@@ -1209,16 +1209,18 @@ class GuideList(FrontendMessage):
             logging.warning("Multiple default guides!  Picking the first one.")
             self.default_guide = [self.default_guide[0]]
         self.default_guide = self.default_guide[0]
-        self.added_guides = [g for g in guides if not g.default and g.visible]
-        self.invisible_guides = [g for g in guides if not g.visible]
+        self.added_guides = [g for g in guides
+                             if not g.default and not g.store]
+        self.visible_stores = [g for g in guides if g.store and g.visible]
+        self.hidden_stores = [g for g in guides if g.store and not g.visible]
 
-class GuidesChanged(FrontendMessage):
-    """Informs the frontend that the guide list has changed.
+class StoresChanged(FrontendMessage):
+    """Informs the frontend that the visible store list has changed.
 
-    :param added: GuideInfo object for each added guide.
+    :param added: GuideInfo object for each added store.
                   The list will be in the same order that they were added.
-    :param changed: The list of GuideInfo for each changed guide.
-    :param removed: list of ids for each guide that was removed.
+    :param changed: The list of GuideInfo for each changed store.
+    :param removed: list of ids for each store that was hidden.
     """
     def __init__(self, added, changed, removed):
         self.added = added

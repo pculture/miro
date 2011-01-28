@@ -51,27 +51,23 @@ class StoreManager(signals.SignalEmitter):
         self.model = widgetset.TableModel('integer', 'text', 'boolean')
         self._iter_map = {}
 
-    def handle_guide_list(self, added_guides):
+    def handle_guide_list(self, stores):
         """Handle the GuideList message."""
-        for info in added_guides:
-            if not info.store:
-                continue
+        for info in stores:
             iter = self.model.append(info.id, info.name, info.visible)
             self._iter_map[info.id] = iter
         self.emit('changed')
 
-    def handle_guides_changed(self, added, changed, removed):
-        self.handle_guide_list(added)
-        for info in changed:
-            if not info.store:
-                continue
+    def handle_stores_changed(self, added, changed, removed):
+        # Stores can't be really added or removed at runtime, so those messages
+        # just mean the visiblity changed
+        for info in added + changed:
             iter = self._iter_map[info.id]
             self.model.update_value(iter, 1, info.name)
             self.model.update_value(iter, 2, info.visible)
         for id_ in removed:
-            if id_ in self._iter_map:
-                iter = self._iter_map.pop(id_)
-                self.model.remove(iter)
+            iter = self._iter_map[id_]
+            self.model.update_value(iter, 2, False) # not visible
         self.emit('changed')
 
     def change_visible(self, id_, visible):

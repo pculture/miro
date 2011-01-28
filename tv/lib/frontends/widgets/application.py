@@ -225,7 +225,10 @@ class Application:
         app.tab_list_manager.populate_tab_list()
         for info in self.message_handler.initial_guides:
             app.tab_list_manager.site_list.add(info)
+        for info in self.message_handler.initial_stores:
+            app.tab_list_manager.store_list.add(info)
         app.tab_list_manager.site_list.model_changed()
+        app.tab_list_manager.store_list.model_changed()
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
         videobox.volume_slider.set_value(app.config.get(prefs.VOLUME_LEVEL))
@@ -1300,6 +1303,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return app.tab_list_manager.playlist_list
         elif message.type == 'guide':
             return app.tab_list_manager.site_list
+        elif message.type == 'store':
+            return app.tab_list_manager.store_list
         elif message.type == 'devices':
             return app.tab_list_manager.devices_list
         elif message.type == 'sharing':
@@ -1317,12 +1322,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_guide_list(self, message):
         app.widgetapp.default_guide_info = message.default_guide
         self.initial_guides = message.added_guides
+        self.initial_stores = message.visible_stores
         self._saw_pre_startup_message('guide-list')
-        app.store_manager.handle_guide_list(message.added_guides)
-        app.store_manager.handle_guide_list(message.invisible_guides)
+        app.store_manager.handle_guide_list(message.visible_stores)
+        app.store_manager.handle_guide_list(message.hidden_stores)
 
-    def handle_guides_changed(self, message):
-        app.store_manager.handle_guides_changed(message.added,
+    def handle_stores_changed(self, message):
+        app.store_manager.handle_stores_changed(message.added,
                                                 message.changed,
                                                 message.removed)
 

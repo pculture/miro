@@ -776,14 +776,17 @@ class MenuStateManager(signals.SignalEmitter):
         """Handle the user selecting things in the site list.
         selected_sites is a list of GuideInfo objects
         """
+        has_stores = bool([True for info in selected_sites if info.store])
         self.enabled_groups.add('SitesSelected')
-        self.enabled_groups.add("RemoveAllowed")
+        if not has_stores:
+            self.enabled_groups.add("RemoveAllowed")
         if len(selected_sites) == 1:
             self.enabled_groups.add('SiteSelected')
-            self.enabled_groups.add("RenameAllowed")
-            self.states["site"].append("RemoveSomething")
-            self.states["site"].append("RenameSomething")
-        else:
+            if not has_stores:
+                self.enabled_groups.add("RenameAllowed")
+                self.states["site"].append("RemoveSomething")
+                self.states["site"].append("RenameSomething")
+        elif not has_stores:
             self.states["sites"].append("RemoveSomething")
             self.states["sites"].append("RenameSomething")
 
@@ -826,7 +829,7 @@ class MenuStateManager(signals.SignalEmitter):
             app.menu_manager._handle_playlist_selection(selected_tabs)
         elif selection_type in ('static', 'library'):
             app.menu_manager._handle_static_tab_selection(selected_tabs)
-        elif selection_type == 'site':
+        elif selection_type in ('site', 'store'):
             app.menu_manager._handle_site_selection(selected_tabs)
         elif selection_type == 'device':
             app.menu_manager._handle_device_selection(selected_tabs)

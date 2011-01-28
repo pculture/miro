@@ -269,39 +269,38 @@ class GuideTracker(ViewTracker):
     info_factory = messages.GuideInfo
 
     def get_object_views(self):
-        return [guide.ChannelGuide.make_view()]
+        return [guide.ChannelGuide.site_view()]
 
     def make_changed_message(self, added, changed, removed):
         return messages.TabsChanged('guide', added, changed, removed)
 
+    def send_initial_list(self):
+        # sends the list for everything (guides, stores, hidden stores)
+        info_list = self._make_added_list(guide.ChannelGuide.make_view())
+        messages.GuideList(info_list).send_to_frontend()
+        self.reset_changes()
+
+class StoreTracker(GuideTracker):
+
+    def get_object_views(self):
+        return [guide.ChannelGuide.store_view()]
+
+    def make_changed_message(self, added, changed, removed):
+        return messages.TabsChanged('store', added, changed, removed)
+
     def send_messages(self):
-        message = messages.GuidesChanged(
+        message = messages.StoresChanged(
             [self.info_factory(g) for g in self._get_added_objects()],
             [self.info_factory(g) for g in self.changed.values()],
             list(self.removed))
         message.send_to_frontend()
 
-        # now that we've sent the GuidesChanged message, fix the changed
-        # message for the hidden flag
-        changed, self.changed = self.changed, {}
-        for obj in changed.values():
-            is_visible = obj.is_visible()
-            if obj.id in self._last_sent_info:
-                was_visible = self._last_sent_info[obj.id].visible
-            else:
-                was_visible = False
-            if is_visible and not was_visible: # newly shown
-                self.added[obj.id] = obj
-                self.added_order.append(obj)
-            elif not is_visible and was_visible: # newly hidden
-                self.removed.add(obj.id)
-            elif is_visible:
-                self.changed[obj.id] = obj
         ViewTracker.send_messages(self)
 
     def send_initial_list(self):
-        info_list = self._make_added_list(guide.ChannelGuide.make_view())
-        messages.GuideList(info_list).send_to_frontend()
+        # GuideTracker sends the message, but we still need to set up
+        # _last_sent_info
+        self._make_added_list(guide.ChannelGuide.store_view())
 
 class WatchedFolderTracker(ViewTracker):
     info_factory = messages.WatchedFolderInfo
@@ -601,6 +600,7 @@ class BackendMessageHandler(messages.MessageHandler):
         self.channel_tracker = None
         self.playlist_tracker = None
         self.guide_tracker = None
+        self.store_tracker = None
         self.watched_folder_tracker = None
         self.download_count_tracker = None
         self.paused_count_tracker = None
@@ -663,12 +663,16 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_track_guides(self, message):
         if not self.guide_tracker:
             self.guide_tracker = GuideTracker()
+            self.store_tracker = StoreTracker()
         self.guide_tracker.send_initial_list()
+        self.store_tracker.send_initial_list()
 
     def handle_stop_tracking_guides(self, message):
         if self.guide_tracker:
             self.guide_tracker.unlink()
             self.guide_tracker = None
+            self.store_tracker.unlink()
+            self.store_tracker = None
 
     def handle_track_watched_folders(self, message):
         if not self.watched_folder_tracker:

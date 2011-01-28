@@ -770,6 +770,23 @@ class SiteList(TabList):
                 (_('Remove Websites'), app.widgetapp.remove_current_site),
             ]
 
+class StoreList(SiteList):
+    type = u'store'
+
+    ALLOW_MULTIPLE = False
+
+    def on_delete_key_pressed(self):
+        pass # XXX: can't delete stores(?)
+
+    def on_context_menu(self, table_view):
+        selected_rows = [table_view.model[iter][0] for iter in \
+                table_view.get_selection()]
+        if len(selected_rows) == 1:
+            return [
+                (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
+            ]
+
+
 class NestedTabList(TabList):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""
 
@@ -967,6 +984,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.sharing_list.view)
         vbox.pack_start(self.build_header(_('SOURCES')))
         vbox.pack_start(tlm.site_list.view)
+        vbox.pack_start(self.build_header(_('STORES')))
+        vbox.pack_start(tlm.store_list.view)
         vbox.pack_start(self.build_header(_('PODCASTS')))
         vbox.pack_start(tlm.feed_list.view)
         vbox.pack_start(self.build_header(_('PLAYLISTS')))

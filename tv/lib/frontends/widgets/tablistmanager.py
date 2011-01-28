@@ -42,6 +42,7 @@ class TabListManager(object):
         self.devices_list = tablist.DevicesList()
         self.sharing_list = tablist.SharingList()
         self.site_list = tablist.SiteList()
+        self.store_list = tablist.StoreList()
         self.feed_list = tablist.FeedList()
         self.playlist_list = tablist.PlaylistList()
         self.widget_to_tablist = {}
@@ -93,7 +94,7 @@ class TabListManager(object):
         return (
             self.static_tab_list, self.library_tab_list, self.devices_list,
             self.sharing_list, self.site_list, self.feed_list,
-            self.playlist_list)
+            self.playlist_list, self.store_list)
 
     def select_guide(self):
         self.select_static_tab(0)

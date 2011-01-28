@@ -81,9 +81,9 @@ class TrackerTest(EventLoopTest):
         messages.FrontendMessage.reset_handler()
 
     def check_changed_message(self, index, added=None, changed=None,
-                              removed=None):
+                              removed=None, **kwargs):
         message = self.test_handler.messages[index]
-        self.check_changed_message_type(message)
+        self.check_changed_message_type(message, **kwargs)
         if added:
             self.assertEquals(len(added), len(message.added))
             for obj, info in zip(added, message.added):
@@ -111,7 +111,7 @@ class TrackerTest(EventLoopTest):
                 "check_message_count(%s) failed.  Messages:\n%s" %
                 (expected_count, self.test_handler.messages))
 
-    def check_changed_message_type(self, message):
+    def check_changed_message_type(self, message, **kwargs):
         raise NotImplementedError()
 
     def check_info_list(self, info_list, objs):
@@ -126,6 +126,12 @@ class GuideTrackTest(TrackerTest):
     def setUp(self):
         TrackerTest.setUp(self)
         self.guide1 = ChannelGuide(u'http://example.com/')
+        self.store1 = ChannelGuide(u'http://amazon.com/')
+        self.store1.store = ChannelGuide.STORE_VISIBLE
+        self.store1.signal_change()
+        self.store2 = ChannelGuide(u'http://not-amazon.com/')
+        self.store2.store = ChannelGuide.STORE_INVISIBLE
+        self.store2.signal_change()
         messages.TrackGuides().send_to_backend()
         self.runUrgentCalls()
 
@@ -141,15 +147,17 @@ class GuideTrackTest(TrackerTest):
         self.assert_(isinstance(message, messages.GuideList))
         self.check_info(message.default_guide, self.guide)
         self.check_info_list(message.added_guides, [self.guide1])
+        self.check_info_list(message.visible_stores, [self.store1])
+        self.check_info_list(message.hidden_stores, [self.store2])
 
-    def check_changed_message_type(self, message):
+    def check_changed_message_type(self, message, type_='guide'):
         self.assertEquals(type(message), messages.TabsChanged)
-        self.assertEquals(message.type, 'guide')
+        self.assertEquals(message.type, type_)
 
-    def check_guide_message(self, index, added=None, changed=None,
+    def check_stores_changed_message(self, index, added=None, changed=None,
                             removed=None):
         message = self.test_handler.messages[index]
-        self.assertEquals(type(message), messages.GuidesChanged)
+        self.assertEquals(type(message), messages.StoresChanged)
         if added:
             self.assertEquals(len(added), len(message.added))
             for obj, info in zip(added, message.added):
@@ -174,43 +182,37 @@ class GuideTrackTest(TrackerTest):
     def test_added(self):
         g = ChannelGuide(u'http://example.com/3')
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_guide_message(1, added=[g])
-        self.check_changed_message(2, added=[g])
+        self.check_message_count(2)
+        self.check_changed_message(1, added=[g])
 
     @uses_httpclient
     def test_removed(self):
         self.guide1.remove()
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_guide_message(1, removed=[self.guide1])
-        self.check_changed_message(2, removed=[self.guide1])
+        self.check_message_count(2)
+        self.check_changed_message(1, removed=[self.guide1])
 
     def test_change(self):
         self.guide1.set_title(u"Booya")
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_guide_message(1, changed=[self.guide1])
-        self.check_changed_message(2, changed=[self.guide1])
+        self.check_message_count(2)
+        self.check_changed_message(1, changed=[self.guide1])
 
     def test_change_invisible(self):
-        self.guide1.store = self.guide1.STORE_INVISIBLE
-        self.guide1.signal_change()
+        self.store1.store = ChannelGuide.STORE_INVISIBLE
+        self.store1.signal_change()
         self.runUrgentCalls()
         self.check_message_count(3)
-        self.check_guide_message(1, changed=[self.guide1])
-        self.check_changed_message(2, removed=[self.guide1])
+        self.check_stores_changed_message(1, removed=[self.store1])
+        self.check_changed_message(2, removed=[self.store1], type_='store')
 
     def test_change_visible(self):
-        self.guide1.store = self.guide1.STORE_INVISIBLE
-        self.guide1.signal_change()
+        self.store2.store = self.guide1.STORE_VISIBLE
+        self.store2.signal_change()
         self.runUrgentCalls()
-        self.test_handler.messages = [] # reset
-        self.guide1.store = self.guide1.STORE_VISIBLE
-        self.guide1.signal_change()
-        self.runUrgentCalls()
-        self.check_guide_message(0, changed=[self.guide1])
-        self.check_changed_message(1, added=[self.guide1])
+        self.check_message_count(3)
+        self.check_stores_changed_message(1, added=[self.store2])
+        self.check_changed_message(2, added=[self.store2], type_='store')
 
     @uses_httpclient
     def test_stop(self):

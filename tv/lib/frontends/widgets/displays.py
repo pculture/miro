@@ -264,7 +264,7 @@ class SiteDisplay(TabDisplay):
 
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'site' and len(selected_tabs) == 1
+        return tab_type in ('site', 'store') and len(selected_tabs) == 1
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
