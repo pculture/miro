@@ -187,7 +187,8 @@ class LibraryTabList(StaticTabListBase):
     def __init__(self):
         StaticTabListBase.__init__(self)
         self.type = u'library'
-        self.view = TabListView(style.StaticTabRenderer())
+        self.view = TabListView(style.StaticTabRenderer(),
+                                widgetset.TableModel)
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
         self.view.set_drag_dest(MediaTypeDropHandler())
@@ -959,14 +960,12 @@ class TabListBox(widgetset.Scroller):
         tlm = app.tab_list_manager
         self.header_left_pad = 10
         vbox = widgetset.VBox()
-        vbox.pack_start(tlm.static_tab_list.view)
-        vbox.pack_start(self.build_header(_('LIBRARY')))
         vbox.pack_start(tlm.library_tab_list.view)
-        vbox.pack_start(self.build_header(_('DEVICES')))
+        vbox.pack_start(tlm.static_tab_list.view)
+        vbox.pack_start(self.build_header(_('CONNECT')))
         vbox.pack_start(tlm.devices_list.view)
-        vbox.pack_start(self.build_header(_('SHARING')))
         vbox.pack_start(tlm.sharing_list.view)
-        vbox.pack_start(self.build_header(_('WEBSITES')))
+        vbox.pack_start(self.build_header(_('SOURCES')))
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('PODCASTS')))
         vbox.pack_start(tlm.feed_list.view)
