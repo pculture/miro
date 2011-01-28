@@ -3,18 +3,22 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: April 15, 2010
+:Date: Januar 28th, 2011
 
 
 Summary
 =======
 
-This is the Linux port of Miro.
+This is the Linux port of Miro.  It uses GTK and other GNOME technologies.
 
 Instructions and build requirements are documented at
 https://develop.participatoryculture.org/index.php/LinuxBuildDocs
 
-There are also helper build scripts located in ``tv/linux/helperscripts/``
+
+Requirements
+============
+
+There are helper build scripts located in ``tv/linux/helperscripts/``
 which will install dependencies for some systems.  Note that these scripts
 may be out of date and that you must run them with administrative priveliges.
 
@@ -27,9 +31,43 @@ Please send in scripts for systems we don't have scripts for.
 If you have problems, visit us on ``#miro-hackers`` on
 ``irc.freenode.net``.
 
+Generally, the requirements are these:
 
-Build and run
-=============
+Build requirements:
+
+* gcc, g++, standard c/c++ libraries - http://gcc.gnu.org/
+* Python >= 2.6 - http://www.python.org/ (we don't support Python 3.0 or higher yet)
+* Pyrex >= 0.9.6.4 or higher - http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+* PyGTK >= 2.0 - http://www.pygtk.org/
+* pygobject >= 2.0 - http://ftp.gnome.org/pub/GNOME/sources/pygobject/
+* libwebkit dev files - http://webkit.org/ (might work with lower versions--untested)
+* libsoup dev files - http://live.gnome.org/LibSoup 
+
+Runtime requirements:
+
+* Python >= 2.6 - http://www.python.org/ (we don't support Python 3.0 or higher yet)
+* dbus and python bindings 0.80.0 or higher - http://www.freedesktop.org/wiki/Software/dbus
+* PyGTK >= 2.0 - http://www.pygtk.org/
+* pygobject >= 2.0 - http://ftp.gnome.org/pub/GNOME/sources/pygobject/
+* pycairo - http://cairographics.org/pycairo/
+* libwebkit >= 1.1.15 - http://webkit.org/ (might work with lower versions--untested)
+* pywebkitgtk >= 1.1.5 - http://live.gnome.org/PyWebKitGtk
+* libsoup - http://live.gnome.org/LibSoup
+* gconf and python bindings
+* gstreamer >= 0.10.22 - http://gstreamer.freedesktop.org/ (needs playbin2 with text-sink)
+* gstreamer plugins-base and plugins-good
+* gstreamer python bindings
+* libtorrent-rasterbar 0.14 or higher except for 0.15.4 which has known issues (bz:13549) - http://www.rasterbar.com/products/libtorrent/
+* libtorrent-rasterbar python bindings
+* libcurl - http://curl.haxx.se/libcurl/
+* libcurl python bindings - http://curl.haxx.se/libcurl/python/
+* mutagen - http://pypi.python.org/pypi/mutagen/1.12 
+
+If you discover that there are other requirements, let us know!
+
+
+Building and running
+====================
 
 To compile and run Miro in the current directory, do::
 
@@ -72,6 +110,19 @@ There are two ways to run Miro in a test sandbox.
    without affecting the process environment.
 
 
+Unittest instructions
+=====================
+
+Once you get ``./run.sh`` working, you can run the unittests on Linux
+platform.  Do the following::
+
+   ./run.sh --unittest
+
+
+This will go through all the unittests on the Linux platform and spit out 
+any errors to stdout and stderr.
+
+
 Preferences
 ===========
 
@@ -90,21 +141,17 @@ To backup your preferences, do::
    gconftool-2 --dump /apps/miro > /tmp/foobar
 
 
-Unittest instructions
-=====================
-
-Once you get ``./run.sh`` working, you can run the unittests on Linux
-platform.  Do the following::
-
-   ./run.sh --unittest
-
-
-This will go through all the unittests on the Linux platform and spit out 
-any errors to stdout and stderr.
-
-
 Problems with gstreamer
 =======================
 
-Make sure you have gstreamer plugins installed.  That solves most
-problems.
+Make sure you have gstreamer plugins installed.  That solves most problems.
+Consult your Linux distribution's documentation for details.
+
+
+Problems with ffmpeg
+====================
+
+Miro uses ffmpeg for conversions.  It's common for Linux distributions to
+ship with ffmpeg versions that are missing libaac decoding.  If you're
+running into problems converting things, that's probably the cause.  Consult
+your Linux distribution's documentation for help.
