@@ -67,13 +67,8 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
-        vbox = widgetset.VBox()
-        vbox.pack_start(self.indydownloads_section)
-        vbox.pack_start(self.downloads_section)
-        vbox.pack_start(self.seeding_section)
-
         background = widgetset.SolidBackground((1, 1, 1))
-        background.add(vbox)
+        background.add(self.item_view)
 
         scroller = widgetset.Scroller(False, True)
         scroller.add(background)
@@ -96,23 +91,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         return itemcontextmenu.ItemContextMenuHandler()
 
     def _make_item_views(self):
-        self.indydownloads_view = ItemView(
-            itemlist.IndividualDownloadItemList())
-        self.indydownloads_section = HideableSection(
-            _("Single and external downloads"), self.indydownloads_view)
-
-        self.downloads_view = ItemView(itemlist.ChannelDownloadItemList())
-        self.downloads_section = HideableSection(
-            _("Feed downloads"), self.downloads_view)
-
-        self.seeding_view = ItemView(itemlist.SeedingItemList())
-        self.seeding_section = HideableSection(_("Seeding"), self.seeding_view)
-
-    def normal_item_views(self):
-        return [self.indydownloads_view, self.downloads_view, self.seeding_view]
-
-    def default_item_view(self):
-        return self.downloads_view
+        self.item_view = ItemView(self.item_list)
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
@@ -132,47 +111,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def _on_settings(self, widget):
         prefpanel.show_window("downloads")
 
-    def _expand_lists_initially(self):
-        self.indydownloads_section.show()
-        self.downloads_section.show()
-
-        if len(self.indydownloads_view.item_list.get_items()) > 0:
-            self.indydownloads_section.show()
-        else:
-            self.indydownloads_section.hide()
-
-        if len(self.downloads_view.item_list.get_items()) > 0:
-            self.downloads_section.show()
-        else:
-            self.downloads_section.hide()
-
-        if len(self.seeding_view.item_list.get_items()) > 0:
-            self.seeding_section.show()
-        else:
-            self.seeding_section.hide()
-
-        self.indydownloads_section.expand()
-        self.downloads_section.expand()
-        self.seeding_section.expand()
-
-    def on_initial_list(self):
-        self._expand_lists_initially()
-
     def on_items_changed(self):
         self.status_toolbar.update_rates(
             downloader.total_down_rate, downloader.total_up_rate)
-
-        if len(self.indydownloads_view.item_list.get_items()) > 0:
-            self.indydownloads_section.show()
-        else:
-            self.indydownloads_section.hide()
-
-        if len(self.downloads_view.item_list.get_items()) > 0:
-            self.downloads_section.show()
-        else:
-            self.downloads_section.hide()
-
-        if len(self.seeding_view.item_list.get_items()) > 0:
-            self.seeding_section.show()
-        else:
-            self.seeding_section.hide()
