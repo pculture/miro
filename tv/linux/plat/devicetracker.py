@@ -85,7 +85,7 @@ class DeviceTracker(object):
         if volumes:
             # so we ignore the disconnected event, instead deferring to the
             # volume events
-            self._drive_has_volumes[id_] = 0
+            self._drive_has_volumes.setdefault(id_, 0)
         else:
             self._unix_device_to_drive[id_] = drive
             app.device_manager.device_connected(id_, name=drive.get_name())
@@ -107,6 +107,7 @@ class DeviceTracker(object):
         self._unix_device_to_drive[id_] = volume.get_drive()
         app.device_manager.device_connected(id_, **info)
         drive_id = volume.get_drive().get_identifier('unix-device')
+        self._drive_has_volumes.setdefault(drive_id, 0)
         self._drive_has_volumes[drive_id] += 1
 
     def _volume_changed(self, volume_monitor, volume):
