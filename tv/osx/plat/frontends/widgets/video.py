@@ -107,6 +107,8 @@ class VideoPlayer (Widget, quicktime.Player):
         self.video_view.setEditable_(NO)
         self.video_view.setPreservesAspectRatio_(YES)
 
+        self.video_window = None
+
         self.movie = None
         self.movie_notifications = None
         self.system_activity_updater_timer = None
