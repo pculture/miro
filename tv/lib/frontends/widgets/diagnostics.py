@@ -113,6 +113,11 @@ def run_dialog():
              "button_face": SHOW,
              "button_fun": open_helper(app.config.get(prefs.SQLITE_PATHNAME))},
 
+            {"label": _("Crash reports location:"),
+             "data": app.config.get(prefs.CRASH_PATHNAME),
+             "button_face": SHOW,
+             "button_fun": open_helper(app.config.get(prefs.CRASH_PATHNAME))},
+
             SEPARATOR,
 
             {"label": _("Space free on disk:"),
