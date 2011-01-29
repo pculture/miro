@@ -131,8 +131,8 @@ class ItemListTracker(signals.SignalEmitter):
         self.emit("items-changed", added, changed, removed)
 
     def set_search(self, query):
-        self.emit("items-will-change")
         added, removed = self.search_filter.set_search(query)
+        self.emit("items-will-change", added, [], removed)
         self.item_list.add_items(added)
         self.item_list.remove_items(removed)
         self.emit("items-changed", added, [], removed)
