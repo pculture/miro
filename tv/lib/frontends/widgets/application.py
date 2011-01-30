@@ -614,11 +614,11 @@ class Application:
             return
 
         if data[0] == "feed":
-            messages.NewFeedSearchFeed(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchFeed(data[1], data[2]).send_to_backend()
         elif data[0] == "search_engine":
-            messages.NewFeedSearchEngine(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchEngine(data[1], data[2]).send_to_backend()
         elif data[0] == "url":
-            messages.NewFeedSearchURL(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchURL(data[1], data[2]).send_to_backend()
 
     def add_new_feed_folder(self, add_selected=False, default_type='feed'):
         name = newfolder.run_dialog(default_type)
