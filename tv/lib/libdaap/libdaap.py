@@ -188,6 +188,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header('Content-type', content_type)
             self.send_header('Daap-Server', self.server_version)
             self.send_header('Content-length', str(len(blob)))
+            self.send_header('Accept-Ranges', 'bytes, seconds')
+            # Note: we currently do not have the ability to replace or 
             # Note: we currently do not have the ability to replace or 
             # override the default headers.
             for k, v in extra_headers:
@@ -317,22 +319,30 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             print 'Header %s value %s' % (k, repr(self.headers.getheader(k)))
         # XXX backend API is broken FIXME  API should return a handle to the
         # open file.
-        stream_file = self.server.backend.get_filepath(item_id)
-        print 'streaming %s' % stream_file
         seekpos = seekend = 0
         rangehdr = self.headers.getheader('Range')
+        typ = ''
         if rangehdr:
-            paramstring = 'bytes='
-            if rangehdr.startswith(paramstring):
-                seekpos = atol(rangehdr[len(paramstring):])
-            idx = rangehdr.find('-')
-            if idx >= 0:
-                seekend = atol(rangehdr[(idx + 1):])
-            if seekend < seekpos:
-                seekend = 0
+            bytes = 'bytes='
+            seconds = 'seconds='
+            if rangehdr.startswith(bytes):
+                typ = 'bytes'
+                seekpos = atol(rangehdr[len(bytes):])
+                idx = rangehdr.find('-')
+                if idx >= 0:
+                    seekend = atol(rangehdr[(idx + 1):])
+                if seekend < seekpos:
+                    seekend = 0
+            elif rangehdr.startswith(seconds):
+                typ = 'seconds'
+                seekpos = atol(rangehdr[len(seconds):])
             rc = DAAP_PARTIAL_CONTENT
+        fildes = self.server.backend.get_file(item_id, typ, offset=seekpos)
+        if fildes < 0:
+            return (DAAP_FILENOTFOUND, [], extra_headers)
+        print 'streaming with file descriptor %d' % fildes
         # Return a special response, the encode_reponse() will handle correctly
-        return (rc, [(stream_file, seekpos, seekend)], extra_headers)
+        return (rc, [(fildes, seekpos, seekend)], extra_headers)
 
     def do_databases(self):
         path, query = split_url_path(self.path)

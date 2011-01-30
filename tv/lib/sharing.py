@@ -45,6 +45,7 @@ from miro import playlist
 from miro import prefs
 from miro import signals
 from miro import util
+from miro import transcode
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
@@ -732,6 +733,23 @@ class SharingManagerBackend(object):
     def get_filepath(self, itemid):
         return self.daapitems[itemid]['path']
 
+    # NB: offset is either a byte offset (if we are sending a file) or 
+    # a time offset (if we are sending a transcoded stream)
+    def get_file(self, itemid, typ, offset=0):
+        path = self.daapitems[itemid]['path']
+        yes, info = transcode.needs_transcode(path)
+        if yes:
+            if offset and typ != 'seconds':
+                raise ValueError('Range not of correct type (need seconds)')
+            transcode_obj = transcode.TranscodeObject(offset, info)
+            fildes = transcode_obj.transcode()
+        else:
+            if offset and typ != 'bytes':
+                raise ValueError('Range not of correct type (need bytes)')
+            fildes = os.open(path, os.O_RDONLY)
+            os.lseek(fildes, offset, os.SEEK_SET)
+        return fildes
+
     def get_playlists(self):
         return self.daap_playlists
 
@@ -770,21 +788,18 @@ class SharingManagerBackend(object):
                 # Fixup the duration: need to convert to millisecond.
                 if daap_string == 'daap.songtime':
                     itemprop[daap_string] *= DURATION_SCALE
-            # Fixup the enclosure format.
-            f, e = os.path.splitext(item.video_path)
-            # Note! sometimes this doesn't work because the file has no
-            # extension!
-            e = e[1:] if e else None
-            if isinstance(e, unicode):
-                e = e.encode('utf-8')
-            itemprop['daap.songformat'] = e
+            # Fixup the enclosure format.  This is hardcoded to mp4, 
+            # as iTunes requires this.  Other clients seem to be able to sniff
+            # out the container.  We can change it if that's no longer true.
             # Fixup the media kind: XXX what about u'other'?
             if itemprop['com.apple.itunes.mediakind'] == u'video':
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_VIDEO)
+                itemprop['daap.songformat'] = 'mp4'
             else:
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_AUDIO)
+                itemprop['daap.songformat'] = 'mp3'
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
