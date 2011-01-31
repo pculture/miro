@@ -230,7 +230,7 @@ class SyncProgressWidget(widgetset.Background):
         line = widgetset.HBox()
         self.sync_progress = SyncProgressBar()
         self.sync_progress.set_size_request(400, 10)
-        self.cancel_button = widgetset.Button(u"X") #'sync-cancel')
+        self.cancel_button = imagebutton.ImageButton('sync-cancel')
         line.pack_start(widgetutil.pad(self.sync_progress, 10, 10, 5, 5))
         line.pack_end(widgetutil.pad(self.cancel_button, 5, 5, 5, 5))
         vbox.pack_start(line)
