@@ -514,6 +514,15 @@ cdef class InfoList:
         else:
             return infolist_node_get_info(node)
 
+    def get_last_info(self):
+        cdef InfoListNode* node
+
+        node = infolist_nodelist_tail(self.nodelist)
+        if infolist_node_is_sentinal(node):
+            return None
+        else:
+            return infolist_node_get_info(node)
+
     def index_of_id(self, id_):
         return infolist_nodelist_node_index(self.nodelist,
                 fetch_node(self.id_map, hash(id_)))

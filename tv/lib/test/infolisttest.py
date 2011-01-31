@@ -73,6 +73,13 @@ class InfoListTestBase(MiroTestCase):
         else:
             self.assertEquals(self.infolist.get_first_info(), None)
 
+        # test get_last_info()
+        if list_of_infos:
+            self.assertEquals(self.infolist.get_last_info(),
+                    list_of_infos[-1])
+        else:
+            self.assertEquals(self.infolist.get_last_info(), None)
+
         self.infolist._sanity_check()
 
     def check_insert(self, infos):
