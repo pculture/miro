@@ -51,11 +51,12 @@ DEFAULT_COLUMN_WIDTHS = {
     u'state': 20, u'name': 130, u'artist': 110, u'album': 100, u'track': 30,
     u'feed-name': 70, u'length': 60, u'genre': 65, u'year': 40, u'rating': 75,
     u'size': 65, u'status': 70, u'date': 70, u'eta': 60, u'rate': 60,
+    u'description': 160,
 }
 DEFAULT_SORT_COLUMN = {
     u'videos': 'name', u'music': 'artist', u'others': 'name',
     u'downloading': 'eta', u'all-feed-video': 'feed-name', u'feed': 'date',
-    u'feed': 'date', u'playlist': 'artist', u'search': 'artist',
+    u'feed': 'date', u'playlist': 'artist', u'search': 'name',
 }
 
 # column properties
@@ -66,10 +67,12 @@ COLUMN_LABELS = {
     u'length': _('Length'), u'status': _('Status'), u'size': _('Size'),
     u'feed-name': _('Feed'), u'eta': _('ETA'), u'rate': _('Speed'),
     u'date-added': _('Date Added'), u'last-played': _('Last Played'),
+    u'description': _('Description'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()
 COLUMN_WIDTH_WEIGHTS = {
+    u'description': 1.2,
     u'name': 1.0,
     u'artist': 0.7,
     u'album': 0.7,
@@ -89,8 +92,7 @@ COLUMNS_AVAILABLE = {
     u'feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
     u'playlist': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
         u'length', u'genre', u'year', u'rating', u'size'],
-    u'search': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
-        u'length', u'genre', u'year', u'rating', u'size'],
+    u'search': [u'state', u'name', u'rating', u'description'],
 }
 
 COLUMNS_AVAILABLE[u'sharing'] = COLUMNS_AVAILABLE[u'videos']

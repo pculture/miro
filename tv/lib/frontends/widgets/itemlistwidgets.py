@@ -267,6 +267,7 @@ class ListItemView(widgetset.TableView):
         'feed-name': style.FeedNameRenderer, 'eta': style.ETARenderer,
         'rate': style.DownloadRateRenderer, 'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,
+        'description': style.DescriptionRenderer,
     }
     COLUMN_PADDING = 12
     def __init__(self, item_list, columns_enabled, column_widths):

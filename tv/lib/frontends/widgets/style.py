@@ -1056,7 +1056,7 @@ class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
 
     def _setup_layout_manager(self):
-        self.text = self.info.description_text.replace('\n', ' ')
+        self.text = self.info.description_stripped[0].replace('\n', '$')
 
 class FeedNameRenderer(ListViewRenderer):
     def _setup_layout_manager(self):
