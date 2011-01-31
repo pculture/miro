@@ -63,7 +63,6 @@ class DeviceTracker(object):
         return drive is None or drive.get_name() == 'CD/DVD Drive'
 
     def _get_volume_info(self, volume):
-        print 'volume', repr(volume.get_name())
         id_ = volume.get_identifier('unix-device')
         mount = size = remaining = None
         mount = volume.get_mount()
