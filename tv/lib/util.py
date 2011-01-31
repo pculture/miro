@@ -637,7 +637,12 @@ def no_console_startupinfo():
     """
     if subprocess.mswindows:
         startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        # XXX temporary: STARTF_USESHOWWINDOW is in a different location
+        # as of Python 2.6.6
+        try:
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        except AttributeError:
+            startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
         return startupinfo
     else:
         return None
