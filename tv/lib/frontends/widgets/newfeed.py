@@ -76,7 +76,7 @@ def _run_dialog(title, description, initial_text):
                 text = url_entry.get_text()
                 return text
             
-            return (None, None)
+            return None
 
         except StandardError:
             logging.exception("newfeed threw exception.")
