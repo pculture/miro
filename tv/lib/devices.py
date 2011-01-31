@@ -163,6 +163,7 @@ class DeviceManager(object):
         self.connected = {}
         self.syncs_in_progress = {}
         self.startup()
+        self.show_unknown = app.config.get(prefs.SHOW_UNKNOWN_DEVICES)
 
     def add_device(self, info):
         try:
@@ -235,6 +236,41 @@ class DeviceManager(object):
                 raise
         return self._get_device_from_info(info, device_type)
 
+    def set_show_unknown(self, show):
+        """
+        Set the value of the show_unknown flag, and, if necessary, send some
+        connected/disconnected messages.
+        """
+        if self.show_unknown == show:
+            return # no change
+        unknown_devices = [info for info in self.connected.values()
+                           if self._is_unknown(info)]
+        if show: # now we're showing them
+            for info in unknown_devices:
+                self._send_connect(info)
+        else: # now we're hiding them
+            for info in unknown_devices:
+                self._send_disconnect(info)
+        self.show_unknown = show
+        app.config.set(prefs.SHOW_UNKNOWN_DEVICES, show)
+
+    @staticmethod
+    def _is_unknown(info):
+        if not getattr(info.info, 'generic', False):
+            # not a generic device
+            return False
+        if info.mount and info.database.get('settings', {}).get(
+            'always_show', False):
+            # we want to show this device all the time
+            return False
+        return True
+
+    def _is_hidden(self, info):
+        # like _is_unknown(), but takes the self.show_unknown flag into account
+        if self.show_unknown:
+            return False
+        else:
+            return self._is_unknown(info)
 
     def _set_connected(self, id_, kwargs):
         if kwargs.get('mount'):
@@ -277,10 +313,13 @@ class DeviceManager(object):
             raise RuntimeError('device_connected() called on connected device')
 
         info = self._set_connected(id_, kwargs)
-        if hasattr(info.info, 'generic'):
-            # ignore these for now
+
+        if not self._is_hidden(info):
+            self._send_connect(info)
+        else:
             logging.debug('ignoring %r' % info.name)
-            return
+
+    def _send_connect(self, info):
         if info.mount:
             scan_device_for_files(info)
         messages.TabsChanged('devices', [info], [], []).send_to_frontend()
@@ -290,14 +329,18 @@ class DeviceManager(object):
             raise RuntimeError('device_changed() called on unknown device')
 
         info = self.connected[id_]
-        if hasattr(info.info, 'generic'):
-            # ignore these for now
+
+        if self._is_hidden(info):
+            # don't bother with change message on devices we're not showing
             return
+
         if info.mount:
             # turn off the autosaving on the old database
             info.database.disconnect_all()
 
         info = self._set_connected(id_, kwargs)
+
+
         if info.mount:
             scan_device_for_files(info)
         else:
@@ -314,15 +357,16 @@ class DeviceManager(object):
                 'device_disconnected() called on unknown device')
 
         info = self.connected.pop(id_)
-        if hasattr(info.info, 'generic'):
-            # ignore these for now
-            return
+        if not self._is_hidden(info):
+            self._send_disconnect(info)
+
+    def _send_disconnect(self, info):
         sync_manager = app.device_manager.get_sync_for_device(info,
                                                               create=False)
         if sync_manager:
             sync_manager.cancel()
 
-        messages.TabsChanged('devices', [], [], [id_]).send_to_frontend()
+        messages.TabsChanged('devices', [], [], [info.id]).send_to_frontend()
 
     def get_sync_for_device(self, device, create=True):
         """

@@ -105,6 +105,7 @@ SUBTITLE_FONT               = Pref(key='subtitleFont',          default=None,  p
 # language setting: "system" uses system default; all other languages are overrides
 LANGUAGE                    = Pref(key='language',              default="system", platformSpecific=False)
 MAX_CONCURRENT_CONVERSIONS  = Pref(key='maxConcurrentConversions', default=1, platformSpecific=False)
+SHOW_UNKNOWN_DEVICES        = Pref(key='showUnknownDevices',    default=False, platformSpecific=False)
 SHARE_MEDIA                 = Pref(key='ShareMedia',            default=False, platformSpecific=False)
 SHARE_DISCOVERABLE          = Pref(key='ShareDiscoverable',     default=True, platformSpecific=False)
 SHARE_NAME                  = Pref(key='ShareName',             default="Miro Share", platformSpecific=False)
