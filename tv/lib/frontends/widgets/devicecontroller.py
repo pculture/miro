@@ -346,26 +346,9 @@ class SyncWidget(widgetset.VBox):
         self.emit('changed')
 
     def get_feeds(self):
-        feeds = []
-        tab_list = self.tab_list()
-        table_model = tab_list.view.model
-        iter_ = table_model.first_iter()
-        if iter_ is None:
-            self.sync_library.disable()
-        else:
-            while iter_ is not None:
-                row = table_model[iter_]
-                if row[0].is_folder:
-                    child_iter = table_model.child_iter(iter_)
-                    while child_iter is not None:
-                        row = table_model[child_iter]
-                        feeds.append(row[0])
-                        child_iter = table_model.next_iter(child_iter)
-                else:
-                    feeds.append(row[0])
-                    iter_ = table_model.next_iter(iter_)
-        feeds.sort(key=operator.attrgetter('name'))
-        return feeds
+        items = self.get_items()
+        items.sort(key=operator.attrgetter('name'))
+        return items
 
     def info_key(self, info):
         return info.url
@@ -394,17 +377,13 @@ class SyncWidget(widgetset.VBox):
         if not self.bulk_change:
             self.emit('changed')
 
-    def find_info_by_key(self, key, tab_list):
-        return tab_list.find_feed_with_url(key)
-
     def checked_feeds(self):
         if not self.sync_library.get_checked():
             return []
         feeds = []
         items = self.device.database['sync'][self.file_type].get('items', ())
-        tab_list = self.tab_list()
         for key in items:
-            feed = self.find_info_by_key(key, tab_list)
+            feed = self.find_info_by_key(key)
             if feed is not None:
                 feeds.append(feed.id)
         return feeds
@@ -429,22 +408,26 @@ class PodcastSyncWidget(SyncWidget):
         else:
             self.sync_unwatched.disable()
 
-    def tab_list(self):
-        return app.tab_list_manager.feed_list
+    def get_items(self):
+        return [info for info in app.tab_list_manager.feed_list.get_feeds()
+                if not info.is_folder]
+
+    def find_info_by_key(self, key):
+        return app.tab_list_manager.feed_list.find_feed_with_url(key)
 
 class PlaylistSyncWidget(SyncWidget):
     file_type = 'playlists'
     list_label = _("Sync These Playlists")
     title = _("Sync Playlists")
 
-    def tab_list(self):
-        return app.tab_list_manager.playlist_list
+    def get_items(self):
+        return app.tab_list_manager.playlist_list.get_playlists()
 
     def info_key(self, info):
         return info.name
 
     def find_info_by_key(self, key, tab_list):
-        return tab_list.find_playlist_with_name(key)
+        return app.tab_list_manager.playlist_list.find_playlist_with_name(key)
 
 class DeviceSettingsWidget(widgetset.Background):
     def __init__(self):
