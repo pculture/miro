@@ -212,13 +212,6 @@ class IconCache(DDBObject):
 
                 tmp_filename, output = next_free_filename(tmp_filename)
 
-                # FIXME - this fixes 15773 where files were getting
-                # saved in a non-binary fashion.  i have no clue why
-                # closing and reopening the file as wb fixes the
-                # corruption problem since next_free_filename always
-                # seems to open it as wb.
-                output.close()
-                output = open(tmp_filename, "wb")
                 output.write(info["body"])
                 output.close()
             except IOError:

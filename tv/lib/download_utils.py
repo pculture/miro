@@ -34,6 +34,7 @@ from urllib import unquote
 import os.path
 import re
 import logging
+import sys
 
 from miro import filetypes
 from miro import util
@@ -145,6 +146,11 @@ def next_free_filename(name):
     """ 
     check_f(name)
     mask = os.O_CREAT | os.O_EXCL | os.O_RDWR
+    # On Windows we need to pass in O_BINARY, fdopen() even with 'b' 
+    # specified is not sufficient.
+    if sys.platform == 'win32':
+        mask |= os.O_BINARY
+
     # Try with the name supplied.
     try:
         fd = os.open(expand_filename(name), mask)
