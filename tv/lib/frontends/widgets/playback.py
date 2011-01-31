@@ -604,10 +604,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
             start_item = self._find_playable(self.model.get_info(start_id))
         else:
             start_item = self._find_playable(self.model.get_first_info())
-        self._set_currently_playing(start_item)
+        self._change_currently_playing(start_item)
 
     def finished(self):
-        self._set_currently_playing(None)
+        self._change_currently_playing(None)
         for handle in self._tracker_callbacks:
             self.item_tracker.disconnect(handle)
         self.item_tracker = None
@@ -617,12 +617,12 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def select_previous_item(self):
         prev_item = self.model.get_prev_info(self.currently_playing.id)
         prev_item = self._find_playable(prev_item, backwards=True)
-        self._set_currently_playing(prev_item)
+        self._change_currently_playing(prev_item)
 
     def select_next_item(self):
         next_item = self.model.get_next_info(self.currently_playing.id)
         next_item = self._find_playable(next_item)
-        self._set_currently_playing(next_item)
+        self._change_currently_playing(next_item)
 
     def is_playing_id(self, id_):
         return self.currently_playing and self.currently_playing.id == id_
@@ -658,12 +658,14 @@ class PlaybackPlaylist(signals.SignalEmitter):
         while position_removed(new_position):
             new_position += 1
             if new_position >= len(self._items_before_change):
-                self._set_currently_playing(None)
+                self._change_currently_playing(None)
                 return
         # Note: this is usefull even if we haven't changed positions, because
-        # it gets us the new ItemInfo
+        # it gets us the new ItemInfo.  Don't call _change_currently_playing()
+        # because we just updating the ItemInfo, not actually changing which
+        # item is playing.
         item = self.model.get_info(self._items_before_change[new_position].id)
-        self._set_currently_playing(item)
+        self.currently_playing = item
 
     def _info_is_playable(self, item_info):
         return not item_info.is_container_item and item_info.is_playable
@@ -681,7 +683,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def _send_item_is_playing(self, info, value):
         messages.SetItemIsPlaying(info, value).send_to_backend()
 
-    def _set_currently_playing(self, new_info):
+    def _change_currently_playing(self, new_info):
         if self.currently_playing:
             self._send_item_is_playing(self.currently_playing, False)
         self.currently_playing = new_info
