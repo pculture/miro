@@ -150,8 +150,8 @@ def _run_dialog(iteminfo):
                 "file_type", _("Media type:"),
                 iteminfo.file_type,
                 [(_("Video"), u"video"),
-                 (_("Audio"), u"audio"),
-                 (_("Other"), u"other")]))
+                 (_("Music"), u"audio"),
+                 (_("Misc"), u"other")]))
 
             # we do this to force wrapping at 50 characters
             sections.append(build_info(
