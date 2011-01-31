@@ -738,10 +738,11 @@ class SharingManagerBackend(object):
     def get_file(self, itemid, typ, offset=0):
         path = self.daapitems[itemid]['path']
         yes, info = transcode.needs_transcode(path)
+        
         if yes:
             if offset and typ != 'seconds':
                 raise ValueError('Range not of correct type (need seconds)')
-            transcode_obj = transcode.TranscodeObject(offset, info)
+            transcode_obj = transcode.TranscodeObject(path, offset, info)
             fildes = transcode_obj.transcode()
         else:
             if offset and typ != 'bytes':

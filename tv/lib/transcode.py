@@ -33,7 +33,7 @@ import re
 import os
 
 from miro import util
-from miro.plat.utils import get_ffmpeg_executable_path
+from miro.plat.utils import get_ffmpeg_executable_path, setup_ffmpeg_presets
 
 # Transcoding
 #
@@ -90,7 +90,7 @@ def needs_transcode(media_file):
     # XXX unbounded read here but should be okay, ffmpeg output is finite.
     # note that we need to read from stderr, since that's what ffmpeg spits 
     # out.
-    text =  handle.stderr.read()
+    text = handle.stderr.read()
     if container_regex.search(text):
         transcode = False
     else:
@@ -130,12 +130,17 @@ class TranscodeObject(object):
     """
 
     # XXX these bitrate qualities are hardcoded
-    has_video_has_audio_args = ['-vcodec', 'libx264', '-sameq']
-    has_video_args = ['-acodec', 'aac', '-strict', 'experimental',
-                      '-ab', '160k']
-    has_audio_args = ['-acodec', 'libmp3lame', '-ab', '160k']
-    video_output_args = ['-f mpetgs', '-']
+    #has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
+    #                  '-vpre', 'slow']
+    #has_video_has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
+    #                  '-ab', '160k', '-ac', '2']
+    has_video_args = []
+    has_video_has_audio_args = []
+    has_audio_args = ['-acodec', 'libmp3lame', '-ac', '2', '-ab', '160k']
+    #video_output_args = ['-f mpegts', '-']
+    video_output_args = ['-f', 'mpeg', '-']
     audio_output_args = ['-']
+
 
     def __init__(self, media_file, time_offset, media_info):
         self.media_file = media_file
@@ -144,19 +149,24 @@ class TranscodeObject(object):
         self.duration = duration
         self.has_audio = has_audio
         self.has_video = has_video
+        # I need to rewrite the m3u8 anyway because I need to tack on the
+        # session-id and all that.
+        self.segmenter_args = ['-', '10', media_file]
+        # This setting makes the environment global to the app instead of
+        # the subtask.  But I guess that's okay.
+        setup_ffmpeg_presets()
 
     def transcode(self):
+        r1, w1 = os.pipe()
+        r2, w2 = os.pipe()
         ffmpeg_exe = get_ffmpeg_executable_path()
-        kwargs = {"bufsize": 1,
-                  "stdout": subprocess.PIPE,
-                  "stderr": subprocess.PIPE,
-                  "stdin": subprocess.PIPE,
+        kwargs = {"stdout": w1,
                   "startupinfo": util.no_console_startupinfo()}
         if os.name != "nt":
             kwargs["close_fds"] = True
         args = [ffmpeg_exe, "-i", self.media_file]
-        if self.video:
-            args += TransodeObject.has_video_args
+        if self.has_video:
+            args += TranscodeObject.has_video_args
             if self.has_audio:
                 # A/V transcode
                 args += TranscodeObject.has_video_has_audio_args
@@ -168,5 +178,16 @@ class TranscodeObject(object):
            raise ValueError('no video or audio stream present')
 
         print 'Running command ', ' '.join(args)
-        handle = subprocess.Popen(args, **kwargs)
-        return handle.stdout
+        ffmpeg_handle = subprocess.Popen(args, **kwargs)
+
+        #segmenter_exe = '/Users/glee/segmenter'
+        #args = [segmenter_exe]
+        #args += TranscodeObject.segmenter_args
+        #kwargs = {"stdout": w2,
+        #          "stdin": r1,
+        #          "startupinfo": util.no_console_startupinfo()}
+        #if os.name != "nt":
+        #    kwargs["close_fds"] = True
+
+        #segmenter_handle = subprocess.Popen(args, **kwargs)
+        return r1

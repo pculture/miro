@@ -187,7 +187,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_response(rcode)
             self.send_header('Content-type', content_type)
             self.send_header('Daap-Server', self.server_version)
-            self.send_header('Content-length', str(len(blob)))
+            if not len(blob) == 0:
+                self.send_header('Content-length', str(len(blob)))
             self.send_header('Accept-Ranges', 'bytes, seconds')
             # Note: we currently do not have the ability to replace or 
             # Note: we currently do not have the ability to replace or 
