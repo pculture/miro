@@ -467,8 +467,7 @@ class SharingItemTracker(SourceTrackerBase):
 class DeviceItemTracker(SourceTrackerBase):
     type = u'device'
     def __init__(self, device):
-        self.device = device
-        self.id = device.id
+        self.device = self.id = device
         self.source = itemsource.DeviceItemSource(device)
 
         SourceTrackerBase.__init__(self)
@@ -1162,9 +1161,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 feed.items.count()).send_to_frontend()
 
     def item_tracker_key(self, message):
-        if message.type == 'device':
-            return (message.type, message.id.id)
-        elif message.type != 'manual':
+        if message.type != 'manual':
             return (message.type, message.id)
         else:
             # make sure the item list is a tuple, so it can be hashed.
