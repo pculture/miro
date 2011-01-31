@@ -288,8 +288,10 @@ class CustomTableCell(NSCell):
         context.style = self.make_drawing_style(frame, view)
         self.layout_manager.reset()
         self.set_wrapper_data()
+        column = self.wrapper.get_index()
+        hover_pos = view.get_hover(self.row, column)
         self.wrapper.render(context, self.layout_manager, self.isHighlighted(),
-                self.hotspot, view.cell_is_hovered(self.row, self.column))
+                self.hotspot, hover_pos)
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def setObjectValue_(self, value):
@@ -303,6 +305,7 @@ class CustomCellRenderer(object):
 
     def __init__(self):
         self.outline_column = False
+        self.index = None
 
     def setDataCell_(self, column):
         # Note that the ownership is the opposite of what happens in widgets.
@@ -319,6 +322,12 @@ class CustomCellRenderer(object):
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
+    
+    def set_index(self, index):
+        self.index = index
+    
+    def get_index(self):
+        return self.index
 
 class InfoListTableCell(CustomTableCell):
     def set_wrapper_data(self):
@@ -421,11 +430,17 @@ class TableViewCommon(object):
         self.setFocusRingType_(NSFocusRingTypeNone)
         self.handled_last_mouse_down = False
         self.gradientHighlight = False
+        self.recalcTrackingRects()
+        self._column_wrappers = []
         return self
 
     def addTableColumn_(self, column):
-        self.column_index_map[column] = len(self.tableColumns())
-        self.SuperClass.addTableColumn_(self, column)
+        index = len(self.tableColumns())
+        column.set_index(index)
+        self._column_wrappers.append(column)
+        self.column_index_map[column._column] = index
+        self.SuperClass.addTableColumn_(self, column._column)
+        self.recalcTrackingRects()
 
     def removeTableColumn_(self, column):
         self.SuperClass.removeTableColumn_(self, column)
@@ -433,12 +448,19 @@ class TableViewCommon(object):
         for key, index in self.column_index_map.items():
             if index > removed:
                 self.column_index_map[key] -= 1
+        for column in self._column_wrappers[:]:
+            if column._column == column:
+                del self._column_wrappers[column]
+        self.recalcTrackingRects()
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
         columns = wrappermap.wrapper(self).columns
         columns[src], columns[dest] = columns[dest], columns[src]
+        for index, column in enumerate(columns):
+            column.set_index(index)
         self.SuperClass.moveColumn_toColumn_(self, src, dest)
+        self.recalcTrackingRects()
 
     def highlightSelectionInClipRect_(self, rect):
         if wrappermap.wrapper(self).draws_selection:
@@ -494,9 +516,6 @@ class TableViewCommon(object):
         return NSDragOperationNone
 
     def recalcTrackingRects(self):
-        # We aren't using mouse hover for 2.0, so let's skip this.  It just
-        # wastes CPU cycles
-        return
         if self.hover_info is not None:
             rect = self.frameOfCellAtColumn_row_(self.hover_info[1],
                     self.hover_info[0])
@@ -520,10 +539,11 @@ class TableViewCommon(object):
     def mouseEntered_(self, event):
         window = self.window()
         if window is not nil and window.isMainWindow():
+            # TODO: get the ListViewRender and check want_hover before setting:
+            window.setAcceptsMouseMovedEvents_(YES)
             row, column = _unpack_row_column(event.userData())
             self.hover_info = (row, column)
-            rect = self.frameOfCellAtColumn_row_(column, row)
-            self.setNeedsDisplayInRect_(rect)
+            self.mouseMoved_(None)
 
     def mouseExited_(self, event):
         window = self.window()
@@ -534,8 +554,21 @@ class TableViewCommon(object):
             rect = self.frameOfCellAtColumn_row_(column, row)
             self.setNeedsDisplayInRect_(rect)
 
-    def cell_is_hovered(self, row, column):
-        return self.hover_info == (row, column)
+    def mouseMoved_(self, event):
+        window = self.window()
+        if window is not nil and window.isMainWindow() and self.hover_info:
+            row, column = self.hover_info
+            rect = self.frameOfCellAtColumn_row_(column, row)
+            window_coords = window.mouseLocationOutsideOfEventStream()
+            coords = self.convertPoint_fromView_(window_coords, nil)
+            self.hover_pos = (coords[0] - rect[0][0], coords[0] - rect[0][1])
+            self.setNeedsDisplayInRect_(rect)
+
+    def get_hover(self, row, column):
+        if self.hover_info == (row, column):
+            return self.hover_pos
+        else:
+            return None
 
     def mouseDown_(self, event):
         if event.modifierFlags() & NSControlKeyMask:
@@ -665,6 +698,10 @@ class TableColumn(signals.SignalEmitter):
 
     def get_sort_order_ascending(self):
         return self.sort_order_ascending
+
+    def set_index(self, index):
+        self.index = index
+        self.renderer.set_index(index)
 
 class MiroTableView(NSTableView):
     SuperClass = NSTableView
@@ -1047,7 +1084,7 @@ class TableView(Widget):
 
     def add_column(self, column):
         self.columns.append(column)
-        self.tableview.addTableColumn_(column._column)
+        self.tableview.addTableColumn_(column)
         if self.column_count() == 1 and self.is_tree():
             self.tableview.setOutlineTableColumn_(column._column)
             column.renderer.outline_column = True

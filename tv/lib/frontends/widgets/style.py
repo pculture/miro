@@ -980,6 +980,9 @@ class ListViewRenderer(widgetset.InfoListRenderer):
     font_size = 0.82
     min_width = 50
     right_aligned = False
+    def __init__(self):
+        widgetset.InfoListRenderer.__init__(self)
+        self.style = None
 
     def get_size(self, style, layout_manager):
         self.height = layout_manager.font(self.font_size, bold=self.bold).line_height()
@@ -988,7 +991,8 @@ class ListViewRenderer(widgetset.InfoListRenderer):
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         self.hotspot = None
         self.selected = False
-        self.style = style
+        if style:
+            self.style = style
         packing = self.layout_manager(layout_manager)
         hotspot_info = packing.find_hotspot(x, y, width, height)
         if hotspot_info is None:
@@ -1140,7 +1144,6 @@ class StatusRenderer(ListViewRenderer):
 class RatingRenderer(ListViewRenderer):
     ICON_STATES = ('yes', 'no', 'probably', 'unset')
     ICON_HORIZONTAL_SPACING = 2
-    HOTSPOT_VERTICAL_PADDING = 8
     def __init__(self):
         ListViewRenderer.__init__(self)
         self.want_hover = True
@@ -1154,37 +1157,27 @@ class RatingRenderer(ListViewRenderer):
             path = resources.path('images/star-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path,
                                (self.icon_width, self.icon_height))
-        self.icon_height += self.HOTSPOT_VERTICAL_PADDING
         self.icon_width += self.ICON_HORIZONTAL_SPACING
         # TODO: find what makes the following +4 necessary
         self.width = self.min_width = int(self.icon_width * 5) + 4
         self.hover = None
-        self.layout = None
 
     def layout_manager(self, layout_manager):
         hbox = cellpack.HBox()
         self.pack_icons(hbox)
         return hbox
 
-    def hotspot_test(self, style, layout_manager, x, y, width, height):
-        packing = self.layout
-        hotspot_info = packing.find_hotspot(x, y, width, height)
-        if hotspot_info is None:
-            return None
-        else:
-            return hotspot_info[0]
-
     def render(self, context, layout_manager, selected, hotspot, hover):
-        if hover and self.layout:
-            hotspot_info = self.layout.find_hotspot(hover[0], hover[1],
-                self.width, self.height)
-            if hotspot_info is None:
-                hover = None
-            else:
-                hover = int(hotspot_info[0].split(':', 1)[1])
+        if hover:
+            y = hover[1]
+            y = self.height / 2
+            hover = self.hotspot_test(None, layout_manager,
+                                      hover[0], y, self.width, self.height)
+            if hover is not None:
+                hover = int(hover.split(':', 1)[1])
         self.hover = hover
-        self.layout = self.layout_manager(layout_manager)
-        self.layout.render_layout(context)
+        packing = self.layout_manager(layout_manager)
+        packing.render_layout(context)
 
     def pack_icons(self, hbox):
         for i in range(5):
