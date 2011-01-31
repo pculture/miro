@@ -55,7 +55,15 @@ class DeviceTracker(object):
                 for volume in volumes:
                     self._volume_added(volume_monitor, volume)
 
+    @staticmethod
+    def _should_ignore_drive(drive):
+        """
+        Returns True if we should ignore everything about the given drive.
+        """
+        return drive is None or drive.get_name() == 'CD/DVD Drive'
+
     def _get_volume_info(self, volume):
+        print 'volume', repr(volume.get_name())
         id_ = volume.get_identifier('unix-device')
         mount = size = remaining = None
         mount = volume.get_mount()
@@ -76,8 +84,7 @@ class DeviceTracker(object):
             }
 
     def _drive_connected(self, volume_monitor, drive):
-        if drive is None:
-            # can happen when a CD is inserted
+        if drive is None or self._should_ignore_drive(drive):
             return
         logging.debug('seen device: %r', drive.get_name())
         id_ = drive.get_identifier('unix-device')
@@ -91,8 +98,7 @@ class DeviceTracker(object):
             app.device_manager.device_connected(id_, name=drive.get_name())
 
     def _drive_disconnected(self, volume_monitor, drive):
-        if drive is None:
-            # can happen when a CD is inserted
+        if self._should_ignore_drive(drive):
             return
         id_ = drive.get_identifier('unix-device')
         if self._drive_has_volumes.get(id_):
@@ -103,6 +109,8 @@ class DeviceTracker(object):
             app.device_manager.device_disconnected(id_)
 
     def _volume_added(self, volume_monitor, volume):
+        if self._should_ignore_drive(volume.get_drive()):
+            return
         id_, info  = self._get_volume_info(volume)
         self._unix_device_to_drive[id_] = volume.get_drive()
         app.device_manager.device_connected(id_, **info)
@@ -111,6 +119,8 @@ class DeviceTracker(object):
         self._drive_has_volumes[drive_id] += 1
 
     def _volume_changed(self, volume_monitor, volume):
+        if self._should_ignore_drive(volume.get_drive()):
+            return
         try:
             id_, info = self._get_volume_info(volume)
         except AttributeError:
@@ -123,6 +133,8 @@ class DeviceTracker(object):
         self._volume_changed(volume_monitor, mount.get_volume())
 
     def _volume_removed(self, volume_monitor, volume):
+        if self._should_ignore_drive(volume.get_drive()):
+            return
         id_ = volume.get_identifier('unix-device')
         del self._unix_device_to_drive[id_]
         app.device_manager.device_disconnected(id_)
