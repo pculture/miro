@@ -616,12 +616,13 @@ class PlaybackPlaylist(signals.SignalEmitter):
 
     def select_previous_item(self):
         prev_item = self.model.get_prev_info(self.currently_playing.id)
-        self.currently_playing = self._find_playable(prev_item,
-                backwards=True)
+        prev_item = self._find_playable(prev_item, backwards=True)
+        self._set_currently_playing(prev_item)
 
     def select_next_item(self):
         next_item = self.model.get_next_info(self.currently_playing.id)
-        self.currently_playing = self._find_playable(next_item)
+        next_item = self._find_playable(next_item)
+        self._set_currently_playing(next_item)
 
     def is_playing_id(self, id_):
         return self.currently_playing and self.currently_playing.id == id_
@@ -657,12 +658,12 @@ class PlaybackPlaylist(signals.SignalEmitter):
         while position_removed(new_position):
             new_position += 1
             if new_position >= len(self._items_before_change):
-                self.currently_playing = None
+                self._set_currently_playing(None)
                 return
         # Note: this is usefull even if we haven't changed positions, because
         # it gets us the new ItemInfo
-        self.currently_playing = self.model.get_info(
-                self._items_before_change[new_position].id)
+        item = self.model.get_info(self._items_before_change[new_position].id)
+        self._set_currently_playing(item)
 
     def _info_is_playable(self, item_info):
         return not item_info.is_container_item and item_info.is_playable
