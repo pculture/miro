@@ -217,7 +217,9 @@ class ItemSearcher(object):
 
     def _term_search(self, term):
         grams = self._ngrams_for_term(term)
-        rv = self._ngram_map[grams[0]]
+        # note that we need to copy the value from _ngram_map.  We don't want
+        # our calls to intersection_update to change it.
+        rv = set(self._ngram_map[grams[0]])
         for gram in grams[1:]:
             rv.intersection_update(self._ngram_map[gram])
         return rv
@@ -233,9 +235,7 @@ class ItemSearcher(object):
 
         if parsed_search.positive_terms:
             first_term = parsed_search.positive_terms[0]
-            # note that we need to copy the results of _term_search here, we
-            # don't want our calls to intersection_update to change it.
-            matching_ids = set(self._term_search(first_term))
+            matching_ids = self._term_search(first_term)
             for term in parsed_search.positive_terms[1:]:
                 matching_ids.intersection_update(self._term_search(term))
         else:
