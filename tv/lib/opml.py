@@ -63,12 +63,12 @@ class Exporter(object):
         pathname.
         """
         feed_order = tabs.TabOrder.feed_order()
-        media_tabs = feed_order.get_all_tabs()
+        feeds = feed_order.get_all_tabs()
 
         site_order = tabs.TabOrder.site_order()
-        site_tabs = site_order.get_all_tabs()
+        sites = site_order.get_all_tabs()
 
-        content = self.export_content(pathname, media_tabs, site_tabs)
+        content = self.export_content(pathname, feeds, sites)
 
         try:
             f = open(pathname, "w")
@@ -77,10 +77,10 @@ class Exporter(object):
         except IOError:
             logging.exception("Could not write file to disk.")
 
-    def export_content(self, pathname, media_tabs, site_tabs):
+    def export_content(self, pathname, feeds, sites):
         """Given a pathname (which is just written into the opml), a
-        list of media_tabs, and a list of site_tabs, generates the
-        OPML and returns it as a utf-8 encoded string.
+        list of feeds, and a list of sites (formerly know as channel guides),
+        generates the OPML and returns it as a utf-8 encoded string.
         """
         self.io = StringIO()
         self.current_folder = None
@@ -100,7 +100,7 @@ class Exporter(object):
         self.io.write(u'</head>\n')
         self.io.write(u'<body>\n')
 
-        for obj in media_tabs:
+        for obj in feeds:
             if isinstance(obj, folder.ChannelFolder):
                 self._open_folder_entry(obj)
             elif isinstance(obj, feed.Feed):
@@ -109,7 +109,7 @@ class Exporter(object):
         if self.current_folder is not None:
             self._close_folder_entry()
 
-        for obj in site_tabs:
+        for obj in sites:
             self._write_site_entry(obj)
 
         self.io.write(u'</body>\n')

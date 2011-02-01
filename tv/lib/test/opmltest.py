@@ -252,9 +252,9 @@ class TestImporter(unittest.TestCase):
     # FIXME - test sites
 
 class TestExporter(MiroTestCase):
-    def _get_export(self, media_tabs, site_tabs):
+    def _get_export(self, feeds, sites):
         return opml.Exporter().export_content(
-            FilenameType("/tmp/foo.opml"), media_tabs, site_tabs)
+            FilenameType("/tmp/foo.opml"), feeds, sites)
 
     def test_simple(self):
         feed1 = feed.Feed(u"http://example.com/feed/")
