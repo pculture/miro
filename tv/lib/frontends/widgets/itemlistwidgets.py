@@ -272,6 +272,7 @@ class ListItemView(widgetset.TableView):
         'size': style.SizeRenderer,
         'feed-name': style.FeedNameRenderer,
         'eta': style.ETARenderer,
+        'torrent-details': style.TorrentDetailsRenderer,
         'rate': style.DownloadRateRenderer,
         'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,

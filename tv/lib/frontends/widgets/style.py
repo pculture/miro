@@ -1227,6 +1227,35 @@ class ETARenderer(ListViewRenderer):
             if eta > 0:
                 self.text = displaytext.time_string(self.info.download_info.eta)
 
+class TorrentDetailsRenderer(ListViewRenderer):
+    right_aligned = False
+
+    def _setup_layout_manager(self):
+        self.text = ''
+        if not self.info.download_info:
+            return
+
+        if not self.info.download_info.torrent:
+            self.text = _("N/A")
+            return
+
+        details = _(
+            "S: %(seeders)s  |  "
+            "L: %(leechers)s  |  "
+            "UR: %(up_rate)s  |  "
+            "UT: %(up_total)s  |  "
+            "DR: %(down_rate)s  |  "
+            "DT: %(down_total)s  |  "
+            "R: %(ratio).2f",
+            {"seeders": self.info.seeders,
+             "leechers": self.info.leechers,
+             "up_rate": self.info.up_rate,
+             "up_total": self.info.up_total,
+             "down_rate": self.info.down_rate,
+             "down_total": self.info.down_total,
+             "ratio": self.info.up_down_ratio})
+        self.text = details
+
 class DownloadRateRenderer(ListViewRenderer):
     right_aligned = True
     def _setup_layout_manager(self):
