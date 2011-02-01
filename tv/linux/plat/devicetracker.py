@@ -83,7 +83,7 @@ class DeviceTracker(object):
             }
 
     def _drive_connected(self, volume_monitor, drive):
-        if drive is None or self._should_ignore_drive(drive):
+        if self._should_ignore_drive(drive):
             return
         logging.debug('seen device: %r', drive.get_name())
         id_ = drive.get_identifier('unix-device')
@@ -108,7 +108,7 @@ class DeviceTracker(object):
             app.device_manager.device_disconnected(id_)
 
     def _volume_added(self, volume_monitor, volume):
-        if self._should_ignore_drive(volume.get_drive()):
+        if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
         id_, info  = self._get_volume_info(volume)
         self._unix_device_to_drive[id_] = volume.get_drive()
@@ -132,7 +132,7 @@ class DeviceTracker(object):
         self._volume_changed(volume_monitor, mount.get_volume())
 
     def _volume_removed(self, volume_monitor, volume):
-        if self._should_ignore_drive(volume.get_drive()):
+        if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
         id_ = volume.get_identifier('unix-device')
         del self._unix_device_to_drive[id_]
