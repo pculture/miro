@@ -118,6 +118,10 @@ class ItemListTracker(signals.SignalEmitter):
     def on_item_list(self, message):
         items = self.search_filter.filter_initial_list(message.items)
         self.emit("items-will-change", items, [], [])
+        # call remove all to handle the race described in #16089.  We may get
+        # multiple ItemList messages, in which case we want the last one to be
+        # the one that sticks.
+        self.item_list.remove_all()
         self.item_list.add_items(items)
         self.emit("initial-list", items)
 

@@ -451,6 +451,11 @@ class ItemList(object):
                 ids_in_model.append(id_)
         self.model.remove_ids(ids_in_model)
 
+    def remove_all(self):
+        """Remove items from the list."""
+        self.model.remove_all()
+        self._hidden_items = {}
+
     def set_new_only(self, new_only):
         """Set if only new items are to be displayed (default False)."""
         self.new_only = new_only
