@@ -341,16 +341,17 @@ class ItemListController(object):
             url = name.split(':', 1)[1]
             try:
                 base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
-            except ValueError:
+            except KeyError:
                 logging.warn("Feed not present when clicking link (%s)",
                         item_info.feed_id)
                 # Feed is not around anymore for some reason (#13310).
-                # Ignore the click.
-                return
+                # Try without base_href
+            else:
+                url = urljoin(base_href, url)
             if subscription.is_subscribe_link(url):
                 messages.SubscriptionLinkClicked(url).send_to_backend()
             else:
-                app.widgetapp.open_url(urljoin(base_href, url))
+                app.widgetapp.open_url(url)
         elif name in ('play', 'thumbnail-play'):
             self._play_item_list(item_info.id)
         elif name == 'play_pause':
