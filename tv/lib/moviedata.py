@@ -155,16 +155,19 @@ class Image(object):
 
     def _parse_APIC(self, apic):
         COVER_ART_TYPE = 3
-        if apic.type is not COVER_ART_TYPE:
+        if hasattr(apic, 'type') and apic.type is not COVER_ART_TYPE:
             self.is_cover_art = False
-        mime = apic.mime.lower()
-        if not '/' in mime:
-            # some files arbitrarily drop the 'image/' component
-            mime = "image/{0}".format(mime)
-        if mime in Image.MIME_EXTENSION_MAP:
-            self.extension = Image.MIME_EXTENSION_MAP[mime]
+        if hasattr(apic, 'mime'):
+            mime = apic.mime.lower()
+            if not '/' in mime:
+                # some files arbitrarily drop the 'image/' component
+                mime = "image/{0}".format(mime)
+            if mime in Image.MIME_EXTENSION_MAP:
+                self.extension = Image.MIME_EXTENSION_MAP[mime]
+            else:
+                logging.warn("Unknown image mime type: %s", mime)
         else:
-            logging.warn("Unknown image mime type: %s", mime)
+            logging.warn("APIC tag without a mime type")
         self.data = apic.data
 
     def _parse_MP4(self, mp4):
@@ -172,10 +175,13 @@ class Image(object):
             mutagen.mp4.MP4Cover.FORMAT_JPEG: Image.JPEG_EXTENSION,
             mutagen.mp4.MP4Cover.FORMAT_PNG: Image.PNG_EXTENSION,
         }
-        if mp4.imageformat in MP4_EXTENSION_MAP:
-            self.extension = MP4_EXTENSION_MAP[mp4.imageformat]
+        if hasattr(mp4, 'imageformat'):
+            if mp4.imageformat in MP4_EXTENSION_MAP:
+                self.extension = MP4_EXTENSION_MAP[mp4.imageformat]
+            else:
+                logging.warn("Unknown MP4 image type code: %s", mp4.imageformat)
         else:
-            logging.warn("Unknown MP4 image type code: %s", mp4.imageformat)
+            logging.warn("MP4 image without a type code")
         self.data = str(mp4)
 
 class MovieDataUpdater(signals.SignalEmitter):
