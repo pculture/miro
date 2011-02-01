@@ -28,7 +28,6 @@
 # statement from all source files in the program, then also delete it here.
 
 import logging
-import os
 
 from miro import app
 from miro import prefs
@@ -478,7 +477,7 @@ class PlaybackManager (signals.SignalEmitter):
             return
         self._handle_skip()
         if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
-            self.stop(save_resume_time)
+            self.stop()
         else:
             self.playlist.select_next_item()
             self._play_current()
@@ -503,7 +502,7 @@ class PlaybackManager (signals.SignalEmitter):
                 return
         self._handle_skip()
         if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
-            self.stop(save_resume_time)
+            self.stop()
         else:
             self.playlist.select_previous_item()
             self._play_current()
