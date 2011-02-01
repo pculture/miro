@@ -74,6 +74,7 @@ class ItemListTracker(signals.SignalEmitter):
         self.is_tracking = False
         self.search_filter = SearchFilter()
         self.item_list = item_list
+        self.saw_initial_list = False
 
     def connect(self, name, func, *extra_args):
         if (name == 'initial-list'
@@ -116,6 +117,7 @@ class ItemListTracker(signals.SignalEmitter):
         self.is_tracking = False
 
     def on_item_list(self, message):
+        self.saw_initial_list = True
         items = self.search_filter.filter_initial_list(message.items)
         self.emit("items-will-change", items, [], [])
         # call remove all to handle the race described in #16089.  We may get
@@ -126,6 +128,11 @@ class ItemListTracker(signals.SignalEmitter):
         self.emit("initial-list", items)
 
     def on_items_changed(self, message):
+        if not self.saw_initial_list:
+            # another hack for #16089, if things get backed up in the wrong
+            # way, we could get an ItemsChanged message for our old list,
+            # before the ItemList message for our new one.
+            return
         added, changed, removed = self.search_filter.filter_changes(
                 message.added, message.changed, message.removed)
         self.emit("items-will-change", added, changed, removed)
