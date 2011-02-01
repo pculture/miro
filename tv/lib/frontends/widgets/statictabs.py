@@ -38,10 +38,14 @@ from miro.frontends.widgets import widgetutil
 class StaticTab(object):
     type = u'static'
     tall = True
+    has_active = True
 
     def __init__(self):
         self.unwatched = self.downloading = 0
         self.icon = widgetutil.make_surface(self.icon_name)
+        if self.has_active:
+            self.active_icon = widgetutil.make_surface(
+                self.icon_name + '_active')
 
 # this maps guide urls to titles we'd rather they use.
 _guide_url_to_title_map = {
@@ -57,6 +61,7 @@ class ChannelGuideTab(StaticTab):
     id = u'guide'
     name = u''
     icon_name = 'icon-guide'
+    has_active = False
 
     def __init__(self):
         StaticTab.__init__(self)

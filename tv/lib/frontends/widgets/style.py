@@ -137,7 +137,11 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
         hbox = cellpack.HBox(spacing=4)
         self.pack_leading_space(hbox)
-        alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0,
+        if selected and hasattr(self.data, 'active_icon'):
+            icon = self.data.active_icon
+        else:
+            icon = self.data.icon
+        alignment = cellpack.Alignment(icon, yalign=0.5, yscale=0.0,
                 xalign=0.5, xscale=0.0, min_width=self.MIN_ICON_WIDTH)
         hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)

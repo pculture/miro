@@ -930,10 +930,13 @@ class PlaylistList(NestedTabList):
 
     def init_info(self, info):
         if info.is_folder:
-            thumb_path = resources.path('images/icon-folder.png')
+            info.icon = imagepool.get_surface(
+                resources.path('images/icon-folder.png'))
         else:
-            thumb_path = resources.path('images/icon-playlist.png')
-        info.icon = imagepool.get_surface(thumb_path)
+            info.icon = imagepool.get_surface(
+                resources.path('images/icon-playlist.png'))
+            info.active_icon = imagepool.get_surface(
+                resources.path('images/icon-playlist_active.png'))
         info.unwatched = info.available = 0
 
     def get_playlists(self):
