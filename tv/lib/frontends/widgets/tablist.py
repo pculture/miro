@@ -890,6 +890,8 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
     def find_feed_with_url(self, url):
         for iter in self.iter_map.values():
             info = self.view.model[iter][0]
+            if info is self:
+                continue
             if info.url == url:
                 return info
         return None
@@ -1012,6 +1014,8 @@ class PlaylistList(HideableTabList, NestedTabList):
     def find_playlist_with_name(self, name):
         for iter in self.iter_map.values():
             info = self.view.model[iter][0]
+            if info is self:
+                continue
             if info.name == name:
                 return info
         return None

@@ -318,7 +318,7 @@ class SyncWidget(widgetset.VBox):
 
     def set_device(self, device):
         self.device = device
-        sync = self.device.database['sync']
+        sync = self.device.database.setdefault('sync', {})
         if self.file_type not in sync:
             sync[self.file_type] = {}
 
