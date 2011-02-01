@@ -118,7 +118,7 @@ class DeviceTracker(object):
         self._drive_has_volumes[drive_id] += 1
 
     def _volume_changed(self, volume_monitor, volume):
-        if self._should_ignore_drive(volume.get_drive()):
+        if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
         try:
             id_, info = self._get_volume_info(volume)
