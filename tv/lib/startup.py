@@ -64,6 +64,7 @@ from miro import httpauth
 from miro import httpclient
 from miro import iconcache
 from miro import item
+from miro import itemsource
 from miro import iteminfocache
 from miro import feed
 from miro import folder
@@ -304,6 +305,7 @@ def finish_startup(obj, thread):
     logging.info("setup theme...")
     setup_theme()
     install_message_handler()
+    itemsource.setup_handlers()
     downloader.init_controller()
 
     # Call this late, after the message handlers have been installed.

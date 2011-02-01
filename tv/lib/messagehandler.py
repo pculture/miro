@@ -735,29 +735,32 @@ class BackendMessageHandler(messages.MessageHandler):
                             message.id)
 
     def handle_mark_item_watched(self, message):
-        message.info.source.mark_watched(message.info)
+        itemsource.get_handler(message.info).mark_watched(message.info)
 
     def handle_mark_item_unwatched(self, message):
-        message.info.source.mark_unwatched(message.info)
+        itemsource.get_handler(message.info).mark_unwatched(message.info)
 
     def handle_mark_item_completed(self, message):
-        message.info.source.mark_completed(message.info)
+        itemsource.get_handler(message.info).mark_completed(message.info)
 
     def handle_mark_item_skipped(self, message):
-        message.info.source.mark_skipped(message.info)
+        itemsource.get_handler(message.info).mark_skipped(message.info)
 
     def handle_set_item_is_playing(self, message):
-        message.info.source.set_is_playing(message.info, message.is_playing)
+        itemsource.get_handler(message.info).set_is_playing(message.info,
+                message.is_playing)
 
     def handle_rate_item(self, message):
-        message.info.source.set_rating(message.info, message.rating)
+        itemsource.get_handler(message.info).set_rating(message.info,
+                message.rating)
 
     def handle_set_item_subtitle_encoding(self, message):
-        message.info.source.set_subtitle_encoding(message.info,
-                                                  message.encoding)
+        itemsource.get_handler(message.info).set_subtitle_encoding(
+                message.info, message.encoding)
 
     def handle_set_item_resume_time(self, message):
-        message.info.source.set_resume_time(message.info, message.resume_time)
+        itemsource.get_handler(message.info).set_resume_time(message.info,
+                message.resume_time)
 
     def handle_set_item_media_type(self, message):
         for id_ in message.video_ids:
@@ -1345,7 +1348,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             item_.expire()
 
     def handle_delete_video(self, message):
-        message.info.source.delete(message.info)
+        itemsource.get_handler(message.info).delete(message.info)
 
     def handle_rename_video(self, message):
         try:

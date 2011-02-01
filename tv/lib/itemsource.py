@@ -60,67 +60,73 @@ class ItemSource(signals.SignalEmitter):
         """
         pass
 
+
+class ItemHandler(object):
+    """
+    Controller base class for handling user actions on an item.
+    """
+
     def mark_watched(self, info):
         """
         Mark the given ItemInfo as watched.  Should also send a 'changed'
         message.
         """
-        pass
+        logging.warn("%s: not handling mark_watched", self)
 
     def mark_unwatched(self, info):
         """
         Mark the given ItemInfo as unwatched.  Should also send a 'changed'
         message.
         """
-        pass
+        logging.warn("%s: not handling mark_unwatched", self)
 
     def mark_completed(self, info):
         """
         Mark the given ItemInfo as completed.  Should also send a 'changed'
         message.
         """
-        pass
+        logging.warn("%s: not handling mark_completed", self)
 
     def mark_skipped(self, info):
         """
         Mark the given ItemInfo as skipped.  Should also send a 'changed'
         message.
         """
-        pass
+        logging.warn("%s: not handling mark_skipped", self)
 
     def set_is_playing(self, info, is_playing):
         """
         Mark the given ItemInfo as playing, based on the is_playing bool.
         Should also send a 'changed' message, if the is_playing state changed.
         """
-        pass
+        logging.warn("%s: not handling set_is_playing", self)
 
     def set_rating(self, info, rating):
         """
         Rate the given ItemInfo.  Should also send a 'changed'
         message if the rating changed.
         """
-        pass
+        logging.warn("%s: not handling set_rating", self)
 
     def set_subtitle_encoding(self, info, encoding):
         """
         Set the subtitle encoding the given ItemInfo.  Should also send a
         'changed' message if the encoding changed.
         """
-        pass
+        logging.warn("%s: not handling set_subtitle_encoding", self)
 
     def set_resume_time(self, info, resume_time):
         """
         Set the resume time for the given ItemInfo.  Should also send a
         'changed' message.
         """
-        pass
+        logging.warn("%s: not handling set_resume_time", self)
 
     def delete(self, info):
         """
         Delete the given ItemInfo.  Should also send a 'removed' message.
         """
-        pass
+        logging.warn("%s: not handling delete", self)
 
 class DatabaseItemSource(ItemSource):
     """
@@ -130,7 +136,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 10
+    VERSION = 11
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -198,6 +204,7 @@ class DatabaseItemSource(ItemSource):
             'up_down_ratio': 0.0,
             'remote': False,
             'device': None,
+            'source_type': 'database',
             'play_count': item.play_count,
             'skip_count': item.skip_count,
             'cover_art': item.get_cover_art(),
@@ -232,18 +239,13 @@ class DatabaseItemSource(ItemSource):
                 info['up_down_ratio'] = float(info['up_total'] /
                                               info['down_total'])
 
-        # technically, we should set the source here, too.  But it's set when
-        # we get ItemInfos from the cache, which is the only way normal Miro
-        # interacts with the infos.
         return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):
         return [self._get_info(id_) for id_ in self.view]
 
     def _get_info(self, id_):
-        info = app.item_info_cache.get_info(id_)
-        info.source = self
-        return info
+        return app.item_info_cache.get_info(id_)
 
     def _on_tracker_added(self, tracker, id_):
         self.emit("added", self._get_info(id_))
@@ -257,6 +259,12 @@ class DatabaseItemSource(ItemSource):
     def unlink(self):
         self.tracker.unlink()
 
+    @staticmethod
+    def get_by_id(id_):
+        # XXX should this be part of the ItemSource API?
+        return app.item_info_cache.get_info(id_)
+
+class DatabaseItemHandler(ItemHandler):
     def mark_watched(self, info):
         """
         Mark the given ItemInfo as watched.  Should also send a 'changed'
@@ -362,11 +370,6 @@ class DatabaseItemSource(ItemSource):
             item_.delete_files()
             item_.expire()
 
-    @staticmethod
-    def get_by_id(id_):
-        # XXX should this be part of the ItemSource API?
-        return app.item_info_cache.get_info(id_)
-
 class SharingItemSource(ItemSource):
     """
     An ItemSource which pulls data from a remote media share.
@@ -388,7 +391,7 @@ class SharingItemSource(ItemSource):
     def _item_info_for(self, item):
         return messages.ItemInfo(
             item.id,
-            source = self,
+            source_type='sharing',
             name = item.name,
             feed_id = item.feed_id,
             feed_name = None,
@@ -479,6 +482,9 @@ class SharingItemSource(ItemSource):
             self.tracker.disconnect(handle)
         self.signal_handles = []
 
+class SharingItemHandler(ItemHandler):
+    pass
+
 class DeviceItemSource(ItemSource):
     """
     An ItemSource which pulls its data from a device's JSON database.
@@ -517,7 +523,7 @@ class DeviceItemSource(ItemSource):
     def _item_info_for(self, item):
         return messages.ItemInfo(
             item.id,
-            source=self,
+            source_type='device',
             name = item.name,
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
@@ -580,6 +586,20 @@ class DeviceItemSource(ItemSource):
             auto_rating=0,
             is_playing=False)
 
+    def fetch_all(self):
+        return [self._item_info_for(devices.DeviceItem(
+                    video_path=video_path,
+                    file_type=self.type,
+                    device=self.device,
+                    **json)) for video_path, json in
+                self.device.database[self.type].items()]
+
+    def unlink(self):
+        for handle in self.signal_handles:
+            self.device.database.disconnect(handle)
+        self.signal_handles = []
+
+class DeviceItemHandler(ItemHandler):
     def delete(self, info):
         device = info.device
         del device.database[info.file_type][info.id]
@@ -593,15 +613,12 @@ class DeviceItemSource(ItemSource):
             os.unlink(info.cover_art)
         device.database.emit('item-removed', info)
 
-    def fetch_all(self):
-        return [self._item_info_for(devices.DeviceItem(
-                    video_path=video_path,
-                    file_type=self.type,
-                    device=self.device,
-                    **json)) for video_path, json in
-                self.device.database[self.type].items()]
+def setup_handlers():
+    app.source_handlers = {
+            'database': DatabaseItemHandler(),
+            'device': DeviceItemHandler(),
+            'sharing': SharingItemHandler(),
+    }
 
-    def unlink(self):
-        for handle in self.signal_handles:
-            self.device.database.disconnect(handle)
-        self.signal_handles = []
+def get_handler(item_info):
+    return app.source_handlers[item_info.source_type]
