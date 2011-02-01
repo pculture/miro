@@ -90,10 +90,8 @@ class ChunkedStreamObj(object):
         self.chunksize = chunksize
         self.fildes = fildes
         self.end = end
-        self.filesize = self.streamsize = None
-        if stat.S_ISREG(os.fstat(fildes)[stat.ST_MODE]):
-            self.filesize = os.fstat(fildes)[stat.ST_SIZE]
-            self.streamsize = self.filesize
+        self.filesize = os.fstat(fildes)[stat.ST_SIZE]
+        self.streamsize = self.filesize
         rangetext = ''
         if start and start < self.filesize:
             self.streamsize = self.filesize - start
@@ -111,7 +109,6 @@ class ChunkedStreamObj(object):
     # Be careful: debug only: if you call this your object is consumed and 
     # you will need to create new one.
     def __str__(self):
-        print 'called os.read'
         return os.read()
 
     def _get_readsize(self):
@@ -123,32 +120,18 @@ class ChunkedStreamObj(object):
         return readsize
 
     def __iter__(self):
-        if self.unread is None:
-            while True:
-                print 'trying to read some data from descriptor %d' % self.fildes
-                data = os.read(self.fildes, self.chunksize)
-                if data:
-                    print 'got some data'
-                    yield data
-                else:
-                    print 'no data?'
-                    break
-        else:
-            while True:
-                readsize = self._get_readsize()
-                data = os.read(self.fildes, readsize)
-                self.unread -= readsize
-                # Maybe file got truncated
-                if data:
-                    yield data
-                if self.unread == 0:
-                    break
+        while True:
+            readsize = self._get_readsize()
+            data = os.read(self.fildes, readsize)
+            self.unread -= readsize
+            # Maybe file got truncated
+            if data:
+                yield data
+            if self.unread == 0:
+                break
 
     def __len__(self):
-        if self.streamsize is not None:
-            return self.streamsize
-        else:
-            return 0
+        return self.streamsize
 
     def get_headers(self):
         headers = []

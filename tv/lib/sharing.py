@@ -32,6 +32,7 @@ import socket
 import select
 import struct
 import threading
+import tempfile
 import time
 import uuid
 
@@ -623,6 +624,9 @@ class SharingManagerBackend(object):
     daap_playlists = dict()     # Playlist, in daap format
     playlist_item_map = dict()  # Playlist -> item mapping
 
+    def __init__(self):
+        self.transcode = dict()
+
     # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
         pass
@@ -730,23 +734,32 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
 
-    def get_filepath(self, itemid):
-        return self.daapitems[itemid]['path']
-
-    # NB: offset is either a byte offset (if we are sending a file) or 
-    # a time offset (if we are sending a transcoded stream)
-    def get_file(self, itemid, typ, offset=0):
+    def get_file(self, itemid, ext, session, offset=0, chunk=None):
         path = self.daapitems[itemid]['path']
-        yes, info = transcode.needs_transcode(path)
-        
-        if yes:
-            if offset and typ != 'seconds':
-                raise ValueError('Range not of correct type (need seconds)')
-            transcode_obj = transcode.TranscodeObject(path, offset, info)
-            fildes = transcode_obj.transcode()
+        if ext in ('ts', 'm3u8'):
+            # If we are requesting a playlist, this basically means that
+            # transcode is required.
+            if (not self.transcode.has_key(session) and 
+              not self.transcode[session].item == itemid):
+                yes, info = needs_transcode(path)
+                self.transcode[session] = transcode.TranscodeObject(path,
+                                                                    itemid,
+                                                                    info)
+            transcode_obj = self.transcode[session]
+            if ext == 'm3u8':
+                # Note: OK: This will be closed when the object is destroyed.
+                tmpf = tempfile.TemporaryFile()
+                tmpf.write(transcode_obj.playlist())
+                fildes = tmpf.fileno()
+                os.lseek(fildes, offset, os.SEEK_SET)
+            elif ext == 'ts':
+                # TODO: seek won't work on this guy, make sure that
+                # we tell the caller to return HTTP/1.1 200 instead.
+                transcode_obj.seek(chunk)
+                fildes = transcode_obj.transcode()
+            else:
+                ValueError('transcode should be one of ts or m3u8')
         else:
-            if offset and typ != 'bytes':
-                raise ValueError('Range not of correct type (need bytes)')
             fildes = os.open(path, os.O_RDONLY)
             os.lseek(fildes, offset, os.SEEK_SET)
         return fildes

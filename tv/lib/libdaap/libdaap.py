@@ -187,9 +187,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_response(rcode)
             self.send_header('Content-type', content_type)
             self.send_header('Daap-Server', self.server_version)
-            if not len(blob) == 0:
-                self.send_header('Content-length', str(len(blob)))
-            self.send_header('Accept-Ranges', 'bytes, seconds')
+            self.send_header('Content-length', str(len(blob)))
             # Note: we currently do not have the ability to replace or 
             # Note: we currently do not have the ability to replace or 
             # override the default headers.
@@ -310,7 +308,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         reply.append(('mupd', [('mstt', DAAP_OK), ('musr', xxx_revision)]))
         return (DAAP_OK, reply, [])
 
-    def do_stream_file(self, db_id, item_id):
+    def do_stream_file(self, db_id, item_id, ext):
         rc = DAAP_OK
         extra_headers = []
         # NOTE: Grabbing first header only.
@@ -325,20 +323,16 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         typ = ''
         if rangehdr:
             bytes = 'bytes='
-            seconds = 'seconds='
             if rangehdr.startswith(bytes):
-                typ = 'bytes'
                 seekpos = atol(rangehdr[len(bytes):])
                 idx = rangehdr.find('-')
                 if idx >= 0:
                     seekend = atol(rangehdr[(idx + 1):])
                 if seekend < seekpos:
                     seekend = 0
-            elif rangehdr.startswith(seconds):
-                typ = 'seconds'
-                seekpos = atol(rangehdr[len(seconds):])
-            rc = DAAP_PARTIAL_CONTENT
-        fildes = self.server.backend.get_file(item_id, typ, offset=seekpos)
+                rc = DAAP_PARTIAL_CONTENT
+        fildes = self.server.backend.get_file(item_id, ext, self.get_session(),
+                                              offset=seekpos)
         if fildes < 0:
             return (DAAP_FILENOTFOUND, [], extra_headers)
         print 'streaming with file descriptor %d' % fildes
@@ -521,7 +515,9 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # junk at the end.
             item_id = atoi(path[3])
             print 'now playing item %d' % item_id
-            return self.do_stream_file(db_id, item_id)
+            name, ext = os.path.splitext(path[3])
+            ext = ext[1:]
+            return self.do_stream_file(db_id, item_id, ext)
         
     def do_database_groups(self, path, query):
         db_id = int(path[1])
