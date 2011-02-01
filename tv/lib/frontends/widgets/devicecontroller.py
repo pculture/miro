@@ -857,8 +857,3 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
             return
         self.device = device
 
-    def set_search(self, search_text):
-        """Set the search for all ItemViews managed by this controller.
-        """
-        self._search_text = search_text
-        messages.SetTrackItemsSearch('device', self.device).send_to_backend()
