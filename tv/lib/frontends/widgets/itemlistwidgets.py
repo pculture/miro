@@ -992,9 +992,9 @@ class ChannelHeaderToolbar(HeaderToolbar):
         self.add_filter('view-all', 'view-all-clicked',
                          declarify(_('View|All')))
         self.add_filter('only-downloaded', 'only-downloaded-clicked',
-                        _('Downloaded Only'))
-        self.add_filter('only-newly-available',
-                        'only-newly-available-clicked', _('New Only'))
+                        _('Downloaded'))
+        self.add_filter('only-unplayed',
+                        'only-unplayed-clicked', _('Unplayed'))
         self.add_filter_switch('view-all')
 
     def set_active_filters(self, filters):

@@ -93,9 +93,9 @@ class FeedController(itemlistcontroller.ItemListController):
         toolbar = itemlistwidgets.ChannelHeaderToolbar()
         toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
         toolbar.connect_weak('only-downloaded-clicked',
-                self.on_only_download_clicked)
-        toolbar.connect_weak('only-newly-available-clicked',
-                self.on_only_newly_available_clicked)
+                self.on_only_downloaded_clicked)
+        toolbar.connect_weak('only-unplayed-clicked',
+                self.on_only_unplayed_clicked)
         return toolbar
 
     def on_view_all_clicked(self, button):
@@ -103,14 +103,14 @@ class FeedController(itemlistcontroller.ItemListController):
         self.item_list.view_all()
         self._toolbar_filter_changed()
 
-    def on_only_download_clicked(self, button):
+    def on_only_downloaded_clicked(self, button):
         self.widget.toolbar.set_active_filter('only-downloaded')
-        self.item_list.set_filters(False, False, False, True)
+        self.item_list.set_filters(False, False, True)
         self._toolbar_filter_changed()
 
-    def on_only_newly_available_clicked(self, button):
-        self.widget.toolbar.set_active_filter('only-newly-available')
-        self.item_list.set_filters(False, False, True, False)
+    def on_only_unplayed_clicked(self, button):
+        self.widget.toolbar.set_active_filter('only-unplayed')
+        self.item_list.set_filters(True, False, False)
         self._toolbar_filter_changed()
 
     def check_for_empty_list(self):
