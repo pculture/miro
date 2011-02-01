@@ -731,6 +731,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'changed', 'item-added',
                                        'item-changed', 'item-removed')
         self.parent = parent
+        self.changing = False
         self.bulk_mode = False
 
     def __getitem__(self, key):
@@ -747,8 +748,12 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             self.notify_changed()
 
     def notify_changed(self):
-        if not self.bulk_mode:
-            self.emit('changed')
+        if not self.bulk_mode and not self.changing:
+            self.changing = True
+            try:
+                self.emit('changed')
+            finally:
+                self.changed = False
 
     def set_bulk_mode(self, bulk):
         self.bulk_mode = bulk
