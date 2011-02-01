@@ -105,7 +105,7 @@ def inet_ntop(af, ip):
     except AttributeError:
         if af == socket.AF_INET:
             return socket.inet_ntoa(ip)
-        if af == soket.AF_INET6:
+        if af == socket.AF_INET6:
             return ':'.join('%x' % bit for bit in struct.unpack('!' + 'H' * 8,
                                                                 ip))
         raise ValueError('unknown address family %d' % af)
