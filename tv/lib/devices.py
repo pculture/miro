@@ -675,6 +675,13 @@ class DeviceItem(object):
                 shutil.copyfile(self.screenshot,
                                 os.path.join(self.device.mount, '.miro',
                                              basename))
+                if self.screenshot.startswith(
+                    moviedata.image_directory('extracted')):
+                    # moviedata extracted this for us, so we can remove it
+                    try:
+                        os.unlink(self.screenshot)
+                    except OSError:
+                        pass
                 self.screenshot = os.path.join('.miro', basename)
             elif self.screenshot.startswith(resources.root()):
                 self.screenshot = None # don't save a default thumbnail
