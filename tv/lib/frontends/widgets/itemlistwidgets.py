@@ -258,14 +258,22 @@ class ItemView(widgetset.TableView):
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
     COLUMN_RENDERERS = {
-        'state': style.StateCircleRenderer, 'name': style.NameRenderer,
-        'artist': style.ArtistRenderer, 'album': style.AlbumRenderer,
-        'track': style.TrackRenderer, 'year': style.YearRenderer,
-        'genre': style.GenreRenderer, 'rating': style.RatingRenderer,
-        'date': style.DateRenderer, 'length': style.LengthRenderer,
-        'status': style.StatusRenderer, 'size': style.SizeRenderer,
-        'feed-name': style.FeedNameRenderer, 'eta': style.ETARenderer,
-        'rate': style.DownloadRateRenderer, 'date-added': style.DateAddedRenderer,
+        'state': style.StateCircleRenderer,
+        'name': style.NameRenderer,
+        'artist': style.ArtistRenderer,
+        'album': style.AlbumRenderer,
+        'track': style.TrackRenderer,
+        'year': style.YearRenderer,
+        'genre': style.GenreRenderer,
+        'rating': style.RatingRenderer,
+        'date': style.DateRenderer,
+        'length': style.LengthRenderer,
+        'status': style.StatusRenderer,
+        'size': style.SizeRenderer,
+        'feed-name': style.FeedNameRenderer,
+        'eta': style.ETARenderer,
+        'rate': style.DownloadRateRenderer,
+        'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,
         'description': style.DescriptionRenderer,
     }
@@ -303,7 +311,7 @@ class ListItemView(widgetset.TableView):
             column = self._column_name_to_column[name]
             width = int(column.get_width())
             if width != self._real_column_widths[name]:
-                widths[name] = width 
+                widths[name] = width
         self.columns_enabled = enabled
         self._real_column_widths.update(widths)
         self.column_widths.update(widths)
@@ -395,7 +403,7 @@ class ListItemView(widgetset.TableView):
 
             available_width = self.width_for_columns(total_width)
             extra_width = available_width - min_width
-            
+
             diff = 0 # prevent cumulative rounding errors
             for name in self.columns_enabled:
                 weight = widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
@@ -524,7 +532,7 @@ class DownloadStatusToolbar(DisplayToolbar):
 
 
         # Sigh.  We want to fix these sizes so they don't jump about
-        # so reserve the maximum size for these things.  The upload and 
+        # so reserve the maximum size for these things.  The upload and
         # download are both the same so we only need to auto-detect for one.
         placeholder_bps = 1000 * 1024    # 1000 kb/s - not rounded 1 MB/s yet
         text_up = _("%(rate)s",
@@ -640,7 +648,7 @@ class DownloadToolbar(DisplayToolbar):
     """
 
     def __init__(self):
-        DisplayToolbar.__init__(self)        
+        DisplayToolbar.__init__(self)
         vbox = widgetset.VBox()
 
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
@@ -800,14 +808,14 @@ class HeaderToolbar(widgetset.Background):
     def __init__(self):
         widgetset.Background.__init__(self)
         self.create_signals()
-        
+
         self._button_hbox = widgetset.HBox()
         self._button_hbox_container = widgetutil.HideableWidget(
             self._button_hbox)
         self._button_hbox_container.show()
 
         self._hbox = widgetset.HBox()
- 
+
         self.view_switch = segmented.SegmentedButtonsRow()
         self.view_switch.add_image_button('normal-view',
                                           'normal-view-button-icon',
