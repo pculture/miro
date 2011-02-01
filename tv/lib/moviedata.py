@@ -183,6 +183,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop',
                 'queue-empty')
         self.in_shutdown = False
+        self.in_progress = set()
         self.queue = Queue.Queue()
         self.thread = None
 
@@ -491,12 +492,12 @@ class MovieDataUpdater(signals.SignalEmitter):
     @as_idle
     def update_finished(self, item, duration, screenshot, mediatype, metadata,
                         cover_art):
+        self.in_progress.remove(item.id)
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
             item.metadata = metadata
             item.cover_art = cover_art
-            item.updating_movie_info = False
             if mediatype is not None:
                 item.file_type = unicode(mediatype)
                 item.media_type_checked = True
@@ -510,10 +511,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             return
         if item.downloader and not item.downloader.is_finished():
             return
-        if item.updating_movie_info:
+        if item.id in self.in_progress:
             return
 
-        item.updating_movie_info = True
+        self.in_progress.add(item.id)
         self.queue.put(MovieDataInfo(item))
 
     def shutdown(self):

@@ -376,7 +376,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.active = False
         self.expiring = None
         self.showMoreInfo = False
-        self.updating_movie_info = False
         self.playing = False
 
     def after_setup_new(self):

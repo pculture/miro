@@ -608,7 +608,7 @@ class DeviceItem(object):
         self.name = self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = self.media_type_checked = True
-        self.updating_movie_info = self.isContainerItem = False
+        self.isContainerItem = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
@@ -641,9 +641,9 @@ class DeviceItem(object):
                 self.release_date = ctime
             if self.creation_time is None:
                 self.creation_time = ctime
+        self.id = self.video_path
         if self.duration is None: # -1 is unknown
             moviedata.movie_data_updater.request_update(self)
-        self.id = self.video_path
 
     @staticmethod
     def id_exists():

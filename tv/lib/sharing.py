@@ -122,7 +122,7 @@ class SharingItem(object):
         self.name = self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = self.media_type_checked = True
-        self.updating_movie_info = self.isContainerItem = False
+        self.isContainerItem = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
