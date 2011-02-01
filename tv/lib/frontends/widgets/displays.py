@@ -237,7 +237,8 @@ class SiteDisplay(TabDisplay):
 
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type in ('site', 'store') and len(selected_tabs) == 1
+        return tab_type in ('site', 'store') and len(selected_tabs) == 1 and \
+               hasattr(selected_tabs[0], 'url')
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
@@ -284,7 +285,8 @@ class FeedDisplay(ItemListDisplay):
 
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
-        return tab_type == cls.TAB_TYPE and len(selected_tabs) == 1
+        return tab_type == cls.TAB_TYPE and len(selected_tabs) == 1 and \
+               hasattr(selected_tabs[0], 'is_folder')
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
@@ -310,7 +312,8 @@ class FeedDisplay(ItemListDisplay):
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'playlist' and len(selected_tabs) == 1
+        return tab_type == 'playlist' and len(selected_tabs) == 1 and \
+               hasattr(selected_tabs[0], 'is_folder')
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)

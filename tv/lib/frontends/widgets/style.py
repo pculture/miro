@@ -130,8 +130,10 @@ class TabRenderer(widgetset.CustomCellRenderer):
         bold = False
         if selected:
             bold = True
-        elif not hasattr(self.data, "bolded") or self.data.bolded:
+        elif not hasattr(self.data, "bolded"):
             bold = self.BOLD_TITLE
+        else:
+            bold = self.data.bolded
         layout_manager.set_font(self.TITLE_FONT_SIZE, bold=bold)
         titlebox = layout_manager.textbox(self.data.name)
 
@@ -158,7 +160,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         renderer.render_layout(context)
 
     def pack_leading_space(self, hbox):
-        hbox.pack_space(2)
+        pass #hbox.pack_space(2)
 
     def pack_bubbles(self, hbox, layout_manager):
         if self.updating_frame > -1:

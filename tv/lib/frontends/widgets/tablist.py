@@ -563,10 +563,7 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         self.doing_change = True
         selected_ids = set(self.view.model[iter][0].id for iter in
                 self.view.get_selection())
-        iter = self.view.model.first_iter()
-        while iter is not None:
-            iter = self.view.model.remove(iter)
-        self.iter_map = {}
+        self._clear_list()
         for info in message.toplevels:
             self.add(info)
             if info.is_folder:
@@ -580,6 +577,12 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         for id in selected_ids:
             self.view.select(self.iter_map[id])
         self.doing_change = False
+
+    def _clear_list(self):
+        iter = self.view.model.first_iter()
+        while iter is not None:
+            iter = self.view.model.remove(iter)
+        self.iter_map = {}
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
@@ -736,8 +739,52 @@ class DevicesList(TabList, TabUpdaterMixin):
     def on_context_menu(self, table_view):
         return []
 
-class SiteList(TabList):
+class HideableTabList(TabList):
+    """
+    A type of tablist which nests under a base tab.  Connect,
+    Sources/Sites/Guides, Stores, Feeds, and Playlists are all of this type.
+    """
+    is_tab = True
+    tall = True
+    bolded = True
+    unwatched = available = 0
+
+    def __init__(self):
+        TabList.__init__(self)
+        self.id = u'%s-base-tab' % self.type
+        self.added_children = False
+        TabList.add(self, self)
+
+    def add(self, info, parent_id=None):
+        if parent_id is None:
+            parent_id = self.id
+        TabList.add(self, info, parent_id)
+        if not self.added_children:
+            self.set_folder_expanded(self.id, True)
+            self.added_children = True
+
+    def _clear_list(self):
+        iter = self.view.model.first_iter()
+        if iter is None:
+            return
+        iter = self.view.model.next_iter(iter)
+        while iter is not None:
+            iter = self.view.model.remove(iter)
+        self.iter_map = {self.id: self.iter_map[self.id]}
+
+    def on_row_expanded_change(self, view, iter, expanded):
+        info = self.view.model[iter][0]
+        if info is not self:
+            TabList.on_row_expanded_change(self, view, iter, expanded)
+
+    def base_info(self):
+        self.icon = widgetutil.make_surface(self.icon_name)
+        self.active_icon = widgetutil.make_surface(self.icon_name + '_active')
+
+class SiteList(HideableTabList):
     type = u'site'
+    name = _('Sources')
+    icon_name = 'icon-site'
 
     ALLOW_MULTIPLE = True
 
@@ -745,10 +792,15 @@ class SiteList(TabList):
         app.widgetapp.remove_current_site()
 
     def init_info(self, info):
+        if info is self:
+            self.base_info()
+            return
         if info.favicon:
             thumb_path = info.favicon
         else:
             thumb_path = resources.path('images/icon-site.png')
+            info.active_icon = imagepool.get_surface(
+                resources.path('image/icon-site_active.png'))
         surface = imagepool.get_surface(thumb_path)
         if surface.width > 16 or surface.height > 16:
             info.icon = imagepool.get_surface(thumb_path, size=(16, 16))
@@ -772,6 +824,8 @@ class SiteList(TabList):
 
 class StoreList(SiteList):
     type = u'store'
+    name = _('Stores')
+    icon_name = 'icon-store'
 
     ALLOW_MULTIPLE = False
 
@@ -801,11 +855,13 @@ class NestedTabList(TabList):
         else:
             return self.make_multiple_context_menu()
 
-class FeedList(NestedTabList, TabUpdaterMixin):
+class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
     type = u'feed'
+    name = _('Podcasts')
+    icon_name = 'icon-podcast'
 
     def __init__(self):
-        TabList.__init__(self)
+        HideableTabList.__init__(self)
         TabUpdaterMixin.__init__(self)
         self.setup_dnd()
 
@@ -817,6 +873,9 @@ class FeedList(NestedTabList, TabUpdaterMixin):
         app.widgetapp.remove_current_feed()
 
     def init_info(self, info):
+        if info is self:
+            self.base_info()
+            return
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
         if info.is_updating:
             self.start_updating(info.id)
@@ -917,11 +976,13 @@ class SharingList(NestedTabList):
             thumb_path = resources.path('images/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)
 
-class PlaylistList(NestedTabList):
+class PlaylistList(HideableTabList, NestedTabList):
     type = u'playlist'
+    name = _('Playlists')
+    icon_name = 'icon-playlist'
 
     def __init__(self):
-        TabList.__init__(self)
+        HideableTabList.__init__(self)
         self.view.set_drag_source(PlaylistListDragHandler())
         self.view.set_drag_dest(PlaylistListDropHandler(self))
 
@@ -929,6 +990,9 @@ class PlaylistList(NestedTabList):
         app.widgetapp.remove_current_playlist()
 
     def init_info(self, info):
+        if info is self:
+            self.base_info()
+            return
         if info.is_folder:
             info.icon = imagepool.get_surface(
                 resources.path('images/icon-folder.png'))
@@ -985,13 +1049,9 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(self.build_header(_('CONNECT')))
         vbox.pack_start(tlm.devices_list.view)
         vbox.pack_start(tlm.sharing_list.view)
-        vbox.pack_start(self.build_header(_('SOURCES')))
         vbox.pack_start(tlm.site_list.view)
-        vbox.pack_start(self.build_header(_('STORES')))
         vbox.pack_start(tlm.store_list.view)
-        vbox.pack_start(self.build_header(_('PODCASTS')))
         vbox.pack_start(tlm.feed_list.view)
-        vbox.pack_start(self.build_header(_('PLAYLISTS')))
         vbox.pack_start(tlm.playlist_list.view)
         return vbox
 
