@@ -125,6 +125,7 @@ class DisplayManager(object):
                 GuideDisplay,
                 MultipleSelectionDisplay,
                 DeviceDisplay,
+                DeviceItemDisplay,
                 SharingDisplay,
                 DummyDisplay,
         ]
@@ -222,34 +223,6 @@ class GuideDisplay(TabDisplay):
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         self.widget = selected_tabs[0].browser
-
-class DeviceDisplay(TabDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'device' and len(selected_tabs) == 1
-
-    def __init__(self, tab_type, selected_tabs):
-        Display.__init__(self)
-        device = selected_tabs[0]
-        if getattr(device, 'fake', False):
-            self.controller = devicecontroller.DeviceItemController(device)
-        else:
-            self.controller = devicecontroller.DeviceController(device)
-        self.widget = self.controller.widget
-
-    def on_selected(self):
-        self.controller.start_tracking()
-
-    def cleanup(self):
-        self.controller.stop_tracking()
-
-    def handle_current_sync_information(self, message):
-        if not getattr(self.controller.device, 'fake', False):
-            self.controller.handle_current_sync_information(message)
-
-    def handle_device_sync_changed(self, message):
-        if not getattr(self.controller.device, 'fake', False):
-            self.controller.handle_device_sync_changed(message)
 
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them
@@ -356,6 +329,48 @@ class PlaylistDisplay(ItemListDisplay):
 
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)
+
+class DeviceDisplayMixin(object):
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+        device = selected_tabs[0]
+        if getattr(device, 'fake', False):
+            self.controller = devicecontroller.DeviceItemController(device)
+        else:
+            self.controller = devicecontroller.DeviceController(device)
+        self.widget = self.controller.widget
+
+    def handle_current_sync_information(self, message):
+        return
+
+    def handle_device_sync_changed(self, message):
+        pass
+
+class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'device' and len(selected_tabs) == 1 and not getattr(
+            selected_tabs[0], 'fake', False)
+
+    def on_selected(self):
+        self.controller.start_tracking()
+
+    def cleanup(self):
+        self.controller.stop_tracking()
+
+    def handle_current_sync_information(self, message):
+        if not getattr(self.controller.device, 'fake', False):
+            self.controller.handle_current_sync_information(message)
+
+    def handle_device_sync_changed(self, message):
+        if not getattr(self.controller.device, 'fake', False):
+            self.controller.handle_device_sync_changed(message)
+
+class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'device' and len(selected_tabs) == 1 and getattr(
+            selected_tabs[0], 'fake', False)
 
 class SharingDisplay(ItemListDisplay):
     @staticmethod
