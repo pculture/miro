@@ -883,7 +883,8 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
             self.stop_updating(info.id)
 
     def get_feeds(self):
-        infos = [self.view.model[i][0] for i in self.iter_map.values()]
+        infos = [self.view.model[i][0] for (k, i) in self.iter_map.items()
+                 if k != self.id]
         return infos
 
     def find_feed_with_url(self, url):
@@ -1004,7 +1005,8 @@ class PlaylistList(HideableTabList, NestedTabList):
         info.unwatched = info.available = 0
 
     def get_playlists(self):
-        infos = [self.view.model[i][0] for i in self.iter_map.values()]
+        infos = [self.view.model[i][0] for (k, i) in self.iter_map.items()
+                 if k != self.id]
         return infos
 
     def find_playlist_with_name(self, name):
