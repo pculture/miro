@@ -210,12 +210,18 @@ class TrackItems(BackendMessage):
 class TrackItemsManually(BackendMessage):
     """Track a manually specified list of items.
 
-    ItemList and ItemsChanged messages will have "manual" as the type and
-    will use the id specified in the constructed.
+    TrackItemsManually can only be used to track database items.
+
+    No ItemList message will be sent, since the sender is providing the inital
+    list of items.  Instead, if the infos_to_track is out of date of date,
+    then an ItemsChanged message will be sent with the changes.
+
+    ItemsChanged messages will have "manual" as the type and will use the id
+    specified in the constructed.
     """
-    def __init__(self, id_, ids_to_track):
+    def __init__(self, id_, infos_to_track):
         self.id = id_
-        self.ids_to_track = ids_to_track
+        self.infos_to_track = infos_to_track
         self.type = 'manual'
 
 class StopTrackingItems(BackendMessage):

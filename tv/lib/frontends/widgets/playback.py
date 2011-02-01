@@ -39,6 +39,7 @@ from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
+from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import dialogs
 
@@ -99,8 +100,14 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             self.pause()
 
+    def start_with_items(self, item_infos):
+        """Start playback, playing a static list of ItemInfos."""
+        tracker = itemtrack.ManualItemListTracker(item_infos)
+        self.start(None, tracker)
+
     def start(self, start_id, item_tracker,
             presentation_mode='fit-to-bounds'):
+        """Start playback, playing the items from an ItemTracker"""
         if self.is_playing:
             self.stop()
         self.playlist = PlaybackPlaylist(item_tracker, start_id)

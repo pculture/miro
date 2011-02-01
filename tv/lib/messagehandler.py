@@ -388,18 +388,36 @@ class PlaylistFolderItemTracker(DatabaseSourceTrackerBase):
 class ManualItemTracker(DatabaseSourceTrackerBase):
     type = u'manual'
 
-    def __init__(self, id_, id_list):
+    def __init__(self, id_, info_list):
         self.id = id_
         # SQLite can only handle 999 variables at once.  If there are more ids
         # than that, we need to split things up (#12020)
         self.views = []
-        for pos in xrange(0, len(id_list), 950):
-            bite_sized_list = id_list[pos:pos+950]
+        self.id_list = [info.id for info in info_list]
+        for pos in xrange(0, len(self.id_list), 950):
+            bite_sized_list = self.id_list[pos:pos+950]
             place_holders = ', '.join('?' for i in xrange(
                     len(bite_sized_list)))
             self.views.append(item.Item.make_view(
                 'id in (%s)' % place_holders, tuple(bite_sized_list)))
         DatabaseSourceTrackerBase.__init__(self)
+        # set _last_sent_info to the values that we received.  We can then use
+        # that to figure out which ones are out of date in send_initial_list()
+        self._last_sent_info.update([(info.id, info) for info in info_list])
+
+    def send_initial_list(self):
+        infos = []
+        for source in self.trackers:
+            infos.extend(source.fetch_all())
+        # _last_sent_info was set with the infos we received, figure out of
+        # any of those weren't up to date.
+        changed = self._make_changed_list(infos)
+        removed_set = set(self.id_list) - set(i.id for i in infos)
+        removed = self._make_removed_list(removed_set)
+        if changed or removed:
+            messages.ItemsChanged(self.type, self.id, [], changed,
+                    removed).send_to_frontend()
+        self.sent_initial_list = True
 
     def get_object_views(self):
         return self.views
@@ -500,7 +518,7 @@ def make_item_tracker(message):
             playlist = PlaylistFolder.get_by_id(message.id)
             return PlaylistFolderItemTracker(playlist)
     elif message.type == 'manual':
-        return ManualItemTracker(message.id, message.ids_to_track)
+        return ManualItemTracker(message.id, message.infos_to_track)
     elif message.type == 'device':
         return DeviceItemTracker(message.id)
     elif message.type == 'sharing':

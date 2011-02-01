@@ -36,6 +36,7 @@ following things:
     - Managing the life of an ItemList
 """
 
+import itertools
 import logging
 
 from miro import app
@@ -77,32 +78,39 @@ class ItemListTracker(signals.SignalEmitter):
         self.saw_initial_list = False
 
     def connect(self, name, func, *extra_args):
-        if (name == 'initial-list'
-                and len(self.get_callbacks('initial-list')) == 0):
+        if not self.is_tracking:
             self._start_tracking()
         return signals.SignalEmitter.connect(self, name, func, *extra_args)
 
     def disconnect(self, callback_handle):
         signals.SignalEmitter.disconnect(self, callback_handle)
-        if (len(self.get_callbacks('initial-list')) == 0
-                and len(self.get_callbacks('items-changed')) == 0):
+        if self.is_tracking and self._all_handlers_disconnected():
             self._stop_tracking()
 
     def disconnect_all(self):
         signals.Signals.disconnect_all(self)
         self._stop_tracking()
 
+    def _all_handlers_disconnected(self):
+        for callback_dict in self.signal_callbacks.values():
+            if len(callback_dict) > 0:
+                return False
+        return True
+
     def _start_tracking(self):
         if self.is_tracking:
             return
         logging.info("ItemListTracker -- tracking: %s, %s", self.type,
                 self.id)
-        messages.TrackItems(self.type, self.id).send_to_backend()
+        self._send_track_items_message()
         app.info_updater.item_list_callbacks.add(self.type, self.id,
                 self.on_item_list)
         app.info_updater.item_changed_callbacks.add(self.type, self.id,
                 self.on_items_changed)
         self.is_tracking = True
+
+    def _send_track_items_message(self):
+        messages.TrackItems(self.type, self.id).send_to_backend()
 
     def _stop_tracking(self):
         if not self.is_tracking:
@@ -117,8 +125,11 @@ class ItemListTracker(signals.SignalEmitter):
         self.is_tracking = False
 
     def on_item_list(self, message):
+        self.add_initial_items(message.items)
+
+    def add_initial_items(self, items):
         self.saw_initial_list = True
-        items = self.search_filter.filter_initial_list(message.items)
+        items = self.search_filter.filter_initial_list(items)
         self.emit("items-will-change", items, [], [])
         # call remove all to handle the race described in #16089.  We may get
         # multiple ItemList messages, in which case we want the last one to be
@@ -147,6 +158,20 @@ class ItemListTracker(signals.SignalEmitter):
         self.item_list.add_items(added)
         self.item_list.remove_items(removed)
         self.emit("items-changed", added, [], removed)
+
+class ManualItemListTracker(ItemListTracker):
+    id_counter = itertools.count()
+
+    def __init__(self, info_list):
+        my_unique_id = ('item-list-tracker-%d' %
+                ManualItemListTracker.id_counter.next())
+        ItemListTracker.__init__(self, 'manual', my_unique_id,
+                itemlist.ItemList())
+        self.info_list = info_list
+        self.add_initial_items(info_list)
+
+    def _send_track_items_message(self):
+        messages.TrackItemsManually(self.id, self.info_list).send_to_backend()
 
 class SearchFilter(object):
     """SearchFilter filter out non-matching items from item lists
