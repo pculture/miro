@@ -767,10 +767,11 @@ class HTTPDownloader(BGDownloader):
             return
         stats = self.client.get_stats()
         if stats.status_code in (200, 206):
+            # Only upload currentSize/rate if we are currently downloading
+            # something.  Don't change them before the transfer starts, while
+            # we are handling redirects, etc.
             self.currentSize = stats.downloaded + stats.initial_size
             self.rate = stats.download_rate
-        else:
-            self.currentSize = self.rate = 0
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
                 'update http downloader stats')
         DOWNLOAD_UPDATER.queue_update(self)
