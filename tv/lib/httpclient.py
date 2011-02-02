@@ -333,6 +333,7 @@ class CurlTransfer(object):
         self.errback = errback
         self.auth_attempts = {'http': 0, 'proxy': 0}
         self.canceled = False
+        self.last_url = None
 
         self.stats = TransferStats()
         self._lookup_auth()
@@ -458,6 +459,7 @@ class CurlTransfer(object):
                 self.handle.setopt(pycurl.NOBODY, 1)
                 self.trying_head_request = True
             else:
+                self.handle.setopt(pycurl.URL, self.last_url)
                 self._open_file()
                 self.handle.setopt(pycurl.WRITEDATA, self._filehandle)
         elif self.content_check_callback is not None:
@@ -612,6 +614,7 @@ class CurlTransfer(object):
 
     def on_finished(self):
         info = self._make_callback_info()
+        self.last_url = self.handle.getinfo(pycurl.EFFECTIVE_URL)
         if self.options.write_file is None:
             info['body'] = self.buffer.getvalue()
         if self.check_response_code(info['status']):
