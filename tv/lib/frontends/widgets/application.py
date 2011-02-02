@@ -247,6 +247,8 @@ class Application:
         videobox.controls.previous.connect('held-down', self.on_fast_backward)
         videobox.controls.previous.connect('released', self.on_stop_fast_playback)
         videobox.controls.fullscreen.connect('clicked', self.on_fullscreen_clicked)
+        videobox.playback_mode.shuffle.connect('clicked', self.on_shuffle_clicked)
+        videobox.playback_mode.repeat.connect('clicked', self.on_repeat_clicked)
         self.window.show()
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
@@ -327,6 +329,12 @@ class Application:
 
     def on_fullscreen_clicked(self, button=None):
         app.playback_manager.fullscreen()
+
+    def on_shuffle_clicked(self, button=None):
+        app.playback_manager.toggle_shuffle()
+
+    def on_repeat_clicked(self, button=None):
+        app.playback_manager.toggle_repeat()
 
     def on_toggle_detach_clicked(self, button=None):
         app.playback_manager.toggle_detached_mode()

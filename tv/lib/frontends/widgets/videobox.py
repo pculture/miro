@@ -447,6 +447,7 @@ class VideoBox(style.LowerBox):
         style.LowerBox.__init__(self)
         self.controls = PlaybackControls()
         self.timeline = ProgressTimeline()
+        self.playback_mode = PlaybackModeControls()
         if hasattr(widgetset, 'VolumeMuter'):
             self.volume_muter = widgetset.VolumeMuter()
         else:
@@ -464,7 +465,39 @@ class VideoBox(style.LowerBox):
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_muter))
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_slider))
         hbox.pack_start(volume_hbox)
+        hbox.pack_start(self.playback_mode)
         self.add(widgetutil.align_middle(hbox, 0, 0, 25, 25))
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)
+
+class PlaybackModeControls(widgetset.HBox):
+    def __init__(self):
+        widgetset.HBox.__init__(self, spacing=0)
+        self.shuffle = imagebutton.ImageButton('shuffle')
+        self.shuffle.set_squish_width(True)
+        self.repeat = imagebutton.ImageButton('repeat')
+        self.repeat.set_squish_width(True)
+        self.pack_start(widgetutil.align_middle(self.shuffle))
+        self.pack_start(widgetutil.align_middle(self.repeat))
+        app.playback_manager.connect('update-shuffle', self.handle_shuffle)
+        app.playback_manager.connect('update-repeat', self.handle_repeat)
+
+    def handle_shuffle(self, obj):
+        if app.playback_manager.shuffle:
+            self.shuffle.set_image('shuffle-on')
+            self.queue_redraw()
+        else:
+            self.shuffle.set_image('shuffle')
+            self.queue_redraw()
+
+    def handle_repeat(self, obj):
+        if app.playback_manager.is_repeat_playlist():
+            self.repeat.set_image('repeat-on')
+            self.queue_redraw()
+        elif app.playback_manager.is_repeat_track():
+            self.repeat.set_image('repeat-1')
+            self.queue_redraw()
+        else:
+            self.repeat.set_image('repeat')
+            self.queue_redraw()

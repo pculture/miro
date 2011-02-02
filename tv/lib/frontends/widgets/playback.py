@@ -28,6 +28,9 @@
 # statement from all source files in the program, then also delete it here.
 
 import logging
+import os
+from random import randrange
+from random import shuffle
 
 from miro import app
 from miro import prefs
@@ -58,6 +61,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing_audio = False
         self.is_paused = False
         self.is_suspended = False
+        self.shuffle = False
+        self.repeat = PlaybackPlaylist.REPEAT_OFF
         self.open_finished = False
         self.open_successful = False
         self.playlist = None
@@ -75,6 +80,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('did-stop')
         self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
+        self.create_signal('update-shuffle')
+        self.create_signal('update-repeat')
 
     def player_ready(self):
         return self.player is not None and self.open_finished
@@ -115,6 +122,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist.connect("playing-info-changed",
                 self._on_playing_changed)
         self.presentation_mode = presentation_mode
+        self.playlist.set_shuffle(self.shuffle)
+        self.playlist.set_repeat(self.repeat)
+        #update shuffle repeat buttons
+        self.emit('update-shuffle')
+        self.emit('update-repeat')
         self._play_current()
         if self.playlist is None:
             # _play_current found that PLAY_IN_MIRO was set to False
@@ -252,6 +264,38 @@ class PlaybackManager (signals.SignalEmitter):
         self.previous_left_widget = None
         self.playlist = None
         self.emit('did-stop')
+
+    def toggle_shuffle(self):
+        self.shuffle = not self.shuffle
+        if self.playlist:
+            self.playlist.set_shuffle(self.shuffle)
+        self.emit('update-shuffle')
+
+    def is_shuffle(self):
+        return self.shuffle
+
+    def toggle_repeat(self):
+        if self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST:
+            self.repeat = PlaybackPlaylist.REPEAT_TRACK
+        elif self.repeat == PlaybackPlaylist.REPEAT_TRACK:
+            self.repeat = PlaybackPlaylist.REPEAT_OFF
+        elif self.repeat == PlaybackPlaylist.REPEAT_OFF:
+            self.repeat = PlaybackPlaylist.REPEAT_PLAYLIST
+        #handle unknown values
+        else:
+            self.set_repeat(PlaybackPlaylist.REPEAT_OFF)
+        if self.playlist:
+            self.playlist.set_repeat(self.repeat)
+        self.emit('update-repeat')
+
+    def is_repeat_off(self):
+        return self.repeat == PlaybackPlaylist.REPEAT_OFF
+
+    def is_repeat_playlist(self):
+        return self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
+
+    def is_repeat_track(self):
+        return self.repeat == PlaybackPlaylist.REPEAT_TRACK
 
     def remove_video_display(self):
         self.removing_video_display = True
@@ -486,7 +530,7 @@ class PlaybackManager (signals.SignalEmitter):
         if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop()
         else:
-            self.playlist.select_next_item()
+            self.playlist.select_next_item(self._not_skipped_by_user)
             self._play_current()
 
     def play_prev_item(self, from_user=False):
@@ -588,6 +632,8 @@ class PlaybackManager (signals.SignalEmitter):
                     encoding).send_to_backend()
 
 class PlaybackPlaylist(signals.SignalEmitter):
+    REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
+
     def __init__(self, item_tracker, start_id):
         signals.SignalEmitter.__init__(self, 'position-changed',
                 'playing-info-changed')
@@ -598,7 +644,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
                     self._on_items_will_change),
                 item_tracker.connect('items-changed', self._on_items_changed),
         ]
+        self.repeat = PlaybackPlaylist.REPEAT_OFF
+        self.shuffle = False
+        self.shuffle_history = []
         self.currently_playing = None
+        self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
         self._pick_initial_item(start_id)
 
     def _pick_initial_item(self, start_id):
@@ -620,18 +670,148 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.model = None
         self.disconnect_all()
 
-    def select_previous_item(self):
-        prev_item = self.model.get_prev_info(self.currently_playing.id)
-        prev_item = self._find_playable(prev_item, backwards=True)
-        self._change_currently_playing(prev_item)
+    def find_next_item(self, not_skipped_by_user=True):
+        #if track repeat is on and the user doesn't skip, 
+        #shuffle doesn't matter
+        if ((self.repeat == PlaybackPlaylist.REPEAT_TRACK
+             and not_skipped_by_user)):
+            return self.currently_playing
+        elif ((not self.shuffle and
+             self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
+             and self.is_playing_last_item())):
+            return self._find_playable(self.model.get_first_info())
+        elif (self.shuffle and self.repeat == PlaybackPlaylist.REPEAT_OFF
+             or self.shuffle and self.repeat == PlaybackPlaylist.REPEAT_TRACK):
+            if not self.shuffle_upcoming:
+                self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
+                self.shuffle_history = []
+                return None #stop playback 
+            else:
+                next_item = self.shuffle_upcoming.pop()
+                self.shuffle_history.append(next_item)
+                return next_item
+        elif self.shuffle and PlaybackPlaylist.REPEAT_PLAYLIST:
+            if not self.shuffle_upcoming:
+                #populate with new items
+                self.shuffle_upcoming = self.generate_upcoming_shuffle_items() 
+            next_item = self.shuffle_upcoming.pop()
+            self.shuffle_history.append(next_item)
+            return next_item
+        else:
+            next_item = self.model.get_next_info(self.currently_playing.id)
+            return self._find_playable(next_item)
 
-    def select_next_item(self):
-        next_item = self.model.get_next_info(self.currently_playing.id)
-        next_item = self._find_playable(next_item)
+    def find_previous_item(self):
+        if self.shuffle:
+            if not self.shuffle_history:
+                return None
+            previous_item = self.shuffle_history.pop()
+            self.shuffle_upcoming.append(previous_item)
+            return previous_item
+        elif (not self.shuffle 
+              and self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
+              and self.is_playing_first_item()):
+            last_item = self._find_playable(self.model.get_last_info(), True)
+            return last_item
+        else:
+            prev_item = self.model.get_prev_info(self.currently_playing.id)
+            return self._find_playable(prev_item, backwards=True)
+
+    def generate_upcoming_shuffle_items(self):
+        if not self.shuffle:
+            return None
+        elif (self.repeat == PlaybackPlaylist.REPEAT_OFF
+             or self.repeat == PlaybackPlaylist.REPEAT_TRACK):
+            current = self.currently_playing
+            #random order
+            items = self.get_all_playable_items()
+            shuffle(items)
+            #do not include currently playing item
+            if self.currently_playing:
+                try:
+                    items.remove(self.currently_playing)
+                except ValueError:
+                    pass
+            return items
+        elif self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST:
+            #random items
+            items = self.get_all_playable_items()
+            if items:
+                return self.random_sequence(items, self.currently_playing)
+            else: 
+                return None
+        else:
+            return None
+
+    def random_sequence(self, pool, do_not_begin_with=None):
+        """
+        Returns a list of random elements taken from the pool 
+        parameter (which is a list). This means that the 
+        returned list might contain elements from the pool 
+        several times while others might not appear at all.
+
+        The returned list has the following contraints:
+
+        An element will never appear twice in a row.
+
+        If an element from the pool is passed as do_no_begin_with 
+        the returned list will not begin with that element.
+        """
+        random_items = []
+        previous_index = None
+
+        if do_not_begin_with:
+            try:
+                previous_index = pool.index(do_not_begin_with)
+            except ValueError:
+                pass
+
+        for i in range(len(pool)):
+            random_index = randrange(0, len(pool))
+            while random_index == previous_index:
+                random_index = randrange(0, len(pool))
+            random_items.append(pool[random_index])
+            previous_index = random_index
+        return random_items
+
+    def select_previous_item(self):
+        previous_item = self.find_previous_item()
+        self._change_currently_playing(previous_item)
+
+    def select_next_item(self, not_skipped_by_user=True):
+        next_item = self.find_next_item(not_skipped_by_user)
         self._change_currently_playing(next_item)
+
+    def is_playing_last_item(self):
+        next_item = self.model.get_next_info(self.currently_playing.id)
+        return self._find_playable(next_item) == None
+
+    def is_playing_first_item(self):
+        previous_item = self.model.get_prev_info(self.currently_playing.id)
+        return self._find_playable(previous_item, True) == None
+
+    def get_all_playable_items(self):
+        item_info = self.model.get_first_info()
+        items = []
+        while item_info is not None:
+            if self._info_is_playable(item_info):
+                items.append(item_info)
+            item_info = self.model.get_next_info(item_info.id)
+        return items
 
     def is_playing_id(self, id_):
         return self.currently_playing and self.currently_playing.id == id_
+
+    def set_shuffle(self, value):
+        self.shuffle = value
+        self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
+        if self.currently_playing:
+            self.shuffle_history = [self.currently_playing]
+        else:
+            self.shuffle_history = []
+
+    def set_repeat(self, value):
+        self.repeat = value
 
     def _on_items_will_change(self, tracker, added, changed, removed):
         if self.currently_playing:
