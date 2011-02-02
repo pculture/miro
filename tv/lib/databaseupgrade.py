@@ -206,7 +206,9 @@ def new_style_upgrade(cursor, saved_version, upgrade_to):
     for version in xrange(saved_version + 1, upgrade_to + 1):
         if util.chatter:
             logging.info("upgrading database to version %s", version)
+        cursor.execute("BEGIN TRANSACTION")
         get_upgrade_func(version)(cursor)
+        cursor.execute("COMMIT TRANSACTION")
         dbupgradeprogress.new_style_progress(saved_version, version,
                                              upgrade_to)
 
