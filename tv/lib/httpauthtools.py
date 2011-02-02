@@ -95,34 +95,35 @@ class HTTPAuthPassword(object):
     def calc_domain_list(self):
         if self.domain is None:
             self.domain_list = None
-        else:
-            # This is slightly weird because RFC 2617 specifies URLs are space
-            # separated and RFC 2069 specifies they are comma separated.
-            # Guess which one it is by searching for a comma, which is a
-            # reserved URL char
-            if ',' in self.domain:
-                sep = ','
-            else:
-                sep = ' '
-            self.domain_list = []
-            for d in self.domain.split(sep):
-                d = d.strip()
-                if d != '':
-                    if '://' not in d:
-                        # no domain listed
-                        if d.startswith('/'):
-                            d = d[1:]
-                        d = '%s://%s/%s' % (self.urlparts.scheme,
-                                self.urlparts.netloc, d)
+            return
 
-                    self.domain_list.append(d)
+        # This is slightly weird because RFC 2617 specifies URLs are
+        # space separated and RFC 2069 specifies they are comma
+        # separated.  Guess which one it is by searching for a comma,
+        # which is a reserved URL char
+        if ',' in self.domain:
+            sep = ','
+        else:
+            sep = ' '
+        self.domain_list = []
+        for d in self.domain.split(sep):
+            d = d.strip()
+            if d != '':
+                if '://' not in d:
+                    # no domain listed
+                    if d.startswith('/'):
+                        d = d[1:]
+                    d = '%s://%s/%s' % (self.urlparts.scheme,
+                                        self.urlparts.netloc, d)
+
+                self.domain_list.append(d)
 
     def same_protection_space(self, other_pw):
         if self.scheme != other_pw.scheme:
-            # HMM, I guess it's possible for a HTTP auth and a digest auth to
-            # cover the same protection space, but that's definitely an edge
-            # case.  We still want to return False here because it's useful to
-            # store both pws.
+            # HMM, I guess it's possible for a HTTP auth and a digest
+            # auth to cover the same protection space, but that's
+            # definitely an edge case.  We still want to return False
+            # here because it's useful to store both pws.
             return False
         if self.realm != other_pw.realm:
             return False
@@ -134,13 +135,13 @@ class HTTPAuthPassword(object):
             return True
         if self.scheme == 'basic':
             if realm is None:
-                # without a realm we can re-use passwords if they start with
-                # the same directory
+                # without a realm we can re-use passwords if they
+                # start with the same directory
                 return (self.urlparts.netloc == request_parts.netloc and
                         request_parts.path.startswith(self.url_dir))
             else:
-                # with a realm, we can re-use passwords if they match the
-                # realm + domain name
+                # with a realm, we can re-use passwords if they match
+                # the realm + domain name
                 return (self.realm == realm and
                         self.urlparts.netloc == request_parts.netloc)
         elif self.scheme == 'digest':
@@ -157,13 +158,10 @@ class HTTPAuthPassword(object):
 class HTTPPasswordList(signals.SignalEmitter):
     """HTTPPasswordList -- handles a list of HTTPAuthPassword objects
 
-    Attributes:
+    :property passwords: The current list of HTTPAuthPassword objects.
 
-    passwords -- The current list of HTTPAuthPassword objects
-
-    signals:
-
-    passwords-updated(self, passwords) -- the password list changed
+    :signal passwords-updated: (self, passwords) -- the password list
+        changed.
     """
 
     def __init__(self):
@@ -209,19 +207,20 @@ class HTTPPasswordList(signals.SignalEmitter):
     def add(self, user, password, url, auth_header):
         new_pw = HTTPAuthPassword(user, password, url, auth_header)
 
-        # Actually adding the auth is a bit tricky, because we want to remove
-        # any old, quite possibly bad, passwords.
+        # Actually adding the auth is a bit tricky, because we want to
+        # remove any old, quite possibly bad, passwords.
 
         found_index = self._find_password_with_protection_space(new_pw)
         if found_index < 0:
-            # We didn't find any old password to replace, add the new password
-            # to the end of the list and we're done
+            # We didn't find any old password to replace, add the new
+            # password to the end of the list and we're done
             self.passwords.append(new_pw)
         else:
-            # We found an old password to replace.  But maybe the old one will
-            # match more URLs in the future.  Try to pick the one closest to
-            # the root URL.  For domain auth it shouldn't matter, but for
-            # basic auth, this may result in fewer round-trips.
+            # We found an old password to replace.  But maybe the old
+            # one will match more URLs in the future.  Try to pick the
+            # one closest to the root URL.  For domain auth it
+            # shouldn't matter, but for basic auth, this may result in
+            # fewer round-trips.
             old_pw = self.passwords[found_index]
             if (old_pw.urlparts.path.count('/') <
                     new_pw.urlparts.path.count('/')):
@@ -229,7 +228,8 @@ class HTTPPasswordList(signals.SignalEmitter):
                 new_pw = HTTPAuthPassword(user, password, old_pw.url,
                         auth_header)
             self.passwords[found_index] = new_pw
-            # for good measure, delete any extra passwords with the same realm
+            # for good measure, delete any extra passwords with the
+            # same realm
             for i in reversed(xrange(found_index+1, len(self.passwords))):
                 if new_pw.same_protection_space(self.passwords[i]):
                     del self.passwords[i]
@@ -239,12 +239,12 @@ class HTTPPasswordList(signals.SignalEmitter):
     def _find_password_with_protection_space(self, pw):
         """Find a password for the same protection space as pw
 
-        "protection space" means the set of URLs where the password is valid
-        for.  Check out RFC 2617 for details
+        "protection space" means the set of URLs where the password is
+        valid for.  Check out RFC 2617 for details
 
-        :returns: the index of the first password where this is True, or -1
+        :returns: the index of the first password where this is True,
+            or -1
         """
-
         for i, other_pw in enumerate(self.passwords):
             if pw.same_protection_space(other_pw):
                 return i
