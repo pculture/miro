@@ -44,39 +44,6 @@ TEXT_JUSTIFY_LEFT = 0
 TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
-# Display State defaults
-DEFAULT_LIST_VIEW_DISPLAYS = set([u'sharing', u'music', u'others', u'playlist', u'search'])
-DEFAULT_DISPLAY_FILTERS = [u'view-all']
-DEFAULT_COLUMN_WIDTHS = {
-    u'state': 20,
-    u'name': 130,
-    u'artist': 110,
-    u'album': 100,
-    u'track': 30,
-    u'feed-name': 70,
-    u'length': 60,
-    u'genre': 65,
-    u'year': 40,
-    u'rating': 75,
-    u'size': 65,
-    u'status': 70,
-    u'date': 70,
-    u'eta': 60,
-    u'torrent-details': 160,
-    u'rate': 60,
-    u'description': 160,
-}
-DEFAULT_SORT_COLUMN = {
-    u'videos': 'name',
-    u'music': 'artist',
-    u'others': 'name',
-    u'downloading': 'eta',
-    u'all-feed-video': 'feed-name',
-    u'feed': 'date',
-    u'playlist': 'artist',
-    u'search': 'name',
-}
-
 # column properties
 COLUMN_LABELS = {
     u'state': _('State'),
@@ -110,32 +77,6 @@ COLUMN_WIDTH_WEIGHTS = {
     u'status': 0.2,
 }
 
-# Display State default; also used to populate View menu
-COLUMNS_AVAILABLE = {
-    u'videos': [u'state', u'name', u'length', u'feed-name', u'size'],
-    u'music': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
-        u'length', u'genre', u'year', u'rating', u'size'],
-    u'others': [u'name', u'feed-name', u'size', u'rating'],
-    u'downloading': [u'name', u'feed-name', u'status', u'eta', u'rate',
-                     u'torrent-details'],
-    u'all-feed-video': [u'state', u'name', u'feed-name', u'length', u'status',
-        u'size'],
-    u'feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
-    u'playlist': [u'state', u'name', u'artist', u'album', u'track',
-                  u'feed-name', u'length', u'genre', u'year', u'rating',
-                  u'size'],
-    u'search': [u'state', u'name', u'rating', u'description'],
-}
-
-COLUMNS_AVAILABLE[u'sharing'] = COLUMNS_AVAILABLE[u'videos']
-COLUMNS_AVAILABLE[u'device-video'] = COLUMNS_AVAILABLE[u'videos']
-COLUMNS_AVAILABLE[u'device-audio'] = COLUMNS_AVAILABLE[u'music']
-
-DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
-DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
-DEFAULT_SORT_COLUMN[u'device-audio'] = DEFAULT_SORT_COLUMN[u'music']
-
 # TODO: no display has type 'all-feed-video' yet
-# TODO: rename 'feed' to 'video-feed'
-# TODO: replace 'playlist' with 'audio-playlist' and 'video-playlist'
+# TODO: rename 'feed' to 'video-feed' ?
 # TODO: special stuff for 'converting' type

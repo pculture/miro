@@ -47,7 +47,6 @@ from miro import messages
 from miro import subscription
 from miro import prefs
 from miro.gtcache import gettext as _
-from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
@@ -57,6 +56,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import menus
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -95,14 +95,16 @@ class ItemListController(object):
         self._search_text = ''
         self.item_tracker = None
         self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
+        list_view = WidgetStateStore.get_list_view_type()
         self.columns_enabled = app.widget_state.get_columns_enabled(
-                self.type, self.id, LIST_VIEW)
+                self.type, self.id, list_view)
         self.column_widths = app.widget_state.get_column_widths(
-                self.type, self.id, LIST_VIEW)
+                self.type, self.id, list_view)
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
         # TODO: change this to restore ItemView sort also
-        sorter = app.widget_state.get_sort_state(self.type, self.id, LIST_VIEW)
+        sort_key = app.widget_state.get_sort_state(self.type, self.id, list_view)
+        sorter = self._make_sorter(sort_key)
         self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
         self.initialize_search()
@@ -115,9 +117,26 @@ class ItemListController(object):
             sorter.KEY, sorter.is_ascending())
         self._items_added_callback = self._playback_item_list = None
 
+    def _make_sorter(self, key):
+        if key.startswith('-'):
+            column = key[1:]
+            ascending = False
+        else:
+            column = key
+            ascending = True
+        return itemlist.SORT_KEY_MAP[column](ascending)
+
+    def _make_sort_key(self, sorter):
+        key = unicode(sorter.KEY)
+        if sorter.is_ascending:
+            state = key
+        else:
+            state = u'-' + key
+        return state
+
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
-        is_list_view = (self.selected_view == LIST_VIEW)
+        is_list_view = WidgetStateStore.is_list_view(self.selected_view)
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
             is_list_view)
         self.item_list = itemlist.ItemList()
@@ -139,16 +158,16 @@ class ItemListController(object):
 
     def set_is_list_view(self, _widget, is_list_view):
         if is_list_view:
-            self.selected_view = LIST_VIEW
+            self.selected_view = WidgetStateStore.get_list_view_type()
             self.widget.switch_to_list_view()
         else:
-            self.selected_view = STANDARD_VIEW
+            self.selected_view = WidgetStateStore.get_standard_view_type()
             self.widget.switch_to_normal_view()
         app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
         app.menu_manager.update_menus()
 
     def get_current_item_view(self):
-        if self.selected_view == LIST_VIEW:
+        if WidgetStateStore.is_list_view(self.selected_view):
             return self.list_item_view
         else:
             return self.item_view
@@ -162,10 +181,11 @@ class ItemListController(object):
         return itemlistwidgets.HeaderToolbar()
 
     def update_columns_enabled(self):
+        list_view = WidgetStateStore.get_list_view_type()
         self.columns_enabled = app.widget_state.get_columns_enabled(
-                self.type, self.id, LIST_VIEW)
+                self.type, self.id, list_view)
         self.column_widths = app.widget_state.get_column_widths(
-                self.type, self.id, LIST_VIEW)
+                self.type, self.id, list_view)
         self.list_item_view.update_columns(self.columns_enabled,
             self.column_widths)
 
@@ -282,15 +302,19 @@ class ItemListController(object):
             item_view.model_changed()
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
         self.list_item_view.change_sort_indicator(sort_key, ascending)
-        app.widget_state.set_sort_state(self.type, self.id, LIST_VIEW, sorter)
+        list_view = WidgetStateStore.get_list_view_type()
+        sort_key = self._make_sort_key(sorter)
+        app.widget_state.set_sort_state(self.type, self.id, list_view, sort_key)
 
     def on_columns_enabled_changed(self, object, columns_enabled):
+        list_view = WidgetStateStore.get_list_view_type()
         app.widget_state.set_columns_enabled(
-                self.type, self.id, LIST_VIEW, columns_enabled)
+                self.type, self.id, list_view, columns_enabled)
 
     def on_column_widths_changed(self, object, column_widths):
+        list_view = WidgetStateStore.get_list_view_type()
         app.widget_state.update_column_widths(
-                self.type, self.id, LIST_VIEW, column_widths)
+                self.type, self.id, list_view, column_widths)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:

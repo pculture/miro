@@ -48,7 +48,6 @@ from miro import app
 from miro import search
 from miro import signals
 from miro import util
-from miro.frontends.widgets import imagepool
 from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset

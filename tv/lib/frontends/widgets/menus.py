@@ -33,8 +33,8 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import conversions
-from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
-from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets.widgetconst import COLUMN_LABELS
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro.gtcache import gettext as _
 
@@ -906,15 +906,12 @@ class MenuStateManager(signals.SignalEmitter):
         if not (hasattr(display, 'type') and hasattr(display, 'id')):
             return
         view_type = app.widget_state.get_selected_view(display.type, display.id)
-        if view_type != LIST_VIEW:
+        if not WidgetStateStore.is_list_view(view_type):
             return
         enabled = app.widget_state.get_columns_enabled(
                   display.type, display.id, view_type)
 
-        columns = []
-        for k, v in widgetconst.COLUMNS_AVAILABLE.items():
-            columns.extend(v)
-        columns = set(columns)
+        columns = _get_all_columns()
 
         checks = {}
         for column in columns:
@@ -923,20 +920,23 @@ class MenuStateManager(signals.SignalEmitter):
 
         self.emit('checked-changed', 'ListView', checks)
         self.enabled_groups.add('ListView')
-        for column in widgetconst.COLUMNS_AVAILABLE[display.type]:
+        for column in WidgetStateStore.get_columns_available(display.type):
             self.enabled_groups.add('column-%s' % column)
 
+def _get_all_columns():
+    columns = set()
+    for display_type in WidgetStateStore.get_display_types():
+        columns.update(WidgetStateStore.get_columns_available(display_type))
+    return columns
+
 def _get_view_menu():
-    columns = []
-    for k, v in widgetconst.COLUMNS_AVAILABLE.items():
-        columns.extend(v)
-    columns = set(columns)
-    columns = sorted(columns, key=lambda name: widgetconst.COLUMN_LABELS[name])
+    columns = _get_all_columns()
+    columns = sorted(columns, key=lambda name: COLUMN_LABELS[name])
 
     menu = list()
     for name in columns:
         groups = ['column-%s' % name]
-        label = widgetconst.COLUMN_LABELS[name]
+        label = COLUMN_LABELS[name]
         handler_name = make_column_toggle_handler(name)
         menu.append(CheckMenuItem(label, handler_name, 'ListView', groups=groups))
     return menu
