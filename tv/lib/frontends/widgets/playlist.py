@@ -104,9 +104,9 @@ class PlaylistSort(itemlist.ItemSort):
     def sort_key(self, item):
         return self.positions[item.id]
 
-class PlaylistItemView(itemlistwidgets.ItemView):
+class PlaylistStandardView(itemlistwidgets.StandardView):
     def __init__(self, item_list, playlist_id):
-        itemlistwidgets.ItemView.__init__(self, item_list)
+        itemlistwidgets.StandardView.__init__(self, item_list)
         self.playlist_id = playlist_id
 
     def build_renderer(self):
@@ -125,7 +125,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         self.item_list_group.set_sort(self._sorter)
 
     def build_item_view(self):
-        return PlaylistItemView(self.item_list, self.id)
+        return PlaylistStandardView(self.item_list, self.id)
 
     def make_drop_handler(self):
         handler = DropHandler(self.id, self.item_view, self._sorter)

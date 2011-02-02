@@ -62,7 +62,7 @@ class FeedController(itemlistcontroller.ItemListController):
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
         icon = imagepool.get(feed_info.thumbnail, size=(41, 41))
-        self.item_view = itemlistwidgets.ItemView(self.item_list,
+        self.item_view = itemlistwidgets.StandardView(self.item_list,
                 self.is_folder)
 
         add_icon_box = (not self.is_folder

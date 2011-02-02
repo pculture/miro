@@ -228,7 +228,7 @@ class SearchListTitlebar(ItemListTitlebar):
 
         return widgetutil.align_middle(hbox, right_pad=20)
 
-class ItemView(widgetset.TableView):
+class StandardView(widgetset.TableView):
     """TableView that displays a list of items using the standard
     view.
     """
@@ -255,7 +255,7 @@ class ItemView(widgetset.TableView):
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
 
-class ListItemView(widgetset.TableView):
+class ListView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
     COLUMN_RENDERERS = {
         'state': style.StateCircleRenderer,
@@ -359,7 +359,7 @@ class ListItemView(widgetset.TableView):
                 header = u''
             else:
                 header = widgetconst.COLUMN_LABELS[name]
-            renderer = ListItemView.COLUMN_RENDERERS[name]()
+            renderer = ListView.COLUMN_RENDERERS[name]()
             self._make_column(header, renderer, name, resizable, pad)
             self._column_by_label[header] = name
         for name, column in self._column_name_to_column.items():
@@ -426,7 +426,7 @@ class ListItemView(widgetset.TableView):
         if not self._current_sort_column in (new_sort_column, None):
             self._current_sort_column.set_sort_indicator_visible(False)
         if new_sort_column is None:
-            logging.warn("ListItemView tried to sort by column %s, "
+            logging.warn("ListView tried to sort by column %s, "
                 "which doesn't exist", repr(column_name))
         else:
             new_sort_column.set_sort_indicator_visible(True)

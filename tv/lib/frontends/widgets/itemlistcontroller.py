@@ -174,7 +174,7 @@ class ItemListController(object):
     current_item_view = property(get_current_item_view)
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
+        return itemlistwidgets.ListView(self.item_list,
                 self.columns_enabled, self.column_widths)
 
     def build_header_toolbar(self):
@@ -516,7 +516,7 @@ class SimpleItemListController(ItemListController):
         self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
     def build_item_view(self):
-        return itemlistwidgets.ItemView(self.item_list)
+        return itemlistwidgets.StandardView(self.item_list)
 
     def make_titlebar(self):
         icon = self._make_icon()
@@ -630,7 +630,7 @@ class SearchController(SimpleItemListController):
 
 class AudioVideoItemsController(SimpleItemListController):
     def build_item_view(self):
-        return itemlistwidgets.ItemView(self.item_list, True)
+        return itemlistwidgets.StandardView(self.item_list, True)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)

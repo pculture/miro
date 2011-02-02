@@ -34,7 +34,7 @@ from miro.gtcache import gettext as _
 
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets.itemlistwidgets import (
-    ItemView, HideableSection, ItemContainerWidget, DownloadToolbar,
+    StandardView, HideableSection, ItemContainerWidget, DownloadToolbar,
     DownloadStatusToolbar, ItemListTitlebar)
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
@@ -91,7 +91,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         return itemcontextmenu.ItemContextMenuHandler()
 
     def _make_item_views(self):
-        self.item_view = ItemView(self.item_list)
+        self.item_view = StandardView(self.item_list)
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
