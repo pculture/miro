@@ -45,16 +45,34 @@ from miro.plat.frontends.widgets import timer
 
 def send_new_order():
     def append_items(sequence, typ):
-        for row in sequence:
+        parent = sequence[0]
+        for row in parent.iterchildren():
             info = row[0]
             message.append(info, typ)
             for child in row.iterchildren():
                 message.append_child(info.id, child[0])
-            
+
     message = messages.TabsReordered()
     append_items(app.tab_list_manager.feed_list.view.model, u'feed')
     append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
     message.send_to_backend()
+
+class TabInfo(object):
+    """
+    Simple Info object which holds the data for the top of a tab list.
+    """
+    is_folder = False # doesn't work like a real folder
+    tall = True
+    bolded = True
+    unwatched = available = 0
+    is_directory_feed = False
+
+    def __init__(self, name, icon_name):
+        self.name = name
+        self.id = u'%s-base-tab' % name
+        self.icon_name = icon_name
+        self.icon = widgetutil.make_surface(self.icon_name)
+        self.active_icon = widgetutil.make_surface(self.icon_name + '_active')
 
 
 class TabListView(widgetset.TableView):
@@ -274,11 +292,12 @@ class TabListDragHandler(object):
         return (self.item_type, self.folder_type)
 
     def begin_drag(self, tableview, rows):
-        typ = self.item_type.encode('ascii', 'replace')
+        typ = self.item_type
         for r in rows:
             if r[0].is_folder:
                 typ = self.folder_type
                 break
+        typ = typ.encode('ascii', 'replace')
         return { typ: '-'.join(str(r[0].id) for r in rows)}
 
 class TabDnDReorder(object):
@@ -316,6 +335,9 @@ class TabDnDReorder(object):
         # know the order of dragged rows so we can insert them back in the
         # right order.
         iter = model.first_iter()
+        if iter is None:
+            return
+        iter = model.child_iter(iter)
         while iter is not None:
             row = model[iter]
             row_dragged = (row[0].id in dragged_ids)
@@ -384,7 +406,7 @@ class MediaTypeDropHandler(object):
         # Return False just in case
         return False
 
-class TabListDropHandler(object):
+class NestedTabListDropHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
 
@@ -397,19 +419,21 @@ class TabListDropHandler(object):
     def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
         if parent is None:
-            is_folder = False
-        elif position < 0:
+            # can't drag above the root
+            return widgetset.DRAG_ACTION_NONE
+        if position < 0:
             is_folder = model[parent][0].is_folder
         elif position < model.children_count(parent):
             iter = model.nth_child_iter(parent, position)
             is_folder = model[iter][0].is_folder
         else:
             is_folder = False
+        parent_info = model[parent][0]
         if position == -1 and not is_folder:
             # Only folders can be dropped on
             return widgetset.DRAG_ACTION_NONE
-        if (typ in self.folder_types and
-                ((position == -1 and is_folder) or parent is not None)):
+        if (typ in self.folder_types and (
+            (position == -1 and is_folder) or parent_info.is_folder)):
             # Don't allow folders to be dropped in other folders
             return widgetset.DRAG_ACTION_NONE
         elif typ not in self.item_types + self.folder_types:
@@ -428,6 +452,10 @@ class TabListDropHandler(object):
         expanded_rows = [id for id in dragged_ids if \
                 source_tablist.view.is_row_expanded(
                 source_tablist.iter_map[id])]
+        if source_tablist.view.is_row_expanded(
+            source_tablist.iter_map[source_tablist.info.id]):
+            # keep the root expanded, if it was before
+            expanded_rows.append(source_tablist.info.id)
         reorderer = TabDnDReorder()
         try:
             new_iters = reorderer.reorder(
@@ -461,7 +489,7 @@ class TabListDropHandler(object):
         app.tab_list_manager.handle_moved_tabs_to_list(dest_tablist)
         return True
 
-class FeedListDropHandler(TabListDropHandler):
+class FeedListDropHandler(NestedTabListDropHandler):
     item_types = ('feed',)
     folder_types = ('feed-with-folder',)
 
@@ -469,16 +497,16 @@ class FeedListDragHandler(TabListDragHandler):
     item_type = u'feed'
     folder_type = u'feed-with-folder'
 
-class PlaylistListDropHandler(TabListDropHandler):
+class PlaylistListDropHandler(NestedTabListDropHandler):
     item_types = ('playlist',)
     folder_types = ('playlist-with-folder',)
 
     def allowed_actions(self):
-        return (TabListDropHandler.allowed_actions(self) | 
+        return (NestedTabListDropHandler.allowed_actions(self) | 
                 widgetset.DRAG_ACTION_COPY)
 
     def allowed_types(self):
-        return TabListDropHandler.allowed_types(self) + ('downloaded-item',)
+        return NestedTabListDropHandler.allowed_types(self) + ('downloaded-item',)
 
     def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
@@ -488,7 +516,7 @@ class PlaylistListDropHandler(TabListDropHandler):
                 return widgetset.DRAG_ACTION_COPY
             else:
                 return widgetset.DRAG_ACTION_NONE
-        return TabListDropHandler.validate_drop(self, table_view, model, typ,
+        return NestedTabListDropHandler.validate_drop(self, table_view, model, typ,
                 source_actions, parent, position)
 
     def accept_drop(self, table_view, model, typ, source_actions, parent,
@@ -503,7 +531,7 @@ class PlaylistListDropHandler(TabListDropHandler):
             # We shouldn't get here, because don't allow it in validate_drop.
             # Return False just in case
             return False
-        return TabListDropHandler.accept_drop(self, table_view, model, typ,
+        return NestedTabListDropHandler.accept_drop(self, table_view, model, typ,
                 source_actions, parent, position, data)
 
 class DeviceDropHandler(object):
@@ -744,42 +772,33 @@ class HideableTabList(TabList):
     A type of tablist which nests under a base tab.  Connect,
     Sources/Sites/Guides, Stores, Feeds, and Playlists are all of this type.
     """
-    is_tab = True
-    tall = True
-    bolded = True
-    unwatched = available = 0
-
     def __init__(self):
         TabList.__init__(self)
-        self.id = u'%s-base-tab' % self.type
         self.added_children = False
-        TabList.add(self, self)
+        self.info = TabInfo(self.name, self.icon_name)
+        TabList.add(self, self.info)
 
     def add(self, info, parent_id=None):
         if parent_id is None:
-            parent_id = self.id
+            parent_id = self.info.id
         TabList.add(self, info, parent_id)
         if not self.added_children:
-            self.set_folder_expanded(self.id, True)
+            self.set_folder_expanded(self.info.id, True)
             self.added_children = True
 
     def _clear_list(self):
         iter = self.view.model.first_iter()
         if iter is None:
             return
-        iter = self.view.model.next_iter(iter)
+        iter = self.view.model.child_iter(iter)
         while iter is not None:
             iter = self.view.model.remove(iter)
-        self.iter_map = {self.id: self.iter_map[self.id]}
+        self.iter_map = {self.info.id: self.iter_map[self.info.id]}
 
     def on_row_expanded_change(self, view, iter, expanded):
         info = self.view.model[iter][0]
-        if info is not self:
+        if info is not self.info:
             TabList.on_row_expanded_change(self, view, iter, expanded)
-
-    def base_info(self):
-        self.icon = widgetutil.make_surface(self.icon_name)
-        self.active_icon = widgetutil.make_surface(self.icon_name + '_active')
 
 class SiteList(HideableTabList):
     type = u'site'
@@ -792,8 +811,7 @@ class SiteList(HideableTabList):
         app.widgetapp.remove_current_site()
 
     def init_info(self, info):
-        if info is self:
-            self.base_info()
+        if info is self.info:
             return
         if info.favicon:
             thumb_path = info.favicon
@@ -873,8 +891,7 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
         app.widgetapp.remove_current_feed()
 
     def init_info(self, info):
-        if info is self:
-            self.base_info()
+        if info is self.info:
             return
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
         if info.is_updating:
@@ -884,7 +901,7 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
 
     def get_feeds(self):
         infos = [self.view.model[i][0] for (k, i) in self.iter_map.items()
-                 if k != self.id]
+                 if k != self.info.id]
         return infos
 
     def find_feed_with_url(self, url):
@@ -993,8 +1010,7 @@ class PlaylistList(HideableTabList, NestedTabList):
         app.widgetapp.remove_current_playlist()
 
     def init_info(self, info):
-        if info is self:
-            self.base_info()
+        if info is self.info:
             return
         if info.is_folder:
             info.icon = imagepool.get_surface(
@@ -1008,7 +1024,7 @@ class PlaylistList(HideableTabList, NestedTabList):
 
     def get_playlists(self):
         infos = [self.view.model[i][0] for (k, i) in self.iter_map.items()
-                 if k != self.id]
+                 if k != self.info.id]
         return infos
 
     def find_playlist_with_name(self, name):
