@@ -212,9 +212,10 @@ class SchemaTuple(SchemaReprContainer):
     """Special case of SchemaReprContainer that stores a simple tuple
     """
     def __init__(self, *childSchemas, **kargs):
-        noneOk = False
         if 'noneOk' in kargs:
-            noneOk = kargs[noneOk]
+            noneOk = kargs['noneOk']
+        else:
+            noneOk = False
         super(SchemaTuple, self).__init__(noneOk)
         self.childSchemas = childSchemas
 
