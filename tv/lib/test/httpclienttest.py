@@ -18,7 +18,6 @@ from miro.test.framework import EventLoopTest, uses_httpclient
 from miro.gtcache import gettext as _
 
 TEST_PATH = 'test.txt'
-TEST_BODY = 'Miro HTTP Test\n'
 
 def uses_mock_httpclient(fun):
     def _uses_mock_httpclient(self):
@@ -37,6 +36,8 @@ class HTTPClientTestBase(EventLoopTest):
         self.grab_url_info = self.grab_url_error = None
         self.expecting_errback = False
         self.event_loop_timeout = 1.0
+        test_txt_path = resources.path("testdata/httpserver/test.txt")
+        self.test_response_data = open(test_txt_path).read()
 
     def grab_url_callback(self, info):
         self.grab_url_info = info
@@ -71,31 +72,37 @@ class HTTPClientTestBase(EventLoopTest):
         self.assertEquals(self.grab_url_error, None)
         self.assertEquals(self.grab_url_info, None)
 
+    def _write_partial_file(self, filename, bytes=30):
+        # Write the start of test.txt to a file to test HTTP resume capability
+        fp = open(filename, 'w')
+        fp.write(self.test_response_data[:bytes])
+        fp.close()
+
 class HTTPClientTest(HTTPClientTestBase):
     @uses_httpclient
     def test_simple_get(self):
         self.grab_url(self.httpserver.build_url('test.txt'))
-        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
 
     @uses_httpclient
     def test_file_get(self):
         path = resources.path("testdata/httpserver/test.txt")
         self.grab_url("file://" + path)
-        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
 
     @uses_httpclient
     def test_simple_get_url_with_spaces(self):
         self.grab_url(self.httpserver.build_url('test%20with%20spaces.txt'))
-        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
         # Having spaces in the URL is not legal, but could happen in the wild.
         # We should work around buggy feeds.
         self.grab_url(self.httpserver.build_url('test with spaces.txt'))
-        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
 
     @uses_httpclient
     def test_unicode_url(self):
         self.grab_url(unicode(self.httpserver.build_url('test.txt')))
-        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
 
     def check_header(self, key, value):
         self.assertEqual(self.last_http_info('headers')[key], value)
@@ -233,7 +240,8 @@ class HTTPClientTest(HTTPClientTestBase):
             self.headers = headers
         self.grab_url(self.httpserver.build_url('temp-redirect'),
                 header_callback=header_callback)
-        self.assertEquals(self.headers['content-length'], len(TEST_BODY))
+        self.assertEquals(self.headers['content-length'],
+                len(self.test_response_data))
 
     @uses_httpclient
     def test_circular_redirect_headers(self):
@@ -323,7 +331,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('test.txt'),
                 content_check_callback=check_content)
         self.assertEquals(self.grab_url_error, None)
-        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
 
     @uses_httpclient
     def test_content_checker_cancel(self):
@@ -371,22 +379,17 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename)
         self.assert_('body' not in self.grab_url_info)
-        self.assertEquals(open(filename).read(), TEST_BODY)
-
-    def _write_partial_file(self, filename):
-        # Write the start of test.txt to a file to test HTTP resume capability
-        fp = open(filename, 'w')
-        fp.write("Miro ")
-        fp.close()
+        self.assertEquals(open(filename).read(), self.test_response_data)
 
     @uses_httpclient
     def test_write_file_resume(self):
         filename = self.make_temp_path(".txt")
-        self._write_partial_file(filename)
+        initial_size = 5
+        self._write_partial_file(filename, initial_size)
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True)
-        self.assertEquals(open(filename).read(), TEST_BODY)
-        self.check_header('Range', 'bytes=5-')
+        self.assertEquals(open(filename).read(), self.test_response_data)
+        self.check_header('Range', 'bytes=%d-' % initial_size)
 
     @uses_httpclient
     def test_write_file_no_resume(self):
@@ -394,7 +397,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self._write_partial_file(filename)
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=False)
-        self.assertEquals(open(filename).read(), TEST_BODY)
+        self.assertEquals(open(filename).read(), self.test_response_data)
         self.check_header_not_present('Range')
 
     @uses_httpclient
@@ -410,14 +413,14 @@ class HTTPClientTest(HTTPClientTestBase):
     @uses_httpclient
     def test_resume_sizes(self):
         filename = self.make_temp_path(".txt")
-        self._write_partial_file(filename)
+        initial_size = 30
+        self._write_partial_file(filename, initial_size)
         def on_headers(headers):
             self.headers = headers
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True, header_callback=on_headers)
         path = resources.path("testdata/httpserver/test.txt")
         file_size = len(open(path).read())
-        initial_size = len("Miro ")
         download_size = file_size - initial_size
         self.assertEquals(self.headers['total-size'], file_size)
         self.assertEquals(self.headers['content-length'], file_size -
@@ -430,7 +433,7 @@ class HTTPClientTest(HTTPClientTestBase):
         filename = self.make_temp_path(".txt")
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True)
-        self.assertEquals(open(filename).read(), TEST_BODY)
+        self.assertEquals(open(filename).read(), self.test_response_data)
  
     @uses_httpclient
     def test_cancel(self):
@@ -519,6 +522,47 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
+
+    @uses_httpclient
+    def test_auth_with_write_file(self):
+        # check that if the auth fails, we don't write data to our file
+        filename = self.make_temp_path(".txt")
+        self.setup_answer("user", "wrongpassword")
+        self.expecting_errback = True
+        self.grab_url(self.httpserver.build_url('protected/index.txt'),
+                write_file=filename)
+        self.assertEquals(open(filename).read(), "")
+
+    @uses_httpclient
+    def test_auth_failed_with_write_file_resume(self):
+        # check the corner case where are resuming a transfer, but we are
+        # getting back an auth failed response
+        filename = self.make_temp_path(".txt")
+        # write more data than is contained in our auth failed response.  We
+        # should still get a AuthorizationFailed, rather than a ResumeFailed
+        # response.
+        self._write_partial_file(filename, 30)
+        self.setup_answer("user", "wrongpassword")
+        self.expecting_errback = True
+        self.grab_url(self.httpserver.build_url('protected/index.txt'),
+                write_file=filename, resume=True)
+        self.check_auth_errback_called()
+
+    @uses_httpclient
+    def test_auth_success_with_write_file_resume(self):
+        # check this corner case when we are resuming a transfer:
+        #  - we get an auth failed response
+        #  - we then send the correct credentials
+        # In this case, we have to make sure that the initial auth failed
+        # reponse didn't mess up the resume.
+        filename = self.make_temp_path(".txt")
+        # write more data than is contained in our auth failed response.
+        self._write_partial_file(filename, 30)
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('protected/index.txt'),
+                write_file=filename, resume=True)
+        self.assertEquals(self.dialogs_seen, 1)
+        self.assertEquals(open(filename).read(), self.test_response_data)
 
     @uses_httpclient
     def test_auth_memory(self):

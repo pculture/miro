@@ -349,6 +349,12 @@ class CurlTransfer(object):
         self.resume_from = 0
         self.out_headers = {}
         self.status_code = None
+        self.trying_head_request = False
+        self.saw_head_success = False
+
+    def _send_new_request(self):
+        self._reset_transfer_data()
+        curl_manager.add_transfer(self)
 
     def start(self):
         if self.options.invalid_url:
@@ -413,8 +419,7 @@ class CurlTransfer(object):
             existing_auth = httpauth.find_http_auth(url, auth_header)
             if existing_auth is not None:
                 self.http_auth = existing_auth
-                self._reset_transfer_data()
-                curl_manager.add_transfer(self)
+                self._send_new_request()
                 return
         try:
             httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
@@ -433,8 +438,7 @@ class CurlTransfer(object):
                 self.http_auth = auth
             else:
                 self.proxy_auth = auth
-            self._reset_transfer_data()
-            curl_manager.add_transfer(self)
+            self._send_new_request()
 
     def build_handle(self):
         """Build a libCURL handle.  This should only be called inside the
@@ -446,8 +450,16 @@ class CurlTransfer(object):
         if self.options._cancel_on_body_data:
             self.handle.setopt(pycurl.WRITEFUNCTION, self._write_func_abort)
         elif self.options.write_file is not None:
-            self._open_file()
-            self.handle.setopt(pycurl.WRITEDATA, self._filehandle)
+            if not self.saw_head_success:
+                # try a HEAD request first to see if the request will work.
+                # This avoids writing error responses to our file.  It also
+                # avoids the issue of RESUME_FROM being applied to the error
+                # response.
+                self.handle.setopt(pycurl.NOBODY, 1)
+                self.trying_head_request = True
+            else:
+                self._open_file()
+                self.handle.setopt(pycurl.WRITEDATA, self._filehandle)
         elif self.content_check_callback is not None:
             self.handle.setopt(pycurl.WRITEFUNCTION, self._call_content_check)
         else:
@@ -603,7 +615,13 @@ class CurlTransfer(object):
         if self.options.write_file is None:
             info['body'] = self.buffer.getvalue()
         if self.check_response_code(info['status']):
-            self.call_callback(info)
+            if not self.trying_head_request:
+                self.call_callback(info)
+            else:
+                # we tried a HEAD request and it worked, now we can do the
+                # transfer for real
+                self._send_new_request()
+                self.saw_head_success = True
         elif info['status'] == 401:
             self.handle_http_auth()
         elif info['status'] == 407:

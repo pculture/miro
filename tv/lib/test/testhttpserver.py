@@ -147,7 +147,6 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.path.startswith("/protected2/") or
                 self.path.startswith("/protected3/")):
             # are password protected.  The data is always just test.txt
-            path = self.translate_path('test.txt')
             auth = 'Basic ' + ('user:password'.encode("base64")[:-1])
             auth2 = 'Basic ' + ('user2:password2'.encode("base64")[:-1])
             # use [:-1] to cut off the trailing newline
@@ -158,8 +157,10 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 realm = "Secure Area2"
             if self.headers.get('authorization') in (auth, auth2):
                 code = 200
+                path = self.translate_path('test.txt')
             else:
                 code = 401
+                path = self.translate_path('auth-failed.txt')
                 headers_to_send.append(('WWW-Authenticate',
                     'Basic realm="%s"' % realm))
         elif self.path.startswith("/digest-protected"):
@@ -169,7 +170,6 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # We use RFC 2069 instead of RFC 2617 because it's easier to
             # implement
 
-            path = self.translate_path('test.txt')
             # use [:-1] to cut off the trailing newline
 
             client_auth = self.headers.get('authorization')
@@ -185,8 +185,10 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             if self.parse_client_digest_auth() == correct_auth_response:
                 code = 200
+                path = self.translate_path('test.txt')
             else:
                 code = 401
+                path = self.translate_path('auth-failed.txt')
                 headers_to_send.append(('WWW-Authenticate',
                     'Digest '
                     'realm="Secure Area Digest", '
@@ -194,7 +196,10 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     'opaque="5ccc069c403ebaf9f0171e9517f40e41"' %
                     self.digest_nonce))
 
-        elif 'range' in self.headers and self.server.allow_resume:
+        else:
+            code = 200
+            path = self.translate_path(self.path)
+        if 'range' in self.headers and self.server.allow_resume:
             range = self.headers['range']
             if range.startswith("bytes="):
                 byte_range = range[len('bytes='):]
@@ -204,11 +209,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 if end != '':
                     self.end_pos = int(end)
                 code = 206
-                path = self.translate_path(self.path)
                 headers_to_send.append(('Content-Range', range))
-        else:
-            code = 200
-            path = self.translate_path(self.path)
         f = None
         try:
             f = open(path, 'rb')
