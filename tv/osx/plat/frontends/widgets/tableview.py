@@ -205,7 +205,14 @@ class MiroCheckboxCell(NSButtonCell):
         return NSButtonCell.stopTracking_at_inView_mouseIsUp_(self, lastPoint,
                 at, tableview, mouseIsUp)
 
-class CellRenderer(object):
+class CellRendererBase(object):
+    def set_index(self, index):
+        self.index = index
+    
+    def get_index(self):
+        return self.index
+
+class CellRenderer(CellRendererBase):
     def __init__(self):
         self.cell = MiroTableCell.alloc().init()
 
@@ -232,11 +239,11 @@ class CellRenderer(object):
                 color[1], color[2], 1.0)
         self.cell.setTextColor_(color)
 
-class ImageCellRenderer(object):
+class ImageCellRenderer(CellRendererBase):
     def setDataCell_(self, column):
         column.setDataCell_(MiroTableImageCell.alloc().init())
 
-class CheckboxCellRenderer(signals.SignalEmitter):
+class CheckboxCellRenderer(CellRendererBase, signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'clicked')
         self.size = widgetconst.SIZE_NORMAL
@@ -300,7 +307,7 @@ class CustomTableCell(NSCell):
     def set_wrapper_data(self):
         self.wrapper.__dict__.update(self.object_value)
 
-class CustomCellRenderer(object):
+class CustomCellRenderer(CellRendererBase):
     CellClass = CustomTableCell
 
     def __init__(self):
@@ -323,12 +330,6 @@ class CustomCellRenderer(object):
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
     
-    def set_index(self, index):
-        self.index = index
-    
-    def get_index(self):
-        return self.index
-
 class InfoListTableCell(CustomTableCell):
     def set_wrapper_data(self):
         self.wrapper.info, self.wrapper.attrs = self.object_value
