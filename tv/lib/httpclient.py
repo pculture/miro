@@ -425,8 +425,8 @@ class CurlTransfer(object):
         try:
             httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
                     url, auth_header, location)
-        except ValueError, e:
-            logging.warn("ValueError when parsing auth header: %s", e)
+        except (AssertionError, ValueError), e:
+            logging.warn("Error when parsing auth header: %s", e)
             self.handle_auth_failure()
 
     def _ask_for_http_auth_callback(self, auth):

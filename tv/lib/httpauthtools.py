@@ -43,6 +43,15 @@ import urlparse
 from miro import signals
 
 def decode_auth_header(auth_header):
+    """Decodes and validates auth headers.
+
+    :param auth_header: The value from a WWW-Authentica HTTP header
+
+    :returns: ``(scheme, realm, domain)`` tuple
+
+    :raises ValueError: if the header is missing a scheme or realm
+    :raises AssertionError: if the scheme is not basic or digest
+    """
     def match_group_1(regex):
         m = re.search(regex, auth_header)
         if m is None:
@@ -55,6 +64,9 @@ def decode_auth_header(auth_header):
     if scheme is None:
         raise ValueError("Scheme not present in auth header: %s" %
                 auth_header)
+    scheme = scheme.lower()
+    if scheme not in ('basic', 'digest'):
+        raise AssertionError("Unknown HTTPAuth Scheme: %s", scheme)
     if realm is None:
         raise ValueError("Realm not present in auth header: %s" %
                 auth_header)
@@ -66,16 +78,17 @@ class HTTPAuthPassword(object):
     These objects should not be modified because they are shared between the
     main thread and the libcurl thread.
     """
-    def __init__(self, username, password, url, auth_header):
+    def __init__(self, username, password, url, auth_header, scheme,
+                 realm, domain):
         self.username = username
         self.password = password
         self.url = url
         self.auth_header = auth_header
 
-        self.scheme, self.realm, self.domain = decode_auth_header(auth_header)
-        self.scheme = self.scheme.lower()
-        if self.scheme not in ('basic', 'digest'):
-            raise AssertionError("Unknown HTTPAuth Scheme: %s", self.scheme)
+        self.scheme = scheme
+        self.realm = realm
+        self.domain = domain
+
         self.urlparts = urlparse.urlparse(url)
         self.url_dir = os.path.dirname(self.urlparts.path) + "/"
         self.calc_domain_list()
@@ -205,7 +218,9 @@ class HTTPPasswordList(signals.SignalEmitter):
             self.emit("passwords-updated", self.passwords)
 
     def add(self, user, password, url, auth_header):
-        new_pw = HTTPAuthPassword(user, password, url, auth_header)
+        scheme, realm, domain = decode_auth_header(auth_header)
+        new_pw = HTTPAuthPassword(user, password, url, auth_header,
+                                  scheme, realm, domain)
 
         # Actually adding the auth is a bit tricky, because we want to
         # remove any old, quite possibly bad, passwords.

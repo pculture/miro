@@ -48,10 +48,15 @@ def handle_http_auth_response(id_, authHeader):
 
 def find_http_auth(url, auth_header=None):
     global password_list
-    if auth_header is not None:
-        auth_scheme, realm, domain = decode_auth_header(auth_header)
-    else:
+    try:
+        if auth_header is not None:
+            auth_scheme, realm, domain = decode_auth_header(auth_header)
+        else:
+            realm = None
+    except (AssertionError, ValueError):
+        # auth_header is malformed, so use a None realm
         realm = None
+
     return password_list.find(url, realm)
 
 def remove(auth):
@@ -65,8 +70,8 @@ def update_passwords(passwords):
     password_list.replace_passwords(passwords)
 
 def ask_for_http_auth(callback, url, auth_header, location):
-    # call decode_auth_header, which will raise ValueError if auth_header is
-    # invalid
+    # call decode_auth_header, which will raise ValueError or
+    # AssertionError if auth_header is invalid
     decode_auth_header(auth_header)
     id_ = requestIdGenerator.next()
     waitingHTTPAuthCallbacks[id_] = callback

@@ -44,11 +44,17 @@ def find_http_auth(url, auth_header=None):
     :param url: request URL
     :param auth_header: optional www-authenticate header to use to search for.
         This allows us to better match basic auth passwords
+
+    :returns: HTTPAuthPassword
     """
     global password_list
-    if auth_header is not None:
-        auth_scheme, realm, domain = decode_auth_header(auth_header)
-    else:
+    try:
+        if auth_header is not None:
+            auth_scheme, realm, domain = decode_auth_header(auth_header)
+        else:
+            realm = None
+    except (AssertionError, ValueError):
+        # auth_header is malformed, so use a None realm.
         realm = None
     return password_list.find(url, realm)
 
