@@ -58,6 +58,7 @@ from miro.test.schedulertest import *
 from miro.test.networktest import *
 from miro.test.httpclienttest import *
 from miro.test.httpdownloadertest import *
+from miro.test.httpauthtoolstest import *
 from miro.test.feedtest import *
 from miro.test.feedparsertest import *
 from miro.test.parseurltest import *
