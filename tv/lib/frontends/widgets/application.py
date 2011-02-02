@@ -59,6 +59,7 @@ from miro import eventloop
 from miro import conversions
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
+from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchfeed
 from miro.frontends.widgets import newfeed
@@ -108,6 +109,7 @@ class Application:
         self.unwatched_count = 0
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
         self.crash_reports_to_handle = []
+        app.widget_state = WidgetStateStore()
 
     def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
@@ -137,6 +139,7 @@ class Application:
         messages.QuerySearchInfo().send_to_backend()
         messages.TrackWatchedFolders().send_to_backend()
         messages.QueryDisplayStates().send_to_backend()
+        messages.QueryViewStates().send_to_backend()
         messages.TrackChannels().send_to_backend()
 
         self.setup_globals()
@@ -344,8 +347,8 @@ class Application:
 
     def toggle_column(self, name):
         current_display = app.display_manager.get_current_display()
-        key = (current_display.type, current_display.id)
-        app.display_state.toggle_column(key, unicode(name))
+        app.widget_state.toggle_column(current_display.type,
+            current_display.id, unicode(name))
         current_display.update_columns_enabled()
 
     def share_item(self, item):
@@ -1172,6 +1175,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             'guide-list',
             'search-info',
             'display-states',
+            'view-states',
         ])
         if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None or \
                 app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
@@ -1474,8 +1478,12 @@ class WidgetsMessageHandler(messages.MessageHandler):
             app.search_manager.handle_search_complete(message)
 
     def handle_current_display_states(self, message):
-        app.display_state = DisplayStatesStore(message)
+        app.widget_state.setup_displays(message)
         self._saw_pre_startup_message('display-states')
+
+    def handle_current_view_states(self, message):
+        app.widget_state.setup_views(message)
+        self._saw_pre_startup_message('view-states')
 
     def handle_progress_dialog_start(self, message):
         self.progress_dialog = dialogs.ProgressDialog(message.title)
@@ -1494,45 +1502,46 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.blink_tab("downloading")
 
-class DisplayStatesStore(object):
-    def __init__(self, message):
+class WidgetStateStore(object):
+    def __init__(self):
         self.displays = {}
+        self.views = {}
+
+    def setup_displays(self, message):
         for display in message.displays:
             self.displays[display.key] = display
 
-    def _get_display(self, key):
-        if not isinstance(key[1], unicode):
-            if not isinstance(key[1], int):
-                logging.warn("display id %s should be a unicode or int", repr(key[1]))
-            key = (key[0], unicode(key[1]))
-        if not isinstance(key[0], unicode):
-            logging.warn("display type %s should be a unicode", repr(key[0]))
-            key = (unicode(key[0]), key[1])
+    def setup_views(self, message):
+        for view in message.views:
+            self.views[view.key] = view
+
+    def _save_display_state(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        m = messages.SaveDisplayState(display)
+        m.send_to_backend()
+
+    def _save_view_state(self, display_type, display_id, view_type):
+        view = self._get_view(display_type, display_id, view_type)
+        m = messages.SaveViewState(view)
+        m.send_to_backend()
+
+    def _get_display(self, display_type, display_id):
+        display_id = unicode(display_id)
+        key = (display_type, display_id)
         if not key in self.displays:
             new_display = messages.DisplayInfo(key)
             self.displays[key] = new_display
-            self.save_state(key)
+            self._save_display_state(display_type, display_id)
         return self.displays[key]
 
-    def is_list_view(self, key):
-        display = self._get_display(key)
-        if display.is_list_view is None:
-            return key[0] in widgetconst.DEFAULT_LIST_VIEW_DISPLAYS
-        return display.is_list_view
-
-    def get_sort_state(self, key):
-        display = self._get_display(key)
-        # previous behavior allowed for an unsorted state;
-        # now, None = default sort for display_type
-        sort_state = display.sort_state
-        if sort_state is None:
-            if key[0] in widgetconst.DEFAULT_SORT_COLUMN:
-                sort_state = widgetconst.DEFAULT_SORT_COLUMN[key[0]]
-            else:
-                logging.warn("display type %s does not have an entry in "
-                    "widgetconst.DEFAULT_SORT_COLUMN", repr(key[0]))
-                return None
-        return self._get_sorter(sort_state)
+    def _get_view(self, display_type, display_id, view_type):
+        display_id = unicode(display_id)
+        key = (display_type, display_id, view_type)
+        if not key in self.views:
+            new_view = messages.ViewInfo(key)
+            self.views[key] = new_view
+            self._save_view_state(display_type, display_id, view_type)
+        return self.views[key]
 
     def _get_sorter(self, state):
         ascending = True
@@ -1541,79 +1550,129 @@ class DisplayStatesStore(object):
             ascending = False
         return itemlist.SORT_KEY_MAP[state](ascending)
 
-    def get_columns_enabled(self, key):
-        display = self._get_display(key)
-        columns_enabled = display.columns_enabled
-        if columns_enabled is None:
-            # default to all columns available for view; we may want to change
-            # this later
-            columns_enabled = widgetconst.COLUMNS_AVAILABLE[key[0]]
-        return columns_enabled
+# Real DisplayState Properties:
 
-    def get_column_widths(self, key):
-        display = self._get_display(key)
-        column_widths = display.column_widths
-        if column_widths is None:
-            column_widths = {}
-            for name in self.get_columns_enabled(key):
-                column_widths[name] = widgetconst.DEFAULT_COLUMN_WIDTHS[name]
-        return column_widths
+    def get_selected_view(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        if display.selected_view is not None:
+            view = display.selected_view
+        else:
+            if display_type in widgetconst.DEFAULT_LIST_VIEW_DISPLAYS:
+                view = LIST_VIEW
+            else:
+                view = STANDARD_VIEW
+        return view
 
-    def get_column_width(self, key, name):
-        display = self._get_display(key)
-        column_widths = self.get_column_widths(key)
-        return column_widths[name]
+    def set_selected_view(self, display_type, display_id, selected_view):
+        display = self._get_display(display_type, display_id)
+        display.selected_view = selected_view
+        self._save_display_state(display_type, display_id)
 
-    def get_filters(self, key):
-        display = self._get_display(key)
+    def get_filters(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
         if display.active_filters is None:
             return widgetconst.DEFAULT_DISPLAY_FILTERS
         return display.active_filters
 
-    def set_filters(self, key, filters):
-        display = self._get_display(key)
+    def set_filters(self, display_type, display_id, filters):
+        display = self._get_display(display_type, display_id)
         display.active_filters = filters
-        self.save_state(key)
+        self._save_display_state(display_type, display_id)
 
-    def set_sort_state(self, key, sorter):
-        display = self._get_display(key)
+# ViewState properties that are only valid for specific view_types:
+
+    def get_columns_enabled(self, display_type, display_id, view_type):
+        if view_type == LIST_VIEW:
+            display = self._get_display(display_type, display_id)
+            columns_enabled = display.list_view_columns
+            if columns_enabled is None:
+                # default to all columns available for view; we may want to change
+                # this later
+                columns_enabled = widgetconst.COLUMNS_AVAILABLE[display_type]
+            return columns_enabled
+        else:
+            raise ValueError()
+
+    def set_columns_enabled(self, display_type, display_id, view_type, enabled):
+        if view_type == LIST_VIEW:
+            display = self._get_display(display_type, display_id)
+            display.list_view_columns = enabled
+            self._save_display_state(display_type, display_id)
+        else:
+            raise ValueError()
+
+    def toggle_column(self, display_type, display_id, view_type, column):
+        if view_type == LIST_VIEW:
+            display = self._get_display(display_type, display_id)
+            columns_enabled = self.get_columns_enabled(
+                              display_type, display_id, view_type)
+            if column in columns_enabled:
+                display.list_view_columns.remove(column)
+            else:
+                display.list_view_columns.append(column)
+            self._save_display_state(display_type, display_id)
+        else:
+            raise ValueError()
+
+    def get_column_widths(self, display_type, display_id, view_type):
+        if view_type == LIST_VIEW:
+            display = self._get_display(display_type, display_id)
+            column_widths = display.list_view_widths
+            if column_widths is None:
+                column_widths = {}
+                for name in self.get_columns_enabled(display_type, display_id,
+                        view_type):
+                    column_widths[name] = widgetconst.DEFAULT_COLUMN_WIDTHS[name]
+            return column_widths
+        else:
+            raise ValueError()
+
+    def update_column_widths(self, display_type, display_id, view_type, widths):
+        if view_type == LIST_VIEW:
+            display = self._get_display(display_type, display_id)
+            if display.list_view_widths is None:
+                display.list_view_widths = self.get_column_widths(
+                                        display_type, display_id, view_type)
+            display.list_view_widths.update(widths)
+            self._save_display_state(display_type, display_id)
+        else:
+            raise ValueError()
+
+# Real ViewState properties:
+
+    def get_sort_state(self, display_type, display_id, view_type):
+        view = self._get_view(display_type, display_id, view_type)
+        sort_state = view.sort_state
+        if sort_state is None:
+            sort_state = widgetconst.DEFAULT_SORT_COLUMN.get(display_type, None)
+            if sort_state is None:
+                logging.warn("display type %s does not have an entry in "
+                    "widgetconst.DEFAULT_SORT_COLUMN", repr(display_type))
+                return None
+        return self._get_sorter(sort_state)
+
+    # TODO: use unicodes in sorter rather than convert here
+    def set_sort_state(self, display_type, display_id, view_type, sorter):
+        view = self._get_view(display_type, display_id, view_type)
         # we have an ItemSort object and need to create a string to
         # represent it. Use the sort key, with '-' prepended if the
         # sort is descending (e.g. "date", "-name", "-size", ...)
-        state = sorter.KEY
+        state = unicode(sorter.KEY)
         if not sorter.is_ascending():
             state = '-' + state
-        display.sort_state = state
-        self.save_state(key)
+        view.sort_state = state
+        self._save_view_state(display_type, display_id, view_type)
 
-    def set_columns_enabled(self, key, enabled):
-        display = self._get_display(key)
-        display.columns_enabled = enabled
-        self.save_state(key)
+    def get_scroll_position(self, display_type, display_id, view_type):
+        view = self._get_view(display_type, display_id, view_type)
+        if view.scroll_position is not None:
+            scroll_position = view.scroll_position
+        else:
+            scroll_position = (0, 0)
+        return scroll_position
 
-    def update_column_widths(self, key, widths):
-        display = self._get_display(key)
-        if display.column_widths is None:
-            display.column_widths = self.get_column_widths(key)
-        display.column_widths.update(widths)
-        self.save_state(key)
-
-    def toggle_column(self, key, column):
-        display = self._get_display(key)
-        display.columns_enabled = self.get_columns_enabled(key)
-        try:
-            display.columns_enabled.remove(column)
-        except ValueError:
-            display.columns_enabled.append(column)
-        self.save_state(key)
-
-    def set_is_list_view(self, key, is_list_view):
-        display = self._get_display(key)
-        display.is_list_view = is_list_view
-        self.save_state(key)
-        app.menu_manager.update_menus()
-
-    def save_state(self, key):
-        display = self._get_display(key)
-        m = messages.SaveDisplayState(display)
-        m.send_to_backend()
+    def set_scroll_position(self, display_type, display_id, view_type,
+            scroll_position):
+        view = self._get_view(display_type, display_id, view_type)
+        view.scroll_position = scroll_position
+        self._save_view_state(display_type, display_id, view_type)

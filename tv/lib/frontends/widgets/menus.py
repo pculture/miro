@@ -33,6 +33,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
 from miro.frontends.widgets import widgetconst
 
 from miro.gtcache import gettext as _
@@ -820,7 +821,7 @@ class MenuStateManager(signals.SignalEmitter):
     def _update_menus_for_selected_tabs(self):
         selection_type, selected_tabs = app.tab_list_manager.get_selection()
         if len(selected_tabs) == 1:
-            app.menu_manager._update_view_menu(selection_type, selected_tabs)
+            app.menu_manager._update_view_menu()
         if selection_type is None or getattr(selected_tabs[0], 'is_tab',
                                              False):
             pass
@@ -898,15 +899,17 @@ class MenuStateManager(signals.SignalEmitter):
         self._set_play_pause()
         self.emit('enabled-changed')
 
-    def _update_view_menu(self, display_type, selected_tabs):
-        try:
-            key = (selected_tabs[0].type, selected_tabs[0].id)
-        except AttributeError:
+    def _update_view_menu(self):
+        display = app.display_manager.get_current_display()
+        # using hasattr because not all displays have ids and types
+        # TODO: refactor the display type / id system
+        if not (hasattr(display, 'type') and hasattr(display, 'id')):
             return
-        is_list_view = app.display_state.is_list_view(key)
-        if not is_list_view:
+        view_type = app.widget_state.get_selected_view(display.type, display.id)
+        if view_type != LIST_VIEW:
             return
-        enabled = app.display_state.get_columns_enabled(key)
+        enabled = app.widget_state.get_columns_enabled(
+                  display.type, display.id, view_type)
 
         columns = []
         for k, v in widgetconst.COLUMNS_AVAILABLE.items():
@@ -920,7 +923,7 @@ class MenuStateManager(signals.SignalEmitter):
 
         self.emit('checked-changed', 'ListView', checks)
         self.enabled_groups.add('ListView')
-        for column in widgetconst.COLUMNS_AVAILABLE[key[0]]:
+        for column in widgetconst.COLUMNS_AVAILABLE[display.type]:
             self.enabled_groups.add('column-%s' % column)
 
 def _get_view_menu():

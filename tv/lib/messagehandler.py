@@ -43,7 +43,6 @@ from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
-from miro.displaystate import DisplayState
 from miro import guide
 from miro import fileutil
 from miro import commandline
@@ -56,6 +55,7 @@ from miro import singleclick
 from miro import subscription
 from miro import tabs
 from miro import opml
+from miro.widgetstate import DisplayState, ViewState
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
@@ -1516,21 +1516,34 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                        message.send_report)
 
     def _get_display_state(self, key):
-        try:
-            return DisplayState.make_view("type=? AND id_=?",
-                key).get_singleton()
-        # XXX FIXME
-        except database.ObjectNotFoundError:
+        key_view = DisplayState.make_view("type=? AND id_=?", key)
+        if key_view.count() == 1:
+            return key_view.get_singleton()
+        else:
             return DisplayState(key)
+
+    def _get_view_state(self, key):
+        key_view = ViewState.make_view(
+                   "display_type=? AND display_id=? AND view_type=?", key)
+        if key_view.count() == 1:
+            return key_view.get_singleton()
+        else:
+            return ViewState(key)
 
     def handle_save_display_state(self, message):
         info = message.display_info
         state = self._get_display_state(info.key)
-        state.is_list_view = info.is_list_view
+        state.selected_view = info.selected_view
         state.active_filters = info.active_filters
+        state.list_view_columns = info.list_view_columns
+        state.list_view_widths = info.list_view_widths
+        state.signal_change()
+
+    def handle_save_view_state(self, message):
+        info = message.view_info
+        state = self._get_view_state(info.key)
         state.sort_state = info.sort_state
-        state.columns_enabled = info.columns_enabled
-        state.column_widths = info.column_widths
+        state.scroll_position = info.scroll_position
         state.signal_change()
         
     def _get_display_states(self):
@@ -1540,10 +1553,23 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             display_info = messages.DisplayInfo(key, display)
             states.append(display_info)
         return states
+        
+    def _get_view_states(self):
+        states = []
+        for view in ViewState.make_view():
+            key = (view.display_type, view.display_id, view.view_type)
+            view_info = messages.ViewInfo(key, view)
+            states.append(view_info)
+        return states
 
     def handle_query_display_states(self, message):
         states = self._get_display_states()
         m = messages.CurrentDisplayStates(states)
+        m.send_to_frontend()
+
+    def handle_query_view_states(self, message):
+        states = self._get_view_states()
+        m = messages.CurrentViewStates(states)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):

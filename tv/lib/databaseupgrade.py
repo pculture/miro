@@ -3099,3 +3099,18 @@ def upgrade135(cursor):
     cursor.execute("UPDATE item SET metadata_version=0 WHERE album IS NULL AND "
         "artist IS NULL AND title_tag IS NULL AND track IS NULL AND year IS NULL "
         "AND genre IS NULL")
+
+def upgrade136(cursor):
+    """Create ViewState; move some things from DisplayState to
+    ViewState; drop some orphaned DisplayState entries.
+    """
+    cursor.execute("DELETE FROM display_state WHERE id_ IS NULL")
+    remove_column(cursor, 'display_state', ['sort_state', 'is_list_view'])
+    rename_column(cursor, 'display_state', 'columns_enabled', 'list_view_columns')
+    rename_column(cursor, 'display_state', 'column_widths', 'list_view_widths')
+    cursor.execute("ALTER TABLE display_state ADD COLUMN selected_view integer")
+    cursor.execute("CREATE TABLE view_state (id integer PRIMARY KEY, "
+        "display_type text, display_id text, view_type integer, "
+        "sort_state text, scroll_position pythonrepr)")
+    cursor.execute("CREATE INDEX view_state_key ON view_state "
+        "(display_type, display_id, view_type)")

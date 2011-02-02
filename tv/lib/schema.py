@@ -51,7 +51,6 @@ import datetime
 import time
 from types import NoneType
 from miro.plat.utils import PlatformFilenameType
-from miro.displaystate import DisplayState
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -365,6 +364,7 @@ from miro.iconcache import IconCache
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.tabs import TabOrder
 from miro.theme import ThemeHistory
+from miro.widgetstate import DisplayState, ViewState
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
@@ -690,12 +690,11 @@ class DisplayStateSchema(DDBObjectSchema):
     table_name = 'display_state'
     fields = DDBObjectSchema.fields + [
         ('type', SchemaString()),
-        ('id_', SchemaString(noneOk=True)),
-        ('is_list_view', SchemaBool(noneOk=True)),
+        ('id_', SchemaString()),
+        ('selected_view', SchemaInt(noneOk=True)),
         ('active_filters', SchemaList(SchemaBinary(), noneOk=True)),
-        ('sort_state', SchemaBinary(noneOk=True)),
-        ('columns_enabled', SchemaList(SchemaString(), noneOk=True)),
-        ('column_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
+        ('list_view_columns', SchemaList(SchemaString(), noneOk=True)),
+        ('list_view_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
     ]
 
     indexes = (
@@ -707,11 +706,11 @@ class DisplayStateSchema(DDBObjectSchema):
         return None
 
     @staticmethod
-    def handle_malformed_columns_enabled(value):
+    def handle_malformed_list_view_columns(value):
         return None
 
     @staticmethod
-    def handle_malformed_column_widths(value):
+    def handle_malformed_list_view_widths(value):
         return None
 
 class DBLogEntrySchema(DDBObjectSchema):
@@ -723,7 +722,26 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-VERSION = 135
+class ViewStateSchema(DDBObjectSchema):
+    klass = ViewState
+    table_name = 'view_state'
+    fields = DDBObjectSchema.fields + [
+        ('display_type', SchemaString()),
+        ('display_id', SchemaString()),
+        ('view_type', SchemaInt()),
+        ('sort_state', SchemaString(noneOk=True)),
+        ('scroll_position', SchemaTuple(SchemaInt(), SchemaInt(), noneOk=True)),
+    ]
+
+    indexes = (
+        ('view_state_key', ('display_type', 'display_id', 'view_type')),
+    )
+
+    @staticmethod
+    def handle_malformed_scroll_position(value):
+        return None
+
+VERSION = 136
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -734,5 +752,5 @@ object_schemas = [
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema,
-    DBLogEntrySchema,
+    DBLogEntrySchema, ViewStateSchema,
 ]

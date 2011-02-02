@@ -12,7 +12,7 @@ from miro import downloader
 from miro import item
 from miro import feed
 from miro import folder
-from miro import displaystate
+from miro import widgetstate
 from miro import guide
 from miro import schema
 from miro import signals
@@ -548,7 +548,7 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         self.tab_order = tabs.TabOrder(u'channel')
         self.guide = guide.ChannelGuide(u'http://example.com/')
         self.theme_hist = theme.ThemeHistory()
-        self.display_state = displaystate.DisplayState((u'testtype',u'testid'))
+        self.display_state = widgetstate.DisplayState((u'testtype', u'testid'))
 
     def check_fixed_value(self, obj, column_name, value, disk_value=None):
         obj = self.reload_object(obj)
@@ -606,17 +606,15 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
 
     def test_corrupt_display_state(self):
         app.db.cursor.execute("UPDATE display_state SET "
-                "active_filters=?, sort_state=?, columns_enabled=?, "
-                "column_widths=?, is_list_view=? WHERE id=?",
-                ('{baddata', 'CANARY', '{baddata', '{baddata', True,
-                    self.display_state.id))
+                "active_filters=?, selected_view=?, "
+                "list_view_columns=?, list_view_widths=? WHERE id=?",
+                ('{baddata', 1, '{baddata', '{baddata', self.display_state.id))
         self.check_fixed_value(self.display_state, 'active_filters', None)
-        self.check_fixed_value(self.display_state, 'columns_enabled', None)
-        self.check_fixed_value(self.display_state, 'column_widths', None)
+        self.check_fixed_value(self.display_state, 'list_view_columns', None)
+        self.check_fixed_value(self.display_state, 'list_view_widths', None)
         # check that fields with valid values were salvaged
         reloaded = self.reload_object(self.display_state)
-        self.assertEquals(reloaded.sort_state, 'CANARY')
-        self.assertEquals(reloaded.is_list_view, True)
+        self.assertEquals(reloaded.selected_view, 1)
 
     def test_corrupt_link_history(self):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy

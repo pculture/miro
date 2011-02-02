@@ -409,12 +409,11 @@ class AudioVideoItemsDisplay(ItemListDisplay):
 
     def remember_state(self):
         filters = self.widget.toolbar.active_filters()
-        display = (self.type, self.id)
-        app.display_state.set_filters(display, filters)
+        app.widget_state.set_filters(self.type, self.id, filters)
 
     def restore_state(self):
         display = (self.type, self.id)
-        initial_filters = app.display_state.get_filters(display)
+        initial_filters = app.widget_state.get_filters(display)
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
 

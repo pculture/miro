@@ -820,6 +820,17 @@ class QueryDisplayStates(BackendMessage):
     """
     pass
 
+class SaveViewState(BackendMessage):
+    """Save changes to one tableview for the frontend
+    """
+    def __init__(self, view_info):
+        self.view_info = view_info
+
+class QueryViewStates(BackendMessage):
+    """Ask for a CurrentViewStates message to be sent back.
+    """
+    pass
+
 class SetDeviceType(BackendMessage):
     """
     Tell the backend which specific type of device we're dealing with.
@@ -1562,31 +1573,47 @@ class CurrentDisplayStates(FrontendMessage):
     def __init__(self, display_infos):
         self.displays = display_infos
 
+class CurrentViewStates(FrontendMessage):
+    """Returns the states of all Views
+    """
+    def __init__(self, view_infos):
+        self.views = view_infos
+
 class DisplayInfo(object):
-    """Contains the state of a single display
+    """Contains the properties that:
+       -are shared across all TableViews for a Display or
+       -apply to just one view in a display
     """
     def __init__(self, key, display=None):
         self.key = key
-        try:
-            self.is_list_view = display.is_list_view
-        except StandardError:
-            self.is_list_view = None
-        try:
+        if display is not None:
+            self.selected_view = display.selected_view
+        else:
+            self.selected_view = None
+        if display is not None and display.active_filters is not None:
             self.active_filters = display.active_filters[:]
-        except StandardError:
+        else:
             self.active_filters = None
-        try:
-            self.sort_state = display.sort_state
-        except StandardError:
+        if display is not None and display.list_view_columns is not None:
+            self.list_view_columns = display.list_view_columns[:]
+        else:
+            self.list_view_columns = None
+        if display is not None and display.list_view_widths is not None:
+            self.list_view_widths = display.list_view_widths.copy()
+        else:
+            self.list_view_widths = None
+
+class ViewInfo(object):
+    """Contains the properties that are unique to each View
+    """
+    def __init__(self, key, view=None):
+        self.key = key
+        if view is not None:
+            self.sort_state = view.sort_state
+            self.scroll_position = view.scroll_position
+        else:
             self.sort_state = None
-        try:
-            self.columns_enabled = display.columns_enabled[:]
-        except StandardError:
-            self.columns_enabled = None
-        try:
-            self.column_widths = display.column_widths.copy()
-        except StandardError:
-            self.column_widths = None
+            self.scroll_position = None
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

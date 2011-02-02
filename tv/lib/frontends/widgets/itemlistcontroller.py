@@ -47,6 +47,7 @@ from miro import messages
 from miro import subscription
 from miro import prefs
 from miro.gtcache import gettext as _
+from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
@@ -93,13 +94,15 @@ class ItemListController(object):
         self.id = id_
         self._search_text = ''
         self.item_tracker = None
-        display = (typ, id_)
-        self.is_list_view = app.display_state.is_list_view(display)
-        self.columns_enabled = app.display_state.get_columns_enabled(display)
-        self.column_widths = app.display_state.get_column_widths(display)
+        self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
+        self.columns_enabled = app.widget_state.get_columns_enabled(
+                self.type, self.id, LIST_VIEW)
+        self.column_widths = app.widget_state.get_column_widths(
+                self.type, self.id, LIST_VIEW)
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
-        sorter = app.display_state.get_sort_state(display)
+        # TODO: change this to restore ItemView sort also
+        sorter = app.widget_state.get_sort_state(self.type, self.id, LIST_VIEW)
         self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
         self.initialize_search()
@@ -114,8 +117,9 @@ class ItemListController(object):
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
+        is_list_view = (self.selected_view == LIST_VIEW)
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
-            self.is_list_view)
+            is_list_view)
         self.item_list = itemlist.ItemList()
         self.list_item_view = self.build_list_item_view()
         scroller = widgetset.Scroller(True, True)
@@ -134,16 +138,17 @@ class ItemListController(object):
         self.build_widget()
 
     def set_is_list_view(self, _widget, is_list_view):
-        self.is_list_view = is_list_view
-        key = (self.type, self.id)
-        if self.is_list_view:
+        if is_list_view:
+            self.selected_view = LIST_VIEW
             self.widget.switch_to_list_view()
         else:
+            self.selected_view = STANDARD_VIEW
             self.widget.switch_to_normal_view()
-        app.display_state.set_is_list_view(key, is_list_view)
+        app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
+        app.menu_manager.update_menus()
 
     def get_current_item_view(self):
-        if self.is_list_view:
+        if self.selected_view == LIST_VIEW:
             return self.list_item_view
         else:
             return self.item_view
@@ -157,9 +162,10 @@ class ItemListController(object):
         return itemlistwidgets.HeaderToolbar()
 
     def update_columns_enabled(self):
-        key = (self.type, self.id)
-        self.columns_enabled = app.display_state.get_columns_enabled(key)
-        self.column_widths = app.display_state.get_column_widths(key)
+        self.columns_enabled = app.widget_state.get_columns_enabled(
+                self.type, self.id, LIST_VIEW)
+        self.column_widths = app.widget_state.get_column_widths(
+                self.type, self.id, LIST_VIEW)
         self.list_item_view.update_columns(self.columns_enabled,
             self.column_widths)
 
@@ -276,21 +282,15 @@ class ItemListController(object):
             item_view.model_changed()
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
         self.list_item_view.change_sort_indicator(sort_key, ascending)
-        display = (self.type, self.id)
-        app.display_state.set_sort_state(display, sorter)
+        app.widget_state.set_sort_state(self.type, self.id, LIST_VIEW, sorter)
 
     def on_columns_enabled_changed(self, object, columns_enabled):
-        key = (self.type, self.id)
-        app.display_state.set_columns_enabled(key, columns_enabled)
+        app.widget_state.set_columns_enabled(
+                self.type, self.id, LIST_VIEW, columns_enabled)
 
     def on_column_widths_changed(self, object, column_widths):
-        key = (self.type, self.id)
-        app.display_state.update_column_widths(key, column_widths)
-
-    def on_toggle_column(self, column):
-        self.enabled_columns ^= set([column])
-        display = (self.type, self.id)
-        app.display_state[display].set_columns_state(self.enabled_columns)
+        app.widget_state.update_column_widths(
+                self.type, self.id, LIST_VIEW, column_widths)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:

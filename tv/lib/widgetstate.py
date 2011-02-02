@@ -27,18 +27,35 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.displaystate -- Object that stores data for each display.
+"""miro.widgetstate - The state of Widgets frontend UI objects.
+See WidgetState design doc in wiki for details.
 """
 
 from miro.database import DDBObject
 
+STANDARD_VIEW = 0
+LIST_VIEW = 1
+
 class DisplayState(DDBObject):
+    """Properties that are shared across all TableViews for a Display, or only
+    used by one (ListView or ItemView)
+    """
     def setup_new(self, display):
         self.type = display[0]
         self.id_ = display[1]
-        # None = use default:
-        self.is_list_view = None
+        # shared properties
+        self.selected_view = None
         self.active_filters = None
+        # ListView properties
+        self.list_view_columns = None
+        self.list_view_widths = None
+
+class ViewState(DDBObject):
+    """Properties that need to be stored for each TableView
+    """
+    def setup_new(self, key):
+        self.display_type = key[0]
+        self.display_id = key[1]
+        self.view_type = key[2]
         self.sort_state = None
-        self.columns_enabled = None
-        self.column_widths = None
+        self.scroll_position = None

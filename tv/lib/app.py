@@ -107,7 +107,7 @@ watched_folder_manager = None
 store_manager = None
 
 # keeps track of frontend states
-display_state = {}
+widget_state = None
 
 # gtk/windows video renderer
 video_renderer = None

@@ -40,6 +40,7 @@ from miro import app
 from miro import prefs
 
 from miro.gtcache import gettext as _
+from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.menus import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.plat.frontends.widgets import wrappermap
@@ -121,9 +122,11 @@ def update_view_menu_state():
         key = (display.type, display.id)
     except AttributeError:
         return
-    if not app.display_state.is_list_view(key):
+    view_type = app.widget_state.get_selected_view(display.type, display.id)
+    if view_type != LIST_VIEW:
         return
-    enabled = app.display_state.get_columns_enabled(key)
+    enabled = app.widget_state.get_columns_enabled(
+              display.type, display.id, view_type)
 
     columns = []
     for k, v in COLUMNS_AVAILABLE.items():
@@ -132,7 +135,7 @@ def update_view_menu_state():
 
     for column in columns:
         menu_item = VIEW_ITEM_MAP[column]
-        hidden = not column in COLUMNS_AVAILABLE[key[0]]
+        hidden = not column in COLUMNS_AVAILABLE[display.type]
         menu_item.setHidden_(hidden)
         if hidden:
             continue

@@ -416,6 +416,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.download = None
         self.wasUpdating = False
         self.inlineSearchTerm = None
+        self.type = u'feed'
         self.calc_item_list()
 
     def _get_actual_feed(self):
