@@ -53,6 +53,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import separator
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -843,6 +844,8 @@ class HeaderToolbar(widgetset.Background):
         self._make_button(_('Time'), 'length')
         self._button_map['date'].set_sort_state(SortBarButton.SORT_DOWN)
 
+        self.filter = WidgetStateStore.get_view_all_filter()
+
     def create_signals(self):
         self.create_signal('sort-changed')
         self.create_signal('list-view-clicked')
@@ -868,23 +871,14 @@ class HeaderToolbar(widgetset.Background):
         self._button_hbox_container.hide()
         self.view_switch.set_active('list-view')
 
-    def switch_to_view_all(self):
-        self.filter_switch.set_active('view-all')
-        self.filter_switch.set_active('view-unwatched', False)
-        self.filter_switch.set_active('view-non-feed', False)
-
-    def switch_to_view_all_if_necessary(self):
-        view_all = (not self.filter_switch.is_active('view-unwatched')
-                    and not self.filter_switch.is_active('view-non-feed'))
-        self.filter_switch.set_active('view-all', view_all)
-
-    def toggle_unwatched_only(self):
-        self.filter_switch.toggle('view-unwatched')
-        self.switch_to_view_all_if_necessary()
-
-    def toggle_non_feed_only(self):
-        self.filter_switch.toggle('view-non-feed')
-        self.switch_to_view_all_if_necessary()
+    def toggle_filter(self, filter_):
+        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
+        view_all = WidgetStateStore.is_view_all_filter(self.filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
+        non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
+        self.filter_switch.set_active('view-all', view_all is True)
+        self.filter_switch.set_active('view-unwatched', unwatched is True)
+        self.filter_switch.set_active('view-non-feed', non_feed is True)
 
     def change_sort_indicator(self, column_name, ascending):
         if not column_name in self._button_map:
@@ -929,7 +923,7 @@ class HeaderToolbar(widgetset.Background):
         """
         self.filter_switch = segmented.SegmentedButtonsRow(*args, **kwargs)
 
-    def add_filter(self, button_name, signal_name, label):
+    def add_filter(self, button_name, signal_name, signal_param, label):
         """Helper method to add a button to the SegmentedButtonsRow made in
         make_filter_switch()
 
@@ -940,7 +934,7 @@ class HeaderToolbar(widgetset.Background):
 
         self.create_signal(signal_name)
         def callback(button):
-            self.emit(signal_name)
+            self.emit(signal_name, signal_param)
         self.filter_switch.add_text_button(button_name, label, callback)
 
     def add_filter_switch(self, *active_filters):
@@ -980,11 +974,14 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.make_filter_switch(behavior='custom')
         # this "All" is different than other "All"s in the codebase, so it
         # needs to be clarified
-        self.add_filter('view-all', 'view-all-clicked',
+        view_all = WidgetStateStore.get_view_all_filter()
+        unwatched = WidgetStateStore.get_unwatched_filter()
+        non_feed = WidgetStateStore.get_non_feed_filter()
+        self.add_filter('view-all', 'toggle-filter', view_all,
                          declarify(_('View|All')))
-        self.add_filter('view-unwatched', 'toggle-unwatched-clicked',
+        self.add_filter('view-unwatched', 'toggle-filter', unwatched,
                         self.unwatched_label)
-        self.add_filter('view-non-feed', 'toggle-non-feed-clicked',
+        self.add_filter('view-non-feed', 'toggle-filter', non_feed,
                         _('Non Feed'))
         self.add_filter_switch('view-all')
 
@@ -998,12 +995,15 @@ class ChannelHeaderToolbar(HeaderToolbar):
         self.make_filter_switch(behavior='radio')
         # this "All" is different than other "All"s in the codebase, so it
         # needs to be clarified
-        self.add_filter('view-all', 'view-all-clicked',
+        view_all = WidgetStateStore.get_view_all_filter()
+        unwatched = WidgetStateStore.get_unwatched_filter()
+        downloaded = WidgetStateStore.get_downloaded_filter()
+        self.add_filter('view-all', 'toggle-filter', view_all,
                          declarify(_('View|All')))
-        self.add_filter('only-downloaded', 'only-downloaded-clicked',
+        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
                         _('Downloaded'))
-        self.add_filter('only-unplayed',
-                        'only-unplayed-clicked', _('Unplayed'))
+        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
+                        _('Unplayed'))
         self.add_filter_switch('view-all')
 
     def set_active_filters(self, filters):
@@ -1129,6 +1129,9 @@ class ItemContainerWidget(widgetset.VBox):
         else:
             self.background.add(self.normal_view_vbox)
             self.toolbar.switch_to_normal_view()
+
+    def toggle_filter(self, filter_):
+        self.toolbar.toggle_filter(filter_)
 
     def switch_to_list_view(self, toolbar=None):
         if not self.in_list_view:

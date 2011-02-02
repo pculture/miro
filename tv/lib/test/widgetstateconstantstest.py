@@ -17,9 +17,6 @@ class WidgetStateConstants(MiroTestCase):
         display_types = set(WidgetStateStore.DEFAULT_VIEW_TYPE.keys())
         self.assertSetEqual(self.display_types, display_types)
 
-    def test_default_display_filters(self):
-        self.assertIsInstance(WidgetStateStore.DEFAULT_DISPLAY_FILTERS, list)
-
     def test_default_column_widths(self):
         columns = set(WidgetStateStore.DEFAULT_COLUMN_WIDTHS.keys())
         self.assertSetEqual(self.columns, columns)

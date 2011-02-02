@@ -84,7 +84,7 @@ class ItemListController(object):
     
     :attribute widget: Widget used to display this controller
     """
-    def __init__(self, typ, id_):
+    def __init__(self, typ, id_, has_filters):
         """Construct a ItemListController.
 
         type and id are the same as in the constructor to
@@ -92,30 +92,44 @@ class ItemListController(object):
         """
         self.type = typ
         self.id = id_
+        self.views = {}
         self._search_text = ''
         self.item_tracker = None
         self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
-        list_view = WidgetStateStore.get_list_view_type()
-        self.columns_enabled = app.widget_state.get_columns_enabled(
-                self.type, self.id, list_view)
-        self.column_widths = app.widget_state.get_column_widths(
-                self.type, self.id, list_view)
         self._init_widget()
-        item_lists = set(iv.item_list for iv in self.all_item_views())
-        # TODO: change this to restore ItemView sort also
-        sort_key = app.widget_state.get_sort_state(self.type, self.id, list_view)
-        sorter = self._make_sorter(sort_key)
-        self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
+        if has_filters:
+            self.restore_filters()
+        item_lists = set(iv.item_list for iv in self.views.values())
+        self.item_list_group = itemlist.ItemListGroup(item_lists)
+        self.multiview_sorter = None
+        self.make_multiview_sorters()
+        self.make_sorters()
         self._init_item_views()
         self.initialize_search()
-        sorter = self.item_list_group.get_sort()
+        self._items_added_callback = self._playback_item_list = None
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
-        self.widget.toolbar.change_sort_indicator(
-            sorter.KEY, sorter.is_ascending())
-        self.list_item_view.change_sort_indicator(
-            sorter.KEY, sorter.is_ascending())
-        self._items_added_callback = self._playback_item_list = None
+
+    def make_multiview_sorters(self):
+        pass
+    
+    def make_sorters(self):
+        for view_type, view in self.views.items():
+            if self.multiview_sorter is None:
+                sorter = self.get_sorter(view_type)
+            else:
+                sorter = self.multview_sorter
+            view.item_list.set_sort(sorter)
+            if WidgetStateStore.is_list_view(view_type):
+                view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
+            else:
+                self.widget.toolbar.change_sort_indicator(
+                        sorter.KEY, sorter.is_ascending())
+
+    def get_sorter(self, view_type):
+        sort_key = app.widget_state.get_sort_state(
+                self.type, self.id, view_type)
+        return self._make_sorter(sort_key)
 
     def _make_sorter(self, key):
         if key.startswith('-'):
@@ -128,11 +142,23 @@ class ItemListController(object):
 
     def _make_sort_key(self, sorter):
         key = unicode(sorter.KEY)
-        if sorter.is_ascending:
+        if sorter.is_ascending():
             state = key
         else:
             state = u'-' + key
         return state
+
+    def restore_filters(self):
+        filters = app.widget_state.get_filters(self.type, self.id)
+        self.widget.toggle_filter(filters)
+        self.item_list.toggle_filter(filters)
+        self._toolbar_filter_changed()
+
+    def on_toggle_filter(self, button, filter_):
+        self.widget.toggle_filter(filter_)
+        self.item_list.toggle_filter(filter_)
+        self._toolbar_filter_changed()
+        app.widget_state.toggle_filters(self.type, self.id, filter_)
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
@@ -140,59 +166,79 @@ class ItemListController(object):
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
             is_list_view)
         self.item_list = itemlist.ItemList()
-        self.list_item_view = self.build_list_item_view()
-        scroller = widgetset.Scroller(True, True)
-        scroller.add(self.list_item_view)
-        self.widget.list_view_vbox.pack_start(scroller, expand=True)
-        self.widget.toolbar.connect_weak('list-view-clicked',
-            self.set_is_list_view, True)
-        self.widget.toolbar.connect_weak('normal-view-clicked',
-            self.set_is_list_view, False)
-        self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
-        self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
-        self.list_item_view.connect_weak('columns-enabled-changed',
-            self.on_columns_enabled_changed)
-        self.list_item_view.connect_weak('column-widths-changed',
-            self.on_column_widths_changed)
+
         self.build_widget()
 
-    def set_is_list_view(self, _widget, is_list_view):
-        if is_list_view:
-            self.selected_view = WidgetStateStore.get_list_view_type()
+        list_view = WidgetStateStore.get_list_view_type()
+        self.views[list_view] = self.build_list_view()
+
+        standard_view = WidgetStateStore.get_standard_view_type()
+        self.views[standard_view] = self.build_standard_view()
+
+        toolbar.connect_weak('sort-changed',
+            self.on_sort_changed, standard_view)
+        self.views[list_view].connect_weak('sort-changed',
+            self.on_sort_changed, list_view)
+        toolbar.connect_weak('list-view-clicked',
+            self.set_view, list_view)
+        toolbar.connect_weak('normal-view-clicked',
+            self.set_view, standard_view)
+        self.views[list_view].connect_weak('columns-enabled-changed',
+            self.on_columns_enabled_changed, list_view)
+        self.views[list_view].connect_weak('column-widths-changed',
+            self.on_column_widths_changed, list_view)
+
+    def set_view(self, _widget, view):
+        self.selected_view = view
+        if WidgetStateStore.is_list_view(view):
             self.widget.switch_to_list_view()
         else:
-            self.selected_view = WidgetStateStore.get_standard_view_type()
             self.widget.switch_to_normal_view()
         app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
         app.menu_manager.update_menus()
 
     def get_current_item_view(self):
-        if WidgetStateStore.is_list_view(self.selected_view):
-            return self.list_item_view
-        else:
-            return self.item_view
+        return self.views[self.selected_view]
     current_item_view = property(get_current_item_view)
 
-    def build_list_item_view(self):
-        return itemlistwidgets.ListView(self.item_list,
-                self.columns_enabled, self.column_widths)
+    def build_widget(self):
+        """Build the container widget for this controller."""
+        raise NotImplementedError()
+
+    def build_standard_view(self):
+        """Build the standard view widget for this controller."""
+        raise NotImplementedError()
+
+    def build_list_view(self):
+        """Build the list view widget for this controller."""
+        list_view_type = WidgetStateStore.get_list_view_type()
+        list_view_columns = app.widget_state.get_columns_enabled(
+                self.type, self.id, list_view_type)
+        list_view_widths = app.widget_state.get_column_widths(
+                self.type, self.id, list_view_type)
+        list_view = itemlistwidgets.ListView(
+               self.item_list, list_view_columns, list_view_widths)
+        scroller = widgetset.Scroller(True, True)
+        scroller.add(list_view)
+        self.widget.list_view_vbox.pack_start(scroller, expand=True)
+        return list_view
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
 
     def update_columns_enabled(self):
         list_view = WidgetStateStore.get_list_view_type()
-        self.columns_enabled = app.widget_state.get_columns_enabled(
+        list_view_columns = app.widget_state.get_columns_enabled(
                 self.type, self.id, list_view)
-        self.column_widths = app.widget_state.get_column_widths(
+        list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view)
-        self.list_item_view.update_columns(self.columns_enabled,
-            self.column_widths)
+        self.views[list_view].update_columns(list_view_columns,
+            list_view_widths)
 
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
-        for item_view in self.all_item_views():
+        for item_view in self.views.values():
             item_view.connect_weak('selection-changed',
                     self.on_selection_changed)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
@@ -288,33 +334,30 @@ class ItemListController(object):
             self._trigger_item(item_view, info)
 
     def _toolbar_filter_changed(self):
-        for item_view in self.all_item_views():
+        for item_view in self.views.values():
             item_view.model_changed()
         self.check_for_empty_list()
 
-    def on_sort_changed(self, object, sort_key, ascending):
-        for item_view in self.all_item_views():
-            item_view.start_bulk_change()
+    def on_sort_changed(self, object, sort_key, ascending, view):
+        self.views[view].start_bulk_change()
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
-        for item_list in self.item_list_group.item_lists:
-            item_list.set_sort(sorter)
-        for item_view in self.all_item_views():
-            item_view.model_changed()
-        self.widget.toolbar.change_sort_indicator(sort_key, ascending)
-        self.list_item_view.change_sort_indicator(sort_key, ascending)
+        self.views[view].item_list.set_sort(sorter)
+        self.views[view].model_changed()
         list_view = WidgetStateStore.get_list_view_type()
+        if view == list_view:
+            self.views[list_view].change_sort_indicator(sort_key, ascending)
+        else:
+            self.widget.toolbar.change_sort_indicator(sort_key, ascending)
         sort_key = self._make_sort_key(sorter)
-        app.widget_state.set_sort_state(self.type, self.id, list_view, sort_key)
+        app.widget_state.set_sort_state(self.type, self.id, view, sort_key)
 
-    def on_columns_enabled_changed(self, object, columns_enabled):
-        list_view = WidgetStateStore.get_list_view_type()
+    def on_columns_enabled_changed(self, object, columns, view_type):
         app.widget_state.set_columns_enabled(
-                self.type, self.id, list_view, columns_enabled)
+                self.type, self.id, view_type, columns)
 
-    def on_column_widths_changed(self, object, column_widths):
-        list_view = WidgetStateStore.get_list_view_type()
+    def on_column_widths_changed(self, object, widths, view_type):
         app.widget_state.update_column_widths(
-                self.type, self.id, list_view, column_widths)
+                self.type, self.id, view_type, widths)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
@@ -443,7 +486,7 @@ class ItemListController(object):
     def _on_playback_change(self, playback_manager, *args):
         # The currently playing item has changed, redraw the view to
         # change which item gets the "currently playing" badge.
-        for item_view in self.all_item_views():
+        for item_view in self.views.values():
             item_view.queue_redraw()
 
     def _playback_will_stop(self, playback_manager):
@@ -453,18 +496,18 @@ class ItemListController(object):
             self._playback_item_list = self._items_added_callback = None
 
     def handle_items_will_change(self, obj, added, changed, removed):
-        for item_view in self.all_item_views():
+        for item_view in self.views.values():
             item_view.start_bulk_change()
 
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
-        for item_view in self.all_item_views():
+        for item_view in self.views.values():
             item_view.model_changed()
         self.on_initial_list()
 
     def handle_items_changed(self, obj, added, changed, removed):
         """Handle an ItemsChanged message meant for this ItemContainer."""
-        for item_view in self.all_item_views():
+        for item_view in self.views.values():
             item_view.model_changed()
         self.on_items_changed()
 
@@ -491,32 +534,31 @@ class ItemListController(object):
     def make_drop_handler(self):
         return None
 
-    def build_widget(self):
-        """Build the widget for this controller."""
-        raise NotImplementedError()
-
-    def all_item_views(self):
-        yield self.item_view
-        yield self.list_item_view
-
     def no_longer_displayed(self):
-        if self.list_item_view:
-            self.list_item_view.on_undisplay()
+        list_view = WidgetStateStore.get_list_view_type()
+        if list_view in self.views:
+            self.views[list_view].on_undisplay()
 
 class SimpleItemListController(ItemListController):
-    def __init__(self):
-        ItemListController.__init__(self, self.type, self.id)
+    def __init__(self, has_filters=False):
+        self.display_channel = True
+        ItemListController.__init__(self, self.type, self.id,
+                has_filters=has_filters)
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
-        self.item_view = self.build_item_view()
         self.widget.titlebar_vbox.pack_start(self.titlebar)
-        scroller = widgetset.Scroller(False, True)
-        scroller.add(self.item_view)
-        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
-    def build_item_view(self):
-        return itemlistwidgets.StandardView(self.item_list)
+    def build_standard_view(self):
+        scroller = widgetset.Scroller(False, True)
+        standard_view_type = WidgetStateStore.get_standard_view_type()
+        standard_view = self.get_standard_view()
+        scroller.add(standard_view)
+        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
+        return standard_view
+
+    def get_standard_view(self):
+        return itemlistwidgets.StandardView(self.item_list, self.display_channel)
 
     def make_titlebar(self):
         icon = self._make_icon()
@@ -629,42 +671,13 @@ class SearchController(SimpleItemListController):
             self.widget.set_list_empty_mode(True)
 
 class AudioVideoItemsController(SimpleItemListController):
-    def build_item_view(self):
-        return itemlistwidgets.StandardView(self.item_list, True)
+    def __init__(self):
+        SimpleItemListController.__init__(self, has_filters=True)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
-        toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
-        toolbar.connect_weak('toggle-unwatched-clicked',
-                             self.on_toggle_unwatched)
-        toolbar.connect_weak('toggle-non-feed-clicked',
-                             self.on_toggle_non_feed)
+        toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
         return toolbar
-
-    def on_view_all_clicked(self, button):
-        self.widget.toolbar.switch_to_view_all()
-        self.item_list.view_all()
-        self._toolbar_filter_changed()
-
-    def on_toggle_unwatched(self, button):
-        self.widget.toolbar.toggle_unwatched_only()
-        self.item_list.toggle_unwatched_only()
-        self._toolbar_filter_changed()
-
-    def on_toggle_non_feed(self, button):
-        self.widget.toolbar.toggle_non_feed_only()
-        self.item_list.toggle_non_feed()
-        self._toolbar_filter_changed()
-
-    def set_item_filters(self, filters):
-        if 'view-all' in filters:
-            unwatched = False
-            non_feed = False
-        else:
-            unwatched = 'view-unwatched' in filters
-            non_feed = 'view-non-feed' in filters
-            self.item_list.set_filters(unwatched, non_feed, False)
-        self.widget.toolbar.set_active_filters(filters)
 
 class VideoItemsController(AudioVideoItemsController):
     type = u'videos'
@@ -672,6 +685,7 @@ class VideoItemsController(AudioVideoItemsController):
     image_filename = 'icon-video_large.png'
     title = _("Video")
     unwatched_label =  _('Unwatched')
+    display_channel = True
 
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'
@@ -679,15 +693,14 @@ class AudioItemsController(AudioVideoItemsController):
     image_filename = 'icon-audio_large.png'
     title = _("Music")
     unwatched_label = _('Unplayed')
+    display_channel = True
 
 class OtherItemsController(SimpleItemListController):
     type = u'others'
     id = u'others'
     image_filename = 'icon-other_large.png'
     title = _("Other")
-
-    def build_item_view(self):
-        return itemlistwidgets.ItemView(self.item_list, True)
+    display_channel = True
 
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""

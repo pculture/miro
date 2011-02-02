@@ -3116,3 +3116,9 @@ def upgrade136(cursor):
         "sort_state text, scroll_position pythonrepr)")
     cursor.execute("CREATE INDEX view_state_key ON view_state "
         "(display_type, display_id, view_type)")
+
+def upgrade137(cursor):
+    """Change filters to integers
+    """
+    remove_column(cursor, 'display_state', ['active_filters'])
+    cursor.execute("ALTER TABLE display_state ADD active_filters integer")

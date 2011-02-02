@@ -54,7 +54,8 @@ class FeedController(itemlistcontroller.ItemListController):
     def __init__(self, id, is_folder, is_directory_feed):
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
-        itemlistcontroller.ItemListController.__init__(self, u'feed', id)
+        self.display_channel = self.is_folder
+        itemlistcontroller.ItemListController.__init__(self, u'feed', id, True)
 
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
@@ -62,8 +63,6 @@ class FeedController(itemlistcontroller.ItemListController):
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
         icon = imagepool.get(feed_info.thumbnail, size=(41, 41))
-        self.item_view = itemlistwidgets.StandardView(self.item_list,
-                self.is_folder)
 
         add_icon_box = (not self.is_folder
                 and not feed_info.thumbnail.startswith(resources.root()))
@@ -81,37 +80,20 @@ class FeedController(itemlistcontroller.ItemListController):
             self.widget.titlebar_vbox.pack_start(sep)
             self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
 
+    def build_standard_view(self):
+        standard_view = itemlistwidgets.StandardView(
+                self.item_list, self.is_folder)
         background = widgetset.SolidBackground((1, 1, 1))
-        background.add(self.item_view)
-
+        background.add(standard_view)
         scroller = widgetset.Scroller(False, True)
         scroller.add(background)
-
         self.widget.normal_view_vbox.pack_start(scroller, expand=True)
+        return standard_view
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.ChannelHeaderToolbar()
-        toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
-        toolbar.connect_weak('only-downloaded-clicked',
-                self.on_only_downloaded_clicked)
-        toolbar.connect_weak('only-unplayed-clicked',
-                self.on_only_unplayed_clicked)
+        toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
         return toolbar
-
-    def on_view_all_clicked(self, button):
-        self.widget.toolbar.set_active_filter('view-all')
-        self.item_list.view_all()
-        self._toolbar_filter_changed()
-
-    def on_only_downloaded_clicked(self, button):
-        self.widget.toolbar.set_active_filter('only-downloaded')
-        self.item_list.set_filters(False, False, True)
-        self._toolbar_filter_changed()
-
-    def on_only_unplayed_clicked(self, button):
-        self.widget.toolbar.set_active_filter('only-unplayed')
-        self.item_list.set_filters(True, False, False)
-        self._toolbar_filter_changed()
 
     def check_for_empty_list(self):
         # TODO: should we do something here?

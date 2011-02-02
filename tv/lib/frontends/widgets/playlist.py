@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import style
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 class DropHandler(signals.SignalEmitter):
     def __init__(self, playlist_id, item_view, sorter):
@@ -120,15 +121,18 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         self.id = playlist_info.id
         self.title = playlist_info.name
         self.is_folder = playlist_info.is_folder
-        self._sorter = PlaylistSort()
         itemlistcontroller.SimpleItemListController.__init__(self)
-        self.item_list_group.set_sort(self._sorter)
 
-    def build_item_view(self):
+    def make_sorters(self):
+        self.multiview_sorter = PlaylistSort()
+
+    def get_standard_view(self):
         return PlaylistStandardView(self.item_list, self.id)
 
     def make_drop_handler(self):
-        handler = DropHandler(self.id, self.item_view, self._sorter)
+        standard_view_type = WidgetStateStore.get_standard_view_type()
+        standard_view = self.views[standard_view_type]
+        handler = DropHandler(self.id, standard_view, self.multiview_sorter)
         handler.connect('new-order', self._on_new_order)
         return handler
 
@@ -157,8 +161,8 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
     def handle_items_will_change(self, obj, added, changed, removed):
         itemlistcontroller.SimpleItemListController.handle_items_will_change(
                 self, obj, added, changed, removed)
-        self._sorter.add_items(added)
-        self._sorter.forget_items(removed)
+        self.multiview_sorter.add_items(added)
+        self.multiview_sorter.forget_items(removed)
 
     def check_for_empty_list(self):
         list_empty = (self.item_list.get_count() == 0)

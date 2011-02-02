@@ -692,7 +692,7 @@ class DisplayStateSchema(DDBObjectSchema):
         ('type', SchemaString()),
         ('id_', SchemaString()),
         ('selected_view', SchemaInt(noneOk=True)),
-        ('active_filters', SchemaList(SchemaBinary(), noneOk=True)),
+        ('active_filters', SchemaInt(noneOk=True)),
         ('list_view_columns', SchemaList(SchemaString(), noneOk=True)),
         ('list_view_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
     ]
@@ -700,10 +700,6 @@ class DisplayStateSchema(DDBObjectSchema):
     indexes = (
         ('display_state_display', ('type', 'id_')),
     )
-
-    @staticmethod
-    def handle_malformed_active_filters(value):
-        return None
 
     @staticmethod
     def handle_malformed_list_view_columns(value):
@@ -741,7 +737,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_scroll_position(value):
         return None
 
-VERSION = 136
+VERSION = 137
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

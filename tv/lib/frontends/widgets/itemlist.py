@@ -48,6 +48,7 @@ from miro import app
 from miro import search
 from miro import signals
 from miro import util
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
@@ -228,18 +229,16 @@ class ItemListGroup(object):
     added/changed/removed they take care of making sure each child list
     updates itself.
 
-    ItemLists maintain an item sorting and a search filter that are shared by
-    each child list.
+    ItemLists maintain a search filter that is shared by each child list.
     """
 
-    def __init__(self, item_lists, sorter=None):
+    def __init__(self, item_lists):
         """Construct in ItemLists.
 
         item_lists is a list of ItemList objects that should be grouped
         together.
         """
         self.item_lists = item_lists
-        self.set_sort(sorter)
         self._throbber_timeouts = {}
 
     def _throbber_timeout(self, id):
@@ -290,18 +289,6 @@ class ItemListGroup(object):
         for sublist in self.item_lists:
             sublist.remove_items(removed_ids)
 
-    def set_sort(self, sorter):
-        """Change the way items are sorted in the list (and filtered lists)
-
-        sorter must be a subclass of ItemSort.
-        """
-        self._sorter = sorter
-        for sublist in self.item_lists:
-            sublist.set_sort(sorter)
-
-    def get_sort(self):
-        return self._sorter
-
 class ItemList(object):
     """
     Attributes:
@@ -327,6 +314,7 @@ class ItemList(object):
         self.non_feed_only = False
         self.resort_on_update = False
         self._hidden_items = {}
+        self._filter = WidgetStateStore.get_view_all_filter()
         # maps ids -> items that should be in this list, but are filtered out
         # for some reason
 
@@ -462,24 +450,14 @@ class ItemList(object):
         self.new_only = new_only
         self._recalculate_hidden_items()
 
-    def view_all(self):
-        self.unwatched_only = False
-        self.downloaded_only = False
-        self.non_feed_only = False
-        self._recalculate_hidden_items()
-
-    def toggle_unwatched_only(self):
-        self.unwatched_only = not self.unwatched_only
-        self._recalculate_hidden_items()
-
-    def toggle_non_feed(self):
-        self.non_feed_only = not self.non_feed_only
-        self._recalculate_hidden_items()
-
-    def set_filters(self, unwatched, non_feed, downloaded):
-        self.unwatched_only = unwatched
-        self.non_feed_only = non_feed
-        self.downloaded_only = downloaded
+    def toggle_filter(self, filter_):
+        self._filter = WidgetStateStore.toggle_filter(self._filter, filter_)
+        self.unwatched_only = WidgetStateStore.has_unwatched_filter(
+                self._filter)
+        self.downloaded_only = WidgetStateStore.has_downloaded_filter(
+                self._filter)
+        self.non_feed_only = WidgetStateStore.has_non_feed_filter(
+                self._filter)
         self._recalculate_hidden_items()
 
     def _recalculate_hidden_items(self):

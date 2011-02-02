@@ -42,16 +42,20 @@ class WidgetStateStore(object):
         u'search': LIST_VIEW, u'sharing': LIST_VIEW,
         u'device-video': STANDARD_VIEW, u'device-audio': LIST_VIEW,
         u'playlist': LIST_VIEW, }
-    DEFAULT_DISPLAY_FILTERS = [u'view-all']
+    FILTER_VIEW_ALL = 0
+    FILTER_UNWATCHED = 1
+    FILTER_NONFEED = 2
+    FILTER_DOWNLOADED = 4
+    DEFAULT_DISPLAY_FILTERS = FILTER_VIEW_ALL
     DEFAULT_COLUMN_WIDTHS = { u'state': 20, u'name': 130, u'artist': 110,
         u'album': 100, u'track': 30, u'feed-name': 70, u'length': 60,
         u'genre': 65, u'year': 40, u'rating': 75, u'size': 65, u'status': 70,
         u'date': 70, u'eta': 60, u'torrent-details': 160, u'rate': 60,
         u'description': 160, }
-    DEFAULT_SORT_COLUMN = { u'videos': 'name', u'music': 'artist',
-        u'others': 'name', u'downloading': 'eta',
-        u'all-feeds': 'feed-name', u'feed': 'date', u'playlist': 'artist',
-        u'search': 'name', }
+    DEFAULT_SORT_COLUMN = { u'videos': u'name', u'music': u'artist',
+        u'others': u'name', u'downloading': u'eta',
+        u'all-feeds': u'feed-name', u'feed': u'date', u'playlist': u'playlist',
+        u'search': u'name', }
     DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_SORT_COLUMN[u'device-audio'] = DEFAULT_SORT_COLUMN[u'music']
@@ -142,7 +146,9 @@ class WidgetStateStore(object):
             return WidgetStateStore.DEFAULT_DISPLAY_FILTERS
         return display.active_filters
 
-    def set_filters(self, display_type, display_id, filters):
+    def toggle_filters(self, display_type, display_id, filter_):
+        filters = self.get_filters(display_type, display_id)
+        filters = WidgetStateStore.toggle_filter(filters, filter_)
         display = self._get_display(display_type, display_id)
         display.active_filters = filters
         self._save_display_state(display_type, display_id)
@@ -251,11 +257,42 @@ class WidgetStateStore(object):
     def is_standard_view(view_type):
         return view_type == WidgetStateStore.STANDARD_VIEW
 
+# manipulate a filter set:
+
+    @staticmethod
+    def toggle_filter(filters, filter_):
+        if filter_ == WidgetStateStore.FILTER_VIEW_ALL:
+            return filter_
+        else:
+            return filters ^ filter_
+
+# static properties of a filter combination:
+
+    @staticmethod
+    def is_view_all_filter(filters):
+        return filters == WidgetStateStore.FILTER_VIEW_ALL
+
+    @staticmethod
+    def has_unwatched_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_UNWATCHED)
+
+    @staticmethod
+    def has_non_feed_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_NONFEED)
+
+    @staticmethod
+    def has_downloaded_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_DOWNLOADED)
+
 # static properties:
+
+    # displays:
 
     @staticmethod
     def get_display_types():
         return WidgetStateStore.AVAILABLE_COLUMNS.keys()
+
+    # views:
 
     @staticmethod
     def get_list_view_type():
@@ -264,3 +301,21 @@ class WidgetStateStore(object):
     @staticmethod
     def get_standard_view_type():
         return WidgetStateStore.STANDARD_VIEW
+
+    # filters:
+
+    @staticmethod
+    def get_view_all_filter():
+        return WidgetStateStore.FILTER_VIEW_ALL
+
+    @staticmethod
+    def get_unwatched_filter():
+        return WidgetStateStore.FILTER_UNWATCHED
+
+    @staticmethod
+    def get_non_feed_filter():
+        return WidgetStateStore.FILTER_NONFEED
+
+    @staticmethod
+    def get_downloaded_filter():
+        return WidgetStateStore.FILTER_DOWNLOADED

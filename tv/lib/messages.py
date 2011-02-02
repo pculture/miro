@@ -1588,11 +1588,9 @@ class DisplayInfo(object):
         self.key = key
         if display is not None:
             self.selected_view = display.selected_view
+            self.active_filters = display.active_filters
         else:
             self.selected_view = None
-        if display is not None and display.active_filters is not None:
-            self.active_filters = display.active_filters[:]
-        else:
             self.active_filters = None
         if display is not None and display.list_view_columns is not None:
             self.list_view_columns = display.list_view_columns[:]

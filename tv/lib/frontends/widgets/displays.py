@@ -407,16 +407,6 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         self.type = self.__class__.tab_type
         self.id = self.__class__.tab_id
 
-    def remember_state(self):
-        filters = self.widget.toolbar.active_filters()
-        app.widget_state.set_filters(self.type, self.id, filters)
-
-    def restore_state(self):
-        display = (self.type, self.id)
-        initial_filters = app.widget_state.get_filters(display)
-        if initial_filters:
-            self.controller.set_item_filters(initial_filters)
-
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
         return (hasattr(selected_tabs[0], 'type') and selected_tabs[0].type ==
