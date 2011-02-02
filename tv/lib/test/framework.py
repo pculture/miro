@@ -44,6 +44,8 @@ util.setup_logging()
 
 import sys
 
+VALID_PLATFORMS = ['linux', 'win32', 'osx']
+
 skipped_tests = []
 
 def skipping(reason):
@@ -73,6 +75,10 @@ def only_on_platforms(*platforms):
        Valid platform strings are from sys.platform and NOT from the
        Miro platform names.  Use 'win32', 'linux', and 'osx'.
     """
+    for mem in platforms:
+        if mem not in VALID_PLATFORMS:
+            raise ValueError("'%s' is not a valid platform" % mem)
+
     if sys.platform in platforms:
         return identity
     else:
@@ -92,6 +98,9 @@ def skip_for_platforms(*platforms):
        Valid platform strings are from sys.platform and NOT from the
        Miro platform names.  Use 'win32', 'linux', and 'osx'.
     """
+    for mem in platforms:
+        if mem not in VALID_PLATFORMS:
+            raise ValueError("'%s' is not a valid platform" % mem)
     if sys.platform == 'linux2':
         sys_platform = 'linux'
     else:
