@@ -115,7 +115,16 @@ class ItemInfoCache(signals.SignalEmitter):
         return buffer(cPickle.dumps(info))
 
     def _blob_to_info(self, blob):
-        return cPickle.loads(str(blob))
+        info = cPickle.loads(str(blob))
+        # Download stats are no longer valid, reset them
+        info.leechers = None
+        info.seeders = None
+        info.up_rate = None
+        info.down_rate = None
+        if info.download_info is not None:
+            info.download_info.rate = 0
+            info.download_info.eta = 0
+        return info
 
     def _quick_load(self):
         """Load ItemInfos using the item_info_cache table
