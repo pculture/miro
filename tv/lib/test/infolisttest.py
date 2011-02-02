@@ -322,7 +322,7 @@ class InfoListGTKTest(InfoListDataTest):
     # Test the same things as in InfoListTest, but check using GTK's classes.
     # Also, check that GTK signal handlers work.
 
-    __skip_for_platforms__ = ['darwin']
+    __skip_for_platforms__ = ['osx']
 
     def setUp(self):
         InfoListDataTest.setUp(self)
@@ -468,7 +468,7 @@ class InfoListGTKTest(InfoListDataTest):
 class InfoListCocoaTest(InfoListDataTest):
     # Test the same things as in InfoListTest, but check using Cocoa's classes
 
-    __only_on_platforms__ = ['darwin']
+    __only_on_platforms__ = ['osx']
 
     def setUp(self):
         import Cocoa
