@@ -411,6 +411,9 @@ class PlaybackManager (signals.SignalEmitter):
     def is_playing_id(self, id_):
         return self.playlist and self.playlist.is_playing_id(id_)
 
+    def is_playing_item(self, item_info):
+        return self.is_playing_id(item_info.id)
+
     def _setup_player(self, item_info, volume):
         def _handle_successful_sniff(item_type):
             self._finish_setup_player(item_info, item_type, volume)
@@ -833,12 +836,16 @@ class PlaybackPlaylist(signals.SignalEmitter):
         del self._index_before_change
         del self._items_before_change
 
-    def _update_currently_playing_after_changes(self, infos_removed):
-        removed_set = set(infos_removed)
+    def _update_currently_playing_after_changes(self, ids_removed):
+        removed_set = set(ids_removed)
         def position_removed(old_index):
             old_info = self._items_before_change[old_index]
-            return (old_info.id in removed_set
-                    or not self.model.get_info(old_info.id).is_playable)
+            try:
+                return (old_info.id in removed_set
+                        or not self.model.get_info(old_info.id).is_playable)
+            except KeyError:
+                # info was removed by the ItemList's internal filter
+                return True
 
         new_position = self._index_before_change
         while position_removed(new_position):

@@ -44,6 +44,7 @@ import sys
 import unicodedata
 import logging
 
+from miro import app
 from miro import search
 from miro import signals
 from miro import util
@@ -383,6 +384,7 @@ class ItemList(object):
             return False
         return (not (self.new_only and item_info.item_viewed) and
                 not (self.unwatched_only and
+                    not app.playback_manager.is_playing_item(item_info) and
                         (item_info.video_path is None or
                             item_info.video_watched)) and
                 not (self.downloaded_only and
