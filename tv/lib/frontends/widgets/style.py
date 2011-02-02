@@ -107,10 +107,10 @@ class LowerBox(widgetset.Background):
         return True
 
 class TabRenderer(widgetset.CustomCellRenderer):
-    MIN_WIDTH = 25
-    MIN_ICON_WIDTH = 16
-    MIN_HEIGHT = 24
-    MIN_HEIGHT_TALL = 28
+    MIN_WIDTH = 34
+    MIN_ICON_WIDTH = 25
+    MIN_HEIGHT = 25
+    MIN_HEIGHT_TALL = 29
     TITLE_FONT_SIZE = 0.82
     BOLD_TITLE = False
 
@@ -160,7 +160,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         renderer.render_layout(context)
 
     def pack_leading_space(self, hbox):
-        pass #hbox.pack_space(2)
+        pass
 
     def pack_bubbles(self, hbox, layout_manager):
         if self.updating_frame > -1:
@@ -203,11 +203,10 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
-    MIN_ICON_WIDTH = 22
     BOLD_TITLE = True
 
     def pack_leading_space(self, hbox):
-        hbox.pack_space(6)
+        hbox.pack_space(14)
 
     def pack_bubbles(self, hbox, layout_manager):
         if self.data.unwatched > 0:
