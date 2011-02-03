@@ -151,9 +151,9 @@ class ItemListController(object):
     def get_sorter(self, view_type):
         sort_key = app.widget_state.get_sort_state(
                 self.type, self.id, view_type)
-        return self._make_sorter(sort_key)
+        return self.make_sorter(sort_key)
 
-    def _make_sorter(self, key):
+    def make_sorter(self, key):
         if key.startswith('-'):
             column = key[1:]
             ascending = False
@@ -162,7 +162,7 @@ class ItemListController(object):
             ascending = True
         return itemlist.SORT_KEY_MAP[column](ascending)
 
-    def _make_sort_key(self, sorter):
+    def make_sort_key(self, sorter):
         key = unicode(sorter.KEY)
         if sorter.is_ascending():
             state = key
@@ -173,9 +173,8 @@ class ItemListController(object):
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
         self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
-        is_list_view = WidgetStateStore.is_list_view(self.selected_view)
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
-            is_list_view)
+                self.selected_view)
         self.item_list = itemlist.ItemList()
 
         self.build_widget()
@@ -201,10 +200,7 @@ class ItemListController(object):
 
     def set_view(self, _widget, view):
         self.selected_view = view
-        if WidgetStateStore.is_list_view(view):
-            self.widget.switch_to_list_view()
-        else:
-            self.widget.switch_to_normal_view()
+        self.widget.switch_to_view(view)
         app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
         app.menu_manager.update_menus()
 
@@ -231,7 +227,7 @@ class ItemListController(object):
                self.item_list, list_view_columns, list_view_widths)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
-        self.widget.list_view_vbox.pack_start(scroller, expand=True)
+        self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
         return list_view
 
     def build_header_toolbar(self):
@@ -354,7 +350,7 @@ class ItemListController(object):
             self.views[list_view].change_sort_indicator(sort_key, ascending)
         else:
             self.widget.toolbar.change_sort_indicator(sort_key, ascending)
-        sort_key = self._make_sort_key(sorter)
+        sort_key = self.make_sort_key(sorter)
         app.widget_state.set_sort_state(self.type, self.id, view, sort_key)
 
     def on_columns_enabled_changed(self, object, columns, view_type):
@@ -559,7 +555,7 @@ class SimpleItemListController(ItemListController):
         standard_view_type = WidgetStateStore.get_standard_view_type()
         standard_view = self.get_standard_view()
         scroller.add(standard_view)
-        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
+        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
         return standard_view
 
     def get_standard_view(self):

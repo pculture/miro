@@ -46,6 +46,7 @@ from miro.frontends.widgets import segmented
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.conversions import conversion_manager
 
 from miro.plat import resources
@@ -814,22 +815,20 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         itemlistcontroller.AudioVideoItemsController.__init__(self)
         if ('%s_sort_state' % tab_type) in device.database:
             sort_key, ascending = device.database['%s_sort_state' % tab_type]
-            self.on_sort_changed(self, sort_key, ascending)
+            for view in self.views.keys():
+                self.on_sort_changed(self, sort_key, ascending, view)
         if ('%s_view' % tab_type) in device.database:
             view_type = device.database['%s_view' % tab_type]
         elif tab_type == 'audio':
-            view_type = 'list'
+            view_type = WidgetStateStore.get_list_view_type()
         else:
-            view_type = 'normal'
+            view_type = WidgetStateStore.get_standard_view_type()
 
-        if view_type == 'list':
-            self.widget.switch_to_list_view()
-        else:
-            self.widget.switch_to_normal_view()
+        self.widget.switch_to_view(view_type)
 
-        self.widget.toolbar.connect('list-view-clicked', self.save_list_view)
+        self.widget.toolbar.connect('list-view-clicked', self.save_view, 'list')
         self.widget.toolbar.connect('normal-view-clicked',
-                                    self.save_normal_view)
+                                    self.save_view, 'normal')
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -837,23 +836,16 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def start_tracking(self):
         self.track_item_lists('device', self.device)
 
-    def on_sort_changed(self, obj, sort_key, ascending):
-        sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
-        self.item_list_group.set_sort(sorter)
-        self.list_item_view.model_changed()
-        sort = (sort_key, ascending)
-        self.widget.toolbar.change_sort_indicator(*sort)
-        self.list_item_view.change_sort_indicator(*sort)
-        self.device.database['%s_sort_state' % self.device.tab_type] = sort
+    def on_sort_changed(self, obj, sort_key, ascending, view):
+        itemlistcontroller.AudioVideoItemsController.on_sort_changed(
+                        self, obj, sort_key, ascending, view)
+        db_entry = '%s_sort_state' % self.device.tab_type
+        self.device.database[db_entry] = (sort_key, ascending)
 
-    def save_list_view(self, toolbar=None):
-        self.device.database['%s_view' % self.device.tab_type] = 'list'
-
-    def save_normal_view(self, toolbar=None):
-        self.device.database['%s_view' % self.device.tab_type] = 'normal'
+    def save_view(self, view, toolbar=None):
+        self.device.database['%s_view' % self.device.tab_type] = view
 
     def handle_device_changed(self, device):
         if self.device.id != device.id:
             return
         self.device = device
-

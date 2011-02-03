@@ -45,6 +45,7 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -83,13 +84,14 @@ class FeedController(itemlistcontroller.ItemListController,
             self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
 
     def build_standard_view(self):
+        standard_view_type = WidgetStateStore.get_standard_view_type()
         standard_view = itemlistwidgets.StandardView(
                 self.item_list, self.is_folder)
         background = widgetset.SolidBackground((1, 1, 1))
         background.add(standard_view)
         scroller = widgetset.Scroller(False, True)
         scroller.add(background)
-        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
+        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
         return standard_view
 
     def build_header_toolbar(self):

@@ -860,13 +860,13 @@ class HeaderToolbar(widgetset.Background):
     def _on_list_clicked(self, button):
         self.emit('list-view-clicked')
 
-    def switch_to_normal_view(self):
-        self._button_hbox_container.show()
-        self.view_switch.set_active('normal-view')
-
-    def switch_to_list_view(self):
-        self._button_hbox_container.hide()
-        self.view_switch.set_active('list-view')
+    def switch_to_view(self, view):
+        if WidgetStateStore.is_standard_view(view):
+            self._button_hbox_container.show()
+            self.view_switch.set_active('normal-view')
+        else:
+            self._button_hbox_container.hide()
+            self.view_switch.set_active('list-view')
 
     def change_sort_indicator(self, column_name, ascending):
         if not column_name in self._button_map:
@@ -1109,16 +1109,18 @@ class ItemContainerWidget(widgetset.VBox):
     playlists, folders, downloads tab, etc).
 
     :attribute titlebar_vbox: VBox for the title bar
-    :attribute normal_view_vbox: VBox for normal view of the items
-    :attribute list_view_vbox: VBox for list view of the items
+    :attribute vbox: VBoxes for standard view and list view
     :attribute list_empty_mode_vbox: VBox for list empty mode
     :attribute toolbar: HeaderToolbar for the widget
     """
 
-    def __init__(self, toolbar, in_list_view):
+    def __init__(self, toolbar, view):
         widgetset.VBox.__init__(self)
-        self.normal_view_vbox = widgetset.VBox()
-        self.list_view_vbox = widgetset.VBox()
+        self.vbox = {}
+        standard_view = WidgetStateStore.get_standard_view_type()
+        list_view = WidgetStateStore.get_list_view_type()
+        self.vbox[standard_view] = widgetset.VBox()
+        self.vbox[list_view] = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
@@ -1128,43 +1130,27 @@ class ItemContainerWidget(widgetset.VBox):
         self.background = ItemListBackground()
         self.pack_start(self.background, expand=True)
         self.pack_start(self.statusbar_vbox)
-        self.in_list_view = in_list_view
+        self.selected_view = view
         self.list_empty_mode = False
-        if self.in_list_view:
-            self.background.add(self.list_view_vbox)
-            self.toolbar.switch_to_list_view()
-        else:
-            self.background.add(self.normal_view_vbox)
-            self.toolbar.switch_to_normal_view()
+        self.background.add(self.vbox[view])
+        self.toolbar.switch_to_view(view)
 
     def toggle_filter(self, filter_):
         self.toolbar.toggle_filter(filter_)
 
-    def switch_to_list_view(self, toolbar=None):
-        if not self.in_list_view:
+    def switch_to_view(self, view, toolbar=None):
+        if self.selected_view != view:
             if not self.list_empty_mode:
                 self.background.remove()
-                self.background.add(self.list_view_vbox)
-            self.toolbar.switch_to_list_view()
-            self.in_list_view = True
-
-    def switch_to_normal_view(self, toolbar=None):
-        if self.in_list_view:
-            if not self.list_empty_mode:
-                self.background.remove()
-                self.background.add(self.normal_view_vbox)
-            self.toolbar.switch_to_normal_view()
-            self.in_list_view = False
+                self.background.add(self.vbox[view])
+            self.toolbar.switch_to_view(view)
+            self.selected_view = view
 
     def set_list_empty_mode(self, enabled):
-        if enabled == self.list_empty_mode:
-            return
-
-        self.background.remove()
-        if enabled:
-            self.background.add(self.list_empty_mode_vbox)
-        elif self.in_list_view:
-            self.background.add(self.list_view_vbox)
-        else:
-            self.background.add(self.normal_view_vbox)
-        self.list_empty_mode = enabled
+        if enabled != self.list_empty_mode:
+            self.background.remove()
+            if enabled:
+                self.background.add(self.list_empty_mode_vbox)
+            else:
+                self.background.add(self.vbox[self.selected_view])
+            self.list_empty_mode = enabled
