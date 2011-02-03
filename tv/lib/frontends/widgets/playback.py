@@ -692,14 +692,14 @@ class PlaybackPlaylist(signals.SignalEmitter):
             else:
                 next_item = self.shuffle_upcoming.pop()
                 self.shuffle_history.append(next_item)
-                return next_item
+                return self.model.get_info(next_item)
         elif self.shuffle and PlaybackPlaylist.REPEAT_PLAYLIST:
             if not self.shuffle_upcoming:
                 #populate with new items
                 self.shuffle_upcoming = self.generate_upcoming_shuffle_items() 
             next_item = self.shuffle_upcoming.pop()
             self.shuffle_history.append(next_item)
-            return next_item
+            return self.model.get_info(next_item)
         else:
             next_item = self.model.get_next_info(self.currently_playing.id)
             return self._find_playable(next_item)
@@ -710,7 +710,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 return None
             previous_item = self.shuffle_history.pop()
             self.shuffle_upcoming.append(previous_item)
-            return previous_item
+            return self.model.get_info(previous_item)
         elif (not self.shuffle 
               and self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
               and self.is_playing_first_item()):
@@ -732,7 +732,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             #do not include currently playing item
             if self.currently_playing:
                 try:
-                    items.remove(self.currently_playing)
+                    items.remove(self.currently_playing.id)
                 except ValueError:
                     pass
             return items
@@ -740,7 +740,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             #random items
             items = self.get_all_playable_items()
             if items:
-                return self.random_sequence(items, self.currently_playing)
+                return self.random_sequence(items, self.currently_playing.id)
             else: 
                 return None
         else:
@@ -798,7 +798,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         items = []
         while item_info is not None:
             if self._info_is_playable(item_info):
-                items.append(item_info)
+                items.append(item_info.id)
             item_info = self.model.get_next_info(item_info.id)
         return items
 
@@ -809,7 +809,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.shuffle = value
         self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
         if self.currently_playing:
-            self.shuffle_history = [self.currently_playing]
+            self.shuffle_history = [self.currently_playing.id]
         else:
             self.shuffle_history = []
 
