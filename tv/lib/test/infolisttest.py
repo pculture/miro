@@ -2,7 +2,7 @@ import sys
 import itertools
 import weakref
 
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, skip_for_platforms, only_on_platforms
 from miro import infolist
 
 class FakeInfo(object):
@@ -318,11 +318,10 @@ class InfoListFeaturesTest(InfoListTestBase):
         # test second unset is okay
         self.infolist.unset_attr(0, 'miro')
 
+@skip_for_platforms('osx')
 class InfoListGTKTest(InfoListDataTest):
     # Test the same things as in InfoListTest, but check using GTK's classes.
     # Also, check that GTK signal handlers work.
-
-    __skip_for_platforms__ = ['osx']
 
     def setUp(self):
         InfoListDataTest.setUp(self)
@@ -465,10 +464,9 @@ class InfoListGTKTest(InfoListDataTest):
             raise AssertionError("assertion failure in signal callback")
         self.check_info_list(self.tracked_infos)
 
+@only_on_platforms('osx')
 class InfoListCocoaTest(InfoListDataTest):
     # Test the same things as in InfoListTest, but check using Cocoa's classes
-
-    __only_on_platforms__ = ['osx']
 
     def setUp(self):
         import Cocoa

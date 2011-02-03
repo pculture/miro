@@ -45,6 +45,13 @@ util.setup_logging()
 import sys
 
 VALID_PLATFORMS = ['linux', 'win32', 'osx']
+PLATFORM_MAP = {
+    'osx': 'osx',
+    'darwin': 'osx',
+    'linux2': 'linux',
+    'linux': 'linux',
+    'win32': 'win32'
+    }
 
 skipped_tests = []
 
@@ -60,8 +67,13 @@ def skipping(reason):
 def identity(fun):
     return fun
 
+def get_sys_platform():
+    return PLATFORM_MAP[sys.platform]
+
 def only_on_platforms(*platforms):
     """Decorator for running a test only on the listed platforms.
+
+    This works as both a function decorator and a class decorator.
     
     Example::
 
@@ -70,27 +82,8 @@ def only_on_platforms(*platforms):
             print "ha!  nothing works on win32!"
             assert False
 
-    .. Note::
-
-       Valid platform strings are from sys.platform and NOT from the
-       Miro platform names.  Use 'win32', 'linux', and 'osx'.
-    """
-    for mem in platforms:
-        if mem not in VALID_PLATFORMS:
-            raise ValueError("'%s' is not a valid platform" % mem)
-
-    if sys.platform in platforms:
-        return identity
-    else:
-        return skipping("only_on_platform %s" % platforms)
-
-def skip_for_platforms(*platforms):
-    """Decorator for skipping a test on the listed platforms.
-    
-    Example::
-
-        @skip_for_platforms('win32')
-        def test_something_that_fails_on_win32(self):
+        @only_on_platforms('osx')
+        class TestSomethingOSXy(MiroTestCase):
             ...
 
     .. Note::
@@ -101,12 +94,43 @@ def skip_for_platforms(*platforms):
     for mem in platforms:
         if mem not in VALID_PLATFORMS:
             raise ValueError("'%s' is not a valid platform" % mem)
-    if sys.platform == 'linux2':
-        sys_platform = 'linux'
+
+    platform = get_sys_platform()
+
+    if platform in platforms:
+        return identity
     else:
-        sys_platform = sys.platform
-    if sys_platform in platforms:
-        return skipping("skip_for_platforms %s" % platforms)
+        return skipping("only_on_platform %r" % (platforms,))
+
+def skip_for_platforms(*platforms):
+    """Decorator for skipping a test on the listed platforms.
+
+    This works as both a function decorator and also a class
+    decorator.
+    
+    Example::
+
+        @skip_for_platforms('win32')
+        def test_something_that_fails_on_win32(self):
+            ...
+
+        @skip_for_platforms('osx')
+        class ThingsThatFailOnOSX(MiroTestCase):
+            ...
+
+    .. Note::
+
+       Valid platform strings are from sys.platform and NOT from the
+       Miro platform names.  Use 'win32', 'linux', and 'osx'.
+    """
+    for mem in platforms:
+        if mem not in VALID_PLATFORMS:
+            raise ValueError("'%s' is not a valid platform" % mem)
+
+    platform = get_sys_platform()
+
+    if platform in platforms:
+        return skipping("skip_for_platforms %r" % (platforms,))
     else:
         return identity
 
@@ -180,19 +204,7 @@ def decorate_all_tests(class_dict, bases, decorator):
             if name.startswith("test"):
                 class_dict[name] = decorator(getattr(cls, name))
 
-class MiroTestCaseMetaclass(type):
-    def __new__(meta, classname, bases, class_dict):
-        if '__skip_for_platforms__' in class_dict:
-            decorate_all_tests(class_dict, bases,
-                    skip_for_platforms(*class_dict['__skip_for_platforms__']))
-        if '__only_on_platforms__' in class_dict:
-            decorate_all_tests(class_dict, bases,
-                    only_on_platforms(*class_dict['__only_on_platforms__']))
-        return type.__new__(meta, classname, bases, class_dict)
-
 class MiroTestCase(unittest.TestCase):
-    __metaclass__ = MiroTestCaseMetaclass
-
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
         if not os.path.exists(self.tempdir):
