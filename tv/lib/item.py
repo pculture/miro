@@ -1597,7 +1597,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             except OSError:
                 return 0
         elif self.has_downloader():
-            return self.downloader.get_total_size()
+            size = self.downloader.get_total_size()
+            if size == -1:
+                logging.debug("downloader could not get total size for item")
+                return 0
+            return size
         else:
             if self.enclosure_size is not None:
                 return self.enclosure_size
