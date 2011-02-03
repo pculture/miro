@@ -725,7 +725,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
             return None
         elif (self.repeat == PlaybackPlaylist.REPEAT_OFF
              or self.repeat == PlaybackPlaylist.REPEAT_TRACK):
-            current = self.currently_playing
             #random order
             items = self.get_all_playable_items()
             shuffle(items)
