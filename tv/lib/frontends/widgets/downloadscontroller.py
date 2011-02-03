@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import prefpanel
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro import messages
 from miro import downloader
@@ -84,6 +85,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         background.add(standard_view)
         scroller = widgetset.Scroller(False, True)
         scroller.add(background)
+        standard_view_type = WidgetStateStore.get_standard_view_type()
         self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
         return standard_view
 
