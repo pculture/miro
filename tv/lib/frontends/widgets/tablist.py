@@ -814,6 +814,7 @@ class HideableTabList(TabList):
         TabList.__init__(self)
         self.added_children = False
         self.info = TabInfo(self.name, self.icon_name)
+        self.view.connect('selection-changed', self.on_selection_changed)
         TabList.add(self, self.info)
 
     def add(self, info, parent_id=None):
@@ -821,7 +822,7 @@ class HideableTabList(TabList):
             parent_id = self.info.id
         TabList.add(self, info, parent_id)
         if not self.added_children:
-            self.set_folder_expanded(self.info.id, True)
+            timer.add(0, self.set_folder_expanded, self.info.id, True)
             self.added_children = True
 
     def _clear_list(self):
@@ -832,6 +833,13 @@ class HideableTabList(TabList):
         while iter is not None:
             iter = self.view.model.remove(iter)
         self.iter_map = {self.info.id: self.iter_map[self.info.id]}
+
+    def on_selection_changed(self, view):
+        for iter in view.get_selection():
+            if view.model[iter][0] is self.info:
+                if not view.is_row_expanded(iter):
+                    timer.add(0, self.set_folder_expanded, self.info.id, True)
+                return
 
     def on_row_expanded_change(self, view, iter, expanded):
         info = self.view.model[iter][0]
@@ -860,8 +868,9 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
         self.view.set_drag_dest(DeviceDropHandler(self))
 
     def on_row_expanded_change(self, view, iter, expanded):
-        # neither handler deals with this
-        return
+        info = self.view.model[iter][0]
+        if info is self.info:
+            HideableTabList.on_row_expanded_change(self, view, iter, expanded)
 
     def on_delete_key_pressed(self):
         # neither handler deals with this
