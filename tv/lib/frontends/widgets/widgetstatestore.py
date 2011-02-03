@@ -36,40 +36,74 @@ from miro.messages import SaveDisplayState, SaveViewState, DisplayInfo, ViewInfo
 class WidgetStateStore(object):
     LIST_VIEW = 1
     STANDARD_VIEW = 0
-    DEFAULT_VIEW_TYPE = {u'videos': STANDARD_VIEW, u'music': LIST_VIEW,
-        u'others': LIST_VIEW, u'downloading': STANDARD_VIEW,
-        u'all-feeds': STANDARD_VIEW, u'feed': STANDARD_VIEW,
-        u'search': LIST_VIEW, u'sharing': LIST_VIEW,
-        u'device-video': STANDARD_VIEW, u'device-audio': LIST_VIEW,
-        u'playlist': LIST_VIEW, }
+    DEFAULT_VIEW_TYPE = {
+        u'videos': STANDARD_VIEW,
+        u'music': LIST_VIEW,
+        u'others': LIST_VIEW,
+        u'downloading': STANDARD_VIEW,
+        u'all-feeds': STANDARD_VIEW,
+        u'feed': STANDARD_VIEW,
+        u'search': LIST_VIEW,
+        u'sharing': LIST_VIEW,
+        u'device-video': STANDARD_VIEW,
+        u'device-audio': LIST_VIEW,
+        u'playlist': LIST_VIEW,
+     }
     FILTER_VIEW_ALL = 0
     FILTER_UNWATCHED = 1
     FILTER_NONFEED = 2
     FILTER_DOWNLOADED = 4
     DEFAULT_DISPLAY_FILTERS = FILTER_VIEW_ALL
-    DEFAULT_COLUMN_WIDTHS = { u'state': 20, u'name': 130, u'artist': 110,
-        u'album': 100, u'track': 30, u'feed-name': 70, u'length': 60,
-        u'genre': 65, u'year': 40, u'rating': 75, u'size': 65, u'status': 70,
-        u'date': 70, u'eta': 60, u'torrent-details': 160, u'rate': 60,
-        u'description': 160, }
-    DEFAULT_SORT_COLUMN = { u'videos': u'name', u'music': u'artist',
-        u'others': u'name', u'downloading': u'eta',
-        u'all-feeds': u'feed-name', u'feed': u'date', u'playlist': u'playlist',
-        u'search': u'name', }
+    DEFAULT_COLUMN_WIDTHS = {
+        u'state': 20,
+        u'name': 130,
+        u'artist': 110,
+        u'album': 100,
+        u'track': 30,
+        u'feed-name': 70,
+        u'length': 60,
+        u'genre': 65,
+        u'year': 40,
+        u'rating': 75,
+        u'size': 65,
+        u'status': 70,
+        u'date': 70,
+        u'eta': 60,
+        u'torrent-details': 160,
+        u'rate': 60,
+        u'description': 160,
+    }
+    DEFAULT_SORT_COLUMN = {
+        u'videos': u'name',
+        u'music': u'artist',
+        u'others': u'name',
+        u'downloading': u'eta',
+        u'all-feeds': u'feed-name',
+        u'feed': u'date',
+        u'playlist': u'playlist',
+        u'search': u'name',
+    }
     DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_SORT_COLUMN[u'device-audio'] = DEFAULT_SORT_COLUMN[u'music']
     DEFAULT_COLUMNS = {
-        u'videos': [u'state', u'name', u'length', u'feed-name', u'size'],
-        u'music': [u'state', u'name', u'artist', u'album', u'track',
+        u'videos':
+            [u'state', u'name', u'length', u'feed-name', u'size'],
+        u'music':
+            [u'state', u'name', u'artist', u'album', u'track',
             u'feed-name', u'length', u'genre', u'year', u'rating'],
-        u'others': [u'name', u'feed-name', u'size'],
-        u'downloading': [u'name', u'feed-name', u'status', u'eta', u'rate',
+        u'others':
+            [u'name', u'feed-name', u'size'],
+        u'downloading':
+            [u'name', u'feed-name', u'status', u'eta', u'rate',
             u'torrent-details', u'size'],
-        u'all-feeds': [u'state', u'name', u'feed-name', u'length',
+        u'all-feeds':
+            [u'state', u'name', u'feed-name', u'length',
             u'status', u'size', u'date'],
-        u'feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
-        u'search': [u'state', u'name', u'description'],
+        u'feed':
+            [u'state', u'name', u'length', u'status', u'size', u'date'],
+        u'search':
+            [u'state', u'name', u'description'],
     }
     DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'videos']
     DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
