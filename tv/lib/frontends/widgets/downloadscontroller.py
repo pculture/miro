@@ -84,7 +84,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         background.add(standard_view)
         scroller = widgetset.Scroller(False, True)
         scroller.add(background)
-        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
+        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
         return standard_view
 
     def _on_search_changed(self, widget, search_text):
