@@ -15,21 +15,21 @@ class WidgetStateConstants(MiroTestCase):
 
     def test_default_view_types(self):
         display_types = set(WidgetStateStore.DEFAULT_VIEW_TYPE.keys())
-        self.assertSetEqual(self.display_types, display_types)
+        self.assertEqual(self.display_types, display_types)
 
     def test_default_column_widths(self):
         columns = set(WidgetStateStore.DEFAULT_COLUMN_WIDTHS.keys())
-        self.assertSetEqual(self.columns, columns)
+        self.assertEqual(self.columns, columns)
 
     def test_default_sort_column(self):
         display_types = set(WidgetStateStore.DEFAULT_SORT_COLUMN.keys())
-        self.assertSetEqual(self.display_types, display_types)
+        self.assertEqual(self.display_types, display_types)
 
     def test_default_columns(self):
         display_types = set(WidgetStateStore.DEFAULT_COLUMNS.keys())
-        self.assertSetEqual(self.display_types, display_types)
+        self.assertEqual(self.display_types, display_types)
 
     def test_available_columns(self):
         # Currently what get_display_types() uses. Testing it anyway.
         display_types = set(WidgetStateStore.AVAILABLE_COLUMNS.keys())
-        self.assertSetEqual(self.display_types, display_types)
+        self.assertEqual(self.display_types, display_types)
