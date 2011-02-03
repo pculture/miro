@@ -79,12 +79,33 @@ class ItemListDragHandler(object):
         else:
             return None
 
+class FilteredListMixin(object):
+    """Track a filter switch attached to an ItemListController
+    """
+    def __init__(self):
+        filters = app.widget_state.get_filters(self.type, self.id)
+        self.update_filters(filters)
+
+    def on_toggle_filter(self, button, filter_):
+        """Handle the filter switch changing state."""
+        self.update_filters(filter_)
+        app.widget_state.toggle_filters(self.type, self.id, filter_)
+
+    def update_filters(self, filters):
+        """Update the display and toolbar filter switch state."""
+        self.widget.toggle_filter(filters)
+        self.item_list.toggle_filter(filters)
+        for item_view in self.views.values():
+            item_view.model_changed()
+        self.check_for_empty_list()
+
 class ItemListController(object):
     """Base class for controllers that manage list of items.
     
-    :attribute widget: Widget used to display this controller
+    :attribute widget: Container widget used to display this controller
+    :attribute views: The ListView and StandardView objects
     """
-    def __init__(self, typ, id_, has_filters):
+    def __init__(self, typ, id_):
         """Construct a ItemListController.
 
         type and id are the same as in the constructor to
@@ -95,10 +116,8 @@ class ItemListController(object):
         self.views = {}
         self._search_text = ''
         self.item_tracker = None
-        self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
         self._init_widget()
-        if has_filters:
-            self.restore_filters()
+
         item_lists = set(iv.item_list for iv in self.views.values())
         self.item_list_group = itemlist.ItemListGroup(item_lists)
         self.multiview_sorter = None
@@ -111,6 +130,9 @@ class ItemListController(object):
         self._playback_callbacks = []
 
     def make_multiview_sorters(self):
+        """Subclasses that need to share one sorter across all views can set
+        self.multiview_sorter here. PlaylistView uses this.
+        """
         pass
     
     def make_sorters(self):
@@ -148,20 +170,9 @@ class ItemListController(object):
             state = u'-' + key
         return state
 
-    def restore_filters(self):
-        filters = app.widget_state.get_filters(self.type, self.id)
-        self.widget.toggle_filter(filters)
-        self.item_list.toggle_filter(filters)
-        self._toolbar_filter_changed()
-
-    def on_toggle_filter(self, button, filter_):
-        self.widget.toggle_filter(filter_)
-        self.item_list.toggle_filter(filter_)
-        self._toolbar_filter_changed()
-        app.widget_state.toggle_filters(self.type, self.id, filter_)
-
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
+        self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
         is_list_view = WidgetStateStore.is_list_view(self.selected_view)
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
             is_list_view)
@@ -332,11 +343,6 @@ class ItemListController(object):
             app.playback_manager.play_pause()
         else:
             self._trigger_item(item_view, info)
-
-    def _toolbar_filter_changed(self):
-        for item_view in self.views.values():
-            item_view.model_changed()
-        self.check_for_empty_list()
 
     def on_sort_changed(self, object, sort_key, ascending, view):
         self.views[view].start_bulk_change()
@@ -540,10 +546,9 @@ class ItemListController(object):
             self.views[list_view].on_undisplay()
 
 class SimpleItemListController(ItemListController):
-    def __init__(self, has_filters=False):
+    def __init__(self):
         self.display_channel = True
-        ItemListController.__init__(self, self.type, self.id,
-                has_filters=has_filters)
+        ItemListController.__init__(self, self.type, self.id)
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
@@ -670,9 +675,10 @@ class SearchController(SimpleItemListController):
         if search_manager.text != '' and result_count == 0:
             self.widget.set_list_empty_mode(True)
 
-class AudioVideoItemsController(SimpleItemListController):
+class AudioVideoItemsController(SimpleItemListController, FilteredListMixin):
     def __init__(self):
-        SimpleItemListController.__init__(self, has_filters=True)
+        SimpleItemListController.__init__(self)
+        FilteredListMixin.__init__(self)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)

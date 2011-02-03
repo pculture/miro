@@ -48,14 +48,16 @@ from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
-class FeedController(itemlistcontroller.ItemListController):
+class FeedController(itemlistcontroller.ItemListController,
+                     itemlistcontroller.FilteredListMixin):
     """Controller object for feeds."""
 
     def __init__(self, id, is_folder, is_directory_feed):
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
         self.display_channel = self.is_folder
-        itemlistcontroller.ItemListController.__init__(self, u'feed', id, True)
+        itemlistcontroller.ItemListController.__init__(self, u'feed', id)
+        itemlistcontroller.FilteredListMixin.__init__(self)
 
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
