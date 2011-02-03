@@ -954,17 +954,12 @@ def handle_key_press(key, mods):
             app.widgetapp.on_stop_clicked()
             return True
 
-    # anything after this point doesn't work when we're playing
-    # audio
-    if app.playback_manager.is_playing_audio:
-        return False
-
     if key == menus.RIGHT_ARROW:
-        app.widgetapp.on_skip_forward()
+        app.widgetapp.on_forward_clicked()
         return True
 
     if key == menus.LEFT_ARROW:
-        app.widgetapp.on_skip_backward()
+        app.widgetapp.on_previous_clicked()
         return True
 
     if key == menus.UP_ARROW:

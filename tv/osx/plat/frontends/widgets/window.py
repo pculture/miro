@@ -52,28 +52,23 @@ from miro.plat.utils import filename_to_unicode
 # object stay alive as long as the window is alive.
 alive_windows = set()
 
-class MiroWindow(NSWindow):
-    def handle_keyDown(self, event):
+class MiroResponder(NSResponder):
+    def keyDown_(self, event):
+        # gets called if none of the cocoa views handle the keyDown_ event.
+        # In this case, see any of our wrappers handle it.
         key = event.charactersIgnoringModifiers()
         if len(key) != 1 or not key.isalpha():
             key = osxmenus.REVERSE_KEYS_MAP.get(key)
         mods = osxmenus.translate_event_modifiers(event)
-        responder = self.firstResponder()
+        responder = event.window().firstResponder()
         while responder is not None:
             wrapper = wrappermap.wrapper(responder)
             if isinstance(wrapper, Widget) or isinstance(wrapper, Window):
                 if wrapper.emit('key-press', key, mods):
-                    return True # signal handler returned True, stop processing
+                    return # signal handler returned True, stop processing
             responder = responder.nextResponder()
-
-    def sendEvent_(self, event):
-        if event.type() == NSKeyDown:
-            # We grab the KeyDown event here instead of with a keyDown handler
-            # because some keys (notable Cmd-> and Cmd-< aren't caught by that
-            # method.
-            if self.handle_keyDown(event):
-                return
-        return NSWindow.sendEvent_(self, event)
+        # nothing handled the event, fall through to basic handling
+        return NSResponder.keyDown_(self, event)
 
 class Window(signals.SignalEmitter):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
@@ -85,11 +80,13 @@ class Window(signals.SignalEmitter):
         self.create_signal('key-press')
         self.create_signal('show')
         self.create_signal('hide')
-        self.nswindow = MiroWindow.alloc().initWithContentRect_styleMask_backing_defer_(
+        self.nswindow = NSWindow.alloc().initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
                 self.get_style_mask(),
                 NSBackingStoreBuffered,
                 NO)
+        self.responder = MiroResponder.alloc().init()
+        self.nswindow.setNextResponder_(self.responder)
         self.nswindow.setTitle_(title)
         self.nswindow.setMinSize_(NSSize(800, 600))
         self.nswindow.setReleasedWhenClosed_(NO)

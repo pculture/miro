@@ -101,15 +101,6 @@ class WrappedWindow(gtk.Window):
         gtk.Window.do_focus_out_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
 
-    def do_key_press_event(self, event):
-        ret = keymap.translate_gtk_event(event)
-        if ret == None:
-            return gtk.Window.do_key_press_event(self, event)
-        key, modifiers = ret
-        if wrappermap.wrapper(self).emit('key-press', key, modifiers):
-            return # handler returned True, don't process the key more
-        return gtk.Window.do_key_press_event(self, event)
-
 gobject.type_register(WrappedWindow)
 
 class WrappedMainWindow(WrappedWindow):
@@ -351,7 +342,11 @@ class Window(WindowBase):
         window, rect specifies the position it should have on screen.
         """
         WindowBase.__init__(self)
+        self._eventbox = gtk.EventBox() # eventbox holds the main widget
+        self._eventbox.connect('key-press-event', self.on_key_press)
+        self._eventbox.show()
         self.set_window(self._make_gtk_window())
+        self._build_gtk_window()
         self._window.set_title(title)
         if rect:
             self._window.set_default_size(rect.width, rect.height)
@@ -368,6 +363,15 @@ class Window(WindowBase):
 
     def _make_gtk_window(self):
         return WrappedWindow()
+
+    def _build_gtk_window(self):
+        self._window.add(self._eventbox)
+
+    def on_key_press(self, widget, event):
+        ret = keymap.translate_gtk_event(event)
+        if ret != None:
+            key, modifiers = ret
+            return self.emit('key-press', key, modifiers)
 
     def on_delete(self, widget, event):
         self.emit('will-close')
@@ -410,7 +414,7 @@ class Window(WindowBase):
         self.content_widget = widget
 
     def _add_content_widget(self, widget):
-        self._window.add(widget._widget)
+        self._eventbox.add(widget._widget)
 
     def get_content_widget(self, widget):
         """Get the current content widget."""
@@ -447,10 +451,6 @@ class Window(WindowBase):
 class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
-        self.vbox = gtk.VBox()
-        self._window.add(self.vbox)
-        self.vbox.show()
-        self._add_menubar()
         self.connect_menu_keyboard_shortcuts()
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
@@ -470,6 +470,14 @@ class MainWindow(Window):
     def _make_gtk_window(self):
         return WrappedMainWindow()
 
+    def _build_gtk_window(self):
+        self._make_menubar()
+        vbox = gtk.VBox()
+        vbox.pack_start(self.menubar, expand=False)
+        vbox.pack_start(self._eventbox, expand=True)
+        vbox.show()
+        self._window.add(vbox)
+
     def on_close(self, window):
         app.widgetapp.on_close()
 
@@ -488,9 +496,8 @@ class MainWindow(Window):
                                                      'Up', 'Down'):
                 return True
 
-    def _add_menubar(self):
+    def _make_menubar(self):
         self.menubar = self.ui_manager.get_widget("/MiroMenu")
-        self.vbox.pack_start(self.menubar, expand=False)
         self.menubar.show_all()
 
     def on_menu_change(self, menu_manager):
@@ -618,9 +625,6 @@ class MainWindow(Window):
 </menubar>
 </ui>'''
         self._merge_id = self.ui_manager.add_ui_from_string(s)
-
-    def _add_content_widget(self, widget):
-        self.vbox.pack_start(widget._widget, expand=True)
 
 _stock = {
     dialogs.BUTTON_OK.text: gtk.STOCK_OK,

@@ -177,8 +177,7 @@ class Application:
         del self._window_show_callback
 
     def on_key_press(self, window, key, mods):
-        if (app.playback_manager.is_playing and
-                app.playback_manager.detached_window is None):
+        if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)
 
     def handle_movies_directory_gone(self, continue_callback):

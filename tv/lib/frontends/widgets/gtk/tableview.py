@@ -292,6 +292,11 @@ class MiroTreeView(gtk.TreeView):
             self.window.invalidate_rect(area, True)
 
     def do_move_cursor(self, step, count):
+        if step == gtk.MOVEMENT_VISUAL_POSITIONS:
+            # GTK is asking us to move left/right.  Since our TableViews don't
+            # support this, return False to let the key press propagate.  See
+            # #15646 for more info.
+            return False
         if isinstance(self.get_parent(), gtk.ScrolledWindow):
             # If our parent is a ScrolledWindow, let GTK take care of this
             self.set_keep_scroll_changes(True)
