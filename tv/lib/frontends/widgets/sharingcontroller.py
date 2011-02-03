@@ -63,7 +63,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def make_drag_handler(self):
         return None
 
-    def build_item_view(self):
+    def build_standard_view(self):
         return SharingStandardView(self.item_list, self.id)
 
     def handle_delete(self):
