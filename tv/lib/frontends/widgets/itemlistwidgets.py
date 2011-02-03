@@ -854,9 +854,6 @@ class HeaderToolbar(widgetset.Background):
     def pack_hbox_extra(self):
         pass
 
-    def active_filters(self):
-        return self.filter_switch.active_buttons()
-
     def _on_normal_clicked(self, button):
         self.emit('normal-view-clicked')
 
@@ -876,9 +873,9 @@ class HeaderToolbar(widgetset.Background):
         view_all = WidgetStateStore.is_view_all_filter(self.filter)
         unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
         non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
-        self.filter_switch.set_active('view-all', view_all is True)
-        self.filter_switch.set_active('view-unwatched', unwatched is True)
-        self.filter_switch.set_active('view-non-feed', non_feed is True)
+        self.filter_switch.set_active('view-all', view_all)
+        self.filter_switch.set_active('view-unwatched', unwatched)
+        self.filter_switch.set_active('view-non-feed', non_feed)
 
     def change_sort_indicator(self, column_name, ascending):
         if not column_name in self._button_map:
@@ -937,14 +934,9 @@ class HeaderToolbar(widgetset.Background):
             self.emit(signal_name, signal_param)
         self.filter_switch.add_text_button(button_name, label, callback)
 
-    def add_filter_switch(self, *active_filters):
-        for filter_name in active_filters:
-            self.filter_switch.set_active(filter_name)
+    def add_filter_switch(self):
         self._hbox.pack_start(widgetutil.align_middle(
             self.filter_switch.make_widget(), left_pad=12))
-
-    def set_active_filter(self, filter_name):
-        self.filter_switch.set_active(filter_name)
 
     def size_request(self, layout):
         width, height = self._hbox.get_size_request()
@@ -983,12 +975,7 @@ class LibraryHeaderToolbar(HeaderToolbar):
                         self.unwatched_label)
         self.add_filter('view-non-feed', 'toggle-filter', non_feed,
                         _('Non Feed'))
-        self.add_filter_switch('view-all')
-
-    def set_active_filters(self, filters):
-        filter_set = set(filters)
-        for filter in self.filter_switch.all_buttons():
-            self.filter_switch.set_active(filter, filter in filter_set)
+        self.add_filter_switch()
 
 class ChannelHeaderToolbar(HeaderToolbar):
     def pack_hbox_extra(self):
@@ -1004,12 +991,7 @@ class ChannelHeaderToolbar(HeaderToolbar):
                         _('Downloaded'))
         self.add_filter('only-unplayed', 'toggle-filter', unwatched,
                         _('Unplayed'))
-        self.add_filter_switch('view-all')
-
-    def set_active_filters(self, filters):
-        filter_set = set(filters)
-        for filter in self.filter_switch.all_buttons():
-            self.filter_switch.set_active(filter, filter in filter_set)
+        self.add_filter_switch()
 
 class SortBarButton(widgetset.CustomButton):
     SORT_NONE = 0
