@@ -134,35 +134,46 @@ infolist_node_set_sort_key(InfoListNode* node, PyObject* sort_key)
 
 static int cmp_failed;
 
-static int
-node_cmp(const void* arg1,
-         const void* arg2)
+int
+infolist_node_cmp(const InfoListNode* node1,
+                  const InfoListNode* node2)
 {
-        InfoListNode* node1;
-        InfoListNode* node2;
         int cmp_result;
 
-        node1 = *((InfoListNode**)arg1);
-        node2 = *((InfoListNode**)arg2);
         if(PyObject_Cmp(node1->sort_key, node2->sort_key, &cmp_result) == -1) {
                 cmp_failed = 1;
-                return 0;
+                cmp_result = 0;
+        }
+        if(cmp_result == 0) {
+                // for a tiebreak, just compare the node pointers.  This
+                // ensures that the order is completely defined and avoids
+                // issues like #16113
+                return (node1 < node2) ? -1 : 1;
         }
         return cmp_result;
 }
 
 static int
-node_cmp_reverse(const void* arg1,
-                 const void* arg2)
+qsort_compare(const void* arg1,
+              const void* arg2)
 {
-        return -node_cmp(arg1, arg2);
+        return infolist_node_cmp(*((InfoListNode**)arg1),
+                                 *((InfoListNode**)arg2));
+}
+
+static int
+qsort_compare_reverse(const void* arg1,
+                      const void* arg2)
+{
+        return infolist_node_cmp(*((InfoListNode**)arg2),
+                                 *((InfoListNode**)arg1));
 }
 
 int
 infolist_node_sort(InfoListNode** node_array, int count)
 {
         cmp_failed = 0;
-        qsort(node_array, count, sizeof(InfoListNode*), node_cmp);
+        qsort(node_array, count, sizeof(InfoListNode*), qsort_compare);
         if(cmp_failed) {
                 // The exception should have been set when the comparison failed.
                 // return -1 should propagate it.
@@ -175,7 +186,7 @@ int
 infolist_node_sort_reversed(InfoListNode** node_array, int count)
 {
         cmp_failed = 0;
-        qsort(node_array, count, sizeof(InfoListNode*), node_cmp_reverse);
+        qsort(node_array, count, sizeof(InfoListNode*), qsort_compare_reverse);
         if(cmp_failed) {
                 // The exception should have been set when the comparison failed.
                 // return -1 should propagate it.

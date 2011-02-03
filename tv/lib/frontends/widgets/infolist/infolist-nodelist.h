@@ -105,6 +105,9 @@ infolist_node_set_sort_key(InfoListNode* node,
 
 // Sort an array of nodes by their sort key
 int
+infolist_node_cmp(const InfoListNode* node1,
+                  const InfoListNode* node2);
+int
 infolist_node_sort(InfoListNode** node_array,
                    int count);
 int

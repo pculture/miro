@@ -46,7 +46,6 @@ cdef extern from "Python.h":
     void PyErr_SetString(PyObject* err, char* msg)
     void PyErr_SetObject(PyObject *type, object obj)
     object PyInt_FromLong(long ival)
-    int PyObject_Cmp(object o1, object o2, int* result) except -1
 
 cdef extern from "infolist-nodelist.h":
     ctypedef struct InfoListNode
@@ -67,6 +66,7 @@ cdef extern from "infolist-nodelist.h":
     object infolist_node_get_sort_key(InfoListNode* node)
     void infolist_node_set_info(InfoListNode* node, object info)
     void infolist_node_set_sort_key(InfoListNode* node, object sort_key)
+    int infolist_node_cmp(InfoListNode* node1, InfoListNode* node2)
     int infolist_node_sort(InfoListNode** node_array, int count) except -1
     int infolist_node_sort_reversed(InfoListNode** node_array,
             int count) except -1
@@ -137,9 +137,8 @@ cdef InfoListNode* insert_node_before(InfoListNodeList* nodelist,
     # Insert a node in the correct position in nodelist by searching backwards
     # from pos.  Returns the position just before node gets inserted, which is
     # can be used for future calls
-    sort_key = infolist_node_get_sort_key(node)
     while not infolist_node_is_sentinal(pos):
-        PyObject_Cmp(sort_key, infolist_node_get_sort_key(pos), &cmp_result)
+        cmp_result = infolist_node_cmp(node, pos)
         if reverse:
             cmp_result *= -1
         if cmp_result < 0:
@@ -149,23 +148,22 @@ cdef InfoListNode* insert_node_before(InfoListNodeList* nodelist,
     infolist_nodelist_insert_after(nodelist, pos, node)
     return pos
 
-cdef int update_sort_key(InfoListNode* node, object sort_key, int reverse):
+cdef int update_sort_key(InfoListNode* node, object new_sort_key, int reverse):
     # Update node's sort key, then return TRUE if the node is now out of place
     # in the list.
     cdef int cmp_result
+    cdef object old_sort_key
 
-    PyObject_Cmp(infolist_node_get_sort_key(node), sort_key, &cmp_result)
-    infolist_node_set_sort_key(node, sort_key)
-    if cmp_result == 0: # sort key didn't change
+    old_sort_key = infolist_node_get_sort_key(node)
+    infolist_node_set_sort_key(node, new_sort_key)
+    if old_sort_key == new_sort_key: # sort key didn't change
         return 0
     if not infolist_node_is_sentinal(node.next):
-        PyObject_Cmp(infolist_node_get_sort_key(node),
-                infolist_node_get_sort_key(node.next), &cmp_result)
+        cmp_result = infolist_node_cmp(node, node.next)
         if (not reverse and cmp_result > 0) or (reverse and cmp_result < 0):
             return 1
     if not infolist_node_is_sentinal(node.prev):
-        PyObject_Cmp(infolist_node_get_sort_key(node),
-                infolist_node_get_sort_key(node.prev), &cmp_result)
+        cmp_result = infolist_node_cmp(node, node.prev)
         if (not reverse and cmp_result < 0) or (reverse and cmp_result > 0):
             return 1
     return 0
