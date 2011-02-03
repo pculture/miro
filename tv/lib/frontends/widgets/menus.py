@@ -820,8 +820,7 @@ class MenuStateManager(signals.SignalEmitter):
         selection_type, selected_tabs = app.tab_list_manager.get_selection()
         if len(selected_tabs) == 1:
             app.menu_manager._update_view_menu()
-        if selection_type is None or getattr(selected_tabs[0], 'is_tab',
-                                             False):
+        if selection_type is None or selected_tabs[0].type == u'tab':
             pass
         elif selection_type == 'feed':
             app.menu_manager._handle_feed_selection(selected_tabs)

@@ -61,7 +61,7 @@ class TabInfo(object):
     """
     Simple Info object which holds the data for the top of a tab list.
     """
-    is_tab = True
+    type = u'tab'
     is_folder = False # doesn't work like a real folder
     tall = True
     bolded = True
@@ -869,7 +869,7 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
 
     def on_context_menu(self, view):
         # neither handle deals with this
-        return
+        return []
 
     def on_row_clicked(self, view, iter):
         info = self.view.model[iter][0]
@@ -927,6 +927,7 @@ class SiteList(HideableTabList):
         else:
             info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
+        info.type = self.type
 
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter][0] for iter in \
@@ -995,6 +996,7 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
     def init_info(self, info):
         if info is self.info:
             return
+        info.type = self.type
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
         if info.is_updating:
             self.start_updating(info.id)
@@ -1067,6 +1069,7 @@ class PlaylistList(HideableTabList, NestedTabList):
                 resources.path('images/icon-playlist.png'))
             info.active_icon = imagepool.get_surface(
                 resources.path('images/icon-playlist_active.png'))
+        info.type = self.type
         info.unwatched = info.available = 0
 
     def get_playlists(self):

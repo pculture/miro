@@ -286,7 +286,7 @@ class FeedDisplay(ItemListDisplay):
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
         return tab_type == cls.TAB_TYPE and len(selected_tabs) == 1 and \
-               not getattr(selected_tabs[0], 'is_tab', False)
+               selected_tabs[0].type != u'tab'
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
@@ -313,7 +313,7 @@ class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return tab_type == 'playlist' and len(selected_tabs) == 1 and \
-               not getattr(selected_tabs[0], 'is_tab', False)
+               selected_tabs[0].type != u'tab'
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
