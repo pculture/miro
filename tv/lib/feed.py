@@ -34,6 +34,7 @@ FIXME - talk about Feed architecture here
 
 import os
 import re
+import time
 import xml
 from urlparse import urljoin
 from HTMLParser import HTMLParser, HTMLParseError
@@ -2006,6 +2007,7 @@ class DirectoryScannerImplBase(FeedImpl):
     def _make_child(self, file_):
         models.FileItem(file_, feed_id=self.ufeed.id)
 
+    @eventloop.idle_iterator
     def update(self):
         self.ufeed.confirm_db_thread()
 
@@ -2045,7 +2047,16 @@ class DirectoryScannerImplBase(FeedImpl):
         # files on the filesystem
         to_add = []
         scan_dir = self._scan_dir()
+        def add_children():
+            app.bulk_sql_manager.start()
+            try:
+                for file_ in to_add:
+                    self._make_child(file_)
+            finally:
+                app.bulk_sql_manager.finish()
+
         if fileutil.isdir(scan_dir):
+            start = time.time()
             all_files = fileutil.miro_allfiles(scan_dir)
             for file_ in all_files:
                 file_ = os.path.normcase(file_)
@@ -2053,14 +2064,14 @@ class DirectoryScannerImplBase(FeedImpl):
                 if (file_ not in known_files and
                         filetypes.is_media_filename(ufile)):
                     to_add.append(file_)
-
-        app.bulk_sql_manager.start()
-        try:
-            for file_ in to_add:
-                self._make_child(file_)
-        finally:
-            app.bulk_sql_manager.finish()
-
+                if time.time() - start > 0.4:
+                    add_children()
+                    to_add = []
+                    self.signal_change()
+                    yield # let other events run
+                    start = time.time()
+        if to_add:
+            add_children()
         self._after_update()
         self.schedule_update_events(-1)
 

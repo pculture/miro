@@ -834,23 +834,27 @@ def scan_device_for_files(device):
 
     device.database.set_bulk_mode(True)
     device.database.setdefault('sync', {})
-    count = 0
-
+    start = time.time()
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
         ufilename = filename_to_unicode(short_filename)
+        item_type = None
         if os.path.normcase(ufilename) in known_files:
             continue
         if filetypes.is_video_filename(ufilename):
             item_type = 'video'
         elif filetypes.is_audio_filename(ufilename):
             item_type = 'audio'
-        else:
-            continue
-        device.database[item_type][ufilename] = {}
-        count += 1
-        if count == 50:
-            count = 0
+        if item_type is not None:
+            device.database[item_type][ufilename] = {}
+            device.database.emit('item-added',
+                                 DeviceItem(video_path=ufilename,
+                                            file_type=item_type,
+                                            device=device))
+        if time.time() - start > 0.4:
+            device.database.set_bulk_mode(False) # save the database
             yield # let other idle functions run
+            device.database.set_bulk_mode(True)
+            start = time.time()
 
     device.database.set_bulk_mode(False)

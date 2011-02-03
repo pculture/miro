@@ -255,15 +255,14 @@ def miro_allfiles(directory):
     OSErrors are silently ignored.  Hidden files aren't returned.
     Pathnames are run through os.path.normcase.
     """
-    files = []
     expanded_directory = expand_filename(directory)
     expanded_directory = os.path.abspath(os.path.normcase(expanded_directory))
     if expanded_directory in deletes_in_progress:
-        return []
+        return
     try:
         listing = os.listdir(expanded_directory)
     except OSError:
-        return []
+        return
     for name in listing:
         name_lower = name.lower()
         if (name.startswith('.') or name_lower == 'thumbs.db' or
@@ -277,12 +276,13 @@ def miro_allfiles(directory):
             continue
         try:
             if os.path.isdir(expanded_path):
-                files.extend(miro_allfiles(path))
-            else:
-                files.append(path)
+                for fn in miro_allfiles(path):
+                    yield fn
+            elif os.path.isfile(expanded_path):
+                yield path
         except OSError:
             pass
-    return files
+
 
 def expand_filename(filename):
     if not filename:
