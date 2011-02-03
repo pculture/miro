@@ -622,6 +622,7 @@ class DeviceItem(object):
         self.track = None
         self.year = None
         self.genre = None
+        self.title_tag = None
         self.rating = None
         self.file_type = None
         self.creation_time = None
@@ -678,24 +679,33 @@ class DeviceItem(object):
                     prefs.ICON_CACHE_DIRECTORY)):
                 # migrate the screenshot onto the device
                 basename = os.path.basename(self.screenshot)
-                shutil.copyfile(self.screenshot,
-                                os.path.join(self.device.mount, '.miro',
-                                             basename))
-                if self.screenshot.startswith(
-                    moviedata.image_directory('extracted')):
-                    # moviedata extracted this for us, so we can remove it
-                    try:
-                        os.unlink(self.screenshot)
-                    except OSError:
-                        pass
-                self.screenshot = os.path.join('.miro', basename)
+                try:
+                    shutil.copyfile(self.screenshot,
+                                    os.path.join(self.device.mount, '.miro',
+                                                 basename))
+                except (IOError, OSError):
+                    # error copying the thumbnail, just erase it
+                    self.screenshot = None
+                else:
+                    if self.screenshot.startswith(
+                        moviedata.image_directory('extracted')):
+                        # moviedata extracted this for us, so we can remove it
+                        try:
+                            os.unlink(self.screenshot)
+                        except OSError:
+                            pass
+                    self.screenshot = os.path.join('.miro', basename)
             elif self.screenshot.startswith(resources.root()):
                 self.screenshot = None # don't save a default thumbnail
 
     def remove(self, save=True):
-        ignored, current_file_type = self.device.id.rsplit('-', 1)
-        if self.video_path in self.device.database[current_file_type]:
-            del self.device.database[current_file_type][self.video_path]
+        file_types = [self.file_type]
+        if '-' in self.device.id:
+            ignored, current_file_type = self.device.id.rsplit('-', 1)
+            file_types.append(current_file_type)
+        for file_type in file_types:
+            if self.video_path in self.device.database[file_type]:
+                del self.device.database[file_type][self.video_path]
         if save:
             self.device.database.emit('item-removed', self)
 
@@ -706,11 +716,12 @@ class DeviceItem(object):
             self.remove()
             return
 
-        ignored, current_file_type = self.device.id.rsplit('-', 1)
+        if '-' in self.device.id:
+            ignored, current_file_type = self.device.id.rsplit('-', 1)
 
-        if self.file_type != current_file_type:
-            # remove the old item from the database
-            self.remove(save=False)
+            if self.file_type != current_file_type:
+                # remove the old item from the database
+                self.remove(save=False)
 
         self._migrate_thumbnail()
         self.device.database[self.file_type][self.video_path] = self.to_dict()

@@ -948,6 +948,10 @@ class HeaderToolbar(widgetset.Background):
         context.rel_line_to(context.width, 0)
         context.stroke()
 
+    def toggle_filter(self, filter_):
+        # implemented by subclasses
+        pass
+
     def toggle_radio_filter(self, filter_):
         self.filter = filter_
         self._toggle_filter_common()
