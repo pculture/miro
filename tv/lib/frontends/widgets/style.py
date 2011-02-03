@@ -216,14 +216,14 @@ class StaticTabRenderer(TabRenderer):
             self.pack_bubble(hbox, layout_manager, self.data.downloading,
                     DOWNLOADING_COLOR)
 
-class DeviceTabRenderer(TabRenderer):
+class ConnectTabRenderer(TabRenderer):
     def pack_bubbles(self, hbox, layout_manager):
         if getattr(self.data, 'fake', False):
             return
         self.hbox = None
         if self.updating_frame > -1:
             return TabRenderer.pack_bubbles(self, hbox, layout_manager)
-        if self.data.mount:
+        if getattr(self.data, 'mount', None):
             eject_image = widgetutil.make_surface('icon-eject')
             hotspot = cellpack.Hotspot('eject-device', eject_image)
             alignment = cellpack.Alignment(hotspot, yalign=0.5, yscale=0.0,
@@ -239,11 +239,6 @@ class DeviceTabRenderer(TabRenderer):
             return None
         else:
             return hotspot_info[0]
-
-# XXX This is quite similar to the DeviceTabRenderer that we might want to try
-# and combine the two.
-class SharingTabRenderer(DeviceTabRenderer):
-    pass
 
 class FakeDownloadInfo(object):
     # Fake download info object used to size items

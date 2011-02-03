@@ -1321,15 +1321,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return app.tab_list_manager.site_list
         elif message.type == 'store':
             return app.tab_list_manager.store_list
-        elif message.type == 'devices':
-            return app.tab_list_manager.devices_list
-        elif message.type == 'sharing':
-            return app.tab_list_manager.sharing_list
+        elif message.type in ('devices', 'sharing'):
+            return app.tab_list_manager.connect_list
         else:
             raise ValueError("Unknown Type: %s" % message.type)
 
     def handle_tab_list(self, message):
         tablist = self.tablist_for_message(message)
+        print 'got tablist for', message.type, tablist
         tablist.reset_list(message)
         if 'feed' in message.type:
             pre_startup_message = message.type + '-tab-list'

@@ -61,6 +61,7 @@ class TabInfo(object):
     """
     Simple Info object which holds the data for the top of a tab list.
     """
+    is_tab = True
     is_folder = False # doesn't work like a real folder
     tall = True
     bolded = True
@@ -548,6 +549,9 @@ class DeviceDropHandler(object):
                       position):
         if position == -1 and parent and type in self.allowed_types():
             device = model[parent][0]
+            if not isinstance(device, messages.DeviceInfo):
+                # DAAP share
+                return widgetset.DRAG_ACTION_NONE
             if device.mount and not getattr(device, 'fake', False):
                 return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
@@ -684,22 +688,10 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         """For subclasses to override."""
         pass
 
-class DevicesList(TabList, TabUpdaterMixin):
-    type = u'device'
 
-    ALLOW_MULTIPLE = False
-
-    render_class = style.DeviceTabRenderer
-
-    def __init__(self):
-        TabList.__init__(self)
-        TabUpdaterMixin.__init__(self)
-        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
-        self.view.set_drag_dest(DeviceDropHandler(self))
-
-    def on_row_expanded_change(self, view, iter, expanded):
-        # don't bother doing anything
-        pass
+class DeviceTabListHandler(object):
+    def __init__(self, tablist):
+        self.tablist = tablist
 
     def _fake_info(self, info, name):
         new_data = {
@@ -718,54 +710,100 @@ class DevicesList(TabList, TabUpdaterMixin):
         return di
 
     def _add_fake_tabs(self, info):
-        TabList.add(self, self._fake_info(info, 'Video'), info.id)
-        TabList.add(self, self._fake_info(info, 'Audio'), info.id)
+        HideableTabList.add(self.tablist, self._fake_info(info, 'Video'), info.id)
+        HideableTabList.add(self.tablist, self._fake_info(info, 'Audio'), info.id)
         # OS X doesn't listen if we do it immediately, so wait a bit
-        timer.add(0, self.set_folder_expanded, info.id, True)
+        timer.add(0, self.tablist.set_folder_expanded, info.id, True)
 
     def add(self, info):
-        TabList.add(self, info)
+        HideableTabList.add(self.tablist, info)
         if info.mount and not info.info.has_multiple_devices:
             self._add_fake_tabs(info)
 
     def update(self, info):
-        if not self.has_info(info.id):
+        if not self.tablist.has_info(info.id):
             # this gets called if a sync is in progress when the device
             # disappears
             return
         if info.mount and not info.info.has_multiple_devices and \
-                not self.get_child_count(info.id):
+                not self.tablist.get_child_count(info.id):
             self._add_fake_tabs(info)
-        elif not info.mount and self.get_child_count(info.id):
-            parent_iter = self.iter_map[info.id]
-            model = self.view.model
+        elif not info.mount and self.tablist.get_child_count(info.id):
+            parent_iter = self.tablist.iter_map[info.id]
+            model = self.tablist.view.model
             next_iter = model.child_iter(parent_iter)
             while next_iter is not None:
                 iter = next_iter
                 next_iter = model.next_iter(next_iter)
                 model.remove(iter)
-        TabList.update(self, info)
+        HideableTabList.update(self.tablist, info)
 
     def init_info(self, info):
+        info.type = u'device'
         info.unwatched = info.available = 0
         if not getattr(info, 'fake', False):
             thumb_path = resources.path('images/phone.png')
             info.icon = imagepool.get_surface(thumb_path)
             if getattr(info, 'is_updating', False):
-                self.start_updating(info.id)
+                self.tablist.start_updating(info.id)
             else:
-                self.stop_updating(info.id)
+                self.tablist.stop_updating(info.id)
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
             info = view.model[iter][0]
             messages.DeviceEject(info).send_to_backend()
 
+class SharingTabListHandler(object):
+    def __init__(self, tablist):
+        self.tablist = tablist
+
+    def on_row_expanded_change(self, view, iter, expanded):
+        pass
+
     def on_delete_key_pressed(self):
         pass
 
     def on_context_menu(self, table_view):
         return []
+
+    def on_row_clicked(self, view, iter):
+        info = view.model[iter][0]
+        # Only display disconnect icon for the share entry not the playlists.
+        if not info.parent_id:
+            info.mount = True
+        view.model_changed()
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        if hotspot == 'eject-device':
+            # Don't track this tab anymore for music.
+            info = view.model[iter][0]
+            info.mount = False
+            # We must stop the playback if we are playing from the same
+            # share that we are ejecting from.
+            host = info.host
+            port = info.port
+            item = app.playback_manager.get_playing_item()
+            remote_item = False
+            if item and item.remote:
+                remote_item = True
+            if remote_item and item.host == host and item.port == port:
+                app.playback_manager.stop(save_resume_time=False)
+            # Default to select the guide.  There's nothing more to see here.
+            typ, selected_tabs = app.tab_list_manager.get_selection()
+            if typ == u'sharing' and (info == selected_tabs[0] or
+              getattr(selected_tabs[0], 'parent_id', None) == info.id):
+                app.tab_list_manager.select_guide()
+            messages.SharingEject(info).send_to_backend()
+
+    def init_info(self, info):
+        info.type = u'sharing'
+        info.unwatched = info.available = 0
+        if info.is_folder:
+            thumb_path = resources.path('images/phone.png')
+        else:
+            thumb_path = resources.path('images/icon-playlist.png')
+        info.icon = imagepool.get_surface(thumb_path)
 
 class HideableTabList(TabList):
     """
@@ -799,6 +837,70 @@ class HideableTabList(TabList):
         info = self.view.model[iter][0]
         if info is not self.info:
             TabList.on_row_expanded_change(self, view, iter, expanded)
+
+class ConnectList(HideableTabList, TabUpdaterMixin):
+    name = _('Connect')
+    icon_name = 'icon-connect'
+    type = u'connect'
+
+    ALLOW_MULTIPLE = False
+
+    render_class = style.ConnectTabRenderer
+
+    def __init__(self):
+        HideableTabList.__init__(self)
+        TabUpdaterMixin.__init__(self)
+        self.info_class_map = {
+            messages.DeviceInfo: DeviceTabListHandler(self),
+            messages.SharingInfo: SharingTabListHandler(self),
+            TabInfo: None,
+            }
+        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+        self.view.connect_weak('row-clicked', self.on_row_clicked)
+        self.view.set_drag_dest(DeviceDropHandler(self))
+
+    def on_row_expanded_change(self, view, iter, expanded):
+        # neither handler deals with this
+        return
+
+    def on_delete_key_pressed(self):
+        # neither handler deals with this
+        return
+
+    def on_context_menu(self, view):
+        # neither handle deals with this
+        return
+
+    def on_row_clicked(self, view, iter):
+        info = self.view.model[iter][0]
+        handler = self.info_class_map[type(info)]
+        if hasattr(handler, 'on_row_clicked'):
+            return handler.on_row_clicked(view, iter)
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        info = self.view.model[iter][0]
+        handler = self.info_class_map[type(info)]
+        return handler.on_hotspot_clicked(view, hotspot, iter)
+
+    def init_info(self, info):
+        if info is self.info:
+            return
+        handler = self.info_class_map[type(info)]
+        return handler.init_info(info)
+
+    def add(self, info, parent_id=None):
+        handler = self.info_class_map[type(info)]
+        if hasattr(handler, 'add'):
+            handler.add(info) # device doesn't use the parent_id
+        else:
+            HideableTabList.add(self, info, parent_id)
+
+    def update(self, info):
+        handler = self.info_class_map[type(info)]
+        if hasattr(handler, 'update'):
+            handler.update(info)
+        else:
+            HideableTabList.update(self, info)
 
 class SiteList(HideableTabList):
     type = u'site'
@@ -940,61 +1042,6 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 
-class SharingList(NestedTabList):
-    type = u'sharing'
-    render_class = style.SharingTabRenderer
-    ALLOW_MULTIPLE = False
-
-    def __init__(self):
-        NestedTabList.__init__(self)
-        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
-        self.view.connect_weak('row-clicked', self.on_row_clicked)
-        
-    def on_row_expanded_change(self, view, iter, expanded):
-        pass
-
-    def on_delete_key_pressed(self):
-        pass
-
-    def on_context_menu(self, table_view):
-        return []
-
-    def on_row_clicked(self, view, iter):
-        info = view.model[iter][0]
-        # Only display disconnect icon for the share entry not the playlists.
-        if not info.parent_id:
-            info.mount = True
-        self.view.model_changed()
-
-    def on_hotspot_clicked(self, view, hotspot, iter):
-        if hotspot == 'eject-device':
-            # Don't track this tab anymore for music.
-            info = view.model[iter][0]
-            info.mount = False
-            # We must stop the playback if we are playing from the same
-            # share that we are ejecting from.
-            host = info.host
-            port = info.port
-            item = app.playback_manager.get_playing_item()
-            remote_item = False
-            if item and item.remote:
-                remote_item = True
-            if remote_item and item.host == host and item.port == port:
-                app.playback_manager.stop(save_resume_time=False)
-            # Default to select the guide.  There's nothing more to see here.
-            typ, selected_tabs = app.tab_list_manager.get_selection()
-            if typ == u'sharing' and (info == selected_tabs[0] or
-              getattr(selected_tabs[0], 'parent_id', None) == info.id):
-                app.tab_list_manager.select_guide()
-            messages.SharingEject(info).send_to_backend()
-
-    def init_info(self, info):
-        info.unwatched = info.available = 0
-        if info.is_folder:
-            thumb_path = resources.path('images/phone.png')
-        else:
-            thumb_path = resources.path('images/icon-playlist.png')
-        info.icon = imagepool.get_surface(thumb_path)
 
 class PlaylistList(HideableTabList, NestedTabList):
     type = u'playlist'
@@ -1068,9 +1115,7 @@ class TabListBox(widgetset.Scroller):
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.library_tab_list.view)
         vbox.pack_start(tlm.static_tab_list.view)
-        vbox.pack_start(self.build_header(_('CONNECT')))
-        vbox.pack_start(tlm.devices_list.view)
-        vbox.pack_start(tlm.sharing_list.view)
+        vbox.pack_start(tlm.connect_list.view)
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(tlm.store_list.view)
         vbox.pack_start(tlm.feed_list.view)

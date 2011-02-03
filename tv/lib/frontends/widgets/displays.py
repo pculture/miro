@@ -352,8 +352,9 @@ class DeviceDisplayMixin(object):
 class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'device' and len(selected_tabs) == 1 and not getattr(
-            selected_tabs[0], 'fake', False)
+        return tab_type == u'device' and len(selected_tabs) == 1 and \
+               isinstance(selected_tabs[0], messages.DeviceInfo) and \
+               not getattr(selected_tabs[0], 'fake', False)
 
     def on_selected(self):
         self.controller.start_tracking()
@@ -372,21 +373,14 @@ class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
 class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'device' and len(selected_tabs) == 1 and getattr(
-            selected_tabs[0], 'fake', False)
+        return tab_type == u'device' and len(selected_tabs) == 1 and \
+               isinstance(selected_tabs[0], messages.DeviceInfo) and \
+               getattr(selected_tabs[0], 'fake', False)
 
 class SharingDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'sharing' and len(selected_tabs) == 1
-
-    def on_selected(self):
-        # No need to track manually - ItemListDisplay does for us
-        ItemListDisplay.on_selected(self)
-
-    def cleanup(self):
-        # No need to cleanup tracking manually - ItemListDisplay does for us
-        ItemListDisplay.cleanup(self)
+        return tab_type == u'sharing' and len(selected_tabs) == 1
 
     def make_controller(self, tab):
         return sharingcontroller.SharingView(tab)

@@ -791,12 +791,10 @@ class MenuStateManager(signals.SignalEmitter):
             self.states["sites"].append("RemoveSomething")
             self.states["sites"].append("RenameSomething")
 
-    def _handle_sharing_selection(self, selected_shares):
-        pass
-
-    def _handle_device_selection(self, selected_devices):
-        selected_device = selected_devices[0]
-        self.enabled_groups.add('DeviceSelected')
+    def _handle_connect_selection(self, selected_devices):
+        selected_info = selected_devices[0]
+        if selected_info.type == u'device':
+            self.enabled_groups.add('DeviceSelected')
 
     def _handle_playlist_selection(self, selected_playlists):
         self.enabled_groups.add('PlaylistsSelected')
@@ -833,10 +831,8 @@ class MenuStateManager(signals.SignalEmitter):
             app.menu_manager._handle_static_tab_selection(selected_tabs)
         elif selection_type in ('site', 'store'):
             app.menu_manager._handle_site_selection(selected_tabs)
-        elif selection_type == 'device':
-            app.menu_manager._handle_device_selection(selected_tabs)
-        elif selection_type == 'sharing':
-            app.menu_manager._handle_sharing_selection(selected_tabs)
+        elif selection_type == 'connect':
+            app.menu_manager._handle_connect_selection(selected_tabs)
         else:
             raise ValueError("Unknown tab list type: %s" % selection_type)
 
