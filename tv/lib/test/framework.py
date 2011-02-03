@@ -174,7 +174,7 @@ def uses_httpclient(fun):
 def decorate_all_tests(class_dict, bases, decorator):
     for name, func in class_dict.iteritems():
         if name.startswith("test"):
-            class_dict[name] = decorator[func]
+            class_dict[name] = decorator(func)
     for cls in bases:
         for name in dir(cls):
             if name.startswith("test"):
