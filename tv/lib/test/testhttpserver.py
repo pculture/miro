@@ -195,7 +195,21 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     'nonce="%s", '
                     'opaque="5ccc069c403ebaf9f0171e9517f40e41"' %
                     self.digest_nonce))
+        elif self.path.startswith("/invalid-auth/"):
+            # send back an invalid auth header
+            if self.path == '/invalid-auth/badscheme':
+                header = 'FakeAuthScheme realm="Protected"'
+            elif self.path == '/invalid-auth/norealm':
+                header = 'Basic'
+            elif self.path == '/invalid-auth/garbled':
+                header = 'bsnth snatou sntaountsaouh'
+            else:
+                # default is a blank header
+                header = ''
 
+            code = 401
+            path = self.translate_path('auth-failed.txt')
+            headers_to_send.append(('WWW-Authenticate', header))
         else:
             code = 200
             path = self.translate_path(self.path)

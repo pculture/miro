@@ -701,6 +701,37 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 2)
 
+    @uses_httpclient
+    def test_bad_auth(self):
+        self.setup_answer("user", "password")
+        self.expecting_errback = True
+
+        # test when schemes that aren't "basic" or "digest"
+        self.grab_url(self.httpserver.build_url('invalid-auth/badscheme'))
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.AuthorizationFailed))
+        # when we get invalid auth headers, we shouldn't pop up dialogs for
+        # the user
+        self.assertEquals(self.dialogs_seen, 0)
+
+        # test auth header without realm
+        self.grab_url(self.httpserver.build_url('invalid-auth/norealm'))
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.AuthorizationFailed))
+        self.assertEquals(self.dialogs_seen, 0)
+
+        # test completely garbled auth header
+        self.grab_url(self.httpserver.build_url('invalid-auth/garbled'))
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.AuthorizationFailed))
+        self.assertEquals(self.dialogs_seen, 0)
+
+        # test auth header with no data
+        self.grab_url(self.httpserver.build_url('invalid-auth/'))
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.AuthorizationFailed))
+        self.assertEquals(self.dialogs_seen, 0)
+
 class HTTPAuthBackendTest(EventLoopTest):
     """ Test using the  httpauth module directly.
 
