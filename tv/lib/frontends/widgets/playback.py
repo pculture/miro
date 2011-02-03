@@ -708,9 +708,12 @@ class PlaybackPlaylist(signals.SignalEmitter):
         if self.shuffle:
             if not self.shuffle_history:
                 return None
-            previous_item = self.shuffle_history.pop()
-            self.shuffle_upcoming.append(previous_item)
-            return self.model.get_info(previous_item)
+            current_item = self.shuffle_history.pop()
+            self.shuffle_upcoming.append(current_item)
+            if not self.shuffle_history:
+                return None
+            previous_item = self.model.get_info(self.shuffle_history[-1])
+            return previous_item
         elif (not self.shuffle 
               and self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
               and self.is_playing_first_item()):
