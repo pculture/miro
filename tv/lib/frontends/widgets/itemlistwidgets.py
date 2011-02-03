@@ -868,15 +868,6 @@ class HeaderToolbar(widgetset.Background):
         self._button_hbox_container.hide()
         self.view_switch.set_active('list-view')
 
-    def toggle_filter(self, filter_):
-        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
-        view_all = WidgetStateStore.is_view_all_filter(self.filter)
-        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
-        self.filter_switch.set_active('view-all', view_all)
-        self.filter_switch.set_active('view-unwatched', unwatched)
-        self.filter_switch.set_active('view-non-feed', non_feed)
-
     def change_sort_indicator(self, column_name, ascending):
         if not column_name in self._button_map:
             return
@@ -957,6 +948,21 @@ class HeaderToolbar(widgetset.Background):
         context.rel_line_to(context.width, 0)
         context.stroke()
 
+    def toggle_radio_filter(self, filter_):
+        self.filter = filter_
+        self._toggle_filter_common()
+
+    def toggle_custom_filter(self, filter_):
+        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
+        self._toggle_filter_common()
+
+    def _toggle_filter_common(self):
+        view_all = WidgetStateStore.is_view_all_filter(self.filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
+        non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
+        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
+        self.update_switches(view_all, unwatched, non_feed, downloaded)
+
 class LibraryHeaderToolbar(HeaderToolbar):
     def __init__(self, unwatched_label):
         self.unwatched_label = unwatched_label
@@ -977,6 +983,14 @@ class LibraryHeaderToolbar(HeaderToolbar):
                         _('Non Feed'))
         self.add_filter_switch()
 
+    def toggle_filter(self, filter_):
+        self.toggle_custom_filter(filter_)
+
+    def update_switches(self, view_all, unwatched, non_feed, downloaded):
+        self.filter_switch.set_active('view-all', view_all)
+        self.filter_switch.set_active('view-unwatched', unwatched)
+        self.filter_switch.set_active('view-non-feed', non_feed)
+
 class ChannelHeaderToolbar(HeaderToolbar):
     def pack_hbox_extra(self):
         self.make_filter_switch(behavior='radio')
@@ -992,6 +1006,17 @@ class ChannelHeaderToolbar(HeaderToolbar):
         self.add_filter('only-unplayed', 'toggle-filter', unwatched,
                         _('Unplayed'))
         self.add_filter_switch()
+
+    def toggle_filter(self, filter_):
+        self.toggle_radio_filter(filter_)
+
+    def update_switches(self, view_all, unwatched, non_feed, downloaded):
+        if downloaded:
+            self.filter_switch.set_active('only-downloaded')
+        elif unwatched:
+            self.filter_switch.set_active('only-unplayed')
+        else:
+            self.filter_switch.set_active('view-all')
 
 class SortBarButton(widgetset.CustomButton):
     SORT_NONE = 0
