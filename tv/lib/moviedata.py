@@ -37,6 +37,7 @@ import threading
 import Queue
 import logging
 import mutagen
+import struct
 
 from miro import app
 from miro import prefs
@@ -431,6 +432,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             muta = mutagen.File(item.get_filename())
             meta = muta.__dict__
         except (AttributeError, IOError):
+            return (mediatype, duration, data, cover_art)
+        except struct.error:
+            logging.warn("read_metadata on incomplete file: %s",
+                         item.get_filename())
             return (mediatype, duration, data, cover_art)
 
         filename = item.get_filename()
