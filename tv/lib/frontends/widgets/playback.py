@@ -835,6 +835,19 @@ class PlaybackPlaylist(signals.SignalEmitter):
             # Note that we aren't quite sure that we actually changed the info
             # here, but emit our signal just to be sure
             self.emit("playing-info-changed")
+        if self.shuffle:
+            for id_ in removed:
+                try:
+                    self.shuffle_upcoming.remove(id_)
+                except ValueError:
+                    pass
+                try:
+                    self.shuffle_history.remove(id_)
+                except ValueError:
+                    pass
+            for item in added:
+                index = randrange(0, len(self.shuffle_upcoming))
+                self.shuffle_upcoming.insert(index, item.id)
         del self._index_before_change
         del self._items_before_change
 
