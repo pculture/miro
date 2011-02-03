@@ -40,11 +40,10 @@ from miro import app
 from miro import prefs
 
 from miro.gtcache import gettext as _
-from miro.widgetstate import LIST_VIEW, STANDARD_VIEW
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.menus import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.plat.frontends.widgets import wrappermap
-from miro.frontends.widgets.widgetconst import COLUMNS_AVAILABLE
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro.plat.appstore import appstore_edition
 
@@ -123,19 +122,18 @@ def update_view_menu_state():
     except AttributeError:
         return
     view_type = app.widget_state.get_selected_view(display.type, display.id)
-    if view_type != LIST_VIEW:
+    if view_type != WidgetStateStore.get_list_view_type():
         return
     enabled = app.widget_state.get_columns_enabled(
               display.type, display.id, view_type)
 
-    columns = []
-    for k, v in COLUMNS_AVAILABLE.items():
-        columns.extend(v)
-    columns = set(columns)
+    columns = set()
+    for display_type in WidgetStateStore.get_display_types():
+        columns.update(WidgetStateStore.get_columns_available(display_type))
 
     for column in columns:
         menu_item = VIEW_ITEM_MAP[column]
-        hidden = not column in COLUMNS_AVAILABLE[display.type]
+        hidden = not column in WidgetStateStore.get_columns_available(display.type)
         menu_item.setHidden_(hidden)
         if hidden:
             continue
