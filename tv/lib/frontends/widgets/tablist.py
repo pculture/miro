@@ -758,21 +758,15 @@ class SharingTabListHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
 
-    def on_row_expanded_change(self, view, iter, expanded):
-        pass
-
-    def on_delete_key_pressed(self):
-        pass
-
-    def on_context_menu(self, table_view):
-        return []
-
     def on_row_clicked(self, view, iter):
         info = view.model[iter][0]
-        # Only display disconnect icon for the share entry not the playlists.
-        if not info.parent_id:
-            info.mount = True
-        view.model_changed()
+        if info.type == u'sharing':
+            # Only display disconnect icon for the share entry not the playlists.
+            if not info.parent_id:
+                info.mount = True
+            view.model_changed()
+        else:
+            HideableTabList.on_row_clicked(self.tablist, view, iter)
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
