@@ -214,10 +214,11 @@ class WidgetStateStore(object):
             columns_enabled = self.get_columns_enabled(
                               display_type, display_id, view_type)
             if column in columns_enabled:
-                display.list_view_columns.remove(column)
+                columns_enabled.remove(column)
             else:
-                display.list_view_columns.append(column)
-            self._save_display_state(display_type, display_id)
+                columns_enabled.append(column)
+            self.set_columns_enabled(display_type, display_id, view_type,
+                                    columns_enabled)
         else:
             raise ValueError()
 
