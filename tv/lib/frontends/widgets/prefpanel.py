@@ -895,12 +895,6 @@ class _ExtensionsHelper(object):
             iter_ = self._model.append(ext.loaded, ext.name)
             self._iter_map[ext.name] = iter_
 
-    def unload(self):
-        # wipe everything out
-        for key in self._iter_map.keys():
-            iter_ = self._iter_map.pop(key)
-            self._model.remove(iter_)
-
     def _show_details(self, renderer, iter_):
         row = self._model[iter_]
         ext = app.extension_manager.get_extension_by_name(row[1])
@@ -987,9 +981,6 @@ class ExtensionsPanel(PanelBuilder):
 
     def on_window_open(self):
         self.extensions_helper.load()
-
-    def on_window_closed(self):
-        self.extensions_helper.unload()
 
 # Add the initial panels
 add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
