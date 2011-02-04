@@ -826,7 +826,6 @@ class HideableTabList(TabList):
             parent_id = self.info.id
         TabList.add(self, info, parent_id)
         if not self.added_children:
-            print 'expanded folder', self 
             timer.add(0, self.set_folder_expanded, self.info.id, True)
             self.added_children = True
 
