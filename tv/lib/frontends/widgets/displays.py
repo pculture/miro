@@ -617,6 +617,9 @@ class MultipleSelectionDisplay(TabDisplay):
             if hasattr(tab, "is_folder") and tab.is_folder:
                 self.folder_count += 1
                 self.folder_child_count += tab_list.get_child_count(tab.id)
+            elif tab_type == 'site' and tab.default:
+                # don't count the default site
+                pass
             else:
                 self.child_count += 1
         vbox = widgetset.VBox(spacing=20)

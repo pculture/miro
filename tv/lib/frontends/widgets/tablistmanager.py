@@ -63,6 +63,10 @@ class TabListManager(object):
         for previously_selected in previous_selection:
             if (view.model[previously_selected][0] == view.model[iter][0]):
                 return # The tab is already selected
+        parent_iter = view.model.parent_iter(iter)
+        if parent_iter and not view.is_row_expanded(parent_iter):
+            # open the parent
+            view.set_row_expanded(parent_iter, True)
         view.select(iter)
         for previously_selected in previous_selection:
             # We unselect *after* having made the new selection because if we
@@ -71,9 +75,6 @@ class TabListManager(object):
             view.unselect(previously_selected)
         self.selected_tab_list = tab_list
         self.selected_tabs = [view.model[iter][0]]
-        self.handle_new_selection()
-
-    def handle_startup_selection(self):
         self.handle_new_selection()
 
     def handle_new_selection(self):
@@ -96,11 +97,13 @@ class TabListManager(object):
             self.playlist_list, self.store_list)
 
     def select_guide(self):
-        self.select_static_tab(0)
+        default_info = self.site_list.default_info
+        iter = self.site_list.iter_map[default_info.id]
+        self._select_from_tab_list(self.site_list, iter)
 
     def select_search(self):
-        self.select_static_tab(1)
-
+        iter = self.static_tab_list.view.model.first_iter()
+        self._select_from_tab_list(self.static_tab_list, iter)
 
     def select_startup_default(self):
         if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
@@ -121,10 +124,6 @@ class TabListManager(object):
                     return
         # if we get here, the fallback default is the Guide
         self.select_guide()
-
-    def select_static_tab(self, index):
-        iter = self.static_tab_list.view.model.nth_iter(index)
-        self._select_from_tab_list(self.static_tab_list, iter)
 
     def handle_tablist_change(self, new_tablist):
         self.selected_tab_list = new_tablist

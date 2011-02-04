@@ -38,67 +38,12 @@ from miro.frontends.widgets import widgetutil
 class StaticTab(object):
     type = u'static'
     tall = True
-    has_active = True
 
     def __init__(self):
         self.unwatched = self.downloading = 0
         self.icon = widgetutil.make_surface(self.icon_name)
-        if self.has_active:
-            self.active_icon = widgetutil.make_surface(
-                self.icon_name + '_active')
-
-# this maps guide urls to titles we'd rather they use.
-_guide_url_to_title_map = {
-    prefs.CHANNEL_GUIDE_URL.default: _("Miro Guide")
-    }
-
-# this maps guide urls to icons we'd rather they use.
-_guide_url_to_icon_map = {
-    prefs.CHANNEL_GUIDE_URL.default: 'icon-guide'
-    }
-
-class ChannelGuideTab(StaticTab):
-    id = u'guide'
-    name = u''
-    icon_name = 'icon-guide'
-    has_active = False
-
-    def __init__(self):
-        StaticTab.__init__(self)
-        self._set_from_info(app.widgetapp.default_guide_info)
-        self.browser = browser.BrowserNav(app.widgetapp.default_guide_info)
-
-    def update(self, guide_info):
-        self._set_from_info(guide_info)
-        self.browser.guide_info = guide_info
-
-    def _set_from_info(self, guide_info):
-        if guide_info is None:
-            return
-
-        # XXX This code is a bit ugly, because we want to use pretty defaults for
-        # the Miro Guide, but still allow themes to override
-
-        if guide_info.default and guide_info.url in _guide_url_to_title_map:
-            self.name = _guide_url_to_title_map[guide_info.url]
-        else:
-            self.name = guide_info.name
-
-        if guide_info.default and guide_info.url in _guide_url_to_icon_map:
-            # one of our default guides
-            self.icon_name = _guide_url_to_icon_map[guide_info.url]
-            self.icon = widgetutil.make_surface(self.icon_name)
-        elif guide_info.faviconIsDefault:
-            # theme guide that should use default favicon
-            self.icon = widgetutil.make_surface(self.icon_name)
-        else:
-            # theme guide with a favicon
-            surface = imagepool.get_surface(guide_info.favicon)
-            if surface.width != 23 or surface.height != 23:
-                self.icon = imagepool.get_surface(guide_info.favicon,
-                                                  size=(23, 23))
-            else:
-                self.icon = surface
+        self.active_icon = widgetutil.make_surface(
+            self.icon_name + '_active')
 
 class SearchTab(StaticTab):
     type = u'search'

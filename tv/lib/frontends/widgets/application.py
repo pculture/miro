@@ -224,6 +224,7 @@ class Application:
 
     def build_window(self):
         app.display_manager = displays.DisplayManager()
+        app.tab_list_manager.site_list.add(self.default_guide_info)
         app.tab_list_manager.populate_tab_list()
         for info in self.message_handler.initial_guides:
             app.tab_list_manager.site_list.add(info)
@@ -231,7 +232,6 @@ class Application:
             app.tab_list_manager.store_list.add(info)
         app.tab_list_manager.site_list.model_changed()
         app.tab_list_manager.store_list.model_changed()
-        app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
         videobox.volume_slider.set_value(app.config.get(prefs.VOLUME_LEVEL))
         videobox.volume_slider.connect('changed', self.on_volume_change)
@@ -857,6 +857,7 @@ class Application:
             self.remove_sites(infos)
 
     def remove_sites(self, infos):
+        infos = [info for info in infos if not info.default]
         title = ngettext('Remove website', 'Remove websites', len(infos))
         description = ngettext(
             'Are you sure you want to remove this website?',
@@ -1327,7 +1328,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_tab_list(self, message):
         tablist = self.tablist_for_message(message)
-        print 'got tablist for', message.type, tablist
         tablist.reset_list(message)
         if 'feed' in message.type:
             pre_startup_message = message.type + '-tab-list'
@@ -1346,11 +1346,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
                                                 message.changed,
                                                 message.removed)
 
-    def update_default_guide(self, guide_info):
-        app.widgetapp.default_guide_info = guide_info
-        guide_tab = app.tab_list_manager.static_tab_list.get_tab('guide')
-        guide_tab.update(guide_info)
-
     def handle_watched_folder_list(self, message):
         app.watched_folder_manager.handle_watched_folder_list(
                 message.watched_folders)
@@ -1360,12 +1355,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 message.added, message.changed, message.removed)
 
     def handle_tabs_changed(self, message):
-        if message.type == 'guide':
-            for info in list(message.changed):
-                if info.default:
-                    self.update_default_guide(info)
-                    message.changed.remove(info)
-                    break
         tablist = self.tablist_for_message(message)
         if message.removed:
             tablist.remove(message.removed)
