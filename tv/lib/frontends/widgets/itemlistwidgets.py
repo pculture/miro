@@ -291,6 +291,7 @@ class ListView(widgetset.TableView):
         self._column_by_label = {}
         self._current_sort_column = None
         self._real_column_widths = {}
+        self.columns_enabled = []
         self.update_columns(columns_enabled, column_widths)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
@@ -348,12 +349,13 @@ class ListView(widgetset.TableView):
                 return _("Newly Available")
         return None
 
-    def update_columns(self, columns_enabled, column_widths):
-        self.columns_enabled = columns_enabled
-        self.column_widths.update(column_widths)
-        for name in self.columns_enabled:
-            if name in self._column_name_to_column:
-                continue
+    def update_columns(self, new_columns, new_widths):
+        assert set(new_columns).issubset(new_widths)
+        old_columns = set(self.columns_enabled)
+        self.columns_enabled = new_columns
+        self.column_widths = new_widths
+        for name in sorted(set(new_columns) - old_columns,
+                key=new_columns.index):
             resizable = not name in widgetconst.NO_RESIZE_COLUMNS
             pad = not name in widgetconst.NO_PAD_COLUMNS
             if name == 'state':
@@ -363,9 +365,8 @@ class ListView(widgetset.TableView):
             renderer = ListView.COLUMN_RENDERERS[name]()
             self._make_column(header, renderer, name, resizable, pad)
             self._column_by_label[header] = name
-        for name, column in self._column_name_to_column.items():
-            if name in self.columns_enabled:
-                continue
+        for name in old_columns - set(new_columns):
+            column = self._column_name_to_column[name]
             index = self.columns.index(column)
             self.remove_column(index)
             del self._column_name_to_column[name]
@@ -397,8 +398,7 @@ class ListView(widgetset.TableView):
             total_weight = 0
             min_width = 0
             for name in self.columns_enabled:
-                if name in widgetconst.COLUMN_WIDTH_WEIGHTS:
-                    total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS[name]
+                total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
                 min_width += self.column_widths[name]
             if total_weight is 0:
                 total_weight = 1

@@ -192,11 +192,10 @@ class WidgetStateStore(object):
     def get_columns_enabled(self, display_type, display_id, view_type):
         if WidgetStateStore.is_list_view(view_type):
             display = self._get_display(display_type, display_id)
-            columns_enabled = display.list_view_columns
-            if columns_enabled is not None:
-                return columns_enabled
-            else:
-                return WidgetStateStore.DEFAULT_COLUMNS[display_type]
+            columns = display.list_view_columns
+            if columns is None:
+                columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
+            return columns[:]
         else:
             raise ValueError()
 
@@ -210,30 +209,24 @@ class WidgetStateStore(object):
 
     def toggle_column(self, display_type, display_id, view_type, column):
         if WidgetStateStore.is_list_view(view_type):
-            display = self._get_display(display_type, display_id)
-            columns_enabled = self.get_columns_enabled(
-                              display_type, display_id, view_type)
-            if column in columns_enabled:
-                columns_enabled.remove(column)
+            columns = self.get_columns_enabled(display_type, display_id, view_type)
+            if column in columns:
+                columns.remove(column)
             else:
-                columns_enabled.append(column)
-            self.set_columns_enabled(display_type, display_id, view_type,
-                                    columns_enabled)
+                columns.append(column)
+            self.set_columns_enabled(display_type, display_id, view_type, columns)
         else:
             raise ValueError()
 
     def get_column_widths(self, display_type, display_id, view_type):
         if WidgetStateStore.is_list_view(view_type):
             display = self._get_display(display_type, display_id)
-            column_widths = display.list_view_widths
-            if column_widths is not None:
-                return column_widths
-            else:
-                defaults = {}
-                for name in self.get_columns_enabled(
-                        display_type, display_id, view_type):
-                    defaults[name] = WidgetStateStore.DEFAULT_COLUMN_WIDTHS[name]
-                return defaults
+            column_widths = display.list_view_widths or {}
+            columns = self.get_columns_enabled(display_type, display_id, view_type)
+            for name in columns:
+                default = WidgetStateStore.DEFAULT_COLUMN_WIDTHS[name]
+                column_widths.setdefault(name, default)
+            return column_widths.copy()
         else:
             raise ValueError()
 
@@ -287,7 +280,7 @@ class WidgetStateStore(object):
 
     @staticmethod
     def get_columns_available(display_type):
-        return WidgetStateStore.AVAILABLE_COLUMNS[display_type]
+        return WidgetStateStore.AVAILABLE_COLUMNS[display_type][:]
 
 # static properties of a view_type:
 
