@@ -368,11 +368,16 @@ def get_menu():
         help_menu.append(MenuItem(_("_Translate"), "Translate"))
     if app.config.get(prefs.PLANET_URL):
         help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
+
     if app.debugmode:
-        # Devel build, add menu items
-        help_menu.append(Separator())
-        help_menu.append(MenuItem(_("Profile Message"), "ProfileMessage"))
-        help_menu.append(MenuItem(_("Profile Redraw"), "ProfileRedraw"))
+        dev_menu = Menu(_("Dev"), "DevMenu", [
+                MenuItem(_("Profile Message"), "ProfileMessage"),
+                MenuItem(_("Profile Redraw"), "ProfileRedraw"),
+                MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
+                MenuItem(_("Dump Database"), "DumpDatabase")
+                ])
+
+        mbar.menuitems.append(dev_menu)
     return mbar
 
 def _get_convert_menu():
@@ -678,6 +683,17 @@ def on_profile_message():
 @action_handler("ProfileRedraw")
 def on_profile_redraw():
     app.widgetapp.profile_redraw()
+
+class TestIntentionalCrash(Exception):
+    pass
+
+@action_handler("TestCrashReporter")
+def on_test_crash_reporter():
+    raise TestIntentionalCrash("intentional error here")
+
+@action_handler("DumpDatabase")
+def on_dump_database():
+    app.db.dumpDatabase()
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to
