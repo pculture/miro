@@ -29,6 +29,7 @@
 
 import logging
 import subprocess
+import tempfile
 import re
 import os
 
@@ -37,22 +38,16 @@ from miro.plat.utils import get_ffmpeg_executable_path, setup_ffmpeg_presets
 
 # Transcoding
 #
-# Currently this is only supported for the iPad, so the operations
-# are pretty basic.
+# The basic operation of transcoding is pretty simple.  The client
+# determines whether it needs a transcode by looking at the metadata
+# that came with the songlist (for example, for daap, this is
+# daap.songformat).  If it needs a transcode, it requests a m3u8 file
+# which contains chunks of mpegts that may be transcoded on the fly.
 #
-# * Do a dry run of ffmpeg.  This gives us the actual container
-#   format of the file, as the database is sometimes unreliable.
-#   Imported files (ones that are not downloaded) do not have the
-#   mime info, so we can't rely on that.  Sometimes files do not have
-#   enclosure_format, so we can't rely on that either.  And finally
-#   sometimes files do not have a valid extension, do we can't
-#   rely on that.  Also, pick out the duration.  We need to do a couple
-#   of regexp do read that information.
-#
-# * If it's the mov/mp4/m4a etc, send that out directly.  This is 
-#   iPad native stuff, so it should be able to deal.
-#
-# * Otherwise, transcode to h.264 using mpegts (video) or mp3 (audio).
+# This scheme does mean that the client cannot receive m3u8 files, but
+# I don't think that's important.  If it becomes an issue, I suppose we could
+# update the protocol to add a special http query string to indicate a 
+# forced transcode.
 #
 # Future work: maybe hook directly into the ffmpeg libraries, then we
 # don't need to parse.
@@ -180,11 +175,12 @@ class TranscodeObject(object):
 
     segment_duration = 10
 
-    def __init__(self, media_file, media_info):
+    def __init__(self, media_file, itemid, media_info, request_path_func):
         self.media_file = media_file
         self.time_offset = 0
         duration, has_audio, has_video = media_info
         self.duration = duration
+        self.itemid = itemid
         self.has_audio = has_audio
         self.has_video = has_video
         # I need to rewrite the m3u8 anyway because I need to tack on the
@@ -196,8 +192,7 @@ class TranscodeObject(object):
         setup_ffmpeg_presets()
         self.ffmpeg_handle = self.segmenter_handle = None
 
-        self.prefix = None
-        self.query = None
+        self.request_path_func = request_path_func
 
         self.nchunks = self.duration / TranscodeObject.segment_duration
         self.trailer = self.duration % TranscodeObject.segment_duration
@@ -211,19 +206,24 @@ class TranscodeObject(object):
         self.playlist += '#EXTM3U\n'
         self.playlist += ('#EXT-X-TARGETDURATION:%d\n' % 
                           TranscodeObject.segment_duration)
+        self.playlist += '#EXT-X-MEDIA-SEQUENCE:0\n'
         for i in xrange(self.nchunks):
-            path = (self.prefix + '/' + self.media_file + '-' + i + '.ts' +
-                    '?' + self.query)
-            self.playlist = '#EXTINF:%d,\n' % self.duration
+            self.playlist += '#EXTINF:%d,\n' % self.duration
             # XXX check corner case
             # Special case
             if i == self.nchunks and self.trailer:
-                self.playlist = self.trailer
-            self.playlist += path
+                self.playlist += self.trailer + '\n'
+            self.playlist += self.request_path_func(self.itemid, 'ts') + '\n'
         self.playlist += '#EXT-X-ENDLIST\n'
+        print 'PLAYLIST', self.playlist
 
-    def playlist(self):
-        return self.playlist
+    def get_playlist(self):
+        self.tmpf = tempfile.TemporaryFile()
+        self.tmpf.write(self.playlist)
+        self.tmpf.flush()
+        fildes = self.tmpf.fileno()
+        os.lseek(fildes, 0, os.SEEK_SET)
+        return fildes
 
     def seek(self, chunk):
         # Strip off the prefix
@@ -262,7 +262,7 @@ class TranscodeObject(object):
         # XXX
         segmenter_exe = '/Users/glee/segmenter'
         args = [segmenter_exe]
-        args += TranscodeObject.segmenter_args
+        args += self.segmenter_args
         kwargs = {"stdout": self.ffmpeg_handle.stdout,
                   "stdin": open(os.devnull, 'rb'),
                   "stderr": open(os.devnull, 'wb'),

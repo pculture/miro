@@ -734,23 +734,23 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
 
-    def get_file(self, itemid, ext, session, offset=0, chunk=None):
+    def get_file(self, itemid, ext, session, request_path_func, offset=0,
+                 chunk=None):
         path = self.daapitems[itemid]['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
             # transcode is required.
-            if (not self.transcode.has_key(session) and 
-              not self.transcode[session].item == itemid):
-                yes, info = needs_transcode(path)
+            if (not self.transcode.has_key(session) or
+              (self.transcode.has_key(session) and 
+              self.transcode[session].itemid != itemid)):
+                yes, info = transcode.needs_transcode(path)
                 self.transcode[session] = transcode.TranscodeObject(path,
-                                                                    itemid,
-                                                                    info)
+                                                            itemid,
+                                                            info,
+                                                            request_path_func)
             transcode_obj = self.transcode[session]
             if ext == 'm3u8':
-                # Note: OK: This will be closed when the object is destroyed.
-                tmpf = tempfile.TemporaryFile()
-                tmpf.write(transcode_obj.playlist())
-                fildes = tmpf.fileno()
+                fildes = transcode_obj.get_playlist()
                 os.lseek(fildes, offset, os.SEEK_SET)
             elif ext == 'ts':
                 # TODO: seek won't work on this guy, make sure that

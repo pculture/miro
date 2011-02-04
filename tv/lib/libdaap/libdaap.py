@@ -308,7 +308,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         reply.append(('mupd', [('mstt', DAAP_OK), ('musr', xxx_revision)]))
         return (DAAP_OK, reply, [])
 
-    def do_stream_file(self, db_id, item_id, ext):
+    def do_stream_file(self, db_id, item_id, ext, chunk):
         rc = DAAP_OK
         extra_headers = []
         # NOTE: Grabbing first header only.
@@ -332,12 +332,22 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     seekend = 0
                 rc = DAAP_PARTIAL_CONTENT
         fildes = self.server.backend.get_file(item_id, ext, self.get_session(),
-                                              offset=seekpos)
+                                              self.get_request_path,
+                                              offset=seekpos, chunk=chunk)
         if fildes < 0:
             return (DAAP_FILENOTFOUND, [], extra_headers)
         print 'streaming with file descriptor %d' % fildes
         # Return a special response, the encode_reponse() will handle correctly
         return (rc, [(fildes, seekpos, seekend)], extra_headers)
+
+    def get_request_path(self, itemid, enclosure):
+        # XXX
+        # This API is bad because we can't get the address we used to connect
+        # with the client unless we poke into semi-private data.  Ugh.
+        address, addrlength = self.rfile._sock.getsockname()
+        listen_address, port = self.server.server_address
+        return ('daap://%s:%d/databases/1/items/%d..%s?session-id=%d' % 
+                (address, port, itemid, enclosure, self.get_session()))
 
     def do_databases(self):
         path, query = split_url_path(self.path)
@@ -517,7 +527,10 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             print 'now playing item %d' % item_id
             name, ext = os.path.splitext(path[3])
             ext = ext[1:]
-            return self.do_stream_file(db_id, item_id, ext)
+            chunk = None
+            if query.has_key('chunk'):
+                chunk = int(query['chunk'])
+            return self.do_stream_file(db_id, item_id, ext, chunk)
         
     def do_database_groups(self, path, query):
         db_id = int(path[1])
