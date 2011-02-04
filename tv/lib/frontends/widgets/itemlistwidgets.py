@@ -423,15 +423,11 @@ class ListView(widgetset.TableView):
         self.emit('sort-changed', column_name, ascending)
 
     def change_sort_indicator(self, column_name, ascending):
-        new_sort_column = self._column_name_to_column.get(column_name)
+        new_sort_column = self._column_name_to_column[column_name]
         if not self._current_sort_column in (new_sort_column, None):
             self._current_sort_column.set_sort_indicator_visible(False)
-        if new_sort_column is None:
-            logging.warn("ListView tried to sort by column %s, "
-                "which doesn't exist", repr(column_name))
-        else:
-            new_sort_column.set_sort_indicator_visible(True)
-            new_sort_column.set_sort_order(ascending)
+        new_sort_column.set_sort_indicator_visible(True)
+        new_sort_column.set_sort_order(ascending)
         self._current_sort_column = new_sort_column
 
 class HideableSection(widgetutil.HideableWidget):

@@ -254,7 +254,14 @@ class WidgetStateStore(object):
         sort_state = view.sort_state
         if sort_state is None:
             sort_state = WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
-        return sort_state
+        if WidgetStateStore.is_standard_view(view_type):
+            return sort_state
+        else:
+            enabled = self.get_columns_enabled(display_type, display_id, view_type)
+            column = sort_state.lstrip('-')
+            if column not in enabled:
+                sort_state = WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
+            return sort_state
 
     def set_sort_state(self, display_type, display_id, view_type, sort_key):
         view = self._get_view(display_type, display_id, view_type)
