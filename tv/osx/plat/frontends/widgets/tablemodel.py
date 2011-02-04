@@ -441,6 +441,7 @@ class DataSourceBase(NSObject):
         self.model = model
         self.drag_source = None
         self.drag_dest = None
+        return self
 
     def setDragSource_(self, drag_source):
         self.drag_source = drag_source

@@ -469,19 +469,22 @@ class InfoListCocoaTest(InfoListDataTest):
     # Test the same things as in InfoListTest, but check using Cocoa's classes
 
     def setUp(self):
-        import Cocoa
+        from miro.plat.frontends.widgets import tablemodel
+        from miro.plat.frontends.widgets import tableview
+
         InfoListDataTest.setUp(self)
-        self.tableview = Cocoa.NSTableView.alloc().init()
-        self.infolist.add_to_tableview(self.tableview)
+        self.data_source = tablemodel.MiroInfoListDataSource.alloc().initWithModel_(self.infolist)
+
 
     def check_info_list(self, info_list):
-        InfoListDataTest.check_info_list(self, info_list)
-        data_source = self.tableview.dataSource()
-        rows = data_source.numberOfRowsInTableView_(self.tableview)
-        self.assertEquals(rows, len(info_list))
+        # Note we just pass in a None for tableviews, the InfoList data source
+        # doesn't use it.
+        rows = self.data_source.numberOfRowsInTableView_(None)
         data_source_rows = []
         for i in xrange(rows):
             info, attrs = self.infolist.row_for_iter(i)
+            self.assertEquals((info, attrs),
+                    self.data_source.tableView_objectValueForTableColumn_row_(
+                        None, 0, i))
             data_source_rows.append(info)
-
-        self.assertEquals(data_source_rows, info_list)
+        InfoListDataTest.check_info_list(self, data_source_rows)
