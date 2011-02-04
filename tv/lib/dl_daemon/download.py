@@ -36,6 +36,7 @@ from copy import copy
 import sys
 import datetime
 import logging
+import tempfile
 
 from miro.gtcache import gettext as _
 
@@ -441,18 +442,19 @@ class BGDownloader(object):
         x = command.UpdateDownloadStatus(daemon.LAST_DAEMON, self.get_status())
         return x.send()
 
-    def pick_initial_filename(self, suffix=".part", torrent=False):
+    def pick_initial_filename(self, suffix=".part", torrent=False,
+                              is_directory=False):
         """Pick a path to download to based on self.shortFilename.
 
         This method sets self.filename, as well as creates any leading
         paths needed to start downloading there.
 
-        If the torrent flag is true, then the filename we're working
-        with is utf-8 and shouldn't be transformed in any way.
-
-        If the torrent flag is false, then the filename we're working
-        with is ascii and needs to be transformed into something sane.
-        (default)
+        :param torrent: If True, then the filename we're working on is
+            encoded in utf-8 and shouldn't be transformed in any way.
+            If False, then the filanem we're working on is encoded in
+            ascii and needs to be transformed into something sane.
+        :param is_directory: If True, we're really creating a
+            directory--not a file.
         """
         download_dir = os.path.join(app.config.get(prefs.MOVIES_DIRECTORY),
                                     'Incomplete Downloads')
@@ -463,12 +465,17 @@ class BGDownloader(object):
         if not torrent:
             # this is an ascii filename and needs to be fixed
             filename = clean_filename(filename)
-        self.filename, fp = next_free_filename(
-                                os.path.join(download_dir, filename))
-        # We can close this object now the file's been created, I guess.
-        # This will linger in the filesystem namespace, caller is responsible
-        # for cleaning this up (which I think it does).
-        fp.close()
+
+        if is_directory:
+            # if this is a torrent and it's a directory of files,
+            # then we create a temp directory to put the directory
+            # of files in.
+            new_filename = tempfile.mkdtemp(prefix=filename, dir=download_dir)
+        else:
+            new_filename, fp = next_free_filename(
+                os.path.join(download_dir, filename))
+            fp.close()
+        self.filename = new_filename
 
     def move_to_movies_directory(self):
         """Move our downloaded file from the Incomplete Downloads
@@ -488,22 +495,38 @@ class BGDownloader(object):
             if len(channel_name) > 80:
                 channel_name = channel_name[:80]
             directory = os.path.join(directory, channel_name)
-            if not os.path.exists(directory):
-                try:
-                    fileutil.makedirs(directory)
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
-                    pass
-        newfilename = os.path.join(directory, self.shortFilename)
-        if newfilename == self.filename:
+        if not os.path.exists(directory):
+            fileutil.makedirs(directory)
+
+        src = self.filename
+        dest = os.path.join(directory, self.shortFilename)
+        if src == dest:
             return
-        newfilename, fp = next_free_filename(newfilename)
+
+        if os.path.isdir(src):
+            # if self.filename is a directory, then we want to take
+            # the subdirectory of the src and put it in a unique
+            # directory in the destination.
+            if os.path.isdir(os.path.join(src, self.shortFilename)):
+                src = os.path.join(src, self.shortFilename)
+            dest = tempfile.mkdtemp(prefix=self.shortFilename, dir=directory)
+        else:
+            dest, fp = next_free_filename(dest)
+            fp.close()
+
         def callback():
-            self.filename = newfilename
+            # for torrent of a directory of files, we want to remove
+            # the temp directory we created in Incomplete Downloads
+            # because we don't need it anymore.
+            if os.path.isdir(self.filename):
+                try:
+                    fileutil.rmtree(self.filename)
+                except OSError:
+                    pass
+            self.filename = dest
             self.update_client()
-        fileutil.migrate_file(self.filename, newfilename, callback)
-        fp.close()
+
+        fileutil.migrate_file(src, dest, callback)
 
     def get_eta(self):
         """Returns a float with the estimated number of seconds left.
@@ -871,7 +894,12 @@ class BTDownloader(BGDownloader):
                     )
                 return
 
-            save_path = os.path.dirname(fileutil.expand_filename(self.filename))
+            # the save_path needs to be a directory--that's where
+            # libtorrent is going to save the torrent contents.
+            save_path = fileutil.expand_filename(self.filename)
+            if not os.path.isdir(save_path):
+                save_path = os.path.dirname(save_path)
+
             if self.fastResumeData:
                 self.torrent = TORRENT_SESSION.session.add_torrent(
                     torrent_info, save_path, lt.bdecode(self.fastResumeData),
@@ -1168,6 +1196,10 @@ class BTDownloader(BGDownloader):
                 if not metainfo:
                     raise RuntimeError()
                 name = metainfo['info']['name']
+                # if the metainfo['info'] has a files key, then this
+                # is a torrent of a bunch of files in a directory
+                is_directory = "files" in metainfo['info']
+
             # Note: handle KeyError as well because bdecode() may return
             # an object with no 'info' key, or with 'info' key but no 'name'
             # key.  This allows us to catch lousily made torrent files.
@@ -1176,7 +1208,9 @@ class BTDownloader(BGDownloader):
                 return
             self.shortFilename = utf8_to_filename(name)
             try:
-                self.pick_initial_filename(suffix="", torrent=True)
+                self.pick_initial_filename(
+                    suffix="", torrent=True, is_directory=is_directory)
+
             # Somewhere deep it calls makedirs() which can throw exceptions.
             #
             # Not sure if this is correct but if we throw a runtime error
