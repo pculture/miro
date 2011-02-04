@@ -236,7 +236,7 @@ def note_label(text):
     return note
 
 # Note: This has to be here so that the above functions have been defined
-# before we try to import stuff from prefpanelset.  This prevents problems 
+# before we try to import stuff from prefpanelset.  This prevents problems
 # resulting from the circular import.
 
 from miro.plat.frontends.widgets import prefpanelset
@@ -264,15 +264,17 @@ class PanelBuilder(object):
 # the panel list holding tuples of (name, image_name, panel_builder)
 _PANEL = []
 
-def add_panel(name, title, panel_builder_class, image_name='images/pref-tab-general.png'):
+def add_panel(name, title, panel_builder_class,
+              image_name='images/pref-tab-general.png'):
     """Adds a panel to the preferences panel list.
 
-    name -- a name for the panel--this is used internally
-    title -- the name of the panel; appears in tabs on the side and the top of
-             the panel
-    panel_builder -- function ``None -> widget`` that builds the panel
-            and returns it
-    image_name -- the image to use in the tabs; defaults to the general tab image
+    :param name: a name for the panel--this is used internally
+    :param title: the name of the panel; appears in tabs on the side and
+        the top of the panel
+    :param panel_builder: function ``None -> widget`` that builds the panel
+        and returns it
+    :param image_name: the image to use in the tabs; defaults to
+        the general tab image
     """
     global _PANEL
     _PANEL.append( (name, title, image_name, panel_builder_class) )
@@ -297,16 +299,19 @@ class GeneralPanel(PanelBuilder):
         attach_boolean(run_at_startup_cbx, prefs.RUN_AT_STARTUP)
         v.pack_start(run_at_startup_cbx)
 
-        warn_if_downloading_cbx = widgetset.Checkbox(_("Warn me if I attempt to quit with downloads in progress."))
-        attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
+        warn_if_downloading_cbx = widgetset.Checkbox(
+            _("Warn me if I attempt to quit with downloads in progress."))
+        attach_boolean(warn_if_downloading_cbx,
+                       prefs.WARN_IF_DOWNLOADING_ON_QUIT)
         v.pack_start(warn_if_downloading_cbx)
 
-        warn_if_converting_cbx = widgetset.Checkbox(_("Warn me if I attempt to quit with conversions in progress."))
+        warn_if_converting_cbx = widgetset.Checkbox(
+            _("Warn me if I attempt to quit with conversions in progress."))
         attach_boolean(warn_if_converting_cbx, prefs.WARN_IF_CONVERTING_ON_QUIT)
         v.pack_start(warn_if_converting_cbx)
 
-        # FIXME - need to automatically generate list of available languages
-        # in correct language
+        # FIXME - need to automatically generate list of available
+        # languages in correct language
         lang_options = gtcache.get_languages()
         lang_options.insert(0, ("system", _("System default")))
 
@@ -314,11 +319,14 @@ class GeneralPanel(PanelBuilder):
         attach_combo(lang_option_menu, prefs.LANGUAGE,
                      [op[0] for op in lang_options])
         v.pack_start(widgetutil.align_left(
-            widgetutil.build_control_line((widgetset.Label(_("Language:")), lang_option_menu))))
+            widgetutil.build_control_line((
+                        widgetset.Label(_("Language:")), lang_option_menu))))
 
         v.pack_start(widgetutil.align_left(
-            dialogwidgets.note(_("(Changing the language requires you to restart Miro.)"))))
-        
+            dialogwidgets.note(
+                    _("(Changing the language requires you to "
+                      "restart Miro.)"))))
+
         pack_extras(v, "general")
 
         return v
@@ -330,7 +338,7 @@ class FeedsPanel(PanelBuilder):
                       (30, _("Every 30 minutes")),
                       (-1 , _("Manually"))]
         cc_option_menu = widgetset.OptionMenu([op[1] for op in cc_options])
-        attach_combo(cc_option_menu, prefs.CHECK_CHANNELS_EVERY_X_MN, 
+        attach_combo(cc_option_menu, prefs.CHECK_CHANNELS_EVERY_X_MN,
             [op[0] for op in cc_options])
 
         ad_options = [("new", _("New")),
@@ -338,7 +346,7 @@ class FeedsPanel(PanelBuilder):
                       ("off", _("Off"))]
         ad_option_menu = widgetset.OptionMenu([op[1] for op in ad_options])
 
-        attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT, 
+        attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT,
             [op[0] for op in ad_options])
 
         max_options = [(0, _("0")),
@@ -347,11 +355,11 @@ class FeedsPanel(PanelBuilder):
                        (100, _("100")),
                        (1000, _("1000"))]
         max_option_menu = widgetset.OptionMenu([op[1] for op in max_options])
-        attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT, 
+        attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT,
             [op[0] for op in max_options])
 
         grid = dialogwidgets.ControlGrid()
-        grid.pack(dialogwidgets.heading(_("Default settings for new feeds:")), 
+        grid.pack(dialogwidgets.heading(_("Default settings for new feeds:")),
                 grid.ALIGN_LEFT, span=2)
         grid.end_line(spacing=2)
         grid.pack(dialogwidgets.note(
@@ -387,21 +395,24 @@ class DownloadsPanel(PanelBuilder):
         grid.pack_label(_('Maximum number of manual downloads at a time:'))
         max_manual = widgetset.TextEntry()
         max_manual.set_width(5)
-        attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS, create_integer_checker(min=0))
+        attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS,
+                       create_integer_checker(min=0))
         grid.pack(max_manual)
         grid.end_line(spacing=6)
 
         grid.pack_label(_('Maximum number of auto-downloads at a time:'))
         max_auto = widgetset.TextEntry()
         max_auto.set_width(5)
-        attach_integer(max_auto, prefs.DOWNLOADS_TARGET, create_integer_checker(min=0))
+        attach_integer(max_auto, prefs.DOWNLOADS_TARGET,
+                       create_integer_checker(min=0))
         grid.pack(max_auto)
         grid.end_line(spacing=12)
-        
+
         vbox.pack_start(grid.make_table())
 
         grid = dialogwidgets.ControlGrid()
-        grid.pack(dialogwidgets.heading(_("Bittorrent:")), grid.ALIGN_LEFT, span=3)
+        grid.pack(dialogwidgets.heading(_("Bittorrent:")),
+                  grid.ALIGN_LEFT, span=3)
         grid.end_line(spacing=12)
 
         cbx = widgetset.Checkbox( _('Limit upstream bandwidth to:'))
@@ -411,7 +422,8 @@ class DownloadsPanel(PanelBuilder):
         attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
         max_kbs = sys.maxint / (2**10) # highest value accepted: sys.maxint
                                        # bits per second in kb/s
-        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0, max=max_kbs))
+        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS,
+                       create_integer_checker(min=0, max=max_kbs))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -422,7 +434,8 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
-        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0, max=max_kbs))
+        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS,
+                       create_integer_checker(min=0, max=max_kbs))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -433,7 +446,8 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
-        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0, max=65536))
+        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM,
+                       create_integer_checker(min=0, max=65536))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -443,14 +457,18 @@ class DownloadsPanel(PanelBuilder):
         min_port.set_width(5)
         max_port = widgetset.TextEntry()
         max_port.set_width(5)
-        attach_integer(min_port, prefs.BT_MIN_PORT, create_integer_checker(min=0, max=65535))
-        attach_integer(max_port, prefs.BT_MAX_PORT, create_integer_checker(min=0, max=65535))
+        attach_integer(min_port, prefs.BT_MIN_PORT,
+                       create_integer_checker(min=0, max=65535))
+        attach_integer(max_port, prefs.BT_MAX_PORT,
+                       create_integer_checker(min=0, max=65535))
 
-        grid.pack_label(_("Starting port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack_label(_("Starting port:"),
+                        dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(min_port)
         grid.end_line(spacing=6)
 
-        grid.pack_label(_("Ending port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack_label(_("Ending port:"),
+                        dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(max_port)
         grid.end_line(spacing=12)
         vbox.pack_start(widgetutil.align_left(grid.make_table()))
@@ -464,7 +482,8 @@ class DownloadsPanel(PanelBuilder):
         attach_boolean(cbx, prefs.BT_ENC_REQ)
         vbox.pack_start(cbx)
 
-        cbx = widgetset.Checkbox(_('Stop torrent uploads when this ratio is reached:'))
+        cbx = widgetset.Checkbox(
+            _('Stop torrent uploads when this ratio is reached:'))
         limit = widgetset.TextEntry()
         attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
         attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
@@ -476,8 +495,8 @@ class DownloadsPanel(PanelBuilder):
         return vbox
 
 class _MovieDirectoryHelper(object):
-    """Helper class that contains widgets used to handle the Movie directory
-    prefs.
+    """Helper class that contains widgets used to handle the Movie
+    directory prefs.
     """
     def __init__(self):
         self.label = widgetset.Label()
@@ -486,9 +505,10 @@ class _MovieDirectoryHelper(object):
         self.button.connect('clicked', self._on_button_clicked)
 
     def _on_button_clicked(self, button):
-        d = dialogs.ask_for_directory(_("Choose Movies Directory"),
-                                      initial_directory=app.config.get(prefs.MOVIES_DIRECTORY),
-                                      transient_for=_pref_window)
+        d = dialogs.ask_for_directory(
+            _("Choose Movies Directory"),
+            initial_directory=app.config.get(prefs.MOVIES_DIRECTORY),
+            transient_for=_pref_window)
         if d is not None:
             try:
                 if not os.path.exists(d):
@@ -496,11 +516,11 @@ class _MovieDirectoryHelper(object):
                 if not os.access(d, os.W_OK):
                     raise IOError    # Pretend we got an IOError.
             except (OSError, IOError):
-                dialogs.show_message(_("Directory not valid"),
-                                     _("Directory '%s' could not be created.  " +
-                                       "Please choose a directory you have " +
-                                       "write access to."),
-                                     dialogs.WARNING_MESSAGE)
+                dialogs.show_message(
+                    _("Directory not valid"),
+                    _("Directory '%s' could not be created.  Please "
+                      "choose a directory you have write access to."),
+                    dialogs.WARNING_MESSAGE)
                 return
             logging.info("Created directory.  It's valid.")
             self.path = d
@@ -513,11 +533,13 @@ class _MovieDirectoryHelper(object):
     def on_window_closed(self):
         if self.path != self.initial_path:
             title = _("Migrate existing movies?")
-            description = _("You've selected a new folder to download movies "
-                    "to.  Should %(appname)s migrate your existing downloads there? "
-                    "(Currently downloading movies will not be moved until "
-                    "they finish.)", {'appname': app.config.get(prefs.SHORT_APP_NAME)})
-            response = dialogs.show_choice_dialog(title, description, 
+            description = _(
+                "You've selected a new folder to download movies "
+                "to.  Should %(appname)s migrate your existing downloads "
+                "there?  (Currently downloading movies will not be moved "
+                "until they finish.)",
+                {'appname': app.config.get(prefs.SHORT_APP_NAME)})
+            response = dialogs.show_choice_dialog(title, description,
                     (dialogs.BUTTON_MIGRATE, dialogs.BUTTON_DONT_MIGRATE),
                     transient_for=_pref_window)
             migrate = (response is dialogs.BUTTON_MIGRATE)
@@ -562,8 +584,8 @@ class _WatchedFolderHelper(object):
         self.folder_list.pack_start(scroller)
         self._check_no_folders()
 
-    def _on_visible_clicked(self, renderer, iter):
-        row = app.watched_folder_manager.model[iter]
+    def _on_visible_clicked(self, renderer, iter_):
+        row = app.watched_folder_manager.model[iter_]
         app.watched_folder_manager.change_visible(row[0], not row[2])
 
     def connect_signals(self):
@@ -592,10 +614,10 @@ class _WatchedFolderHelper(object):
             self._check_no_folders()
 
     def _remove_clicked(self, button):
-        iter = self._table.get_selected()
-        if iter is not None:
-            id = app.watched_folder_manager.model[iter][0]
-            app.watched_folder_manager.remove(id)
+        iter_ = self._table.get_selected()
+        if iter_ is not None:
+            id_ = app.watched_folder_manager.model[iter_][0]
+            app.watched_folder_manager.remove(id_)
 
 class FoldersPanel(PanelBuilder):
     def build_widget(self):
@@ -610,8 +632,9 @@ class FoldersPanel(PanelBuilder):
         grid.pack(self.movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
         grid.pack(self.movie_dir_helper.button)
         grid.end_line(spacing=18)
-        grid.pack_label(_('Watch for new video and audio items in these folders '
-                          'and include them in library:'), span=2)
+        grid.pack_label(
+            _('Watch for new video and audio items in these folders '
+              'and include them in library:'), span=2)
         grid.end_line()
         grid.pack(self.watched_folder_helper.folder_list, pad_right=12)
         grid.pack(self.watched_folder_helper.button_box)
@@ -631,7 +654,8 @@ class DiskSpacePanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
 
-        cbx = widgetset.Checkbox(_('Keep at least this much free space on my drive:'))
+        cbx = widgetset.Checkbox(
+            _('Keep at least this much free space on my drive:'))
         limit = widgetset.TextEntry()
         limit.set_width(6)
         note = widgetset.Label(_('GB'))
@@ -639,7 +663,8 @@ class DiskSpacePanel(PanelBuilder):
 
         def set_library_filter(self, typ, filter):
             self.library[typ] = filter
-        attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
+        attach_float(limit, prefs.PRESERVE_X_GB_FREE,
+                     create_float_checker(min=0.0))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -656,7 +681,8 @@ class DiskSpacePanel(PanelBuilder):
         attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
                 [op[0] for op in expire_ops])
 
-        grid.pack_label(_('By default, video and audio items expire after:'), extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack_label(_('By default, video and audio items expire after:'),
+                        extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(expire_menu, extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
 
         return grid.make_table()
@@ -684,10 +710,10 @@ class SharingPanel(PanelBuilder):
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT,
                        [sharing_warnonquit_cbx, share_txt])
-        # Why is check function always false?  Because we don't want to
-        # continually reload (unpublish and republish) the share as the
-        # user is typing.  On_window_open() and open_window_closed() takes
-        # care of this.
+        # Why is check function always false?  Because we don't want
+        # to continually reload (unpublish and republish) the share as
+        # the user is typing.  on_window_open() and
+        # open_window_closed() takes care of this.
         attach_text(share_txt, prefs.SHARE_NAME,
                     check_function=lambda w, v: False)
 
@@ -697,7 +723,7 @@ class SharingPanel(PanelBuilder):
             sharing_cbx.disable()
             share_txt.disable()
             sharing_warnonquit_cbx.disable()
-            
+
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
         vbox.pack_start(widgetutil.align_left(sharing_warnonquit_cbx,
                                               bottom_pad=6))
@@ -730,14 +756,20 @@ class PlaybackPanel(PanelBuilder):
         v = widgetset.VBox()
 
         miro_cbx = widgetset.Checkbox(_('Play media in Miro.'))
-        separate_cbx = widgetset.Checkbox(_('Always play videos in a separate window.'))
-        resume_cbx = widgetset.Checkbox(_('Resume playing a video or audio item from the point it was last stopped.'))
+        separate_cbx = widgetset.Checkbox(
+            _('Always play videos in a separate window.'))
+        resume_cbx = widgetset.Checkbox(
+            _('Resume playing a video or audio item from the point '
+              'it was last stopped.'))
 
-        subtitles_cbx = widgetset.Checkbox(_('Automatically enable movie subtitles when available.'))
+        subtitles_cbx = widgetset.Checkbox(
+            _('Automatically enable movie subtitles when available.'))
 
         rbg = widgetset.RadioButtonGroup()
-        play_rb = widgetset.RadioButton(_("Play video and audio items one after another"), rbg)
-        stop_rb = widgetset.RadioButton(_("Stop after each video or audio item"), rbg)
+        play_rb = widgetset.RadioButton(
+            _("Play video and audio items one after another"), rbg)
+        stop_rb = widgetset.RadioButton(
+            _("Stop after each video or audio item"), rbg)
 
         attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_cbx,
                                                       subtitles_cbx, play_rb,
@@ -753,7 +785,8 @@ class PlaybackPanel(PanelBuilder):
         attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
         v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))
 
-        attach_radio([(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        attach_radio([(stop_rb, True), (play_rb, False)],
+                     prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         v.pack_start(widgetutil.align_left(play_rb), padding=2)
         v.pack_start(widgetutil.align_left(stop_rb))
 
@@ -766,13 +799,14 @@ class ConversionsPanel(PanelBuilder):
         vbox = widgetset.VBox()
 
         grid = dialogwidgets.ControlGrid()
-        
+
         count = get_logical_cpu_count()
         max_concurrent = []
         for i in range(0, count):
             max_concurrent.append((i+1, str(i+1)))
-        max_concurrent_menu = widgetset.OptionMenu([op[1] for op in max_concurrent])
-        attach_combo(max_concurrent_menu, prefs.MAX_CONCURRENT_CONVERSIONS, 
+        max_concurrent_menu = widgetset.OptionMenu(
+            [op[1] for op in max_concurrent])
+        attach_combo(max_concurrent_menu, prefs.MAX_CONCURRENT_CONVERSIONS,
             [op[0] for op in max_concurrent])
 
         if count == 1:
@@ -780,7 +814,8 @@ class ConversionsPanel(PanelBuilder):
 
         grid.pack(dialogwidgets.label_with_note(
             _("Allow this many concurrent conversions:"),
-            _("(changing this will not apply to currently running conversions)")),
+            _("(changing this will not apply to currently running "
+              "conversions)")),
             dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(max_concurrent_menu)
         grid.end_line(spacing=4)
@@ -826,8 +861,8 @@ class _StoreHelper(object):
     def _on_stores_changed(self, manager):
         self._table.model_changed()
 
-    def _on_visible_clicked(self, renderer, iter):
-        row = app.store_manager.model[iter]
+    def _on_visible_clicked(self, renderer, iter_):
+        row = app.store_manager.model[iter_]
         app.store_manager.change_visible(row[0], not row[2])
 
 

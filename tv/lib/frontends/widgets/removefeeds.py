@@ -33,7 +33,6 @@ import logging
 
 from miro import app
 from miro import prefs
-from miro import messages
 from miro import util
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
@@ -41,15 +40,13 @@ from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_CANCEL, BUTTON_REMOVE
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
-from miro.frontends.widgets import separator
-from miro.frontends.widgets import style
-from miro.frontends.widgets.widgetutil import build_hbox
-from miro.util import clamp_text
 
 KEEP_ITEMS = "keep_items"
 
-def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_feeds):
-    """Displays the remove feeds dialog."""
+def run_dialog(channel_infos, downloaded_items, downloading_items,
+               has_watched_feeds):
+    """Displays the remove feeds dialog.
+    """
     title = ngettext('Remove Feed', 'Remove Feeds', len(channel_infos))
 
     rc_window = MainDialog(title)
@@ -79,19 +76,23 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
                 scroller.add(v2)
                 scroller_width, scroller_height = scroller.get_size_request()
                 if scroller_height == 0:
-                    scroller.set_size_request(scroller_width, 5 * (lab_height + 1))
+                    scroller.set_size_request(scroller_width,
+                                              5 * (lab_height + 1))
                 v2 = scroller
             v.pack_start(v2, padding=10)
 
             cbx_downloaded = None
             if downloaded_items:
-                cbx_downloaded = widgetset.Checkbox(_("Keep items that have been downloaded in my library."))
-                v.pack_start(widgetutil.align_left(cbx_downloaded, bottom_pad=5))
+                cbx_downloaded = widgetset.Checkbox(_(
+                        "Keep items that have been downloaded in my library."))
+                v.pack_start(widgetutil.align_left(
+                        cbx_downloaded, bottom_pad=5))
 
             if has_watched_feeds:
                 lab = widgetset.Label(_(
-                    "Watched folders will be removed from the sidebar but their contents will "
-                    "still appear in your library.  You can stop watching watched folders completely "
+                    "Watched folders will be removed from the sidebar but "
+                    "their contents will still appear in your library.  "
+                    "You can stop watching watched folders completely "
                     "in the %(appname)s preference panel.",
                     {"appname": app.config.get(prefs.SHORT_APP_NAME)}
                 ))
