@@ -371,9 +371,9 @@ class ItemRenderer(widgetset.InfoListRenderer):
             pos = end
         if pos < len(text):
             textbox.append_text(text[pos:])
-        if (self.info.children and self.info.download_info and
-            self.info.download_info.finished):
-            textbox.append(u'<BR>' + _('Contents appear in the library'))
+        if ((self.info.children and self.info.download_info and
+             self.info.download_info.finished)):
+            textbox.append_text(u'<BR>' + _('Contents appear in the library'))
         self.description_links = links
         return textbox
 
