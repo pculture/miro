@@ -63,10 +63,12 @@ class TabListManager(object):
         for previously_selected in previous_selection:
             if (view.model[previously_selected][0] == view.model[iter][0]):
                 return # The tab is already selected
-        parent_iter = view.model.parent_iter(iter)
-        if parent_iter and not view.is_row_expanded(parent_iter):
-            # open the parent
-            view.set_row_expanded(parent_iter, True)
+        if hasattr(view.model, 'parent_iter'): # TableModel doesn't necessarily
+                                               # have this
+            parent_iter = view.model.parent_iter(iter)
+            if parent_iter and not view.is_row_expanded(parent_iter):
+                # open the parent
+                view.set_row_expanded(parent_iter, True)
         view.select(iter)
         for previously_selected in previous_selection:
             # We unselect *after* having made the new selection because if we
@@ -99,7 +101,11 @@ class TabListManager(object):
     def select_guide(self):
         default_info = self.site_list.default_info
         iter = self.site_list.iter_map[default_info.id]
-        self._select_from_tab_list(self.site_list, iter)
+        try:
+            self._select_from_tab_list(self.site_list, iter)
+        except ValueError:
+            # TODO: make this actually work on OS X (#16157)
+            self.select_search()
 
     def select_search(self):
         iter = self.static_tab_list.view.model.first_iter()
