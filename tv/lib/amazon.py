@@ -30,6 +30,9 @@
 """Functions for downloading stuff from Amazon's MP3 Store.
 """
 
+# NOTE: This file is not run through gettext because gettext kicks up an
+# error.
+
 import base64
 from xml.dom import minidom
 
