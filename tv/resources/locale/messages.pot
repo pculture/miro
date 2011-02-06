@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-06 17:26-0500\n"
+"POT-Creation-Date: 2011-02-06 17:29-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -662,7 +662,7 @@ msgid "starting up..."
 msgstr ""
 
 #: ../../lib/feed.py:849
-msgid "Error loading feed"
+msgid "Error loading podcast"
 msgstr ""
 
 #: ../../lib/feed.py:851
@@ -1841,7 +1841,7 @@ msgid ""
 "The address you entered is not a valid url.  Please check the URL and try "
 "again.\n"
 "\n"
-"Enter the URL of the feed to add"
+"Enter the URL of the podcast to add"
 msgstr ""
 
 #: ../../lib/frontends/widgets/feedcontroller.py:175
@@ -3755,7 +3755,7 @@ msgid ""
 "to our crash database.\n"
 "\n"
 "Finally, you can start fresh and your damaged database will be removed, but "
-"you will have to re-add your feeds and media files."
+"you will have to re-add your podcasts and media files."
 msgstr ""
 
 #: ../../lib/storedatabase.py:327
@@ -3823,8 +3823,7 @@ msgstr ""
 
 #: ../../lib/singleclick.py:121
 #, python-format
-msgid ""
-"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgid "This file at %(url)s does not appear to be audio, video, or a podcast."
 msgstr ""
 
 #: ../../lib/singleclick.py:168
