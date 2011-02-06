@@ -720,7 +720,7 @@ class FolderContentsController(SimpleItemListController):
     def build_widget(self):
         SimpleItemListController.build_widget(self)
 
-        button = widgetset.Button(_('Back to feed'))
+        button = widgetset.Button(_('Back to podcast'))
         button.connect('clicked', self._on_clicked)
         self.widget.titlebar_vbox.pack_start(widgetutil.align_left(button,
             left_pad=10, top_pad=6, bottom_pad=4))

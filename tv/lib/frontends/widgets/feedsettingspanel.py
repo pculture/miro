@@ -137,7 +137,7 @@ def _build_video_expires(channel, grid):
     grid.pack(expire_combo, grid.ALIGN_LEFT)
 
 def _build_remember_items(channel, grid):
-    grid.pack_label(_("Outdated Feed Items:"), grid.ALIGN_RIGHT)
+    grid.pack_label(_("Outdated Podcast Items:"), grid.ALIGN_RIGHT)
     older_options = [
         ("-1", _("Keep %(number)s (Default)",
                  {"number": app.config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
@@ -241,7 +241,7 @@ def _build_auto_download(channel, grid):
 
 def run_dialog(channel):
     """Displays the feed settings panel dialog."""
-    pref_window = MainDialog(_("Feed Settings"))
+    pref_window = MainDialog(_("Podcast Settings"))
     try:
         try:
             v = widgetset.VBox(spacing=10)

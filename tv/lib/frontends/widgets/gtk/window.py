@@ -514,7 +514,7 @@ class MainWindow(Window):
                     action_group.set_sensitive(False)
 
         removeSomething = self.menu_structure.get("RemoveSomething").label
-        updateFeeds = self.menu_structure.get("UpdateFeeds").label
+        updatePodcasts = self.menu_structure.get("UpdatePodcasts").label
         removePlaylists = self.menu_structure.get("RemovePlaylists").label
         removeItems = self.menu_structure.get("RemoveItems").label
 
@@ -525,8 +525,8 @@ class MainWindow(Window):
         for state, actions in menu_manager.states.items():
             if "RemoveSomething" in actions:
                 removeSomething = get_state_label("RemoveSomething", state)
-            if "UpdateFeeds" in actions:
-                updateFeeds = get_state_label("UpdateFeeds", state)
+            if "UpdatePodcasts" in actions:
+                updatePodcasts = get_state_label("UpdatePodcasts", state)
             if "RemovePlaylists" in actions:
                 removePlaylists = get_state_label("RemovePlaylists", state)
             if "RemoveItems" in actions:
@@ -538,7 +538,7 @@ class MainWindow(Window):
             action_groups[group].get_action(action).set_property("label", newlabel)
 
         change_label("RemoveAllowed", "RemoveSomething", removeSomething)
-        change_label("FeedsSelected", "UpdateFeeds", updateFeeds)
+        change_label("PodcastsSelected", "UpdatePodcasts", updatePodcasts)
         change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
         change_label("LocalPlayablesSelected_PlayPause", "RemoveItems", removeItems)
 

@@ -1461,10 +1461,10 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         # send a notification to the user
         if feeds:
             if len(feeds) == 1:
-                title = _("Subscribed to new feed:")
+                title = _("Subscribed to new podcast:")
                 body = feeds[0].get('title', feeds[0]['url'])
             elif len(feeds) > 1:
-                title = _('Subscribed to new feeds:')
+                title = _('Subscribed to new podcasts:')
                 body = '\n'.join(
                     [' - %s' % feed.get('title', feed['url'])
                      for feed in feeds])

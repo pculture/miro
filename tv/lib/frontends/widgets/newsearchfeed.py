@@ -28,7 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 """miro.frontends.widgets.newsearchfeed -- Holds dialog and processing
-code for the New Search Feed dialog.
+code for the New Search Podcast dialog.
 """
 
 from miro.gtcache import gettext as _
@@ -45,10 +45,10 @@ from miro import app
 import logging
 
 def run_dialog():
-    """Creates and launches the New Search Feed dialog.  This dialog waits
-    for the user to press "Create Feed" or "Cancel".
+    """Creates and launches the New Search Podcast dialog.  This
+    dialog waits for the user to press "Create Podcast" or "Cancel".
 
-    In the case of "Create Feed", returns a tuple of:
+    In the case of "Create Podcast", returns a tuple of:
 
     * ("feed", ChannelInfo, search_term str)
     * ("search_engine", SearchEngineInfo, search_term str)
@@ -56,8 +56,8 @@ def run_dialog():
 
     In the case of "Cancel", returns None.
     """
-    title = _('New Search Feed')
-    description = _('A search feed contains items that match a search term.')
+    title = _('New Search Podcast')
+    description = _('A search podcast contains items that match a search term.')
 
     channels = app.tab_list_manager.feed_list.get_feeds()
     channels = [ci for ci in channels if not ci.is_folder]
@@ -79,14 +79,15 @@ def run_dialog():
             extra.pack_start(hb1)
 
             hb2 = widgetset.HBox()
-            hb2.pack_start(widgetutil.align_top(widgetset.Label(_('In this:')), top_pad=3), padding=5)
+            hb2.pack_start(widgetutil.align_top(
+                    widgetset.Label(_('In this:')), top_pad=3), padding=5)
 
             choice_table = widgetset.Table(columns=2, rows=3)
             choice_table.set_column_spacing(5)
             choice_table.set_row_spacing(5)
             rbg = widgetset.RadioButtonGroup()
 
-            channel_rb = widgetset.RadioButton(_("Feed:"), rbg)
+            channel_rb = widgetset.RadioButton(_("Podcast:"), rbg)
             channel_option = widgetset.OptionMenu(
                 [ci.name + u" - " + ci.url for ci in channels])
             channel_option.set_size_request(250, -1)
@@ -95,7 +96,8 @@ def run_dialog():
 
             search_engine_rb = widgetset.RadioButton(_("Search engine:"), rbg)
             search_engines = searchengines.get_search_engines()
-            search_engine_option = widgetset.OptionMenu([se.title for se in search_engines])
+            search_engine_option = widgetset.OptionMenu(
+                [se.title for se in search_engines])
             choice_table.pack(search_engine_rb, 0, 1)
             choice_table.pack(search_engine_option, 1, 1)
 

@@ -264,7 +264,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     FLAP_HIGHLIGHT_COLOR = (237.0 / 255.0, 237.0 / 255.0, 237.0 / 255.0)
 
     FROM_TEXT = _("From")
-    CHANNEL_INFO_TEXT = _("From %(channel)s")
+    CHANNEL_INFO_TEXT = _("From %(podcast)s")
     FILE_NAME_TEXT = _("File name:")
     SHOW_MORE_TEXT = _("Show More")
     SHOW_LESS_TEXT = _("Show Less")
@@ -445,7 +445,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
             channel_info_layout = cellpack.Layout()
             channel_info_layout.add_image(self.channel_title_icon, rect.x, 0)
             channel_info = layout_manager.textbox(self.CHANNEL_INFO_TEXT
-                    % {'channel': self.info.feed_name})
+                    % {'podcast': self.info.feed_name})
             channel_info_layout.add_text_line(channel_info,
                     channel_info_layout.last_rect.right + 4, 0,
                     rect.width - self.channel_title_icon.width - 4)

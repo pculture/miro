@@ -52,9 +52,9 @@ def handle_external_url(url):
 
 def ask_for_feed_subscribe(url):
     url = feed.normalize_feed_url(url)
-    title = _("Subscribe to Feed")
+    title = _("Subscribe to Podcast")
     text = _(
-        "This link appears to be a feed.  Do you want to add it to "
+        "This link appears to be a podcast.  Do you want to add it to "
         "your subscriptions?\n"
         "\n"
         "%(url)s",

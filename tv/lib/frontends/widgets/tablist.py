@@ -1060,19 +1060,19 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
 
     def make_folder_context_menu(self, obj):
         return [
-            (_('Update Feeds In Folder'), app.widgetapp.update_selected_feeds),
-            (_('Rename Feed Folder'), app.widgetapp.rename_something),
+            (_('Update Podcasts In Folder'), app.widgetapp.update_selected_feeds),
+            (_('Rename Podcast Folder'), app.widgetapp.rename_something),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 
     def make_single_context_menu(self, obj):
         menu = [
-            (_('Update Feed Now'), app.widgetapp.update_selected_feeds)
+            (_('Update Podcast Now'), app.widgetapp.update_selected_feeds)
         ]
 
         menu.append((_('Rename'), app.widgetapp.rename_something))
         if not obj.has_original_title:
-            menu.append((_('Revert Feed Name'),
+            menu.append((_('Revert Podcast Name'),
                          app.widgetapp.revert_feed_name))
         menu.append((_('Settings'), app.widgetapp.feed_settings))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_feed_url))
@@ -1081,7 +1081,7 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
 
     def make_multiple_context_menu(self):
         return [
-            (_('Update Feeds Now'), app.widgetapp.update_selected_feeds),
+            (_('Update Podcasts Now'), app.widgetapp.update_selected_feeds),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 

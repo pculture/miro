@@ -138,7 +138,7 @@ def startup_function(func):
                       "It's possible that your database file is corrupted and "
                       "cannot be used.\n\n"
                       "You can start fresh and your damaged database will be "
-                      "removed, but you will have to re-add your feeds and "
+                      "removed, but you will have to re-add your podcasts and "
                       "media files.  If you want to do this, press the "
                       "Start Fresh button and restart %(appname)s.\n\n"
                       "To help us fix problems like this in the future, "
@@ -532,7 +532,7 @@ def send_startup_crash_report(report):
         "%(appname)s will now submit a crash report to our crash "
         "database\n\n"
         "Do you want to include entire program database "
-        "including all video and feed metadata with crash report? "
+        "including all video and podcast metadata with crash report? "
         "This will help us diagnose the issue.",
         {"appname": app.config.get(prefs.SHORT_APP_NAME)})
     d = dialogs.ChoiceDialog(title, description,

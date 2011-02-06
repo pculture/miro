@@ -96,7 +96,7 @@ class PhantomFeedTest(SanityTest):
         if not self.feeds_in_items.issubset(self.top_level_feeds):
             phantoms = self.feeds_in_items.difference(self.top_level_feeds)
             phantoms_string = ', '.join([str(p) for p in phantoms])
-            return "Phantom feed(s) referenced in items: %s" % phantoms_string
+            return "Phantom podcast(s) referenced in items: %s" % phantoms_string
         if not self.parents_in_items.issubset(self.top_level_parents):
             phantoms = self.parents_in_items.difference(self.top_level_parents)
             phantoms_string = ', '.join([str(p) for p in phantoms])

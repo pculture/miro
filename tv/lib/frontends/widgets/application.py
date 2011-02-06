@@ -509,11 +509,13 @@ class Application:
 
         if external_count > 0:
             description = ngettext(
-                'One of these items was not downloaded from a feed. '
-                'Would you like to delete it or just remove it from the Library?',
+                'One of these items was not downloaded from a podcast. '
+                'Would you like to delete it or just remove it from the '
+                'Library?',
 
-                'Some of these items were not downloaded from a feed. '
-                'Would you like to delete them or just remove them from the Library?',
+                'Some of these items were not downloaded from a podcast. '
+                'Would you like to delete them or just remove them from the '
+                'Library?',
 
                 external_count
             )
@@ -791,13 +793,13 @@ class Application:
             t = 'playlist-folder'
 
         if t == 'feed-folder':
-            title = _('Rename Feed Folder')
-            description = _('Enter a new name for the feed folder %(name)s',
+            title = _('Rename Podcast Folder')
+            description = _('Enter a new name for the podcast folder %(name)s',
                             {"name": info.name})
 
         elif t == 'feed':
-            title = _('Rename Feed')
-            description = _('Enter a new name for the feed %(name)s',
+            title = _('Rename Podcast')
+            description = _('Enter a new name for the podcast %(name)s',
                             {"name": info.name})
 
         elif t == 'playlist':

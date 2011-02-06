@@ -103,10 +103,11 @@ class DBUpgradeProgressDialog(MainDialog):
         MainDialog.__init__(self, title)
         self.progress_bar = widgetset.ProgressBar()
         self.top_label = widgetset.Label()
-        self.top_label.set_text(_("Miro is upgrading your database of feeds "
-            "and files.  This one-time process can take a long time if you "
-            "have a large number of items in Miro (it can even take more "
-            "than 30 minutes)."))
+        self.top_label.set_text(_(
+                "Miro is upgrading your database of podcasts and files.  "
+                "This one-time process can take a long time if you "
+                "have a large number of items in Miro (it can even take more "
+                "than 30 minutes)."))
         self.top_label.set_wrap(True)
         self.top_label.set_size_request(200, -1)
         self.label = widgetset.Label()

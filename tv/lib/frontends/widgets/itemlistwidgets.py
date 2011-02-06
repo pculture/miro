@@ -491,7 +491,7 @@ class SearchToolbar(DisplayToolbar):
         DisplayToolbar.__init__(self)
         hbox = widgetset.HBox()
         self.add(hbox)
-        save_button = widgetset.Button(_('Save as a Feed'), style='smooth')
+        save_button = widgetset.Button(_('Save as a Podcast'), style='smooth')
         save_button.set_size(widgetconst.SIZE_SMALL)
         save_button.connect('clicked', self._on_save_clicked)
         aligned = widgetutil.align_left(save_button, top_pad=5, left_pad=5,
@@ -740,7 +740,7 @@ class FeedToolbar(DisplayToolbar):
         autodownload_menu.connect('changed', self._on_autodownload_changed)
         self.autodownload_menu = widgetutil.HideableWidget(autodownload_menu)
 
-        share_button = widgetset.Button(_("Share feed"), style='smooth')
+        share_button = widgetset.Button(_("Share podcast"), style='smooth')
         share_button.set_size(widgetconst.SIZE_SMALL)
         share_button.set_color(widgetset.TOOLBAR_GRAY)
         share_button.connect('clicked', self._on_share_clicked)
@@ -752,7 +752,7 @@ class FeedToolbar(DisplayToolbar):
         settings_button.connect('clicked', self._on_settings_clicked)
         self.settings_button = widgetutil.HideableWidget(settings_button)
 
-        remove_button = widgetset.Button(_("Remove feed"), style='smooth')
+        remove_button = widgetset.Button(_("Remove podcast"), style='smooth')
         remove_button.set_size(widgetconst.SIZE_SMALL)
         remove_button.set_color(widgetset.TOOLBAR_GRAY)
         remove_button.connect('clicked', self._on_remove_clicked)
@@ -980,7 +980,7 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.add_filter('view-unwatched', 'toggle-filter', unwatched,
                         self.unwatched_label)
         self.add_filter('view-non-feed', 'toggle-filter', non_feed,
-                        _('Non Feed'))
+                        _('Non Podcast'))
         self.add_filter_switch()
 
     def toggle_filter(self, filter_):

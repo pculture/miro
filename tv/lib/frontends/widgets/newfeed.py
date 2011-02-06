@@ -46,7 +46,7 @@ import logging
 
 def _run_dialog(title, description, initial_text):
     """Creates and launches the New Feed dialog.  This dialog waits for
-    the user to press "Create Feed" or "Cancel".
+    the user to press "Create Podcast" or "Cancel".
 
     Returns the URL, or None.
     """
@@ -85,7 +85,7 @@ def _run_dialog(title, description, initial_text):
         
 def run_dialog():
     """Creates and launches the New Feed dialog.  This dialog waits for
-    the user to press "Create Feed" or "Cancel".
+    the user to press "Create Podcast" or "Cancel".
 
     Returns the URL, or None.
     """
@@ -95,8 +95,8 @@ def run_dialog():
     else:
         text = ""
 
-    title = _('Add Feed')
-    description = _('Enter the URL of the feed to add')
+    title = _('Add Podcast')
+    description = _('Enter the URL of the podcast to add')
 
     while 1:
         text = _run_dialog(title, description, initial_text=text)
@@ -107,5 +107,9 @@ def run_dialog():
         if feed.validate_feed_url(normalized_url):
             return normalized_url
 
-        title = _('Add Feed - Invalid URL')
-        description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the feed to add')
+        title = _('Add Podcast - Invalid URL')
+        description = _(
+            'The address you entered is not a valid url.  '
+            'Please check the URL and try again.'
+            '\n\n'
+            'Enter the URL of the feed to add')

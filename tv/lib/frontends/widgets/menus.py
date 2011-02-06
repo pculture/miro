@@ -90,7 +90,7 @@ class MenuItem:
 
     >>> MenuItem(_("Preferences"), "EditPreferences")
     >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
-    >>> MenuItem(_("_Update Feed"), "UpdateFeeds",
+    >>> MenuItem(_("_Update Podcasts"), "UpdatePodcasts",
     ...          (Shortcut("r", MOD), Shortcut(F5)))
     >>> MenuItem(_("_Play"), "PlayPauseItem",
     ...          play=_("_Play"), pause=_("_Pause"))
@@ -239,48 +239,49 @@ def get_menu():
                     ]),
 
             Menu(_("_Sidebar"), "SidebarMenu", [
-                    MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD),
+                    MenuItem(_("Add _Podcast"), "NewPodcast",
+                             Shortcut("n", MOD),
                              groups=["NonPlaying"]),
                     MenuItem(_("Add Website"), "NewGuide",
                              groups=["NonPlaying"]),
-                    MenuItem(_("New Searc_h Feed"), "NewSearchFeed",
+                    MenuItem(_("New Searc_h Podcast"), "NewSearchPodcast",
                              groups=["NonPlaying"]),
-                    MenuItem(_("New _Folder"), "NewFeedFolder",
+                    MenuItem(_("New _Folder"), "NewPodcastFolder",
                              Shortcut("n", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("Re_name"), "RenameSomething",
                              groups=["RenameAllowed"],
-                             # groups=["FeedOrFolderSelected", "SiteSelected"],
-                             feed=_("Re_name Feed"),
+                             # groups=["PodcastOrFolderSelected", "SiteSelected"],
+                             feed=_("Re_name Podcast"),
                              site=_("Re_name Website")),
                     MenuItem(_("_Remove"), "RemoveSomething",
                              Shortcut(BKSPACE, MOD),
                              groups=["RemoveAllowed"],
-                             # groups=["FeedsSelected", "SitesSelected"],
-                             feed=_("_Remove Feed"),
-                             feeds=_("_Remove Feeds"),
+                             # groups=["PodcastsSelected", "SitesSelected"],
+                             feed=_("_Remove Podcast"),
+                             feeds=_("_Remove Podcasts"),
                              folder=_("_Remove Folder"),
                              folders=_("_Remove Folders"),
                              site=_("_Remove Website"),
                              sites=_("_Remove Websites")),
-                    MenuItem(_("_Update Feed"), "UpdateFeeds",
+                    MenuItem(_("_Update Podcast"), "UpdatePodcasts",
                              (Shortcut("r", MOD), Shortcut(F5)),
-                             groups=["FeedsSelected"],
-                             plural=_("_Update Feeds")),
-                    MenuItem(_("Update _All Feeds"), "UpdateAllFeeds",
+                             groups=["PodcastsSelected"],
+                             plural=_("_Update Podcasts")),
+                    MenuItem(_("Update _All Podcasts"), "UpdateAllPodcasts",
                              Shortcut("r", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds",
+                    MenuItem(_("_Import Podcasts (OPML)"), "ImportPodcasts",
                              groups=["NonPlaying"]),
-                    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds",
+                    MenuItem(_("E_xport Podcasts (OPML)"), "ExportPodcasts",
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("_Share with a Friend"), "ShareFeed",
-                             groups=["FeedSelected"]),
-                    MenuItem(_("Copy URL"), "CopyFeedURL",
-                             groups=["FeedSelected"]),
+                    MenuItem(_("_Share with a Friend"), "SharePodcast",
+                             groups=["PodcastSelected"]),
+                    MenuItem(_("Copy URL"), "CopyPodcastURL",
+                             groups=["PodcastSelected"]),
                     ]),
 
             Menu(_("_Playlists"), "PlaylistsMenu", [
@@ -524,53 +525,53 @@ def on_edit_preferences():
 def on_quit():
     app.widgetapp.quit()
 
-# Feeds menu
-@action_handler("NewFeed")
-def on_new_feed():
+# Podcasts menu
+@action_handler("NewPodcast")
+def on_new_podcast():
     app.widgetapp.add_new_feed()
 
 @action_handler("NewGuide")
 def on_new_guidel():
     app.widgetapp.add_new_guide()
 
-@action_handler("NewSearchFeed")
-def on_new_search_feed():
+@action_handler("NewSearchPodcast")
+def on_new_search_podcast():
     app.widgetapp.add_new_search_feed()
 
-@action_handler("NewFeedFolder")
-def on_new_feed_folder():
+@action_handler("NewPodcastFolder")
+def on_new_podcast_folder():
     app.widgetapp.add_new_feed_folder()
 
 @action_handler("RenameSomething")
-def on_rename_feed():
+def on_rename_podcast():
     app.widgetapp.rename_something()
 
 @action_handler("RemoveSomething")
-def on_remove_feeds():
+def on_remove_podcasts():
     app.widgetapp.remove_something()
 
-@action_handler("UpdateFeeds")
-def on_update_feeds():
+@action_handler("UpdatePodcasts")
+def on_update_podcasts():
     app.widgetapp.update_selected_feeds()
 
-@action_handler("UpdateAllFeeds")
-def on_update_all_feeds():
+@action_handler("UpdateAllPodcasts")
+def on_update_all_podcasts():
     app.widgetapp.update_all_feeds()
 
-@action_handler("ImportFeeds")
-def on_import_feeds():
+@action_handler("ImportPodcasts")
+def on_import_podcasts():
     app.widgetapp.import_feeds()
 
-@action_handler("ExportFeeds")
-def on_export_feeds():
+@action_handler("ExportPodcasts")
+def on_export_podcasts():
     app.widgetapp.export_feeds()
 
-@action_handler("ShareFeed")
-def on_share_feed():
+@action_handler("SharePodcast")
+def on_share_podcast():
     app.widgetapp.share_feed()
 
-@action_handler("CopyFeedURL")
-def on_copy_feed_url():
+@action_handler("CopyPodcastURL")
+def on_copy_podcast_url():
     app.widgetapp.copy_feed_url()
 
 # Playlists menu
@@ -768,7 +769,7 @@ class MenuStateManager(signals.SignalEmitter):
 
         ``selected_feeds`` is a list of ChannelInfo objects.
         """
-        self.enabled_groups.add('FeedsSelected')
+        self.enabled_groups.add('PodcastsSelected')
         self.enabled_groups.add("RemoveAllowed")
         if len(selected_feeds) == 1:
             if selected_feeds[0].is_folder:
@@ -776,8 +777,8 @@ class MenuStateManager(signals.SignalEmitter):
             else:
                 self.states["feed"].append("RemoveSomething")
                 self.states["feed"].append("RenameSomething")
-                self.enabled_groups.add('FeedSelected')
-            self.enabled_groups.add('FeedOrFolderSelected')
+                self.enabled_groups.add('PodcastSelected')
+            self.enabled_groups.add('PodcastOrFolderSelected')
             self.enabled_groups.add("RenameAllowed")
         else:
             selected_folders = [s for s in selected_feeds if s.is_folder]
@@ -787,7 +788,7 @@ class MenuStateManager(signals.SignalEmitter):
                 self.states["plural"].append("RemoveSomething")
                 self.states["feeds"].append("RemoveSomething")
                 self.states["feeds"].append("RenameSomething")
-            self.states["plural"].append("UpdateFeeds")
+            self.states["plural"].append("UpdatePodcastss")
 
     def _handle_site_selection(self, selected_sites):
         """Handle the user selecting things in the site list.

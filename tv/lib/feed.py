@@ -255,7 +255,7 @@ class FeedImpl(DDBObject):
         if firstTriggerDelay >= 0:
             self.scheduler = eventloop.add_timeout(
                 firstTriggerDelay, self.update,
-                "Feed update (%s)" % self.get_title())
+                "Podcast update (%s)" % self.get_title())
         else:
             if self.updateFreq > 0:
                 logging.info("scheduling update in %s minutes (%s)",
@@ -263,7 +263,7 @@ class FeedImpl(DDBObject):
                              self.get_title())
                 self.scheduler = eventloop.add_timeout(
                     self.updateFreq, self.update,
-                    "Feed update (%s)" % self.get_title())
+                    "Podcast update (%s)" % self.get_title())
             else:
                 logging.info("updateFreq is %s: skipping update (%s)",
                              self.updateFreq,
@@ -848,10 +848,10 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.informOnError:
             title = _('Error loading feed')
             description = _(
-                "Couldn't load the feed at %(url)s (%(errordescription)s)."
+                "Couldn't load the podcast at %(url)s (%(errordescription)s)."
             ) % { "url": self.url, "errordescription": errorDescription }
             description += "\n\n"
-            description += _("Would you like to keep the feed?")
+            description += _("Would you like to keep the podcast?")
             d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
                     dialogs.BUTTON_DELETE)
             def callback(dialog):
@@ -865,7 +865,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def _generate_feed_errback(self, error, removeOnError):
         if not self.id_exists():
             return
-        logging.info("Warning couldn't load feed at %s (%s)",
+        logging.info("Warning couldn't load podcast at %s (%s)",
                      self.origURL, error)
         self._handle_feed_loading_error(error.getFriendlyDescription())
 
@@ -987,17 +987,17 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def ask_for_scrape(self, info, initialHTML, charset):
-        title = _("Channel is not compatible with %(appname)s",
+        title = _("Podcast is not compatible with %(appname)s",
                   {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         description = _(
-            "This channel is not compatible with %(appname)s "
-            "but we'll try our best to grab the files.  It may take extra time "
-            "to list the videos, and descriptions may look funny.\n"
+            "This podcast is not compatible with %(appname)s "
+            "but we'll try our best to grab the files.  It may take extra "
+            "time to list the videos, and descriptions may look funny.\n"
             "\n"
-            "Please contact the publishers of %(url)s and ask if they can supply a "
-            "feed in a format that will work with %(appname)s.\n"
+            "Please contact the publishers of %(url)s and ask if they can "
+            "supply a podcast in a format that will work with %(appname)s.\n"
             "\n"
-            "Do you want to try to load this channel anyway?",
+            "Do you want to try to load this podcast anyway?",
             {"url": info["updated-url"],
              "appname": app.config.get(prefs.SHORT_APP_NAME)}
         )

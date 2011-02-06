@@ -229,14 +229,14 @@ class Importer(object):
         imported_feeds = len(self.result[0].get('feed', []))
         ignored_feeds = len(self.result[1].get('feed', []))
         title = _("OPML Import summary")
-        message = ngettext("Successfully imported %(count)d feed.",
-                           "Successfully imported %(count)d feeds.",
+        message = ngettext("Successfully imported %(count)d podcast.",
+                           "Successfully imported %(count)d podcasts.",
                            imported_feeds,
                            {"count": imported_feeds})
         if self.ignored_feeds > 0:
             message += "\n"
-            message += ngettext("Skipped %(count)d feed already present.",
-                                "Skipped %(count)d feeds already present.",
+            message += ngettext("Skipped %(count)d podcast already present.",
+                                "Skipped %(count)d podcasts already present.",
                                 ignored_feeds,
                                 {"count": ignored_feeds})
         dialog = dialogs.MessageBoxDialog(title, message)

@@ -123,7 +123,7 @@ def add_subscription_url(prefix, expected_content_type, url):
             subscription_list = autodiscover.parse_content(info['body'])
             if subscription_list is None:
                 text = _(
-                    "This %(appname)s feed file has an invalid format: "
+                    "This %(appname)s podcast file has an invalid format: "
                     "%(url)s.  Please notify the publisher of this file.",
                     {"appname": app.config.get(prefs.SHORT_APP_NAME),
                      "url": real_url}
@@ -134,7 +134,7 @@ def add_subscription_url(prefix, expected_content_type, url):
                     subscription_list)
         else:
             text = _(
-                "This %(appname)s feed file has the wrong content type: "
+                "This %(appname)s podcast file has the wrong content type: "
                 "%(url)s. Please notify the publisher of this file.",
                 {"appname": app.config.get(prefs.SHORT_APP_NAME),
                  "url": real_url}
@@ -143,7 +143,7 @@ def add_subscription_url(prefix, expected_content_type, url):
 
     def errback(error):
         text = _(
-            "Could not download the %(appname)s feed file: %(url)s",
+            "Could not download the %(appname)s podcast file: %(url)s",
             {"appname": app.config.get(prefs.SHORT_APP_NAME),
              "url": real_url}
             )

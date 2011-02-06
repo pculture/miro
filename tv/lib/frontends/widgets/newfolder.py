@@ -89,7 +89,7 @@ def run_dialog(default_type):
 
     Returns the name, or None.
     """
-    title = _('Create Feed Folder')
+    title = _('Create Podcast Folder')
 
-    return _run_dialog(_('Create Feed Folder'),
+    return _run_dialog(_('Create Podcast Folder'),
             _('Enter the name of the folder to add'), default_type)

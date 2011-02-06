@@ -58,7 +58,7 @@ COLUMN_LABELS = {
     u'length': _('Length'),
     u'status': _('Status'),
     u'size': _('Size'),
-    u'feed-name': _('Feed'),
+    u'feed-name': _('Podcast'),
     u'eta': _('ETA'),
     u'torrent-details': _('Torrent details'),
     u'rate': _('Speed'),

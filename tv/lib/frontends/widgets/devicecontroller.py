@@ -272,7 +272,7 @@ class SyncProgressWidget(widgetset.Background):
         context.fill()
 
 class SyncWidget(widgetset.VBox):
-    list_label = _("Sync These Feeds")
+    list_label = _("Sync These Podcasts")
 
     def __init__(self):
         self.device = None

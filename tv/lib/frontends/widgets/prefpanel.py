@@ -331,7 +331,7 @@ class GeneralPanel(PanelBuilder):
 
         return v
 
-class FeedsPanel(PanelBuilder):
+class PodcastsPanel(PanelBuilder):
     def build_widget(self):
         cc_options = [(1440, _("Every day")),
                       (60, _("Every hour")),
@@ -359,11 +359,13 @@ class FeedsPanel(PanelBuilder):
             [op[0] for op in max_options])
 
         grid = dialogwidgets.ControlGrid()
-        grid.pack(dialogwidgets.heading(_("Default settings for new feeds:")),
+        grid.pack(dialogwidgets.heading(
+                _("Default settings for new podcasts:")),
                 grid.ALIGN_LEFT, span=2)
         grid.end_line(spacing=2)
         grid.pack(dialogwidgets.note(
-                _("(These can be changed using the feed's settings button)")),
+                _("(These can be changed using the podcast's settings "
+                  "button)")),
                 grid.ALIGN_LEFT, span=2)
         grid.end_line(spacing=12)
 
@@ -1019,7 +1021,7 @@ class ExtensionsPanel(PanelBuilder):
 
 # Add the initial panels
 add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
-add_panel("feeds", _("Feeds"), FeedsPanel, 'images/pref-tab-feeds.png')
+add_panel("feeds", _("Podcasts"), PodcastsPanel, 'images/pref-tab-feeds.png')
 add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-downloads.png')
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')

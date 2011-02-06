@@ -47,7 +47,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items,
                has_watched_feeds):
     """Displays the remove feeds dialog.
     """
-    title = ngettext('Remove Feed', 'Remove Feeds', len(channel_infos))
+    title = ngettext('Remove Podcast', 'Remove Podcasts', len(channel_infos))
 
     rc_window = MainDialog(title)
     try:
@@ -55,8 +55,8 @@ def run_dialog(channel_infos, downloaded_items, downloading_items,
             v = widgetset.VBox(spacing=5)
 
             lab = widgetset.Label(ngettext(
-                "Are you sure you want to remove this feed:",
-                "Are you sure you want to remove these feeds:",
+                "Are you sure you want to remove this podcast:",
+                "Are you sure you want to remove these podcasts:",
                 len(channel_infos)
             ))
             lab.set_wrap(True)
@@ -102,9 +102,9 @@ def run_dialog(channel_infos, downloaded_items, downloading_items,
 
             if downloading_items:
                 lab_downloading = widgetset.Label(ngettext(
-                    "Are you sure you want to remove this feed?  "
+                    "Are you sure you want to remove this podcast?  "
                     "The downloads currently in progress will be canceled.",
-                    "Are you sure you want to remove these feeds?  "
+                    "Are you sure you want to remove these podcasts?  "
                     "The downloads currently in progress will be canceled.",
                     len(channel_infos)
                 ))
