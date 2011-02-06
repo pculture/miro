@@ -259,7 +259,7 @@ class LiveStorage:
             "If your disk is not full, help us understand the problem by "
             "reporting a bug to our crash database.\n\n"
             "Finally, you can start fresh and your damaged database will be "
-            "removed, but you will have to re-add your feeds and media "
+            "removed, but you will have to re-add your podcasts and media "
             "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
             )
         d = dialogs.ThreeChoiceDialog(title, description,

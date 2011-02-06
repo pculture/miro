@@ -119,7 +119,7 @@ def download_unknown_mime_type(url):
     title = _('File Download')
     text = _(
         'This file at %(url)s does not appear to be audio, video, or '
-        'an RSS feed.',
+        'a podcast.',
         {"url": url})
     dialog = dialogs.ThreeChoiceDialog(title, text,
                                        dialogs.BUTTON_DOWNLOAD_ANYWAY,

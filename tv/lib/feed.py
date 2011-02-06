@@ -846,7 +846,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.loading = False
         self.signal_change()
         if self.informOnError:
-            title = _('Error loading feed')
+            title = _('Error loading podcast')
             description = _(
                 "Couldn't load the podcast at %(url)s (%(errordescription)s)."
             ) % { "url": self.url, "errordescription": errorDescription }

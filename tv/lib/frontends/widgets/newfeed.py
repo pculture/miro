@@ -112,4 +112,4 @@ def run_dialog():
             'The address you entered is not a valid url.  '
             'Please check the URL and try again.'
             '\n\n'
-            'Enter the URL of the feed to add')
+            'Enter the URL of the podcast to add')
