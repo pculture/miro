@@ -443,6 +443,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('file_type', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
+        ('album_artist', SchemaString(noneOk=True)),
         ('artist', SchemaString(noneOk=True)),
         ('title_tag', SchemaString(noneOk=True)),
         ('track', SchemaInt(noneOk=True)),
@@ -737,7 +738,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_scroll_position(value):
         return None
 
-VERSION = 137
+VERSION = 138
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

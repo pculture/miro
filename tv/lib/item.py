@@ -351,6 +351,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.subtitle_encoding = None
         self.setup_new_icon_cache()
         self.album = None
+        self.album_artist = None
         self.artist = None
         self.title_tag = None
         self.track = None
@@ -472,9 +473,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
                 '(metadata_version < ? AND '
-                '(album IS NULL OR artist IS NULL OR title_tag IS NULL OR '
-                'track IS NULL OR year IS NULL OR genre IS NULL OR '
-                'cover_art IS NULL)) OR '
+                '(album IS NULL OR album_artist is NULL OR artist IS NULL OR '
+                'title_tag IS NULL OR track IS NULL OR year IS NULL OR '
+                'genre IS NULL OR cover_art IS NULL)) OR '
                 'NOT item.media_type_checked)',
                 (moviedata.METADATA_VERSION,),
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
@@ -1291,6 +1292,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return resources.path("images/thumb-default-audio.png")
             else:
                 return resources.path("images/thumb-default-video.png")
+
+    @returns_unicode
+    def get_album_artist(self):
+        return self.album_artist
 
     @returns_unicode
     def get_artist(self):

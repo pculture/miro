@@ -3122,3 +3122,8 @@ def upgrade137(cursor):
     """
     remove_column(cursor, 'display_state', ['active_filters'])
     cursor.execute("ALTER TABLE display_state ADD active_filters integer")
+
+def upgrade138(cursor):
+    """Support album_artist field.
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN album_artist text")
