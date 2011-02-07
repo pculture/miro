@@ -42,6 +42,7 @@ class WidgetStateStore(object):
         u'device-video': STANDARD_VIEW,
         u'downloading': STANDARD_VIEW,
         u'feed': STANDARD_VIEW,
+        u'folder-contents': STANDARD_VIEW,
         u'music': LIST_VIEW,
         u'others': LIST_VIEW,
         u'playlist': LIST_VIEW,
@@ -77,6 +78,7 @@ class WidgetStateStore(object):
         u'all-feeds': u'feed-name',
         u'downloading': u'eta',
         u'feed': u'date',
+        u'folder-contents': u'artist',
         u'music': u'artist',
         u'others': u'name',
         u'playlist': u'playlist',
@@ -107,6 +109,7 @@ class WidgetStateStore(object):
     }
     DEFAULT_COLUMNS[u'device-audio'] = DEFAULT_COLUMNS[u'music']
     DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
+    DEFAULT_COLUMNS[u'folder-contents'] = DEFAULT_COLUMNS[u'music']
     DEFAULT_COLUMNS[u'playlist'] = DEFAULT_COLUMNS[u'music']
     DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'videos']
 
