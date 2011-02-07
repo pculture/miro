@@ -844,8 +844,6 @@ class HTTPDownloader(BGDownloader):
         self.update_client()
 
 class BTDownloader(BGDownloader):
-    # update fast resume every 5 minutes
-    FAST_RESUME_UPDATE_INTERVAL = 60 * 5
     # reannounce at most every 30 seconds
     REANNOUNCE_LIMIT = 30
 
@@ -855,15 +853,14 @@ class BTDownloader(BGDownloader):
         self.rate = self.eta = 0
         self.upRate = self.uploaded = 0
         self.activity = None
-        self.fastResumeData = None
+        self.fast_resume_data = None
         self.retryDC = None
         self.channelName = None
         self.uploadedStart = 0
         self.restarting = False
         self.seeders = -1
         self.leechers = -1
-        self.last_fast_resume_update = clock()
-        self.metainfo_updated = self.fast_resume_data_updated = False
+        self.metainfo_updated = False
         if restore is not None:
             self.firstTime = False
             self.restore_state(restore)
@@ -900,9 +897,9 @@ class BTDownloader(BGDownloader):
             if not os.path.isdir(save_path):
                 save_path = os.path.dirname(save_path)
 
-            if self.fastResumeData:
+            if self.fast_resume_data:
                 self.torrent = TORRENT_SESSION.session.add_torrent(
-                    torrent_info, save_path, lt.bdecode(self.fastResumeData),
+                    torrent_info, save_path, lt.bdecode(self.fast_resume_data),
                     lt.storage_mode_t.storage_mode_allocate)
                 self.torrent.resume()
             else:
@@ -1078,17 +1075,10 @@ class BTDownloader(BGDownloader):
                      app.config.get(prefs.UPLOAD_RATIO))):
                     self.stop_upload()
 
-        if self.should_update_fast_resume_data():
-            self.update_fast_resume_data()
-
-    def should_update_fast_resume_data(self):
-        return (clock() - self.last_fast_resume_update >
-                self.FAST_RESUME_UPDATE_INTERVAL)
+        self.update_fast_resume_data()
 
     def update_fast_resume_data(self):
-        self.last_fast_resume_update = clock()
-        self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
-        self.fast_resume_data_updated = True
+        self.fast_resume_data = lt.bencode(self.torrent.write_resume_data())
 
     def handle_error(self, short_reason, reason):
         self._shutdown_torrent()
@@ -1123,9 +1113,7 @@ class BTDownloader(BGDownloader):
         if self.metainfo_updated:
             data['metainfo'] = self.metainfo
             self.metainfo_updated = False
-        if self.fast_resume_data_updated:
-            data['fastResumeData'] = self.fastResumeData
-            self.fast_resume_data_updated = False
+        data['fast_resume_data'] = self.fast_resume_data
         data['activity'] = self.activity
         data['dlerType'] = 'BitTorrent'
         data['seeders'] = self.seeders

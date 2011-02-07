@@ -242,14 +242,14 @@ class RemoteDownloader(DDBObject):
     def update_status(cls, data):
         for field in data:
             if field not in ['filename', 'shortFilename', 'channelName',
-                             'metainfo', 'fastResumeData']:
+                             'metainfo', 'fast_resume_data']:
                 data[field] = unicodify(data[field])
         self = get_downloader_by_dlid(dlid=data['dlid'])
         # print data
         if self is not None:
             # FIXME - this should get fixed.
             metainfo = data.pop('metainfo', self.metainfo)
-            fast_resume_data = data.pop('fastResumeData',
+            fast_resume_data = data.pop('fast_resume_data',
                     self.fast_resume_data)
             # for metainfo and fast_resume_data, the downloader process
             # doesn't send the keys if they haven't changed.  Therefore, use
@@ -678,7 +678,7 @@ class RemoteDownloader(DDBObject):
             _downloads[self.dlid] = self
             dler_status = self.status
             dler_status['metainfo'] = self.metainfo
-            dler_status['fastResumeData'] = self.fast_resume_data
+            dler_status['fast_resume_data'] = self.fast_resume_data
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
                                                  dler_status)
             c.send()
