@@ -48,6 +48,7 @@ from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
 from miro.frontends.widgets import sharingcontroller
+from miro.frontends.widgets import tabcontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -127,6 +128,7 @@ class DisplayManager(object):
                 DeviceDisplay,
                 DeviceItemDisplay,
                 SharingDisplay,
+                ConnectDisplay,
                 DummyDisplay,
         ]
         # displays that we keep alive all the time
@@ -707,6 +709,16 @@ class MultipleSelectionDisplay(TabDisplay):
             app.widgetapp.add_new_feed_folder(add_selected=True)
         else:
             app.widgetapp.add_new_playlist_folder(add_selected=True)
+
+class ConnectDisplay(TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == u'tab' and len(selected_tabs) == 1 and \
+               selected_tabs[0].name == _('Connect')
+
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+        self.widget = tabcontroller.ConnectTab()
 
 class DummyDisplay(TabDisplay):
     @staticmethod
