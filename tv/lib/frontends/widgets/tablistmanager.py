@@ -68,6 +68,7 @@ class TabListManager(object):
             parent_iter = view.model.parent_iter(iter)
             if parent_iter and not view.is_row_expanded(parent_iter):
                 # open the parent
+                view.model_changed()
                 view.set_row_expanded(parent_iter, True)
         view.select(iter)
         for previously_selected in previous_selection:
@@ -104,7 +105,6 @@ class TabListManager(object):
         try:
             self._select_from_tab_list(self.site_list, iter)
         except ValueError:
-            # TODO: make this actually work on OS X (#16157)
             self.select_search()
 
     def select_search(self):
@@ -170,9 +170,15 @@ class TabListManager(object):
         if iter is None:
             # We deleted all the feeds/playlists, select the guide instead
             self.select_guide()
-        else:
-            self.selected_tab_list.view.select(iter)
-            self.selected_tabs = [model[iter][0]]
+            return
+        info = model[iter][0]
+        if info.type == u'tab':
+            # hideable tab list, try to select the first child
+            iter = model.child_iter(iter)
+            if iter is None:
+                self.select_guide()
+                return
+        self._select_from_tab_list(self.selected_tab_list, iter)
 
     def get_selection(self):
         if self.__table_view is not None:

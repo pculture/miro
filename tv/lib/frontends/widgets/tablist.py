@@ -720,10 +720,12 @@ class DeviceTabListHandler(object):
         return di
 
     def _add_fake_tabs(self, info):
+        self.doing_change = True
         HideableTabList.add(self.tablist, self._fake_info(info, 'Video'), info.id)
         HideableTabList.add(self.tablist, self._fake_info(info, 'Audio'), info.id)
-        # OS X doesn't listen if we do it immediately, so wait a bit
-        timer.add(0, self.tablist.set_folder_expanded, info.id, True)
+        self.tablist.model_changed()
+        self.tablist.set_folder_expanded(info.id, True)
+        self.doing_change = False
 
     def add(self, info):
         HideableTabList.add(self.tablist, info)
@@ -826,7 +828,8 @@ class HideableTabList(TabList):
             parent_id = self.info.id
         TabList.add(self, info, parent_id)
         if not self.added_children:
-            timer.add(0, self.set_folder_expanded, self.info.id, True)
+            self.view.model_changed()
+            self.set_folder_expanded(self.info.id, True)
             self.added_children = True
 
     def _clear_list(self):
@@ -842,7 +845,7 @@ class HideableTabList(TabList):
         for iter in view.get_selection():
             if view.model[iter][0] is self.info:
                 if not view.is_row_expanded(iter):
-                    timer.add(0, self.set_folder_expanded, self.info.id, True)
+                    self.set_folder_expanded(self.info.id, True)
                 return
 
     def on_row_expanded_change(self, view, iter, expanded):
