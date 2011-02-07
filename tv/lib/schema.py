@@ -301,7 +301,7 @@ class SchemaStatusContainer(SchemaReprContainer):
                 self.validateType(value, str)
 
     def _binary_fields(self):
-        rv = ('metainfo', 'fastResumeData')
+        rv = ('metainfo', 'fast_resume_data')
         if PlatformFilenameType != unicode:
             rv += self.filename_fields
         return rv
