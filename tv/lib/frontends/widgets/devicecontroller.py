@@ -665,15 +665,33 @@ class UnknownDeviceView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
         label = widgetset.Label()
-        label.set_text(_("We're not exactly sure what kind of phone this is."))
-        label.set_bold(True)
-        label.set_size(1.5)
+        label.set_text(
+            _("Your device isn't telling us its exact model number."))
         self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
                                               bottom_pad=20))
+        label = widgetset.Label()
+        label.set_text(
+            _('For optimal video conversion, select the device model.'))
+        label.set_bold(True)
+        self.pack_start(widgetutil.align_center(label, left_pad=20,
+                                                bottom_pad=20)),
 
         self.device_choices = widgetset.VBox()
         self.pack_start(widgetutil.align_center(self.device_choices,
-                                                left_pad=20, top_pad=50,
+                                                left_pad=20, top_pad=20,
+                                                bottom_pad=20))
+
+        image = widgetset.ImageDisplay(
+            imagepool.get(resources.path('images/sync-unknown.png')))
+        self.pack_start(widgetutil.align_center(image, left_pad=20,
+                                                bottom_pad=20))
+
+        label = widgetset.Label()
+        label.set_text(_("If you don't know the model or it doesn't appear "
+                         "in the list, it's fine to choose the 'Generic' "
+                         "device option."))
+        label.set_bold(True)
+        self.pack_start(widgetutil.align_center(label, left_pad=20,
                                                 bottom_pad=20))
 
     def set_device(self, device):
@@ -697,7 +715,7 @@ class UnknownDeviceView(widgetset.VBox):
 
         select = widgetset.Button(_('This is my device'))
         select.connect('clicked', _clicked)
-        self.device_choices.pack_start(widgetutil.pad(select, top=40))
+        self.device_choices.pack_start(widgetutil.pad(select, top=20))
 
 class DeviceUnmountedView(widgetset.VBox):
     def __init__(self):
