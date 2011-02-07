@@ -73,8 +73,8 @@ TAG_MAP = {
     'cover-art': ('\uFFFDart', 'apic', 'covr'),
 }
 TAG_TYPES = {
-    'album': unicode, 'artist': unicode, 'title': unicode, 'track': int,
-    'year': int, 'genre': unicode,
+    'album': unicode, 'album_artist': unicode, 'artist': unicode,
+    'title': unicode, 'track': int, 'year': int, 'genre': unicode,
 }
 NOFLATTEN_TAGS = ('cover-art',)
 
