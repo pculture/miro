@@ -721,7 +721,7 @@ class DeviceUnmountedView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
         label = widgetset.Label()
-        label.set_text(_('This phone is not yet mounted.'))
+        label.set_text(_('This device is not yet mounted.'))
         label.set_bold(True)
         label.set_size(1.5)
         self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
@@ -729,8 +729,13 @@ class DeviceUnmountedView(widgetset.VBox):
         self.device_text = widgetset.Label()
         self.device_text.set_size(1.5)
         self.device_text.set_wrap(True)
-        self.pack_start(widgetutil.align_center(self.device_text, left_pad=20))
+        self.pack_start(widgetutil.align_center(self.device_text, left_pad=20,
+                                                bottom_pad=40))
 
+        image = widgetset.ImageDisplay(
+            imagepool.get(resources.path('images/sync-unmounted.png')))
+        self.pack_start(widgetutil.align_center(image, left_pad=20,
+                                                bottom_pad=20))
 
     def set_device(self, device):
         self.device_text.set_text(
