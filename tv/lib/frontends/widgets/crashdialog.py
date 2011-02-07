@@ -40,23 +40,32 @@ from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_IGNORE, BUTTON_SUBMIT_REPORT
 
 IGNORE_ERRORS = -1
 
-def run_dialog(report):
-    window = MainDialog(_("Internal Error"))
-    try:
+class CrashDialog(MainDialog):
+    def __init__(self):
+        MainDialog.__init__(self, _("Internal Error"))
+        self.vbox = None
+        self.report = ""
+
+    def on_see_crash_report(self, widget):
+        self.hidden_vbox.show()
+
+    def run_dialog(self, report):
+        self.report = report
         try:
             vbox = widgetset.VBox(spacing=5)
 
             lab = widgetset.Label(_(
-                "%(appname)s has encountered an internal error.  You can "
-                "help us track down this problem and fix it by submitting "
-                "an error report.",
-                {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-                ))
+                    "%(appname)s has encountered an internal error.  You can "
+                    "help us track down this problem and fix it by submitting "
+                    "an error report.",
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                    ))
 
             lab.set_wrap(True)
             lab.set_size_request(600, -1)
@@ -64,28 +73,57 @@ def run_dialog(report):
             vbox.pack_start(widgetutil.align_left(lab))
 
             cbx = widgetset.Checkbox(_(
-                "Include entire program database including all video and "
-                "podcast metadata with crash report"
-            ))
+                    "Include entire program database including all video and "
+                    "podcast metadata with error report"
+                    ))
             vbox.pack_start(widgetutil.align_left(cbx))
+
+            button = widgetset.Button(_("See crash report"))
+            button.set_size(widgetconst.SIZE_SMALL)
+            button.connect('clicked', self.on_see_crash_report)
+            vbox.pack_start(widgetutil.align_right(button))
 
             lab2 = widgetset.Label(_("Describe what you were doing when you got this error:"))
             vbox.pack_start(widgetutil.align_left(lab2))
 
             text = widgetset.MultilineTextEntry()
-            text.set_size_request(600, 100)
-            vbox.pack_start(widgetutil.align_left(text))
+            scroller = widgetset.Scroller(True, True)
+            scroller.add(text)
+            scroller.set_size_request(600, 100)
+            vbox.pack_start(widgetutil.align_left(scroller))
 
-            window.set_extra_widget(vbox)
-            window.add_button(BUTTON_SUBMIT_REPORT.text)
-            window.add_button(BUTTON_IGNORE.text)
+            hidden_vbox = widgetset.VBox(spacing=5)
+            lab = widgetset.Label(_("Crash Report:"))
+            hidden_vbox.pack_start(widgetutil.align_left(lab))
 
-            ret = window.run()
+            report_text = widgetset.MultilineTextEntry(self.report)
+            report_text.set_editable(False)
+
+            scroller = widgetset.Scroller(True, True)
+            scroller.add(report_text)
+            scroller.set_size_request(600, 100)
+            hidden_vbox.pack_start(widgetutil.align_left(scroller))
+
+            self.hidden_vbox = widgetutil.HideableWidget(hidden_vbox)
+            self.hidden_vbox.hide()
+            vbox.pack_start(self.hidden_vbox)
+
+            self.set_extra_widget(vbox)
+            self.add_button(BUTTON_SUBMIT_REPORT.text)
+            self.add_button(BUTTON_IGNORE.text)
+
+            self.vbox = vbox
+            ret = self.run()
             if ret == 0:
                 messages.ReportCrash(report, text.get_text(), cbx.get_checked()).send_to_backend()
             else:
                 return IGNORE_ERRORS
         except StandardError:
             logging.exception("crashdialog threw exception.")
+
+def run_dialog(report):
+    try:
+        diag = CrashDialog()
+        diag.run_dialog(report)
     finally:
-        window.destroy()
+        diag.destroy()
