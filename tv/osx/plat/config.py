@@ -118,6 +118,9 @@ def get(descriptor):
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         return _makeSupportFilePath('icon-cache')
+
+    elif descriptor == prefs.COVER_ART_DIRECTORY:
+        return _makeSupportFilePath('cover-art')
     
     elif descriptor == prefs.SQLITE_PATHNAME:
         return _makeSupportFilePath('sqlitedb')

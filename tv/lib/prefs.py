@@ -184,6 +184,8 @@ SUPPORT_DIRECTORY = \
     Pref(key='SupportDirectory', default=None, platformSpecific=True)
 ICON_CACHE_DIRECTORY = \
     Pref(key='IconCacheDirectory', default=None, platformSpecific=True)
+COVER_ART_DIRECTORY = \
+    Pref(key='CoverArtDirectory', default=None, platformSpecific=True)
 SQLITE_PATHNAME = \
     Pref(key='SQLLitePathname',    default=None, platformSpecific=True)
 CRASH_PATHNAME = \

@@ -176,6 +176,10 @@ def get(descriptor):
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'icon-cache')
 
+    elif descriptor == prefs.COVER_ART_DIRECTORY:
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'cover-art')
+
     elif descriptor == prefs.SQLITE_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'sqlitedb')

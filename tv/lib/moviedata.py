@@ -45,6 +45,7 @@ from miro import signals
 from miro import util
 from miro import fileutil
 from miro import filetypes
+from miro import coverart
 from miro.fileobject import FilenameType
 from miro.plat.utils import (kill_process, movie_data_program_info,
                              thread_body)
@@ -80,17 +81,7 @@ NOFLATTEN_TAGS = ('cover-art',)
 
 # increment this after adding to TAG_MAP or changing read_metadata() in a way
 # that will increase data identified (will not change values already extracted)
-METADATA_VERSION = 3
-
-def image_directory(subdir):
-    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
-    try:
-        fileutil.makedirs(dir_)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        pass
-    return dir_
+METADATA_VERSION = 5
 
 class MovieDataInfo(object):
     """Little utility class to keep track of data associated with each
@@ -112,7 +103,7 @@ class MovieDataInfo(object):
         # different directories.
         thumbnail_filename = '%s.%s.png' % (os.path.basename(self.video_path),
                                             util.random_string(5))
-        self.thumbnail_path = os.path.join(image_directory('extracted'),
+        self.thumbnail_path = os.path.join(self.image_directory('extracted'),
                                            thumbnail_filename)
         if hasattr(app, 'in_unit_tests'):
             self._program_info = None
@@ -132,66 +123,16 @@ class MovieDataInfo(object):
 
     program_info = property(_get_program_info)
 
-class UnknownImageObjectException(Exception):
-    """Image uses this when mutagen gives us something strange.
-    """
-    pass
-
-class Image(object):
-    """Utility class to represent a cover art image.
-    Normalizes mutagen's various image objects into one class
-    so that we can use them all the same way.
-    """
-    JPEG_EXTENSION = 'jpg'
-    PNG_EXTENSION = 'png'
-    # keep images of unknown formats; maybe we can use them later:
-    UNKNOWN_EXTENSION = 'bin'
-    MIME_EXTENSION_MAP = {
-        'image/jpeg': JPEG_EXTENSION,
-        'image/jpg': JPEG_EXTENSION,
-        'image/png': PNG_EXTENSION,
-    }
-    def __init__(self, image_object):
-        self.is_cover_art = True
-        self.extension = Image.UNKNOWN_EXTENSION
-        self.data = None
-        if isinstance(image_object, mutagen.id3.APIC):
-            self._parse_APIC(image_object)
-        elif isinstance(image_object, mutagen.mp4.MP4Cover):
-            self._parse_MP4(image_object)
-        else:
-            raise UnknownImageObjectException()
-
-    def _parse_APIC(self, apic):
-        COVER_ART_TYPE = 3
-        if hasattr(apic, 'type') and apic.type is not COVER_ART_TYPE:
-            self.is_cover_art = False
-        if hasattr(apic, 'mime'):
-            mime = apic.mime.lower()
-            if not '/' in mime:
-                # some files arbitrarily drop the 'image/' component
-                mime = "image/{0}".format(mime)
-            if mime in Image.MIME_EXTENSION_MAP:
-                self.extension = Image.MIME_EXTENSION_MAP[mime]
-            else:
-                logging.warn("Unknown image mime type: %s", mime)
-        else:
-            logging.warn("APIC tag without a mime type")
-        self.data = apic.data
-
-    def _parse_MP4(self, mp4):
-        MP4_EXTENSION_MAP = {
-            mutagen.mp4.MP4Cover.FORMAT_JPEG: Image.JPEG_EXTENSION,
-            mutagen.mp4.MP4Cover.FORMAT_PNG: Image.PNG_EXTENSION,
-        }
-        if hasattr(mp4, 'imageformat'):
-            if mp4.imageformat in MP4_EXTENSION_MAP:
-                self.extension = MP4_EXTENSION_MAP[mp4.imageformat]
-            else:
-                logging.warn("Unknown MP4 image type code: %s", mp4.imageformat)
-        else:
-            logging.warn("MP4 image without a type code")
-        self.data = str(mp4)
+    @classmethod
+    def image_directory(cls, subdir):
+        dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
+        try:
+            fileutil.makedirs(dir_)
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except:
+            pass
+        return dir_
 
 class MovieDataUpdater(signals.SignalEmitter):
     def __init__ (self):
@@ -388,40 +329,32 @@ class MovieDataUpdater(signals.SignalEmitter):
                     data[u'track'] = unicode(num)
         return data
 
-    def _make_cover_art_file(self, filename, objects):
+    def _make_cover_art_file(self, track_path, objects):
         if not isinstance(objects, list):
             objects = [objects]
 
         images = []
         for image_object in objects:
             try:
-               image = Image(image_object)
-            except UnknownImageObjectException:
-               logging.debug("Couldn't parse image object of type %s",
-                             type(image_object))
+               image = coverart.Image(image_object)
+            except coverart.UnknownImageObjectException as e:
+               logging.debug("Couldn't parse image object of type %s", e.get_type())
             else:
                images.append(image)
+        if not images:
+            return
 
         cover_image = None
         for candidate in images:
-            if candidate.is_cover_art:
+            if candidate.is_cover_art() is not False:
                 cover_image = candidate
                 break
         if cover_image is None:
             # no attached image is definitively cover art. use the first one.
             cover_image = images[0]
 
-        cover_filename = "{0}.{1}.{2}".format(os.path.basename(filename),
-                         util.random_string(5), image.extension)
-        cover_path = os.path.join(image_directory('cover-art'), cover_filename)
-        try:
-            file_handle = fileutil.open_file(cover_path, 'wb')
-            file_handle.write(image.data) 
-        except IOError:
-            logging.warn(
-                "Couldn't write cover art file: {0}".format(cover_path))
-            cover_path = None
-        return cover_path
+        path = cover_image.write_to_file(track_path)
+        return path
     
     def read_metadata(self, item):
         mediatype = None
@@ -482,7 +415,10 @@ class MovieDataUpdater(signals.SignalEmitter):
 
         data = self._special_mappings(data, item)
 
-        if 'cover-art' in data:
+        if hasattr(muta, 'pictures'):
+            image_data = muta.pictures
+            cover_art = self._make_cover_art_file(item.get_filename(), image_data)
+        elif 'cover-art' in data:
             image_data = data['cover-art']
             cover_art = self._make_cover_art_file(item.get_filename(), image_data)
             del data['cover-art']
