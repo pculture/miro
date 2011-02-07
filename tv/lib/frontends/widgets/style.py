@@ -1293,7 +1293,7 @@ class LastPlayedRenderer(ListViewRenderer):
         self.text = displaytext.date_slashes(self.info.last_played)
 
 class StateCircleRenderer(ListViewRenderer):
-    ICON_STATES = ('normal', 'new', 'playing', 'downloading')
+    ICON_STATES = ('normal', 'unplayed', 'new', 'playing', 'downloading')
     ICON_PROPORTIONS = 7.0 / 9.0 # width / height
     min_width = 7
     def __init__(self):
@@ -1321,6 +1321,8 @@ class StateCircleRenderer(ListViewRenderer):
             icon = self.icon['downloading']
         elif self.info.is_playing:
             icon = self.icon['playing']
+        elif self.info.state == 'newly-downloaded':
+            icon = self.icon['unplayed']
         elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
             icon = self.icon['new']
         elif (not self.info.item_viewed and not self.info.expiration_date and
