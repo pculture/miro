@@ -32,6 +32,7 @@ import subprocess
 import tempfile
 import re
 import os
+import select
 import threading
 
 from miro import util
@@ -203,8 +204,8 @@ class TranscodeObject(object):
         self.start_chunk = 0
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
-        self.chunk_sem = threading.BoundedSemaphore(
-                                    TranscodeObject.buffer_high_watermark)
+        # TODO Make sure the semaphore cannot grow past the high watermark
+        self.chunk_sem = threading.Semaphore(0)
         self.terminate_signal_thread = False
         self.create_playlist()
 
@@ -240,12 +241,12 @@ class TranscodeObject(object):
         self.start_chunk = self.last_chunk = chunk
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
-        self.chunk_sem = threading.BoundedSemaphore(
-                                    TranscodeObject.buffer_high_watermark)
+        self.chunk_sem = threading.Semaphore(0)
         # OK, you can restart the transcode by calling transcode()
 
     def transcode(self):
-        self.r, self.w = os.pipe()
+        self.r, self.child_w = os.pipe()
+        self.child_r, self.w = os.pipe()
         ffmpeg_exe = get_ffmpeg_executable_path()
         kwargs = {#"stdin": open(os.devnull, 'rb'),
                   "stdout": subprocess.PIPE,
@@ -274,14 +275,15 @@ class TranscodeObject(object):
         # XXX
         segmenter_exe = '/Users/glee/segmenter'
         args = [segmenter_exe]
-        #args += TranscodeObject.segmenter_args + [str(self.r)]
-        args += TranscodeObject.segmenter_args + [str(2)]
+        child_fds = [str(self.child_r), str(self.child_w)]
+        args += TranscodeObject.segmenter_args + child_fds
         kwargs = {"stdout": subprocess.PIPE,
                   "stdin": self.ffmpeg_handle.stdout,
                   #"stderr": open(os.devnull, 'wb'),
                   "startupinfo": util.no_console_startupinfo()}
-        if os.name != "nt":
-            kwargs["close_fds"] = True
+        # XXX Can't use this - need to pass on the child fds
+        #if os.name != "nt":
+        #    kwargs["close_fds"] = True
 
         print 'Running command ', ' '.join(args)
         self.segmenter_handle = subprocess.Popen(args, **kwargs)
@@ -295,11 +297,39 @@ class TranscodeObject(object):
         while (self.start_chunk < self.nchunks and not 
                self.terminate_signal_thread):
             data = ''
+            rset = [self.segmenter_handle.stdout, self.r]
             while True:
-                d = self.segmenter_handle.stdout.read()
-                if not d:
-                    break
-                data += d
+                #print 'SELECT'
+                r, w, x = select.select(rset, [], [])
+                # 3 cases when we wake up and r is not empty:
+                # both are readable: read segmenter handle, read self.r then
+                # continue to next file.
+                #
+                # segmenter handle only: read segmenter handle then select
+                # again
+                #
+                # self.r only: read self.r and then continue to next file
+                next_file = False
+                #if self.segmenter_handle.stdout in r:
+                #    print 'SEGMENTER DATA READABLE'
+                #if self.r in r:
+                #    print 'CONTROL PIPE READABLE'
+
+                if self.segmenter_handle.stdout in r:
+                    # Bounded read, stdout doesn't close until the program 
+                    # does!  Also, do a manual read because the stdout file
+                    # object is broken and won't return a short read.
+                    d = os.read(self.segmenter_handle.stdout.fileno(), 1024)
+                    # EOF so we can break without normal restart throttle proto
+                    if not d:
+                        break
+                    data += d
+                if self.r in r:
+                    throwaway = os.read(self.r, 1024)
+                    next_file = True
+                if next_file:
+                    os.write(self.w, 'b')
+            # XXX what to do?  can block in the semaphore
             if self.terminate_signal_thread:
                 break
             self.chunk_lock.acquire()
@@ -309,20 +339,20 @@ class TranscodeObject(object):
             os.lseek(fildes, 0, os.SEEK_SET)
             print 'APPEND', fildes
             self.chunk_buffer.append(fildes)
-            self.chunk_sem.acquire()
-            os.write(self.w, 'b')
             self.start_chunk += 1
             self.chunk_lock.release()
+            # Tell consumer there is stuff available
+            self.chunk_sem.release()
 
     def get_chunk(self):
         # XXX How do we save a reference to this guy?  discard_chunk?
-        import time
-        time.sleep(7)
-        print 'SLEPT'
+        # ANS: wrap around file wrapper would be good thing to do
+        # Consume an item ...
+        self.chunk_sem.acquire()
         self.chunk_lock.acquire()
-        fildes = self.chunk_buffer.pop()
+        fildes = self.chunk_buffer[0]
+        self.chunk_buffer = self.chunk_buffer[1:]
         print 'POP'
-        self.chunk_sem.release()
         self.chunk_lock.release()
         print 'FILDES %d' % fildes
         return fildes
