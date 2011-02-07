@@ -63,9 +63,9 @@ TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 TAG_MAP = {
     'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
-    'album_artist': ('tpe2'),
+    'album_artist': ('albumartist', 'album artist', 'tpe2'),
     'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
-        'composer', u'\uFFFDart'),
+        'composer', u'\uFFFDart', 'album artist'),
     'title': ('tit2', 'title', u'\uFFFDnam'),
     'track': ('trck', 'tracknumber'),
     'year': ('tdrc', 'tyer', 'date', 'year'),
@@ -80,7 +80,7 @@ NOFLATTEN_TAGS = ('cover-art',)
 
 # increment this after adding to TAG_MAP or changing read_metadata() in a way
 # that will increase data identified (will not change values already extracted)
-METADATA_VERSION = 2
+METADATA_VERSION = 3
 
 def image_directory(subdir):
     dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
@@ -325,6 +325,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                 key = unicode(key, 'utf-8', 'replace')
             if key.startswith('PRIV:'):
                 key = key.split('PRIV:')[1]
+            if key.startswith('TXXX:'):
+                key = key.split('TXXX:')[1]
             key = key.split(':')[0]
             if key.startswith('WM/'):
                 key = key.split('WM/')[1]
