@@ -37,17 +37,17 @@ class WidgetStateStore(object):
     LIST_VIEW = 1
     STANDARD_VIEW = 0
     DEFAULT_VIEW_TYPE = {
-        u'videos': STANDARD_VIEW,
+        u'all-feeds': STANDARD_VIEW,
+        u'device-audio': LIST_VIEW,
+        u'device-video': STANDARD_VIEW,
+        u'downloading': STANDARD_VIEW,
+        u'feed': STANDARD_VIEW,
         u'music': LIST_VIEW,
         u'others': LIST_VIEW,
-        u'downloading': STANDARD_VIEW,
-        u'all-feeds': STANDARD_VIEW,
-        u'feed': STANDARD_VIEW,
+        u'playlist': LIST_VIEW,
         u'search': LIST_VIEW,
         u'sharing': LIST_VIEW,
-        u'device-video': STANDARD_VIEW,
-        u'device-audio': LIST_VIEW,
-        u'playlist': LIST_VIEW,
+        u'videos': STANDARD_VIEW,
      }
     FILTER_VIEW_ALL = 0
     FILTER_UNWATCHED = 1
@@ -55,37 +55,37 @@ class WidgetStateStore(object):
     FILTER_DOWNLOADED = 4
     DEFAULT_DISPLAY_FILTERS = FILTER_VIEW_ALL
     DEFAULT_COLUMN_WIDTHS = {
-        u'state': 20,
-        u'name': 130,
-        u'artist': 110,
         u'album': 100,
-        u'track': 30,
+        u'artist': 110,
+        u'date': 70,
+        u'description': 160,
+        u'eta': 60,
         u'feed-name': 70,
-        u'length': 60,
         u'genre': 65,
-        u'year': 40,
+        u'length': 60,
+        u'name': 130,
+        u'rate': 60,
         u'rating': 75,
         u'size': 65,
+        u'state': 20,
         u'status': 70,
-        u'date': 70,
-        u'eta': 60,
         u'torrent-details': 160,
-        u'rate': 60,
-        u'description': 160,
+        u'track': 30,
+        u'year': 40,
     }
     DEFAULT_SORT_COLUMN = {
-        u'videos': u'name',
+        u'all-feeds': u'feed-name',
+        u'downloading': u'eta',
+        u'feed': u'date',
         u'music': u'artist',
         u'others': u'name',
-        u'downloading': u'eta',
-        u'all-feeds': u'feed-name',
-        u'feed': u'date',
         u'playlist': u'playlist',
         u'search': u'name',
+        u'videos': u'name',
     }
-    DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
-    DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_SORT_COLUMN[u'device-audio'] = DEFAULT_SORT_COLUMN[u'music']
+    DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
+    DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_COLUMNS = {
         u'videos':
             [u'state', u'name', u'length', u'feed-name', u'size'],
@@ -105,19 +105,19 @@ class WidgetStateStore(object):
         u'search':
             [u'state', u'name', u'description'],
     }
-    DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'videos']
-    DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
     DEFAULT_COLUMNS[u'device-audio'] = DEFAULT_COLUMNS[u'music']
+    DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
     DEFAULT_COLUMNS[u'playlist'] = DEFAULT_COLUMNS[u'music']
+    DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'videos']
 
     AVAILABLE_COLUMNS = {}
     for display_type, columns in DEFAULT_COLUMNS.items():
         AVAILABLE_COLUMNS[display_type] = DEFAULT_COLUMNS[display_type][:]
     # add available but non-default columns here:
-    AVAILABLE_COLUMNS['videos'].extend([u'rating'])
     AVAILABLE_COLUMNS['music'].extend([u'size'])
     AVAILABLE_COLUMNS['others'].extend([u'rating'])
     AVAILABLE_COLUMNS['search'].extend([u'rating'])
+    AVAILABLE_COLUMNS['videos'].extend([u'rating'])
 
     def __init__(self):
         self.displays = {}
