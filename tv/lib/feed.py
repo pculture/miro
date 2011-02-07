@@ -124,7 +124,7 @@ def add_feed_from_web_page(url):
         if url:
             Feed(url)
     def errback(error):
-        logging.warning ("unhandled error in add_feed_from_web_page: %s", error)
+        logging.warning("unhandled error in add_feed_from_web_page: %s", error)
     grab_url(url, callback, errback)
 
 FILE_MATCH_RE = re.compile(r"^file://.")
@@ -169,7 +169,7 @@ def normalize_feed_url(url):
     url = quote_unicode_url(url)
 
     if not validate_feed_url(url):
-        logging.info ("unable to normalize URL %s", originalURL)
+        logging.info("unable to normalize URL %s", originalURL)
         return originalURL
     else:
         return url
@@ -499,7 +499,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             folder = self.get_folder()
             if folder:
                 folder.signal_change(needs_save=False)
-        DDBObject.signal_change (self, needs_save=needs_save)
+        DDBObject.signal_change(self, needs_save=needs_save)
 
     def on_signal_change(self):
         is_updating = bool(self.actualFeed.updating)
@@ -833,7 +833,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     lambda info: self._generate_feed_callback(info, removeOnError),
                     lambda error: self._generate_feed_errback(error, removeOnError),
                     default_mime_type=u'application/rss+xml')
-            logging.debug ("added async callback to create feed %s", self.origURL)
+            logging.debug("added async callback to create feed %s", self.origURL)
         if newFeed:
             self.finish_generate_feed(newFeed)
 
@@ -956,8 +956,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             try:
                 parser.parse(StringIO(xmldata))
             except UnicodeDecodeError:
-                logging.exception ("Unicode issue parsing... %s",
-                                   xmldata[0:300])
+                logging.exception("Unicode issue parsing... %s",
+                                  xmldata[0:300])
                 self.finish_generate_feed(None)
                 if removeOnError:
                     self.remove()
@@ -1653,7 +1653,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
             self.modified[url] = unicodify(info['last-modified'])
         else:
             self.modified[url] = None
-        self.call_feedparser (html, url)
+        self.call_feedparser(html, url)
 
     def on_remove(self):
         self._cancel_all_downloads()
@@ -1848,7 +1848,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                      mimetype.startswith('application/rss+xml') or
                      mimetype.startswith('application/podcast+xml') or
                      mimetype.startswith('application/atom+xml') or
-                     mimetype.startswith('application/rdf+xml') ) and
+                     mimetype.startswith('application/rdf+xml')) and
                     depth < maxDepth -1):
                     newURLs.append(link)
 
@@ -2378,7 +2378,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler,
                     html = fix_html_header(html, self.charset)
                 self.links[:0] = lg.get_links(html, self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
-                logging.info ("bad HTML in description for %s", self.baseurl)
+                logging.info("bad HTML in description for %s", self.baseurl)
             self.inDescription = False
         elif tag.lower() == 'link':
             self.links.append((self.theLink, None, None))
@@ -2414,11 +2414,11 @@ class HTMLFeedURLParser(HTMLParser):
         try:
             self.feed(data)
         except HTMLParseError:
-            logging.info ("error parsing %s", baseurl)
+            logging.info("error parsing %s", baseurl)
         try:
             self.close()
         except HTMLParseError:
-            logging.info ("error closing %s", baseurl)
+            logging.info("error closing %s", baseurl)
         return self.link
 
     def handle_starttag(self, tag, attrs):
