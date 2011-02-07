@@ -703,14 +703,14 @@ class DeviceTabListHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
 
-    def _fake_info(self, info, name):
+    def _fake_info(self, info, type, name):
         new_data = {
             'fake': True,
-            'tab_type': name.lower(),
-            'id': '%s-%s' % (info.id, name.lower()),
+            'tab_type': type,
+            'id': '%s-%s' % (info.id, type),
             'name': name,
             'icon': imagepool.get_surface(
-                resources.path('images/icon-%s.png' % name.lower()))
+                resources.path('images/icon-%s.png' % type))
             }
 
         # hack to create a DeviceInfo without dealing with __init__
@@ -721,8 +721,12 @@ class DeviceTabListHandler(object):
 
     def _add_fake_tabs(self, info):
         self.doing_change = True
-        HideableTabList.add(self.tablist, self._fake_info(info, 'Video'), info.id)
-        HideableTabList.add(self.tablist, self._fake_info(info, 'Audio'), info.id)
+        HideableTabList.add(self.tablist,
+                            self._fake_info(info, 'video', _('Video')),
+                            info.id)
+        HideableTabList.add(self.tablist,
+                            self._fake_info(info, 'audio', _('Audio')),
+                            info.id)
         self.tablist.model_changed()
         self.tablist.set_folder_expanded(info.id, True)
         self.doing_change = False
