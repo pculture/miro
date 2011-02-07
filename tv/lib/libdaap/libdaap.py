@@ -531,6 +531,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             if query.has_key('chunk'):
                 chunk = int(query['chunk'])
             return self.do_stream_file(db_id, item_id, ext, chunk)
+
         
     def do_database_groups(self, path, query):
         db_id = int(path[1])

@@ -129,6 +129,7 @@ class ChunkedStreamObj(object):
                 yield data
             if self.unread == 0:
                 break
+        os.close(self.fildes)
 
     def __len__(self):
         return self.streamsize

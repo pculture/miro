@@ -756,7 +756,8 @@ class SharingManagerBackend(object):
                 # TODO: seek won't work on this guy, make sure that
                 # we tell the caller to return HTTP/1.1 200 instead.
                 transcode_obj.seek(chunk)
-                fildes = transcode_obj.transcode()
+                transcode_obj.transcode()
+                fildes = transcode_obj.get_chunk()
             else:
                 ValueError('transcode should be one of ts or m3u8')
         else:

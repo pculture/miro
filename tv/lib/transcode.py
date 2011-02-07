@@ -32,9 +32,11 @@ import subprocess
 import tempfile
 import re
 import os
+import threading
 
 from miro import util
-from miro.plat.utils import get_ffmpeg_executable_path, setup_ffmpeg_presets
+from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
+                             thread_body)
 
 # Transcoding
 #
@@ -73,8 +75,7 @@ def needs_transcode(media_file):
 
     May throw exception if ffmpeg not found.  Remember to catch."""
     ffmpeg_exe = get_ffmpeg_executable_path()
-    kwargs = {"bufsize": 1,
-              "stdout": subprocess.PIPE,
+    kwargs = {"stdout": subprocess.PIPE,
               "stderr": subprocess.PIPE,
               "stdin": subprocess.PIPE,
               "startupinfo": util.no_console_startupinfo()}
@@ -174,6 +175,9 @@ class TranscodeObject(object):
     audio_output_args = ['-f', 'mpegts', '-']
 
     segment_duration = 10
+    segmenter_args = ['-', str(segment_duration)]
+
+    buffer_high_watermark = 6
 
     def __init__(self, media_file, itemid, media_info, request_path_func):
         self.media_file = media_file
@@ -183,10 +187,6 @@ class TranscodeObject(object):
         self.itemid = itemid
         self.has_audio = has_audio
         self.has_video = has_video
-        # I need to rewrite the m3u8 anyway because I need to tack on the
-        # session-id and all that.
-        self.segmenter_args = ['-', TranscodeObject.segment_duration,
-                               media_file]
         # This setting makes the environment global to the app instead of
         # the subtask.  But I guess that's okay.
         setup_ffmpeg_presets()
@@ -199,6 +199,13 @@ class TranscodeObject(object):
         if self.trailer:
             self.nchunks += 1
 
+        self.last_chunk = None
+        self.start_chunk = 0
+        self.chunk_buffer = []
+        self.chunk_lock = threading.Lock()
+        self.chunk_sem = threading.BoundedSemaphore(
+                                    TranscodeObject.buffer_high_watermark)
+        self.terminate_signal_thread = False
         self.create_playlist()
 
     def create_playlist(self):
@@ -218,26 +225,31 @@ class TranscodeObject(object):
         print 'PLAYLIST', self.playlist
 
     def get_playlist(self):
-        self.tmpf = tempfile.TemporaryFile()
-        self.tmpf.write(self.playlist)
-        self.tmpf.flush()
+        fildes, name = tempfile.mkstemp()
+        os.unlink(name)
+        os.write(fildes, self.playlist)
         fildes = self.tmpf.fileno()
         os.lseek(fildes, 0, os.SEEK_SET)
         return fildes
 
     def seek(self, chunk):
-        # Strip off the prefix
         self.time_offset = chunk * TranscodeObject.segment_duration
-        # We only need to kill the last guy in the pipe ...
-        if self.segmenter_handle:
-            self.segmenter_handle.terminate()
+        self.shutdown()
+        # XXX FIXME: should only clear if this is a real seek
+        # Clear the chunk buffer, and the lock/synchronization state
+        self.start_chunk = self.last_chunk = chunk
+        self.chunk_buffer = []
+        self.chunk_lock = threading.Lock()
+        self.chunk_sem = threading.BoundedSemaphore(
+                                    TranscodeObject.buffer_high_watermark)
         # OK, you can restart the transcode by calling transcode()
 
     def transcode(self):
+        self.r, self.w = os.pipe()
         ffmpeg_exe = get_ffmpeg_executable_path()
-        kwargs = {"stdin": open(os.devnull, 'rb'),
+        kwargs = {#"stdin": open(os.devnull, 'rb'),
                   "stdout": subprocess.PIPE,
-                  "stderr": open(os.devnull, 'wb'),
+                  #"stderr": open(os.devnull, 'wb'),
                   "startupinfo": util.no_console_startupinfo()}
         if os.name != "nt":
             kwargs["close_fds"] = True
@@ -262,13 +274,74 @@ class TranscodeObject(object):
         # XXX
         segmenter_exe = '/Users/glee/segmenter'
         args = [segmenter_exe]
-        args += self.segmenter_args
-        kwargs = {"stdout": self.ffmpeg_handle.stdout,
-                  "stdin": open(os.devnull, 'rb'),
-                  "stderr": open(os.devnull, 'wb'),
+        #args += TranscodeObject.segmenter_args + [str(self.r)]
+        args += TranscodeObject.segmenter_args + [str(2)]
+        kwargs = {"stdout": subprocess.PIPE,
+                  "stdin": self.ffmpeg_handle.stdout,
+                  #"stderr": open(os.devnull, 'wb'),
                   "startupinfo": util.no_console_startupinfo()}
         if os.name != "nt":
             kwargs["close_fds"] = True
 
+        print 'Running command ', ' '.join(args)
         self.segmenter_handle = subprocess.Popen(args, **kwargs)
-        return segmenter_handle.stdout.fileno()
+
+        self.thread = threading.Thread(target=thread_body,
+                                       args=[self.signal_thread],
+                                       name="Transcode Signaling")
+        self.thread.start()
+
+    def signal_thread(self):
+        while (self.start_chunk < self.nchunks and not 
+               self.terminate_signal_thread):
+            data = ''
+            while True:
+                d = self.segmenter_handle.stdout.read()
+                if not d:
+                    break
+                data += d
+            if self.terminate_signal_thread:
+                break
+            self.chunk_lock.acquire()
+            fildes, name = tempfile.mkstemp()
+            os.unlink(name)
+            os.write(fildes, data)
+            os.lseek(fildes, 0, os.SEEK_SET)
+            print 'APPEND', fildes
+            self.chunk_buffer.append(fildes)
+            self.chunk_sem.acquire()
+            os.write(self.w, 'b')
+            self.start_chunk += 1
+            self.chunk_lock.release()
+
+    def get_chunk(self):
+        # XXX How do we save a reference to this guy?  discard_chunk?
+        import time
+        time.sleep(7)
+        print 'SLEPT'
+        self.chunk_lock.acquire()
+        fildes = self.chunk_buffer.pop()
+        print 'POP'
+        self.chunk_sem.release()
+        self.chunk_lock.release()
+        print 'FILDES %d' % fildes
+        return fildes
+
+    # Shutdown the transcode job.  If we quitting, make sure you call this
+    # so the segmenter et al have a chance to clean up.
+    def shutdown(self):
+        # We only need to kill the last guy in the pipe ... and wait for
+        # the signaling thread to finish.  The signaling thread read will
+        # return 0, and go back to the top-level loop where it will know 
+        # it needs to quit.  We wait for the quit to happen.
+        if self.segmenter_handle:
+            self.segmenter_handle.terminate()
+            self.terminate_signal_thread = True
+            # Make sure we wakeup the semaphore, if we are stuck in there.
+            # The synchronization watermarks doesn't matter anymore since
+            # we are going away.
+            self.chunk_sem.release()
+            self.signal_thread.join()
+            self.terminate_signal_thread = False
+            self.segmenter_handle = None
+            self.ffmpeg_handle = None
