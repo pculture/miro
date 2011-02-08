@@ -57,6 +57,42 @@ class RoundedSolidBackground(widgetset.Background):
         context.set_color(self.color)
         context.fill()
 
+class SharingBroken(widgetset.Background):
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.create_signal('install-clicked')
+
+        vbox = widgetset.VBox()
+        label = widgetset.Label(_("Sharing Disabled").upper())
+        label.set_bold(True)
+        label.set_color((1, 1, 1))
+        vbox.pack_start(widgetutil.align_left(label, top_pad=10))
+        label = widgetset.Label(
+            _("You need to install the free DAAP from Apple to be able to "
+              "share files from Miro-to-Miro or to the Miro iPad app."))
+        label.set_wrap(True)
+        label.set_color((1, 1, 1))
+        vbox.pack_start(widgetutil.align_left(label, top_pad=20))
+        button = widgetset.Button(_("Click here to install"))
+        button.connect('clicked', self.on_clicked)
+        vbox.pack_start(widgetutil.align_left(button, top_pad=20,
+                                              bottom_pad=20))
+
+        self.add(widgetutil.align(vbox, xscale=1, left_pad=20))
+
+    def draw(self, context, layout):
+        gradient = widgetset.Gradient(0, 0, 0, context.height - 1)
+        gradient.set_start_color(style.css_to_color('#a92928'))
+        gradient.set_end_color(style.css_to_color('#7e1c1b'))
+        context.rectangle(0, 0, context.width, context.height - 1)
+        context.gradient_fill(gradient)
+        context.rectangle(0, context.height -1, context.width, context.height)
+        context.set_color((0, 0, 0))
+        context.fill()
+
+    def on_clicked(self, button):
+        self.emit('install-clicked')
+
 class PrettyToggleButton(widgetset.CustomButton):
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -147,7 +183,12 @@ class AppStoreButton(widgetset.CustomButton):
 class ConnectTab(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
-        self.set_size_request(600, -1)
+
+        if not app.sharing_manager.mdns_present:
+            sharing_broken = SharingBroken()
+            sharing_broken.connect('install-clicked',
+                                   self.daap_install_clicked)
+            self.pack_start(sharing_broken)
 
         trans_data = {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}
 
@@ -159,12 +200,15 @@ class ConnectTab(widgetset.VBox):
         label.set_size(2)
         label.set_bold(True)
         title.pack_start(widgetutil.pad(label, left=5))
-        self.pack_start(widgetutil.align_center(title, bottom_pad=20))
+        self.pack_start(widgetutil.align_center(title, top_pad=30,
+                                                bottom_pad=20))
+
+        bottom = widgetset.VBox()
 
         # sharing
         label = widgetset.Label(_("%(shortappname)s Sharing", trans_data))
         label.set_size(1.5)
-        self.pack_start(widgetutil.align_left(label, left_pad=20,
+        bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         label = widgetset.Label(
             _("%(shortappname)s can stream and download files to and from "
@@ -172,27 +216,33 @@ class ConnectTab(widgetset.VBox):
               "Miro iPad app.  It's awesome!", trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
-        self.pack_start(widgetutil.align_left(label, left_pad=20,
+        bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         vbox = widgetset.VBox()
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.Checkbox(_("Videos")))
         hbox.pack_start(widgetset.Checkbox(_("Music")))
         hbox.pack_start(widgetset.Checkbox(_("Podcasts")))
-        hbox.pack_end(PrettyToggleButton())
+        button = PrettyToggleButton()
+        button.connect('clicked', self.daap_toggled)
+        button.set_value(app.config.get(prefs.SHARE_MEDIA))
+        hbox.pack_end(button)
         vbox.pack_start(hbox)
 
         hbox = widgetset.HBox()
         #_("Off")
         hbox.pack_start(widgetset.Label(
             _("My %(shortappname)s Share Name", trans_data)))
-        hbox.pack_start(widgetutil.pad(widgetset.TextEntry(), left=5))
+        entry = widgetset.TextEntry(app.config.get(prefs.SHARE_NAME))
+        entry.connect('changed', self.daap_name_changed)
+        hbox.pack_start(widgetutil.pad(entry, left=5))
         vbox.pack_start(widgetutil.pad(hbox, top=10))
 
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
         bg.set_size_request(550, -1)
         bg.add(widgetutil.pad(vbox, 10, 10, 10, 10))
-        self.pack_start(widgetutil.align_left(bg, left_pad=20, bottom_pad=50))
+        bottom.pack_start(widgetutil.align_left(bg, left_pad=20,
+                                                bottom_pad=50))
 
         # syncing
         hbox = widgetset.HBox()
@@ -235,7 +285,7 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(vbox)
         hbox.pack_start(widgetutil.align_right(widgetset.ImageDisplay(
             imagepool.get(resources.path('images/connect-android.png')))))
-        self.pack_start(hbox)
+        bottom.pack_start(hbox)
 
         # iPad link
         hbox = widgetset.HBox()
@@ -258,7 +308,18 @@ class ConnectTab(widgetset.VBox):
         app_store_button = AppStoreButton()
         app_store_button.connect('clicked', self.app_store_button_clicked)
         hbox.pack_start(app_store_button)
-        self.pack_start(hbox)
+        bottom.pack_start(hbox)
+
+        self.pack_start(widgetutil.align_center(bottom))
+
+    def daap_install_clicked(self, button):
+        print 'daap install clicked'
+
+    def daap_toggled(self, button):
+        app.config.set(prefs.SHARE_MEDIA, button.get_value())
+
+    def daap_name_changed(self, entry):
+        app.config.set(prefs.SHARE_NAME, entry.get_text())
 
     def help_button_clicked(self, button):
         print 'help clicked'
