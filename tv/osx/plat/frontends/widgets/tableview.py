@@ -1223,3 +1223,11 @@ class TableView(Widget):
             types = drag_dest.allowed_types()
             self.tableview.registerForDraggedTypes_(types)
             self.data_source.setDragDest_(drag_dest)
+
+    def set_scroll_position(self, scroll_pos):
+        # FIXME: stub
+        pass
+
+    def get_scroll_position(self):
+        # FIXME: stub
+        return 0, 0

@@ -197,6 +197,8 @@ class ItemListController(object):
             self.on_columns_enabled_changed, list_view)
         self.views[list_view].connect_weak('column-widths-changed',
             self.on_column_widths_changed, list_view)
+        self.views[list_view].connect_weak('scroll-position-changed',
+            self.on_scroll_position_changed, list_view)
 
     def set_view(self, _widget, view):
         self.selected_view = view
@@ -223,8 +225,10 @@ class ItemListController(object):
                 self.type, self.id, list_view_type)
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view_type)
+        scroll_pos = app.widget_state.get_scroll_position(
+            self.type, self.id, list_view_type)
         list_view = itemlistwidgets.ListView(
-               self.item_list, list_view_columns, list_view_widths)
+               self.item_list, list_view_columns, list_view_widths, scroll_pos)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
@@ -360,6 +364,10 @@ class ItemListController(object):
     def on_column_widths_changed(self, object, widths, view_type):
         app.widget_state.update_column_widths(
                 self.type, self.id, view_type, widths)
+
+    def on_scroll_position_changed(self, object, scroll_pos, view_type):
+        app.widget_state.set_scroll_position(
+                self.type, self.id, view_type, scroll_pos)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:

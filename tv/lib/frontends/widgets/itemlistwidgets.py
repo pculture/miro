@@ -280,19 +280,19 @@ class ListView(widgetset.TableView):
         'description': style.DescriptionRenderer,
     }
     COLUMN_PADDING = 12
-    def __init__(self, item_list, columns_enabled, column_widths):
+    def __init__(self, item_list, columns_enabled, column_widths, scroll_pos):
         widgetset.TableView.__init__(self, item_list.model)
         self.column_widths = {}
         self.create_signal('sort-changed')
         self.create_signal('columns-enabled-changed')
         self.create_signal('column-widths-changed')
+        self.create_signal('scroll-position-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._column_by_label = {}
         self._current_sort_column = None
         self._real_column_widths = {}
         self.columns_enabled = []
-        self.update_columns(columns_enabled, column_widths)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(self.COLUMN_PADDING)
@@ -302,8 +302,11 @@ class ListView(widgetset.TableView):
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
+        self.update_columns(columns_enabled, column_widths)
+        self.scroll_pos = scroll_pos
+        self.set_scroll_position(scroll_pos)
 
-    def _get_ui_column_state(self):
+    def _get_ui_state(self):
         if not self._set_initial_widths:
             return
         enabled = []
@@ -318,11 +321,14 @@ class ListView(widgetset.TableView):
         self.columns_enabled = enabled
         self._real_column_widths.update(widths)
         self.column_widths.update(widths)
+        self.scroll_pos = self.get_scroll_position()
 
     def on_undisplay(self):
-        self._get_ui_column_state()
+        self._get_ui_state()
         self.emit('column-widths-changed', self.column_widths)
         self.emit('columns-enabled-changed', self.columns_enabled)
+        if self.scroll_pos is not None:
+            self.emit('scroll-position-changed', self.scroll_pos)
 
     def get_tooltip(self, iter_, column):
         if ('name' in self._column_name_to_column and

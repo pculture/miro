@@ -245,18 +245,39 @@ class MiroTreeView(gtk.TreeView):
         self.connect('parent-set', self.on_parent_set)
 
     def on_parent_set(self, widget, old_parent):
+        """We have parent window now; we need to control its scrollbars."""
         if isinstance(self.get_parent(), gtk.ScrolledWindow):
             window = self.get_parent()
             scrollbars = (window.get_hscrollbar(), window.get_vscrollbar())
             self.scrollbars = scrollbars
-            self.scroll_positions = []
-            self.keep_scroll_change = []
+            self.keep_scroll_change = [False, False]
             for i, scrollbar in enumerate(scrollbars):
-                self.scroll_positions.append(None)
-                self.keep_scroll_change.append(False)
-                weak_connect(scrollbar, 'change-value',
-                        self.on_bar_change_value, i)
+                adjustment = scrollbar.get_adjustment()
+                weak_connect(adjustment, 'changed',
+                        self.on_scroll_range_changed, i)
 
+    def on_scroll_range_changed(self, adjustment, bar):
+        """The scrollbar might have a range now. Set its initial position if
+        we haven't already.
+        """
+        if not self.scroll_positions_set:
+            self.set_scroll_position(self.scroll_positions)
+
+    def set_scroll_position(self, scroll_position):
+        """Restore the scrollbars to a remembered state."""
+        self.scroll_positions = list(scroll_position)
+        success = len(self.scrollbars) > 0
+        for i, scrollbar in enumerate(self.scrollbars):
+            success &= self._update_scrollbar_position(i)
+        if success:
+            self.scroll_positions_set = True
+
+    def get_scroll_position(self):
+        """Get the current position of both scrollbars, to restore later."""
+        if len(self.scroll_positions) == 2:
+            return int(self.scroll_positions[0]), int(self.scroll_positions[1])
+        else:
+            return 0, 0
 
     def _update_scrollbar_position(self, bar):
         """Move the specified scrollbar to its saved position."""
@@ -267,8 +288,16 @@ class MiroTreeView(gtk.TreeView):
         pos = self.scroll_positions[bar]
         lower = adj.get_lower()
         upper = adj.get_upper() - adj.get_page_size()
+        # currently, StandardView gets an upper of 2.0 when it's not ready
+        # FIXME: don't count on that
+        if upper < 5:
+            # not ready yet, and/or window has reset our position
+            self.scroll_positions_set = False
+            return False
+        # have to clip it ourselves
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
+        return True
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -1202,6 +1231,12 @@ class TableView(Widget):
 
     def get_left_offset(self):
         return self._widget.get_left_offset()
+
+    def set_scroll_position(self, scroll_pos):
+        self._widget.set_scroll_position(scroll_pos)
+    
+    def get_scroll_position(self):
+        return self._widget.get_scroll_position()
 
 class TableModel(object):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
