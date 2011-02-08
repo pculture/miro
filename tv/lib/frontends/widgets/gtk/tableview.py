@@ -240,8 +240,8 @@ class MiroTreeView(gtk.TreeView):
         self.height_without_pad_bottom = -1
         self.set_enable_search(False)
         self.scrollbars = []
-        self.scroll_positions = []
-        self.keep_scroll_change = []
+        self.scroll_positions = [None, None]
+        self.scroll_positions_set = False
         self.connect('parent-set', self.on_parent_set)
 
     def on_parent_set(self, widget, old_parent):
@@ -256,28 +256,19 @@ class MiroTreeView(gtk.TreeView):
                 self.keep_scroll_change.append(False)
                 weak_connect(scrollbar, 'change-value',
                         self.on_bar_change_value, i)
-                weak_connect(scrollbar, 'value-changed',
-                        self.on_bar_value_changed, i)
 
-    def on_bar_change_value(self, range_, scroll, value, bar):
-        self.scroll_positions[bar] = value
 
-    def on_bar_value_changed(self, range_, bar):
-        if self.keep_scroll_change[bar]:
-            self.keep_scroll_change[bar] = False
-            for i, bar in enumerate(self.scrollbars):
-                self.scroll_positions[i] = bar.get_adjustment().get_value()
-            return
+    def _update_scrollbar_position(self, bar):
+        """Move the specified scrollbar to its saved position."""
+        if self.scroll_positions[bar] is None:
+            # nothing to restore it to yet
+            return False
         adj = self.scrollbars[bar].get_adjustment()
         pos = self.scroll_positions[bar]
         lower = adj.get_lower()
         upper = adj.get_upper() - adj.get_page_size()
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
-
-    def set_keep_scroll_changes(self, keep):
-        for i, bar in enumerate(self.scrollbars):
-            self.keep_scroll_change[i] = keep
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -299,9 +290,7 @@ class MiroTreeView(gtk.TreeView):
             return False
         if isinstance(self.get_parent(), gtk.ScrolledWindow):
             # If our parent is a ScrolledWindow, let GTK take care of this
-            self.set_keep_scroll_changes(True)
             handled = gtk.TreeView.do_move_cursor(self, step, count)
-            self.set_keep_scroll_changes(False)
             return handled
         else:
             # Otherwise, we have to search up the widget tree for a
