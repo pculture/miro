@@ -801,7 +801,7 @@ class SharingTabListHandler(object):
                 app.playback_manager.stop()
             # Default to select the guide.  There's nothing more to see here.
             typ, selected_tabs = app.tab_list_manager.get_selection()
-            if typ == u'sharing' and (info == selected_tabs[0] or
+            if typ == u'connect' and (info == selected_tabs[0] or
               getattr(selected_tabs[0], 'parent_id', None) == info.id):
                 app.tab_list_manager.select_guide()
             messages.SharingEject(info).send_to_backend()

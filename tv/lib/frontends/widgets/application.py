@@ -1212,7 +1212,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 app.playback_manager.stop()
         message = messages.TabsChanged('sharing', [], [], [share.id])
         typ, selected_tabs = app.tab_list_manager.get_selection()
-        if typ == u'sharing' and share in selected_tabs:
+        if typ == u'connect' and share in selected_tabs:
             app.tab_list_manager.select_guide()
         # Call directly: already in frontend.
         self.handle_tabs_changed(message)
