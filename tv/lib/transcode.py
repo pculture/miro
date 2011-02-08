@@ -199,6 +199,9 @@ class TranscodeObject(object):
         self.trailer = self.duration % TranscodeObject.segment_duration
         if self.trailer:
             self.nchunks += 1
+        print 'TRANSCODE INFO, duration', self.duration
+        print 'TRANSCODE INFO, nchunks ', self.nchunks
+        print 'TRANSCODE INFO, trailer', self.trailer
 
         # XXX dodgy
         # Set start_chunk != current_chunk to force seek() to return True
@@ -218,11 +221,13 @@ class TranscodeObject(object):
                           TranscodeObject.segment_duration)
         self.playlist += '#EXT-X-MEDIA-SEQUENCE:0\n'
         for i in xrange(self.nchunks):
-            self.playlist += '#EXTINF:%d,\n' % self.segment_duration
             # XXX check corner case
             # Special case
-            if i == self.nchunks and self.trailer:
-                self.playlist += self.trailer + '\n'
+            if i == (self.nchunks - 1) and self.trailer:
+                chunk_duration = self.trailer
+            else:
+                chunk_duration = self.segment_duration
+            self.playlist += '#EXTINF:%d,\n' % chunk_duration
             urlpath = self.request_path_func(self.itemid, 'ts')
             # This returns us a pedantically correct path but we want to be
             # able to use http, which is understood by everybody and is 
