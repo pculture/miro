@@ -45,6 +45,7 @@ from miro.frontends.widgets.displays import VideoDisplay
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import dialogs
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 class PlaybackManager (signals.SignalEmitter):
     
@@ -62,7 +63,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_paused = False
         self.is_suspended = False
         self.shuffle = False
-        self.repeat = PlaybackPlaylist.REPEAT_OFF
+        self.repeat = WidgetStateStore.get_repeat_off() 
         self.open_finished = False
         self.open_successful = False
         self.playlist = None
@@ -124,9 +125,6 @@ class PlaybackManager (signals.SignalEmitter):
         self.presentation_mode = presentation_mode
         self.playlist.set_shuffle(self.shuffle)
         self.playlist.set_repeat(self.repeat)
-        #update shuffle repeat buttons
-        self.emit('update-shuffle')
-        self.emit('update-repeat')
         self._play_current()
         if self.playlist is None:
             # _play_current found that PLAY_IN_MIRO was set to False
@@ -266,36 +264,32 @@ class PlaybackManager (signals.SignalEmitter):
         self.emit('did-stop')
 
     def toggle_shuffle(self):
-        self.shuffle = not self.shuffle
-        if self.playlist:
-            self.playlist.set_shuffle(self.shuffle)
-        self.emit('update-shuffle')
+        self.set_shuffle(not self.shuffle)
 
-    def is_shuffle(self):
-        return self.shuffle
+    def set_shuffle(self, shuffle):
+        if self.shuffle != shuffle:
+            self.shuffle = shuffle
+            if self.playlist:
+                self.playlist.set_shuffle(self.shuffle)
+            self.emit('update-shuffle')
 
     def toggle_repeat(self):
-        if self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST:
-            self.repeat = PlaybackPlaylist.REPEAT_TRACK
-        elif self.repeat == PlaybackPlaylist.REPEAT_TRACK:
-            self.repeat = PlaybackPlaylist.REPEAT_OFF
-        elif self.repeat == PlaybackPlaylist.REPEAT_OFF:
-            self.repeat = PlaybackPlaylist.REPEAT_PLAYLIST
+        if self.repeat == WidgetStateStore.get_repeat_playlist():
+            self.set_repeat(WidgetStateStore.get_repeat_track())
+        elif self.repeat == WidgetStateStore.get_repeat_track():
+            self.set_repeat(WidgetStateStore.get_repeat_off())
+        elif self.repeat == WidgetStateStore.get_repeat_off():
+            self.set_repeat(WidgetStateStore.get_repeat_playlist())
         #handle unknown values
         else:
-            self.set_repeat(PlaybackPlaylist.REPEAT_OFF)
-        if self.playlist:
-            self.playlist.set_repeat(self.repeat)
-        self.emit('update-repeat')
+            self.set_repeat(WidgetStateStore.get_repeat_off())
 
-    def is_repeat_off(self):
-        return self.repeat == PlaybackPlaylist.REPEAT_OFF
-
-    def is_repeat_playlist(self):
-        return self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
-
-    def is_repeat_track(self):
-        return self.repeat == PlaybackPlaylist.REPEAT_TRACK
+    def set_repeat(self, repeat):
+        if self.repeat != repeat:
+            self.repeat = repeat
+            if self.playlist:
+                self.playlist.set_repeat(self.repeat)
+            self.emit('update-repeat')
 
     def remove_video_display(self):
         self.removing_video_display = True
@@ -635,8 +629,6 @@ class PlaybackManager (signals.SignalEmitter):
                     encoding).send_to_backend()
 
 class PlaybackPlaylist(signals.SignalEmitter):
-    REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
-
     def __init__(self, item_tracker, start_id):
         signals.SignalEmitter.__init__(self, 'position-changed',
                 'playing-info-changed')
@@ -647,7 +639,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                     self._on_items_will_change),
                 item_tracker.connect('items-changed', self._on_items_changed),
         ]
-        self.repeat = PlaybackPlaylist.REPEAT_OFF
+        self.repeat = WidgetStateStore.get_repeat_off()
         self.shuffle = False
         self.shuffle_history = []
         self.currently_playing = None
@@ -676,15 +668,15 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def find_next_item(self, not_skipped_by_user=True):
         #if track repeat is on and the user doesn't skip, 
         #shuffle doesn't matter
-        if ((self.repeat == PlaybackPlaylist.REPEAT_TRACK
+        if ((self.repeat == WidgetStateStore.get_repeat_track()
              and not_skipped_by_user)):
             return self.currently_playing
         elif ((not self.shuffle and
-             self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
+             self.repeat == WidgetStateStore.get_repeat_playlist()
              and self.is_playing_last_item())):
             return self._find_playable(self.model.get_first_info())
-        elif (self.shuffle and self.repeat == PlaybackPlaylist.REPEAT_OFF
-             or self.shuffle and self.repeat == PlaybackPlaylist.REPEAT_TRACK):
+        elif (self.shuffle and self.repeat == WidgetStateStore.get_repeat_off()
+             or self.shuffle and self.repeat == WidgetStateStore.get_repeat_track()):
             if not self.shuffle_upcoming:
                 self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
                 self.shuffle_history = []
@@ -693,7 +685,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 next_item = self.shuffle_upcoming.pop()
                 self.shuffle_history.append(next_item)
                 return self.model.get_info(next_item)
-        elif self.shuffle and PlaybackPlaylist.REPEAT_PLAYLIST:
+        elif self.shuffle and WidgetStateStore.get_repeat_playlist():
             if not self.shuffle_upcoming:
                 #populate with new items
                 self.shuffle_upcoming = self.generate_upcoming_shuffle_items() 
@@ -715,7 +707,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             previous_item = self.model.get_info(self.shuffle_history[-1])
             return previous_item
         elif (not self.shuffle 
-              and self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST
+              and self.repeat == WidgetStateStore.get_repeat_playlist()
               and self.is_playing_first_item()):
             last_item = self._find_playable(self.model.get_last_info(), True)
             return last_item
@@ -726,8 +718,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def generate_upcoming_shuffle_items(self):
         if not self.shuffle:
             return None
-        elif (self.repeat == PlaybackPlaylist.REPEAT_OFF
-             or self.repeat == PlaybackPlaylist.REPEAT_TRACK):
+        elif (self.repeat == WidgetStateStore.get_repeat_off()
+             or self.repeat == WidgetStateStore.get_repeat_track()):
             #random order
             items = self.get_all_playable_items()
             shuffle(items)
@@ -738,7 +730,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 except ValueError:
                     pass
             return items
-        elif self.repeat == PlaybackPlaylist.REPEAT_PLAYLIST:
+        elif self.repeat == WidgetStateStore.get_repeat_playlist():
             #random items
             items = self.get_all_playable_items()
             if items:

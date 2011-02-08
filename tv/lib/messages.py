@@ -1589,9 +1589,13 @@ class DisplayInfo(object):
         if display is not None:
             self.selected_view = display.selected_view
             self.active_filters = display.active_filters
+            self.shuffle = display.shuffle
+            self.repeat = display.repeat
         else:
             self.selected_view = None
             self.active_filters = None
+            self.shuffle = None
+            self.repeat = None
         if display is not None and display.list_view_columns is not None:
             self.list_view_columns = display.list_view_columns[:]
         else:

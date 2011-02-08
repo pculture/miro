@@ -129,6 +129,45 @@ class ItemListController(object):
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
 
+    def on_displayed(self):
+        self.shuffle_handle = None
+        self.repeat_handle = None
+        #We only want to show the shuffle/repeat status of the 
+        #currently displayed playlist if there is no playback in 
+        #progress. If there currently is playback we want to 
+        #continue showing the shuffle/repeat status of the currently 
+        #playing playlist.
+        if not app.playback_manager.playlist:
+            shuffle = app.widget_state.get_shuffle(self.type, self.id)
+            app.playback_manager.set_shuffle(shuffle)
+            repeat = app.widget_state.get_repeat(self.type, self.id)
+            app.playback_manager.set_repeat(repeat)
+        self.shuffle_handle = app.playback_manager.connect('update-shuffle',
+                    self._handle_shuffle_update)
+        self.repeat_handle = app.playback_manager.connect('update-repeat',
+                    self._handle_repeat_update)
+        self.stop_handle = app.playback_manager.connect('did-stop',
+                    self._handle_playback_did_stop)
+
+    def _handle_shuffle_update(self, playback_manager, *args):
+        if app.item_list_controller_manager.displayed == self:
+            app.widget_state.set_shuffle(self.type, self.id, 
+                    app.playback_manager.shuffle)
+
+    def _handle_repeat_update(self, playback_manager, *args):
+        if app.item_list_controller_manager.displayed == self:
+            app.widget_state.set_repeat(self.type, self.id, 
+                    app.playback_manager.repeat)
+
+    def _handle_playback_did_stop(self, playback_manager):
+        if app.item_list_controller_manager.displayed == self:
+            #if playback stops we always want to load the shuffle/repeat 
+            #of the current playlist
+            shuffle = app.widget_state.get_shuffle(self.type, self.id)
+            app.playback_manager.set_shuffle(shuffle)
+            repeat = app.widget_state.get_repeat(self.type, self.id)
+            app.playback_manager.set_repeat(repeat)
+
     def make_multiview_sorters(self):
         """Subclasses that need to share one sorter across all views can set
         self.multiview_sorter here. PlaylistView uses this.
@@ -332,6 +371,10 @@ class ItemListController(object):
             self._playback_item_list = item_list
         app.playback_manager.start(start_id, self.item_tracker,
                 presentation_mode)
+        shuffle = app.widget_state.get_shuffle(self.type, self.id)
+        app.playback_manager.set_shuffle(shuffle)
+        repeat = app.widget_state.get_repeat(self.type, self.id)
+        app.playback_manager.set_repeat(repeat)
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.
@@ -564,6 +607,12 @@ class ItemListController(object):
     def no_longer_displayed(self):
         for view in self.views:
             self.views[view].on_undisplay()
+        if self.shuffle_handle:
+            app.playback_manager.disconnect(self.shuffle_handle)
+        if self.repeat_handle:
+            app.playback_manager.disconnect(self.repeat_handle)
+        if self.stop_handle:
+            app.playback_manager.disconnect(self.stop_handle)
 
 class SimpleItemListController(ItemListController):
     def __init__(self):
@@ -765,6 +814,7 @@ class ItemListControllerManager(object):
 
     def controller_displayed(self, item_list_controller):
         self.displayed = item_list_controller
+        self.displayed.on_displayed()
 
     def controller_no_longer_displayed(self, item_list_controller):
         if item_list_controller is not self.displayed:

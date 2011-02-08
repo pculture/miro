@@ -44,6 +44,8 @@ class DisplayState(DDBObject):
         self.type = display[0]
         self.id_ = display[1]
         # shared properties
+        self.shuffle = None
+        self.repeat = None
         self.selected_view = None
         self.active_filters = None
         # ListView properties

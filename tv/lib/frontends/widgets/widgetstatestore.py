@@ -121,6 +121,7 @@ class WidgetStateStore(object):
     AVAILABLE_COLUMNS['others'].extend([u'rating'])
     AVAILABLE_COLUMNS['search'].extend([u'rating'])
     AVAILABLE_COLUMNS['videos'].extend([u'rating'])
+    REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
     def __init__(self):
         self.displays = {}
@@ -189,6 +190,30 @@ class WidgetStateStore(object):
         display = self._get_display(display_type, display_id)
         display.active_filters = filters
         self._save_display_state(display_type, display_id)
+
+    def set_shuffle(self, display_type, display_id, shuffle):
+        display = self._get_display(display_type, display_id)
+        display.shuffle = shuffle
+        self._save_display_state(display_type, display_id)
+
+    def get_shuffle(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        if display.shuffle is None:
+            display.shuffle = False
+        else:
+            return display.shuffle
+
+    def set_repeat(self, display_type, display_id, repeat):
+        display = self._get_display(display_type, display_id)
+        display.repeat = repeat
+        self._save_display_state(display_type, display_id)
+
+    def get_repeat(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        if display.repeat is None:
+            display.repeat = WidgetStateStore.REPEAT_OFF
+        else:
+            return display.repeat
 
 # ViewState properties that are only valid for specific view_types:
 
@@ -353,6 +378,18 @@ class WidgetStateStore(object):
     @staticmethod
     def get_display_types():
         return WidgetStateStore.AVAILABLE_COLUMNS.keys()
+
+    @staticmethod
+    def get_repeat_off():
+        return WidgetStateStore.REPEAT_OFF
+
+    @staticmethod
+    def get_repeat_playlist():
+        return WidgetStateStore.REPEAT_PLAYLIST
+
+    @staticmethod
+    def get_repeat_track():
+        return WidgetStateStore.REPEAT_TRACK
 
     # views:
 

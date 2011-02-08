@@ -1555,6 +1555,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.active_filters = info.active_filters
         state.list_view_columns = info.list_view_columns
         state.list_view_widths = info.list_view_widths
+        state.shuffle = info.shuffle
+        state.repeat = info.repeat
         state.signal_change()
 
     def handle_save_view_state(self, message):

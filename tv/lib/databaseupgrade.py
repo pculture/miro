@@ -3134,3 +3134,9 @@ def upgrade138(cursor):
 def upgrade139(cursor):
     """Add ViewState field for selection."""
     cursor.execute("ALTER TABLE view_state ADD COLUMN selection pythonrepr")
+
+def upgrade140(cursor):
+    """Add shuffle/repeat states to DisplayState
+    """
+    cursor.execute("ALTER TABLE display_state ADD COLUMN shuffle integer")
+    cursor.execute("ALTER TABLE display_state ADD COLUMN repeat integer")

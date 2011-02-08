@@ -38,6 +38,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -501,10 +502,10 @@ class PlaybackModeControls(widgetset.HBox):
             self.queue_redraw()
 
     def handle_repeat(self, obj):
-        if app.playback_manager.is_repeat_playlist():
+        if app.playback_manager.repeat == WidgetStateStore.get_repeat_playlist():
             self.repeat.set_image('repeat-on')
             self.queue_redraw()
-        elif app.playback_manager.is_repeat_track():
+        elif app.playback_manager.repeat == WidgetStateStore.get_repeat_track():
             self.repeat.set_image('repeat-1')
             self.queue_redraw()
         else:
