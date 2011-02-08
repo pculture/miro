@@ -71,8 +71,8 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
 
-    def build_standard_view(self):
-        standard_view = StandardView(self.item_list)
+    def build_standard_view(self, scroll_pos):
+        standard_view = StandardView(self.item_list, scroll_pos)
         self.toolbar = DownloadToolbar()
         self.toolbar.connect("pause-all", self._on_pause_all)
         self.toolbar.connect("resume-all", self._on_resume_all)
@@ -81,11 +81,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.widget.titlebar_vbox.pack_start(self.toolbar)
         background = widgetset.SolidBackground((1, 1, 1))
         background.add(standard_view)
-        scroller = widgetset.Scroller(False, True)
-        scroller.add(background)
-        standard_view_type = WidgetStateStore.get_standard_view_type()
-        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
-        return standard_view
+        return standard_view, background
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)

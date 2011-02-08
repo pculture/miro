@@ -43,8 +43,8 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import style
 
 class SharingStandardView(itemlistwidgets.StandardView):
-    def __init__(self, item_list, playlist_id):
-        itemlistwidgets.StandardView.__init__(self, item_list)
+    def __init__(self, item_list, scroll_pos, playlist_id):
+        itemlistwidgets.StandardView.__init__(self, item_list, scroll_pos)
         self.playlist_id = playlist_id
 
     def build_renderer(self):
@@ -63,8 +63,9 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def make_drag_handler(self):
         return None
 
-    def build_standard_view(self):
-        return SharingStandardView(self.item_list, self.id)
+    def build_standard_view(self, scroll_pos):
+        standard_view = SharingStandardView(self.item_list, scroll_pos, self.id)
+        return standard_view, standard_view
 
     def handle_delete(self):
         pass

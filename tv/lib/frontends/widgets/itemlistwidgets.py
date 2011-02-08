@@ -229,17 +229,34 @@ class SearchListTitlebar(ItemListTitlebar):
 
         return widgetutil.align_middle(hbox, right_pad=20)
 
-class StandardView(widgetset.TableView):
+class ItemView(widgetset.TableView):
+    """TableView that displays a list of items."""
+    def __init__(self, item_list, scroll_pos):
+        widgetset.TableView.__init__(self, item_list.model)
+
+        self.item_list = item_list
+        self.set_fixed_height(True)
+        self.allow_multiple_select(True)
+
+        self.create_signal('scroll-position-changed')
+        self.scroll_pos = scroll_pos
+        self.set_scroll_position(scroll_pos)
+
+    def on_undisplay(self):
+        self.scroll_pos = self.get_scroll_position()
+        if self.scroll_pos is not None:
+            self.emit('scroll-position-changed', self.scroll_pos)
+
+class StandardView(ItemView):
     """TableView that displays a list of items using the standard
     view.
     """
 
     draws_selection = True
 
-    def __init__(self, item_list, display_channel=True):
-        widgetset.TableView.__init__(self, item_list.model)
+    def __init__(self, item_list, scroll_pos, display_channel=True):
+        ItemView.__init__(self, item_list, scroll_pos)
         self.display_channel = display_channel
-        self.item_list = item_list
         self.set_draws_selection(False)
         self.renderer = self.build_renderer()
         self.renderer.total_width = -1
@@ -248,15 +265,13 @@ class StandardView(widgetset.TableView):
         self.column.set_min_width(self.renderer.MIN_WIDTH)
         self.add_column(self.column)
         self.set_show_headers(False)
-        self.allow_multiple_select(True)
         self.set_auto_resizes(True)
-        self.set_fixed_height(True)
         self.set_background_color(widgetutil.WHITE)
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
 
-class ListView(widgetset.TableView):
+class ListView(ItemView):
     """TableView that displays a list of items using the list view."""
     COLUMN_RENDERERS = {
         'state': style.StateCircleRenderer,
@@ -281,13 +296,11 @@ class ListView(widgetset.TableView):
     }
     COLUMN_PADDING = 12
     def __init__(self, item_list, columns_enabled, column_widths, scroll_pos):
-        widgetset.TableView.__init__(self, item_list.model)
+        ItemView.__init__(self, item_list, scroll_pos)
         self.column_widths = {}
         self.create_signal('sort-changed')
         self.create_signal('columns-enabled-changed')
         self.create_signal('column-widths-changed')
-        self.create_signal('scroll-position-changed')
-        self.item_list = item_list
         self._column_name_to_column = {}
         self._column_by_label = {}
         self._current_sort_column = None
@@ -299,12 +312,8 @@ class ListView(widgetset.TableView):
         self.set_row_spacing(5)
         self.set_grid_lines(False, True)
         self.set_alternate_row_backgrounds(True)
-        self.set_fixed_height(True)
-        self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
         self.update_columns(columns_enabled, column_widths)
-        self.scroll_pos = scroll_pos
-        self.set_scroll_position(scroll_pos)
 
     def _get_ui_state(self):
         if not self._set_initial_widths:
@@ -321,14 +330,12 @@ class ListView(widgetset.TableView):
         self.columns_enabled = enabled
         self._real_column_widths.update(widths)
         self.column_widths.update(widths)
-        self.scroll_pos = self.get_scroll_position()
 
     def on_undisplay(self):
         self._get_ui_state()
+        ItemView.on_undisplay(self)
         self.emit('column-widths-changed', self.column_widths)
         self.emit('columns-enabled-changed', self.columns_enabled)
-        if self.scroll_pos is not None:
-            self.emit('scroll-position-changed', self.scroll_pos)
 
     def get_tooltip(self, iter_, column):
         if ('name' in self._column_name_to_column and

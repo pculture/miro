@@ -1231,3 +1231,6 @@ class TableView(Widget):
     def get_scroll_position(self):
         # FIXME: stub
         return 0, 0
+
+    def set_scroller(self, scroller):
+        # FIXME: stub

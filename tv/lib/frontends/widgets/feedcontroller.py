@@ -80,16 +80,12 @@ class FeedController(itemlistcontroller.ItemListController,
             self.widget.titlebar_vbox.pack_start(sep)
             self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
 
-    def build_standard_view(self):
-        standard_view_type = WidgetStateStore.get_standard_view_type()
+    def build_standard_view(self, scroll_pos):
         standard_view = itemlistwidgets.StandardView(
-                self.item_list, self.is_folder)
+                self.item_list, scroll_pos, self.is_folder)
         background = widgetset.SolidBackground((1, 1, 1))
         background.add(standard_view)
-        scroller = widgetset.Scroller(False, True)
-        scroller.add(background)
-        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
-        return standard_view
+        return standard_view, background
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.ChannelHeaderToolbar()

@@ -246,15 +246,19 @@ class MiroTreeView(gtk.TreeView):
 
     def on_parent_set(self, widget, old_parent):
         """We have parent window now; we need to control its scrollbars."""
-        if isinstance(self.get_parent(), gtk.ScrolledWindow):
-            window = self.get_parent()
-            scrollbars = (window.get_hscrollbar(), window.get_vscrollbar())
-            self.scrollbars = scrollbars
-            self.keep_scroll_change = [False, False]
-            for i, scrollbar in enumerate(scrollbars):
-                adjustment = scrollbar.get_adjustment()
-                weak_connect(adjustment, 'changed',
-                        self.on_scroll_range_changed, i)
+        self.set_scroller(widget.get_parent())
+
+    def set_scroller(self, window):
+        """Take control of the scrollbars of window."""
+        if not isinstance(window, gtk.ScrolledWindow):
+            return
+        scrollbars = (window.get_hscrollbar(), window.get_vscrollbar())
+        self.scrollbars = scrollbars
+        for i, scrollbar in enumerate(scrollbars):
+            adjustment = scrollbar.get_adjustment()
+            weak_connect(adjustment, 'changed',
+                    self.on_scroll_range_changed, i)
+        self.set_scroll_position(self.scroll_positions)
 
     def on_scroll_range_changed(self, adjustment, bar):
         """The scrollbar might have a range now. Set its initial position if
@@ -266,18 +270,19 @@ class MiroTreeView(gtk.TreeView):
     def set_scroll_position(self, scroll_position):
         """Restore the scrollbars to a remembered state."""
         self.scroll_positions = list(scroll_position)
-        success = len(self.scrollbars) > 0
+        success = [False, False]
         for i, scrollbar in enumerate(self.scrollbars):
-            success &= self._update_scrollbar_position(i)
-        if success:
+            success[i] = self._update_scrollbar_position(i)
+        # we don't really care about the horizontal scrollbar:
+        if success[1]:
             self.scroll_positions_set = True
 
     def get_scroll_position(self):
         """Get the current position of both scrollbars, to restore later."""
-        if len(self.scroll_positions) == 2:
-            return int(self.scroll_positions[0]), int(self.scroll_positions[1])
-        else:
-            return 0, 0
+        x_pos, y_pos = self.scroll_positions
+        x_pos = x_pos or 0
+        y_pos = y_pos or 0
+        return int(x_pos), int(y_pos)
 
     def _update_scrollbar_position(self, bar):
         """Move the specified scrollbar to its saved position."""
@@ -1237,6 +1242,12 @@ class TableView(Widget):
     
     def get_scroll_position(self):
         return self._widget.get_scroll_position()
+
+    def set_scroller(self, scroller):
+        """Set the Scroller object for this widget, if its ScrolledWindow is
+        not a direct ancestor of the object. Standard View needs this.
+        """
+        self._widget.set_scroller(scroller._widget)
 
 class TableModel(object):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""

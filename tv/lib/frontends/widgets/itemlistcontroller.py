@@ -183,7 +183,16 @@ class ItemListController(object):
         self.views[list_view] = self.build_list_view()
 
         standard_view = WidgetStateStore.get_standard_view_type()
-        self.views[standard_view] = self.build_standard_view()
+        scroll_pos = app.widget_state.get_scroll_position(
+            self.type, self.id, standard_view)
+        components = self.build_standard_view(scroll_pos)
+        self.views[standard_view], standard_view_widget = components
+        
+        standard_view_scroller = widgetset.Scroller(False, True)
+        standard_view_scroller.add(standard_view_widget)
+        self.widget.vbox[standard_view].pack_start(
+                standard_view_scroller, expand=True)
+        self.views[standard_view].set_scroller(standard_view_scroller)
 
         toolbar.connect_weak('sort-changed',
             self.on_sort_changed, standard_view)
@@ -199,6 +208,8 @@ class ItemListController(object):
             self.on_column_widths_changed, list_view)
         self.views[list_view].connect_weak('scroll-position-changed',
             self.on_scroll_position_changed, list_view)
+        self.views[standard_view].connect_weak('scroll-position-changed',
+            self.on_scroll_position_changed, standard_view)
 
     def set_view(self, _widget, view):
         self.selected_view = view
@@ -214,8 +225,13 @@ class ItemListController(object):
         """Build the container widget for this controller."""
         raise NotImplementedError()
 
-    def build_standard_view(self):
-        """Build the standard view widget for this controller."""
+    def build_standard_view(self, scroll_pos):
+        """Build the standard view widget for this controller.
+        Return value must be a tuple of:
+        (StandardView object, container)
+        If the StandardView is not in a container (e.g. a background), the
+        container should equal the StandardView.
+        """
         raise NotImplementedError()
 
     def build_list_view(self):
@@ -539,9 +555,8 @@ class ItemListController(object):
         return None
 
     def no_longer_displayed(self):
-        list_view = WidgetStateStore.get_list_view_type()
-        if list_view in self.views:
-            self.views[list_view].on_undisplay()
+        for view in self.views:
+            self.views[view].on_undisplay()
 
 class SimpleItemListController(ItemListController):
     def __init__(self):
@@ -552,16 +567,10 @@ class SimpleItemListController(ItemListController):
         self.titlebar = self.make_titlebar()
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
-    def build_standard_view(self):
-        scroller = widgetset.Scroller(False, True)
-        standard_view_type = WidgetStateStore.get_standard_view_type()
-        standard_view = self.get_standard_view()
-        scroller.add(standard_view)
-        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
-        return standard_view
-
-    def get_standard_view(self):
-        return itemlistwidgets.StandardView(self.item_list, self.display_channel)
+    def build_standard_view(self, scroll_pos):
+        standard_view = itemlistwidgets.StandardView(
+                self.item_list, scroll_pos, self.display_channel)
+        return standard_view, standard_view
 
     def make_titlebar(self):
         icon = self._make_icon()
