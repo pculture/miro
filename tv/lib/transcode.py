@@ -223,7 +223,14 @@ class TranscodeObject(object):
             # Special case
             if i == self.nchunks and self.trailer:
                 self.playlist += self.trailer + '\n'
-            self.playlist += self.request_path_func(self.itemid, 'ts') + '\n'
+            urlpath = self.request_path_func(self.itemid, 'ts')
+            # This returns us a pedantically correct path but we want to be
+            # able to use http, which is understood by everybody and is 
+            # what's used by the underlying.
+            urlpath = urlpath.replace('daap://', 'http://')
+            # Append our chunk XXX - bad way to append a query like this
+            urlpath += '&chunk=%d' % i
+            self.playlist += urlpath + '\n'
         self.playlist += '#EXT-X-ENDLIST\n'
         print 'PLAYLIST', self.playlist
 

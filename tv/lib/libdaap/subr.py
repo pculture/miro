@@ -300,17 +300,16 @@ def split_url_path(urlpath):
        as a list and a dictionary of parameters.
     """
     parts = urlpath.split('?')
+    qdict = dict()
     if len(parts) > 1 and parts[1]:
         path, query = parts
-        qdict = dict()
         # I think urllib won't split these for us (?) ... oh well.
         for q in query.split('&'):
             name, sep, value = q.partition('=')
             qdict[name] = urllib.unquote(value)
-        url_sep = '/'
-        # [1:] because we want to split out the first empty string, URI in form
-        # of /xxx/yyy, '/xxx/yyy'.split(/') -> '', 'xxx', 'yyy'
-        return [urllib.unquote(x) for x in path.split(url_sep)][1:], qdict
     else:
-        # len(parts) == 1:
-        return parts, None    # path only
+        path = urlpath
+    url_sep = '/'
+    # [1:] because we want to split out the first empty string, URI in form
+    # of /xxx/yyy, '/xxx/yyy'.split(/') -> '', 'xxx', 'yyy'
+    return [urllib.unquote(x) for x in path.split(url_sep)][1:], qdict

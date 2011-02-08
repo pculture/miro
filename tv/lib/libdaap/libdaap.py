@@ -352,8 +352,9 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_databases(self):
         path, query = split_url_path(self.path)
         session = self.get_session()
-        if not session:
-            return (DAAP_FORBIDDEN, [], [])
+        print 'WARNING: NO SESSION, TEMPORARILY DISABLED'
+        #if not session:
+        #    return (DAAP_FORBIDDEN, [], [])
         if len(path) == 1:
             reply = []
             db = []
