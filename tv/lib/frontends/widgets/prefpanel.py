@@ -1026,7 +1026,7 @@ add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-download
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
-add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref-tab-general.png')
+add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref-tab-sharing.png')
 add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
 add_panel("stores", _("Stores"), StoresPanel, 'images/pref-tab-downloads.png')
 add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref-tab-general.png')
