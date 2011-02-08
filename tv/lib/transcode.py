@@ -200,7 +200,9 @@ class TranscodeObject(object):
         if self.trailer:
             self.nchunks += 1
 
-        self.last_chunk = None
+        # XXX dodgy
+        # Set start_chunk != current_chunk to force seek() to return True
+        self.current_chunk = -1
         self.start_chunk = 0
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
@@ -234,15 +236,21 @@ class TranscodeObject(object):
         return fildes
 
     def seek(self, chunk):
+        # Is it requesting the next available chunk in the sequence?  If so
+        # then it's fine, nothing to do.  Otherwise, stop the job.  Returns
+        # a booelan indicating whether a transcode needs to be restarted.
+        if self.current_chunk == chunk:
+            return False
         self.time_offset = chunk * TranscodeObject.segment_duration
         self.shutdown()
         # XXX FIXME: should only clear if this is a real seek
         # Clear the chunk buffer, and the lock/synchronization state
-        self.start_chunk = self.last_chunk = chunk
+        self.start_chunk = self.current_chunk = chunk
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
         # OK, you can restart the transcode by calling transcode()
+        return True
 
     def transcode(self):
         self.r, self.child_w = os.pipe()
@@ -294,8 +302,8 @@ class TranscodeObject(object):
         self.thread.start()
 
     def signal_thread(self):
-        while (self.start_chunk < self.nchunks and not 
-               self.terminate_signal_thread):
+        i = self.start_chunk
+        while i < self.nchunks and not self.terminate_signal_thread:
             data = ''
             rset = [self.segmenter_handle.stdout, self.r]
             while True:
@@ -314,7 +322,7 @@ class TranscodeObject(object):
                 #    print 'SEGMENTER DATA READABLE'
                 #if self.r in r:
                 #    print 'CONTROL PIPE READABLE'
-
+    
                 if self.segmenter_handle.stdout in r:
                     # Bounded read, stdout doesn't close until the program 
                     # does!  Also, do a manual read because the stdout file
@@ -329,6 +337,7 @@ class TranscodeObject(object):
                     next_file = True
                 if next_file:
                     os.write(self.w, 'b')
+                    break
             # XXX what to do?  can block in the semaphore
             if self.terminate_signal_thread:
                 break
@@ -339,7 +348,7 @@ class TranscodeObject(object):
             os.lseek(fildes, 0, os.SEEK_SET)
             print 'APPEND', fildes
             self.chunk_buffer.append(fildes)
-            self.start_chunk += 1
+            i += 1
             self.chunk_lock.release()
             # Tell consumer there is stuff available
             self.chunk_sem.release()
@@ -351,6 +360,7 @@ class TranscodeObject(object):
         self.chunk_sem.acquire()
         self.chunk_lock.acquire()
         fildes = self.chunk_buffer[0]
+        self.current_chunk += 1
         self.chunk_buffer = self.chunk_buffer[1:]
         print 'POP'
         self.chunk_lock.release()
