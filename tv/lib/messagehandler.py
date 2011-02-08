@@ -1553,6 +1553,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state = self._get_view_state(info.key)
         state.sort_state = info.sort_state
         state.scroll_position = info.scroll_position
+        state.selection = info.selection
         state.signal_change()
         
     def _get_display_states(self):

@@ -642,6 +642,7 @@ class TableView(Widget):
         self._connect_hotspot_signals()
         self.layout_manager = LayoutManager(self._widget)
         self.selected = None
+        self.restore_selection = []
         if hasattr(self, 'get_tooltip'):
             self._widget.set_property('has-tooltip', True)
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
@@ -834,13 +835,35 @@ class TableView(Widget):
         return self.selection.count_selected_rows()
 
     def select(self, iter):
-        return self.selection.select_iter(iter)
+        """Try to select an iter. Return whether the seletion was successful."""
+        self.selection.select_iter(iter)
+        return self.selection.iter_is_selected(iter)
 
     def unselect(self, iter):
         return self.selection.unselect_iter(iter)
 
     def unselect_all(self):
         return self.selection.unselect_all()
+
+    def set_selection_as_strings(self, selected):
+        """Given a list of selection strings, selects each iter represented by
+        the strings. Returns the number of rows successfully selected.
+        
+        There's no straightforward way to wait until after the model has been
+        populated to call this method, so here we actually just make a note of
+        the values to be selected, and model_changed selects them when it can.
+        """
+        self.restore_selection = selected
+
+    def get_selection_as_strings(self):
+        """Returns the current selection as a list of strings."""
+        selected = []
+        selected_iters = self.get_selection()
+        for iter_ in selected_iters:
+            sel_string = self._model.get_string_from_iter(iter_)
+            iter2 = self._model.get_iter_from_string(sel_string)
+            selected.append(sel_string)
+        return selected
 
     def set_row_expanded(self, iter, expanded):
         path = self._model.get_path(iter)
@@ -1233,6 +1256,17 @@ class TableView(Widget):
                 self.hotspot_tracker.redraw_cell()
                 self.hotspot_tracker.update_hit()
             self.in_bulk_change = False
+        else:
+            # deal with any selection waiting to be added from
+            # set_selection_as_strings
+            for sel_string in self.restore_selection[:]:
+                try:
+                    iter_ = self._model.get_iter_from_string(sel_string)
+                except ValueError:
+                    pass
+                else:
+                    if self.select(iter_):
+                        self.restore_selection.remove(sel_string)
 
     def get_left_offset(self):
         return self._widget.get_left_offset()

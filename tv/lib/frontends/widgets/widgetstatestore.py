@@ -280,6 +280,26 @@ class WidgetStateStore(object):
         view.scroll_position = scroll_position
         self._save_view_state(display_type, display_id, view_type)
 
+    def get_selection(self, display_type, display_id, view_type):
+        """Returns the current selection for a view, or None if no selection has
+        been saved.
+        """
+        view = self._get_view(display_type, display_id, view_type)
+        if view.selection is not None:
+            selection = [str(path) for path in view.selection]
+        else:
+            selection = None
+        return selection
+
+    def set_selection(self, display_type, display_id, view_type,
+            selection):
+        view = self._get_view(display_type, display_id, view_type)
+        if selection is not None:
+            view.selection = [unicode(path) for path in selection]
+        else:
+            view.selection = None
+        self._save_view_state(display_type, display_id, view_type)
+
 # static properties of a display_type:
 
     @staticmethod

@@ -80,9 +80,9 @@ class FeedController(itemlistcontroller.ItemListController,
             self.widget.titlebar_vbox.pack_start(sep)
             self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
 
-    def build_standard_view(self, scroll_pos):
+    def build_standard_view(self, scroll_pos, selection):
         standard_view = itemlistwidgets.StandardView(
-                self.item_list, scroll_pos, self.is_folder)
+                self.item_list, scroll_pos, selection, self.is_folder)
         background = widgetset.SolidBackground((1, 1, 1))
         background.add(standard_view)
         return standard_view, background

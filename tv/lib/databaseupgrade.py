@@ -3127,3 +3127,7 @@ def upgrade138(cursor):
     """Support album_artist field.
     """
     cursor.execute("ALTER TABLE item ADD COLUMN album_artist text")
+
+def upgrade139(cursor):
+    """Add ViewState field for selection."""
+    cursor.execute("ALTER TABLE view_state ADD COLUMN selection pythonrepr")

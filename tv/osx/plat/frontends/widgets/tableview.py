@@ -1235,3 +1235,9 @@ class TableView(Widget):
     def set_scroller(self, scroller):
         # FIXME: stub
         pass
+
+    def set_selection_as_strings(self, selected):
+        pass
+
+    def get_selection_as_strings(self):
+        return []

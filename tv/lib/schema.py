@@ -728,6 +728,7 @@ class ViewStateSchema(DDBObjectSchema):
         ('view_type', SchemaInt()),
         ('sort_state', SchemaString(noneOk=True)),
         ('scroll_position', SchemaTuple(SchemaInt(), SchemaInt(), noneOk=True)),
+        ('selection', SchemaList(SchemaString(), noneOk=True)),
     ]
 
     indexes = (
@@ -738,7 +739,11 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_scroll_position(value):
         return None
 
-VERSION = 138
+    @staticmethod
+    def handle_malformed_selection(value):
+        return None
+
+VERSION = 139
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

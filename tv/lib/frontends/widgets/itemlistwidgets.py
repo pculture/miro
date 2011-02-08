@@ -231,7 +231,7 @@ class SearchListTitlebar(ItemListTitlebar):
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
-    def __init__(self, item_list, scroll_pos):
+    def __init__(self, item_list, scroll_pos, selection):
         widgetset.TableView.__init__(self, item_list.model)
 
         self.item_list = item_list
@@ -241,6 +241,9 @@ class ItemView(widgetset.TableView):
         self.create_signal('scroll-position-changed')
         self.scroll_pos = scroll_pos
         self.set_scroll_position(scroll_pos)
+
+        if selection is not None:
+            self.set_selection_as_strings(selection)
 
     def on_undisplay(self):
         self.scroll_pos = self.get_scroll_position()
@@ -254,8 +257,8 @@ class StandardView(ItemView):
 
     draws_selection = True
 
-    def __init__(self, item_list, scroll_pos, display_channel=True):
-        ItemView.__init__(self, item_list, scroll_pos)
+    def __init__(self, item_list, scroll_pos, selection, display_channel=True):
+        ItemView.__init__(self, item_list, scroll_pos, selection)
         self.display_channel = display_channel
         self.set_draws_selection(False)
         self.renderer = self.build_renderer()
@@ -295,8 +298,9 @@ class ListView(ItemView):
         'description': style.DescriptionRenderer,
     }
     COLUMN_PADDING = 12
-    def __init__(self, item_list, columns_enabled, column_widths, scroll_pos):
-        ItemView.__init__(self, item_list, scroll_pos)
+    def __init__(self, item_list,
+            columns_enabled, column_widths, scroll_pos, selection):
+        ItemView.__init__(self, item_list, scroll_pos, selection)
         self.column_widths = {}
         self.create_signal('sort-changed')
         self.create_signal('columns-enabled-changed')

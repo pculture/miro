@@ -185,7 +185,9 @@ class ItemListController(object):
         standard_view = WidgetStateStore.get_standard_view_type()
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, standard_view)
-        components = self.build_standard_view(scroll_pos)
+        selection = app.widget_state.get_selection(
+            self.type, self.id, standard_view)
+        components = self.build_standard_view(scroll_pos, selection)
         self.views[standard_view], standard_view_widget = components
         
         standard_view_scroller = widgetset.Scroller(False, True)
@@ -225,7 +227,7 @@ class ItemListController(object):
         """Build the container widget for this controller."""
         raise NotImplementedError()
 
-    def build_standard_view(self, scroll_pos):
+    def build_standard_view(self, scroll_pos, selection):
         """Build the standard view widget for this controller.
         Return value must be a tuple of:
         (StandardView object, container)
@@ -243,8 +245,10 @@ class ItemListController(object):
                 self.type, self.id, list_view_type)
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, list_view_type)
-        list_view = itemlistwidgets.ListView(
-               self.item_list, list_view_columns, list_view_widths, scroll_pos)
+        selection = app.widget_state.get_selection(
+            self.type, self.id, list_view_type)
+        list_view = itemlistwidgets.ListView(self.item_list,
+                list_view_columns, list_view_widths, scroll_pos, selection)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
@@ -265,9 +269,9 @@ class ItemListController(object):
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
-        for item_view in self.views.values():
+        for view_type, item_view in self.views.items():
             item_view.connect_weak('selection-changed',
-                    self.on_selection_changed)
+                    self.on_selection_changed, view_type)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('key-press', self.on_key_press)
             item_view.connect_weak('row-double-clicked',
@@ -456,8 +460,11 @@ class ItemListController(object):
             logging.debug("ItemView doesn't know how to handle hotspot %s.",
                 name)
 
-    def on_selection_changed(self, item_view):
+    def on_selection_changed(self, item_view, view_type):
         app.menu_manager.update_menus()
+        selection = item_view.get_selection_as_strings()
+        app.widget_state.set_selection(
+                self.type, self.id, view_type, selection)
 
     def start_tracking(self):
         """Send the message to start tracking items."""
@@ -567,9 +574,9 @@ class SimpleItemListController(ItemListController):
         self.titlebar = self.make_titlebar()
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
-    def build_standard_view(self, scroll_pos):
+    def build_standard_view(self, scroll_pos, selection):
         standard_view = itemlistwidgets.StandardView(
-                self.item_list, scroll_pos, self.display_channel)
+                self.item_list, scroll_pos, selection, self.display_channel)
         return standard_view, standard_view
 
     def make_titlebar(self):

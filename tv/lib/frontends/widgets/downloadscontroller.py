@@ -71,8 +71,8 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
 
-    def build_standard_view(self, scroll_pos):
-        standard_view = StandardView(self.item_list, scroll_pos)
+    def build_standard_view(self, scroll_pos, selection):
+        standard_view = StandardView(self.item_list, scroll_pos, selection)
         self.toolbar = DownloadToolbar()
         self.toolbar.connect("pause-all", self._on_pause_all)
         self.toolbar.connect("resume-all", self._on_resume_all)

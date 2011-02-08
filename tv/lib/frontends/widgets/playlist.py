@@ -106,8 +106,9 @@ class PlaylistSort(itemlist.ItemSort):
         return self.positions[item.id]
 
 class PlaylistStandardView(itemlistwidgets.StandardView):
-    def __init__(self, item_list, playlist_id):
-        itemlistwidgets.StandardView.__init__(self, item_list)
+    def __init__(self, item_list, scroll_pos, selection, playlist_id):
+        itemlistwidgets.StandardView.__init__(self, item_list,
+                scroll_pos, selection)
         self.playlist_id = playlist_id
 
     def build_renderer(self):
@@ -126,8 +127,10 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
     def make_sorters(self):
         self.multiview_sorter = PlaylistSort()
 
-    def get_standard_view(self):
-        return PlaylistStandardView(self.item_list, self.id)
+    def build_standard_view(self, scroll_pos, selection):
+        standard_view = PlaylistStandardView(self.item_list,
+                scroll_pos, selection, self.id)
+        return standard_view, standard_view
 
     def make_drop_handler(self):
         standard_view_type = WidgetStateStore.get_standard_view_type()

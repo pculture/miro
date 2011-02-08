@@ -1609,9 +1609,11 @@ class ViewInfo(object):
         if view is not None:
             self.sort_state = view.sort_state
             self.scroll_position = view.scroll_position
+            self.selection = view.selection
         else:
             self.sort_state = None
             self.scroll_position = None
+            self.selection = None
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.
