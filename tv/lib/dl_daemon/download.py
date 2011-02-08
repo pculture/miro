@@ -914,9 +914,7 @@ class BTDownloader(BGDownloader):
             except AttributeError:
                 logging.warning("libtorrent module doesn't have "
                                 "version_major or version_minor")
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             self.handle_error(_('BitTorrent failure'),
                               _('BitTorrent failed to startup'))
             logging.exception("Exception thrown in _start_torrent")
@@ -929,7 +927,7 @@ class BTDownloader(BGDownloader):
         # if we have no metainfo, then try rescraping
         try:
             self.torrent.scrape_tracker()
-        except Exception:
+        except StandardError:
             # FIXME - lock this exception down
             logging.exception("unable to scrape tracker")
 
@@ -952,7 +950,7 @@ class BTDownloader(BGDownloader):
             # if the rate is 0, then try reannouncing
             try:
                 self.torrent.force_reannounce()
-            except Exception:
+            except StandardError:
                 # FIXME - lock this exception down
                 logging.exception("unable to reannounce to peers")
 
@@ -964,9 +962,7 @@ class BTDownloader(BGDownloader):
                 self.update_fast_resume_data()
                 TORRENT_SESSION.session.remove_torrent(self.torrent, 0)
                 self.torrent = None
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("Error shutting down torrent")
 
     def _pause_torrent(self):
@@ -974,9 +970,7 @@ class BTDownloader(BGDownloader):
             TORRENT_SESSION.remove_torrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("Error pausing torrent")
 
     def _resume_torrent(self):
@@ -987,9 +981,7 @@ class BTDownloader(BGDownloader):
         try:
             self.torrent.resume()
             TORRENT_SESSION.add_torrent(self)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("Error resuming torrent")
 
     def _debug_print_peers(self):
