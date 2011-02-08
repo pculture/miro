@@ -61,9 +61,9 @@ FFMPEG2THEORA_BINARY = LinuxPref(
 
 FIRST_TIME = LinuxPref(
     key="startupTasksDone",
-    default=False,
+    default=True,
     alias="firsttimestartup",
-    helptext="If true, forces first time startup dialog to show.")
+    helptext="If False, Miro shows first time startup dialog.")
 
 USE_RENDERER = LinuxPref(
     key="useRenderer",
