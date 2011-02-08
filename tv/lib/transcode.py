@@ -216,7 +216,7 @@ class TranscodeObject(object):
                           TranscodeObject.segment_duration)
         self.playlist += '#EXT-X-MEDIA-SEQUENCE:0\n'
         for i in xrange(self.nchunks):
-            self.playlist += '#EXTINF:%d,\n' % self.duration
+            self.playlist += '#EXTINF:%d,\n' % self.segment_duration
             # XXX check corner case
             # Special case
             if i == self.nchunks and self.trailer:
@@ -256,7 +256,7 @@ class TranscodeObject(object):
             kwargs["close_fds"] = True
         args = [ffmpeg_exe, "-i", self.media_file]
         if self.time_offset:
-            args += TranscodeObject.time_offset_args + [self.time_offset]
+            args += TranscodeObject.time_offset_args + [str(self.time_offset)]
         if self.has_video:
             args += TranscodeObject.has_video_args
             if self.has_audio:
