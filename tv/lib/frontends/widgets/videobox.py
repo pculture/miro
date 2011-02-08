@@ -48,11 +48,9 @@ class PlaybackControls(widgetset.HBox):
         self.stop = self.make_button('stop', False)
         self.play = self.make_button('play', False)
         self.forward = self.make_button('skip_forward', True)
-        self.fullscreen = self.make_button('play_fullscreen', True)
         self.pack_start(widgetutil.align_middle(self.previous))
         self.pack_start(widgetutil.align_middle(self.stop))
         self.pack_start(widgetutil.align_middle(self.play))
-        self.pack_start(widgetutil.align_middle(self.fullscreen))
         self.pack_start(widgetutil.align_middle(self.forward))
         app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
@@ -80,8 +78,6 @@ class PlaybackControls(widgetset.HBox):
         self.play.disable()
         self.play.set_image('pause')
         self.forward.enable()
-        if item_info.file_type == 'video':
-            self.fullscreen.enable()
         self.queue_redraw()
     
     def handle_play(self, obj, duration):
@@ -90,8 +86,6 @@ class PlaybackControls(widgetset.HBox):
         self.play.set_image('pause')
         self.play.enable()
         self.forward.enable()
-        if not obj.is_playing_audio:
-            self.fullscreen.enable()
         self.queue_redraw()
 
     def handle_pause(self, obj):
@@ -104,7 +98,6 @@ class PlaybackControls(widgetset.HBox):
         self.stop.disable()
         self.play.disable()
         self.forward.disable()
-        self.fullscreen.disable()
         self.queue_redraw()
 
 class PlaybackInfo(widgetset.DrawingArea):

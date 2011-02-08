@@ -245,7 +245,6 @@ class Application:
         videobox.controls.previous.connect('clicked', self.on_previous_clicked)
         videobox.controls.previous.connect('held-down', self.on_fast_backward)
         videobox.controls.previous.connect('released', self.on_stop_fast_playback)
-        videobox.controls.fullscreen.connect('clicked', self.on_fullscreen_clicked)
         videobox.playback_mode.shuffle.connect('clicked', self.on_shuffle_clicked)
         videobox.playback_mode.repeat.connect('clicked', self.on_repeat_clicked)
         self.window.show()
@@ -325,9 +324,6 @@ class Application:
 
     def on_stop_fast_playback(self, button):
         app.playback_manager.stop_fast_playback()
-
-    def on_fullscreen_clicked(self, button=None):
-        app.playback_manager.fullscreen()
 
     def on_shuffle_clicked(self, button=None):
         app.playback_manager.toggle_shuffle()
