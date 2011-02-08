@@ -63,6 +63,7 @@ def pick_test():
         ProfileListItemView,
         ProfileItemViewAdd,
         ProfileItemViewRemove,
+        ProfileItemViewResort,
     ]
     labels = [c.friendly_name() for c in choices]
     index = dialogs.ask_for_choice('Pick Test',
@@ -171,7 +172,7 @@ class ProfileItemView(ProfiledCode):
         self.descriptions = itertools.cycle(descriptions)
 
     def make_item_view(self):
-        self.item_view = itemlistwidgets.ItemView(self.item_list)
+        self.item_view = itemlistwidgets.StandardView(self.item_list)
 
     def profiled_code(self):
         for x in xrange(30):
@@ -299,4 +300,15 @@ class ProfileItemViewRemove(ProfileItemView):
     def profiled_code(self):
         self.item_view.start_bulk_change()
         self.item_list.remove_items(range(10000))
+        self.item_view.model_changed()
+
+class ProfileItemViewResort(ProfileItemView):
+    initial_items = 10000
+
+    @classmethod
+    def friendly_name(cls):
+        return "Profile resorting lots of items"
+
+    def profiled_code(self):
+        self.item_list.set_sort(itemlist.NameSort(False))
         self.item_view.model_changed()

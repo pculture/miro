@@ -44,13 +44,13 @@ def run_application():
     # monkey patch the startup method so that we don't startup the miro
     # backend.  Dirty, but it works.
     application.startup = tests.startup
-    application.setup_globals()
     application.run()
+    application.setup_globals()
 
 def build_platform_app():
     for name in dir(plat_application):
         obj = getattr(plat_application, name)
-        if (type(obj) is types.ClassType
+        if (type(obj) in (types.ClassType, type)
                 and issubclass(obj, application.Application)
                 and obj is not application.Application):
             return obj()
