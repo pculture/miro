@@ -357,6 +357,13 @@ class DatabaseSourceTrackerBase(SourceTrackerBase):
     def get_object_views(self):
         return [self.view]
 
+class AllFeedsItemTracker(DatabaseSourceTrackerBase):
+    type = u'feed'
+    def __init__(self, id):
+        self.view = item.Item.toplevel_view()
+        self.id = id
+        DatabaseSourceTrackerBase.__init__(self)
+
 class FeedItemTracker(DatabaseSourceTrackerBase):
     type = u'feed'
     def __init__(self, feed):
@@ -504,6 +511,8 @@ def make_item_tracker(message):
     elif message.type == 'folder-contents':
         return FolderItemsTracker(message.id)
     elif message.type == 'feed':
+        if message.id == u'%s-base-tab' % _('Podcasts'):
+            return AllFeedsItemTracker(message.id)
         try:
             feed_ = feed.Feed.get_by_id(message.id)
             return FeedItemTracker(feed_)

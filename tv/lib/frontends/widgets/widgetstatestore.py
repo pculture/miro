@@ -42,6 +42,7 @@ class WidgetStateStore(object):
         u'device-video': STANDARD_VIEW,
         u'downloading': STANDARD_VIEW,
         u'feed': STANDARD_VIEW,
+        u'tab': STANDARD_VIEW,
         u'folder-contents': STANDARD_VIEW,
         u'music': LIST_VIEW,
         u'others': LIST_VIEW,

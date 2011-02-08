@@ -77,12 +77,14 @@ class TabInfo(object):
     tall = True
     bolded = True
     unwatched = available = 0
+    autodownload_mode = u'off'
     is_directory_feed = False
 
     def __init__(self, name, icon_name):
         self.name = name
         self.id = u'%s-base-tab' % name
         self.icon_name = icon_name
+        self.thumbnail = resources.path('images/%s.png' % icon_name)
         self.icon = widgetutil.make_surface(self.icon_name)
         self.active_icon = widgetutil.make_surface(self.icon_name + '_active')
 

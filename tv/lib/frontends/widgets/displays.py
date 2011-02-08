@@ -117,6 +117,7 @@ class DisplayManager(object):
         # displays that we construct when the user clicks on them
         self.on_demand_display_classes = [
                 FeedDisplay,
+                AllFeedsDisplay,
                 PlaylistDisplay,
                 SiteDisplay,
                 SearchDisplay,
@@ -310,6 +311,19 @@ class FeedDisplay(ItemListDisplay):
     def make_controller(self, tab):
         self.feed_id = tab.id
         return feedcontroller.FeedController(tab.id, tab.is_folder, tab.is_directory_feed)
+
+class AllFeedsDisplay(FeedDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == u'tab' and len(selected_tabs) == 1 and \
+               selected_tabs[0].name == _("Podcasts")
+
+    def make_controller(self, tab):
+        return feedcontroller.FeedController(tab.id, True, True)
+
+    def cleanup(self):
+        ItemListDisplay.cleanup(self)
+        app.info_updater.disconnect(self._signal_handler)
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
