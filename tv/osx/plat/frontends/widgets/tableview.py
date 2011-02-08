@@ -1234,3 +1234,4 @@ class TableView(Widget):
 
     def set_scroller(self, scroller):
         # FIXME: stub
+        pass
