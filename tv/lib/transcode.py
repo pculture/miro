@@ -162,7 +162,7 @@ class TranscodeObject(object):
     be some duplication here.
     """
 
-    time_offset_args = ['-t']
+    time_offset_args = ['-ss']
     # XXX these bitrate qualities are hardcoded
     #has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
     #                  '-vpre', 'slow']
