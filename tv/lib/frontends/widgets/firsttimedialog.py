@@ -93,9 +93,9 @@ class FirstTimeDialog(widgetset.Window):
         self.on_close_handler = self.connect('will-close', self.on_close)
 
     def build_pages(self):
-        return [self.build_first_page(),
-                self.build_second_page(),
-                self.build_third_page(),
+        return [self.build_language_page(),
+                self.build_startup_page(),
+                self.build_import_page(),
                 self.build_search_page()]
 
     def run(self):
@@ -133,7 +133,7 @@ class FirstTimeDialog(widgetset.Window):
     def prev_page(self):
         self._switch_page(self._page_index - 1)
 
-    def build_first_page(self):
+    def build_language_page(self):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_title(_("Choose Language")))
@@ -192,7 +192,7 @@ class FirstTimeDialog(widgetset.Window):
         vbox.pack_start(widgetutil.align_right(next_button))
         return vbox
 
-    def build_second_page(self):
+    def build_startup_page(self):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_title(
@@ -236,7 +236,7 @@ class FirstTimeDialog(widgetset.Window):
 
         return vbox
 
-    def build_third_page(self):
+    def build_import_page(self):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_title(_("Finding Files")))
