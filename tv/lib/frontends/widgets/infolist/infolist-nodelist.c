@@ -44,7 +44,7 @@
         return error_rv; }
 
 InfoListNode*
-infolist_node_new(int id,
+infolist_node_new(PyObject* id,
                   PyObject* info,
                   PyObject* sort_key)
 {
@@ -54,6 +54,7 @@ infolist_node_new(int id,
         if(!node) {
                 return (InfoListNode*)PyErr_NoMemory();
         }
+        Py_INCREF(id);
         Py_INCREF(info);
         Py_INCREF(sort_key);
         node->id = id;
@@ -67,6 +68,7 @@ int
 infolist_node_free(InfoListNode* node)
 {
         CHECK_NOT_IN_LIST(node, -1);
+        Py_DECREF(node->id);
         Py_DECREF(node->info);
         Py_DECREF(node->sort_key);
         PyMem_Free(node);
@@ -76,7 +78,7 @@ infolist_node_free(InfoListNode* node)
 static void
 infolist_node_make_sentinals(InfoListNode* start, InfoListNode* end)
 {
-        start->id = end->id = -1;
+        start->id = end->id = NULL;
         start->info = end->info = NULL;
         start->sort_key = end->sort_key = NULL;
         start->next = end->next = end;
@@ -87,6 +89,13 @@ int
 infolist_node_is_sentinal(InfoListNode* node)
 {
         return node->info == NULL;
+}
+
+PyObject*
+infolist_node_get_id(InfoListNode* node)
+{
+        Py_INCREF(node->id);
+        return node->id;
 }
 
 PyObject*

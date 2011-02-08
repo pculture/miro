@@ -357,7 +357,6 @@ class MiroBuild (py2app):
         return Extension("miro.infolist",
                 [
                     os.path.join(INFOLIST_DIR, 'infolist-nodelist.c'),
-                    os.path.join(INFOLIST_DIR, 'infolist-idmap.cpp'),
                     os.path.join(INFOLIST_DIR, 'infolist.pyx'),
                     os.path.join(INFOLIST_DIR, 'cocoa', 'infolist-cocoa.m'),
                     ],

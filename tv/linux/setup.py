@@ -292,7 +292,6 @@ infolist_ext = \
     Extension("miro.infolist",
         [
             os.path.join(infolist_dir, 'infolist-nodelist.c'),
-            os.path.join(infolist_dir, 'infolist-idmap.cpp'),
             os.path.join(infolist_dir, 'infolist.pyx'),
             os.path.join(infolist_dir, 'gtk', 'infolist-gtk.c'),
         ],

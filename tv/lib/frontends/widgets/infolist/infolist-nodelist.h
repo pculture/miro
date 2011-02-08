@@ -56,7 +56,7 @@ extern "C" {
 
 struct InfoListNodeStruct
 {
-        int id;
+        PyObject* id;
         PyObject* info;
         PyObject* sort_key;
         struct InfoListNodeStruct *next;
@@ -68,7 +68,7 @@ typedef struct InfoListNodeStruct InfoListNode;
 
 // Create a new InfoListNode, we ADDREF all the python objects
 InfoListNode*
-infolist_node_new(int id,
+infolist_node_new(PyObject* id,
                   PyObject* info,
                   PyObject* sort_key);
 
@@ -84,6 +84,9 @@ infolist_node_is_sentinal(InfoListNode* node);
 // get/set python objects for a node.  Reference counting is as usual for
 // python (nodes hold a reference to the objects inside them, return values
 // get ADDREFed)
+PyObject*
+infolist_node_get_id(InfoListNode* node);
+
 PyObject*
 infolist_node_get_info(InfoListNode* node);
 

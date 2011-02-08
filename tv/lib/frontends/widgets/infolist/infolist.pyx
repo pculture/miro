@@ -43,24 +43,23 @@ cdef extern from "Python.h":
 
     void* PyMem_Malloc(size_t n) except NULL
     void PyMem_Free(void *p)
-    void PyErr_SetString(PyObject* err, char* msg)
-    void PyErr_SetObject(PyObject *type, object obj)
-    object PyInt_FromLong(long ival)
+    object PyCObject_FromVoidPtr(void* cobj, void (*destr)(void *))
+    void* PyCObject_AsVoidPtr(object self)
 
 cdef extern from "infolist-nodelist.h":
     ctypedef struct InfoListNode
     ctypedef struct InfoListNode:
-            int id
             InfoListNode *next
             InfoListNode *prev
             # would be nice to list the python objects here, but Pyrex doesn't
             # support it well.  Use the infolist_node_get_* methods for
             # access.
 
-    InfoListNode* infolist_node_new(int id, object info, 
+    InfoListNode* infolist_node_new(object id, object info, 
             object sort_key) except NULL
     int infolist_node_free(InfoListNode* node) except -1
     int infolist_node_is_sentinal(InfoListNode* node) except -1
+    object infolist_node_get_id(InfoListNode* node)
     object infolist_node_get_info(InfoListNode* node)
     object infolist_node_get_sort_key(InfoListNode* node)
     void infolist_node_set_info(InfoListNode* node, object info)
@@ -91,16 +90,6 @@ cdef extern from "infolist-nodelist.h":
             int n) except NULL
     int infolist_nodelist_check_nodes(InfoListNodeList* nodelist) except -1
 
-cdef extern from "infolist-idmap.h":
-    ctypedef struct InfoListIDMap
-
-    InfoListIDMap* infolist_idmap_new() except NULL
-    void infolist_idmap_free(InfoListIDMap* id_map)
-
-    void infolist_idmap_set(InfoListIDMap* id_map, int id, InfoListNode* node)
-    InfoListNode* infolist_idmap_get(InfoListIDMap* id_map, int id)
-    void infolist_idmap_remove(InfoListIDMap* id_map, int id)
-
 cdef extern from "infolist-platform.h":
     int infolistplat_init() except -1
     int infolistplat_nodelist_created(InfoListNodeList* nodelist) except -1
@@ -121,14 +110,6 @@ cdef extern from "infolist-platform.h":
             object tableview) except -1
     InfoListNode* infolistplat_node_for_pos(InfoListNodeList* nodelist,
             object pos) except NULL
-
-cdef InfoListNode* fetch_node(InfoListIDMap* id_map, int id_) except NULL:
-    cdef InfoListNode* node
-    node = infolist_idmap_get(id_map, id_)
-    if node == NULL:
-        PyErr_SetObject(PyExc_KeyError, PyInt_FromLong(id_))
-        return NULL
-    return node
 
 cdef class InfoListAttributeStore:
     """Stores the attributes for an InfoList
@@ -231,7 +212,7 @@ cdef class InfoList:
     """
 
     cdef InfoListNodeList* nodelist
-    cdef InfoListIDMap* id_map
+    cdef dict id_map # maps ids -> CObjects that point to nodes
     cdef object sort_key_func
     cdef int sort_mode
     cdef InfoListAttributeStore attributes
@@ -240,13 +221,12 @@ cdef class InfoList:
         # __cinit__ should allocate any C resources
         self.nodelist = infolist_nodelist_new()
         infolistplat_nodelist_created(self.nodelist)
-        self.id_map = infolist_idmap_new()
+        self.id_map = {}
 
     def __dealloc__(self):
         # __dealloc__ should free any C resources
         infolistplat_nodelist_will_destroy(self.nodelist)
         infolist_nodelist_free(self.nodelist)
-        infolist_idmap_free(self.id_map)
 
     def __init__(self, sort_key_func, reverse=False):
         """Create an InfoList.
@@ -282,6 +262,12 @@ cdef class InfoList:
             infolist_node_sort_reversed(nodes, count)
         elif self.sort_mode == INFOLIST_SORT_REVERSED:
             infolist_node_sort(nodes, count)
+
+    cdef InfoListNode* _fetch_node(self, object id) except NULL:
+        cdef object cobject
+
+        cobject = self.id_map[id]
+        return <InfoListNode*>PyCObject_AsVoidPtr(cobject)
 
     def add_infos(self, new_infos, before_id=None):
         """Add a list of objects into the list.
@@ -321,12 +307,11 @@ cdef class InfoList:
             # prepare the insert
             for 0 <= i < count:
                 info = new_infos[i]
-                if infolist_idmap_get(self.id_map, hash(info.id)) != NULL:
+                if info.id in self.id_map:
                     raise ValueError("Info with id %s already in list" %
                             info.id)
                 sort_key = self.sort_key_func(info)
-                node_array[i] = infolist_node_new(hash(info.id), info,
-                        sort_key)
+                node_array[i] = infolist_node_new(info.id, info, sort_key)
                 infos_created += 1
             # insert nodes in reversed order, this makes calculating rows
             # simpler in the GTK code
@@ -335,14 +320,15 @@ cdef class InfoList:
                 if before_id is None:
                     pos = infolist_nodelist_tail(self.nodelist).next
                 else:
-                    pos = fetch_node(self.id_map, hash(before_id))
+                    pos = self._fetch_node(before_id)
                 #for 0 <= i < count:
                 for count > i >= 0:
                     new_node = node_array[i]
                     infolist_nodelist_insert_before(self.nodelist, pos,
                             new_node)
                     infos_added += 1
-                    infolist_idmap_set(self.id_map, new_node.id, new_node)
+                    cobj = PyCObject_FromVoidPtr(new_node, NULL)
+                    self.id_map[infolist_node_get_id(new_node)] = cobj
                     infolistplat_node_added(self.nodelist, new_node)
                     pos = new_node
             else:
@@ -354,7 +340,8 @@ cdef class InfoList:
                     pos = insert_node_before(self.nodelist, new_node, pos,
                             reverse_sort)
                     infos_added += 1
-                    infolist_idmap_set(self.id_map, new_node.id, new_node)
+                    cobj = PyCObject_FromVoidPtr(new_node, NULL)
+                    self.id_map[infolist_node_get_id(new_node)] = cobj
                     infolistplat_node_added(self.nodelist, new_node)
         finally:
             if infos_added < infos_created:
@@ -385,7 +372,7 @@ cdef class InfoList:
         try:
             # fetch first, in case of key error
             for 0 <= i < count:
-                node_array[i] = fetch_node(self.id_map, hash(infos[i].id))
+                node_array[i] = self._fetch_node(infos[i].id)
             infolistplat_will_change_nodes(self.nodelist)
             for 0 <= i < count:
                 node = node_array[i]
@@ -442,7 +429,7 @@ cdef class InfoList:
         try:
             # fetch all nodes first in case of KeyError
             for 0 <= i < count:
-                to_remove[i] = fetch_node(self.id_map, hash(id_list[i]))
+                to_remove[i] = self._fetch_node(id_list[i])
             infolistplat_will_remove_nodes(self.nodelist)
             # order nodes last-to-first so that we call
             # infolistplat_node_removed in that order
@@ -450,7 +437,7 @@ cdef class InfoList:
             for 0 <= i < count:
                 node = to_remove[i]
                 infolist_nodelist_remove(self.nodelist, node)
-                infolist_idmap_remove(self.id_map, node.id)
+                del self.id_map[infolist_node_get_id(node)]
                 self.attributes.del_attr_dict(infolist_node_get_info(node).id)
                 infolistplat_node_removed(self.nodelist, node)
                 infolist_node_free(node)
@@ -468,11 +455,11 @@ cdef class InfoList:
         while not infolist_node_is_sentinal(node):
             prev_node = node.prev
             infolist_nodelist_remove(self.nodelist, node)
-            infolist_idmap_remove(self.id_map, node.id)
             infolistplat_node_removed(self.nodelist, node)
             infolist_node_free(node)
             node = prev_node
         self.attributes = InfoListAttributeStore()
+        self.id_map = {}
 
     def move_before(self, target_id, id_list):
         """Move rows around manually.
@@ -503,15 +490,15 @@ cdef class InfoList:
         try:
             # fetch first, in case of key error
             if target_id is not None:
-                target_node = fetch_node(self.id_map, hash(target_id))
+                target_node = self._fetch_node(target_id)
             else:
                 target_node = infolist_nodelist_tail(self.nodelist).next
             for 0 <= i < count:
-                node_array[i] = fetch_node(self.id_map, hash(id_list[i]))
+                node_array[i] = self._fetch_node(id_list[i])
             # move target_id before the nodes in node_array
             if target_id is not None:
                 for 0 <= i < count:
-                    if node_array[i].id == target_node.id:
+                    if node_array[i] == target_node:
                         target_node = target_node.prev
             # remove infos then re-enter them
             infolistplat_will_reorder_nodes(self.nodelist)
@@ -534,7 +521,7 @@ cdef class InfoList:
         return self.attributes.get_attr(id_, name)
 
     def get_info(self, id_):
-        return infolist_node_get_info(fetch_node(self.id_map, hash(id_)))
+        return infolist_node_get_info(self._fetch_node(id_))
 
     def get_first_info(self):
         cdef InfoListNode* node
@@ -556,12 +543,12 @@ cdef class InfoList:
 
     def index_of_id(self, id_):
         return infolist_nodelist_node_index(self.nodelist,
-                fetch_node(self.id_map, hash(id_)))
+                self._fetch_node(id_))
 
     def get_next_info(self, id_):
         cdef InfoListNode* node
         
-        node = fetch_node(self.id_map, hash(id_)).next
+        node = self._fetch_node(id_).next
         if infolist_node_is_sentinal(node):
             return None
         else:
@@ -570,14 +557,14 @@ cdef class InfoList:
     def get_prev_info(self, id_):
         cdef InfoListNode* node
         
-        node = fetch_node(self.id_map, hash(id_)).prev
+        node = self._fetch_node(id_).prev
         if infolist_node_is_sentinal(node):
             return None
         else:
             return infolist_node_get_info(node)
 
     def get_sort_key(self, id_):
-        return infolist_node_get_sort_key(fetch_node(self.id_map, hash(id_)))
+        return infolist_node_get_sort_key(self._fetch_node(id_))
 
     def change_sort(self, sort_key_func, reverse=False):
         cdef InfoListNode** nodes
@@ -648,8 +635,10 @@ cdef class InfoList:
 
     def nth_row(self, index):
         cdef InfoListNode* node
+        cdef object info
 
         node = infolist_nodelist_nth_node(self.nodelist, index)
+        info = infolist_node_get_info(node)
         return (info, self.attributes.get_attr_dict(info.id))
 
     def __getitem__(self, pos):
@@ -660,7 +649,7 @@ cdef class InfoList:
         infolist_nodelist_check_nodes(self.nodelist)
         info_list = self.info_list()
         for info in info_list:
-            if info is not self.get_info(hash(info.id)):
+            if info is not self.get_info(info.id):
                 raise AssertionError("id_map for %s is wrong" % info.id)
 
         for i in xrange(len(info_list) - 1):
