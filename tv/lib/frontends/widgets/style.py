@@ -1314,9 +1314,16 @@ class StateCircleRenderer(ListViewRenderer):
             self.icon[state] = imagepool.get_surface(path,
                     (self.width, self.icon_height))
 
-    def render(self, context, layout_manager, selected, hotspot, hover):
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        return None
+
+    def layout_manager(self, layout_manager):
         if not self.set_up:
             self.setup(layout_manager)
+        return layout_manager
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        layout_manager = self.layout_manager(layout_manager)
         if self.info.state == 'downloading':
             icon = self.icon['downloading']
         elif self.info.is_playing:
