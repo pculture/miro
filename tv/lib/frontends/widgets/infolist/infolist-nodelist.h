@@ -59,7 +59,6 @@ struct InfoListNodeStruct
         int id;
         PyObject* info;
         PyObject* sort_key;
-        PyObject* attr_dict;
         struct InfoListNodeStruct *next;
         struct InfoListNodeStruct *prev;
         // Call infolist_nodelist_calc_positions before using position
@@ -71,8 +70,7 @@ typedef struct InfoListNodeStruct InfoListNode;
 InfoListNode*
 infolist_node_new(int id,
                   PyObject* info,
-                  PyObject* sort_key,
-                  PyObject* attr_dict);
+                  PyObject* sort_key);
 
 // Free a InfoListNode and DECREF the python objects
 int
@@ -88,9 +86,6 @@ infolist_node_is_sentinal(InfoListNode* node);
 // get ADDREFed)
 PyObject*
 infolist_node_get_info(InfoListNode* node);
-
-PyObject*
-infolist_node_get_attr_dict(InfoListNode* node);
 
 PyObject*
 infolist_node_get_sort_key(InfoListNode* node);

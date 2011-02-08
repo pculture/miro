@@ -57,12 +57,11 @@ cdef extern from "infolist-nodelist.h":
             # support it well.  Use the infolist_node_get_* methods for
             # access.
 
-    InfoListNode* infolist_node_new(int id, object info, object sort_key,
-            object attr_dict) except NULL
+    InfoListNode* infolist_node_new(int id, object info, 
+            object sort_key) except NULL
     int infolist_node_free(InfoListNode* node) except -1
     int infolist_node_is_sentinal(InfoListNode* node) except -1
     object infolist_node_get_info(InfoListNode* node)
-    object infolist_node_get_attr_dict(InfoListNode* node)
     object infolist_node_get_sort_key(InfoListNode* node)
     void infolist_node_set_info(InfoListNode* node, object info)
     void infolist_node_set_sort_key(InfoListNode* node, object sort_key)
@@ -131,6 +130,46 @@ cdef InfoListNode* fetch_node(InfoListIDMap* id_map, int id_) except NULL:
         return NULL
     return node
 
+cdef class InfoListAttributeStore:
+    """Stores the attributes for an InfoList
+
+    For most rows, the attributes will be empty.  As an optimization, we share
+    a single dictionary between all of those.
+    """
+    cdef dict attr_dict_map # maps id -> attr_dicts
+    cdef dict empty_dict # shared empty dict
+
+    def __init__(self, *args, **kwargs):
+        self.attr_dict_map = {}
+        self.empty_dict = {}
+
+    def get_attr(self, id_, name):
+        if id_ not in self.attr_dict_map:
+            raise KeyError(name)
+        else:
+            return self.attr_dict_map[id_][name]
+
+    def set_attr(self, id_, name, value):
+        if id_ not in self.attr_dict_map:
+            self.attr_dict_map[id_] = {name: value}
+        else:
+            self.attr_dict_map[id_][name] = value
+
+    def unset_attr(self, id_, name):
+        if (id_ in self.attr_dict_map
+                and name in self.attr_dict_map[id_]):
+            del self.attr_dict_map[id_][name]
+
+    def get_attr_dict(self, id_):
+        if id_ not in self.attr_dict_map:
+            return self.empty_dict
+        else:
+            return self.attr_dict_map[id_]
+
+    def del_attr_dict(self, id_):
+        if id_ in self.attr_dict_map:
+            del self.attr_dict_map[id_]
+
 cdef InfoListNode* insert_node_before(InfoListNodeList* nodelist,
         InfoListNode* node, InfoListNode* pos, int reverse) except NULL:
     cdef int cmp_result
@@ -195,6 +234,7 @@ cdef class InfoList:
     cdef InfoListIDMap* id_map
     cdef object sort_key_func
     cdef int sort_mode
+    cdef InfoListAttributeStore attributes
 
     def __cinit__(self, *args, **kwargs):
         # __cinit__ should allocate any C resources
@@ -216,6 +256,7 @@ cdef class InfoList:
         :param reverse: Should we sort in reverse order?
         """
         self._set_sort(sort_key_func, reverse)
+        self.attributes = InfoListAttributeStore()
 
     cdef int _set_sort(self, object sort_key_func, object reverse):
         if sort_key_func is not None:
@@ -285,7 +326,7 @@ cdef class InfoList:
                             info.id)
                 sort_key = self.sort_key_func(info)
                 node_array[i] = infolist_node_new(hash(info.id), info,
-                        sort_key, {})
+                        sort_key)
                 infos_created += 1
             # insert nodes in reversed order, this makes calculating rows
             # simpler in the GTK code
@@ -410,6 +451,7 @@ cdef class InfoList:
                 node = to_remove[i]
                 infolist_nodelist_remove(self.nodelist, node)
                 infolist_idmap_remove(self.id_map, node.id)
+                self.attributes.del_attr_dict(infolist_node_get_info(node).id)
                 infolistplat_node_removed(self.nodelist, node)
                 infolist_node_free(node)
         finally:
@@ -430,6 +472,7 @@ cdef class InfoList:
             infolistplat_node_removed(self.nodelist, node)
             infolist_node_free(node)
             node = prev_node
+        self.attributes = InfoListAttributeStore()
 
     def move_before(self, target_id, id_list):
         """Move rows around manually.
@@ -482,23 +525,13 @@ cdef class InfoList:
             PyMem_Free(node_array)
 
     def set_attr(self, id_, name, value):
-        cdef dict attrs
-        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map,
-            hash(id_)))
-        attrs[name] = value
+        self.attributes.set_attr(id_, name, value)
 
     def unset_attr(self, id_, name):
-        cdef dict attrs
-        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map,
-            hash(id_)))
-        if name in attrs:
-            del attrs[name]
+        self.attributes.unset_attr(id_, name)
 
     def get_attr(self, id_, name):
-        cdef dict attrs
-        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map,
-            hash(id_)))
-        return attrs[name]
+        return self.attributes.get_attr(id_, name)
 
     def get_info(self, id_):
         return infolist_node_get_info(fetch_node(self.id_map, hash(id_)))
@@ -607,17 +640,17 @@ cdef class InfoList:
         :param pos: position in the list
         """
         cdef InfoListNode* node
+        cdef object info
 
         node = infolistplat_node_for_pos(self.nodelist, pos)
-        return (infolist_node_get_info(node),
-                infolist_node_get_attr_dict(node))
+        info = infolist_node_get_info(node)
+        return (info, self.attributes.get_attr_dict(info.id))
 
     def nth_row(self, index):
         cdef InfoListNode* node
 
         node = infolist_nodelist_nth_node(self.nodelist, index)
-        return (infolist_node_get_info(node),
-                infolist_node_get_attr_dict(node))
+        return (info, self.attributes.get_attr_dict(info.id))
 
     def __getitem__(self, pos):
         return self.row_for_iter(pos)

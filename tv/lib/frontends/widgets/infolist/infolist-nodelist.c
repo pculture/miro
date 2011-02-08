@@ -46,8 +46,7 @@
 InfoListNode*
 infolist_node_new(int id,
                   PyObject* info,
-                  PyObject* sort_key,
-                  PyObject* attr_dict)
+                  PyObject* sort_key)
 {
         InfoListNode* node;
 
@@ -57,11 +56,9 @@ infolist_node_new(int id,
         }
         Py_INCREF(info);
         Py_INCREF(sort_key);
-        Py_INCREF(attr_dict);
         node->id = id;
         node->info = info;
         node->sort_key = sort_key;
-        node->attr_dict = attr_dict;
         node->prev = node->next = NULL;
         return node;
 }
@@ -72,7 +69,6 @@ infolist_node_free(InfoListNode* node)
         CHECK_NOT_IN_LIST(node, -1);
         Py_DECREF(node->info);
         Py_DECREF(node->sort_key);
-        Py_DECREF(node->attr_dict);
         PyMem_Free(node);
         return 0;
 }
@@ -83,7 +79,6 @@ infolist_node_make_sentinals(InfoListNode* start, InfoListNode* end)
         start->id = end->id = -1;
         start->info = end->info = NULL;
         start->sort_key = end->sort_key = NULL;
-        start->attr_dict = end->attr_dict = NULL;
         start->next = end->next = end;
         end->prev = start->prev = start;
 }
@@ -99,13 +94,6 @@ infolist_node_get_info(InfoListNode* node)
 {
         Py_INCREF(node->info);
         return node->info;
-}
-
-PyObject*
-infolist_node_get_attr_dict(InfoListNode* node)
-{
-        Py_INCREF(node->attr_dict);
-        return node->attr_dict;
 }
 
 PyObject*
