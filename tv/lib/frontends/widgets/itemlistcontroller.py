@@ -458,8 +458,6 @@ class ItemListController(object):
         item_tracker.set_search(self._search_text)
         self._item_tracker_callbacks = [
             item_tracker.connect("initial-list", self.handle_item_list),
-            item_tracker.connect("items-will-change",
-                self.handle_items_will_change),
             item_tracker.connect("items-changed", self.handle_items_changed),
         ]
         self.item_tracker = item_tracker
@@ -496,10 +494,6 @@ class ItemListController(object):
         if self._items_added_callback is not None:
             self._playback_item_list.disconnect(self._items_added_callback)
             self._playback_item_list = self._items_added_callback = None
-
-    def handle_items_will_change(self, obj, added, changed, removed):
-        for item_view in self.views.values():
-            item_view.start_bulk_change()
 
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
