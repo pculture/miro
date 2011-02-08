@@ -504,7 +504,7 @@ class ToolbarDelegate (NSObject):
         panel = self.panels[itemIdentifier]
         item = PreferenceItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item.setLabel_(panel[1])
-        item.setImage_(NSImage.imageNamed_(u"pref_item_%s" % itemIdentifier))
+        item.setImage_(NSImage.imageNamed_(u"pref_tab_%s" % itemIdentifier))
         item.setAction_("switchPreferenceView:")
         item.setTarget_(self)
         item.setPanel_(panel[0])

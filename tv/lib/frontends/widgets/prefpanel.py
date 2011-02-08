@@ -265,7 +265,7 @@ class PanelBuilder(object):
 _PANEL = []
 
 def add_panel(name, title, panel_builder_class,
-              image_name='images/pref-tab-general.png'):
+              image_name='images/pref_tab_general.png'):
     """Adds a panel to the preferences panel list.
 
     :param name: a name for the panel--this is used internally
@@ -1020,16 +1020,16 @@ class ExtensionsPanel(PanelBuilder):
         self.extensions_helper.load()
 
 # Add the initial panels
-add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
-add_panel("feeds", _("Podcasts"), PodcastsPanel, 'images/pref-tab-feeds.png')
-add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-downloads.png')
-add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
-add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
-add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
-add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref-tab-sharing.png')
-add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
-add_panel("stores", _("Stores"), StoresPanel, 'images/pref-tab-downloads.png')
-add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref-tab-general.png')
+add_panel("general", _("General"), GeneralPanel, 'images/pref_tab_general.png')
+add_panel("feeds", _("Podcasts"), PodcastsPanel, 'images/pref_tab_feeds.png')
+add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref_tab_downloads.png')
+add_panel("folders", _("Folders"), FoldersPanel, 'images/pref_tab_folders.png')
+add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref_tab_disk_space.png')
+add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref_tab_playback.png')
+add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref_tab_sharing.png')
+add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref_tab_conversions.png')
+add_panel("stores", _("Stores"), StoresPanel, 'images/pref_tab_stores.png')
+add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref_tab_extensions.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):
