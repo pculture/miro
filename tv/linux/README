@@ -3,13 +3,14 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: Januar 28th, 2011
+:Date: February 8th, 2011
 
 
 Summary
 =======
 
-This is the Linux port of Miro.  It uses GTK and other GNOME technologies.
+This is the Linux port of Miro.  It uses GTK and other GNOME
+technologies.
 
 Instructions and build requirements are documented at
 https://develop.participatoryculture.org/index.php/LinuxBuildDocs
@@ -19,8 +20,9 @@ Requirements
 ============
 
 There are helper build scripts located in ``tv/linux/helperscripts/``
-which will install dependencies for some systems.  Note that these scripts
-may be out of date and that you must run them with administrative priveliges.
+which will install dependencies for some systems.  Note that these
+scripts may be out of date and that you must run them with
+administrative priveliges.
 
 RUN THEM AT YOUR OWN RISK!  
 
@@ -35,33 +37,44 @@ Generally, the requirements are these:
 
 Build requirements:
 
+* git - http://git-scm.com/
 * gcc, g++, standard c/c++ libraries - http://gcc.gnu.org/
-* Python >= 2.6 - http://www.python.org/ (we don't support Python 3.0 or higher yet)
-* Pyrex >= 0.9.6.4 or higher - http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+* Python >= 2.6 - http://www.python.org/ (we don't support Python 3.0
+  or higher yet)
+* Pyrex >= 0.9.6.4 or higher -
+  http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
 * PyGTK >= 2.0 - http://www.pygtk.org/
 * pygobject >= 2.0 - http://ftp.gnome.org/pub/GNOME/sources/pygobject/
-* libwebkit dev files - http://webkit.org/ (might work with lower versions--untested)
+* libwebkit dev files - http://webkit.org/ (might work with lower
+  versions--untested)
 * libsoup dev files - http://live.gnome.org/LibSoup 
 
 Runtime requirements:
 
-* Python >= 2.6 - http://www.python.org/ (we don't support Python 3.0 or higher yet)
-* dbus and python bindings 0.80.0 or higher - http://www.freedesktop.org/wiki/Software/dbus
+* Python >= 2.6 - http://www.python.org/
+  (we don't support Python 3.0 or higher yet)
+* dbus and python bindings 0.80.0 or higher -
+  http://www.freedesktop.org/wiki/Software/dbus
 * PyGTK >= 2.0 - http://www.pygtk.org/
 * pygobject >= 2.0 - http://ftp.gnome.org/pub/GNOME/sources/pygobject/
 * pycairo - http://cairographics.org/pycairo/
-* libwebkit >= 1.1.15 - http://webkit.org/ (might work with lower versions--untested)
+* libwebkit >= 1.1.15 - http://webkit.org/
+  (might work with lower versions--untested)
 * pywebkitgtk >= 1.1.5 - http://live.gnome.org/PyWebKitGtk
 * libsoup - http://live.gnome.org/LibSoup
 * gconf and python bindings
-* gstreamer >= 0.10.22 - http://gstreamer.freedesktop.org/ (needs playbin2 with text-sink)
+* gstreamer >= 0.10.22 - http://gstreamer.freedesktop.org/
+  (needs playbin2 with text-sink)
 * gstreamer plugins-base and plugins-good
 * gstreamer python bindings
-* libtorrent-rasterbar 0.14 or higher except for 0.15.4 which has known issues (bz:13549) - http://www.rasterbar.com/products/libtorrent/
+* libtorrent-rasterbar 0.14 or higher except for 0.15.4 which has
+  known issues (bz:13549) -
+  http://www.rasterbar.com/products/libtorrent/
 * libtorrent-rasterbar python bindings
 * libcurl - http://curl.haxx.se/libcurl/
 * libcurl python bindings - http://curl.haxx.se/libcurl/python/
 * mutagen - http://pypi.python.org/pypi/mutagen/1.12 
+* libavahi-compat-libdnssd1
 
 If you discover that there are other requirements, let us know!
 
@@ -79,12 +92,6 @@ See https://develop.participatoryculture.org/projects/dtv/wiki/LinuxBuildDocs
 for more information on building and executing the Linux platform code.
 The information at this URL is considered the authoritative source.
 
-To run Miro in "debug mode" (i.e. in gdb)::
-
-   ./run.sh --debug
-
-Obviously, this requires gdb.
-
 For more command-line options including how to set preferences on the command 
 and what preferences are available, do::
 
@@ -92,22 +99,22 @@ and what preferences are available, do::
 
 There are two ways to run Miro in a test sandbox.
 
-1. Set the ``HOME`` environment variable to switch where Miro saves database
-   and other files::
+1. Set the ``HOME`` environment variable to switch where Miro saves
+   database and other files::
 
       mkdir /tmp/foo
       HOME=/tmp/foo ./run.sh
 
-   This has the problem that it doesn't work if you're using KDE (it causes
-   problems) and it uses your "production" Miro configuration.
+   This has the problem that it doesn't work if you're using KDE (it
+   causes problems) and it uses your "production" Miro configuration.
 
 2. Run Miro using the ``--home`` and ``--gconf-name`` arguments::
 
       mkdir /tmp/foo
       run.sh --home=/tmp/foo --gconf-name=mirotest
 
-   This stores configuration in a different place and uses a differen home
-   without affecting the process environment.
+   This stores configuration in a different place and uses a different
+   home without affecting the process environment.
 
 
 Unittest instructions
@@ -119,8 +126,12 @@ platform.  Do the following::
    ./run.sh --unittest
 
 
-This will go through all the unittests on the Linux platform and spit out 
-any errors to stdout and stderr.
+This will go through all the unittests on the Linux platform and spit
+out any errors to stdout and stderr.
+
+You can run specific tests by providing the test name.  For example::
+
+   ./run.sh --unittest utiltest
 
 
 Preferences
