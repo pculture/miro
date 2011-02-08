@@ -1209,7 +1209,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             item = app.playback_manager.get_playing_item()
             if (item and item.remote and
               item.host == host and item.port == port):
-                app.playback_manager.stop(save_resume_time=False)
+                app.playback_manager.stop()
         message = messages.TabsChanged('sharing', [], [], [share.id])
         typ, selected_tabs = app.tab_list_manager.get_selection()
         if typ == u'sharing' and share in selected_tabs:

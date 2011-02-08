@@ -798,7 +798,7 @@ class SharingTabListHandler(object):
             if item and item.remote:
                 remote_item = True
             if remote_item and item.host == host and item.port == port:
-                app.playback_manager.stop(save_resume_time=False)
+                app.playback_manager.stop()
             # Default to select the guide.  There's nothing more to see here.
             typ, selected_tabs = app.tab_list_manager.get_selection()
             if typ == u'sharing' and (info == selected_tabs[0] or
