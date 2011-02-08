@@ -906,14 +906,9 @@ class BTDownloader(BGDownloader):
                 self.torrent = TORRENT_SESSION.session.add_torrent(
                     torrent_info, save_path, None,
                     lt.storage_mode_t.storage_mode_allocate)
-            try:
-                if (lt.version_major, lt.version_minor) > (0, 13):
-                    logging.debug(
-                        "setting libtorrent auto_managed to False")
-                    self.torrent.auto_managed(False)
-            except AttributeError:
-                logging.warning("libtorrent module doesn't have "
-                                "version_major or version_minor")
+
+            # need to do this for libtorrent > 0.13
+            self.torrent.auto_managed(False)
         except StandardError:
             self.handle_error(_('BitTorrent failure'),
                               _('BitTorrent failed to startup'))
