@@ -88,7 +88,7 @@ To compile and run Miro in the current directory, do::
 
 If you have the required dependencies it should build Miro and run it.
 
-See https://develop.participatoryculture.org/projects/dtv/wiki/LinuxBuildDocs
+See https://develop.participatoryculture.org/index.php/LinuxBuildDocs
 for more information on building and executing the Linux platform code.
 The information at this URL is considered the authoritative source.
 
