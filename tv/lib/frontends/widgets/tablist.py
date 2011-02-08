@@ -1059,7 +1059,7 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
     def find_feed_with_url(self, url):
         for iter in self.iter_map.values():
             info = self.view.model[iter][0]
-            if info is self:
+            if info is self.info:
                 continue
             if info.url == url:
                 return info
