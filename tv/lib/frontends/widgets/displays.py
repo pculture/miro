@@ -732,8 +732,11 @@ class ConnectDisplay(TabDisplay):
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
-        self.widget = widgetset.Alignment(xalign=0.5, yalign=0.0, xscale=1)
-        self.widget.add(tabcontroller.ConnectTab())
+
+        self.widget = widgetset.Scroller(False, True)
+        alignment = widgetset.Alignment(xalign=0.5, yalign=0.0, xscale=1)
+        alignment.add(tabcontroller.ConnectTab())
+        self.widget.add(alignment)
 
 class DummyDisplay(TabDisplay):
     @staticmethod
