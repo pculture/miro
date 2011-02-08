@@ -34,13 +34,10 @@ from miro.gtcache import gettext as _
 
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets.itemlistwidgets import (
-    StandardView, HideableSection, ItemContainerWidget, DownloadToolbar,
-    DownloadStatusToolbar, ItemListTitlebar)
+    StandardView, DownloadToolbar, DownloadStatusToolbar, ItemListTitlebar)
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
-from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import prefpanel
-from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro import messages
 from miro import downloader
@@ -53,6 +50,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
                                                        u'downloading')
         for item_list in self.item_list_group.item_lists:
             item_list.resort_on_update = True
+        self.toolbar = None
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()

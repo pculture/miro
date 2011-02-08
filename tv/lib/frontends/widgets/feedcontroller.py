@@ -36,16 +36,12 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import feedsettingspanel
-from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import itemcontextmenu
-from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
-from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -57,6 +53,7 @@ class FeedController(itemlistcontroller.ItemListController,
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
         self.display_channel = self.is_folder
+        self.titlebar = None
         itemlistcontroller.ItemListController.__init__(self, u'feed', id)
         itemlistcontroller.FilteredListMixin.__init__(self)
 
