@@ -231,7 +231,6 @@ class TranscodeObject(object):
         fildes, name = tempfile.mkstemp()
         os.unlink(name)
         os.write(fildes, self.playlist)
-        fildes = self.tmpf.fileno()
         os.lseek(fildes, 0, os.SEEK_SET)
         return fildes
 
