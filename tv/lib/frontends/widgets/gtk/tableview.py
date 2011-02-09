@@ -279,10 +279,11 @@ class MiroTreeView(gtk.TreeView):
 
     def get_scroll_position(self):
         """Get the current position of both scrollbars, to restore later."""
-        x_pos, y_pos = self.scroll_positions
-        x_pos = x_pos or 0
-        y_pos = y_pos or 0
-        return int(x_pos), int(y_pos)
+        scroll_positions = [0, 0]
+        for i, bar in enumerate(self.scrollbars):
+            adj = bar.get_adjustment()
+            scroll_positions[i] = int(adj.get_value())
+        return tuple(scroll_positions)
 
     def _update_scrollbar_position(self, bar):
         """Move the specified scrollbar to its saved position."""
