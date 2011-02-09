@@ -549,15 +549,31 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                             playlist_id=k)
                 returned_playlists.append(info)
 
-            items = self.client.items(playlist_id=k, meta=DAAP_META)
-            for itemkey in items.keys():
-                item = self.sharing_item(items[itemkey], k)
-                returned_items.append(item)
-
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken?
         if not self.base_playlist:
-            print 'WARNING: no base playlist?'
+            raise ValueError('Cannot find base playlist')
+
+        items = self.client.items(playlist_id=self.base_playlist,
+                                  meta=DAAP_META)
+        # XXX FIXME: organize this much better with a dict from ground up
+        itemdict = dict()    # XXX temporary band-aid
+        for itemkey in items.keys():
+            item = self.sharing_item(items[itemkey], self.base_playlist)
+            itemdict[itemkey] = items[itemkey]
+            returned_items.append(item)
+
+        # Have to save the items from the base playlist first, because
+        # Rhythmbox will get lazy and only send the ids around (expecting
+        # us to already to have the data, I guess). 
+        for k in playlists.keys():
+            if k == self.base_playlist:
+                continue
+            items = self.client.items(playlist_id=k, meta=DAAP_META)
+            for itemkey in items.keys():
+                rawitem = itemdict[itemkey]
+                item = self.sharing_item(rawitem, k)
+                returned_items.append(item)
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
@@ -570,9 +586,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.playlists = returned_playlists
         message = messages.TabsChanged('sharing', self.playlists, [], [])
         message.send_to_frontend()
-        # Send a list of all the items to the main sharing tab.
+        # Send a list of all the items to the main sharing tab.  Only add
+        # those that are part of o the base playlist.
         for item in self.items:
-            self.emit('added', item)
+            if item.playlist_id == self.base_playlist:
+                self.emit('added', item)
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
@@ -580,8 +598,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
     def get_items(self, playlist_id=None):
+        # XXX SLOW!  And could possibly do with some refactoring.
         if not playlist_id and self.base_playlist is not None:
-            return self.items
+            return [item for item in self.items if
+                    item.playlist_id == self.base_playlist]
         else:
             return [item for item in self.items if  
                     item.playlist_id == playlist_id]
