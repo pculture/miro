@@ -322,9 +322,6 @@ class HideableWidget(widgetset.VBox):
             self.remove(self._child)
             self.shown = False
 
-    def get_size_request(self):
-        return self._child.get_size_request()
-
 class Shadow(object):
     """Encapsulates all parameters required to draw shadows.
     """

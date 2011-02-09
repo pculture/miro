@@ -184,6 +184,10 @@ class Window(signals.SignalEmitter):
         # request and the actual size invalidation invocation.  So check
         # to see if nswindow is there if not then do not do anything.
         if self.nswindow:
+            # FIXME: I'm not sure that this code does what we want it to do.
+            # It enforces the min-size when the user drags the window, but I
+            # think it should also call setContentSize_ if the window is
+            # currently too small to fit the content - BDK
             self.nswindow.setContentMinSize_(NSSize(width, height))
 
     def get_content_widget(self):
@@ -278,8 +282,39 @@ class Dialog(DialogBase):
             self.buttons[0].make_default()
         return window
 
+    def hookup_content_widget_signals(self):
+        self.size_req_handler = self.content_widget.connect(
+                'size-request-changed',
+                self.on_content_widget_size_request_change)
+
+    def unhook_content_widget_signals(self):
+        self.content_widget.disconnect(self.size_req_handler)
+        self.size_req_handler = None
+
+    def on_content_widget_size_request_change(self, widget, old_size):
+        width, height = self.content_widget.get_size_request()
+        # It is possible the window is torn down between the size invalidate
+        # request and the actual size invalidation invocation.  So check
+        # to see if nswindow is there if not then do not do anything.
+        if self.window and (width, height) != old_size:
+            self.change_content_size(width, height)
+
+    def change_content_size(self, width, height):
+        content_rect = self.window.contentRectForFrameRect_(
+                self.window.frame())
+        # Cocoa's coordinate system is funky, adjust y so that the top stays
+        # in place
+        content_rect.origin.y += (content_rect.size.height - height)
+        # change our frame to fit the new content.  It would be nice to
+        # animate the change, but timers don't work when we are displaying a
+        # modal dialog
+        content_rect.size = NSSize(width, height)
+        new_frame = self.window.frameRectForContentRect_(content_rect)
+        self.window.setFrame_display_(new_frame, NO)
+
     def run(self):
         self.window = self.build_window()
+        self.hookup_content_widget_signals()
         self.running = True
         if self.sheet_parent is None:
             response = NSApp().runModalForWindow_(self.window)
@@ -294,6 +329,7 @@ class Dialog(DialogBase):
                 # the dialog
                 self.window.orderOut_(nil)
         self.running = False
+        self.unhook_content_widget_signals()
 
         if response < 0:
             return -1
