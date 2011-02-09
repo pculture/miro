@@ -643,7 +643,7 @@ class DeviceItem(object):
         if self.size is None:
             self.size = os.path.getsize(self.get_filename())
         if self.release_date is None or self.creation_time is None:
-            ctime = os.path.getctime(self.get_filename())
+            ctime = fileutil.getctime(self.get_filename())
             if self.release_date is None:
                 self.release_date = ctime
             if self.creation_time is None:
