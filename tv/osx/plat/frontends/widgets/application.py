@@ -85,6 +85,13 @@ class MiroApplication(NSApplication):
             # should we just catch StandardError here?
             app.widgetapp.exception_handler(*sys.exc_info())
 
+    def sendAction_to_from_(self, action, to, from_):
+        try:
+            NSApplication.sendAction_to_from_(self, action, to, from_)
+        except:
+            # should we just catch StandardError here?
+            app.widgetapp.exception_handler(*sys.exc_info())
+
 class OSXApplication(Application, signals.SignalEmitter):
     def __init__(self):
         Application.__init__(self)
