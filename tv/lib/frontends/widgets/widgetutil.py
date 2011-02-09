@@ -485,7 +485,7 @@ def get_feed_info(feed_id):
     """Returns the :class:`FeedInfo` object for a given ``feed_id``
     regardless of whether it's an audio or video feed.
     """
-    return app.tab_list_manager.feed_list.get_info(feed_id)
+    return app.tabs['feed'].get_info(feed_id)
 
 def feed_exists(feed_id):
     """Returns true or false as to whether a :class:`Feed` with id ``feed_id``

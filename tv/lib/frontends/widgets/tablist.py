@@ -29,11 +29,15 @@
 
 """Displays the list of tabs on the left-hand side of the app."""
 
+from __future__ import with_statement # neccessary for python2.5
+
 from hashlib import md5
 try:
     import cPickle as pickle
 except ImportError:
     import pickle
+from contextlib import contextmanager
+import logging
 
 from miro import app
 from miro import prefs
@@ -54,9 +58,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import timer
 
 class TabInfo(object):
-    """
-    Simple Info object which holds the data for the top of a tab list.
-    """
+    """Simple Info object which holds the data for a top-level tab."""
     type = u'tab'
     is_folder = False # doesn't work like a real folder
     tall = True
@@ -73,6 +75,7 @@ class TabInfo(object):
         self.active_icon = widgetutil.make_surface(self.icon_name + '_active')
 
 class TabListView(widgetset.TableView):
+    """TableView for a tablist."""
     draws_selection = True
 
     def __init__(self, renderer, table_model_class=None):
@@ -123,17 +126,6 @@ class TabListView(widgetset.TableView):
         self.model.update_value(iter_, 2, -1)
         self.model_changed()
 
-class TabBlinkerMixin(object):
-    def blink_tab(self, id_):
-        self.show_auto_tab( id_)
-        self.view.blink_tab(self.iter_map[id_])
-        timer.add(1, self._unblink_tab, id_)
-
-    def _unblink_tab(self, id_):
-        # double check that the tab still exists
-        if id_ in self.iter_map:
-            self.view.unblink_tab(self.iter_map[id_])
-
 class TabUpdaterMixin(object):
     def __init__(self):
         self.updating_animations = {}
@@ -171,17 +163,88 @@ class TabUpdaterMixin(object):
         timer_id = timer.add(0.1, self.pulse_updating_animation, id_)
         self.updating_animations[id_] = timer_id
 
-class StaticTabListBase(TabBlinkerMixin):
+class TabBlinkerMixin(object):
+    def blink_tab(self, tab_id):
+        self.show_auto_tab(tab_id)
+        self.view.blink_tab(self.iter_map[tab_id])
+        timer.add(1, self._unblink_tab, tab_id)
+
+    def _unblink_tab(self, tab_id):
+        # double check that the tab still exists
+        if tab_id in self.iter_map:
+            self.view.unblink_tab(self.iter_map[tab_id])
+
+class TabList(signals.SignalEmitter):
+    """Handles a list of tabs on the left-side of Miro.
+    
+    Signals:
+        tab-added: a tab has been added to this list; no parameters.
+        moved-tabs-to-list(destination): tabs have been moved to destination
+    """
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('tab-added')
+        self.create_signal('moved-tabs-to-list')
+        self.create_signal('row-collapsed')
+        self.view = self._make_view()
+        self.setup_view()
         self.iter_map = {}
-        self.doing_change = False
-        # doing_change will be True if we are changing a bunch of tabs.  This
-        # will cause us to not try to update things based on the selection
-        # changing.
+        self._removing = 0
+        self._adding = 0
+
+    @contextmanager
+    def removing(self):
+        """For removing one or more tabs - delays updates until all changes
+        finish.
+        """
+        self._removing += 1
+        try:
+            yield
+        finally:
+            self._removing -= 1
+        if not self._adding and not self._removing:
+            self.view.model_changed()
+
+    @contextmanager
+    def adding(self):
+        """For adding one or more tabs; signals tab-added when all (potentially
+        nested) tab-add operations are finished.
+        """
+        self._adding += 1
+        try:
+            yield
+        finally:
+            self._adding -= 1
+        if not self._adding:
+            self.emit('tab-added')
+        if not self._adding and not self._removing:
+            self.view.model_changed()
+
+    @contextmanager
+    def preserving_expanded_rows(self):
+        """Prevent expanded rows from being collapsed by changes. Implementation
+        does not currently handle nesting.
+        """
+        expanded_rows = (id_ for id_, iter_ in self.iter_map.iteritems() if
+            id_ == self.info.id or self.view.is_row_expanded(iter_))
+        try:
+            yield
+        finally:
+            for id_ in expanded_rows:
+                self.view.set_row_expanded(self.iter_map[id_], True)
+
+    def build_tabs(self):
+        """Build any standard tabs; for non-static tabs, this is a pass."""
 
     def add(self, tab):
-        iter_ = self.view.append_tab(tab)
-        self.iter_map[tab.id] = iter_
+        with self.adding():
+            iter_ = self.view.append_tab(tab)
+            self.iter_map[tab.id] = iter_
+
+    def extend(self, tabs):
+        with self.adding():
+            for tab in tabs:
+                self.add(tab)
 
     def remove(self, name):
         iter_ = self.iter_map.pop(name)
@@ -197,71 +260,76 @@ class StaticTabListBase(TabBlinkerMixin):
         if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)
 
-class StaticTabList(StaticTabListBase):
+class StaticTabList(TabList):
     """Handles the static tabs (the tabs on top that are always the same)."""
     def __init__(self):
-        StaticTabListBase.__init__(self)
+        TabList.__init__(self)
         self.type = u'static'
-        self.view = TabListView(style.StaticTabRenderer())
-        self.view.allow_multiple_select(False)
-        self.setup_view()
+
+    def _make_view(self):
+        view = TabListView(style.StaticTabRenderer())
+        view.allow_multiple_select(False)
+        return view
 
     def build_tabs(self):
         self.add(statictabs.SearchTab())
-        self.view.model_changed()
 
-class LibraryTabList(StaticTabListBase):
+    def get_default(self):
+        """Returns an iter pointing to Video Search."""
+        return self.view.model.first_iter()
+
+class LibraryTabList(TabBlinkerMixin, TabList):
     """Handles all Library related tabs - Video, Audio, Downloading..."""
     def __init__(self):
-        StaticTabListBase.__init__(self)
+        TabList.__init__(self)
         self.type = u'library'
-        self.view = TabListView(style.StaticTabRenderer())
-        self.view.allow_multiple_select(False)
-        self.view.set_drag_dest(MediaTypeDropHandler())
-        self.view.connect('selection-changed', self.on_selection_changed)
-        self.setup_view()
-        self.auto_tabs = None
+        self.auto_tabs = {}
         self.auto_tabs_to_show = set()
 
+    def _make_view(self):
+        view = TabListView(style.StaticTabRenderer())
+        view.allow_multiple_select(False)
+        view.set_drag_dest(MediaTypeDropHandler())
+        view.connect('selection-changed', self.on_selection_changed)
+        view.connect('deselected', self.on_deselected)
+        return view
+
     def build_tabs(self):
-        self.add(statictabs.ChannelGuideTab())
-        self.add(statictabs.VideoLibraryTab())
-        self.add(statictabs.AudioLibraryTab())
-        self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
-                          'converting': statictabs.ConvertingTab(),
-                          'others': statictabs.OthersTab()}
-        self.view.model_changed()
+        self.extend([
+            statictabs.ChannelGuideTab(),
+            statictabs.VideoLibraryTab(),
+            statictabs.AudioLibraryTab(),
+        ])
+        self.auto_tabs.update({'downloading': statictabs.DownloadsTab(),
+                               'converting': statictabs.ConvertingTab(),
+                               'others': statictabs.OthersTab()})
 
     def update_auto_tab_count(self, name, count):
         if count > 0:
             self.auto_tabs_to_show.add(name)
             self.show_auto_tab(name)
-        else:
+        elif name in self.iter_map:
             self.auto_tabs_to_show.discard(name)
             self.remove_auto_tab_if_not_selected(name)
 
-
     def show_auto_tab(self, name):
-        try:
-            tab = self.get_tab(name)
-        except KeyError, e:
+        if name not in self.iter_map:
             self.add(self.auto_tabs[name])
 
     def remove_auto_tab_if_not_selected(self, name):
-        if name not in self.iter_map:
+        if name in app.tabs.selected_ids:
             return
-        # Don't remove the tab if it's currently selected.
-        for iter_ in self.view.get_selection():
-            info = self.view.model[iter_][0]
-            if info.id == name:
-                return
         self.remove(name)
 
+    def on_deselected(self, view):
+        """deselected is a more specific signal that selection-changed, to
+        simplify sending selection signals while handling selection-changed."""
+        for name in (set(self.auto_tabs).intersection(self.iter_map) -
+                     self.auto_tabs_to_show):
+            self.remove_auto_tab_if_not_selected(name)
+
     def on_selection_changed(self, view):
-        for name in self.auto_tabs:
-            if name in self.iter_map and name not in self.auto_tabs_to_show:
-                self.remove_auto_tab_if_not_selected(name)
-                self.view.model_changed()
+        self.on_deselected(view)
         if not app.config.get(prefs.MUSIC_TAB_CLICKED):
             for iter_ in view.get_selection():
                 if view.model[iter_][0].id == 'music':
@@ -288,86 +356,87 @@ class LibraryTabList(StaticTabListBase):
     def update_count(self, key, attr, count, other_count=0):
         if key in self.auto_tabs:
             self.update_auto_tab_count(key, count+other_count)
-        try:
+        if key in self.iter_map:
             iter_ = self.iter_map[key]
-        except KeyError, e:
-            pass
-        else:
             tab = self.view.model[iter_][0]
             setattr(tab, attr, count)
             self.view.update_tab(iter_, tab)
         self.view.model_changed()
 
-class TabList(TabBlinkerMixin, signals.SignalEmitter):
-    """Handles a list of tabs on the left-side of Miro.
-
-    signals:
-
-    tab-name-changed (tablist, old_name, new_new) -- The name of a tab
-        changed.
+class HideableTabList(TabList):
+    """A type of tablist which nests under a base tab.  Connect,
+    Sources/Sites/Guides, Stores, Feeds, and Playlists are all of this type.
     """
 
     ALLOW_MULTIPLE = True
 
     render_class = style.TabRenderer
+    type = NotImplemented
+    name = NotImplemented
+    icon_name = NotImplemented
 
     def __init__(self):
-        signals.SignalEmitter.__init__(self)
+        TabList.__init__(self)
         self.create_signal('tab-name-changed')
-        self.view = TabListView(self.render_class())
-        self.view.allow_multiple_select(self.ALLOW_MULTIPLE)
-        self.view.connect_weak('key-press', self.on_key_press)
-        self.view.connect('row-expanded', self.on_row_expanded_change, True)
-        self.view.connect('row-collapsed', self.on_row_expanded_change, False)
-        self.iter_map = {}
-        self.doing_change = False
-        self.view.set_context_menu_callback(self.on_context_menu)
+        self.info = TabInfo(self.name, self.icon_name)
+        TabList.add(self, self.info)
+        self.view.model_changed()
 
-    def reset_list(self, message):
-        self.doing_change = True
-        selected_ids = set(self.view.model[iter_][0].id for iter_ in
-                self.view.get_selection())
-        self._clear_list()
-        for info in message.toplevels:
-            self.add(info)
-            if info.is_folder:
-                for child_info in message.folder_children[info.id]:
-                    self.add(child_info, info.id)
-        self.model_changed()
-        for info in message.toplevels:
-            if info.is_folder:
-                expanded = (info.id in message.expanded_folders)
-                self.set_folder_expanded(info.id, expanded)
-        for id_ in selected_ids:
-            self.view.select(self.iter_map[id_])
-        self.doing_change = False
+    def _make_view(self):
+        view = TabListView(self.render_class())
+        view.allow_multiple_select(self.ALLOW_MULTIPLE)
+        view.connect('row-expanded', self.on_row_expanded_change, True)
+        view.connect('row-collapsed', self.on_row_expanded_change, False)
+        view.connect('selection-changed', self.on_selection_changed)
+        view.set_context_menu_callback(self.on_context_menu)
+        return view
 
-    def _clear_list(self):
-        iter_ = self.view.model.first_iter()
-        while iter_ is not None:
-            iter_ = self.view.model.remove(iter_)
-        self.iter_map = {}
+    def on_context_menu(self, table_view):
+        raise NotImplementedError
+
+    def init_info(self, info):
+        raise NotImplementedError
+
+    def setup_list(self, message):
+        """Called during startup to set up a newly-created list."""
+        with self.adding():
+            for info in message.toplevels:
+                self.add(info)
+                if info.is_folder:
+                    for child_info in message.folder_children[info.id]:
+                        self.add(child_info, info.id)
+                    expanded = (info.id in message.expanded_folders)
+                    self.set_folder_expanded(info.id, expanded)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
             self.on_delete_key_pressed()
             return True
-        if app.playback_manager.is_playing:
-            return playback.handle_key_press(key, mods)
+        return TabList.on_key_press(self, view, key, mods)
 
-    def on_row_expanded_change(self, view, iter_, expanded):
-        id_ = self.view.model[iter_][0].id
-        message = messages.FolderExpandedChange(self.type, id_, expanded)
-        message.send_to_backend()
+    def on_row_expanded_change(self, view, iter_, path, expanded):
+        info = self.view.model[iter_][0]
+        id_ = info.id
+        if info is not self.info:
+            message = messages.FolderExpandedChange(self.type, id_, expanded)
+            message.send_to_backend()
+        if not expanded:
+            self.emit('row-collapsed', iter_, path)
 
     def add(self, info, parent_id=None):
-        self.init_info(info)
-        if parent_id:
-            parent_iter = self.iter_map[parent_id]
-            iter_ = self.view.append_child_tab(parent_iter, info)
-        else:
-            iter_ = self.view.append_tab(info)
-        self.iter_map[info.id] = iter_
+        """Add a TabInfo to the list, with an optional parent (by id)."""
+        with self.adding():
+            if parent_id is None:
+                parent_id = self.info.id
+            self.init_info(info)
+            if parent_id:
+                parent_iter = self.iter_map[parent_id]
+                iter_ = self.view.append_child_tab(parent_iter, info)
+            else:
+                iter_ = self.view.append_tab(info)
+            self.iter_map[info.id] = iter_
+        if len(self.iter_map) == 2: # just added a single child
+            self.set_folder_expanded(self.info.id, True)
 
     def set_folder_expanded(self, id_, expanded):
         self.view.set_row_expanded(self.iter_map[id_], expanded)
@@ -380,18 +449,15 @@ class TabList(TabBlinkerMixin, signals.SignalEmitter):
             self.emit('tab-name-changed', old_name, info.name)
 
     def remove(self, id_list):
-        self.doing_change = True
-        for id_ in id_list:
-            try:
-                iter_ = self.iter_map.pop(id_)
-            except KeyError:
-                # child of a tab we already deleted
-                continue
-            self.forget_child_iters(iter_)
-            self.view.model.remove(iter_)
-        self.doing_change = False
-        self.view.model_changed()
-        app.tab_list_manager.recalc_selection()
+        with self.removing():
+            for id_ in id_list:
+                try:
+                    iter_ = self.iter_map.pop(id_)
+                except KeyError:
+                    # child of a tab we already deleted
+                    continue
+                self.forget_child_iters(iter_)
+                self.view.model.remove(iter_)
 
     def forget_child_iters(self, parent_iter):
         model = self.view.model
@@ -422,6 +488,13 @@ class TabList(TabBlinkerMixin, signals.SignalEmitter):
         """For subclasses to override."""
         pass
 
+    def on_selection_changed(self, view):
+        for iter_ in view.get_selection():
+            if view.model[iter_][0] is self.info:
+                if not view.is_row_expanded(iter_):
+                    self.set_folder_expanded(self.info.id, True)
+                return
+
 class DeviceTabListHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
@@ -450,19 +523,20 @@ class DeviceTabListHandler(object):
                 self._fake_info(info, 'audio', _('Music'))]
 
     def _add_fake_tabs(self, info):
-        self.tablist.doing_change = True
-        for fake in self._get_fake_infos(info):
-            HideableTabList.add(self.tablist,
-                                fake,
-                                info.id)
-        self.tablist.model_changed()
-        self.tablist.set_folder_expanded(info.id, True)
-        self.tablist.doing_change = False
+        with self.tablist.adding():
+            for fake in self._get_fake_infos(info):
+                HideableTabList.add(self.tablist,
+                                    fake,
+                                    info.id)
+            self.tablist.set_folder_expanded(info.id, True)
 
     def add(self, info):
-        HideableTabList.add(self.tablist, info)
+        self.tablist.add(info)
         if info.mount and not info.info.has_multiple_devices:
             self._add_fake_tabs(info)
+
+    def extend(self, tabs):
+        self.tablist.extend(tabs)
 
     def update(self, info):
         tablist = self.tablist
@@ -526,10 +600,10 @@ class SharingTabListHandler(object):
             if remote_item and item.host == host and item.port == port:
                 app.playback_manager.stop()
             # Default to select the guide.  There's nothing more to see here.
-            typ, selected_tabs = app.tab_list_manager.get_selection()
+            typ, selected_tabs = app.tabs.selection
             if typ == u'connect' and (info == selected_tabs[0] or
               getattr(selected_tabs[0], 'parent_id', None) == info.id):
-                app.tab_list_manager.select_guide()
+                app.tabs.select_guide()
             messages.SharingEject(info).send_to_backend()
 
     def update(self, info):
@@ -564,47 +638,6 @@ class SharingTabListHandler(object):
             thumb_path = resources.path('images/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)
 
-class HideableTabList(TabList):
-    """
-    A type of tablist which nests under a base tab.  Connect,
-    Sources/Sites/Guides, Stores, Feeds, and Playlists are all of this type.
-    """
-    def __init__(self):
-        TabList.__init__(self)
-        self.info = TabInfo(self.name, self.icon_name)
-        self.view.connect('selection-changed', self.on_selection_changed)
-        TabList.add(self, self.info)
-        self.view.model_changed()
-
-    def add(self, info, parent_id=None):
-        if parent_id is None:
-            parent_id = self.info.id
-        TabList.add(self, info, parent_id)
-        if len(self.iter_map) == 2: # just added a single child
-            self.view.model_changed()
-            self.set_folder_expanded(self.info.id, True)
-
-    def _clear_list(self):
-        iter_ = self.view.model.first_iter()
-        if iter_ is None:
-            return
-        iter_ = self.view.model.child_iter(iter_)
-        while iter_ is not None:
-            iter_ = self.view.model.remove(iter_)
-        self.iter_map = {self.info.id: self.iter_map[self.info.id]}
-
-    def on_selection_changed(self, view):
-        for iter_ in view.get_selection():
-            if view.model[iter_][0] is self.info:
-                if not view.is_row_expanded(iter_):
-                    self.set_folder_expanded(self.info.id, True)
-                return
-
-    def on_row_expanded_change(self, view, iter_, expanded):
-        info = self.view.model[iter_][0]
-        if info is not self.info:
-            TabList.on_row_expanded_change(self, view, iter_, expanded)
-
 class ConnectList(TabUpdaterMixin, HideableTabList):
     name = _('Connect')
     icon_name = 'icon-connect'
@@ -626,10 +659,10 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
         self.view.connect_weak('row-clicked', self.on_row_clicked)
         self.view.set_drag_dest(DeviceDropHandler(self))
 
-    def on_row_expanded_change(self, view, iter_, expanded):
+    def on_row_expanded_change(self, view, iter_, path, expanded):
         info = self.view.model[iter_][0]
         if info is self.info:
-            HideableTabList.on_row_expanded_change(self, view, iter_, expanded)
+            HideableTabList.on_row_expanded_change(self, view, iter_, path, expanded)
 
     def on_delete_key_pressed(self):
         # neither handler deals with this
@@ -677,6 +710,10 @@ class SiteList(HideableTabList):
 
     ALLOW_MULTIPLE = True
 
+    def __init__(self):
+        HideableTabList.__init__(self)
+        self.default_info = None
+
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_site()
 
@@ -714,6 +751,10 @@ class SiteList(HideableTabList):
                 (_('Remove Sources'), app.widgetapp.remove_current_site),
                 ]
 
+    def get_default(self):
+        """Return the iter pointing to this list's default tab."""
+        return self.iter_map[self.default_info.id]
+
 class StoreList(SiteList):
     type = u'store'
     name = _('Stores')
@@ -736,7 +777,6 @@ class StoreList(SiteList):
 
 class NestedTabListMixin(object):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""
-
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter_][0] for iter_ in
                 table_view.get_selection()]
@@ -778,12 +818,11 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
             self.stop_updating(info.id)
 
     def get_feeds(self):
-        infos = [self.view.model[i][0] for (k, i) in self.iter_map.items()
-                 if k != self.info.id]
-        return infos
+        return (self.view.model[i][0] for k, i in self.iter_map.iteritems()
+                if k != self.info.id)
 
     def find_feed_with_url(self, url):
-        for iter_ in self.iter_map.values():
+        for iter_ in self.iter_map.itervalues():
             info = self.view.model[iter_][0]
             if info is self.info:
                 continue
@@ -846,12 +885,11 @@ class PlaylistList(NestedTabListMixin, HideableTabList):
         info.unwatched = info.available = 0
 
     def get_playlists(self):
-        infos = [self.view.model[i][0] for (k, i) in self.iter_map.items()
-                 if k != self.info.id]
-        return infos
+        return (self.view.model[i][0] for k, i in self.iter_map.iteritems()
+                if k != self.info.id)
 
     def find_playlist_with_name(self, name):
-        for iter_ in self.iter_map.values():
+        for iter_ in self.iter_map.itervalues():
             info = self.view.model[iter_][0]
             if info is self:
                 continue
@@ -877,6 +915,7 @@ class PlaylistList(NestedTabListMixin, HideableTabList):
         ]
 
 class TabListBox(widgetset.Scroller):
+    """The widget displaying the full tab list."""
     def __init__(self):
         widgetset.Scroller.__init__(self, False, True)
         background = widgetset.SolidBackground()
@@ -886,13 +925,14 @@ class TabListBox(widgetset.Scroller):
         self.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
 
     def build_vbox(self):
-        tlm = app.tab_list_manager
         vbox = widgetset.VBox()
-        vbox.pack_start(tlm.library_tab_list.view)
-        vbox.pack_start(tlm.static_tab_list.view)
-        vbox.pack_start(tlm.connect_list.view)
-        vbox.pack_start(tlm.site_list.view)
-        vbox.pack_start(tlm.store_list.view)
-        vbox.pack_start(tlm.feed_list.view)
-        vbox.pack_start(tlm.playlist_list.view)
+        for widget in app.tabs.tab_list_widgets:
+            vbox.pack_start(widget)
         return vbox
+
+def all_tab_lists():
+    """Return an iterable of all the tablist instances TabListManager should
+    own, in no particular order.
+    """
+    return (StaticTabList(), LibraryTabList(), ConnectList(), SiteList(),
+            StoreList(), FeedList(), PlaylistList())

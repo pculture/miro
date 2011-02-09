@@ -460,6 +460,7 @@ class MainWindow(Window):
         self.connect_menu_keyboard_shortcuts()
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
+        self.create_signal('on-shown')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
         app.menu_manager.connect('radio-group-changed', self.on_radio_change)
         app.menu_manager.connect('checked-changed', self.on_checked_change)
@@ -471,6 +472,7 @@ class MainWindow(Window):
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
         self.connect('will-close', self.on_close)
+        self._window.connect('map-event', lambda w, a: self.emit('on-shown'))
         self._clear_subtitles_menu()
 
     def _make_gtk_window(self):

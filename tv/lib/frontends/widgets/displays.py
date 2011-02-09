@@ -163,13 +163,15 @@ class DisplayManager(object):
                 selected_tabs == self.selected_tabs and
                 len(self.display_stack) > 0 and
                 isinstance(self.display_stack[-1], TabDisplay)):
-            logging.debug('not reselecting')
+            logging.warn('not reselecting')
             return
 
         self.selected_tab_list = selected_tab_list
         self.selected_tabs = selected_tabs
-        if hasattr(selected_tabs[0], 'type'):
-            tab_type = selected_tabs[0].type
+        # parents always come first, so using the type of the last item handles
+        # the case where a root item and its child(ren) are selected
+        if hasattr(selected_tabs[-1], 'type'):
+            tab_type = selected_tabs[-1].type
         else:
             tab_type = selected_tab_list.type
 
@@ -638,12 +640,7 @@ class MultipleSelectionDisplay(TabDisplay):
         Display.__init__(self)
         self.type = tab_type
         self.child_count = self.folder_count = self.folder_child_count = 0
-        if tab_type == 'feed':
-            tab_list = app.tab_list_manager.feed_list
-        elif tab_type == 'site':
-            tab_list = app.tab_list_manager.site_list
-        else:
-            tab_list = app.tab_list_manager.playlist_list
+        tab_list = app.tabs[tab_type]
         for tab in selected_tabs:
             if hasattr(tab, "is_folder") and tab.is_folder:
                 self.folder_count += 1

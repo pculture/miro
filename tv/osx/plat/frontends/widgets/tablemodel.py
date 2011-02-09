@@ -29,6 +29,8 @@
 
 """tablemodel.py -- Model classes for TableView.  """
 
+import logging
+
 from AppKit import NSDragOperationNone, NSTableViewDropOn, protocols
 from Foundation import NSObject, NSNotFound, NSMutableIndexSet
 from objc import YES, NO, nil
@@ -138,6 +140,8 @@ class TableModelBase(signals.SignalEmitter):
         for iter in old_selection:
             if iter.valid():
                 new_index_set.addIndex_(self.row_of_iter(tableview, iter))
+            else:
+                raise ValueError('iter no longer valid')
         tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
 
     def check_column_values(self, column_values):
@@ -290,9 +294,8 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
             try:
                 index = self.index_of_id(id_)
             except KeyError:
-                pass
-            else:
-                new_index_set.addIndex_(index)
+                raise ValueError('iter no longer valid')
+            new_index_set.addIndex_(index)
         tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
 
     def add_infos(self, *args, **kwargs):
@@ -376,6 +379,7 @@ class TreeTableModel(TableModelBase):
         return self.row_list_for_iter(iter.value().parent)
 
     def row_list_for_iter(self, iter):
+        """Return the rows of all direct children of iter."""
         if iter is None:
             return self.row_list
         else:
@@ -424,7 +428,7 @@ class TreeTableModel(TableModelBase):
         return row_list.nth_iter(index)
 
     def has_child(self, iter):
-        return  len(iter.value().children) > 0
+        return len(iter.value().children) > 0
 
     def children_count(self, iter):
         if iter is not None:
@@ -439,10 +443,25 @@ class TreeTableModel(TableModelBase):
         return iter.value().parent
 
     def iter_for_row(self, tableview, row):
-        return self.iter_for_item[tableview.itemAtRow_(row)]
+        item = tableview.itemAtRow_(row)
+        if item in self.iter_for_item:
+            return self.iter_for_item[item]
+        else:
+            logging.debug('no iter for item %s at row %s', repr(item), row)
 
     def row_of_iter(self, tableview, iter):
-        return tableview.rowForItem_(iter.value())
+        item = iter.value()
+        row = tableview.rowForItem_(item)
+        if row == -1:
+            raise LookupError("%s is not in this table" % repr(item))
+        return row
+
+    def get_path(self, iter_):
+        """Not implemented (yet?) for Cocoa. Currently the only place this is
+        needed is tablistmanager, where the situation that uses paths results
+        from GTK peculiarities.
+        """
+        return NotImplemented
 
 class DataSourceBase(NSObject):
     def initWithModel_(self, model):

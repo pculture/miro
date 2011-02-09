@@ -56,7 +56,7 @@ def run_dialog():
     title = _('Add a Playlist')
     description = _('Add items to an existing playlist or a new one.')
 
-    playlists = app.tab_list_manager.playlist_list.get_playlists()
+    playlists = app.tabs['playlist'].get_playlists()
     playlists = [pi for pi in playlists if not pi.is_folder]
     playlists.sort(key=lambda x: name_sort_key(x.name))
 

@@ -79,8 +79,8 @@ widgetapp = None
 # handles the right-hand display
 display_manager = None
 
-# handles the tab display
-tab_list_manager = None
+# handles the left-hand tabs
+tabs = None
 
 # manages ItemListControllers
 item_list_controller_manager = None

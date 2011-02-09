@@ -534,7 +534,7 @@ def on_new_podcast():
     app.widgetapp.add_new_feed()
 
 @action_handler("NewGuide")
-def on_new_guidel():
+def on_new_guide():
     app.widgetapp.add_new_guide()
 
 @action_handler("NewSearchPodcast")
@@ -781,7 +781,8 @@ class MenuStateManager(signals.SignalEmitter):
         self.enabled_groups.add('PodcastsSelected')
         self.enabled_groups.add("RemoveAllowed")
         if len(selected_feeds) == 1:
-            if selected_feeds[0].is_folder:
+            if (hasattr(selected_feeds[0], 'is_folder') and
+                    selected_feeds[0].is_folder):
                 self.states["folder"].append("RemoveSomething")
             else:
                 self.states["feed"].append("RemoveSomething")
@@ -843,7 +844,7 @@ class MenuStateManager(signals.SignalEmitter):
         pass
 
     def _update_menus_for_selected_tabs(self):
-        selection_type, selected_tabs = app.tab_list_manager.get_selection()
+        selection_type, selected_tabs = app.tabs.selection
         if len(selected_tabs) == 1:
             app.menu_manager._update_view_menu()
         if selection_type is None or selected_tabs[0].type == u'tab':

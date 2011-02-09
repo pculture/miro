@@ -40,6 +40,8 @@ forward those signals on.  It's the job of ItemListController
 subclasses to handle the logic involved.
 """
 
+import logging
+
 from miro import app
 from miro import prefs
 from miro import displaytext

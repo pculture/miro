@@ -30,25 +30,31 @@
 """tableview.py -- Wrapper for the GTKTreeView widget.  It's used for the tab
 list and the item list (AKA almost all of the miro).
 """
+
+from __future__ import with_statement # neccessary for python2.5
+
 import itertools
+from contextlib import contextmanager
 
 import logging
+
 import gobject
 import gtk
-import pango
 
 from miro import signals
 from miro import infolist
-from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
-from miro.frontends.widgets.gtk.base import Widget, make_gdk_color
+from miro.frontends.widgets.gtk.base import Widget
 from miro.frontends.widgets.gtk.simple import Image
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
+from miro.frontends.widgets.gtk.tableviewcells import (GTKCustomCellRenderer,
+     GTKCheckboxCellRenderer, InfoListRenderer, InfoListRendererText)
 
 def rect_contains_rect(outside, inside):
+    # currently unused
     return (outside.x <= inside.x and
             outside.y <= inside.y and
             outside.x + outside.width >= inside.x + inside.width and
@@ -57,206 +63,6 @@ def rect_contains_rect(outside, inside):
 def rect_contains_point(rect, x, y):
     return ((rect.x <= x < rect.x + rect.width) and
             (rect.y <= y < rect.y + rect.height))
-
-class CellRenderer(object):
-    """Simple Cell Renderer
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-    def __init__(self):
-        self._renderer = gtk.CellRendererText()
-        self.want_hover = False
-
-    def setup_attributes(self, column, attr_map):
-        column.add_attribute(self._renderer, 'text', attr_map['value'])
-
-    def set_align(self, align):
-        if align == 'left':
-            self._renderer.props.xalign = 0.0
-        elif align == 'center':
-            self._renderer.props.xalign = 0.5
-        elif align == 'right':
-            self._renderer.props.xalign = 1.0
-        else:
-            raise ValueError("unknown alignment: %s" % align)
-
-    def set_color(self, color):
-        self._renderer.props.foreground_gdk = make_gdk_color(color)
-
-    def set_bold(self, bold):
-        font_desc = self._renderer.props.font_desc
-        if bold:
-            font_desc.set_weight(pango.WEIGHT_BOLD)
-        else:
-            font_desc.set_weight(pango.WEIGHT_NORMAL)
-        self._renderer.props.font_desc = font_desc
-
-    def set_text_size(self, size):
-        if size == widgetconst.SIZE_NORMAL:
-            self._renderer.props.scale = 1.0
-        elif size == widgetconst.SIZE_SMALL:
-            # FIXME: on 3.5 we just ignored the call.  Always setting scale to
-            # 1.0 basically replicates that behavior, but should we actually
-            # try to implement the semantics of SIZE_SMALL?
-            self._renderer.props.scale = 1.0
-        else:
-            raise ValueError("unknown size: %s" % size)
-
-    def set_font_scale(self, scale_factor):
-        self._renderer.props.scale = scale_factor
-
-class ImageCellRenderer(object):
-    """Cell Renderer for images
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-    def __init__(self):
-        self._renderer = gtk.CellRendererPixbuf()
-
-    def setup_attributes(self, column, attr_map):
-        column.add_attribute(self._renderer, 'pixbuf', attr_map['image'])
-
-class GTKCheckboxCellRenderer(gtk.CellRendererToggle):
-    def do_activate(self, event, treeview, path, background_area, cell_area,
-            flags):
-        iter = treeview.get_model().get_iter(path)
-        self.set_active(not self.get_active())
-        wrappermap.wrapper(self).emit('clicked', iter)
-
-gobject.type_register(GTKCheckboxCellRenderer)
-
-class CheckboxCellRenderer(signals.SignalEmitter):
-    """Cell Renderer for booleans
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-    def __init__(self):
-        signals.SignalEmitter.__init__(self)
-        self.create_signal("clicked")
-        self._renderer = GTKCheckboxCellRenderer()
-        wrappermap.add(self._renderer, self)
-        self.want_hover = False
-
-    def set_control_size(self, size):
-        pass
-
-    def setup_attributes(self, column, attr_map):
-        column.add_attribute(self._renderer, 'active', attr_map['value'])
-
-class GTKCustomCellRenderer(gtk.GenericCellRenderer):
-    """Handles the GTK hide of CustomCellRenderer
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-
-    def on_get_size(self, widget, cell_area=None):
-        wrapper = wrappermap.wrapper(self)
-        widget_wrapper = wrappermap.wrapper(widget)
-        style = drawing.DrawingStyle(widget_wrapper, use_base_color=True)
-        # NOTE: CustomCellRenderer.cell_data_func() sets up its attributes
-        # from the model itself, so we don't have to worry about setting them
-        # here.
-        width, height = wrapper.get_size(style, widget_wrapper.layout_manager)
-        x_offset = self.props.xpad
-        y_offset = self.props.ypad
-        width += self.props.xpad * 2
-        height += self.props.ypad * 2
-        if cell_area:
-            x_offset += cell_area.x
-            y_offset += cell_area.x
-            extra_width = max(0, cell_area.width - width)
-            extra_height = max(0, cell_area.height - height)
-            x_offset += int(round(self.props.xalign * extra_width))
-            y_offset += int(round(self.props.yalign * extra_height))
-        return x_offset, y_offset, width, height
-
-    def on_render(self, window, widget, background_area, cell_area, expose_area,
-            flags):
-        selected = (flags & gtk.CELL_RENDERER_SELECTED)
-        if selected:
-            if widget.flags() & gtk.HAS_FOCUS:
-                state = gtk.STATE_SELECTED
-            else:
-                state = gtk.STATE_ACTIVE
-        else:
-            state = gtk.STATE_NORMAL
-        xpad = self.props.xpad
-        ypad = self.props.ypad
-        area = gtk.gdk.Rectangle(cell_area.x + xpad, cell_area.y + ypad,
-                cell_area.width - xpad * 2, cell_area.height - ypad * 2)
-        context = drawing.DrawingContext(window, area, expose_area)
-        widget_wrapper = wrappermap.wrapper(widget)
-        if (selected and not widget_wrapper.draws_selection and
-                widget_wrapper.use_custom_style):
-            # Draw the base color as our background.  This erases the gradient
-            # that GTK draws for selected items.
-            area = widget.get_background_area(self.path, self.column)
-            window.draw_rectangle(widget.style.base_gc[state], True,
-                    area.x, area.y, area.width, area.height)
-        context.style = drawing.DrawingStyle(widget_wrapper,
-                use_base_color=True, state=state)
-        owner = wrappermap.wrapper(self)
-        widget_wrapper.layout_manager.update_cairo_context(context.context)
-        hotspot_tracker = widget_wrapper.hotspot_tracker
-        if (hotspot_tracker and hotspot_tracker.hit and
-                hotspot_tracker.column == self.column and
-                hotspot_tracker.path == self.path):
-            hotspot = hotspot_tracker.name
-        else:
-            hotspot = None
-        if (self.path, self.column) == widget_wrapper.hover_info:
-            hover = widget_wrapper.hover_pos
-            hover = (hover[0] - xpad, hover[1] - ypad)
-        else:
-            hover = None
-        # NOTE: CustomCellRenderer.cell_data_func() sets up its attributes
-        # from the model itself, so we don't have to worry about setting them
-        # here.
-        widget_wrapper.layout_manager.reset()
-        owner.render(context, widget_wrapper.layout_manager, selected,
-                hotspot, hover)
-
-    def on_activate(self, event, widget, path, background_area, cell_area,
-            flags):
-        pass
-
-    def on_start_editing(self, event, widget, path, background_area,
-            cell_area, flags):
-        pass
-gobject.type_register(GTKCustomCellRenderer)
-
-class CustomCellRenderer(object):
-    """Customizable Cell Renderer
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-    def __init__(self):
-        self._renderer = GTKCustomCellRenderer()
-        self.want_hover = False
-        wrappermap.add(self._renderer, self)
-
-    def setup_attributes(self, column, attr_map):
-        column.set_cell_data_func(self._renderer, self.cell_data_func,
-                attr_map)
-
-    def cell_data_func(self, column, cell, model, iter, attr_map):
-        cell.column = column
-        cell.path = model.get_path(iter)
-        row = model[iter]
-        # Set attributes on self instead cell This works because cell is just
-        # going to turn around and call our methods to do the rendering.
-        for name, index in attr_map.items():
-            setattr(self, name, row[index])
-
-    def hotspot_test(self, style, layout, x, y, width, height):
-        return None
-
-class InfoListRenderer(CustomCellRenderer):
-    """Custom Renderer for InfoListModels
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-
-    def cell_data_func(self, column, cell, model, iter, attr_map):
-        self.info, self.attrs = wrappermap.wrapper(model).row_for_iter(iter)
-        cell.column = column
-        cell.path = model.get_path(iter)
-
-class InfoListRendererText(CellRenderer):
-    """Renderer for InfoListModels that only display text
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-
-    def setup_attributes(self, column, attr_map):
-        infolist.gtk.setup_text_cell_data_func(column, self._renderer,
-                self.get_value)
 
 class MiroTreeView(gtk.TreeView):
     """Extends the GTK TreeView widget to help implement TableView
@@ -621,7 +427,156 @@ class TableColumn(signals.SignalEmitter):
         """
         return self._column.get_sort_order() == gtk.SORT_ASCENDING
 
-class TableView(Widget):
+class SelectionOwnerMixin(object):
+    """Encapsulates the selection functionality of a TableView."""
+    def __init__(self):
+        self.selection = self._widget.get_selection()
+        self._selected_before_change = None
+        self._ignore_selection_changed = 0
+        self._restoring_selection = None
+        self.create_signal('selection-changed')
+        self.create_signal('selection-invalid')
+        self.create_signal('deselected')
+        weak_connect(self.selection, 'changed', self.on_selection_changed)
+
+    @contextmanager
+    def ignoring_selection_changes(self):
+        """Use this with with to prevent sending signals when we're changing our
+        own selection; that way, when we get a signal, we know it's something
+        important.
+        """
+        self._ignore_selection_changed += 1
+        try:
+            yield
+        finally:
+            self._ignore_selection_changed -= 1
+
+    def allow_multiple_select(self, allow):
+        if allow:
+            mode = gtk.SELECTION_MULTIPLE
+        else:
+            mode = gtk.SELECTION_SINGLE
+        self.selection.set_mode(mode)
+
+    def get_selection(self):
+        """Returns a list of GTK Iters."""
+        iters = []
+        def collect(treemodel, path, iter):
+            iters.append(iter)
+        self.selection.selected_foreach(collect)
+        return iters
+
+    def get_selected(self):
+        """Returns a GTK Iter."""
+        model, iter = self.selection.get_selected()
+        return iter
+
+    def num_rows_selected(self):
+        """Should be the same as len(get_selection()), but more efficient."""
+        return self.selection.count_selected_rows()
+
+    def select(self, iter_):
+        """Try to select an iter. Raises ValueError if iter cannot be selected.
+        Sends no signals.
+        """
+        with self.ignoring_selection_changes():
+            self.selection.select_iter(iter_)
+        if not self.selection.iter_is_selected(iter_):
+            raise ValueError
+
+    def unselect(self, iter_):
+        """Unselect an Iter. Fails silently if the Iter is not selected, but
+        raises an exception if the Iter is not selectable at all. Sends no
+        signals.
+        """
+        path = self._model.get_path(iter_)
+        with self.ignoring_selection_changes():
+            self.selection.unselect_iter(iter_)
+
+    def unselect_all(self, signal=True):
+        """Unselect all. emits only the 'deselected' signal."""
+        with self.ignoring_selection_changes():
+            self.selection.unselect_all()
+            if signal:
+                self.emit('deselected')
+
+    def set_selection_as_strings(self, selected):
+        """Given a list of selection strings, selects each Iter represented by
+        the strings. Returns True if immediately successful, or False if the
+        selection given cannot be restored yet and has been postponed. Emits no
+        signals.
+        """
+        self._restoring_selection = None
+        with self.ignoring_selection_changes():
+            self.selection.unselect_all()
+        for sel_string in selected:
+            try:
+                iter_ = self._model.get_iter_from_string(sel_string)
+            except ValueError:
+                self._restoring_selection = selected
+                return False
+            with self.ignoring_selection_changes():
+                self.selection.select_iter(iter_)
+        self._save_selection() # overwrite old _save_selection
+        return True
+
+    def get_selection_as_strings(self):
+        """Returns the current selection as a list of strings."""
+        selected = []
+        selected_iters = self.get_selection()
+        for iter_ in selected_iters:
+            sel_string = self._model.get_string_from_iter(iter_)
+            selected.append(sel_string)
+        return selected
+
+    def on_selection_changed(self, selection):
+        """When we receive a selection-changed signal, we forward it if we're
+        not in a 'with ignoring_selection_changes' block. Selection-changed
+        handlers are run in an ignoring block, and anything that changes the
+        selection to reflect the current state.
+        """
+        if not self._ignore_selection_changed:
+            # don't bother sending out a second selection-changed signal if
+            # the handler changes the selection (#15767)
+            with self.ignoring_selection_changes():
+                self.emit('selection-changed')
+
+    def _save_selection(self):
+        """Save the current selection to restore with _restore_selection.
+        Selection needs to be saved/restored whenever the model is set to None
+        (bulk edits). Stores the selection as TreeRowReferences, which are
+        smarter than paths/Iters (the follow items despite changes in order) but
+        cannot be saved between sessions.
+        """
+        model, paths = self.selection.get_selected_rows()
+        self._selected_before_change = []
+        for path in paths:
+            self._selected_before_change.append(gtk.TreeRowReference(model, path))
+
+    def _restore_selection(self):
+        """Restore the selection after making changes that would unset it. If
+        there is a selection from set_selection_as_strings, restore that if
+        possible; otherwise, use what was set in _save_selection.
+        """
+        if self._restoring_selection is not None:
+            if self.set_selection_as_strings(self._restoring_selection):
+                return
+        if self._ignore_selection_changed:
+            return
+        if self._selected_before_change is None:
+            return
+        with self.ignoring_selection_changes():
+            self.selection.unselect_all()
+            for row in self._selected_before_change:
+                try:
+                    self.selection.select_path(row.get_path())
+                except TypeError:
+                    self._selected_before_change = None
+                    logging.error("can't restore selection - deleted?", exc_info=True)
+                    self.emit('selection-invalid')
+                    return
+
+class TableView(Widget, SelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -629,12 +584,12 @@ class TableView(Widget):
     def __init__(self, model):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
+        SelectionOwnerMixin.__init__(self)
         self.model = model
         self.model.add_to_tableview(self._widget)
         self._model = self._widget.get_model()
         wrappermap.add(self._model, model)
         self._setup_colors()
-        self.selection = self._widget.get_selection()
         self.columns = []
         self.attr_map_for_column = {}
         self.gtk_column_to_wrapper = {}
@@ -648,11 +603,17 @@ class TableView(Widget):
         self.in_bulk_change = False
         self.handled_last_button_press = False
         self.delaying_press = False
-        self.ignore_selection_changed = False
         self.set_columns_draggable(False)
+        self.layout_manager = LayoutManager(self._widget)
+        if hasattr(self, 'get_tooltip'):
+            self._widget.set_property('has-tooltip', True)
+            self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
+            self._last_tooltip_place = None
+        self._connect_signals()
+
+    def _connect_signals(self):
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
-        self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.create_signal('row-clicked')
         self.create_signal('row-double-clicked')
@@ -673,15 +634,7 @@ class TableView(Widget):
         self.wrapped_widget_connect('drag-data-received',
                 self.on_drag_data_received)
         self.wrapped_widget_connect('unrealize', self.on_unrealize)
-        weak_connect(self.selection, 'changed', self.on_selection_changed)
         self._connect_hotspot_signals()
-        self.layout_manager = LayoutManager(self._widget)
-        self.selected = None
-        self.restore_selection = []
-        if hasattr(self, 'get_tooltip'):
-            self._widget.set_property('has-tooltip', True)
-            self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
-            self._last_tooltip_place = None
 
     def _connect_hotspot_signals(self):
         self._hotspot_callback_handles = []
@@ -850,58 +803,6 @@ class TableView(Widget):
     def set_fixed_height(self, fixed_height):
         self._widget.set_fixed_height_mode(fixed_height)
 
-    def allow_multiple_select(self, allow):
-        if allow:
-            mode = gtk.SELECTION_MULTIPLE
-        else:
-            mode = gtk.SELECTION_SINGLE
-        self.selection.set_mode(mode)
-
-    def get_selection(self):
-        iters = []
-        def collect(treemodel, path, iter):
-            iters.append(iter)
-        self.selection.selected_foreach(collect)
-        return iters
-
-    def get_selected(self):
-        model, iter = self.selection.get_selected()
-        return iter
-
-    def num_rows_selected(self):
-        return self.selection.count_selected_rows()
-
-    def select(self, iter):
-        """Try to select an iter. Return whether the seletion was successful."""
-        self.selection.select_iter(iter)
-        return self.selection.iter_is_selected(iter)
-
-    def unselect(self, iter):
-        return self.selection.unselect_iter(iter)
-
-    def unselect_all(self):
-        return self.selection.unselect_all()
-
-    def set_selection_as_strings(self, selected):
-        """Given a list of selection strings, selects each iter represented by
-        the strings.
-        
-        There's no straightforward way to wait until after the model has been
-        populated to call this method, so here we actually just make a note of
-        the values to be selected, and model_changed selects them when it can.
-        """
-        self.restore_selection = selected
-
-    def get_selection_as_strings(self):
-        """Returns the current selection as a list of strings."""
-        selected = []
-        selected_iters = self.get_selection()
-        for iter_ in selected_iters:
-            sel_string = self._model.get_string_from_iter(iter_)
-            iter2 = self._model.get_iter_from_string(sel_string)
-            selected.append(sel_string)
-        return selected
-
     def set_row_expanded(self, iter, expanded):
         path = self._model.get_path(iter)
         if expanded:
@@ -938,21 +839,11 @@ class TableView(Widget):
             self._widget.unset_rows_drag_dest()
             self._widget.drag_dest_unset()
 
-    def on_row_expanded(self, widget, iter, path):
-        self.emit('row-expanded', iter)
+    def on_row_expanded(self, _widget, iter_, path):
+        self.emit('row-expanded', iter_, path)
 
-    def on_row_collapsed(self, widget, iter, path):
-        self.emit('row-collapsed', iter)
-
-    def on_selection_changed(self, selection):
-        if not self.ignore_selection_changed:
-            # don't bother sending out a second selection-changed signal if
-            # the handler changes the selection (#15767)
-            self.ignore_selection_changed = True
-            try:
-                self.emit('selection-changed')
-            finally:
-                self.ignore_selection_changed = False
+    def on_row_collapsed(self, _widget, iter_, path):
+        self.emit('row-collapsed', iter_, path)
 
     def on_row_inserted(self, model, path, iter):
         if self.hotspot_tracker:
@@ -1037,12 +928,10 @@ class TableView(Widget):
         self.handled_last_button_press = False
 
     def _popup_context_menu(self, path, event):
-        selection = self._widget.get_selection()
-        if not selection.path_is_selected(path):
-            self.ignore_selection_changed = True
-            selection.unselect_all()
-            self.ignore_selection_changed = False
-            selection.select_path(path)
+        if not self.selection.path_is_selected(path):
+            with self.ignoring_selection_changes():
+                self.selection.unselect_all()
+            self.selection.select_path(path)
         menu = self.make_context_menu()
         menu.popup(None, None, None, event.button, event.time)
         return menu
@@ -1142,11 +1031,9 @@ class TableView(Widget):
                 path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
                 if path_info is not None:
                     path, column, x, y = path_info
-                    selection = self._widget.get_selection()
-                    self.ignore_selection_changed = True
-                    selection.unselect_all()
-                    self.ignore_selection_changed = False
-                    selection.select_path(path)
+                    with self.ignoring_selection_changes():
+                        self.selection.unselect_all()
+                    self.selection.select_path(path)
         self.delaying_press = False
 
     def on_unrealize(self, treeview):
@@ -1199,8 +1086,8 @@ class TableView(Widget):
 
     def on_drag_data_get(self, treeview, context, selection, info, timestamp):
         if self.drag_data:
-            for type, data in self.drag_data.items():
-                selection.set(type, 8, data)
+            for typ, data in self.drag_data.items():
+                selection.set(typ, 8, data)
 
     def on_drag_end(self, treeview, context):
         self.drag_data = None
@@ -1294,7 +1181,6 @@ class TableView(Widget):
         if type == "NONE":
             return
         if selection.data is None:
-            logging.warn("selection.data is None")
             return
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
@@ -1307,22 +1193,6 @@ class TableView(Widget):
                 return True
         return False
 
-    def _save_selection(self):
-        model, paths = self.selection.get_selected_rows()
-        if len(paths) > 0:
-            self.selected = []
-            for path in paths:
-                self.selected.append(gtk.TreeRowReference(model, path))
-        else:
-            self.selected = None
-
-    def _restore_selection(self):
-        if self.selected:
-            for row in self.selected:
-                path = row.get_path()
-                if path:
-                    self.selection.select_path(path)
-
     def start_bulk_change(self):
         self._widget.freeze_child_notify()
         self._save_selection()
@@ -1333,24 +1203,13 @@ class TableView(Widget):
     def model_changed(self):
         if self.in_bulk_change:
             self._widget.set_model(self._model)
-            self._restore_selection()
             self._widget.thaw_child_notify()
             self._connect_hotspot_signals()
             if self.hotspot_tracker:
                 self.hotspot_tracker.redraw_cell()
                 self.hotspot_tracker.update_hit()
             self.in_bulk_change = False
-        else:
-            # deal with any selection waiting to be added from
-            # set_selection_as_strings
-            for sel_string in self.restore_selection[:]:
-                try:
-                    iter_ = self._model.get_iter_from_string(sel_string)
-                except ValueError:
-                    pass
-                else:
-                    if self.select(iter_):
-                        self.restore_selection.remove(sel_string)
+        self._restore_selection()
 
     def get_left_offset(self):
         return self._widget.get_left_offset()
@@ -1469,6 +1328,9 @@ class TableModel(object):
 
     def get_rows(self, row_paths):
         return [self._model[path] for path in row_paths]
+    
+    def get_path(self, iter_):
+        return self._model.get_path(iter_)
 
 class TreeTableModel(TableModel):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""

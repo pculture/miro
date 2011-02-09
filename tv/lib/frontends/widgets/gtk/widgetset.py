@@ -55,7 +55,8 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
      AlertDialog
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
-        InfoListModel, TableColumn, TreeTableModel, CellRenderer,
+        InfoListModel, TableColumn, TreeTableModel)
+from miro.frontends.widgets.gtk.tableviewcells import (CellRenderer,
         ImageCellRenderer, CheckboxCellRenderer, CustomCellRenderer,
         InfoListRenderer, InfoListRendererText)
 from miro.frontends.widgets.gtk.simple import (Image, ImageDisplay,

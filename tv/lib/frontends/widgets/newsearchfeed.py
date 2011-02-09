@@ -59,7 +59,7 @@ def run_dialog():
     title = _('New Search Podcast')
     description = _('A search podcast contains items that match a search term.')
 
-    channels = app.tab_list_manager.feed_list.get_feeds()
+    channels = app.tabs['feed'].get_feeds()
     channels = [ci for ci in channels if not ci.is_folder]
     channels.sort(key=lambda x: util.name_sort_key(x.name))
 

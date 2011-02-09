@@ -161,6 +161,7 @@ class Application:
         self.window = MiroWindow(app.config.get(prefs.LONG_APP_NAME),
                                  self.get_main_window_dimensions())
         self.window.connect_weak('key-press', self.on_key_press)
+        self.window.connect_weak('on-shown', self.on_shown)
         self._window_show_callback = self.window.connect_weak('show',
                 self.on_window_show)
 
@@ -171,7 +172,7 @@ class Application:
         app.playback_manager = playback.PlaybackManager()
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
-        app.tab_list_manager = tablistmanager.TabListManager()
+        app.tabs = tablistmanager.TabListManager()
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
@@ -188,6 +189,14 @@ class Application:
         call_on_ui_thread(m.send_to_backend)
         self.window.disconnect(self._window_show_callback)
         del self._window_show_callback
+
+    def on_shown(self, widget):
+        """Called after the window has been shown (later than on_window_show).
+        This is useful for e.g. restoring a saved selection, which is overridden
+        by the default first-row selection if done too early.
+        """
+        logging.debug('on_shown')
+        app.tabs.on_shown()
 
     def on_key_press(self, window, key, mods):
         if app.playback_manager.is_playing:
@@ -237,14 +246,8 @@ class Application:
 
     def build_window(self):
         app.display_manager = displays.DisplayManager()
-        app.tab_list_manager.populate_tab_list()
-        for info in self.message_handler.initial_guides:
-            app.tab_list_manager.site_list.add(info)
-        for info in self.message_handler.initial_stores:
-            app.tab_list_manager.store_list.add(info)
-        app.tab_list_manager.site_list.model_changed()
-        app.tab_list_manager.store_list.model_changed()
-        app.tab_list_manager.handle_startup_selection()
+        app.tabs['site'].extend(self.message_handler.initial_guides)
+        app.tabs['store'].extend(self.message_handler.initial_stores)
         videobox = self.window.videobox
         videobox.volume_slider.set_value(app.config.get(prefs.VOLUME_LEVEL))
         videobox.volume_slider.connect('changed', self.on_volume_change)
@@ -381,7 +384,7 @@ class Application:
         self.open_url(share_url)
 
     def share_feed(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tabs.selection
         if t == 'feed' and len(channel_infos) == 1:
             ci = channel_infos[0]
             share_items = {"feed_url": ci.base_href}
@@ -660,7 +663,7 @@ class Application:
         name = newfolder.run_dialog(default_type)
         if name is not None:
             if add_selected:
-                t, infos = app.tab_list_manager.get_selection()
+                t, infos = app.tabs.selection
                 child_ids = [info.id for info in infos]
             else:
                 child_ids = None
@@ -678,14 +681,14 @@ class Application:
             messages.NewGuide(url).send_to_backend()
 
     def remove_something(self):
-        t, infos = app.tab_list_manager.get_selection_and_children()
+        t, infos = app.tabs.selection_and_children
         if t == 'feed':
             self.remove_feeds(infos)
         elif t in('site'):
             self.remove_sites(infos)
 
     def remove_current_feed(self):
-        t, channel_infos = app.tab_list_manager.get_selection_and_children()
+        t, channel_infos = app.tabs.selection_and_children
         if t == 'feed':
             self.remove_feeds(channel_infos)
 
@@ -716,7 +719,7 @@ class Application:
                     ).send_to_backend()
 
     def update_selected_feeds(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tabs.selection
         if t == 'feed':
             for ci in channel_infos:
                 if ci.is_folder:
@@ -754,17 +757,17 @@ class Application:
         messages.ExportSubscriptions(filepath).send_to_backend()
 
     def feed_settings(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tabs.selection
         if t == 'feed' and len(channel_infos) == 1:
             feedsettingspanel.run_dialog(channel_infos[0])
 
     def copy_feed_url(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tabs.selection
         if t == 'feed' and len(channel_infos) == 1:
             app.widgetapp.copy_text_to_clipboard(channel_infos[0].url)
 
     def copy_site_url(self):
-        t, site_infos = app.tab_list_manager.get_selection()
+        t, site_infos = app.tabs.selection
         if t == 'site':
             app.widgetapp.copy_text_to_clipboard(site_infos[0].url)
 
@@ -800,14 +803,14 @@ class Application:
         name = dialogs.ask_for_string(title, description)
         if name:
             if add_selected:
-                t, infos = app.tab_list_manager.get_selection()
+                t, infos = app.tabs.selection
                 child_ids = [info.id for info in infos]
             else:
                 child_ids = None
             messages.NewPlaylistFolder(name, child_ids).send_to_backend()
 
     def rename_something(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tabs.selection
         info = channel_infos[0]
 
         if t == 'feed' and info.is_folder:
@@ -848,14 +851,14 @@ class Application:
             messages.RenameObject(t, info.id, name).send_to_backend()
 
     def revert_feed_name(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tabs.selection
         if not channel_infos:
             return
         info = channel_infos[0]
         messages.RevertFeedTitle(info.id).send_to_backend()
 
     def remove_current_playlist(self):
-        t, infos = app.tab_list_manager.get_selection()
+        t, infos = app.tabs.selection
         if t == 'playlist':
             self.remove_playlists(infos)
 
@@ -877,7 +880,7 @@ class Application:
                 messages.DeletePlaylist(pi.id, pi.is_folder).send_to_backend()
 
     def remove_current_site(self):
-        t, infos = app.tab_list_manager.get_selection()
+        t, infos = app.tabs.selection
         if t == 'site':
             self.remove_sites(infos)
 
@@ -1255,9 +1258,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
               item.host == host and item.port == port):
                 app.playback_manager.stop()
         message = messages.TabsChanged('sharing', [], [], [share.id])
-        typ, selected_tabs = app.tab_list_manager.get_selection()
+        typ, selected_tabs = app.tabs.selection
         if typ == u'connect' and share in selected_tabs:
-            app.tab_list_manager.select_guide()
+            app.tabs.select_guide()
         # Call directly: already in frontend.
         self.handle_tabs_changed(message)
         # Now, reply to backend, and eject the share.
@@ -1272,7 +1275,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
                         'The share is either unreachable or incompatible '
                         'with Miro sharing.' % fmtargs)
         dialogs.show_message(title, description, dialogs.INFO_MESSAGE)
-        app.tab_list_manager.select_guide()
+        app.tabs.select_guide()
 
     def handle_device_eject_failed(self, message):
         name = message.device.name
@@ -1365,22 +1368,18 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self._saw_pre_startup_message('search-info')
 
     def tablist_for_message(self, message):
-        if message.type == 'feed':
-            return app.tab_list_manager.feed_list
-        elif message.type == 'playlist':
-            return app.tab_list_manager.playlist_list
+        if message.type in app.tabs:
+            return app.tabs[message.type]
         elif message.type == 'guide':
-            return app.tab_list_manager.site_list
-        elif message.type == 'store':
-            return app.tab_list_manager.store_list
+            return app.tabs['site']
         elif message.type in ('devices', 'sharing'):
-            return app.tab_list_manager.connect_list
+            return app.tabs['connect']
         else:
             raise ValueError("Unknown Type: %s" % message.type)
 
     def handle_tab_list(self, message):
         tablist = self.tablist_for_message(message)
-        tablist.reset_list(message)
+        tablist.setup_list(message)
         if 'feed' in message.type:
             pre_startup_message = message.type + '-tab-list'
             self._saw_pre_startup_message(pre_startup_message)
@@ -1444,7 +1443,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count
-        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list = app.tabs['library']
         library_tab_list.update_download_count(message.count,
                                                message.non_downloading_count)
 
@@ -1452,15 +1451,15 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.paused_count = message.count
 
     def handle_others_count_changed(self, message):
-        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list = app.tabs['library']
         library_tab_list.update_others_count(message.count)
 
     def handle_new_video_count_changed(self, message):
-        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list = app.tabs['library']
         library_tab_list.update_new_video_count(message.count)
 
     def handle_new_audio_count_changed(self, message):
-        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list = app.tabs['library']
         library_tab_list.update_new_audio_count(message.count)
 
     def handle_unwatched_count_changed(self, message):
@@ -1468,7 +1467,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.handle_unwatched_count_changed()
 
     def handle_conversions_count_changed(self, message):
-        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list = app.tabs['library']
         library_tab_list.update_converting_count(message.running_count,
                 message.other_count)
 
@@ -1562,7 +1561,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.progress_dialog = None
 
     def handle_feedless_download_started(self, message):
-        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list = app.tabs['library']
         library_tab_list.blink_tab("downloading")
 
     def handle_metadata_progress_update(self, message):

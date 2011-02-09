@@ -55,7 +55,7 @@ class SearchBox(style.LowerBox):
 
     def on_search(self, obj):
         app.search_manager.set_search_info(obj.selected_engine(), obj.get_text())
-        app.tab_list_manager.select_search()
+        app.tabs.select_search()
         app.search_manager.perform_search()
 
     def on_start_attached_playback(self, obj):

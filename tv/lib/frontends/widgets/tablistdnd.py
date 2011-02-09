@@ -29,114 +29,107 @@
 
 """Drag aNd Drop handlers for TabLists."""
 
+import logging
+
 from miro import app
 from miro import messages
 from miro.plat.frontends.widgets import widgetset
 
-def send_new_order():
-    def append_items(sequence, typ):
-        parent = sequence[sequence.first_iter()]
-        for row in parent.iterchildren():
-            info = row[0]
-            message.append(info, typ)
-            for child in row.iterchildren():
-                message.append_child(info.id, child[0])
-
-    message = messages.TabsReordered()
-    append_items(app.tab_list_manager.feed_list.view.model, u'feed')
-    append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
-    message.send_to_backend()
-
 class TabListDragHandler(object):
+    item_type = NotImplemented
+    folder_type = NotImplemented
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_MOVE
 
     def allowed_types(self):
         return (self.item_type, self.folder_type)
 
-    def begin_drag(self, tableview, rows):
+    def begin_drag(self, _tableview, rows):
+        """Returns (tablist.type as a str, drag_data)"""
         typ = self.item_type
-        for r in rows:
-            if r[0].is_folder:
+        for row in rows:
+            if row[0].type == 'tab':
+                return None
+            if row[0].is_folder:
                 typ = self.folder_type
                 break
         typ = typ.encode('ascii', 'replace')
         return { typ: '-'.join(str(r[0].id) for r in rows)}
 
 class TabDnDReorder(object):
-    """Handles re-ordering tabs for doing drag and drop
-    reordering.
-    """
+    """Handles re-ordering tabs for doing drag and drop reordering."""
     def __init__(self):
         self.removed_rows = []
         self.removed_children = {}
+        self.drop_row_iter = None
+        self.drop_id = None
 
-    def calc_drop_id(self, model):
-        if self.drop_row_iter is not None:
-            self.drop_id = model[self.drop_row_iter][0].id
-        else:
-            self.drop_id = None
-
-    def reorder(self, source_model, dest_model, parent, position, dragged_ids):
+    def reorder(self, model, parent, position, dragged_ids):
         if position >= 0:
-            self.drop_row_iter = dest_model.nth_child_iter(parent, position)
+            self.drop_row_iter = model.nth_child_iter(parent, position)
         else:
             self.drop_row_iter = None
-        self.calc_drop_id(dest_model)
-        self.remove_dragged_rows(source_model, dragged_ids)
-        return self.put_rows_back(dest_model, parent)
+        self.drop_id = self._calc_drop_id(model)
+        self._remove_dragged_rows(model, dragged_ids)
+        return self._put_rows_back(model, parent)
 
-    def remove_row(self, model, iter_, row):
-        self.removed_rows.append(row)
-        if row[0].id == self.drop_id:
-            self.drop_row_iter = model.next_iter(self.drop_row_iter)
-            self.calc_drop_id(model)
-        return model.remove(iter_)
+    def _calc_drop_id(self, model):
+        if self.drop_row_iter is not None:
+            return model[self.drop_row_iter][0].id
 
-    def remove_dragged_rows(self, model, dragged_ids):
+    def _remove_dragged_rows(self, model, dragged_ids):
+        """Part of reorder, separated for clarity."""
         # iterating through the entire table seems inefficient, but we have to
         # know the order of dragged rows so we can insert them back in the
         # right order.
         iter_ = model.first_iter()
-        if iter_ is None:
+        if not iter_:
+            app.widgetapp.handle_soft_failure('_remove_dragged_rows',
+                "tried to drag no rows?",
+                with_exception=False)
             return
         iter_ = model.child_iter(iter_)
-        while iter_ is not None:
+        while iter_:
             row = model[iter_]
-            row_dragged = (row[0].id in dragged_ids)
-            if row_dragged:
+            if row[0].id in dragged_ids:
                 # need to make a copy of the row data, since we're removing it
                 # from the table
                 children = [tuple(r) for r in row.iterchildren()]
                 self.removed_children[row[0].id] = children
-                iter_ = self.remove_row(model, iter_, tuple(row))
+                iter_ = self._remove_row(model, iter_, tuple(row))
             else:
                 child_iter = model.child_iter(iter_)
-                while child_iter is not None:
+                while child_iter:
                     row = model[child_iter]
                     if row[0].id in dragged_ids:
-                        child_iter = self.remove_row(model, child_iter,
+                        child_iter = self._remove_row(model, child_iter,
                                 tuple(row))
                     else:
                         child_iter = model.next_iter(child_iter)
                 iter_ = model.next_iter(iter_)
 
-    def put_rows_back(self, model, parent):
-        if self.drop_row_iter is None:
-            def put_back(moved_row):
-                return model.append_child(parent, *moved_row)
-        else:
-            def put_back(moved_row):
-                return model.insert_before(self.drop_row_iter, *moved_row)
+    def _put_rows_back(self, model, parent):
+        """Part of reorder, separated for clarity."""
         retval = {}
         for removed_row in self.removed_rows:
-            iter_ = put_back(removed_row)
+            if self.drop_row_iter is None:
+                iter_ = model.append_child(parent, *removed_row)
+            else:
+                iter_ = model.insert_before(self.drop_row_iter, *removed_row)
             retval[removed_row[0].id] = iter_
             children = self.removed_children.get(removed_row[0].id, [])
             for child_row in children:
                 child_iter = model.append_child(iter_, *child_row)
                 retval[child_row[0].id] = child_iter
         return retval
+
+    def _remove_row(self, model, iter_, row):
+        """Part of _remove_dragged_rows."""
+        self.removed_rows.append(row)
+        if row[0].id == self.drop_id:
+            self.drop_row_iter = model.next_iter(self.drop_row_iter)
+            self.drop_id = self._calc_drop_id(model)
+        return model.remove(iter_)
 
 class MediaTypeDropHandler(object):
     """Drop Handler that changes the media type (audio/video/other) of items
@@ -149,36 +142,38 @@ class MediaTypeDropHandler(object):
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
 
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
-            position):
+    def _is_valid_drop(self, typ, parent, position):
         if parent is None or position != -1:
-            return widgetset.DRAG_ACTION_NONE
+            return False
         if typ == 'downloaded-item':
-            return widgetset.DRAG_ACTION_COPY
+            return True
         media_type = model[parent][0].media_type
         if typ == ('device-%s-item' % media_type):
+            return True
+
+    def validate_drop(self, _table_view, _model, typ, _source_actions, parent,
+            position):
+        if self._is_valid_drop(typ, parent, position):
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
+    def accept_drop(self, _table_view, model, typ, _source_actions, parent,
             position, data):
-        if parent is not None and position != -1:
+        if self._is_valid_drop(typ, parent, position):
+            video_ids = [int(id_) for id_ in data.split('-')]
             media_type = model[parent][0].media_type
-            if typ == 'downloaded-item':
-                video_ids = [int(id_) for id_ in data.split('-')]
-                m = messages.SetItemMediaType(media_type, video_ids)
-                m.send_to_backend()
-                return True
-            elif typ == ('device-%s-item' % media_type):
-                # copying media from the device
-                item_infos = pickle.loads(data)
-                m = messages.DownloadDeviceItems(item_infos)
-                m.send_to_backend
-        # We shouldn't get here, because don't allow it in validate_drop.
-        # Return False just in case
+            m = messages.SetItemMediaType(media_type, video_ids)
+            m.send_to_backend()
+            return True
+        app.widgetapp.handle_soft_failure('accept_drop',
+            "tried to accept a drop that shouldn't have validated!",
+            with_exception=False)
         return False
 
 class NestedTabListDropHandler(object):
+    item_types = NotImplemented
+    folder_types = NotImplemented
+
     def __init__(self, tablist):
         self.tablist = tablist
 
@@ -188,7 +183,7 @@ class NestedTabListDropHandler(object):
     def allowed_types(self):
         return self.item_types + self.folder_types
 
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
+    def validate_drop(self, _table_view, model, typ, _source_actions, parent,
             position):
         if parent is None:
             # can't drag above the root
@@ -212,53 +207,39 @@ class NestedTabListDropHandler(object):
             return widgetset.DRAG_ACTION_NONE
         return widgetset.DRAG_ACTION_MOVE
 
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
+    def accept_drop(self, _table_view, model, typ, _source_actions, parent,
             position, data):
-        source_tablist = dest_tablist = self.tablist
-        selected_infos = app.tab_list_manager.get_selection()[1]
-        selected_rows = [info.id for info in selected_infos]
-        source_tablist.doing_change = dest_tablist.doing_change = True
-        source_tablist.view.unselect_all()
-        dest_tablist.view.unselect_all()
-        dragged_ids = set([int(id_) for id_ in data.split('-')])
-        expanded_rows = [id_ for id_ in dragged_ids if
-                source_tablist.view.is_row_expanded(
-                source_tablist.iter_map[id_])]
-        if source_tablist.view.is_row_expanded(
-            source_tablist.iter_map[source_tablist.info.id]):
-            # keep the root expanded, if it was before
-            expanded_rows.append(source_tablist.info.id)
-        reorderer = TabDnDReorder()
-        try:
-            new_iters = reorderer.reorder(
-                source_tablist.view.model, dest_tablist.view.model,
-                parent, position, dragged_ids)
+        dragged_ids = set(int(id_) for id_ in data.split('-'))
+        view = self.tablist.view
+        # NOTE: combine 'with' statements in python2.7+
+        with self.tablist.preserving_expanded_rows():
+            with self.tablist.adding():
+                with self.tablist.removing():
+                    new_iters = TabDnDReorder().reorder(
+                        view.model, parent, position, dragged_ids)
+                    self.tablist.iter_map.update(new_iters)
+        view.unselect_all(signal=False)
+        for iter_ in new_iters.itervalues():
+            try:
+                view.select(iter_)
+            except ValueError:
+                parent = view.model.parent_iter(iter_)
+                view.set_row_expanded(parent, True)
+                view.select(iter_)
+            except LookupError:
+                logging.error('lookup error in accept_drop')
+                view.select(view.model.first_iter())
+        view._save_selection()
+        view.emit('selection-changed')
+        message = messages.TabsReordered()
 
-            # handle deletions for the source... delete the keys on
-            # what's returned from the source_tablist's iter_map
-            if source_tablist != dest_tablist:
-                for key in new_iters.keys():
-                    source_tablist.iter_map.pop(key)
-            dest_tablist.iter_map.update(new_iters)
-        finally:
-            if source_tablist != dest_tablist:
-                source_tablist.model_changed()
-            dest_tablist.model_changed()
-        for id_ in expanded_rows:
-            dest_tablist.view.set_row_expanded(dest_tablist.iter_map[id_], True)
-        try:
-            for id_ in selected_rows:
-                iter_ = dest_tablist.iter_map[id_]
-                parent = model.parent_iter(iter_)
-                if parent is None or dest_tablist.view.is_row_expanded(parent):
-                    dest_tablist.view.select(iter_)
-        except KeyError:
-            pass
+        parent = view.model[view.model.first_iter()]
+        for row in parent.iterchildren():
+            message.append(row[0], self.tablist.type)
+            for child in row.iterchildren():
+                message.append_child(row[0].id, child[0])
 
-        send_new_order()
-        source_tablist.doing_change = False
-        dest_tablist.doing_change = False
-        app.tab_list_manager.handle_moved_tabs_to_list(dest_tablist)
+        message.send_to_backend()
         return True
 
 class FeedListDropHandler(NestedTabListDropHandler):
@@ -300,11 +281,16 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
                 messages.AddVideosToPlaylist(playlist_id,
                         video_ids).send_to_backend()
                 return True
-            # We shouldn't get here, because don't allow it in validate_drop.
-            # Return False just in case
+            app.widgetapp.handle_soft_failure('accept_drop',
+                "tried to accept a drop that shouldn't have validated!",
+                with_exception=False)
             return False
         return NestedTabListDropHandler.accept_drop(self, table_view, model, typ,
                 source_actions, parent, position, data)
+
+class PlaylistListDragHandler(TabListDragHandler):
+    item_type = u'playlist'
+    folder_type = u'playlist-with-folder'
 
 class DeviceDropHandler(object):
     def __init__(self, tablist):
@@ -316,9 +302,9 @@ class DeviceDropHandler(object):
     def allowed_types(self):
         return ('downloaded-item',)
 
-    def validate_drop(self, widget, model, type, source_actions, parent,
+    def validate_drop(self, _widget, model, typ, _source_actions, parent,
                       position):
-        if position == -1 and parent and type in self.allowed_types():
+        if position == -1 and parent and typ in self.allowed_types():
             device = model[parent][0]
             if not isinstance(device, messages.DeviceInfo):
                 # DAAP share
@@ -327,12 +313,8 @@ class DeviceDropHandler(object):
                 return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, widget, model, type, source_actions, parent,
-                    position, data):
+    def accept_drop(self, _widget, model, _type, _source_actions, parent,
+                    _position, data):
         video_ids = [int(id_) for id_ in data.split('-')]
         device = model[parent][0]
         messages.DeviceSyncMedia(device, video_ids).send_to_backend()
-
-class PlaylistListDragHandler(TabListDragHandler):
-    item_type = u'playlist'
-    folder_type = u'playlist-with-folder'

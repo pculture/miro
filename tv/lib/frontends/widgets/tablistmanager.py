@@ -30,182 +30,301 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
-from miro import prefs
 
-from miro.frontends.widgets import tablist
+from miro.frontends.widgets.tablist import all_tab_lists
 
-class TabListManager(object):
+import logging
+
+class TabListManager(dict):
+    """TabListManager is a map of list_type:TabList which manages a selection."""
+    ORDER = ('library', 'static', 'connect', 'site', 'store', 'feed', 'playlist')
+    DEFAULT_TAB = ('library', '0') # guide
+    # NOTE: when an OrderedDict collection is available, replace ORDER
     def __init__(self):
-        self.static_tab_list = tablist.StaticTabList()
-        self.library_tab_list = tablist.LibraryTabList()
-        self.connect_list = tablist.ConnectList()
-        self.site_list = tablist.SiteList()
-        self.store_list = tablist.StoreList()
-        self.feed_list = tablist.FeedList()
-        self.playlist_list = tablist.PlaylistList()
-        self.widget_to_tablist = {}
-        for tab_list in self.all_tab_lists():
-            self.widget_to_tablist[tab_list.view] = tab_list
-        self.__table_view = None
-
-    def populate_tab_list(self):
-        self.static_tab_list.build_tabs()
-        self.library_tab_list.build_tabs()
-        self.select_startup_default()
-        for tab_list in self.all_tab_lists():
+        dict.__init__(self)
+        self.type, self.id = u'tablist', u'tablist'
+        for tab_list in all_tab_lists():
+            tab_list.connect('tab-added', self.on_tab_added)
+            tab_list.connect('row-collapsed', self.on_row_collapsed)
+            tab_list.connect('moved-tabs-to-list', self.on_moved_tabs_to_list)
             tab_list.view.connect('selection-changed',
-                    self.on_selection_changed)
+                    self.on_selection_changed, tab_list)
+            tab_list.view.connect('selection-invalid',
+                    self.on_selection_invalid, tab_list)
+            self[tab_list.type] = tab_list
+        self._selected_tablist = None
+        self._previous_selection = (None, [])
+        self._before_no_tabs = self._previous_selection
+        self._restored = False
+        self._path_broken = None
+        self._is_base_selected = False
 
-    def _select_from_tab_list(self, tab_list, iter):
-        view = tab_list.view
-        previous_selection = view.get_selection()
-        for previously_selected in previous_selection:
-            if (view.model[previously_selected][0] == view.model[iter][0]):
-                return # The tab is already selected
-        if hasattr(view.model, 'parent_iter'): # TableModel doesn't necessarily
-                                               # have this
-            parent_iter = view.model.parent_iter(iter)
-            if parent_iter and not view.is_row_expanded(parent_iter):
-                # open the parent
-                view.model_changed()
-                view.set_row_expanded(parent_iter, True)
-        view.select(iter)
-        for previously_selected in previous_selection:
-            # We unselect *after* having made the new selection because if we
-            # unselect first and the selection is empty, the on_selection_changed
-            # callback forces the guide to be selected.
-            view.unselect(previously_selected)
-        self.selected_tab_list = tab_list
-        self.selected_tabs = [view.model[iter][0]]
-        self.handle_new_selection()
+    @property
+    def tab_list_widgets(self):
+        """Return the TableViews for the tab lists, in display order."""
+        return (self[list_type].view for list_type in self.ORDER)
 
-    def handle_startup_selection(self):
-        self.handle_new_selection()
-
-    def handle_new_selection(self):
-        app.display_manager.select_display_for_tabs(self.selected_tab_list,
-                self.selected_tabs)
-
-    def handle_moved_tabs_to_list(self, tab_list):
-        """Handle tabs being moved between tab lists.
-
-        tab_list is the tab list that the tabs were moved to
+    @property
+    def selected_ids(self):
+        """Return a generator for the ids of the selected tabs; uses the
+        currently selected tablist. May return an empty generator.
         """
-        if tab_list is not self.selected_tab_list:
-            self.selected_tab_list = tab_list
-            self.update_selected_tabs()
+        return (tab.id for tab in self.selection[1])
 
-    def all_tab_lists(self):
-        return (
-            self.static_tab_list, self.library_tab_list, self.connect_list,
-            self.site_list, self.feed_list,
-            self.playlist_list, self.store_list)
+    @property
+    def selection(self):
+        """The current selection, as (type of the selected list, list of
+        TabInfos). The list of TabInfos is never empty; if nothing is selected,
+        the selection is changed to a fallback.
+        """
+        real_tabs = self._selected_tablist.view.num_rows_selected()
+        if not real_tabs:
+            self._handle_no_tabs_selected(self._selected_tablist)
+        view = self._selected_tablist.view
+        iters = view.get_selection()
+        if real_tabs:
+            self._previous_selection = (self._selected_tablist.type,
+                    (self._get_locator(view, i) for i in iters))
+        try:
+            return self._selected_tablist.type, [view.model[i][0]
+                   for i in iters]
+        except AttributeError:
+            logging.error('iter is None')
+            return self._selected_tablist.type, [
+                    table_view.model[table_view.model.first_iter()][0]] 
+
+    @property
+    def selection_and_children(self):
+        """Return the current selection and its children, as the type of the
+        selected list and a list of TabInfos. Children are returned before
+        parents.
+        """
+        if not self._selected_tablist:
+            return None, []
+        selected_tabs = set()
+        view = self._selected_tablist.view
+        for path in view.get_selection():
+            row = view.model[path]
+            # sort children before parents
+            selected_tabs.add((1, row[0]))
+            for children in row.iterchildren():
+                selected_tabs.add((0, children[0]))
+        return self._selected_tablist.type, [tab[1] for tab in
+               sorted(selected_tabs)]
 
     def select_guide(self):
-        iter = self.library_tab_list.view.model.first_iter()
-        self._select_from_tab_list(self.library_tab_list, iter)
+        """Select the default Source - usually, the Guide tab."""
+        self._select_from_tab_list('site', self['site'].get_default())
 
     def select_search(self):
-        iter = self.static_tab_list.view.model.first_iter()
-        self._select_from_tab_list(self.static_tab_list, iter)
+        """Select the Video Search tab."""
+        self._select_from_tab_list('static', self['static'].get_default())
 
-    def select_startup_default(self):
-        if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
-            info = self.feed_list.find_feed_with_url(
-                app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP))
-            if info is not None:
-                self._select_from_tab_list(
-                    self.feed_list,
-                    self.feed_list.iter_map[info.id])
-                return
-
-        if app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
-            for iter in self.feed_list.iter_map.values():
-                info = self.feed_list.view.model[iter][0]
-                if info.is_folder and info.name == app.config.get(
-                    prefs.OPEN_FOLDER_ON_STARTUP):
-                    self._select_from_tab_list(self.feed_list, iter)
-                    return
-        # if we get here, the fallback default is the Guide
-        self.select_guide()
-
-    def handle_tablist_change(self, new_tablist):
-        self.selected_tab_list = new_tablist
-        for tab_list in self.all_tab_lists():
-            if tab_list is not new_tablist:
-                tab_list.view.unselect_all()
-
-    def update_selected_tabs(self):
-        table_view = self.selected_tab_list.view
-        self.__table_view = table_view
-        self.selected_tabs = [table_view.model[i][0] for i in
-                table_view.get_selection()]
-
-    def on_selection_changed(self, table_view):
-        if (table_view is not self.selected_tab_list.view and
-                table_view.num_rows_selected() == 0):
-            # This is the result of us calling unselect_all() in
-            # handle_tablist_change
-            return
-
-        tab_list = self.widget_to_tablist[table_view]
-        if tab_list.doing_change:
-            return
-        if tab_list is not self.selected_tab_list:
-            self.handle_tablist_change(tab_list)
-        if table_view.num_rows_selected() > 0:
-            self.update_selected_tabs()
-        else:
-            self.handle_no_tabs_selected()
-        self.handle_new_selection()
-
-    def recalc_selection(self):
-        self.on_selection_changed(self.selected_tab_list.view)
-
-    def handle_no_tabs_selected(self):
-        model = self.selected_tab_list.view.model
+    def _handle_no_tabs_selected(self, _selected_tablist):
+        """No tab is selected; select a fallback. This may be about to be
+        overwritten by on_row_collapsed, but there's no way to tell.
+        """
+        self._restored = False
+        self._before_no_tabs = self._previous_selection
+        logging.warn('_handle_no_tabs_selected')
+        model = _selected_tablist.view.model
         # select the top-level tab for of the list
-        iter = model.first_iter()
-        if iter is None:
+        iter_ = model.first_iter()
+        if not iter_:
             # somehow there's no tabs left in the list.  select the guide as a
             # fallback
             self.select_guide()
             app.widgetapp.handle_soft_failure("handle_no_tabs_selected",
                     'first_iter is None', with_exception=False)
             return
-        info = model[iter][0]
-        if info.type == u'tab':
-            # hideable tab list.  If we have a child, select it.  Otherwise,
-            # select the top-level tab
-            child = model.child_iter(iter)
-            if child is not None:
-                iter = child
-        self._select_from_tab_list(self.selected_tab_list, iter)
+        self._select_from_tab_list(_selected_tablist.type, iter_)
 
-    def get_selection(self):
-        if self.__table_view is not None:
-            return self.selected_tab_list.type, self.selected_tabs
-        else:
-            return None, []
+    def _select_from_tab_list(self, list_type=None, iter_=None, restore=False):
+        """Select a tab by it's type and an iter. If iter_ is None, no new
+        selection will be set but the tab list will be activated.
 
-    def get_selection_and_children(self):
-        """This returns the selection and, in the case of parent rows, returns
-        all children, too.  This is particularly useful for getting selections
-        that include children of folders.
+        If restore is set, ignores other parameters and restores the last saved
+        selection.
 
-        This returns a list generated from a set--so there are no repeated
-        elements.
+        If restore is not set, list_type must specify the tab list to select.
         """
-        table_view = self.__table_view
-        if table_view is not None:
-            selected_tabs = set()
-            for mem in table_view.get_selection():
-                row = table_view.model[mem]
-                # sort children before parents
-                selected_tabs.add((1, row[0]))
-                for children in row.iterchildren():
-                    selected_tabs.add((0, children[0]))
-            return self.selected_tab_list.type, [obj for index, obj in
-                                                 sorted(selected_tabs)]
+        was_base_selected = self._is_base_selected
+        if restore:
+            list_type = self._restore()
+        view = self[list_type].view
+        if iter_:
+            # select the tab
+            view.select(iter_)
+        for tab_list in self.itervalues():
+            if tab_list.type != list_type:
+                # unselect other tabs
+                tab_list.view.unselect_all()
+            # keep the current selections
+            tab_list.view._save_selection() 
+        self._selected_tablist = self[list_type]
+        iters = view.get_selection()
+        tabs = [view.model[i][0] for i in iters]
+        # prevent selecting base and non-base at the same time
+        if tabs and hasattr(self[list_type], 'info'): # hideable
+            self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
+            if self._is_base_selected and len(tabs) > 1:
+                root = self[list_type].iter_map[self[list_type].info.id]
+                if was_base_selected: # unselect base if it was already selected
+                    if (self._selected_tablist.type ==
+                            self._previous_selection[0]):
+                        view.unselect(root)
+                else: # unselect everything but base if base is newly selected
+                    view.unselect_all(signal=False)
+                    view.select(root)
+                view._save_selection()
+            iters = view.get_selection()
+            tabs = [view.model[i][0] for i in iters]
+            self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
+        # open the ancestors
+        if hasattr(view.model, 'parent_iter'): # not all models have parents
+            for selected in iters:
+                parent_iter = view.model.parent_iter(selected)
+                if parent_iter and not view.is_row_expanded(parent_iter):
+                    view.set_row_expanded(parent_iter, True)
+        # update the display
+        if tabs:
+            app.display_manager.select_display_for_tabs(self[list_type], tabs)
         else:
-            return None, []
+            # no valid selection now; don't update display until the real
+            # selection is set
+            self._before_no_tabs = self._previous_selection
+        if tabs and not restore and self._restored:
+            # save the selection
+            selected = view.get_selection_as_strings()
+            selected.insert(0, list_type)
+            logging.debug('saving: %s', repr(selected))
+            app.widget_state.set_selection(self.type, self.id, selected)
+        self._restored = tabs
+        if iter_ is None:
+            return
+        # verify success
+        for sel in tabs:
+            if (sel == view.model[iter_][0]):
+                break
+        logging.warn('_sftl failed')
+
+    def _restore(self):
+        """Restore a saved selection."""
+        sel = app.widget_state.get_selection(self.type, self.id)
+        if sel is None:
+            sel = list(self.DEFAULT_TAB)
+        list_type = sel.pop(0)
+        view = self[list_type].view
+        # select the paths to find out what the strings translate to
+        view.set_selection_as_strings(sel)
+        view._save_selection()
+        if not hasattr(self[list_type], 'info'):
+            logging.debug('not hideable')
+            # not hideable
+            return list_type
+        logging.debug('hideable')
+        # OS X won't expand the root automatically
+        root = self[list_type].iter_map[self[list_type].info.id]
+        view.set_row_expanded(root, True)
+        # now that the root is definitely open, we can really set the sel
+        logging.debug('restoring.1: %s/%s', repr(list_type), repr(sel))
+        view.set_selection_as_strings(sel)
+        view._save_selection()
+        return list_type
+
+    def on_shown(self):
+        """The window has been shown."""
+        # build_tabs cannot be called until now because the guide needs the
+        # window already to exist
+        for tab_list in self.itervalues():
+            tab_list.build_tabs()
+        # the default selection should have set itself by now, so now we can
+        # overwrite it
+        self._select_from_tab_list(restore=True)
+
+    def on_selection_changed(self, _table_view, tab_list):
+        """When the user has changed the selection, we set the selected tablist
+        and then display the new tab(s).
+        """
+        if tab_list._adding or tab_list._removing:
+            return
+        self._select_from_tab_list(tab_list.type)
+
+    def on_tab_added(self, tab_list):
+        """A tablist has gained a tab."""
+        selection = app.widget_state.get_selection(self.type, self.id)
+        if not self._restored and selection and selection[0] == tab_list.type:
+            # we may be waiting for this tab to switch to it
+            self._select_from_tab_list(restore=True)
+
+    def on_moved_tabs_to_list(self, _tab_list, destination):
+        """Handle tabs being moved between tab lists."""
+        self._select_from_tab_list(destination.type)
+
+    def _get_locator(self, view, iter_):
+        """OS X doesn't have hierarchial paths; this returns whatever type of
+        locator is useful on this platform.
+
+        The ideal replacement for hack would be to implement hierarchial paths
+        on OS X.
+        """
+        if not self._path_broken:
+            path = view.model.get_path(iter_)
+            if path is NotImplemented:
+                self._path_broken = True
+            else:
+                self._path_broken = False
+                return path
+        return iter_.value()
+    
+    def _locator_is_parent(self, model, parent, children):
+        """This compares one locator with an iterable of other locators to see
+        whether the one is the parent of any of the others.
+
+        With hierarchial rows, this is O(n).
+        """
+        if self._path_broken:
+            # breadth-first search from children upwards to the root node
+            to_check = set(children)
+            while to_check:
+                checked = set()
+                for node in to_check.copy():
+                    if node == parent:
+                        return True
+                    checked.add(node)
+                    if node.parent is not None:
+                        to_check.add(node.parent.value())
+                to_check.difference_update(checked)
+            return False
+        else:
+            # if a path starts with parent but is longer than parent, it's a
+            # child of parent
+            depth = len(parent)
+            return any(len(sel) > depth and sel[:depth] == parent
+                       for sel in children)
+
+    def on_row_collapsed(self, tab_list, iter_, path):
+        """When an ancestor of a selected tab is collapsed, we lose the
+        selection before we get the row-collapsed signal. The approach taken
+        here is to check whether the last real selection included descendants of
+        the collapsed row, and if so select the collapsed row.
+        """
+        previous_tab_list, selected = self._before_no_tabs
+        selected = list(selected)
+        if tab_list == previous_tab_list or not selected:
+            return
+        if self._path_broken is None:
+            self._path_broken = path is NotImplemented
+        if self._path_broken:
+            path = self._get_locator(tab_list.view, iter_)
+        if self._locator_is_parent(tab_list.view.model, path, selected):
+            tab_list.view.unselect_all(signal=False)
+            self._restored = True
+            self._select_from_tab_list(tab_list.type, iter_)
+
+    def on_selection_invalid(self, _table_view, tab_list):
+        """The current selection is invalid; this happens after deleting. Select
+        the root node.
+        """
+        root = tab_list.iter_map[tab_list.info.id]
+        self._select_from_tab_list(tab_list.type, root)

@@ -468,8 +468,8 @@ class VideoBox(style.LowerBox):
         self.selected_file = info
 
     def on_playback_started(self, manager):
-        self.selected_tab_list = app.tab_list_manager.selected_tab_list
-        self.selected_tabs = app.tab_list_manager.selected_tabs
+        self.selected_tab_list = app.tabs.selected_tab_list
+        self.selected_tabs = app.tabs.selected_tabs
 
     def on_playback_stopped(self, manager):
         self.selected_file = None
@@ -483,8 +483,7 @@ class VideoBox(style.LowerBox):
             # playing a video in the app, so don't bother
             return
         tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
-        app.tab_list_manager._select_from_tab_list(self.selected_tab_list,
-                                                   tab_iter)
+        app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
         controller = app.display_manager.current_display.controller
         controller.scroll_to_item(self.selected_file)
 

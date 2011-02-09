@@ -435,11 +435,11 @@ class PodcastSyncWidget(SyncWidget):
             self.sync_unwatched.disable()
 
     def get_items(self):
-        return [info for info in app.tab_list_manager.feed_list.get_feeds()
+        return [info for info in app.tabs['feed'].get_feeds()
                 if not info.is_folder]
 
     def find_info_by_key(self, key):
-        return app.tab_list_manager.feed_list.find_feed_with_url(key)
+        return app.tabs['feed'].find_feed_with_url(key)
 
 class PlaylistSyncWidget(SyncWidget):
     file_type = 'playlists'
@@ -447,13 +447,13 @@ class PlaylistSyncWidget(SyncWidget):
     title = _("Sync Playlists")
 
     def get_items(self):
-        return app.tab_list_manager.playlist_list.get_playlists()
+        return app.tabs['playlist'].get_playlists()
 
     def info_key(self, info):
         return info.name
 
     def find_info_by_key(self, key):
-        return app.tab_list_manager.playlist_list.find_playlist_with_name(key)
+        return app.tabs['playlist'].find_playlist_with_name(key)
 
 class DeviceSettingsWidget(widgetset.Background):
     def __init__(self):

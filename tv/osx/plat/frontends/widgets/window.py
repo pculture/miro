@@ -135,6 +135,7 @@ class Window(signals.SignalEmitter):
         self.create_signal('key-press')
         self.create_signal('show')
         self.create_signal('hide')
+        self.create_signal('on-shown')
         self.nswindow = MiroWindow.alloc().initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
                 self.get_style_mask(),
@@ -199,6 +200,10 @@ class Window(signals.SignalEmitter):
         self.nswindow.makeKeyAndOrderFront_(nil)
         self.nswindow.makeMainWindow()
         self.emit('show')
+        # Cocoa doesn't apply default selections as forcefully as GTK, so
+        # currently there's no need for on-shown to actually wait until the
+        # window has been shown here
+        self.emit('on-shown')
 
     def close(self):
         self.nswindow.close()
