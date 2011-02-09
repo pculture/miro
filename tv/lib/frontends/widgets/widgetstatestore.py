@@ -37,12 +37,11 @@ class WidgetStateStore(object):
     LIST_VIEW = 1
     STANDARD_VIEW = 0
     DEFAULT_VIEW_TYPE = {
-        u'all-feeds': STANDARD_VIEW,
+        u'tab': STANDARD_VIEW, # all-feeds
         u'device-audio': LIST_VIEW,
         u'device-video': STANDARD_VIEW,
         u'downloading': STANDARD_VIEW,
         u'feed': STANDARD_VIEW,
-        u'tab': STANDARD_VIEW,
         u'folder-contents': STANDARD_VIEW,
         u'music': LIST_VIEW,
         u'others': LIST_VIEW,
@@ -76,7 +75,7 @@ class WidgetStateStore(object):
         u'year': 40,
     }
     DEFAULT_SORT_COLUMN = {
-        u'all-feeds': u'feed-name',
+        u'tab': u'feed-name', # all-feeds
         u'downloading': u'name',
         u'feed': u'date',
         u'folder-contents': u'artist',
@@ -100,7 +99,7 @@ class WidgetStateStore(object):
         u'downloading':
             [u'name', u'feed-name', u'status', u'eta', u'rate',
             u'torrent-details', u'size'],
-        u'all-feeds':
+        u'tab': # all-feeds
             [u'state', u'name', u'feed-name', u'length',
             u'status', u'size', u'date'],
         u'feed':
