@@ -181,6 +181,8 @@ class AppStoreButton(widgetset.CustomButton):
         self.image.draw(context, 0, 0, self.image.width, self.image.height)
 
 class ConnectTab(widgetset.VBox):
+    trans_data = {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}
+
     def __init__(self):
         widgetset.VBox.__init__(self)
 
@@ -190,7 +192,6 @@ class ConnectTab(widgetset.VBox):
                                    self.daap_install_clicked)
             self.pack_start(sharing_broken)
 
-        trans_data = {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}
 
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
@@ -205,15 +206,21 @@ class ConnectTab(widgetset.VBox):
 
         bottom = widgetset.VBox()
 
-        # sharing
-        label = widgetset.Label(_("%(shortappname)s Sharing", trans_data))
+        self._build_daap_section(bottom)
+        self._build_sync_section(bottom)
+        self._build_app_store_section(bottom)
+
+        self.pack_start(widgetutil.align_center(bottom))
+
+    def _build_daap_section(self, bottom):
+        label = widgetset.Label(_("%(shortappname)s Sharing", self.trans_data))
         label.set_size(1.5)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         label = widgetset.Label(
             _("%(shortappname)s can stream and download files to and from "
               "other %(shortappname)ss on your local network and to the "
-              "Miro iPad app.  It's awesome!", trans_data))
+              "Miro iPad app.  It's awesome!", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -230,9 +237,8 @@ class ConnectTab(widgetset.VBox):
         vbox.pack_start(hbox)
 
         hbox = widgetset.HBox()
-        #_("Off")
         hbox.pack_start(widgetset.Label(
-            _("My %(shortappname)s Share Name", trans_data)))
+            _("My %(shortappname)s Share Name", self.trans_data)))
         entry = widgetset.TextEntry(app.config.get(prefs.SHARE_NAME))
         entry.connect('changed', self.daap_name_changed)
         hbox.pack_start(widgetutil.pad(entry, left=5))
@@ -244,7 +250,7 @@ class ConnectTab(widgetset.VBox):
         bottom.pack_start(widgetutil.align_left(bg, left_pad=20,
                                                 bottom_pad=50))
 
-        # syncing
+    def _build_sync_section(self, bottom):
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
         label_line = widgetset.HBox()
@@ -260,7 +266,7 @@ class ConnectTab(widgetset.VBox):
         label = widgetset.Label(
             _("Connect the USB cable to sync your Android device with "
               "%(shortappname)s.  Be sure to set your device to 'USB Mass "
-              "Storage' mode in your device settings.", trans_data))
+              "Storage' mode in your device settings.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -274,7 +280,7 @@ class ConnectTab(widgetset.VBox):
         label = widgetset.Label(
             _("Use this if your phone doesn't appear in %(shortappname)s when "
               "you connect it to the computer, or if you want to sync with an "
-              "external drive.", trans_data))
+              "external drive.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
         show_all_vbox.pack_start(label)
@@ -287,6 +293,8 @@ class ConnectTab(widgetset.VBox):
             imagepool.get(resources.path('images/connect-android.png')))))
         bottom.pack_start(hbox)
 
+    def _build_app_store_section(self, bottom):
+
         # iPad link
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
@@ -298,7 +306,7 @@ class ConnectTab(widgetset.VBox):
             _("The gorgeous Miro iPad app lets you wirelessly stream music "
               "and videos from %(shortappname)s on your desktop to your iPad. "
               "You can also download songs and videos to your iPad and take "
-              "them with you.", trans_data))
+              "them with you.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -309,8 +317,6 @@ class ConnectTab(widgetset.VBox):
         app_store_button.connect('clicked', self.app_store_button_clicked)
         hbox.pack_start(app_store_button)
         bottom.pack_start(hbox)
-
-        self.pack_start(widgetutil.align_center(bottom))
 
     def daap_install_clicked(self, button):
         print 'daap install clicked'
