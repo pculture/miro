@@ -923,7 +923,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.feed_id is not None:
             feed_ = self.get_feed()
             if feed_.origURL != 'dtv:manualFeed':
-                return feed_.get_title()
+                # we do this manually so we don't pick up the name of a search
+                # query (#16044)
+                return feed_.userTitle or feed_.actualFeed.get_title()
         if self.has_parent():
             try:
                 return self.get_parent().get_title()
