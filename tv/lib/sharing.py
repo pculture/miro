@@ -356,11 +356,11 @@ class SharingTracker(object):
                     if cmd == SharingTracker.CMD_QUIT:
                         return
                     if cmd == SharingTracker.CMD_PAUSE:
-                        self.pause = True
+                        self.paused = True
                         self.event.set()
                         continue
                     if cmd == SharingTracker.CMD_RESUME:
-                        self.pause = False
+                        self.paused = False
                         continue
                     raise
                 for i in r:
