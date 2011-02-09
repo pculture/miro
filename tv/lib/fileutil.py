@@ -60,11 +60,17 @@ def isabs(path):
 
 def getctime(path):
     path = expand_filename(path)
-    return os.path.getctime(path)
+    time = os.path.getctime(path)
+    # work around python bug - see #15818
+    time = max(time, 0) 
+    return time
 
 def getmtime(path):
     path = expand_filename(path)
-    return os.path.getmtime(path)
+    time = os.path.getmtime(path)
+    # work around python bug - see #15818
+    time = max(time, 0) 
+    return time
 
 def exists(path):
     if not path:
