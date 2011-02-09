@@ -250,16 +250,20 @@ class WidgetStateStore(object):
     def get_sort_state(self, display_type, display_id, view_type):
         view = self._get_view(display_type, display_id, view_type)
         sort_state = view.sort_state
+        default = WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
         if sort_state is None:
-            sort_state = WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
+            sort_state = default
         if WidgetStateStore.is_standard_view(view_type):
             return sort_state
         else:
             enabled = self.get_columns_enabled(display_type, display_id, view_type)
             column = sort_state.lstrip('-')
-            if column not in enabled:
-                sort_state = WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
-            return sort_state
+            if column in enabled:
+                return sort_state
+            elif default in enabled:
+                return default
+            else:
+                return enabled[0]
 
     def set_sort_state(self, display_type, display_id, view_type, sort_key):
         view = self._get_view(display_type, display_id, view_type)
