@@ -685,6 +685,7 @@ class DaapClient(object):
             self.timer = threading.Timer(self.HEARTBEAT,
                                          self.heartbeat_callback,
                                          [self.session])
+            self.timer.start()
         # We've been disconnected, or server gave incorrect response?
         except (IOError, ValueError):
             pass
@@ -767,6 +768,7 @@ class DaapClient(object):
             self.timer = threading.Timer(self.HEARTBEAT,
                                          self.heartbeat_callback,
                                          [self.session])
+            self.timer.start()
             return True
         # We've been disconnected or there was a problem?
         except (IOError, ValueError):
