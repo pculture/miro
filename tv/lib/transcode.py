@@ -163,13 +163,14 @@ class TranscodeObject(object):
     """
 
     time_offset_args = ['-ss']
-    # XXX these bitrate qualities are hardcoded
-    #has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
-    #                  '-vpre', 'slow']
-    #has_video_has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
-    #                  '-ab', '160k', '-ac', '2']
+    # XXX these bitrate qualities are hardcoded.  Note: the fallback for 
+    # A/V is to leave the arguments empty, and that works.
     has_video_args = []
     has_video_has_audio_args = []
+    has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
+                      '-vpre', 'slow']
+    has_video_has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
+                      '-ab', '160k', '-ac', '2']
     has_audio_args = ['-acodec', 'libmp3lame', '-ac', '2', '-ab', '160k']
     video_output_args = ['-f', 'mpegts', '-']
     audio_output_args = ['-f', 'mpegts', '-']
