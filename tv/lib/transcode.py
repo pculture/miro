@@ -391,7 +391,7 @@ class TranscodeObject(object):
             # The synchronization watermarks doesn't matter anymore since
             # we are going away.
             self.chunk_sem.release()
-            self.signal_thread.join()
+            self.thread.join()
             self.terminate_signal_thread = False
             self.segmenter_handle = None
             self.ffmpeg_handle = None
