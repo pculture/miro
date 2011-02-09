@@ -510,7 +510,7 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
 
     def translateRow_operation_(self, row, operation):
         if operation == NSTableViewDropOn:
-            return (self.model.nth_iter(row),), -1
+            return self.model.nth_iter(row), -1
         else:
             return None, row
 
@@ -529,7 +529,7 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
 class MiroInfoListDataSource(MiroTableViewDataSource):
     def translateRow_operation_(self, row, operation):
         if operation == NSTableViewDropOn:
-            return (row,), -1
+            return row, -1
         else:
             return None, row
 
