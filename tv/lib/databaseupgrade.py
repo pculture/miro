@@ -3140,3 +3140,8 @@ def upgrade140(cursor):
     """
     cursor.execute("ALTER TABLE display_state ADD COLUMN shuffle integer")
     cursor.execute("ALTER TABLE display_state ADD COLUMN repeat integer")
+
+def upgrade141(cursor):
+    """Removes the fast_resume_data column.
+    """
+    remove_column(cursor, 'remote_downloader', ['fast_resume_data'])

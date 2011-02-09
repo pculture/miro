@@ -97,14 +97,14 @@ class SchemaItem(object):
             raise ValidationError("%r (type: %s) is not a %s" %
                                   (data, type(data), correctType))
 
-    def validateTypes(self, data, possibleTypes):
+    def validateTypes(self, data, possibleTypes, msg=""):
         if data is None:
             return
         for t in possibleTypes:
             if isinstance(data, t):
                 return
-        raise ValidationError("%r (type: %s) is not any of: %s" %
-                              (data, type(data), possibleTypes))
+        raise ValidationError("%r (type: %s) is not any of: %s (%s)" %
+                              (data, type(data), possibleTypes, msg))
 
 class SchemaSimpleItem(SchemaItem):
     """Base class for SchemaItems for simple python types."""
@@ -292,16 +292,16 @@ class SchemaStatusContainer(SchemaReprContainer):
         for key, value in data.items():
             self.validateTypes(key, [bool, int, long, float, unicode,
                                      str, NoneType, datetime.datetime,
-                                     time.struct_time])
+                                     time.struct_time], "%s: %s" % (key, value))
             if key not in binary_fields:
                 self.validateTypes(value, [bool, int, long, float, unicode,
                                            NoneType, datetime.datetime,
-                                           time.struct_time])
+                                           time.struct_time], "%s: %s" % (key, value))
             else:
                 self.validateType(value, str)
 
     def _binary_fields(self):
-        rv = ('metainfo', 'fast_resume_data')
+        rv = ('metainfo',)
         if PlatformFilenameType != unicode:
             rv += self.filename_fields
         return rv
@@ -584,7 +584,6 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('channelName', SchemaFilename(noneOk=True)),
         ('status', SchemaStatusContainer()),
         ('metainfo', SchemaBinary(noneOk=True)),
-        ('fast_resume_data', SchemaBinary(noneOk=True)),
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
         ('main_item_id', SchemaInt(noneOk=True)),
@@ -745,7 +744,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 140
+VERSION = 141
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

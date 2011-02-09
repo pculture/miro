@@ -54,8 +54,10 @@ from miro import prefs
 
 from miro.dl_daemon import command
 from miro.dl_daemon import daemon
-from miro.util import check_f, check_u, stringify, MAX_TORRENT_SIZE
-from miro.plat.utils import get_available_bytes_for_movies, utf8_to_filename
+from miro.util import (
+    check_f, check_u, stringify, MAX_TORRENT_SIZE, returns_filename)
+from miro.plat.utils import (
+    get_available_bytes_for_movies, utf8_to_filename, PlatformFilenameType)
 
 chatter = True
 
@@ -843,6 +845,82 @@ class HTTPDownloader(BGDownloader):
         self.cancel_request()
         self.update_client()
 
+
+@returns_filename
+def generate_fast_resume_filename(info_hash):
+    filename = PlatformFilenameType(clean_filename(info_hash) + ".fastresume")
+
+    support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
+    fast_resume_file = os.path.join(support_dir, 'fastresume', filename)
+
+    return fast_resume_file
+
+def save_fast_resume_data(info_hash, fast_resume_data):
+    """Saves fast_resume_data to disk.
+
+    If it encounters problems, then it prints something to the log
+    and otherwise eats the exceptions.
+
+    :param info_hash: the torrent handle info hash--this is unique to
+        a torrent.
+    :param fast_resume_data: the bencoded fast resume data to save to
+        disk
+    """
+    logging.info("save_fast_resume_data")
+
+    fast_resume_file = generate_fast_resume_filename(info_hash)
+    fast_resume_dir = os.path.dirname(fast_resume_file)
+
+    if not os.path.exists(fast_resume_dir):
+        try:
+            os.makedirs(fast_resume_dir)
+        except OSError:
+            logging.exception("can't save fast_resume_data")
+            return
+
+    f = open(fast_resume_file, "wb")
+    f.write(fast_resume_data)
+    f.close()
+
+def load_fast_resume_data(info_hash):
+    """Loads fast_resume_data from file on disk.
+
+    :param info_hash: the torrent handle info hash--this is unique to
+        a torrent.
+
+    :returns: None if there are errors or it doesn't exist, or
+        the bencoded fast resume data
+    """
+    logging.info("load_fast_resume_data")
+
+    fast_resume_file = generate_fast_resume_filename(info_hash)
+    if not os.path.exists(fast_resume_file):
+        return None
+
+    try:
+        f = open(fast_resume_file, "rb")
+        fast_resume_data = f.read()
+        f.close()
+        return fast_resume_data
+    except StandardError:
+        logging.exception("exception kicked up when loading fast "
+                          "resume data")
+    return None
+
+def remove_fast_resume_data(info_hash):
+    """Removes fast_resume_data from file on disk.
+
+    :param info_hash: the torrent handle info hash--this is unique to
+        a torrent.
+    """
+    logging.info("remove_fast_resume_data")
+    fast_resume_file = generate_fast_resume_filename(info_hash)
+    if os.path.exists(fast_resume_file):
+        try:
+            fileutil.remove(fast_resume_file)
+        except OSError:
+            logging.exception("remove_fast_resume_data kicked up exception")
+
 class BTDownloader(BGDownloader):
     # reannounce at most every 30 seconds
     REANNOUNCE_LIMIT = 30
@@ -861,6 +939,7 @@ class BTDownloader(BGDownloader):
         self.seeders = -1
         self.leechers = -1
         self.metainfo_updated = False
+        self.info_hash = None
         if restore is not None:
             self.firstTime = False
             self.restore_state(restore)
@@ -874,7 +953,10 @@ class BTDownloader(BGDownloader):
 
     def _start_torrent(self):
         try:
+            logging.debug("_start_torrent: dlid %s", self.dlid)
+
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
+
             duplicate = TORRENT_SESSION.find_duplicate_torrent(torrent_info)
             if duplicate is not None:
                 c = command.DuplicateTorrent(daemon.LAST_DAEMON,
@@ -897,6 +979,9 @@ class BTDownloader(BGDownloader):
             if not os.path.isdir(save_path):
                 save_path = os.path.dirname(save_path)
 
+            if self.info_hash:
+                self.fast_resume_data = load_fast_resume_data(self.info_hash)
+
             if self.fast_resume_data:
                 self.torrent = TORRENT_SESSION.session.add_torrent(
                     torrent_info, save_path, lt.bdecode(self.fast_resume_data),
@@ -906,6 +991,10 @@ class BTDownloader(BGDownloader):
                 self.torrent = TORRENT_SESSION.session.add_torrent(
                     torrent_info, save_path, None,
                     lt.storage_mode_t.storage_mode_allocate)
+
+            self.info_hash = str(self.torrent.info_hash())
+
+            logging.debug("_start_torrent: info_hash: %s", self.info_hash)
 
             # need to do this for libtorrent > 0.13
             self.torrent.auto_managed(False)
@@ -1066,6 +1155,9 @@ class BTDownloader(BGDownloader):
 
     def update_fast_resume_data(self):
         self.fast_resume_data = lt.bencode(self.torrent.write_resume_data())
+        if self.info_hash:
+            save_fast_resume_data(
+                self.info_hash, self.fast_resume_data)
 
     def handle_error(self, short_reason, reason):
         self._shutdown_torrent()
@@ -1100,11 +1192,12 @@ class BTDownloader(BGDownloader):
         if self.metainfo_updated:
             data['metainfo'] = self.metainfo
             self.metainfo_updated = False
-        data['fast_resume_data'] = self.fast_resume_data
+        # data['fast_resume_data'] = self.fast_resume_data
         data['activity'] = self.activity
         data['dlerType'] = 'BitTorrent'
         data['seeders'] = self.seeders
         data['leechers'] = self.leechers
+        data['info_hash'] = self.info_hash
         return data
 
     def get_rate(self):
@@ -1131,6 +1224,9 @@ class BTDownloader(BGDownloader):
                     fileutil.remove(self.filename)
             except OSError:
                 pass
+
+            if self.info_hash:
+                remove_fast_resume_data(self.info_hash)
 
     def stop_upload(self):
         self.state = u"finished"
