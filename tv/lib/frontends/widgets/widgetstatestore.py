@@ -77,7 +77,7 @@ class WidgetStateStore(object):
     }
     DEFAULT_SORT_COLUMN = {
         u'all-feeds': u'feed-name',
-        u'downloading': u'eta',
+        u'downloading': u'name',
         u'feed': u'date',
         u'folder-contents': u'artist',
         u'music': u'artist',
