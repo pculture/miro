@@ -200,6 +200,7 @@ class WidgetStateStore(object):
         display = self._get_display(display_type, display_id)
         if display.shuffle is None:
             display.shuffle = False
+            return display.shuffle
         else:
             return display.shuffle
 
@@ -212,6 +213,7 @@ class WidgetStateStore(object):
         display = self._get_display(display_type, display_id)
         if display.repeat is None:
             display.repeat = WidgetStateStore.REPEAT_OFF
+            return display.repeat
         else:
             return display.repeat
 
