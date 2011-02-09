@@ -1342,6 +1342,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
         logging.info("saving video %s to %s" % (item_.get_filename(),
                                                 message.filename))
+
+
+        try:
+            if fileutil.samefile(item_.get_filename(), message.filename):
+                return # saving over the same file
+        except (IOError, OSError):
+            # FIXME - return an error to the frontend?
+            pass
+
         try:
             shutil.copyfile(item_.get_filename(), message.filename)
         except IOError:

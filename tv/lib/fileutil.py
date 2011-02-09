@@ -112,6 +112,15 @@ def abspath(path):
     path = collapse_filename(path)
     return path
 
+try:
+    samefile = os.path.samefile
+except AttributeError:
+    # Windows doesn't have samefile()
+    def samefile(path1, path2):
+        abspath1 = os.path.normcase(abspath(path1))
+        abspath2 = os.path.normcase(abspath(path2))
+        return abspath1 == abspath2
+
 def is_windows_file_in_use_error(exception):
     """Check if an exception was caused by a file being in use on windows
 
