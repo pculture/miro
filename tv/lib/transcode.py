@@ -171,8 +171,7 @@ class TranscodeObject(object):
     has_video_args = []
     has_video_has_audio_args = []
     has_audio_args = ['-acodec', 'libmp3lame', '-ac', '2', '-ab', '160k']
-    #video_output_args = ['-f mpegts', '-']
-    video_output_args = ['-f', 'mpeg', '-']
+    video_output_args = ['-f', 'mpegts', '-']
     audio_output_args = ['-f', 'mpegts', '-']
 
     segment_duration = 10
