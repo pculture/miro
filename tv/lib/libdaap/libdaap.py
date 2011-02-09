@@ -683,8 +683,7 @@ class DaapClient(object):
             self.check_reply(tmp_conn.getresponse(), httplib.NO_CONTENT)
             # If it works, Re-arm the timer
             self.timer = threading.Timer(self.HEARTBEAT,
-                                         self.heartbeat_callback,
-                                         [self.session])
+                                         self.heartbeat_callback)
             self.timer.start()
         # We've been disconnected, or server gave incorrect response?
         except (IOError, ValueError):
@@ -766,8 +765,7 @@ class DaapClient(object):
             # Finally, if this all works, start the heartbeat timer.
             # XXX pick out the daap timeout from the server.
             self.timer = threading.Timer(self.HEARTBEAT,
-                                         self.heartbeat_callback,
-                                         [self.session])
+                                         self.heartbeat_callback)
             self.timer.start()
             return True
         # We've been disconnected or there was a problem?
