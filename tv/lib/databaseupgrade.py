@@ -2952,6 +2952,8 @@ def upgrade130(cursor):
     Amazon, eMusic, etc.
     """
     cursor.execute("ALTER TABLE channel_guide ADD COLUMN store integer")
+    cursor.execute('UPDATE channel_guide SET store=?', (0,)) # 0 is a regular
+                                                             # site
 
 def upgrade131(cursor):
     """Adds the Amazon MP3 Store as a site for anyone who doesn't
@@ -2978,7 +2980,8 @@ def upgrade131(cursor):
                    "store, userTitle) "
                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                    (next_id, store_url, "[]", store_url,
-                    favicon_url, True, True, u"Amazon MP3 Store"))
+                    favicon_url, True, 1, u"Amazon MP3 Store")) # 1 is a
+                                                                # visible store
 
     # add the new Audio Guide to the site tablist
     cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
