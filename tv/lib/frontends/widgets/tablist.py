@@ -983,12 +983,12 @@ class SiteList(HideableTabList):
             rows = [(_('Copy URL to clipboard'), app.widgetapp.copy_site_url)]
             if editable:
                 rows.extend([
-                    (_('Rename Website'), app.widgetapp.rename_something),
-                    (_('Remove Website'), app.widgetapp.remove_current_site)])
+                    (_('Rename Source'), app.widgetapp.rename_something),
+                    (_('Remove Source'), app.widgetapp.remove_current_site)])
             return rows
         elif editable:
             return [
-                (_('Remove Websites'), app.widgetapp.remove_current_site),
+                (_('Remove Sources'), app.widgetapp.remove_current_site),
             ]
         else:
             return []

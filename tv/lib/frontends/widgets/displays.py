@@ -686,8 +686,8 @@ class MultipleSelectionDisplay(TabDisplay):
                         {"count": self.child_count}))
             elif tab_type == "site":
                 label_parts.append(ngettext(
-                        '%(count)d Website Selected',
-                        '%(count)d Websites Selected',
+                        '%(count)d Source Selected',
+                        '%(count)d Sources Selected',
                         self.child_count,
                         {"count": self.child_count}))
             else:

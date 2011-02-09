@@ -640,12 +640,12 @@ class Application:
             messages.NewFeedFolder(name, child_ids).send_to_backend()
 
     def add_new_guide(self):
-        url = self.ask_for_url(_('Add Website'),
-                _('Enter the URL of the website to add'),
-                _('Add Website - Invalid URL'),
+        url = self.ask_for_url(_('Add Source'),
+                _('Enter the URL of the source to add'),
+                _('Add Source - Invalid URL'),
                 _("The address you entered is not a valid url.\n"
                   "Please check the URL and try again.\n\n"
-                  "Enter the URL of the website to add"))
+                  "Enter the URL of the source to add"))
 
         if url is not None:
             messages.NewGuide(url).send_to_backend()
@@ -808,8 +808,8 @@ class Application:
             description = _('Enter a new name for the playlist folder %(name)s',
                             {"name": info.name})
         elif t == 'site':
-            title = _('Rename Website')
-            description = _('Enter a new name for the website %(name)s',
+            title = _('Rename Source')
+            description = _('Enter a new name for the source %(name)s',
                             {"name": info.name})
 
         else:
@@ -856,10 +856,10 @@ class Application:
 
     def remove_sites(self, infos):
         infos = [info for info in infos if not info.default]
-        title = ngettext('Remove website', 'Remove websites', len(infos))
+        title = ngettext('Remove source', 'Remove sources', len(infos))
         description = ngettext(
-            'Are you sure you want to remove this website?',
-            'Are you sure you want to remove these %(count)s websites?',
+            'Are you sure you want to remove this source?',
+            'Are you sure you want to remove these %(count)s sources?',
             len(infos),
             {"count": len(infos)}
             )
