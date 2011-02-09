@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-04 13:15+0000\n"
-"Last-Translator: Jiehan Zheng <zheng@jiehan.org>\n"
+"PO-Revision-Date: 2010-12-14 19:06+0000\n"
+"Last-Translator: Heling Yao <Unknown>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -56,7 +56,7 @@ msgstr "下载完成"
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "影片'%s'下载完成"
+msgstr "视频 %s 下载完成。"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -179,11 +179,11 @@ msgstr "东欧"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
-msgstr ""
+msgstr "波罗的海语系"
 
 #: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
-msgstr ""
+msgstr "俄语"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
@@ -191,22 +191,22 @@ msgstr "东南欧"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "乌克兰语"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "西欧语系"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "凯尔特语"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "世界语"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -214,16 +214,16 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
-msgstr ""
+msgstr "希腊语"
 
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "东亚语系"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "通用中文"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
@@ -239,7 +239,7 @@ msgstr "简体中文版的Unix"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "日语"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
@@ -252,24 +252,24 @@ msgstr "日本的Unix"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "朝鲜语"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "中文(繁体)"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Unix下的中文繁体"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "香港地区的中文补充"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "东南亚和亚洲西南部"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -278,12 +278,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "土耳其语"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "泰语"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -291,12 +291,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "越南语"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "中亚语系"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -305,7 +305,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "阿拉伯语"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "希伯来语"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -324,14 +324,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "通用编码"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "通用语言"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -353,7 +353,7 @@ msgstr "完全关闭 %(appname)s"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "系统默认"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
@@ -431,16 +431,16 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "轨道 %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:496
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "字母文件 %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "克罗地亚语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -449,39 +449,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "西里尔语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "斯拉夫语系/俄语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "斯拉夫语系/乌克兰语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "中欧语系"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "罗马尼亚语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "冰岛语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "北欧语系"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "南欧语系"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -489,48 +489,48 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "西方语言"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "简体中文"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "繁体中文"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "亚美尼亚语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "格鲁吉亚语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "古吉拉特语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "旁遮普语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "印地语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "希伯来语"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "波斯语"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -547,15 +547,15 @@ msgstr "视频渲染"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "二进制文件"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "ffmpeg二进制文件路径"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "ffmpeg2theora二进制文件路径"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -571,7 +571,7 @@ msgstr "升级数据库中"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "数据库错误"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -590,6 +590,16 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"很抱歉, %(appname)s 因为以下数据库错误不能启动：\n"
+"\n"
+"错误: %(error)s\n"
+"\n"
+"可能您的数据库已经损坏，无法使用。\n"
+"\n"
+"您可以重新启动，损坏的数据库将随之被移除, 不过您需要重新添加源和媒体文件. 如果您确定要这么做，请按下“重启”按钮来重新启动 "
+"%(appname)s.\n"
+"\n"
+"您可以通过 %(url)s 提交错误报告来帮助我们修复这一问题。"
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -615,7 +625,7 @@ msgstr "您已经有一个使用更新的 %(appname)s 版本保存过的数据�
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "提交崩溃报告"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -625,6 +635,9 @@ msgid ""
 "Do you want to include entire program database including all video and feed "
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"%(appname)s 现在将向我们的崩溃问题数据库提交崩溃报告。\n"
+"\n"
+"您想要在其中包含程序的完整数据库（包括所有的视频和源的标签数据）吗？这将帮助我们诊断问题所在。"
 
 #: ../../lib/feed.py:844
 msgid "Error loading feed"
@@ -669,7 +682,7 @@ msgstr ""
 #: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr ""
+msgstr "%(engine)s 来 '%(query)s'"
 
 #: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
@@ -710,7 +723,7 @@ msgstr "没有连接 - %s后重试"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "没有连接 - 稍后将重新尝试"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -761,6 +774,11 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s 无法从以下URL下载文件：\n"
+"\n"
+"URL:%(url)s\n"
+"\n"
+"错误：%(error)s (%(errordesc)s)"
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
@@ -855,16 +873,16 @@ msgstr "torrent文件 %(filename)s 似乎已经损坏并不能打开。"
 #: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "原因未知"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (转换为 %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -1023,30 +1041,30 @@ msgstr "重试"
 
 #: ../../lib/dialogs.py:129
 msgid "Start Fresh"
-msgstr ""
+msgstr "重启"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "包含数据库"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "请勿包含数据库"
 
 #: ../../lib/dialogs.py:212
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
-msgstr ""
+msgstr "%(authtype)s %(url)s 要求用户名和密码来获得 \"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "需要登录"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s 数据库更新失败"
 
 #: ../../lib/storedatabase.py:251
 #, python-format
@@ -1062,6 +1080,13 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"很抱歉, %(appname)s 因为发生错误无法升级您的数据库。\n"
+"\n"
+"请检查是否磁盘已满. 如果已满，请退出 %(appname)s, 清理一些磁盘空间，然后重新启动 %(appname)s .\n"
+"\n"
+"如果磁盘未满, 请发送错误报告来帮助我们确定问题.\n"
+"\n"
+"最后，您可以重新启动，损坏的数据库将随之被移除,然而您需要重新添加媒体和源。"
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
@@ -1129,32 +1154,32 @@ msgstr "启动中..."
 
 #: ../../lib/controller.py:139
 msgid "Sending Crash Report"
-msgstr ""
+msgstr "发送崩溃报告"
 
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "发送崩溃报告 (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:64
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:67
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:70
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:86
 #, python-format
@@ -1183,22 +1208,22 @@ msgstr[0] "%(num)d 秒"
 #: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:124
 #, python-format
@@ -1320,7 +1345,7 @@ msgstr "下载总计"
 
 #: ../../lib/frontends/widgets/style.py:252
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "上行/下载 比率"
 
 #: ../../lib/frontends/widgets/style.py:254
 msgid "Download Torrent"
@@ -1333,7 +1358,7 @@ msgstr "错误"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "已放入自动下载队列"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1364,7 +1389,7 @@ msgstr "已暂停"
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr ""
+msgstr "于 %(resumetime)s 恢复"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
@@ -1421,7 +1446,7 @@ msgstr "打开字幕文件"
 
 #: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
-msgstr ""
+msgstr "字幕文件"
 
 #: ../../lib/frontends/widgets/menus.py:203
 msgid "_File"
@@ -1449,7 +1474,7 @@ msgstr "删除此项(_R)"
 
 #: ../../lib/frontends/widgets/menus.py:214
 msgid "_Edit Item"
-msgstr ""
+msgstr "编辑项目(_E)"
 
 #: ../../lib/frontends/widgets/menus.py:216
 msgid "Save Item _As"
@@ -1465,7 +1490,7 @@ msgstr "复制此项 _URL 地址"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
-msgstr ""
+msgstr "首选项"
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "_Quit"
@@ -1498,11 +1523,11 @@ msgstr "重命名(_N)"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
-msgstr ""
+msgstr "重命名源"
 
 #: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
-msgstr ""
+msgstr "重命名站点"
 
 #: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
@@ -1510,11 +1535,11 @@ msgstr "删除(_R)"
 
 #: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_移除源"
 
 #: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_移除多个源"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
@@ -1522,15 +1547,15 @@ msgstr "删除文件夹(_R)"
 
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_移除多个文件夹"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
-msgstr ""
+msgstr "_移除该站点"
 
 #: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_移除多个站点"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
@@ -1611,11 +1636,11 @@ msgstr "停止(_S)"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr ""
+msgstr "_下个项目"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr ""
+msgstr "_上个项目"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
@@ -1647,11 +1672,11 @@ msgstr "字幕(_U)"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "选择字幕文件..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "转换"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1688,15 +1713,15 @@ msgstr "_Planet Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "显示转换文件夹"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "编码"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "默认(UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1788,7 +1813,7 @@ msgstr "%(rate)s 下载中"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "自动下载"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -1855,6 +1880,15 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s 不能使用在以下位置的主要视频目录：\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"这可能是由于该目录位于没有连接的外接驱动器,或者 %(shortappname)s 对该目录没有写入的权限, 或者在该路径的位置不存在该目录。\n"
+"\n"
+"如果您选择继续, 主要视频目录将被重设到当前驱动器. 如果您有已经下载完成的视频，这将会导致 %(shortappname)s "
+"丢失这些视频文件的细节。\n"
+"如果您选择退出, 那么您可以连接外接驱动器或修复问题并重新启动 %(shortappname)s."
 
 #: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
@@ -1964,11 +1998,11 @@ msgstr "另存为..."
 
 #: ../../lib/frontends/widgets/application.py:583
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "输入要添加的站点的地址（URL）"
 
 #: ../../lib/frontends/widgets/application.py:584
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "添加站点 -无效的地址（URL）"
 
 #: ../../lib/frontends/widgets/application.py:585
 msgid ""
@@ -1977,6 +2011,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"您输入的地址不是有效的URL。\n"
+"请检查URL并再次尝试。\n"
+"\n"
+"输入要添加的站点的地址（URL）"
 
 #: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
@@ -2057,7 +2095,7 @@ msgstr "重命名站点"
 #: ../../lib/frontends/widgets/application.py:746
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "为站点%(name)s 输入新名称"
 
 #: ../../lib/frontends/widgets/application.py:770
 msgid "Remove playlist"
@@ -2075,15 +2113,13 @@ msgstr[0] ""
 #: ../../lib/frontends/widgets/application.py:792
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "移除站点"
 
 #: ../../lib/frontends/widgets/application.py:794
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "确定要移除 %(count)s 个站点吗？"
 
 #: ../../lib/frontends/widgets/application.py:830
 #: ../../lib/frontends/widgets/application.py:849
@@ -2107,12 +2143,11 @@ msgstr "当尝试退出时，如还有下载任务正在执行请提醒我。"
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "您有 %(count)d 个会话正在进行当中。确定退出？"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr ""
+msgstr "退出时提醒我有会话在进行中"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
@@ -2129,7 +2164,7 @@ msgstr "%(name)s首次安装"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
-msgstr ""
+msgstr "选择语言"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
@@ -2141,20 +2176,25 @@ msgid ""
 "\n"
 "What language would you like Miro to be in?"
 msgstr ""
+"欢迎来到 %(name)s！这是您第一次启动。\n"
+"\n"
+"接下来的几个窗口将帮助您配置 %(name)s 以获得最佳的使用效果。\n"
+"\n"
+"您希望Miro使用哪种语言？"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
 #: ../../lib/frontends/widgets/prefpanel.py:306
 msgid "System default"
-msgstr ""
+msgstr "系统默认"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
-msgstr ""
+msgstr "升级"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
-msgstr ""
+msgstr "语言："
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #: ../../lib/frontends/widgets/firsttimedialog.py:228
@@ -2164,7 +2204,7 @@ msgstr "下一页 >"
 #: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
-msgstr ""
+msgstr "%(name)s 启动"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
@@ -2173,6 +2213,7 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"我们建议您在计算机启动时自动运行 %(name)s 。采用这种方式进行中的下载可以自动完成，新的媒体文件将会在后台下载，从而在您想要观看的时候准备就绪。"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
@@ -2187,7 +2228,7 @@ msgstr "< 上一页"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr ""
+msgstr "查找文件"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2265,7 +2306,7 @@ msgstr[0] "%(count)d 个月以前"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "让项目自动过期"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2331,7 +2372,7 @@ msgstr "旧项已被删除."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "当这么多项目未被播放时暂停自动下载："
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2364,7 +2405,7 @@ msgstr "视频搜索"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "无结果"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2373,6 +2414,7 @@ msgid ""
 "engines, click on the icon to the left of the search box above and select "
 "the search engine from the drop down."
 msgstr ""
+"点击上面的搜索框来在互联网上的媒体搜索站点搜索媒体，输入关键词然后按下Enter键。要切换搜索引擎，点击搜索框左侧的图标从下拉菜单中选择需要的搜索引擎。"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
@@ -2499,8 +2541,7 @@ msgstr[0] "选择了 %(count)d 个种子"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d 个站点已选择"
 
 #: ../../lib/frontends/widgets/displays.py:604
 #, python-format
@@ -2543,42 +2584,42 @@ msgstr "路径:"
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr ""
+msgstr "会话"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr ""
+msgstr "停止所有会话"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "清楚已完成的会话"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "转换为 %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "失败: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "纠错"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "打开日志"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "清除"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "已完成"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2751,7 +2792,7 @@ msgstr "Miro正在升级您的订阅和下载文件的数据库。升级只做�
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: 删除"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2792,7 +2833,7 @@ msgstr "内存中数据库对象总数"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "所有数据库备份："
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -2849,7 +2890,7 @@ msgstr "回复上传"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:227
 msgid "Convert to..."
-msgstr ""
+msgstr "转换为..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:257
@@ -3004,7 +3045,7 @@ msgstr "当下载进行时如果试图退出, 请提示我."
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "试图推出时如果有活动的会话则警告我。"
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
@@ -3146,11 +3187,11 @@ msgstr "您选择一个新的文件夹放置媒体文件。需要%(appname)s帮�
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
-msgstr ""
+msgstr "文件夹"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "可见"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
@@ -3226,7 +3267,7 @@ msgstr "播放后停止"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "允许同时进行的会话数："
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
@@ -3312,11 +3353,11 @@ msgstr "永久链接"
 
 #: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
-msgstr ""
+msgstr "退出全屏"
 
 #: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
-msgstr ""
+msgstr "全屏"
 
 #: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
@@ -3343,7 +3384,7 @@ msgstr "%(host)s 断开了连接"
 #: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "主机返回 %(status)s"
 
 #: ../../lib/httpclient.py:112
 msgid "Please retry later"
@@ -3352,17 +3393,17 @@ msgstr "请稍后重试"
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s 不支持HTTP断点续传"
 
 #: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "%(url)sHTTP重定向限制"
 
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "以下代理服务器认证失败: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
@@ -3371,7 +3412,7 @@ msgstr "404 - 请求页面未找到"
 #: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "主机返回错误状态代码： %(code)s"
 
 #: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
@@ -3379,11 +3420,11 @@ msgstr "验证(授权)失败"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "认证已取消"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "用户取消认证"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"
@@ -3396,12 +3437,12 @@ msgstr "\"%(url)s\"不是一个有效的地址"
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "未知主机"
 
 #: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "找不到域名 \"%(host)s\""
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -3424,15 +3465,15 @@ msgstr "无法写入 %(filename)s"
 
 #: ../../lib/httpclient.py:181
 msgid "Write error"
-msgstr ""
+msgstr "写入错误"
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "站点"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "代理服务器"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3480,7 +3521,7 @@ msgstr "需要 %(amount)s M 以保存视频"
 
 #: ../../lib/dl_daemon/download.py:722
 msgid "no content"
-msgstr ""
+msgstr "无内容"
 
 #: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
@@ -3530,3 +3571,338 @@ msgstr "搜索全部"
 
 #~ msgid "Custom Channels"
 #~ msgstr "自定义频道"
+
+#~ msgid "Stop after each video"
+#~ msgstr "单个视频结束后停止"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "顺次播放视频"
+
+#~ msgid "Select _All"
+#~ msgstr "全选(_A)"
+
+#~ msgid "_Options"
+#~ msgstr "选项(_O)"
+
+#~ msgid "Auto Download"
+#~ msgstr "添加到下载"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "当播放声音使用这个作为视频"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d小时"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d天"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "您必须重新播放以使可视化设置的变更生效."
+
+#~ msgid "None"
+#~ msgstr "无"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "您正使用自定义频道列表的 %(appname)s 版本."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s Gbps"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s bps"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s Mbps"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s Kbps"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "无法打开 %(filename)s 进行记录"
+
+#~ msgid "Re_name Item"
+#~ msgstr "重命名此项(_n)"
+
+#~ msgid "_Paste"
+#~ msgstr "粘贴(_P)"
+
+#~ msgid "_Copy"
+#~ msgstr "复制(_C)"
+
+#~ msgid "Cu_t"
+#~ msgstr "剪切(_T)"
+
+#~ msgid "Add Site"
+#~ msgstr "添加站点"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "自动失效的视频:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "在如下数量的项未播放之前暂停自动下载"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "排入自动下载队列"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "自动下载设置:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "检视在这些文件夹里面的新视频并把他们加入媒体库:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "恢复到上次播放停止的位置开始播放视频"
+
+#~ msgid "No Results Found"
+#~ msgstr "搜索结果为空"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "搜索所有%(text)s"
+
+#~ msgid "Add to Library"
+#~ msgstr "添加到库中"
+
+#~ msgid "Rename Item"
+#~ msgstr "重命名该项"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "输入需要添加站点的URL"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "添加站点 - 无效的URL"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "输入该项的新名称"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "移除 %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "确认移除%(name)s？"
+
+#~ msgid "Migrating files"
+#~ msgstr "迁移文件"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "您输入的地址是无效的。\n"
+#~ "清检查URL并重试。\n"
+#~ "\n"
+#~ "输入需要加入的URL"
+
+#~ msgid "Rename Site"
+#~ msgstr "重命名站点"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "为站点 %(name)s 输入新的名称"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s 在如下地址找不到默认视频文件夹:\n"
+#~ "%(moviedirectory)s\n"
+#~ "默认视频文件夹可能在一个目前没有连接的外置硬盘上。\n"
+#~ "如果您选择继续，默认视频文件夹将会被重置到当前的硬盘。此重置将会导致%(shortappname)s丢失已经下载的视频文件。\n"
+#~ "您可以选择退出，连接外置硬盘，或者手动修复此问题，之后重新打开%(shortappname)s 。"
+
+#~ msgid "Add to library"
+#~ msgstr "添加到媒体库"
+
+#~ msgid "FEEDS"
+#~ msgstr "Feeds"
+
+#~ msgid "SITES"
+#~ msgstr "站点"
+
+#~ msgid "Remove Site"
+#~ msgstr "删除站点"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "改回项目名称"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "订阅多个 Feeds"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "为新建的FEED文件夹输入一个名字"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d 分钟"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "期望是回车换行符,实际为:%(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "头部错误:%(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "状态行错误:%(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "片段大小错误:%(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "状态码错误:%(code)s"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] "注意：你已经订阅了其中的%(count)d个种子。这些种子将保持不变。"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "创建%(count)d个种子?"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr "BT种子文件%(filename)s可能已损坏,无法打开。[确认]"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "管线请求(Pipeline request)从未被启动"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "默认情况下, 视频有效期至:"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "接下来的几项将让%(name)s更加人性化。\n"
+#~ "\n"
+#~ "建议你将%(name)s添加到系统启动项。这样，正在下载中的或新的媒体文件将在后台继续下载，以便您的观看。"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "欢迎安装%(name)s"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "完成%(name)s的安装"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] ""
+#~ "确定移除该站点？\r\n"
+#~ "确定移除这%(count)s个站点？"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "移除站点"
+
+#~ msgid "Remove Sites"
+#~ msgstr "删除站点"
+
+#~ msgid "View:"
+#~ msgstr "观看"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "选择了%(count)d站点"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "磁盘空间不够"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr "磁盘空间不够（升级旧版%(appname)s数据库），请删除部分文件并重试。"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s无法从该地址下载文件：\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s 无法保存数据库内容：磁盘空间已满\n"
+#~ "建议从已满的磁盘空间上删除部分文件，或从您的收藏中删除一些视频。\n"
+#~ "最近的数据变更可能因空间不够而丢失。"
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "编辑项目的元数据"
+
+#~ msgid "other"
+#~ msgstr "其他"
+
+#~ msgid "Unknown Language"
+#~ msgstr "未知语言"

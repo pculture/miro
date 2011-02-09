@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3634,3 +3634,213 @@ msgstr "Contoh Playlist"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Cari Semua"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Standar, Video akan kedaluarsa setelah :"
+
+#~ msgid "Auto Download"
+#~ msgstr "Unduh Otomatis"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Kesalahan Internal: Tidak siap untuk mengirim"
+
+#~ msgid "_Copy"
+#~ msgstr "_Salin"
+
+#~ msgid "Select _All"
+#~ msgstr "Pilih _Semua"
+
+#~ msgid "Cu_t"
+#~ msgstr "Po_tong"
+
+#~ msgid "_Paste"
+#~ msgstr "_Tempel"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Video Selanjutnya"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Video Sebelumnya"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "None"
+#~ msgstr "Nihil"
+
+#~ msgid "Add to Library"
+#~ msgstr "Tambahkan ke Perpustakaan"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Gunakan video ini saat memainkan audio:"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Anda sedang menggunakan versi %(appname)s dengan set saluran kustom."
+
+#~ msgid "Custom Channels"
+#~ msgstr "Saluran kustom"
+
+#~ msgid "Rename Item"
+#~ msgstr "Ubah Nama Item"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Kembalikan Nama Item"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "CRLF yang Diharapkan mendapatkan: %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Baris Header Tidak Benar: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Baris Status Tidak Benar: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Ukuran Bongkahan Tidak Benar: %(msg)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Permintaan pipa saluran tidak pernah dimulai"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Kode Status Tidak Benar: %(code)s"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Pengaturan unduhan otomatis:"
+
+#~ msgid "No Results Found"
+#~ msgstr "Tidak ada hasil yang ditemukan"
+
+#~ msgid "Migrating files"
+#~ msgstr "Memindahkan berkas"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "Menunggu untuk unduhan otomatis"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Video yang Otomatis-Kadaluarsa"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Tahan unduhan-otomatis ketika berkas ini tidak dimainkan"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Selamat Datang di Pengaturan %(name)s Pertama Kali"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Beberapa jendela berikut akan membantu Anda untuk mengatur %(name)s sehingga "
+#~ "dapat bekerja sesuai keinginan Anda.\n"
+#~ "\n"
+#~ "Kami menyarankan Anda untuk menjalankan %(name)s ketika komputer dihidupkan. "
+#~ " Dengan demikian, unduhan yang sedang dalam proses dapat selesai diunduh dan "
+#~ "berkas media baru dapat di unduh pada latar-proses, sehingga berkas media "
+#~ "siap ketika Anda ingin menontonnya."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Menyelesaikan Pengaturan %(name)s Pertama Kali"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s tidak dapat mengunduh berkas pada URL berikut:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Cari semua: %(text)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Tidak dapat membuka %(filename)s untuk ditulisi"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d menit"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d jam"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d hari"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Kami mohon maaf, %(appname)s tidak dapat memperbaharui database karena "
+#~ "terjadi eror.\n"
+#~ "\n"
+#~ "Periksa apakah tempat penyimpanan Anda penuh.  Jika penuh, keluar dari "
+#~ "%(appname)s, bebaskan sejumlah ruang kosong, dan mulai %(appname)s kembali.\n"
+#~ "\n"
+#~ "Jika tempat penyimpanan Anda tidak penuh, bantu kami memahami "
+#~ "permasalahannya dengan keluar, kemudian melaporkan masalahnya ke "
+#~ "bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Terakhir, Anda dapat memulai dari awal dan database yang rusak akan dihapus, "
+#~ "tetapi Anda harus menambahkan kembali feed dan berkas media Anda."

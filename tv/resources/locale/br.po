@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-08 17:40+0000\n"
-"Last-Translator: Nicky Rowe <Unknown>\n"
+"PO-Revision-Date: 2011-01-08 15:16+0000\n"
+"Last-Translator: Skolajidi Diwan <gireg_konan@hotmail.com>\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -102,7 +102,7 @@ msgstr "Pegañ"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:187
 msgid "Select All"
-msgstr "Diuzañ pep tra"
+msgstr "Dibab holl"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:189
 msgid "Edit"
@@ -138,7 +138,7 @@ msgstr "Prenestr pennañ"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:219
 msgid "Bring All to Front"
-msgstr "Degas holl d’an diaraog"
+msgstr "Degas holl diaraog"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:221
 msgid "Window"
@@ -159,12 +159,12 @@ msgstr "Skoilhañ istitloù"
 #: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr "Hini dioueradus ebet"
+msgstr "N'eus hini"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
 msgid "Select a Subtitles file..."
-msgstr "Dibab restr istitloù"
+msgstr "Dibab restr Istitloù"
 
 #: ../../windows/plat/renderers/vlc.py:697
 #: ../../windows/plat/renderers/vlc.py:700
@@ -191,18 +191,18 @@ msgstr "Eus Gevred Europa"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukraineg"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "Kornôg-Europat"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "Keltiek"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
@@ -214,24 +214,24 @@ msgstr "Esperanteg"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
-msgstr ""
+msgstr "Gresianek"
 
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "Reter-Aziat"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Sinaeg hollek"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "Sinaeg eeun"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "Sinaeg eeun Unix"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -239,11 +239,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "Japaneg"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Japaneg Unix"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -252,24 +252,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "Koreeg"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "Sinaeg hengounel"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Sinaeg hengounel Unix"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Ouzhpennadenn Hong-Kong"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "Gevred ha Mervent Aziat"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -278,12 +278,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Turkeg"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Thailandeg"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -291,12 +291,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnameg"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Reterat-kreiz"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -305,7 +305,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "Arabeg"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebreeg"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -324,14 +324,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unikod"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Hollvedel"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -344,7 +344,7 @@ msgstr "Serrit pa glikin war ar voutonenn ruz:"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
-msgstr "Bihanikaat en daolenn a-benn adkregiñ gant ar pellgargañ."
+msgstr "Bihanikaat en daolenn ma adkrego ar pellgargañ."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
@@ -353,11 +353,11 @@ msgstr "Kuitaat %(appname)s da vat."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Reizhiad dre-ziouer"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Font istitl :"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -369,9 +369,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Pa glikit war arvoutonenn ruz, daoust ha c’hoant hoc’h eus e vefe serret an "
-"daolenn sistem pe kuitaat gant %(appname)s? Gallout a refet kemm an "
-"arventenn-mañ diwezhatoc’h en Dibaboù."
+"Pa glikit war ar voutonenn ruz, ha serret e vo an daolenn sistem pe kuitaat "
+"gant %(appname)s? Gallout a refet kemm an arventenn-mañ diwezhatoc’h en "
+"Dibaboù."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
@@ -383,7 +383,7 @@ msgstr "Fazi erbediñ an dra"
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
-msgstr "Fazi o tigeriñ al lec’hienn"
+msgstr "Fazi Digeriñ Lec’hienn"
 
 #: ../../windows/plat/frontends/widgets/application.py:217
 #, python-format
@@ -417,7 +417,7 @@ msgid ""
 "Would you like to do this now?"
 msgstr ""
 "Ma vo kaer ho selladenn %(appname)s, e kinnigomp deoc’h staliañ Adobe Flash. "
-"Ober se bremañ?"
+"En ober bremañ?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -433,22 +433,22 @@ msgid ""
 "been installed."
 msgstr ""
 "Pellgarget e vo al lec’hienn eus pehini e vo pellgarget ha staliet Adobe "
-"Flash.   \tRet e vefe deoc’h kuitaat %(appname)s bremañ hag adloc’hañ goude "
-"bezañ staliet Adobe Flash."
+"Flash.   \tRet e vefe deoc’h kuitaat %(appname)s bremañ hag e adloc’hañ "
+"goude bezañ staliet Adobe Flash."
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Roudenn %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:496
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Restr istitl %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Kroateg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -457,39 +457,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Kirileg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Kirileg/Rusianeg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Kirileg/Ukraineg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "Kreiz-Europat"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Roumaneg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandeg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Norzhek"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "Su-Europat"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -497,52 +497,52 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "Kornogat"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Sinaeg eeun"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Sinaeg hengounel"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Armenieg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Jeorjieg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujaratieg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhieg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindieg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Hebraeg hewel"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Perseg ; Farsi"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
-msgstr "Dibaboù restaoladur"
+msgstr "Dibaboù restaol"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:64
 #, python-format
@@ -552,19 +552,19 @@ msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:79
 msgid "Video renderer:"
-msgstr "Restaoler Video"
+msgstr "Restaol Video"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Binaroù da implij"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "hent ar binaroù ffmpeg"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "Hent ar binaroù ffmpeg2theora"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -580,7 +580,7 @@ msgstr "O peurwellaat an diaz roadennoù"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Fazi en diaz roadennoù"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -599,6 +599,19 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Digarezit, ne oa ket gouest %(appname)s da loc'hañ en abeg d'ur fazi diaz "
+"roadennoù:\n"
+"\n"
+"Fazi: %(error)s\n"
+"\n"
+"Marteze ez eo siet ho tiaz roadennoù ha n'hell ket bezañ implijet.\n"
+"\n"
+"Adkrogit hag e vo tennet ho tiaz kuit, met ret e vo deoc'h adlakaat ho "
+"heuliennoù hag ho restroù media. M'hoc'h eus c'hoant n'ho po ken nemet "
+"pouezhañ war ar voutonenn Adloc'hañ hag adkregiñ gant %(appname)s.\n"
+"\n"
+"A-benn hon sikour da dresañ ar c'hudennoù-se en dazont, kasit dimp mar-plij "
+"ur rentañ-kont beug da %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -610,8 +623,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
-"Ur fazi dianavezet en deus harzet ouzh %(appname)s da vont en-dro. Kasit ur "
-"rentañ-kont fazi da %(url)s mar plij."
+"Harzet en deus ur fazi dianavezet ouzh %(appname)s da vont en-dro. Kasit ur "
+"rentañ-kont beug da %(url)s mar plij."
 
 #: ../../lib/startup.py:246
 msgid "Database too new"
@@ -629,7 +642,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "O kas rentañ-kont sac'hadenn"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -639,6 +652,12 @@ msgid ""
 "Do you want to include entire program database including all video and feed "
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"Kaset e vo gant %(appname)s ur rentañ-kont sac'hadenn d'hon diaz "
+"sac'hadennoù.\n"
+"\n"
+"Ha c'hoant ho pefe e vefe lakaet asambles an diaz poellad penn-da-benn gant "
+"an holl videoioù ha metadata an heuliennoù ? Se a sikourfe ac'hanomp da "
+"gavout ar gudenn."
 
 #: ../../lib/feed.py:844
 msgid "Error loading feed"
@@ -652,7 +671,7 @@ msgstr ""
 
 #: ../../lib/feed.py:849
 msgid "Would you like to keep the feed?"
-msgstr "Ha c’hoant hoc’h eus da virout an heulienn?"
+msgstr "C'hoant hoc’h eus da virout an heulienn?"
 
 #: ../../lib/feed.py:972
 msgid "Bad content-type"
@@ -685,7 +704,7 @@ msgstr ""
 #: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr ""
+msgstr "%(engine)s evit '%(query)s'"
 
 #: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
@@ -722,11 +741,11 @@ msgstr "Kregiñ"
 #: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "Kevreadenn ebet - adesaeet e vo a-benn %s"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "Kevreadenn ebet - adesaeet e vo prestik"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -779,6 +798,13 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"N'hell ket %(appname)s enkargañ ur restr en URL-mañ:\n"
+"\n"
+"URL: %(url)s\n"
+"\n"
+"Fazi: %(error)s (%(errordesc)s)\n"
+"\t\tTorrioù linennoù zo amañ. Pep hini anezho a verk un torr linenn. "
+"Adkrogit gant ul linenn nevez en hevelep lec'h an droidigezh."
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
@@ -876,20 +902,22 @@ msgstr "Torrent Null"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Ar restr torrent %(filename)s a seblant bezañ siet ha n'hell ket bezañ "
+"digoret."
 
 #: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Hep digarez"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Troet e %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -901,7 +929,7 @@ msgstr "Mat eo"
 
 #: ../../lib/dialogs.py:94
 msgid "Apply"
-msgstr ""
+msgstr "Seveniñ"
 
 #: ../../lib/dialogs.py:95 ../../lib/frontends/widgets/gtk/window.py:820
 msgid "Close"
@@ -1044,34 +1072,36 @@ msgstr "Paouez selladenn"
 
 #: ../../lib/dialogs.py:128
 msgid "Retry"
-msgstr ""
+msgstr "Klask en-dro"
 
 #: ../../lib/dialogs.py:129
 msgid "Start Fresh"
-msgstr ""
+msgstr "Kregiñ a-nevez"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "Enklozañ diaz roadennoù"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "Arabat enklozañ diaz"
 
 #: ../../lib/dialogs.py:212
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s en deus ezhomm eus un anv-implijer ha ger-kuzh evit "
+"\"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Kevreadenniñ rediet"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "Reneveziñ diaz %(appname)s c'hwitet"
 
 #: ../../lib/storedatabase.py:251
 #, python-format
@@ -1087,6 +1117,17 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Hon digarezit, ne oa ket gouest %(appname)s da reneveziñ ho tiaz en abeg "
+"d'ar fazioù.\n"
+"\n"
+"Sellit ervat da welout ha ne vefe ket leun ho pladenn, da heul kuitait "
+"%(appname)s, dieubit un tamm plas, hag adkrogit gant %(appname)s.\n"
+"\n"
+"Ma ne vefe ket leun ho pladenn, kasit deomp ur rentañ-kont beug mar-plij war-"
+"du hon diaz sac'hadennoù.\n"
+"\n"
+"A-benn ar fin e c'hellit adloc'hañ hag e vo dilemet ho tiaz siet, met ret e "
+"vo deoc'h adlakaat ho heuliennoù ha restroù media."
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
@@ -1126,6 +1167,20 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"Ne oa ket gouest %(appname)s da virout e ziaz.\n"
+"\n"
+"Ma 'z eo leun ho pladenn, e kinnigomp deoc'h dieubiñ un tamm plas ha "
+"adloc'hañ. Ma n'eo ket leun ho pladenn ez eo posubl-tre e yelo mat goude "
+"adloc'hañ.\n"
+"\n"
+"Ma n'eo servijet da vann ebet adloc'hañ, kuitait %(appname)s mar-plij hag "
+"adkrogit a-nevez. Kemmoù nevez a c'hellfe bezañ kollet.\n"
+"\n"
+"Ma welit ar fazi-mañ pa 'z enkargit, e kinnigomp deoc'h enkargañ nebeutoc'h "
+"a restroù war un dro el lec'h kendivizout dibaboù el lodenn pellgargañ.\n"
+"\n"
+"Fazi: %(error_text)s\n"
+"\n"
 
 #: ../../lib/item.py:1220
 msgid "no title"
@@ -1145,32 +1200,32 @@ msgstr "O kregiñ"
 
 #: ../../lib/controller.py:139
 msgid "Sending Crash Report"
-msgstr ""
+msgstr "O kas rentañ-kont sac'hadenn"
 
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "O kas rentañ-kont sac'hadenn (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:64
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:67
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:70
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:86
 #, python-format
@@ -1190,7 +1245,9 @@ msgstr[1] "%(num).0f eur"
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] "%(num).0f munutenn"
+msgstr[0] ""
+"%(num).0f munutenn\r\n"
+"%(num).0f munutenn"
 msgstr[1] "%(num).0f munutenn"
 
 #: ../../lib/displaytext.py:97
@@ -1203,22 +1260,22 @@ msgstr[1] "%(num).d a segondennoù"
 #: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:124
 #, python-format
@@ -1231,14 +1288,18 @@ msgstr[1] "Marv a-benn %(count)d deiz"
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Marv a-benn %(count)d eur"
+msgstr[0] ""
+"Marv a-benn %(count)d eur\r\n"
+"Marv a-benn %(count)d eur"
 msgstr[1] "Marv a-benn %(count)d eur"
 
 #: ../../lib/displaytext.py:134
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "Marv a-benn %(count)d munutenn"
+msgstr[0] ""
+"Marv a-benn %(count)d munutenn\r\n"
+"Marv a-benn %(count)d munutenn"
 msgstr[1] "Marv a-benn %(count)d munutenn"
 
 #: ../../lib/displaytext.py:142
@@ -1259,7 +1320,7 @@ msgstr[1] "Marv a-benn: %(count)d eur"
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "arv a-benn: %(count)d munutenn"
+msgstr[0] "Marv a-benn: %(count)d munutenn"
 msgstr[1] "Marv a-benn: %(count)d munutenn"
 
 #: ../../lib/displaytext.py:169
@@ -1269,7 +1330,7 @@ msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
 #: ../../lib/frontends/widgets/style.py:234
 msgid "From"
-msgstr "Abaoe"
+msgstr "Eus"
 
 #: ../../lib/frontends/widgets/style.py:235
 msgid "File name:"
@@ -1346,7 +1407,7 @@ msgstr "Hollad degemeret"
 
 #: ../../lib/frontends/widgets/style.py:252
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Uhelaat/Izelaat Kenfeur"
 
 #: ../../lib/frontends/widgets/style.py:254
 msgid "Download Torrent"
@@ -1359,7 +1420,7 @@ msgstr "Fazi"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "Lostigell da em bellgargañ"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1376,7 +1437,7 @@ msgstr "O c’hoari bremañ"
 #: ../../lib/frontends/widgets/style.py:1221
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
-msgstr "Vak nevez ‘zo"
+msgstr "Implijadus nevez 'zo"
 
 #: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
@@ -1390,7 +1451,7 @@ msgstr "Ehanet — #1"
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr ""
+msgstr "Adkregiñ da %(resumetime)s"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
@@ -1444,11 +1505,11 @@ msgstr "aodio"
 
 #: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Digeriñ Teuliad Istitloù"
 
 #: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
-msgstr ""
+msgstr "Restroù iztitloù"
 
 #: ../../lib/frontends/widgets/menus.py:203
 msgid "_File"
@@ -1476,7 +1537,7 @@ msgstr "_Dilemel an traoù"
 
 #: ../../lib/frontends/widgets/menus.py:214
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Kemmañ an Dra"
 
 #: ../../lib/frontends/widgets/menus.py:216
 msgid "Save Item _As"
@@ -1492,7 +1553,7 @@ msgstr "Eilañ _URL an dra"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
-msgstr ""
+msgstr "Dibaboù gwellañ"
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "_Quit"
@@ -1509,7 +1570,7 @@ msgstr "Ouzhpennañ _un heulienn"
 #: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
-msgstr ""
+msgstr "Ouzhpennañ Lec'hienn"
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
@@ -1525,11 +1586,11 @@ msgstr "_Adenvel"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Ad_anvañ Heulienn"
 
 #: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
-msgstr ""
+msgstr "Ad_anvañ Lec'hienn"
 
 #: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
@@ -1537,27 +1598,27 @@ msgstr "Dilemel"
 
 #: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Tennañ Heulienn"
 
 #: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Tennañ Heuliennoù"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
-msgstr "_Dilemel teuliad"
+msgstr "_Dilemel Teuliad"
 
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Dilemel Teuliadoù"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Dilemel Lec'hienn"
 
 #: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Dilemel Lec'hiennoù"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
@@ -1577,7 +1638,7 @@ msgstr "_Enporzhiañ heuliennoù (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
-msgstr "Ezporzhiañ restr (OPML)"
+msgstr "E_zporzhiañ restr (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
@@ -1638,11 +1699,11 @@ msgstr "_Paouez"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr ""
+msgstr "_Kentañ tra"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr ""
+msgstr "_Tra kent"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
@@ -1670,15 +1731,15 @@ msgstr "_Stagañ/distagañ"
 
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
-msgstr ""
+msgstr "I_stitloù"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Dibabit ur Restr Istitloù"
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Treiñ"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1715,15 +1776,15 @@ msgstr "_Planedenn Viro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Diskouez teuliad treiñ"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Enkodiñ"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Dre dech (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1818,7 +1879,7 @@ msgstr "%(rate)s enkargañ"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Emgargañ"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2094,7 +2155,7 @@ msgstr "Reiñ un anv nevez  da deuliad ar roll-c’hoari  %(name)s"
 #: ../../lib/frontends/widgets/application.py:745
 #: ../../lib/frontends/widgets/tablist.py:624
 msgid "Rename Website"
-msgstr ""
+msgstr "Adanvañ Lec'hienn"
 
 #: ../../lib/frontends/widgets/application.py:746
 #, python-format
@@ -2173,7 +2234,7 @@ msgstr "%(name)s Staliadur kentañ"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
-msgstr ""
+msgstr "Dibab Yezh"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
@@ -2193,12 +2254,12 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
-msgstr ""
+msgstr "Hizivaat"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
-msgstr ""
+msgstr "Yezh:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #: ../../lib/frontends/widgets/firsttimedialog.py:228
@@ -2208,7 +2269,7 @@ msgstr "Kentañ hini"
 #: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
-msgstr ""
+msgstr "O kregiñ gant %(name)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
@@ -2231,7 +2292,7 @@ msgstr "< Diaraok"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr ""
+msgstr "O Klask Restroù"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2314,7 +2375,7 @@ msgstr[1] "%(count)d miz ‘zo"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "Traoù peuzvarv"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2381,6 +2442,7 @@ msgstr "Skarzhet an traoù kozh"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
+"Paouez gant emgargañ pa vez kement-mañ a draoù n'int ket bet c'hoariet :"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2413,7 +2475,7 @@ msgstr "Klasker videoioù"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Disoc'h Ebet"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2545,8 +2607,8 @@ msgstr[1] "%(count)d heulienn dibabet"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Lec'hienn Dibabet"
+msgstr[1] "%(count)d a Lec'hiennoù Dibabet"
 
 #: ../../lib/frontends/widgets/displays.py:604
 #, python-format
@@ -2566,47 +2628,47 @@ msgstr "Lakaat en un teul nevez"
 #: ../../lib/frontends/widgets/itemedit.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:108
 msgid "Edit Item"
-msgstr ""
+msgstr "Aozañ an dra"
 
 #: ../../lib/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Titl :"
 
 #: ../../lib/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Deskrivadur :"
 
 #: ../../lib/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Doare ar media"
 
 #: ../../lib/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Hent :"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:56
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr ""
+msgstr "Troidigezhioù"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr ""
+msgstr "Paouez an holl droidigezhioù"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Skarzhañ Troidigezhioù Echu"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Treiñ davet %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "C'hwitet : %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
@@ -2619,11 +2681,11 @@ msgstr ""
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Skarzhañ"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Echuet"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2808,7 +2870,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Diverkañ"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2849,7 +2911,7 @@ msgstr "Niver a roadennoù eñvoret"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Niver db a viradennoù"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -2906,7 +2968,7 @@ msgstr "Adkregiñ ar c’henlodañ"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:227
 msgid "Convert to..."
-msgstr ""
+msgstr "Treiñ davet"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:257
@@ -3227,7 +3289,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "Gweladus"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
@@ -3595,3 +3657,287 @@ msgstr "Roll-c’hoari Skouer"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Klask pep tra"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Linenn Talbenn Fall: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Ment Tamm Fall: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Linenn Statud Fall: %(msg)s"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Dislinennañ engortozet e-lec’h %(character)r"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Reked san n’eo ket aet en-dro"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Kod statud fall: %(code)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Fazi diabarzh: N’eo ket prest da gas"
+
+#~ msgid "Rename Item"
+#~ msgstr "Adenvel an dra"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Distreiñ war anv an dra"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Videoioù gant termen emgefreek:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Ehaniñ pellgargañ emgefreek pa chom  kement-mañ a draoù dic’hoariet:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Bezet degemeret mat war bazenn gentañ neuziañ %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Kentañ skrammadoù ho sikouro da staliañ %(name)s ma yelo diouzh ar gwellañ "
+#~ "en-dro evidoc’h.\n"
+#~ "\n"
+#~ "Hoc’h aliañ a reomp e loc’hfe %(name)s pa vez enaouet hoc’h urzhiataerez. "
+#~ "Evel-se e c’hello echuiñ ar pellgargadennoù a yelo en-dro neuze, ha restroù "
+#~ "media nevez a c’hellfe em bellgargañ da vezañ prest da sellet pa ho po "
+#~ "c’hoant."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "O peurglokaat %(name)s ar staliadur kentañ"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "El lostigell da bellgargañ"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d lec’hienn dibabet"
+#~ msgstr[1] "%(count)d lec’hienn dibabet"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "N’hall ket %(shortappname)s kavout roll kentañ ar videoioù lec’hiet e:  "
+#~ "%(moviedirectory)s  Marteze ez eo abalamour m’emañ lec’hiet en ul lenner "
+#~ "diavaez nend eo ket luget.   Ma kendalc’hit da vont, e vo adlec’hiet ar roll "
+#~ "videoioù war ar bladenn-mañ. M’ho poa videoioù  pellgarget e lakfe "
+#~ "%(shortappname)s da goll titouroù ‘zo diwar o fenn.  Ma paouezit, e c’hellit "
+#~ "lugañ al lenner diavaez pe a-hend-all dresit ar gudenn hag adloc’hit "
+#~ "%(shortappname)s."
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Ouzhpennañ ul lec’hienn – URL direizh"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "N’eo ket reizh URL ar chomlec’h hoc’h eus skrivet.  Adsellit pizh ouzh an "
+#~ "URL ha klaskit adarre.   Lakait URL al lec'hienn da ouzhpennañ."
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Lakaat URL al lec’hienn da ouzhpennañ"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Lakaat un anv nevez d’an dra"
+
+#~ msgid "Add Site"
+#~ msgstr "Ouzhpennañ ul lec’hienn"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Ha sur oc’h da gaout c’hoant da zilemel al lec’hienn-mañ?"
+#~ msgstr[1] ""
+#~ "Ha sur oc’h da gaout c’hoant da zilemel ar %(count)s lec’hienn-mañ?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Dilemel lec’hienn"
+#~ msgstr[1] "Dilemel lec’hiennoù"
+
+#~ msgid "Rename Site"
+#~ msgstr "Adanvañ al lec’hienn"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Reiñ un anv nevez d'al lec’hienn %(name)s"
+
+#~ msgid "Migrating files"
+#~ msgstr "O tilec’hiañ restroù"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Arventenn pellgargañ emgefreek :"
+
+#~ msgid "Remove Site"
+#~ msgstr "Dilemel lec’hienn"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Dilemel lec’hiennoù"
+
+#~ msgid "No Results Found"
+#~ msgstr "Disoc’h ebet kavet"
+
+#~ msgid "FEEDS"
+#~ msgstr "Heuliennoù"
+
+#~ msgid "SITES"
+#~ msgstr "Lec'hiennoù"
+
+#~ msgid "Auto Download"
+#~ msgstr "Pellgargadenn emgefreek"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Seblantout a ra ar restr torrent %(filename)s bezañ brein ha n’heller ket e "
+#~ "zigeriñ. [OK]"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Klask pep tra: %(text)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s n’hall ket pellgagañ ur restr diwar an URL-mañ:  URL: %(url)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Dibosubl eo digeriñ %(filename)s a-benn skrivañ ennañ"
+
+#~ msgid "_Options"
+#~ msgstr "_Dibaboù"
+
+#~ msgid "Cu_t"
+#~ msgstr "_Troc'hañ"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Ad_anvañ an Dra"
+
+#~ msgid "_Copy"
+#~ msgstr "_Eilañ"
+
+#~ msgid "_Paste"
+#~ msgstr "Pegañ"
+
+#~ msgid "Select _All"
+#~ msgstr "Diuz pep tr_a"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Video Kent"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Video War-lerc’h"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d munutenn"
+#~ msgstr[1] "%(count)d munutenn"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d eur"
+#~ msgstr[1] "%(count)d eur"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d deiz"
+#~ msgstr[1] "%(count)d deiz"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s n'en deus ket gallet mirout e ziaz titouroù: Pladenn Leun.\n"
+#~ "Kinnig a reomp deoc'h dilemel an teulioù diwar ar bladenn leun pe dilemel un "
+#~ "nebeud filmoù hepken diouzh ho tastumad.\n"
+#~ "Kemmadennoù nevez 'zo a c'hallfe bezañ kollet."
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "N’eus ket a-walc’h a blas war ar bladenn-galet a-benn peurwellaat ho tiaz "
+#~ "diwar ar stumm kent %(appname)s. Skarzhit traoù ha klaskit adarre."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Re nebeut a blas war ar bladenn-galet"

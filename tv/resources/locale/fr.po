@@ -14,8 +14,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 "X-Poedit-Language: French\n"
 
 #: ../../lib/net.py:75
@@ -3717,3 +3717,409 @@ msgstr "Tout rechercher"
 
 #~ msgid "Auto Download"
 #~ msgstr "Téléchargement automatique"
+
+#~ msgid "_Video"
+#~ msgstr "_Vidéo"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Chaines personnelles"
+
+#~ msgid "_Copy"
+#~ msgstr "_Copier"
+
+#~ msgid "_Options"
+#~ msgstr "_Options"
+
+#~ msgid "Stop after each video"
+#~ msgstr "S'arrêter après chaque video"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Lire les videos les unes à la suite des autres"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Par défaut, les vidéos expirent après :"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d heure"
+#~ msgstr[1] "%(count)d heures"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d jour"
+#~ msgstr[1] "%(count)d jours"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Surveiller ce dossier et inclure les nouvelles vidéos dans la bibliothèque:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr ""
+#~ "Reprendre la lecture de la vidéo depuis le point ou la dernière lecture "
+#~ "s'est arrêtée."
+
+#~ msgid "FEEDS"
+#~ msgstr "FLUX"
+
+#~ msgid "SITES"
+#~ msgstr "SITES"
+
+#~ msgid "None"
+#~ msgstr "Aucun"
+
+#~ msgid "No Results Found"
+#~ msgstr "Aucun résultat trouvé"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Vous devez redémarrer la lecture pour que les changements de visualisation "
+#~ "prennent effet."
+
+#~ msgid "Re_name Item"
+#~ msgstr "Re_nommer l'élément"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minute"
+#~ msgstr[1] "%(count)d minutes"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s o/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s o"
+
+#~ msgid "Add to library"
+#~ msgstr "Ajouter à la librairie"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "Vous utilisez une version de %(appname)s avec un lot de chaînes personnalisé."
+
+#~ msgid "Add Site"
+#~ msgstr "Ajouter un site"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Supprimer %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Êtes-vous sûr de vouloir supprimer %(name)s ?"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Entrez un nom pour le nouveau dossier surveillé"
+
+#~ msgid "Migrating files"
+#~ msgstr "Déplacement des fichiers en cours"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Abonnement à plusieurs flux"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Créer un flux?"
+#~ msgstr[1] "Créer %(count)d flux?"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "REMARQUE: Vous êtes déjà abonné à l'un de ces flux. Ceux-ci vont rester là "
+#~ "ils sont."
+#~ msgstr[1] ""
+#~ "REMARQUE: Vous êtes déjà abonné à %(count)d de ces flux. Ceux-ci vont rester "
+#~ "là où ils sont."
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Plugin de visualisation pour l'audio"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Démarrer le partage"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Achèvement de la première étape de configuration de %(name)s"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Supprimer le site"
+#~ msgstr[1] "Supprimer les sites"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Supprimer les sites"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "téléchargement automatique en attente"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d site sélectionné"
+#~ msgstr[1] "%(count)d sites sélectionnés"
+
+#~ msgid "Rename Site"
+#~ msgstr "Renommer le site"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Le fichier torrent %(filename)s semble être corrompu et ne peut pas être "
+#~ "ouvert. [OK]"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Impossible d'obtenir les droits d'écriture pour %(filename)s"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Un saut de ligne (CRLF) était attendu à la place de %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Ligne d'en-tête erronée : %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Ligne d'état erronée : %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Code d'état erroné : %(code)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "La demande de redirection n'a jamais démarré"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Erreur interne : pas prêt à envoyer"
+
+#~ msgid "Rename Item"
+#~ msgstr "Renommer l'élément"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Revenir à l'ancien nom"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Expiration automatique des vidéos :"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Les quelques fenêtres suivantes vont vous aider à configurer %(name)s afin "
+#~ "qu'il vous satisfasse au mieux.\n"
+#~ "\n"
+#~ "Nous recommandons que %(name)s se lance lorsque votre ordinateur démarre. De "
+#~ "cette façon, les téléchargements en cours peuvent se terminer et de nouveaux "
+#~ "médias peuvent être téléchargés en arrière-plan pour être prêts quand vous "
+#~ "voudrez les voir."
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Mettre le téléchargement automatique en pause quand ce nombre d'éléments non "
+#~ "lus est atteint :"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Saisissez le nouveau nom de l'élément"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Saisissez l'URL du site à ajouter"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Saisissez un nouveau nom pour le site %(name)s"
+
+#~ msgid "Remove Site"
+#~ msgstr "Supprimer le site"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Tout rechercher : %(text)s"
+
+#~ msgid "Cu_t"
+#~ msgstr "Co_uper"
+
+#~ msgid "_Paste"
+#~ msgstr "Co_ller"
+
+#~ msgid "Select _All"
+#~ msgstr "_Tout sélectionner"
+
+#~ msgid "_Next Video"
+#~ msgstr "Vidéo sui_vante"
+
+#~ msgid "_Previous Video"
+#~ msgstr "Vidéo _précédente"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s Go/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s Mo/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s Ko/s"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s Go"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s Mo"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s Ko"
+
+#~ msgid "Add to Library"
+#~ msgstr "Ajouter à la bibliothèque"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Bienvenue dans la configuration initiale de %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Voulez-vous vraiment supprimer ce site ?"
+#~ msgstr[1] "Voulez-vous vraiment supprimer ces %(count)s sites ?"
+
+#~ msgid "View:"
+#~ msgstr "Vue :"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s ne peut pas télécharger de fichier à cette URL :\n"
+#~ "\n"
+#~ "URL : %(url)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Taille de fragment incorrecte : %(msg)s"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Il n'y a pas assez d'espace disque pour mettre à jour la base de données de "
+#~ "l'ancienne version de %(appname)s. Veuillez supprimer certains fichiers et "
+#~ "essayer à nouveau."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Espace disque insuffisant"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "Impossible de sauvegarder la base de données de %(appname)s : disque plein.\n"
+#~ "Nous vous suggérons d'effacer des fichiers de votre disque ou simplement "
+#~ "d'effacer certaines vidéos de votre collection.\n"
+#~ "Les modifications récentes pourraient être perdues."
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s ne peut pas trouver le répertoire vidéo principal situé à "
+#~ "l'emplacement :\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "C'est peut-être parce qu'il est situé sur un lecteur externe non connecté.\n"
+#~ "\n"
+#~ "Si vous continuez, le dossier vidéo principal sera réinitialisé sur ce "
+#~ "disque à l'emplacement par défaut. Si vous aviez téléchargé des vidéos, "
+#~ "%(shortappname)s perdra les renseignements sur ces vidéos.\n"
+#~ "\n"
+#~ "Si vous quittez, vous pourrez connecter le disque ou résoudre le problème "
+#~ "autrement, puis relancer %(shortappname)s."
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Ajout d'un site - URL non valable"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "L'adresse saisie n'est pas valable.\n"
+#~ "Veuillez vérifier l'URL et réessayer.\n"
+#~ "\n"
+#~ "Saisissez L'URL du site à ajouter"
+
+#~ msgid "other"
+#~ msgstr "Autres"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Langue inconnue"
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "Éditer les métadonnées de cet objet."
+
+#~ msgid "Re_name Site"
+#~ msgstr "Re_nommer le Site"
+
+#~ msgid "(Pending)"
+#~ msgstr "(En attente)"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Paramètre de téléchargement automatique :"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Chinois universel"
+
+#, python-format
+#~ msgid "Conversion to %s"
+#~ msgstr "Conversion vers %s"
+
+#~ msgid "FAILED!"
+#~ msgstr "ÉCHEC !"
+
+#, python-format
+#~ msgid "Pending conversion to %s"
+#~ msgstr "Conversion vers %s en attente"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2009-08-14 08:28+0000\n"
-"Last-Translator: Ronak <Unknown>\n"
+"PO-Revision-Date: 2010-12-19 08:36+0000\n"
+"Last-Translator: Sam <ultysagar@gmail.com>\n"
 "Language-Team: Gujarati <gu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -31,7 +31,7 @@ msgstr "સમય સમાપ્ત"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
 #: ../../lib/frontends/widgets/gtk/video.py:302
 msgid "Share"
-msgstr ""
+msgstr "વહેંચો"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:261
@@ -41,7 +41,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
-msgstr ""
+msgstr "રાખો"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
@@ -188,11 +188,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
-msgstr ""
+msgstr "બાલ્ટીક"
 
 #: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
-msgstr ""
+msgstr "રશિયન"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
@@ -200,22 +200,22 @@ msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "યૂક્રેનિયન"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "પશ્ચિમ યુરોપિયન"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "સેલ્ટિક"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "ઇસ્પેરાન્ટો"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -248,7 +248,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "જાપાનીઝ"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
@@ -261,11 +261,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "કોરિયન"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "પરંપરાગત ચાઇનિઝ"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
@@ -287,12 +287,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "તુર્કીશ"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "થાઇ"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -300,7 +300,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "વિયેતનામીસ"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "અરૅબિક"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -323,7 +323,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "હીબ્રુ"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -333,14 +333,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "યુનીકોડ"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "વૈશ્વીક"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -362,7 +362,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "સિસ્ટમ મૂળભૂત"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
@@ -412,7 +412,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "અડોબી ફ્લાશનું સ્થાપન કરવું ?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -447,7 +447,7 @@ msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "ક્રોએટિઅન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -456,39 +456,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "સેરિલીક"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "સેરિલીક/રશિઅન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "સેરિલીક/યુક્રેનિઅન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "મધ્ય યુરોપિયન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "રોમાનિયન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "આઇસલૅન્ડિક"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "નોર્ડિક"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "દક્ષિણ યુરોપિયન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -496,48 +496,48 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "પશ્ચિમી"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "સરળ બનાવેલ ચાઇનીઝ"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "પરંપરાગત ચાઇનીઝ"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "અર્મેનિયન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "જોર્જિયન"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "ગુજરાતી"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "ગુરમુખી"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "હિન્દી"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "દેખી શકાય તેવુ હિબ્રુ"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "પર્સિયન"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -600,7 +600,7 @@ msgstr ""
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
-msgstr ""
+msgstr "અજ્ઞાત ભૂલ"
 
 #: ../../lib/startup.py:149
 #, python-format
@@ -3503,3 +3503,16 @@ msgstr ""
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#~ msgid "None"
+#~ msgstr "કશું નંહિ"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "આ વિડયો પ્રદષિત કરજો, ધ્વનિ ફાઈલ સાથે"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "ભૂલભરેલું મથાળું: %(msg)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "આંતરિક ભૂલ: મોકલવા તૈયાર નથી"

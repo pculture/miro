@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-24 19:47+0000\n"
-"Last-Translator: Juliano Sens <Unknown>\n"
+"PO-Revision-Date: 2010-12-21 16:27+0000\n"
+"Last-Translator: Fernand Zilla <Unknown>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -51,12 +51,12 @@ msgstr "Ver no programa"
 
 #: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
-msgstr "Download Completado"
+msgstr "Download Concluído"
 
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "O download do vídeo '%s' está concluído."
+msgstr "O download do vídeo '%s' foi concluído."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -110,7 +110,7 @@ msgstr "Editar"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:194
 msgid "Present Half Size"
-msgstr "Metade do tamanho atual"
+msgstr "Metade do Tamanho Real"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:197
 msgid "Present Actual Size"
@@ -1767,7 +1767,7 @@ msgstr "_Planeta Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr "Mostrar pasta de conversas"
+msgstr "Mostra pasta de Conversão"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
@@ -2668,11 +2668,11 @@ msgstr "Caminho:"
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr "Conversas"
+msgstr "Conversões"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr "Parar todas as conversas"
+msgstr "Para todas as conversões"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
@@ -3274,11 +3274,11 @@ msgstr "Parar Upload de torrent quando este ratio for alcançado"
 
 #: ../../lib/frontends/widgets/prefpanel.py:484
 msgid "Choose Movies Directory"
-msgstr "Escolha o Diretório de FIlmes"
+msgstr "Escolha o diretório dos filmes"
 
 #: ../../lib/frontends/widgets/prefpanel.py:497
 msgid "Directory not valid"
-msgstr "Diretório não válido"
+msgstr "Diretório inválido"
 
 #: ../../lib/frontends/widgets/prefpanel.py:498
 #, python-format
@@ -3684,8 +3684,427 @@ msgstr "Procurar todos"
 #~ msgid "Custom Channels"
 #~ msgstr "Canais Personalizados"
 
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Realizando inscrição em múltiplas listas de conteúdo"
+
+#~ msgid "_Next Video"
+#~ msgstr "Próximo Vídeo"
+
+#~ msgid "_Previous Video"
+#~ msgstr "Vídeo Anterior"
+
+#~ msgid "_Paste"
+#~ msgstr "_Colar"
+
+#~ msgid "Select _All"
+#~ msgstr "Selecion_ar Todos"
+
+#~ msgid "Cu_t"
+#~ msgstr "Recor_tar"
+
+#~ msgid "_Copy"
+#~ msgstr "_Copiar"
+
+#~ msgid "_Options"
+#~ msgstr "_Opções"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Parar após cada vídeo"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Exibir videos um após o outro"
+
 #~ msgid "Pipeline request never started"
 #~ msgstr "Não foi possível iniciar o download"
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Erro interno: não foi possível iniciar o download"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Por padrão, os vídeos expiram após:"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "O arquivo torrent %(filename)s aparenta estar corrompido e não pode ser "
+#~ "aberto. [OK]"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count) dia"
+#~ msgstr[1] "%(count) dias"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Começar a assistir o vídeo do último ponto em que parou"
+
+#~ msgid "Rename Site"
+#~ msgstr "Renomear Site"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count) hora"
+#~ msgstr[1] "%(count)d horas"
+
+#~ msgid "Remove Site"
+#~ msgstr "Remover Site"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Digite um novo nome para o site %(name)s"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Procure por novos vídeos nestas pastas e os inclua na biblioteca:"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Digite o novo nome para o item"
+
+#~ msgid "None"
+#~ msgstr "Nenhum"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Procurar Tudo: %(text)s"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Você deve reiniciar a reprodução para as alterações de visualização terem "
+#~ "efeito"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Re_nomear Item"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Não foi possível abrir %(filename)s para escrita"
+
+#~ msgid "Add Site"
+#~ msgstr "Adicionar Site"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Vídeos com \"Auto-Expire\":"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Configuração de download automático:"
+
+#~ msgid "No Results Found"
+#~ msgstr "Nenhum Resultado Encontrado"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "Você está rodando uma versão do %(appname)s com um conjunto customizado de "
+#~ "canais."
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "na fila para download"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Adicionar Site - URL inválida"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Entre com a URL do site a ser adicionado"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Remover %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Você tem certeza que quer remover %(name)s?"
+
+#~ msgid "Add to Library"
+#~ msgstr "Adicionar na biblioteca"
+
+#~ msgid "Migrating files"
+#~ msgstr "Migrando arquivos"
+
+#~ msgid "Add to library"
+#~ msgstr "Adicionar na biblioteca"
+
+#~ msgid "FEEDS"
+#~ msgstr "FEEDS"
+
+#~ msgid "SITES"
+#~ msgstr "SITES"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Entre com um nome para a nova pasta de feed"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Criar feed?"
+#~ msgstr[1] "Criar %(count)d feeds?"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minuto"
+#~ msgstr[1] "%(count)d minutos"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Linha de Status Inválida: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Tamanho do Pacote Inválido: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Código de Status Inválido: %(code)s"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Bem Vindo à Configuração Inicial de %(name)s"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Iniciar distribuição"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Desfazer nome do Item"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "O endereço fornecido não é válido.\n"
+#~ "Verifique o endereço e tente de novo!"
+
+#, python-format
+#~ msgid ""
+#~ "%(copyright)s.  See license.txt file for details.\n"
+#~ "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+#~ msgstr ""
+#~ "%(copyright)s. Veja o arquivo license.txt para mais detalhes.\n"
+#~ "Miro e a logomarca Miro são marcas registradas do Participatory Culture "
+#~ "Foundation."
+
+#~ msgid "View:"
+#~ msgstr "Visualizar:"
+
+#, python-format
+#~ msgid "Adding feed to a new folder"
+#~ msgid_plural "Adding %(count)d feeds to a new folder"
+#~ msgstr[0] "Adicionando feed a uma nova pasta"
+#~ msgstr[1] "Adicionando %(count)d feeds a uma nova pasta"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s não consegue baixar um arquivo no seguinte endereço:\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "NOTA: Você já se inscreveu para um desses feeds. Esses feeds vão continuar "
+#~ "onde estão."
+#~ msgstr[1] ""
+#~ "NOTA: Você já se inscreveu para %(count)d desses feeds. Esses feeds vão "
+#~ "continuar onde estão."
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Use este vídeo quando reproduzindo áudio:"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Quebra de linha esperada retornou: %(character)r"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Você tem certeza que deseja remover esse site?"
+#~ msgstr[1] "Você tem certeza que deseja remover esses %(count)s sites?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Remover site"
+#~ msgstr[1] "Remover sites"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Remover sites"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Terminando as configurações iniciais do %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Não há espaço em disco suficiente para atualizar o banco de dados da versão "
+#~ "anterior de %(appname)s. Por favor delete alguns arquivos e tente novamente."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Espaço em disco insuficiente."
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s não pôde salvar seu banco de dados: O disco está cheio.\n"
+#~ "Sugerimos deletar arquivos do disco cheio ou simplesmente deletar alguns "
+#~ "filmes de sua coleção.\n"
+#~ "Mudanças recentes podem ter sido perdidas."
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Linha de cabeçalho inválida: %(msg)s"
+
+#~ msgid "Rename Item"
+#~ msgstr "Renomear item"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Pausar Transferência Automática quando o número de itens não reproduzidos "
+#~ "for de:"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "As próximas telas irão ajudar você a configurar o %(name)s para que funcione "
+#~ "melhor.\n"
+#~ "\n"
+#~ "Nós recomendamos que você ative o carregamento automático do %(name)s quando "
+#~ "o seu computador iniciar. Desta forma, arquivos em progresso podem ser "
+#~ "finalizados e novos arquivos podem ser baixados em segundo plano, prontos "
+#~ "para serem vistos quando você quiser."
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Site Selecionado"
+#~ msgstr[1] "%(count)d Sites Selecionados"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s não conseguiu achar o diretório padrão de vídeo localizado "
+#~ "em:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Isto pode acontecer porque o diretório está localizado em um disco externo "
+#~ "que não está conectado.\n"
+#~ "\n"
+#~ "Se você continuar, o diretório padrão de vídeo será reconfigurado para um "
+#~ "local neste disco. Se você tiver vídeos neste diretório isso irá fazer com "
+#~ "que o %(shortappname)s perca detalhes sobre esses vídeos.\n"
+#~ "\n"
+#~ "Se você sair, então poderá conectar o disco, ou então consertar o problema e "
+#~ "reiniciar o %(shortappname)s."
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "Editar os metadados deste item."
+
+#~ msgid "other"
+#~ msgstr "outro"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Idioma Desconhecido"
+
+#~ msgid "_Remove Site"
+#~ msgstr "Remover Site"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "Remover Sites"
+
+#~ msgid "Re_name Site"
+#~ msgstr "Renomear Site"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Desculpe-nos, o %(appname)s não conseguiu fazer o upgrade do seu banco de "
+#~ "dados devido a erros.\n"
+#~ "Verifique se o seu disco está cheio. Se estiver cheio, então feche o "
+#~ "%(appname)s, libere algum espaço e inicie o %(appname)s novamente.\n"
+#~ "Se o disco não estiver cheio, ajude-nos a entender o problema reportando o "
+#~ "problema em bugzilla.pculture.org após fechar o programa.\n"
+#~ "Finalmente, você pode criar um novo banco de dados e o anterior defeituoso "
+#~ "será removido. Contudo, você terá que adicionar novamente os seus feeds e "
+#~ "arquivos de vídeo e áudio."
+
+#~ msgid "(Pending)"
+#~ msgstr "(Pendente)"

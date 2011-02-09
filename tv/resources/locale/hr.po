@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-07 18:14+0000\n"
-"Last-Translator: Zoran Kradija <Unknown>\n"
+"PO-Revision-Date: 2011-01-31 13:54+0000\n"
+"Last-Translator: Valkane <balinjera@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -531,11 +531,11 @@ msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Vizualni hebrejski"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
@@ -3591,3 +3591,251 @@ msgstr "Primjer liste za izvođenje"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Sve pretražiti"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Osobni kanali"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Sljedeći video"
+
+#~ msgid "_Previous Video"
+#~ msgstr "Prethodni video"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Povjerljiva veza nikad nije započela"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Unutarnja greška: Nije spremno za poslati"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Trebali biste ponovno pokrenuti playback da bi promjene u vizualizaciji "
+#~ "postale aktivne."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "Veličina %(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "Veličina %(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "Veličina %(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "Veličina %(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "Veličina %(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Ne može otvoriti datoteku %(filename)s za zapis"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Zaustaviti nakon svakog videa"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Prikazati videa jedan za drugim"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Videa s automatskim istekom valjanosti:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "stavljeno u red čekanja za automatsko skidanje"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Postavke automatskog skidanja:"
+
+#~ msgid "No Results Found"
+#~ msgstr "Ništa nije pronađeno"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Nastavi učitavanje videa od mjesta zadnje stanke."
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Po standardnoj postavci, video istječe nakon:"
+
+#~ msgid "None"
+#~ msgstr "Ništa"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Koristi ovo kao filmsku pozadinu prilikom slušanja zvučnog zapisa"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Vi koristite verziju %(appname)s s osobnom zbirkom kanala."
+
+#~ msgid "Add to Library"
+#~ msgstr "Dodati u knjižnicu"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Pretraži sve: %(text)s"
+
+#~ msgid "Re_name Item"
+#~ msgstr "_Preimenovati dokument"
+
+#~ msgid "_Paste"
+#~ msgstr "_Zalijepiti"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopirati"
+
+#~ msgid "Select _All"
+#~ msgstr "_Sve označiti"
+
+#~ msgid "Cu_t"
+#~ msgstr "Izreza_ti"
+
+#~ msgid "_Options"
+#~ msgstr "_Postavke"
+
+#~ msgid "Add Site"
+#~ msgstr "Dodati Site"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Auto-Skidanje pauzirati ukoliko je mnoštvo dokumenata neučitano"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Pripazi na nova videa u ovim mapama i uključi ih u knjižnicu:"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Dodati stranicu - neispravan URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Adresa koju ste unijeli nije valjan url.\n"
+#~ "Molimo provjerite URL i pokušajte ponovo.\n"
+#~ "\n"
+#~ "Unesite URL stranice koju želite dodati"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Unesite URL stranice koju želite dodati"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Unesi novo ime dokumenta"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s ne može pronaći glavnu mapu za videa smještenu u :\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Možda se ovo dogodilo zato što se ona nalazi na vanjskom tvrdom disku koji u "
+#~ "ovom trenutku nije prikopčan.\n"
+#~ "\n"
+#~ "Ukoliko nastavite, glavna mapa za videa bit će ponovno vraćena na ovaj tvrdi "
+#~ "disk. Ukoliko ste imali skinutih videa to će uzrokovati %(shortappname)s da "
+#~ "izgubi detalje o njima.\n"
+#~ "\n"
+#~ "Ukoliko odustanete, onda možete prikopčati disk ili na neki drugi način "
+#~ "riješiti problem te ponovo pokrenuti %(shortappname)s.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+
+#~ msgid "SITES"
+#~ msgstr "STRANICE"
+
+#~ msgid "Remove Site"
+#~ msgstr "Ukloni Stranicu"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Ukloni Stranice"
+
+#~ msgid "Auto Download"
+#~ msgstr "Auto Preuzimanje"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Nedovoljno prostora na disku"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Vratiti ime stavke"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Očekivani CRLF dobio je: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Pogreška u veličini bloka na liniji: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Pogreška u kodu:%(code)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Slijedećih nekoliko ekrana pomoći će vam optimalno namjestiti  %(name)s.\n"
+#~ "\n"
+#~ "Preporučujemo vam aktiviranje %(name)s prilikom pokretanja vašeg računala. "
+#~ "Ovim putem aktivna skidanja mogu se završiti i nove medijske datoteke mogu "
+#~ "biti skidane u pozadini, spremne za izvođenje kada vi to poželite."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Dovršavanje prvog namiještanja postavki %(name)s"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Dobro došli  u %(name)s namiještanju početnih postavki"
+
+#~ msgid "Migrating files"
+#~ msgstr "Prenositi datotek"
+
+#~ msgid "Rename Item"
+#~ msgstr "Preimenovati stavku"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Greška linije zaglavlja:%(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Greška statusne linije: %(msg)s"

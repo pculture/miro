@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-09-24 19:17+0000\n"
-"Last-Translator: Aistis J. Vitkauskas <Unknown>\n"
+"PO-Revision-Date: 2010-12-27 23:19+0000\n"
+"Last-Translator: Tomas D Davainis <tomasdd@gmail.com>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -548,6 +548,7 @@ msgstr "Multimedia įrenginių nuostatos:"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Tam kad pakeitimai įsigaliotų, turite programą %(appname)s paleisti iš naujo."
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:79
 msgid "Video renderer:"
@@ -3626,3 +3627,370 @@ msgstr "Grojaraščio pavyzdys"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Ieškoti visur"
+
+#~ msgid "_Paste"
+#~ msgstr "Į_dėti"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopijuoti"
+
+#~ msgid "Select _All"
+#~ msgstr "Pasirinkti _viską"
+
+#~ msgid "Cu_t"
+#~ msgstr "_Iškirpti"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Kitas video"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Vidinė klaida: nepasiruošta išsiųsti"
+
+#~ msgid "None"
+#~ msgstr "Jokia"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Rodyti šį filmuką grojant muziką:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Pasirinkti kanalai"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Nepavyko atverti %(filename)s rašymui"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Pe_rvadinti elementą"
+
+#~ msgid "Add to Library"
+#~ msgstr "Įtraukti į archyvą"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#~ msgid "_Options"
+#~ msgstr "_Nustatymai"
+
+#~ msgid "Add Site"
+#~ msgstr "Įtraukti _puslapį"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Ankstesnis video"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "Jūs esate paleidę %(appname)s modifikuotą versiją su savitais kanalais."
+
+#~ msgid "queued for autodownload"
+#~ msgstr "Laukiama parsiunčiant"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Automatinio siuntimo nuostatos:"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Leisti video įrašus vieną po kito"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Groti video įrašus nuo ten kur buvo paskutinį sykį sustabdyti."
+
+#~ msgid "Stop after each video"
+#~ msgstr "Sustabdyti pasibaigus kiekvienam įrašui"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Ieškoti naujų video failų šiame kataloge ir įtraukti juos į archyvą:"
+
+#~ msgid "No Results Found"
+#~ msgstr "Nerasta jokių rezultatų"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s negali surasti pirminio video failų katalogo:\n"
+#~ "%(moviedirectory)s\n"
+#~ "Gal būt jis patalpintas išoriniame diske kuris nėra prijungtas prie "
+#~ "kompiuterio.\n"
+#~ "Jeigu jūs tesite, naujas pirminis video failų katalogas bus sukurtas "
+#~ "komiuterio kietajame diske. Ir jūs prarasite %(shortappname)s parsiųstų "
+#~ "failų informaciją.\n"
+#~ "Jeigu dabar išeisite, jūs galėsite prijungti išorinį duomenų kaupiklį ar "
+#~ "kitaip ištaisyti šią problemą ir poto vėl galėsite paleisti %(shortappname)s."
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Ieškoti visur: %(text)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Blogas dalies dydis: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Blogas būsenos kodas: %(code)s"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Torrent failas %(filename)s gali būti pažeistas ir jo negalima atidaryti. "
+#~ "[OK]"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Bloga antraštės eilutė: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Bloga būsenos eilutė: %(msg)s"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Daugelio kanalų užsisakymas"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Įveskite naujo kanalų katalogo pavadinimą"
+
+#~ msgid "FEEDS"
+#~ msgstr "KANALAI"
+
+#~ msgid "SITES"
+#~ msgstr "PUSLAPIAI"
+
+#~ msgid "Remove Site"
+#~ msgstr "Pašalinti puslapį"
+
+#~ msgid "Rename Item"
+#~ msgstr "Pervadinti įrašą"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Įtraukti puslapį - klaida"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Jūsų įvesta nuoroda yra neteisinga.\n"
+#~ "Prašome patikrinti nuorodą ir pamėginti iš naujo\n"
+#~ "\n"
+#~ "Įveskite įtraukiamo puslapio nuorodą"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Įveskite įtraukiamo puslapio nuorodą"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Įveskite įrašo pavadinimą"
+
+#~ msgid "Rename Site"
+#~ msgstr "Pervadinti puslapį"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Įveskite naują puslapio %(name)s pavadinimą"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Pašalinti %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Ar jūs tikrai norite pašalinti %(name)s?"
+
+#~ msgid "Migrating files"
+#~ msgstr "Perkeliami failai"
+
+#~ msgid "Auto Download"
+#~ msgstr "Automatinis siuntimas"
+
+#~ msgid "Add to library"
+#~ msgstr "Įtraukti į archyvą"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minutė"
+#~ msgstr[1] "%(count)d minutės"
+#~ msgstr[2] "%(count)d minutės"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d valanda"
+#~ msgstr[1] "%(count)d valandos"
+#~ msgstr[2] "landos"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d diena"
+#~ msgstr[1] "%(count)d dienos"
+#~ msgstr[2] "%(count)d dienos"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Sukurti kanalą?"
+#~ msgstr[1] "Sukurti %(count)d kanalų?"
+#~ msgstr[2] "Sukurti %(count)d kanalų?"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "PASTABA: Jūs jau prenumeruojate vieną iš šių kanalų. Šitie kanalai bus ten "
+#~ "pat kur jie ir dabar yra."
+#~ msgstr[1] ""
+#~ "PASTABA: Jūs jau esate užsiprenumeravę %(count)d iš šių kanalų. Šitie "
+#~ "kanalai bus ten pat kur jie ir dabar yra."
+#~ msgstr[2] ""
+#~ "PASTABA: Jūs jau esate užsiprenumeravę %(count)d iš šių kanalų. Šitie "
+#~ "kanalai bus ten pat kur jie ir dabar yra."
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Sustabdyti automatinį siuntimą kai bus neperžiūrėta daug įrašų:"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Pagal nutylėjimą, vaizdo įrašas nustoja galioti po:"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Jūs turėsite iš naujo paleisti failą, kad garso vizualizacija pasikeistų."
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Automatiškai trinti failus:"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Atstatyti elemento pavadinimą"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Konvejerio užklausa nebuvo pradėta"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d svetainė pažymėta"
+#~ msgstr[1] "%(count)d svetainės pažymėtos"
+#~ msgstr[2] "%(count)d svetainių pažymėta"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Ar tikrai norite pašalinti šią svetainę?"
+#~ msgstr[1] "Ar tikrai norite pašalinti šias %(count)s svetaines?"
+#~ msgstr[2] "Ar tikrai norite pašalinti šias %(count)s svetainių?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Pašalinti svetainę"
+#~ msgstr[1] "Pašalinti svetaines"
+#~ msgstr[2] "Pašalinti svetaines"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Pašalinti svetaines"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Nepakanka vietos diske duomenų bazės atnaujinimui nuo praeitos %(appname)s "
+#~ "versijos. Prašom ištrinti keletą failų ir bandyti vėl."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Nepakanka vietos diske"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s nepavyko išsaugoti savo duomenų bazės: Diskas pilnas.\n"
+#~ "Siūlome ištrinti failus iš pilno disko arba tiesiog pašalinti kelis filmus "
+#~ "iš kolekcijos.\n"
+#~ "Paskutiniai pakeitimai gali būti dingę."
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Sveiki, čia %(name)s pradiniai nustatymai"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Tikėtasi CRLF, gauta %(character)r"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s nepavyko parsiųsti failo iš URL:\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Kiti toliau esantys keli paveiksliukai padės jums nustatyti %(name)s "
+#~ "geresniam veikimui. \n"
+#~ "\n"
+#~ "Mes rekomenduojame nustatyti %(name)s paleidimą kiekvieno kompiuterio "
+#~ "įjungimo metu. Šiuo būdu esami ir nauji siuntimai bus vykdomi foniniu "
+#~ "rėžimu. Ir bus paruošti peržiūrai jums tinkamiausiu metu."

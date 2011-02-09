@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:194
 msgid "Present Half Size"
@@ -3723,6 +3723,32 @@ msgstr "Приклад списку відтворення"
 msgid "Search All"
 msgstr "Шукати всюди"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "По замовчуванню, видаляти відео після:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Слідкувати за появою нового відео в цих теках і при наявності додавати його "
+#~ "до медіа бібліотеки:"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Зупиняти після кожного відео"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Грати відео  одне за одним"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Продовжувати грати відео з позиції попередньої зупинки."
+
+#~ msgid "Add to Library"
+#~ msgstr "Додати до бібліотеки"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Користуватися цим для відео при програванні аудіо:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Власні канали"
+
 #~ msgid "Add Site"
 #~ msgstr "Додати сайт"
 
@@ -3736,6 +3762,9 @@ msgstr "Шукати всюди"
 #, python-format
 #~ msgid "Bad Status Code: %(code)s"
 #~ msgstr "Невірний код статусу: %(code)s"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Почати роздавати"
 
 #~ msgid "Auto-Expire Videos:"
 #~ msgstr "Відео, що автоматично застарівають"
@@ -3844,6 +3873,9 @@ msgstr "Шукати всюди"
 
 #~ msgid "FEEDS"
 #~ msgstr "СТРІЧКИ"
+
+#~ msgid "View:"
+#~ msgstr "Вигляд:"
 
 #, python-format
 #~ msgid "Search All: %(text)s"
@@ -3992,3 +4024,48 @@ msgstr "Шукати всюди"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s б"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s не вдається зберегти базу даних через відсутність вільного "
+#~ "простору: диск заповнено.\n"
+#~ "Радимо видалити зайві файли з диску, або видалити частину відео з вашої "
+#~ "колекції.\n"
+#~ "Останні зміни можуть бути втрачені."
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Призупинити авто-завантаження, якщо наявно:"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "На диску недостатньо вільного місця"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Недостатньо вільного місця на диску,  щоб оновити вашу базу даних від "
+#~ "попередньої версії %(appname)s.  Будь ласка, видаліть непотрібні файли та "
+#~ "спробуйте знову."
+
+#~ msgid "(Pending)"
+#~ msgstr "(Очікування)"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Китайська універсальна"
+
+#, python-format
+#~ msgid "Conversion to %s"
+#~ msgstr "Перетворення на %s"
+
+#~ msgid "FAILED!"
+#~ msgstr "ЗБІЙ!"
+
+#, python-format
+#~ msgid "Pending conversion to %s"
+#~ msgstr "Затримка перетворення на %s"

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
@@ -3588,12 +3588,89 @@ msgstr "Örnek Çalma Listesi"
 msgid "Search All"
 msgstr "Tümünü Ara"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Öntanımlı olarak, videoların süresi dolar:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Kişisel Kanallar"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Her videodan sonra dur"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Videoları biribiri ardına oynat"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Videoyu son durdurulduğu yerden oynatmaya devam ettir."
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Bu klasörlerde yeni videoları tara ve bunları kitaplığa ekle:"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Görselleştime değişikliklerinin geçerli olması için oynatıcıyı yeniden "
+#~ "başlatman gerekir."
+
+#~ msgid "Add to Library"
+#~ msgstr "Kütüphaneye ekle"
+
+#~ msgid "None"
+#~ msgstr "Hiçbiri"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Video sesini çalarken bunu kullan::"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Birden fazla abone beslemesi"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Yeni yayın klasör için bir isim girin"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] ""
+#~ "Besleme oluştur\r\n"
+#~ "Beslemeler %(count)d oluştur?"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Sizin versiyonunuz %(appname)s bu kanalın ayarlarını yapamaz."
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Sil %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "%(name)s i silmek istediğinizden eminmisiniz?"
+
+#~ msgid "Add to library"
+#~ msgstr "Kütüphaneye ekle"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "Not: %(count)d bu beslemelerden birine zaten üye olmuşsunuz. Bu beslemeler "
+#~ "oldukları gibi kalacaklar."
+
 #~ msgid "Remove site"
 #~ msgid_plural "Remove sites"
 #~ msgstr[0] "Siteyi Sil"
 
 #~ msgid "Remove Sites"
 #~ msgstr "Siteleri Sil"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Site Seçildi"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
@@ -3798,3 +3875,91 @@ msgstr "Tümünü Ara"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "%(name)s in ilk kurulumu tamamlanıyor"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "%(name)s in ilk kurulum ayarına hoşgeldiniz."
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Sonraki birkaç ekran size göre en iyi şekilde çalışması için  %(name)s ın "
+#~ "bazı ayarlarını yapmanıza yardımcı olacak . \n"
+#~ "\n"
+#~ "%(name)s in bilgisayarınız başladığında açılmasını tavsiye ediyoruz. "
+#~ "Böylece, arka planda Devam eden indirmeler bitirilebilinir ve yeni dosyalar "
+#~ "istediğiniz zaman seyretmeniz için hazırlanır."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Yetersiz disk alanı"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] ""
+#~ "Bu siteyi kaldırmak istediğinizden emin misiniz?\r\n"
+#~ "%(count)s siteyi kaldırmak istediğinizden emin misiniz?"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "%(appname)s veritabanınızın önceki sürümününden yükseltilebilmesi için "
+#~ "yeterli disk alanı yok.  Lütfen bazı dosyalarınızı silip tekrar deneyin."
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s şu URL adresindeki bir dosyayı indiremiyor:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s veritabanını kaydedemedi: Disk Dolu.\n"
+#~ "Dolu diskten bazı dosyaları silmenizi veya koleksiyonunuzdan bazı filmleri "
+#~ "silmenizi öneririz.\n"
+#~ "Son yapılan değişiklikler kaybolabilir."
+
+#~ msgid "Rename Item"
+#~ msgstr "Öğeyi Yeniden Adlandır"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Bilinmeyen Dil"
+
+#~ msgid "_Remove Site"
+#~ msgstr "_Siteyi Kaldır"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "_Siteleri Kaldır"
+
+#~ msgid "Re_name Site"
+#~ msgstr "Siteyi Yeniden_Adlandır"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Sıralı istek hiç başlamadı"
+
+#~ msgid "FAILED!"
+#~ msgstr "BAŞARISIZ!"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Çince (Evrensel)"

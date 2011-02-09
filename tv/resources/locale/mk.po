@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3594,3 +3594,287 @@ msgstr "Пример за список за репродукција"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Пребарај ги сите"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Очекуваниот CRLF доби: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Неправилна големина на парче: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Неправилна заглавна линија: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Неправилна статусна линија: %(msg)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Pipeline барањето никогаш не започнало"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Неправилен статусен код: %(code)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Внатрешна грешка: Неспремност за испраќање"
+
+#~ msgid "Rename Item"
+#~ msgstr "Преименувај објект"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Поврати име на објект"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Авто-истекувачки видеа:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Паузирај авто-превземање, кога оволкав број објекти не се репродуцирани:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Добредојдовте во првичното нагодување на %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Следните екрани ќе Ви помогнат да го нагодите %(name)s за да работи најдобро "
+#~ "за Вас.\n"
+#~ "Ви препорачуваме да го вклучите %(name)s со вклучувањето на Вашиот "
+#~ "компјутер. На тој начин активните превземања можат да се завршат и нови "
+#~ "медијски документи можат да бидат превземени во позадина, за да бидат "
+#~ "спремни за репродукција кога вие ќе сакате."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Завршување на првичното нагодување на %(name)s"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "додадено за авто-превземање"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "Избран е %(count)d сајт"
+#~ msgstr[1] "Избрани се %(count)d сајтови"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s не може да го најде главнаиот видео директориум кој се "
+#~ "наоѓа во:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Това може да се случи, доколку се наоѓа на надворешен уред, којшто не е "
+#~ "поврзан.\n"
+#~ "\n"
+#~ "Доколку продолжите, главниот видео директориум ќе биде насочен да покажува "
+#~ "кон тој уред. Доколку сте имале превземени видео документи, ова ќе "
+#~ "предизвика %(shortappname)s да ги загуби деталите за тие видео документи.\n"
+#~ "\n"
+#~ "Доколку излезете, може да се поврзете со уредот или да го решите проблемот "
+#~ "на друг начин и повторно да ја вклучите %(shortappname)s."
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Внесете страна - Погрешен URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Страната што ја внесовме не е валиден url.\n"
+#~ "Ве молам проверете го URL-от и пробајте повторно.\n"
+#~ "\n"
+#~ "Внесете го URL-от на страната за додавање"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Внесете URL на страната за додавање"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Внесете ново име за објектот"
+
+#~ msgid "Add Site"
+#~ msgstr "Додадете страна"
+
+#~ msgid "Rename Site"
+#~ msgstr "Преименувај ја страната"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Внесете ново име за страната %(name)s"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Отстранете ја страната"
+#~ msgstr[1] "Отстранете ги страните"
+
+#~ msgid "Migrating files"
+#~ msgstr "Преселба на датотеки"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Дали сте сигурни дека сакате да ја отстраните страната?"
+#~ msgstr[1] ""
+#~ "Дали сте сигурни дека сакате да ги отстраните следниве %(count)s страници?"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Нагодувања за Авто-превземање:"
+
+#~ msgid "Remove Site"
+#~ msgstr "Отстрани го сајтот"
+
+#~ msgid "FEEDS"
+#~ msgstr "ИНФО-КАНАЛИ"
+
+#~ msgid "SITES"
+#~ msgstr "САЈТОВИ"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Отстрани ги сајтовите"
+
+#~ msgid "No Results Found"
+#~ msgstr "Не се пронајдени резултати"
+
+#~ msgid "Auto Download"
+#~ msgstr "Авто превземање"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Немате доволно простор на дискот за да ја обновите базата на податоци од "
+#~ "предходната верзија на %(appname)s. Ве молиме избришете некои документи и "
+#~ "пробајте повторно."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Недоволен простор на дискот."
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Торент документот %(filename)s изгледа дека е оштетен и не може да се "
+#~ "отвори. [OK]"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Пребарај ги сите: %(text)s"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Пре_именувај објект"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s не е во можност да го превземе документот на овој URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Не можам да го отворам %(filename)s за запишување"
+
+#~ msgid "_Copy"
+#~ msgstr "_Копирај"
+
+#~ msgid "Cu_t"
+#~ msgstr "И_сечи"
+
+#~ msgid "_Options"
+#~ msgstr "_Опции"
+
+#~ msgid "_Paste"
+#~ msgstr "_Вметни"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Наредно видео"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Предходно видео"
+
+#~ msgid "_Video"
+#~ msgstr "_Видео"
+
+#~ msgid "Select _All"
+#~ msgstr "Избери _сѐ"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d минута"
+#~ msgstr[1] "%(count)d минути"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d час"
+#~ msgstr[1] "%(count)d часови"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d ден"
+#~ msgstr[1] "%(count)d денови"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s гб/с"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s б/с"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s мб/с"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s кб/с"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s мб"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s б"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s кб"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s гб"

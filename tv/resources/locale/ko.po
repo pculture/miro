@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3492,6 +3492,75 @@ msgstr "모두 검색"
 #~ msgid "Custom Channels"
 #~ msgstr "채널 설정"
 
+#~ msgid "Add Site"
+#~ msgstr "사이트 추가"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "자동다운로드 대기중"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "자동 다운로드 설정:"
+
+#~ msgid "No Results Found"
+#~ msgstr "검색 결과가 없습니다."
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "사이트 추가 - 잘못된 URL"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "추가할 사이트의 URL 입력"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "항목의 이름 바꾸기"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "모두 검색: %(text)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "잘못된 상태 코드: %(code)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "잘못된 헤더 문장: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "잘못된 청크 크기: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "잘못된 상태 문장: %(msg)s"
+
+#~ msgid "_Options"
+#~ msgstr "옵션(_O)"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#~ msgid "_Paste"
+#~ msgstr "붙여넣기(_P)"
+
+#~ msgid "Select _All"
+#~ msgstr "전부 선택(_A)"
+
+#~ msgid "Cu_t"
+#~ msgstr "잘라내기(_T)"
+
+#~ msgid "Rename Item"
+#~ msgstr "항목 이름 바꾸기"
+
+#~ msgid "Rename Site"
+#~ msgstr "사이트 이름 바꾸기"
+
+#~ msgid "Migrating files"
+#~ msgstr "파일 옮기는 중"
+
+#~ msgid "Auto Download"
+#~ msgstr "자동 다운로드"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3499,3 +3568,212 @@ msgstr "모두 검색"
 #~ "from your collection.\n"
 #~ "Recent changes may be lost."
 #~ msgstr "%(appname)s 는 데이터베이스 저장에 실패했습니다: 디스크 꽉참"
+
+#~ msgid "_Copy"
+#~ msgstr "복사(_C)"
+
+#~ msgid "Stop after each video"
+#~ msgstr "따로 재생"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "이어서 재생"
+
+#~ msgid "_Video"
+#~ msgstr "동영상(_V)"
+
+#~ msgid "_Next Video"
+#~ msgstr "다음 동영상(_N)"
+
+#~ msgid "_Previous Video"
+#~ msgstr "이전 동영상(_P)"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "다음 만큼의 항목을 재생하지 않았을 경우 자동 다운로드를 일시 중지:"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "동영상 자동 만료:"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "시각화를 바꾸면 프로그램을 재생을 다시 시작해야 효과가 있습니다."
+
+#~ msgid "None"
+#~ msgstr "없음"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "오디오를 재생할 때 사용할 영상:"
+
+#~ msgid "Add to Library"
+#~ msgstr "모음집에 추가"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "고유 채널 모음이 있는 버전의 %(appname)s 프로그램을 실행 중입니다."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s GB/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s MB/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s KB/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s B/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s MB"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s KB"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s B"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "%(filename)s 파일을 열 수 없습니다."
+
+#~ msgid "Re_name Item"
+#~ msgstr "이름 바꾸기(_N)"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "폴더에 있는 새 동영상을 찾아 모음집에 추가:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "최근에 멈춘 시점부터 동영상 재생."
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s에서 다음 위치의 동영상 디렉터리를 찾을 수 없습니다:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "이러한 현상은 해당 폴더가 아직 연결되지 않은 외부 드라이브에 있기 때문일 수 있습니다.\n"
+#~ "\n"
+#~ "계속 진행하신다면, 최우선 동영상 디렉터리는 이 드라이브에 있는 위치로 초기화 됩니다. 만약 다운받은 동영상이 있다면 이로 인해 "
+#~ "%(shortappname)s 프로그램이 가진 해당 동영상에 대한 추가 정보를 잃게 됩니다.\n"
+#~ "\n"
+#~ "만약 종료하시면 드라이브를 연결하시거나 다른 문제를 해결한 후 %(shortappname)s 프로그램을 다시 실행할 수 있습니다."
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "입력하신 주소는 잘못된 URL입니다.\n"
+#~ "URL을 살펴보시고 다시 시도하십시오.\n"
+#~ "\n"
+#~ "추가할 사이트의 URL 입력"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "%(name)s 사이트의 새 이름을 입력하십시오"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "%(name)s 제거"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "정말로 %(name)s을(를) 제거하시겠습니까?"
+
+#~ msgid "Add to library"
+#~ msgstr "모음집에 추가"
+
+#~ msgid "Remove Site"
+#~ msgstr "사이트 제거"
+
+#~ msgid "SITES"
+#~ msgstr "사이트"
+
+#~ msgid "FEEDS"
+#~ msgstr "피드"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "항목 이름 되돌리기"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "여러 개 피드 구독"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "%(count)d개 피드를 만드시겠습니까?"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "새 피드 폴더의 이름을 입력하십시오"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] "알림: 다음 피드 중에서 이미 %(count)d개를 구독하고 있습니다. 다음 피드는 현재 위치에 남겨 둡니다."
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr "%(filename)s 토런트 파일이 손상된 것으로 보입니다. 열 수 없습니다. [확인]"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d일"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d시간"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d분"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "개행문자(CRLF) 위치에 문자: %(character)r"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "내부 오류: 전송 준비되지 않음"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "사이트(들) 삭제"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "%(name)s의 첫번째 설정을 환영합니다"
+
+#~ msgid "Remove Sites"
+#~ msgstr "사이트 삭제"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "부족한 디스크 공간"

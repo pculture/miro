@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3572,3 +3572,194 @@ msgstr "Paraug repertuārs"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Meklēt visus"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Pēc noklusējuma video dzēšās pēc:"
+
+#~ msgid "_Paste"
+#~ msgstr "I_evietot"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopēt"
+
+#~ msgid "Select _All"
+#~ msgstr "Izvēlēties _visu"
+
+#~ msgid "Cu_t"
+#~ msgstr "Izgriez_t"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Nākamais video"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Iepriekšējais video"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Cauruļvada pieprasījums nekad nav sākts"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Iekšējā kļūda: Nav gatavs sūtīt"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Pašizvēlēti kanāli"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Izmantot šo video, kad tiek atskaņota mūzika"
+
+#~ msgid "Add to Library"
+#~ msgstr "Pievienot bibliotēkai"
+
+#~ msgid "None"
+#~ msgstr "Neviens"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Nevar atvērt failu %(filename)s rakstīšanai"
+
+#~ msgid "_Options"
+#~ msgstr "_Opcijas"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Pā_rsaukt"
+
+#~ msgid "Add Site"
+#~ msgstr "Pievienot vietni"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Automātiski novecojošie video:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Pārtraukt automātisko lejupielādi, kad neapskatīto vienību skaits ir šāds:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "sarindots automātiskai lejupielādei"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Automātiskās lejupielādes iestatījums:"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Gribēju CRLF, dabūju: %(character)r"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Nepareiza Stavokļa Līnija: %(msg)s"
+
+#~ msgid "Rename Item"
+#~ msgstr "Pārdēvēt Vienību"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Atgriezt Vienības Vardu"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Beidzam %(name)s Pirmās Reizes Uzstādīšanu"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Vieta Izvēlēta"
+#~ msgstr[1] "%(count)d Vieta Izvēlēta"
+#~ msgstr[2] "%(count)d Vietas Izvēlētas"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Ievadiet pievienojamās vietas URL"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Pievienojot Vietu - Nederīgs URL"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Ievadiet jauno vienuma vārdu"
+
+#~ msgid "Rename Site"
+#~ msgstr "Pardēvēt Vietu"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Ievadiet jaunu nosaukumu vietai %(name)s"
+
+#~ msgid "Migrating files"
+#~ msgstr "Migrējot datnes"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Vai pārliecināti, ka gribat aizvākt šo vietu?"
+#~ msgstr[1] "Vai pārliecināti, ka gribat aizvākt šīs %(count)s vietas?"
+#~ msgstr[2] "Vai pārliecināti, ka gribat aizvākt šīs %(count)s vietas?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Aizvākt vietu"
+#~ msgstr[1] "Aizvākt vietas"
+#~ msgstr[2] "Aizvākt vietas"
+
+#~ msgid "Remove Site"
+#~ msgstr "Aizvākt Vietu"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Aizvākt Vietas"
+
+#~ msgid "FEEDS"
+#~ msgstr "BAROTNES"
+
+#~ msgid "SITES"
+#~ msgstr "VIETAS"
+
+#~ msgid "Auto Download"
+#~ msgstr "Automatiski Lejupielādēt"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Straumes datne %(filename)s izskatās samaitāta un nevar tikt atvērta. [OK]"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Izmeklēt Visur: %(text)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Bojāta Galvenes rindiņa: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Bojāts statusa kods: %(code)s"

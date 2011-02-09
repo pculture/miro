@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3508,3 +3508,153 @@ msgstr "ตัวอย่างเพลย์ลิสต์"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "มีข้อผิดพลาดภายใน: ไม่พร้อมที่จะส่ง"
+
+#~ msgid "_Options"
+#~ msgstr "_ตัวเลือก"
+
+#~ msgid "_Copy"
+#~ msgstr "_คัดลอก"
+
+#~ msgid "Select _All"
+#~ msgstr "เลือกทั้ง_หมด"
+
+#~ msgid "Cu_t"
+#~ msgstr "_ตัด"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "เล่นวิดิโอต่อเนื่องกัน"
+
+#~ msgid "Stop after each video"
+#~ msgstr "หยุดหลังจากเล่นวิดิโอแต่ละอันเสร็จ"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "ค่าโดยปริยาย, วีดีโอ จะหมดอายุ หลังจาก :"
+
+#~ msgid "_Paste"
+#~ msgstr "_วาง"
+
+#~ msgid "_Next Video"
+#~ msgstr "วิดีโอถัดไป"
+
+#~ msgid "_Previous Video"
+#~ msgstr "วิดีโอก่อนหน้า"
+
+#~ msgid "_Video"
+#~ msgstr "วิดีโอ"
+
+#~ msgid "Auto Download"
+#~ msgstr "ดาวน์โหลดอัตโนมัติ"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "พักการดาวน์โหลดอัตโนมัติ เมื่อมีวัตถุที่ยังไม่ได้ดูเป็จจำนวน:"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "หน้าจอต่อไปนี่ จะช่วยคุณในการติดตั้ง %(name)s ให้เหมาะสมที่สุดกับคุณ\n"
+#~ "เราแนะนำให้คุณตั้งค่าให้ %(name)s เริ่มทำงานเมื่อคอมพิวเตอร์ของคุณเริ่มทำงาน "
+#~ "ซึ่งจะทำให้กระบวนการดาวน์โหลดสามารถดาวน์โหลดได้สำเร็จ "
+#~ "และไฟล์สื่อใหม่ๆจะสามารถดาวน์โหลดอยู่ภายหลังได้ "
+#~ "และพร้อมทันทีที่คุณต้องการจะรับชม"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "ทำการเริ่มการทำงานครั้งแรกของ %(name)s ให้สำเร็จ"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "เข้าคิวเพื่อการดาวน์โหลดอัตโนมัติ"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s หาไดเรคทอรีเบื้องต้นของวิดีโอที่:\n"
+#~ "\n"
+#~ "%(moviedirectory)s ไม่พบ\n"
+#~ "\n"
+#~ "ซึ่งอาจเกิดขึ้นเนื่องจากมันอยู่ในไดรฟ์ภายนอกที่ไม่ได้ถูกเชื่อมต่อ\n"
+#~ "\n"
+#~ "ถ้าคุณดำเนินการต่อ ไดเรคทอรีเบื้องต้นของวิดีโอจะถูกคืนค่ามายังที่ไดรฟนี้แทน "
+#~ "ซึ่งถ้าคุณมีวิดีโอที่ถูกดาวน์โหลดไว้แล้ว %(shortappname)s "
+#~ "จะสุญเสียรายละเอียดเกี่ยวกับวิดีโอเหล่านั้น\n"
+#~ "\n"
+#~ "ถ้าคุณออก คุณจะสามารถเชื่อมต่อไดรฟหรือแก้ปัญหาอื่นๆที่เกิดขึ้น "
+#~ "แล้วจึงเรียกใช้ %(shortappname)s ได้อีกครั้ง"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "เพิ่มเว็บไซท์ - URL ไม่ถูกต้อง"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "ใส่ URL ของเว็บไซท์ที่ต้องการจะเพิ่ม"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "ที่อยู่ที่คุณใส่ไม่ใช่ URL ที่ถูกต้อง\n"
+#~ "กรุณาตรวจสอบ URL แล้วลองใหม่อีกครั้ง\n"
+#~ "\n"
+#~ "ใส่ URL ของเว็บไซท์ที่ต้องการจะเพิ่ม"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "ใส่ชื่อใหม่สำหรับวัตถุ"
+
+#~ msgid "Add Site"
+#~ msgstr "เพิ่มเว็บไซท์"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "คุณมั่นใจหรือไม่ที่จะเอาเว็บไซท์จำนวน %(count)s เว็บไซท์ออก?"
+
+#~ msgid "Rename Site"
+#~ msgstr "เปลี่ยนชื่อเว็บไซท์"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "ใส่ชื่อใหม่สำหรับเว็บไซท์ %(name)s"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "เอาเว็บไซท์ออก"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "การตั้งค่าดาวน์โหลดอัตโนมัติ:"
+
+#~ msgid "Remove Site"
+#~ msgstr "ลบเว็บไซท์"
+
+#~ msgid "Remove Sites"
+#~ msgstr "ลบเว็บไซท์"
+
+#~ msgid "Migrating files"
+#~ msgstr "กำลังย้ายแฟ้ม"
+
+#~ msgid "Rename Item"
+#~ msgstr "เปลี่ยนชื่อรายการ"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "คืนค่าเป็นชื่อเดิม"

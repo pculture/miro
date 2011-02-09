@@ -15,14 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
-
-#: ../../osx/plat/frontends/widgets/overlay.py:121
-#: ../../lib/frontends/widgets/itemcontextmenu.py:164
-#: ../../lib/frontends/widgets/gtk/video.py:302
-msgid "Share"
-msgstr "Comparteix"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:261
@@ -32,7 +26,207 @@ msgstr "Comparteix"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
-msgstr "Conserva"
+msgstr "Mantenir"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:163
+msgid "Hide Others"
+msgstr "Amaga les altres"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:165
+msgid "Show All"
+msgstr "Mostrar tots"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:182
+msgid "Cut"
+msgstr "Talla"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Copy"
+msgstr "Còpia"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:187
+msgid "Select All"
+msgstr "Selecciona tots"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:219
+msgid "Bring All to Front"
+msgstr "Porta-ho tot al devant"
+
+#: ../../windows/plat/frontends/widgets/application.py:208
+msgid "Error Bombing Item"
+msgstr "Error creant l'arxiu bomba"
+
+#: ../../windows/plat/frontends/widgets/application.py:210
+msgid "Error Recommending Item"
+msgstr "Error al recomanar l'item"
+
+#: ../../windows/plat/frontends/widgets/application.py:212
+msgid "Error Opening Website"
+msgstr "Error al obrir el web"
+
+#: ../../lib/feed.py:844
+msgid "Error loading feed"
+msgstr "Error al carregar subministre"
+
+#: ../../lib/feed.py:849
+msgid "Would you like to keep the feed?"
+msgstr "Vols mantenir el subministre?"
+
+#: ../../lib/downloader.py:337
+msgid "Flash URL Scraping Error"
+msgstr "Error amb l'adreça Flash"
+
+#: ../../lib/commandline.py:194
+msgid "Invalid Torrent"
+msgstr "Torrent no vàlid"
+
+#: ../../lib/dialogs.py:104
+msgid "Migrate"
+msgstr "Migrar"
+
+#: ../../lib/dialogs.py:105
+msgid "Don't Migrate"
+msgstr "No migrar"
+
+#: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
+#: ../../lib/frontends/widgets/style.py:1152
+#: ../../lib/frontends/widgets/style.py:1163
+#: ../../lib/frontends/widgets/itemcontextmenu.py:140
+#: ../../lib/frontends/widgets/itemcontextmenu.py:241
+msgid "Download"
+msgstr "Descàrrega"
+
+#: ../../lib/dialogs.py:107
+msgid "Remove Entry"
+msgstr "Eliminar Entrada"
+
+#: ../../lib/dialogs.py:109
+msgid "Delete Files"
+msgstr "Esborrar Arxius"
+
+#: ../../lib/dialogs.py:110
+msgid "Keep Videos"
+msgstr "Mantindre Vídeos"
+
+#: ../../lib/dialogs.py:111
+msgid "Delete Videos"
+msgstr "Esborrar vídeos"
+
+#: ../../lib/dialogs.py:112
+msgid "Create"
+msgstr "Crear"
+
+#: ../../lib/dialogs.py:115 ../../lib/frontends/widgets/prefpanel.py:544
+msgid "Add"
+msgstr "Afegir"
+
+#: ../../lib/dialogs.py:116
+msgid "Add Into New Folder"
+msgstr "Afegir Dins d'una Carpeta Nova"
+
+#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
+#: ../../lib/frontends/widgets/tablist.py:707
+#: ../../lib/frontends/widgets/tablist.py:719
+#: ../../lib/frontends/widgets/tablist.py:725
+#: ../../lib/frontends/widgets/tablist.py:761
+#: ../../lib/frontends/widgets/tablist.py:767
+#: ../../lib/frontends/widgets/tablist.py:772
+#: ../../lib/frontends/widgets/prefpanel.py:547
+msgid "Remove"
+msgstr "Eliminar"
+
+#: ../../lib/frontends/widgets/menus.py:273
+msgid "_Playlists"
+msgstr "_Llistes de reproducció"
+
+#: ../../lib/frontends/widgets/menus.py:281
+msgid "Re_name Playlist"
+msgstr "Renombrar llista de reproducció"
+
+#: ../../lib/frontends/widgets/menus.py:283
+msgid "_Remove Playlist"
+msgstr "_Eliminar llista de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:682
+msgid "Create Playlist"
+msgstr "Crear Llista de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:683
+msgid "Enter a name for the new playlist"
+msgstr "Introdueix un nom per a la nova llista de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:704
+msgid "Create Playlist Folder"
+msgstr "Crea una carpeta de llista de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:705
+msgid "Enter a name for the new playlist folder"
+msgstr "Introdueix un nom per a la carpeta de llistes de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:736
+#: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
+msgid "Rename Playlist"
+msgstr "Renombrar llista de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:741
+#: ../../lib/frontends/widgets/tablist.py:760
+msgid "Rename Playlist Folder"
+msgstr "Renombrar carpeta de llista de reproducció"
+
+#: ../../lib/frontends/widgets/application.py:830
+#: ../../lib/frontends/widgets/application.py:849
+msgid "Are you sure you want to quit?"
+msgstr "Està segur de voler abandonar el programa?"
+
+#: ../../lib/frontends/widgets/crashdialog.py:48
+msgid "Internal Error"
+msgstr "Error Intern"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:310
+msgid "Remove From Playlist"
+msgstr "Esborra de la llista de reproducció"
+
+#: ../../lib/frontends/widgets/prefpanel.py:729
+msgid "Playback"
+msgstr "Reproducció"
+
+#: ../../lib/playlist.py:203
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Introdueix un nou nom per a la llista de reproducció %s"
+
+#: ../../lib/httpclient.py:135
+msgid "Got 404 status code"
+msgstr "Tens un codi d'estat 404"
+
+#: ../../lib/net.py:91 ../../lib/net.py:97
+msgid "Can't connect"
+msgstr "No es pot conectar"
+
+#: ../../lib/net.py:98
+msgid "SSL connection error"
+msgstr "Error de conexió SSL"
+
+#: ../../lib/net.py:102
+msgid "Timeout"
+msgstr "temps esgotat"
+
+#: ../../lib/dl_daemon/download.py:1109
+msgid "Torrent file deleted"
+msgstr "Arxiu torrent esborrat"
+
+#: ../../lib/theme.py:189
+msgid "Example Playlist"
+msgstr "Llista de reproducció d'exemple"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "no es podrà executar la Pipeline requerida"
+
+#: ../../osx/plat/frontends/widgets/overlay.py:121
+#: ../../lib/frontends/widgets/itemcontextmenu.py:164
+#: ../../lib/frontends/widgets/gtk/video.py:302
+msgid "Share"
+msgstr "Comparteix"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
@@ -67,14 +261,6 @@ msgstr "Serveis"
 msgid "Hide %(appname)s"
 msgstr "Amaga el %(appname)s"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:163
-msgid "Hide Others"
-msgstr "Amaga els altres"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:165
-msgid "Show All"
-msgstr "Mostra'ls tots"
-
 #: ../../osx/plat/frontends/widgets/osxmenus.py:170
 msgid "Preferences..."
 msgstr "Preferències...."
@@ -88,21 +274,9 @@ msgstr "Surt del %(appname)s"
 msgid "Close Window"
 msgstr "Tanca la finestra"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:182
-msgid "Cut"
-msgstr "Retalla"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Copy"
-msgstr "Copia"
-
 #: ../../osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Paste"
 msgstr "Enganxa"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:187
-msgid "Select All"
-msgstr "Selecciona-ho tot"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:189
 msgid "Edit"
@@ -135,10 +309,6 @@ msgstr "Redueix"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 msgid "Main Window"
 msgstr "Finestra principal"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:219
-msgid "Bring All to Front"
-msgstr "Porta-ho tot al davant"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:221
 msgid "Window"
@@ -373,18 +543,6 @@ msgstr ""
 "Quan cliqueu el botó de tancar vermell, voleu que el %(appname)s es tanqui o "
 "es minimitzi a la safata del sistema? Podeu canviar aquest paràmetre més "
 "tard des de les «Opcions»."
-
-#: ../../windows/plat/frontends/widgets/application.py:208
-msgid "Error Bombing Item"
-msgstr "S'ha produït un error en bombardejar l'element"
-
-#: ../../windows/plat/frontends/widgets/application.py:210
-msgid "Error Recommending Item"
-msgstr "S'ha produït un error quan es recomanava l'element"
-
-#: ../../windows/plat/frontends/widgets/application.py:212
-msgid "Error Opening Website"
-msgstr "S'ha produït un error en obrir el lloc web"
 
 #: ../../windows/plat/frontends/widgets/application.py:217
 #, python-format
@@ -653,18 +811,10 @@ msgid ""
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
 
-#: ../../lib/feed.py:844
-msgid "Error loading feed"
-msgstr "Error al carregar canal"
-
 #: ../../lib/feed.py:846
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
-
-#: ../../lib/feed.py:849
-msgid "Would you like to keep the feed?"
-msgstr "Voleu conservar el canal?"
 
 #: ../../lib/feed.py:972
 msgid "Bad content-type"
@@ -716,10 +866,6 @@ msgstr "activitat"
 #: ../../lib/httpclient.py:165
 msgid "File not found"
 msgstr "Arxiu no trobat"
-
-#: ../../lib/downloader.py:337
-msgid "Flash URL Scraping Error"
-msgstr "Error en l'adreça Flash"
 
 #: ../../lib/downloader.py:535
 msgid "starting up"
@@ -868,10 +1014,6 @@ msgstr ""
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
 
-#: ../../lib/commandline.py:194
-msgid "Invalid Torrent"
-msgstr "Torrent invàlid"
-
 #: ../../lib/commandline.py:196
 #, python-format
 msgid ""
@@ -944,45 +1086,9 @@ msgstr "Ignora"
 msgid "Submit Crash Report"
 msgstr "Envia informe d'errada"
 
-#: ../../lib/dialogs.py:104
-msgid "Migrate"
-msgstr "Mou"
-
-#: ../../lib/dialogs.py:105
-msgid "Don't Migrate"
-msgstr "No moguis"
-
-#: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1152
-#: ../../lib/frontends/widgets/style.py:1163
-#: ../../lib/frontends/widgets/itemcontextmenu.py:140
-#: ../../lib/frontends/widgets/itemcontextmenu.py:241
-msgid "Download"
-msgstr "Descarrega"
-
-#: ../../lib/dialogs.py:107
-msgid "Remove Entry"
-msgstr "Elimina Entrada"
-
 #: ../../lib/dialogs.py:108
 msgid "Delete File"
 msgstr "Arxiu Esborrat"
-
-#: ../../lib/dialogs.py:109
-msgid "Delete Files"
-msgstr "Esborra Arxius"
-
-#: ../../lib/dialogs.py:110
-msgid "Keep Videos"
-msgstr "Conserva Vídeos"
-
-#: ../../lib/dialogs.py:111
-msgid "Delete Videos"
-msgstr "Esborra vídeos"
-
-#: ../../lib/dialogs.py:112
-msgid "Create"
-msgstr "Crea"
 
 #: ../../lib/dialogs.py:113
 msgid "Create Feed"
@@ -991,25 +1097,6 @@ msgstr ""
 #: ../../lib/dialogs.py:114
 msgid "Create Folder"
 msgstr "Crea carpeta"
-
-#: ../../lib/dialogs.py:115 ../../lib/frontends/widgets/prefpanel.py:544
-msgid "Add"
-msgstr "Afegeix"
-
-#: ../../lib/dialogs.py:116
-msgid "Add Into New Folder"
-msgstr "Afegeix dins d'una Carpeta nova"
-
-#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
-#: ../../lib/frontends/widgets/tablist.py:707
-#: ../../lib/frontends/widgets/tablist.py:719
-#: ../../lib/frontends/widgets/tablist.py:725
-#: ../../lib/frontends/widgets/tablist.py:761
-#: ../../lib/frontends/widgets/tablist.py:767
-#: ../../lib/frontends/widgets/tablist.py:772
-#: ../../lib/frontends/widgets/prefpanel.py:547
-msgid "Remove"
-msgstr "Elimina"
 
 #: ../../lib/dialogs.py:120
 msgid "Not Now"
@@ -1588,10 +1675,6 @@ msgstr "_Comparteix-ho amb un amic"
 msgid "Copy URL"
 msgstr "Copia l'URL"
 
-#: ../../lib/frontends/widgets/menus.py:273
-msgid "_Playlists"
-msgstr "_Repertoris"
-
 #: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
 msgstr "Crea un _repertori"
@@ -1599,14 +1682,6 @@ msgstr "Crea un _repertori"
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
 msgstr "Carpeta de re_pertoris nova"
-
-#: ../../lib/frontends/widgets/menus.py:281
-msgid "Re_name Playlist"
-msgstr "Canvia nom del repertori"
-
-#: ../../lib/frontends/widgets/menus.py:283
-msgid "_Remove Playlist"
-msgstr "_Elimina repertori"
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
@@ -2019,22 +2094,6 @@ msgstr "Importar fitxer OPML - Error"
 msgid "Export OPML File"
 msgstr "Exporta arxiu OPML"
 
-#: ../../lib/frontends/widgets/application.py:682
-msgid "Create Playlist"
-msgstr "Crea repertori"
-
-#: ../../lib/frontends/widgets/application.py:683
-msgid "Enter a name for the new playlist"
-msgstr "Introduïu un nom per al repertori nou"
-
-#: ../../lib/frontends/widgets/application.py:704
-msgid "Create Playlist Folder"
-msgstr "Crea una carpeta de repertoris"
-
-#: ../../lib/frontends/widgets/application.py:705
-msgid "Enter a name for the new playlist folder"
-msgstr "Introduiu un nom per a la carpeta de repertoris"
-
 #: ../../lib/frontends/widgets/application.py:726
 #: ../../lib/frontends/widgets/tablist.py:706
 msgid "Rename Feed Folder"
@@ -2054,20 +2113,10 @@ msgstr ""
 msgid "Enter a new name for the feed %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:736
-#: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
-msgid "Rename Playlist"
-msgstr "Canvia el nom del repertori"
-
 #: ../../lib/frontends/widgets/application.py:737
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
-
-#: ../../lib/frontends/widgets/application.py:741
-#: ../../lib/frontends/widgets/tablist.py:760
-msgid "Rename Playlist Folder"
-msgstr "Canvia nom de la  carpeta de repertoris"
 
 #: ../../lib/frontends/widgets/application.py:742
 #, python-format
@@ -2109,11 +2158,6 @@ msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../lib/frontends/widgets/application.py:830
-#: ../../lib/frontends/widgets/application.py:849
-msgid "Are you sure you want to quit?"
-msgstr "Voleu sortir del programa?"
 
 #: ../../lib/frontends/widgets/application.py:832
 #, python-format
@@ -2617,10 +2661,6 @@ msgstr "Baixades del canal"
 msgid "Seeding"
 msgstr "Sembrant"
 
-#: ../../lib/frontends/widgets/crashdialog.py:48
-msgid "Internal Error"
-msgstr "S'ha produït un error intern"
-
 #: ../../lib/frontends/widgets/crashdialog.py:54
 #, python-format
 msgid ""
@@ -2943,10 +2983,6 @@ msgstr[1] "%(count)d Elements en Pausa"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:281
 msgid "Restart Upload"
 msgstr "Reprèn la pujada"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:310
-msgid "Remove From Playlist"
-msgstr "Elimina repertori"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -3285,10 +3321,6 @@ msgstr "Carpetes"
 msgid "Disk space"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:729
-msgid "Playback"
-msgstr "Reprodueix"
-
 #: ../../lib/frontends/widgets/prefpanel.py:734
 msgid "Preferences"
 msgstr "Preferències"
@@ -3361,11 +3393,6 @@ msgstr ""
 msgid "Pop-out"
 msgstr ""
 
-#: ../../lib/playlist.py:203
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Introduiu un nom nou per el repertori %s"
-
 #: ../../lib/httpclient.py:101
 msgid "HTTP error"
 msgstr "S'ha produït un error en l'HTTP"
@@ -3398,10 +3425,6 @@ msgstr ""
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
-
-#: ../../lib/httpclient.py:135
-msgid "Got 404 status code"
-msgstr "Teniu un codi d'estat 404"
 
 #: ../../lib/httpclient.py:137
 #, python-format
@@ -3474,22 +3497,10 @@ msgstr ""
 msgid "Error: %(msg)s"
 msgstr "S'ha produït un error: %(msg)s"
 
-#: ../../lib/net.py:91 ../../lib/net.py:97
-msgid "Can't connect"
-msgstr "No es pot connectar"
-
 #: ../../lib/net.py:92
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr "S'ha produït un error de connexió: %(msg)s"
-
-#: ../../lib/net.py:98
-msgid "SSL connection error"
-msgstr "S'ha produït un error en la connexió SSL"
-
-#: ../../lib/net.py:102
-msgid "Timeout"
-msgstr "Temps esgotat"
 
 #: ../../lib/net.py:103
 #, python-format
@@ -3534,22 +3545,40 @@ msgstr "Torrent corrupte"
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1109
-msgid "Torrent file deleted"
-msgstr "Arxiu torrent eliminat"
-
 #: ../../lib/dl_daemon/download.py:1110
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
 
-#: ../../lib/theme.py:189
-msgid "Example Playlist"
-msgstr "Repertori d'exemple"
-
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Cerca a tots"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Canals personalitzats"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Per defecte, els vídeos caduquen després de:"
+
+#~ msgid "None"
+#~ msgstr "Cap"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Empra això pel vídeo quan es reprodueixi àudio:"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "S'està executant una versió de %(appname)s amb una selecció de canals a mida."
+
+#~ msgid "Add to Library"
+#~ msgstr "Afegeix a la biblioteca"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "S'ha de reiniciar la reproducció per tal que els canvis de visualització "
+#~ "tinguin efecte."
 
 #~ msgid ""
 #~ "The address you entered is not a valid url.\n"
@@ -3579,6 +3608,18 @@ msgstr "Cerca a tots"
 #~ msgid "Rename Site"
 #~ msgstr "Canviar el nom del lloc"
 
+#~ msgid "Stop after each video"
+#~ msgstr "Aturar després de cada vídeo"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Reproduir vídeos un rera l'altre"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Reprèn la reproducció d'un vídeo des del punt de l'última parada."
+
+#~ msgid "Add to library"
+#~ msgstr "Afegeix a la biblioteca"
+
 #~ msgid "SITES"
 #~ msgstr "LLOCS"
 
@@ -3591,8 +3632,8 @@ msgstr "Cerca a tots"
 #~ msgid "No Results Found"
 #~ msgstr "No s'han trobat resultats"
 
-#~ msgid "Pipeline request never started"
-#~ msgstr "No es podrà executar la Pipeline requerida"
+#~ msgid "View:"
+#~ msgstr "Veure:"
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Error intern: No està preparat per enviar"
@@ -3626,3 +3667,42 @@ msgstr "Cerca a tots"
 
 #~ msgid "_Video"
 #~ msgstr "_Vídeo"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Línia d'estat incorrecta: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Línia de capçalera incorrecta: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Mida del paquet incorrecta: %(msg)s"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Esperava CRLF, obtingut: %(character)r"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Codi d'estat erroni: %(code)s"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Restituir Nom de l'Element"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "En fila per baixar automaticament"
+
+#~ msgid "Rename Item"
+#~ msgstr "Cambiar nom de l'element"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Auto-Expirar Vídeos:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Pausar Auto-Descàrrega quan els elements sense reproduir sumin:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Benvingut a la configuració d'instal·lació de %(name)s:"

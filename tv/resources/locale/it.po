@@ -15,13 +15,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
 #: ../../lib/httpclient.py:165
 msgid "File not found"
 msgstr "File non trovato"
+
+#: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
+#: ../../lib/frontends/widgets/style.py:1152
+#: ../../lib/frontends/widgets/style.py:1163
+#: ../../lib/frontends/widgets/itemcontextmenu.py:140
+#: ../../lib/frontends/widgets/itemcontextmenu.py:241
+msgid "Download"
+msgstr "Scaricamento"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:326
+#: ../../lib/frontends/widgets/statictabs.py:121
+msgid "Downloading"
+msgstr "Downnload in corso"
 
 #: ../../lib/httpclient.py:101
 msgid "HTTP error"
@@ -48,6 +61,9 @@ msgstr "Connessione a %(host)s scaduta"
 #: ../../lib/net.py:280
 msgid "Unknown Error code"
 msgstr "Codice di errore sconosciuto"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "il flusso dati richiesto non si è mai avviato"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -1002,14 +1018,6 @@ msgstr "Migra"
 msgid "Don't Migrate"
 msgstr "Non migrare"
 
-#: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1152
-#: ../../lib/frontends/widgets/style.py:1163
-#: ../../lib/frontends/widgets/itemcontextmenu.py:140
-#: ../../lib/frontends/widgets/itemcontextmenu.py:241
-msgid "Download"
-msgstr "Download"
-
 #: ../../lib/dialogs.py:107
 msgid "Remove Entry"
 msgstr "Rimuovi elemento"
@@ -1842,11 +1850,6 @@ msgstr "Tempo Rimanente"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:301
 msgid "Speed"
 msgstr "Velocità"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:326
-#: ../../lib/frontends/widgets/statictabs.py:121
-msgid "Downloading"
-msgstr "Scaricando"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:457
 msgid "Save as a Feed"
@@ -3687,16 +3690,109 @@ msgstr "Playlist di esempio"
 msgid "Search All"
 msgstr "Cerca tutto"
 
-#~ msgid "Pipeline request never started"
-#~ msgstr "Pipeline richiesta mai iniziata"
+#~ msgid "Custom Channels"
+#~ msgstr "Canali personalizzati"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Iscrizione a feed multipli"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Ferma dopo ogni video"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Visualizza video uno dopo l'altro"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Di default i video vengono cancellati dopo:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Controlla la presenza di nuovi video in queste cartelle ed aggiungili alla "
+#~ "libreria:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Riavvia l'esecuzione del video dal punto in cui era stato fermato."
 
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "Atteso CRLF, trovato: %(character)r"
 
+#~ msgid "None"
+#~ msgstr "Nessuno"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Usa questo come video quando si riproduce l'audio:"
+
 #, python-format
 #~ msgid "Bad Header Line: %(msg)s"
 #~ msgstr "Errore nella Linea di Header: %(msg)s"
+
+#~ msgid "Add to Library"
+#~ msgstr "Aggiungi alla Libreria"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Rimuovi %(name)s"
+
+#~ msgid "Add to library"
+#~ msgstr "Aggiungi alla Libreria"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Sei sicuro di voler rimuovere %(name)s?"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Immettere un nome per la nuova cartella di feed"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Crea feed?"
+#~ msgstr[1] "Crea %(count)d feed?"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "NOTA: Sei già iscritto a uno di questi feed. Questi feed rimarranno dove "
+#~ "sono attualmente."
+#~ msgstr[1] ""
+#~ "NOTA: Sei già iscritto a %(count)d di questi feed. Questi feed rimarranno "
+#~ "dove sono attualmente."
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Devi riavviare il riproduttore affinchè i cambiamenti di visualizzazione "
+#~ "abbiano effetto."
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "Stai eseguendo una versione di %(appname)s con un insieme di canali "
+#~ "personalizzato."
+
+#, python-format
+#~ msgid ""
+#~ "%(copyright)s.  See license.txt file for details.\n"
+#~ "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+#~ msgstr ""
+#~ "%(copyright)s. Leggi il file license.txt per maggiori dettali.\n"
+#~ "Miro e il logo di Miro sono marchi registrati della Participatory Culture "
+#~ "Foundation"
+
+#~ msgid "View:"
+#~ msgstr "Visualizza:"
+
+#, python-format
+#~ msgid "Adding feed to a new folder"
+#~ msgid_plural "Adding %(count)d feeds to a new folder"
+#~ msgstr[0] "Sto aggiungendo un feed a una nuova cartella"
+#~ msgstr[1] "Sto aggiungendo %(count)d feed a una nuova cartella"
 
 #, python-format
 #~ msgid ""
@@ -3707,6 +3803,1190 @@ msgstr "Cerca tutto"
 #~ "%(appname)s non è riuscito a scaricare il file da quest'indirizzo:\n"
 #~ "\n"
 #~ "%(url)s"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Avvia il seeding"
+
+#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
+#~ msgstr ""
+#~ "Il file \"%(filename)s\" è stato eliminato al di fuori di %(appname)s."
+
+#~ msgid "No server specified"
+#~ msgstr "Nessun server specificato"
+
+#~ msgid "Error "
+#~ msgstr "Errore "
+
+#~ msgid "no login ID submitted"
+#~ msgstr "non &egrave; stato fornito alcun ID di login"
+
+#~ msgid "connection not established"
+#~ msgstr "connessione non stabilita"
+
+#~ msgid "No password submitted"
+#~ msgstr "Non &egrave; stata fornita alcuna password"
+
+#~ msgid "Authentication failed"
+#~ msgstr "Autenticazione fallita"
+
+#~ msgid "No connection to server"
+#~ msgstr "Nessuna connessione al server"
+
+#~ msgid "No login ID submitted"
+#~ msgstr "Non &egrave; stato fornito alcun ID di login"
+
+#~ msgid "No server banner"
+#~ msgstr "Nessun banner nel server"
+
+#~ msgid "abort"
+#~ msgstr "interrompi"
+
+#~ msgid "apop authentication failed"
+#~ msgstr "autenticazione apop fallita"
+
+#~ msgid "Premature end of list"
+#~ msgstr "Lista terminata prematuramente"
+
+#~ msgid "Empty command string"
+#~ msgstr "Stringa di comando vuota"
+
+#~ msgid "connection does not exist"
+#~ msgstr "la connessione non esiste"
+
+#~ msgid "No msg number submitted"
+#~ msgstr "Non &egrave; stato fornito alcun numero di messaggio"
+
+#~ msgid "Command failed "
+#~ msgstr "Comando fallito "
+
+#~ msgid "Miro - free, open source internet tv and video player"
+#~ msgstr "Miro - internet tv e video player libero ed open source"
+
+#~ msgid "Stuck? Find Help!"
+#~ msgstr "Bloccato? Cerca aiuto!"
+
+#~ msgid "First things first, check out the"
+#~ msgstr "Prima di tutto controlla il"
+
+#~ msgid "FAQ"
+#~ msgstr "Domande frequenti"
+
+#~ msgid ""
+#~ "&mdash; it'll help with all the most common questions and problems. If "
+#~ "things still aren't working properly, enter your question in the box below."
+#~ msgstr ""
+#~ "&mdash; ti aiuterà con i problemi e le domande più comuni. Se le cose non "
+#~ "funzionano bene comunque, poni le tue domande nello spazio sottostante"
+
+#~ msgid "Getting Started"
+#~ msgstr "Per iniziare"
+
+#~ msgid "Help"
+#~ msgstr "Aiuto"
+
+#~ msgid "Find More Help"
+#~ msgstr "Cerca un aiuto ulteriore"
+
+#~ msgid "Intro Video"
+#~ msgstr "Video Introduttivo"
+
+#~ msgid "This short video will show you the basics of using Miro."
+#~ msgstr ""
+#~ "Questo breve video ti dimostrerà i concetti basilari dell'uso di Miro"
+
+#~ msgid "The Features"
+#~ msgstr "Le Caratteristiche"
+
+#~ msgid "A friendly guide to the many features of Miro."
+#~ msgstr "Una guida amichevole alle tante funzioni di Miro"
+
+#~ msgid "Find More Answers"
+#~ msgstr "Ricerca maggiori informazioni"
+
+#~ msgid "Ask your Miro related questions on our GetSatisfaction site."
+#~ msgstr "Fai le tue domande su Miro sul sito GetSatisfaction"
+
+#~ msgid "FAQ Chapters"
+#~ msgstr "Argomenti delle domande frequenti"
+
+#~ msgid "Using Miro"
+#~ msgstr "Usare Miro"
+
+#~ msgid "How do I use Miro?"
+#~ msgstr "Come posso usare Miro?"
+
+#~ msgid "How do I watch videos?"
+#~ msgstr "Come posso guardare i filmati?"
+
+#~ msgid "How do I play videos in fullscreen mode?"
+#~ msgstr "Come posso eseguire i filmati in modalità tutto schermo?"
+
+#~ msgid "How do I exit fullscreen mode while a video is playing?"
+#~ msgstr ""
+#~ "Come faccio ad uscire dalla modalità tutto schermo durante l'esecuzione di "
+#~ "un filmato?"
+
+#~ msgid "How do I subscribe to feeds?"
+#~ msgstr "Come posso iscrivermi ad un Feed?"
+
+#~ msgid "How do I add sites?"
+#~ msgstr "Come faccio ad aggiungere siti?"
+
+#~ msgid "How do I remove feeds or sites?"
+#~ msgstr "Come posso rimuovere dei Feed o siti?"
+
+#~ msgid ""
+#~ "How do I automatically download (auto-download) everything from a feed?"
+#~ msgstr ""
+#~ "Come posso settare il download automatico di ogni elemento di un feed?"
+
+#~ msgid ""
+#~ "How do I know when new videos in a feed are available to download, or have "
+#~ "already downloaded and are ready to watch?"
+#~ msgstr ""
+#~ "Come posso sapere quando posso scaricare nuovi video da un Feed, o quando "
+#~ "sono stati già scaricati e sono pronti per essere visti?"
+
+#~ msgid "How do I share videos or shows that I like with friends?"
+#~ msgstr ""
+#~ "Come posso condividere i video o gli spettacoli che mi piacciono con i miei "
+#~ "amici?"
+
+#~ msgid "How do I set preferences to manage the videos I've downloaded?"
+#~ msgstr "Come imposto le preferenze per gestire i video che ho scaricato?"
+
+#~ msgid "How do I import video podcast subscriptions from iTunes into Miro?"
+#~ msgstr ""
+#~ "Come posso importare le sottoscrizioni video o podcast da iTunes a Miro?"
+
+#~ msgid "What are the keyboard shortcuts for Miro?"
+#~ msgstr "Quali sono le scorciatoie da tastiera per Miro?"
+
+#~ msgid "How do I configure a proxy for Miro to work?"
+#~ msgstr "Come configuro una connessione proxy che funzioni con Miro?"
+
+#~ msgid "How do I back up my Miro database?"
+#~ msgstr "Come faccio a salvare il mio database di Miro?"
+
+#~ msgid "Common Questions and Issues"
+#~ msgstr "Domande e Risposte comuni"
+
+#~ msgid "How do I install Miro?"
+#~ msgstr "Come installo Miro?"
+
+#~ msgid "How do I uninstall Miro?"
+#~ msgstr "Come posso rimuovere Miro?"
+
+#~ msgid "What's the Difference Between a Site and a Feed?"
+#~ msgstr "Qual'è la differenza tra un Sito ed un Feed?"
+
+#~ msgid "Can I add feeds or sites that aren't listed in the Miro Guide?"
+#~ msgstr ""
+#~ "Posso aggiungere Feed o siti che non sono elencati nella guida di Miro?"
+
+#~ msgid ">Does Miro play Flash video, .flvs, or .swf's?"
+#~ msgstr ">Può Miro eseguire filmati Flash, .flvs o .swf?"
+
+#~ msgid ""
+#~ "Why do all my media files have Miro logos now? I want to use a different "
+#~ "program to play these files!"
+#~ msgstr ""
+#~ "Perché tutti i miei file video hanno l'icona di Miro adesso? Voglio usare un "
+#~ "programma differente per guardare questi file!"
+
+#~ msgid "Can I sync my videos to an iPod or other video device?"
+#~ msgstr ""
+#~ "Posso sincronizzare i miei filmati con l'iPod od altri dispositivi video?"
+
+#~ msgid ">Do you support the Mac remote? Other remotes?"
+#~ msgstr "Hai il supporto per il Mac remote? Altri supporti remoti supportati?"
+
+#~ msgid "I'm trying to download a video, but the video isn't downloading."
+#~ msgstr "Provo a scaricare un video, ma non viene scaricato."
+
+#~ msgid "I downloaded a video, but it won't play."
+#~ msgstr "Ho scaricato un filmato ma non riesce a visualizzarlo"
+
+#~ msgid "I downloaded a video but it's gone from my collection."
+#~ msgstr "Ho scaricato un video ma è sparito dalla mia collezione."
+
+#~ msgid ""
+#~ "I subscribed to a feed but it's empty. The feed does not show any videos "
+#~ "available to download."
+#~ msgstr ""
+#~ "Ho sottoscritto un Feed ma è vuoto. Il Feed non mostra nessun video "
+#~ "disponibile per il download"
+
+#~ msgid "I installed Miro, but it's not in my language."
+#~ msgstr "Ho installato Miro ma non è nella mia lingua"
+
+#~ msgid "I'm having problems with Miro on Ubuntu Feisty."
+#~ msgstr "Sto avendo problemi con Miro usando una Ubuntu Feisty"
+
+#~ msgid ""
+#~ "I'm getting very few search results for YouTube and other video services."
+#~ msgstr ""
+#~ "Sto ricevendo veramente pochi risultati da YouTube e da altri servizi video"
+
+#~ msgid "My Bittorrent downloads don't work/go slow."
+#~ msgstr "I miei download Bittorrent non funzionano o vanno lenti"
+
+#~ msgid "About Miro"
+#~ msgstr "Informazioni su Miro"
+
+#~ msgid "Who Makes Miro?"
+#~ msgstr "Chi ha creato Miro?"
+
+#~ msgid "What is Miro?"
+#~ msgstr "Che cos'è Miro?"
+
+#~ msgid "How Can I Contact the Participatory Culture Foundation?"
+#~ msgstr "Come contatto la Participatory Culture Foundation?"
+
+#~ msgid "I'd like to Report a Bug, Problem, or Desired Feature for Miro."
+#~ msgstr ""
+#~ "Vorrei comunicare un Bug, un problema, o suggerire una caratteristica "
+#~ "desiderata per Miro."
+
+#~ msgid "What are the system requirements to run Miro?"
+#~ msgstr "Quali sono i requisiti di sistema per usare Miro?"
+
+#~ msgid "What video formats can Miro play?"
+#~ msgstr "Quali formati video può riprodurre Miro?"
+
+#~ msgid "Where can I see the source code for Miro?"
+#~ msgstr "Dove posso trovare il codice sorgente di Miro?"
+
+#~ msgid "Can I put my show/videos in the Miro Content Guide?"
+#~ msgstr "Posso contribuire con i miei filmati nella Guida di Miro?"
+
+#~ msgid "Where to Get Help"
+#~ msgstr "Dove trovare aiuto"
+
+#~ msgid "The FAQ"
+#~ msgstr "Le FAQ"
+
+#~ msgid "Answers to all your most frequently asked questions."
+#~ msgstr "Risposte alle vostre domande più frequenti"
+
+#~ msgid "A Better Way to Watch."
+#~ msgstr "Un modo migliore di guardare"
+
+#~ msgid ""
+#~ "Miro is the only internet TV you'll need &mdash; it's an application that "
+#~ "brings together thousands of shows from all over the web. There's TONS of "
+#~ "great content, lots of it in HD, and fresh shows are added all the time. You "
+#~ "can watch and organize video feeds when you're offline or traveling, find TV "
+#~ "programs on sites like Hulu, and download from sites like YouTube. Miro "
+#~ "downloads in HD, whenever it's available!"
+#~ msgstr ""
+#~ "Miro è l'unica TV internet di cui avrai bisogno &mdash; è un'applicazione "
+#~ "che accomuna insieme migliaia di spettacoli da tutte le parti della rete. Ci "
+#~ "sono TONNELLATE di splendidi contenuti, molti dei quali in HD, e nuovi video "
+#~ "sono aggiunti puntualmente. Puoi vedere ed organizzare i Feed video anche "
+#~ "quando sei offline o stai viaggiando, trova programmi TV da siti come Hulu, "
+#~ "e scarica da siti come YouTube. Miro scarica in HD, quando è possibile!"
+
+#~ msgid "It's Easy: Install Miro, Add Shows, Watch Videos"
+#~ msgstr ""
+#~ "E' semplicisimo: installi Miro, aggiungi gli spettacoli, guardi i video"
+
+#~ msgid "Download Miro"
+#~ msgstr "Scarica Miro"
+
+#~ msgid ""
+#~ ", follow the install instructions from that link, and then open the "
+#~ "application. Once Miro is running, the"
+#~ msgstr ""
+#~ ", segui le istruzioni di installazione da quel link, e poi apri "
+#~ "l'applicazione. Non appena Miro è pronto, il"
+
+#~ msgid ""
+#~ "will open up and you can begin browsing the guide. Everything in the guide "
+#~ "is free, so add any feed or site that looks interesting."
+#~ msgstr ""
+#~ "si aprirà e puoi iniziare a sfogliare la guida. Tutto ciò che è contenuto "
+#~ "nella guida è gratis, quindi puoi aggiungere qualsiasi Feed o sito che "
+#~ "sembri interessante."
+
+#~ msgid "The Miro Basics"
+#~ msgstr "Le basi di Miro"
+
+#~ msgid "Preview episodes of shows in the Miro Guide."
+#~ msgstr "Anteprime degli spettacoli nella guida di Miro."
+
+#~ msgid "Click green \"add\" buttons to put a feeds or sites in your sidebar."
+#~ msgstr ""
+#~ "Premi il bottone verde \"aggiungi\" per mettere un Feed od un sito nella tua "
+#~ "barra laterale."
+
+#~ msgid ""
+#~ "Feeds in your sidebar will automatically download new episodes (just like a "
+#~ "TIVO)."
+#~ msgstr ""
+#~ "I Feed nella tua barra laterale scaricheranno in automatico i nuovi episodi "
+#~ "(proprio come un TIVO)"
+
+#~ msgid "Take a Tour of Miro"
+#~ msgstr "Esplora Miro"
+
+#~ msgid ""
+#~ "Check out these still images of Miro in the screenshot gallery. Want "
+#~ "something more dynamic? Watch this screencast video of Miro in action. Once "
+#~ "you've seen that stuff, we highly recommend you"
+#~ msgstr ""
+#~ "Guarda tutte queste immagini di Miro nella galleria delle immagini. Vuoi "
+#~ "qualcosa di più dinamico? Guarda questo video di Miro in azione. Una volta "
+#~ "che avrai visto tutto ciò ti raccomandiamo caldamente"
+
+#~ msgid "download Miro"
+#~ msgstr "scarica Miro"
+
+#~ msgid "."
+#~ msgstr "."
+
+#~ msgid "Turn your visitors into subscribers."
+#~ msgstr "Trasforma i tuoi visitatori in abbonati"
+
+#~ msgid ""
+#~ "Getting your videos into Miro is free and easy: we'll help you reach our "
+#~ "audience of hundreds of thousands of users around the world. And when "
+#~ "someone stops by your website to watch a video, seize that chance to turn a "
+#~ "one-time viewer into a long-term fan."
+#~ msgstr ""
+#~ "Portare i tuoi video in Miro è facile e gratis: noi ti aiuteremo a "
+#~ "raggiungere le centinaia di migliaia di nostri spettatori in giro per il "
+#~ "mondo. E quando qualcuno si ferma sul tuo sito per guardare un video, "
+#~ "afferra quell'opportunità per trasformare un saltuario visitatore in un fan "
+#~ "a lungo termine."
+
+#~ msgid "Get Your Videos into Miro"
+#~ msgstr "Inserisci i tuoi video in Miro"
+
+#~ msgid ""
+#~ "Miro converts any media RSS feed into a channel. Don't worry if you've never "
+#~ "heard of RSS &mdash; it's an open distribution format that works with Miro, "
+#~ "iTunes, and lots of other tools. Many blogs and video sharing services "
+#~ "automatically generate an RSS feed."
+#~ msgstr ""
+#~ "Miro converte un qualsiasi Feed RSS in un canale. Non ti preoccupare se non "
+#~ "hai mai sentito parlare di RSS &mdash; è un formato a distribuzione libera "
+#~ "che funziona con Miro, iTunes, e molti altri strumenti. Molti blog e servizi "
+#~ "di condivisione video generano automaticamente un Feed RSS."
+
+#~ msgid "Find out if your hosting service offers an RSS feed."
+#~ msgstr "Scopri se il tuo servizio di hosting offre un Feed RSS"
+
+#~ msgid "Here's what to look for"
+#~ msgstr "Qui c'è quello che devi cercare"
+
+#~ msgid "Submit your RSS feed and info about your show to the Miro Guide"
+#~ msgstr ""
+#~ "Inserisci il tuo feed RSS e le informazioni sul tuo spettacolo nella guida "
+#~ "di Miro"
+
+#~ msgid "Put a one-click subscribe button onto your site"
+#~ msgstr "Aggiungi un pulsante di sottoscrizione sul tuo sito"
+
+#~ msgid "How to Shoot, Edit, and Publish Online Video"
+#~ msgstr "Come girare, modificare, e pubblicare un video online"
+
+#~ msgid ""
+#~ "We have created a detailed set of guides for shooting, editing, publishing, "
+#~ "and promoting internet video. We think it's the best resource anywhere.\n"
+#~ "If you are getting started with creating internet vieo or if you want to "
+#~ "learn more about a specific topic, it's the best place to start."
+#~ msgstr ""
+#~ "Abbiamo creato una serie dettagliata di guide per girare, modificare, "
+#~ "pubblicare e promuovere i video in internet. Crediamo che sia la miglior "
+#~ "risorsa possibile.\n"
+#~ "Se stai iniziando a creare video, o se vuoi imparare di più su un "
+#~ "particolare argomento, questa è il migliore posto dove iniziare."
+
+#~ msgid "Sharing Miro is Sharing Our Mission"
+#~ msgstr "Condividere Miro è condividere la nostra Missione"
+
+#~ msgid ""
+#~ "Miro is one of the world's most popular free, open-source software projects. "
+#~ "But it's more than just great software: Miro is part of a fight to keep "
+#~ "online video open.\n"
+#~ "\n"
+#~ "Dozens of major corporations are trying to lock video creators and viewers "
+#~ "into closed and proprietary distribution systems. To them, proprietary "
+#~ "models are just a way to make money by forcing viewers and creators to use "
+#~ "their products. But if companies act as gatekeepers deciding what people see "
+#~ "and what they don't, free speech online is threatened."
+#~ msgstr ""
+#~ "Miro è uno dei più popolari, gratis e open-source programmi del mondo. Ma è "
+#~ "molto di più di un programma geniale: Miro è parte di una battaglia per "
+#~ "mantenere liberi i video online.\n"
+#~ "\n"
+#~ "Dozzine delle maggiori corporazioni stanno cercando di contenere creatori e "
+#~ "spettatori in sistemi di distribuzione chiusi e proprietari. Ma se le "
+#~ "compagnie agiscono come i guardiani decidendo cosa le persone possono vedere "
+#~ "e cosa no, la libertà di parola online è minacciata."
+
+#~ msgid "Two Reasons to Share Miro"
+#~ msgstr "Due motivi per condividere Miro"
+
+#~ msgid "Reason One:"
+#~ msgstr "Primo motivo"
+
+#~ msgid ""
+#~ "Miro is a slick way for your friends to watch all the shows they love, view "
+#~ "YouTube videos in HD, discover fresh new web video programming, and more."
+#~ msgstr ""
+#~ "Usare Miro è il modo più veloce per i tuoi amici di guardare tutti gli "
+#~ "spettacoli che amano, visionare i video di YouTube in formato HD, scoprire "
+#~ "la programmazione di nuovi video web ed altro ancora"
+
+#~ msgid "Reason Two:"
+#~ msgstr "Secondo motivo"
+
+#~ msgid ""
+#~ "Our mission is to democratize television as it moves online. When more "
+#~ "people use Miro, it sends an important signal to video publishers "
+#~ "everywhere: open standards, interoperability, and decentralization matter!"
+#~ msgstr ""
+#~ "La nostra missione è portare la democrazia sulla televisione come è già per "
+#~ "tutto ciò che c'è online. Quando sempre più gente utilizzerà Miro, verrà "
+#~ "mandato un importante segnale a tutti i produttori di video: standard "
+#~ "aperti, interoperabilità e decentralizzazione!"
+
+#~ msgid "The Absolute Best Way to Give Miro to Friends"
+#~ msgstr "Il modo migliore per far conoscere Miro agli amici"
+
+#~ msgid ""
+#~ "Installing and configuring Miro on a friend's computer is the only foolproof "
+#~ "way to get the job done. Miro is one of those applications where you need to "
+#~ "see the HD video firsthand to understand why it's so cool. Also, you know "
+#~ "your friends' tastes in video better than we do, so you can subscribe them "
+#~ "to shows you know they will enjoy. So go ahead and offer to give them the "
+#~ "only internet TV they'll need."
+#~ msgstr ""
+#~ "Installare e configurare Miro sul computer di un amico è l'unico modo sicuro "
+#~ "per ottenere un lavoro ben fatto. Miro è una di quelle applicazioni dove hai "
+#~ "bisogno di vedere un filmato in HD prima di capire perché è così figo. "
+#~ "Inoltre tu conosci i gusti dei tui amici molto meglio di noi, così potrai "
+#~ "iscriverli agli spettacoli che più gli piacciono. Vai avanti così e fagli "
+#~ "vedere l'unica internetTV di cui  hanno bisogno."
+
+#~ msgid "Miro HD Video Player | Free internet tv and video podcast player."
+#~ msgstr ""
+#~ "Miro riproduttore di filmati in alta definizione HD | Internet TV Libera e "
+#~ "riproduttore di filmati podcast"
+
+#~ msgid "Your Talent: Where Does it Fit?"
+#~ msgstr "Il tuo talento: Dove si esprime?"
+
+#~ msgid ""
+#~ "Hi there, we're the Participatory \n"
+#~ "Culture Foundation; a small 501c3 non-profit organization pushing for a \n"
+#~ "more open and democratic video space, through open source software. \n"
+#~ "We're lucky to have help from a global community of volunteers and \n"
+#~ "interns: coders, translators, bug reporters, community leaders, guide \n"
+#~ "moderators, and more. We'd love to have you involved &mdash; based on \n"
+#~ "the projects below, where do your biggest strengths lie? "
+#~ msgstr ""
+#~ "Ciao, siamo la Participatory \n"
+#~ "Culture Foundation; una piccola organizzazione no-profit che si batte \n"
+#~ "per un canale video più aperto e democratico, attraverso il software open "
+#~ "source. \n"
+#~ "Siamo stati fortunati a ricevere aiuto per formare una comunità di volontari "
+#~ "e \n"
+#~ "collaboratori: programmatori, traduttori, segnalatori di bug, promotori e "
+#~ "moderatori, \n"
+#~ "e tanti altri. Saremmo entusiasti di coinvolgere anche te &mdash; sulla base "
+#~ "\n"
+#~ "dei progetti qui sotto, quali sono i tuoi più grandi punti di forza? "
+
+#~ msgid "Roll Over For Details"
+#~ msgstr "Passa sopra per maggiori dettagli"
+
+#~ msgid "Development Center"
+#~ msgstr "Centro Sviluppatori"
+
+#~ msgid "development wiki"
+#~ msgstr "wiki di sviluppo"
+
+#~ msgid "Developers mailing list: "
+#~ msgstr "Mailing list degli sviluppatori "
+
+#~ msgid "IRC: "
+#~ msgstr "IRC: "
+
+#~ msgid ""
+#~ "If you're a student looking for an exciting internship with a start-up style "
+#~ "non-profit organization, we may be able to help. We've got slots for coders, "
+#~ "non-profit biz-dev, and marketing. We're very flexible about where you work "
+#~ "from, but we expect you to be self-motivated, dedicated, driven, "
+#~ "independent, and ready to get your hands dirty. If you're serious about an "
+#~ "internship, send us a resume and brief statement of intent."
+#~ msgstr ""
+#~ "Se sei uno studente che vuole fare un esperienza di internship in una "
+#~ "organizzazione senza scopo di lucro noi possiamo aiutarti. Abbiamo numerosi "
+#~ "posti per programmatori, sviluppatori e pubblicitari. Siamo moltoflessibili "
+#~ "ma ci aspettiamo che tu sia motivato, indipendente e volenteroso di "
+#~ "sacrificarti. Se sei intenzionato a fare una intenrship mandaci il tuo "
+#~ "profilo e una breve lettera di presentazione"
+
+#~ msgid "Dean Jansen"
+#~ msgstr "Dean Jansen"
+
+#~ msgid "Send resume and statement to: "
+#~ msgstr "Invia il curriculum e la lettera di presentazione a : "
+
+#~ msgid "dean [at] pculture.org"
+#~ msgstr "dean [at] pculture.org"
+
+#~ msgid "We Need Bug Testers"
+#~ msgstr "Abbiamo bisogno di tester"
+
+#~ msgid ""
+#~ "This is a fantastic way for anyone to contribute to the Miro project &mdash; "
+#~ "you don't need programming skills, just the ability to describe problems "
+#~ "clearly. Janet, our bugmaster and QA person even wrote up guidelines for "
+#~ "being an "
+#~ msgstr ""
+#~ "Questa è una maniera fantastica per permettere a chiunque di contribuire al "
+#~ "progetto &mdash di Miro; non ti servono capacità da programmatore, basta la "
+#~ "capacità di descrivere i problemi in modo chiaro. Janet, la nostra "
+#~ "responsabile dei bug e del supporto ha persino scritto delle linee guida per "
+#~ "essere un "
+
+#~ msgid "awesome bug reporter"
+#~ msgstr "fantastico cacciatore di bug."
+
+#~ msgid ". First, I recommend you take a peek at the "
+#~ msgstr "Prima di tutto suggerisco di dare un'occhiata al "
+
+#~ msgid "Miro testing blog"
+#~ msgstr "blog di testing di Miro"
+
+#~ msgid " and then jump in and "
+#~ msgstr " e poi di buttarsi e "
+
+#~ msgid "start testing"
+#~ msgstr "cominciare a testare"
+
+#~ msgid "Project Leader: "
+#~ msgstr "Responsabile del progetto: "
+
+#~ msgid "Janet"
+#~ msgstr "Janet"
+
+#~ msgid "For guidance, email: "
+#~ msgstr "Se serve aiuto scrivete a: "
+
+#~ msgid "jed [at] pculture.org"
+#~ msgstr "jed [at] pculture.org"
+
+#~ msgid "Join the Miro Translators"
+#~ msgstr "Unisciti al gruppo di Traduzione Miro"
+
+#~ msgid ""
+#~ "Do you speak more than one language? Miro is 100% volunteer translated and "
+#~ "we're always looking for help. Getting started is quick and easy &mdash; "
+#~ "make a "
+#~ msgstr ""
+#~ "Parli più di una lingua? La traduzione di Miro si affida al 100% ai "
+#~ "volontari e siamo sempre alla ricerca di aiuto. Iniziare è facile e veloce "
+#~ "&mdash; crea un "
+
+#~ msgid "Launchpad account"
+#~ msgstr "account su Launchpad"
+
+#~ msgid ", and then follow these links to help translate "
+#~ msgstr ", e quindi segui questi link per aiutare la traduzione "
+
+#~ msgid "Miro"
+#~ msgstr "Miro"
+
+#~ msgid " and "
+#~ msgstr " e "
+
+#~ msgid ". If you have questions, please contact: "
+#~ msgstr ". Se hai delle domande, per favore, contattaci: "
+
+#~ msgid "translations [at] pculture.org"
+#~ msgstr "translations [at] pculture.org"
+
+#~ msgid "Translations to GetMiro.com Last Synced: "
+#~ msgstr "Traduzioni di GetMiro.com sincronizzate l'ultima volta : "
+
+#~ msgid "Translations to MiroGuide.com Last Updated: "
+#~ msgstr "Traduzioni di MiroGuide.com aggiornate l'ultima volta: "
+
+#~ msgid "Translations to Miro Application Last Synced: "
+#~ msgstr "Traduzioni dell'applicazione Miro sincronizzate l'ultima volta "
+
+#~ msgid "The Miro Source Code"
+#~ msgstr "Il Codice Sorgente di Miro"
+
+#~ msgid "Join the Conversation"
+#~ msgstr "Unisciti alla conversazione"
+
+#~ msgid "Miro users always have questions, issues, and ideas; we use "
+#~ msgstr "Gli utenti Miro hanno sempre domande, dubbi, e idee; noi usiamo "
+
+#~ msgid "unanswered questions"
+#~ msgstr "domande senza risposta"
+
+#~ msgid "Dean"
+#~ msgstr "Dean"
+
+#~ msgid "Questions? Email: "
+#~ msgstr "Hai delle domande? Scrivi a : "
+
+#~ msgid "You Can Get Involved"
+#~ msgstr "Tu puoi partecipare"
+
+#~ msgid "Miro isn't perfect, but with your help we can get better."
+#~ msgstr "Miro non è perfetto, ma con il tuo aiuto può diventare migliore."
+
+#~ msgid "Help Translate Miro"
+#~ msgstr "Aiuta a tradurre Miro"
+
+#~ msgid "Do you speak a non-engdivsh language? Get involved!"
+#~ msgstr "Parli una lingua diversa dall'Inglese? Contribuisci!"
+
+#~ msgid "Looking for an Internship?"
+#~ msgstr "Cerchi uno stage?"
+
+#~ msgid ""
+#~ "We have awesome internships for coders, non-profit biz dev, and marketing."
+#~ msgstr ""
+#~ "Abbiamo degli stage fantastici per programmatori, amministratori del settore "
+#~ "no-profit, e marketing."
+
+#~ msgid "Information on building and developing Miro."
+#~ msgstr "Informazioni per lo sviluppo di Miro"
+
+#~ msgid "Join the Conversation on GetSatisfaction"
+#~ msgstr "Di la tua su GetSatisfaction"
+
+#~ msgid "Volunteering and Interning"
+#~ msgstr "Volontariato e Stages"
+
+#~ msgid "Share Miro"
+#~ msgstr "Condividi Miro"
+
+#~ msgid "IRC Chat"
+#~ msgstr "Chat IRC"
+
+#~ msgid "Help us find problems early and make Miro better."
+#~ msgstr "Per migliorare Miroaiutaci a trovare i problemi"
+
+#~ msgid "Do you speak a non-english language? Get involved!"
+#~ msgstr "Parli una lingua diversa dall'Inglese? Contribuisci!"
+
+#~ msgid "Miro is free and open source, licensed under the GPL."
+#~ msgstr "Miro è gratis e Open Source, e viene distribuito sotto licenza GPL."
+
+#~ msgid ""
+#~ "The Miro Guide, our open content directory, is browsed by a large and global "
+#~ "audience of Miro users and is also avialable in any web browser at"
+#~ msgstr ""
+#~ "La guida di Miro, la nostra directory è visitata da una larga fetta di "
+#~ "utilizzatori di Miro ed è anche disponibile su ogni browser al sito"
+
+#~ msgid "miroguide.com"
+#~ msgstr "miroguide.com"
+
+#~ msgid "Adding a Show to the Miro Guide"
+#~ msgstr "Aggiungere uno Show alla Guida di Miro"
+
+#~ msgid "Make an account"
+#~ msgstr "Crea un account"
+
+#~ msgid ""
+#~ "Click your username in the sub-navigation bar and select 'Submit Show.'"
+#~ msgstr ""
+#~ "Clicca il tuo nome utente nella barra di navigazione e selezione \"Invia "
+#~ "Video\""
+
+#~ msgid "troubleshooting guide"
+#~ msgstr "Guida alla risoluzione dei problemi"
+
+#~ msgid ")."
+#~ msgstr ")."
+
+#~ msgid ""
+#~ "Our team of volunteer moderators will check to make sure the channel works "
+#~ "in Miro. As long as it does, your channel becomes part of the Miro Guide!"
+#~ msgstr ""
+#~ "La nostra squadra di moderatori controllerà per dare sicurezza che il canale "
+#~ "funzioni in Miro. Una volta fatto questo, il tuo canale sarà parte della "
+#~ "guida di Miro!"
+
+#~ msgid ""
+#~ "We reserve the right to reject spam, porn, hate speech, and unauthorized "
+#~ "copyrighted material."
+#~ msgstr ""
+#~ "Noi ci riserviamo il diritto di rifiutare spam, pornografia e violazioni del "
+#~ "diritto d'autore"
+
+#~ msgid "Introduction"
+#~ msgstr "Introduzione"
+
+#~ msgid "The basics of creating internet video from A-Z!"
+#~ msgstr "Le basi per creare un internet video"
+
+#~ msgid "Chapter 1: Equipment"
+#~ msgstr "Capitolo 1: Equipaggiamento"
+
+#~ msgid "Get the right gear for your projects."
+#~ msgstr "Ottieni gli strumenti adatti per il tuo progetto."
+
+#~ msgid "Chapter 2: Shoot"
+#~ msgstr "Capitolo 2: Gira il video"
+
+#~ msgid "Techniques for capturing audio and video."
+#~ msgstr "Tecniche di cattura audio e video"
+
+#~ msgid "Chapter 3: Edit"
+#~ msgstr "Modifica"
+
+#~ msgid "Transform raw footage into something sweet."
+#~ msgstr "Trasforma un semplice filmato in qualcosa di più"
+
+#~ msgid "Chapter 4: License"
+#~ msgstr "Capitolo 4: Licenza"
+
+#~ msgid "Chapter 5: Publish"
+#~ msgstr "Capitolo 5 : Pubblica"
+
+#~ msgid "Make it available to a billion people."
+#~ msgstr "Rendilo disponibile a miliardi di persone"
+
+#~ msgid "Chapter 6: Promote"
+#~ msgstr "Capitolo 6: Promuovilo"
+
+#~ msgid "Get Watched."
+#~ msgstr "Rendilo visibile."
+
+#~ msgid "Publishing Overview"
+#~ msgstr "Guida alla pubblicazione"
+
+#~ msgid "Troubleshooting"
+#~ msgstr "Risoluzione dei problemi"
+
+#~ msgid "The Miro Content Guide"
+#~ msgstr "La guida ai contenuti di Miro"
+
+#~ msgid "The Publisher's Toolkit"
+#~ msgstr "La cassetta degli attrezzi per la pubblicazione"
+
+#~ msgid "Screenshots"
+#~ msgstr "Schermate"
+
+#~ msgid "Chat"
+#~ msgstr "Chat"
+
+#~ msgid "About"
+#~ msgstr "About"
+
+#~ msgid "Contact"
+#~ msgstr "Contatto"
+
+#~ msgid "Jobs"
+#~ msgstr "Lavori"
+
+#~ msgid "Donate"
+#~ msgstr "Sostieni"
+
+#~ msgid "Blog"
+#~ msgstr "Blog"
+
+#~ msgid "How to Use Miro"
+#~ msgstr "Come usare Miro"
+
+#~ msgid "The Miro Video Guide"
+#~ msgstr "La Video Guida di Miro"
+
+#~ msgid "Translate Miro"
+#~ msgstr "Traduci Miro"
+
+#~ msgid "How to Make Internet TV"
+#~ msgstr "Come creare una TV Internet"
+
+#~ msgid "Unlike your browser, Miro's built for HD."
+#~ msgstr "A differenza del tuo browser, Miro supporta i video HD"
+
+#~ msgid "Fullscreen, HD video on Miro is like nothing"
+#~ msgstr "A schermo intero,Miro è come non hai mai"
+
+#~ msgid "you've ever seen online."
+#~ msgstr "visto"
+
+#~ msgid "Can't open a video? Now you can, with Miro."
+#~ msgstr "Non riesci a visualizzare un video? Ora puoi, con Miro."
+
+#~ msgid ""
+#~ "When it comes to video podcasts, Miro goes far beyond iTunes by letting you "
+#~ "subscribe to BitTorrent RSS feeds, with one of the fastest torrent "
+#~ "downloaders in the"
+#~ msgstr ""
+#~ "Quando parliamo di podcasts, Miro va oltre a ITune dandoti la possibilità di "
+#~ "sottoscrivere un BitTorrent RSS feed con uno dei più veloci servizi di "
+#~ "download"
+
+#~ msgid "world (it's called 'libtorrent')."
+#~ msgstr "al mondo (chiamato \"libtorrent\")."
+
+#~ msgid "Instead of separate programs..."
+#~ msgstr "Invece di programmi separati..."
+
+#~ msgid "Search, download, and save videos..."
+#~ msgstr "Ricerca, scarica e salva video"
+
+#~ msgid "With YouTube's new HD support, the video quality"
+#~ msgstr "Con il supporto al servizio HD di YouTube, la qualità video"
+
+#~ msgid " can be incredible."
+#~ msgstr " può essere incredibile."
+
+#~ msgid "Here's just a few of the more than 6,000 shows on Miro."
+#~ msgstr "Ecco solo qualche esempio dei più dei 6000 video presenti in Miro"
+
+#~ msgid "GetMiro.com"
+#~ msgstr "GetMiro.com"
+
+#~ msgid "GetSatisfaction"
+#~ msgstr "GetSatisfaction"
+
+#~ msgid ""
+#~ " to engage the community. We'd love to have you involved &mdash; answering "
+#~ "questions and developing ideas. A good place to start is this list of "
+#~ msgstr ""
+#~ " coinvolgere la commnunity. Ci piacerebbe averti impegnato &mdash; a "
+#~ "rispondere domane e sviluppare idee. Un buon punto da cui iniziare &egrave; "
+#~ "questa lista di "
+
+#~ msgid "Learn Production, Publishing, and Promotion"
+#~ msgstr "Impara la Produzione, la Pubblicazione e la Promozione"
+
+#~ msgid "Make Internet TV"
+#~ msgstr "Crea Internet TV"
+
+#~ msgid ""
+#~ "is a website that reads like an interactive book for learning the basics of "
+#~ "shooting, editing, and publishing internet video."
+#~ msgstr ""
+#~ "&egrave; un sito web che si legge come un libro interattivo per imparare le "
+#~ "basi della ripresa, dell'editing e della pubblicazione di un internet video"
+
+#~ msgid "in the Miro Guide"
+#~ msgstr "nella guida di Miro"
+
+#~ msgid ""
+#~ "Add your RSS feed and channel information. Follow the steps that are "
+#~ "presented (for more info on RSS feeds, see our"
+#~ msgstr ""
+#~ "Aggiungi il tuo feed RSS e le informazioni sul canale. Segui i passi che ti "
+#~ "vengono presentati (per maggiori informazioni sui feed RSS, guarda il nostro"
+
+#~ msgid "Social Media"
+#~ msgstr "Social Media"
+
+#~ msgid "Get in the Miro Guide"
+#~ msgstr "Vai alla Guida di Miro"
+
+#~ msgid "One-Click Link Builder"
+#~ msgstr "Costruzione di Link in 1-Click"
+
+#~ msgid ""
+#~ "Similar to \"add this podcast to iTunes\" buttons, Miro 1-click links let "
+#~ "people add your channel directly from your site."
+#~ msgstr ""
+#~ "Come i pulsanti \"aggiungi questo podcast ad iTunes\", i link Miro 1-click "
+#~ "permettono alle persone di aggiungere i propri canali direttamente dal tuo "
+#~ "sito"
+
+#~ msgid "Custom Miro Generator"
+#~ msgstr "Generatore Miro Personalizzato"
+
+#~ msgid ""
+#~ "Distribute a version of Miro with <strong>your</strong> name and "
+#~ "<strong>your</strong> channels."
+#~ msgstr ""
+#~ "Distribuisci una versione di Miro con il <strong>tuo</strong> nome e i "
+#~ "<strong>tuoi</strong> canali."
+
+#~ msgid "Media RSS Specification"
+#~ msgstr "Specifiche Media RSS"
+
+#~ msgid "These standard RSS schemes work best with Miro."
+#~ msgstr "Questi schemi RSS standard funzionano meglio con Miro"
+
+#~ msgid "RSS Feed Validator"
+#~ msgstr "Validatore di Feed RSS"
+
+#~ msgid "Test your feed with this site."
+#~ msgstr "Prova il tuo feed con questo sito"
+
+#~ msgid "Troubleshooting Sections"
+#~ msgstr "Sezione di Aiuto"
+
+#~ msgid "How do I get my video into Miro?"
+#~ msgstr "Come posso caricare il mio video in Miro?"
+
+#~ msgid "Why doesn't my RSS feed work in Miro?"
+#~ msgstr "Perch&egrave; il mio feed RSS non funziona con Miro?"
+
+#~ msgid "How can I get video RSS feeds in my custom website?"
+#~ msgstr "Come posso includere un feed RSS video nel mio sito personale?"
+
+#~ msgid "How do I publish in HD?"
+#~ msgstr "Come posso pubblicare in HD?"
+
+#~ msgid "How do I take advantage of Bittorrent in Miro?"
+#~ msgstr "Come posso sfruttare i vantaggi di Bittorrent in Miro?"
+
+#~ msgid "Will you feature my videos in the Miro Guide?"
+#~ msgstr "Includerete i miei video nella Guida di Miro?"
+
+#~ msgid "The Miro Audience"
+#~ msgstr "L'audience di Miro"
+
+#~ msgid "Growing User Base"
+#~ msgstr "Base di Utenti Crescente"
+
+#~ msgid ""
+#~ "Miro was downloaded about 4 million times in the past year and is used by "
+#~ "hundreds of thousands of people each month."
+#~ msgstr ""
+#~ "Miro &egrave; stato scaricato circa 4 milioni di volte nell'ultimo anno ed "
+#~ "&egrave; utilizzato da centinaia di migliaia di persone ogni mese"
+
+#~ msgid "A Popular Solution"
+#~ msgstr "Una Soluzione Popolare"
+
+#~ msgid ""
+#~ "CNET has identified Miro as the second most popular video RSS player in the "
+#~ "world, behind iTunes."
+#~ msgstr ""
+#~ "CNET ha identificato Miro come il secondo video player RSS del mondo, dopo  "
+#~ "iTunes"
+
+#~ msgid "Global Audience"
+#~ msgstr "Audience Globale"
+
+#~ msgid ""
+#~ "Miro has as many users in Europe as in North America and is growing fast in "
+#~ "South America and other parts of the world."
+#~ msgstr ""
+#~ "Miro ha molti utenti in Europa come in Nord America e sta crescendo "
+#~ "velocemente in Sud America e nelle altre parti del mondo"
+
+#~ msgid "Miro Advantages"
+#~ msgstr "I Vantaggi di Miro"
+
+#~ msgid "Open Source"
+#~ msgstr "Open Source"
+
+#~ msgid ""
+#~ "Miro is open source software, developed by the Participatory Culture "
+#~ "Foundation, a non-profit (501c3) organization."
+#~ msgstr ""
+#~ "Miro &egrave; un software open source, sviluppato dalla Participatory "
+#~ "Culture Foundation, un'organizzazione no-profit (501c3)"
+
+#~ msgid "High Definition"
+#~ msgstr "Alta Definizione"
+
+#~ msgid ""
+#~ "Miro is the easiest way to distribute HD content, which why Miro offers "
+#~ "access to more free HD content than any other service."
+#~ msgstr ""
+#~ "Miro &egrave; la via pi&ugrave; semplice per distribuire contenuti in alta "
+#~ "definizione, questo perch&egrave; Miro offre accesso a pi&ugrave; contenuti "
+#~ "HD gratuiti di qualsiasi altro servizio"
+
+#~ msgid "BitTorrent Support"
+#~ msgstr "Supporto BitTorrent"
+
+#~ msgid ""
+#~ "Want to cut your bandwidth costs?  Miro gives your viewers a effortless and "
+#~ "invisible bit torrent experience that can dramatically cut your bandwidth "
+#~ "bill.  Learn More."
+#~ msgstr ""
+#~ "Vuoi ridurre i tuoi costi legati alla banda? Miro offre ai tuoi ascoltatori "
+#~ "un'esperienza bit torrent invisibile e senza sforzo che pu&ograve; ridurre "
+#~ "drasticamente le tue spese legate alla banda. Per saperne di pi&ugrave;"
+
+#~ msgid "Put Your Videos on Miro"
+#~ msgstr "Carica i tuoi video in Miro"
+
+#~ msgid "Submit your RSS feed to the Miro Guide"
+#~ msgstr "Invia i tuoi feed RSS alla Guida di Miro"
+
+#~ msgid "Put a"
+#~ msgstr "Metti un"
+
+#~ msgid "one-click subscribe button"
+#~ msgstr "pulsante di iscrizione one-click"
+
+#~ msgid ""
+#~ "on your site.  When people stop by to watch one video, they can use this "
+#~ "button to subscribe and get new videos automatically."
+#~ msgstr ""
+#~ "sul tuo sito. Quando le persone si fermano a guardare un video, possono "
+#~ "usare questo pulsante per iscriversi e ricevere in automatico i nuovi video"
+
+#~ msgid ""
+#~ "Running into any problems?  We'd love to help: publishing [at] pculture.org"
+#~ msgstr ""
+#~ "Hai qualche problema? Ci piacerebbe aiutarti: publishing [at] pculture.org"
+
+#~ msgid "Who's Using Miro?"
+#~ msgstr "Chi usa Miro?"
+
+#~ msgid "Screenshots of Miro 2.0 for OSX"
+#~ msgstr "Screenshots di Miro 2.0 per OSX"
+
+#~ msgid "Features in Miro 2.0 for"
+#~ msgstr "Funzionalit&agrave: di Miro 2.0 per"
+
+#~ msgid "Watching"
+#~ msgstr "Guardando"
+
+#~ msgid "Organizing"
+#~ msgstr "Organizzando"
+
+#~ msgid "Subscribing to Channels"
+#~ msgstr "Iscrivendosi ai Canali"
+
+#~ msgid "Openness"
+#~ msgstr "Apertura"
+
+#~ msgid "Searching"
+#~ msgstr "Cercando"
+
+#~ msgid "The Miro Guide"
+#~ msgstr "La Guida di Miro"
+
+#~ msgid "Sharing"
+#~ msgstr "Condividendo"
+
+#~ msgid "Miro in Full Screen Mode"
+#~ msgstr "Miro in Modali&agrave; schermo intero"
+
+#~ msgid "Watch Fullscreen"
+#~ msgstr "Guarda a Schermo Intero"
+
+#~ msgid ""
+#~ "Since Miro works so well for HD content, you'll find lots of video that "
+#~ "looks beautiful in fullscreen on even the largest displays."
+#~ msgstr ""
+#~ "Siccome Miro gestisce cos&igrave; bene i contenuti in HD, troverai tanti "
+#~ "video che si vedono bene a schermo intero anche sugli schermi pi&ugrave; "
+#~ "grandi"
+
+#~ msgid "Resume from Where You Stopped"
+#~ msgstr "Riprendi da dove ti eri fermato"
+
+#~ msgid ""
+#~ "Miro will remember where you stopped watching a video and will start at that "
+#~ "point when you play it again."
+#~ msgstr ""
+#~ "Miro ricorder&agrave; il punto in cui hai smesso di guardare un video e "
+#~ "ricomincer&agrave; da quel punto quando ricomincierai a guardarlo"
+
+#~ msgid "Play Almost Anything"
+#~ msgstr "Visualizza praticamente tutto"
+
+#~ msgid ""
+#~ "Forget about the format wars.  Miro can play MPEG, Quicktime, AVI, H.\\264, "
+#~ "Divx, Windows Media, Flash Video, and almost every other major video format."
+#~ msgstr ""
+#~ "Dimenticati delle guerre dei formati. Miro pu&ograve; visualizzare MPEG, "
+#~ "Quicktime, AVI, H.\\264, Divx, Windows Media, Flash Video e praticamente "
+#~ "tutti gli altri formati vido più diffusi"
+
+#~ msgid "One After Another"
+#~ msgstr "Uno dopo l'altro"
+
+#~ msgid "Keyboard Shortcuts"
+#~ msgstr "Scorciatoie da tastiera"
+
+#~ msgid ""
+#~ "Keyboard shortcuts for all the key playback commands makes it easy to "
+#~ "configure a remote control."
+#~ msgstr ""
+#~ "Scorciatoie da tastiera per tutti i comandi di playback pi&ugrave; "
+#~ "importanti rendono semplice configurare un telecomando"
+
+#~ msgid "All-New Interface"
+#~ msgstr "Interfaccia completamente rinnovata"
+
+#~ msgid ""
+#~ "A beautiful, completely redesigned interface makes using Miro easier than "
+#~ "ever."
+#~ msgstr ""
+#~ "Un'interfaccia utente bellissima, completamente riprogettata, rende "
+#~ "l'utilizzo di Miro pi&ugrave; semplice di sempre"
+
+#~ msgid "Video Playlists"
+#~ msgstr "Playlist video"
+
+#~ msgid "Move Your Library"
+#~ msgstr "Sposta la tua libreria"
+
+#~ msgid ""
+#~ "Running out of space? Miro can move your video collection to any location on "
+#~ "your system, such as an external hard drive."
+#~ msgstr ""
+#~ "Stai finendo lo spazio su disco? Miro pu&ograve; spostare la tua collezione "
+#~ "di video in qualsiasi punto del tuo filesystem, anche su un hard disk esterno"
+
+#~ msgid "Channel and Playlist Folders"
+#~ msgstr "Cartelle dei Canali e delle Playlist"
+
+#~ msgid ""
+#~ "Group your channels by topic by creating folders.  Do the same for playlists."
+#~ msgstr ""
+#~ "Raggruppa i tuoi canali per argomento creando cartelle. Fai lo stesso per le "
+#~ "playlist"
+
+#~ msgid "Bring Your Videos Together"
+#~ msgstr "Metti insieme i tuoi video"
+
+#~ msgid "Thumbnail Creation"
+#~ msgstr "Creazione di miniature"
+
+#~ msgid "Miro will create a thumbnail for any video that doesn't have one."
+#~ msgstr "Miro creer&agrave; una miniatura per ogni video che non ne ha uno"
+
+#~ msgid "Behind the Scenes"
+#~ msgstr "Dietro le quinte"
+
+#~ msgid ""
+#~ "Two of the biggest improvements in Miro 2.0 are under the hood, including:"
+#~ msgstr ""
+#~ "Due dei maggiori miglioramenti in Miro 2.0 sono sotto il cofano, includono:"
+
+#~ msgid ""
+#~ "Better performance-- Miro starts up faster, uses less memory, and is more "
+#~ "responsive."
+#~ msgstr ""
+#~ "Migliori prestazioni-- Miro si avvia in meno tempo, usa meno memoria ed "
+#~ "pi&ugrave; reattivo"
+
+#~ msgid "Folder with Miro Logo"
+#~ msgstr "Cartella con il Logo di Miro"
+
+#~ msgid "Individual Video Downloads"
+#~ msgstr "Download video individuali"
+
+#~ msgid "Video RSS"
+#~ msgstr "Video RSS"
+
+#~ msgid "All of Your Favorite Shows"
+#~ msgstr "Tutti i tuoi show preferiti"
+
+#~ msgid "The Simpsons"
+#~ msgstr "I Simpson"
 
 #, python-format
 #~ msgid "Are you sure you want to remove this site?"
@@ -3751,6 +5031,18 @@ msgstr "Cerca tutto"
 
 #~ msgid "Remove Sites"
 #~ msgstr "Rimuovi i siti"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s non è stato in grado di salvare il suo database: Disco Pieno.\n"
+#~ "Ti suggeriamo di cancellare qualche file dal disco pieno o semplicemente di "
+#~ "cancellare qualche video dalla tua collezione.\n"
+#~ "Le modifiche recenti potrebbero essere perse."
 
 #~ msgid "Rename Item"
 #~ msgstr "Rinomina Elemento"
@@ -3938,3 +5230,57 @@ msgstr "Cerca tutto"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Linea di Stato erronea: %(msg)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Errore interno: Non pronto ad inviare"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Spazio su disco insufficiente per aggiornare il suo database dalla versione "
+#~ "di %(appname)s precedente. Per favore eliminare alcuni file e riprovare."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Spazio su disco insufficiente"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Codice di Stato non corretto: : %(code)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Dimensione del frammento errata: %(msg)s"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Siamo spiacenti, %(appname)s non è in grado di aggiornare il database a "
+#~ "causa di un errore.\n"
+#~ "\n"
+#~ "Controlla se il disco è pieno. Se è pieno, allora esci da %(appname)s, "
+#~ "libera dello spazio e avvia di nuovo %(appname)s.\n"
+#~ "\n"
+#~ "Se il disco non è pieno, aiutaci a capire il problema chiudendo "
+#~ "l'applicazione e riportando il problema al sito bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Infine, puoi iniziare una nuova sessione e il database danneggiato verrà "
+#~ "rimosso, ma dovrai aggiungere di nuovo i tuoi feed e i file multimediali."
+
+#~ msgid "_Next Video"
+#~ msgstr "Video seguente"

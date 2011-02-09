@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-18 13:23+0000\n"
-"Last-Translator: Nicky Rowe <Unknown>\n"
+"PO-Revision-Date: 2011-01-22 23:37+0000\n"
+"Last-Translator: nrowe <Unknown>\n"
 "Language-Team: Cornish <kw@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n==3) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:40+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -56,7 +56,7 @@ msgstr "Iscarga gorfednys"
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Iscarga video '%s' ew gorfednys."
+msgstr "Iscarga video '%s' yw gorfednys."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -138,7 +138,7 @@ msgstr "Fenester jyf"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:219
 msgid "Bring All to Front"
-msgstr "Rei oll dhe'n toal"
+msgstr "Ri oll dhe'n tal"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:221
 msgid "Window"
@@ -159,7 +159,7 @@ msgstr "Dialosegy istitlys"
 #: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr "Nag eus veth cavadow"
+msgstr "Nyns eus vyth cavadow"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
@@ -336,7 +336,7 @@ msgstr "Ollgebmyn"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
 msgid "Enable tray icon"
-msgstr "Galosegy arwodh an servyour"
+msgstr "Galosegy arwodhik an servyour"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
@@ -349,7 +349,7 @@ msgstr "Degea dhe'n servyour may halla iscarganjow pesya"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "Qwitya %(appname)s en tien."
+msgstr "Qwitya %(appname)s yn tien."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
@@ -371,15 +371,15 @@ msgid ""
 msgstr ""
 "Pan wrewgh whi clickya war'n boton degea rudh, a via da genowgh %(appname)s "
 "dhe dhegea dhe servyour an system po qwitya? Whi a ell chanjya an dowisyans-"
-"ma diwettha e'n dowisyanjow."
+"ma diwettha y'n dowisyanjow."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
-msgstr "Gwall gans talbeledna an tra"
+msgstr "Gwall gans talbeledna an dra"
 
 #: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
-msgstr "Gwall gans comendya an tra"
+msgstr "Gwall gans comendya an dra"
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
@@ -389,17 +389,16 @@ msgstr "Gwall gans egery an wiasva"
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
-"Yth esa gwall gans egery %(url)s. Assayowgh arta en nebes secundys, mar pleg"
+msgstr "Yth esa gwall gans egery %(url)s. Assayowgh arta yn nebes secundys"
 
 #: ../../windows/plat/frontends/widgets/update.py:148
 msgid "Update Available"
-msgstr "Nowedhans ew cavadow"
+msgstr "Nowedhans yw cavadow"
 
 #: ../../windows/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "Versyon nowyth a %(appname)s ew cavadow rag iscarga."
+msgstr "Versyon nowyth a %(appname)s yw cavadow rag iscarga."
 
 #: ../../windows/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -433,8 +432,8 @@ msgid ""
 msgstr ""
 "Agas peurel a vedn carga an wiasva may hallowgh whi iscarga ha lea Adobe "
 "Flash.\n"
-"Whi a dal qwitya %(appname)s lebmyn hag y dhalleth arta woja Adobe Flash ew "
-"leys."
+"Whi a dal qwitya %(appname)s lebmyn hag y dhalleth arta woja Adobe Flash dhe "
+"vos leys."
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
@@ -599,14 +598,14 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
-"Drog ew genen, ny alja %(appname)s dalleth awos cudyn gans an database:\n"
+"Drog yw genen, ny alja %(appname)s dalleth awos cudyn gans an database:\n"
 "Gwall: %(error)s\n"
-"Possybyl ew dr'ew agas restren database legrys ha ny ell bos usys.\n"
+"Possybyl yw dr'yw agas restren database legrys ha ny ell bos usys.\n"
 "Whi a ell dalleth arta hag agas database shyndys a vedh dileys, bus res a "
 "vedh dhewgh keworra agas feeds ha restrednow media arta. Mar mednowgh whi "
 "gwul hebma, clyckyowgh an boton Dalleth Arta ha gwrewgh dastalleth "
 "%(appname)s.\n"
-"Rag agan gweres dhe staga cudydnow a'n sort-ma en termyn a dheu, danonowgh "
+"Rag agan gweres dhe staga cudydnow a'n sort-ma yn termyn a dheu, danonowgh "
 "dhyn derivas gwall orth %(url)s."
 
 #: ../../lib/startup.py:148
@@ -624,7 +623,7 @@ msgstr ""
 
 #: ../../lib/startup.py:246
 msgid "Database too new"
-msgstr "An database ew re nowyth"
+msgstr "An database yw re nowyth"
 
 #: ../../lib/startup.py:248
 #, python-format
@@ -672,7 +671,7 @@ msgstr "Content-type drog"
 #: ../../lib/feed.py:985
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr "Nyns ew an canel kesson gans %(appname)s"
+msgstr "Nyns yw an canel kesson gans %(appname)s"
 
 #: ../../lib/feed.py:988
 #, python-format
@@ -686,11 +685,11 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
-"Nyns ew an canel-ma kesson gans %(appname)s bus ni a vedh assaya dhe gawas "
-"an restrednow. Y halja kemeres moy a dermyn dhe renkya an videos, hag an "
+"Nyns yw an canel-ma kesson gans %(appname)s bus ni a vedn saya dhe gawas an "
+"restrednow. Y halja kemeres moy a dermyn dhe renkya an videos, hag an "
 "descrifanjow a alja mires stranj.\n"
 "Mar pleg, kestevowgh orth dyllanjow %(url)s ha govydnowgh mar kallons provya "
-"feed en furvyans a vedn obery gans %(appname)s."
+"feed yn furvyans a vedn obery gans %(appname)s."
 
 #: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
@@ -719,7 +718,7 @@ msgstr "bowder"
 #: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
 #: ../../lib/httpclient.py:165
 msgid "File not found"
-msgstr "Nyns ew restren kevys"
+msgstr "Nyns yw restren kevys"
 
 #: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
@@ -732,11 +731,11 @@ msgstr "ow talleth"
 #: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr "nag eus junyans - y fedn assaya arta en %s"
+msgstr "nyns eus junyans - my a vedn saya arta yn %s"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr "nag eus junyans - y fedn assaya arta en scon"
+msgstr "nyns eus junyans - my a vedn saya arta yn scon"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -745,11 +744,11 @@ msgstr "Ancoth"
 
 #: ../../lib/singleclick.py:66
 msgid "Download already exists"
-msgstr "Ma'n iscargans whath"
+msgstr "Yma an iscargans whath"
 
 #: ../../lib/singleclick.py:67
 msgid "That URL is already an external download."
-msgstr "An URL-na ew iscargans a-ves whath."
+msgstr "An URL-na yw iscargans a-ves whath."
 
 #: ../../lib/singleclick.py:73
 #, python-format
@@ -758,11 +757,11 @@ msgstr "%(appname)s a vedn dalleth y iscarga lebmyn."
 
 #: ../../lib/singleclick.py:76
 msgid "It is downloading now."
-msgstr "Ma ev owth iscarga lebmyn."
+msgstr "Yma ev owth iscarga lebmyn."
 
 #: ../../lib/singleclick.py:78
 msgid "It has already been downloaded."
-msgstr "Thew iscargys seulabres."
+msgstr "Iscargys seulabres yw."
 
 #: ../../lib/singleclick.py:116
 msgid "File Download"
@@ -772,7 +771,7 @@ msgstr "Iscargans restren"
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr "Y hevel nag ew an restren orth %(url)s feed audio, video po RSS."
+msgstr "Y hevel nag yw an restren orth %(url)s feed audio, video po RSS."
 
 #: ../../lib/singleclick.py:165
 msgid "Download Error"
@@ -787,7 +786,7 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
-"Nag ell %(appname)s iscarga restren orth an URL-na:\n"
+"Ny ell %(appname)s iscarga restren orth an URL-na:\n"
 "URL: %(url)s\n"
 "Gwall: %(error)s (%(errordesc)s)"
 
@@ -799,7 +798,7 @@ msgstr "Ynworrans OPML a fylellas"
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
-"Y hevel dr'ew an restren OPML dowisys drog. An ynworrans a veu gorderrys."
+"Y hevel dr'yw an restren OPML dowisys drog. An ynworrans a veu gorderrys."
 
 #: ../../lib/opml.py:233
 msgid "OPML Import summary"
@@ -809,10 +808,10 @@ msgstr "Derivas cot an ynworrans OPML"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "%(count)d feed a veu ynworrys en sowen."
-msgstr[1] "%(count)d feed a veu ynworrys en sowen."
-msgstr[2] "%(count)d feed a veu ynworrys en sowen."
-msgstr[3] "%(count)d feed a veu ynworrys en sowen."
+msgstr[0] "%(count)d feed a veu ynworrys yn sowen"
+msgstr[1] "%(count)d feed a veu ynworrys yn sowen."
+msgstr[2] "%(count)d feed a veu ynworrys yn sowen."
+msgstr[3] "%(count)d feed a veu ynworrys yn sowen."
 
 #: ../../lib/opml.py:240
 #, python-format
@@ -849,7 +848,7 @@ msgstr "Ragbernys dhe feed nowyth:"
 
 #: ../../lib/messagehandler.py:1353
 msgid "Subscribed to new feeds:"
-msgstr "Ragpernys dhe feeds nowyth:"
+msgstr "Ragbernys dhe feeds nowyth:"
 
 #: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
@@ -857,7 +856,7 @@ msgstr "Ow tivroa restrednow"
 
 #: ../../lib/commandline.py:115
 msgid "Subscription error"
-msgstr "Gwall gans an ragpern"
+msgstr "Gwall gans an ragbern"
 
 #: ../../lib/commandline.py:125
 #, python-format
@@ -865,7 +864,7 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
-"Ma furvyans drog dhe'n restren feed %(appname)s-ma: %(url)s. Gwarnyowgh "
+"Yma furvyans drog dhe'n restren feed %(appname)s-ma: %(url)s. Gwarnyowgh "
 "dyllanjor an restren-ma, mar pleg."
 
 #: ../../lib/commandline.py:136
@@ -874,13 +873,13 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
-"Ma sort cabm an sensas dhe'n restren feed %(appname)s-ma: %(url)s. "
+"Yma sort cabm an sensas dhe'n restren feed %(appname)s-ma: %(url)s. "
 "Gwarnyowgh dyllanjor an restren-ma, mar pleg."
 
 #: ../../lib/commandline.py:145
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr "Nag ellam iscarga restren feed %(appname)s: %(url)s"
+msgstr "Ny ellam iscarga restren feed %(appname)s: %(url)s"
 
 #: ../../lib/commandline.py:194
 msgid "Invalid Torrent"
@@ -891,7 +890,7 @@ msgstr "Torrent drog"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
-"Y hevel dr'ew an restren torrent %(filename)s legrys ha ny ell bos egerys."
+"Y hevel dr'yw an restren torrent %(filename)s legrys ha ny ell bos egerys."
 
 #: ../../lib/videoconversion.py:88
 #, python-format
@@ -900,7 +899,7 @@ msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr "An cheson ew ancoth"
+msgstr "An cheson yw ancoth"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
@@ -985,7 +984,7 @@ msgstr "Dilea restren"
 
 #: ../../lib/dialogs.py:109
 msgid "Delete Files"
-msgstr "Diles restrednow"
+msgstr "Dilea restrednow"
 
 #: ../../lib/dialogs.py:110
 msgid "Keep Videos"
@@ -1013,7 +1012,7 @@ msgstr "Keworra"
 
 #: ../../lib/dialogs.py:116
 msgid "Add Into New Folder"
-msgstr "Keworra en plegel nowyth"
+msgstr "Keworra yn plegel nowyth"
 
 #: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
 #: ../../lib/frontends/widgets/tablist.py:707
@@ -1028,7 +1027,7 @@ msgstr "Dilea"
 
 #: ../../lib/dialogs.py:120
 msgid "Not Now"
-msgstr "Na lebmyn"
+msgstr "A-dar lebmyn"
 
 #: ../../lib/dialogs.py:121
 msgid "Close to Tray"
@@ -1040,19 +1039,19 @@ msgstr "Lonchya Miro"
 
 #: ../../lib/dialogs.py:123
 msgid "Download Anyway"
-msgstr "Iscarga en neb fordh"
+msgstr "Iscarga yn neb fordh"
 
 #: ../../lib/dialogs.py:124
 msgid "Open in External Browser"
-msgstr "Egery en peurel a-ves"
+msgstr "Egery yn peurel a-ves"
 
 #: ../../lib/dialogs.py:125
 msgid "Don't Install"
-msgstr "Na lea"
+msgstr "Na le"
 
 #: ../../lib/dialogs.py:126
 msgid "Subscribe"
-msgstr "Ragperna"
+msgstr "Ragberna"
 
 #: ../../lib/dialogs.py:127
 msgid "Stop Watching"
@@ -1060,7 +1059,7 @@ msgstr "Hedhy miras"
 
 #: ../../lib/dialogs.py:128
 msgid "Retry"
-msgstr "Assaya arta"
+msgstr "Saya arta"
 
 #: ../../lib/dialogs.py:129
 msgid "Start Fresh"
@@ -1079,7 +1078,7 @@ msgstr "Na wra keworra database"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
-"Ma %(authtype)s %(url)s ow corholy hanow-usyer ha ger-tremena rag "
+"Yma %(authtype)s %(url)s ow corholy hanow-usyer ha ger-tremena rag "
 "\"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
@@ -1105,11 +1104,11 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
-"Drog ew genen, ny alja %(appname)s ughradha agas database awos gwallow.\n"
-"Gwrewgh gweles mars ew agas plasen leun. Mars ew leun, qwityowgh "
+"Drog yw genen, ny alja %(appname)s ughradha agas database awos gwallow.\n"
+"Gwrewgh gweles mars yw agas plasen leun. Mars yw leun, qwityowgh "
 "%(appname)s, gwrewgh neb efander, ha dallethowgh %(appname)s arta.\n"
-"Po nyns ew agas plasen leun, gwerowgh ni dhe gonvedhes an cudyn dre dherivas "
-"gwall dhe'gan database gwallow.\n"
+"Mar nyns yw agas plasen leun, gwerowgh ni dhe gonvedhes an cudyn dre "
+"dherivas gwall dhe'gan database gwallow.\n"
 "Wor'tiwedh, whi a ell dalleth arta ha'gas database shyndys a vedh dileys, "
 "bus res a vedh dhewgh keworra agas feeds ha restrednow media arta."
 
@@ -1127,8 +1126,8 @@ msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
-"An database a veu gwithys en sowyn. Yth ew saw lebmyn dhe gwitya heb kelly "
-"neb data."
+"An database a veu gwithys yn sowyn. Yth yw saw lebmyn dhe gwitya heb kelly "
+"data."
 
 #: ../../lib/storedatabase.py:776
 #, python-format
@@ -1153,13 +1152,13 @@ msgid ""
 "\n"
 msgstr ""
 "Ny alja %(appname)s gwitha y dhatabase.\n"
-"Mars ew agas plasen leun, ni a venja profya dhe wul neb efander ha saya "
-"arta. Po nyns ew agas plasen leun, possybyl ew dre vedn dastalleth soweny.\n"
-"Po ny wrug dastalleth soweny, gwrewgh qwitya %(appname)s ha dastalleth. "
+"Mars yw agas plasen leun, ni a venja profya dhe wul neb efander ha saya "
+"arta. Mar nyns yw agas plasen leun, possybyl yw dre vedn dastalleth soweny.\n"
+"Mar ny wrug dastalleth soweny, gwrewgh qwitya %(appname)s ha dastalleth. "
 "Chanjyow a-dhiwedhes a alja bos kellys.\n"
-"Mars erowgh whi ow qweles an gwall-ma en fenowgh ha whi owth iscarga, ni a "
-"venja profya dhewgh dhe lehe an niver a iscarganjow kettermynek e'n dialog "
-"dowisyanjow e'n tab iscarga.\n"
+"Mars erowgh whi ow qweles an gwall-ma yn fenowgh ha whi owth iscarga, ni a "
+"venja profya dhewgh dhe lehe an niver a iscarganjow kettermynek y'n dialog "
+"dowisyanjow y'n tab iscarga.\n"
 "Gwall: %(error_text)s\n"
 "\n"
 
@@ -1169,7 +1168,7 @@ msgstr "titel vyth"
 
 #: ../../lib/item.py:1262 ../../lib/item.py:1269
 msgid "Contents appear in the library"
-msgstr "Ma'n contents owth apperya e'n lyverva"
+msgstr "Yma'n contents owth apperya y'n lyverva"
 
 #: ../../lib/item.py:1273
 msgid "Contents:"
@@ -1213,8 +1212,8 @@ msgstr "%(size)s B/s"
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
 msgstr[0] "%(num).0f dedh"
-msgstr[1] "%(num).0f dedh"
-msgstr[2] "%(num).0f dhedh"
+msgstr[1] "%(num).0f dhedh"
+msgstr[2] "%(num).0f dedh"
 msgstr[3] "%(num).0f dedh"
 
 #: ../../lib/displaytext.py:90
@@ -1231,8 +1230,8 @@ msgstr[3] "%(num).0f our"
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
 msgstr[0] "%(num).0f myn"
-msgstr[1] "%(num).0f myn"
-msgstr[2] "%(num).0f vyn"
+msgstr[1] "%(num).0f vyn"
+msgstr[2] "%(num).0f myn"
 msgstr[3] "%(num).0f myn"
 
 #: ../../lib/displaytext.py:97
@@ -1268,36 +1267,36 @@ msgstr "%(size)s B"
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] "Y whra diwedha en %(count)d dedh"
-msgstr[1] "Y whra diwedha en %(count)d dedh"
-msgstr[2] "Y whra diwedha en %(count)d dhedh"
-msgstr[3] "Y whra diwedha en %(count)d dedh"
+msgstr[0] "Y whra diwedha yn %(count)d dedh"
+msgstr[1] "Y whra diwedha yn %(count)d dhedh"
+msgstr[2] "Y whra diwedha yn %(count)d dedh"
+msgstr[3] "Y whra diwedha yn %(count)d dedh"
 
 #: ../../lib/displaytext.py:129
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Y whra diwedha en %(count)d our"
-msgstr[1] "Y whra diwedha en %(count)d our"
-msgstr[2] "Y whra diwedha en %(count)d our"
-msgstr[3] "Y whra diwedha en %(count)d our"
+msgstr[0] "Y whra diwedha yn %(count)d our"
+msgstr[1] "Y whra diwedha yn %(count)d our"
+msgstr[2] "Y whra diwedha yn %(count)d our"
+msgstr[3] "Y whra diwedha yn %(count)d our"
 
 #: ../../lib/displaytext.py:134
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "Y whra diwedha en %(count)d mynysen"
-msgstr[1] "Y whra diwedha en %(count)d mynysen"
-msgstr[2] "Y whra diwedha en %(count)d vynysen"
-msgstr[3] "Y whra diwedha en %(count)d mynysen"
+msgstr[0] "Y whra diwedha yn %(count)d mynysen"
+msgstr[1] "Y whra diwedha en %(count)d vynysen"
+msgstr[2] "Y whra diwedha yn %(count)d mynysen"
+msgstr[3] "Y whra diwedha yn %(count)d mynysen"
 
 #: ../../lib/displaytext.py:142
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
 msgstr[0] "Y whra diwedha: %(count)d dedh"
-msgstr[1] "Y whra diwedha: %(count)d dedh"
-msgstr[2] "Y whra diwedha: %(count)d dhedh"
+msgstr[1] "Y whra diwedha: %(count)d dhedh"
+msgstr[2] "Y whra diwedha: %(count)d dedh"
 msgstr[3] "Y whra diwedha: %(count)d dedh"
 
 #: ../../lib/displaytext.py:147
@@ -1314,8 +1313,8 @@ msgstr[3] "Y whra diwedha: %(count)d our"
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
 msgstr[0] "Y whra diwedha: %(count)d mynysen"
-msgstr[1] "Y whra diwedha: %(count)d mynysen"
-msgstr[2] "Y whra diwedha: %(count)d vynysen"
+msgstr[1] "Y whra diwedha: %(count)d vynysen"
+msgstr[2] "Y whra diwedha: %(count)d mynysen"
 msgstr[3] "Y whra diwedha: %(count)d mynysen"
 
 #: ../../lib/displaytext.py:169
@@ -1337,7 +1336,7 @@ msgstr "Disqwedhes moy"
 
 #: ../../lib/frontends/widgets/style.py:237
 msgid "Show Less"
-msgstr "Diskwedhes le"
+msgstr "Disqwedhes le"
 
 #: ../../lib/frontends/widgets/style.py:238
 #: ../../lib/frontends/widgets/itemcontextmenu.py:148
@@ -1348,7 +1347,7 @@ msgstr "Geryow"
 #: ../../lib/frontends/widgets/style.py:240
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr "Discudha en %(progname)s"
+msgstr "Discudha yn %(progname)s"
 
 #: ../../lib/frontends/widgets/style.py:240
 #: ../../lib/frontends/widgets/displays.py:419
@@ -1432,7 +1431,7 @@ msgstr "Ow seny lebmyn"
 #: ../../lib/frontends/widgets/style.py:1221
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
-msgstr "Cavadow en nowyth"
+msgstr "Cavadow yn nowyth"
 
 #: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
@@ -1458,7 +1457,7 @@ msgstr "Feed whilans nowyth"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
-msgstr "Ma feed whilans ow senjy taclow eus ow machya tra whilans."
+msgstr "Yma feed whilans ow senjy taclow eus ow machya tra whilans."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:75
 msgid "Search for:"
@@ -1466,7 +1465,7 @@ msgstr "Whilas:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:82
 msgid "In this:"
-msgstr "En an:"
+msgstr "Y'n:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:89
 msgid "Feed:"
@@ -1515,7 +1514,7 @@ msgstr "_Egery"
 
 #: ../../lib/frontends/widgets/menus.py:206
 msgid "_Download Item"
-msgstr "_Iscarga an dra"
+msgstr "_Iscarga tra"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
@@ -1636,7 +1635,7 @@ msgstr "E_sperthy feeds (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
-msgstr "_Kevradna gen cothman"
+msgstr "_Kevradna gans cothman"
 
 #: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
@@ -1701,7 +1700,7 @@ msgstr "_Kens tra"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
-msgstr "Skypya en-_rag"
+msgstr "Skypya yn-_rag"
 
 #: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
@@ -1709,215 +1708,217 @@ msgstr "Skypya war _dhelergh"
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
-msgstr ""
+msgstr "Uhelhe Sonradh"
 
 #: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Iselhe Sonradh"
 
 #: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
-msgstr ""
+msgstr "Scrin leun"
 
 #: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
-msgstr ""
+msgstr "_Sqwychya ynter distag/stag"
 
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
-msgstr ""
+msgstr "I_stitlys"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Dowisowgh restren istitlys..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Convertya"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
 msgid "_Help"
-msgstr ""
+msgstr "_Gweres"
 
 #: ../../lib/frontends/widgets/menus.py:335
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_A-dro dhe %(name)s"
 
 #: ../../lib/frontends/widgets/menus.py:343
 msgid "_Donate"
-msgstr ""
+msgstr "_Ri"
 
 #: ../../lib/frontends/widgets/menus.py:348
 #: ../../lib/frontends/widgets/diagnostics.py:92
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnosteks"
 
 #: ../../lib/frontends/widgets/menus.py:350
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Danon derivas gwall"
 
 #: ../../lib/frontends/widgets/menus.py:352
 msgid "_Translate"
-msgstr ""
+msgstr "_Treylya"
 
 #: ../../lib/frontends/widgets/menus.py:354
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Planet Miro"
 
 #: ../../lib/frontends/widgets/menus.py:369
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Disqwedhes plegel an convertyanjow"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Codyans"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Defowt (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
-msgstr ""
+msgstr "Gwitha an whilans"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:291
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:293
 msgid "Feed"
-msgstr ""
+msgstr "Feed"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:295
 #: ../../lib/frontends/widgets/itemlistwidgets.py:754
 msgid "Date"
-msgstr ""
+msgstr "Dedhyans"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:296
 msgid "Length"
-msgstr ""
+msgstr "Hes"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:297
 msgid "Status"
-msgstr ""
+msgstr "Studh"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:298
 #: ../../lib/frontends/widgets/itemlistwidgets.py:755
 msgid "Size"
-msgstr ""
+msgstr "Mens"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:300
 msgid "ETA"
-msgstr ""
+msgstr "ETA"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:301
 msgid "Speed"
-msgstr ""
+msgstr "Toth"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:326
 #: ../../lib/frontends/widgets/statictabs.py:121
 msgid "Downloading"
-msgstr ""
+msgstr "Owth iscarga"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:457
 msgid "Save as a Feed"
-msgstr ""
+msgstr "Gwitha avel feed"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:505
 msgid "Pause All"
-msgstr ""
+msgstr "Hockya oll"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:512
 msgid "Resume All"
-msgstr ""
+msgstr "Daskemeres oll"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:519
 msgid "Cancel All"
-msgstr ""
+msgstr "Hedhy oll"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:526
 msgid "Download Settings"
-msgstr ""
+msgstr "Dowisyanjow iscarga"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:575
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
+"%(available)s yn-dadn fin spas iscarganjow (%(amount)s cavadow war'n blasen)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:582
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
+"%(available)s cavadow rag iscarganjow (%(amount)s cavadow war'n blasen)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:588
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "%(amount)s cavadow war'n blasen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:607
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "%(rate)s owth ughcarga"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:610
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s owth iscarga"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Awto-iscarga"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
 msgid "All"
-msgstr ""
+msgstr "Oll"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:650
 #: ../../lib/frontends/widgets/prefpanel.py:331
 msgid "New"
-msgstr ""
+msgstr "Nowyth"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
 #: ../../lib/frontends/widgets/prefpanel.py:333
 msgid "Off"
-msgstr ""
+msgstr "Difudhys"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:659
 msgid "Share feed"
-msgstr ""
+msgstr "Kevradna an feed"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:665
 msgid "Settings"
-msgstr ""
+msgstr "Dowisyanjow"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:671
 msgid "Remove feed"
-msgstr ""
+msgstr "Dilea an feed"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:753
 msgid "Name"
-msgstr ""
+msgstr "Hanow"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:756
 msgid "Time"
-msgstr ""
+msgstr "Eur"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:883
 msgid "View|All"
-msgstr ""
+msgstr "Gweles|Oll"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:889
 msgid "Non Feed"
-msgstr ""
+msgstr "Nyns yw feed"
 
 #: ../../lib/frontends/widgets/application.py:161
 msgid "Movies directory gone"
-msgstr ""
+msgstr "Arayel fylmow yw gyllys"
 
 #: ../../lib/frontends/widgets/application.py:163
 #, python-format
@@ -1937,46 +1938,56 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"Ny ell %(shortappname)s usya an arayel video elvednek trovys orth:\n"
+"%(moviedirectory)s\n"
+"Y halja bos drefen y vos trovys war plasen a-ves nag yw junys, drefen y vos "
+"arayel nag yw cubmyans scrifa dhe %(shortappname)s dhodho, po yma neppyth "
+"nag yw arayal orth an lergh-na.\n"
+"Mar qwrewgh whi pesya, an arayal video elvednek a vedh dassettys dhe deller "
+"war'n blasen-ma. Mars esa videos iscargys dhewgh, %(shortappname)s a vedn "
+"kelly manylyon a'n videos-na.\n"
+"Mar qwrewgh whi qwitya, whi a ell junya an blasen po staga an cudyn ha "
+"dalleth %(shortappname)s arta."
 
 #: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Gwall gans disqwedhes an restren"
 
 #: ../../lib/frontends/widgets/application.py:342
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "An restren %(filename)s a veu dileys dhort a-ves a %(appname)s."
 
 #: ../../lib/frontends/widgets/application.py:353
 msgid "Open Files..."
-msgstr ""
+msgstr "Egery restrednow..."
 
 #: ../../lib/frontends/widgets/application.py:364
 #: ../../lib/frontends/widgets/application.py:369
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Egery restrednow - gwall"
 
 #: ../../lib/frontends/widgets/application.py:365
 #: ../../lib/frontends/widgets/application.py:653
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "Nyns eus restren henwys %(filename)s."
 
 #: ../../lib/frontends/widgets/application.py:370
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Nyns eus restrednow henwys a'n par-ma:"
 
 #: ../../lib/frontends/widgets/application.py:407
 msgid "New Download"
-msgstr ""
+msgstr "Iscargans nowyth"
 
 #: ../../lib/frontends/widgets/application.py:408
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "Scrifowgh URL an restren rag iscarga"
 
 #: ../../lib/frontends/widgets/application.py:409
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Iscargans nowyth - URL drog"
 
 #: ../../lib/frontends/widgets/application.py:410
 msgid ""
@@ -1985,22 +1996,27 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
+"Nyns yw an trigva usy scrifys genowgh da.\n"
+"Mar pleg, gwelowgh mars yw an URL ewn ha gwrewgh saya arta.\n"
+"Scrifowgh URL an restren rag iscarga"
 
 #: ../../lib/frontends/widgets/application.py:418
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "Nowyth flabm yw %(appname)s"
 
 #: ../../lib/frontends/widgets/application.py:420
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "Nowyth flabm yw %(appname)s!"
 
 #: ../../lib/frontends/widgets/application.py:444
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Removya an dra"
+msgstr[1] "Removya taclow"
+msgstr[2] "Removya taclow"
+msgstr[3] "Removya taclow"
 
 #: ../../lib/frontends/widgets/application.py:448
 msgid ""
@@ -2010,7 +2026,17 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Ny veu onen a'n taclow-ma iscargys dhort feet. A via da genowgh y dhilea po "
+"y removya dhort an lyverva?"
 msgstr[1] ""
+"Ny veu re a'n taclow-ma iscargys dhort feet. A via da genowgh aga dilea po "
+"aga removya dhort an lyverva?"
+msgstr[2] ""
+"Ny veu re a'n taclow-ma iscargys dhort feet. A via da genowgh aga dilea po "
+"aga removya dhort an lyverva?"
+msgstr[3] ""
+"Ny veu re a'n taclow-ma iscargys dhort feet. A via da genowgh aga dilea po "
+"aga removya dhort an lyverva?"
 
 #: ../../lib/frontends/widgets/application.py:458
 msgid ""
@@ -2020,14 +2046,26 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Onen a'n taclow-ma yw plegel. Dilea/removya plegel a vedn dilea/removya y "
+"gontents"
 msgstr[1] ""
+"Re a'n taclow-ma yw plegellow. Dilea/removya plegel a vedn dilea/removya y "
+"gontents"
+msgstr[2] ""
+"Re a'n taclow-ma yw plegellow. Dilea/removya plegel a vedn dilea/removya y "
+"gontents"
+msgstr[3] ""
+"Re a'n taclow-ma yw plegellow. Dilea/removya plegel a vedn dilea/removya y "
+"gontents"
 
 #: ../../lib/frontends/widgets/application.py:473
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Owgh whi sur dr'eus whans dhewgh dilea an dra?"
+msgstr[1] "Owgh whi sur dr'eus whans dhewgh dilea %(count)d taclow oll?"
+msgstr[2] "Owgh whi sur dr'eus whans dhewgh dilea %(count)d taclow oll?"
+msgstr[3] "Owgh whi sur dr'eus whans dhewgh dilea %(count)d taclow oll?"
 
 #: ../../lib/frontends/widgets/application.py:480
 msgid ""
@@ -2035,19 +2073,25 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Onen a'n taclow-ma yw plegel. Dilea plegel a vedn dilea y gontents"
 msgstr[1] ""
+"Re a'n taclow-ma yw plegellow. Dilea plegel a vedn dilea y gontents"
+msgstr[2] ""
+"Re a'n taclow-ma yw plegellow. Dilea plegel a vedn dilea y gontents"
+msgstr[3] ""
+"Re a'n taclow-ma yw plegellow. Dilea plegel a vedn dilea y gontents"
 
 #: ../../lib/frontends/widgets/application.py:524
 msgid "Save Item As..."
-msgstr ""
+msgstr "Gwitha an dra avel..."
 
 #: ../../lib/frontends/widgets/application.py:583
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Jynnscrifowgh URL an wiasva rag keworra"
 
 #: ../../lib/frontends/widgets/application.py:584
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Keworra gwiasva - URL drog"
 
 #: ../../lib/frontends/widgets/application.py:585
 msgid ""
@@ -2056,158 +2100,176 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Nyns yw an trigva usy scrifys genowgh da.\n"
+"Gwelowgh mars yw an URL ewn ha sayowgh arta.\n"
+"Jynnscrifowgh URL an wiasva rag keworra"
 
 #: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
-msgstr ""
+msgstr "Ymperthy restren OPML"
 
 #: ../../lib/frontends/widgets/application.py:645
 msgid "OPML Files"
-msgstr ""
+msgstr "Restrednow OPML"
 
 #: ../../lib/frontends/widgets/application.py:652
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "Ymperthy restren OPML - Gwall"
 
 #: ../../lib/frontends/widgets/application.py:658
 msgid "Export OPML File"
-msgstr ""
+msgstr "Esperthy restren OPML"
 
 #: ../../lib/frontends/widgets/application.py:682
 msgid "Create Playlist"
-msgstr ""
+msgstr "Gwruthyl canrol"
 
 #: ../../lib/frontends/widgets/application.py:683
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Scrifowgh hanow rag an ganrol nowyth"
 
 #: ../../lib/frontends/widgets/application.py:704
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Gwruthyl plegel canrolyow"
 
 #: ../../lib/frontends/widgets/application.py:705
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Scrifowgh hanow rag an blegel ganrolyow nowyth"
 
 #: ../../lib/frontends/widgets/application.py:726
 #: ../../lib/frontends/widgets/tablist.py:706
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Dashenwel plegel feeds"
 
 #: ../../lib/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
+msgstr "Scrifowgh hanow nowyth rag an blegel feeds %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:731
 msgid "Rename Feed"
-msgstr ""
+msgstr "Dashenwel feed"
 
 #: ../../lib/frontends/widgets/application.py:732
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "Scrifowgh hanow nowyth rag an feed %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:736
 #: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Dashenwel canrol"
 
 #: ../../lib/frontends/widgets/application.py:737
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "Scrifowgh hanow nowyth rag an ganrol %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:741
 #: ../../lib/frontends/widgets/tablist.py:760
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Dashenwel plegel ganrolyow"
 
 #: ../../lib/frontends/widgets/application.py:742
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "Scrifowgh hanow nowyth rag an blegel ganrolyow %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:745
 #: ../../lib/frontends/widgets/tablist.py:624
 msgid "Rename Website"
-msgstr ""
+msgstr "Dashenwel gwiasva"
 
 #: ../../lib/frontends/widgets/application.py:746
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Scrifowgh hanow nowyth rag an wiasva %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:770
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Removya an ganrol"
+msgstr[1] "Removya canrolyow"
+msgstr[2] "Removya canrolyow"
+msgstr[3] "Removya canrolyow"
 
 #: ../../lib/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Owgh whi sur dr'eus whans dhewgh removya an ganrol-ma?"
+msgstr[1] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s ganrol-ma?"
+msgstr[2] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s hanrol-ma?"
+msgstr[3] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s canrol-ma?"
 
 #: ../../lib/frontends/widgets/application.py:792
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Removya an wiasva"
+msgstr[1] "Removya gwiasvaow"
+msgstr[2] "Removya gwiasvaow"
+msgstr[3] "Removya gwiasvaow"
 
 #: ../../lib/frontends/widgets/application.py:794
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Owgh whi sur dr'eus whans dhewgh removya an wiasva-ma?"
+msgstr[1] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s wiasva-ma?"
+msgstr[2] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s gwiasva-ma?"
+msgstr[3] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s gwiasva-ma?"
 
 #: ../../lib/frontends/widgets/application.py:830
 #: ../../lib/frontends/widgets/application.py:849
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Owgh whi sur dr'eus whans dhewgh qwitya?"
 
 #: ../../lib/frontends/widgets/application.py:832
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Yma %(count)d iscargans bew dhewgh. Qwitya yn neb fordh?"
+msgstr[1] "Yma %(count)d iscargans bew dhewgh. Qwitya yn neb fordh?"
+msgstr[2] "Yma %(count)d iscargans bew dhewgh. Qwitya yn neb fordh?"
+msgstr[3] "Yma %(count)d iscargans bew dhewgh. Qwitya yn neb fordh?"
 
 #: ../../lib/frontends/widgets/application.py:837
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Gwarn vy pan wra'ma saya dhe gwitya gans iscarganjow bew"
 
 #: ../../lib/frontends/widgets/application.py:851
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] ""
+msgstr[0] "Yma %(count)d convertyans bew dhewgh. Qwitya yn neb fordh?"
 msgstr[1] ""
+"Yma %(count)d convertyans bew po ow cortos dhewgh. Qwitya yn neb fordh?"
+msgstr[2] ""
+"Yma %(count)d convertyans bew po ow cortos dhewgh. Qwitya yn neb fordh?"
+msgstr[3] ""
+"Yma %(count)d convertyans bew po ow cortos dhewgh. Qwitya yn neb fordh?"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr ""
+msgstr "Gwarn vy pan wra'ma saya dhe gwitya gans convertyanjow bew"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
-msgstr ""
+msgstr "Owth ughradha an database"
 
 #: ../../lib/frontends/widgets/application.py:1232
 msgid "Message"
-msgstr ""
+msgstr "Messaj"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:68
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "Kensa fyttyans %(name)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
-msgstr ""
+msgstr "Dowisowgh an yeth"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
@@ -2219,30 +2281,34 @@ msgid ""
 "\n"
 "What language would you like Miro to be in?"
 msgstr ""
+"Dynnargh dhe gensa fyttyans %(name)s!\n"
+"An nessa nebes scrinys a vedn agas gweres dhe fyttya %(name)s may whra obery "
+"y'n gwella fordh ragowgh.\n"
+"Py yeth a via da genowgh Miro dhe usya?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
 #: ../../lib/frontends/widgets/prefpanel.py:306
 msgid "System default"
-msgstr ""
+msgstr "Defowt an system"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
-msgstr ""
+msgstr "Nowedha"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
-msgstr ""
+msgstr "Yeth:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #: ../../lib/frontends/widgets/firsttimedialog.py:228
 msgid "Next >"
-msgstr ""
+msgstr "Nessa >"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
-msgstr ""
+msgstr "Dalathans %(name)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
@@ -2251,21 +2317,25 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Yth ero'ni ow comendya %(name)s dhe vos settys dhe lonchya pan wra agas "
+"amontyer dalleth. Yndelma, iscarganjow bew a ell diwedha iscarga ha "
+"restrednow media nowyth a ell bos iscargys y'n gilva, parys pan eus whans "
+"dhewgh mires ortans."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "A via da genowgh lonchya %(name)s orth dalathans?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:225
 #: ../../lib/frontends/widgets/firsttimedialog.py:290
 #: ../../lib/frontends/widgets/firsttimedialog.py:370
 msgid "< Previous"
-msgstr ""
+msgstr "< Kens"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr ""
+msgstr "Ow cavos restrednow"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2275,176 +2345,189 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s a ell cavos pub restren media war agas amontyer rag agas gweres dhe "
+"restry agas cuntellyans.\n"
+"A via da genowgh %(name)s dhe whilas restrednow media war agas amontyer?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:262
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Strotha dhe oll ow restrednow personel."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:263
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Whilas yn plegellow personelhes:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:269
 #: ../../lib/frontends/widgets/prefpanel.py:479
 msgid "Change"
-msgstr ""
+msgstr "Chanjya"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:275
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Dowisowgh an arayel rag whilas restrednow media"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:305
 #: ../../lib/frontends/widgets/firsttimedialog.py:373
 msgid "Finish"
-msgstr ""
+msgstr "Diwedha"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Searching for media files"
-msgstr ""
+msgstr "Ow whilas restrednow media"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:401
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "parsas %(count)s restren"
+msgstr[1] "parsas %(count)s restren"
+msgstr[2] "parsas %(count)s restren"
+msgstr[3] "parsas %(count)s restren"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:406
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s restren media kevys"
+msgstr[1] "%(count)s restren media kevys"
+msgstr[2] "%(count)s restren media kevys"
+msgstr[3] "%(count)s restren media kevys"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:102
 #: ../../lib/frontends/widgets/prefpanel.py:647
 msgid "never"
-msgstr ""
+msgstr "jammes"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nans yw %(count)d eur"
+msgstr[1] "nans yw %(count)d eur"
+msgstr[2] "nans yw %(count)d eur"
+msgstr[3] "nans yw %(count)d eur"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nans yw %(count)d dedh"
+msgstr[1] "nans yw %(count)d dhedh"
+msgstr[2] "nans yw %(count)d dedh"
+msgstr[3] "nans yw %(count)d dedh"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nans yw %(count)d mis"
+msgstr[1] "nans yw %(count)d vis"
+msgstr[2] "nans yw %(count)d mis"
+msgstr[3] "nans yw %(count)d mis"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "Taclow awto-diwedha:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "Golyes %(expiration)s (defowt)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Golyes nans yw 1 dedh"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Golyes nans yw 3 dedh"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Golyes nans yw 6 dedh"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Golyes nans yw 10 dedh"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Golyes nans yw 1 mis"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "Taclow coth an feed:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "Gwitha %(number)s (defowt)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Gwitha 0"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Gwitha 20"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Gwitha 50"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Gwitha 100"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Gwitha 1000"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Dilea oll"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Dileys yw an taclow coth."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Hock awto-iscarga pan vo an mens-ma a daclow dissenys:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 dra dhissenys"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 thra dhissenys"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 tra dhissenys"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 tra dhissenys"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 tra dhissenys"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Dowisyanjow an feed"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:463
 #: ../../lib/frontends/widgets/statictabs.py:97
 msgid "Video Search"
-msgstr ""
+msgstr "Whilans video"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Sewyanjow vyth"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2453,48 +2536,52 @@ msgid ""
 "engines, click on the icon to the left of the search box above and select "
 "the search engine from the drop down."
 msgstr ""
+"Rag whilas media war gwiasvaow whilans media Internet, clyckyowgh war'n box "
+"whilans a-ugh, scrifowgh termys whilans ha sqwatyowgh an alwhedhen 'Enter'. "
+"Rag chanjya jynnow-whilas, clyckyowgh war'n arwodhik dhe gledh an box "
+"whilans a-ugh ha dowisowgh an jynn-whilas dhort an rol."
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
 #: ../../lib/frontends/widgets/statictabs.py:103
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:591
 msgid "Unwatched"
-msgstr ""
+msgstr "Disgolyes"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:597
 #: ../../lib/frontends/widgets/itemedit.py:152
 #: ../../lib/frontends/widgets/statictabs.py:109
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:604
 #: ../../lib/frontends/widgets/itemedit.py:153
 #: ../../lib/frontends/widgets/statictabs.py:115
 msgid "Other"
-msgstr ""
+msgstr "Aral"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:636
 msgid "Back to feed"
-msgstr ""
+msgstr "War-dhelergh dhe'n feed"
 
 #: ../../lib/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "An feed a dal mos y'n trogh-ma:"
 
 #: ../../lib/frontends/widgets/newfeed.py:109
 msgid "Add Feed"
-msgstr ""
+msgstr "Keworra feed"
 
 #: ../../lib/frontends/widgets/newfeed.py:110
 msgid "Enter the URL of the feed to add"
-msgstr ""
+msgstr "Scrifowgh URL an feed rag keworra"
 
 #: ../../lib/frontends/widgets/newfeed.py:121
 msgid "Add Feed - Invalid URL"
-msgstr ""
+msgstr "Keworra feed - URL drog"
 
 #: ../../lib/frontends/widgets/newfeed.py:122
 msgid ""
@@ -2503,6 +2590,9 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+"Nyns yw an drigva scrifys genowgh URL da.\n"
+"Gwelowgh mars yw an URL ewn ha sayowgh arta.\n"
+"Scrifowgh URL an feed rag keworra"
 
 #: ../../lib/frontends/widgets/displays.py:401
 #, python-format
@@ -2510,168 +2600,184 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"Ny ell %(appname)s seny an restren-ma. Whi a alja saya y egery gans towlen "
+"dhyffrans."
 
 #: ../../lib/frontends/widgets/displays.py:411
 msgid "Filename:"
-msgstr ""
+msgstr "Hanow an restren:"
 
 #: ../../lib/frontends/widgets/displays.py:414
 msgid "File type:"
-msgstr ""
+msgstr "Sort an restren:"
 
 #: ../../lib/frontends/widgets/displays.py:420
 #: ../../lib/frontends/widgets/displays.py:457
 #: ../../lib/frontends/widgets/itemcontextmenu.py:105
 msgid "Play Externally"
-msgstr ""
+msgstr "Seny war-ves"
 
 #: ../../lib/frontends/widgets/displays.py:422
 msgid "Skip"
-msgstr ""
+msgstr "Kelly"
 
 #: ../../lib/frontends/widgets/displays.py:459
 msgid "Open Externally"
-msgstr ""
+msgstr "Egery war-ves"
 
 #: ../../lib/frontends/widgets/displays.py:566
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d plegel feed dowisys"
+msgstr[1] "%(count)d blegel feed dowisys"
+msgstr[2] "%(count)d plegel feed dowisys"
+msgstr[3] "%(count)d plegel feed dowisys"
 
 #: ../../lib/frontends/widgets/displays.py:571
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(ow senjy %(count)d feed)"
+msgstr[1] "(ow senjy %(count)d feed)"
+msgstr[2] "(ow senjy %(count)d feed)"
+msgstr[3] "(ow senjy %(count)d feed)"
 
 #: ../../lib/frontends/widgets/displays.py:577
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d plegel ganrolyow dowisys"
+msgstr[1] "%(count)d blegel ganrolyow dowisys"
+msgstr[2] "%(count)d plegel ganrolyow dowisys"
+msgstr[3] "%(count)d plegel ganrolyow dowisys"
 
 #: ../../lib/frontends/widgets/displays.py:582
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(ow senjy %(count)d canrol)"
+msgstr[1] "(ow senjy %(count)d ganrol)"
+msgstr[2] "(ow senjy %(count)d canrol)"
+msgstr[3] "(ow senjy %(count)d canrol)"
 
 #: ../../lib/frontends/widgets/displays.py:592
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d feed dowisys"
+msgstr[1] "%(count)d feed dowisys"
+msgstr[2] "%(count)d feed dowisys"
+msgstr[3] "%(count)d feed dowisys"
 
 #: ../../lib/frontends/widgets/displays.py:598
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d gwiasva dowisys"
+msgstr[1] "%(count)d wiasva dowisys"
+msgstr[2] "%(count)d gwiasva dowisys"
+msgstr[3] "%(count)d gwiasva dowisys"
 
 #: ../../lib/frontends/widgets/displays.py:604
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d canrol dowisys"
+msgstr[1] "%(count)d ganrol dowisys"
+msgstr[2] "%(count)d canrol dowisys"
+msgstr[3] "%(count)d canrol dowisys"
 
 #: ../../lib/frontends/widgets/displays.py:611
 msgid "Delete All"
-msgstr ""
+msgstr "Dilea oll"
 
 #: ../../lib/frontends/widgets/displays.py:615
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "Gorra yn plegel nowyth"
 
 #: ../../lib/frontends/widgets/itemedit.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:108
 msgid "Edit Item"
-msgstr ""
+msgstr "Chanjya an dra"
 
 #: ../../lib/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: ../../lib/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Dascrifans:"
 
 #: ../../lib/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Sort an media:"
 
 #: ../../lib/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Fordh:"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:56
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr ""
+msgstr "Convertyanjow"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr ""
+msgstr "Hedhy oll an convertyanjow"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Gwakhe convertyanjow dalethys"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Convertyans dhe %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "Fylellas: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Trobyl-tedna"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "Egery an govnoten"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Gwakhe"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Cowlwres"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
-msgstr ""
+msgstr "Iscarganjow"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:97
 msgid "Single and external downloads"
-msgstr ""
+msgstr "Iscarganjow udnik hag a-ves"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:101
 msgid "Feed downloads"
-msgstr ""
+msgstr "Iscarganjow feeds"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:104
 msgid "Seeding"
-msgstr ""
+msgstr "Ow hasa"
 
 #: ../../lib/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr ""
+msgstr "Gwall a-bervedh"
 
 #: ../../lib/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -2679,32 +2785,41 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"Yma metyes gans %(appname)s gwall a-bervedh. Whi a ell agan gweres dhe gavos "
+"an cudyn-ma hag y staga dre danon dhyn derivas gwall."
 
 #: ../../lib/frontends/widgets/crashdialog.py:66
 msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Yncludya database dien an dowlen, owth yncludya oll metadata feed ha video, "
+"gans an derivas gwall"
 
 #: ../../lib/frontends/widgets/crashdialog.py:71
 msgid "Describe what you were doing when you got this error:"
 msgstr ""
+"Dascrifowgh an pyth esewgh whi ow kul pan wrugowgh receva an gwall-ma:"
 
 #: ../../lib/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Dilea an feed"
+msgstr[1] "Dilea an feeds"
+msgstr[2] "Dilea an feeds"
+msgstr[3] "Dilea an feeds"
 
 #: ../../lib/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Owgh whi sur dr'eus whans dhewgh dilea an feed-ma:"
+msgstr[1] "Owgh whi sur dr'eus whans dhewgh dilea an feeds-ma:"
+msgstr[2] "Owgh whi sur dr'eus whans dhewgh dilea an feeds-ma:"
+msgstr[3] "Owgh whi sur dr'eus whans dhewgh dilea an feeds-ma:"
 
 #: ../../lib/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "Gwitha taclow eus iscargys y'm lyverva vy."
 
 #: ../../lib/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -2713,6 +2828,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Plegellow golyes a vedh dileys dhort an bar tu bus aga hontents a vedn "
+"apperya y'gas lyverva hogen. Whi a ell hedhy golyas plegellow golyes yn tien "
+"yn panel dowisyanjow %(appname)s."
 
 #: ../../lib/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -2722,93 +2840,103 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Owgh whi sur dr'eus whans dhewgh dilea an feed-ma? An iscarganjow bew a vedh "
+"hedhys."
 msgstr[1] ""
+"Owgh whi sur dr'eus whans dhewgh dilea an feeds-ma? An iscarganjow bew a "
+"vedh hedhys."
+msgstr[2] ""
+"Owgh whi sur dr'eus whans dhewgh dilea an feeds-ma? An iscarganjow bew a "
+"vedh hedhys."
+msgstr[3] ""
+"Owgh whi sur dr'eus whans dhewgh dilea an feeds-ma? An iscarganjow bew a "
+"vedh hedhys."
 
 #: ../../lib/frontends/widgets/tablist.py:623
 #: ../../lib/frontends/widgets/tablist.py:718
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Copia URL dhe'n scryp"
 
 #: ../../lib/frontends/widgets/tablist.py:625
 msgid "Remove Website"
-msgstr ""
+msgstr "Dilea an wiasva"
 
 #: ../../lib/frontends/widgets/tablist.py:629
 msgid "Remove Websites"
-msgstr ""
+msgstr "Dilea an wiasvaow"
 
 #: ../../lib/frontends/widgets/tablist.py:705
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Nowedha feeds eus y'n blegel"
 
 #: ../../lib/frontends/widgets/tablist.py:712
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Nowedha an feed lebmyn"
 
 #: ../../lib/frontends/widgets/tablist.py:715
 msgid "Rename"
-msgstr ""
+msgstr "Dashenwel"
 
 #: ../../lib/frontends/widgets/tablist.py:717
 msgid "Revert Feed Name"
-msgstr ""
+msgstr "Dewheles hanow an feed"
 
 #: ../../lib/frontends/widgets/tablist.py:724
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Nowedha an feeds lebmyn"
 
 #: ../../lib/frontends/widgets/tablist.py:789
 msgid "LIBRARY"
-msgstr ""
+msgstr "LYVERVA"
 
 #: ../../lib/frontends/widgets/tablist.py:791
 msgid "WEBSITES"
-msgstr ""
+msgstr "GWIASVAOW"
 
 #: ../../lib/frontends/widgets/tablist.py:793
 msgid "VIDEO FEEDS"
-msgstr ""
+msgstr "FEEDS VIDEO"
 
 #: ../../lib/frontends/widgets/tablist.py:795
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "FEEDS AUDIO"
 
 #: ../../lib/frontends/widgets/tablist.py:797
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "CANROLYOW"
 
 #: ../../lib/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Hanow an blegel:"
 
 #: ../../lib/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "An blegel a dal mos y'n trogh-ma:"
 
 #: ../../lib/frontends/widgets/newfolder.py:107
 #: ../../lib/frontends/widgets/newfolder.py:109
 msgid "Create Feed Folder"
-msgstr ""
+msgstr "Gwruthyl plegel feeds"
 
 #: ../../lib/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Scrifowgh hanow an blegel rag keworra"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Keworra canrol"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "Keworra taclow dhe ganrol vew po onen nowyth"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:77
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Canrol vew:"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:83
 msgid "New playlist:"
-msgstr ""
+msgstr "Canrol nowyth:"
 
 #: ../../lib/frontends/widgets/dialogs.py:105
 msgid ""
@@ -2816,214 +2944,231 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
+"Yma Miro ow nowedha agas database a feeds ha restrednow. An proces termyn "
+"udnik-ma a ell lenwel meur a dermyn mars eus niver bras a daclow dhewgh yn "
+"Miro (traweythyow moy es 30 mynysen)."
 
 #: ../../lib/frontends/widgets/diagnostics.py:62
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Dilea"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 msgid "Show"
-msgstr ""
+msgstr "Disqwedhes"
 
 #: ../../lib/frontends/widgets/diagnostics.py:95
 msgid "Movies location:"
-msgstr ""
+msgstr "Trovyans an fylmow:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:99
 msgid "Icon cache location:"
-msgstr ""
+msgstr "Trovyans cache an arwodhigow:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:103
 msgid "Log file location:"
-msgstr ""
+msgstr "Trovyans an restren govnotednow:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:107
 msgid "Downloader log file location:"
-msgstr ""
+msgstr "Trovyans an restren govnoten iscargyer:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:111
 msgid "Database file location:"
-msgstr ""
+msgstr "Trovyans an restren database:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:118
 msgid "Space free on disk:"
-msgstr ""
+msgstr "Spas frank war'n blasen:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:120
 msgid "Database size:"
-msgstr ""
+msgstr "Hens an database:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:122
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Taclow db cowal y'n cov:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Scodhyanjow db cowal:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
-msgstr ""
+msgstr "Egery y'n beurel:"
 
 #: ../../lib/frontends/widgets/browser.py:100
 msgid "Download this video"
-msgstr ""
+msgstr "Iscarga an video-ma"
 
 #: ../../lib/frontends/widgets/rundialog.py:82
 msgid "Username:"
-msgstr ""
+msgstr "Hanow-usyer:"
 
 #: ../../lib/frontends/widgets/rundialog.py:86
 msgid "Password:"
-msgstr ""
+msgstr "Ger-tremena:"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:66
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Dilea dhort an lyverva"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:101
 #: ../../lib/frontends/widgets/itemcontextmenu.py:204
 msgid "Play"
-msgstr ""
+msgstr "Seny"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:104
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Seny an dra-ma hepken"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:106
 #: ../../lib/frontends/widgets/itemcontextmenu.py:205
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Keworra dhe ganrol"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:110
 #: ../../lib/frontends/widgets/itemcontextmenu.py:212
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Merkya avel dassenys"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:113
 #: ../../lib/frontends/widgets/itemcontextmenu.py:217
 msgid "Mark as Played"
-msgstr ""
+msgstr "Merkya avel senys"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:119
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Hedhy hasa"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:121
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Daskemeres hasa"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:227
 msgid "Convert to..."
-msgstr ""
+msgstr "Convertya dhe..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:257
 #: ../../lib/frontends/widgets/itemcontextmenu.py:275
 msgid "Cancel Download"
-msgstr ""
+msgstr "Hedhy iscarga"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:133
 #: ../../lib/frontends/widgets/itemcontextmenu.py:258
 msgid "Pause Download"
-msgstr ""
+msgstr "Hockya iscarga"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:271
 msgid "Resume Download"
-msgstr ""
+msgstr "Daskemeres iscarga"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:150
 msgid "License"
-msgstr ""
+msgstr "Lecyans"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:153
 msgid "File in Browser"
-msgstr ""
+msgstr "Restredna y'n beurel"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:155
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Restredna yn %(progname)s"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:157
 msgid "File on Disk"
-msgstr ""
+msgstr "Restredna war'n blasen"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:161
 msgid "View"
-msgstr ""
+msgstr "Gweles"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:199
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d dra iscargys"
+msgstr[1] "%(count)d dra iscargys"
+msgstr[2] "%(count)d thra iscargys"
+msgstr[3] "%(count)d tra iscargys"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:233
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d dra gavadow"
+msgstr[1] "%(count)d dra gavadow"
+msgstr[2] "%(count)d thra gavadow"
+msgstr[3] "%(count)d tra gavadow"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:246
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d dra owth iscarga"
+msgstr[1] "%(count)d dra owth iscarga"
+msgstr[2] "%(count)d thra owth iscarga"
+msgstr[3] "%(count)d tra owth iscarga"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:263
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d dra hockys"
+msgstr[1] "%(count)d dra hockys"
+msgstr[2] "%(count)d thra hockys"
+msgstr[3] "%(count)d tra hockys"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:281
 msgid "Restart Upload"
-msgstr ""
+msgstr "Daskemeres ughcarga"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:310
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Dilea dhort an ganrol"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
-msgstr ""
+msgstr "Iscargys"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "Feed cowal"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:191
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Disqwedhes %(count)d dra moy"
+msgstr[1] "Disqwedhes %(count)d dra moy"
+msgstr[2] "Disqwedhes %(count)d thra moy"
+msgstr[3] "Disqwedhes %(count)d tra moy"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:232
 #: ../../lib/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d owth iscarga"
+msgstr[1] "%(count)d owth iscarga"
+msgstr[2] "%(count)d owth iscarga"
+msgstr[3] "%(count)d owth iscarga"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:243
 #: ../../lib/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d dra"
+msgstr[1] "%(count)d dra"
+msgstr[2] "%(count)d thra"
+msgstr[3] "%(count)d tra"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -3031,31 +3176,39 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d iscargans yw lostys awos taclow dassenys (gwelowgh an settyanjow)"
 msgstr[1] ""
+"%(count)d iscargans yw lostys awos taclow dassenys (gwelowgh an settyanjow)"
+msgstr[2] ""
+"%(count)d iscargans yw lostys awos taclow dassenys (gwelowgh an settyanjow)"
+msgstr[3] ""
+"%(count)d iscargans yw lostys awos taclow dassenys (gwelowgh an settyanjow)"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Yma %(count)d dra ow machya an whilans"
+msgstr[1] "Yma %(count)d dra ow machya an whilans"
+msgstr[2] "Yma %(count)d thra ow machya an whilans"
+msgstr[3] "Yma %(count)d tra ow machya an whilans"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr ""
+msgstr "Yma oll an taclow ow machya an whilans"
 
 #: ../../lib/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Gwag yw an ganrol-ma"
 
 #: ../../lib/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
+msgstr "Rag keworra tra, halyowgh ev war hanow an ganrol-ma y'n bar tu."
 
 #: ../../lib/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr ""
+msgstr "Ragberna dhe'n feed"
 
 #: ../../lib/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -3065,153 +3218,156 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Y hevel dr'yw an gevren-ma feed. Eus whans dhewgh y geworra dhe'gas "
+"ragbernanjow?\n"
+"%(url)s"
 
 #: ../../lib/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Gydlyver Miro"
 
 #: ../../lib/frontends/widgets/prefpanel.py:291
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Lonch %(appname)s yn awtomatek pan wra'ma omgelmy."
 
 #: ../../lib/frontends/widgets/prefpanel.py:295
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Gwarn vy mar qwra'ma saya dhe gwitya gans iscarganjow bew."
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "Gwarn vy mar qwra'ma saya dhe gwitya gans convertyanjow bew."
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr ""
+msgstr "(Chanjya an yeth a wra dervyn whi dhe dhastalleth Miro.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
-msgstr ""
+msgstr "Pub dedh"
 
 #: ../../lib/frontends/widgets/prefpanel.py:324
 msgid "Every hour"
-msgstr ""
+msgstr "Pub eur"
 
 #: ../../lib/frontends/widgets/prefpanel.py:325
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Pub 30 mynysen"
 
 #: ../../lib/frontends/widgets/prefpanel.py:326
 msgid "Manually"
-msgstr ""
+msgstr "Yn tewla"
 
 #: ../../lib/frontends/widgets/prefpanel.py:339
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../lib/frontends/widgets/prefpanel.py:340
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../lib/frontends/widgets/prefpanel.py:341
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../lib/frontends/widgets/prefpanel.py:342
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../lib/frontends/widgets/prefpanel.py:343
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../lib/frontends/widgets/prefpanel.py:349
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "Settyanjow defowt rag feeds nowyth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:353
 msgid "(These can be changed using the feed's settings button)"
-msgstr ""
+msgstr "(An re-ma a ell bos chanjys dre boton settyanjow an feed)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:357
 msgid "Check for new content:"
-msgstr ""
+msgstr "Checkya rag sensas nowyth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Settyans awto-iscarga:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
-msgstr ""
+msgstr "Gwra remembra an niver-ma a daclow coth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:369
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(yn keworrans dhe'n sensas kesres)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:382
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "Niver moyha a iscarganjow war-barth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:389
 msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
+msgstr "Niver moyha a awto-iscarganjow war-barth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:399
 msgid "Bittorrent:"
-msgstr ""
+msgstr "Bittorrent:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:402
 msgid "Limit upstream bandwidth to:"
-msgstr ""
+msgstr "Strotha les-band an ughfrosans orth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:413
 #: ../../lib/frontends/widgets/prefpanel.py:424
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
 #: ../../lib/frontends/widgets/prefpanel.py:416
 msgid "Limit downstream bandwidth to:"
-msgstr ""
+msgstr "Strotha les-band an isfrosans orth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:427
 msgid "Limit torrent connections to:"
-msgstr ""
+msgstr "Strotha junyanjow torrent orth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:444
 msgid "Starting port:"
-msgstr ""
+msgstr "Porth dalleth:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:448
 msgid "Ending port:"
-msgstr ""
+msgstr "Porth diwedha:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:454
 msgid "Automatically forward ports.  (UPNP)"
-msgstr ""
+msgstr "Danon pella porthow yn awtomatek. (UPNP)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:458
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "Sconya ajon junyanjow heb yncryptyans"
 
 #: ../../lib/frontends/widgets/prefpanel.py:462
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgstr "Hedhy ughcarganjow torrent pan'th yw an kemyns-ma drehedhys"
 
 #: ../../lib/frontends/widgets/prefpanel.py:484
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "Dowis arayel fylmow"
 
 #: ../../lib/frontends/widgets/prefpanel.py:497
 msgid "Directory not valid"
-msgstr ""
+msgstr "Nyns yw an arayel da."
 
 #: ../../lib/frontends/widgets/prefpanel.py:498
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "Ny alja an arayel '%s' bos formys.  "
 
 #: ../../lib/frontends/widgets/prefpanel.py:513
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "Divroa fylmow bew?"
 
 #: ../../lib/frontends/widgets/prefpanel.py:514
 #, python-format
@@ -3220,131 +3376,138 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Whi a dhowisas plegel nowyth rag iscarga fylmow dhedhy. A dalvia %(appname)s "
+"divroa agas iscarganjow bew ena? (Ny vedh fylmow eus owth iscarga a-lebmyn "
+"bos gwayes kens eus diwedh dhedhans.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
-msgstr ""
+msgstr "plegel"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "hewel"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
-msgstr ""
+msgstr "Keworra plegel golyes"
 
 #: ../../lib/frontends/widgets/prefpanel.py:604
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Senjy iscarganjow y'n blegel-ma:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:611
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Golyas rag taclow video hag audio nowyth y'n plegellow-ma hag aga yncludya "
+"y'n lyverva:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:630
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Senjy dhe'n lyha an niver-ma a spas war ow lewel:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:633
 #: ../../lib/frontends/widgets/prefpanel.py:639
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../lib/frontends/widgets/prefpanel.py:642
 msgid "1 day"
-msgstr ""
+msgstr "1 jedh"
 
 #: ../../lib/frontends/widgets/prefpanel.py:643
 msgid "3 days"
-msgstr ""
+msgstr "3 dedh"
 
 #: ../../lib/frontends/widgets/prefpanel.py:644
 msgid "6 days"
-msgstr ""
+msgstr "6 dedh"
 
 #: ../../lib/frontends/widgets/prefpanel.py:645
 msgid "10 days"
-msgstr ""
+msgstr "10 dedh"
 
 #: ../../lib/frontends/widgets/prefpanel.py:646
 msgid "1 month"
-msgstr ""
+msgstr "1 mis"
 
 #: ../../lib/frontends/widgets/prefpanel.py:652
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Dre defowt, taclow video hag audio a wra diwedha woja:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Seny media yn Miro."
 
 #: ../../lib/frontends/widgets/prefpanel.py:662
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Seny pup prys videos yn fenester diberthys."
 
 #: ../../lib/frontends/widgets/prefpanel.py:663
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
+"Daskemeres seny tra video po audio dhort an termyn orth neb a veu ev kens "
+"hedhys."
 
 #: ../../lib/frontends/widgets/prefpanel.py:665
 msgid "Automatically enable movie subtitles when available."
-msgstr ""
+msgstr "Galosegy yn awtomatek istitlys fylmow pan'th yns cavadow."
 
 #: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Seny taclow video hag audio an eyl woja y gila"
 
 #: ../../lib/frontends/widgets/prefpanel.py:669
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Hedhy woja pub tra video po audio"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Alowa an niver-ma a gonvertyanjow kettermynek:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "(Ny vedh convertyanjow yn fyw bos nasyes dre chanjya hebma)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
-msgstr ""
+msgstr "Kebmyn"
 
 #: ../../lib/frontends/widgets/prefpanel.py:725
 msgid "Feeds"
-msgstr ""
+msgstr "Feeds"
 
 #: ../../lib/frontends/widgets/prefpanel.py:727
 msgid "Folders"
-msgstr ""
+msgstr "Plegellow"
 
 #: ../../lib/frontends/widgets/prefpanel.py:728
 msgid "Disk space"
-msgstr ""
+msgstr "Spas an blasen"
 
 #: ../../lib/frontends/widgets/prefpanel.py:729
 msgid "Playback"
-msgstr ""
+msgstr "Dasseny"
 
 #: ../../lib/frontends/widgets/prefpanel.py:734
 msgid "Preferences"
-msgstr ""
+msgstr "Dowisyanjow"
 
 #: ../../lib/frontends/widgets/gtk/window.py:716
 msgid "All files"
-msgstr ""
+msgstr "Restrednow oll"
 
 #: ../../lib/frontends/widgets/gtk/window.py:748
 msgid "Choose"
-msgstr ""
+msgstr "Dowisowgh"
 
 #: ../../lib/frontends/widgets/gtk/window.py:765
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "A-dro dhe %(appname)s"
 
 #: ../../lib/frontends/widgets/gtk/window.py:781
 #, python-format
@@ -3352,241 +3515,243 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s. Gwelowgh an restren license.txt rag manylyon.\n"
+"%(trademark)s"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Seny an nessa disenys (%(unplayed)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:99
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Seny an disenys oll (%(unplayed)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:102
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "Hockya an iscarganjow oll (%(downloading)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:105
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
+msgstr "Daskemeres an iscarganjow oll (%(paused)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:113
 msgid "Hide"
-msgstr ""
+msgstr "Cudha"
 
 #: ../../lib/frontends/widgets/gtk/video.py:287
 msgid "Subtitles"
-msgstr ""
+msgstr "Istitlys"
 
 #: ../../lib/frontends/widgets/gtk/video.py:312
 msgid "Permalink"
-msgstr ""
+msgstr "Kevren fast"
 
 #: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
-msgstr ""
+msgstr "Qwitya scrin leun"
 
 #: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
-msgstr ""
+msgstr "Scrin leun"
 
 #: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
-msgstr ""
+msgstr "Tardha a-bervedh"
 
 #: ../../lib/frontends/widgets/gtk/video.py:341
 msgid "Pop-out"
-msgstr ""
+msgstr "Tardha a-ves"
 
 #: ../../lib/playlist.py:203
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Scrifowgh hanow nowyth rag an ganrol %s"
 
 #: ../../lib/httpclient.py:101
 msgid "HTTP error"
-msgstr ""
+msgstr "Gwall HTTP"
 
 #: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s a wrug degea an junyans"
 
 #: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "An ost a ros %(status)s"
 
 #: ../../lib/httpclient.py:112
 msgid "Please retry later"
-msgstr ""
+msgstr "Sayowgh arta diwettha"
 
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "Ny wra %(host)s scoodhya daskemeres HTTP"
 
 #: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "Fin daswedyanjow HTTP yw drehedhys rag %(url)s"
 
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "An warantyans rag an proxy-ma a fylellas: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Recevas coden studh 404"
 
 #: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "An ost a ros coden studh drog: %(code)s"
 
 #: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
-msgstr ""
+msgstr "An warantyans a fylellas"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "An warantyans a veu hedhys"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "An warantyans a veu hedhys gans an devnydhyer"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"
-msgstr ""
+msgstr "URL drog"
 
 #: ../../lib/httpclient.py:154
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "Nyns yw \"%(url)s\" URL da"
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "Ost ancoth"
 
 #: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Ny alja an hanow-tiredh \"%(host)s\" bos kevys"
 
 #: ../../lib/httpclient.py:166
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
+msgstr "Nyns eus restren orth \"%(path)s\""
 
 #: ../../lib/httpclient.py:170
 msgid "Read error"
-msgstr ""
+msgstr "Gwall gans redya"
 
 #: ../../lib/httpclient.py:171
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "Gwall dres redya dhort \"%(path)s\""
 
 #: ../../lib/httpclient.py:179 ../../lib/dl_daemon/download.py:680
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "Ny aljem scrifa dhe %(filename)s"
 
 #: ../../lib/httpclient.py:181
 msgid "Write error"
-msgstr ""
+msgstr "Gwall gans scrifa"
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Gwiasva"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/net.py:75
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Gwall: %(msg)s"
 
 #: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
-msgstr ""
+msgstr "Ny aljem junya"
 
 #: ../../lib/net.py:92
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "Gwall gans junya: %(msg)s"
 
 #: ../../lib/net.py:98
 msgid "SSL connection error"
-msgstr ""
+msgstr "Gwall junyans SSL"
 
 #: ../../lib/net.py:102
 msgid "Timeout"
-msgstr ""
+msgstr "Termyn yw gyllys"
 
 #: ../../lib/net.py:103
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "Termyn an junyans dhe %(host)s yw gyllys"
 
 #: ../../lib/net.py:280
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Coden gwall ancoth"
 
 #: ../../lib/net.py:312
 msgid "Connection closed"
-msgstr ""
+msgstr "An junyans a veu degeys"
 
 #: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:837
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Nyns eus spas plasen lowr"
 
 #: ../../lib/dl_daemon/download.py:689 ../../lib/dl_daemon/download.py:838
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "Res yw bos %(amount)s MB dhewgh rag senjy an video-ma"
 
 #: ../../lib/dl_daemon/download.py:722
 msgid "no content"
-msgstr ""
+msgstr "content vyth"
 
 #: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "Fall BitTorrent"
 
 #: ../../lib/dl_daemon/download.py:865
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "BitTorrent a fylellas dhe dhalleth"
 
 #: ../../lib/dl_daemon/download.py:1077
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Torrent legrys"
 
 #: ../../lib/dl_daemon/download.py:1078
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "Nyns o an restren torrent orth %(url)s da"
 
 #: ../../lib/dl_daemon/download.py:1109
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "An restren torrent yw dileys"
 
 #: ../../lib/dl_daemon/download.py:1110
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
+msgstr "An restren torrent rag an dra-ma a veu dileys yn-mes a %(appname)s."
 
 #: ../../lib/theme.py:189
 msgid "Example Playlist"
-msgstr ""
+msgstr "Canrol ensampel"
 
 #: ../../lib/searchengines.py:180
 msgid "Search All"
-msgstr ""
+msgstr "Whilas oll"

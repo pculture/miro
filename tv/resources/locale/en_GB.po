@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3665,6 +3665,125 @@ msgstr "Example Playlist"
 msgid "Search All"
 msgstr "Search All"
 
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Auto Download"
+#~ msgstr "Auto-Download"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Previous Video"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Next Video"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Pipeline request never started"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Custom Channels"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "By default, videos expire after:"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Internal Error: Not ready to send"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Stop after each video"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Play videos one after another"
+
+#~ msgid "_Paste"
+#~ msgstr "_Paste"
+
+#~ msgid "_Copy"
+#~ msgstr "_Copy"
+
+#~ msgid "Select _All"
+#~ msgstr "Select _All"
+
+#~ msgid "Cu_t"
+#~ msgstr "Cu_t"
+
+#~ msgid "_Options"
+#~ msgstr "_Options"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Use this for video when playing audio:"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+
+#~ msgid "None"
+#~ msgstr "None"
+
+#~ msgid "Add to Library"
+#~ msgstr "Add to Library"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "You must restart playback for visualization changes to take effect."
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Couldn't open %(filename)s for writing"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#~ msgid "Add Site"
+#~ msgstr "Add Site"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Re_name Item"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Pause auto-downloading when this number of items are unplayed"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "Queued for autodownload"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3676,3 +3795,238 @@ msgstr "Search All"
 #~ "We suggest deleting files from the full disk or simply deleting some movies "
 #~ "from your collection.\n"
 #~ "Recent changes may be lost."
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Expected CRLF got: %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Bad Header Line: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Bad Status Line: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Bad Chunk size: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Bad Status Code: %(code)s"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Start Seeding"
+
+#~ msgid "Rename Item"
+#~ msgstr "Rename Item"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Revert Item Name"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Auto-Expire Videos:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Welcome to the %(name)s First Time Setup"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Completing the %(name)s First Time Setup"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Site Selected"
+#~ msgstr[1] "%(count)d Sites Selected"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Enter the URL of the site to add"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Enter the new name for the item"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Add Site - Invalid URL"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Are you sure you want to remove this site?"
+#~ msgstr[1] "Are you sure you want to remove these %(count)s sites?"
+
+#~ msgid "Rename Site"
+#~ msgstr "Rename Site"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Enter a new name for the site %(name)s"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Remove site"
+#~ msgstr[1] "Remove sites"
+
+#~ msgid "Migrating files"
+#~ msgstr "Migrating files"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Auto download setting:"
+
+#~ msgid "FEEDS"
+#~ msgstr "FEEDS"
+
+#~ msgid "Remove Site"
+#~ msgstr "Remove Site"
+
+#~ msgid "SITES"
+#~ msgstr "SITES"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Remove Sites"
+
+#~ msgid "No Results Found"
+#~ msgstr "No Results Found"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Insufficient disk space"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Search All: %(text)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minute"
+#~ msgstr[1] "%(count)d minutes"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d hour"
+#~ msgstr[1] "%(count)d hours"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d day"
+#~ msgstr[1] "%(count)d days"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+
+#~ msgid "(Pending)"
+#~ msgstr "(Pending)"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Universal, Chinese"
+
+#, python-format
+#~ msgid "Conversion to %s"
+#~ msgstr "Conversion to %s"
+
+#~ msgid "FAILED!"
+#~ msgstr "FAILED!"
+
+#, python-format
+#~ msgid "Pending conversion to %s"
+#~ msgstr "Pending conversion to %s"

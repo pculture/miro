@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-09-09 22:53+0000\n"
-"Last-Translator: dorusto <Unknown>\n"
+"PO-Revision-Date: 2010-12-31 04:14+0000\n"
+"Last-Translator: Lucian Jian <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -202,7 +202,7 @@ msgstr "Celtic"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "Chineză simplificată"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -219,15 +219,15 @@ msgstr "Aisa de est"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Chineză Universală"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "Chineză simplificată"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "Chineză Simplificată Unix"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -235,11 +235,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "Japoneză"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Japoneză Unix"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -248,24 +248,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "Coreeană"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "Chineză tradițională"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Unix Traditional Chinezesc"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Hong-Kong Suplimentar"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "Asia SE si SW"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -274,12 +274,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Turcă"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Thailandeză"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -287,12 +287,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnameză"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Orientul Mijlociu"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -301,7 +301,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "Arabă"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -310,7 +310,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "Ebraică"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -320,14 +320,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Universal"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -349,11 +349,11 @@ msgstr "Închide %(appname)s de tot."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Setări implicite"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Font subtitrare"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -437,16 +437,16 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Piesa %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:496
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Fisier subtitrare %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Croată"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -455,39 +455,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Chirilică"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Chirilică/Rusă"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Chirilică/Ucraineană"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "Central-europeană"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Română"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandeză"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Nordică"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "Sud-europeană"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -495,48 +495,48 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "Occidental"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Chineză simplificată"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Chineză tradițională"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Armeană"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Georgiană"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindusă"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Ebraică vizuală"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Persană"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -555,15 +555,15 @@ msgstr "Redare video:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Coduri sursă de folosit:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "Calea catre sursa ffmpeg:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "Calea catre sursa ffmpeg2theora:"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -579,7 +579,7 @@ msgstr "Baza de date este reactualizată"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Eroare bază de date"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -598,6 +598,20 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Ne pare rau, %(appname)s nu a putut porni din cauza unei probleme cu baza de "
+"date:\n"
+"\n"
+"Eroare: %(error)s\n"
+"\n"
+"E posibil ca baza dumneavoastra  de date sa fie corupta si nu poate fi "
+"utilizata.\n"
+"\n"
+"Puteti reseta aplicatia si baza de date distrusa va fi stearsa, dar va "
+"trebui sa adaugati din nou toate feed-urile si fisierele media. Daca doriti "
+"sa resetati putesi apasa pe butonul Start Fresh si reporniti %(appname)s.\n"
+"\n"
+"Pentru a ne ajuta sa reparam probleme asemanatoare in viitor, va rugam sa "
+"completati un raport de eroare la %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -627,7 +641,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "Transmisie raport de eroare"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -637,6 +651,10 @@ msgid ""
 "Do you want to include entire program database including all video and feed "
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"%(appname)s va trimite un raport de eroare catre baza noastra de date\n"
+"Doriti sa includeti intreaga baza de date a programelor inclusiv toate "
+"fisierele video si datele feed-urilor in raportul de eroare? Aceasta ne va "
+"ajuta sa diagnosticam problema aparuta."
 
 #: ../../lib/feed.py:844
 msgid "Error loading feed"
@@ -684,7 +702,7 @@ msgstr ""
 #: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr ""
+msgstr "%(engine)s pentru '%(query)s'"
 
 #: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
@@ -721,11 +739,11 @@ msgstr "pornire"
 #: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "conexiune inexistenta - reincearca in %s"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "conexiune inexistenta - reincearca cat de repede"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -777,6 +795,9 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s nu poate descarca un fichier de la aceasta adresa:\n"
+"URL : %(url)s\n"
+"Eroare : %(error)s (%(errordesc)s)"
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
@@ -874,21 +895,21 @@ msgstr "Formatul torrentului este necorespunzător"
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
-msgstr ""
+msgstr "Fisierul torrent %(filename)s pare corupt si nu poate fi deschis."
 
 #: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Motiv necunoscut"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (convertit in %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -1047,30 +1068,32 @@ msgstr "Reîncearcă"
 
 #: ../../lib/dialogs.py:129
 msgid "Start Fresh"
-msgstr ""
+msgstr "Începe din nou"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "Include baza de date"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "Nu include baza de date"
 
 #: ../../lib/dialogs.py:212
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s necesita un nume de utilizator si o parola pentru "
+"« %(realm)s »."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Autentificare necesara"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "Actualizarea bazei de date %(appname)s a esuat"
 
 #: ../../lib/storedatabase.py:251
 #, python-format
@@ -1145,32 +1168,32 @@ msgstr "pornire..."
 
 #: ../../lib/controller.py:139
 msgid "Sending Crash Report"
-msgstr ""
+msgstr "Trimite raport de eroare"
 
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Trimite raport de eroare  (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:64
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:67
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:70
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:86
 #, python-format
@@ -1207,22 +1230,22 @@ msgstr[2] "%(num)d de secunde"
 #: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:124
 #, python-format
@@ -1356,7 +1379,7 @@ msgstr "Total descărcat"
 
 #: ../../lib/frontends/widgets/style.py:252
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Raport Up/Down"
 
 #: ../../lib/frontends/widgets/style.py:254
 msgid "Download Torrent"
@@ -1369,7 +1392,7 @@ msgstr "Eroare"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "Adaugat la coada petru descarcare"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1400,7 +1423,7 @@ msgstr "pauză"
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr ""
+msgstr "Reporneste la %(resumetime)s"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
@@ -1535,11 +1558,11 @@ msgstr "Rede_numește"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Redenumeste feed-ul"
 
 #: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
-msgstr ""
+msgstr "Redenumeste site-ul web"
 
 #: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
@@ -1547,11 +1570,11 @@ msgstr "Ște_rge"
 
 #: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Sterge feed-ul"
 
 #: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Sterge feed-urile"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
@@ -1559,15 +1582,15 @@ msgstr "Ște_rge dosar"
 
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Sterge directoarele"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Sterge site-ul web"
 
 #: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Sterge site-urile web"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
@@ -1648,11 +1671,11 @@ msgstr "_Stop"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr ""
+msgstr "_Urmatorul element"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr ""
+msgstr "_Elementul precedent"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
@@ -1684,11 +1707,11 @@ msgstr "S_ubtitrări"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Selecteaza fisierul de subtitrare"
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Conversie"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1725,15 +1748,15 @@ msgstr "_Planeta Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Afiseaza directorul de conversie"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Codificare"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Implicit (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1827,7 +1850,7 @@ msgstr "%(rate)s descărcare"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Descarcare automata"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2123,7 +2146,7 @@ msgstr "Redenumire Pagina Web"
 #: ../../lib/frontends/widgets/application.py:746
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Introduceti un nou nume pentru site-ul %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:770
 msgid "Remove playlist"
@@ -2143,15 +2166,15 @@ msgstr[2] "Sigur doriți să ștergeți aceste %(count)s de liste de redare?"
 #: ../../lib/frontends/widgets/application.py:792
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] "Şterge pagina web"
-msgstr[1] "Şterge paginile web"
+msgstr[0] "Şterge site-ul web"
+msgstr[1] "Şterge site-urile web"
 
 #: ../../lib/frontends/widgets/application.py:794
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sunteti sigur ca doriti sa stergeti pagina web"
+msgstr[1] "Sunteti sigur ca doriti sa stergeti pagina web"
 
 #: ../../lib/frontends/widgets/application.py:830
 #: ../../lib/frontends/widgets/application.py:849
@@ -2181,7 +2204,7 @@ msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr ""
+msgstr "Avertizeaza-ma incerc sa ies si exista conversii in curs de executie"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
@@ -2198,7 +2221,7 @@ msgstr "Configurare inițială %(name)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
-msgstr ""
+msgstr "Alegeti limba"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
@@ -2214,16 +2237,16 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
 #: ../../lib/frontends/widgets/prefpanel.py:306
 msgid "System default"
-msgstr ""
+msgstr "Valoare implicită a sistemului"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
-msgstr ""
+msgstr "Actualizează"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
-msgstr ""
+msgstr "Limbă:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #: ../../lib/frontends/widgets/firsttimedialog.py:228
@@ -2233,7 +2256,7 @@ msgstr "Înainte >"
 #: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
-msgstr ""
+msgstr "Porneste %(name)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
@@ -2242,6 +2265,9 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Vă recomandăm să lansati  %(name)s atunci când computerul porneşte. În acest "
+"fel, descărcările în curs se pot termina  şi noi fisiere media pot fi "
+"descărcate în fundal, pentru a fi gata atunci când doriţi să le urmăriţi."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
@@ -2256,7 +2282,7 @@ msgstr "< Înapoi"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr ""
+msgstr "Cautare fisiere"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2345,7 +2371,7 @@ msgstr[2] "Acum %(count)d de luni"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "Elemente care expira automat"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2412,6 +2438,7 @@ msgstr "Elementele vechi au fost șterse"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
+"opreste decarcarea automata cand acest numar de fisiere nu au fost vizionate:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2444,7 +2471,7 @@ msgstr "Cautare video"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Nici un rezultat"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2627,42 +2654,42 @@ msgstr "Cale acces:"
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr ""
+msgstr "Conversii"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr ""
+msgstr "Opreste toate conversiile"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Sterge conversiile terminate"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Converteste in %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "Esuat: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Rezolva problemele"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "Deschide jurnalul"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Șterge"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Terminat"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2852,7 +2879,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Sterse"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2893,7 +2920,7 @@ msgstr "Număr total de obiecte db în memorie:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Total salvari ale bazei de date:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -2950,7 +2977,7 @@ msgstr "Reîncepe trimiterea"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:227
 msgid "Convert to..."
-msgstr ""
+msgstr "Conveteste in"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:257
@@ -3133,10 +3160,11 @@ msgstr "Avertizează-mă dacă încerc să închid programul când descarc."
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
+"Avertiza-mă dacă încerc să inchid si exista conversii în curs de desfăşurare."
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr ""
+msgstr "(Schimbarea limbii va necesita să reporniţi Miro.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
@@ -3188,7 +3216,7 @@ msgstr "Verifică pentru componente noi:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Setari pt descarcare automata"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3277,11 +3305,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
-msgstr ""
+msgstr "Director"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "vizibil"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
@@ -3360,11 +3388,11 @@ msgstr "Oprește redarea după fiecare clip video sau audio"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Numar de conversii autorizate simultan:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "(Aceasta schimbare nu afecteaza conversiile in curs de executie)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3447,11 +3475,11 @@ msgstr "Permalink"
 
 #: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
-msgstr ""
+msgstr "Ieșire din mod Afişare pe tot ecranul"
 
 #: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
-msgstr ""
+msgstr "Afişare pe tot ecranul"
 
 #: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
@@ -3478,26 +3506,26 @@ msgstr "%(host)s a închis conexiunea"
 #: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Surasa a returnat %(status)s"
 
 #: ../../lib/httpclient.py:112
 msgid "Please retry later"
-msgstr ""
+msgstr "Va rugam re-incercati mai tarziu"
 
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s nu suporta reinceperea transferurilor HTTP"
 
 #: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "Limita de redirectionari HHTP a fost depasita pentru %(url)s"
 
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Autorizarea a esuat pentru proxy: %(host)s : %(port)s"
 
 #: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
@@ -3506,7 +3534,7 @@ msgstr "S-a primit codul de stare 404"
 #: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Sursa a returnat un cod eronat: %(code)s"
 
 #: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
@@ -3514,11 +3542,11 @@ msgstr "Autorizare eşuată"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Autorizare anulata"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Autorizare anulata de utilizator"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"
@@ -3531,12 +3559,12 @@ msgstr "„%(url)s” nu este un URL corect"
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "Sursa necunoscuta"
 
 #: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Domeniul \"%(host)s\" nu a fost gasit"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -3559,15 +3587,15 @@ msgstr "Nu s-a putut scriere în %(filename)s"
 
 #: ../../lib/httpclient.py:181
 msgid "Write error"
-msgstr ""
+msgstr "Eroare la scriere"
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Pagină web"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3615,7 +3643,7 @@ msgstr "%(amount)s MB necesari pentru salvarea acestui fișier video"
 
 #: ../../lib/dl_daemon/download.py:722
 msgid "no content"
-msgstr ""
+msgstr "fara continut"
 
 #: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
@@ -3655,6 +3683,280 @@ msgstr "Caută în toate"
 #~ msgid "Auto Download"
 #~ msgstr "Descărcare automată"
 
+#~ msgid "Cu_t"
+#~ msgstr "_Taie"
+
+#~ msgid "_Copy"
+#~ msgstr "_Copiază"
+
+#~ msgid "None"
+#~ msgstr "Niciunul"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#~ msgid "Add to Library"
+#~ msgstr "Adaugă la bibliotecă"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "Trebuie să reporniți redarea înainte ca schimbările să ia efect."
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Utilizați asta ca video când redați audio:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Canale personale"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Rulați o versiune %(appname)s cu un set personalizat de canale."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s Gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s Mb/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s Mb"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s Gb"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Rede_numește elementul"
+
+#~ msgid "_Paste"
+#~ msgstr "Li_pește"
+
+#~ msgid "Select _All"
+#~ msgstr "Selectează _tot"
+
+#~ msgid "_Options"
+#~ msgstr "_Opțiuni"
+
+#~ msgid "Add Site"
+#~ msgstr "Adaugă sit"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Următorul video"
+
+#~ msgid "_Previous Video"
+#~ msgstr "Videoul _precedent"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Expiră automat videouri:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "în așteptare pentru auto-descărcare"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Opțiuni de descărcare automată:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Urmărește video-uri nou adăugate în aceste directoare și include-le în "
+#~ "librărie:"
+
+#~ msgid "No Results Found"
+#~ msgstr "Nici un rezultat găsit"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s nu poate găsi filmul principal la:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Se poate să fie din cauză că acesta este pe un disc extern care nu e "
+#~ "conectat.\n"
+#~ "\n"
+#~ "Dacă continuați, dosarul principal pentru video va fi re-inițializat la o "
+#~ "locație pe acest disc. Dacă aveați fișiere video descărcate, "
+#~ "%(shortappname)s va pierde detaliile despre acestea.\n"
+#~ "\n"
+#~ "Dacă închideți, puteți conecta discul extern sau rezolva altfel problema și "
+#~ "apoi puteți relansa %(shortappname)s."
+
+#~ msgid "Rename Item"
+#~ msgstr "Redenumește elementul"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Adăugare sit - URL eronat"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Șterge %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Sigur doriți să ștergeți %(name)s?"
+
+#~ msgid "Rename Site"
+#~ msgstr "Redenumește situl"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Alegeți numele nou pentru situl %(name)s"
+
+#~ msgid "Migrating files"
+#~ msgstr "Migrare fișiere"
+
+#~ msgid "Add to library"
+#~ msgstr "Adaugă în librărie"
+
+#~ msgid "Remove Site"
+#~ msgstr "Șterge situl"
+
+#~ msgid "SITES"
+#~ msgstr "SITURI"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Revino la numele anterior"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minut"
+#~ msgstr[1] "%(count)d minute"
+#~ msgstr[2] "%(count)d de minute"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d oră"
+#~ msgstr[1] "%(count)d ore"
+#~ msgstr[2] "%(count)d de ore"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d zi"
+#~ msgstr[1] "%(count)d zile"
+#~ msgstr[2] "%(count)d de zile"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Linie de antet invalidă: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Dimensiune greșită de bucăți: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Linie de stare invalidă: %(msg)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Cererea „pipeline” nu a pornit"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Cod de stare invalid: %(code)s"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Caută tot: %(text)s"
+
+#~ msgid "FEEDS"
+#~ msgstr "FLUXURI"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Abonare la mai multe fluxuri"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Alegeți un nume pentru noul dosar de fluxuri"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "ATENȚIE: Sunteți deja abonat la unul din aceste fluxuri. Acesta va rămâne "
+#~ "unde este acum."
+#~ msgstr[1] ""
+#~ "ATENȚIE: Sunteți deja abonat la %(count)d din aceste fluxuri. Acestea vor "
+#~ "rămâne unde sunt acum."
+#~ msgstr[2] ""
+#~ "ATENȚIE: Sunteți deja abonat la %(count)d din aceste fluxuri. Acestea vor "
+#~ "rămâne unde sunt acum."
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Creare flux?"
+#~ msgstr[1] "Creare %(count)d fluxuri?"
+#~ msgstr[2] "Creare %(count)d de fluxuri?"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Suspendă descărcarea automată când sunt atâtea elemente încă neredate:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Reia redarea video de unde a fost oprită ultima oară."
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Fișierul torrent %(filename)s pare să fie corupt și nu poate fi deschis.  "
+#~ "[OK]"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Nu s-a putut deschide %(filename)s pentru scriere"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Se aștepta CRLF dar s-a găsit: %(character)r"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Redă clipuri unul după altul"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Oprește redarea după fiecare clip video"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "În mod implicit clipurile expiră după:"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3666,3 +3968,101 @@ msgstr "Caută în toate"
 #~ "Puteți să ștergeți fișiere de pe discul plin, sau pur și simplu să ștergerți "
 #~ "câteva filme din colecția dumneavoastră.\n"
 #~ "Schimbări recente pot fi pierdute."
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Eroare internă: Nepregătit pentru trimitere"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Introduceți noul nume al elementului"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Introduceți URLul sitului de adăugat"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Adresa pe care ați introdus-o nu este un URL corect.\n"
+#~ "Verificați URLul și încercați din nou.\n"
+#~ "\n"
+#~ "Introduceți URLul sitului de adăugat"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Bun venit la meniul de configurare inițială al %(name)s"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Terminarea configurării inițiale a %(name)s"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d sit selectat"
+#~ msgstr[1] "%(count)d situri selectate"
+#~ msgstr[2] "%(count)d de situri selectate"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Elimină situl"
+#~ msgstr[1] "Elimină siturile"
+#~ msgstr[2] "Elimină siturile"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Sigur doriți să ștergeți acest sit?"
+#~ msgstr[1] "Sigur doriți să ștergeți aceste %(count)s situri?"
+#~ msgstr[2] "Sigur doriți să ștergeți aceste %(count)s de situri?"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Șterge situl"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s nu poate să descarce un fișier la acest URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#~ msgid "View:"
+#~ msgstr "Vizualizare:"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Următoarele câteva ecrane vă vor ajuta să configurați %(name)s pentru a "
+#~ "funcționa după preferințele dumneavoastră.\\n\n"
+#~ "\\n\n"
+#~ "Vă recomandăm să configurați %(name)s să fie pornit la pornirea "
+#~ "calculatorului. Astfel, descărcările incomplete pot fi terminate și noi "
+#~ "fișiere media se pot transfera în fundal, pentru a fi gata de vizualizare."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Spaţiu pe disc insuficient"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Spaţiu pe disc insuficient pentru a-ţi reactualiza baza de date de la "
+#~ "versiunea precedentă a %(appname)s. Te rog şterge câteva fişiere şi încearcă "
+#~ "iar."
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "Modifica metadata acestui element"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Limbă necunoscută"

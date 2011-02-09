@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 "X-Poedit-Country: GEORGIA\n"
 "X-Poedit-Language: Georgian\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -3505,3 +3505,20 @@ msgstr ""
 
 #~ msgid "Auto Download"
 #~ msgstr "ავტო გადმოწერა"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "CRLF-ს ნაცვლად მიღებულია %(character)r"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "არასწორი სტატუსის კოდი: %(code)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "შიდა შეცდომა: გაგზავნისთვის მზადყოფნა არაა"
+
+#~ msgid "Rename Item"
+#~ msgstr "სახელის გადარქმევა"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "გადარქმეული სახელის დაბრუნება"

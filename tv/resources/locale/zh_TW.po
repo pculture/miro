@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3494,6 +3494,126 @@ msgstr "搜尋全部"
 #~ msgid "By default, videos expire after:"
 #~ msgstr "預設影片保存期限:"
 
+#~ msgid "_Next Video"
+#~ msgstr "下一段影片 (_N)"
+
+#~ msgid "_Previous Video"
+#~ msgstr "上一段影片 (_P)"
+
+#~ msgid "_Video"
+#~ msgstr "影片 (_V)"
+
+#~ msgid "_Paste"
+#~ msgstr "貼上(_P)"
+
+#~ msgid "_Copy"
+#~ msgstr "複製(_C)"
+
+#~ msgid "Select _All"
+#~ msgstr "全部選取 (_A)"
+
+#~ msgid "Cu_t"
+#~ msgstr "剪下(_T)"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "播放聲音時用此於影片"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr "Torrent檔案 %(filename)s 似乎損毀了且無法開啟. [OK]"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d 小時"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d 天"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "從上次停止的地方繼續觀賞影片."
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "監控這些資料夾中的新影像檔並加入收藏庫中:"
+
+#~ msgid "Rename Site"
+#~ msgstr "重新命名網站"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "輸入網站 %(name)s 的新名稱"
+
+#~ msgid "Auto Download"
+#~ msgstr "自動下載"
+
+#~ msgid "Remove Site"
+#~ msgstr "移除網站"
+
+#~ msgid "SITES"
+#~ msgstr "網站"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "無法打開寫入%(filename)s"
+
+#~ msgid "Custom Channels"
+#~ msgstr "自訂頻道"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "內部錯誤: 尚未準備好送出"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "您正執行%(appname)s的一個版本其中有一組自訂的頻道."
+
+#~ msgid "Add Site"
+#~ msgstr "加入網址"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "自動下載設定"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "連續撥放影片"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "重新命名該物件"
+
+#~ msgid "Add to library"
+#~ msgstr "匯入資料庫"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "回復物件名稱"
+
+#~ msgid "Add to Library"
+#~ msgstr "加入至資料庫"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "自動過期影片"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "等候自動下載"
+
+#~ msgid "No Results Found"
+#~ msgstr "搜尋無結果"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "您所輸入的網址不存在\n"
+#~ "請確認URL並再試一次\n"
+#~ "輸入URL來加入"
+
+#~ msgid "Migrating files"
+#~ msgstr "正在移動檔案"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3504,3 +3624,71 @@ msgstr "搜尋全部"
 #~ "%(appname)s 無法完成資料庫儲存: 磁碟已滿.\n"
 #~ "我們建議您刪除一些資料或從您的收藏中刪除一些影片.\n"
 #~ "最近的變更可能會遺失."
+
+#~ msgid "Re_name Item"
+#~ msgstr "重新命名選項 (_N)"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "您必須重新播放，才能套用視覺設定。"
+
+#~ msgid "None"
+#~ msgstr "沒有"
+
+#~ msgid "Rename Item"
+#~ msgstr "重新命名項目"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "當有這麼多項目尚未播放時暫停自動下載"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "下面的幾個畫面會協助你設定%(name)s，以便使本程式符合您的需求。\n"
+#~ "\n"
+#~ "我們建議您把%(name)s設定為開機後就啟動。如此一來，正在下載以及新的影片就可以在幕後下載完成。"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "完成%(name)s的首次啟動設定"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "歡迎來到%(name)s的首次啟動設定"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d個網站已被選取"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "加入網址 - 不合格的網址"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "請輸入欲加入的網站網址"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "移除網站"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "您確定要移除這%(count)s個網站?"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "預期得CLRF, 得t: %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "不良標頭列: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "不良碎片大小: %(msg)s"

@@ -11,15 +11,15 @@ msgstr ""
 "Project-Id-Version: democracyplayer-bg\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-11 19:04+0000\n"
-"Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
+"PO-Revision-Date: 2010-12-03 10:55+0000\n"
+"Last-Translator: Svetlozar Mladenoff <Unknown>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../lib/httpclient.py:101
 msgid "HTTP error"
@@ -59,7 +59,7 @@ msgstr "Запазване"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
 #: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
-msgstr "Изтрий"
+msgstr "Изтриване"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
@@ -76,7 +76,7 @@ msgstr "Изтеглянето приключи"
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Изтеглянето на филма '%s' приключи."
+msgstr "Изтеглянето на '%s' (видео) завърши."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -85,7 +85,7 @@ msgstr "Услуги"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:161
 #, python-format
 msgid "Hide %(appname)s"
-msgstr "Скрий %(appname)s"
+msgstr "Скриване на %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Hide Others"
@@ -97,12 +97,12 @@ msgstr "Показване на всички"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:170
 msgid "Preferences..."
-msgstr "Настройки..."
+msgstr "Предпочитания..."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:172
 #, python-format
 msgid "Quit %(appname)s"
-msgstr "Напусни %(appname)s"
+msgstr "Излизане от %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:176
 msgid "Close Window"
@@ -110,15 +110,15 @@ msgstr "Затваряне на прозореца"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:182
 msgid "Cut"
-msgstr "Изрежи"
+msgstr "Изрязване"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Copy"
-msgstr "Копирай"
+msgstr "Копиране"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Paste"
-msgstr "Постави"
+msgstr "Поставяне"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:187
 msgid "Select All"
@@ -130,23 +130,23 @@ msgstr "Редактиране"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:194
 msgid "Present Half Size"
-msgstr "Покажи на половин размер"
+msgstr "Преглед 50% умален"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:197
 msgid "Present Actual Size"
-msgstr "Покажи на истински размер"
+msgstr "Преглед в реален размер"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:200
 msgid "Present Double Size"
-msgstr "Покажи на двоен размер"
+msgstr "Преглед в удвоен размер"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:207
 msgid "Present Video"
-msgstr "Покажи видео"
+msgstr "Преглед на видео"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:213
 msgid "Zoom"
-msgstr "Размер"
+msgstr "Мащабиране"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:214
 msgid "Minimize"
@@ -158,7 +158,7 @@ msgstr "Главен прозорец"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:219
 msgid "Bring All to Front"
-msgstr "Всичко на преден план"
+msgstr "Изнасяне на всичко на преден план"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:221
 msgid "Window"
@@ -167,7 +167,7 @@ msgstr "Прозорец"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:226
 #, python-format
 msgid "%(appname)s Help"
-msgstr "%(appname)s Помощ"
+msgstr "Помощ за %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:368
 #: ../../lib/frontends/widgets/gtk/window.py:295
@@ -179,12 +179,12 @@ msgstr "Изключи субтитри"
 #: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr "Не е достъпно"
+msgstr "Няма достъпни"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
 msgid "Select a Subtitles file..."
-msgstr "Селектирай файл със субтитри..."
+msgstr "Изберете субтитри"
 
 #: ../../windows/plat/renderers/vlc.py:697
 #: ../../windows/plat/renderers/vlc.py:700
@@ -207,7 +207,7 @@ msgstr "Руски"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr "Южноизточноевропейски"
+msgstr "Югоизточноевропейски"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
@@ -284,7 +284,7 @@ msgstr "Традиционен китайски Юникс"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Допълващ хонгконгски"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
@@ -316,7 +316,7 @@ msgstr "Виетнамски"
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Среден изток"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -356,7 +356,7 @@ msgstr "Универсално"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
 msgid "Enable tray icon"
-msgstr "Показване на икона в панела"
+msgstr "Разрешаване на икона до часовника"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
@@ -369,7 +369,7 @@ msgstr "Затваряне в системния панел, за да прод�
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "Напусни %(appname)s напълно."
+msgstr "Напускане изцяло на %(appname)s."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
@@ -381,7 +381,7 @@ msgstr "Шрифт за субтитри:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
-msgstr "Да се затваря ли в системния панел?"
+msgstr "Смъкване до часовника?"
 
 #: ../../windows/plat/frontends/widgets/application.py:149
 #, python-format
@@ -389,9 +389,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Когато натиснете червения бутон за затваряне, бихте ли желали %(appname)s да "
-"се скрие, но иконата му да се показва на системната табла, или предпочитате "
-"да напуснете? Може да промените тази настройка по-късно в Настройки."
+"Когато натискате червения бутон за затваряне, искате ли %(appname)s да "
+"премине в иконка до часовника или да се прекрати? Можете да го промените по-"
+"късно в Опции."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
@@ -3682,6 +3682,84 @@ msgstr "Примерен списък"
 msgid "Search All"
 msgstr "Търсене на всичко"
 
+#~ msgid "Custom Channels"
+#~ msgstr "Потребителски канал"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "По подразбиране филмите са валидни:"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Последователно пускане на видеата."
+
+#~ msgid "Add to Library"
+#~ msgstr "Добавяне към библиотеката"
+
+#~ msgid "None"
+#~ msgstr "Нищо"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Използване на това за видео, когато се възпроизвежда аудио:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Продължаване на видеото от точката на спиране."
+
+#~ msgid "Stop after each video"
+#~ msgstr "Спиране след всяко видео"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Записване за множество емисии"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Създаване на емисия?"
+#~ msgstr[1] "Създаване на %(count)d емисии?"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "Забележка: Вече сте абонирани за една от тези емисии. Те ще останат където "
+#~ "са в момента."
+#~ msgstr[1] ""
+#~ "Забележка: Вече сте абонирани за %(count)d от тези емисии. Те ще останат "
+#~ "където са в момента."
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Следене за нови видеа в тези папки и добавяне към библиотеката:"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Премахване на %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Сигурни ли сте, че желаете да премахнете %(name)s?"
+
+#~ msgid "Add to library"
+#~ msgstr "Добавяне към библиотеката"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "За да може промените в настройките за визуализация да влязат в сила, трябва "
+#~ "да рестартирате плейбека."
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "Вие изпълнявате версия на %(appname)s с модифицирано множество от канали."
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Въведете име за папката на новата емисия"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Започни сийдването"
+
 #, python-format
 #~ msgid "Welcome to the %(name)s First Time Setup"
 #~ msgstr "Добре дошли в %(name)s Стартиране за първи път"
@@ -3708,6 +3786,17 @@ msgstr "Търсене на всичко"
 
 #, python-format
 #~ msgid ""
+#~ "%(copyright)s.  See license.txt file for details.\n"
+#~ "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+#~ msgstr ""
+#~ "%(copyright)s. Вижте license.txt файла за подробности.\n"
+#~ "Miro и логото на Miro са търговски марки на Participatory Culture Foundation."
+
+#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
+#~ msgstr "Файлът \"%(filename)s\" беше изтрит извън %s(appname."
+
+#, python-format
+#~ msgid ""
 #~ "%(appname)s is not able to download a file at this URL:\n"
 #~ "\n"
 #~ "URL: %(url)s"
@@ -3715,6 +3804,15 @@ msgstr "Търсене на всичко"
 #~ "%(appname)s не може да свали файла от този URL:\n"
 #~ "\n"
 #~ "URL: %(url)s"
+
+#~ msgid "View:"
+#~ msgstr "Изглед:"
+
+#, python-format
+#~ msgid "Adding feed to a new folder"
+#~ msgid_plural "Adding %(count)d feeds to a new folder"
+#~ msgstr[0] "Добавяне на емисия в нова папка"
+#~ msgstr[1] "Добавяне на %(count)d емисии в нова папка"
 
 #, python-format
 #~ msgid "%(count)d Site Selected"
@@ -3959,3 +4057,29 @@ msgstr "Търсене на всичко"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s Б"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Недостатъчно дисково пространство"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Няма достатчно място за да се обнови базата данни от предишната версия на "
+#~ "%(appname)s. Моля, изтрийте някои файлове и опитайте отново."
+
+#~ msgid "Re_name Site"
+#~ msgstr "Преиманувай Страницата"
+
+#~ msgid "_Remove Site"
+#~ msgstr "Премахни Страници"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "Премахни Страници"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Непознат Език"
+
+#~ msgid "(Pending)"
+#~ msgstr "(В процес)"

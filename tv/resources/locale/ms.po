@@ -15,8 +15,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:163
+msgid "Hide Others"
+msgstr "Sorok Lain-lain"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:165
+msgid "Show All"
+msgstr "Tunjuk Semua"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:184
+msgid "Paste"
+msgstr "Lekat"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:189
+msgid "Edit"
+msgstr "Sunting"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:214
+msgid "Minimize"
+msgstr "Kecilkan"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -67,14 +87,6 @@ msgstr "Perkhidmatan"
 msgid "Hide %(appname)s"
 msgstr "Sembunyikan %(appname)s"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:163
-msgid "Hide Others"
-msgstr "Sembunyi Lain-lain"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:165
-msgid "Show All"
-msgstr "Papar Semua"
-
 #: ../../osx/plat/frontends/widgets/osxmenus.py:170
 msgid "Preferences..."
 msgstr "Keutamaan..."
@@ -96,17 +108,9 @@ msgstr "Potong"
 msgid "Copy"
 msgstr "Salin"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:184
-msgid "Paste"
-msgstr "Tampal"
-
 #: ../../osx/plat/frontends/widgets/osxmenus.py:187
 msgid "Select All"
 msgstr "Pilih Semua"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:189
-msgid "Edit"
-msgstr "Edit"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:194
 msgid "Present Half Size"
@@ -127,10 +131,6 @@ msgstr "Paparkan video"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:213
 msgid "Zoom"
 msgstr "Zum"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:214
-msgid "Minimize"
-msgstr "Minimakan"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 msgid "Main Window"
@@ -3673,6 +3673,21 @@ msgstr "Contoh senarai"
 msgid "Search All"
 msgstr "Gelintar semua"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Secara default, video tamat tempoh selepas:"
+
+#~ msgid "None"
+#~ msgstr "Tiada"
+
+#~ msgid "Add to Library"
+#~ msgstr "Tambah pada perpustakaan."
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "Anda mesti ulang semula untuk visual yang diubah berfungsi."
+
+#~ msgid "Custom Channels"
+#~ msgstr "Siaran pilihan"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3752,3 +3767,111 @@ msgstr "Gelintar semua"
 
 #~ msgid "_Video"
 #~ msgstr "_Video"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Kembalikan Nama Item"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "CRLF yang dijangka: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Saiz Ketulan Rosak: %(msg)s"
+
+#~ msgid "Auto Download"
+#~ msgstr "Muat turun Automatik"
+
+#~ msgid "No Results Found"
+#~ msgstr "Tiada hasil ditemui"
+
+#~ msgid "(Pending)"
+#~ msgstr "(Menunggu)"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Tidak dapat buka %(filename)s untuk rakaman"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d hari"
+#~ msgstr[1] "%(count)d hari"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d jam"
+#~ msgstr[1] "%(count)d jam"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minit"
+#~ msgstr[1] "%(count)d minit"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Baris Pengepala Rosak: %(msg)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s tidak dapat memuat turun fail di URL ini:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Cina, Universal"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Henti sebentar Muaturun-Automatik bila item ini tidak dimainkan:"
+
+#, python-format
+#~ msgid "Conversion to %s"
+#~ msgstr "Penukaran ke %s"
+
+#~ msgid "FAILED!"
+#~ msgstr "GAGAL!"
+
+#, python-format
+#~ msgid "Pending conversion to %s"
+#~ msgstr "Tangguh penukaran ke %s"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Tetapan muat turun automatik:"

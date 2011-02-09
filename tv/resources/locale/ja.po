@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3494,6 +3494,129 @@ msgstr "全てを検索"
 #~ msgid "_Video"
 #~ msgstr "ビデオ(_V)"
 
+#~ msgid "Custom Channels"
+#~ msgstr "カスタム・チャンネル"
+
+#~ msgid "_Paste"
+#~ msgstr "貼り付け(_P)"
+
+#~ msgid "Select _All"
+#~ msgstr "全て選択(_A)"
+
+#~ msgid "Auto Download"
+#~ msgstr "自動ダウンロード"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr "ビジュアライゼーション変更の効果を反映させるには、もう一度再生しなおして下さい"
+
+#~ msgid "None"
+#~ msgstr "なし"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "オーディオ再生時、このビデオを使用する:"
+
+#~ msgid "_Copy"
+#~ msgstr "コピー(_C)"
+
+#~ msgid "Cu_t"
+#~ msgstr "切り取り(_T)"
+
+#~ msgid "_Next Video"
+#~ msgstr "次のビデオ(_N)"
+
+#~ msgid "_Previous Video"
+#~ msgstr "前のビデオ(_P)"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "自動ダウンロードにキュー"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "自動ダウンロード設定:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "これらのフォルダーの新しいビデオを視聴して、それらをライブラリーに含める:"
+
+#~ msgid "Stop after each video"
+#~ msgstr "各ビデオ再生後に停止"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "続けて別のビデオを再生"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "前回停止したポイントからビデオの再生を再開"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "デフォルトのビデオ有効期限:"
+
+#~ msgid "No Results Found"
+#~ msgstr "見つけることが出来ませんでした"
+
+#~ msgid "Rename Item"
+#~ msgstr "アイテムをリネーム"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "アイテムの新しい名前を入力"
+
+#~ msgid "Remove Site"
+#~ msgstr "サイトを削除"
+
+#~ msgid "SITES"
+#~ msgstr "サイト"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "パイプライン要求は未だ開始していません"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "内部エラー: 発信準備が出来ません"
+
+#~ msgid "Re_name Item"
+#~ msgstr "アイテムのリネーム(_N)"
+
+#~ msgid "FEEDS"
+#~ msgstr "フィード"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "サイト追加 - 不正なURLです"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "追加するサイトのURLを入力してください"
+
+#~ msgid "Rename Site"
+#~ msgstr "サイト名を変更"
+
+#~ msgid "Add to Library"
+#~ msgstr "ライブラリに追加"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "%(filename)s が書込みのためにオープンできませんでした"
+
+#~ msgid "_Options"
+#~ msgstr "設定(_O)"
+
+#~ msgid "Add Site"
+#~ msgstr "サイトを追加"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "すべて検索: %(text)s"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3504,3 +3627,14 @@ msgstr "全てを検索"
 #~ "%(appname)s はデータベースの保存が出来ませんでした：　ディスク容量不足。\n"
 #~ "ディスクからファイルを削除するかあなたのコレクション中の動画をいくつか削除されることをお勧めします。\n"
 #~ "最新の変更は失われるでしょう。"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "%(name)sの初回セットアップへようこそ"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "悪い部分の大きさ: %(msg)s"
+
+#~ msgid "Migrating files"
+#~ msgstr "ファイル移行"

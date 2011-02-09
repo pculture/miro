@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3514,3 +3514,22 @@ msgstr ""
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#~ msgid "_Next Video"
+#~ msgstr ""
+#~ "_Susunod na Video\r\n"
+#~ "_Susunod na Palabas"
+
+#~ msgid "_Previous Video"
+#~ msgstr ""
+#~ "_Naunang Video\r\n"
+#~ "_Naunang Palabas"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Kamaliang Panloob: Hindi handang ipadala"
+
+#~ msgid "Rename Item"
+#~ msgstr "Baguhin ang Pangalan ng Item"

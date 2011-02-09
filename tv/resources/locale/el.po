@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-01 19:06+0000\n"
+"PO-Revision-Date: 2010-12-23 21:34+0000\n"
 "Last-Translator: Atheos <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -977,7 +977,7 @@ msgstr "Αγνόηση"
 
 #: ../../lib/dialogs.py:103
 msgid "Submit Crash Report"
-msgstr "Υποβολή αναφοράς απρόοπτου τερματισμού"
+msgstr "Υποβολή αναφοράς σφάλματος"
 
 #: ../../lib/dialogs.py:104
 msgid "Migrate"
@@ -2773,9 +2773,9 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
-"Να συμπεριλάβεις ολόκληρη τη βάση δεδομένων του προγράμματος, "
-"συμπεριλαμβανομένων όλων των μεταδεδομένων των βίντεο και των ροών, στην "
-"αναφορά σφάλματος"
+"Να συμπεριληφθεί ολόκληρη η βάση δεδομένων του προγράμματος,\r\n"
+"συμπεριλαμβανομένων όλων των μεταδεδομένων των βίντεο και των ροών,\r\n"
+"στην αναφορά σφάλματος"
 
 #: ../../lib/frontends/widgets/crashdialog.py:71
 msgid "Describe what you were doing when you got this error:"
@@ -3717,9 +3717,69 @@ msgstr "Δείγμα λίστας αναπαραγωγής"
 msgid "Search All"
 msgstr "Αναζήτηση όλων"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Από προεπιλογή, τα βίντεο λήγουν μετά από:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Καθορισμένα απο το χρήστη κανάλια"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Αναπαραγωγή βίντεο διαδοχικά"
+
+#~ msgid "None"
+#~ msgstr "Κανένα"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "Στην ουρά για αυτόματη λήψη"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Παρακολούθησε για νέα βίντεο μέσα σε αυτούς τους φακέλους και συμπερίλαβέ τα "
+#~ "σην βιβλιοθήκη:"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Διακοπή μετά από κάθε βίντεο"
+
+#~ msgid "Rename Site"
+#~ msgstr "Μετονομάστε τον Ιστότοπο"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d λεπτό"
+#~ msgstr[1] "%(count)d λεπτά"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d ώρα"
+#~ msgstr[1] "%(count)d ώρες"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d μέρα"
+#~ msgstr[1] "%(count)d μέρες"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Το αρχείο torrent %(filename)s φαίνεται πώς είναι κατεστραμένο και δέν "
+#~ "μπορεί να ανοίξει. [OK]"
+
 #, python-format
 #~ msgid "Bad Status Code: %(code)s"
 #~ msgstr "Κακή κατάσταση κώδικα: %(code)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Κακή γραμμή κεφαλίδας: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Λάθος μέγεθος τμήματος: %(msg)s"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
@@ -3776,3 +3836,166 @@ msgstr "Αναζήτηση όλων"
 
 #~ msgid "_Video"
 #~ msgstr "_Βίντεο"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Αφαίρεση ιστότοπου"
+#~ msgstr[1] "Αφαίρεση ιστοτόπων"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Αφαίρεση Ιστοτόπων"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Ανεπαρκής χώρος στον δίσκο για αναβάθμιση της βάσης δεδομένων από "
+#~ "προηγούμενη έκδοση του %(appname)s. Παρακαλώ διαγράψτε μερικά αρχεία και "
+#~ "προσπαθήστε ξανά."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Καλωσορίσατε στην %(name)s Εγκατάσταση Πρώτης Φοράς"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Συμπληρώνοντας την %(name)s Εγκατάσταση Πρώτης Φοράς"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Ιστότοπος Επιλέχθηκε"
+#~ msgstr[1] "%(count)d Ιστότοποι Επιλέχθηκαν"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Αναμενόταν CRLF ήρθε: %(character)r"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Επαναφορά Ονόματος Αντικειμένου"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s δέν βρέθηκε ο πρωταρχικός κατάλογος βίντεο στο:\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Αυτό μπορεί να έγινε ,επειδή βρίσκεται σε εξωτερικό δίσκο που δέν είναι "
+#~ "συνδεμένος.\n"
+#~ "\n"
+#~ "Εάν συνεχίσετε ,ο πρωταρχικός κατάλογος βίντεο θα επανέλθει σε μία τοποθεσία "
+#~ "στον τρέχον δίσκο.Εάν έχετε κατεβάσει βίντεο αυτό θα προκαλέσει "
+#~ "%(shortappname)s απώλεια πληροφοριών για αυτά τα βίντεο\n"
+#~ "\n"
+#~ "Εάν τερματίσετε , τότε μπορείτε να συνδέσετε τον δίσκο ή  διαφορετικά "
+#~ "διόρθωστε το πρόβλημα και επανεκκινήστε %(shortappname)s"
+
+#~ msgid "Add Site"
+#~ msgstr "Προσθήκη Ιστοσελίδας"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Το αίτιμα των μέσων πληροφορίας (pipeline) δεν πραγματοποιήθηκε"
+
+#~ msgid "Auto Download"
+#~ msgstr "Αυτόματη λήψη αρχείων"
+
+#~ msgid "Migrating files"
+#~ msgstr "Μεταγκατάσταση αρχείων"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Προσθήκη Ιστοσελίδας - Άκυρο URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Η διεύθυνση που δώσατε δεν είναι έγκυρο url.\n"
+#~ "Παρακαλώ ελέγξτε το url και δοκιμάστε ξανά.\n"
+#~ "\n"
+#~ "Δώστε το url της ιστοσελίδας για προσθήκη"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Αναζήτηση Όλων: %(text)s"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Ανεπαρκής χώρος στο δίσκο"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Είσαι βέβαιος ότι θέλεις να αφαιρέσεις αυτήν την ιστοσελίδα;"
+#~ msgstr[1] ""
+#~ "Είστε βέβαιος ότι θέλετε να αφαιρεσετε αυτές τις %(count)s ιστοσελίδες;"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Δώστε την διέυθυνση URL της ιστοσελίδας για πρόσθεση"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Μετ_ονομασία Αντικειμένου"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Παύση της Αυτόματης-Λήψης όταν πολλά αντικείμενα είναι άπαιχτα"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Δεν κατέστει δυνατό το άνοιγμα του/των %(filename)s για εγγραφή"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "Το %(appname)s δεν μπόρεσε να κατεβάσει ένα αρχείο από αυτή διεύθυνση URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Οι λίγες επόμενες οθόνες θα σας βοηθήσουν να εγκαταστήσετε %(name)s ώστε να "
+#~ "δουλεύει καλύτερα για εσάς.\n"
+#~ "\n"
+#~ "Σας συνιστούμε να έχετε %(name)s ξεκινήσει όταν ο υπολογιστής σας ξεκινά. Με "
+#~ "αυτό τον τρόπο, οι λήψης που τρέχουν θα μπορέσουν να τελειώσουν τη "
+#~ "διαδικασία λήψης και νέα media αρχεία θα μπορέσουν να ληφθούν στο "
+#~ "παρασκήνιο, έτοιμα όταν θελήσετε να τα παρακολουθήσετε."

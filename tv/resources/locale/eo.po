@@ -11,15 +11,15 @@ msgstr ""
 "Project-Id-Version: democracyplayer_democracyplayer-eo-20080122\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-08-29 22:37+0000\n"
-"Last-Translator: Joseph Schwenker <Unknown>\n"
+"PO-Revision-Date: 2011-01-16 14:35+0000\n"
+"Last-Translator: Kristjan SCHMIDT <Unknown>\n"
 "Language-Team: <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -42,7 +42,7 @@ msgstr "Konservi"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
 #: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
-msgstr "Forviŝi"
+msgstr "Forigi"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
@@ -76,7 +76,7 @@ msgstr "Kaŝi la Aliojn"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:165
 msgid "Show All"
-msgstr ""
+msgstr "Montri ĉion"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:170
 msgid "Preferences..."
@@ -356,11 +356,11 @@ msgstr "Ĉesi %(appname)s tute."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Sistema defaŭlto"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Subtekst-tiparo:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -437,11 +437,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:496
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Subtekst-dosiero %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Kroata"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -450,39 +450,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cirila"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Cirila/Rusa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Cirila/Ukraina"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "Mezeŭropa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Rumana"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "Islanda"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Norda"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "Sudeŭropa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -490,40 +490,40 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "Okcidente"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Ĉina simpligite"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Ĉina tradicie"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Armena"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Kartvela"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Guĝarata"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmuka"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
@@ -531,7 +531,7 @@ msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Persa"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -962,7 +962,7 @@ msgstr "Krei Fluon"
 
 #: ../../lib/dialogs.py:114
 msgid "Create Folder"
-msgstr "Krei Dosierujon"
+msgstr "Krei dosierujon"
 
 #: ../../lib/dialogs.py:115 ../../lib/frontends/widgets/prefpanel.py:544
 msgid "Add"
@@ -3506,3 +3506,71 @@ msgstr "Ekzempla Leglisto"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Serĉi Ĉiujn"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Auto Download"
+#~ msgstr "Aŭtomataj elŝutadoj"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Videoj estas aŭtomate eksigataj post:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Propraj Kanaloj"
+
+#~ msgid "Rename Item"
+#~ msgstr "Alinomu Eron"
+
+#~ msgid "Remove Site"
+#~ msgstr "Forigi Retejon"
+
+#~ msgid "FEEDS"
+#~ msgstr "FLUOJ"
+
+#~ msgid "SITES"
+#~ msgstr "RETEJOJ"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Forigi Retejojn"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Antaŭa Filmeto"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Sekva Filmeto"
+
+#~ msgid "_Options"
+#~ msgstr "_Agordoj"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Entajpu la novan nomon por la ero"
+
+#~ msgid "Rename Site"
+#~ msgstr "Alinomi retejon"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Ĉu vi certe volas forigi ĉi tiun retejon?"
+#~ msgstr[1] "Ĉu vi certe volas forigi ĉi tiujn %(count)s retejojn?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Forigi retejon"
+#~ msgstr[1] "Forigi retejojn"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopii"
+
+#~ msgid "_Paste"
+#~ msgstr "_Enmeti"
+
+#~ msgid "Select _All"
+#~ msgstr "Elekti ĉi_on"
+
+#~ msgid "Cu_t"
+#~ msgstr "El_tondi"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Universala, Ĉina"

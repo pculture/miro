@@ -16,8 +16,160 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:41
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:49
+msgid "Enable tray icon"
+msgstr "Vis ikon i systemtrauet"
+
+#: ../../windows/plat/frontends/widgets/application.py:208
+msgid "Error Bombing Item"
+msgstr "Feil ved videobombing"
+
+#: ../../windows/plat/frontends/widgets/application.py:210
+msgid "Error Recommending Item"
+msgstr "Feil ved videoanbefaling"
+
+#: ../../lib/feed.py:844
+msgid "Error loading feed"
+msgstr "Feil ved henting av kanal"
+
+#: ../../lib/feed.py:846
+#, python-format
+msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
+msgstr "Klarte ikkje henta kanal frå %(url)s (%(errordescription)s)."
+
+#: ../../lib/feed.py:849
+msgid "Would you like to keep the feed?"
+msgstr "Ønskjer du å behalda kanalen?"
+
+#: ../../lib/feed.py:985
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "Kanalen er ikkje kompatibel med %(appname)s"
+
+#: ../../lib/singleclick.py:118
+#, python-format
+msgid ""
+"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+"Fila på %(url)s ser ikkje ut til å vera ei lyd-, film- eller RSS-kjelde."
+
+#: ../../lib/opml.py:234
+#, python-format
+msgid "Successfully imported %(count)d feed."
+msgid_plural "Successfully imported %(count)d feeds."
+msgstr[0] "%(count)d filmkjelde vart importert."
+msgstr[1] "%(count)d filmkjelder vart importerte."
+
+#: ../../lib/opml.py:240
+#, python-format
+msgid "Skipped %(count)d feed already present."
+msgid_plural "Skipped %(count)d feeds already present."
+msgstr[0] "Hoppa over %(count)d eksisterande filmkjelde."
+msgstr[1] "Hoppa over %(count)d eksisterande filmkjelder."
+
+#: ../../lib/frontends/widgets/menus.py:273
+msgid "_Playlists"
+msgstr "_Spelelister"
+
+#: ../../lib/frontends/widgets/menus.py:291
+msgid "P_layback"
+msgstr "A_vspeling"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:300
+msgid "ETA"
+msgstr "Tid ferdig"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:582
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr "%(available)s ledige for nedlasting (%(amount)s ledig på disken)"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:650
+#: ../../lib/frontends/widgets/prefpanel.py:331
+msgid "New"
+msgstr "Ny"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:651
+#: ../../lib/frontends/widgets/prefpanel.py:333
+msgid "Off"
+msgstr "Av"
+
+#: ../../lib/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr "Abonner på kanal"
+
+#: ../../lib/frontends/widgets/linkhandler.py:56
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+"Lenkja ser ut til å vera ein kanal. Ønskjer du å abonnera på han?\n"
+"\n"
+"%(url)s"
+
+#: ../../lib/frontends/widgets/prefpanel.py:662
+msgid "Always play videos in a separate window."
+msgstr "Spel alltid videoar i eit eksternt vindauge."
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Innstillingar for autonedlasting:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Hald fram avspeling av videoar frå der dei vart stoppa."
+
+#~ msgid "Auto Download"
+#~ msgstr "Automatisk nedlasting"
+
+#~| msgid "(You must restart Miro for this change to take effect)\n"
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Du må starta avspelinga på nytt for at visualiseringsendringa skal tre i "
+#~ "kraft."
+
+#~| msgid "Play videos one after another."
+#~ msgid "Play videos one after another"
+#~ msgstr "Spel av filmar éin etter éin"
+
+#~| msgid "Stop after each video."
+#~ msgid "Stop after each video"
+#~ msgstr "Stopp etter kvar film"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s finn ikkje hovudvideomappa på:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Dette kan vera fordi mappa ligg på ein ekstern harddisk som ikkje er kopla "
+#~ "til.\n"
+#~ "\n"
+#~ "Om du held fram, vert videomappa nullstilt til ei plassering på denne     "
+#~ "stasjonen. Dette vil føra til at %(shortappname)s mistar nokre detaljar om "
+#~ "videoane som ligg på den eksterne stasjonen.\n"
+#~ "\n"
+#~ "Du kan òg avslutta, kopla til den eksterne harddisken (eller retta problema "
+#~ "på anna vis), og så starta %(shortappname)s på nytt."
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -334,11 +486,6 @@ msgstr "Unicode"
 msgid "Universal"
 msgstr "Universal"
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:41
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:49
-msgid "Enable tray icon"
-msgstr "Vis ikon i systemtrauet."
-
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
 msgstr "Når eg trykkjer på den raude lukk-knappen:"
@@ -373,14 +520,6 @@ msgstr ""
 "Når du trykkjer den raude lukkeknappen, vil du at %(appname)s skal "
 "minimerast til eit ikon i systemtrauet, eller avslutta heilt? Du kan endra "
 "denne innstillinga seinare under «Innstillingar»."
-
-#: ../../windows/plat/frontends/widgets/application.py:208
-msgid "Error Bombing Item"
-msgstr "Feil ved bombing"
-
-#: ../../windows/plat/frontends/widgets/application.py:210
-msgid "Error Recommending Item"
-msgstr "Feil ved anbefaling"
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
@@ -641,27 +780,9 @@ msgid ""
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
 
-#: ../../lib/feed.py:844
-msgid "Error loading feed"
-msgstr "Feil ved henting av kjelde"
-
-#: ../../lib/feed.py:846
-#, python-format
-msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr "Klarte ikkje henta kjelde frå %(url)s (%(errordescription)s)."
-
-#: ../../lib/feed.py:849
-msgid "Would you like to keep the feed?"
-msgstr "Ønskjer du å behalda kjelda?"
-
 #: ../../lib/feed.py:972
 msgid "Bad content-type"
 msgstr "Ugyldig innhaldstype"
-
-#: ../../lib/feed.py:985
-#, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr "Kjelda er ikkje kompatibel med %(appname)s"
 
 #: ../../lib/feed.py:988
 #, python-format
@@ -760,13 +881,6 @@ msgstr "Nedlastinga er alt fullførd."
 msgid "File Download"
 msgstr "Filnedlasting"
 
-#: ../../lib/singleclick.py:118
-#, python-format
-msgid ""
-"This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-"Fila på %(url)s ser ikkje ut til å vera ei lyd-, video- eller RSS-kjelde."
-
 #: ../../lib/singleclick.py:165
 msgid "Download Error"
 msgstr "Feil ved nedlasting"
@@ -794,20 +908,6 @@ msgstr ""
 #: ../../lib/opml.py:233
 msgid "OPML Import summary"
 msgstr "Samandrag av OPML-import"
-
-#: ../../lib/opml.py:234
-#, python-format
-msgid "Successfully imported %(count)d feed."
-msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "%(count)d kjelde vart importert."
-msgstr[1] "%(count)d kjelder vart importerte."
-
-#: ../../lib/opml.py:240
-#, python-format
-msgid "Skipped %(count)d feed already present."
-msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] "Hoppa over %(count)d eksisterande kjelde."
-msgstr[1] "Hoppa over %(count)d eksisterande kjelder."
 
 #: ../../lib/util.py:376 ../../lib/util.py:378
 #, python-format
@@ -1601,10 +1701,6 @@ msgstr "_Del med ein venn"
 msgid "Copy URL"
 msgstr "Kopier adresse"
 
-#: ../../lib/frontends/widgets/menus.py:273
-msgid "_Playlists"
-msgstr "S_pelelister"
-
 #: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
 msgstr "Ny _speleliste"
@@ -1632,10 +1728,6 @@ msgstr "_Fjern spelelistemapper"
 #: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
 msgstr "_Fjern spelelistemappe"
-
-#: ../../lib/frontends/widgets/menus.py:291
-msgid "P_layback"
-msgstr "_Avspeling"
 
 #: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
@@ -1769,10 +1861,6 @@ msgstr "Status"
 msgid "Size"
 msgstr "Storleik"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:300
-msgid "ETA"
-msgstr "Tid att"
-
 #: ../../lib/frontends/widgets/itemlistwidgets.py:301
 msgid "Speed"
 msgstr "Fart"
@@ -1808,11 +1896,6 @@ msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "%(available)s under plassgrensa for nedlasting (%(amount)s ledig på disken)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:582
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr "%(available)s ledig for nedlasting (%(amount)s ledig på disken)"
-
 #: ../../lib/frontends/widgets/itemlistwidgets.py:588
 #, python-format
 msgid "%(amount)s free on disk"
@@ -1836,16 +1919,6 @@ msgstr "Auto-nedlasting"
 #: ../../lib/frontends/widgets/prefpanel.py:332
 msgid "All"
 msgstr "Alle"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:650
-#: ../../lib/frontends/widgets/prefpanel.py:331
-msgid "New"
-msgstr "Nye"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:651
-#: ../../lib/frontends/widgets/prefpanel.py:333
-msgid "Off"
-msgstr "Ingen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:659
 msgid "Share feed"
@@ -3074,22 +3147,6 @@ msgid ""
 msgstr ""
 "Dra eit element til namnet på spelelista i sidestolpen for å leggja det til."
 
-#: ../../lib/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr "Abonner på kjelde"
-
-#: ../../lib/frontends/widgets/linkhandler.py:56
-#, python-format
-msgid ""
-"This link appears to be a feed.  Do you want to add it to your "
-"subscriptions?\n"
-"\n"
-"%(url)s"
-msgstr ""
-"Lenkja ser ut til å vera ei kjelde. Ønskjer du å abonnera på ho?\n"
-"\n"
-"%(url)s"
-
 #: ../../lib/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
 msgstr "Miro-gaid"
@@ -3309,10 +3366,6 @@ msgstr "Som standard går video- og lydelement ut etter:"
 #: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "Play media in Miro."
 msgstr "Spel av media i Miro."
-
-#: ../../lib/frontends/widgets/prefpanel.py:662
-msgid "Always play videos in a separate window."
-msgstr "Spel alltid videoane i eksterne vindauge."
 
 #: ../../lib/frontends/widgets/prefpanel.py:663
 msgid ""
@@ -3645,6 +3698,9 @@ msgstr "Søk i alle"
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Intern feil: Ikkje klar til å senda"
 
+#~ msgid "None"
+#~ msgstr "Ingen"
+
 #~ msgid "Use this for video when playing audio:"
 #~ msgstr "Bruk dette som videoillustrasjon ved avspeling av lydfiler:"
 
@@ -3823,6 +3879,12 @@ msgstr "Søk i alle"
 #~ "Skriv inn adressa til nettstaden du vil leggja til."
 
 #, python-format
+#~| msgid "Remove %(name)s"
+#~| msgid_plural "Remove %(count)d items"
+#~ msgid "Remove %(name)s"
+#~ msgstr "Fjern %(name)s"
+
+#, python-format
 #~ msgid "Are you sure you want to remove %(name)s?"
 #~ msgstr "Er du sikker på at du vil fjerna %(name)s?"
 
@@ -3911,36 +3973,6 @@ msgstr "Søk i alle"
 #~ msgstr[0] "%(count)d nettstad vald"
 #~ msgstr[1] "%(count)d nettstader valde"
 
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't find the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s finn ikkje hovudvideomappa på:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Dette kan vera fordi mappa ligg på ein ekstern harddisk som ikkje er kopla "
-#~ "til.\n"
-#~ "\n"
-#~ "Om du held fram, vert videomappa nullstilt til ei plassering på denne "
-#~ "stasjonen. Dette vil føra til at %(shortappname)s mistar nokre detaljar om "
-#~ "videoane som ligg på den eksterne stasjonen.\n"
-#~ "\n"
-#~ "Du kan òg avslutta, kopla til den eksterne harddisken (eller retta problema "
-#~ "på anna vis), og så starta %(shortappname)s på nytt."
-
 #~| msgid "Remove item"
 #~| msgid_plural "Remove items"
 #~ msgid "Remove site"
@@ -3956,24 +3988,9 @@ msgstr "Søk i alle"
 #~ msgstr[0] "Er du sikker på at du vil fjerna denne nettstaden?"
 #~ msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s nettstadene?"
 
-#~ msgid "Auto download setting:"
-#~ msgstr "Last ned automatisk:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Hald fram avspeling av videoane frå der dei vart stoppa."
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Spel av videoane éin etter éin"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stopp etter kvar video"
-
 #~| msgid "Remove Site"
 #~ msgid "Remove Sites"
 #~ msgstr "Fjern nettstader"
-
-#~ msgid "Auto Download"
-#~ msgstr "Last ned automatisk"
 
 #~| msgid "View"
 #~ msgid "View:"
@@ -4001,11 +4018,6 @@ msgstr "Søk i alle"
 #~ "Ein ny versjon av %(appname)s er tilgjengeleg for nedlasting.\n"
 #~ "%(notes)s\n"
 #~ "Ønskjer du å lasta han ned no?"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Du må starta avspelinga på nytt for at endringa av lydillustrasjonen skal "
-#~ "tre i kraft."
 
 #~ msgid "Sample Channels"
 #~ msgstr "Eksempelkanalar"
@@ -5347,3 +5359,28 @@ msgstr "Søk i alle"
 
 #~ msgid "Question"
 #~ msgstr "Spørsmål"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "%(appname)s klarte diverre ikkje å oppgradera databasen på grunn av ein "
+#~ "feil.\n"
+#~ "\n"
+#~ "Kontroller om disken er full. Dersom han er full, avslutt %(appname)s, slett "
+#~ "unødvendige filer og start %(appname)s igjen.\n"
+#~ "\n"
+#~ "Dersom disken din ikkje er full, kan du hjelpa oss med å forstå problemet "
+#~ "ved å avslutta og så rapportere feilen til bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Du kan òg starta på nytt og sletta den skadde databasen, men då må du leggja "
+#~ "til igjen alle kjelder og filer på nytt."

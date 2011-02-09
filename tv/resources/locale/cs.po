@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3705,6 +3705,273 @@ msgstr "Prohledat vše"
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Vnitřní chyba: nepřipraven k odesílání"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Standartně vyprší video po:"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Následující video"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Předchozí video"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Auto Download"
+#~ msgstr "Automaticky stahovat"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Vybrané kanály"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopírovat"
+
+#~ msgid "Select _All"
+#~ msgstr "Vybr_at  vše"
+
+#~ msgid "_Options"
+#~ msgstr "_Možnosti"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Zastav po každém videu"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Přehraj videa jedno po druhém"
+
+#~ msgid "Add to Library"
+#~ msgstr "Přidat do knihovny"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Pro aktivaci provedených vizualizačních změn je třeba restartovat playback."
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Při přehrávání audio záznamů použít pro video:"
+
+#~ msgid "Cu_t"
+#~ msgstr "Vyjmou_t"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Používáte verzi aplikace %(appname)s s přizpůsobenou sadou kanálů."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#~ msgid "_Paste"
+#~ msgstr "_Vložit"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Odstra_nit položku"
+
+#~ msgid "Add Site"
+#~ msgstr "Přidat stránku"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Prohledat vše: %(text)s"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Pozastavit automatické stahování pokud počet nepřehraných položek je:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "vloženo do fronty automatického stahování"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Nastavení automatického stahování:"
+
+#~ msgid "No Results Found"
+#~ msgstr "Nenalezeny žádné výsledky"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s nemohl najít hlavní složku pro video:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Je možné, že tato složka je součástí externího disku, který není připojený.\n"
+#~ "\n"
+#~ "Pokud budete pokračovat, hlavní složka pro video bude přenastavena na tento "
+#~ "disk.  Pokud jste měli stažená videa, pak %(shortappname)s k nim nebude mít "
+#~ "detailní informace k dispozici..\n"
+#~ "\n"
+#~ "Pokud ukončíte aplikaci, budete moci připojit externí disk či vyřešit tento "
+#~ "problém jinak a poté znovu spustíte %(shortappname)s."
+
+#~ msgid "Rename Item"
+#~ msgstr "Přejmenovat položku"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Vložte název nové položky"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Vložte URL přidávané stránky"
+
+#~ msgid "Rename Site"
+#~ msgstr "Přejmenovat stránku"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Přidat stránku - nesprávná URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Adresa, kterou jste vložili je nesprávná.\n"
+#~ "Prosím zkontrolujte URL a zkuste stahování opakovat.\n"
+#~ "\n"
+#~ "Vložte URL pro stahování"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Odstranit %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Opravdu chcete odstranit %(name)s?"
+
+#~ msgid "Migrating files"
+#~ msgstr "Migrující soubory"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Vlož nový název stránky %(name)s"
+
+#~ msgid "None"
+#~ msgstr "Žádný"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Automaticky prošlá videa :"
+
+#~ msgid "Add to library"
+#~ msgstr "Přidat do knihovny"
+
+#~ msgid "FEEDS"
+#~ msgstr "FEEDY"
+
+#~ msgid "SITES"
+#~ msgstr "STRÁNKY"
+
+#~ msgid "Remove Site"
+#~ msgstr "Odstranit stránku"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Vrátit jméno položky"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Vložte název feed složky"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Přihlásit se k více feedům"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "POZNÁMKA: Již jste přihlášen k jednomu z těchto feedů. Tyto feedy zůstanou "
+#~ "tam kde právě jsou."
+#~ msgstr[1] ""
+#~ "POZNÁMKA: Již jste přihlášen k %(count)d z těchto feedů. Tyto feedy zůstanou "
+#~ "tam kde právě jsou."
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Vytvořit feed?"
+#~ msgstr[1] "Vytvořit %(count)d feedy?"
+#~ msgstr[2] "Vytvořit %(count)d feedů?"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minuta"
+#~ msgstr[1] "%(count)d minuty"
+#~ msgstr[2] "%(count)d minut"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d hodina"
+#~ msgstr[1] "%(count)d hodiny"
+#~ msgstr[2] "%(count)d hodin"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d den"
+#~ msgstr[1] "%(count)d dny"
+#~ msgstr[2] "%(count)d dní"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Torrentový soubor %(filename)s vypadá porušený nebo nelze otevřít. [OK]"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Očekáváný CRLF: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Špatná velikost bloku: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Špatný status kód: %(code)s"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3716,3 +3983,88 @@ msgstr "Prohledat vše"
 #~ "Navrhujeme odstranit z disku některé soubory nebo vymazat některé ze záznamů "
 #~ "Vaší kolekce.\n"
 #~ "Nedávno provedené změny mohou být ztraceny."
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Vítej v %(name)s prvotním nastavení"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Odstranit stránku"
+#~ msgstr[1] "Odstranit stránky"
+#~ msgstr[2] "Odstranit stránky"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] ""
+#~ msgstr[1] "%(count)d"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Další obrazovky vám pomohou nastavit %(name)s pro vaše potřeby.\n"
+#~ "\n"
+#~ "Doporučujeme spouštět %(name)s při startu počítače. Díky tomu může "
+#~ "pokračovat stahování již nastavených souborů a mohou být stažena i nová "
+#~ "videa, která tak budou připravena až je budete chtít shlédnout."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Dokončení prvotního nastavení %(name)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Chybná hlavička: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Chybný stav: %(msg)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s nemůže stáhnout soubor z této adresy:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Omlouváme se, aplikace %(appname)s kvůli chybám nemůže aktualizovat vaši "
+#~ "databázi\n"
+#~ "\n"
+#~ "Zkontrolujte zda disk není zaplněn. Pokud je plný, ukončete aplikaci "
+#~ "%(appname)s, uvolněte nějaké místo, a spusťte %(appname)s znovu.\n"
+#~ "\n"
+#~ "Pokud vas disk není plný, pomožte nám vyřešit tento problém. Ukončete "
+#~ "aplikaci a oznamte chybu na bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Konečna můžete začít načisto. Vaše poškozená databáze bude smazána, budete "
+#~ "do ní ale muset znovu přidat své kanály a mediální soubory."
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Nelze otevřít soubor %(filename)s pro zápis"
+
+#~ msgid "(Pending)"
+#~ msgstr "(až do)"

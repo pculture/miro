@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3504,3 +3504,25 @@ msgstr ""
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Falsch Status Zeil: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Falsch Zeilestéck gréisst: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Falsch Header Line: %(msg)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Pipeline Ufuerderung gouf nach ni gestart"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Falschen Status-Code: %(code)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Internen Fehler: Net bereet fir ze verschécken"

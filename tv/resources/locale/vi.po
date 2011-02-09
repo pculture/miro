@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-21 01:33+0000\n"
-"Last-Translator: Doko Demo Doa <Unknown>\n"
+"PO-Revision-Date: 2010-12-21 15:45+0000\n"
+"Last-Translator: cvhien <Unknown>\n"
 "Language-Team: Vietnamese <vi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -114,7 +114,7 @@ msgstr "Hiển thị một nửa kích cỡ"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:197
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Hiển thị kích thước thật"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:200
 msgid "Present Double Size"
@@ -667,7 +667,7 @@ msgstr "Không thể tải thông tin ở %(url)s (%(errordescription)s)."
 
 #: ../../lib/feed.py:849
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Bạn có muốn giữ liệu thông tin?"
 
 #: ../../lib/feed.py:972
 msgid "Bad content-type"
@@ -690,6 +690,14 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Kênh này không phù hợp với %(appname)s nhưng chúng tôi sẻ cố gắng lấy các "
+"file. Điều này có thể mất nhiều thời gian để liệt kê các video, và mô tả khá "
+"lạ.\n"
+"\n"
+"Xin hãy liên hệ nhà xuất bản ở %(url)s và hỏi nếu họ có thể cung cấp thông "
+"tin ở dạng làm việc được với %(appname)s.\n"
+"\n"
+"Bạn có muốn cố tải kênh này thế nào cũng được?"
 
 #: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
@@ -722,7 +730,7 @@ msgstr "Không tìm thấy tập tin"
 
 #: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Lỗi đoạn Flash URL"
 
 #: ../../lib/downloader.py:535
 msgid "starting up"
@@ -849,7 +857,7 @@ msgstr "Đã xác nhận các nguồn thông tin mới"
 
 #: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
-msgstr ""
+msgstr "Đang dịch chuyển file"
 
 #: ../../lib/commandline.py:115
 msgid "Subscription error"
@@ -1176,7 +1184,7 @@ msgstr "Đang gửi báo cáo lỗi"
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Đang gửi báo cáo sự cồ (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
@@ -2128,8 +2136,7 @@ msgstr "Bạn có chắc rằng bạn muốn thoát ?"
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Bạn có %(count)d tải về trong tiến trình. Vẫn cứ thoát?"
 
 #: ../../lib/frontends/widgets/application.py:837
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -3557,3 +3564,25 @@ msgstr "Tìm kiếm tất cả"
 
 #~ msgid "_Video"
 #~ msgstr "_Video"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Sử dụng cái biểu hiện này để hát audio:"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Dòng tình trạng sai: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Dòng đầu đề sai: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Mã trạng thái sai: %(code)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Lỗi bên trong: Chưa sẵn sàng để gửi"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Thay vì CRLF, nhận được: %(character)r"

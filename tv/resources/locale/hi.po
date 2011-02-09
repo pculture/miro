@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
@@ -3556,6 +3556,111 @@ msgstr ""
 msgid "Search All"
 msgstr ""
 
+#~ msgid "_Video"
+#~ msgstr "वीडियो"
+
+#~ msgid "None"
+#~ msgstr "कुछ नही"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "आपको प्ले या चलाने की क्रिया दुबारा शुरू करनी चाहिए ताकि visualization "
+#~ "दुबारा नयी प्रकार से दिखाई दे |"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "जब आवाज़ (audio) चल रही हो तो यह चलचित्र (video) दिखाएँ |"
+
+#~ msgid "Custom Channels"
+#~ msgstr "अपने दुबारा बनाए गए चैनल"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "आप %(appname)s को अपने दुबारा बनाए गए चैनल के साथ चला रहें हैं"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s जीबी प्रति सेकंड"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s किलो बिट प्रति सेकंड"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s मेगा बिट प्रति सेकंड"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s किलो बिट प्रति सेकंड"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s गीगा बिट"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "%(filename)s फाइल को खोला नहीं जा सका"
+
+#~ msgid "_Copy"
+#~ msgstr "प्रतिलिपि बनायें(_C)"
+
+#~ msgid "Select _All"
+#~ msgstr "सभी का चयन करे (_A)"
+
+#~ msgid "Cu_t"
+#~ msgstr "काटें (t)"
+
+#~ msgid "Re_name Item"
+#~ msgstr "नया नाम दें"
+
+#~ msgid "_Paste"
+#~ msgstr "चिपकाएं"
+
+#~ msgid "_Next Video"
+#~ msgstr "अगला वीडियो (video)"
+
+#~ msgid "_Previous Video"
+#~ msgstr "पिचला वीडियो (video)"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "जो अपने आप डाउनलोड हो सकती है उसकी लिस्ट है"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "अपने आप download शुरू होने वाली व्यवस्था के लिए सेटिंग"
+
+#~ msgid "Add to Library"
+#~ msgstr "कोष में शामिल करें"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "नये विडियो को ढूँढें और कोष में शामिल करें"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "अपने आप विडियो ख़तम हो जातें हैं इस समय बाद"
+
+#~ msgid "Stop after each video"
+#~ msgstr "हर एक विडियो के बाद रुकें"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "एक के बाद दूसरा विडियो चलाएं"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "विडियो को वहीं से चलाएं जहां से इसे रोका था"
+
+#~ msgid "No Results Found"
+#~ msgstr "कुछ भी नहीं मिला"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "विडियो अपने आप ख़तम हो जाएं :"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3567,3 +3672,6 @@ msgstr ""
 #~ "डिस्क पूरी भर गयी है हम आपको सलाह देते हैं की आप उस डिस्क में से कुछ फिल्में "
 #~ "डिलीट कर दें या कोई और फाइलें डिलीट कर दें नहीं तो वर्तमान वाली चीज़ों को सेव "
 #~ "नहीं किया जा सकता |"
+
+#~ msgid "Rename Item"
+#~ msgstr "वस्तु का नाम बदलें"

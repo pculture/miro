@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -43,11 +43,11 @@ msgstr "Fshije"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
-msgstr ""
+msgstr "Nxirre nga dritarja"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:213
 msgid "Pop In"
-msgstr ""
+msgstr "Fute ne dritare"
 
 #: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
@@ -375,7 +375,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Gabim ne bombardimin e njësisë"
 
 #: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
@@ -717,7 +717,7 @@ msgstr "Kartela nuk gjendet"
 
 #: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Gabim në copëzimin e URL-së së Flashit"
 
 #: ../../lib/downloader.py:535
 msgid "starting up"
@@ -1311,7 +1311,7 @@ msgstr "Komente"
 #: ../../lib/frontends/widgets/style.py:240
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr ""
+msgstr "Trego në %(progname)s"
 
 #: ../../lib/frontends/widgets/style.py:240
 #: ../../lib/frontends/widgets/displays.py:419
@@ -1920,7 +1920,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Gabim ne Nxjerrjen e Skedarit"
 
 #: ../../lib/frontends/widgets/application.py:342
 #, python-format
@@ -2352,7 +2352,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "Parë %(expiration)s (Default)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
@@ -3434,11 +3434,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
-msgstr ""
+msgstr "Fute ne dritare"
 
 #: ../../lib/frontends/widgets/gtk/video.py:341
 msgid "Pop-out"
-msgstr ""
+msgstr "Nxirre nga dritarja"
 
 #: ../../lib/playlist.py:203
 #, python-format
@@ -3630,6 +3630,18 @@ msgstr "Shembull Luajliste"
 msgid "Search All"
 msgstr "Kërko Në të Tëra"
 
+#~ msgid "Custom Channels"
+#~ msgstr "Kanale Vetjake"
+
+#~ msgid "None"
+#~ msgstr "Asnje"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Si parazgjedhje, videot skadojnë pas:"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Fillo Ndarjen"
+
 #, python-format
 #~ msgid "Completing the %(name)s First Time Setup"
 #~ msgstr "Duke kompletuar %(name)s Në Lëshim të Parë"
@@ -3663,3 +3675,272 @@ msgstr "Kërko Në të Tëra"
 
 #~ msgid "_Video"
 #~ msgstr "_Video"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Rikthe Emrin e Objektit"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Rresht i Gabuar Gjendjeje: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Rresht i Gabuar Titulli: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Madhësi e Gabuar Cope: %(msg)s"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Pritej CRFL, u mor %(character)r"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Kod i Gabuar Gjendjeje: %(code)s"
+
+#~ msgid "Rename Item"
+#~ msgstr "Riemërto Objektin"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Video Me Vetëskadim:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Mirë se vini te Rregullimi i Parë i %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Hapat pasues do t'ju ndihmojnë të rregulloni %(name)sn që të punojë sa më "
+#~ "mirë për ju.\n"
+#~ "\n"
+#~ "Këshillojmë që ta bëni %(name)sn të niset kur niset kompjuteri juaj.  Në "
+#~ "këtë mënyrë, shkarkimet e lëna në punë e sipër mund të përfundohen dhe "
+#~ "kartelat e reja media të shkarkohen në prapaskenë, të gatshme për kur doni "
+#~ "t'i shihni."
+
+#~ msgid "queued for autodownload"
+#~ msgstr "në rradhë për vetëshkarkim"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d \"Site\" i Përzgjedhur"
+#~ msgstr[1] "%(count)d \"Site\"-e të Përzgjedhur"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s s'gjen dot drejtorinë parësore për videot te:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Kjo ndoshta ngaqë gjendet në një disk të jashtëm që nuk është lidhur në "
+#~ "sistem.\n"
+#~ "\n"
+#~ "Po vazhduat, drejtoria parësore e videove do të ricaktohet te një vend në "
+#~ "këtë disk.  Po qe se patët video të shkarkuara, kjo do të bëjë që "
+#~ "%(shortappname)s të humbë të dhënat rreth këtyre  videove.\n"
+#~ "\n"
+#~ "Po qe dilni prej këtej, mund ta lidhni mandej diskun tuaj në sistem ose "
+#~ "ndryshe ta ndreqni problemin dhe të rinisni %(shortappname)sn."
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Jepni emrin e ri për objektin"
+
+#~ msgid "Add Site"
+#~ msgstr "Shto \"Site\""
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Jepni URL-në e \"site\"-it për shtim"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Shto \"Site\" - URL e Pavlefshme"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Vendndodhja që dhatë nuk është url e vlefshme.\n"
+#~ "Ju lutem, kontrolloni URL-në dhe riprovoni.\n"
+#~ "\n"
+#~ "Jepni URL-në e \"site\"-it që duhet shtuar"
+
+#~ msgid "Rename Site"
+#~ msgstr "Riemërtoni \"Site\"-in"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Jepni emër  të ri për \"site\"-in %(name)s"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Hiqe \"site\"-in"
+#~ msgstr[1] "Hiqi \"site\"-et"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Are you sure you want to remove this site?"
+#~ msgstr[1] "Jeni i sigurt se doni të hiqen këta %(count)s \"site\"-e?"
+
+#~ msgid "Migrating files"
+#~ msgstr "Po migrohen kartelat"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Rregullim për vetëshkarkimet:"
+
+#~ msgid "Remove Site"
+#~ msgstr "Hiqe \"Site\"-in"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Hiqi \"Site\"-et"
+
+#~ msgid "SITES"
+#~ msgstr "\"SITE\"-E"
+
+#~ msgid "FEEDS"
+#~ msgstr "PRURJE"
+
+#~ msgid "No Results Found"
+#~ msgstr "S'u gjetën Përfundime."
+
+#~ msgid "Auto Download"
+#~ msgstr "Vetëshkarkim"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Hapësirë e pamjaftueshme në disk"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Pa vend të mjaftueshëm në disk për përditësimin e bazës suaj të të dhënave "
+#~ "nga versioni i mëparshëm i %(appname)ss. Ju lutem, fshini disa kartela dhe "
+#~ "riprovoni."
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Kartela %(filename)s duket se është e dëmtuar dhe nuk mund të hapet. [OK]"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Kërko Në të Tëra: %(text)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s nuk është në gjendje të shkarkojë kartelë te kjo URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "S'hapi dot %(filename)s për shkrim!"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Ri_emërtoje Objektin"
+
+#~ msgid "_Options"
+#~ msgstr "_Mundësi"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d ditë"
+#~ msgstr[1] "%(count)d ditë"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d orë"
+#~ msgstr[1] "%(count)d orë"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minutë"
+#~ msgstr[1] "%(count)d minuta"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s nuk qe në gjendje të ruante bazën e vet të të dhënave: Disku "
+#~ "Plot.\n"
+#~ "Këshillojmë fshirje kartelash nga disku plot ose thjesht fshirjen e disa "
+#~ "filmave nga koleksioni juaj.\n"
+#~ "Ndryshimet së fundmi mund të humbasin."
+
+#~ msgid "Re_name Site"
+#~ msgstr "Ri_emërtoni 'Site''-in"
+
+#~ msgid "_Remove Site"
+#~ msgstr "_Hiqe \"Site\"-in"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "_Hiqi \"Site\"-et"

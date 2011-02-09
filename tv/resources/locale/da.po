@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-20 17:49+0000\n"
-"Last-Translator: Kim Hansen <Unknown>\n"
+"PO-Revision-Date: 2011-01-06 15:56+0000\n"
+"Last-Translator: Jonas Boserup <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../lib/frontends/widgets/style.py:260
 #: ../../lib/frontends/widgets/style.py:1221
@@ -193,7 +193,7 @@ msgstr "Russisk"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr ""
+msgstr "Syd-østeuropæisk"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
@@ -270,12 +270,12 @@ msgstr "Traditionel kinesisk unix"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Hong-Kong supplement"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "SØ og SV-asiatisk"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -302,7 +302,7 @@ msgstr "Vietnamesisk"
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Mellemøstlig"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -330,14 +330,14 @@ msgstr "Hebraisk"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unikode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Universal"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -359,11 +359,11 @@ msgstr "Afslut %(appname)s fuldstændigt."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Systemstandard"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Undertekstskrifttype:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -454,7 +454,7 @@ msgstr "Undertekstfil %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Kroatisk"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -463,7 +463,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Kyrillisk"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
@@ -842,7 +842,7 @@ msgstr "%(size)sB"
 
 #: ../../lib/messagehandler.py:1350
 msgid "Subscribed to new feed:"
-msgstr "Abonneret til det nye feed:"
+msgstr "Abonnerer på ny kilde:"
 
 #: ../../lib/messagehandler.py:1353
 msgid "Subscribed to new feeds:"
@@ -862,6 +862,8 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Denne %(appname)s feed fil har et ugyldigt format: %(url)s.  Gør venligst "
+"udgiveren af filen opmærksom på dette."
 
 #: ../../lib/commandline.py:136
 #, python-format
@@ -1448,12 +1450,12 @@ msgstr "Feed:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:96
 msgid "Search engine:"
-msgstr "Søge maskine:"
+msgstr "Søgemaskine:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:102
 #: ../../lib/frontends/widgets/newfeed.py:60
 msgid "URL:"
-msgstr "Adresse(URL):"
+msgstr "URL:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:136
 msgid "Add new feed to this section:"
@@ -1473,7 +1475,7 @@ msgstr "lyd"
 
 #: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
-msgstr "Åben undertekstfil"
+msgstr "Åbn undertekstfil..."
 
 #: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
@@ -1481,7 +1483,7 @@ msgstr "Undertekstfiler"
 
 #: ../../lib/frontends/widgets/menus.py:203
 msgid "_File"
-msgstr "_Fil"
+msgstr "_Filer"
 
 #: ../../lib/frontends/widgets/menus.py:204
 msgid "_Open"
@@ -1489,11 +1491,11 @@ msgstr "_Åbn"
 
 #: ../../lib/frontends/widgets/menus.py:206
 msgid "_Download Item"
-msgstr "_Download element"
+msgstr "_Hent element"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
-msgstr "Check _Version"
+msgstr "Kontroller _version"
 
 #: ../../lib/frontends/widgets/menus.py:210
 msgid "_Remove Item"
@@ -1505,15 +1507,15 @@ msgstr "_Fjern elementer"
 
 #: ../../lib/frontends/widgets/menus.py:214
 msgid "_Edit Item"
-msgstr "Rediger element"
+msgstr "_Rediger element"
 
 #: ../../lib/frontends/widgets/menus.py:216
 msgid "Save Item _As"
-msgstr "Gem element _Som"
+msgstr "_Gem element som"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Save Items _As"
-msgstr "Gem elementer _Som"
+msgstr "_Gem elementer som"
 
 #: ../../lib/frontends/widgets/menus.py:220
 msgid "Copy Item _URL"
@@ -1521,7 +1523,7 @@ msgstr "Kopier element _URL"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
-msgstr "Indstillinger"
+msgstr "_Indstillinger"
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "_Quit"
@@ -1533,24 +1535,24 @@ msgstr "_Sidebjælke"
 
 #: ../../lib/frontends/widgets/menus.py:229
 msgid "Add _Feed"
-msgstr "Tilføj _Feed"
+msgstr "Tilføj _kilde"
 
 #: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
-msgstr "Tilføj hjemmeside"
+msgstr "Tilføj _hjemmeside"
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
-msgstr "Tilføj avanceret feed"
+msgstr "Ny _søgekilde"
 
 #: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
-msgstr "Ny _Mappe"
+msgstr "Ny _mappe"
 
 #: ../../lib/frontends/widgets/menus.py:239
 msgid "Re_name"
-msgstr "Om_døb"
+msgstr "_Omdøb"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
@@ -1558,7 +1560,7 @@ msgstr "Om_døb Feed"
 
 #: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
-msgstr "om_døb hjemmeside"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
@@ -1574,19 +1576,19 @@ msgstr "_Fjern Feeds"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
-msgstr "_Fjern mappe"
+msgstr "F_jern mappe"
 
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
-msgstr "_Fjern mapper"
+msgstr "F_jern mapper"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
-msgstr "Fjern hjemmeside"
+msgstr "_Fjern hjemmeside"
 
 #: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
-msgstr "Fjern hjemmesider"
+msgstr "_Fjern hjemmesider"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
@@ -1614,39 +1616,39 @@ msgstr "_Del med en ven"
 
 #: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
-msgstr "Kopier URL"
+msgstr "Kopiér URL"
 
 #: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
-msgstr "_Playlister"
+msgstr "S_pillelister"
 
 #: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
-msgstr "Ny _Playliste"
+msgstr "Ny _spilleliste"
 
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
-msgstr "Ny Playliste map_pe"
+msgstr "Ny spilleliste_mappe"
 
 #: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
-msgstr "Omdøb Playliste"
+msgstr "_Omdøb spilleliste"
 
 #: ../../lib/frontends/widgets/menus.py:283
 msgid "_Remove Playlist"
-msgstr "Slet Playliste"
+msgstr "_Fjern spilleliste"
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
-msgstr "_Fjern Playlister"
+msgstr "_Fjern spillelister"
 
 #: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
-msgstr "_Fjern Playliste mapper"
+msgstr "F_jern spillelistemapper"
 
 #: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
-msgstr "_Fjern Playliste mappe"
+msgstr "F_jern spillelistemappe"
 
 #: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
@@ -1667,27 +1669,27 @@ msgstr "_Stop"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr "Næste element"
+msgstr "_Næste element"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr "Forige element"
+msgstr "_Forrige element"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
-msgstr "Hop _frem"
+msgstr "Spring f_remad"
 
 #: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
-msgstr "Hop til_Bage"
+msgstr "Spring _tilbage"
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
-msgstr "Volumen _Op"
+msgstr "Lydstyrke _op"
 
 #: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
-msgstr "Lydstyrke _Ned"
+msgstr "Lydstyrke _ned"
 
 #: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
@@ -1695,7 +1697,7 @@ msgstr "_Fuldskærm"
 
 #: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
-msgstr "_Skift Frakoblet/Tilkoblet"
+msgstr "S_kift Frakoblet/Tilkoblet"
 
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
@@ -1703,11 +1705,11 @@ msgstr "_Undertekster"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
-msgstr "Vælg en undertekstfil"
+msgstr "Vælg en undertekstfil..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Omdan"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1730,7 +1732,7 @@ msgstr "Diagnostik"
 
 #: ../../lib/frontends/widgets/menus.py:350
 msgid "Report a _Bug"
-msgstr "Meld en _programfejl"
+msgstr "Rapportér en _fejl"
 
 #: ../../lib/frontends/widgets/menus.py:352
 msgid "_Translate"
@@ -1744,7 +1746,7 @@ msgstr "_Planet Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr "Vis samtalemappe"
+msgstr "Vis konverteringsmappe"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
@@ -1752,7 +1754,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Standard (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1773,7 +1775,7 @@ msgstr "Dato"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:296
 msgid "Length"
-msgstr "Længde"
+msgstr "Varighed"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:297
 msgid "Status"
@@ -1786,7 +1788,7 @@ msgstr "Størrelse"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:300
 msgid "ETA"
-msgstr "ETA"
+msgstr "Tid tilbage"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:301
 msgid "Speed"
@@ -1795,7 +1797,7 @@ msgstr "Hastighed"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:326
 #: ../../lib/frontends/widgets/statictabs.py:121
 msgid "Downloading"
-msgstr "Downloader"
+msgstr "Henter"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:457
 msgid "Save as a Feed"
@@ -1803,11 +1805,11 @@ msgstr "Gem som et feed"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:505
 msgid "Pause All"
-msgstr "Sæt alle på pause"
+msgstr "Pause alle"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:512
 msgid "Resume All"
-msgstr "Start alle igen"
+msgstr "Genoptag alle"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:519
 msgid "Cancel All"
@@ -2028,7 +2030,7 @@ msgstr[1] ""
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Er du sikker på at du ønsker at slette elementet?"
+msgstr[0] ""
 msgstr[1] "Er du sikker på at du ønsker at slette %(count)d elementer?"
 
 #: ../../lib/frontends/widgets/application.py:480
@@ -2126,7 +2128,7 @@ msgstr "Omdøb afspilningsliste"
 #: ../../lib/frontends/widgets/application.py:737
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr "Indtast et nyt navn til afspilningslisten %(name)s"
+msgstr "Indtast et nyt navn for afspilningslisten %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:741
 #: ../../lib/frontends/widgets/tablist.py:760
@@ -2136,7 +2138,7 @@ msgstr "Omdøb spilleliste mappe"
 #: ../../lib/frontends/widgets/application.py:742
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "Indtast et nyt navn til afspilningsliste mappen %(name)s"
+msgstr "Indtast et nyt navn for afspilningsliste-mappen %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:745
 #: ../../lib/frontends/widgets/tablist.py:624
@@ -2435,7 +2437,7 @@ msgstr "Gamle elementer er blevet fjernet."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Pause auto-hentning når dette antal elementer ikke er afspillet:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2974,7 +2976,7 @@ msgstr "Afbryd download"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:133
 #: ../../lib/frontends/widgets/itemcontextmenu.py:258
 msgid "Pause Download"
-msgstr "Sæt download på pause"
+msgstr "Pause hentning"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:271
@@ -3027,8 +3029,8 @@ msgstr[1] "%(count)d elementer hentes"
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d element venter"
-msgstr[1] "%(count)d elementer venter"
+msgstr[0] "%(count)d standset element"
+msgstr[1] "%(count)d standset elementer"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:281
 msgid "Restart Upload"
@@ -3655,6 +3657,89 @@ msgstr "Playliste eksempel"
 msgid "Search All"
 msgstr "Søg alle"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Som standard udløber videoer efter:"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Afspil videoer efter hinanden"
+
+#~ msgid "Stop after each video"
+#~ msgstr "stop efter hver video"
+
+#~ msgid "None"
+#~ msgstr "Ingen"
+
+#~ msgid "Add to Library"
+#~ msgstr "Tilføj til bibliotek"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Brug denne som video når lyd afspilles"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Tilpassede kanaler"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Du kører en version af %(appname)s med tilpassede kanaler"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Du skal genstarte playback for at visualiserings ændringerne kan træde i "
+#~ "kraft."
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Fjern %(name)s"
+
+#~ msgid "Add to library"
+#~ msgstr "Tilføj til bibliotek"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Indtast et navn til den nye feed mappe"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Se efter nye videoer i disse mappe og inkluder dem i biblioteket:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Forsæt afspilning af en video fra det punkt den sidst blev stoppet."
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Er du sikker på at du ønsker at fjerne %(name)s?"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Abonnerer på flere feeds"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Opret feed?"
+#~ msgstr[1] "Opret %(count)d feeds?"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "NOTE: Du abonnerer allerede på et af disse feeds. Disse feeds vil forblive "
+#~ "hvor de er nu."
+#~ msgstr[1] ""
+#~ "NOTE: Du abonnerer allerede på %(count)d disse feeds. Disse feeds vil "
+#~ "forblive hvor de er nu."
+
+#~ msgid "Start Seeding"
+#~ msgstr "Start seeding"
+
+#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
+#~ msgstr "Filen \"%(filename)s\" blev slettet fra"
+
+#~ msgid "View:"
+#~ msgstr "Vis:"
+
 #~ msgid "Remove site"
 #~ msgid_plural "Remove sites"
 #~ msgstr[0] "Fjern side"
@@ -3900,3 +3985,70 @@ msgstr "Søg alle"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s kunne ikke gemme databasen. Drevet er fyldt.\n"
+#~ " Vi foreslår at du sletter filer fra drevet eller simpelthen sletter nogle "
+#~ "film fra din samling. \n"
+#~ "Nye ændringer kan gå tabt."
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Ikke nok disk plads til at opgradere din database fra den tidligere version "
+#~ "af %(appname)s. Slet venligst nogle filer og prøv igen."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Utilstrækkelig diskplads"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Pipeline forespørgsel startede aldrig"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Velkommen til %(name)s førstegangs opsætning"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Færdiggører %(name)s førstegangs opsætning"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Ukendt sprog"
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "Rediger metadata for dette element"
+
+#~ msgid "other"
+#~ msgstr "andet"
+
+#~ msgid "_Remove Site"
+#~ msgstr "_Fjern side"
+
+#~ msgid "Re_name Site"
+#~ msgstr "Om_døb side"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "_Fjern sider"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Forventede CRLF, fik: %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Dårlig headerlinie: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Dårlig chunkstørrelse: %(msg)s"
+
+#~ msgid "(Pending)"
+#~ msgstr "Ventende"

@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3521,3 +3521,70 @@ msgstr ""
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Bad Status Line: %(msg)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Унутраная памылка: перасылка не гатовая"
+
+#~ msgid "Rename Item"
+#~ msgstr "Перайменаваць"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Вярнуть папярэдняе імя"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Аўтаматычна выдаленае відэа:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Прыпыніць аўта-спампаваньне калі ёсьць непрагледжаных элементаў:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "будзе аўтаматычна спампавана"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Увядзіце новае імя элемента"
+
+#~ msgid "Add Site"
+#~ msgstr "Дадаць сайт"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Увядзіце URL каб дадаць сайт"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Дадаць сайт - несапраўдны URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Уведзены адрас ня ёсьць сапраўдны URL.\n"
+#~ "Праверце URL і паспрабуйце зноў.\n"
+#~ "\n"
+#~ "Увядзіце URL каб дадаць сайт"
+
+#~ msgid "Rename Site"
+#~ msgstr "Пераназваць сайт"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Запыт на перадачу ня атрыманы"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Няслушны загаловак: %(msg)s"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Атрымана %(character)r замест CRLF"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Няслушны памер фрагмэнту: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Няслушны статус: %(code)s"

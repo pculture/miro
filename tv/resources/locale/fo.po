@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3503,3 +3503,26 @@ msgstr ""
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Væntaði CRLF men fekk: %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Feilur í høvdalinju: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Feilur í støðulinju: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Feilur í bitastødd: %(msg)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Pipeline fyrispurningur ongantíð byrjaður"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Feilur í støðu kotu: %(code)s"

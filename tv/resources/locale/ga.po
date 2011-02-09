@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3732,6 +3732,49 @@ msgstr "Seinnréim Shamplach"
 msgid "Search All"
 msgstr "Cuardaigh Uile"
 
+#~ msgid "Custom Channels"
+#~ msgstr "Bealaí Saincheaptha"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Mar réamhshocrú, téann físeáin as feidhm tar éis:"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Bain feidhm as seo le haghaidh físeán nuair atá fuaim á sheinnt:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Fair amach do físeáin nua sna fillteáin seo agus cuir sa leabharlann iad:"
+
+#~ msgid "None"
+#~ msgstr "Dada"
+
+#~ msgid "Add to Library"
+#~ msgstr "Cuir leis an Leabharlann"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Stad tar éis gach físeán"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Bain %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "An bhfuil tú cinnte go dteastaíonn uait %(name)s a bhaint?"
+
+#~ msgid "Add to library"
+#~ msgstr "Cuir leis an leabharlann"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Cruthaigh fotha?"
+#~ msgstr[1] "Cruthaigh %(count)d fothaí?"
+#~ msgstr[2] "Cruthaigh %(count)d fothaí?"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Seinn na físeáin ceann in ndiaidh a chéile"
+
 #~ msgid "Pipeline request never started"
 #~ msgstr "Níor thosaíodh an t-iarratas píblíne"
 
@@ -3864,3 +3907,75 @@ msgstr "Cuardaigh Uile"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Droch Giotamhéid: %(msg)s"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Fáilte go dtí Socrú don Chéad Uair %(name)s"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Suíomh Roghnaithe"
+#~ msgstr[1] "%(count)d Suíomhanna Roghnaithe"
+#~ msgstr[2] "%(count)d Suíomhanna Roghnaithe"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "An bhfuil tú cinnte go dteastaíonn uait an suíomh seo a bhaint?"
+#~ msgstr[1] ""
+#~ "An bhfuil tú cinnte go dteastaíonn uait na %(count)s suíomhanna seo a bhaint?"
+#~ msgstr[2] ""
+#~ "An bhfuil tú cinnte go dteastaíonn uait na %(count)s suíomhanna seo a bhaint?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Bain an suíomh"
+#~ msgstr[1] "Bain na suíomhanna"
+#~ msgstr[2] "Bain na suíomhanna"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Bain na Suíomhanna"
+
+#~ msgid "(Pending)"
+#~ msgstr "(Ag feitheamh)"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "Ní féidir le %(appname)s comhad a íosluchtú ag an URL seo:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Líne Droch Stádais: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Líne Droch-cheanntáisc: %(msg)s"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Fuair an CRLF ionchais: %(character)r"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Tagairt Droch Stádais: %(code)s"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Socrú íosluchtaith uathoibríoch:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "i scuaine le íosluchtú"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Cuir Uath-Íosluchtú ar son nuair atá an líon seo míreanna neamhsheinnte:"

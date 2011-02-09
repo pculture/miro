@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-22 10:21+0000\n"
+"PO-Revision-Date: 2011-01-04 07:58+0000\n"
 "Last-Translator: Tomi Juntunen <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -1421,7 +1421,7 @@ msgstr "pysäytetty"
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr "Jatka kello %(resumetime)s"
+msgstr "Jatka kohdasta %(resumetime)s"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
@@ -1518,7 +1518,7 @@ msgstr "Tallenna kohteet _nimellä"
 
 #: ../../lib/frontends/widgets/menus.py:220
 msgid "Copy Item _URL"
-msgstr "Kopioi kohteen_URL"
+msgstr "Kopioi kohteen _URL"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
@@ -2628,7 +2628,7 @@ msgstr "Aseta uuteen kansioon"
 #: ../../lib/frontends/widgets/itemedit.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:108
 msgid "Edit Item"
-msgstr "Muokkaa esinettä"
+msgstr "Muokkaa tietoja"
 
 #: ../../lib/frontends/widgets/itemedit.py:145
 msgid "Title:"
@@ -2931,7 +2931,7 @@ msgstr "Salasana:"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:66
 msgid "Remove From the Library"
-msgstr "Poista Kirjastosta"
+msgstr "Poista kirjastosta"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:101
 #: ../../lib/frontends/widgets/itemcontextmenu.py:204
@@ -3656,3 +3656,405 @@ msgstr "Esimerkkisoittolista"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Etsi kaikista"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Oletuksena videoiden vanhenemisaika on:"
+
+#~ msgid "_Video"
+#~ msgstr "_Video"
+
+#~ msgid "Auto Download"
+#~ msgstr "Lataa automaattisesti"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Tilataan useita syötteitä"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Valinnaiset kanavat"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Seuraava video"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Edellinen video"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Sisäinen virhe: Ei valmis lähettämään"
+
+#~ msgid "Select _All"
+#~ msgstr "Valitse _kaikki"
+
+#~ msgid "_Paste"
+#~ msgstr "_Liitä"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopioi"
+
+#~ msgid "Cu_t"
+#~ msgstr "L_eikkaa"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Automaattiset latausasetukset:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Jatka videon toistoa siitä mihin jäin viimeksi."
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Käynnistä toisto uudestaan saadaksesi visualisoinnin muutokset voimaan."
+
+#~ msgid "Add to Library"
+#~ msgstr "Lisää kirjastoon"
+
+#~ msgid "None"
+#~ msgstr "Ei mitään"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Käytä tätä videon toistoon toistettaessa audiota:"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Käytössäsi on versio %(appname)s:sta, jossa on muokattu kanavalista."
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gt/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s t/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mt/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kt/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mt"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s t"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kt"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gt"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Ei pystytty avaamaan %(filename)s:a kirjoitusta varten"
+
+#~ msgid "_Options"
+#~ msgstr "_Asetukset"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Uudelleen_nimeä kohde"
+
+#~ msgid "Add Site"
+#~ msgstr "Lisää sivusto"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Videoiden automaattinen vanheneminen:"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Pysäytä automaattinen lataus, kun näin monta kohdetta on katsomatta:"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "lisätty automaattisen latauksen jonoon"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Tarkkaile näiden kansioiden uusia videoita ja lisää ne kirjastoon:"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Pysähdy jokaisen videon jälkeen"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Toista videot peräkkäin"
+
+#~ msgid "No Results Found"
+#~ msgstr "Ei tuloksia"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s ei löydä ensisijaista videokansiota sijainnista:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Tämä saattaa johtua siitä, että kansio sijaitsee ulkoisella kovalevyllä, "
+#~ "jota ei ole yhdistetty.\n"
+#~ "\n"
+#~ "Jos jatkat, niin ensisijainen videokansio asetetaan tälle kiintolevylle. Jos "
+#~ "olit ladannut videoita, niin %(shortappname)s menettää niiden tiedot.\n"
+#~ "\n"
+#~ "Jos lopetat, niin voit liittää kiintolevyn tai korjata ongelman muutoin ja "
+#~ "käynnistää sitten %(shortappname)s:n."
+
+#~ msgid "Rename Item"
+#~ msgstr "Uudelleennimeä kohde"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Lisää sivu - URL ei kelvollinen"
+
+#~ msgid "Rename Site"
+#~ msgstr "Uudelleennimeä sivu"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Poista %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Oletko varma, että haluat poistaa %(name)s:n?"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Kirjoita sivun %(name)s uusi nimi"
+
+#~ msgid "Migrating files"
+#~ msgstr "Siirretään tiedostoja"
+
+#~ msgid "Add to library"
+#~ msgstr "Lisää kirjastoon"
+
+#~ msgid "Remove Site"
+#~ msgstr "Poista sivu"
+
+#~ msgid "FEEDS"
+#~ msgstr "SYÖTTEET"
+
+#~ msgid "SITES"
+#~ msgstr "SIVUT"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Palauta kohteen nimi"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Kirjoita uuden syötekansion nimi"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "HUOMIO: Sinä tilaat jo yhtä näistä syötteistä. Nämä syötteet pysyvät "
+#~ "nykyisissä sijainneissaan."
+#~ msgstr[1] ""
+#~ "HUOMIO: Sinä tilaat jo %(count)d näistä syötteistä. Nämä syötteet pysyvät "
+#~ "nykyisissä sijainneissaan."
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Luo syöte?"
+#~ msgstr[1] "Luo %(count)d syötettä?"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minuutti"
+#~ msgstr[1] "%(count)d minuuttia"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d tunti"
+#~ msgstr[1] "%(count)d tuntia"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d päivä"
+#~ msgstr[1] "%(count)d päivää"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Torrent-tiedosto %(filename)s näyttäisi olevan korruptoitunut, eikä sitä voi "
+#~ "avata. [OK]"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Odotettiin CRLF, saatiin: %(character)r"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Virheellinen tilarivi: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Virheellinen osan koko: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Virheellinen tilakoodi: %(code)s"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Etsi kaikki: %(text)s"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Kirjoittamasi osoite ei ole kelvollinen URL.\n"
+#~ "Tarkista URL ja yritä uudestaan.\n"
+#~ "\n"
+#~ "Kirjoita lisättävän sivun URL"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Kirjoita lisättävän sivun URL"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Kirjoita kohteen uusi nimi"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Aloita lähettäminen"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Tervetuloa %(name)s:n aloitusasetuksiin"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Seuraavat pari sivua auttavat sinua säätämään %(name)s asetukset, jotta se "
+#~ "toimisi parhaiten sinulle sopivalla tavalla.\n"
+#~ "\n"
+#~ "Suosittelemme, että asetat %(name)s:n käynnistymään tietokoneen "
+#~ "käynnistyessä. Tällä tavoin lataukset voidaan saada valmiiksi ja uudet "
+#~ "mediatiedostot ladataan taustalla, jotta ne ovat valmiina katsottaviksi "
+#~ "halutessasi."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Viimeistellään %(name)s:n aloitusasetukset"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Oletko varma, että haluat poistaa tämän sivun?"
+#~ msgstr[1] "Oletko varma, että haluat poistaa nämä %(count)s sivua?"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d sivu valittu"
+#~ msgstr[1] "%(count)d sivua valittu"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Poista sivu"
+#~ msgstr[1] "Poista sivut"
+
+#~ msgid "View:"
+#~ msgstr "Näytä:"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Poista sivut"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s ei pysty lataamaan tiedostoa tästä osoitteesta:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Virheellinen otsikkorivi: %(msg)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Pipeline-pyyntö ei ikinä alkanut"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s ei onnistunut tallentamaan sen tietokantaa: Levy täynnä.\n"
+#~ "Me ehdotamme poistamaan tiedostoja täynnä olevalta levyltä tai "
+#~ "yksinkertaisesti poistamaan joitain elokuvia kokoelmaltasi.\n"
+#~ "Tuoreet muutokset voivat hävitä."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Levytila ei riitä"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Levytila ei riitä %(appname)s tietokannan aikaisemman version "
+#~ "päivittämiseen. Yritä poistaa joitakin tiedostoja ja kokeile uudelleen."
+
+#~ msgid "other"
+#~ msgstr "muu"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Tuntematon kieli"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Virheiden vuoksi %(appname)s ei valitettavasti kyennyt päivittämään "
+#~ "tietokantaa.\n"
+#~ "Tarkista, onko levy täynnä. Jos on, sulje %(appname)s, tee levylle vapaata "
+#~ "tilaa ja käynnistä %(appname)s sen jälkeen uudelleen.\n"
+#~ "Mikäli levy ei ole täynnä, voit auttaa vian löytämisessä sulkemalla ohjelman "
+#~ "ja tekemällä vikailmoituksen bugzilla.pculture.org:ssa.\n"
+#~ "Voit myös aloittaa alusta, jolloin viallinen tietokanta poistetaan, mutta "
+#~ "joudut tällöin lisäämään syötteet ja tiedostot uudestaan."
+
+#~ msgid "(Pending)"
+#~ msgstr "(Odottaa)"

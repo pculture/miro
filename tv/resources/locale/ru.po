@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-16 17:59+0000\n"
-"Last-Translator: Misha Shnurapet <Unknown>\n"
+"PO-Revision-Date: 2011-01-07 00:47+0000\n"
+"Last-Translator: Nkolay Parukhin <parukhin@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -33,7 +33,7 @@ msgstr "Поделиться"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
-msgstr "Хранить"
+msgstr "Сохранить"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
@@ -600,6 +600,20 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"К сожалению, %(appname)s не смогла запуститься из-за проблем с базой "
+"данных:\n"
+"\n"
+"Ошибка: %(error)s\n"
+"\n"
+"Вполне возможно, что ваш файл базы данных поврежден и не может быть "
+"использован.\n"
+"\n"
+"Вы можете начать все заново и ваша поврежденная база данных будет удалена, "
+"но вам придется заново добавить свои каналы и медиа-файлы. Если вы хотите "
+"сделать это, нажмите кнопку Начать заново и перезапустите %(appname)s.\n"
+"\n"
+"Чтобы помочь нам решить похожие проблемы в будущем, пожалуйста, отправьте "
+"отчет об ошибке в %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -1075,6 +1089,7 @@ msgstr "Не включать базу данных"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s требует имя пользователя и пароль для \"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
@@ -1316,7 +1331,7 @@ msgstr "%(dayofmonth)s %(month)s %(year)s"
 
 #: ../../lib/frontends/widgets/style.py:234
 msgid "From"
-msgstr "От"
+msgstr "Из"
 
 #: ../../lib/frontends/widgets/style.py:235
 msgid "File name:"
@@ -1324,11 +1339,11 @@ msgstr "Название файла:"
 
 #: ../../lib/frontends/widgets/style.py:236
 msgid "Show More"
-msgstr "Показать"
+msgstr "Подробно"
 
 #: ../../lib/frontends/widgets/style.py:237
 msgid "Show Less"
-msgstr "Скрыть"
+msgstr "Кратко"
 
 #: ../../lib/frontends/widgets/style.py:238
 #: ../../lib/frontends/widgets/itemcontextmenu.py:148
@@ -1361,7 +1376,7 @@ msgstr "Ссылка на файл"
 
 #: ../../lib/frontends/widgets/style.py:244
 msgid "License Page"
-msgstr "Страница с лицензией"
+msgstr "Лицензия"
 
 #: ../../lib/frontends/widgets/style.py:245
 msgid "File Type"
@@ -1406,7 +1421,7 @@ msgstr "Ошибка"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr "В очереди для автоматической загрузки"
+msgstr "В очереди загрузки"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1445,13 +1460,13 @@ msgstr "Убрать из списка воспроизведения"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr "Новое поисковое вещание"
+msgstr "Новая подписка на поиск"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
-"Поисковое вещание содержит трансляции, которые соответствуют поисковому "
-"запросу."
+"Подписка на поиск будет содержать элементы, соответствующие заданному "
+"критерию."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:75
 msgid "Search for:"
@@ -1463,7 +1478,7 @@ msgstr "В этом:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:89
 msgid "Feed:"
-msgstr "Вещание:"
+msgstr "Поток:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:96
 msgid "Search engine:"
@@ -1476,7 +1491,7 @@ msgstr "Адрес:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:136
 msgid "Add new feed to this section:"
-msgstr "Добавить новое вещание в этот раздел:"
+msgstr "Добавить новую подписку в раздел:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:139
 #: ../../lib/frontends/widgets/newfeed.py:72
@@ -1492,7 +1507,7 @@ msgstr "аудио"
 
 #: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
-msgstr "Открыть файл с субтитрами..."
+msgstr "Загрузить субтитры из файла..."
 
 #: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
@@ -1508,7 +1523,7 @@ msgstr "_Открыть"
 
 #: ../../lib/frontends/widgets/menus.py:206
 msgid "_Download Item"
-msgstr "_Скачать"
+msgstr "_Загрузить"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
@@ -1536,7 +1551,7 @@ msgstr "_Сохранить выделенное"
 
 #: ../../lib/frontends/widgets/menus.py:220
 msgid "Copy Item _URL"
-msgstr "_Копировать URL"
+msgstr "_Копировать адрес"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
@@ -1561,7 +1576,7 @@ msgstr "Добавить сайт"
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
-msgstr "Новое пои_сковое вещание"
+msgstr "Подписаться на _поиск"
 
 #: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
@@ -1609,31 +1624,31 @@ msgstr "_Удалить сайты"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
-msgstr "_Обновить вещание"
+msgstr "_Обновить подписку"
 
 #: ../../lib/frontends/widgets/menus.py:257
 msgid "_Update Feeds"
-msgstr "_Обновить вещания"
+msgstr "_Обновить подписки"
 
 #: ../../lib/frontends/widgets/menus.py:258
 msgid "Update _All Feeds"
-msgstr "_Обновить все вещания"
+msgstr "_Обновить все подписки"
 
 #: ../../lib/frontends/widgets/menus.py:262
 msgid "_Import Feeds (OPML)"
-msgstr "_Импортировать вещания (OPML)"
+msgstr "_Импортировать подписки (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
-msgstr "_Экспортировать вещания (OPML)"
+msgstr "_Экспортировать подписки (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
-msgstr "По_делиться с друзьями"
+msgstr "По_делиться с другом"
 
 #: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
-msgstr "Скопировать URL"
+msgstr "Копировать адрес"
 
 #: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
@@ -1645,7 +1660,7 @@ msgstr "Новый список воспроизведения"
 
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
-msgstr "Создать новую папку для списка воспроизведения"
+msgstr "Новая папка для списков воспроизведения"
 
 #: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
@@ -1657,7 +1672,7 @@ msgstr "Удалить список воспроизведения"
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
-msgstr "Удалит список"
+msgstr "Удалит списки воспроизведения"
 
 #: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
@@ -1674,7 +1689,7 @@ msgstr "Воспроизвести"
 #: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
 msgid "_Play"
-msgstr "Воспроизвести"
+msgstr "_Воспроизвести"
 
 #: ../../lib/frontends/widgets/menus.py:295
 msgid "_Pause"
@@ -1686,43 +1701,43 @@ msgstr "_Остановить"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr "_Следующий Пункт"
+msgstr "_Следующий"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr "_Предыдущий Пункт"
+msgstr "_Предыдущий"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
-msgstr "Прыгнуть _вперед"
+msgstr "Промотать _вперед"
 
 #: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
-msgstr "Прыгнуть _назад"
+msgstr "Промотать _назад"
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
-msgstr "_Увеличить громкость"
+msgstr "_Громче"
 
 #: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
-msgstr "У_меньшить громкость"
+msgstr "_Тише"
 
 #: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
-msgstr "Полноэкранный режим"
+msgstr "_Во весь экран"
 
 #: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
-msgstr "_Переключить Вложен/Не вложен"
+msgstr "_Отделить / Присоединить"
 
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
-msgstr "С_убтитры"
+msgstr "_Субтитры"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
-msgstr "Выбрать файл с субтитрами..."
+msgstr "Указать файл с субтитрами..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
@@ -1763,7 +1778,7 @@ msgstr "_Блоги о Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr "Показать папку результатов преобразования."
+msgstr "Показать папку результатов преобразования"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
@@ -1783,7 +1798,7 @@ msgstr "Название"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:293
 msgid "Feed"
-msgstr "Вещание"
+msgstr "Подписка"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:295
 #: ../../lib/frontends/widgets/itemlistwidgets.py:754
@@ -1805,7 +1820,7 @@ msgstr "Размер"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:300
 msgid "ETA"
-msgstr "ETA"
+msgstr "Осталось"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:301
 msgid "Speed"
@@ -1818,7 +1833,7 @@ msgstr "Загружается"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:457
 msgid "Save as a Feed"
-msgstr "Сохранить вещание как"
+msgstr "Сохранить как подписку"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:505
 msgid "Pause All"
@@ -1839,8 +1854,7 @@ msgstr "Параметры загрузки"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:575
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-"%(available)s - ограничение на загрузку файлов (%(amount)s свободно на диске)"
+msgstr "%(available)s меньше объёма загрузки (%(amount)s свободно на диске)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:582
 #, python-format
@@ -1855,12 +1869,12 @@ msgstr "%(amount)s свободно на диске"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:607
 #, python-format
 msgid "%(rate)s uploading"
-msgstr "%(rate)s отправлено"
+msgstr "Раздаётся %(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:610
 #, python-format
 msgid "%(rate)s downloading"
-msgstr "%(rate)s загружается"
+msgstr "Загружается %(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
@@ -1874,28 +1888,28 @@ msgstr "Все"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:650
 #: ../../lib/frontends/widgets/prefpanel.py:331
 msgid "New"
-msgstr "Новый"
+msgstr "Новые"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
 #: ../../lib/frontends/widgets/prefpanel.py:333
 msgid "Off"
-msgstr "Выключено"
+msgstr "Отключено"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:659
 msgid "Share feed"
-msgstr "Отправить ссылку на вещание"
+msgstr "Поделиться подпиской"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:665
 msgid "Settings"
-msgstr "Настройки"
+msgstr "Параметры"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:671
 msgid "Remove feed"
-msgstr "Удалить вещание"
+msgstr "Удалить подписку"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:753
 msgid "Name"
-msgstr "Наименование"
+msgstr "Название"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:756
 msgid "Time"
@@ -1907,12 +1921,13 @@ msgstr "Показать|Все"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:889
 msgid "Non Feed"
-msgstr "Не лента"
+msgstr "Вне подписок"
 
 #: ../../lib/frontends/widgets/application.py:161
 msgid "Movies directory gone"
-msgstr "Каталог фильмов пропал"
+msgstr "Каталог фильмов отсутствует"
 
+# Сами-то читали, чего напереводили? Исправлено!
 #: ../../lib/frontends/widgets/application.py:163
 #, python-format
 msgid ""
@@ -1931,49 +1946,49 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
-"%(shortappname)s не может использовать основной каталог видео расположенный "
-"по адресу:\n"
+"%(shortappname)s не удается задействовать основной каталог с видео:\n"
 "\n"
 "%(moviedirectory)s\n"
 "\n"
-"Это может быть потому что он находится на внешнем диске, который не "
-"подключен, это каталог для которого %(shortappname)s  не имеет права на "
-"запись, или есть нечто, что не является каталогом на этом пути. \n"
+"Возможно, он находился на внешнем носителе, который теперь отключен, или "
+"%(shortappname)s запрещен в него доступ, или по указанному пути вовсе не "
+"каталог.\n"
 "\n"
-"Если вы продолжите, основной каталог видео будет сброшен в папку на этом "
-"диске. Если вы загрузили видео это вызовет то, что %(shortappname)s потеряет "
-"информацию об этих видео. \n"
+"Если продолжить, основной каталог для видео будет переназначен. При этом "
+"имеющаяся в %(shortappname)s информация о видеофайлах, загруженных в этот "
+"каталог, будет утрачена.\n"
 "\n"
-"Если вы выйдете, то вы можете подключить диск или иным образом устранить "
-"проблему и перезапустить %(shortappname)s."
+"Если сейчас закрыть программу, то можно будет подключить прежний носитель "
+"или как-то иначе устранить проблему, чтобы затем запустить %(shortappname)s "
+"снова."
 
 #: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
-msgstr "Ошибка воспроизведения файла"
+msgstr "Не удалось найти файл"
 
 #: ../../lib/frontends/widgets/application.py:342
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr "Файл %(filename)s был удален извне приложения %(appname)s."
+msgstr "Файл %(filename)s был удален вне %(appname)s."
 
 #: ../../lib/frontends/widgets/application.py:353
 msgid "Open Files..."
-msgstr "Открываю файлы..."
+msgstr "Открыть файлы..."
 
 #: ../../lib/frontends/widgets/application.py:364
 #: ../../lib/frontends/widgets/application.py:369
 msgid "Open Files - Error"
-msgstr "Ошибка при открытии файлов"
+msgstr "Открытие файлов — Ошибка"
 
 #: ../../lib/frontends/widgets/application.py:365
 #: ../../lib/frontends/widgets/application.py:653
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr "Файл %(filename)s не существует."
+msgstr "Файла %(filename)s не существует."
 
 #: ../../lib/frontends/widgets/application.py:370
 msgid "The following files do not exist:"
-msgstr "Следующие файлы не существуют:"
+msgstr "Следующих файлов не существует:"
 
 #: ../../lib/frontends/widgets/application.py:407
 msgid "New Download"
@@ -1981,11 +1996,11 @@ msgstr "Новая загрузка"
 
 #: ../../lib/frontends/widgets/application.py:408
 msgid "Enter the URL of the item to download"
-msgstr "Введите URL файла, чтобы скачать его"
+msgstr "Введите адрес загружаемого объекта"
 
 #: ../../lib/frontends/widgets/application.py:409
 msgid "New Download - Invalid URL"
-msgstr "Новая загрузка - Некорректный адрес URL"
+msgstr "Новая загрузка — Неверный адрес"
 
 #: ../../lib/frontends/widgets/application.py:410
 msgid ""
@@ -1994,10 +2009,10 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
-"Вы ввели адрес, который не доступен.\n"
-"Пожалуйста, проверьте URL и попробуйте снова.\n"
+"Введённый адрес неверен.\n"
+"Пожалуйста, проверьте его и повторите попытку.\n"
 "\n"
-"Введите URL файла, чтобы скачать его"
+"Введите адрес загружаемого объекта"
 
 #: ../../lib/frontends/widgets/application.py:418
 #, python-format
@@ -2024,14 +2039,14 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
-"Один из этих элементов был загружен не из вещания. Вы хотите полностью "
-"удалить файл или удалить только запись в библиотеке?"
+"Один из этих элементов был загружен вне подписок. Желаете удалить файл или "
+"только сведения из библиотеки?"
 msgstr[1] ""
-"Некоторые из этих элементов были загружены не из вещаний. Вы хотите "
-"полностью удалить файлы или удалить только записи в библиотеке?"
+"Некоторые из этих элементов были загружены вне подписок. Желаете удалить "
+"файлы или только сведения из библиотеки?"
 msgstr[2] ""
-"Некоторые из этих элементов были загружены не из вещаний. Вы хотите "
-"полностью удалить файлы или удалить только записи в библиотеке?"
+"Некоторые из этих элементов были загружены вне подписок. Желаете удалить "
+"файлы или только сведения из библиотеки?"
 
 #: ../../lib/frontends/widgets/application.py:458
 msgid ""
@@ -2041,22 +2056,22 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
-"Один из этих элементов является папкой. Удаление/перемещение папки "
-"удалит/переместит все ее содержимое"
+"Один из этих элементов является папкой. Удаление или перемещение папки также "
+"повлечет удаление или перемещение её содержимого"
 msgstr[1] ""
-"Некоторые из этих элементов являются папками. Удаление/перемещение папок "
-"удалит/переместит все их содержимое"
+"Некоторые из этих элементов являются папками. Удаление или перемещение папок "
+"также повлечет удаление или перемещение их содержимого"
 msgstr[2] ""
-"Некоторые из этих элементов являются папками. Удаление/перемещение папок "
-"удалит/переместит все их содержимое"
+"Некоторые из этих элементов являются папками. Удаление или перемещение папок "
+"также повлечет удаление или перемещение их содержимого"
 
 #: ../../lib/frontends/widgets/application.py:473
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Удалить файл, вы уверены?"
-msgstr[1] "Удалить все %(count)d файла, вы уверены?"
-msgstr[2] "Удалить все %(count)d файлов, вы уверены?"
+msgstr[0] "Действительно желаете удалить этот файл?"
+msgstr[1] "Действительно желаете удалить эти %(count)d файла?"
+msgstr[2] "Действительно желаете удалить %(count)d файлов?"
 
 #: ../../lib/frontends/widgets/application.py:480
 msgid ""
@@ -2064,14 +2079,14 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
-"Один из этих элементов является папкой. Удаление папки удалит все ее "
+"Один из этих элементов является папкой. Вслед за ним будет удалено всё его "
 "содержимое"
 msgstr[1] ""
-"Некоторые из этих элементов являются папками. Удаление папок удалит все их "
-"содержимое"
+"Некоторые из этих элементов являются папками. Вслед за ними будет удалено "
+"всё их содержимое"
 msgstr[2] ""
-"Некоторые из этих элементов являются папками. Удаление папок удалит все их "
-"содержимое"
+"Некоторые из этих элементов являются папками. Вслед за ними будет удалено "
+"всё их содержимое"
 
 #: ../../lib/frontends/widgets/application.py:524
 msgid "Save Item As..."
@@ -2083,7 +2098,7 @@ msgstr "Введите адрес добавляемого сайта"
 
 #: ../../lib/frontends/widgets/application.py:584
 msgid "Add Website - Invalid URL"
-msgstr "Добавление сайта - Неправильный URL"
+msgstr "Добавление сайта — Некорректный адрес"
 
 #: ../../lib/frontends/widgets/application.py:585
 msgid ""
@@ -2092,26 +2107,26 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
-"Введенный URL не верный.\n"
-"Пожалуйста, проверьте URL и попробуйте снова.\n"
+"Введенный адрес недействителен.\n"
+"Пожалуйста, проверьте адрес и повторите попытку.\n"
 "\n"
-"Введите URL веб-сайта:"
+"Введите адрес добавляемого сайта:"
 
 #: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
-msgstr "Импортировать OPML-файл"
+msgstr "Импортировать список OPML"
 
 #: ../../lib/frontends/widgets/application.py:645
 msgid "OPML Files"
-msgstr "OPML-файлы"
+msgstr "Файлы OPML"
 
 #: ../../lib/frontends/widgets/application.py:652
 msgid "Import OPML File - Error"
-msgstr "Импорт OPML файла - Ошибка"
+msgstr "Импорт списка OPML — Ошибка"
 
 #: ../../lib/frontends/widgets/application.py:658
 msgid "Export OPML File"
-msgstr "Экспортировать OPML-файл"
+msgstr "Экспортировать список в OPML"
 
 #: ../../lib/frontends/widgets/application.py:682
 msgid "Create Playlist"
@@ -2232,7 +2247,9 @@ msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
 msgstr[0] "У вас в процессе %(count)d преобразование. Все равно выйти?"
 msgstr[1] ""
-"У вас в процессе или  ожидают %(count)d преобразований. Все равно выйти?"
+"У вас в процессе или  ожидают %(count)d преобразования. Все равно выйти?"
+msgstr[2] ""
+"У вас в процессе или ожидают %(count)d преобразований. Все равно выйти?"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
@@ -2920,7 +2937,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Удалить"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -3562,7 +3579,7 @@ msgstr "Достигнут предел перенаправлений: %(url)s"
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Не удалось авторизоваться на прокси: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
@@ -3730,3 +3747,416 @@ msgstr "Искать везде"
 
 #~ msgid "Custom Channels"
 #~ msgstr "Пользовательский канал"
+
+#~ msgid "_Paste"
+#~ msgstr "_Вставить"
+
+#~ msgid "_Copy"
+#~ msgstr "_Копировать"
+
+#~ msgid "Select _All"
+#~ msgstr "Выделить_все"
+
+#~ msgid "Cu_t"
+#~ msgstr "_Вырезать"
+
+#~ msgid "Auto Download"
+#~ msgstr "Автоматическая загрузка"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Использовать для видео при проигрывании аудио:"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d час"
+#~ msgstr[1] "%(count)d часов"
+#~ msgstr[2] "%(count)d часов"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d день"
+#~ msgstr[1] "%(count)d дней"
+#~ msgstr[2] "%(count)d дней"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr ""
+#~ "Обнаружить новые видео-фрагменты в данных папках и включить их в библиотеку:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr "Возобновить воспроизведение видео-фрагмента с момента остановки."
+
+#~ msgid "Rename Site"
+#~ msgstr "Переименовать сайт"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Введите новое имя сайта %(name)s"
+
+#~ msgid "SITES"
+#~ msgstr "САЙТЫ"
+
+#~ msgid "Remove Site"
+#~ msgstr "Удалить сайт"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Невозможно открыть %(filename)s для записи"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Некорректный заголовок: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Некорректная строка статуса: %(msg)s"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr ""
+#~ "Вы запустили вариант приложения %(appname)s с пользовательским набором "
+#~ "каналов."
+
+#~ msgid "None"
+#~ msgstr "Не использовать"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Чтобы изменения вступили в силу, вы должны перезапустить воспроизведение."
+
+#~ msgid "Re_name Item"
+#~ msgstr "_Переименовать элемент"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "В очереди для автоматического скачивания"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Настройки автоматического скачивания:"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Проигрывать видео одно за другим."
+
+#~ msgid "Stop after each video"
+#~ msgstr "Останавливать после каждого видео"
+
+#~ msgid "No Results Found"
+#~ msgstr "Ничего не найдено"
+
+#~ msgid "Rename Item"
+#~ msgstr "Переименовать элемент"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Введите новое название элемента"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d минута"
+#~ msgstr[1] "%(count)d минут"
+#~ msgstr[2] "%(count)d минут"
+
+#~ msgid "Add to Library"
+#~ msgstr "Добавить в библиотеку"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Автоматическое устаревание файлов:"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s ГБ/с"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s Б/с"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s МБ/с"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s КБ/с"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s ГБ"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s МБ"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s Б"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s КБ"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Вернуть название элемента"
+
+#~ msgid "_Options"
+#~ msgstr "Параметры"
+
+#~ msgid "Add Site"
+#~ msgstr "Добавить сайт"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Приостановить автозагрузку когда играют:"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Добавление сайта - ошибочный URL"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Удалить %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Вы уверены, что хотите удалить %(name)s?"
+
+#~ msgid "Add to library"
+#~ msgstr "Добавить в библиотеку"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Искать все: %(text)s"
+
+#~ msgid "Migrating files"
+#~ msgstr "Переносим файлы"
+
+#~ msgid "FEEDS"
+#~ msgstr "ВЕЩАНИЯ"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Подписка на несколько вещаний"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Введите имя для нового каталога вещаний:"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "ПРИМЕЧАНИЕ: Вы уже подписаны на одно из этих вещаний. Это вещание останется "
+#~ "без изменения."
+#~ msgstr[1] ""
+#~ "ПРИМЕЧАНИЕ: Вы уже подписаны на %(count)d из этих вещаний. Эти вещания "
+#~ "останутся без изменения."
+#~ msgstr[2] ""
+#~ "ПРИМЕЧАНИЕ: Вы уже подписаны на %(count)d из этих вещаний. Эти вещания "
+#~ "останутся без изменения."
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Создать вещание?"
+#~ msgstr[1] "Создать вещания (%(count)d)?"
+#~ msgstr[2] "Создать вещания (%(count)d)?"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Добро пожаловать в начальную настройку %(name)s"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Введите URL добавляемого сайта"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Введенный адрес не является корректным URL.\n"
+#~ "Проверьте правильность адреса и повторите. \n"
+#~ "\n"
+#~ "Введите адрес сайта для добавления"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Удалить сайт"
+#~ msgstr[1] "Удалить сайты"
+#~ msgstr[2] "Удалить сайты"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Вы действительно хотите удалить этот сайт?"
+#~ msgstr[1] "Вы действительно хотите удалить %(count)s этих сайта?"
+#~ msgstr[2] "Вы действительно хотите удалить %(count)s этих сайтов?"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Завершение начальной настройки %(name)s"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "Выбран %(count)d сайт"
+#~ msgstr[1] "Выбраны %(count)d сайта"
+#~ msgstr[2] "Выбраны %(count)d сайтов"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s не может скачать файл по этому адресу:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Убрать Сайты"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Некорректный статус: %(code)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Некорректный размер фрагмента: %(msg)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Внутренняя ошибка: не готов к отправке"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s не удалось сохранить базу данных: диск заполнен.\n"
+#~ "Мы рекомендуем удалить ненужные файлы с диска или удалить часть видео из "
+#~ "вашей коллекции.\n"
+#~ "Недавние изменения могли быть потеряны."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Недостаточно свободного места на диске"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Нехватка места на жестком диске для обновления базы данных из прошлой версии "
+#~ "%(appname)s. Удалите некоторые файлы и попробуйте еще раз."
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Торрент-файл %(filename)s, скорее всего, повреждён и не может быть открыт. "
+#~ "[OK]"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Последующие экраны позволят Вам настроить %(name)s согласно вашим "
+#~ "предпочтениям.\n"
+#~ "\n"
+#~ "Рекомендуется, чтобы %(name)s стартовал во время загрузки вашего компьютера. "
+#~ "В этом случае незавершенные файлы смогут быть загружены полностью, а новые "
+#~ "мультимедийные файлы могут быть закачаны в фоновом режиме. Вы сможете "
+#~ "воспроизвести эти файлы тогда, когда это Вам будет удобно."
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s не может найти главный каталог с видео, расположенный в:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Возможно, он расположен на вашем внешнем диске, который не подключен.\n"
+#~ "\n"
+#~ "Если вы продолжите, главный каталог для видео опять разместится на этом "
+#~ "диске. Если у вас есть скачанные видеофайлы, то это вынудит %(shortappname)s "
+#~ "потерять информацию о них.\n"
+#~ "\n"
+#~ "Если вы выйдите, то сможете подключить диск или решить проблему каким-либо "
+#~ "иным способом, и после этого перезапустить %(shortappname)s."
+
+#~ msgid "Unknown Language"
+#~ msgstr "Неизвестный язык"
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "Редактировать метаданные этого элемента."
+
+#~ msgid "other"
+#~ msgstr "прочие"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "К сожалению, %(appname)s не удалось обновить базу данных из-за ошибок.\n"
+#~ "\n"
+#~ "Убедитесь, что ваш диск не заполнен. Если он заполнен, закройте %(appname)s, "
+#~ "освободите немного места, и запустите %(appname)s повторно.\n"
+#~ "\n"
+#~ "Если ваш диск не заполнен, помогите нам понять проблему, выйдите и сообщите "
+#~ "об ошибке в bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Наконец, вы можете начать все заново и ваша поврежденная база данных будет "
+#~ "удалена, но вам придется заново добавить свои ленты и мультимедийные файлы."
+
+#~ msgid "(Pending)"
+#~ msgstr "Ожидает"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Получен символ %(character)r вместо ожидаемого перевода строки"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Запрос от источника информации не получен"
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Универсальный Китайский"
+
+#, python-format
+#~ msgid "Conversion to %s"
+#~ msgstr "Преобразование в %s"
+
+#~ msgid "FAILED!"
+#~ msgstr "Неудачно!"
+
+#, python-format
+#~ msgid "Pending conversion to %s"
+#~ msgstr "Ожидание преобразования в %s"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-15 21:45+0000\n"
-"Last-Translator: lyyser <Unknown>\n"
+"PO-Revision-Date: 2010-12-07 13:13+0000\n"
+"Last-Translator: bushido <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -696,7 +696,7 @@ msgstr ""
 #: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr ""
+msgstr "%(engine)s selle jaoks  -> '%(query)s'"
 
 #: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
@@ -737,7 +737,7 @@ msgstr "pole ühendust - taastatakse %s"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "pole ühendust - taastatakse  varsti"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -893,7 +893,7 @@ msgstr ""
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Põhjus on teadmata"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
@@ -1061,21 +1061,22 @@ msgstr "Alusta värskelt"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "Sisalda andmebaasi"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "Ära sisalda andmebaasi"
 
 #: ../../lib/dialogs.py:212
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s nõuab kasutajanime ja parooli \"%(realm)s\" jaoks."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Sisselogimine nõutav"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -1154,32 +1155,32 @@ msgstr "käivitumas..."
 
 #: ../../lib/controller.py:139
 msgid "Sending Crash Report"
-msgstr ""
+msgstr "Saadetakse kokkujooksmise raporti"
 
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Saadetakse kokkujooksmise raporti (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:64
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:67
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:70
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:86
 #, python-format
@@ -1212,22 +1213,22 @@ msgstr[1] "%(num)d sekundit"
 #: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:124
 #, python-format
@@ -3602,8 +3603,20 @@ msgstr "Esitusnimekirja näidis"
 msgid "Search All"
 msgstr "Otsi kõike"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Vaikimisi aeguvad videod pärast:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Kohandatud kanalid"
+
+#~ msgid "Add to library"
+#~ msgstr "Lisa videokogusse"
+
 #~ msgid "_Options"
 #~ msgstr "_Valikud"
+
+#~ msgid "Add to Library"
+#~ msgstr "Lisa videokogusse"
 
 #, python-format
 #~ msgid "Bad Status Code: %(code)s"
@@ -3615,11 +3628,17 @@ msgstr "Otsi kõike"
 #~ msgid "Revert Item Name"
 #~ msgstr "Taasta kirje nimi"
 
+#~ msgid "Start Seeding"
+#~ msgstr "Alusta jagamist"
+
 #~ msgid "Auto-Expire Videos:"
 #~ msgstr "Automaatselt aeguvad videod:"
 
 #~ msgid "Remove Site"
 #~ msgstr "Eemalda sait"
+
+#~ msgid "View:"
+#~ msgstr "Vaata:"
 
 #~ msgid "Re_name Item"
 #~ msgstr "_Nimeta"
@@ -3639,6 +3658,9 @@ msgstr "Otsi kõike"
 #, python-format
 #~ msgid "%(size)s b/s"
 #~ msgstr "%(size)s b/s"
+
+#~ msgid "None"
+#~ msgstr "Pole"
 
 #~ msgid "SITES"
 #~ msgstr "LEHEKÜLJED"
@@ -3673,6 +3695,9 @@ msgstr "Otsi kõike"
 
 #~ msgid "Remove Sites"
 #~ msgstr "Eemalda lehekülg"
+
+#~ msgid "FEEDS"
+#~ msgstr "VOOD"
 
 #, python-format
 #~ msgid "Search All: %(text)s"
@@ -3744,3 +3769,176 @@ msgstr "Otsi kõike"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Teretulemast %(name)s esmakasutusele"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Halb Päiserida: %(msg)s"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Pausi Automaatset Allalaadimist kui nii palju objekte on veel mängimata:"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Sait valitud"
+#~ msgstr[1] "%(count)d Saiti valitud"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Aadress, mille sisestasid pole õige.\n"
+#~ "Palun kontrolli URL´i ja proovi uuesti.\n"
+#~ "\n"
+#~ "Sisesta saidi URL lisamiseks"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Sisesta saidi URL lisamiseks"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Automaatse allalaadimise seaded:"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "%(name)s Esimese korra paigaldamise lõpetamine"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s ei leia esmast videokataloogi, mis asub aadressil:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "See võib olla sellepärast, et see on paigutatud kaasaskantavale kettale, mis "
+#~ "pole ühendatud.\n"
+#~ "\n"
+#~ "Kui sa jätkas, peamine videokataloog taasväärtustatakse selle ketta "
+#~ "asukohale. Kui sul oli videoid allalaetud, siis see võib põhjustada "
+#~ "%(shortappname)s videote detailide kaotust.\n"
+#~ "\n"
+#~ "Kui sa loobud, siis sa saad ühendada ketast või paranda see probleem ja "
+#~ "taaskäivita %(shortappname)s."
+
+#~ msgid "queued for autodownload"
+#~ msgstr "autoallalaadimise järjekorda pandud"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Järgmised mõned ekraanid aitavad sul seadistada %(name)s et see töötaks "
+#~ "hästi sinule.\n"
+#~ "\n"
+#~ "Me  nõuame, et sul oleks %(name)s käivitatud, kui arvuti käivitub. Sel "
+#~ "viisil, allalaadimised edasiliikumisel saavad lõpetada allalaadimise ja uusi "
+#~ "meediafaili saadakse alla laadida tagaplaanil, valmis siis kui sa tahad neid "
+#~ "vaadata."
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Oodatud CRLF sai: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Paha rämpsusuurus: %(msg)s"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Pole niipalju kettaruumi, et uuendada oma andmebaasi eelmiselt %(appname)s "
+#~ "versioonilt. Palun kustuta mõned failid ja proovi uuesti."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Ebapiisav kettaruum"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr "%(filename)s torrenti fail näib olevat rikutud ja ei saa avada. [OK]"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s pole suuteline allalaadima faili sellel URL´il:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Ei saa avada %(filename)s kirjutamiseks"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d päev"
+#~ msgstr[1] "%(count)d päeva"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s ei saanud salvstada oma andmebaasi: Ketas täis.\n"
+#~ "Me soovitame failide kustutamit täiskettalt või kustutades mõnda filmi oma "
+#~ "kollekstioonist.\n"
+#~ "Hiljutised muudatused võivad kaotsi minna."
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Me vabandame, %(appname)s ei saadud uuendada andmebaasi vigade tõttu.\n"
+#~ "\n"
+#~ "Vaata ega su kõvaketas pole täis.  Kui on täis, siis välju %(appname)s, "
+#~ "puhasta kõvaketast ja käivita  %(appname)s uuesti.\n"
+#~ "\n"
+#~ "Kui su kõvaketas pole täis, aita meil aru saada probleemist väljudes, siis "
+#~ "raporteeida veast siin bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Lõpuks, sa saad alustada uuesti ja sinu kahjustatud andmebaas eemaldatakse, "
+#~ "aga sa pead uuesti lisama oma vood ja meediafailid.."
+
+#~ msgid "Universal, Chinese"
+#~ msgstr "Universaalne, Hiina"

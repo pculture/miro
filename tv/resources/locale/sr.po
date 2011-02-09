@@ -16,18 +16,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:42+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 "Language: sr\n"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:163
+msgid "Hide Others"
+msgstr "Sakrij Ostale"
+
+#: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
+#: ../../lib/httpclient.py:165
+msgid "File not found"
+msgstr "Fajl nije nađen"
+
+#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:216
+#: ../../lib/frontends/widgets/firsttimedialog.py:253
+msgid "No"
+msgstr "ne"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:326
+#: ../../lib/frontends/widgets/statictabs.py:121
+msgid "Downloading"
+msgstr "Downloading"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:463
 #: ../../lib/frontends/widgets/statictabs.py:97
 msgid "Video Search"
 msgstr "Претрага"
 
+#: ../../lib/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Korisničko ime"
+
 #: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
 msgstr "Повезивање није успело."
+
+#: ../../lib/net.py:102
+msgid "Timeout"
+msgstr "Timeout"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -77,10 +104,6 @@ msgstr "Услуге"
 #, python-format
 msgid "Hide %(appname)s"
 msgstr "Сакриј %(appname)s"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:163
-msgid "Hide Others"
-msgstr "Сакриј остале"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:165
 msgid "Show All"
@@ -737,11 +760,6 @@ msgstr "Репродукује се"
 msgid "activity"
 msgstr "активност"
 
-#: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
-#: ../../lib/httpclient.py:165
-msgid "File not found"
-msgstr "Датотека није пронађена."
-
 #: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
 msgstr "Грешка у гребању адресе флеш датотеке."
@@ -957,11 +975,6 @@ msgstr "Готово"
 #: ../../lib/frontends/widgets/firsttimedialog.py:254
 msgid "Yes"
 msgstr "Да"
-
-#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:216
-#: ../../lib/frontends/widgets/firsttimedialog.py:253
-msgid "No"
-msgstr "Не"
 
 #: ../../lib/dialogs.py:100
 msgid "Quit"
@@ -1835,11 +1848,6 @@ msgstr "Процењено време"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:301
 msgid "Speed"
 msgstr "Брзина"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:326
-#: ../../lib/frontends/widgets/statictabs.py:121
-msgid "Downloading"
-msgstr "Преузимање"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:457
 msgid "Save as a Feed"
@@ -2986,10 +2994,6 @@ msgstr "Отвори у прегледачу"
 msgid "Download this video"
 msgstr "Преузми овај видео запис"
 
-#: ../../lib/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Корисничко име:"
-
 #: ../../lib/frontends/widgets/rundialog.py:86
 msgid "Password:"
 msgstr "Лозинка:"
@@ -3664,10 +3668,6 @@ msgstr "Грешка при повезивању: %(msg)s"
 msgid "SSL connection error"
 msgstr "Грешка SSL везе."
 
-#: ../../lib/net.py:102
-msgid "Timeout"
-msgstr "Време је истекло."
-
 #: ../../lib/net.py:103
 #, python-format
 msgid "Connection to %(host)s timed out"
@@ -3729,5 +3729,325 @@ msgstr "Пример списка нумера"
 msgid "Search All"
 msgstr "Претражи све"
 
+#~ msgid "None"
+#~ msgstr "Nijedan"
+
+#~ msgid "Add to Library"
+#~ msgstr "Dodaj u Biblioteku"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Morate da restartujete Miro kako bi promene vizualizacije imale efekta."
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Koristi ovo za Video kada puštaš audio:"
+
 #~ msgid "By default, videos expire after:"
 #~ msgstr "Po pravilu, video ne radi posle:"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Лоша статусна линија: %(msg)s"
+
+#~ msgid "Rename Item"
+#~ msgstr "Преименуј ставку"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Врати име ставке"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "на чекању за аутоматско преузимање"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d изабрана страница"
+#~ msgstr[1] "%(count)d изабраних страница"
+#~ msgstr[2] "%(count)d изабраних страница"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Адреса коју сте уписали није исправан url.\n"
+#~ "Молимо проверите URL и покушајте поново.\n"
+#~ "\n"
+#~ "Упишитe URL странице за додавање"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Упишите URL странице за додавање"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Додај страницу - неисправан URL"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Упишите ново име за ставку"
+
+#~ msgid "Add Site"
+#~ msgstr "Додај страницу"
+
+#~ msgid "Remove Site"
+#~ msgstr "Уклони страницу"
+
+#~ msgid "FEEDS"
+#~ msgstr "ДОВОДИ"
+
+#~ msgid "SITES"
+#~ msgstr "СТРАНИЦЕ"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Уклони странице"
+
+#~ msgid "No Results Found"
+#~ msgstr "Нема пронађених резултата"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Недовољно места на диску"
+
+#~ msgid "_Copy"
+#~ msgstr "_Умножи"
+
+#~ msgid "Select _All"
+#~ msgstr "Изабери _све"
+
+#~ msgid "_Options"
+#~ msgstr "_Опције"
+
+#~ msgid "_Paste"
+#~ msgstr "_Налепи"
+
+#~ msgid "_Video"
+#~ msgstr "_Видео снимак"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Видео снимци који аутоматски истичу"
+
+#~ msgid "Rename Site"
+#~ msgstr "Преименуј страницу"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Упиши ново име за страницу %(name)s"
+
+#~ msgid "Migrating files"
+#~ msgstr "Померање датотека"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Да ли сте сигурни да желите да уклоните ову страницу?"
+#~ msgstr[1] "Да ли сте сигурни да желите да уклоните ове %(count)s странице?"
+#~ msgstr[2] "Да ли сте сигурни да желите да уклоните ових %(count)s страница?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Уклони страницу"
+#~ msgstr[1] "Уклони странице"
+#~ msgstr[2] "Уклони странице"
+
+#~ msgid "Auto Download"
+#~ msgstr "Аутоматско преузимање"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Пре_именуј ставку"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d сат"
+#~ msgstr[1] "%(count)d сата"
+#~ msgstr[2] "%(count)d сати"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d дан"
+#~ msgstr[1] "%(count)d дана"
+#~ msgstr[2] "%(count)d дана"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d минут"
+#~ msgstr[1] "%(count)d минута"
+#~ msgstr[2] "%(count)d минута"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s неможе да пронађе главни директоријум видео датотека "
+#~ "смештен у:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Можда се локација односи на екстерни уређај који тренутно није повезан.\n"
+#~ "\n"
+#~ "Ако наставите, главни видео директоријум ће бити ресетован на предефинисану "
+#~ "локацију на овом драјву. ако сте имали видео датотеке преузете и сачуване у "
+#~ "овај директоријум ова промена ће изазвати да програм %(shortappname)s изгуби "
+#~ "детаљне информације о тим видео датотекама.\n"
+#~ "\n"
+#~ "Ако откажете, можете повезати уређај на оме се налази директоријум са видео "
+#~ "датотекама, или поправите проблем и поново покрените програм "
+#~ "%(shortappname)s."
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Nedovoljno mesta na disku za unapređivanje baze podataka sa prethodne "
+#~ "verzije %(appname)s. Molim vas obrišite nekoliko fajlova i pokušajte ponovo."
+
+#~ msgid "Unknown Language"
+#~ msgstr "Nepoznat jezik"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Очекиван CRLF има вредност: %(character)r"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Неисправан ред у заглављу: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Неисправна величина дела: %(msg)s"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Поставке за аутоматско преузимање:"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Следећи видео"
+
+#~ msgid "_Previous Video"
+#~ msgstr "Претходни видео"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Паузирај аутоматско преузимање када је оволико ставки непогледано:"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Неколико наредних прозора ће Вам помоћи да подесите %(name)s како би највише "
+#~ "одговарало Ваших потребама.\n"
+#~ "\n"
+#~ "Предлажемо да се %(name)s покреће заједно с Вашим рачунаром. На овај начин, "
+#~ "започета преузимања могу да се заврше и нове ставке могу да се преузимају у "
+#~ "позадини, спремне за репродуковање."
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Добро дошли у %(name)s прве поставке"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Подешавање при првом покретању %(name)s је завршено"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Претражи све: %(text)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s није доступно за преузимање на овој адреси:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Грешка при отварању %(filename)s у циљу писања"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Извињавамо се, %(appname)s није успела да ажурира Вашу базу података.\n"
+#~ "\n"
+#~ "Проверите да ли Вам је тврди диск попуњен. Ако јесте, онда изађите из "
+#~ "%(appname)s, ослободите се мало простора, и покрените %(appname)s поново.\n"
+#~ "\n"
+#~ "Ако Вам диск није попуњен, изађите из програма и пошаљите нам извештај квара "
+#~ "на bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Коначно, можете почети испочетка — оштећена база података ће бити избрисана, "
+#~ "тако да ћете морати да поново додате Ваше доводе и медијуме."
+
+#~ msgid "(Pending)"
+#~ msgstr "(У току)"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Неисправан кôд стања : %(code)s"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Захтев процесног ланца никада није покренут"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Унутрашка грешка: Нисам спреман за слање"

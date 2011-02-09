@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3584,6 +3584,12 @@ msgstr "Adibidezko zerrenda"
 msgid "Search All"
 msgstr ""
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Ez bada zehazten, bideoen iraungitze (kaduzitate) denbora:"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Kanal pertsonalizatuak"
+
 #~ msgid "Auto Download"
 #~ msgstr "Auto Deskarga"
 
@@ -3607,3 +3613,77 @@ msgstr ""
 
 #~ msgid "_Video"
 #~ msgstr "_Bideo"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Barne-errorea: Bidaltzeko prest ez"
+
+#~ msgid "No Results Found"
+#~ msgstr "Bilaketak emaitzarik ez"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "CRLF espero zen baina %(character)r jaso da"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Deskarga automatikoen ezarpenak:"
+
+#~ msgid "Migrating files"
+#~ msgstr "Fitxategiak migratzen"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "Deskarga automatikorako ilaratuta"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr ""
+#~ "Horrenbeste elementu ikusi gabe daudenean deskarga automatikoa pausarazi:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Ongietorri %(name)s-(r)en lehen aldiko instalaziora"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Hurrengo pantailek %(name)s zure beharrizanetara moldatzen lagunduko "
+#~ "dizute.\n"
+#~ "\n"
+#~ "%(name)s zure konputagailuarekin batera abiaraztea gomendatzen dizugu. "
+#~ "Horrela, burutu gabeko deskargak bukatu egingo dira eta multimedia fitxategi "
+#~ "berriak atzeko planoan deskargatuko dira, zuk nahi duzunean ikusteko prest."
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#~ msgid "(Pending)"
+#~ msgstr "(Burutu gabe)"

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -3739,3 +3739,452 @@ msgstr "Primer seznama predvajanja"
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr "Najdi vse"
+
+#~ msgid "_Video"
+#~ msgstr "_Posnetki"
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Posnetki naj privzeto pretečejo po:"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Naročen na več virov"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Naslednji posnetek"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Kanali po meri"
+
+#~ msgid "Cu_t"
+#~ msgstr "I_zreži"
+
+#~ msgid "_Copy"
+#~ msgstr "_Kopiraj"
+
+#~ msgid "_Paste"
+#~ msgstr "_Prilepi"
+
+#~ msgid "Select _All"
+#~ msgstr "Izberi _vse"
+
+#~ msgid "Auto Download"
+#~ msgstr "Samodejno prenesi"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "Zahteva cevovoda ni bila nikoli zagnana"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Notranja napaka: ni pripravljeno za pošiljanje"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Prejšnji posnetek"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Nepravilna vrstica stanja: %(msg)s"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d ur"
+#~ msgstr[1] "%(count)d ura"
+#~ msgstr[2] "%(count)d uri"
+#~ msgstr[3] "%(count)d ure"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr ""
+#~ "Predvajanje nadaljuj z mesta, na katerem je bilo nazadnje ustavljeno."
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d dni"
+#~ msgstr[1] "%(count)d dan"
+#~ msgstr[2] "%(count)d dneva"
+#~ msgstr[3] "%(count)d dnevi"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Pričakovan CRLF, pridobljeno: %(character)r"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "Datoteke %(filename)s ni mogoče odpreti za pisanje"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Pri predvajanju zvoka posnetkov uporabi:"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Nepravilna vrstica glave: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Nepravilna velikost koščka: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Nepravilna koda stanja: %(code)s"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "Datoteka torrenta %(filename)s se zdi okvarjena, zato je ni mogoče odpreti. "
+#~ "[OK]"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Vnesite novo ime za %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Poganjate različico %(appname)s z naborom kanalov po meri."
+
+#~ msgid "Rename Site"
+#~ msgstr "Preimenuj mesto"
+
+#~ msgid "SITES"
+#~ msgstr "MESTA"
+
+#~ msgid "Remove Site"
+#~ msgstr "Odstrani mesto"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Opazuj nove posnetke v teh mapah in jih vključi v knjižnico:"
+
+#~ msgid "None"
+#~ msgstr "Brez"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Vnesite novo ime za element"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Nastavitev samodejnega prenosa:"
+
+#~ msgid "Rename Item"
+#~ msgstr "Preimenuj predmet"
+
+#~ msgid "Re_name Item"
+#~ msgstr "P_reimenuj predmet"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "v vrsti za samodejni prenos"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s ne najde prvotne mape posnetkov:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Morda gre za mapo na zunanjem pogonu, ki ni povezan.\n"
+#~ "\n"
+#~ "Če nadaljujete, bo prvotna mapa posnetkov ponastavljena na mesto na tem "
+#~ "pogonu.  Če ste že prenesli kakšne posnetke, bo %(shortappname)s podatke o "
+#~ "teh posnetkih izgubil.\n"
+#~ "\n"
+#~ "Če prete program, lahko povežete pogon ali drugače rešite težavo in ponovno "
+#~ "poženete %(shortappname)s."
+
+#~ msgid "Stop after each video"
+#~ msgstr "Ustavi po vsakem"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Predvajaj enega za drugim"
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Če želite uveljaviti spremembe vizualizacije, morate ponovno začeti s "
+#~ "predvajanjem."
+
+#~ msgid "No Results Found"
+#~ msgstr "Ni zadetkov"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d minut"
+#~ msgstr[1] "%(count)d minuta"
+#~ msgstr[2] "%(count)d minuti"
+#~ msgstr[3] "%(count)d minute"
+
+#~ msgid "Add to Library"
+#~ msgstr "Dodaj v knjižnico"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Posnetki naj zastarijo po:"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s Gb/s"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s Mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s Mb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s Gb"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Povrni ime elementa"
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Izberi vse: %(text)s"
+
+#~ msgid "Add to library"
+#~ msgstr "Dodaj v knjižnico"
+
+#~ msgid "_Options"
+#~ msgstr "_Možnosti"
+
+#~ msgid "Add Site"
+#~ msgstr "Dodaj _mesto"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Vnesite ime za novo mapo vira"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Odstrani %(name)s"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Želite ustvariti %(count)d virov?"
+#~ msgstr[1] "Želite ustvariti %(count)d vir?"
+#~ msgstr[2] "Želite ustvariti %(count)d vira?"
+#~ msgstr[3] "Želite ustvariti %(count)d vire?"
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Ste prepričani, da želite odstraniti %(name)s?"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "OPOMBA: Na nekatere teh virov ste že naročeni. Ti viri bodo ostali tam, kjer "
+#~ "so."
+#~ msgstr[1] ""
+#~ "OPOMBA: Na nekatere teh virov ste že naročeni. Ti viri bodo ostali tam, kjer "
+#~ "so."
+#~ msgstr[2] ""
+#~ "OPOMBA: Na nekatere teh virov ste že naročeni. Ti viri bodo ostali tam, kjer "
+#~ "so."
+#~ msgstr[3] ""
+#~ "OPOMBA: Na nekatere teh virov ste že naročeni. Ti viri bodo ostali tam, kjer "
+#~ "so."
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Dodaj mesto - neveljaven URL"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Vnesite URL mesta, ki ga želite dodati"
+
+#~ msgid "Migrating files"
+#~ msgstr "Migracija datotek"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Ustavi samodejno prenašanje, če je nepredvajanih toliko predmetov:"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Naslov, ki ste ga vnesli, ni veljaven URL.\n"
+#~ "Preverite URL in poskusite znova.\n"
+#~ "\n"
+#~ "Vnesite URL mesta, ki ga želite dodati"
+
+#~ msgid "FEEDS"
+#~ msgstr "VIRI"
+
+#~ msgid "Start Seeding"
+#~ msgstr "Začni sejati"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Dobrodošli v prvi namestitvi programa %(name)s"
+
+#~ msgid "View:"
+#~ msgstr "Pogled:"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Zaključevanje prve namestitve programa %(name)s"
+
+#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
+#~ msgstr "Datoteka \"%(filename)s\" je bila izbrisana zunaj %s(appname."
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Nekaj naslednjih strani vam bo v pomoč pri vzpostavitvi %(name)s, da bo kar "
+#~ "najbolj prilagojen vašim potrebam.\n"
+#~ "\n"
+#~ "Priporočamo, da nastavite, da se %(name)s zažene, ko zaženete računalnik.  "
+#~ "Na ta način se začeti prenosi lahko dokončajo in nove datoteke se prenesejo "
+#~ "v ozadju, tako da so pripravljene na ogled."
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s ne more prenesti datoteke s tega URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(copyright)s.  See license.txt file for details.\n"
+#~ "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+#~ msgstr ""
+#~ "%(copyright)s.  Podrobnosti preberite v datoteki license.txt.\n"
+#~ "Miro in logotip Miro so zaščitene blagovne znamke Participatory Culture "
+#~ "Foundation."
+
+#, python-format
+#~ msgid "Adding feed to a new folder"
+#~ msgid_plural "Adding %(count)d feeds to a new folder"
+#~ msgstr[0] "Dodajanje %(count)d vira v novo mapo"
+#~ msgstr[1] "Dodajanje %(count)d virov v novo mapo"
+#~ msgstr[2] "Dodajanje %(count)d virov v novo mapo"
+#~ msgstr[3] "Dodajanje %(count)d virov v novo mapo"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Odstrani mesta"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Ste prepričani, da želite odstraniti to %(count)s mesto?"
+#~ msgstr[1] "Ste prepričani, da želite odstraniti ti %(count)s mesti?"
+#~ msgstr[2] "Ste prepričani, da želite odstraniti ta %(count)s mesta?"
+#~ msgstr[3] "Ste prepričani, da želite odstraniti teh %(count)s mest?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Odstrani mesto"
+#~ msgstr[1] "Odstrani mesti"
+#~ msgstr[2] "Odstrani mesta"
+#~ msgstr[3] "Odstrani mesta"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "Izbrano %(count)d mesto"
+#~ msgstr[1] "Izbrani %(count)d mesti"
+#~ msgstr[2] "Izbrana %(count)d mesta"
+#~ msgstr[3] "Izbranih %(count)d mest"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "Zbirka podatkov se v %(appname)s ni uspešno shranila: na disku ni prostora.\n"
+#~ "Predlagamo, da s polnega diska izbrišete nekaj datotek ali preprosto "
+#~ "pobrišete nekaj filmov iz svoje zbirke.\n"
+#~ "Nedavne spremembe bodo morda izgubljene."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Premalo prostora na disku"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Premalo prostora na disku, da bi lahko posodobili svojo zbirko podatkov s "
+#~ "prejšnje različice programa %(appname)s. Izbrišite nekaj datotek in "
+#~ "poskusite znova."
+
+#~ msgid "_Remove Site"
+#~ msgstr "_Odstrani mesto"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "_Odstrani mesta"
+
+#~ msgid "Re_name Site"
+#~ msgstr "_Preimenuj mesto"
+
+#~ msgid "Unknown Language"
+#~ msgstr "Neznan jezik"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Oprostite, %(appname)s zaradi napak ni mogel nadgraditi zbirke podatkov.\n"
+#~ "\n"
+#~ "Preverite, ali je disk poln. Če je, potem zaprite %(appname)s, izbrišite "
+#~ "nekaj podatkov na disku in ponovno zaženite %(appname)s.\n"
+#~ "\n"
+#~ "Če disk ni poln, nam pomagajte razumeti problem tako, da zaprete program in "
+#~ "poročate o napaki na bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Zatem lahko ponovno zaženete program, stara zbirka bo izbrisana in morali "
+#~ "boste ponovno dodati vire RSS ter ostale posnetke."

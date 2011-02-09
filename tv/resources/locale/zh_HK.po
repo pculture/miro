@@ -15,8 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:182
+msgid "Cut"
+msgstr "剪"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -87,10 +91,6 @@ msgstr ""
 #: ../../osx/plat/frontends/widgets/osxmenus.py:176
 msgid "Close Window"
 msgstr "關閉視窗"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:182
-msgid "Cut"
-msgstr "剪下"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Copy"
@@ -3495,6 +3495,26 @@ msgstr "播放清單範例"
 msgid "Search All"
 msgstr "搵哂全部"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "預設情況下，影片會於下列時間後過期:"
+
+#~ msgid "Add to Library"
+#~ msgstr "加入到書庫"
+
+#~ msgid "None"
+#~ msgstr "冇"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "播音樂時播依段片"
+
+#~ msgid "Custom Channels"
+#~ msgstr "自訂頻度"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "你依家行緊一套有自訂頻度的%(appname)s。"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3559,3 +3579,6 @@ msgstr "搵哂全部"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)sbit"
+
+#~ msgid "Select _All"
+#~ msgstr "全部選取(_A)"

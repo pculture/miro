@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-30 22:14+0000\n"
+"PO-Revision-Date: 2010-12-22 12:00+0000\n"
 "Last-Translator: Péter Trombitás <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:40+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -331,7 +331,7 @@ msgstr "Unicode"
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Általános"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -483,7 +483,7 @@ msgstr "Izlandi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Skandináv"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
@@ -532,7 +532,7 @@ msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Héber (vizuális)"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
@@ -724,7 +724,7 @@ msgstr "Nincs kapcsolat - %s múlva újrapróbálom"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "nincs kapcsolat - újrapróbálkozás hamarosan"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -3619,3 +3619,322 @@ msgstr "Összes Keresése"
 
 #~ msgid "By default, videos expire after:"
 #~ msgstr "A videó ennyi idő után avul el:"
+
+#~ msgid "_Next Video"
+#~ msgstr "_Következő videó"
+
+#~ msgid "_Previous Video"
+#~ msgstr "_Előző videó"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "A kapcsolat nem jött létre"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Egyedi Csatornák"
+
+#~ msgid "_Paste"
+#~ msgstr "_Beillesztés"
+
+#~ msgid "_Copy"
+#~ msgstr "_Másolás"
+
+#~ msgid "Select _All"
+#~ msgstr "Mindent kijelöl"
+
+#~ msgid "Cu_t"
+#~ msgstr "_Kivágás"
+
+#~ msgid "Auto Download"
+#~ msgstr "Automatikus letöltés"
+
+#~ msgid "None"
+#~ msgstr "Nincs"
+
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Használdd ezt a videót, ha játssza a hangot:"
+
+#~ msgid "Add to Library"
+#~ msgstr "Add hozzá a gyüjteményhez"
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Saját csatornád verziót futtatsz a %(appname)s-al."
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "Érvénytelen fejléc sor: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Line: %(msg)s"
+#~ msgstr "Érvénytelen státusz sor: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "Érvénytelen státusz kód: %(code)s"
+
+#~ msgid "Rename Item"
+#~ msgstr "Elem átnevezése"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Elem nevének visszaállítása"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "Automatikus letöltés szüneteltetése ha ennyi nem játszott elem van:"
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "Várt: CRLF, talált: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "Érvénytelen méretű szelet: %(msg)s"
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "Belső Hiba: Nem áll készen a küldésre"
+
+#~ msgid "Auto-Expire Videos:"
+#~ msgstr "Autómatikusan Lejárnak a Videók:"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Üdvözöl a %(name)s Kezdeti Beállítása"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "A következő néhány lépés segíteni fog a %(name)s neked megfelelő "
+#~ "beállításában.\n"
+#~ "\n"
+#~ "Ajánljuk, hogy a %(name)s elinduljon a számítógéppel együtt.  Így a "
+#~ "folyamatban lévő letöltések elkészülhetnek és új média fájlok is "
+#~ "letölthetőek, hogy készen álljanak amikor meg akarod nézni őket."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "%(name)s Kezdeti Beállításának Befejezése"
+
+#~ msgid "queued for autodownload"
+#~ msgstr "Automatikus letöltésre várakozik"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Oldal Kijelölve"
+#~ msgstr[1] "%(count)d Oldal Kijelölve"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s nem találja a videó mappát:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Lehet, hogy egy nem csatlakoztatt külső meghajtón van.\n"
+#~ "\n"
+#~ "Ha folytatod, az eldődleges videó mappa újra létrejön a jelenlegi meghajtón. "
+#~ " Ha voltak letöltött videóid a %(shortappname)s el fogja felejteni őket..\n"
+#~ "\n"
+#~ "Ha kilépsz kijavíthatod a hibát és újraindíthatod a programot."
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Oldal Hozzáadása - Érvénytelen URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "A megadott cím nem érvényes URL.\n"
+#~ "Ellenőrizd a címet és próbáld újra!\n"
+#~ "\n"
+#~ "Add meg a hozzáadandó oldal címét"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Add meg a hozzáadandó oldal címét"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Adjd meg az új elem nevét!"
+
+#~ msgid "Add Site"
+#~ msgstr "Oldal Hozzáadása"
+
+#~ msgid "Rename Site"
+#~ msgstr "Oldal Átnevezése"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Adj meg egy új nevet az oldalnak: %(name)s"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Biztosan el szeretnéd távolítani ezt az oldalt?"
+#~ msgstr[1] "Biztosan el szeretnéd távolítani ezt a(z) %(count)s oldalt?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Oldal eltávolítása"
+#~ msgstr[1] "Oldalak eltávolítása"
+
+#~ msgid "Migrating files"
+#~ msgstr "Fájlok költöztetése"
+
+#~ msgid "Auto download setting:"
+#~ msgstr "Autómatikus letöltési beállítás:"
+
+#~ msgid "Remove Site"
+#~ msgstr "Oldal Eltávolítása"
+
+#~ msgid "SITES"
+#~ msgstr "OLDALAK"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Oldalak Eltávolítása"
+
+#~ msgid "No Results Found"
+#~ msgstr "Nincsenek Találatok"
+
+#~ msgid "FEEDS"
+#~ msgstr "FEEDEK"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr "A torrent fájl %(filename)s hibás és nem lehet megnyitni. [OK]"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Nincs elég hely az adatbázis frissítésére az %(appname)s programhoz. Kérem "
+#~ "töröljön néhány fájlt és próbálja újra!"
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Nem elegendő lemezterület."
+
+#, python-format
+#~ msgid "Search All: %(text)s"
+#~ msgstr "Összes Keresése: %(text)s"
+
+#, python-format
+#~ msgid "Couldn't open %(filename)s for writing"
+#~ msgstr "%(filename)s nem lehet megnyitni íráshoz."
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s nem képes letölteni ezt:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+
+#~ msgid "_Options"
+#~ msgstr "Beállítás_ok"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Elemek Átnevezése"
+
+#, python-format
+#~ msgid "%(count)d minute"
+#~ msgid_plural "%(count)d minutes"
+#~ msgstr[0] "%(count)d perc"
+#~ msgstr[1] "%(count)d perc"
+
+#, python-format
+#~ msgid "%(size)s gb/s"
+#~ msgstr "%(size)s gb/s"
+
+#, python-format
+#~ msgid "%(size)s mb/s"
+#~ msgstr "%(size)s mb/s"
+
+#, python-format
+#~ msgid "%(size)s kb/s"
+#~ msgstr "%(size)s kb/s"
+
+#, python-format
+#~ msgid "%(count)d hour"
+#~ msgid_plural "%(count)d hours"
+#~ msgstr[0] "%(count)d óra"
+#~ msgstr[1] "%(count)d óra"
+
+#, python-format
+#~ msgid "%(count)d day"
+#~ msgid_plural "%(count)d days"
+#~ msgstr[0] "%(count)d nap"
+#~ msgstr[1] "%(count)d nap"
+
+#, python-format
+#~ msgid "%(size)s b/s"
+#~ msgstr "%(size)s b/s"
+
+#, python-format
+#~ msgid "%(size)s b"
+#~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "%(size)s kb"
+#~ msgstr "%(size)s kb"
+
+#, python-format
+#~ msgid "%(size)s gb"
+#~ msgstr "%(size)s gb"
+
+#, python-format
+#~ msgid "%(size)s mb"
+#~ msgstr "%(size)s mb"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%(appname)s nem tudta elmenteni az adatbázisát: A lemez tele van.\n"
+#~ "Azt ajánljuk, hogy töröljön néhány fájlt a lemezről vagy egyszerűen töröljön "
+#~ "néhány filmet a gyűjteményéből.\n"
+#~ "Az utolsó változások elveszhettek."
+
+#~ msgid "Unknown Language"
+#~ msgstr "Ismeretlen Nyelv"
+
+#~ msgid "other"
+#~ msgstr "egyéb"
+
+#~ msgid "Edit the metadata of this item."
+#~ msgstr "Metaadat szerkesztése"
+
+#~ msgid "_Remove Site"
+#~ msgstr "Webhely el_távolítása"
+
+#~ msgid "Re_name Site"
+#~ msgstr "Webhely át_nevezése"
+
+#~ msgid "_Remove Sites"
+#~ msgstr "Webhelyek el_távolítása"

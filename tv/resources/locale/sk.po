@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-05-19 15:13+0000\n"
-"Last-Translator: FreelancerSK <fl6162@gmail.com>\n"
+"PO-Revision-Date: 2010-12-13 17:22+0000\n"
+"Last-Translator: Peter Fodor <Unknown>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -43,7 +43,7 @@ msgstr "Odstrániť"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
-msgstr "Vystrčiť"
+msgstr "Vyskočiť"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:213
 msgid "Pop In"
@@ -171,7 +171,7 @@ msgstr "Vybrať súbor s titulkami..."
 #: ../../windows/plat/renderers/vlc.py:701
 #: ../../linux/plat/renderers/gstreamerrenderer.py:569
 msgid "Eastern European"
-msgstr ""
+msgstr "východoeurópske"
 
 #: ../../windows/plat/renderers/vlc.py:698
 #: ../../windows/plat/renderers/vlc.py:699
@@ -179,34 +179,34 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
-msgstr ""
+msgstr "Baltsky"
 
 #: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
-msgstr ""
+msgstr "Rusky"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr ""
+msgstr "Juho-východoeurópske"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrajinsky"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "Západoeurópske"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "Keltské"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -214,24 +214,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
-msgstr ""
+msgstr "Grécky"
 
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "Východoazijské"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "zjednodušená Čínština"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "zjednodušená Čínština"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "zjednodušená Čínština UNIX"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -239,11 +239,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "Japonsky"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Japonsky UNIX"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -252,15 +252,15 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "Kórejsky"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "tradičná Čínština"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "tradičná Čínština UNIX"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
@@ -278,12 +278,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Turecky"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Thajsky"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -291,12 +291,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamsky"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Stredovýchodné"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -305,7 +305,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "Arabsky"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrejsky"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -324,14 +324,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Univerzálne"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -353,11 +353,11 @@ msgstr "Ukončenie %(appname)s kompletné."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Predvolené nastavenie systému"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "písmo titulkov"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -448,7 +448,7 @@ msgstr "Súbor s titulkami %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Chorvátsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -457,39 +457,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cyrilika"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Cyrilika/Ruské"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Cyrilika/Ukrajinské"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "Stredoeurópske"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Rumunsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "škandinávske"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "Juhoeurópske"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -497,48 +497,48 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "Západné"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Zjednodušená čínština"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Tradičná čínština"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Arménsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Gruzínsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujaratsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhsky"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindština"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Hebrejské vizuálne"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Perzsky"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -559,11 +559,11 @@ msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "ffmpeg binárna cesta"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "ffmpeg2theoria binárna cesta"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -579,7 +579,7 @@ msgstr "Aktualizácia databázy"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Chyba databázy"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -878,11 +878,11 @@ msgstr "Torrent súbor %(filename)s je poškodený a nemôže byť otvorený."
 #: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Neznáma príčina"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
@@ -1050,21 +1050,22 @@ msgstr "Čerstvý začiatok"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "Zahrnúť databázu"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "Nezahrnúť databázu"
 
 #: ../../lib/dialogs.py:212
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s vyžaduje užívateľské meno a heslo pre \"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Je potrebné prihlásenie"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -1161,27 +1162,27 @@ msgstr ""
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Odosielam chybové hlásenie  (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:64
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:67
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:70
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:86
 #, python-format
@@ -1218,22 +1219,22 @@ msgstr[2] "%(num)d sekúnd"
 #: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:124
 #, python-format
@@ -1698,7 +1699,7 @@ msgstr "Vybrať súbor s titulkami..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Konvertovať"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1739,11 +1740,11 @@ msgstr "Otvoriť priečinok na konverzie"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Kódovanie"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Základné (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1836,7 +1837,7 @@ msgstr "%(rate)s sťahuje"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Auto-sťahovanie"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2375,7 +2376,7 @@ msgstr[2] "pred %(count)d mesiacmi"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "Dočasné položky"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2474,7 +2475,7 @@ msgstr "Hľadanie videa"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Žiadne výsledky"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2665,12 +2666,12 @@ msgstr "Zastaviť všetky konverzie"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Vymazať dokončené konverzie"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Konverzia do %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
@@ -2688,11 +2689,11 @@ msgstr ""
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Vymazať"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Hotovo"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2879,7 +2880,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Vymazať"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2920,7 +2921,7 @@ msgstr "V pamäti celkovo db objektov:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Záloh databáz celkom:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -3155,11 +3156,11 @@ msgstr "Varovať ma pri pokuse skončiť s aktívnymi downloadami."
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "Zapnúť upozorňovanie pri pokuse vypnúť program v priebehu konverzie."
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr ""
+msgstr "(Zmena jazyka si vyžaduje reštartovanie aplikácie Miro)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
@@ -3211,7 +3212,7 @@ msgstr "Pozrieť či je k dispozícií nový obsah:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Nastavenie Auto-sťahovania"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3384,7 +3385,7 @@ msgstr "Zastaviť po každej audio/video položke"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Povoliť toľko súbežných konverzií"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
@@ -3505,7 +3506,7 @@ msgstr ""
 
 #: ../../lib/httpclient.py:112
 msgid "Please retry later"
-msgstr ""
+msgstr "Prosím skúste neskôr"
 
 #: ../../lib/httpclient.py:116
 #, python-format
@@ -3520,7 +3521,7 @@ msgstr ""
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Autorizácia nevydarená pre proxy: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
@@ -3537,11 +3538,11 @@ msgstr "Zlyhanie autentifikácie"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Autorizácia zrušená"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Autorizácia zrušená používaťeľom"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"
@@ -3554,12 +3555,12 @@ msgstr "\"%(url)s\" nie je platná URL"
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "Neznámy Host"
 
 #: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Doménu \"%(host)s\" sa nepodarilo nájsť"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -3582,15 +3583,15 @@ msgstr "Chyba pri zápise do %(filename)s"
 
 #: ../../lib/httpclient.py:181
 msgid "Write error"
-msgstr ""
+msgstr "Chyba zápisu"
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Webová stránka"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3638,7 +3639,7 @@ msgstr "%(amount)s MB potrebných na uloženie tohto videa"
 
 #: ../../lib/dl_daemon/download.py:722
 msgid "no content"
-msgstr ""
+msgstr "Bez obsahu"
 
 #: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
@@ -3674,6 +3675,35 @@ msgstr "Ukážkový playlist"
 msgid "Search All"
 msgstr "Prehľadať všetky"
 
+#~ msgid "Use this for video when playing audio:"
+#~ msgstr "Použiť toto video pri prehrávaní zvuku:"
+
+#~ msgid "Watch for new videos in these folders and include them in library:"
+#~ msgstr "Sledovať nové videá v týchto priečinko a pridať ich do knižnice:"
+
+#~ msgid "Resume playing a video from the point it was last stopped."
+#~ msgstr ""
+#~ "Pokračovať v prehrávaní videa z miesta, kedy bolo naposledy pozastavené."
+
+#, python-format
+#~ msgid ""
+#~ "You are running a version of %(appname)s with a custom set of channels."
+#~ msgstr "Používate verziu %(appname)s s prispôsobenou sadou kanálov."
+
+#~ msgid "You must restart playback for visualization changes to take effect."
+#~ msgstr ""
+#~ "Aby sa prejavili zmeny v nastavení vizualizácie, musíte zastaviť a znovu "
+#~ "spustiť prehrávanie."
+
+#~ msgid "None"
+#~ msgstr "Bez zmeny"
+
+#~ msgid "Add to Library"
+#~ msgstr "Pridať do knižnice"
+
+#~ msgid "Custom Channels"
+#~ msgstr "Vlastné kanály"
+
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -3685,6 +3715,50 @@ msgstr "Prehľadať všetky"
 #~ "Navrhujeme vymazať súbory z plného disku alebo odstrániť nejaké filmy z "
 #~ "Vašej kolekcie.\n"
 #~ "Posledné zmeny môžu byť stratené."
+
+#, python-format
+#~ msgid "Are you sure you want to remove %(name)s?"
+#~ msgstr "Naozaj chcete odstrániť %(name)s"
+
+#, python-format
+#~ msgid "Create feed?"
+#~ msgid_plural "Create %(count)d feeds?"
+#~ msgstr[0] "Vytvoriť kanál"
+#~ msgstr[1] "Vytvoriť %(count)d kanály"
+#~ msgstr[2] "Vytvoriť %(count)d kanálov"
+
+#~ msgid "Stop after each video"
+#~ msgstr "Zastaviť po každom videu"
+
+#~ msgid "Play videos one after another"
+#~ msgstr "Prehrávať videá za sebou"
+
+#~ msgid "Subscribing to multiple feeds"
+#~ msgstr "Zapísať sa do viacerých kanálov"
+
+#~ msgid "Enter a name for the new feed folder"
+#~ msgstr "Zadaj meno nového adresára pre kanále"
+
+#, python-format
+#~ msgid ""
+#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
+#~ "stay where they currently are."
+#~ msgid_plural ""
+#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+#~ "will stay where they currently are."
+#~ msgstr[0] ""
+#~ "Poznámka: Už si zapísaný do jedného s týchto kanálov. Tieto kanály zostanú "
+#~ "tam, kde sa momentálne nachádzajú."
+#~ msgstr[1] ""
+#~ "Poznámka: Už si zapísaný do %(count)d s týchto kanálov. Tieto kanály zostanú "
+#~ "tam, kde sa momentálne nachádzajú."
+
+#~ msgid "By default, videos expire after:"
+#~ msgstr "Štandardne, videá expirujú po:"
+
+#, python-format
+#~ msgid "Remove %(name)s"
+#~ msgstr "Odstrániť %(name)s"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
@@ -3856,3 +3930,126 @@ msgstr "Prehľadať všetky"
 #, python-format
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "Vitajte v počiatočnom nastavení %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Nasledovných pár obrazoviek Vám pomôže nastaviť %(name)s čo najlepšie pre "
+#~ "Vaše potreby.\n"
+#~ "Odporúčame nastaviť štart %(name)s pri štarte počítača, aby bolo možné "
+#~ "dosťahovať sťahované súbory a stiahnuť nové súbory."
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "Dokončenie počiatočného nastavenia %(name)s"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s nemôže nájsť hlavný filmový adresár umiestnený v\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Toto môže byť spôsobené pretože umiestnenie je na externom zariadení, ktoré "
+#~ "nie je pripojené.\n"
+#~ "\n"
+#~ "Ak chcete pokračovať, hlavný filmový adresár bude umiestnený na toto "
+#~ "zariadenie. Ak máte stiahnuté videá, toto spôsobí %(shortappname)s stratu "
+#~ "detailov o týchto filmoch.\n"
+#~ "\n"
+#~ "Ak skončíte, môžete pripojiť zariadenie alebo inak vyriešiť problém a ešte "
+#~ "raz spustiť %(shortappname)s."
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Vložte URL stránku pre pridanie"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Pridať stránku - Neplatná URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Adresu, ktorú ste vložili, je neplatná.\n"
+#~ "Prosím skontrolujte URL a skúste znovu.\n"
+#~ "\n"
+#~ "Vložte URL stránku pre pridanie"
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d stránka označená"
+#~ msgstr[1] "%(count)d stránky označné"
+#~ msgstr[2] "%(count)d stránok označených"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Ste si istý že chcete odstrániť túto stránku?"
+#~ msgstr[1] "Ste si istý že chcete odstrániť tieto stránky?"
+#~ msgstr[2] "Ste si istý že chcete odstrániť tieto stránky?"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Odstrániť stránku"
+#~ msgstr[1] "Odstrániť stránky"
+#~ msgstr[2] "Odstrániť stránky"
+
+#, python-format
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s nedokáže stiahnuť súbor z tejto adresy:\n"
+#~ "\n"
+#~ "Adresa: %(url)s"
+
+#, python-format
+#~ msgid ""
+#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+#~ "\n"
+#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+#~ "free up some space, and start %(appname)s again.\n"
+#~ "\n"
+#~ "If your disk is not full, help us understand the problem by quitting, then "
+#~ "reporting a bug at bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Finally, you can start fresh and your damaged database will be removed, but "
+#~ "you will have to re-add your feeds and media files."
+#~ msgstr ""
+#~ "Prepáčte, databázu %(appname)s sa nepodarilo aktualizovať kvôli chybám.\n"
+#~ "\n"
+#~ "Skontrolujte či nemáte plný disk.  Ak je plný, ukončite %(appname)s, "
+#~ "uvoľnite na disku miesto a znovu zapnite %(appname)s.\n"
+#~ "\n"
+#~ "Ak Váš disk nie je plný, ukončite program a pomôžte nám pochopiť problém "
+#~ "jeho nahlásením na bugzilla.pculture.org\n"
+#~ "\n"
+#~ "Nakoniec môžete začať odznova a vaša poškodená databáza bude zmazaná, ale "
+#~ "budete musieť znovu pridať všetky vlákna a multimediálne súbory."

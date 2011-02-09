@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-21 21:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-02-09 12:41+0000\n"
+"X-Generator: Launchpad (build 12335)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -3509,3 +3509,56 @@ msgstr ""
 #: ../../lib/searchengines.py:180
 msgid "Search All"
 msgstr ""
+
+#~ msgid "Internal Error: Not ready to send"
+#~ msgstr "ಅಂತರಿಕ ದೋಷ: ಕಳುಹಿಸಲು ಸಿದ್ಧವಾಗಿಲ್ಲ"
+
+#~ msgid "Pipeline request never started"
+#~ msgstr "ಪೈಪ್‌ಲೈನ್‌ ಕೋರಿಕೆಯು ಪ್ರಾರಂಭಗೊಂಡಿಲ್ಲ"
+
+#, python-format
+#~ msgid "Bad Header Line: %(msg)s"
+#~ msgstr "ಅಹಿತವಾದ ಶಿರೋನಾಮೆ: %(msg)s"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "ಅಂಶದ ಹೆಸರನ್ನು ಹಿಂದಿದ್ದಂತೆ ಮಾಡು"
+
+#, python-format
+#~ msgid "Completing the %(name)s First Time Setup"
+#~ msgstr "%(name)s ನ ಮೊದಲನೇ ಬಾರಿಯ ಸಂಸ್ಥಾಪನೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲಾಗುತ್ತಿದೆ"
+
+#, python-format
+#~ msgid ""
+#~ "The next few screens will help you set up %(name)s so that it works best for "
+#~ "you.\n"
+#~ "\n"
+#~ "We recommend that you have %(name)s launch when your computer starts up.  "
+#~ "This way, downloads in progress can finish downloading and new media files "
+#~ "can be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "%(name)s ಅನ್ನು ಸಂಸ್ಥಾಪಿಸಲು ಹಾಗೂ ಅದು ನಿಮಗಾಗಿ ಅತ್ಯುತ್ತಮವಾಗಿ ಕೆಲಸಮಾಡುವಂತಾಗಿಸಲು "
+#~ "ಮುಂದಿನ ಕೆಲವು ತೆರೆಗಳು ನಿಮಗೆ ನೆರವಾಗಲಿವೆ.\n"
+#~ "\n"
+#~ "ನಾವು ನಿಮಗೆ %(name)s ಅನ್ನು ಗಣಕ ಆರಂಭಗೊಂಡಾಗಲೇ ಪ್ರರಂಭಿಸಲು ಸಲಹೆ ನೀಡುತ್ತೇವೆ. ಹೀಗೆ, "
+#~ "ಈಗಾಗಲೇ ಚಲಾವಣೆಯಲ್ಲಿರುವ ಡೌನ್‌ಲೋಡ್‌ಗಳು ಹಿನ್ನೆಲೆಯಲ್ಲೇ ಪೂರ್ಣಗೊಂಡು, ಹೊಸ "
+#~ "ಬಹುಮಾಧ್ಯಮಿಕ ಕಡತಗಳೂ ಸಹ ಹಿನ್ನೆಲೆಯಲ್ಲೇ ಡೌನ್‌ಲೋಡ್‌ಗೊಂಡು, ಬಯಸಿದಾಗ ವೀಕ್ಷಿಸಲು "
+#~ "ಸಿಧ್ಧವಿರಬಹುದು."
+
+#, python-format
+#~ msgid "Expected CRLF got: %(character)r"
+#~ msgstr "ನಿರೀಕ್ಷಿಸಿದ್ದು: CRLF ದೊರೆತದ್ದು: %(character)r"
+
+#, python-format
+#~ msgid "Bad Chunk size: %(msg)s"
+#~ msgstr "ಅಹಿತವಾದ ತುಣುಕಿನ ಪ್ರಮಾಣ: %(msg)s"
+
+#, python-format
+#~ msgid "Bad Status Code: %(code)s"
+#~ msgstr "ಅಹಿತಕರ  ಅವಸ್ಥಾ ಸಂಕೇತ: %(code)s"
+
+#~ msgid "Rename Item"
+#~ msgstr "ಅಂಶವನ್ನು ಮರುನಾಮಕರಿಸು"
+
+#, python-format
+#~ msgid "Welcome to the %(name)s First Time Setup"
+#~ msgstr "%(name)sನ ಮೊದಲ ಬಾರಿಯ ಸಂಸ್ಥಾಪನೆಗೆ ಸ್ವಾಗತ"
