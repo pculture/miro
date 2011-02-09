@@ -42,6 +42,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 
 from miro.plat import resources
+from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets import widgetset
 
 class RoundedSolidBackground(widgetset.Background):
@@ -68,7 +69,7 @@ class SharingBroken(widgetset.Background):
         label.set_color((1, 1, 1))
         vbox.pack_start(widgetutil.align_left(label, top_pad=10))
         label = widgetset.Label(
-            _("You need to install the free DAAP from Apple to be able to "
+            _("You need to install the Bonjour libraries to be able to "
               "share files from Miro-to-Miro or to the Miro iPad app."))
         label.set_wrap(True)
         label.set_color((1, 1, 1))
@@ -319,13 +320,14 @@ class ConnectTab(widgetset.VBox):
         bottom.pack_start(hbox)
 
     def daap_install_clicked(self, button):
-        print 'daap install clicked'
+        install_bonjour()
 
     def daap_toggled(self, button):
         app.config.set(prefs.SHARE_MEDIA, button.get_value())
 
     def daap_name_changed(self, entry):
-        app.config.set(prefs.SHARE_NAME, entry.get_text())
+        app.config.set(prefs.SHARE_NAME,
+                       entry.get_text().strip().encode('utf-8'))
 
     def help_button_clicked(self, button):
         print 'help clicked'
