@@ -274,6 +274,10 @@ class ProgressSlider(widgetset.CustomSlider):
         self.background_surface = widgetutil.ThreeImageSurface('playback_track')
         self.progress_surface = widgetutil.ThreeImageSurface('playback_track_progress')
         self.progress_cursor = widgetutil.make_surface('playback_cursor')
+        self.background_surface_inactive = widgetutil.ThreeImageSurface('playback_track_inactive')
+        self.progress_surface_inactive = widgetutil.ThreeImageSurface('playback_track_progress_inactive')
+        self.progress_cursor_inactive = widgetutil.make_surface('playback_cursor_inactive')
+
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
         app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
@@ -308,7 +312,7 @@ class ProgressSlider(widgetset.CustomSlider):
         return False
 
     def size_request(self, layout):
-        return (60, 11)
+        return (60, 17)
 
     def slider_size(self):
         return 1
@@ -316,18 +320,30 @@ class ProgressSlider(widgetset.CustomSlider):
     def draw(self, context, layout):
         if not app.playback_manager.is_playing:
             return
-        min, max = self.get_range()
-        progress_width = int(round(self.get_value() / max * context.width))
-        self.progress_surface.draw(context, 0, 0, progress_width)
-        if progress_width == 0:
-            self.background_surface.draw(context, 0, 0, context.width)
+        if self.get_window().is_active():
+            background, progress, cursor = (self.background_surface,
+                                            self.progress_surface,
+                                            self.progress_cursor)
         else:
-            self.background_surface.draw_right(context, progress_width, 0, context.width - progress_width)
+            background, progress, cursor = (self.background_surface_inactive,
+                                            self.progress_surface_inactive,
+                                            self.progress_cursor_inactive)
+
+        min, max = self.get_range()
+        progress_width = int(round(self.get_value() / max * context.width - 9))
+        progress.draw(context, 0, 1, progress_width, context.height - 1)
+        if progress_width == 0:
+            background.draw(context, 0, 1, context.width, context.height - 1)
+        else:
+            background.draw_right(context, progress_width, 1,
+                                  context.width - progress_width,
+                                  context.height - 1)
         if self.duration > 0:
-            if progress_width <= 3:
-                self.progress_cursor.draw(context, 0, 0, self.progress_cursor.width, self.progress_cursor.height)
+            if progress_width <= 9:
+                cursor.draw(context, 0, 0, cursor.width, cursor.height)
             else:
-                self.progress_cursor.draw(context, progress_width-3, 0, self.progress_cursor.width, self.progress_cursor.height)
+                cursor.draw(context, progress_width-9, 0, cursor.width,
+                            cursor.height)
 
 class ProgressTimeline(widgetset.Background):
     def __init__(self):
