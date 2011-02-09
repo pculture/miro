@@ -200,11 +200,8 @@ class MultilineTextEntry(Widget):
     def calc_size_request(self):
         if self.view.superview() is None:
             return (50, 50)
-        width = self.view.superview().frame().size.width
-        height = self.view.frame().size.height
-        if self.parent_is_scroller:
-            width -= NSScroller.scrollerWidth()
-        return (width, height)
+        size = self.view.textContainer().containerSize()
+        return size.width, size.height
 
     def set_editable(self, editable):
         if editable:
