@@ -829,7 +829,6 @@ class DaapClient(object):
         try:
             self.timer.cancel()
             self.conn.request('GET', self.sessionize('/logout', []))
-            self.check_reply(self.conn.getresponse())
         # Don't care since we are going away anyway.
         except (ValueError, httplib.ResponseNotReady, AttributeError, IOError):
             pass
