@@ -213,6 +213,10 @@ class ConnectTab(widgetset.VBox):
 
         self.pack_start(widgetutil.align_center(bottom))
 
+        self.callback_handle = app.backend_config_watcher.connect_weak(
+            'changed',
+            self.on_config_changed)
+
     def _build_daap_section(self, bottom):
         label = widgetset.Label(_("%(shortappname)s Sharing", self.trans_data))
         label.set_size(1.5)
@@ -231,18 +235,21 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(widgetset.Checkbox(_("Videos")))
         hbox.pack_start(widgetset.Checkbox(_("Music")))
         hbox.pack_start(widgetset.Checkbox(_("Podcasts")))
-        button = PrettyToggleButton()
-        button.connect('clicked', self.daap_toggled)
-        button.set_value(app.config.get(prefs.SHARE_MEDIA))
-        hbox.pack_end(button)
+        self.share_button = PrettyToggleButton()
+        self.share_button.connect('clicked', self.daap_toggled)
+        self.share_button.set_value(app.config.get(prefs.SHARE_MEDIA))
+        hbox.pack_end(self.share_button)
         vbox.pack_start(hbox)
 
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.Label(
             _("My %(shortappname)s Share Name", self.trans_data)))
-        entry = widgetset.TextEntry(app.config.get(prefs.SHARE_NAME))
-        entry.connect('changed', self.daap_name_changed)
-        hbox.pack_start(widgetutil.pad(entry, left=5))
+        self.share_entry = widgetset.TextEntry(
+            app.config.get(prefs.SHARE_NAME))
+        if not self.share_button.get_value():
+            self.share_entry.disable()
+        self.share_entry.connect('changed', self.daap_name_changed)
+        hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
         vbox.pack_start(widgetutil.pad(hbox, top=10))
 
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
@@ -274,10 +281,12 @@ class ConnectTab(widgetset.VBox):
                                               bottom_pad=5))
 
         show_all_vbox = widgetset.VBox()
-        cb = widgetset.Checkbox(_("Show all attached devices and drives"))
-        cb.set_checked(app.config.get(prefs.SHOW_UNKNOWN_DEVICES))
-        cb.connect('toggled', self.show_all_devices_toggled)
-        show_all_vbox.pack_start(cb)
+        self.show_unknown = widgetset.Checkbox(
+            _("Show all attached devices and drives"))
+        self.show_unknown.set_checked(
+            app.config.get(prefs.SHOW_UNKNOWN_DEVICES))
+        self.show_unknown.connect('toggled', self.show_all_devices_toggled)
+        show_all_vbox.pack_start(self.show_unknown)
         label = widgetset.Label(
             _("Use this if your phone doesn't appear in %(shortappname)s when "
               "you connect it to the computer, or if you want to sync with an "
@@ -319,11 +328,21 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(app_store_button)
         bottom.pack_start(hbox)
 
+    def on_config_changed(self, obj, key, value):
+        if key == prefs.SHARE_MEDIA.key:
+            self.share_button.set_value(value)
+        elif key == prefs.SHARE_NAME.key:
+            self.share_entry.set_text(value)
+
     def daap_install_clicked(self, button):
         install_bonjour()
 
     def daap_toggled(self, button):
         app.config.set(prefs.SHARE_MEDIA, button.get_value())
+        if button.get_value():
+            self.share_entry.enable()
+        else:
+            self.share_entry.disable()
 
     def daap_name_changed(self, entry):
         app.config.set(prefs.SHARE_NAME,
