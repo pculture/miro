@@ -381,10 +381,11 @@ class TranscodeObject(object):
     # Shutdown the transcode job.  If we quitting, make sure you call this
     # so the segmenter et al have a chance to clean up.
     def shutdown(self):
-        # We only need to kill the last guy in the pipe ... and wait for
-        # the signaling thread to finish.  The signaling thread read will
-        # return 0, and go back to the top-level loop where it will know 
-        # it needs to quit.  We wait for the quit to happen.
+        # If we kill the segmenter thread, then the stdout and the control
+        # pipe reads should return 0.  This can indicate that the transcode
+        # pipeline has been terminated.
+        if self.ffmpeg_handle:
+            self.ffmpeg_handle.terminate()
         if self.segmenter_handle:
             self.segmenter_handle.terminate()
             self.terminate_signal_thread = True
@@ -395,4 +396,3 @@ class TranscodeObject(object):
             self.thread.join()
             self.terminate_signal_thread = False
             self.segmenter_handle = None
-            self.ffmpeg_handle = None
