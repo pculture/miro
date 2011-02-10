@@ -359,6 +359,11 @@ class ProgressTimeline(widgetset.Background):
         self.slider.connect('released', self.on_slider_released)
         self.remaining_time = ProgressTimeRemaining()
         self.remaining_time.connect('clicked', self.on_remaining_clicked)
+
+        self.active = widgetutil.ThreeImageSurface('progress_timeline')
+        self.inactive = widgetutil.ThreeImageSurface(
+            'progress_timeline_inactive')
+
         vbox = widgetset.VBox()
         vbox.pack_start(widgetutil.align_middle(self.info, top_pad=6))
         slider_box = widgetset.HBox()
@@ -390,31 +395,17 @@ class ProgressTimeline(widgetset.Background):
         self.time.set_current_time(current_time)
         self.remaining_time.set_current_time(current_time)
 
-    def get_height(self, layout):
-        # this assumes that the height is 14 pixels of space plus the
-        # height of two labels--one for the time and one for the
-        # title.  we do the max thing so there's a minimum height that
-        # comes out of this.
-        layout.set_font(0.8)
-        sizer_text = layout.textbox("Foo")
-        dummy, height = sizer_text.get_size()
-        return max(40, 14 + (height * 2))
-
     def size_request(self, layout):
-        layout.set_font(0.8)
-        sizer_text = layout.textbox("Foo")
-        dummy, height = sizer_text.get_size()
-        return -1, self.get_height(layout)
+        return -1, 46
 
     def draw(self, context, layout):
         if self.get_window().is_active():
-            c = (40.0 / 255.0, 40.0 / 255.0, 40.0 / 255.0)
+            surface = self.active
         else:
-            c = (145.0 / 255.0, 145.0 / 255.0, 145.0 / 255.0)
+            surface = self.inactive
 
-        widgetutil.round_rect(context, 0, 0, context.width, context.height, 5)
-        context.set_color(c)
-        context.fill()
+        surface.draw(context, 0, 0, context.width, context.height)
+
 
 class VolumeSlider(widgetset.CustomSlider):
     def __init__(self):

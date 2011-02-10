@@ -67,41 +67,23 @@ ERROR_COLOR = (0.90, 0.0, 0.0)
 BLINK_COLOR = css_to_color('#fffb83')
 
 class LowerBox(widgetset.Background):
-    def __init__(self):
-        widgetset.Background.__init__(self)
-
-        self.image = widgetutil.make_surface('wtexture')
-        self.separator_color = (64.0/255.0, 64.0/255.0, 64.0/255.0)
-        self.highlight_color = (218.0/255.0, 218.0/255.0, 218.0/255.0)
-
-        self.image_inactive = widgetutil.make_surface('wtexture_inactive')
-        self.separator_color_inactive = (135.0/255.0, 135.0/255.0, 135.0/255.0)
-        self.highlight_color_inactive = (239.0/255.0, 239.0/255.0, 239.0/255.0)
 
     def size_request(self, layout_manager):
         return (0, 63)
 
     def draw(self, context, layout_manager):
-        if self.get_window().is_active():
-            image = self.image
-            highlight_color = self.highlight_color
-            separator_color = self.separator_color
-        else:
-            image = self.image_inactive
-            highlight_color = self.highlight_color_inactive
-            separator_color = self.separator_color_inactive
-        image.draw(context, 0, 0, context.width, context.height)
+        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient.set_start_color(css_to_color('#d4d4d4'))
+        gradient.set_end_color(css_to_color('#a8a8a8'))
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
 
         context.set_line_width(1)
         context.move_to(0, 0.5)
         context.line_to(context.width, 0.5)
-        context.set_color(separator_color)
+        context.set_color((1, 1, 1))
         context.stroke()
 
-        context.move_to(0, 1.5)
-        context.line_to(context.width, 1.5)
-        context.set_color(highlight_color)
-        context.stroke()
 
     def is_opaque(self):
         return True
