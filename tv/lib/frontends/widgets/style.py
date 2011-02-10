@@ -330,7 +330,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         hotspot, x, y = hotspot_info
         if hotspot == 'description':
             textbox = self.make_description(layout_manager)
-            textbox.set_width(width - 300) # center rect is smaller
+            textbox.set_width(width - 407) # center rect is smaller
             index = textbox.char_at(x, y)
             if index is None:
                 return None
