@@ -423,7 +423,7 @@ class FeedItemTrackTest(TrackerTest):
     def check_info(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.get_title())
         self.assertEquals(itemInfo.description, item.get_description())
-        self.assertEquals(itemInfo.release_date, item.get_release_date_obj())
+        self.assertEquals(itemInfo.release_date, item.get_release_date())
         self.assertEquals(itemInfo.size, item.get_size())
         self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
@@ -516,7 +516,7 @@ class PlaylistItemTrackTest(TrackerTest):
     def check_info(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.get_title())
         self.assertEquals(itemInfo.description, item.get_description())
-        self.assertEquals(itemInfo.release_date, item.get_release_date_obj())
+        self.assertEquals(itemInfo.release_date, item.get_release_date())
         self.assertEquals(itemInfo.size, item.get_size())
         self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
