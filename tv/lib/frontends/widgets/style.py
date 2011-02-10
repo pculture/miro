@@ -1085,6 +1085,8 @@ class StatusRenderer(ListViewRenderer):
                 self.info.download_info.rate == 0):
             if self.info.download_info.state == 'paused':
                 self.text = _('paused')
+            elif self.info.download_info.state == 'pending':
+                self.text = _('queued')
             elif self.info.download_info.state == 'failed':
                 self.text = self.info.download_info.short_reason_failed
             else:
@@ -1097,7 +1099,8 @@ class StatusRenderer(ListViewRenderer):
             self.text = ''
 
     def layout_manager(self, layout_manager):
-        if self.info.state in ('downloading', 'paused'):
+        if (self.info.state in ('downloading', 'paused') and
+            self.info.download_info.state != 'pending'):
             return self.pack_progress_bar(layout_manager)
         else:
             return ListViewRenderer.layout_manager(self, layout_manager)
@@ -1122,6 +1125,12 @@ class StatusRenderer(ListViewRenderer):
             hotspot = cellpack.Hotspot('keep', self.button['keep'])
             hbox.pack_space(8)
             hbox.pack(hotspot)
+        elif (self.info.state == 'downloading' and
+              self.info.download_info.state == 'pending'):
+            button = self.button['cancel']
+            hotspot = cellpack.Hotspot('cancel', button)
+            hbox.pack_space(8)
+            hbox.pack(cellpack.align_middle(hotspot))
 
 class RatingRenderer(ListViewRenderer):
     ICON_STATES = ('yes', 'no', 'probably', 'unset')
