@@ -44,7 +44,7 @@ class UnknownImageObjectException(Exception):
     """Image uses this when mutagen gives us something strange.
     """
     def __init__(self, object_type, known_types):
-        Exception.__init__()
+        Exception.__init__(self)
         self.object_type = object_type
         self.known_types = known_types
 
