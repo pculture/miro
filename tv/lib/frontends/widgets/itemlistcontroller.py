@@ -173,19 +173,23 @@ class ItemListController(object):
         self.multiview_sorter here. PlaylistView uses this.
         """
         pass
-    
+
     def make_sorters(self):
         for view_type, view in self.views.items():
             if self.multiview_sorter is None:
                 sorter = self.get_sorter(view_type)
             else:
-                sorter = self.multview_sorter
-            view.item_list.set_sort(sorter)
+                sorter = self.multiview_sorter
             if WidgetStateStore.is_list_view(view_type):
                 view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
             else:
                 self.widget.toolbar.change_sort_indicator(
                         sorter.KEY, sorter.is_ascending())
+        if self.multiview_sorter is None:
+            sorter = self.get_sorter(self.selected_view)
+        else:
+            sorter = self.multiview_sorter
+        self.views[self.selected_view].item_list.set_sort(sorter)
 
     def get_sorter(self, view_type):
         sort_key = app.widget_state.get_sort_state(
