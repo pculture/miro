@@ -908,7 +908,7 @@ class SharingManager(object):
             try:
                 rset = [server_fileno, self.r]
                 refs = []
-                if self.discoverable:
+                if self.discoverable and self.mdns_callback:
                     refs += self.mdns_callback.get_refs()
                 rset += refs
                 r, w, x = select.select(rset, [], [])
