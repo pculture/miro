@@ -50,7 +50,7 @@ class PreferencesWindow(window.Window):
         alignment.set_padding(0, 10, 0, 10)
         alignment.add(close_button)
         self.content_widget.pack_start(alignment)
-        self._eventbox.add(self.content_widget)
+        self._window.add(self.content_widget)
         self.connect('will-close', self.on_close)
 
     def on_close(self, window):
