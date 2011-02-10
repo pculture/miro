@@ -866,8 +866,6 @@ def save_fast_resume_data(info_hash, fast_resume_data):
     :param fast_resume_data: the bencoded fast resume data to save to
         disk
     """
-    logging.info("save_fast_resume_data")
-
     fast_resume_file = generate_fast_resume_filename(info_hash)
     fast_resume_dir = os.path.dirname(fast_resume_file)
 
@@ -891,8 +889,6 @@ def load_fast_resume_data(info_hash):
     :returns: None if there are errors or it doesn't exist, or
         the bencoded fast resume data
     """
-    logging.info("load_fast_resume_data")
-
     fast_resume_file = generate_fast_resume_filename(info_hash)
     if not os.path.exists(fast_resume_file):
         return None
@@ -913,13 +909,15 @@ def remove_fast_resume_data(info_hash):
     :param info_hash: the torrent handle info hash--this is unique to
         a torrent.
     """
-    logging.info("remove_fast_resume_data")
     fast_resume_file = generate_fast_resume_filename(info_hash)
     if os.path.exists(fast_resume_file):
         try:
             fileutil.remove(fast_resume_file)
         except OSError:
             logging.exception("remove_fast_resume_data kicked up exception")
+
+# update fast resume data every 5 seconds
+FRD_UPDATE_LIMIT = 5
 
 class BTDownloader(BGDownloader):
     # reannounce at most every 30 seconds
@@ -950,11 +948,10 @@ class BTDownloader(BGDownloader):
 
         self.item = item
         self._last_reannounce_time = time.time()
+        self._last_frd_update = time.time()
 
     def _start_torrent(self):
         try:
-            logging.debug("_start_torrent: dlid %s", self.dlid)
-
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
 
             duplicate = TORRENT_SESSION.find_duplicate_torrent(torrent_info)
@@ -993,8 +990,6 @@ class BTDownloader(BGDownloader):
                     lt.storage_mode_t.storage_mode_allocate)
 
             self.info_hash = str(self.torrent.info_hash())
-
-            logging.debug("_start_torrent: info_hash: %s", self.info_hash)
 
             # need to do this for libtorrent > 0.13
             self.torrent.auto_managed(False)
@@ -1043,7 +1038,7 @@ class BTDownloader(BGDownloader):
             TORRENT_SESSION.remove_torrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
-                self.update_fast_resume_data()
+                self.update_fast_resume_data(force=True)
                 TORRENT_SESSION.session.remove_torrent(self.torrent, 0)
                 self.torrent = None
         except StandardError:
@@ -1153,11 +1148,17 @@ class BTDownloader(BGDownloader):
 
         self.update_fast_resume_data()
 
-    def update_fast_resume_data(self):
+    def update_fast_resume_data(self, force=False):
+        if not self.info_hash:
+            return
+
+        time_now = time.time()
+        if not force and time_now < (self._last_frd_update + FRD_UPDATE_LIMIT):
+            return
+        self._last_frd_update = time_now
+
         self.fast_resume_data = lt.bencode(self.torrent.write_resume_data())
-        if self.info_hash:
-            save_fast_resume_data(
-                self.info_hash, self.fast_resume_data)
+        save_fast_resume_data(self.info_hash, self.fast_resume_data)
 
     def handle_error(self, short_reason, reason):
         self._shutdown_torrent()
