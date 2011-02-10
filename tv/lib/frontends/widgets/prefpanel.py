@@ -719,6 +719,14 @@ class SharingPanel(PanelBuilder):
         attach_text(share_txt, prefs.SHARE_NAME,
                     check_function=lambda w, v: False)
 
+        def on_config_changed(obj, key, value):
+            if key == prefs.SHARE_MEDIA.key:
+                sharing_cbx.set_checked(not sharing_cbx.get_checked())
+            elif key == prefs.SHARE_NAME.key:
+                share_txt.set_text(value)
+
+        app.backend_config_watcher.connect('changed', on_config_changed)
+
         # Do this after the attach so we can override the preference
         # values.
         if not app.sharing_manager.mdns_present:
