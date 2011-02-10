@@ -938,6 +938,12 @@ def handle_key_press(key, mods):
             return True
         return False
 
+    if key == menus.DELETE or key == menus.BKSPACE:
+        playing = app.playback_manager.get_playing_item()
+        if playing is not None:
+            app.widgetapp.remove_items([playing])
+            return True
+
     if key == menus.ESCAPE:
         if app.playback_manager.is_fullscreen:
             app.widgetapp.on_fullscreen_clicked()
