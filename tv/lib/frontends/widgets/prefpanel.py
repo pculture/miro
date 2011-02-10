@@ -690,13 +690,6 @@ class DiskSpacePanel(PanelBuilder):
         return grid.make_table()
 
 class SharingPanel(PanelBuilder):
-    def on_window_open(self):
-        self.old_name = app.config.get(prefs.SHARE_NAME)
-
-    def on_window_closed(self):
-        if self.old_name != self.new_name and not self.new_name == '':
-            app.config.set(prefs.SHARE_NAME, self.new_name)
-
     def build_widget(self):
         vbox = widgetset.VBox()
         grid = dialogwidgets.ControlGrid()
@@ -709,23 +702,11 @@ class SharingPanel(PanelBuilder):
         share_txt = widgetset.TextEntry()
         share_txt.connect('changed', text_changed)
 
-        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
-        attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT,
+        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, 
                        [sharing_warnonquit_cbx, share_txt])
-        # Why is check function always false?  Because we don't want
-        # to continually reload (unpublish and republish) the share as
-        # the user is typing.  on_window_open() and
-        # open_window_closed() takes care of this.
+        attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
         attach_text(share_txt, prefs.SHARE_NAME,
-                    check_function=lambda w, v: False)
-
-        def on_config_changed(obj, key, value):
-            if key == prefs.SHARE_MEDIA.key:
-                sharing_cbx.set_checked(not sharing_cbx.get_checked())
-            elif key == prefs.SHARE_NAME.key:
-                share_txt.set_text(value)
-
-        app.backend_config_watcher.connect('changed', on_config_changed)
+                    check_function=lambda w, v: v != '')
 
         # Do this after the attach so we can override the preference
         # values.
