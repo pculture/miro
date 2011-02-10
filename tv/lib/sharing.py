@@ -824,7 +824,9 @@ class SharingManager(object):
             return 0
 
     def on_config_changed(self, obj, key, value):
-        listen_keys = ['ShareMedia', 'ShareDiscoverable', 'ShareName']
+        listen_keys = [prefs.SHARE_MEDIA.key,
+                       prefs.SHARE_DISCOVERABLE.key,
+                       prefs.SHARE_NAME.key]
         if not key in listen_keys:
             return
         self.twiddle_sharing()
