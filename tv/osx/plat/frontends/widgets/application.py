@@ -87,10 +87,12 @@ class MiroApplication(NSApplication):
 
     def sendAction_to_from_(self, action, to, from_):
         try:
-            NSApplication.sendAction_to_from_(self, action, to, from_)
+            return NSApplication.sendAction_to_from_(self, action, to, from_)
         except:
             # should we just catch StandardError here?
             app.widgetapp.exception_handler(*sys.exc_info())
+            # tell Cocoa that we handled the event
+            return YES 
 
 class OSXApplication(Application, signals.SignalEmitter):
     def __init__(self):
