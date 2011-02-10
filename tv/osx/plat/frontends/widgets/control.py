@@ -198,10 +198,12 @@ class MultilineTextEntry(Widget):
         self.invalidate_size_request()
 
     def calc_size_request(self):
-        if self.view.superview() is None:
-            return (50, 50)
-        size = self.view.textContainer().containerSize()
-        return size.width, size.height
+        layout_manager = self.view.layoutManager()
+        text_container = self.view.textContainer()
+        # The next line is there just to force cocoa to layout the text
+        layout_manager.glyphRangeForTextContainer_(text_container)
+        rect = layout_manager.usedRectForTextContainer_(text_container)
+        return rect.size.width, rect.size.height
 
     def set_editable(self, editable):
         if editable:
