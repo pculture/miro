@@ -736,6 +736,7 @@ class SharingManagerBackend(object):
 
     def get_file(self, itemid, ext, session, request_path_func, offset=0,
                  chunk=None):
+        fildes = -1
         path = self.daapitems[itemid]['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
@@ -759,10 +760,28 @@ class SharingManagerBackend(object):
                     transcode_obj.transcode()
                 fildes = transcode_obj.get_chunk()
             else:
-                ValueError('transcode should be one of ts or m3u8')
+                # Should this be a ValueError instead?  But returning -1
+                # will make the caller return 404.
+                print 'ERROR: transcode should be one of ts or m3u8'
+                fildes = -1
+        elif ext == 'coverart':
+            try:
+                cover_art = self.daapitems[itemid]['cover_art']
+                if cover_art:
+                    fildes = os.open(cover_art, os.O_RDONLY)
+                    os.lseek(fildes, offset, os.SEEK_SET)
+            except OSError:
+                if not fildes < 0:
+                    os.close(fildes)
+                    fildes = -1
         else:
-            fildes = os.open(path, os.O_RDONLY)
-            os.lseek(fildes, offset, os.SEEK_SET)
+            try:
+                fildes = os.open(path, os.O_RDONLY)
+                os.lseek(fildes, offset, os.SEEK_SET)
+            except OSError:
+                if not fildes < 0:
+                    os.close(fildes)
+                    fildes = -1
         return fildes
 
     def get_playlists(self):
@@ -818,6 +837,7 @@ class SharingManagerBackend(object):
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
+            itemprop['cover_art'] = item.cover_art
             self.daapitems[item.id] = itemprop
 
 class SharingManager(object):

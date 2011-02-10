@@ -75,6 +75,7 @@ DAAP_NOCONTENT = 204   # Acknowledged but no content to send back
 DAAP_PARTIAL_CONTENT = 206 # Partial content, if Range header included.
 DAAP_FORBIDDEN = 403   # Access denied
 DAAP_BADREQUEST = 400  # Bad URI request
+DAAP_FILENOTFOUND = 404 # File not found
 DAAP_UNAVAILABLE = 503 # We are full
 
 DEFAULT_CONTENT_TYPE = 'application/x-dmap-tagged'
