@@ -2093,7 +2093,7 @@ class FileItem(Item):
         try:
             self.releaseDateObj = datetime.fromtimestamp(
                 fileutil.getmtime(self.filename))
-        except OSError:
+        except OSError, ValueError:
             logging.warn("Error setting release date:\n%s",
                     traceback.format_exc())
             self.releaseDateObj = datetime.now()

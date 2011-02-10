@@ -30,6 +30,7 @@
 import datetime
 import logging
 import os.path
+import traceback
 
 from miro import app
 from miro import database
@@ -399,7 +400,7 @@ class SharingItemSource(ItemSource):
             feed_url = None,
             description = item.description,
             state = u'saved',
-            release_date = datetime.datetime.fromtimestamp(item.release_date),
+            release_date = item.get_release_date_obj(),
             size = item.size,
             duration = (item.duration not in (-1, None) and
                         item.duration / 1000 or 0),
@@ -533,7 +534,7 @@ class DeviceItemSource(ItemSource):
             feed_url = None,
             description = item.description,
             state = u'saved',
-            release_date = datetime.datetime.fromtimestamp(item.release_date),
+            release_date = item.get_release_date_obj(),
             size = item.size,
             duration = (item.duration not in (-1, None) and
                         item.duration / 1000 or 0),
