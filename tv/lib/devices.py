@@ -656,6 +656,9 @@ class DeviceItem(object):
     def id_exists():
         return True
 
+    def get_release_date(self):
+        return self.release_date
+
     @returns_filename
     def get_filename(self):
         return os.path.join(self.device.mount, self.video_path)

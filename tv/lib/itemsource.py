@@ -157,7 +157,7 @@ class DatabaseItemSource(ItemSource):
             'feed_url': item.get_feed_url(),
             'description': item.get_description(),
             'state': item.get_state(),
-            'release_date': item.get_release_date_obj(),
+            'release_date': item.get_release_date(),
             'size': item.get_size(),
             'duration': item.get_duration_value(),
             'resume_time': item.resumeTime,
@@ -400,7 +400,7 @@ class SharingItemSource(ItemSource):
             feed_url = None,
             description = item.description,
             state = u'saved',
-            release_date = item.get_release_date_obj(),
+            release_date = item.get_release_date(),
             size = item.size,
             duration = (item.duration not in (-1, None) and
                         item.duration / 1000 or 0),
@@ -534,7 +534,7 @@ class DeviceItemSource(ItemSource):
             feed_url = None,
             description = item.description,
             state = u'saved',
-            release_date = item.get_release_date_obj(),
+            release_date = item.get_release_date(),
             size = item.size,
             duration = (item.duration not in (-1, None) and
                         item.duration / 1000 or 0),

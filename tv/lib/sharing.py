@@ -166,6 +166,9 @@ class SharingItem(object):
     def id_exists():
         return True
 
+    def get_release_date(self):
+        return self.release_date
+
     @returns_filename
     def get_filename(self):
         # For daap, sent it to be the same as http as it is basically

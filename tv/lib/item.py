@@ -1641,9 +1641,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_pub_date_parsed(self):
         """Returns the published date of the item as a datetime object.
         """
-        return self.get_release_date_obj()
+        return self.get_release_date()
 
-    def get_release_date_obj(self):
+    def get_release_date(self):
         """Returns the date this video was released or when it was
         published.
         """
@@ -2098,7 +2098,7 @@ class FileItem(Item):
                     traceback.format_exc())
             self.releaseDateObj = datetime.now()
 
-    def get_release_date_obj(self):
+    def get_release_date(self):
         if self.parent_id:
             return self.get_parent().releaseDateObj
         else:
