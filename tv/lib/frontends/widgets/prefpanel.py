@@ -108,6 +108,19 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
             else:
                 [sw.disable() for sw in sensitive_widget]
 
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            widget.freeze_signals()
+            widget.set_checked(app.config.get(descriptor))
+            if sensitive_widget != None:
+                if widget.get_checked():
+                    [sw.enable() for sw in sensitive_widget]
+                else:
+                    [sw.disable() for sw in sensitive_widget]
+            widget.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
+        
     widget.set_checked(app.config.get(descriptor))
     if sensitive_widget != None:
         if widget.get_checked():
@@ -122,6 +135,17 @@ def attach_radio(widget_values, descriptor):
         for w, v in widget_values:
             if widget is w:
                 app.config.set(descriptor, v)
+
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            pref_value = app.config.get(descriptor)
+            for w, v in widget_values:
+                if v == pref_value:
+                    w.freeze_signals()
+                    w.set_selected()
+                    w.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
 
     pref_value = app.config.get(descriptor)
     for w, v in widget_values:
@@ -151,6 +175,14 @@ def attach_integer(widget, descriptor, check_function=None):
         except ValueError, ve:
             pass
 
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            widget.freeze_signals()
+            widget.set_text(str(app.config.get(descriptor)))
+            widget.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
+
     widget.set_text(str(app.config.get(descriptor)))
     widget.connect('changed', integer_changed)
 
@@ -175,6 +207,14 @@ def attach_float(widget, descriptor, check_function=None):
             app.config.set(descriptor, v)
         except ValueError, ve:
             pass
+
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            widget.freeze_signals()
+            widget.set_text(str(app.config.get(descriptor)))
+            widget.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
 
     # strip off trailing 0s and if there's a . at the end, strip that
     # off, too.
@@ -206,6 +246,14 @@ def attach_text(widget, descriptor, check_function=None):
                 return
         app.config.set(descriptor, v)
 
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            widget.freeze_signals()
+            widget.set_text(str(app.config.get(descriptor)))
+            widget.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
+
     widget.set_text(app.config.get(descriptor))
     widget.connect('changed', text_changed)
 
@@ -219,6 +267,18 @@ def attach_combo(widget, descriptor, values):
     """
     def combo_changed(widget, index):
         app.config.set(descriptor, values[index])
+
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            value = app.config.get(descriptor)
+            widget.freeze_signals()
+            try:
+                widget.set_selected(values.index(value))
+            except ValueError:
+                widget.set_selected(1)
+            widget.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
 
     value = app.config.get(descriptor)
     try:
