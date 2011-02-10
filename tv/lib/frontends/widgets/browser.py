@@ -49,6 +49,16 @@ from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import separator
 from miro.gtcache import gettext as _
 
+class BrowserToolbarBackground(widgetset.Background):
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.set_size_request(-1, 33)
+        self.background = widgetutil.make_surface('navbg')
+
+    def draw(self, context, layout):
+        self.background.draw(context, 0, 0, context.width, context.height)
+
 class BrowserToolbar(widgetset.HBox):
     """
     Forward/back/home & "display in browser" buttons
@@ -56,7 +66,7 @@ class BrowserToolbar(widgetset.HBox):
     def __init__(self):
         widgetset.HBox.__init__(self)
 
-        self.set_size_request(-1, 25)
+        self.set_size_request(-1, 33)
         self.create_signal('browser-reload')
         self.create_signal('browser-back')
         self.create_signal('browser-forward')
@@ -110,7 +120,8 @@ class BrowserToolbar(widgetset.HBox):
         self.loading_icon = widgetutil.HideableWidget(
                 widgetset.AnimatedImageDisplay(
                     resources.path('images/load-indicator.gif')))
-        self.pack_end(widgetutil.align_middle(self.loading_icon, right_pad=6))
+        self.pack_start(widgetutil.align(self.loading_icon, 0.5, 0.5,
+                                         right_pad=6), expand=True)
 
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
@@ -132,6 +143,7 @@ class BrowserToolbar(widgetset.HBox):
 
     def _on_browser_open_activate(self, button):
         self.emit('browser-open')
+
 
 class Browser(widgetset.Browser):
     def __init__(self, guide_info):
@@ -202,10 +214,11 @@ class BrowserNav(widgetset.VBox):
         widgetset.VBox.__init__(self)
         self.browser = Browser(guide_info)
         self.toolbar = BrowserToolbar()
+        bg = BrowserToolbarBackground()
+        bg.add(self.toolbar)
         self.guide_info = guide_info
         self.home_url = guide_info.url
-        self.pack_start(self.toolbar, expand=False)
-        self.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)))
+        self.pack_start(bg, expand=False)
         self.pack_start(self.browser, expand=True)
 
         self.toolbar.connect_weak('browser-back', self._on_browser_back)
