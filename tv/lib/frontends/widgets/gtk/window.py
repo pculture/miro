@@ -102,9 +102,12 @@ class WrappedWindow(gtk.Window):
         wrappermap.wrapper(self).emit('active-change')
 
     def do_key_press_event(self, event):
-        gtk_handled_event = self.propagate_key_event(event)
-        if gtk_handled_event:
+        if self.activate_key(event): # event activated a menu item
             return
+
+        if self.propagate_key_event(event): # event handled by widget
+            return
+
         ret = keymap.translate_gtk_event(event)
         if ret is not None:
             key, modifiers = ret
