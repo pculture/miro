@@ -586,6 +586,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def mark_as_viewed(self):
         """Sets the last time the feed was viewed to now
         """
+        # get the list of available items before we reset the time
+        available_items = list(self.available_items)
         self.last_viewed = datetime.now()
         try:
             del self._num_available
@@ -594,7 +596,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.in_folder():
             self.get_folder().signal_change()
         self.signal_change()
-        for item in self.available_items:
+        for item in available_items:
             item.signal_change(needs_save=False)
 
     def start_manual_download(self):
