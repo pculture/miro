@@ -446,6 +446,9 @@ class CurlTransfer(object):
         LibCURLManager thread.
         """
         self.handle = self.options.build_handle(self.out_headers)
+        # don't authenticate SSL certificates see #15180
+        self.handle.setopt(pycurl.SSL_VERIFYPEER, 0)
+
         self._setup_http_auth()
         self._setup_proxy_auth()
         if self.options._cancel_on_body_data:
