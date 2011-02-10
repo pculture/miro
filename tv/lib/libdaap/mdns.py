@@ -169,18 +169,24 @@ class BonjourCallbacks(object):
         sdRef.close()
 
 def bonjour_register_service(name, regtype, port, callback):
-    callback_obj = BonjourCallbacks(callback)
-    ref = pybonjour.DNSServiceRegister(name=name,
+    try:
+        callback_obj = BonjourCallbacks(callback)
+        ref = pybonjour.DNSServiceRegister(name=name,
                                        regtype=regtype,
                                        port=port,
                                        callBack=callback_obj.register_callback)
-    callback_obj.add_ref(ref)
-    return callback_obj
+        callback_obj.add_ref(ref)
+        return callback_obj
+    except pybonjour.BonjourError:
+        return None
 
 def bonjour_browse_service(regtype, callback):
-    callback_obj = BonjourCallbacks(callback)
-    ref = pybonjour.DNSServiceBrowse(regtype=regtype,
-                                     callBack=callback_obj.browse_callback)
-    callback_obj.host = dict()
-    callback_obj.add_ref(ref)
-    return callback_obj
+    try:
+        callback_obj = BonjourCallbacks(callback)
+        ref = pybonjour.DNSServiceBrowse(regtype=regtype,
+                                         callBack=callback_obj.browse_callback)
+        callback_obj.host = dict()
+        callback_obj.add_ref(ref)
+        return callback_obj
+    except pybonjour.BonjourError:
+        return None

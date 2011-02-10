@@ -788,6 +788,10 @@ class SharingManager(object):
     """SharingManager is the sharing server.  It publishes Miro media items
     to the outside world.  One part is the server instance and the other
     part is the service publishing, both are handled here.
+
+    Important note: mdns_present only indicates the ability to interact with
+    the mdns libraries, does not mean that mdns functionality is present
+    on the system (e.g. server may be disabled).
     """
     # These commands should all be of the same size.
     CMD_QUIT = 'quit'
@@ -893,7 +897,8 @@ class SharingManager(object):
 
     def disable_discover(self):
         self.discoverable = False
-        libdaap.mdns_unregister_service(self.mdns_callback)
+        if self.mdns_callback:
+            libdaap.mdns_unregister_service(self.mdns_callback)
 
     def server_thread(self):
         server_fileno = self.server.fileno()
