@@ -331,20 +331,15 @@ class ProgressSlider(widgetset.CustomSlider):
                                             self.progress_cursor_inactive)
 
         min, max = self.get_range()
-        progress_width = int(round(self.get_value() / max * context.width - 9))
-        progress.draw(context, 0, 1, progress_width, context.height - 1)
-        if progress_width == 0:
-            background.draw(context, 0, 1, context.width, context.height - 1)
-        else:
-            background.draw_right(context, progress_width, 1,
-                                  context.width - progress_width,
-                                  context.height - 1)
+        scale = (self.get_value() - min) / (max - min)
+        cursor_pos = int(scale * (context.width - 18))
+        background.draw(context, 0, 1, context.width, context.height - 1)
+        if cursor_pos:
+            progress.draw(context, 0, 1, cursor_pos + 9, context.height - 1)
+
         if self.duration > 0:
-            if progress_width <= 9:
-                cursor.draw(context, 0, 0, cursor.width, cursor.height)
-            else:
-                cursor.draw(context, progress_width-9, 0, cursor.width,
-                            cursor.height)
+            cursor.draw(context, cursor_pos, 0, cursor.width,
+                        cursor.height)
 
 class ProgressTimeline(widgetset.Background):
     def __init__(self):
