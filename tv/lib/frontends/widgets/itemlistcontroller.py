@@ -406,7 +406,7 @@ class ItemListController(object):
 
     def on_row_activated(self, item_view, iter_):
         info = item_view.model[iter_][0]
-        if app.playback_manager.is_playing_id(info.id):
+        if app.playback_manager.is_playing:
             app.playback_manager.play_pause()
         else:
             self._trigger_item(item_view, info)
