@@ -644,6 +644,16 @@ class TableViewCommon(object):
         else:
             self.SuperClass.mouseUp_(self, event)
 
+    def keyDown_(self, event):
+        mods = osxmenus.translate_event_modifiers(event)
+        if event.charactersIgnoringModifiers() == ' ' and len(mods) == 0:
+            # handle spacebar with no modifiers
+            wrapper = wrappermap.wrapper(self)
+            iter = wrapper.model.iter_for_row(self, self.selectedRow())
+            wrapper.emit('row-activated', iter)
+        else:
+            self.SuperClass.keyDown_(self, event)
+
 class TableColumn(signals.SignalEmitter):
     def __init__(self, title, renderer, **attrs):
         signals.SignalEmitter.__init__(self)
@@ -752,8 +762,6 @@ class TableView(Widget):
         self.create_signal('hotspot-clicked')
         self.create_signal('row-double-clicked')
         self.create_signal('row-clicked')
-        # row-activated is never emitted, but it should be
-        # when space or enter is pressed with a row selected. --Kaz
         self.create_signal('row-activated')
         self.model = model
         self.columns = []
