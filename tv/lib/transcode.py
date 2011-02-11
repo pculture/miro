@@ -328,6 +328,7 @@ class TranscodeObject(object):
 
     def signal_thread(self):
         i = self.start_chunk
+        eof = False
         while i < self.nchunks and not self.terminate_signal_thread:
             data = ''
             rset = [self.segmenter_handle.stdout, self.r]
@@ -355,6 +356,7 @@ class TranscodeObject(object):
                     d = os.read(self.segmenter_handle.stdout.fileno(), 1024)
                     # EOF so we can break without normal restart throttle proto
                     if not d:
+                        eof = True
                         break
                     data += d
                 if self.r in r:
@@ -392,6 +394,19 @@ class TranscodeObject(object):
             self.chunk_lock.release()
             # Tell consumer there is stuff available
             self.chunk_sem.release()
+            # If the transcode job has finished then run the shutdown 
+            # mechanism.
+            if eof:
+                # Since we are in the signaling thread, we don't want to 
+                # call shutdown() because that messes with the signaling
+                # thread.  This is just to make sure they really are gone...
+                if self.ffmpeg_handle:
+                    self.ffmpeg_handle.kill()
+                if self.segmenter_handle:
+                    self.segmenter_handle.kill()
+                self.ffmpeg_handle = self.segmenter_handle = None
+                del self.thread
+                return
 
     def get_chunk(self):
         # XXX How do we save a reference to this guy?  discard_chunk?
