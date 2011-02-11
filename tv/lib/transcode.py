@@ -364,7 +364,6 @@ class TranscodeObject(object):
                     next_file = True
                 if next_file:
                     break
-            # XXX what to do?  can block in the semaphore
             if self.terminate_signal_thread:
                 break
             self.chunk_lock.acquire()
