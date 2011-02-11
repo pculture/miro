@@ -217,6 +217,11 @@ class TranscodeObject(object):
         self.terminate_signal_thread = False
         self.create_playlist()
 
+    def __del__(self):
+        self.shutdown()
+        for fd in self.r, self.w, self.child_r, self.child_w:
+            os.close(fd)
+
     def create_playlist(self):
         self.playlist = ''
         self.playlist += '#EXTM3U\n'
@@ -419,10 +424,8 @@ class TranscodeObject(object):
         if self.segmenter_handle:
             self.segmenter_handle.kill()
             self.terminate_signal_thread = True
-            # Make sure we wakeup the semaphore, if we are stuck in there.
-            # The synchronization watermarks doesn't matter anymore since
-            # we are going away.
-            self.chunk_sem.release()
+            # Wake up the signaling thread.
+            os.write(self.child_w, 'b')
             self.thread.join()
             self.terminate_signal_thread = False
             self.segmenter_handle = None
