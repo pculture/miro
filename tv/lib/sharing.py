@@ -745,6 +745,7 @@ class SharingManagerBackend(object):
               (self.transcode.has_key(session) and 
               self.transcode[session].itemid != itemid)):
                 yes, info = transcode.needs_transcode(path)
+                self.transcode[session].shutdown()
                 self.transcode[session] = transcode.TranscodeObject(path,
                                                             itemid,
                                                             info,
@@ -775,6 +776,11 @@ class SharingManagerBackend(object):
                     os.close(fildes)
                     fildes = -1
         else:
+            # If there is an outstanding job delete it first.
+            try:
+                del self.transcode[session]
+            except KeyError:
+                pass
             try:
                 fildes = os.open(path, os.O_RDONLY)
                 os.lseek(fildes, offset, os.SEEK_SET)
