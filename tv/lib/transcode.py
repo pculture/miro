@@ -264,53 +264,62 @@ class TranscodeObject(object):
         return True
 
     def transcode(self):
-        self.r, self.child_w = os.pipe()
-        self.child_r, self.w = os.pipe()
-        ffmpeg_exe = get_ffmpeg_executable_path()
-        kwargs = {#"stdin": open(os.devnull, 'rb'),
-                  "stdout": subprocess.PIPE,
-                  #"stderr": open(os.devnull, 'wb'),
-                  "startupinfo": util.no_console_startupinfo()}
-        if os.name != "nt":
-            kwargs["close_fds"] = True
-        args = [ffmpeg_exe, "-i", self.media_file]
-        if self.time_offset:
-            args += TranscodeObject.time_offset_args + [str(self.time_offset)]
-        if self.has_video:
-            args += TranscodeObject.has_video_args
-            if self.has_audio:
-                # A/V transcode
-                args += TranscodeObject.has_video_has_audio_args
-            args += TranscodeObject.video_output_args
-        elif self.has_audio:
-            args += TranscodeObject.has_audio_args
-            args += TranscodeObject.audio_output_args
-        else:
-           raise ValueError('no video or audio stream present')
+        try:
+            self.r, self.child_w = os.pipe()
+            self.child_r, self.w = os.pipe()
+            ffmpeg_exe = get_ffmpeg_executable_path()
+            kwargs = {#"stdin": open(os.devnull, 'rb'),
+                      "stdout": subprocess.PIPE,
+                      #"stderr": open(os.devnull, 'wb'),
+                      "startupinfo": util.no_console_startupinfo()}
+            if os.name != "nt":
+                kwargs["close_fds"] = True
+            args = [ffmpeg_exe, "-i", self.media_file]
+            if self.time_offset:
+                args += TranscodeObject.time_offset_args + [str(self.time_offset)]
+            if self.has_video:
+                args += TranscodeObject.has_video_args
+                if self.has_audio:
+                    # A/V transcode
+                    args += TranscodeObject.has_video_has_audio_args
+                args += TranscodeObject.video_output_args
+            elif self.has_audio:
+                args += TranscodeObject.has_audio_args
+                args += TranscodeObject.audio_output_args
+            else:
+               raise ValueError('no video or audio stream present')
+    
+            print 'Running command ', ' '.join(args)
+            self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
+    
+            # XXX
+            segmenter_exe = '/Users/glee/segmenter'
+            args = [segmenter_exe]
+            child_fds = [str(self.child_r), str(self.child_w)]
+            args += TranscodeObject.segmenter_args + child_fds
+            kwargs = {"stdout": subprocess.PIPE,
+                      "stdin": self.ffmpeg_handle.stdout,
+                      #"stderr": open(os.devnull, 'wb'),
+                      "startupinfo": util.no_console_startupinfo()}
+            # XXX Can't use this - need to pass on the child fds
+            #if os.name != "nt":
+            #    kwargs["close_fds"] = True
+    
+            print 'Running command ', ' '.join(args)
+            self.segmenter_handle = subprocess.Popen(args, **kwargs)
+    
+            self.thread = threading.Thread(target=thread_body,
+                                           args=[self.signal_thread],
+                                           name="Transcode Signaling")
+            self.thread.start()
 
-        print 'Running command ', ' '.join(args)
-        self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
+            os.close(self.child_r)
+            os.close(self.child_w)
 
-        # XXX
-        segmenter_exe = '/Users/glee/segmenter'
-        args = [segmenter_exe]
-        child_fds = [str(self.child_r), str(self.child_w)]
-        args += TranscodeObject.segmenter_args + child_fds
-        kwargs = {"stdout": subprocess.PIPE,
-                  "stdin": self.ffmpeg_handle.stdout,
-                  #"stderr": open(os.devnull, 'wb'),
-                  "startupinfo": util.no_console_startupinfo()}
-        # XXX Can't use this - need to pass on the child fds
-        #if os.name != "nt":
-        #    kwargs["close_fds"] = True
-
-        print 'Running command ', ' '.join(args)
-        self.segmenter_handle = subprocess.Popen(args, **kwargs)
-
-        self.thread = threading.Thread(target=thread_body,
-                                       args=[self.signal_thread],
-                                       name="Transcode Signaling")
-        self.thread.start()
+            return True
+        except StandardError, e:
+            logging.error('ERROR: ' + e)
+            return False
 
     def signal_thread(self):
         i = self.start_chunk
