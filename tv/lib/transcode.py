@@ -414,9 +414,10 @@ class TranscodeObject(object):
         # pipe reads should return 0.  This can indicate that the transcode
         # pipeline has been terminated.
         if self.ffmpeg_handle:
-            self.ffmpeg_handle.terminate()
+            self.ffmpeg_handle.kill()
+            self.ffmpeg_handle = None
         if self.segmenter_handle:
-            self.segmenter_handle.terminate()
+            self.segmenter_handle.kill()
             self.terminate_signal_thread = True
             # Make sure we wakeup the semaphore, if we are stuck in there.
             # The synchronization watermarks doesn't matter anymore since
