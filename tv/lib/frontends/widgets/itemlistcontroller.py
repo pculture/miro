@@ -95,8 +95,7 @@ class FilteredListMixin(object):
         """Update the display and toolbar filter switch state."""
         self.widget.toggle_filter(filters)
         self.item_list.toggle_filter(filters)
-        for item_view in self.views.values():
-            item_view.model_changed()
+        self.send_model_changed()
         self.check_for_empty_list()
 
 class ItemListController(object):
@@ -412,10 +411,9 @@ class ItemListController(object):
             self._trigger_item(item_view, info)
 
     def on_sort_changed(self, object, sort_key, ascending, view):
-        self.views[view].start_bulk_change()
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
-        self.views[view].item_list.set_sort(sorter)
-        self.views[view].model_changed()
+        self.item_list.set_sort(sorter)
+        self.send_model_changed()
         list_view = WidgetStateStore.get_list_view_type()
         if view == list_view:
             self.views[list_view].change_sort_indicator(sort_key, ascending)
@@ -535,6 +533,8 @@ class ItemListController(object):
         item_tracker = itemtrack.ItemListTracker(type_, id_, item_list)
         item_tracker.set_search(self._search_text)
         self._item_tracker_callbacks = [
+            item_tracker.connect("items-will-change",
+                self.handle_items_will_change),
             item_tracker.connect("initial-list", self.handle_item_list),
             item_tracker.connect("items-changed", self.handle_items_changed),
         ]
@@ -573,16 +573,30 @@ class ItemListController(object):
             self._playback_item_list.disconnect(self._items_added_callback)
             self._playback_item_list = self._items_added_callback = None
 
-    def handle_item_list(self, obj, items):
-        """Handle an ItemList message meant for this ItemContainer."""
+    def start_bulk_change(self):
+        for item_view in self.views.values():
+            item_view.start_bulk_change()
+
+    def send_model_changed(self):
         for item_view in self.views.values():
             item_view.model_changed()
+
+    def handle_items_will_change(self, obj, added, changed, removed):
+        if len(added) + len(removed) > 100:
+            # Lots of changes are happening, so call start_bulk_change() to
+            # speed things up.  The reason we don't call this always is that
+            # it looses the scroll position on GTK.  But when lots of rows are
+            # changing, trying to keep the scroll position is pointless.
+            self.start_bulk_change()
+
+    def handle_item_list(self, obj, items):
+        """Handle an ItemList message meant for this ItemContainer."""
+        self.send_model_changed()
         self.on_initial_list()
 
     def handle_items_changed(self, obj, added, changed, removed):
         """Handle an ItemsChanged message meant for this ItemContainer."""
-        for item_view in self.views.values():
-            item_view.model_changed()
+        self.send_model_changed()
         self.on_items_changed()
 
     def on_initial_list(self):
