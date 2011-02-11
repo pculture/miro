@@ -56,7 +56,7 @@ _guide_url_to_icon_map = {
 
 def send_new_order():
     def append_items(sequence, typ):
-        parent = sequence[0]
+        parent = sequence[sequence.first_iter()]
         for row in parent.iterchildren():
             info = row[0]
             message.append(info, typ)
