@@ -178,6 +178,9 @@ class TranscodeObject(object):
     segment_duration = 10
     segmenter_args = ['-', str(segment_duration)]
 
+    # Future work: we only have a high watermark, so the transcode job gets
+    # throttled when it reaches the high watermark and then starts again
+    # as items are consumed.  It may be good to have a low watermark as well.
     buffer_high_watermark = 6
 
     def __init__(self, media_file, itemid, media_info, request_path_func):
@@ -207,9 +210,9 @@ class TranscodeObject(object):
         # Set start_chunk != current_chunk to force seek() to return True
         self.current_chunk = -1
         self.start_chunk = 0
+        self.throttled = False
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
-        # TODO Make sure the semaphore cannot grow past the high watermark
         self.chunk_sem = threading.Semaphore(0)
         self.terminate_signal_thread = False
         self.create_playlist()
@@ -257,6 +260,7 @@ class TranscodeObject(object):
         # XXX FIXME: should only clear if this is a real seek
         # Clear the chunk buffer, and the lock/synchronization state
         self.start_chunk = self.current_chunk = chunk
+        self.throttled = False
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
@@ -313,9 +317,6 @@ class TranscodeObject(object):
                                            name="Transcode Signaling")
             self.thread.start()
 
-            os.close(self.child_r)
-            os.close(self.child_w)
-
             return True
         except StandardError, e:
             logging.error('ERROR: ' + e)
@@ -356,12 +357,27 @@ class TranscodeObject(object):
                     throwaway = os.read(self.r, 1024)
                     next_file = True
                 if next_file:
-                    os.write(self.w, 'b')
                     break
             # XXX what to do?  can block in the semaphore
             if self.terminate_signal_thread:
                 break
             self.chunk_lock.acquire()
+            # Housekeeping if next_file is set...
+            if next_file:
+                # If this was an unthrottle request, set it so and then
+                # just continue - there isn't actually any data available.
+                if self.throttled:
+                    print 'UNTHROTTLED'
+                    self.throttled = False
+                    os.write(self.w, 'b')
+                    continue
+                if (len(self.chunk_buffer) + 1 == 
+                  TranscodeObject.buffer_high_watermark):
+                    print 'THROTTLED'
+                    self.throttled = True
+                else:
+                    print 'QUEUE NOT YET FULL'
+                    os.write(self.w, 'b')
             fildes, name = tempfile.mkstemp()
             os.unlink(name)
             os.write(fildes, data)
@@ -383,6 +399,11 @@ class TranscodeObject(object):
         self.current_chunk += 1
         self.chunk_buffer = self.chunk_buffer[1:]
         print 'POP'
+        # If we are currently throttled, unthrottle.  We steal the "child_w"
+        # that's really supposed to be coming from the segmenter for this job.
+        if self.throttled == True:
+            self.throttled = False
+            os.write(self.child_w)
         self.chunk_lock.release()
         print 'FILDES %d' % fildes
         return fildes
