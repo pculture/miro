@@ -193,6 +193,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                     if duration == -1:
                         duration = self.parse_duration(stdout)
                     mediatype = self.parse_type(stdout)
+                    if mediatype is None:
+                        mediatype = 'other'
                     if THUMBNAIL_SUCCESS_RE.search(stdout):
                         screenshot_worked = True
                     if ((screenshot_worked and
