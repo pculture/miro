@@ -257,7 +257,6 @@ class TranscodeObject(object):
             return False
         self.time_offset = chunk * TranscodeObject.segment_duration
         self.shutdown()
-        # XXX FIXME: should only clear if this is a real seek
         # Clear the chunk buffer, and the lock/synchronization state
         self.start_chunk = self.current_chunk = chunk
         self.throttled = False
