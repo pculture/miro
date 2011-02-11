@@ -58,6 +58,7 @@ class Widget(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, *signal_names)
         self.create_signal('size-allocated')
         self.create_signal('key-press')
+        self.create_signal('focus-out')
         self.style_mods = {}
         self.use_custom_style = False
         self._disabled = False
@@ -77,6 +78,7 @@ class Widget(signals.SignalEmitter):
                 self.on_hierarchy_changed)
         self.wrapped_widget_connect('size-allocate', self.on_size_allocate)
         self.wrapped_widget_connect('key-press-event', self.on_key_press)
+        self.wrapped_widget_connect('focus-out-event', self.on_focus_out)
         self.use_custom_style_callback = None
 
     def on_hierarchy_changed(self, widget, previous_toplevel):
@@ -104,6 +106,9 @@ class Widget(signals.SignalEmitter):
     def on_key_press(self, widget, event):
         key, modifiers = keymap.translate_gtk_event(event)
         return self.emit('key-press', key, modifiers)
+
+    def on_focus_out(self, widget, event):
+        self.emit('focus-out')
 
     def on_use_custom_style_changed(self, window):
         self.use_custom_style = window.use_custom_style

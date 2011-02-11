@@ -176,15 +176,21 @@ def attach_integer(widget, descriptor, error_widget=None, check_function=None):
     :param check_function: function with signature ``widget * int -> boolean``
         that checks the value for appropriateness
     """
-    def integer_changed(widget):
+    def check_value(widget):
         try:
-            v = int(widget.get_text().strip())
-            if check_function != None:
-                if not check_function(error_widget, v):
-                    return
-            app.config.set(descriptor, v)
+            check_function(error_widget, int(widget.get_text().strip()))
         except ValueError, ve:
             error_widget.show()
+
+    def save_value(widget):
+        try:
+            v = int(widget.get_text().strip())
+            if ((check_function != None and 
+                 not check_function(error_widget, v))):
+                return
+            app.config.set(descriptor, v)
+        except ValueError:
+            pass
 
     def on_config_changed(obj, key, value):
         if key == descriptor.key:
@@ -193,9 +199,10 @@ def attach_integer(widget, descriptor, error_widget=None, check_function=None):
             widget.thaw_signals()
 
     app.frontend_config_watcher.connect('changed', on_config_changed)
-
     widget.set_text(str(app.config.get(descriptor)))
-    widget.connect('changed', integer_changed)
+    if check_function:
+        widget.connect('changed', check_value)
+    widget.connect('focus-out', save_value)
 
 def float_value_to_text(value):
     """Converts a float value to a nice text string for a TextEntry.
@@ -225,15 +232,21 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
     :param check_function: function with signature ``widget * float -> boolean``
         that checks the value for appropriateness
     """
-    def float_changed(widget):
+    def check_value(widget):
+        try:
+            check_function(error_widget, float(widget.get_text().strip()))
+        except ValueError:
+            error_widget.show()
+
+    def save_value(widget):
         try:
             v = float(widget.get_text().strip())
-            if check_function != None:
-                if not check_function(error_widget, v):
-                    return
+            if ((check_function != None and 
+                 not check_function(error_widget, v))):
+                return
             app.config.set(descriptor, v)
-        except ValueError, ve:
-            error_widget.show()
+        except ValueError:
+            pass
 
     def on_config_changed(obj, key, value):
         if key == descriptor.key:
@@ -243,7 +256,9 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
 
     app.frontend_config_watcher.connect('changed', on_config_changed)
     widget.set_text(float_value_to_text(app.config.get(descriptor)))
-    widget.connect('changed', float_changed)
+    if check_function:
+        widget.connect('changed', check_value)
+    widget.connect('focus-out', save_value)
 
 def attach_text(widget, descriptor, check_function=None):
     """This is for text entry preferences.
