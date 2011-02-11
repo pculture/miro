@@ -840,6 +840,10 @@ class SharingManagerBackend(object):
             itemprop['cover_art'] = item.cover_art
             self.daapitems[item.id] = itemprop
 
+    def shutdown(self):
+       for key in self.transcode.keys():
+           self.transcode[key].shutdown()
+
 class SharingManager(object):
     """SharingManager is the sharing server.  It publishes Miro media items
     to the outside world.  One part is the server instance and the other
@@ -1038,3 +1042,4 @@ class SharingManager(object):
             if self.discoverable:
                 self.disable_discover()
             self.disable_sharing()
+        self.backend.shutdown()
