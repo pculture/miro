@@ -69,24 +69,33 @@ from miro.frontends.widgets import dialogs
 
 # Note: we do an additional import from prefpanelset half way down the file.
 
-def create_integer_checker(min=None, max=None):
-    """Returns a checker function that checks bounds."""
-    def positive_integer_checker(widget, v):
-        if min != None and v < min:
-            widget.set_text(str(min))
-        if max != None and v > max:
-            widget.set_text(str(max))
-        return True
-    return positive_integer_checker
 
-def create_float_checker(min=None, max=None):
+ERROR_IMAGE_PATH = resources.path('images/pref_panel_error.png')
+
+def build_error_image():
+    """Builds a hidden/hideable error image widget for controls that
+    hold values that are naughty.
+
+    :returns: hidden error image
+    """
+    image = widgetutil.HideableWidget(
+        widgetutil.align_middle(
+            widgetset.ImageDisplay(widgetset.Image(ERROR_IMAGE_PATH)),
+            top_pad=6))
+    image.hide()
+    return image
+
+def create_value_checker(min_=None, max_=None):
     """Returns a checker function that checks bounds."""
-    def positive_float_checker(widget, v):
-        if min != None and v < min:
-            widget.set_text(str(min))
-        if max != None and v > min:
-            widget.set_text(str(max))
+    def _integer_checker(error_widget, v):
+        if (((min_ != None and v < min_) or
+             (max_ != None and v > max_))):
+            error_widget.show()
+            return False
+        else:
+            error_widget.hide()
         return True
+    return _integer_checker
 
 def attach_boolean(widget, descriptor, sensitive_widget=None):
     """This is for preferences implemented as a checkbox where the
@@ -153,27 +162,29 @@ def attach_radio(widget_values, descriptor):
         if v == pref_value:
             w.set_selected()
 
-def attach_integer(widget, descriptor, check_function=None):
+def attach_integer(widget, descriptor, error_widget=None, check_function=None):
     """This is for preferences implemented as a text entry where the
     value is an integer.
 
     It allows for a check_function which takes a widget and a value
     and returns True if the value is ok, False if not.
 
-    widget - widget
-    descriptor - prefs preference
-    check_function - function with signature ``widget * int -> boolean``
+    :param widget: widget
+    :param descriptor: prefs preference
+    :param error_widget: widget with show/hide methods that shows when
+        the value is bad
+    :param check_function: function with signature ``widget * int -> boolean``
         that checks the value for appropriateness
     """
     def integer_changed(widget):
         try:
             v = int(widget.get_text().strip())
             if check_function != None:
-                if not check_function(widget, v):
+                if not check_function(error_widget, v):
                     return
             app.config.set(descriptor, v)
         except ValueError, ve:
-            pass
+            error_widget.show()
 
     def on_config_changed(obj, key, value):
         if key == descriptor.key:
@@ -186,46 +197,52 @@ def attach_integer(widget, descriptor, check_function=None):
     widget.set_text(str(app.config.get(descriptor)))
     widget.connect('changed', integer_changed)
 
-def attach_float(widget, descriptor, check_function=None):
-    """This is for preferences implemented as a text entry where the
-    value is a float.
-
-    It allows for a check_function which takes a widget and a value
-    and returns True if the value is ok, False if not.
-
-    widget - widget
-    descriptor - prefs preference
-    check_function - function with signature ``widget * float -> boolean``
-        that checks the value for appropriateness
+def float_value_to_text(value):
+    """Converts a float value to a nice text string for a TextEntry.
     """
-    def float_changed(widget):
-        try:
-            v = float(widget.get_text().strip())
-            if check_function != None:
-                if not check_function(widget, v):
-                    return
-            app.config.set(descriptor, v)
-        except ValueError, ve:
-            pass
-
-    def on_config_changed(obj, key, value):
-        if key == descriptor.key:
-            widget.freeze_signals()
-            widget.set_text(str(app.config.get(descriptor)))
-            widget.thaw_signals()
-
-    app.frontend_config_watcher.connect('changed', on_config_changed)
-
     # strip off trailing 0s and if there's a . at the end, strip that
     # off, too.
-    text = "%.3f" % app.config.get(descriptor)
+    text = "%.3f" % value
     while text.endswith("0"):
         text = text[:-1]
     if text.endswith("."):
         text = text[:-1]
     if not text:
         text = "0"
-    widget.set_text(text)
+    return text
+
+def attach_float(widget, descriptor, error_widget=None, check_function=None):
+    """This is for preferences implemented as a text entry where the
+    value is a float.
+
+    It allows for a check_function which takes a widget and a value
+    and returns True if the value is ok, False if not.
+
+    :param widget: widget
+    :param descriptor: prefs preference
+    :param error_widget: widget with show/hide methods that shows when
+        the value is bad
+    :param check_function: function with signature ``widget * float -> boolean``
+        that checks the value for appropriateness
+    """
+    def float_changed(widget):
+        try:
+            v = float(widget.get_text().strip())
+            if check_function != None:
+                if not check_function(error_widget, v):
+                    return
+            app.config.set(descriptor, v)
+        except ValueError, ve:
+            error_widget.show()
+
+    def on_config_changed(obj, key, value):
+        if key == descriptor.key:
+            widget.freeze_signals()
+            widget.set_text(float_value_to_text(app.config.get(descriptor)))
+            widget.thaw_signals()
+
+    app.frontend_config_watcher.connect('changed', on_config_changed)
+    widget.set_text(float_value_to_text(app.config.get(descriptor)))
     widget.connect('changed', float_changed)
 
 def attach_text(widget, descriptor, check_function=None):
@@ -457,17 +474,24 @@ class DownloadsPanel(PanelBuilder):
         grid.pack_label(_('Maximum number of manual downloads at a time:'))
         max_manual = widgetset.TextEntry()
         max_manual.set_width(5)
-        attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS,
-                       create_integer_checker(min=0))
+        max_manual_error = build_error_image()
+        attach_integer(max_manual,
+                       prefs.MAX_MANUAL_DOWNLOADS,
+                       max_manual_error,
+                       create_value_checker(min_=0))
         grid.pack(max_manual)
+        grid.pack(max_manual_error, grid.ALIGN_LEFT)
         grid.end_line(spacing=6)
 
         grid.pack_label(_('Maximum number of auto-downloads at a time:'))
         max_auto = widgetset.TextEntry()
         max_auto.set_width(5)
+        max_auto_error = build_error_image()
         attach_integer(max_auto, prefs.DOWNLOADS_TARGET,
-                       create_integer_checker(min=0))
+                       max_auto_error,
+                       create_value_checker(min_=0))
         grid.pack(max_auto)
+        grid.pack(max_auto_error, dialogwidgets.ControlGrid.ALIGN_LEFT)
         grid.end_line(spacing=12)
 
         vbox.pack_start(grid.make_table())
@@ -484,54 +508,69 @@ class DownloadsPanel(PanelBuilder):
         attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
         max_kbs = sys.maxint / (2**10) # highest value accepted: sys.maxint
                                        # bits per second in kb/s
+        limit_error = build_error_image()
         attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS,
-                       create_integer_checker(min=0, max=max_kbs))
+                       limit_error,
+                       create_value_checker(min_=0, max_=max_kbs))
 
         grid.pack(cbx)
         grid.pack(limit)
         grid.pack_label(_("KB/s"))
+        grid.pack(limit_error)
         grid.end_line(spacing=6)
 
         cbx = widgetset.Checkbox(_('Limit downstream bandwidth to:'))
         limit = widgetset.TextEntry()
         limit.set_width(5)
+        limit_error = build_error_image()
         attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
         attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS,
-                       create_integer_checker(min=0, max=max_kbs))
+                       limit_error,
+                       create_value_checker(min_=0, max_=max_kbs))
 
         grid.pack(cbx)
         grid.pack(limit)
         grid.pack_label(_("KB/s"))
+        grid.pack(limit_error)
         grid.end_line(spacing=6)
 
         cbx = widgetset.Checkbox(_('Limit torrent connections to:'))
         limit = widgetset.TextEntry()
         limit.set_width(5)
+        limit_error = build_error_image()
         attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
         attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM,
-                       create_integer_checker(min=0, max=65536))
+                       limit_error,
+                       create_value_checker(min_=0, max_=65536))
 
         grid.pack(cbx)
         grid.pack(limit)
+        grid.pack(limit_error)
         grid.end_line(spacing=6)
 
         min_port = widgetset.TextEntry()
         min_port.set_width(5)
+        min_port_error = build_error_image()
         max_port = widgetset.TextEntry()
         max_port.set_width(5)
+        max_port_error = build_error_image()
         attach_integer(min_port, prefs.BT_MIN_PORT,
-                       create_integer_checker(min=0, max=65535))
+                       min_port_error,
+                       create_value_checker(min_=0, max_=65535))
         attach_integer(max_port, prefs.BT_MAX_PORT,
-                       create_integer_checker(min=0, max=65535))
+                       max_port_error,
+                       create_value_checker(min_=0, max_=65535))
 
         grid.pack_label(_("Starting port:"),
                         dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(min_port)
+        grid.pack(min_port_error)
         grid.end_line(spacing=6)
 
         grid.pack_label(_("Ending port:"),
                         dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(max_port)
+        grid.pack(max_port_error)
         grid.end_line(spacing=12)
         vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
@@ -547,10 +586,14 @@ class DownloadsPanel(PanelBuilder):
         cbx = widgetset.Checkbox(
             _('Stop torrent uploads when this ratio is reached:'))
         limit = widgetset.TextEntry()
+        limit_error = build_error_image()
         attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
-        attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
+        attach_float(limit, prefs.UPLOAD_RATIO,
+                     limit_error,
+                     create_value_checker(min_=0.0))
         grid.pack(cbx)
         grid.pack(limit)
+        grid.pack(limit_error)
         grid.end_line(spacing=6)
         vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
@@ -720,17 +763,20 @@ class DiskSpacePanel(PanelBuilder):
             _('Keep at least this much free space on my drive:'))
         limit = widgetset.TextEntry()
         limit.set_width(6)
+        limit_error = build_error_image()
         note = widgetset.Label(_('GB'))
         attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
 
         def set_library_filter(self, typ, filter):
             self.library[typ] = filter
         attach_float(limit, prefs.PRESERVE_X_GB_FREE,
-                     create_float_checker(min=0.0))
+                     limit_error,
+                     create_value_checker(min_=0.0))
 
         grid.pack(cbx)
         grid.pack(limit)
         grid.pack_label(_('GB'))
+        grid.pack(limit_error)
         grid.end_line(spacing=4)
 
         expire_ops = [(1, _('1 day')),
