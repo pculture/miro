@@ -1272,6 +1272,10 @@ class TableView(Widget):
     def get_left_offset(self):
         return self._widget.get_left_offset()
 
+    def scroll_to_iter(self, iter):
+        path = self._model.get_path(iter)
+        self._widget.scroll_to_cell(path)
+
     def set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)
     

@@ -70,6 +70,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.mark_as_watched_timeout = None
         self.update_timeout = None
         self.presentation_mode = 'fit-to-bounds'
+        self.create_signal('will-start')
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
         self.create_signal('will-play')
@@ -118,6 +119,7 @@ class PlaybackManager (signals.SignalEmitter):
         """Start playback, playing the items from an ItemTracker"""
         if self.is_playing:
             self.stop()
+        self.emit('will-start')
         self.playlist = PlaybackPlaylist(item_tracker, start_id)
         self.playlist.connect("position-changed", self._on_position_changed)
         self.playlist.connect("playing-info-changed",

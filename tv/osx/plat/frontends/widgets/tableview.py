@@ -1232,6 +1232,9 @@ class TableView(Widget):
             self.tableview.registerForDraggedTypes_(types)
             self.data_source.setDragDest_(drag_dest)
 
+    def scroll_to_iter(self, iter):
+        self.tableview.scrollRowToVisible_(self.row_of_iter(iter))
+
     def set_scroll_position(self, scroll_pos):
         # FIXME: stub
         pass

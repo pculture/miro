@@ -101,13 +101,13 @@ class PlaybackControls(widgetset.HBox):
         self.forward.disable()
         self.queue_redraw()
 
-class PlaybackInfo(widgetset.DrawingArea):
+class PlaybackInfo(widgetset.CustomButton):
     LEFT_MARGIN = 8
     RIGHT_MARGIN = 8
     TOTAL_MARGIN = LEFT_MARGIN + RIGHT_MARGIN
     
     def __init__(self):
-        widgetset.DrawingArea.__init__(self)
+        widgetset.CustomButton.__init__(self)
         self.video_icon = imagepool.get_surface(resources.path('images/mini-icon-video.png'))
         self.audio_icon = imagepool.get_surface(resources.path('images/mini-icon-audio.png'))
         self.reset()
@@ -443,6 +443,9 @@ class VideoBox(style.LowerBox):
         style.LowerBox.__init__(self)
         self.controls = PlaybackControls()
         self.timeline = ProgressTimeline()
+        app.playback_manager.connect('will-start', self.on_playback_started)
+        app.playback_manager.connect('selecting-file', self.on_file_selected)
+        self.timeline.info.connect('clicked', self.on_title_clicked)
         self.playback_mode = PlaybackModeControls()
         if hasattr(widgetset, 'VolumeMuter'):
             self.volume_muter = widgetset.VolumeMuter()
@@ -463,6 +466,22 @@ class VideoBox(style.LowerBox):
         hbox.pack_start(volume_hbox)
         hbox.pack_start(self.playback_mode)
         self.add(widgetutil.align_middle(hbox, 0, 0, 25, 25))
+
+    def on_file_selected(self, manager, info):
+        self.selected_file = info
+
+    def on_playback_started(self, manager):
+        self.selected_tab_list = app.tab_list_manager.selected_tab_list
+        self.selected_tabs = app.tab_list_manager.selected_tabs
+
+    def on_title_clicked(self, button):
+        tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
+        app.tab_list_manager._select_from_tab_list(self.selected_tab_list,
+                                                   tab_iter)
+        controller = app.display_manager.current_display.controller
+        model = controller.current_item_view.model
+        iter = model.iter_for_id(self.selected_file.id)
+        controller.current_item_view.scroll_to_iter(iter)
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)
