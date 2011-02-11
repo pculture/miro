@@ -365,7 +365,7 @@ class TranscodeObject(object):
                 if next_file:
                     break
             if self.terminate_signal_thread:
-                break
+                return
             self.chunk_lock.acquire()
             # Housekeeping if next_file is set...
             if next_file:
