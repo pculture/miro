@@ -38,6 +38,11 @@
 // All functions should return 0 on success and -1 on failure (and set the
 // python exception)
 
+#ifndef INFOLIST_PLAT_H
+#define INFOLIST_PLAT_H
+
+#include <Python.h>
+
 int
 infolistplat_init(void);
 
@@ -92,3 +97,9 @@ infolistplat_add_to_tableview(InfoListNodeList* nodelist,
 InfoListNode*
 infolistplat_node_for_pos(InfoListNodeList* nodelist,
                           PyObject* pos);
+
+PyObject*
+infolistplat_iter_for_node(InfoListNodeList* nodelist,
+                           InfoListNode* node);
+
+#endif /* INFOLIST_PLAT_H */

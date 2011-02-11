@@ -122,3 +122,11 @@ infolistplat_node_for_pos(InfoListNodeList* nodelist,
         return infolist_nodelist_nth_node(nodelist, row);
 }
 
+InfoListNode*
+infolistplat_iter_for_node(InfoListNodeList* nodelist,
+                           InfoListNode* node)
+{
+        /* We handle this by subclassing in python-land on OS X.*/
+        PyErr_SetNone(&PyExc_NotImplementedError);
+        return NULL;
+}

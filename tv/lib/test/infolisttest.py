@@ -26,10 +26,13 @@ class InfoListTestBase(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         FakeInfo.counter = itertools.count()
-        self.infolist = infolist.InfoList(self.sort_key_func, False)
+        self.infolist = self.build_infolist()
         self.sorter = self.sort_key_func
         self.reverse = False
         self.correct_infos = []
+
+    def build_infolist(self):
+        return infolist.InfoList(self.sort_key_func, False)
 
     def sort_key_func(self, info):
         return info.name.lower()
@@ -350,6 +353,13 @@ class InfoListGTKTest(InfoListDataTest):
             iter_for_path = gtk_model.get_iter(check_path)
             self.assertEquals(self.infolist.row_for_iter(iter_for_path),
                     self.infolist.row_for_iter(it))
+            # check that iter_for_id gives a correct iter.  This is a bit
+            # weird, because iters don't do all that much directly.  To check,
+            # make sure that the iter is associated with the correct path.
+            info = self.infolist.row_for_iter(it)[0]
+            iter_to_check = self.infolist.iter_for_id(info.id)
+            self.assertEquals(gtk_model.get_path(iter_to_check), check_path)
+            # prepare next loop
             it = gtk_model.iter_next(it)
 
     def on_row_inserted(self, obj, path, it):
@@ -475,6 +485,9 @@ class InfoListCocoaTest(InfoListDataTest):
         InfoListDataTest.setUp(self)
         self.data_source = tablemodel.MiroInfoListDataSource.alloc().initWithModel_(self.infolist)
 
+    def build_infolist(self):
+        from miro.plat.frontends.widgets import tablemodel
+        return tablemodel.InfoListModel(self.sort_key_func, False)
 
     def check_info_list(self, info_list):
         # Note we just pass in a None for tableviews, the InfoList data source
@@ -487,4 +500,7 @@ class InfoListCocoaTest(InfoListDataTest):
                     self.data_source.tableView_objectValueForTableColumn_row_(
                         None, 0, i))
             data_source_rows.append(info)
+            # check that iter_for_id gives the correct iter.  On OS X, this is
+            # just the index of the row
+            self.assertEquals(self.infolist.iter_for_id(info.id), i)
         InfoListDataTest.check_info_list(self, data_source_rows)

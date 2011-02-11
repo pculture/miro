@@ -110,6 +110,8 @@ cdef extern from "infolist-platform.h":
             object tableview) except -1
     InfoListNode* infolistplat_node_for_pos(InfoListNodeList* nodelist,
             object pos) except NULL
+    object infolistplat_iter_for_node(InfoListNodeList* nodelist,
+            InfoListNode* node)
 
 cdef class InfoListAttributeStore:
     """Stores the attributes for an InfoList
@@ -632,6 +634,23 @@ cdef class InfoList:
         node = infolistplat_node_for_pos(self.nodelist, pos)
         info = infolist_node_get_info(node)
         return (info, self.attributes.get_attr_dict(info.id))
+
+    def iter_for_id(self, id_):
+        """Get an TableModel iterator for an info in the list
+
+        Iterators are a platform-specific object that refers to a position in
+        the table.  "Iterator" is a bit of a misnomer, since they are only
+        used for positions, not actually iterating through the list.
+
+        :param id_: id of the info that we care about
+        :returns: Platform-specific TableModel iterator
+
+        """
+
+        cdef InfoListNode* node
+
+        node = self._fetch_node(id_)
+        return infolistplat_iter_for_node(self.nodelist, node)
 
     def nth_row(self, index):
         cdef InfoListNode* node

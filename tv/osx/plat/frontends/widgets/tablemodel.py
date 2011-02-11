@@ -336,6 +336,9 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
     def row_of_iter(self, tableview, iter):
         return iter # iterators are just the row index
 
+    def iter_for_id(self, id_):
+        return self.index_of_id(id_) # iterators are just the row index
+
     def get_column_data(self, row, column):
         return row
 

@@ -521,3 +521,19 @@ infolistplat_node_for_pos(InfoListNodeList* nodelist,
 
         return (InfoListNode*)iter->user_data;
 }
+
+PyObject*
+infolistplat_iter_for_node(InfoListNodeList* nodelist,
+                           InfoListNode* node)
+{
+        GtkTreeIter iter;
+        MiroListStore* miro_list_store;
+
+        miro_list_store = (MiroListStore*)nodelist->plat_data;
+
+        iter.stamp = miro_list_store->stamp;
+        iter.user_data = node;
+        /* This call to pyg_boxed_new copies the iter, so it's okay that we're
+         * using a value from the stack */
+        return pyg_boxed_new(GTK_TYPE_TREE_ITER, &iter, TRUE, TRUE);
+}
