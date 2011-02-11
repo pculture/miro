@@ -40,6 +40,28 @@ pygst.require('0.10')
 import gst
 import gst.interfaces
 
+def scaled_size(from_size, to_size):
+    """Takes an image which has a width and a height and a size tuple
+    that specifies the space available and returns the new width
+    and height that allows the image to fit into the sized space
+    at the correct height/width ratio.
+
+    :param from_size: (width, height) tuple of original image size
+    :param to_size: (width, height) tuple of new image size
+    """
+    image_ratio = float(from_size[0]) / from_size[1]
+    new_ratio = float(to_size[0]) / to_size[1]
+    if image_ratio == new_ratio:
+        return size
+    elif image_ratio > new_ratio:
+        # The scaled image has a wider aspect ratio than the old one.
+        height = int(round(float(to_size[0]) / from_size[0] * from_size[1]))
+        return to_size[0], height
+    else:
+        # The scaled image has a taller aspect ratio than the old one.
+        width = int(round(float(to_size[1]) / from_size[1] * from_size[0]))
+        return width, to_size[1]
+
 class Extractor:
     def __init__(self, filename, thumbnail_filename, callback):
         self.thumbnail_filename = thumbnail_filename
@@ -196,6 +218,14 @@ class Extractor:
             pixbuf = gtk.gdk.pixbuf_new_from_data(
                 buff.data, gtk.gdk.COLORSPACE_RGB, False, 8,
                 width, height, width * 3)
+
+            # NOTE: 200x136 is sort of arbitrary.  it's larger than what
+            # the ui uses at the time of this writing.
+            new_width, new_height = scaled_size((width, height), (200, 136))
+
+            pixbuf = pixbuf.scale_simple(
+                new_width, new_height, gtk.gdk.INTERP_BILINEAR)
+
             pixbuf.save(self.thumbnail_filename, "png")
             del pixbuf
             self.success = True
