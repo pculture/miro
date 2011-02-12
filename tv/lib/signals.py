@@ -162,7 +162,11 @@ class SignalEmitter(object):
         connect() or connect_weak().
         """
         callbacks = self.get_callbacks(callback_handle[0])
-        del callbacks[callback_handle[1]]
+        if callback_handle[1] in callbacks:
+            del callbacks[callback_handle[1]]
+        else:
+            logging.warning(
+                "disconnect called but callback_handle not in the callback")
 
     def disconnect_all(self):
         for signal in self.signal_callbacks:

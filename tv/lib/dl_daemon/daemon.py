@@ -242,6 +242,7 @@ class ControllerDaemon(Daemon):
         self._setup_httpauth()
         self.shutdown_callback = None
         self.shutdown_timeout_dc = None
+        self.callback_handle = None
 
     def start_downloader_daemon(self):
         start_download_daemon(self.read_pid(), self.addr, self.port)
@@ -282,11 +283,13 @@ class ControllerDaemon(Daemon):
             data[desc.key] = app.config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send()
-        self.callback_handle = app.backend_config_watcher.connect("changed",
-                self.on_config_change)
+        self.callback_handle = app.backend_config_watcher.connect(
+            "changed", self.on_config_change)
 
     def _remove_config_callback(self):
-        app.backend_config_watcher.disconnect(self.callback_handle)
+        if self.callback_handle is not None:
+            app.backend_config_watcher.disconnect(self.callback_handle)
+            self.callback_handle = None
 
     def on_config_change(self, obj, key, value):
         if not self.shutdown:
