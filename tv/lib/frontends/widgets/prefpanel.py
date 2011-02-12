@@ -703,17 +703,21 @@ class _WatchedFolderHelper(object):
         self.folder_list = widgetset.VBox()
         self.folder_list.pack_start(scroller)
         self._check_no_folders()
+        self._changed_signal = None
 
     def _on_visible_clicked(self, renderer, iter_):
         row = app.watched_folder_manager.model[iter_]
         app.watched_folder_manager.change_visible(row[0], not row[2])
 
     def connect_signals(self):
-        self._changed_signal = app.watched_folder_manager.connect('changed',
-                self._on_folders_changed)
+        if self._changed_signal is None:
+            self._changed_signal = app.watched_folder_manager.connect(
+                'changed', self._on_folders_changed)
 
     def disconnect_signals(self):
-        app.watched_folder_manager.disconnect(self._changed_signal)
+        if self._changed_signal is not None:
+            app.watched_folder_manager.disconnect(self._changed_signal)
+            self._changed_signal = None
 
     def _on_folders_changed(self, watched_folder_manager):
         self._table.model_changed()
@@ -962,13 +966,17 @@ class _StoreHelper(object):
         scroller.set_size_request(-1, 120)
         self.store_list = widgetset.VBox()
         self.store_list.pack_start(scroller)
+        self._changed_signal = None
 
     def connect_signals(self):
-        self._changed_signal = app.store_manager.connect('changed',
-                self._on_stores_changed)
+        if self._changed_signal is None:
+            self._changed_signal = app.store_manager.connect(
+                'changed', self._on_stores_changed)
 
     def disconnect_signals(self):
-        app.store_manager.disconnect(self._changed_signal)
+        if self._changed_signal is not None:
+            app.store_manager.disconnect(self._changed_signal)
+            self._changed_signal = None
 
     def _on_stores_changed(self, manager):
         self._table.model_changed()
