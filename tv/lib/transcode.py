@@ -322,7 +322,7 @@ class TranscodeObject(object):
 
             return True
         except StandardError, e:
-            logging.error('ERROR: ' + e)
+            logging.error('ERROR: ' + str(e))
             return False
 
     def signal_thread(self):
