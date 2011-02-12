@@ -39,24 +39,26 @@ from miro.plat import resources
 from miro.plat.frontends.widgets import file_navigator_name
 from miro.conversions import conversion_manager
 
-
 class ItemContextMenuHandler(object):
     """Handles the context menus for rows in an item list."""
 
     def callback(self, tableview):
         """Callback to handle the context menu.
 
-        This method can be passed into TableView.set_context_menu_callback
+        This method can be passed into
+        TableView.set_context_menu_callback
         """
-        selected = [tableview.model[iter][0] for iter in \
-                tableview.get_selection()]
+        selected = [tableview.model[iter][0]
+                    for iter in tableview.get_selection()]
         if len(selected) == 1:
             return self._make_context_menu_single(selected[0])
         else:
             return self._make_context_menu_multiple(selected)
 
     def _remove_context_menu_item(self, selection):
-        """The menu item to remove the item (or None to exclude it)."""
+        """The menu item to remove the item (or None to exclude
+        it).
+        """
         remove = False
         for info in selection:
             if info.is_external:
@@ -76,9 +78,9 @@ class ItemContextMenuHandler(object):
         """Make the context menu for a single item."""
         # Format for the menu list:
         #
-        # Each item is either None or separated into (label, callback),
-        # more or less, kinda.  If it's None, it's actually a
-        # separator. Otherwise..
+        # Each item is either None or separated into (label,
+        # callback), more or less, kinda.  If it's None, it's actually
+        # a separator. Otherwise....
         #
         # The label is one of two things:
         #  - A string, which is used as the label for the menu item
@@ -104,7 +106,8 @@ class ItemContextMenuHandler(object):
                 if app.config.get(prefs.PLAY_IN_MIRO):
                     menu.append((_('Play Just This Item'), play_and_stop))
                     menu.append((_('Play Externally'), play_externally))
-                menu.append((_('Add to Playlist'), app.widgetapp.add_to_playlist))
+                menu.append((_('Add to Playlist'),
+                             app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, [item])
             if not (item.device or item.remote):
                 menu.append((_("Edit Item"), app.widgetapp.edit_item))
@@ -118,15 +121,19 @@ class ItemContextMenuHandler(object):
                     menu.append((_('Keep'),
                         messages.KeepVideo(item.id).send_to_backend))
                 if item.seeding_status == 'seeding':
-                    menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
+                    menu.append((_('Stop Seeding'),
+                                 messages.StopUpload(item.id).send_to_backend))
                 elif item.seeding_status == 'stopped':
-                    menu.append((_('Resume Seeding'), messages.StartUpload(item.id).send_to_backend))
+                    menu.append((_('Resume Seeding'),
+                                 messages.StartUpload(item.id).send_to_backend))
 
                 menu.append(None)
 
                 convert_menu = self._make_convert_menu()
                 menu.append((_('Convert to...'), convert_menu))
-        elif item.download_info is not None and item.download_info.state != 'failed':
+
+        elif ((item.download_info is not None and
+               item.download_info.state != 'failed')):
             menu = [
                     (_('Cancel Download'),
                         messages.CancelDownload(item.id).send_to_backend)
@@ -147,26 +154,37 @@ class ItemContextMenuHandler(object):
 
         view_menu = []
         if not item.is_external and item.permalink:
-            view_menu.append((_('Web Page'), lambda: app.widgetapp.open_url(item.permalink)))
+            view_menu.append((_('Web Page'),
+                              lambda: app.widgetapp.open_url(item.permalink)))
         if item.commentslink and item.commentslink != item.permalink:
-            view_menu.append((_('Comments'), lambda: app.widgetapp.open_url(item.commentslink)))
+            view_menu.append((
+                    _('Comments'),
+                    lambda: app.widgetapp.open_url(item.commentslink)))
         if item.license and item.license != item.permalink:
-            view_menu.append((_('License'), lambda: app.widgetapp.open_url(item.license)))
+            view_menu.append((_('License'),
+                              lambda: app.widgetapp.open_url(item.license)))
         if item.downloaded:
-            if item.file_url != item.permalink and not item.file_url.startswith('file://'):
-                view_menu.append((_('File in Browser'), lambda: app.widgetapp.open_url(item.file_url)))
+            if ((item.file_url != item.permalink and
+                 not item.file_url.startswith('file://'))):
+                view_menu.append((
+                        _('File in Browser'),
+                        lambda: app.widgetapp.open_url(item.file_url)))
             if file_navigator_name:
-                reveal_text = _('File in %(progname)s', {"progname": file_navigator_name})
+                reveal_text = _('File in %(progname)s',
+                                {"progname": file_navigator_name})
             else:
                 reveal_text = _('File on Disk')
-            view_menu.append((reveal_text, lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
+            view_menu.append((
+                    reveal_text,
+                    lambda: app.widgetapp.check_then_reveal_file(
+                        item.video_path)))
 
         if not item.remote:
             menu.append(None)
             menu.append((_('View'), view_menu))
 
         if item.has_sharable_url:
-            # Append the separator if it was skipped
+            # append the separator if it was skipped
             if item.remote:
                 menu.append(None)
             menu.append((_('Share'), lambda: app.widgetapp.share_item(item)))
@@ -244,7 +262,7 @@ class ItemContextMenuHandler(object):
                 menu.append(None)
                 convert_menu = self._make_convert_menu()
                 menu.append((_('Convert to...'), convert_menu))
-            
+
 
         if available:
             if len(menu) > 0:
@@ -300,7 +318,7 @@ class ItemContextMenuHandler(object):
             menu.append((_('Restart Upload'), restart_all))
 
         return menu
-    
+
     def _make_convert_menu(self):
         convert_menu = []
         sections = conversion_manager.get_converters()
