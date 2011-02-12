@@ -104,6 +104,7 @@ VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 
+SEGMENTER_PATH = os.path.join(BINARY_KIT_ROOT, 'segmenter')
 FFMPEG_PATH = os.path.join(
     BINARY_KIT_ROOT, 'ffmpeg', 'ffmpeg-r25766-swscale-r32562-mingw32-shared')
 FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
@@ -290,6 +291,7 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
+            os.path.join(SEGMENTER_PATH, 'segmenter.exe'),
             os.path.join(FFMPEG_PATH, 'bin', 'ffmpeg.exe'),
             os.path.join(FFMPEG_PATH, 'bin', 'avcodec-52.dll'),
             os.path.join(FFMPEG_PATH, 'bin', 'avcore-0.dll'),
