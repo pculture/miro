@@ -8,10 +8,10 @@
 #
 # This script must be run with sudo.
 
-# Last updated:    9/16/2010
+# Last updated:    2/12/2011
 # Last updated by: Will Kahn-Greene
 
-aptitude install \
+apt-get install \
     build-essential \
     git-core \
     pkg-config \
@@ -20,7 +20,7 @@ aptitude install \
     libwebkit-dev \
     libsoup2.4-dev
 
-aptitude install \
+apt-get install \
     libavahi-compat-libdnssd1 \
     libtorrent-rasterbar6 \
     python-libtorrent \
