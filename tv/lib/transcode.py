@@ -276,9 +276,9 @@ class TranscodeObject(object):
             self.r, self.child_w = os.pipe()
             self.child_r, self.w = os.pipe()
             ffmpeg_exe = get_ffmpeg_executable_path()
-            kwargs = {#"stdin": open(os.devnull, 'rb'),
+            kwargs = {"stdin": open(os.devnull, 'rb'),
                       "stdout": subprocess.PIPE,
-                      #"stderr": open(os.devnull, 'wb'),
+                      "stderr": open(os.devnull, 'wb'),
                       "startupinfo": util.no_console_startupinfo()}
             if os.name != "nt":
                 kwargs["close_fds"] = True
@@ -300,13 +300,14 @@ class TranscodeObject(object):
             print 'Running command ', ' '.join(args)
             self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
     
-            segmenter_exe = get_segmenter_executable_path()
+            #segmenter_exe = get_segmenter_executable_path()
+            segmenter_exe = '/Users/glee/segmenter'
             args = [segmenter_exe]
             child_fds = [str(self.child_r), str(self.child_w)]
             args += TranscodeObject.segmenter_args + child_fds
             kwargs = {"stdout": subprocess.PIPE,
                       "stdin": self.ffmpeg_handle.stdout,
-                      #"stderr": open(os.devnull, 'wb'),
+                      "stderr": open(os.devnull, 'wb'),
                       "startupinfo": util.no_console_startupinfo()}
             # XXX Can't use this - need to pass on the child fds
             #if os.name != "nt":
