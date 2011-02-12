@@ -91,35 +91,66 @@ class ItemContextMenuHandler(object):
         #  - A list, which means a submenu... should be in the same format
         #    as this normal menu
         #  - A method of some form.  In other words, a *real* callback :)
+
+        menu = []
+
+        def play_externally():
+            app.widgetapp.open_file(item.video_path)
+            messages.MarkItemWatched(item).send_to_backend()
+
         if item.downloaded:
-            def play_and_stop():
-                app.playback_manager.start_with_items([item])
+            # FIXME - most recent conversion target here
 
-            def play_externally():
-                app.widgetapp.open_file(item.video_path)
-                messages.MarkItemWatched(item).send_to_backend()
+            # Convert menu
+            convert_menu = self._make_convert_menu()
+            menu.append((_('Convert to...'), convert_menu))
 
-            menu = [
-                (_('Play'), app.widgetapp.play_selection),
-            ]
+
+            # Show File in Finder
+            if file_navigator_name:
+                reveal_text = _('Show File in %(progname)s',
+                                {"progname": file_navigator_name})
+            else:
+                reveal_text = _('File on Disk')
+
+            menu.append((
+                    reveal_text,
+                    lambda: app.widgetapp.check_then_reveal_file(
+                        item.video_path)))
+
+            # separator
+            menu.append(None)
+
+            # Play
+            menu.append((_('Play'), app.widgetapp.play_selection))
+
+            # Mark as Played, Play Just This Item, Play Externally
+            # these don't work for device or remote items.
             if not (item.device or item.remote):
-                if app.config.get(prefs.PLAY_IN_MIRO):
-                    menu.append((_('Play Just This Item'), play_and_stop))
-                    menu.append((_('Play Externally'), play_externally))
-                menu.append((_('Add to Playlist'),
-                             app.widgetapp.add_to_playlist))
-            self._add_remove_context_menu_item(menu, [item])
-            if not (item.device or item.remote):
-                menu.append((_("Edit Item"), app.widgetapp.edit_item))
                 if item.video_watched:
                     menu.append((_('Mark as Unplayed'),
                         messages.MarkItemUnwatched(item).send_to_backend))
                 else:
                     menu.append((_('Mark as Played'),
                         messages.MarkItemWatched(item).send_to_backend))
-                if item.expiration_date:
-                    menu.append((_('Keep'),
-                        messages.KeepVideo(item.id).send_to_backend))
+
+                if app.config.get(prefs.PLAY_IN_MIRO):
+                    menu.append((
+                            _('Play Just This Item'),
+                            lambda: app.playback_manager.start_with_items(
+                                [item])))
+                    menu.append((_('Play Externally'), play_externally))
+
+            # Edit Item Details, Delete, Resume/Stop Seeding
+            # this doesn't work for device or remote items.
+            if not (item.device or item.remote):
+                # separator
+                menu.append(None)
+
+                menu.append((_("Edit Item Details"), app.widgetapp.edit_item))
+
+                menu.append((_("Delete"), app.widgetapp.remove_items))
+
                 if item.seeding_status == 'seeding':
                     menu.append((_('Stop Seeding'),
                                  messages.StopUpload(item.id).send_to_backend))
@@ -127,67 +158,43 @@ class ItemContextMenuHandler(object):
                     menu.append((_('Resume Seeding'),
                                  messages.StartUpload(item.id).send_to_backend))
 
-                menu.append(None)
-
-                convert_menu = self._make_convert_menu()
-                menu.append((_('Convert to...'), convert_menu))
-
         elif ((item.download_info is not None and
                item.download_info.state != 'failed')):
-            menu = [
-                    (_('Cancel Download'),
-                        messages.CancelDownload(item.id).send_to_backend)
-            ]
+            menu.append((_('Cancel Download'),
+                         messages.CancelDownload(item.id).send_to_backend))
             if item.download_info.state != 'paused':
                 menu.append((_('Pause Download'),
-                        messages.PauseDownload(item.id).send_to_backend))
+                             messages.PauseDownload(item.id).send_to_backend))
             else:
                 menu.append((_('Resume Download'),
-                        messages.ResumeDownload(item.id).send_to_backend))
+                             messages.ResumeDownload(item.id).send_to_backend))
+
         else:
-            menu = [
-                (_('Download'),
-                    messages.StartDownload(item.id).send_to_backend)
-            ]
+            if not (item.device or item.remote):
+                # Download
+                menu.append((_('Download'),
+                            messages.StartDownload(item.id).send_to_backend))
 
-        menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_item_url))
-
-        view_menu = []
-        if not item.is_external and item.permalink:
-            view_menu.append((_('Web Page'),
-                              lambda: app.widgetapp.open_url(item.permalink)))
-        if item.commentslink and item.commentslink != item.permalink:
-            view_menu.append((
-                    _('Comments'),
-                    lambda: app.widgetapp.open_url(item.commentslink)))
-        if item.license and item.license != item.permalink:
-            view_menu.append((_('License'),
-                              lambda: app.widgetapp.open_url(item.license)))
-        if item.downloaded:
-            if ((item.file_url != item.permalink and
-                 not item.file_url.startswith('file://'))):
-                view_menu.append((
-                        _('File in Browser'),
-                        lambda: app.widgetapp.open_url(item.file_url)))
-            if file_navigator_name:
-                reveal_text = _('File in %(progname)s',
-                                {"progname": file_navigator_name})
             else:
-                reveal_text = _('File on Disk')
-            view_menu.append((
-                    reveal_text,
-                    lambda: app.widgetapp.check_then_reveal_file(
-                        item.video_path)))
+                # Play
+                menu.append((_('Play'), app.widgetapp.play_selection))
 
-        if not item.remote:
+
+        if not (item.device or item.remote):
+            # separator
             menu.append(None)
-            menu.append((_('View'), view_menu))
 
-        if item.has_sharable_url:
-            # append the separator if it was skipped
-            if item.remote:
-                menu.append(None)
-            menu.append((_('Share'), lambda: app.widgetapp.share_item(item)))
+            menu.append((
+                    _('Copy URL to clipboard'), app.widgetapp.copy_item_url))
+            
+
+            menu.append((_('View Web Page'),
+                         lambda: app.widgetapp.open_url(item.permalink)))
+
+
+            if item.has_sharable_url:
+                menu.append((
+                        _('Share'), lambda: app.widgetapp.share_item(item)))
 
         return menu
 
