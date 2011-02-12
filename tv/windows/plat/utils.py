@@ -405,6 +405,9 @@ def get_logical_cpu_count():
         pass
     return 1
 
+def get_segmenter_executable_path():
+    return os.path.join(resources.app_root(), "segmenter.exe")
+
 def setup_ffmpeg_presets():
     os.environ['FFMPEG_DATADIR'] = resources.app_root()
 
