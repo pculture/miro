@@ -40,6 +40,7 @@ pygst.require('0.10')
 import gst
 import gst.interfaces
 
+
 def scaled_size(from_size, to_size):
     """Takes an image which has a width and a height and a size tuple
     that specifies the space available and returns the new width
@@ -52,7 +53,7 @@ def scaled_size(from_size, to_size):
     image_ratio = float(from_size[0]) / from_size[1]
     new_ratio = float(to_size[0]) / to_size[1]
     if image_ratio == new_ratio:
-        return size
+        return to_size
     elif image_ratio > new_ratio:
         # The scaled image has a wider aspect ratio than the old one.
         height = int(round(float(to_size[0]) / from_size[0] * from_size[1]))
@@ -61,6 +62,7 @@ def scaled_size(from_size, to_size):
         # The scaled image has a taller aspect ratio than the old one.
         width = int(round(float(to_size[1]) / from_size[1] * from_size[0]))
         return width, to_size[1]
+
 
 class Extractor:
     def __init__(self, filename, thumbnail_filename, callback):
@@ -113,10 +115,11 @@ class Extractor:
                             self.buffer_probes[name] = pad.add_buffer_probe(
                                 self.buffer_probe_handler, name)
 
+                    seek_amount = min(self.duration / 2, 20 * gst.SECOND)
                     seek_result = self.thumbnail_pipeline.seek(
                         1.0, gst.FORMAT_TIME,
                         gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
-                        gst.SEEK_TYPE_SET, min(self.duration / 2, 20 * gst.SECOND),
+                        gst.SEEK_TYPE_SET, seek_amount,
                         gst.SEEK_TYPE_NONE, 0)
 
                     if not seek_result:
@@ -214,7 +217,7 @@ class Extractor:
             filters = caps[0]
             width = filters["width"]
             height = filters["height"]
-            timecode = self.thumbnail_pipeline.query_position(gst.FORMAT_TIME)[0]
+
             pixbuf = gtk.gdk.pixbuf_new_from_data(
                 buff.data, gtk.gdk.COLORSPACE_RGB, False, 8,
                 width, height, width * 3)
@@ -247,7 +250,7 @@ class Extractor:
                 for sink in self.pipeline.sinks():
                     name = sink.get_name()
                     factoryname = sink.get_factory().get_name()
-                    if factoryname == "fakesink" :
+                    if factoryname == "fakesink":
                         pad = sink.get_pad("sink")
                         pad.remove_buffer_probe(self.buffer_probes[name])
                         del self.buffer_probes[name]
@@ -257,9 +260,11 @@ class Extractor:
             self.bus.disconnect(self.watch_id)
             self.bus = None
 
+
 def make_verbose():
     import logging
     logging.basicConfig(level=logging.INFO)
+
     def wrap_func(func):
         def _wrap_func(*args, **kwargs):
             logging.info("calling %s (%s) (%s)",
@@ -272,6 +277,7 @@ def make_verbose():
         if callable(fun):
             Extractor.__dict__[mem] = wrap_func(fun)
 
+
 def handle_result(duration, success, media_type):
     if duration != -1:
         print "Miro-Movie-Data-Length: %s" % (duration / 1000000)
@@ -283,6 +289,7 @@ def handle_result(duration, success, media_type):
         print "Miro-Movie-Data-Thumbnail: Failure"
     print "Miro-Movie-Data-Type: %s" % media_type
     sys.exit(0)
+
 
 def main(argv):
     if "--verbose" in argv:
@@ -299,6 +306,7 @@ def main(argv):
     extractor = Extractor(argv[1], argv[2], handle_result)
     gtk.gdk.threads_init()
     gtk.main()
+
 
 if __name__ == "__main__":
     main(sys.argv)

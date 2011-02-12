@@ -67,6 +67,7 @@ from miro.frontends.widgets.gtk import webkitgtkhacks
 import logging
 import sys
 
+
 def _get_pref(key, getter_name):
     gconf_lock.acquire()
     try:
@@ -81,6 +82,7 @@ def _get_pref(key, getter_name):
     finally:
         gconf_lock.release()
 
+
 def _set_pref(key, setter_name, value):
     gconf_lock.acquire()
     try:
@@ -91,18 +93,42 @@ def _set_pref(key, setter_name, value):
     finally:
         gconf_lock.release()
 
-def get_int(key): return _get_pref('window/' + key, 'get_int')
-def get_bool(key): return _get_pref('window/' + key, 'get_bool')
-def get_player_int(key): return _get_pref(key, 'get_int')
-def get_player_bool(key): return _get_pref(key, 'get_bool')
 
-def set_int(key, value): return _set_pref('window/' + key, 'set_int', value)
-def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
-def set_player_int(key, value): return _set_pref(key, 'set_int', value)
-def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
+def get_int(key):
+    return _get_pref('window/' + key, 'get_int')
+
+
+def get_bool(key):
+    return _get_pref('window/' + key, 'get_bool')
+
+
+def get_player_int(key):
+    return _get_pref(key, 'get_int')
+
+
+def get_player_bool(key):
+    return _get_pref(key, 'get_bool')
+
+
+def set_int(key, value):
+    return _set_pref('window/' + key, 'set_int', value)
+
+
+def set_bool(key, value):
+    return _set_pref('window/' + key, 'set_bool', value)
+
+
+def set_player_int(key, value):
+    return _set_pref(key, 'set_int', value)
+
+
+def set_player_bool(key, value):
+    return _set_pref(key, 'set_bool', value)
+
 
 def run_application():
     LinuxApplication().run()
+
 
 class LinuxApplication(Application):
     def run(self):
@@ -112,7 +138,7 @@ class LinuxApplication(Application):
         gtk.gdk.threads_init()
         self._setup_webkit()
         self.startup()
-        
+
         logging.info("Linux version:     %s %s %s",
                      platform.system(),
                      platform.release(),

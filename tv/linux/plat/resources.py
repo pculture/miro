@@ -49,14 +49,18 @@ RESOURCE_ROOT = os.path.abspath(
 SHARE_ROOT = os.path.abspath(
     os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
 
+
 def root():
     return RESOURCE_ROOT
+
 
 def extension_core_roots():
     return [os.path.join(root(), 'extensions')]
 
+
 def extension_user_roots():
     return ["%(supportdir)s/extensions"]
+
 
 def path(relative_path):
     """Find the full path to a resource data file. 'relative_path' is
@@ -65,19 +69,24 @@ def path(relative_path):
     """
     return os.path.join(RESOURCE_ROOT, relative_path)
 
+
 def share_path(relative_path):
     return os.path.join(SHARE_ROOT, relative_path)
+
 
 def url(relative_path):
     """As path(), but return a file: URL instead.
     """
     return u'file://%s' % urllib.quote(path(relative_path))
 
+
 def theme_path(theme, relative_path):
     return os.path.join('/usr/share/miro/themes', theme, relative_path)
 
+
 def check_kde():
     return os.environ.get("KDE_FULL_SESSION", None) != None
+
 
 def open_url(url):
     # We could use Python's webbrowser.open() here, but unfortunately,
@@ -88,12 +97,14 @@ def open_url(url):
     else:
         os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", url)
 
+
 def open_file(filename):
     if check_kde():
         os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient",
                    "exec", "file://" + filename)
     else:
         os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", filename)
+
 
 def get_autostart_dir():
     if check_kde():
@@ -108,8 +119,10 @@ def get_autostart_dir():
     autostart_dir = os.path.expanduser(autostart_dir)
     return autostart_dir
 
+
 def _clean_piece(piece):
     return piece.replace(";", " ")
+
 
 def get_osname():
     """Composes and returns the osname section of the user agent.
@@ -128,9 +141,11 @@ def get_osname():
     This function also removes any stray ``;``.
     """
     osname = ["%s %s" % (platform.uname()[0], platform.machine())]
-    osname.append(" ".join(platform.dist("Unknown", "Unknown", "Unknown")[0:2]))
+    dist = platform.dist("Unknown", "Unknown", "Unknown")[0:2]
+    osname.append(" ".join(dist))
     osname = "; ".join([_clean_piece(s) for s in osname])
     return osname
+
 
 def get_default_search_dir():
     return os.path.expanduser("~/")

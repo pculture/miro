@@ -32,6 +32,7 @@ import dbus
 
 from miro import app
 
+
 class MediaKeyHandler(object):
     def __init__(self, app_window):
         self.bus = dbus.Bus(dbus.Bus.TYPE_SESSION)
@@ -63,6 +64,7 @@ class MediaKeyHandler(object):
         self.bus_object.GrabMediaPlayerKeys(
             "Miro", 0, dbus_interface='org.gnome.SettingsDaemon.MediaKeys')
         return False
+
 
 def get_media_key_handler(app_window):
     try:

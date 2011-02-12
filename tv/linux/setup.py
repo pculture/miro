@@ -40,7 +40,8 @@ import sys
 try:
     from Pyrex.Compiler import Version
     if Version.version.split(".") < ["0", "9", "6", "4"]:
-        print "Pyrex 0.9.6.4 or greater required.  You have version %s." % Version.version
+        print ("Pyrex 0.9.6.4 or greater required.  "
+               "You have version %s." % Version.version)
         sys.exit(1)
 except ImportError:
     print "Pyrex not found.  Please install Pyrex."
@@ -51,19 +52,17 @@ from distutils.core import setup
 from distutils.extension import Extension
 from distutils.errors import DistutilsOptionError
 from distutils.util import change_root
-from distutils import dir_util, log, sysconfig
 from glob import glob
 from string import Template
 import distutils.command.install_data
 import os
 import pwd
 import subprocess
-import platform
-import re
 import time
 import shutil
 
 from Pyrex.Distutils import build_ext
+
 
 #### useful paths to have around ####
 def is_root_dir(d):
@@ -73,6 +72,7 @@ def is_root_dir(d):
     our way up the path until our is_root_dir test passes.
     """
     return os.path.exists(os.path.join(d, "MIRO_ROOT"))
+
 
 def get_root_dir():
     root_try = os.path.abspath(os.path.dirname(__file__))
@@ -122,6 +122,7 @@ appVersion = util.read_simple_config_file(app_config)['appVersion']
 if 'bdist_rpm' in sys.argv:
     appVersion = appVersion.replace('-', '_')
 
+
 def getlogin():
     """Does a best-effort attempt to return the login of the user running the
     script.
@@ -136,12 +137,14 @@ def getlogin():
         pass
     pwd.getpwuid(os.getuid())[0]
 
+
 def read_file(path):
     f = open(path)
     try:
         return f.read()
     finally:
         f.close()
+
 
 def write_file(path, contents):
     f = open(path, 'w')
@@ -150,48 +153,53 @@ def write_file(path, contents):
     finally:
         f.close()
 
+
 def expand_file_contents(path, **values):
-    """Do a string expansion on the contents of a file using the same rules as
-    string.Template from the standard library.
+    """Do a string expansion on the contents of a file using the same
+    rules as string.Template from the standard library.
     """
     template = Template(read_file(path))
     expanded = template.substitute(**values)
     write_file(path, expanded)
 
+
 def get_command_output(cmd, warnOnStderr=True, warnOnReturnCode=True):
-    """Wait for a command and return its output.  Check for common errors and
-    raise an exception if one of these occurs.
+    """Wait for a command and return its output.  Check for common
+    errors and raise an exception if one of these occurs.
     """
     p = subprocess.Popen(cmd, shell=True, close_fds=True,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
     if warnOnStderr and stderr != '':
-        raise RuntimeError("%s outputted the following error:\n%s" % (cmd, stderr))
+        raise RuntimeError("%s outputted the following error:\n%s" %
+                           (cmd, stderr))
     if warnOnReturnCode and p.returncode != 0:
-        raise RuntimeError("%s had non-zero return code %d" % (cmd, p.returncode))
+        raise RuntimeError("%s had non-zero return code %d" %
+                           (cmd, p.returncode))
     return stdout
 
-def parse_pkg_config(command, components, options_dict = None):
+
+def parse_pkg_config(command, components, options_dict=None):
     """Helper function to parse compiler/linker arguments from
     pkg-config and update include_dirs, library_dirs, etc.
 
-    We return a dict with the following keys, which match up with keyword
-    arguments to the setup function: include_dirs, library_dirs, libraries,
-    extra_compile_args.
+    We return a dict with the following keys, which match up with
+    keyword arguments to the setup function: include_dirs,
+    library_dirs, libraries, extra_compile_args.
 
-    Command is the command to run (pkg-config, etc).
-    Components is a string that lists the components to get options for.
+    Command is the command to run (pkg-config, etc).  Components is a
+    string that lists the components to get options for.
 
-    If options_dict is passed in, we add options to it, instead of starting
-    from scratch.
+    If options_dict is passed in, we add options to it, instead of
+    starting from scratch.
     """
     if options_dict is None:
         options_dict = {
-            'include_dirs' : [],
-            'library_dirs' : [],
-            'runtime_dirs' : [],
-            'libraries' : [],
-            'extra_compile_args' : []
+            'include_dirs': [],
+            'library_dirs': [],
+            'runtime_dirs': [],
+            'libraries': [],
+            'extra_compile_args': []
         }
     commandLine = "%s --cflags --libs %s" % (command, components)
     output = get_command_output(commandLine).strip()
@@ -212,13 +220,15 @@ def parse_pkg_config(command, components, options_dict = None):
 
     return options_dict
 
+
 def package_exists(package_name):
     """
-    Return True if the package is present in the system.  False otherwise.
-    The check is made with pkg-config.
+    Return True if the package is present in the system.  False
+    otherwise.  The check is made with pkg-config.
     """
     # pkg-config returns 0 if the package is present
     return subprocess.call(['pkg-config', '--exists', package_name]) == 0
+
 
 def generate_miro():
     f = open(os.path.join(platform_dir, "miro"), "w")
@@ -246,7 +256,8 @@ then
         exit;
     fi
 
-    $GDB -ex 'set breakpoint pending on' -ex 'run' --args $PYTHON ./miro.real --sync "$@"
+    $GDB -ex 'set breakpoint pending on' \
+        -ex 'run' --args $PYTHON ./miro.real --sync "$@"
 else
     miro.real "$@"
 fi
@@ -263,8 +274,8 @@ ngrams_ext = \
 xlib_ext = \
     Extension("miro.plat.xlibhelper",
         [os.path.join(platform_package_dir, 'xlibhelper.pyx')],
-        library_dirs = ['/usr/X11R6/lib'],
-        libraries = ['X11'],
+        library_dirs=['/usr/X11R6/lib'],
+        libraries=['X11'],
     )
 
 pygtkhacks_ext = \
@@ -298,6 +309,7 @@ infolist_ext = \
         **infolist_options
     )
 
+
 #### Build the data_files list ####
 def listfiles(path):
     all_files = [f for f in glob(os.path.join(path, '*')) if os.path.isfile(f)
@@ -329,7 +341,7 @@ for dir in ('searchengines',
 
 # add core extension files
 for root, dirs, files in os.walk(extensions_dir):
-    extroot = root[len(extensions_dir)+1:]
+    extroot = root[len(extensions_dir) + 1:]
     files = [os.path.join(root, f) for f in files
              if (not f.endswith("~") and not "#" in f)]
     data_files.append((
@@ -338,7 +350,7 @@ for root, dirs, files in os.walk(extensions_dir):
 
 # add core platform extension files
 for root, dirs, files in os.walk(platform_extensions_dir):
-    extroot = root[len(platform_extensions_dir)+1:]
+    extroot = root[len(platform_extensions_dir) + 1:]
     files = [os.path.join(root, f) for f in files
              if (not f.endswith("~") and not "#" in f)]
     data_files.append((
@@ -368,14 +380,18 @@ data_files += [
 ]
 
 
-# if we're not doing "python setup.py clean", then we can do a bunch of things
-# that have file-related side-effects
+# if we're not doing "python setup.py clean", then we can do a bunch
+# of things that have file-related side-effects
 if not "clean" in sys.argv:
     generate_miro()
     # gzip the man page
-    os.system ("gzip -9 < %s > %s" % (os.path.join(platform_dir, 'miro.1'), os.path.join(platform_dir, 'miro.1.gz')))
+    os.system("gzip -9 < %s > %s" % (
+            os.path.join(platform_dir, 'miro.1'),
+            os.path.join(platform_dir, 'miro.1.gz')))
     # copy miro.1.gz to miro.real.1.gz so that lintian complains less
-    os.system ("cp %s %s" % (os.path.join(platform_dir, 'miro.1.gz'), os.path.join(platform_dir, 'miro.real.1.gz')))
+    os.system("cp %s %s" % (
+            os.path.join(platform_dir, 'miro.1.gz'),
+            os.path.join(platform_dir, 'miro.real.1.gz')))
 
 
 #### Our specialized install_data command ####
@@ -422,9 +438,9 @@ class install_data(distutils.command.install_data.install_data):
                              MOZILLA_LIB_PATH="")
         self.outfiles.append(dest)
 
-        locale_dir = os.path.join (resource_dir, "locale")
+        locale_dir = os.path.join(resource_dir, "locale")
 
-        for source in glob (os.path.join (locale_dir, "*.mo")):
+        for source in glob(os.path.join(locale_dir, "*.mo")):
             lang = os.path.basename(source)[:-3]
             if 'LINGUAS' in os.environ and lang not in os.environ['LINGUAS']:
                 continue
@@ -441,7 +457,8 @@ class install_data(distutils.command.install_data.install_data):
 
 
 class test_system(Command):
-    description = "Allows you to test configurations without compiling or running."
+    description = ("Allows you to test configurations without compiling "
+                   "or running.")
     user_options = []
 
     def initialize_options(self):
@@ -455,6 +472,7 @@ class test_system(Command):
         # we have most of the pieces here?
         pass
 
+
 #### install_theme installs a specified theme .zip
 class install_theme(Command):
     description = 'Install a provided theme to /usr/share/miro/themes'
@@ -465,12 +483,12 @@ class install_theme(Command):
 
     def finalize_options(self):
         if self.theme is None:
-            raise DistutilsOptionError, "must supply a theme ZIP file"
+            raise DistutilsOptionError("must supply a theme ZIP file")
         if not os.path.exists(self.theme):
-            raise DistutilsOptionError, "theme file does not exist"
+            raise DistutilsOptionError("theme file does not exist")
         import zipfile
         if not zipfile.is_zipfile(self.theme):
-            raise DistutilsOptionError, "theme file is not a ZIP file"
+            raise DistutilsOptionError("theme file is not a ZIP file")
         zf = zipfile.ZipFile(self.theme)
         appConfig = zf.read('app.config')
         themeName = None
@@ -482,7 +500,7 @@ class install_theme(Command):
                 if name == 'themeName':
                     themeName = value
         if themeName is None:
-            raise DistutilsOptionError, "invalid theme file"
+            raise DistutilsOptionError("invalid theme file")
         self.zipfile = zf
         self.theme_name = themeName
         self.theme_dir = '/usr/share/miro/themes/%s' % themeName
@@ -508,6 +526,7 @@ To use this theme, run:
 
     miro --theme="%s"
 """ % (self.theme_name, self.theme_name)
+
 
 class clean(Command):
     description = 'Cleans the build and dist directories'
@@ -542,13 +561,13 @@ setup(name='miro',
     author_email='feedback@pculture.org',
     url='http://www.getmiro.com/',
     download_url='http://www.getmiro.com/downloads/',
-    scripts = [
+    scripts=[
         os.path.join(platform_dir, 'miro'),
         os.path.join(platform_dir, 'miro.real')
     ],
     data_files=data_files,
     ext_modules=ext_modules,
-    packages = [
+    packages=[
         'miro',
         'miro.libdaap',
         'miro.dl_daemon',
@@ -565,12 +584,12 @@ setup(name='miro',
         'miro.plat.frontends.widgets',
         'miro.plat.renderers',
     ],
-    package_dir = {
+    package_dir={
         'miro': portable_dir,
         'miro.test': test_dir,
         'miro.plat': platform_package_dir,
     },
-    cmdclass = {
+    cmdclass={
         'test_system': test_system,
         'build_ext': build_ext,
         'install_data': install_data,

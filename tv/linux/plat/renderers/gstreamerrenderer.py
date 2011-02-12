@@ -37,7 +37,6 @@ import sys
 import logging
 import os
 import thread
-import shutil
 from threading import Event
 
 import pygst
@@ -47,7 +46,7 @@ import gst.interfaces
 import gtk
 
 # not sure why this isn't in the gst module, but it's easy to define
-GST_PLAY_FLAG_TEXT          = (1 << 2)
+GST_PLAY_FLAG_TEXT = (1 << 2)
 
 from miro import app
 from miro import prefs
@@ -60,11 +59,14 @@ from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
 
+
 def to_seconds(t):
     return t / gst.SECOND
 
+
 def from_seconds(s):
     return s * gst.SECOND
+
 
 class Sniffer:
     """Determines whether a file is "audio", "video", or "unplayable".
@@ -129,6 +131,7 @@ class Sniffer:
         del self.playbin
         del self.audiosink
         del self.videosink
+
 
 class Renderer:
     def __init__(self):
@@ -205,7 +208,8 @@ class Renderer:
                 logging.error("on_bus_message: gstreamer error: %s", err)
             else:
                 err, debug = message.parse_error()
-                logging.error("on_bus_message (after callbacks): gstreamer error: %s", err)
+                logging.error("on_bus_message (after callbacks): "
+                              "gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_STATE_CHANGED:
             prev, new, pending = message.parse_state_changed()
             if ((new == gst.STATE_PAUSED
@@ -251,11 +255,12 @@ class Renderer:
             return self.get_current_time(attempt + 1)
 
     def _seek(self, seconds):
-        event = gst.event_new_seek(1.0,
-                                   gst.FORMAT_TIME,
-                                   gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
-                                   gst.SEEK_TYPE_SET, from_seconds(seconds),
-                                   gst.SEEK_TYPE_NONE, 0)
+        event = gst.event_new_seek(
+            1.0,
+            gst.FORMAT_TIME,
+            gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
+            gst.SEEK_TYPE_SET, from_seconds(seconds),
+            gst.SEEK_TYPE_NONE, 0)
         result = self.playbin.send_event(event)
         if not result:
             logging.error("seek failed")
@@ -330,8 +335,10 @@ class Renderer:
                               gst.SEEK_TYPE_SET,
                               position + (rate * gst.SECOND))
 
+
 class AudioRenderer(Renderer):
     pass
+
 
 class VideoRenderer(Renderer):
     def __init__(self):
@@ -362,7 +369,8 @@ class VideoRenderer(Renderer):
 
     def build_playbin(self):
         Renderer.build_playbin(self)
-        self.watch_ids.append(self.bus.connect('sync-message::element', self.on_sync_message))
+        self.watch_ids.append(self.bus.connect(
+                'sync-message::element', self.on_sync_message))
         self.videosink = gst.element_factory_make(
             self.videosink_name, "videosink")
         self.playbin.set_property("video-sink", self.videosink)
@@ -371,7 +379,8 @@ class VideoRenderer(Renderer):
                 self.textsink_name, "textsink")
             self.playbin.set_property("text-sink", self.textsink)
         except TypeError:
-            logging.warning("this platform has an old version of playbin2--no subtitle support.")
+            logging.warning("this platform has an old version of "
+                            "playbin2--no subtitle support.")
             self.supports_subtitles = False
 
     def destroy_playbin(self):
@@ -390,11 +399,11 @@ class VideoRenderer(Renderer):
         if (app.config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles
                 and not sub_filename):
             tracks = self.get_subtitles()
-            if 100 in tracks: # Select default sidecar file
+            if 100 in tracks:  # Select default sidecar file
                 sub_filename = tracks[100][1]
                 sub_index = 0
                 self.enabled_track = 100
-            elif 0 in tracks: # Select default embedded subtitle track
+            elif 0 in tracks:  # Select default embedded subtitle track
                 sub_index = 0
                 self.enabled_track = 0
 
@@ -523,7 +532,8 @@ class VideoRenderer(Renderer):
         if not self.supports_subtitles:
             return []
         tracks = [(index, filename)
-                  for index, (filename, language) in self.get_subtitles().items()]
+                  for index, (filename, language)
+                  in self.get_subtitles().items()]
         return tracks
 
     def get_enabled_subtitle_track(self):
@@ -572,12 +582,15 @@ class VideoRenderer(Renderer):
         if not self.supports_subtitles:
             return
         subtitle_encoding = self.playbin.get_property("subtitle-encoding")
+
         def handle_ok():
             self.playbin.set_property("subtitle-encoding", subtitle_encoding)
             handle_successful_select()
+
         def handle_err():
             app.playback_manager.stop()
-        filenames = [filename for lang, filename in self.get_subtitles().values()]
+        filenames = [filename
+                     for lang, filename in self.get_subtitles().values()]
         if sub_path not in filenames:
             sub_path = copy_subtitle_file(sub_path, iteminfo.video_path)
         self.select_file(iteminfo, handle_ok, handle_err, sub_path)
@@ -672,10 +685,12 @@ class VideoRenderer(Renderer):
     def select_subtitle_encoding(self, encoding):
         self.playbin.set_property("subtitle-encoding", encoding)
 
+
 def movie_data_program_info(movie_path, thumbnail_path):
     extractor_path = os.path.join(os.path.split(__file__)[0],
                                   "gst_extractor.py")
     return ((sys.executable, extractor_path, movie_path, thumbnail_path), None)
+
 
 def get_item_type(item_info, success_callback, error_callback):
     s = Sniffer(item_info.video_path)

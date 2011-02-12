@@ -34,6 +34,7 @@ import dbus
 import gobject
 import subprocess
 
+
 class GnomeScreenSaverManager(object):
     def __init__(self):
         self.cookie = None
@@ -60,6 +61,7 @@ class GnomeScreenSaverManager(object):
 
         obj.UnInhibit(self.cookie)
         self.cookie = None
+
 
 class XScreenSaverManager(object):
     def __init__(self):
@@ -91,11 +93,13 @@ class XScreenSaverManager(object):
         gobject.source_remove(self.timer)
         self.timer = None
 
+
 MANAGERS = [
     GnomeScreenSaverManager(),
     XScreenSaverManager(),
     # TODO: make a KDE3 version?
 ]
+
 
 def create_manager():
     """Return an object that can disable/enable the screensaver."""

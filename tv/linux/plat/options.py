@@ -41,6 +41,7 @@ user_home = "~/"
 
 from miro.prefs import Pref
 
+
 class LinuxPref(Pref):
     def __init__(self, key, default, alias, helptext):
         Pref.__init__(self, key, default, False, None, None)
@@ -69,20 +70,21 @@ USE_RENDERER = LinuxPref(
     key="useRenderer",
     default=u"gstreamer",
     alias="renderer",
-    helptext="Which renderer to use.  (gstreamer, ...)" )
+    helptext="Which renderer to use.  (gstreamer, ...)")
 
 GSTREAMER_IMAGESINK = LinuxPref(
     key="DefaultGstreamerImagesink",
     default="gconfvideosink",
     alias="gstreamer-imagesink",
-    helptext="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+    helptext=("Which GStreamer image sink to use for video.  "
+              "(autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)"))
 
 GSTREAMER_AUDIOSINK = LinuxPref(
     key="DefaultGstreamerAudiosink",
     default="gconfaudiosink",
     alias="gstreamer-audiosink",
-    helptext="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
-
+    helptext=("Which GStreamer sink to use for audio.  "
+              "(autoaudiosink, osssink, alsasink, gconfaudiosink, ...)"))
 
 SHOW_TRAYICON = Pref(
     key="showTrayicon",

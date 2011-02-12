@@ -37,6 +37,7 @@ import os.path
 from miro import app
 from miro.plat import options
 
+
 def get_renderer_list():
     d = os.path.dirname(__file__)
     contents = os.listdir(d)
@@ -44,6 +45,7 @@ def get_renderer_list():
     contents = [m for m in contents if m.endswith("renderer.py")]
     contents = [m[:-11] for m in contents]
     return contents
+
 
 def set_renderer(modname):
     """Attempt to set the video renderer."""
@@ -62,25 +64,29 @@ def set_renderer(modname):
                 traceback.format_exc())
         raise
 
+
 def init_renderer():
-    """Initializes a video renderer for us to use.  This call will attempt to
-    find a working renderer and set the global variables ``app.audio_renderer``
-    and ``app.video_renderer`` to renderers in that module.
+    """Initializes a video renderer for us to use.  This call will
+    attempt to find a working renderer and set the global variables
+    ``app.audio_renderer`` and ``app.video_renderer`` to renderers in
+    that module.
 
     .. Note::
 
-       Renderer modules have to be ``xxxxrenderer`` and ``xxxx`` shows up in
-       the preferences.
+       Renderer modules have to be ``xxxxrenderer`` and ``xxxx`` shows
+       up in the preferences.
     """
     r = app.config.get(options.USE_RENDERER)
     try:
         set_renderer("%srenderer" % r)
         return
     except StandardError:
-        logging.exception("init_renderer: error detected...  trying to use gstreamerrenderer")
+        logging.exception("init_renderer: error detected...  "
+                          "trying to use gstreamerrenderer")
 
     try:
-        # try to add the gstreamer renderer if the preferences aren't right
+        # try to add the gstreamer renderer if the preferences aren't
+        # right
         set_renderer("gstreamerrenderer")
         return
     except StandardError:

@@ -32,6 +32,7 @@ import shutil
 from miro.plat import resources
 import gconf
 
+
 def upgrade():
     # dot directory
     src = os.path.expanduser('~/.democracy')
@@ -89,10 +90,10 @@ def upgrade():
         options.gconf_name = "miro"
     key = "/apps/%s/MoviesDirectory" % options.gconf_name
     if client.get(key) is None:
-        for mem in ["~/.miro/Movies",    # packages
+        for mem in ["~/.miro/Movies",     # packages
                     "~/Videos/Miro",
-                    "~/Movies/Miro",     # pre 3.5
-                    "~/Movies/Democracy" # democracy player
+                    "~/Movies/Miro",      # pre 3.5
+                    "~/Movies/Democracy"  # democracy player
                     ]:
             mem = os.path.expanduser(mem)
             if os.path.exists(mem):
@@ -107,4 +108,3 @@ def upgrade():
             if os.path.exists(mem):
                 client.set_string(key, mem)
                 break
-

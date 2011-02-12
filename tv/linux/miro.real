@@ -37,7 +37,6 @@ if xlibhelper.XInitThreads() == 0:
 
 import os.path
 import sys
-import string
 
 import optparse
 
@@ -82,7 +81,8 @@ group.add_option('--set',
                  dest="set_prefs",
                  metavar="<PREF>",
                  nargs=1,
-                 help="Sets a preference and saves the new value for future Miro runs.  Example: miro --set renderer=gstreamer")
+                 help="Sets a preference and saves the new value for "
+                 "future Miro runs.  Example: miro --set renderer=gstreamer")
 parser.set_defaults(set_prefs=[])
 parser.add_option_group(group)
 
@@ -166,13 +166,14 @@ if '--unittest' in sys.argv:
     from miro import test
     test.run_tests()
     sys.exit(0)
-    
+
 if '--convert' in sys.argv:
     sys.argv.remove('--convert')
     from miro.plat import clconverter
     clconverter.convert(sys.argv[1:])
     sys.exit(0)
-    
+
+
 def get_keyval(keyval):
     key, val = keyval.split("=")
     if not key in options.PREFERENCES:
@@ -191,7 +192,7 @@ def get_keyval(keyval):
         elif defaulttype == int:
             val = int(val)
         elif defaulttype == bool:
-            if val[0].lower() in ["t", "y", "1" ]:
+            if val[0].lower() in ["t", "y", "1"]:
                 val = True
             else:
                 val = False
@@ -201,6 +202,7 @@ def get_keyval(keyval):
         sys.exit(1)
 
     return p, val
+
 
 def startapp():
     # set debugmode
@@ -231,6 +233,7 @@ def startapp():
     startfrontend.run_application(parsed_options.frontend, props_to_set,
             parsed_options.theme)
 
+
 def print_version():
     print """
 Miro (%s)
@@ -258,13 +261,15 @@ elif parsed_options.profile:
         sys.modules['profile'] = profile
     except ImportError:
         import profile
+
     from miro import eventloop
+
     def main():
         startapp()
-    if (parsed_options.bias):
+    if parsed_options.bias:
         profile.Profile.bias = parsed_options.bias
     eventloop.profile_file = parsed_options.profile
-    profile.run ('main()', parsed_options.profile)
+    profile.run('main()', parsed_options.profile)
 
 else:
     try:

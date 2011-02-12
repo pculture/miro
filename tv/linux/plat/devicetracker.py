@@ -34,6 +34,7 @@ import gio
 
 from miro import app
 
+
 class DeviceTracker(object):
     def __init__(self):
         self._unix_device_to_drive = {}
@@ -70,7 +71,7 @@ class DeviceTracker(object):
             mount = mount.get_root().get_path()
             if mount and os.path.exists(mount):
                 if mount[-1] != os.path.sep:
-                    mount = mount + os.path.sep # make sure it ends with a /
+                    mount = mount + os.path.sep  # make sure it ends with a /
                 statinfo = os.statvfs(mount)
                 size = statinfo.f_frsize * statinfo.f_blocks
                 remaining = statinfo.f_frsize * statinfo.f_bavail
@@ -110,7 +111,7 @@ class DeviceTracker(object):
     def _volume_added(self, volume_monitor, volume):
         if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
-        id_, info  = self._get_volume_info(volume)
+        id_, info = self._get_volume_info(volume)
         self._unix_device_to_drive[id_] = volume.get_drive()
         app.device_manager.device_connected(id_, **info)
         drive_id = volume.get_drive().get_identifier('unix-device')
@@ -138,7 +139,7 @@ class DeviceTracker(object):
         del self._unix_device_to_drive[id_]
         app.device_manager.device_disconnected(id_)
         drive = volume.get_drive()
-        if drive is None: # can be None on force-disconnect
+        if drive is None:  # can be None on force-disconnect
             return
         drive_id = drive .get_identifier('unix-device')
         self._drive_has_volumes[drive_id] -= 1

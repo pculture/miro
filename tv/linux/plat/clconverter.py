@@ -33,13 +33,13 @@ Allows Miro on Linux to do command-line conversions.
 
 import os
 import subprocess
-import optparse
 import shutil
 
 from miro.plat import resources, utils
 from miro import videoconversion
 
 USAGE = "usage: %prog --convert [target] [inputfile [inputfile...]]"
+
 
 def convert(args):
     cm = videoconversion.ConverterManager()
@@ -56,7 +56,7 @@ def convert(args):
 
     target = args[0]
     infiles = args[1:]
-    
+
     try:
         converter_info = cm.lookup_converter(target)
     except KeyError:

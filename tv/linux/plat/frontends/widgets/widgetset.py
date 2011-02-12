@@ -30,9 +30,8 @@
 import gtk
 import gobject
 
-from miro import app
-# Most of our stuff comes from the portable code, except the video renderer
-# and the browser.
+# Most of our stuff comes from the portable code, except the video
+# renderer and the browser.
 from miro.frontends.widgets.gtk.widgetset import *
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 
@@ -41,7 +40,8 @@ from miro.plat.frontends.widgets import webkitbrowser
 
 # Use the default font
 ITEM_TITLE_FONT = None
-ITEM_DESC_FONT  = None
+ITEM_DESC_FONT = None
+
 
 class ScrolledBrowser(gtk.ScrolledWindow):
     def __init__(self):
@@ -50,6 +50,7 @@ class ScrolledBrowser(gtk.ScrolledWindow):
         # self.add_with_viewport(self.browser)
         self.add(self.browser)
         self.show_all()
+
 
 class Browser(Widget):
     """Web browser widget.

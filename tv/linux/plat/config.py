@@ -47,10 +47,12 @@ from miro.plat import resources
 client = gconf.client_get_default()
 gconf_lock = threading.RLock()
 
+
 def _gconf_key(key):
     if options.gconf_name is None:
         options.gconf_name = "miro"
     return '/apps/%s/%s' % (options.gconf_name, key)
+
 
 def _convert_gconf_value(value):
     if value.type == gconf.VALUE_STRING:
@@ -65,6 +67,7 @@ def _convert_gconf_value(value):
         return [_convert_gconf_value(v) for v in value.get_list()]
     raise TypeError("unknown gconf type %s" % value.type)
 
+
 def _get_gconf(fullkey, default=None):
     gconf_lock.acquire()
     try:
@@ -78,6 +81,7 @@ def _get_gconf(fullkey, default=None):
         return default
     finally:
         gconf_lock.release()
+
 
 class GconfDict:
     def get(self, key, default=None):
@@ -146,17 +150,21 @@ class GconfDict:
         finally:
             gconf_lock.release()
 
+
 def load():
     return GconfDict()
 
+
 def save(data):
     pass
+
 
 def get(descriptor):
     value = descriptor.default
 
     if descriptor == prefs.MOVIES_DIRECTORY:
-        value = os.path.expanduser(os.path.join(options.user_home, 'Videos/Miro'))
+        value = os.path.expanduser(os.path.join(options.user_home,
+                                                'Videos/Miro'))
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         value = os.path.expanduser(os.path.join(options.user_home, 'Desktop'))
@@ -191,7 +199,7 @@ def get(descriptor):
     elif descriptor == prefs.LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'miro.log')
-    
+
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'miro-downloader.log')

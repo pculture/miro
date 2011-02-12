@@ -31,7 +31,6 @@ import errno
 import signal
 import os
 import statvfs
-import threading
 from miro import app
 from miro import prefs
 import logging
@@ -44,8 +43,6 @@ from miro.util import returns_unicode, returns_binary, check_u, check_b
 import miro
 from miro.plat import options
 
-from miro.gtcache import gettext as _
-
 PlatformFilenameType = str
 
 # We need to define samefile for the portable code.  Lucky for us, this is
@@ -55,12 +52,14 @@ from os.path import samefile
 # this is used in lib/gtcache.py
 _locale_initialized = False
 
+
 def dirfilt(root, dirs):
     """
     Platform hook to filter out any directories that should not be
     descended into, root and dirs corresponds as per os.walk().
     """
     return dirs
+
 
 def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
@@ -81,6 +80,7 @@ def get_available_bytes_for_movies():
     statinfo = os.statvfs(movie_dir)
     return statinfo.f_frsize * statinfo.f_bavail
 
+
 def locale_initialized():
     """Returns whether or not the locale has been initialized.
 
@@ -89,6 +89,7 @@ def locale_initialized():
     """
     return _locale_initialized
 
+
 def initialize_locale():
     """Initializes the locale.
     """
@@ -96,7 +97,10 @@ def initialize_locale():
     global _locale_initialized
     _locale_initialized = True
 
+
 FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
+
+
 def setup_logging(in_downloader=False):
     """Sets up logging using the Python logging module.
 
@@ -135,11 +139,12 @@ def setup_logging(in_downloader=False):
         rotater = logging.handlers.RotatingFileHandler(
             pathname, mode="w", maxBytes=100000,
             backupCount=5)
-            
+
     formatter = logging.Formatter(FORMAT)
     rotater.setFormatter(formatter)
     logging.getLogger('').addHandler(rotater)
     rotater.doRollover()
+
 
 @returns_binary
 def utf8_to_filename(filename):
@@ -148,6 +153,7 @@ def utf8_to_filename(filename):
     if not isinstance(filename, str):
         raise ValueError("filename is not a str")
     return filename
+
 
 @returns_unicode
 def shorten_fn(filename):
@@ -159,6 +165,7 @@ def shorten_fn(filename):
 
     return unicode(last[:-1])
 
+
 def encode_fn(filename):
     try:
         return filename.encode(locale.getpreferredencoding())
@@ -166,6 +173,7 @@ def encode_fn(filename):
         raise
     except:
         return filename.encode('ascii', 'replace')
+
 
 @returns_binary
 def unicode_to_filename(filename, path=None):
@@ -189,7 +197,8 @@ def unicode_to_filename(filename, path=None):
     # add a number to the end
     max_len = os.statvfs(path)[statvfs.F_NAMEMAX] - 5
 
-    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "'", "<", ">", "|", "&", "\r", "\n"):
+    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "'",
+                "<", ">", "|", "&", "\r", "\n"):
         filename = filename.replace(mem, "_")
 
     new_filename = encode_fn(filename)
@@ -199,6 +208,7 @@ def unicode_to_filename(filename, path=None):
         new_filename = encode_fn(filename)
 
     return new_filename
+
 
 @returns_unicode
 def filename_to_unicode(filename, path=None):
@@ -220,6 +230,7 @@ def filename_to_unicode(filename, path=None):
     except:
         return filename.decode('ascii', 'replace')
 
+
 @returns_unicode
 def make_url_safe(s, safe='/'):
     """Takes in a byte string or a unicode string and does the right thing
@@ -237,6 +248,7 @@ def make_url_safe(s, safe='/'):
     except:
         return s.decode('ascii', 'replace')
 
+
 @returns_binary
 def unmake_url_safe(s):
     """Undoes make_url_safe (assuming it was passed a FilenameType)
@@ -244,6 +256,7 @@ def unmake_url_safe(s):
     # unquote the byte string
     check_u(s)
     return urllib.unquote(s.encode('ascii'))
+
 
 def _pid_is_running(pid):
     if pid is None:
@@ -253,6 +266,7 @@ def _pid_is_running(pid):
         return True
     except OSError, err:
         return err.errno == errno.EPERM
+
 
 def kill_process(pid):
     """Kills the process with the given pid.
@@ -272,6 +286,7 @@ def kill_process(pid):
         except:
             logging.exception("error killing download daemon")
 
+
 def launch_download_daemon(oldpid, env):
     """Launches the download daemon.
 
@@ -284,7 +299,8 @@ def launch_download_daemon(oldpid, env):
 
     environ = os.environ.copy()
     environ['MIRO_FRONTEND'] = options.frontend
-    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(
+        prefs.DOWNLOADER_LOG_PATHNAME)
     environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
     environ['MIRO_DEBUGMODE'] = str(app.debugmode)
     if hasattr(miro.app, 'in_unit_tests'):
@@ -297,10 +313,12 @@ def launch_download_daemon(oldpid, env):
     script = os.path.join(dl_daemon_path, 'MiroDownloader.py')
     os.spawnle(os.P_NOWAIT, sys.executable, sys.executable, script, environ)
 
+
 def exit_miro(return_code):
     """Exits Miro.
     """
     sys.exit(return_code)
+
 
 def movie_data_program_info(movie_path, thumbnail_path):
     """Returns the necessary information for Miro to run the media
@@ -319,6 +337,7 @@ def movie_data_program_info(movie_path, thumbnail_path):
     from miro import app
     return app.movie_data_program_info(movie_path, thumbnail_path)
 
+
 def get_logical_cpu_count():
     """Returns the logical number of cpus on this machine.
 
@@ -333,9 +352,11 @@ def get_logical_cpu_count():
             return ncpus
     return 1
 
+
 def setup_ffmpeg_presets():
     # the linux distro should handle this
     pass
+
 
 def get_ffmpeg_executable_path():
     """Returns the location of the ffmpeg binary.
@@ -343,6 +364,7 @@ def get_ffmpeg_executable_path():
     :returns: string
     """
     return app.config.get(options.FFMPEG_BINARY)
+
 
 def customize_ffmpeg_parameters(params):
     """Takes a list of parameters and modifies it based on
@@ -356,12 +378,14 @@ def customize_ffmpeg_parameters(params):
     """
     return params
 
+
 def get_ffmpeg2theora_executable_path():
     """Returns the location of the ffmpeg2theora binary.
 
     :returns: string
     """
     return app.config.get(options.FFMPEG2THEORA_BINARY)
+
 
 def customize_ffmpeg2theora_parameters(params):
     """Takes a list of parameters and modifies it based on
@@ -375,13 +399,16 @@ def customize_ffmpeg2theora_parameters(params):
     """
     return params
 
+
 def begin_thread_loop(context_object):
     # used for testing
     pass
 
+
 def finish_thread_loop(context_object):
     # used for testing
     pass
+
 
 def get_cookie_path():
     """
@@ -394,10 +421,11 @@ def get_cookie_path():
         app.config.get(prefs.SUPPORT_DIRECTORY),
         'cookies.txt')
 
+
 # Expand me: pick up Linux media players.
 def get_plat_media_player_name_path():
     return (None, None)
 
+
 def thread_body(func, *args, **kwargs):
     func(*args, **kwargs)
-

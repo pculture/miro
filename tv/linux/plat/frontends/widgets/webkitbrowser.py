@@ -33,7 +33,7 @@ Code for a WebKit based browser.
 Documentation for WebKitGTK+:
 http://webkitgtk.org/reference/index.html
 
-Documentation for PyWebKitGTK: 
+Documentation for PyWebKitGTK:
 http://code.google.com/p/pywebkitgtk/
 """
 
@@ -43,10 +43,12 @@ from miro import prefs
 import gtk
 import webkit
 
+
 def fix_user_agent(agent):
     """Default user agent for WebKitGTK+ is something like:
 
-    Mozilla/5.0 (X11; U; Linux x86_64; c) AppleWebKit/531.2+ (KHTML, like Gecko) Safari/531.2+
+    Mozilla/5.0 (X11; U; Linux x86_64; c) AppleWebKit/531.2+
+    (KHTML, like Gecko) Safari/531.2+
 
     This function takes that string, drops the last bit, and adds Miro
     bits.
@@ -56,6 +58,7 @@ def fix_user_agent(agent):
                                  app.config.get(prefs.APP_VERSION),
                                  app.config.get(prefs.PROJECT_URL)))
     return " ".join(agent)
+
 
 class WebKitEmbed(webkit.WebView):
     def __init__(self):

@@ -34,6 +34,7 @@ from dbus.service import BusName
 
 from miro import messages
 
+
 class OneTime(dbus.service.Object):
     """This makes sure we've only got one instance of Miro running at
     any given time.
@@ -50,8 +51,6 @@ class OneTime(dbus.service.Object):
         dbus_interface='org.participatoryculture.dtv.OneTimeIFace',
         in_signature='as')
     def handle_args(self, args):
-        from miro import singleclick
-        from miro import eventloop
         for i, arg in enumerate(args):
             args[i] = arg.encode('latin1')
             if arg.startswith('file://'):

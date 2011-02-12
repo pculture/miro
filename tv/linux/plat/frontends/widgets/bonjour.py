@@ -27,19 +27,18 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os
-import logging
-
 from miro import app
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
+
 
 def check_bonjour_install():
     request_count = app.config.get(prefs.BONJOUR_REQUEST_COUNT)
     if app.sharing_manager.mdns_present or request_count > 0:
         return
     install_bonjour(startup=True)
+
 
 # We can't really do much here ...
 def install_bonjour(startup=False):
@@ -76,7 +75,7 @@ def install_bonjour(startup=False):
     if not startup:
         dialogs.show_message(title, description)
     else:
-        # Buttons in this order because if the window is destroyed by the 
+        # Buttons in this order because if the window is destroyed by the
         # "X" button it becomes -1 which is the last element of the list.
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_NO,
@@ -86,4 +85,3 @@ def install_bonjour(startup=False):
             return
         else:
             app.config.set(prefs.BONJOUR_REQUEST_COUNT, 1)
-

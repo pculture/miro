@@ -38,13 +38,14 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import align_left
 from miro.frontends.widgets.prefpanel import (
-    attach_boolean, attach_radio, attach_combo, attach_text)
+    attach_boolean, attach_radio, attach_text)
 
 from miro.plat import renderers
-from miro.plat import options 
+from miro.plat import options
 
 from miro import app
 from miro import prefs
+
 
 def _general_panel():
     extras = []
@@ -52,6 +53,7 @@ def _general_panel():
     attach_boolean(cbx, options.SHOW_TRAYICON)
     extras.append(cbx)
     return extras
+
 
 def _playback_panel():
     extras = []
@@ -87,6 +89,7 @@ def _playback_panel():
 
     return extras
 
+
 def _conversions_panel():
     extras = []
 
@@ -113,6 +116,7 @@ def _conversions_panel():
     extras.append(align_left(grid.make_table()))
 
     return extras
+
 
 def get_platform_specific(panel_name):
     if panel_name == "general":
