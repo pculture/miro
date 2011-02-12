@@ -37,7 +37,7 @@ import threading
 
 from miro import util
 from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
-                             thread_body)
+                             get_segmenter_executable_path, thread_body)
 
 # Transcoding
 #
@@ -300,8 +300,7 @@ class TranscodeObject(object):
             print 'Running command ', ' '.join(args)
             self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
     
-            # XXX
-            segmenter_exe = '/Users/glee/segmenter'
+            segmenter_exe = get_segmenter_executable_path()
             args = [segmenter_exe]
             child_fds = [str(self.child_r), str(self.child_w)]
             args += TranscodeObject.segmenter_args + child_fds
