@@ -87,7 +87,9 @@ class MiroWindow(widgetset.MainWindow):
             left_width = int(app.config.get(prefs.LEFT_VIEW_SIZE))
             if left_width is None or left_width == "":
                 left_width = 200
-        except:
+        except (TypeError, ValueError):
+            # Note: TypeError gets thrown becaue LEFT_VIEW_SIZE
+            # defaults to None.
             left_width = 200
         self.splitter.set_left_width(left_width)
 

@@ -336,8 +336,8 @@ class SharingTracker(object):
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue
-            except:
-                raise ValueError('unknown error during select')
+            except StandardError, err:
+                raise ValueError('unknown error during select %s' % str(err))
 
         if app.sharing_manager.mdns_present:
             callback = libdaap.mdns_browse(self.mdns_callback)
@@ -375,7 +375,7 @@ class SharingTracker(object):
                     continue
                 else:
                     pass
-            except:
+            except StandardError:
                 pass
 
     def start_tracking(self):
@@ -938,7 +938,7 @@ class SharingManager(object):
                 else:
                     pass
             # XXX How to pass error, send message to the backend/frontend?
-            except:
+            except StandardError:
                 pass
 
     def enable_sharing(self):

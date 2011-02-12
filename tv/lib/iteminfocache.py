@@ -170,7 +170,7 @@ class ItemInfoCache(signals.SignalEmitter):
             self._run_inserts()
             self._run_updates()
             self._run_deletes()
-        except:
+        except StandardError:
             app.db.cursor.execute("ROLLBACK TRANSACTION")
             raise
         else:

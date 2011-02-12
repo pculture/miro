@@ -68,9 +68,7 @@ def format_crash_report(when, exc_info, details):
     header += "Call stack\n----------\n"
     try:
         stack = util.get_nice_stack()
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         stack = traceback.extract_stack()
     header += ''.join(traceback.format_list(stack))
     header += "\n"
@@ -96,9 +94,7 @@ def format_crash_report(when, exc_info, details):
             log_contents = "%s\n---\n" % log_name
             log_contents += f.read()
             f.close()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except (IOError, OSError):
             log_contents = ''
         return log_contents
 

@@ -36,7 +36,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def handle(self):
         try:
             BaseHTTPServer.BaseHTTPRequestHandler.handle(self)
-        except:
+        except StandardError:
             if not self.server.shutting_down:
                 raise
 

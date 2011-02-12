@@ -216,12 +216,12 @@ class FeedParserValues(object):
 
     def _calc_payment_link(self):
         try:
-            return self.first_video_enclosure.payment_url.decode('ascii',
-                                                                 'replace')
-        except:
+            return self.first_video_enclosure.payment_url.decode(
+                'ascii', 'replace')
+        except (AttributeError, UnicodeDecodeError):
             try:
                 return self.entry.payment_url.decode('ascii','replace')
-            except:
+            except (AttributeError, UnicodeDecodeError):
                 return u""
 
     def _calc_comments_link(self):
@@ -1899,9 +1899,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                         os.remove(turd)
                     fileutil.rmdir(filename_path)
                     fileutil.rename(temp, filename_path)
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
+                except OSError:
                     logging.warn("fix_incorrect_torrent_subdir error:\n%s",
                                  traceback.format_exc())
                 self.set_filename(filename_path)
@@ -2077,9 +2075,7 @@ class FileItem(Item):
                 fileutil.remove(self.filename)
             elif fileutil.isdir(self.filename):
                 fileutil.rmtree(self.filename)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except OSError:
             logging.warn("delete_files error:\n%s", traceback.format_exc())
 
     def download(self, autodl=False):

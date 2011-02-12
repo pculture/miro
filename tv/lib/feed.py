@@ -958,14 +958,11 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             try:
                 parser.parse(StringIO(xmldata))
             except UnicodeDecodeError:
-                logging.exception("Unicode issue parsing... %s",
-                                  xmldata[0:300])
+                logging.exception("Unicode issue parsing... %s", xmldata[0:300])
                 self.finish_generate_feed(None)
                 if removeOnError:
                     self.remove()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except (StandardError, xml.sax.SAXNotRecognizedException):
                 #it doesn't parse as RSS, so it must be HTML
                 #print " Nevermind! it's HTML"
                 self.ask_for_scrape(info, html, charset)
@@ -1274,9 +1271,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                                 item.update_from_feed_parser_values(fp_values)
                                 new = False
                                 self.old_items.discard(item)
-                        except (SystemExit, KeyboardInterrupt):
-                            raise
-                        except:
+                        except StandardError:
                             pass
             if new and fp_values.first_video_enclosure is not None:
                 self._handle_new_entry(entry, fp_values, channel_title)
@@ -1370,9 +1365,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def get_base_href(self):
         try:
             return escape(self.parsed.link)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except AttributeError:
             return FeedImpl.get_base_href(self)
 
     @returns_unicode
@@ -1382,9 +1375,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.ufeed.confirm_db_thread()
         try:
             return self.parsed.link
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except AttributeError:
             return u""
 
     def feedparser_finished(self):
@@ -1588,9 +1579,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
             try:
                 parsed = feedparserutil.parse(html)
                 self.feedparser_callback(parsed, url)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 self.feedparser_errback(self, None, url)
                 raise
         else:
@@ -1903,9 +1892,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             try:
                 parser.setFeature(xml.sax.handler.feature_external_ges, 0)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 pass
             if charset is not None:
                 handler = RSSLinkGrabber(baseurl, charset)
@@ -2354,7 +2341,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler,
         if self.firstTag:
             self.firstTag = False
             if tag not in ['rss', 'feed']:
-                raise xml.sax.SAXNotRecognizedException, "Not an RSS file"
+                raise xml.sax.SAXNotRecognizedException("Not an RSS file")
         if tag.lower() == 'enclosure' or tag.lower() == 'content':
             self.enclosureCount += 1
         elif tag.lower() == 'link':

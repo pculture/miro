@@ -180,9 +180,7 @@ class RemoteDownloader(DDBObject):
             try:
                 self.contentType = info['content-type'].decode('ascii',
                                                                'replace')
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except (KeyError, UnicodeDecodeError):
                 self.contentType = None
             self.run_downloader()
         else:

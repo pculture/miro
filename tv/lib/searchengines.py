@@ -153,9 +153,8 @@ def _load_search_engine(filename):
                                          sort_order=sort,
                                          filename=filename))
 
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
+        # FIXME - lock this down more
         warn(filename, "Exception parsing file")
 
 def create_engines():

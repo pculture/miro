@@ -169,9 +169,7 @@ def shorten_fn(filename):
 def encode_fn(filename):
     try:
         return filename.encode(locale.getpreferredencoding())
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except UnicodeEncodeError:
         return filename.encode('ascii', 'replace')
 
 
@@ -225,9 +223,7 @@ def filename_to_unicode(filename, path=None):
     check_b(filename)
     try:
         return filename.decode(locale.getpreferredencoding())
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except UnicodeDecodeError:
         return filename.decode('ascii', 'replace')
 
 
@@ -243,9 +239,7 @@ def make_url_safe(s, safe='/'):
     try:
         return urllib.quote(s.encode(locale.getpreferredencoding()),
                             safe=safe).decode('ascii')
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except (UnicodeEncodeError, UnicodeDecodeError):
         return s.decode('ascii', 'replace')
 
 
@@ -281,9 +275,7 @@ def kill_process(pid):
                 if not _pid_is_running(pid):
                     return
             os.kill(pid, signal.SIGKILL)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("error killing download daemon")
 
 

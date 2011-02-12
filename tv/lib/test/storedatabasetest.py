@@ -179,7 +179,7 @@ class DBUpgradeTest(StoreDatabaseTest):
     def tearDown(self):
         try:
             os.unlink(self.save_path2)
-        except:
+        except OSError:
             pass
         StoreDatabaseTest.tearDown(self)
 

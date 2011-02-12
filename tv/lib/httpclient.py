@@ -982,9 +982,7 @@ def _grab_file_url(url, callback, errback, default_mime_type):
     else:
         try:
             data = f.read()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except IOError:
             eventloop.add_idle(errback, 'grab file url errback',
                     args=(FileURLReadError(path),))
         else:

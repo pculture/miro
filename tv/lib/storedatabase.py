@@ -509,10 +509,9 @@ class LiveStorage:
     def get_last_id(self):
         try:
             return self._get_last_id()
-        except (KeyError, SystemError,
-                databaseupgrade.DatabaseTooNewError):
+        except databaseupgrade.DatabaseTooNewError:
             raise
-        except:
+        except StandardError:
             self._handle_load_error("Error calculating last id")
             return self._get_last_id()
 

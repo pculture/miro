@@ -348,14 +348,10 @@ def upgrade12(objectList):
                             enclosure = enc
                             break
                     o.savedData['releaseDateObj'] = datetime(*enclosure.updated_parsed[0:7])
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
+                except StandardError:
                     try:
                         o.savedData['releaseDateObj'] = datetime(*o.savedData['entry'].updated_parsed[0:7])
-                    except (SystemExit, KeyboardInterrupt):
-                        raise
-                    except:
+                    except StandardError:
                         o.savedData['releaseDateObj'] = datetime.min
                 changed.add(o)
     return changed
@@ -689,9 +685,7 @@ def upgrade38(objectList):
                                                                                                             ord('\\') : u'-',
                                                                                                             ord(':')  : u'-' })
                     changed.add(o)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 pass
     return changed
 
@@ -857,9 +851,7 @@ def upgrade46(objectList):
                 if type (o.savedData['status']['fastResumeData']) == unicode:
                     o.savedData['status']['fastResumeData'] = o.savedData['status']['fastResumeData'].encode('ascii','replace')
                 changed.add(o)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 pass
     return changed
 
@@ -1055,9 +1047,7 @@ def upgrade58(objectList):
             try:
                 o.savedData['status']['fastResumeData'] = None
                 changed.add(o)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 pass
     return changed
 
@@ -1234,9 +1224,7 @@ def upgrade71(objectList):
             host, port = host.split(':')
             try:
                 port = int(port)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 logging.warn("invalid port for %r" % url)
                 port = default_port(scheme)
         else:
@@ -1531,9 +1519,7 @@ def upgrade75(objectList):
             host, port = host.split(':')
             try:
                 port = int(port)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 logging.warn("invalid port for %r" % url)
                 port = default_port(scheme)
         else:
@@ -1869,10 +1855,10 @@ def upgrade75(objectList):
             try:
                 return self.first_video_enclosure.payment_url.decode('ascii',
                                                                      'replace')
-            except:
+            except (UnicodeDecodeError, AttributeError):
                 try:
                     return self.entry.payment_url.decode('ascii','replace')
-                except:
+                except (UnicodeDecodeError, AttributeError):
                     return u""
 
         def _calc_comments_link(self):
@@ -1934,14 +1920,10 @@ def upgrade75(objectList):
         def _calc_release_date(self):
             try:
                 return datetime(*self.first_video_enclosure.updated_parsed[0:7])
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 try:
                     return datetime(*self.entry.updated_parsed[0:7])
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
+                except StandardError:
                     return datetime.min
 
     from datetime import datetime

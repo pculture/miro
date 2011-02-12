@@ -409,7 +409,7 @@ class ConnectionHandlerTest(EventLoopTest):
         def readData():
             try:
                 readIn = self.remoteSocket.recv(1024 * 1024)
-            except:
+            except StandardError:
                 readIn = ''
             self.received.addData(readIn)
             if self.received.length == len(data):

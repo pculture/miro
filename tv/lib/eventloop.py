@@ -209,9 +209,7 @@ class ThreadPool(object):
             x = self.threads.pop()
             try:
                 x.join()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 pass
 
 class SimpleEventLoop(signals.SignalEmitter):

@@ -108,9 +108,7 @@ class Controller:
             for thread in threading.enumerate():
                 logging.info("%s", thread)
 
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             signals.system.failed_exn("while shutting down")
             exit_miro(1)
 
@@ -184,9 +182,7 @@ class BugReportSender(signals.SignalEmitter):
             try:
                 logging.info("Sending entire database")
                 backupfile = self._backup_support_dir()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except StandardError:
                 logging.exception("Failed to backup database")
 
         if isinstance(report, str):

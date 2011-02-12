@@ -369,7 +369,7 @@ class PlaybackManager (signals.SignalEmitter):
             total = self.player.get_total_playback_time()
             if total is not None:
                 self.emit('playback-did-progress', progress * total, total)
-        except:
+        except StandardError:
             pass
 
     def on_movie_finished(self):

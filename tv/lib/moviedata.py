@@ -128,9 +128,7 @@ class MovieDataInfo(object):
         dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
         try:
             fileutil.makedirs(dir_)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
+        except OSError:
             pass
         return dir_
 
@@ -437,9 +435,7 @@ class MovieDataUpdater(signals.SignalEmitter):
     def kill_process(self, pid):
         try:
             kill_process(pid)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
+        except OSError:
             logging.warn("Error trying to kill the movie data process:\n%s",
                          traceback.format_exc())
         else:

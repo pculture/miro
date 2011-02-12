@@ -105,9 +105,7 @@ def _scrape_youtube_url(url, callback):
             lambda x: _youtube_callback_step2(x, video_id, callback),
             lambda x: _youtube_errback(x, callback))
 
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.exception("youtube_callback: unable to scrape YouTube Video URL")
         callback(None)
 
@@ -149,9 +147,7 @@ def _youtube_callback_step2(info, video_id, callback):
 
         _youtube_errback(info, callback)
 
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.exception("youtube_callback_step2: unable to scrape YouTube URL")
         callback(None)
 
@@ -167,9 +163,7 @@ def _scrape_google_video_url(url, callback):
         url = (u"http://video.google.com/videofile/%s.flv?docid=%s&itag=5" %
                (doc_id, doc_id))
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape Google Video URL: %s", url)
         callback(None)
 
@@ -179,9 +173,7 @@ def _scrape_lulu_video_url(url, callback):
         params = cgi.parse_qs(components[3])
         url = unquote_plus(params['file'][0]).decode('ascii', 'replace')
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape LuLu.tv Video URL: %s", url)
         callback(None)
 
@@ -197,9 +189,7 @@ def _scrape_vmix_video_url(url, callback):
         httpclient.grab_url(url, lambda x: _scrape_vmix_callback(x, callback),
                            lambda x: _scrape_vmix_errback(x, callback))
 
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape VMix Video URL: %s", url)
         callback(None)
 
@@ -208,9 +198,7 @@ def _scrape_vmix_callback(info, callback):
         doc = minidom.parseString(info['body'])
         url = doc.getElementsByTagName('file').item(0).firstChild.data.decode('ascii', 'replace')
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unsable to scrape XML for VMix Video URL %s",
                         info['redirected-url'])
         callback(None)
@@ -226,9 +214,7 @@ def _scrape_vsocial_video_url(url, callback):
         v = params['v'][0]
         url = u'http://static.vsocial.com/varmedia/vsocial/flv/%s_out.flv' % v
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape VSocial URL: %s", url)
         callback(None)
 
@@ -241,9 +227,7 @@ def _scrape_veohtv_video_url(url, callback):
         url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalink_id)
         httpclient.grab_url(url, lambda x: _scrape_veohtv_callback(x, callback),
                            lambda x: _scrape_veohtv_errback(x, callback))
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape Veoh URL: %s", url)
         callback(None)
 
@@ -257,9 +241,7 @@ def _scrape_veohtv_callback(info, callback):
         url = (u'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' %
                file_hash)
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape Veoh URL data: %s", url)
         callback(None)
 
@@ -278,9 +260,7 @@ def _scrape_break_callback(info, callback):
         params = cgi.parse_qs(components[3])
         url = unquote_plus(params['sVidLoc'][0]).decode('ascii', 'replace')
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("unable to scrape Break URL: %s", url)
         callback(None)
 
@@ -302,9 +282,7 @@ def _scrape_vimeo_video_url(url, callback):
             url,
             lambda x: _scrape_vimeo_callback(x, callback),
             lambda x: _scrape_vimeo_errback(x, callback))
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
 
@@ -318,9 +296,7 @@ def _scrape_vimeo_moogaloop_url(url, callback):
             url,
             lambda x: _scrape_vimeo_callback(x, callback),
             lambda x: _scrape_vimeo_errback(x, callback))
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("Unable to scrape vimeo.com moogaloop URL: %s", url)
         callback(None)
 
@@ -337,9 +313,7 @@ def _scrape_vimeo_callback(info, callback):
                (id_, req_sig, req_sig_expires))
         # TODO: HD support
         callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         logging.warning("Unable to scrape XML for vimeo.com video URL: %s", url)
         callback(None)
 
