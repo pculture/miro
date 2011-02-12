@@ -33,6 +33,7 @@ import tempfile
 import re
 import os
 import select
+import sys
 import threading
 
 from miro import util
@@ -322,8 +323,9 @@ class TranscodeObject(object):
             self.thread.start()
 
             return True
-        except StandardError, e:
-            logging.error('ERROR: ' + str(e))
+        except StandardError:
+            (typ, value, tb) = sys.exc_info()
+            logging.error('ERROR: %s %s' % (str(typ), str(value)))
             return False
 
     def signal_thread(self):
