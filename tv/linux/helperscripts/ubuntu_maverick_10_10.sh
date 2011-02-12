@@ -21,6 +21,8 @@ apt-get install \
     libsoup2.4-dev
 
 apt-get install \
+    libavformat-dev \
+    libavutil-dev \
     libavahi-compat-libdnssd1 \
     libtorrent-rasterbar6 \
     python-libtorrent \
