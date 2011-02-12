@@ -745,7 +745,8 @@ class SharingManagerBackend(object):
               (self.transcode.has_key(session) and 
               self.transcode[session].itemid != itemid)):
                 yes, info = transcode.needs_transcode(path)
-                self.transcode[session].shutdown()
+                if self.transcode.has_key(session):
+                    self.transcode[session].shutdown()
                 self.transcode[session] = transcode.TranscodeObject(path,
                                                             itemid,
                                                             info,
