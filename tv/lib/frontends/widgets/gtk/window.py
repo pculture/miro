@@ -121,7 +121,7 @@ class WrappedMainWindow(WrappedWindow):
                 event.state & gtk.gdk.MOD1_MASK and
                 app.playback_manager.is_playing):
             # Hack for having 2 shortcuts for fullscreen
-            app.widgetapp.on_fullscreen_clicked()
+            app.playback_manager.enter_fullscreen()
             return
         return WrappedWindow.do_key_press_event(self, event)
 

@@ -574,13 +574,15 @@ class PlaybackManager (signals.SignalEmitter):
             self.enter_fullscreen()
 
     def enter_fullscreen(self):
-        self.is_fullscreen = True
-        self.video_display.enter_fullscreen()
+        if not self.is_fullscreen:
+            self.is_fullscreen = True
+            self.video_display.enter_fullscreen()
     
     def exit_fullscreen(self):
-        self.is_fullscreen = False
-        self.presentation_mode = 'fit-to-bounds'
-        self.video_display.exit_fullscreen()
+        if self.is_fullscreen:
+            self.is_fullscreen = False
+            self.presentation_mode = 'fit-to-bounds'
+            self.video_display.exit_fullscreen()
 
     def toggle_detached_mode(self):
         if self.is_fullscreen:
@@ -948,7 +950,7 @@ def handle_key_press(key, mods):
 
     if key == menus.ESCAPE:
         if app.playback_manager.is_fullscreen:
-            app.widgetapp.on_fullscreen_clicked()
+            app.playback_manager.exit_fullscreen()
             return True
         else:
             app.widgetapp.on_stop_clicked()
