@@ -242,9 +242,9 @@ class SharingTracker(object):
 
         return local_addresses
 
-    def mdns_callback(self, added, fullname, host, ips, port):
+    def mdns_callback(self, added, fullname, host, port):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
-                                  args=[added, fullname, host, ips, port])
+                                  args=[added, fullname, host, port])
 
     def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
@@ -272,7 +272,7 @@ class SharingTracker(object):
                                  testconnect,
                                  'DAAP test connect')
 
-    def mdns_callback_backend(self, added, fullname, host, ips, port):
+    def mdns_callback_backend(self, added, fullname, host, port):
         if fullname == app.sharing_manager.name:
             return
         # Need to come up with a unique ID for the share.  Use the name

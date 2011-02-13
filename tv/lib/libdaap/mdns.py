@@ -60,13 +60,6 @@ class BonjourCallbacks(object):
     def __init__(self, user_callback):
         self.user_callback = user_callback
         self.refs = []
-        self.query_types = [pybonjour.kDNSServiceType_A]
-        # Workaround: the Windows mDNSResponder won't give us a reply
-        # for type AAAA!  Is it because there is no IPv6 configured?
-        # mDNSResponder should still return error in this case.
-        if sys.platform != 'win32':
-            self.query_types.append(pybonjour.kDNSServiceType_AAAA)
-        self.nquery_types = len(self.query_types)
 
     def add_ref(self, ref):
         self.refs.append(ref)
@@ -98,7 +91,7 @@ class BonjourCallbacks(object):
         if (flags & pybonjour.kDNSServiceFlagsAdd):
             host = HostObject()
             host.added = True
-            host.fullname = serviceName
+            host.servicename = serviceName
             ref = pybonjour.DNSServiceResolve(0,
                                               interfaceIndex,
                                               serviceName,
@@ -115,55 +108,15 @@ class BonjourCallbacks(object):
                                [],
                                0)
 
-
-    def query_callback(self, sdRef, flags, interfaceIndex, errorCode, fullname,
-                       rrtype, rrclass, rdata, ttl):
-        idx = sdRef.fileno()
-        self.host[idx].typecount += 1
-        af = socket.AF_UNSPEC
-        if rrtype == pybonjour.kDNSServiceType_AAAA:
-            af = socket.AF_INET6
-        elif rrtype == pybonjour.kDNSServiceType_A:
-            af = socket.AF_INET
-        if errorCode == pybonjour.kDNSServiceErr_NoError:
-            self.host[idx].ips[af] = rdata
-        if self.nquery_types == self.host[idx].typecount:
-            self.user_callback(self.host[idx].added,
-                               self.host[idx].fullname,
-                               self.host[idx].hosttarget,
-                               self.host[idx].ips,
-                               self.host[idx].port)
-        del self.host[idx]
-        self.del_ref(sdRef)
-        sdRef.close()
-
     def resolve_callback(self, sdRef, flags, interfaceIndex, errorCode,
                          fullname, hosttarget, port, txtRecord):
         if errorCode == pybonjour.kDNSServiceErr_NoError:
-            old_idx = sdRef.fileno()
-            for typ in self.query_types:
-                ref = pybonjour.DNSServiceQueryRecord(
-                                              interfaceIndex = interfaceIndex,
-                                              fullname = hosttarget,
-                                              rrtype = typ,
-                                              callBack = self.query_callback)
-                # Move this guy to a new indexing slot, we are about to be 
-                # done with this socket.  We add an index entry for each
-                # reference all pointing to the same host object because 
-                # we can't reconstruct a index on a per-host basis in 
-                # the callback.
-                idx = ref.fileno()
-                self.host[idx] = self.host[old_idx]
-                self.add_ref(ref)
-
-            # Housekeeping: delete the old index because the socket will be
-            # closed.
-            host = self.host[old_idx]
-            del self.host[old_idx]
-            host.typecount = 0
-            host.hosttarget = hosttarget
-            host.port = port
-            host.ips = dict()
+            idx = sdRef.fileno()
+            self.user_callback(self.host[idx].added,
+                               self.host[idx].servicename,
+                               hosttarget,
+                               port)
+            del self.host[idx]
 
         self.del_ref(sdRef)
         sdRef.close()

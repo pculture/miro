@@ -620,7 +620,7 @@ def mdns_browse(callback):
     class BrowseCallback(object):
        def __init__(self, callback):
            self.user_callback = callback
-       def mdns_callback(self, added, fullname, hosttarget, ips, port):
+       def mdns_callback(self, added, fullname, hosttarget, port):
            # XXX not exactly sure why it does this, but we can fix it up.
            # If there's something we can convert back to ASCII then just skip
            # over.
@@ -634,7 +634,7 @@ def mdns_browse(callback):
                fullname = fullname[:fullname.rindex('._daap._tcp')]
            except (ValueError, IndexError):
                pass
-           self.user_callback(added, fullname, hosttarget, ips, port)
+           self.user_callback(added, fullname, hosttarget, port)
     callback_obj = BrowseCallback(callback)
     mdns_callback = callback_obj.mdns_callback
     return mdns.bonjour_browse_service('_daap._tcp', mdns_callback)
