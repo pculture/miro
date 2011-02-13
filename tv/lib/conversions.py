@@ -56,19 +56,20 @@ from miro.fileobject import FilenameType
 from miro.plat import utils
 from miro.plat import resources
 
+NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
+
+
 def get_conversions_folder():
     """Get the folder for video conversions.
 
     This method is safe to call from the frontend thread.
     """
-
     root = app.config.get(prefs.MOVIES_DIRECTORY)
     target_folder = os.path.join(root, "Converted")
     if not os.path.exists(target_folder):
         os.mkdir(target_folder)
     return target_folder
 
-NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
 
 class ConverterInfo(object):
     """Holds the data for a specific conversion that allows us to
@@ -96,6 +97,7 @@ class ConverterInfo(object):
             return parser.get(section, key)
         except NoOptionError:
             return defaults.get(key)
+
 
 class ConverterManager(object):
     """Manages converter .conv files which define the various
@@ -157,6 +159,7 @@ class ConverterManager(object):
 
     def get_converters(self):
         return self.converters
+
 
 class ConversionManager(signals.SignalEmitter):
     def __init__(self):
@@ -359,7 +362,7 @@ class ConversionManager(signals.SignalEmitter):
                     _create_item_for_conversion(destination,
                                                 source_info,
                                                 conversion_name)
-                if not task.temp_output_path.endswith('.tmp'): # temp dir
+                if not task.temp_output_path.endswith('.tmp'):  # temp dir
                     clean_up(task.temp_output_path,
                              file_and_directory=True)
             else:
@@ -471,6 +474,7 @@ class ConversionManager(signals.SignalEmitter):
         self._notify_tasks_count()
         self.quit_flag = True
 
+
 def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
 
@@ -505,6 +509,7 @@ def build_output_paths(item_info, target_folder, converter_info):
 
     return (final_path, temp_path)
 
+
 def build_parameters(input_path, output_path, converter_info):
     """Performs the substitutions on the converter_info parameters
     and returns a list of arguments.
@@ -525,6 +530,7 @@ def build_parameters(input_path, output_path, converter_info):
         return param
     return [substitute(p) for p in converter_info.parameters.split()]
 
+
 def clean_up(temp_file, file_and_directory=False, attempts=0):
     if attempts > 5:
         return
@@ -537,7 +543,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
             timeout = 1.0 * attempts
             eventloop.add_timeout(
                 timeout, clean_up, "conversion clean_up attempt",
-                (temp_file, file_and_directory, attempts+1))
+                (temp_file, file_and_directory, attempts + 1))
 
     if file_and_directory:
         path = os.path.dirname(temp_file)
@@ -550,7 +556,8 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
                 timeout = 1.0 * attempts
                 eventloop.add_timeout(
                     timeout, clean_up, "conversion clean_up attempt",
-                    (temp_file, file_and_directory, attempts+1))
+                    (temp_file, file_and_directory, attempts + 1))
+
 
 class ConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder,
@@ -715,10 +722,11 @@ class ConversionTask(object):
         if hasattr(self.process_handle, "pid"):
             logging.info("killing conversion task %d", self.process_handle.pid)
             utils.kill_process(self.process_handle.pid)
-            if not self.temp_output_path.endswith('.tmp'): # temp file
+            if not self.temp_output_path.endswith('.tmp'):  # temp file
                 if (os.path.exists(self.temp_output_path) and
                     self.progress < 1.0):
                     clean_up(self.temp_output_path, file_and_directory=True)
+
 
 def line_reader(handle):
     """Builds a line reading generator for the given handle.  This
@@ -739,14 +747,15 @@ def line_reader(handle):
             c = handle.read(1)
     return _readlines
 
-class CopyConversionTask(ConversionTask):
 
+class CopyConversionTask(ConversionTask):
     def __init__(self, item_info, target_folder, create_item):
         ConversionTask.__init__(self, None, item_info, target_folder,
                                 create_item)
 
     def get_executable(self):
-        return "copy" # never actually executed
+        # never actually executed
+        return "copy"
 
     def get_display_name(self):
         return _("Copy")
@@ -759,10 +768,12 @@ class CopyConversionTask(ConversionTask):
         return not bool(self.progress)
 
     def is_running(self):
-        return False # never running, since running is basically a no-op
+        # never running, since running is basically a no-op
+        return False
 
     def done_running(self):
         return bool(self.progress)
+
 
 class FFMpegConversionTask(ConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)'
@@ -811,6 +822,7 @@ class FFMpegConversionTask(ConversionTask):
             if match is not None:
                 return 1.0
         return self.progress
+
 
 class FFMpeg2TheoraConversionTask(ConversionTask):
     DURATION_RE = re.compile(r'f2t ;duration: ([^;]*);')
@@ -862,11 +874,13 @@ class FFMpeg2TheoraConversionTask(ConversionTask):
                 return 1.0
         return self.progress
 
+
 def convert(converter_id, item_info):
     """Given a converter and an item, this starts the conversion for
     that item.
     """
     conversion_manager.start_conversion(converter_id, item_info)
+
 
 @eventloop.as_idle
 def _create_item_for_conversion(filename, source_info, conversion_name):
