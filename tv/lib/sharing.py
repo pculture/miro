@@ -444,7 +444,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     type = u'sharing'
     def __init__(self, share):
         self.client = None
-        self.connected_gate = threading.Event()
         self.share = share
         self.items = []
         self.playlists = []
@@ -495,14 +494,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         return sharing_item
 
     def client_disconnect(self):
-        # If user requested a disconnect before the connect was actually 
-        # finished, wait for the connect to finish first to synchronize things.
-        # Additionally, check for the self.client flag.  A connect error
-        # leads to automatic disconnect so self.client at this point will be
-        # None.
-        self.connected_gate.wait()
-        if not self.client:
-            return
         client = self.client
         self.client = None
         playlist_ids = [playlist_.id for playlist_ in self.playlists]
@@ -595,20 +586,20 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         returned_items, returned_playlists = args
         self.items = returned_items
         self.playlists = returned_playlists
-        message = messages.TabsChanged('sharing', self.playlists, [], [])
+        self.share.mount = True
+        message = messages.TabsChanged('sharing', self.playlists,
+                                       [self.share], [])
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.  Only add
         # those that are part of o the base playlist.
         for item in self.items:
             if item.playlist_id == self.base_playlist:
                 self.emit('added', item)
-        self.connected_gate.set()
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
         app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
-        self.connected_gate.set()
 
     def get_items(self, playlist_id=None):
         # XXX SLOW!  And could possibly do with some refactoring.

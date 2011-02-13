@@ -1217,7 +1217,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
             messages.SharingEject(share).send_to_backend()
         
     def handle_sharing_connect_failed(self, message):
-        message.share.mount = False
         name = message.share.name
         title = _('Connect failed')
         fmtargs = dict(name=name)
