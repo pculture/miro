@@ -696,6 +696,12 @@ class DaapClient(object):
     def __init__(self, host, port):
         self.host = host
         self.port = port
+        self.session = None
+
+    def alive(self):
+        self.timer.cancel()
+        self.heartbeat_callback()
+        return self.session is not None
 
     def heartbeat_callback(self):
         try:
@@ -708,7 +714,7 @@ class DaapClient(object):
             self.timer.start()
         # We've been disconnected, or server gave incorrect response?
         except (IOError, ValueError):
-            pass
+            self.disconnect()
 
     # Generic check for http response.  ValueError() on unexpected response.
     def check_reply(self, response, http_code=httplib.OK, callback=None,
@@ -857,6 +863,7 @@ class DaapClient(object):
         except (ValueError, httplib.ResponseNotReady, AttributeError, IOError):
             pass
         finally:
+            self.session = None
             self.conn.close()
 
     def daap_get_file_request(self, file_id, enclosure=None):
