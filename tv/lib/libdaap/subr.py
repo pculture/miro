@@ -106,6 +106,11 @@ class ChunkedStreamObj(object):
         self.unread = self.streamsize
         self.rangetext = rangetext
 
+    def __del__(self):
+        # TODO: maybe it's better to wrap it in a file object so we can do
+        # automatic garbage collection.
+        os.close(self.fildes)
+
     # Be careful: debug only: if you call this your object is consumed and 
     # you will need to create new one.
     def __str__(self):
@@ -129,7 +134,6 @@ class ChunkedStreamObj(object):
                 yield data
             if self.unread == 0:
                 break
-        os.close(self.fildes)
 
     def __len__(self):
         return self.streamsize
