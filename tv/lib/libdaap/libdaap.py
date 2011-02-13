@@ -294,7 +294,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if not session:
            return (DAAP_FORBIDDEN, [], [])
         self.server.del_session(session)
-        return (DAAP_OK, [], [])
 
     # We don't support this but Rhythmbox sends this anyway.  Grr.
     def do_update(self):
@@ -575,7 +574,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # XXX we should be splitting these so the path and the querystring
             # are separate.
             elif self.path.startswith('/logout'):
-               rcode, reply, extra_headers = self.do_logout()
+               self.do_logout()
                endconn = True
             elif self.path.startswith('/activity'):
                 rcode, reply, extra_headers = self.do_activity()
@@ -599,10 +598,11 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             rcode = DAAP_BADREQUEST
             reply = []
             extra_headers = []
-        print 'do_GET: send reply with HTTP code %d' % rcode
-        self.do_send_reply(rcode, reply, extra_headers=extra_headers)
         if endconn:
             self.wfile.close()
+        else:
+            print 'do_GET: send reply with HTTP code %d' % rcode
+            self.do_send_reply(rcode, reply, extra_headers=extra_headers)
 
 def mdns_init():
     return mdns.mdns_init()
