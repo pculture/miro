@@ -784,6 +784,8 @@ class SharingManagerBackend(object):
             # Note! sometimes this doesn't work because the file has no
             # extension!
             e = e[1:] if e else None
+            if isinstance(e, unicode):
+                e = e.encode('utf-8')
             itemprop['daap.songformat'] = e
             # Fixup the media kind: XXX what about u'other'?
             if itemprop['com.apple.itunes.mediakind'] == u'video':
