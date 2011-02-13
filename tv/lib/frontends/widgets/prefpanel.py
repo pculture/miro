@@ -158,9 +158,9 @@ def attach_radio(widget_values, descriptor):
 
     pref_value = app.config.get(descriptor)
     for w, v in widget_values:
-        w.connect('clicked', radio_changed)
         if v == pref_value:
             w.set_selected()
+        w.connect('clicked', radio_changed)
 
 def attach_integer(widget, descriptor, error_widget=None, check_function=None):
     """This is for preferences implemented as a text entry where the
