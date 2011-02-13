@@ -639,8 +639,8 @@ class PreferencesWindow (Window):
     def do_select_panel(self, panel, animate):
         wframe = self.nswindow.frame()
         vsize = list(panel.get_size_request())
-        if vsize[0] < 500:
-            vsize[0] = 500
+        if vsize[0] < 650:
+            vsize[0] = 650
         if vsize[1] < 200:
             vsize[1] = 200
 
