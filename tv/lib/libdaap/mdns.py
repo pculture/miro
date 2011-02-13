@@ -105,7 +105,6 @@ class BonjourCallbacks(object):
             self.user_callback(False,
                                serviceName,
                                '',
-                               [],
                                0)
 
     def resolve_callback(self, sdRef, flags, interfaceIndex, errorCode,
