@@ -182,6 +182,8 @@ class ConversionManager(signals.SignalEmitter):
         self.finished_tasks = list()
         self.quit_flag = False
 
+        self.last_conversion_id = None
+
     def startup(self):
         self.converters.load_converters(resources.path('conversions/*.conv'))
 
@@ -189,6 +191,12 @@ class ConversionManager(signals.SignalEmitter):
         if self.task_loop is not None:
             self.cancel_all()
             self.task_loop.join()
+
+    def set_last_conversion(self, conversion_id):
+        self.last_conversion_id = conversion_id
+
+    def get_last_conversion(self):
+        return self.last_conversion_id
 
     def cancel_all(self):
         self._enqueue_message("cancel_all")
@@ -875,11 +883,13 @@ class FFMpeg2TheoraConversionTask(ConversionTask):
         return self.progress
 
 
-def convert(converter_id, item_info):
+def convert(converter_id, item_info, update_last=False):
     """Given a converter and an item, this starts the conversion for
     that item.
     """
     conversion_manager.start_conversion(converter_id, item_info)
+    if update_last:
+        conversion_manager.set_last_conversion(converter_id)
 
 
 @eventloop.as_idle

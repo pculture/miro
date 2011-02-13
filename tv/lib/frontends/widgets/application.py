@@ -596,7 +596,7 @@ class Application:
     def convert_items(self, converter_id):
         selection = app.item_list_controller_manager.get_selection()
         for item_info in selection:
-            conversions.convert(converter_id, item_info)
+            conversions.convert(converter_id, item_info, update_last=True)
 
     def copy_item_url(self):
         selection = app.item_list_controller_manager.get_selection()

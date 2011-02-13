@@ -99,7 +99,16 @@ class ItemContextMenuHandler(object):
             messages.MarkItemWatched(item).send_to_backend()
 
         if item.downloaded:
-            # FIXME - most recent conversion target here
+            # most recent conversion here
+            last_converter = conversion_manager.get_last_conversion()
+            if last_converter is not None:
+                converter = conversion_manager.lookup_converter(last_converter)
+                if converter:
+                    def convert(converter=converter.identifier):
+                        app.widgetapp.convert_items(converter)
+                    menu.append((_('Convert to %(conversion)s',
+                                   {"conversion": converter.displayname}),
+                                 convert))
 
             # Convert menu
             convert_menu = self._make_convert_menu()
