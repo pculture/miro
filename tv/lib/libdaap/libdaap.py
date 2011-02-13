@@ -346,7 +346,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # with the client unless we poke into semi-private data.  Ugh.
         address, addrlength = self.rfile._sock.getsockname()
         listen_address, port = self.server.server_address
-        return ('daap://%s:%d/databases/1/items/%d..%s?session-id=%d' % 
+        return ('daap://%s:%d/databases/1/items/%d.%s?session-id=%d' % 
                 (address, port, itemid, enclosure, self.get_session()))
 
     def do_databases(self):
