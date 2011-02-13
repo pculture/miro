@@ -40,7 +40,6 @@ This module defines the messages that are passed between the two
 threads.
 """
 
-import datetime
 import logging
 import re
 
@@ -979,7 +978,6 @@ class ChannelInfo(object):
     :param max_old_items: maximum number of old items to remember
     """
     def __init__(self, channel_obj):
-        import time
         self.name = channel_obj.get_title()
         self.id = channel_obj.id
         self.unwatched = channel_obj.num_unwatched()

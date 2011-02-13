@@ -1298,8 +1298,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         """
         if self.initialUpdate:
             self.initialUpdate = False
-            startfrom = None
-            itemToUpdate = None
             for latest in models.Item.latest_in_feed_view(self.ufeed_id):
                 latest.eligibleForAutoDownload = True
                 latest.signal_change()
@@ -1339,7 +1337,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if item.downloader is None:
                 candidates.append((item.creationTime, item))
         candidates.sort()
-        for time, item in candidates[:extra]:
+        for time_, item in candidates[:extra]:
             item.remove()
 
     def add_scraped_thumbnail(self, entry):
@@ -1873,7 +1871,6 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             html = self.initialHTML
             self.initialHTML = None
             redir_url = self.url
-            status = 200
             charset = self.initialCharset
             self.initialCharset = None
             subLinks = self.scrape_links(html, redir_url, charset=charset,
@@ -2336,7 +2333,6 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler,
         self.fatal_errors = 0
 
     def startElementNS(self, name, qname, attrs):
-        uri = name[0]
         tag = name[1]
         if self.firstTag:
             self.firstTag = False
@@ -2357,7 +2353,6 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler,
             self.inTitle = True
 
     def endElementNS(self, name, qname):
-        uri = name[0]
         tag = name[1]
         if tag.lower() == 'description':
             lg = HTMLLinkGrabber()

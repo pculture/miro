@@ -30,10 +30,8 @@
 """``miro.messagehandler``` -- Backend message handler
 """
 
-import itertools
 import logging
 import time
-import threading
 import os
 
 from miro import app
@@ -50,7 +48,6 @@ from miro import item
 from miro import itemsource
 from miro import messages
 from miro import prefs
-from miro import search
 from miro import singleclick
 from miro import subscription
 from miro import tabs
@@ -61,7 +58,7 @@ from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
-from miro.plat.utils import make_url_safe, thread_body
+from miro.plat.utils import make_url_safe
 
 import shutil
 

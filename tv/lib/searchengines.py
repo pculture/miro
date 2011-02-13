@@ -31,7 +31,7 @@
 :class:`SearchEngineInfo` and related helper functions.
 """
 
-from miro.util import check_u, returns_unicode
+from miro.util import check_u
 from miro.xhtmltools import urlencode
 from xml.dom.minidom import parse
 from miro.plat import resources

@@ -177,7 +177,7 @@ class ThemeHistory(DDBObject):
             ]
         for default in default_playlists:
             try:
-                pl = playlist.SavedPlaylist.get_by_title(default)
+                playlist.SavedPlaylist.get_by_title(default)
             except ObjectNotFoundError:
                 playlist.SavedPlaylist(_("Example Playlist"))
 

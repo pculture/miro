@@ -62,7 +62,6 @@ from miro import searchengines
 from miro import fileutil
 from miro import search
 from miro import models
-from miro.fileobject import FilenameType
 
 _charset = locale.getpreferredencoding()
 
@@ -2089,7 +2088,7 @@ class FileItem(Item):
         try:
             self.releaseDateObj = datetime.fromtimestamp(
                 fileutil.getmtime(self.filename))
-        except OSError, ValueError:
+        except (OSError, ValueError):
             logging.warn("Error setting release date:\n%s",
                     traceback.format_exc())
             self.releaseDateObj = datetime.now()

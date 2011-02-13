@@ -31,7 +31,6 @@ import datetime
 import os
 import random
 import logging
-from base64 import b64encode
 
 from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError

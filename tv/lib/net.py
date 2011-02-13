@@ -302,7 +302,7 @@ class AsyncSocket(object):
                          SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
                         "socket connect timeout")
             else:
-                fullmsg = "Connection failed: %s" % string.join(msgs);
+                fullmsg = "Connection failed"
                 trap_call(self, errback, ConnectionError(fullmsg))
         def onWriteReady():
             eventloop.remove_write_callback(self.socket)

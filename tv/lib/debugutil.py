@@ -38,7 +38,6 @@ writing and finally got around to persisting to the code-base.
 """
 
 import logging
-import traceback
 import time
 
 def logwrap(fun):

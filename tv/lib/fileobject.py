@@ -30,12 +30,8 @@
 """The file object encapsulates data about the filename object.
 """
 
-import logging
-import os
-import shutil
-
 from miro.xhtmltools import urlencode
-from miro.plat.utils import (unicode_to_filename, PlatformFilenameType)
+from miro.plat.utils import PlatformFilenameType
 
 # FilenameType is currently a transitional object and as such is incomplete.
 # You should NOT use its urlize functionality for anything other than DAAP

@@ -27,10 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import datetime
 import logging
 import os.path
-import traceback
 
 from miro import app
 from miro import database

@@ -769,7 +769,7 @@ class LiveStorage:
         for (sql, values, many) in to_run:
             try:
                 self._time_execute(sql, values, many)
-            except sqlite3.OperationalError, e:
+            except sqlite3.OperationalError:
                 self._log_error(sql, values, many)
                 return False
         return True

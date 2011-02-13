@@ -34,7 +34,6 @@ from miro import database
 from miro import guide
 from miro import feed
 from miro import folder
-from miro import eventloop
 from miro import playlist
 from miro.util import check_u
 

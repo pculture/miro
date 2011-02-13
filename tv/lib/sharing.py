@@ -39,9 +39,7 @@ from hashlib import md5
 
 from miro.gtcache import gettext as _
 from miro import app
-from miro import config
 from miro import eventloop
-from miro import item
 from miro import messages
 from miro import playlist
 from miro import prefs
@@ -497,7 +495,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_disconnect(self):
         client = self.client
         self.client = None
-        playlist_ids = [playlist.id for playlist in self.playlists]
+        playlist_ids = [playlist_.id for playlist_ in self.playlists]
         message = messages.TabsChanged(self.type, [], [], playlist_ids)
         message.send_to_frontend()
         eventloop.call_in_thread(self.client_disconnect_callback,
