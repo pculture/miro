@@ -818,6 +818,7 @@ class HideableTabList(TabList):
         self.info = TabInfo(self.name, self.icon_name)
         self.view.connect('selection-changed', self.on_selection_changed)
         TabList.add(self, self.info)
+        self.view.model_changed()
 
     def add(self, info, parent_id=None):
         if parent_id is None:
