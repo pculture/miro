@@ -509,7 +509,9 @@ class ItemListController(object):
 
     def on_selection_changed(self, item_view, view_type):
         app.menu_manager.update_menus()
-        selection = item_view.get_selection_as_strings()
+
+    def save_selection(self, view_type):
+        selection = self.views[view_type].get_selection_as_strings()
         app.widget_state.set_selection(
                 self.type, self.id, view_type, selection)
 
@@ -631,6 +633,7 @@ class ItemListController(object):
     def no_longer_displayed(self):
         for view in self.views:
             self.views[view].on_undisplay()
+            self.save_selection(view)
         if self.shuffle_handle:
             app.playback_manager.disconnect(self.shuffle_handle)
         if self.repeat_handle:
