@@ -45,21 +45,22 @@ from miro import displaytext
 from miro.plat import resources
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
-from miro.frontends.widgets.gtk.widgetset import (Widget, VBox, Label, HBox,
-                                                  Alignment, Background,
-                                                  DrawingArea, ImageSurface,
-                                                  Image, CustomButton)
+from miro.frontends.widgets.gtk.widgetset import (
+    Widget, VBox, Label, HBox, Alignment, Background, DrawingArea,
+    ImageSurface, Image, CustomButton)
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
 WHITE = (1.0, 1.0, 1.0)
 
-# Global VideoWidget object.  We re-use so we can re-use our PersistentWindow
+# Global VideoWidget object.  We re-use so we can re-use our
+# PersistentWindow
 video_widget = None
 
+
 class ClickableLabel(Widget):
-    """This is like a label and reimplements many of the Label things, but
-    it's an EventBox with a Label child widget.
+    """This is like a label and reimplements many of the Label things,
+    but it's an EventBox with a Label child widget.
     """
     def __init__(self, text, size=0.77, color=WHITE):
         Widget.__init__(self)
@@ -111,6 +112,7 @@ class ClickableLabel(Widget):
     def show(self):
         self.label._widget.show()
 
+
 class ClickableImageButton(CustomButton):
     def __init__(self, image_path):
         CustomButton.__init__(self)
@@ -137,6 +139,7 @@ class ClickableImageButton(CustomButton):
         if self._widget.window:
             self._widget.window.set_cursor(None)
 
+
 class NullRenderer:
     def __init__(self):
         pass
@@ -144,10 +147,12 @@ class NullRenderer:
     def reset(self):
         pass
 
+
 def make_hidden_cursor():
     pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
     color = gtk.gdk.Color()
     return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+
 
 def make_label(text, handler, visible=True):
     if visible:
@@ -162,10 +167,12 @@ def make_label(text, handler, visible=True):
     lab.set_size(0.77)
     return lab
 
+
 def make_image_button(image_path, handler):
     b = ClickableImageButton(resources.path(image_path))
     b.connect('clicked', handler)
     return b
+
 
 def _align_left(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Align left and pad."""
@@ -174,12 +181,14 @@ def _align_left(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     alignment.add(widget)
     return alignment
 
+
 def _align_right(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Align right and pad."""
     alignment = Alignment(1, 0, 0, 1)
     alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
     alignment.add(widget)
     return alignment
+
 
 def _align_center(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Align center (horizontally) and pad."""
@@ -188,6 +197,7 @@ def _align_center(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     alignment.add(widget)
     return alignment
 
+
 def _align_middle(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Align center (vertically) and pad."""
     alignment = Alignment(0, 0.5, 0, 0)
@@ -195,10 +205,12 @@ def _align_middle(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     alignment.add(widget)
     return alignment
 
-# Couple of utility functions to grab GTK widgets out of the widget tree for
-# fullscreen code
+
+# Couple of utility functions to grab GTK widgets out of the widget
+# tree for fullscreen code
 def _videobox_widget():
     return app.widgetapp.window.videobox._widget
+
 
 def _window():
     """Returns the window used for playback.  This is either the main window
@@ -207,6 +219,7 @@ def _window():
     if app.playback_manager.detached_window:
         return app.playback_manager.detached_window._window
     return app.widgetapp.window._window
+
 
 class VideoOverlay(Window):
     def __init__(self):
@@ -230,6 +243,7 @@ class VideoOverlay(Window):
         window.move(screen_rect.x, screen_rect.y + screen_rect.height -
                 my_height)
 
+
 class VideoWidget(Widget):
     def __init__(self, renderer):
         Widget.__init__(self)
@@ -242,6 +256,7 @@ class VideoWidget(Widget):
     def destroy(self):
         self._widget.destroy()
 
+
 class Divider(DrawingArea):
     def size_request(self, layout):
         return (1, 25)
@@ -252,6 +267,7 @@ class Divider(DrawingArea):
         context.move_to(0, 0)
         context.rel_line_to(0, context.height)
         context.stroke()
+
 
 class VideoDetailsWidget(Background):
     def __init__(self):
@@ -277,13 +293,19 @@ class VideoDetailsWidget(Background):
                 text = displaytext.expiration_date(info.expiration_date)
                 self._expiration_label = Label(text)
                 self._expiration_label.set_size(0.77)
-                self._expiration_label.set_color((152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
+                self._expiration_label.set_color(
+                    (152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
                 outer_hbox.pack_start(_align_middle(self._expiration_label))
-                outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+                outer_hbox.pack_start(_align_middle(
+                        Divider(), top_pad=3, bottom_pad=3,
+                        left_pad=5, right_pad=5))
 
-            lab = make_label(_("Keep"), self.handle_keep, info.expiration_date is not None)
+            lab = make_label(_("Keep"), self.handle_keep,
+                             info.expiration_date is not None)
             outer_hbox.pack_start(_align_middle(lab))
-            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+            outer_hbox.pack_start(_align_middle(
+                    Divider(), top_pad=3, bottom_pad=3,
+                    left_pad=5, right_pad=5))
 
         self._subtitles_link = make_label(_("Subtitles"),
                                           self.handle_subtitles)
@@ -292,18 +314,23 @@ class VideoDetailsWidget(Background):
                                             self.handle_subtitles)
         outer_hbox.pack_start(_align_middle(subtitles_image))
 
-        outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+        outer_hbox.pack_start(_align_middle(
+                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
         self._delete_link = make_label(_("Delete"), self.handle_delete)
         outer_hbox.pack_start(_align_middle(self._delete_link))
 
         if not info.is_external:
-            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+            outer_hbox.pack_start(_align_middle(
+                    Divider(), top_pad=3, bottom_pad=3,
+                    left_pad=5, right_pad=5))
 
             self._share_link = make_label(_("Share"), self.handle_share,
                                           info.has_sharable_url)
             outer_hbox.pack_start(_align_middle(self._share_link))
-            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+            outer_hbox.pack_start(_align_middle(
+                    Divider(), top_pad=3, bottom_pad=3,
+                    left_pad=5, right_pad=5))
 
             if info.commentslink:
                 self._permalink_link = make_label(_("Comments"),
@@ -315,7 +342,8 @@ class VideoDetailsWidget(Background):
                                                   info.permalink)
             outer_hbox.pack_start(_align_middle(self._permalink_link))
 
-        outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+        outer_hbox.pack_start(_align_middle(
+                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
         if app.playback_manager.is_fullscreen:
             fullscreen_link = make_label(_("Exit fullscreen"),
@@ -328,8 +356,8 @@ class VideoDetailsWidget(Background):
             fullscreen_link = make_label(_("Fullscreen"),
                                          self.handle_fullscreen)
             outer_hbox.pack_start(_align_middle(fullscreen_link))
-            fullscreen_image = make_image_button('images/fullscreen_enter.png',
-                                                 self.handle_fullscreen)
+            fullscreen_image = make_image_button(
+                'images/fullscreen_enter.png', self.handle_fullscreen)
             outer_hbox.pack_start(_align_middle(fullscreen_image))
 
         if app.playback_manager.detached_window is not None:
@@ -468,11 +496,13 @@ class VideoDetailsWidget(Background):
         if self._delete_link:
             self._delete_link.on_leave_notify(None, None)
 
+
 class VideoPlayer(player.Player, VBox):
     """Video renderer widget.
 
-    Note: ``app.video_renderer`` must be initialized before instantiating this
-    class.  If no renderers can be found, set ``app.video_renderer`` to ``None``.
+    Note: ``app.video_renderer`` must be initialized before
+    instantiating this class.  If no renderers can be found, set
+    ``app.video_renderer`` to ``None``.
     """
     HIDE_CONTROLS_TIMEOUT = 2000
 
@@ -504,7 +534,8 @@ class VideoPlayer(player.Player, VBox):
                 self._on_items_changed)
         self._item_id = None
 
-        self._video_widget.wrapped_widget_connect('button-press-event', self.on_button_press)
+        self._video_widget.wrapped_widget_connect(
+            'button-press-event', self.on_button_press)
 
     def teardown(self):
         self.renderer.reset()
@@ -583,7 +614,7 @@ class VideoPlayer(player.Player, VBox):
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
         # make sure all hide() calls go through, otherwise we get the wrong
         # size on windows (#10810)
-        while gtk.events_pending(): 
+        while gtk.events_pending():
             gtk.main_iteration()
         _window().fullscreen()
 
@@ -702,9 +733,9 @@ class VideoPlayer(player.Player, VBox):
 
     def select_subtitle_file(self, sub_path, handle_successful_select):
         app.video_renderer.select_subtitle_file(
-            app.playback_manager.get_playing_item(), 
+            app.playback_manager.get_playing_item(),
             sub_path,
             handle_successful_select)
-        
+
     def select_subtitle_encoding(self, encoding):
         app.video_renderer.select_subtitle_encoding(encoding)
