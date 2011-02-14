@@ -97,6 +97,17 @@ def create_value_checker(min_=None, max_=None):
         return True
     return _integer_checker
 
+def text_is_not_blank(error_widget, value):
+    """
+    Checks that the given text field is not blank.
+    """
+    if value != u'':
+        error_widget.hide()
+        return True
+    else:
+        error_widget.show()
+        return False
+
 def attach_boolean(widget, descriptor, sensitive_widget=None):
     """This is for preferences implemented as a checkbox where the
     value is True or False.
@@ -283,7 +294,7 @@ def attach_text(widget, descriptor, error_widget=None, check_function=None):
     def save_value(widget):
         try:
             v = widget.get_text().strip().encode('utf-8')
-            if check_function != None:
+            if check_function is not None:
                 if not check_function(error_widget, v):
                     return
             app.config.set(descriptor, v)
@@ -844,8 +855,10 @@ class SharingPanel(PanelBuilder):
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, 
                        [sharing_warnonquit_cbx, share_txt])
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
+        share_error = build_error_image()
         attach_text(share_txt, prefs.SHARE_NAME,
-                    check_function=lambda w, v: v != '')
+                    error_widget=share_error,
+                    check_function=text_is_not_blank)
 
         # Do this after the attach so we can override the preference
         # values.
@@ -861,6 +874,7 @@ class SharingPanel(PanelBuilder):
         grid.pack_label(_("Share Name:"),
                         dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(share_txt)
+        grid.pack(share_error, dialogwidgets.ControlGrid.ALIGN_LEFT)
         vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
         if not app.sharing_manager.mdns_present:
