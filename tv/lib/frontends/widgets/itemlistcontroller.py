@@ -124,7 +124,6 @@ class ItemListController(object):
         self.make_sorters()
         self._init_item_views()
         self.initialize_search()
-        self._items_added_callback = self._playback_item_list = None
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
 
@@ -369,15 +368,6 @@ class ItemListController(object):
             logging.warn("_play_item_list called with unplayable item")
             return
         app.playback_manager.stop()
-        if ((app.config.get(prefs.PLAY_IN_MIRO)
-             and len(self.get_selection()) <= 1)):
-            if self._items_added_callback is not None:
-                self._playback_item_list.disconnect(self._items_added_callback)
-            # User is playing items in Miro and has 0 or 1 items
-            # selected, if more items get added to the item list, we
-            # should play them.
-            item_list = self.current_item_view.item_list
-            self._playback_item_list = item_list
         app.playback_manager.start(start_id, self.item_tracker,
                 presentation_mode)
         shuffle = app.widget_state.get_shuffle(self.type, self.id)
@@ -570,9 +560,6 @@ class ItemListController(object):
 
     def _playback_will_stop(self, playback_manager):
         self._on_playback_change(playback_manager)
-        if self._items_added_callback is not None:
-            self._playback_item_list.disconnect(self._items_added_callback)
-            self._playback_item_list = self._items_added_callback = None
 
     def start_bulk_change(self):
         for item_view in self.views.values():
