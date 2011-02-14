@@ -37,6 +37,7 @@ from miro import prefs
 from miro.gtcache import gettext as _
 
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -244,12 +245,17 @@ class ConnectTab(widgetset.VBox):
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.Label(
             _("My %(shortappname)s Share Name", self.trans_data)))
-        self.share_entry = widgetset.TextEntry(
-            app.config.get(prefs.SHARE_NAME))
+        self.share_entry = widgetset.TextEntry()
+        share_error = prefpanel.build_error_image()
+        prefpanel.attach_text(self.share_entry,
+                              prefs.SHARE_NAME,
+                              error_widget=share_error,
+                              check_function=prefpanel.text_is_not_blank)
+
         if not self.share_button.get_value():
             self.share_entry.disable()
-        self.share_entry.connect('focus-out', self.daap_name_changed)
         hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
+        hbox.pack_start(share_error)
         vbox.pack_start(widgetutil.pad(hbox, top=10))
 
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
@@ -332,8 +338,6 @@ class ConnectTab(widgetset.VBox):
         if key == prefs.SHARE_MEDIA.key:
             self.share_button.set_value(value)
             self.daap_toggled(self.share_button)
-        elif key == prefs.SHARE_NAME.key:
-            self.share_entry.set_text(value)
 
     def daap_install_clicked(self, button):
         install_bonjour()
@@ -344,10 +348,6 @@ class ConnectTab(widgetset.VBox):
             self.share_entry.enable()
         else:
             self.share_entry.disable()
-
-    def daap_name_changed(self, entry):
-        app.config.set(prefs.SHARE_NAME,
-                       entry.get_text().strip().encode('utf-8'))
 
     def help_button_clicked(self, button):
         print 'help clicked'
