@@ -248,7 +248,7 @@ class ConnectTab(widgetset.VBox):
             app.config.get(prefs.SHARE_NAME))
         if not self.share_button.get_value():
             self.share_entry.disable()
-        self.share_entry.connect('changed', self.daap_name_changed)
+        self.share_entry.connect('focus-out', self.daap_name_changed)
         hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
         vbox.pack_start(widgetutil.pad(hbox, top=10))
 
@@ -331,6 +331,7 @@ class ConnectTab(widgetset.VBox):
     def on_config_changed(self, obj, key, value):
         if key == prefs.SHARE_MEDIA.key:
             self.share_button.set_value(value)
+            self.daap_toggled(self.share_button)
         elif key == prefs.SHARE_NAME.key:
             self.share_entry.set_text(value)
 
