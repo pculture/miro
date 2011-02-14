@@ -115,6 +115,8 @@ class ItemListController(object):
         self.views = {}
         self._search_text = ''
         self.item_tracker = None
+        self._got_initial_list = False
+        self._needs_scroll = None
         self._init_widget()
 
         item_lists = set(iv.item_list for iv in self.views.values())
@@ -592,6 +594,10 @@ class ItemListController(object):
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
         self.send_model_changed()
+        self._got_initial_list = True
+        if self._needs_scroll:
+            self.scroll_to_item(self._needs_scroll)
+            self._needs_scroll = None
         self.on_initial_list()
 
     def handle_items_changed(self, obj, added, changed, removed):
@@ -631,6 +637,17 @@ class ItemListController(object):
             app.playback_manager.disconnect(self.repeat_handle)
         if self.stop_handle:
             app.playback_manager.disconnect(self.stop_handle)
+
+    def scroll_to_item(self, item):
+        if self._got_initial_list:
+            iter = self.current_item_view.model.iter_for_id(item.id)
+            try:
+                self.current_item_view.scroll_to_iter(iter)
+            except KeyError:
+                # item no longer in the list, so we'll ignore it
+                pass
+        else:
+            self._needs_scroll = item
 
 class SimpleItemListController(ItemListController):
     def __init__(self):

@@ -479,9 +479,7 @@ class VideoBox(style.LowerBox):
         app.tab_list_manager._select_from_tab_list(self.selected_tab_list,
                                                    tab_iter)
         controller = app.display_manager.current_display.controller
-        model = controller.current_item_view.model
-        iter = model.iter_for_id(self.selected_file.id)
-        controller.current_item_view.scroll_to_iter(iter)
+        controller.scroll_to_item(self.selected_file)
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)
