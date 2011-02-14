@@ -411,6 +411,9 @@ class TranscodeObject(object):
                 return
 
     def get_chunk(self):
+        # XXX: be sure to add a check to see whether there is an active
+        # transcode job or not (also make sure that transcode job isn't
+        # inactive because it's already finished
         # XXX How do we save a reference to this guy?  discard_chunk?
         # ANS: wrap around file wrapper would be good thing to do
         # Consume an item ...
