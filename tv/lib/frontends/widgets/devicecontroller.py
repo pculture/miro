@@ -841,7 +841,11 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
             for view in self.views.keys():
                 self.on_sort_changed(self, sort_key, ascending, view)
         if ('%s_view' % tab_type) in device.database:
-            view_type = device.database['%s_view' % tab_type]
+            view_name = device.database['%s_view' % tab_type]
+            if view_name  == u'list':
+                view_type = WidgetStateStore.get_list_view_type()
+            else:
+                view_type = WidgetStateStore.get_standard_view_type()
         elif tab_type == 'audio':
             view_type = WidgetStateStore.get_list_view_type()
         else:

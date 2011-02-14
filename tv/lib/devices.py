@@ -27,6 +27,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from datetime import datetime
 from glob import glob
 from fnmatch import fnmatch
 import json
@@ -657,7 +658,7 @@ class DeviceItem(object):
         return True
 
     def get_release_date(self):
-        return self.release_date
+        return datetime.fromtimestamp(self.release_date)
 
     @returns_filename
     def get_filename(self):
