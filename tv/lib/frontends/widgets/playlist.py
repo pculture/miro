@@ -64,19 +64,14 @@ class DropHandler(signals.SignalEmitter):
 
     def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
-        dragged_ids = set([int(id) for id in data.split('-')])
+        dragged_ids = [int(id) for id in data.split('-')]
         if 0 <= position < len(model):
             insert_info = model.nth_row(position)[0]
         else:
             insert_info = None
-        self.item_view.item_list.set_sort(None)
-        try:
-            self.item_view.item_list.move_items(insert_info, dragged_ids)
-        finally:
-            self.item_view.model_changed()
-        new_order = [info.id for info in model.info_list()]
-        self.sorter.set_new_order(new_order)
-        self.item_view.item_list.set_sort(self.sorter)
+        new_order = self.sorter.move_ids_before(insert_info.id, dragged_ids)
+        self.item_view.item_list.resort()
+        self.item_view.model_changed()
         self.emit('new-order', new_order)
         return True
 
@@ -102,6 +97,28 @@ class PlaylistSort(itemlist.ItemSort):
         self.positions = dict((id, self.current_postion.next())
             for id in id_order)
 
+    def move_ids_before(self, before_id, id_list):
+        """Move ids around in the position list
+
+        The ids in id_list will be placed before before_id.  If before_id is
+        None, then they will be placed at the end of the list.
+
+        :returns: new sort order as a list of ids
+        """
+
+        # calculate order of ids not in id_list
+        moving = set(id_list)
+        new_order = [id_ for id_ in self.positions if id_ not in moving]
+        new_order.sort(key=lambda id_: self.positions[id_])
+        # insert id_list into new_order
+        if before_id is not None:
+            insert_pos = new_order.index(before_id)
+            new_order[insert_pos:insert_pos] = id_list
+        else:
+            new_order.extend(id_list)
+        self.set_new_order(new_order)
+        return new_order
+
     def sort_key(self, item):
         return self.positions[item.id]
 
@@ -126,11 +143,16 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
 
     def make_sorters(self):
         self.multiview_sorter = PlaylistSort()
+        self.item_list.set_sort(self.multiview_sorter)
 
     def build_standard_view(self, scroll_pos, selection):
         standard_view = PlaylistStandardView(self.item_list,
                 scroll_pos, selection, self.id)
         return standard_view, standard_view
+
+    def on_items_will_change(self, added, changed, removed):
+        self.multiview_sorter.add_items(added)
+        self.multiview_sorter.forget_items(removed)
 
     def make_drop_handler(self):
         standard_view_type = WidgetStateStore.get_standard_view_type()

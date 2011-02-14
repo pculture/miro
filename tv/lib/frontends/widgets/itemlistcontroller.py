@@ -576,6 +576,7 @@ class ItemListController(object):
             # it looses the scroll position on GTK.  But when lots of rows are
             # changing, trying to keep the scroll position is pointless.
             self.start_bulk_change()
+        self.on_items_will_change(added, changed, removed)
 
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
@@ -590,6 +591,13 @@ class ItemListController(object):
         """Handle an ItemsChanged message meant for this ItemContainer."""
         self.send_model_changed()
         self.on_items_changed()
+
+    def on_items_will_change(self, added, changed, removed):
+        """Called before we change the list.
+
+        Subclasses can override this method if they want.
+        """
+        pass
 
     def on_initial_list(self):
         """Called after we have receieved the initial list of items.

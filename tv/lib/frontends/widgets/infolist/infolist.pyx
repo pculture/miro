@@ -190,14 +190,9 @@ cdef int update_sort_key(InfoListNode* node, object new_sort_key, int reverse):
             return 1
     return 0
 
-def NullSort(object obj):
-    # sort function for when sort == None
-    return None
-
 cdef enum SortMode:
     INFOLIST_SORT_NORMAL = 0
     INFOLIST_SORT_REVERSED = 1
-    INFOLIST_SORT_NONE = 2
 
 cdef class InfoList:
     """InfoList -- TableModel for ItemInfo and similar objects
@@ -240,16 +235,14 @@ cdef class InfoList:
         self._set_sort(sort_key_func, reverse)
         self.attributes = InfoListAttributeStore()
 
-    cdef int _set_sort(self, object sort_key_func, object reverse):
-        if sort_key_func is not None:
-            self.sort_key_func = sort_key_func
-            if not reverse:
-                self.sort_mode = INFOLIST_SORT_NORMAL
-            else:
-                self.sort_mode = INFOLIST_SORT_REVERSED
+    cdef int _set_sort(self, object sort_key_func, object reverse) except -1:
+        if sort_key_func is None:
+            raise ValueError("sort_key_func can't be None")
+        self.sort_key_func = sort_key_func
+        if reverse:
+            self.sort_mode = INFOLIST_SORT_REVERSED
         else:
-            self.sort_key_func = NullSort
-            self.sort_mode = INFOLIST_SORT_NONE
+            self.sort_mode = INFOLIST_SORT_NORMAL
         return 0
 
     cdef int sort_nodes(self, InfoListNode** nodes, int count) except -1:
@@ -271,7 +264,7 @@ cdef class InfoList:
         cobject = self.id_map[id]
         return <InfoListNode*>PyCObject_AsVoidPtr(cobject)
 
-    def add_infos(self, new_infos, before_id=None):
+    def add_infos(self, new_infos):
         """Add a list of objects into the list.
 
         If we have a sort, they will be inserted in sorted order.  If not,
@@ -280,13 +273,7 @@ cdef class InfoList:
         If any info is already in the list, then a ValueError will be thrown
         and no changes will be made.
 
-        before_id is used to position then infos when no sort is set.  If not
-        given, the infos will be positioned at the end of the list.  If a sort
-        is set and before_id is not None, a ValueError will be raised.
-
-
         :param new_infos: an iterable with the infos
-        :param before_id: an id to insert before
         """
         cdef InfoListNode* pos
         cdef InfoListNode* new_node
@@ -297,9 +284,6 @@ cdef class InfoList:
         cdef int infos_created
         cdef int infos_added
         cdef object info, sort_key
-
-        if self.sort_mode != INFOLIST_SORT_NONE and before_id is not None:
-            raise ValueError("before_id given when a sort is set")
 
         infos_created = infos_added = 0
         count = len(new_infos)
@@ -318,33 +302,17 @@ cdef class InfoList:
             # insert nodes in reversed order, this makes calculating rows
             # simpler in the GTK code
             infolistplat_will_add_nodes(self.nodelist)
-            if self.sort_mode == INFOLIST_SORT_NONE:
-                if before_id is None:
-                    pos = infolist_nodelist_tail(self.nodelist).next
-                else:
-                    pos = self._fetch_node(before_id)
-                #for 0 <= i < count:
-                for count > i >= 0:
-                    new_node = node_array[i]
-                    infolist_nodelist_insert_before(self.nodelist, pos,
-                            new_node)
-                    infos_added += 1
-                    cobj = PyCObject_FromVoidPtr(new_node, NULL)
-                    self.id_map[infolist_node_get_id(new_node)] = cobj
-                    infolistplat_node_added(self.nodelist, new_node)
-                    pos = new_node
-            else:
-                pos = infolist_nodelist_tail(self.nodelist)
-                self.sort_nodes_reversed(node_array, count)
-                reverse_sort = (self.sort_mode == INFOLIST_SORT_REVERSED)
-                for 0 <= i < count:
-                    new_node = node_array[i]
-                    pos = insert_node_before(self.nodelist, new_node, pos,
-                            reverse_sort)
-                    infos_added += 1
-                    cobj = PyCObject_FromVoidPtr(new_node, NULL)
-                    self.id_map[infolist_node_get_id(new_node)] = cobj
-                    infolistplat_node_added(self.nodelist, new_node)
+            pos = infolist_nodelist_tail(self.nodelist)
+            self.sort_nodes_reversed(node_array, count)
+            reverse_sort = (self.sort_mode == INFOLIST_SORT_REVERSED)
+            for 0 <= i < count:
+                new_node = node_array[i]
+                pos = insert_node_before(self.nodelist, new_node, pos,
+                        reverse_sort)
+                infos_added += 1
+                cobj = PyCObject_FromVoidPtr(new_node, NULL)
+                self.id_map[infolist_node_get_id(new_node)] = cobj
+                infolistplat_node_added(self.nodelist, new_node)
         finally:
             if infos_added < infos_created:
                 for infos_added <= i < infos_created:
@@ -386,8 +354,6 @@ cdef class InfoList:
                 reverse = 0
             elif self.sort_mode == INFOLIST_SORT_REVERSED:
                 reverse = 1
-            else:
-                raise ValueError("resort=True without a sort set")
 
             # update sort keys and figure out which nodes actually need to
             # move.
@@ -463,56 +429,6 @@ cdef class InfoList:
         self.attributes = InfoListAttributeStore()
         self.id_map = {}
 
-    def move_before(self, target_id, id_list):
-        """Move rows around manually.
-
-
-        The infos with ids in id_list will be moved before the info with
-        target_id.  The infos will be in the same order as given in id_list.
-
-        If target_id is in id_list, then the infos will be moved just before
-        the first info before target_id that is not in the list.
-
-        If target_id is None, then the infos will be moved to the end of the
-        list.
-
-        Raises a ValueError if a sort is set
-        """
-        cdef InfoListNode** node_array # stores the nodes to move
-        cdef InfoListNode* target_node
-        cdef int count
-
-        if self.sort_mode != INFOLIST_SORT_NONE:
-            raise ValueError("move_before() called with a sort set")
-
-        node_array = NULL
-        count = len(id_list)
-        node_array = <InfoListNode**>PyMem_Malloc(
-                sizeof(InfoListNode*) * count)
-        try:
-            # fetch first, in case of key error
-            if target_id is not None:
-                target_node = self._fetch_node(target_id)
-            else:
-                target_node = infolist_nodelist_tail(self.nodelist).next
-            for 0 <= i < count:
-                node_array[i] = self._fetch_node(id_list[i])
-            # move target_id before the nodes in node_array
-            if target_id is not None:
-                for 0 <= i < count:
-                    if node_array[i] == target_node:
-                        target_node = target_node.prev
-            # remove infos then re-enter them
-            infolistplat_will_reorder_nodes(self.nodelist)
-            for 0 <= i < count:
-                infolist_nodelist_remove(self.nodelist, node_array[i])
-            for 0 <= i < count:
-                infolist_nodelist_insert_before(self.nodelist, target_node,
-                        node_array[i])
-            infolistplat_nodes_reordered(self.nodelist)
-        finally:
-            PyMem_Free(node_array)
-
     def set_attr(self, id_, name, value):
         self.attributes.set_attr(id_, name, value)
 
@@ -578,8 +494,6 @@ cdef class InfoList:
 
         
         self._set_sort(sort_key_func, reverse)
-        if self.sort_mode == INFOLIST_SORT_NONE:
-            return
         node_count = self.nodelist.node_count
         nodes = <InfoListNode**>PyMem_Malloc(
                 sizeof(InfoListNode*) * node_count)

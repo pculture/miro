@@ -239,8 +239,9 @@ class ItemList(object):
     """
 
     def __init__(self):
-        self.model = widgetset.InfoListModel(None)
-        self._sorter = None
+        self._sorter = DEFAULT_SORT
+        self.model = widgetset.InfoListModel(self._sorter.sort_key,
+                self._sorter.reverse)
         self.new_only = False
         self.unwatched_only = False
         self.downloaded_only = False
@@ -253,10 +254,10 @@ class ItemList(object):
 
     def set_sort(self, sorter):
         self._sorter = sorter
-        if sorter is not None:
-            self.model.change_sort(sorter.sort_key, sorter.reverse)
-        else:
-            self.model.change_sort(None)
+        self.model.change_sort(sorter.sort_key, sorter.reverse)
+
+    def resort(self):
+        self.set_sort(self._sorter)
 
     def get_sort(self):
         return self._sorter

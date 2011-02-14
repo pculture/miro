@@ -99,12 +99,6 @@ class InfoListTestBase(MiroTestCase):
             raise ValueError("multiple infos with id %s", id_)
         return self.correct_infos.index(filtered_list[0])
 
-    def check_add_with_before_id(self, id_, infos):
-        split_index = self.find_info_index(id_)
-        self.correct_infos[split_index:split_index] = infos
-        self.infolist.add_infos(infos, before_id=id_)
-        self.check_info_list(self.correct_infos)
-
     def check_update(self, *args, **kwargs):
         """Update the list and check it.  args should be in the format id,
         name, id2, name2, ...
@@ -136,32 +130,6 @@ class InfoListTestBase(MiroTestCase):
         self.infolist.change_sort(new_sorter, reverse)
         self.check_info_list(self.correct_infos)
 
-    def check_move_before(self, id_, id_list):
-        to_move = []
-        for move_id in id_list:
-            to_move.append(self.correct_infos[self.find_info_index(move_id)])
-        # push id_ back before the id_list
-        move_id = id_
-        if move_id is not None:
-            while move_id in id_list:
-                id_index = self.find_info_index(move_id)
-                if id_index > 0:
-                    move_id = self.correct_infos[id_index-1].id
-                else:
-                    move_id = -1 # oops we are not before the start of the list
-                    break
-        self.correct_infos = [i for i in self.correct_infos 
-                if i not in to_move]
-        if move_id is None:
-            self.correct_infos = self.correct_infos + to_move
-        elif move_id > -1:
-            id_index = self.find_info_index(move_id)
-            self.correct_infos[id_index:id_index] = to_move
-        else:
-            self.correct_infos = to_move + self.correct_infos
-        self.infolist.move_before(id_, id_list)
-        self.check_info_list(self.correct_infos)
-
 class InfoListDataTest(InfoListTestBase):
     def check_list(self, *names):
         self.assertEquals(list(names),
@@ -182,9 +150,6 @@ class InfoListDataTest(InfoListTestBase):
         # check reversed order
         self.check_update_sort(self.sorter, reverse=True)
         self.check_insert(self.make_infos('a', 'z', 'd'))
-        # check no order
-        self.check_update_sort(None)
-        self.check_insert(self.make_infos('zz', 'aa', 'dd'))
 
     def test_insert_in_order(self):
         # ordered inserts is a possible edge case
@@ -227,24 +192,6 @@ class InfoListDataTest(InfoListTestBase):
         # check reversed order
         self.check_update_sort(self.sorter, reverse=True)
         self.check_update(1, 'aaa', 2, 'ZZZ', resort=True)
-        # check no order causes error
-        self.check_update_sort(None)
-        self.assertRaises(ValueError, self.infolist.update_infos,
-                self.correct_infos, resort=True)
-
-    def test_move_before(self):
-        self.check_update_sort(None)
-        self.check_insert(self.make_infos('m', 'i', 'r', 'o'))
-        self.check_move_before(1, [3, 2])
-        # try move_before with target=None
-        self.check_move_before(None, [1, 2])
-        # try move_before when 1 element is in the list
-        self.check_move_before(2, [0, 2, 1])
-        # test edge cases
-        self.assertRaises(KeyError, self.infolist.move_before, 100, [1, 2])
-        self.assertRaises(KeyError, self.infolist.move_before, 0, [100, 2])
-        self.check_update_sort(self.sort_key_func)
-        self.assertRaises(ValueError, self.infolist.move_before, 0, [1, 2])
 
     def test_non_integer_id(self):
         infos = self.make_infos('m', 'i', 'r', 'o', 'p', 'c', 'f')
@@ -252,24 +199,13 @@ class InfoListDataTest(InfoListTestBase):
             i.id = i.name # id is the initial name of the info
         self.check_insert(infos[:4])
         self.check_update('m', 'ZZZ', 'r', 'ABC')
-        self.check_update_sort(None)
-        self.check_add_with_before_id('m', infos[4:])
-        self.check_move_before('m', ['o', 'p', 'c'])
-        self.check_remove('m', 'i', 'c')
-
-    def test_add_info_with_before_id(self):
-        self.check_update_sort(None)
-        self.check_insert(self.make_infos('m', 'i', 'r', 'o'))
-        self.check_add_with_before_id(2, self.make_infos('M', 'I', 'R', 'O'))
-        self.assertRaises(KeyError, self.infolist.add_infos,
-            self.make_infos('a', 'b'), before_id=100)
-        self.check_update_sort(self.sort_key_func)
-        self.assertRaises(ValueError, self.infolist.add_infos,
-            self.make_infos('a', 'b'), before_id=1)
+        self.check_remove('m', 'i')
 
     def test_new_sort_order(self):
         self.check_insert(self.make_infos('m', 'i', 'r', 'o'))
         self.check_update_sort(lambda info: info.id)
+        # None shouldn't be allowed
+        self.assertRaises(ValueError, self.infolist.change_sort, None)
 
 class InfoListMemoryTest(InfoListTestBase):
     def test_objects_released(self):
@@ -439,13 +375,6 @@ class InfoListGTKTest(InfoListDataTest):
             raise AssertionError("assertion failure in signal callback")
         self.check_info_list(self.tracked_infos)
 
-    def check_add_with_before_id(self, *args, **kwargs):
-        self.tracked_infos = self.correct_infos[:]
-        InfoListDataTest.check_add_with_before_id(self, *args, **kwargs)
-        if self.signal_error:
-            raise AssertionError("assertion failure in signal callback")
-        self.check_info_list(self.tracked_infos)
-
     def check_update(self, *args, **kwargs):
         self.tracked_infos = self.correct_infos[:]
         InfoListDataTest.check_update(self, *args, **kwargs)
@@ -463,13 +392,6 @@ class InfoListGTKTest(InfoListDataTest):
     def check_update_sort(self, *args, **kwargs):
         self.tracked_infos = self.correct_infos[:]
         InfoListDataTest.check_update_sort(self, *args, **kwargs)
-        if self.signal_error:
-            raise AssertionError("assertion failure in signal callback")
-        self.check_info_list(self.tracked_infos)
-
-    def check_move_before(self, *args, **kwargs):
-        self.tracked_infos = self.correct_infos[:]
-        InfoListDataTest.check_move_before(self, *args, **kwargs)
         if self.signal_error:
             raise AssertionError("assertion failure in signal callback")
         self.check_info_list(self.tracked_infos)
