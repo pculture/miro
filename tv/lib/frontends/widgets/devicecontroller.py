@@ -42,6 +42,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
@@ -860,8 +861,8 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
 
-    def start_tracking(self):
-        self.track_item_lists('device', self.device)
+    def build_item_tracker(self):
+        return itemtrack.ItemListTracker('device', self.device)
 
     def on_sort_changed(self, obj, sort_key, ascending, view):
         itemlistcontroller.AudioVideoItemsController.on_sort_changed(

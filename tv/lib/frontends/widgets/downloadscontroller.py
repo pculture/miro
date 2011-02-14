@@ -48,8 +48,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
         itemlistcontroller.ItemListController.__init__(self, u'downloading',
                                                        u'downloading')
-        for item_list in self.item_list_group.item_lists:
-            item_list.resort_on_update = True
+        self.item_list.resort_on_update = True
         self.toolbar = None
 
     def build_widget(self):

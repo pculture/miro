@@ -67,14 +67,14 @@ class ItemListTracker(signals.SignalEmitter):
         items-changed (tracker, added, changed, removed) -- The item list
             changed
     """
-    def __init__(self, type_, id_, item_list):
+    def __init__(self, type_, id_):
         signals.SignalEmitter.__init__(self, 'items-will-change',
                 'initial-list', 'items-changed')
         self.type = type_
+        self.item_list = itemlist.ItemList()
         self.id = id_
         self.is_tracking = False
         self.search_filter = SearchFilter()
-        self.item_list = item_list
         self.saw_initial_list = False
 
     def connect(self, name, func, *extra_args):
@@ -165,8 +165,7 @@ class ManualItemListTracker(ItemListTracker):
     def __init__(self, info_list):
         my_unique_id = ('item-list-tracker-%d' %
                 ManualItemListTracker.id_counter.next())
-        ItemListTracker.__init__(self, 'manual', my_unique_id,
-                itemlist.ItemList())
+        ItemListTracker.__init__(self, 'manual', my_unique_id)
         self.info_list = info_list
         self.add_initial_items(info_list)
 

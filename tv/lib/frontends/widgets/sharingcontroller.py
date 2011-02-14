@@ -72,13 +72,8 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def handle_delete(self):
         pass
 
-    # Grumble ... we need to override it as the id identifies the tab, not
-    # the share, but we only have one tracker per share.  Send the 
-    # actual SharingInfo over which contains everything the backend needs
-    # to work out what to do.
-    def start_tracking(self):
-        self.track_item_lists(self.type, self.share)
-        self.track_playback()
+    def build_item_tracker(self):
+        return itemtrack.ItemListTracker(self.type, self.share)
 
     # note: this should never be empty, so we don't have empty view.
     def build_widget(self):

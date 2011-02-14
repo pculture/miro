@@ -114,13 +114,11 @@ class ItemListController(object):
         self.id = id_
         self.views = {}
         self._search_text = ''
-        self.item_tracker = None
         self._got_initial_list = False
         self._needs_scroll = None
+        self.item_tracker = self.build_item_tracker()
         self._init_widget()
 
-        item_lists = set(iv.item_list for iv in self.views.values())
-        self.item_list_group = itemlist.ItemListGroup(item_lists)
         self.multiview_sorter = None
         self.make_multiview_sorters()
         self.make_sorters()
@@ -129,6 +127,10 @@ class ItemListController(object):
         self._items_added_callback = self._playback_item_list = None
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
+
+    def get_item_list(self):
+        return self.item_tracker.item_list
+    item_list = property(get_item_list)
 
     def on_displayed(self):
         self.shuffle_handle = None
@@ -219,7 +221,6 @@ class ItemListController(object):
         self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
                 self.selected_view)
-        self.item_list = itemlist.ItemList()
 
         self.build_widget()
 
@@ -300,6 +301,9 @@ class ItemListController(object):
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
+
+    def build_item_tracker(self):
+        return itemtrack.ItemListTracker(self.type, self.id)
 
     def update_columns_enabled(self):
         list_view = WidgetStateStore.get_list_view_type()
@@ -517,7 +521,7 @@ class ItemListController(object):
 
     def start_tracking(self):
         """Send the message to start tracking items."""
-        self.track_item_lists(self.type, self.id)
+        self.track_item_lists()
         self.track_playback()
 
     def stop_tracking(self):
@@ -525,24 +529,17 @@ class ItemListController(object):
         self.cancel_track_item_lists()
         self.cancel_track_playback()
 
-    def track_item_lists(self, type_, id_):
-        if self.item_tracker is not None:
+    def track_item_lists(self):
+        if self._item_tracker_callbacks:
             raise AssertionError("called track_item_lists() twice")
-        # FIXME: we're not really using multiple items anymore, hence the
-        # following hack.  We should remove ItemListGroup though
-        if len(self.item_list_group.item_lists) != 1:
-            raise AssertionError("wrong number of item lists: %s",
-                    len(self.item_list_group.item_lists))
-        item_list = list(self.item_list_group.item_lists)[0]
-        item_tracker = itemtrack.ItemListTracker(type_, id_, item_list)
-        item_tracker.set_search(self._search_text)
+        self.item_tracker.set_search(self._search_text)
         self._item_tracker_callbacks = [
-            item_tracker.connect("items-will-change",
+            self.item_tracker.connect("items-will-change",
                 self.handle_items_will_change),
-            item_tracker.connect("initial-list", self.handle_item_list),
-            item_tracker.connect("items-changed", self.handle_items_changed),
+            self.item_tracker.connect("initial-list", self.handle_item_list),
+            self.item_tracker.connect("items-changed",
+                self.handle_items_changed),
         ]
-        self.item_tracker = item_tracker
 
     def cancel_track_item_lists(self):
         if self.item_tracker is None:
