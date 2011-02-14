@@ -260,23 +260,35 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
         widget.connect('changed', check_value)
     widget.connect('focus-out', save_value)
 
-def attach_text(widget, descriptor, check_function=None):
+def attach_text(widget, descriptor, error_widget=None, check_function=None):
     """This is for text entry preferences.
 
     It allows for a check_function which takes a widget and a value
     and returns True if the value is ok, False if not.
 
-    widget - widget
-    descriptor - prefs preference
-    check_function - function with signature ``widget * int -> boolean``
+    :param widget: widget
+    :param descriptor: prefs preference
+    :param error_widget: widget with show/hide methods that shows when
+        the value is bad
+    :param check_function: function with signature ``widget * int -> boolean``
         that checks the value for appropriateness
     """
-    def text_changed(widget):
-        v = widget.get_text().strip().encode('utf-8')
-        if check_function != None:
-            if not check_function(widget, v):
-                return
-        app.config.set(descriptor, v)
+    def check_value(widget):
+        try:
+            check_function(error_widget,
+                           widget.get_text().strip().encode('utf-8'))
+        except ValueError:
+            error_widget.show()
+
+    def save_value(widget):
+        try:
+            v = widget.get_text().strip().encode('utf-8')
+            if check_function != None:
+                if not check_function(error_widget, v):
+                    return
+            app.config.set(descriptor, v)
+        except ValueError:
+            pass
 
     def on_config_changed(obj, key, value):
         if key == descriptor.key:
@@ -287,7 +299,9 @@ def attach_text(widget, descriptor, check_function=None):
     app.frontend_config_watcher.connect('changed', on_config_changed)
 
     widget.set_text(app.config.get(descriptor))
-    widget.connect('changed', text_changed)
+    if check_function:
+        widget.connect('changed', check_value)
+    widget.connect('focus-out', save_value)
 
 def attach_combo(widget, descriptor, values):
     """This is for preferences implemented as an option menu where there
