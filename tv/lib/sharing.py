@@ -962,6 +962,7 @@ class SharingManager(object):
         self.thread = threading.Thread(target=thread_body,
                                        args=[self.server_thread],
                                        name='DAAP Server Thread')
+        self.thread.daemon = True
         self.thread.start()
         self.sharing = True
 
