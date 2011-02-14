@@ -285,6 +285,7 @@ class TranscodeObject(object):
                 kwargs["close_fds"] = True
             args = [ffmpeg_exe, "-i", self.media_file]
             if self.time_offset:
+                print 'STARTING JOB FROM %d' % self.time_offset
                 args += TranscodeObject.time_offset_args + [str(self.time_offset)]
             if self.has_video:
                 args += TranscodeObject.has_video_args
@@ -423,7 +424,7 @@ class TranscodeObject(object):
         # that's really supposed to be coming from the segmenter for this job.
         if self.throttled == True:
             self.throttled = False
-            os.write(self.child_w)
+            os.write(self.child_w, 'b')
         self.chunk_lock.release()
         print 'FILDES %d' % fildes
         return fildes
