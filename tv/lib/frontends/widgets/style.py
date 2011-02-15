@@ -72,18 +72,21 @@ class LowerBox(widgetset.Background):
         return (0, 63)
 
     def draw(self, context, layout_manager):
-        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient = widgetset.Gradient(0, 2, 0, context.height)
         gradient.set_start_color(css_to_color('#d4d4d4'))
         gradient.set_end_color(css_to_color('#a8a8a8'))
-        context.rectangle(0, 0, context.width, context.height)
+        context.rectangle(0, 2, context.width, context.height)
         context.gradient_fill(gradient)
 
         context.set_line_width(1)
         context.move_to(0, 0.5)
         context.line_to(context.width, 0.5)
-        context.set_color((1, 1, 1))
+        context.set_color(css_to_color('#585858'))
         context.stroke()
-
+        context.move_to(0, 1.5)
+        context.line_to(context.width, 1.5)
+        context.set_color(css_to_color('#e6e6e6'))
+        context.stroke()
 
     def is_opaque(self):
         return True
