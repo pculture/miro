@@ -78,6 +78,7 @@ class DropHandler(signals.SignalEmitter):
 class PlaylistSort(itemlist.ItemSort):
     """Sort that orders items by their order in the playlist.
     """
+    KEY = None
 
     def __init__(self):
         itemlist.ItemSort.__init__(self, True)
@@ -151,13 +152,15 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         return standard_view, standard_view
 
     def on_items_will_change(self, added, changed, removed):
-        self.multiview_sorter.add_items(added)
-        self.multiview_sorter.forget_items(removed)
+        sorter = self.item_list.get_sort()
+        sorter.add_items(added)
+        sorter.forget_items(removed)
 
     def make_drop_handler(self):
         standard_view_type = WidgetStateStore.get_standard_view_type()
         standard_view = self.views[standard_view_type]
-        handler = DropHandler(self.id, standard_view, self.multiview_sorter)
+        sorter = self.item_list.get_sort()
+        handler = DropHandler(self.id, standard_view, sorter)
         handler.connect('new-order', self._on_new_order)
         return handler
 

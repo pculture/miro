@@ -440,11 +440,15 @@ class ListView(ItemView):
         self.emit('sort-changed', column_name, ascending)
 
     def change_sort_indicator(self, column_name, ascending):
-        new_sort_column = self._column_name_to_column[column_name]
+        if column_name is None:
+            # not sorted by a column - e.g. PlaylistSort
+            new_sort_column = None
+        else:
+            new_sort_column = self._column_name_to_column[column_name]
+            new_sort_column.set_sort_indicator_visible(True)
+            new_sort_column.set_sort_order(ascending)
         if not self._current_sort_column in (new_sort_column, None):
             self._current_sort_column.set_sort_indicator_visible(False)
-        new_sort_column.set_sort_indicator_visible(True)
-        new_sort_column.set_sort_order(ascending)
         self._current_sort_column = new_sort_column
 
 class HideableSection(widgetutil.HideableWidget):
@@ -882,12 +886,6 @@ class HeaderToolbar(widgetset.Background):
             self.view_switch.set_active('list-view')
 
     def change_sort_indicator(self, column_name, ascending):
-        if not column_name in self._button_map:
-            # change to a list view sort that we don't have a header for.
-            # Turn off all headers
-            for name, button in self._button_map.iteritems():
-                button.set_sort_state(SortBarButton.SORT_NONE)
-            return
         for name, button in self._button_map.iteritems():
             if name == column_name:
                 if ascending:
