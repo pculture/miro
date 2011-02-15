@@ -198,7 +198,6 @@ class ItemListController(object):
         list_view = WidgetStateStore.get_list_view_type()
         self.views[list_view].change_sort_indicator(sort_key, ascending)
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
-        print 'CHANGING SORT: ', sort_key, ascending
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
