@@ -3136,4 +3136,4 @@ def upgrade142(cursor):
 def upgrade143(cursor):
     """Move sort_state from view_state to display_state"""
     remove_column(cursor, 'view_state', ['sort_state'])
-    cursor.execute("ALTER TABLE display_state ADD COLUMN sort_state pythonrepr")
+    cursor.execute("ALTER TABLE display_state ADD COLUMN sort_state text")
