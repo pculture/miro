@@ -271,6 +271,7 @@ class WindowBase(signals.SignalEmitter):
         if group is not None:
             gtk_action.set_group(group)
         gtk_action.connect("activate", callback, index)
+        self.action_groups[groups[0]].add_action(gtk_action)
 
     def make_check_action(self, action, check_group, label, groups, shortcuts):
         gtk_action = gtk.ToggleAction(action, label, None, None)
