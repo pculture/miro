@@ -391,6 +391,7 @@ infolist_nodelist_calc_positions(InfoListNodeList* nodelist)
                 node->position = i;
                 node = node->next;
         }
+        nodelist->node_positions_dirty = 0;
         return 0;
 
 }
