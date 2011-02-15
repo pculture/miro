@@ -91,3 +91,11 @@ class FilenameType(PlatformFilenameType):
 
     def urlize(self):
         return self.handler(self, *self.args)
+
+    def __getstate__(self):
+        # remove handler and args which cause FilenameType to be
+        # un-pickle-able.
+        d = dict(self.__dict__)
+        del d["handler"]
+        del d["args"]
+        return d
