@@ -1213,6 +1213,9 @@ class TableView(Widget):
         type = self.find_type(drag_context)
         if type == "NONE":
             return
+        if selection.data is None:
+            logging.warn("selection.data is None")
+            return
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
             drop_action = self.drag_dest.validate_drop(self, self.model, type,
