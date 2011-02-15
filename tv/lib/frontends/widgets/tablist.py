@@ -75,7 +75,6 @@ class TabInfo(object):
     type = u'tab'
     is_folder = False # doesn't work like a real folder
     tall = True
-    bolded = True
     unwatched = available = 0
     autodownload_mode = u'off'
     is_directory_feed = False
@@ -1164,16 +1163,4 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.store_list.view)
         vbox.pack_start(tlm.feed_list.view)
         vbox.pack_start(tlm.playlist_list.view)
-        return vbox
-
-    def build_header(self, text):
-        label = widgetset.Label(text)
-        label.set_bold(True)
-        label.set_size(0.85)
-        label.set_color(style.TAB_LIST_HEADER_COLOR)
-
-        vbox = widgetset.VBox()
-        vbox.pack_start(widgetutil.align_left(label, 
-                top_pad=5, bottom_pad=5, left_pad=self.header_left_pad))
-
         return vbox

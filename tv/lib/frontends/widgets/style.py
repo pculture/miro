@@ -94,21 +94,24 @@ class LowerBox(widgetset.Background):
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 34
     MIN_ICON_WIDTH = 25
-    MIN_HEIGHT = 25
-    MIN_HEIGHT_TALL = 29
-    TITLE_FONT_SIZE = 0.82
+    MIN_HEIGHT = 28
+    MIN_HEIGHT_TALL = 32
+    TALL_FONT_SIZE = 13.0 / 17
+    FONT_SIZE = 11.0 / 17
     BOLD_TITLE = False
 
     def get_size(self, style, layout_manager):
         if hasattr(self.data, 'tall') and self.data.tall:
             min_height = self.MIN_HEIGHT_TALL
+            font_scale = self.TALL_FONT_SIZE
         else:
             min_height = self.MIN_HEIGHT
+            font_scale = self.FONT_SIZE
         return (self.MIN_WIDTH, max(min_height,
-            layout_manager.font(self.TITLE_FONT_SIZE).line_height()))
+            layout_manager.font(font_scale).line_height()))
 
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
-            layout_manager.font(self.TITLE_FONT_SIZE).line_height()))
+            layout_manager.font(font_scale).line_height()))
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         layout_manager.set_text_color(context.style.text_color)
@@ -119,7 +122,10 @@ class TabRenderer(widgetset.CustomCellRenderer):
             bold = self.BOLD_TITLE
         else:
             bold = self.data.bolded
-        layout_manager.set_font(self.TITLE_FONT_SIZE, bold=bold)
+        if getattr(self.data, 'tall', False):
+            layout_manager.set_font(self.TALL_FONT_SIZE, bold=bold)
+        else:
+            layout_manager.set_font(self.FONT_SIZE, bold=bold)
         titlebox = layout_manager.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
