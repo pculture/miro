@@ -390,10 +390,15 @@ def get_logical_cpu_count():
     try:
         import multiprocessing
         return multiprocessing.cpu_count()
-    except ImportError:
-        ncpus = int(os.environ["NUMBER_OF_PROCESSORS"]);
+    except (NotImplementedError, ImportError):
+        pass
+
+    try:
+        ncpus = int(os.environ.get("NUMBER_OF_PROCESSORS"));
         if ncpus > 0:
             return ncpus
+    except (TypeError, ValueError):
+        pass
     return 1
 
 def setup_ffmpeg_presets():
