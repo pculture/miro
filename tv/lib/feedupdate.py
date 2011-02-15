@@ -68,7 +68,10 @@ class FeedUpdateQueue(object):
         for callback_handle in self.callback_handles.pop(feed.id):
             feed.disconnect(callback_handle)
         self.currently_updating.remove(feed)
-        self.run_update_queue()
+        # call run_update_queue in an idle to avoid re-updating the feed that
+        # just finished.  That could cause weird effects since we are in the
+        # update-finished callback right now.  See #16277
+        eventloop.add_idle(self.run_update_queue, 'run feed update queue')
 
     def run_update_queue(self):
         while (len(self.update_queue) > 0 and 
