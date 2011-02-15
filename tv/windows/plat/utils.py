@@ -212,7 +212,8 @@ def setup_logging(in_downloader=False):
     formatter = logging.Formatter(FORMAT)
     rotater.setLevel(level)
     rotater.setFormatter(formatter)
-    logging.getLogger('').addHandler(rotater)
+    logger = logging.getLogger('')
+    logger.addHandler(rotater)
     rotater.doRollover()
     try:
         for record in prelogger.remove():
@@ -224,7 +225,7 @@ def setup_logging(in_downloader=False):
         stdouthandler = logging.StreamHandler(sys.stdout)
         stdouthandler.setLevel(level)
         stdouthandler.setFormatter(formatter)
-        logging.getLogger('').addHandler(stdouthandler)
+        logger.addHandler(stdouthandler)
     else:
         sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
         sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
