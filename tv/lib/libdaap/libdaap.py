@@ -331,14 +331,15 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 if seekend < seekpos:
                     seekend = 0
                 rc = DAAP_PARTIAL_CONTENT
-        fildes = self.server.backend.get_file(item_id, ext, self.get_session(),
-                                              self.get_request_path,
-                                              offset=seekpos, chunk=chunk)
-        if fildes < 0:
+        file_obj = self.server.backend.get_file(item_id, ext,
+                                                self.get_session(),
+                                                self.get_request_path,
+                                                offset=seekpos, chunk=chunk)
+        if not file_obj:
             return (DAAP_FILENOTFOUND, [], extra_headers)
-        print 'streaming with file descriptor %d' % fildes
+        print 'streaming with file object ', file_obj
         # Return a special response, the encode_reponse() will handle correctly
-        return (rc, [(fildes, seekpos, seekend)], extra_headers)
+        return (rc, [(file_obj, seekpos, seekend)], extra_headers)
 
     def get_request_path(self, itemid, enclosure):
         # XXX

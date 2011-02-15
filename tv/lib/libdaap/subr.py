@@ -86,11 +86,11 @@ class ChunkedStreamObj(object):
     """
     DEFAULT_CHUNK_SIZE = 128 * 1024
 
-    def __init__(self, fildes, start=0, end=0, chunksize=DEFAULT_CHUNK_SIZE):
+    def __init__(self, file_obj, start=0, end=0, chunksize=DEFAULT_CHUNK_SIZE):
         self.chunksize = chunksize
-        self.fildes = fildes
+        self.file_obj = file_obj
         self.end = end
-        self.filesize = os.fstat(fildes)[stat.ST_SIZE]
+        self.filesize = os.fstat(file_obj.fileno())[stat.ST_SIZE]
         self.streamsize = self.filesize
         rangetext = ''
         if start and start < self.filesize:
@@ -106,15 +106,10 @@ class ChunkedStreamObj(object):
         self.unread = self.streamsize
         self.rangetext = rangetext
 
-    def __del__(self):
-        # TODO: maybe it's better to wrap it in a file object so we can do
-        # automatic garbage collection.
-        os.close(self.fildes)
-
     # Be careful: debug only: if you call this your object is consumed and 
     # you will need to create new one.
     def __str__(self):
-        return os.read()
+        return self.file_obj.read()
 
     def _get_readsize(self):
         readsize = 0
@@ -127,7 +122,7 @@ class ChunkedStreamObj(object):
     def __iter__(self):
         while True:
             readsize = self._get_readsize()
-            data = os.read(self.fildes, readsize)
+            data = self.file_obj.read(readsize)
             self.unread -= readsize
             # Maybe file got truncated
             if data:
@@ -292,8 +287,8 @@ def encode_response(reply):
     except ValueError:
         # This is probably a file.  Just pass up to the
         # caller and let the caller deal with it.
-        [(fildes, start, end)] = reply
-        blob = ChunkedStreamObj(fildes, start, end)
+        [(file_obj, start, end)] = reply
+        blob = ChunkedStreamObj(file_obj, start, end)
     return blob
 
 def split_url_path(urlpath):

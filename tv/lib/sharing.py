@@ -736,7 +736,7 @@ class SharingManagerBackend(object):
 
     def get_file(self, itemid, ext, session, request_path_func, offset=0,
                  chunk=None):
-        fildes = -1
+        file_obj = None
         path = self.daapitems[itemid]['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
@@ -753,29 +753,27 @@ class SharingManagerBackend(object):
                                                             request_path_func)
             transcode_obj = self.transcode[session]
             if ext == 'm3u8':
-                fildes = transcode_obj.get_playlist()
-                os.lseek(fildes, offset, os.SEEK_SET)
+                file_obj = transcode_obj.get_playlist()
+                file_obj.seek(offset, os.SEEK_SET)
             elif ext == 'ts':
                 # TODO: seek won't work on this guy, make sure that
                 # we tell the caller to return HTTP/1.1 200 instead.
                 if transcode_obj.seek(chunk):
                     transcode_obj.transcode()
-                fildes = transcode_obj.get_chunk()
+                file_obj = transcode_obj.get_chunk()
             else:
                 # Should this be a ValueError instead?  But returning -1
                 # will make the caller return 404.
                 print 'ERROR: transcode should be one of ts or m3u8'
-                fildes = -1
         elif ext == 'coverart':
             try:
                 cover_art = self.daapitems[itemid]['cover_art']
                 if cover_art:
-                    fildes = os.open(cover_art, os.O_RDONLY)
-                    os.lseek(fildes, offset, os.SEEK_SET)
+                    file_obj = open(cover_art, 'rb')
+                    file_obj.seek(offset, os.SEEK_SET)
             except OSError:
-                if not fildes < 0:
-                    os.close(fildes)
-                    fildes = -1
+                if file_obj:
+                    file_obj.close()
         else:
             # If there is an outstanding job delete it first.
             try:
@@ -783,13 +781,12 @@ class SharingManagerBackend(object):
             except KeyError:
                 pass
             try:
-                fildes = os.open(path, os.O_RDONLY)
-                os.lseek(fildes, offset, os.SEEK_SET)
+                file_obj = open(path, 'rb')
+                file_obj.seek(offset, os.SEEK_SET)
             except OSError:
-                if not fildes < 0:
-                    os.close(fildes)
-                    fildes = -1
-        return fildes
+                if file_obj:
+                    file_obj.close()
+        return file_obj
 
     def get_playlists(self):
         return self.daap_playlists

@@ -249,11 +249,11 @@ class TranscodeObject(object):
         print 'PLAYLIST', self.playlist
 
     def get_playlist(self):
-        fildes, name = tempfile.mkstemp()
-        os.unlink(name)
-        os.write(fildes, self.playlist)
-        os.lseek(fildes, 0, os.SEEK_SET)
-        return fildes
+        tmpf = tempfile.TemporaryFile()
+        tmpf.write(self.playlist)
+        tmpf.flush()
+        tmpf.seek(0, os.SEEK_SET)
+        return tmpf
 
     def seek(self, chunk):
         # Is it requesting the next available chunk in the sequence?  If so
@@ -386,12 +386,12 @@ class TranscodeObject(object):
                 else:
                     print 'QUEUE NOT YET FULL'
                     os.write(self.w, 'b')
-            fildes, name = tempfile.mkstemp()
-            os.unlink(name)
-            os.write(fildes, data)
-            os.lseek(fildes, 0, os.SEEK_SET)
-            print 'APPEND', fildes
-            self.chunk_buffer.append(fildes)
+            tmpf = tempfile.TemporaryFile()
+            tmpf.write(data)
+            tmpf.flush()
+            tmpf.seek(0, os.SEEK_SET)
+            print 'APPEND', tmpf
+            self.chunk_buffer.append(tmpf)
             i += 1
             self.chunk_lock.release()
             # Tell consumer there is stuff available
@@ -419,7 +419,7 @@ class TranscodeObject(object):
         # Consume an item ...
         self.chunk_sem.acquire()
         self.chunk_lock.acquire()
-        fildes = self.chunk_buffer[0]
+        tmpf = self.chunk_buffer[0]
         self.current_chunk += 1
         self.chunk_buffer = self.chunk_buffer[1:]
         print 'POP'
@@ -429,8 +429,8 @@ class TranscodeObject(object):
             self.throttled = False
             os.write(self.child_w, 'b')
         self.chunk_lock.release()
-        print 'FILDES %d' % fildes
-        return fildes
+        print 'FILE', tmpf
+        return tmpf
 
     # Shutdown the transcode job.  If we quitting, make sure you call this
     # so the segmenter et al have a chance to clean up.
