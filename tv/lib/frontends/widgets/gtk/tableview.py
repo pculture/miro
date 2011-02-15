@@ -737,7 +737,7 @@ class TableView(Widget):
         elif vertical:
             setting = gtk.TREE_VIEW_GRID_LINES_VERTICAL
         else:
-            value = gtk.TREE_VIEW_GRID_LINES_NONE
+            setting = gtk.TREE_VIEW_GRID_LINES_NONE
         self._widget.set_grid_lines(setting)
 
     def add_column(self, column):
