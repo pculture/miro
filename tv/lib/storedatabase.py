@@ -395,8 +395,12 @@ class LiveStorage:
         self._ids_loaded.add(obj.id)
 
     def forget_object(self, obj):
-        del self._object_map[obj.id]
-        self._ids_loaded.remove(obj.id)
+        try:
+            del self._object_map[obj.id]
+        except KeyError:
+            logging.warn("key error in forget_object: %s (obj: %s)", obj.id,
+                    obj)
+        self._ids_loaded.discard(obj.id)
 
     def _insert_sql_for_schema(self, obj_schema):
         return "INSERT INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
