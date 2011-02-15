@@ -189,16 +189,20 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Play'), app.widgetapp.play_selection))
 
 
-        if not (item.device or item.remote):
+        # don't add this section if the item is remote or a device OR
+        # if it has nothing to add to the section.  that way we don't
+        # end up with just a separator.
+        if ((not (item.device or item.remote) and
+             item.permalink or item.has_sharable_url)):
             # separator
             menu.append(None)
 
             menu.append((
                     _('Copy URL to clipboard'), app.widgetapp.copy_item_url))
             
-
-            menu.append((_('View Web Page'),
-                         lambda: app.widgetapp.open_url(item.permalink)))
+            if item.permalink:
+                menu.append((_('View Web Page'),
+                             lambda: app.widgetapp.open_url(item.permalink)))
 
 
             if item.has_sharable_url:
