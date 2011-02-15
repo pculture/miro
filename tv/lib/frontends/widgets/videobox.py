@@ -447,14 +447,8 @@ class VideoBox(style.LowerBox):
         app.playback_manager.connect('selecting-file', self.on_file_selected)
         self.timeline.info.connect('clicked', self.on_title_clicked)
         self.playback_mode = PlaybackModeControls()
-        if hasattr(widgetset, 'VolumeMuter'):
-            self.volume_muter = widgetset.VolumeMuter()
-        else:
-            self.volume_muter = imagebutton.ImageButton('volume')
-        if hasattr(widgetset, 'VolumeSlider'):
-            self.volume_slider = widgetset.VolumeSlider()
-        else:
-            self.volume_slider = VolumeSlider()
+        self.volume_muter = imagebutton.ImageButton('volume')
+        self.volume_slider = VolumeSlider()
         self.time_slider = self.timeline.slider
 
         hbox = widgetset.HBox(spacing=20)
