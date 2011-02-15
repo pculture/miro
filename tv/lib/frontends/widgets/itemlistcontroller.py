@@ -119,9 +119,7 @@ class ItemListController(object):
         self.item_tracker = self.build_item_tracker()
         self._init_widget()
 
-        self.multiview_sorter = None
-        self.make_multiview_sorters()
-        self.make_sorters()
+        self._init_sort()
         self._init_item_views()
         self.initialize_search()
         self._item_tracker_callbacks = []
@@ -170,32 +168,13 @@ class ItemListController(object):
             repeat = app.widget_state.get_repeat(self.type, self.id)
             app.playback_manager.set_repeat(repeat)
 
-    def make_multiview_sorters(self):
-        """Subclasses that need to share one sorter across all views can set
-        self.multiview_sorter here. PlaylistView uses this.
-        """
-        pass
+    def _init_sort(self):
+        sorter = self.get_sorter()
+        self.change_sort_indicators(sorter.KEY, sorter.is_ascending())
+        self.item_list.set_sort(sorter)
 
-    def make_sorters(self):
-        for view_type, view in self.views.items():
-            if self.multiview_sorter is None:
-                sorter = self.get_sorter(view_type)
-            else:
-                sorter = self.multiview_sorter
-            if WidgetStateStore.is_list_view(view_type):
-                view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
-            else:
-                self.widget.toolbar.change_sort_indicator(
-                        sorter.KEY, sorter.is_ascending())
-        if self.multiview_sorter is None:
-            sorter = self.get_sorter(self.selected_view)
-        else:
-            sorter = self.multiview_sorter
-        self.views[self.selected_view].item_list.set_sort(sorter)
-
-    def get_sorter(self, view_type):
-        sort_key = app.widget_state.get_sort_state(
-                self.type, self.id, view_type)
+    def get_sorter(self):
+        sort_key = app.widget_state.get_sort_state(self.type, self.id)
         return self.make_sorter(sort_key)
 
     def make_sorter(self, key):
@@ -214,6 +193,12 @@ class ItemListController(object):
         else:
             state = u'-' + key
         return state
+
+    def change_sort_indicators(self, sort_key, ascending):
+        list_view = WidgetStateStore.get_list_view_type()
+        self.views[list_view].change_sort_indicator(sort_key, ascending)
+        self.widget.toolbar.change_sort_indicator(sort_key, ascending)
+        print 'CHANGING SORT: ', sort_key, ascending
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
@@ -415,13 +400,9 @@ class ItemListController(object):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
         self.item_list.set_sort(sorter)
         self.send_model_changed()
-        list_view = WidgetStateStore.get_list_view_type()
-        if view == list_view:
-            self.views[list_view].change_sort_indicator(sort_key, ascending)
-        else:
-            self.widget.toolbar.change_sort_indicator(sort_key, ascending)
+        self.change_sort_indicators(sort_key, ascending)
         sort_key = self.make_sort_key(sorter)
-        app.widget_state.set_sort_state(self.type, self.id, view, sort_key)
+        app.widget_state.set_sort_state(self.type, self.id, sort_key)
 
     def on_columns_enabled_changed(self, object, columns, view_type):
         app.widget_state.set_columns_enabled(

@@ -1590,12 +1590,14 @@ class DisplayInfo(object):
             self.shuffle = display.shuffle
             self.repeat = display.repeat
             self.selection = display.selection
+            self.sort_state = display.sort_state
         else:
             self.selected_view = None
             self.active_filters = None
             self.shuffle = None
             self.repeat = None
             self.selection = None
+            self.sort_state = None
         if display is not None and display.list_view_columns is not None:
             self.list_view_columns = display.list_view_columns[:]
         else:
@@ -1611,10 +1613,8 @@ class ViewInfo(object):
     def __init__(self, key, view=None):
         self.key = key
         if view is not None:
-            self.sort_state = view.sort_state
             self.scroll_position = view.scroll_position
         else:
-            self.sort_state = None
             self.scroll_position = None
 
 class OpenInExternalBrowser(FrontendMessage):

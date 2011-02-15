@@ -1555,12 +1555,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.shuffle = info.shuffle
         state.repeat = info.repeat
         state.selection = info.selection
+        state.sort_state = info.sort_state
         state.signal_change()
 
     def handle_save_view_state(self, message):
         info = message.view_info
         state = self._get_view_state(info.key)
-        state.sort_state = info.sort_state
         state.scroll_position = info.scroll_position
         state.signal_change()
         

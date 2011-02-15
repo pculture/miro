@@ -883,6 +883,10 @@ class HeaderToolbar(widgetset.Background):
 
     def change_sort_indicator(self, column_name, ascending):
         if not column_name in self._button_map:
+            # change to a list view sort that we don't have a header for.
+            # Turn off all headers
+            for name, button in self._button_map.iteritems():
+                button.set_sort_state(SortBarButton.SORT_NONE)
             return
         for name, button in self._button_map.iteritems():
             if name == column_name:

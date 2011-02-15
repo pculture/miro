@@ -236,6 +236,19 @@ class WidgetStateStore(object):
             display.selection = None
         self._save_display_state(display_type, display_id)
 
+    def get_sort_state(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        sort_state = display.sort_state
+        if sort_state is None:
+            return WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
+        else:
+            return sort_state
+
+    def set_sort_state(self, display_type, display_id, sort_key):
+        display = self._get_display(display_type, display_id)
+        display.sort_state = sort_key
+        self._save_display_state(display_type, display_id)
+
 # ViewState properties that are only valid for specific view_types:
 
     def get_columns_enabled(self, display_type, display_id, view_type):
@@ -291,29 +304,6 @@ class WidgetStateStore(object):
             raise ValueError()
 
 # Real ViewState properties:
-
-    def get_sort_state(self, display_type, display_id, view_type):
-        view = self._get_view(display_type, display_id, view_type)
-        sort_state = view.sort_state
-        default = WidgetStateStore.DEFAULT_SORT_COLUMN[display_type]
-        if sort_state is None:
-            sort_state = default
-        if WidgetStateStore.is_standard_view(view_type):
-            return sort_state
-        else:
-            enabled = self.get_columns_enabled(display_type, display_id, view_type)
-            column = sort_state.lstrip('-')
-            if column in enabled:
-                return sort_state
-            elif default in enabled:
-                return default
-            else:
-                return enabled[0]
-
-    def set_sort_state(self, display_type, display_id, view_type, sort_key):
-        view = self._get_view(display_type, display_id, view_type)
-        view.sort_state = sort_key
-        self._save_view_state(display_type, display_id, view_type)
 
     def get_scroll_position(self, display_type, display_id, view_type):
         view = self._get_view(display_type, display_id, view_type)

@@ -141,9 +141,9 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         self.is_folder = playlist_info.is_folder
         itemlistcontroller.SimpleItemListController.__init__(self)
 
-    def make_sorters(self):
-        self.multiview_sorter = PlaylistSort()
-        self.item_list.set_sort(self.multiview_sorter)
+    def get_sorter(self):
+        # playlists are always sorted with PlaylistSort
+        return PlaylistSort()
 
     def build_standard_view(self, scroll_pos, selection):
         standard_view = PlaylistStandardView(self.item_list,
