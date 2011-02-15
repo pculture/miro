@@ -240,9 +240,10 @@ class ControllerDaemon(Daemon):
         self.port = self.stream.port
         self._setup_config()
         self._setup_httpauth()
-        self.shutdown_callback = None
-        self.shutdown_timeout_dc = None
-        self.callback_handle = None
+        self._shutdown_callback = None
+        self._shutdown_timeout_dc = None
+        self._callback_handle = None
+        self._httpauth_callback_handle = None
 
     def start_downloader_daemon(self):
         start_download_daemon(self.read_pid(), self.addr, self.port)
@@ -283,13 +284,13 @@ class ControllerDaemon(Daemon):
             data[desc.key] = app.config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send()
-        self.callback_handle = app.backend_config_watcher.connect(
+        self._callback_handle = app.backend_config_watcher.connect(
             "changed", self.on_config_change)
 
     def _remove_config_callback(self):
-        if self.callback_handle is not None:
-            app.backend_config_watcher.disconnect(self.callback_handle)
-            self.callback_handle = None
+        if self._callback_handle is not None:
+            app.backend_config_watcher.disconnect(self._callback_handle)
+            self._callback_handle = None
 
     def on_config_change(self, obj, key, value):
         if not self.shutdown:
@@ -299,11 +300,12 @@ class ControllerDaemon(Daemon):
     def _setup_httpauth(self):
         c = command.UpdateHTTPPasswordsCommand(self, httpauth.all_passwords())
         c.send()
-        self.http_auth_callback_handle = httpauth.add_change_callback(
+        self._httpauth_callback_handle = httpauth.add_change_callback(
                 self.update_http_auth)
 
     def _remove_httpauth_callback(self):
-        httpauth.remove_change_callback(self.http_auth_callback_handle)
+        if self._httpauth_callback_handle is not None:
+            httpauth.remove_change_callback(self._httpauth_callback_handle)
 
     def update_http_auth(self, passwords):
         c = command.UpdateHTTPPasswordsCommand(self, passwords)
@@ -328,10 +330,10 @@ class ControllerDaemon(Daemon):
         self.shutdown_response()
 
     def shutdown_response(self):
-        if self.shutdown_callback:
-            self.shutdown_callback()
-        if self.shutdown_timeout_dc:
-            self.shutdown_timeout_dc.cancel()
+        if self._shutdown_callback:
+            self._shutdown_callback()
+        if self._shutdown_timeout_dc:
+            self._shutdown_timeout_dc.cancel()
 
     def shutdown_downloader_daemon(self, timeout=5, callback=None):
         """Send the downloader daemon the shutdown command.  If it
@@ -339,10 +341,10 @@ class ControllerDaemon(Daemon):
         not sent until the downloader daemon has one remaining thread
         and that thread will immediately exit).
         """
-        self.shutdown_callback = callback
+        self._shutdown_callback = callback
         c = command.ShutDownCommand(self)
         c.send()
         self.shutdown = True
         self._remove_config_callback()
-        self.shutdown_timeout_dc = eventloop.add_timeout(
+        self._shutdown_timeout_dc = eventloop.add_timeout(
             timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")
