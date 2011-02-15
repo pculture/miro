@@ -66,10 +66,15 @@ class ItemListTracker(signals.SignalEmitter):
         initial-list (tracker, items) -- The initial item list was received
         items-changed (tracker, added, changed, removed) -- The item list
             changed
+        items-removed-from-source (tracker, removed) - Items were permanently
+            removed from the item list (as opposed to just filtered out by
+            the filter). The passed items include all removed items, 
+            irrespective of whether they currently are filtered out by the
+            filter or not
     """
     def __init__(self, type_, id_):
         signals.SignalEmitter.__init__(self, 'items-will-change',
-                'initial-list', 'items-changed')
+                'initial-list', 'items-changed', 'items-removed-from-source')
         self.type = type_
         self.item_list = itemlist.ItemList()
         self.id = id_
@@ -150,6 +155,8 @@ class ItemListTracker(signals.SignalEmitter):
         self.item_list.add_items(added)
         self.item_list.update_items(changed)
         self.item_list.remove_items(removed)
+        #Note that the code in PlaybackPlaylist expects this signal order
+        self.emit("items-removed-from-source", message.removed)
         self.emit("items-changed", added, changed, removed)
 
     def set_search(self, query):
