@@ -229,8 +229,7 @@ class ItemListController(object):
         standard_view = WidgetStateStore.get_standard_view_type()
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, standard_view)
-        selection = app.widget_state.get_selection(
-            self.type, self.id, standard_view)
+        selection = app.widget_state.get_selection(self.type, self.id)
         components = self.build_standard_view(scroll_pos, selection)
         self.views[standard_view], standard_view_widget = components
         
@@ -258,8 +257,15 @@ class ItemListController(object):
             self.on_scroll_position_changed, standard_view)
 
     def set_view(self, _widget, view):
+        if view == self.selected_view:
+            return
+        # set selection for the view we will switch to
+        current_selection = self.current_item_view.get_selection_as_strings()
+        self.views[view].set_selection_as_strings(current_selection)
+        # do the switch
         self.selected_view = view
         self.widget.switch_to_view(view)
+        # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
         app.menu_manager.update_menus()
 
@@ -289,8 +295,7 @@ class ItemListController(object):
                 self.type, self.id, list_view_type)
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, list_view_type)
-        selection = app.widget_state.get_selection(
-            self.type, self.id, list_view_type)
+        selection = app.widget_state.get_selection(self.type, self.id)
         list_view = itemlistwidgets.ListView(self.item_list,
                 list_view_columns, list_view_widths, scroll_pos, selection)
         scroller = widgetset.Scroller(True, True)
@@ -504,10 +509,9 @@ class ItemListController(object):
     def on_selection_changed(self, item_view, view_type):
         app.menu_manager.update_menus()
 
-    def save_selection(self, view_type):
-        selection = self.views[view_type].get_selection_as_strings()
-        app.widget_state.set_selection(
-                self.type, self.id, view_type, selection)
+    def save_selection(self):
+        selection = self.current_item_view.get_selection_as_strings()
+        app.widget_state.set_selection(self.type, self.id, selection)
 
     def start_tracking(self):
         """Send the message to start tracking items."""
@@ -623,9 +627,9 @@ class ItemListController(object):
         return None
 
     def no_longer_displayed(self):
+        self.save_selection()
         for view in self.views:
             self.views[view].on_undisplay()
-            self.save_selection(view)
         if self.shuffle_handle:
             app.playback_manager.disconnect(self.shuffle_handle)
         if self.repeat_handle:

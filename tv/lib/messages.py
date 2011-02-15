@@ -1589,11 +1589,13 @@ class DisplayInfo(object):
             self.active_filters = display.active_filters
             self.shuffle = display.shuffle
             self.repeat = display.repeat
+            self.selection = display.selection
         else:
             self.selected_view = None
             self.active_filters = None
             self.shuffle = None
             self.repeat = None
+            self.selection = None
         if display is not None and display.list_view_columns is not None:
             self.list_view_columns = display.list_view_columns[:]
         else:
@@ -1611,11 +1613,9 @@ class ViewInfo(object):
         if view is not None:
             self.sort_state = view.sort_state
             self.scroll_position = view.scroll_position
-            self.selection = view.selection
         else:
             self.sort_state = None
             self.scroll_position = None
-            self.selection = None
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

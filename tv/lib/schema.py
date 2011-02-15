@@ -697,6 +697,7 @@ class DisplayStateSchema(DDBObjectSchema):
         ('list_view_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
         ('shuffle', SchemaBool(noneOk=True)),
         ('repeat', SchemaInt(noneOk=True)),
+        ('selection', SchemaList(SchemaString(), noneOk=True)),
     ]
 
     indexes = (
@@ -729,7 +730,6 @@ class ViewStateSchema(DDBObjectSchema):
         ('view_type', SchemaInt()),
         ('sort_state', SchemaString(noneOk=True)),
         ('scroll_position', SchemaTuple(SchemaInt(), SchemaInt(), noneOk=True)),
-        ('selection', SchemaList(SchemaString(), noneOk=True)),
     ]
 
     indexes = (
@@ -744,7 +744,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 141
+VERSION = 142
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

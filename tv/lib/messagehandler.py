@@ -1554,6 +1554,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.list_view_widths = info.list_view_widths
         state.shuffle = info.shuffle
         state.repeat = info.repeat
+        state.selection = info.selection
         state.signal_change()
 
     def handle_save_view_state(self, message):
@@ -1561,7 +1562,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state = self._get_view_state(info.key)
         state.sort_state = info.sort_state
         state.scroll_position = info.scroll_position
-        state.selection = info.selection
         state.signal_change()
         
     def _get_display_states(self):

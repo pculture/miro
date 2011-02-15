@@ -51,6 +51,7 @@ class DisplayState(DDBObject):
         # ListView properties
         self.list_view_columns = None
         self.list_view_widths = None
+        self.selection = None
 
 class ViewState(DDBObject):
     """Properties that need to be stored for each TableView
@@ -61,4 +62,3 @@ class ViewState(DDBObject):
         self.view_type = key[2]
         self.sort_state = None
         self.scroll_position = None
-        self.selection = None

@@ -3127,3 +3127,8 @@ def upgrade141(cursor):
     """Removes the fast_resume_data column.
     """
     remove_column(cursor, 'remote_downloader', ['fast_resume_data'])
+
+def upgrade142(cursor):
+    """Add ViewState field for selection."""
+    remove_column(cursor, 'view_state', ['selection'])
+    cursor.execute("ALTER TABLE display_state ADD COLUMN selection pythonrepr")
