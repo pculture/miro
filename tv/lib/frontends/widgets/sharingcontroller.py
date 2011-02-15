@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import style
 
 class SharingStandardView(itemlistwidgets.StandardView):
