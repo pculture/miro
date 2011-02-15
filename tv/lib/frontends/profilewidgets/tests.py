@@ -229,7 +229,7 @@ class ProfileItemView(ProfiledCode):
          'downloaded': False,
          'item_viewed': False,
          'genre': u'',
-         'has_sharable_url': True,
+         'has_shareable_url': True,
          'is_external': False,
          'permalink':
          u'http://www.earth-touch.com/?hguid=825ae0b0-4b9c-11df-a87c-00304858a4c8',

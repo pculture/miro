@@ -158,7 +158,7 @@ class OverlayPalette (NSWindowController):
         except:
             self.feedLabel.setStringValue_("")
         self.keepButton.setEnabled_(item_info.can_be_saved)
-        self.shareButton.setEnabled_(item_info.has_sharable_url)
+        self.shareButton.setEnabled_(item_info.has_shareable_url)
         self.adjustContent(video_window, False)
         self.update_(nil)
         if NSApplication.sharedApplication().isActive() and video_window.isVisible():
@@ -169,7 +169,7 @@ class OverlayPalette (NSWindowController):
         for item_info in changed:
             if item_info.id == self.item_info.id:
                 self.keepButton.setEnabled_(item_info.can_be_saved)
-                self.shareButton.setEnabled_(item_info.has_sharable_url)
+                self.shareButton.setEnabled_(item_info.has_shareable_url)
                 self.update_(nil)
                 
     def enter_fullscreen(self, videoWindow):

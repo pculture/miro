@@ -1078,7 +1078,7 @@ class ItemInfo(object):
     :param commentslink: URL to a comments page for the item (or None)
     :param payment_link: URL of the payment page associated with the item
                          (or empty string)
-    :param has_sharable_url: does this item have a sharable URL?
+    :param has_shareable_url: does this item have a shareable URL?
     :param can_be_saved: is this an expiring downloaded item?
     :param downloaded: has the item been downloaded?
     :param is_external: is this item external (true) or from a channel

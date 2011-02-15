@@ -193,7 +193,7 @@ class ItemContextMenuHandler(object):
         # if it has nothing to add to the section.  that way we don't
         # end up with just a separator.
         if ((not (item.device or item.remote) and
-             item.permalink or item.has_sharable_url)):
+             item.permalink or item.has_shareable_url)):
             # separator
             menu.append(None)
 
@@ -205,7 +205,7 @@ class ItemContextMenuHandler(object):
                              lambda: app.widgetapp.open_url(item.permalink)))
 
 
-            if item.has_sharable_url:
+            if item.has_shareable_url:
                 menu.append((
                         _('Share'), lambda: app.widgetapp.share_item(item)))
 

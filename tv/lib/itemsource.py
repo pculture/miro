@@ -135,7 +135,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 11
+    VERSION = 12
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -162,7 +162,7 @@ class DatabaseItemSource(ItemSource):
             'permalink': item.get_link(),
             'commentslink': item.get_comments_link(),
             'payment_link': item.get_payment_link(),
-            'has_sharable_url': item.has_shareable_url(),
+            'has_shareable_url': item.has_shareable_url(),
             'can_be_saved': item.show_save_button(),
             'pending_manual_dl': item.is_pending_manual_download(),
             'pending_auto_dl': item.is_pending_auto_download(),
@@ -428,7 +428,6 @@ class SharingItemSource(ItemSource):
             subtitle_encoding = item.subtitle_encoding,
             seeding_status = None,
             media_type_checked = True,
-            has_sharable_url = False,
             mime_type = item.enclosure_type,
             artist = item.artist,
             album = item.album,
@@ -540,7 +539,7 @@ class DeviceItemSource(ItemSource):
             permalink = item.permalink,
             commentslink = item.comments_link,
             payment_link = item.payment_link,
-            has_sharable_url = bool(item.url),
+            has_shareable_url = bool(item.url),
             can_be_saved = False,
             pending_manual_dl = False,
             pending_auto_dl = False,

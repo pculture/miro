@@ -326,7 +326,7 @@ class VideoDetailsWidget(Background):
                     left_pad=5, right_pad=5))
 
             self._share_link = make_label(_("Share"), self.handle_share,
-                                          info.has_sharable_url)
+                                          info.has_shareable_url)
             outer_hbox.pack_start(_align_middle(self._share_link))
             outer_hbox.pack_start(_align_middle(
                     Divider(), top_pad=3, bottom_pad=3,
