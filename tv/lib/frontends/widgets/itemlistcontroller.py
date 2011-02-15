@@ -195,8 +195,7 @@ class ItemListController(object):
         return state
 
     def change_sort_indicators(self, sort_key, ascending):
-        list_view = WidgetStateStore.get_list_view_type()
-        self.views[list_view].change_sort_indicator(sort_key, ascending)
+        self.list_item_view.change_sort_indicator(sort_key, ascending)
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
 
     def _init_widget(self):
@@ -216,6 +215,10 @@ class ItemListController(object):
         selection = app.widget_state.get_selection(self.type, self.id)
         components = self.build_standard_view(scroll_pos, selection)
         self.views[standard_view], standard_view_widget = components
+
+        # set up member attrs to easily get our list/standard view widgets
+        self.list_item_view = self.views[list_view]
+        self.standard_item_view = self.views[standard_view]
         
         standard_view_scroller = widgetset.Scroller(False, True)
         standard_view_scroller.add(standard_view_widget)
@@ -225,19 +228,19 @@ class ItemListController(object):
 
         toolbar.connect_weak('sort-changed',
             self.on_sort_changed, standard_view)
-        self.views[list_view].connect_weak('sort-changed',
+        self.list_item_view.connect_weak('sort-changed',
             self.on_sort_changed, list_view)
         toolbar.connect_weak('list-view-clicked',
             self.set_view, list_view)
         toolbar.connect_weak('normal-view-clicked',
             self.set_view, standard_view)
-        self.views[list_view].connect_weak('columns-enabled-changed',
+        self.list_item_view.connect_weak('columns-enabled-changed',
             self.on_columns_enabled_changed, list_view)
-        self.views[list_view].connect_weak('column-widths-changed',
+        self.list_item_view.connect_weak('column-widths-changed',
             self.on_column_widths_changed, list_view)
-        self.views[list_view].connect_weak('scroll-position-changed',
+        self.list_item_view.connect_weak('scroll-position-changed',
             self.on_scroll_position_changed, list_view)
-        self.views[standard_view].connect_weak('scroll-position-changed',
+        self.standard_item_view.connect_weak('scroll-position-changed',
             self.on_scroll_position_changed, standard_view)
 
     def set_view(self, _widget, view):
@@ -299,7 +302,7 @@ class ItemListController(object):
                 self.type, self.id, list_view)
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view)
-        self.views[list_view].update_columns(list_view_columns,
+        self.list_item_view.update_columns(list_view_columns,
             list_view_widths)
 
     def _init_item_views(self):
