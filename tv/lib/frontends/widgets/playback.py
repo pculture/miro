@@ -824,13 +824,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
         old_currently_playing = self.currently_playing
         if self.currently_playing:
             self._update_currently_playing_after_changes(removed)
-        if (self.currently_playing is None
-                or old_currently_playing.id is not self.currently_playing.id):
-            self.emit("position-changed")
-        else:
-            # Note that we aren't quite sure that we actually changed the info
-            # here, but emit our signal just to be sure
-            self.emit("playing-info-changed")
         if self.shuffle:
             for id_ in removed:
                 try:
@@ -844,8 +837,15 @@ class PlaybackPlaylist(signals.SignalEmitter):
             for item in added:
                 index = randrange(0, len(self.shuffle_upcoming))
                 self.shuffle_upcoming.insert(index, item.id)
-        del self._index_before_change
-        del self._items_before_change
+        self._index_before_change = None
+        self._items_before_change = None
+        if (self.currently_playing is None
+                or old_currently_playing.id is not self.currently_playing.id):
+            self.emit("position-changed")
+        else:
+            # Note that we aren't quite sure that we actually changed the info
+            # here, but emit our signal just to be sure
+            self.emit("playing-info-changed")
 
     def _update_currently_playing_after_changes(self, ids_removed):
         removed_set = set(ids_removed)
