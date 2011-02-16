@@ -600,10 +600,11 @@ class VLCRenderer(object):
 
     def setup_subtitle_font(self):
         font_path = app.config.get(prefs.SUBTITLE_FONT)
-        config_PutPsz(self.vlc_instance,
-                ctypes.c_char_p('freetype-font'),
-                ctypes.c_char_p(font_path))
-        logging.info("Setting VLC subtitle font: %s", font_path)
+        if font_path is not None:
+            config_PutPsz(self.vlc_instance,
+                          ctypes.c_char_p('freetype-font'),
+                          ctypes.c_char_p(font_path))
+            logging.info("Setting VLC subtitle font: %s", font_path)
 
     def get_subtitle_tracks(self):
         return self.subtitle_info
@@ -699,12 +700,11 @@ class VLCRenderer(object):
     def select_subtitle_encoding(self, encoding):
         if self.media_playing is None:
             return
-        if encoding is None:
-            encoding = ''
-        config_PutPsz(self.vlc_instance,
-                ctypes.c_char_p('subsdec-encoding'),
-                ctypes.c_char_p(encoding))
-        logging.info("Setting VLC subtitle encoding: %s", encoding)
+        if encoding:
+            config_PutPsz(self.vlc_instance,
+                          ctypes.c_char_p('subsdec-encoding'),
+                          ctypes.c_char_p(encoding))
+            logging.info("Setting VLC subtitle encoding: %s", encoding)
 
     def setup_subtitle_encoding_menu(self, menubar):
         menus.add_subtitle_encoding_menu(menubar, _('Eastern European'),
