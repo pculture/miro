@@ -194,7 +194,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
-    BOLD_TITLE = True
 
     def pack_leading_space(self, hbox):
         hbox.pack_space(14)
