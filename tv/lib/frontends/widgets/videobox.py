@@ -338,7 +338,7 @@ class ProgressSlider(widgetset.CustomSlider):
             progress.draw(context, 0, 1, cursor_pos + 9)
 
         if self.duration > 0:
-            cursor.draw(context, cursor_pos, 0, cursor.width)
+            cursor.draw(context, cursor_pos, 0, cursor.width, cursor.height)
 
 class ProgressTimeline(widgetset.Background):
     def __init__(self):
