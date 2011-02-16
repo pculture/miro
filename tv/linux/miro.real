@@ -123,6 +123,11 @@ group.add_option('--home',
                  metavar='<DIR>',
                  help='Like setting $HOME env var, but only in Miro')
 parser.set_defaults(user_home='~/')
+group.add_option('--ignore-onetime',
+                 dest='ignore_onetime',
+                 action='store_true',
+                 help="Don't check if another Miro is already running.")
+parser.set_defaults(ignore_onetime=False)
 parser.add_option_group(group)
 
 group = optparse.OptionGroup(parser, "Unittest options")
@@ -285,7 +290,8 @@ else:
         import dbus
         from miro.plat import onetime
         try:
-            onetime.OneTime()
+            if not parsed_options.ignore_onetime:
+                onetime.OneTime()
             startapp()
         except dbus.NameExistsException:
             bus = dbus.SessionBus()
