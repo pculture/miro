@@ -1138,7 +1138,7 @@ class ProgressToolbar(widgetset.HBox):
         file_description = 'files'
         if self.mediatype is not None:
             file_description = self.mediatype + ' ' + file_description
-        text = "Importing {finished} of {total} {file_description}".format(
+        text = "Importing: {finished} of {total} {file_description}".format(
                 finished=self.total-self.remaining, total=self.total,
                 file_description=file_description)
         self.label.set_text(text)

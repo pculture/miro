@@ -97,14 +97,14 @@ class Controller:
 
     def on_shutdown(self):
         try:
-            eventloop.join()
-            logging.info("Saving preferences...")
-            app.config.save()
-
             logging.info("Shutting down icon cache updates")
             iconcache.icon_cache_updater.shutdown()
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
+
+            eventloop.join()
+            logging.info("Saving preferences...")
+            app.config.save()
 
             logging.info("Done shutting down.")
             logging.info("Remaining threads are:")

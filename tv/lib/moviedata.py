@@ -139,8 +139,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                 'queue-empty')
         self.in_shutdown = False
         self.in_progress = set()
-        self.queue = Queue.Queue()
+        self.queue = Queue.PriorityQueue()
         self.thread = None
+        self.media_order = ['audio', 'video', 'other']
         self.unnotified = {'audio':0, 'video':0}
         self.remaining = {'audio':0, 'video':0}
         self.displayed = {'audio': False, 'video': False}
@@ -152,13 +153,24 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.thread.setDaemon(True)
         self.thread.start()
 
-    def update_progress(self, item_, add_or_remove):
+    def guess_mediatype(self, item_):
+        """Guess the mediatype of a file. Needs to be quick, as it's executed by
+        the requesting thread in request_update(), and nothing will break if it
+        isn't always accurate - so just checks filename.
+        """
         filename = item_.get_filename()
         if filetypes.is_video_filename(filename):
             mediatype = 'video'
         elif filetypes.is_audio_filename(filename):
             mediatype = 'audio'
         else:
+            mediatype = 'other'
+        return mediatype
+
+    def update_progress(self, mediatype, add_or_remove):
+        # BATCH_SIZE of 1 necessary until widget interpolation implemented
+        BATCH_SIZE = 1
+        if mediatype not in ('audio', 'video'):
             # I don't think it's useful to show progress for "Other" items
             return
         self.remaining[mediatype] += add_or_remove
@@ -168,7 +180,8 @@ class MovieDataUpdater(signals.SignalEmitter):
         displayed = self.displayed[mediatype]
         news = None
         if remaining > 0 and not displayed:
-            eta = remaining
+            # eta is not implemented or used yet
+            eta = None
             news = models.messages.MetadataProgressStart(mediatype,
                    remaining, eta)
             self.displayed[mediatype] = True
@@ -177,11 +190,11 @@ class MovieDataUpdater(signals.SignalEmitter):
             news = models.messages.MetadataProgressFinish(mediatype)
             self.displayed[mediatype] = False
             self.unnotified[mediatype] = 0
-        elif add_or_remove > 0 or unnotified < -9:
+        elif add_or_remove > 0 or unnotified <= -BATCH_SIZE:
             # Most of the time, we won't get any added items after we start -
             # but whenever we do, that will affect progress.
             # TODO: handle that case with batched signal
-            # Otherwise, just send re-estimates every 10 items.
+            # Otherwise, just send re-estimates every BATCH_SIZE items.
             eta = remaining
             added = max(add_or_remove, 0)
             news = models.messages.MetadataProgressUpdate(mediatype,
@@ -195,7 +208,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             self.emit('begin-loop')
             if self.queue.empty():
                 self.emit('queue-empty')
-            mdi = self.queue.get(block=True)
+            _discard_, mdi = self.queue.get(block=True)
             if mdi is None or mdi.program_info is None:
                 # shutdown() was called or there's no moviedata
                 # implemented.
@@ -502,7 +515,8 @@ class MovieDataUpdater(signals.SignalEmitter):
     def update_finished(self, item, duration, screenshot, mediatype, metadata,
                         cover_art):
         self.in_progress.remove(item.id)
-        self.update_progress(item, -1)
+        mediatype = self.guess_mediatype(item)
+        self.update_progress(mediatype, -1)
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
@@ -532,13 +546,15 @@ class MovieDataUpdater(signals.SignalEmitter):
             return
 
         self.in_progress.add(item.id)
-        self.queue.put(MovieDataInfo(item))
-        self.update_progress(item, 1)
+        mediatype = self.guess_mediatype(item)
+        priority = self.media_order.index(mediatype)
+        self.queue.put((priority, MovieDataInfo(item)))
+        self.update_progress(mediatype, 1)
 
     def shutdown(self):
         self.in_shutdown = True
         # wake up our thread
-        self.queue.put(None)
+        self.queue.put((-1000, None))
         if self.thread is not None:
             self.thread.join()
 
