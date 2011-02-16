@@ -339,6 +339,7 @@ class TranscodeObject(object):
             self.sink_thread = threading.Thread(target=thread_body,
                                                 args=[self.segmenter_consumer],
                                                 name="Segmenter Consumer")
+            self.sink_thread.daemon = True
             self.sink_thread.start()
 
             return True
