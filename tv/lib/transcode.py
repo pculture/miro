@@ -230,7 +230,6 @@ class TranscodeObject(object):
         # Set start_chunk != current_chunk to force seek() to return True
         self.current_chunk = -1
         self.start_chunk = 0
-        self.throttled = False
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
@@ -281,7 +280,10 @@ class TranscodeObject(object):
         self.shutdown()
         # Clear the chunk buffer, and the lock/synchronization state
         self.start_chunk = self.current_chunk = chunk
-        self.throttled = False
+        # TODO: we could turn chunk_buffer into a dictionary or maybe an
+        # out of order list of some sort to support implementations that
+        # decide to fetch things out of order (possibly by multiple client
+        # threads), within reason.
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
@@ -358,14 +360,14 @@ class TranscodeObject(object):
             # ready for next segment
             self.tmp_file = tempfile.TemporaryFile()
 
-    # Data consumer from segmenter
+    # Data consumer from segmenter.  Here, we listen for incoming request,
+    # and a quit signal.  One media chunk per incoming request.
     def segmenter_consumer(self):
         while True:
             try:
-                print 'selecting'
                 r, w, x = select.select([self.sink.fileno(), self.r], [], [])
                 if self.r in r:
-                    print 'BYE BYE ...'
+                    
                     self.sink_thread = None
                     return
                 # XXX throttle
@@ -390,11 +392,6 @@ class TranscodeObject(object):
         self.current_chunk += 1
         self.chunk_buffer = self.chunk_buffer[1:]
         print 'POP'
-        # If we are currently throttled, unthrottle.  We steal the "child_w"
-        # that's really supposed to be coming from the segmenter for this job.
-        if self.throttled == True:
-            self.throttled = False
-            os.write(self.child_w, 'b')
         self.chunk_lock.release()
         print 'FILE', tmpf
         return tmpf
@@ -418,3 +415,4 @@ class TranscodeObject(object):
             self.w.send('b')
         except AttributeError:
             pass
+
