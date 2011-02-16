@@ -344,6 +344,8 @@ def get_logical_cpu_count():
             return ncpus
     return 1
 
+def get_segmenter_executable_path():
+    pass    
 
 def setup_ffmpeg_presets():
     # the linux distro should handle this
