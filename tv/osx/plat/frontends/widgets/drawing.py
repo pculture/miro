@@ -57,11 +57,7 @@ class ImageSurface:
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
         dest_rect = NSRect((x, y), (width, height))
-        if self.width <= width and self.height <= height:
-            self.image.drawInRect_fromRect_operation_fraction_(dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
-        else:
-            NSColor.colorWithPatternImage_(self.image).set()
-            NSRectFill(dest_rect)
+        self.image.drawInRect_fromRect_operation_fraction_(dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
         context.path.removeAllPoints()
 
 def convert_cocoa_color(color):
