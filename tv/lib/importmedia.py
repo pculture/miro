@@ -31,45 +31,10 @@
 """
 
 import os
+import plistlib
 import urllib
 
-import xml.sax
-import xml.sax.handler
-import xml.sax.saxutils
-
 ITUNES_XML_FILE = "iTunes Music Library.xml"
-
-class iTunesMusicLibraryContentHandler(xml.sax.handler.ContentHandler):
-    """A very specific content handler for handling the iTunes music 
-       library file.
-
-       We only care about snarfing the music path then we bail out.
-       This is done by getting the value <key>Music Folder</key>
-       which will appear as <string>...</string>.
-    """
-
-    MUSIC_FOLDER_KEYNAME = "Music Folder"
-
-    def __init__(self):
-        self.element_name = None
-        self.in_music_folder_key = False
-        self.music_path = None
-
-    def startElement(self, name, attrs):
-        self.element_name = name
-
-    def characters(self, content):
-        if self.element_name == 'key' and content == self.MUSIC_FOLDER_KEYNAME:
-            self.in_music_folder_key = True
-            return
-        if self.in_music_folder_key and self.element_name == 'string':
-            # Must convert to string content - otherwise we get into unicode
-            # troubles when we unquote the URI escapes.
-            self.music_path = str(content)
-            self.in_music_folder_key = False
-            return
-        # Wasn't followed with a <string> as expected...
-        self.in_music_folder_key = False
 
 def file_path_xlat(path):
     """Convert iTunes path to what we can handle."""
@@ -88,19 +53,10 @@ def import_itunes_path(path):
        path.  Returns the path of the music library as specified in the
        iTunes settings or None if it cannot find the xml file, or does not
        contain the path for some reason."""
-    music_path = None
     try:
-        parser = xml.sax.make_parser()
-        handler = iTunesMusicLibraryContentHandler()
-        parser.setContentHandler(handler)
-        # Tell xml.sax that we don't want to parse external entities, as it
-        # will stall when no network is installed.
-        parser.setFeature(xml.sax.handler.feature_external_ges, False)
-        parser.setFeature(xml.sax.handler.feature_external_pes, False)
-        parser.parse(os.path.join(path, ITUNES_XML_FILE))
-        music_path = file_path_xlat(handler.music_path)
-        return music_path
-    except (IOError, xml.sax.SAXParseException):
+        data = plistlib.readPlist(os.path.join(path, ITUNES_XML_FILE))
+        return file_path_xlat(data['Music Folder'])
+    except (IOError, KeyError):
         pass
-    return music_path
+    
 
