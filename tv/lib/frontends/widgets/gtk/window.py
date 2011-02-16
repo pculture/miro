@@ -565,6 +565,7 @@ class MainWindow(Window):
             self._clear_subtitles_menu()
         else:
             tracks = app.video_renderer.get_subtitle_tracks()
+#             if tracks is None or len(tracks) == 0:
             if len(tracks) == 0:
                 self._clear_subtitles_menu()
             else:
@@ -599,7 +600,7 @@ class MainWindow(Window):
 </ui>''')
 
         self._merge_id = self.ui_manager.add_ui_from_string(outstream.getvalue())
-        
+
         action_group = self.action_groups["AlwaysOn"]
         for i, lang in tracks:
             action_group.get_action("SubtitleTrack%d" % i).set_property("label", lang)

@@ -52,6 +52,7 @@ from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
 WHITE = (1.0, 1.0, 1.0)
+GREEN = (159.0 / 255.0, 202.0 / 255.0, 120.0 / 255.0)
 
 # Global VideoWidget object.  We re-use so we can re-use our
 # PersistentWindow
@@ -275,6 +276,13 @@ class VideoDetailsWidget(Background):
         self.item_info = None
         self.rebuild_video_details()
         self._delete_link = None
+        self._will_play_handle = app.playback_manager.connect(
+            'will-play', self.on_will_play)
+
+    def on_will_play(self, widget, duration):
+        # we need to update the video details now that the file is
+        # open and we know more about subtitle track info.
+        self.rebuild_video_details()
 
     def rebuild_video_details(self):
         # this removes the child widget if there is one
@@ -307,12 +315,7 @@ class VideoDetailsWidget(Background):
                     Divider(), top_pad=3, bottom_pad=3,
                     left_pad=5, right_pad=5))
 
-        self._subtitles_link = make_label(_("Subtitles"),
-                                          self.handle_subtitles)
-        outer_hbox.pack_start(_align_middle(self._subtitles_link))
-        subtitles_image = make_image_button('images/subtitles_down.png',
-                                            self.handle_subtitles)
-        outer_hbox.pack_start(_align_middle(subtitles_image))
+        outer_hbox.pack_start(self.make_subtitles_button())
 
         outer_hbox.pack_start(_align_middle(
                 Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
@@ -374,6 +377,40 @@ class VideoDetailsWidget(Background):
             outer_hbox.pack_start(_align_middle(popout_image))
 
         self.add(_align_right(outer_hbox, left_pad=15, right_pad=15))
+
+
+    def make_subtitles_button(self):
+        hbox = HBox(5)
+
+        current_track = app.video_renderer.get_enabled_subtitle_track()
+
+        # None, -1 and 0 all mean there is no current track.
+        if current_track is not None and current_track > 0:
+            ccimage = 'images/cc-on.png'
+            cccolor = GREEN
+            cctext = _("Subtitles On")
+
+        else:
+            tracks = app.video_renderer.get_subtitle_tracks()
+            if tracks is not None and len(tracks) > 0:
+                ccimage = 'images/cc-available.png'
+                cctext = _("Subtitles Found")
+                cccolor = WHITE
+            else:
+                ccimage = 'images/cc-available.png'
+                cctext = _("Subtitles")
+                cccolor = WHITE
+
+        cc_image_button = make_image_button(ccimage, self.handle_subtitles)
+        hbox.pack_start(_align_middle(cc_image_button))
+        subtitles_link = make_label(cctext, self.handle_subtitles)
+        subtitles_link.set_color(cccolor)
+        hbox.pack_start(_align_middle(subtitles_link))
+
+        subtitles_image = make_image_button(
+            'images/subtitles_down.png', self.handle_subtitles)
+        hbox.pack_start(_align_middle(subtitles_image))
+        return hbox
 
     def hide(self):
         self._widget.hide()
@@ -450,11 +487,13 @@ class VideoDetailsWidget(Background):
         if widget.active:
             app.video_renderer.disable_subtitles()
             app.widgetapp.window.on_playback_change(app.playback_manager)
+            self.rebuild_video_details()
 
     def handle_subtitle_change(self, widget, index):
         if widget.active:
             app.video_renderer.enable_subtitle_track(index)
             app.widgetapp.window.on_playback_change(app.playback_manager)
+            self.rebuild_video_details()
 
     def handle_select_subtitle_file(self, widget):
         app.playback_manager.open_subtitle_file()
@@ -688,7 +727,6 @@ class VideoPlayer(player.Player, VBox):
         _window().window.set_cursor(None)
 
     def show_controls(self):
-        logging.info("show_controls")
         self.show_mouse()
         self.overlay.show()
 

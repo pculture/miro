@@ -32,7 +32,8 @@ import logging
 import os
 import traceback
 import urllib
-import logging
+
+vlc_logger = logging.getLogger('vlc')
 
 import gtk
 import gobject
@@ -162,7 +163,7 @@ class VLCSniffer(object):
         self.exc.check()
 
     def shutdown(self):
-        logging.info("shutting down VLC Sniffer")
+        vlc_logger.info("shutting down VLC Sniffer")
         libvlc.libvlc_media_player_release(self.media_player)
         libvlc.libvlc_release(self.vlc)
 
@@ -225,7 +226,7 @@ class VLCSniffer(object):
             libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
             self.exc.check()
         except VLCError, vlce:
-            logging.warning("sniffer reset failed: %s", vlce)
+            vlc_logger.warning("sniffer reset failed: %s", vlce)
         self.callback_info[0](item_type)
         self.callback_info = None
         self.media_playing = None
@@ -235,7 +236,7 @@ class VLCSniffer(object):
             libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
             self.exc.check()
         except VLCError, vlce:
-            logging.warning("sniffer reset failed: %s", vlce)
+            vlc_logger.warning("sniffer reset failed: %s", vlce)
         self.callback_info[1]()
         self.callback_info = None
         self.media_playing = None
@@ -292,7 +293,7 @@ class VLCSniffer(object):
 
 class VLCRenderer(object):
     def __init__(self):
-        logging.info("Initializing VLC")
+        vlc_logger.info("Initializing VLC")
         plugin_dir = os.path.join(resources.app_root(), 'vlc-plugins')
         self.exc = VLCException()
 
@@ -326,7 +327,7 @@ class VLCRenderer(object):
         self.unset_widget()
 
     def shutdown(self):
-        logging.info("shutting down VLC")
+        vlc_logger.info("shutting down VLC")
         self.reset()
         libvlc.libvlc_media_player_release(self.media_player)
         vlc_object_release(self.vlc_instance)
@@ -347,7 +348,7 @@ class VLCRenderer(object):
         if type_ == libvlc_MediaStateChanged:
             self._handle_state_change(obj, arg1)
         else:
-            logging.warn("Unknown VLC event type: %s", type_)
+            vlc_logger.warning("Unknown VLC event type: %s", type_)
 
     def _handle_state_change(self, obj, state):
         if obj != self.media_playing:
@@ -393,13 +394,16 @@ class VLCRenderer(object):
     def _open_success(self):
         # FIXME - sometimes _open_success is called, but callback_info
         # is None.  not sure why this happens.
+        if not self.callback_info:
+            vlc_logger.warning("_open_success: callback_info is None")
+            return
         self.setup_subtitles()
-        if self.callback_info:
-            self.callback_info[0]()
+        self.callback_info[0]()
         self.callback_info = None
 
     def _open_failure(self):
-        logging.info("_open_failure\n%s", "".join(traceback.format_stack()))
+        vlc_logger.warning(
+            "_open_failure\n%s", "".join(traceback.format_stack()))
         self.callback_info[1]()
         self.callback_info = None
         self.media_playing = None
@@ -527,7 +531,7 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception getting time: %s" % e)
+            vlc_logger.warning("exception getting time: %s" % e)
             return None
 
         return t / 1000.0
@@ -542,7 +546,7 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception setting current time %s" % e)
+            vlc_logger.warning("exception setting current time %s" % e)
 
     def get_duration(self):
         # self._duration = (filename, duration)
@@ -554,7 +558,7 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception getting duration: %s" % e)
+            vlc_logger.warning("exception getting duration: %s" % e)
             return None
 
         self._duration = (self._filename, length / 1000.0)
@@ -571,7 +575,6 @@ class VLCRenderer(object):
         return rv / 100.0
 
     def set_rate(self, rate):
-        logging.info("set_rate: rate %s", rate)
         if self._rate == rate:
             return
         self._rate = rate
@@ -580,7 +583,7 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception setting rate: %s" % e)
+            vlc_logger.warning("exception setting rate: %s" % e)
             return None
 
     def get_rate(self):
@@ -604,7 +607,7 @@ class VLCRenderer(object):
             config_PutPsz(self.vlc_instance,
                           ctypes.c_char_p('freetype-font'),
                           ctypes.c_char_p(font_path))
-            logging.info("Setting VLC subtitle font: %s", font_path)
+            vlc_logger.info("Setting VLC subtitle font: %s", font_path)
 
     def get_subtitle_tracks(self):
         return self.subtitle_info
@@ -620,12 +623,15 @@ class VLCRenderer(object):
             self.exc.check()
             first_desc = desc
             for i in range(0, count):
-                if i > 0: # track 0 is "disabled", don't include it
+                # track 0 is "disabled", don't include it
+                if i > 0:
                     self.subtitle_info.append((i, desc.contents.name))
                 desc = desc.contents.next
             libvlc.libvlc_track_description_release(first_desc)
-        except VLCError, e:
-            logging.warn("exception when getting list of subtitle tracks")
+        except VLCError:
+            vlc_logger.warning(
+                "setup_subtitle_info: exception when getting list "
+                "of subtitle tracks")
 
     def get_enabled_subtitle_track(self):
         track_index = libvlc.libvlc_video_get_spu(
@@ -633,7 +639,7 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception when getting enabled subtitle track")
+            vlc_logger.warning("exception when getting enabled subtitle track")
             return None
         return track_index
 
@@ -657,7 +663,7 @@ class VLCRenderer(object):
             return
 
         if track_index >= count:
-            logging.warn("Subtitle track too high: %s (count: %s)",
+            vlc_logger.warning("Subtitle track too high: %s (count: %s)",
                     track_index, count)
 
         libvlc.libvlc_video_set_spu(self.media_player, track_index,
@@ -665,7 +671,8 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception when setting subtitle track: %s", e)
+            vlc_logger.warning(
+                "exception when setting subtitle track: %s", e)
 
     def select_subtitle_file(self, item, sub_path, handle_successful_select):
         try:
@@ -676,7 +683,7 @@ class VLCRenderer(object):
             # for VLC to pick it up on the next playback forcing the
             # user to select it again.
             # This is bug 12813.
-            logging.exception("exception thrown when copying subtitle file")
+            vlc_logger.exception("exception thrown when copying subtitle file")
 
         sub_path = sub_path.encode('utf-8')
         res = libvlc.libvlc_video_set_subtitle_file(
@@ -684,7 +691,8 @@ class VLCRenderer(object):
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception when setting subtitle track to file: %s", e)
+            vlc_logger.warn(
+                "exception when setting subtitle track to file: %s", e)
         else:
             handle_successful_select()
             # 1 is the track of the external file, don't select it quite yet
@@ -704,7 +712,7 @@ class VLCRenderer(object):
             config_PutPsz(self.vlc_instance,
                           ctypes.c_char_p('subsdec-encoding'),
                           ctypes.c_char_p(encoding))
-            logging.info("Setting VLC subtitle encoding: %s", encoding)
+            vlc_logger.info("Setting VLC subtitle encoding: %s", encoding)
 
     def setup_subtitle_encoding_menu(self, menubar):
         menus.add_subtitle_encoding_menu(menubar, _('Eastern European'),
