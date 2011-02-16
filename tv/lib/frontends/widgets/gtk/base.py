@@ -45,7 +45,7 @@ def make_gdk_color(miro_color):
     return gtk.gdk.Color(*values)
 
 class Widget(signals.SignalEmitter):
-    """Base class for GTK widgets.  
+    """Base class for GTK widgets.
 
     The actual GTK Widget is stored in '_widget'.
 
@@ -176,7 +176,7 @@ class Widget(signals.SignalEmitter):
         return other_widget._widget.translate_coordinates(self._widget, 0, 0)
 
     def convert_gtk_color(self, color):
-        return (color.red / 65535.0, color.green / 65535.0, 
+        return (color.red / 65535.0, color.green / 65535.0,
                 color.blue / 65535.0)
 
     def get_width(self):
@@ -257,8 +257,11 @@ class Bin(Widget):
         self._widget.add(self.child._widget)
 
     def remove_child_from_widget(self):
-        self._widget.get_child().hide() # otherwise gtkmozembed gets confused
-        self._widget.remove(self._widget.get_child())
+        if self._widget.get_child() is not None:
+            # otherwise gtkmozembed gets confused
+            self._widget.get_child().hide()
+            self._widget.remove(self._widget.get_child())
+
 
     def remove(self):
         if self.child is not None:
