@@ -393,9 +393,6 @@ class MiroTreeView(gtk.TreeView):
 
     def do_expose_event(self, event):
         gtk.TreeView.do_expose_event(self, event)
-        x, y = self.tree_to_widget_coords(0, self.height_without_pad_bottom)
-        event.window.draw_rectangle(self.style.base_gc[self.state], True,
-                x, y, self.allocation.width, self.PAD_BOTTOM)
         if self.drag_dest_at_bottom:
             gc = self.get_style().fg_gc[self.state]
             x1, x2, y = self.bottom_drag_dest_coords()
