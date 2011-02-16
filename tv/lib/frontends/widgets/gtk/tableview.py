@@ -787,7 +787,7 @@ class TableView(Widget):
         titles = []
         columns = self._widget.get_columns()
         for column in columns:
-            titles.append(column.get_title())
+            titles.append(column.get_title().decode('utf-8'))
         return titles
 
     def column_count(self):
