@@ -34,15 +34,16 @@ Allows Miro on Linux to do command-line conversions.
 import os
 import subprocess
 import shutil
+import sys
 
 from miro.plat import resources, utils
-from miro import videoconversion
+from miro import conversions
 
-USAGE = "usage: %prog --convert [target] [inputfile [inputfile...]]"
+USAGE = "usage: miro --convert [target] [inputfile [inputfile...]]"
 
 
 def convert(args):
-    cm = videoconversion.ConverterManager()
+    cm = conversions.ConverterManager()
     cm.load_converters(resources.path('conversions/*.conv'))
 
     if len(args) < 2:
