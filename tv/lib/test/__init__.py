@@ -33,6 +33,7 @@ up the testsuite.
 """
 
 import os
+import sys
 from miro import app
 from miro import prefs
 from miro import config
@@ -115,7 +116,29 @@ class MiroTestLoader(unittest.TestLoader):
             obj = getattr(performancetest, name)
             globals()[name] = obj
 
+def stop_on_failure(runner, result, meth):
+    def _wrapped_meth(*args, **kwargs):
+        runner.failed_fast = True
+        result.stop()
+        return meth(*args, **kwargs)
+    return _wrapped_meth
+
 class MiroTestRunner(unittest.TextTestRunner):
+    def __init__(self, stream=sys.stderr, descriptions=1, verbosity=1,
+                 failfast=False):
+        unittest.TextTestRunner.__init__(self, stream, descriptions, verbosity)
+        self.failfast = failfast
+        if failfast:
+            self.stream.write("Tests set to stop on first failure.\n")
+        self.failed_fast = False
+
+    def _makeResult(self):
+        result = unittest.TextTestRunner._makeResult(self)
+        if self.failfast:
+            result.addFailure = stop_on_failure(self, result, result.addFailure)
+            result.addError = stop_on_failure(self, result, result.addError)
+        return result
+
     def run(self, suite):
         self.before_run()
         try:
@@ -132,10 +155,18 @@ class MiroTestRunner(unittest.TextTestRunner):
         httpclient.cleanup_libcurl()
         from miro.test import framework
         framework.clean_up_temp_files()
+        if self.failed_fast:
+            self.stream.write(
+                "Stopped on first failure!  Not all tests were run!\n")
         for mem in framework.skipped_tests:
-            print "Skipped: %s" % mem
+            self.stream.write("Skipped: %s\n" % mem)
 
 def run_tests():
+    failfast = False
+    if "--failfast" in sys.argv:
+        sys.argv.remove("--failfast")
+        failfast = True
     from miro import test
-    unittest.main(module=test, testLoader=MiroTestLoader(), testRunner =
-            MiroTestRunner())
+    unittest.main(
+        module=test, testLoader=MiroTestLoader(),
+        testRunner=MiroTestRunner(failfast=failfast))

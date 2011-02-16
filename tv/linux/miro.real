@@ -103,6 +103,10 @@ group.add_option('-v',
                  dest='unittest_verbose', action='store_true',
                  help='Run unittests in verbose mode.')
 parser.set_defaults(unittest_verbose=False)
+group.add_option('--failfast',
+                  dest='unittest_failfast', action='store_true',
+                  help='Run unittests and stop on first failure.')
+parser.set_defaults(unittest_failfast=False)
 group.add_option('--convert',
                  dest='convert', action='store_true',
                  help='Command line conversion.')

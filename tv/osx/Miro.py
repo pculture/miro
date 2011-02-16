@@ -219,6 +219,14 @@ group.add_option('--unittest',
                  dest='unittest', action='store_true',
                  help='Run unittests instead of launching the program.')
 parser.set_defaults(unittest=False)
+group.add_option('-v',
+                 dest='unittest_verbose', action='store_true',
+                 help='Run unittests in verbose mode.')
+parser.set_defaults(unittest_verbose=False)
+group.add_option('--failfast',
+                  dest='unittest_failfast', action='store_true',
+                  help='Run unittests and stop on first failure.')
+parser.set_defaults(unittest_failfast=False)
 (parsed_options, args) = parser.parse_args()
 
 # Launch player or downloader, depending on command line parameter`
