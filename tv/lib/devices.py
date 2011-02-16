@@ -678,27 +678,31 @@ class DeviceItem(object):
             return resources.path("images/thumb-default-video.png")
 
     def _migrate_thumbnail(self):
+        screenshot = self.screenshot
         icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-        if self.screenshot is not None:
-            if self.screenshot.startswith(icon_cache_directory):
+        cover_art_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        if screenshot is not None:
+            if (screenshot.startswith(icon_cache_directory) or
+                screenshot.startswith(cover_art_directory)):
                 # migrate the screenshot onto the device
-                basename = os.path.basename(self.screenshot)
+                basename = os.path.basename(screenshot)
                 try:
                     new_path = os.path.join(self.device.mount, '.miro', basename)
-                    shutil.copyfile(self.screenshot, new_path)
+                    shutil.copyfile(screenshot, new_path)
                 except (IOError, OSError):
                     # error copying the thumbnail, just erase it
                     self.screenshot = None
                 else:
                     extracted = os.path.join(icon_cache_directory, 'extracted')
-                    if self.screenshot.startswith(extracted):
+                    if (screenshot.startswith(extracted) or
+                        screenshot.startswith(cover_art_directory)):
                         # moviedata extracted this for us, so we can remove it
                         try:
-                            os.unlink(self.screenshot)
+                            os.unlink(screenshot)
                         except OSError:
                             pass
                     self.screenshot = os.path.join('.miro', basename)
-            elif self.screenshot.startswith(resources.root()):
+            elif screenshot.startswith(resources.root()):
                 self.screenshot = None # don't save a default thumbnail
 
     def remove(self, save=True):
@@ -737,7 +741,7 @@ class DeviceItem(object):
         for k, v in self.__dict__.items():
             if v is not None and k not in ('device', 'file_type', 'id',
                                            'video_path'):
-                if k == 'screenshot':
+                if k == 'screenshot' or k == 'thumbnail' or k == '':
                     v = filename_to_unicode(v)
                 data[k] = v
         return data
