@@ -327,7 +327,7 @@ class TranscodeObject(object):
             args += TranscodeObject.segmenter_args + [str(port)]
             kwargs = {"stdout": open(os.devnull, 'rb'),
                       "stdin": self.ffmpeg_handle.stdout,
-                      #"stderr": open(os.devnull, 'wb'),
+                      "stderr": open(os.devnull, 'wb'),
                       "startupinfo": util.no_console_startupinfo()}
             # XXX Can't use this - need to pass on the child fds
             #if os.name != "nt":
