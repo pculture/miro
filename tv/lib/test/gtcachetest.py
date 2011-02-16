@@ -27,26 +27,9 @@ from miro.plat import resources
 
 def make_french(f):
     def _make_french(*args, **kwargs):
-        old_lang = None
-        try:
-            try:
-                old_lang = os.environ["LANGUAGE"]
-            except StandardError:
-                pass
-            os.environ["LANGUAGE"] = "fr"
-            gtcache._gtcache = {}
-
-            gettext.bindtextdomain("miro", resources.path("testdata/locale"))
-            gettext.textdomain("miro")
-            gettext.bind_textdomain_codeset("miro", "UTF-8")
-
-            f(*args, **kwargs)
-
-        finally:
-            if old_lang is None:
-                del os.environ["LANGUAGE"]
-            else:
-                os.environ["LANGUAGE"] = old_lang
+        gtcache.init(languages=['fr'],
+                localedir=resources.path("testdata/locale"))
+        f(*args, **kwargs)
     return _make_french
 
 INPUT = "parsed %(countfiles)d files - found %(countvideos)d videos"

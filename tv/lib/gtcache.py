@@ -38,6 +38,7 @@ from miro import prefs
 import miro.plat.utils
 
 _gtcache = None
+_translation = None
 codeset = None # The default codeset of our locale (always lower case)
 
 def get_languages():
@@ -77,17 +78,21 @@ def get_languages():
 
     return langs
 
-def init():
+def init(languages=None, localedir=None):
     global _gtcache
+    global _translation
     global codeset
-    _gtcache = {}
+
     if not miro.plat.utils.locale_initialized():
         raise Exception, "locale not initialized"
 
-    language = app.config.get(prefs.LANGUAGE)
+    if languages is None:
+        language = app.config.get(prefs.LANGUAGE)
+        if language != "system":
+            languages = [language]
 
-    if language != "system":
-        os.environ["LANGUAGE"] = language
+    if localedir is None:
+        localedir = app.config.get(prefs.GETTEXT_PATHNAME)
 
     # try to set the locale to the platform default, but if that fails
     # log a message and set it to C.
@@ -97,20 +102,13 @@ def init():
         print "gtcache.init: setlocale failed.  setting locale to 'C'"
         locale.setlocale(locale.LC_ALL, 'C')
 
-    # try to get the locale which might fail despite the above.  see bug #11783.
-    try:
-        codeset = locale.getlocale()[1]
-    except ValueError:
-        print "gtcache.init: getlocale failed.  setting locale to 'C'"
-        locale.setlocale(locale.LC_ALL, "C")
-        codeset = locale.getlocale()[1]
+    _translation = _gt.translation("miro",
+            localedir=localedir,
+            languages=languages,
+            codeset="UTF-8",
+            fallback=True)
 
-    if codeset is not None:
-        codeset = codeset.lower()
-
-    _gt.bindtextdomain("miro", app.config.get(prefs.GETTEXT_PATHNAME))
-    _gt.textdomain("miro")
-    _gt.bind_textdomain_codeset("miro", "UTF-8")
+    _gtcache = {}
 
 def declarify(text):
     """Takes the return from a gettext call, and "declarifies" it.  If the
@@ -157,11 +155,9 @@ def gettext(text, values=None):
     text = text.encode('utf-8')
     try:
         s = _gtcache[text]
-
     except KeyError:
-        s = _gt.gettext(text).decode('utf-8')
+        s = _translation.gettext(text).decode('utf-8')
         _gtcache[text] = s
-
     except TypeError:
         print "gtcache.gettext: not initialized for string \"%s\"" % text
         # import traceback
@@ -202,7 +198,7 @@ def ngettext(text1, text2, count, values=None):
     text1 = text1.encode('utf-8')
     text2 = text2.encode('utf-8')
 
-    s = _gt.ngettext(text1, text2, count).decode('utf-8')
+    s = _translation.ngettext(text1, text2, count).decode('utf-8')
     try:
         if values:
             s = s % values
