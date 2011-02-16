@@ -56,7 +56,7 @@ from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
         InfoListModel, TableColumn, TreeTableModel, CellRenderer,
         ImageCellRenderer, CheckboxCellRenderer, CustomCellRenderer,
-        InfoListRenderer)
+        InfoListRenderer, InfoListRendererText)
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
      AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
      ProgressBar

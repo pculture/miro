@@ -39,6 +39,7 @@ import pango
 
 from miro import signals
 from miro import infolist
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
@@ -67,8 +68,15 @@ class CellRenderer(object):
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'text', attr_map['value'])
 
-    def set_text_size(self, size):
-        pass
+    def set_align(self, align):
+        if align == 'left':
+            self._renderer.props.xalign = 0.0
+        elif align == 'center':
+            self._renderer.props.xalign = 0.5
+        elif align == 'right':
+            self._renderer.props.xalign = 1.0
+        else:
+            raise ValueError("unknown alignment: %s" % align)
 
     def set_color(self, color):
         self._renderer.props.foreground_gdk = make_gdk_color(color)
@@ -80,6 +88,20 @@ class CellRenderer(object):
         else:
             font_desc.set_weight(pango.WEIGHT_NORMAL)
         self._renderer.props.font_desc = font_desc
+
+    def set_text_size(self, size):
+        if size == widgetconst.SIZE_NORMAL:
+            self._renderer.props.scale = 1.0
+        elif size == widgetconst.SIZE_SMALL:
+            # FIXME: on 3.5 we just ignored the call.  Always setting scale to
+            # 1.0 basically replicates that behavior, but should we actually
+            # try to implement the semantics of SIZE_SMALL?
+            self._renderer.props.scale = 1.0
+        else:
+            raise ValueError("unknown size: %s" % size)
+
+    def set_font_scale(self, scale_factor):
+        self._renderer.props.scale = scale_factor
 
 class ImageCellRenderer(object):
     """Cell Renderer for images
@@ -220,13 +242,25 @@ class CustomCellRenderer(object):
         return None
 
 class InfoListRenderer(CustomCellRenderer):
-    """Customizable Cell Renderer
+    """Custom Renderer for InfoListModels
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     def cell_data_func(self, column, cell, model, iter, attr_map):
         self.info, self.attrs = wrappermap.wrapper(model).row_for_iter(iter)
         cell.column = column
         cell.path = model.get_path(iter)
+
+class InfoListRendererText(CellRenderer):
+    """Renderer for InfoListModels that only display text
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
+
+    def __init__(self, attr_name):
+        CellRenderer.__init__(self)
+        self.attr_name = attr_name
+
+    def setup_attributes(self, column, attr_map):
+        infolist.gtk.setup_text_cell_data_func(column, self._renderer,
+                self.attr_name)
 
 class MiroTreeView(gtk.TreeView):
     """Extends the GTK TreeView widget to help implement TableView
@@ -1422,8 +1456,10 @@ class InfoListModel(infolist.InfoList):
     # we we wrap it slightly so that it matches some of the TableModel
     # interface
     def check_new_column(self, column):
-        if not isinstance(column.renderer, InfoListRenderer):
-            raise TypeError("InfoListModel only supports InfoListRenderer")
+        if not (isinstance(column.renderer, InfoListRenderer) or
+                isinstance(column.renderer, InfoListRendererText)):
+            raise TypeError("InfoListModel only supports InfoListRenderer "
+                    "or InfoListRendererText")
 
     def get_rows(self, row_paths):
         return [self.nth_row(path[0]) for path in row_paths]

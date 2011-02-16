@@ -37,6 +37,8 @@
 #include "infolist-nodelist.h"
 #include "infolist-gtk.h"
 
+static PyTypeObject *PyGObject_Type=NULL;
+
 static void
 miro_list_store_init (MiroListStore *self);
 
@@ -106,6 +108,123 @@ miro_list_store_interface_init (GtkTreeModelIface *iface);
 
 static void
 miro_list_store_set_path_row(MiroListStore* self, int row);
+
+
+/* Create the "miro.infolist.gtk" module */
+
+static PyObject*
+convert_obj_to_utf8(PyObject* obj) {
+        PyObject* obj_as_unicode;
+        PyObject* obj_as_utf8;
+
+        if(PyString_Check(obj)) {
+                /* obj is a string already, we can use it's value directly */
+                Py_INCREF(obj);
+                return obj;
+        }
+        /* Convert the object to unicode */
+        if(PyUnicode_Check(obj)) {
+                /* fast path for objects that are already unicode */
+                obj_as_unicode = obj;
+                Py_INCREF(obj_as_unicode);
+        } else {
+                obj_as_unicode = PyObject_Unicode(obj);
+                if(!obj_as_unicode) return NULL;
+        }
+        /* Convert the unicode to utf-8 */
+        obj_as_utf8 = PyUnicode_AsUTF8String(obj_as_unicode);
+        Py_DECREF(obj_as_unicode);
+        return obj_as_utf8;
+}
+
+static void 
+text_cell_data_func(GtkTreeViewColumn *tree_column,
+                    GtkCellRenderer *cell,
+                    GtkTreeModel *tree_model,
+                    GtkTreeIter *iter,
+                    gchar* attr_name)
+{
+        PyObject* attr_obj;
+        PyObject* attr_as_utf8;
+        InfoListNode *node;
+        PyGILState_STATE gstate;
+
+        /* Aquire the GIL before touching python data */
+        gstate = PyGILState_Ensure();
+        /* Get the python object for this cell */
+        node = (InfoListNode*)iter->user_data;
+        attr_obj = PyObject_GetAttrString(node->info, attr_name);
+        if(!attr_obj) {
+                PyErr_Print();
+                return;
+        }
+        if(attr_obj == Py_None) {
+                /* Special-case empty values */
+                Py_DECREF(attr_obj);
+                PyGILState_Release(gstate);
+                g_object_set(G_OBJECT(cell), "text", "", NULL);
+                return;
+        }
+
+        /* Convert object to utf-8 */
+        attr_as_utf8 = convert_obj_to_utf8(attr_obj);
+        if(!attr_as_utf8) {
+                PyErr_Print();
+                Py_DECREF(attr_obj);
+                return;
+        }
+        /* Set the value */
+        g_object_set(G_OBJECT(cell), "text", PyString_AS_STRING(attr_as_utf8),
+                     NULL);
+        /* All done.  Release references then the GIL */
+        Py_DECREF(attr_as_utf8);
+        Py_DECREF(attr_obj);
+        PyGILState_Release(gstate);
+}
+
+
+static PyObject *
+setup_text_cell_data_func(PyObject *self, PyObject *args)
+{
+        PyObject* column;
+        PyObject* renderer;
+        GObject* g_column;
+        GObject* g_renderer;
+
+        const char *attr_name;
+
+        if (!PyArg_ParseTuple(args, "O!O!s",
+                              PyGObject_Type, &column,
+                              PyGObject_Type, &renderer,
+                              &attr_name)) {
+                return NULL;
+        }
+        /* Convert Python objects to GObjects */
+        g_column = pygobject_get(column);
+        g_renderer = pygobject_get(renderer);
+
+        /* Set the cell data func
+         * Copy attr_name so that we own the reference, use g_free as our
+         * destroy func to free it when we're done.
+         * */
+        gtk_tree_view_column_set_cell_data_func(GTK_TREE_VIEW_COLUMN(g_column),
+                                                GTK_CELL_RENDERER(g_renderer),
+                                                (GtkTreeCellDataFunc)
+                                                text_cell_data_func,
+                                                g_strdup(attr_name),
+                                                g_free);
+
+        Py_INCREF(Py_None);
+        return Py_None;
+}
+
+static PyMethodDef InfoListGTKMethods[] = {
+        {"setup_text_cell_data_func",  setup_text_cell_data_func, METH_VARARGS,
+                "Setup a Text Cell data function for an InfoList model" },
+        {NULL, NULL, 0, NULL}        /* Sentinel */
+};
+
+/* Implement GTK stuff */
 
 G_DEFINE_TYPE_WITH_CODE(MiroListStore, miro_list_store, G_TYPE_OBJECT,
                         G_IMPLEMENT_INTERFACE(GTK_TYPE_TREE_MODEL,
@@ -330,10 +449,38 @@ do_init_pygtk(void)
 int
 infolistplat_init(void)
 {
+        PyObject* gobject_mod;
+        PyObject* infolist_mod;
+        PyObject* infolist_gtk_mod;
+
         g_type_init();
         if(!pygobject_init(2, -1, -1)) return -1;
         do_init_pygtk();
         if(PyErr_Occurred()) return -1;
+
+        /* Setup PyGObject_Type */
+        gobject_mod = PyImport_ImportModule("gobject");
+        if (!gobject_mod) {
+                return -1;
+        }
+        PyGObject_Type = (PyTypeObject*)PyObject_GetAttrString(gobject_mod,
+                                                               "GObject");
+        Py_DECREF(gobject_mod);
+
+        /* Create our GTK infolist submodule. */
+        infolist_gtk_mod = Py_InitModule("miro.infolist.gtk",
+                                         InfoListGTKMethods);
+        if(!infolist_gtk_mod) {
+                return -1;
+        }
+
+        infolist_mod = PyImport_ImportModule("miro.infolist");
+        if(!infolist_mod) {
+                return -1;
+        }
+        if(PyModule_AddObject(infolist_mod, "gtk", infolist_gtk_mod) < 0) {
+                return -1;
+        }
         return 0;
 }
 

@@ -157,6 +157,21 @@ class MiroTableCell(NSTextFieldCell):
             # OS X calls setObjectValue_('') on intialization
             NSCell.setObjectValue_(self, value_dict)
 
+class MiroTableInfoListTextCell(MiroTableCell):
+    def initWithAttrName_(self, attr_name):
+        self.attr_name = attr_name
+        return self
+
+    def setObjectValue_(self, value):
+        if isinstance(value, tuple):
+            info, attrs = value
+            cell_text = getattr(info, self.attr_name)
+            NSCell.setObjectValue_(self, cell_text)
+        else:
+            # Getting set to a something other than a model row, usually this
+            # happens in initialization
+            NSCell.setObjectValue_(self, '')
+
 class MiroTableImageCell(NSImageCell):
     def calcHeight_(self, view):
         return self.value_dict['image'].size().height
@@ -214,30 +229,58 @@ class CellRendererBase(object):
 
 class CellRenderer(CellRendererBase):
     def __init__(self):
-        self.cell = MiroTableCell.alloc().init()
+        self.cell = self.build_cell()
+        self._font_scale_factor = 1.0
+        self._font_bold = False
+        self.set_align('left')
+
+    def build_cell(self):
+        return MiroTableCell.alloc().init()
 
     def setDataCell_(self, column):
         column.setDataCell_(self.cell)
 
     def set_text_size(self, size):
         if size == widgetconst.SIZE_NORMAL:
-            self.cell.setFont_(NSFont.systemFontOfSize_(NSFont.systemFontSize()))
+            self._font_scale_factor = 1.0
         elif size == widgetconst.SIZE_SMALL:
-            self.cell.setFont_(NSFont.systemFontOfSize_(11))
+            # make the scale factor such so that the font size is 11.0
+            self._font_scale_factor = 11.0 / NSFont.systemFontSize()
         else:
             raise ValueError("Unknown size: %s" % size)
+        self._set_font()
+
+    def set_font_scale(self, scale_factor):
+        self._font_scale_factor = scale_factor
+        self._set_font()
 
     def set_bold(self, bold):
-        if bold:
-            font = NSFont.boldSystemFontOfSize_(NSFont.systemFontSize())
+        self._font_bold = bold
+        self._set_font()
+
+    def _set_font(self):
+        size = NSFont.systemFontSize() * self._font_scale_factor
+        if self._font_bold:
+            font = NSFont.boldSystemFontOfSize_(size)
         else:
-            font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
+            font = NSFont.systemFontOfSize_(size)
         self.cell.setFont_(font)
 
     def set_color(self, color):
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0],
                 color[1], color[2], 1.0)
         self.cell.setTextColor_(color)
+
+    def set_align(self, align):
+        if align == 'left':
+            ns_alignment = NSLeftTextAlignment
+        elif align == 'center':
+            ns_alignment = NSCenterTextAlignment
+        elif align == 'right':
+            ns_alignment = NSRightTextAlignment
+        else:
+            raise ValueError("unknown alignment: %s", align)
+        self.cell.setAlignment_(ns_alignment)
 
 class ImageCellRenderer(CellRendererBase):
     def setDataCell_(self, column):
@@ -339,6 +382,15 @@ class InfoListRenderer(CustomCellRenderer):
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
+
+class InfoListRendererText(CellRenderer):
+    def __init__(self, attr_name):
+        self.attr_name = attr_name
+        CellRenderer.__init__(self)
+
+    def build_cell(self):
+        cell = MiroTableInfoListTextCell.alloc()
+        return cell.initWithAttrName_(self.attr_name)
 
 def calc_row_height(view, model_row):
     row_height = 0

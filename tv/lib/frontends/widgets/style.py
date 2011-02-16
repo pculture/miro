@@ -962,109 +962,159 @@ class PlaylistItemRenderer(ItemRenderer):
         return layout
 
 # Renderers for the list view
-class ListViewRenderer(widgetset.InfoListRenderer):
+class ListViewRendererText(widgetset.InfoListRendererText):
+    """Renderer for list view columns that are just plain text"""
+
     bold = False
     color = (0.17, 0.17, 0.17)
     font_size = 0.82
     min_width = 50
     right_aligned = False
-    def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
-        self.style = None
 
-    def get_size(self, style, layout_manager):
-        self.height = layout_manager.font(self.font_size, bold=self.bold).line_height()
-        return 5, self.height
+    def __init__(self):
+        widgetset.InfoListRendererText.__init__(self, self.attr_name)
+        self.set_bold(self.bold)
+        self.set_color(self.color)
+        self.set_font_scale(self.font_size)
+        if self.right_aligned:
+            self.set_align('right')
+
+class DescriptionRenderer(ListViewRendererText):
+    color = (0.6, 0.6, 0.6)
+    attr_name = 'description_oneline'
+
+class FeedNameRenderer(ListViewRendererText):
+    attr_name = 'feed_name'
+
+class DateRenderer(ListViewRendererText):
+    attr_name = 'display_date'
+
+class LengthRenderer(ListViewRendererText):
+    attr_name = 'display_duration'
+
+class ETARenderer(ListViewRendererText):
+    right_aligned = True
+    attr_name = 'display_eta'
+
+class TorrentDetailsRenderer(ListViewRendererText):
+    attr_name = 'display_torrent_details'
+
+class DownloadRateRenderer(ListViewRendererText):
+    right_aligned = True
+    attr_name = 'display_rate'
+
+class SizeRenderer(ListViewRendererText):
+    right_aligned = True
+    attr_name = 'display_size'
+
+class ArtistRenderer(ListViewRendererText):
+    attr_name = 'artist'
+
+class AlbumRenderer(ListViewRendererText):
+    attr_name = 'album'
+
+class TrackRenderer(ListViewRendererText):
+    attr_name = 'display_track'
+
+class YearRenderer(ListViewRendererText):
+    attr_name = 'display_year'
+
+class GenreRenderer(ListViewRendererText):
+    attr_name = 'genre'
+
+class DateAddedRenderer(ListViewRendererText):
+    attr_name = 'display_date_added'
+
+class LastPlayedRenderer(ListViewRendererText):
+    attr_name = 'display_last_played'
+
+class ListViewRenderer(widgetset.InfoListRenderer):
+    """Renderer for more complex list view columns.
+
+    This class is useful for renderers that use the cellpack.Layout class.
+    """
+    font_size = 0.82
+    default_text_color = (0.17, 0.17, 0.17)
+    min_width = 5
+    min_height = 0
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
-        self.hotspot = None
-        self.selected = False
-        if style:
-            self.style = style
-        packing = self.layout_manager(layout_manager)
-        hotspot_info = packing.find_hotspot(x, y, width, height)
+        layout = self.layout_all(layout_manager, width, height)
+        hotspot_info = layout.find_hotspot(x, y)
         if hotspot_info is None:
             return None
-        else:
-            return hotspot_info[0]
+        hotspot, x, y = hotspot_info
+        return hotspot
+
+    def get_size(self, style, layout_manager):
+        layout_manager.set_font(self.font_size)
+        height = max(self.min_height,
+                layout_manager.current_font.line_height())
+        return (self.min_width, height)
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        self.hotspot = hotspot
-        self.style = context.style
-        self.selected = selected
-        packing = self.layout_manager(layout_manager)
-        packing.render_layout(context)
+        layout = self.layout_all(layout_manager, context.width, context.height)
+        layout.draw(context)
 
-    def layout_manager(self, layout_manager):
-        self._setup_layout_manager()
-        layout_manager.set_font(self.font_size, bold=self.bold)
-        if not self.selected and self.style.use_custom_style:
-            layout_manager.set_text_color(self.color)
-        else:
-            layout_manager.set_text_color(self.style.text_color)
-        textbox = layout_manager.textbox(self.text)
-        if self.right_aligned:
-            textbox.set_alignment('right')
-        hbox = cellpack.HBox()
-        textline = cellpack.TruncatedTextLine(textbox)
-        hbox.pack(cellpack.align_middle(textline), expand=True)
-        layout_manager.set_font(self.font_size, bold=False)
-        self._pack_extra(layout_manager, hbox)
-        return hbox
+    def layout_all(self, layout_manager, width, height):
+        """Layout the contents of this cell
 
-    def _setup_layout_manager(self):
-        """Prepare to layout_manager the cell.  This method must set the text
-        attribute and may also set the color, bold or other attributes.
+        Subclasses must implement this method
+
+        :param layout_manager: LayoutManager object
+        :param width: width of the area to lay the cell out in
+        :param height: height of the area to lay the cell out in
+        :returns: cellpack.Layout object
         """
         raise NotImplementedError()
 
-    def _pack_extra(self, layout_manager, hbox):
-        """Pack extra stuff in the hbox that we created in layout_manager()."""
-        pass
 
 class NameRenderer(ListViewRenderer):
-    button_font_size = ListViewRenderer.font_size * (0.77 / 0.82)
+    min_width = 100
+    button_font_size = 0.77
 
     def __init__(self):
-        ListViewRenderer.__init__(self)
-        self.button = None
+        widgetset.InfoListRenderer.__init__(self)
         path = resources.path('images/download-arrow.png')
         self.download_icon = imagepool.get_surface(path)
 
-    def _setup_layout_manager(self):
-        self.text = self.info.name
+    def layout_all(self, layout_manager, width, height):
+        # make a Layout Object
+        layout = cellpack.Layout()
+        # add the button, if needed
+        if self.should_show_download_button():
+            button = self.make_button(layout_manager)
+            button_x = width - button.get_size()[0]
+            layout.add_image(button, button_x, 0, hotspot='download')
+            # text should end at the start of the button
+            text_width = button_x
+        else:
+            # text can take up the whole space
+            text_width = width
+        # add the text
+        layout_manager.set_font(self.font_size)
+        layout_manager.set_text_color(self.default_text_color)
+        textbox = layout_manager.textbox(self.info.name)
+        textbox.set_wrap_style('truncated-char')
+        layout.add_text_line(textbox, 0, 0, text_width)
+        # middle-align everything
+        layout.center_y(top=0, bottom=height)
+        return layout
 
-    def _pack_extra(self, layout_manager, hbox):
-        if not (self.info.downloaded or
-                self.info.state in ('downloading', 'paused')):
-            if self.button is None:
-                layout_manager.set_font(self.button_font_size)
-                self.button = layout_manager.button(_("Download"))
-                self.button.set_icon(self.download_icon)
-            hbox.pack(cellpack.align_middle(cellpack.Hotspot('download',
-                self.button)))
+    def make_button(self, layout_manager):
+        layout_manager.set_font(self.button_font_size)
+        button = layout_manager.button(_("Download"))
+        button.set_icon(self.download_icon)
+        return button
 
-class DescriptionRenderer(ListViewRenderer):
-    color = (0.6, 0.6, 0.6)
-
-    def _setup_layout_manager(self):
-        self.text = self.info.description_stripped[0].replace('\n', '$')
-
-class FeedNameRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = self.info.feed_name
-
-class DateRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = displaytext.date_slashes(self.info.release_date)
-
-class LengthRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = displaytext.duration(self.info.duration)
+    def should_show_download_button(self):
+        return (not self.info.downloaded and
+                self.info.state not in ('downloading', 'paused'))
 
 class StatusRenderer(ListViewRenderer):
     BUTTONS = ('pause', 'resume', 'cancel', 'keep')
-    bold = True
+    min_width = 40
+    min_height = 20
 
     def __init__(self):
         ListViewRenderer.__init__(self)
@@ -1073,76 +1123,111 @@ class StatusRenderer(ListViewRenderer):
             path = resources.path('images/%s-button.png' % button)
             self.button[button] = imagepool.get_surface(path)
 
-    def _setup_layout_manager(self):
+    def layout_all(self, layout_manager, width, height):
+        if (self.info.state in ('downloading', 'paused') and
+            self.info.download_info.state != 'pending'):
+            return self.layout_progress(layout_manager, width, height)
+        else:
+            return self.layout_text(layout_manager, width, height)
+
+    def layout_progress(self, layout_manager, width, height):
+        """Handle layout when we should display a progress bar """
+
+        layout = cellpack.Layout()
+        # add left button
+        if self.info.state == 'downloading':
+            left_button = 'pause'
+        else:
+            left_button = 'resume'
+        left_button_rect = layout.add_image(self.button[left_button], 0, 0,
+                hotspot=left_button)
+        # add right button
+        right_x = width - self.button['cancel'].width
+        layout.add_image(self.button['cancel'], right_x, 0, hotspot='cancel')
+        # pack the progress bar in the center
+        progress_left = left_button_rect.width + 2
+        progress_right = right_x - 2
+        progress_rect = cellpack.LayoutRect(progress_left, 0,
+                progress_right-progress_left, height)
+
+        layout.add_rect(progress_rect, ItemProgressBarDrawer(self.info).draw)
+        # middle-align everything
+        layout.center_y(top=0, bottom=height)
+        return layout
+
+    def layout_text(self, layout_manager, width, height):
+        """Handle layout when we should display status text"""
+        layout = cellpack.Layout()
+        text, color = self._calc_status_text()
+        if text:
+            layout_manager.set_font(self.font_size, bold=True)
+            layout_manager.set_text_color(color)
+            textbox = layout_manager.textbox(text)
+            layout.add_text_line(textbox, 0, 0, width)
+            self.add_extra_button(layout, width)
+        # middle-align everything
+        layout.center_y(top=0, bottom=height)
+        return layout
+
+    def _calc_status_text(self):
+        """Calculate the text/color for our status line.
+
+        :returns: (text, color) tuple
+        """
         if self.info.downloaded:
-            if not self.info.is_playable:
-                self.text = ''
-            else:
+            if self.info.is_playable:
                 if not self.info.video_watched:
-                    self.text = _('Unplayed')
-                    self.color = UNPLAYED_COLOR
+                    return (_('Unplayed'), UNPLAYED_COLOR)
                 elif self.info.expiration_date:
-                    self.text = displaytext.expiration_date_short(
-                        self.info.expiration_date)
-                    self.color = EXPIRING_TEXT_COLOR
-                else:
-                    self.text = ''
+                    text = displaytext.expiration_date_short(
+                            self.info.expiration_date)
+                    return (text, EXPIRING_TEXT_COLOR)
         elif (self.info.download_info and
                 self.info.download_info.rate == 0):
             if self.info.download_info.state == 'paused':
-                self.text = _('paused')
+                return (_('paused'), DOWNLOADING_COLOR)
             elif self.info.download_info.state == 'pending':
-                self.text = _('queued')
+                return (_('queued'), DOWNLOADING_COLOR)
             elif self.info.download_info.state == 'failed':
-                self.text = self.info.download_info.short_reason_failed
+                return (self.info.download_info.short_reason_failed,
+                        DOWNLOADING_COLOR)
             else:
-                self.text = self.info.download_info.startup_activity
-            self.color = DOWNLOADING_COLOR
+                return (self.info.download_info.startup_activity,
+                        DOWNLOADING_COLOR)
         elif not self.info.item_viewed:
-            self.text = _('Newly Available')
-            self.color = AVAILABLE_COLOR
-        else:
-            self.text = ''
+            return (_('Newly Available'), AVAILABLE_COLOR)
+        return ('', self.default_text_color)
 
-    def layout_manager(self, layout_manager):
-        if (self.info.state in ('downloading', 'paused') and
-            self.info.download_info.state != 'pending'):
-            return self.pack_progress_bar(layout_manager)
-        else:
-            return ListViewRenderer.layout_manager(self, layout_manager)
+    def add_extra_button(self, layout, width):
+        """Add a button to the right of the text, if needed"""
 
-    def pack_progress_bar(self, layout_manager):
-        progress_bar = ItemProgressBarDrawer(self.info)
-        hbox = cellpack.HBox(spacing=2)
-        if self.info.state == 'downloading':
-            hotspot = cellpack.Hotspot('pause', self.button['pause'])
-        else:
-            hotspot = cellpack.Hotspot('resume', self.button['resume'])
-        hbox.pack(cellpack.align_middle(hotspot))
-        drawing_area = cellpack.DrawingArea(20, 10, progress_bar.draw)
-        hbox.pack(cellpack.align_middle(drawing_area), expand=True)
-        hotspot = cellpack.Hotspot('cancel', self.button['cancel'])
-        hbox.pack(cellpack.align_middle(hotspot))
-        return hbox
-
-    def _pack_extra(self, layout_manager, hbox):
         if self.info.expiration_date:
-            button = self.button['keep']
-            hotspot = cellpack.Hotspot('keep', self.button['keep'])
-            hbox.pack_space(8)
-            hbox.pack(hotspot)
+            button_name = 'keep'
         elif (self.info.state == 'downloading' and
               self.info.download_info.state == 'pending'):
-            button = self.button['cancel']
-            hotspot = cellpack.Hotspot('cancel', button)
-            hbox.pack_space(8)
-            hbox.pack(cellpack.align_middle(hotspot))
+            button_name = 'cancel'
+        else:
+            return
+        button = self.button[button_name]
+        button_x = width - button.width # right-align
+        layout.add_image(button, button_x, 0, hotspot=button_name)
 
-class RatingRenderer(ListViewRenderer):
+class RatingRenderer(widgetset.InfoListRenderer):
+    """Render ratings column
+
+    This cell supports updating based on hover states and rates items based on
+    the user clicking in the cell.
+    """
+
+    # NOTE: we don't inherit from ListViewRenderer because we handle
+    # everything ourselves, without using the Layout class
+
     ICON_STATES = ('yes', 'no', 'probably', 'unset')
     ICON_HORIZONTAL_SPACING = 2
+    ICON_COUNT = 5
+
     def __init__(self):
-        ListViewRenderer.__init__(self)
+        widgetset.InfoListRenderer.__init__(self)
         self.want_hover = True
         self.icon = {}
         # TODO: to support scaling, we need not to check min_height until after
@@ -1154,37 +1239,57 @@ class RatingRenderer(ListViewRenderer):
             path = resources.path('images/star-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path,
                                (self.icon_width, self.icon_height))
-        self.icon_width += self.ICON_HORIZONTAL_SPACING
-        # TODO: find what makes the following +4 necessary
-        self.width = self.min_width = int(self.icon_width * 5) + 4
+        self.min_width = self.width = int(self.icon_width * self.ICON_COUNT)
         self.hover = None
 
-    def layout_manager(self, layout_manager):
-        hbox = cellpack.HBox()
-        self.pack_icons(hbox)
-        return hbox
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        hotspot_index = self.icon_index_at_x(x)
+        if hotspot_index is not None:
+            return "rate:%s" % hotspot_index
+        else:
+            return None
+
+    def icon_index_at_x(self, x):
+        """Calculate the index of the icon
+
+        :param x: x-coordinate to use
+        :returns: index of the icon at x, or None
+        """
+        # use icon_width + ICON_HORIZONTAL_SPACING to calculate which star we
+        # are over.  Don't worry about the y-coord
+
+        # make each icon's area include the spacing around it
+        icon_width_with_pad = self.icon_width + self.ICON_HORIZONTAL_SPACING
+        # translate x so that x=0 is to the left of the cell, based on
+        # ICON_HORIZONTAL_SPACING.  This effectively centers the spacing on
+        # each icon, rather than having the spacing be to the right.
+        x += int(self.ICON_HORIZONTAL_SPACING / 2)
+        # finally, calculate which icon is hit
+        if 0 <= x < icon_width_with_pad * self.ICON_COUNT:
+            return x // icon_width_with_pad
+        else:
+            return None
+
+    def get_size(self, style, layout_manager):
+        return self.width, self.icon_height
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if hover:
-            y = hover[1]
-            y = self.height / 2
-            hover = self.hotspot_test(None, layout_manager,
-                                      hover[0], y, self.width, self.height)
-            if hover is not None:
-                hover = int(hover.split(':', 1)[1])
-        self.hover = hover
-        packing = self.layout_manager(layout_manager)
-        packing.render_layout(context)
-
-    def pack_icons(self, hbox):
-        for i in range(5):
+            self.hover = self.icon_index_at_x(hover[0])
+        else:
+            self.hover = None
+        x_pos = 0
+        y_pos = int((context.height - self.icon_height) / 2)
+        for i in xrange(self.ICON_COUNT):
             icon = self._get_icon(i)
-            alignment = cellpack.Alignment(icon,
-                yalign=0.5, yscale=0.0, xalign=0.5, xscale=0,
-                min_width=self.icon_width, min_height=self.icon_height)
-            hbox.pack(alignment)
+            icon.draw(context, x_pos, y_pos, icon.width, icon.height)
+            x_pos += self.icon_width + self.ICON_HORIZONTAL_SPACING
 
     def _get_icon(self, i):
+        """Get the ith rating icon.
+
+        :returns: ImageSurface
+        """
         # yes/no for explicit ratings; maybe/no for hover ratings;
         # probably/no for auto ratings; unset when no explicit, auto, or hover rating
         if self.hover is not None:
@@ -1205,138 +1310,74 @@ class RatingRenderer(ListViewRenderer):
                     state = 'unset'
             else:
                 state = 'unset'
-        name = "rate:"+str(i)
-        return cellpack.Hotspot(name, self.icon[state])
+        return self.icon[state]
 
-class ETARenderer(ListViewRenderer):
-    right_aligned = True
+class StateCircleRenderer(widgetset.InfoListRenderer):
+    """Renderer for the state circle column."""
 
-    def _setup_layout_manager(self):
-        self.text = ''
-        if self.info.state == 'downloading':
-            eta = self.info.download_info.eta
-            if eta > 0:
-                self.text = displaytext.time_string(self.info.download_info.eta)
+    # NOTE: we don't inherit from ListViewRenderer because we handle
+    # everything ourselves, without using the Layout class
 
-class TorrentDetailsRenderer(ListViewRenderer):
-    right_aligned = False
-
-    def _setup_layout_manager(self):
-        self.text = ''
-        if not self.info.download_info:
-            return
-
-        if not self.info.download_info.torrent:
-            self.text = _("N/A")
-            return
-
-        details = _(
-            "S: %(seeders)s  |  "
-            "L: %(leechers)s  |  "
-            "UR: %(up_rate)s  |  "
-            "UT: %(up_total)s  |  "
-            "DR: %(down_rate)s  |  "
-            "DT: %(down_total)s  |  "
-            "R: %(ratio).2f",
-            {"seeders": self.info.seeders,
-             "leechers": self.info.leechers,
-             "up_rate": self.info.up_rate,
-             "up_total": self.info.up_total,
-             "down_rate": self.info.down_rate,
-             "down_total": self.info.down_total,
-             "ratio": self.info.up_down_ratio})
-        self.text = details
-
-class DownloadRateRenderer(ListViewRenderer):
-    right_aligned = True
-    def _setup_layout_manager(self):
-        if self.info.state == 'downloading':
-            self.text = displaytext.download_rate(self.info.download_info.rate)
-        else:
-            self.text = ''
-
-class SizeRenderer(ListViewRenderer):
-    right_aligned = True
-
-    def _setup_layout_manager(self):
-        self.text = displaytext.size_string(self.info.size)
-
-class ArtistRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = self.info.artist
-
-class AlbumRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = self.info.album
-
-class TrackRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = displaytext.integer(self.info.track)
-
-class YearRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = displaytext.integer(self.info.year)
-
-class GenreRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = self.info.genre
-
-class DateAddedRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = displaytext.date_slashes(self.info.date_added)
-
-class LastPlayedRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = displaytext.date_slashes(self.info.last_played)
-
-class StateCircleRenderer(ListViewRenderer):
     ICON_STATES = ('normal', 'unplayed', 'new', 'playing', 'downloading')
     ICON_PROPORTIONS = 7.0 / 9.0 # width / height
     min_width = 7
-    def __init__(self):
-        ListViewRenderer.__init__(self)
-        self.icon = {}
-        self.set_up = False
+    min_height = 9
 
-    def setup(self, layout_manager):
-        self.set_up = True
+    def __init__(self):
+        widgetset.InfoListRenderer.__init__(self)
         self.icon = {}
-        self.get_size(None, layout_manager)
-        self.width = int(self.height / 2.0)
-        self.icon_height = int(self.width / self.ICON_PROPORTIONS + 0.5)
+        self.setup_size = (-1, -1)
+
+    def setup_icons(self, width, height):
+        """Create icons that will fill our allocated area correctly. """
+        if (width, height) == self.setup_size:
+            return
+
+        print "SETUP: ", width, height
+
+        icon_width = int(height / 2.0)
+        icon_height = int((icon_width / self.ICON_PROPORTIONS) + 0.5)
         # FIXME: by the time min_width is set below, it doesn't matter --Kaz
-        self.min_width = self.width
+        self.width = self.min_width = icon_width
+        self.height = icon_height
+        icon_dimensions = (icon_width, icon_height)
         for state in StateCircleRenderer.ICON_STATES:
             path = resources.path('images/status-icon-%s.png' % state)
-            self.icon[state] = imagepool.get_surface(path,
-                    (self.width, self.icon_height))
+            self.icon[state] = imagepool.get_surface(path, icon_dimensions)
+        self.setup_size = (width, height)
+
+    def get_size(self, style, layout_manager):
+        return self.min_width, self.min_height
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         return None
 
-    def layout_manager(self, layout_manager):
-        if not self.set_up:
-            self.setup(layout_manager)
-        return layout_manager
-
     def render(self, context, layout_manager, selected, hotspot, hover):
-        layout_manager = self.layout_manager(layout_manager)
+        self.setup_icons(context.width, context.height)
+        icon = self.calc_icon()
+        # center icon vertically and horizontally
+        x = int((context.width - self.width) / 2)
+        y = int((context.height - self.height) / 2)
+        icon.draw(context, x, y, icon.width, icon.height)
+
+    def calc_icon(self):
+        """Get the icon we should show.
+
+        :returns: ImageSurface to display
+        """
         if self.info.state == 'downloading':
-            icon = self.icon['downloading']
+            return self.icon['downloading']
         elif self.info.is_playing:
-            icon = self.icon['playing']
+            return self.icon['playing']
         elif self.info.state == 'newly-downloaded':
-            icon = self.icon['unplayed']
+            return self.icon['unplayed']
         elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
-            icon = self.icon['new']
+            return self.icon['new']
         elif (not self.info.item_viewed and not self.info.expiration_date and
                 not self.info.is_external and not self.info.downloaded):
-            icon = self.icon['new']
+            return self.icon['new']
         else:
-            icon = self.icon['normal']
-        x = int((context.width - self.width) / 2)
-        y = int((context.height - self.icon_height) / 2)
-        icon.draw(context, x, y, self.width, self.icon_height)
+            return self.icon['normal']
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
