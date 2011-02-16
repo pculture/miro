@@ -45,6 +45,7 @@ def initialize():
     global ManualFeedImpl, ChannelFolder, PlaylistFolder
     global PlaylistFolderItemMap, ChannelGuide, Item, FileItem, IconCache
     global SavedPlaylist, PlaylistItemMap, TabOrder, ThemeHistory
+    global messages
 
     from miro.downloader import RemoteDownloader
     from miro.feed import Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl, \
@@ -58,3 +59,4 @@ def initialize():
     from miro.playlist import SavedPlaylist, PlaylistItemMap
     from miro.tabs import TabOrder
     from miro.theme import ThemeHistory
+    from miro import messages

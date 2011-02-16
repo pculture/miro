@@ -98,6 +98,41 @@ class FilteredListMixin(object):
         self.send_model_changed()
         self.check_for_empty_list()
 
+class ProgressTrackingListMixin(object):
+    """Controller that cares about item metadata extraction progress."""
+    def __init__(self):
+        self.postponed = None
+
+    def start_metadata_progress(self, remaining, eta, new):
+        meter = self.widget.get_progress_meter()
+        if meter is None:
+            # got progress before widget
+            self.postponed = (remaining, eta, new)
+        else:
+            meter.start(eta, new)
+            self.postponed = None
+
+    def update_metadata_progress(self, remaining, eta, new):
+        meter = self.widget.get_progress_meter()
+        if meter is None:
+            self.start_metadata_progress(remaining, eta, new)
+        else:
+            meter.update(remaining, eta, new)
+
+    def finish_metadata_progress(self):
+        meter = self.widget.get_progress_meter()
+        if meter is None:
+            # progress started and ended before we had a widget
+            self.postponed = None
+        else:
+            meter.finish()
+
+    def _init_widget(self):
+        """Hook that handles any updates that were waiting for the widget."""
+        super(ProgressTrackingListMixin, self)._init_widget()
+        if self.postponed is not None:
+            self.start_metadata_progress(*self.postponed)
+
 class ItemListController(object):
     """Base class for controllers that manage list of items.
     
@@ -755,10 +790,12 @@ class SearchController(SimpleItemListController):
         if search_manager.text != '' and result_count == 0:
             self.widget.set_list_empty_mode(True)
 
-class AudioVideoItemsController(SimpleItemListController, FilteredListMixin):
+class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
+        ProgressTrackingListMixin):
     def __init__(self):
         SimpleItemListController.__init__(self)
         FilteredListMixin.__init__(self)
+        ProgressTrackingListMixin.__init__(self)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
@@ -828,6 +865,7 @@ class ItemListControllerManager(object):
     def __init__(self):
         self.displayed = None
         self.all_controllers = set()
+        self.controller_for_type = {}
 
     def controller_displayed(self, item_list_controller):
         self.displayed = item_list_controller
@@ -843,9 +881,17 @@ class ItemListControllerManager(object):
 
     def controller_created(self, item_list_controller):
         self.all_controllers.add(item_list_controller)
+        if item_list_controller.type == 'music':
+            self.controller_for_type['audio'] = item_list_controller
+        elif item_list_controller.type == 'videos':
+            self.controller_for_type['video'] = item_list_controller
 
     def controller_destroyed(self, item_list_controller):
         self.all_controllers.remove(item_list_controller)
+        if item_list_controller.type == 'music':
+            del self.controller_for_type['audio']
+        elif item_list_controller.type == 'videos':
+            del self.controller_for_type['video']
 
     def play_selection(self, presentation_mode='fit-to-bounds'):
         if self.displayed is not None:
@@ -864,3 +910,18 @@ class ItemListControllerManager(object):
     def undisplay_controller(self):
         if self.displayed:
             self.controller_no_longer_displayed(self.displayed)
+
+    def start_metadata_progress(self, mediatype, remaining, eta, new):
+        controller = self.controller_for_type.get(mediatype)
+        assert controller is not None
+        controller.start_metadata_progress(remaining, eta, new)
+
+    def finish_metadata_progress(self, mediatype):
+        controller = self.controller_for_type.get(mediatype)
+        assert controller is not None
+        controller.finish_metadata_progress()
+
+    def update_metadata_progress(self, mediatype, remaining, eta, new):
+        controller = self.controller_for_type.get(mediatype)
+        assert controller is not None
+        controller.update_metadata_progress(remaining, eta, new)

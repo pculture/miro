@@ -46,6 +46,7 @@ from miro import util
 from miro import fileutil
 from miro import filetypes
 from miro import coverart
+from miro import models
 from miro.fileobject import FilenameType
 from miro.plat.utils import (kill_process, movie_data_program_info,
                              thread_body)
@@ -140,6 +141,9 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.in_progress = set()
         self.queue = Queue.Queue()
         self.thread = None
+        self.unnotified = {'audio':0, 'video':0}
+        self.remaining = {'audio':0, 'video':0}
+        self.displayed = {'audio': False, 'video': False}
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
@@ -147,6 +151,44 @@ class MovieDataUpdater(signals.SignalEmitter):
                                        args=[self.thread_loop])
         self.thread.setDaemon(True)
         self.thread.start()
+
+    def update_progress(self, item_, add_or_remove):
+        filename = item_.get_filename()
+        if filetypes.is_video_filename(filename):
+            mediatype = 'video'
+        elif filetypes.is_audio_filename(filename):
+            mediatype = 'audio'
+        else:
+            # I don't think it's useful to show progress for "Other" items
+            return
+        self.remaining[mediatype] += add_or_remove
+        self.unnotified[mediatype] += add_or_remove
+        remaining = self.remaining[mediatype]
+        unnotified = self.unnotified[mediatype]
+        displayed = self.displayed[mediatype]
+        news = None
+        if remaining > 0 and not displayed:
+            eta = remaining
+            news = models.messages.MetadataProgressStart(mediatype,
+                   remaining, eta)
+            self.displayed[mediatype] = True
+            self.unnotified[mediatype] = 0
+        elif remaining == 0:
+            news = models.messages.MetadataProgressFinish(mediatype)
+            self.displayed[mediatype] = False
+            self.unnotified[mediatype] = 0
+        elif add_or_remove > 0 or unnotified < -9:
+            # Most of the time, we won't get any added items after we start -
+            # but whenever we do, that will affect progress.
+            # TODO: handle that case with batched signal
+            # Otherwise, just send re-estimates every 10 items.
+            eta = remaining
+            added = max(add_or_remove, 0)
+            news = models.messages.MetadataProgressUpdate(mediatype,
+                   remaining, eta, added)
+            self.unnotified[mediatype] = 0
+        if news is not None:
+            news.send_to_frontend()
 
     def thread_loop(self):
         while not self.in_shutdown:
@@ -162,18 +204,19 @@ class MovieDataUpdater(signals.SignalEmitter):
             duration = -1
             metadata = {}
             cover_art = FilenameType("")
-            file_info = self.read_metadata(mdi.item)
+            item_ = mdi.item
+            file_info = self.read_metadata(item_)
             (mime_mediatype, duration, metadata, cover_art) = file_info
             if duration > -1 and mime_mediatype is not 'video':
                 mediatype = 'audio'
-                screenshot = mdi.item.screenshot or FilenameType("")
+                screenshot = item_.screenshot or FilenameType("")
                 if cover_art is None:
                     logging.debug("moviedata: mutagen %s %s", duration, mediatype)
                 else:
                     logging.debug("moviedata: mutagen %s %s %s",
                                   duration, cover_art, mediatype)
 
-                self.update_finished(mdi.item, duration, screenshot, mediatype,
+                self.update_finished(item_, duration, screenshot, mediatype,
                                      metadata, cover_art)
             else:
                 try:
@@ -206,14 +249,14 @@ class MovieDataUpdater(signals.SignalEmitter):
                     logging.debug("moviedata: mdp %s %s %s", duration, screenshot,
                                   mediatype)
 
-                    self.update_finished(mdi.item, duration, screenshot,
+                    self.update_finished(item_, duration, screenshot,
                                          mediatype, metadata, cover_art)
                 except StandardError:
                     if self.in_shutdown:
                         break
                     signals.system.failed_exn(
                         "When running external movie data program")
-                    self.update_finished(mdi.item, -1, None, None, metadata,
+                    self.update_finished(item_, -1, None, None, metadata,
                                          cover_art)
             self.emit('end-loop')
 
@@ -459,6 +502,7 @@ class MovieDataUpdater(signals.SignalEmitter):
     def update_finished(self, item, duration, screenshot, mediatype, metadata,
                         cover_art):
         self.in_progress.remove(item.id)
+        self.update_progress(item, -1)
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
@@ -489,6 +533,7 @@ class MovieDataUpdater(signals.SignalEmitter):
 
         self.in_progress.add(item.id)
         self.queue.put(MovieDataInfo(item))
+        self.update_progress(item, 1)
 
     def shutdown(self):
         self.in_shutdown = True

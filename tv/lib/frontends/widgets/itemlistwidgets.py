@@ -1104,6 +1104,72 @@ class EmptyListDescription(widgetset.Alignment):
         self.label.set_size_request(250, -1)
         self.add(self.label)
 
+class ProgressToolbar(widgetset.HBox):
+    """Toolbar displayed above ItemViews to show the progress of reading new
+    metadata, communicating with a device, and similar time-consuming
+    operations.
+
+    Assumes current ETA is accurate; keeps track of its own elapsed time.
+    Displays progress as: elapsed / (elapsed + ETA)
+
+    Rather than have to send a message every time an item is found or examined,
+    we cheat a bit: the backend sends signals for batches of items
+    (currently 10), and we interpolate the current state based on ETA.
+    """
+    def __init__(self, mediatype):
+        widgetset.HBox.__init__(self)
+        self.mediatype = mediatype
+        loading_icon = widgetset.AnimatedImageDisplay(
+                       resources.path('images/load-indicator.gif'))
+        self.label = widgetset.Label()
+        self.meter = widgetutil.HideableWidget(loading_icon)
+        self.label_widget = widgetutil.HideableWidget(self.label)
+        self.pack_start(widgetutil.align(
+                        self.label_widget, 1, 0.5, 1, 0, 0, 0, 280, 10),
+                        expand=False)
+        self.pack_start(widgetutil.align_left(
+                        self.meter, 0, 0, 0, 200), expand=True)
+        self.elapsed = None
+        self.eta = None
+        self.total = None
+        self.remaining = None
+
+    def _update_label(self):
+        file_description = 'files'
+        if self.mediatype is not None:
+            file_description = self.mediatype + ' ' + file_description
+        text = "Importing {finished} of {total} {file_description}".format(
+                finished=self.total-self.remaining, total=self.total,
+                file_description=file_description)
+        self.label.set_text(text)
+
+    def start(self, seconds, items):
+        """Set an initial time estimate, reset any previous progress to 0, and
+        begin animation. If estimate == None, just shows a bouncy bar.
+        """
+        self.elapsed = 0
+        self.total = 0
+        self.update(items, seconds, items)
+        self.label_widget.show()
+        self.meter.show()
+
+    def finish(self):
+        """Fast-forward through any remaining progress and then hide."""
+        self.update(0, 0.1, 0)
+        # TODO: delay disappearance until bar finishes
+        self.label_widget.hide()
+        self.meter.hide()
+
+    def update(self, remaining, seconds, new):
+        """Correct an existing time estimate. Bar will wait for progress to
+        catch up to estimate rather than move backwards.
+        """
+        self.eta = seconds
+        self.total += new
+        self.remaining = remaining
+        # TODO: display eta
+        self._update_label()
+
 class ItemContainerWidget(widgetset.VBox):
     """A Widget for displaying objects that contain items (feeds,
     playlists, folders, downloads tab, etc).
@@ -1114,7 +1180,7 @@ class ItemContainerWidget(widgetset.VBox):
     :attribute toolbar: HeaderToolbar for the widget
     """
 
-    def __init__(self, toolbar, view):
+    def __init__(self, toolbar, view, mediatype=None):
         widgetset.VBox.__init__(self)
         self.vbox = {}
         standard_view = WidgetStateStore.get_standard_view_type()
@@ -1124,9 +1190,11 @@ class ItemContainerWidget(widgetset.VBox):
         self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
+        self.progress_toolbar = ProgressToolbar(mediatype)
         self.toolbar = toolbar
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
+        self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()
         self.pack_start(self.background, expand=True)
         self.pack_start(self.statusbar_vbox)
@@ -1154,3 +1222,7 @@ class ItemContainerWidget(widgetset.VBox):
             else:
                 self.background.add(self.vbox[self.selected_view])
             self.list_empty_mode = enabled
+
+    def get_progress_meter(self):
+        """Return a ProgressToolbar attached to the display."""
+        return self.progress_toolbar

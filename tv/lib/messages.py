@@ -1646,3 +1646,21 @@ class FeedlessDownloadStarted(FrontendMessage):
     subscribe link was clicked.
     """
     pass
+
+class MetadataProgressStart(FrontendMessage):
+    def __init__(self, mediatype, remaining, eta):
+        self.mediatype = mediatype
+        self.remaining = remaining
+        self.eta = eta
+        self.new = self.remaining
+
+class MetadataProgressFinish(FrontendMessage):
+    def __init__(self, mediatype):
+        self.mediatype = mediatype
+
+class MetadataProgressUpdate(FrontendMessage):
+    def __init__(self, mediatype, remaining, eta, new):
+        self.mediatype = mediatype
+        self.remaining = remaining
+        self.eta = eta
+        self.new = new
