@@ -163,6 +163,7 @@ class Renderer:
         self.playbin = None
         self.bus = None
         self.watch_ids = []
+        self.enabled_track = None
 
     def build_playbin(self):
         self.playbin = gst.element_factory_make("playbin2", "player")
@@ -537,6 +538,8 @@ class VideoRenderer(Renderer):
         return tracks
 
     def get_enabled_subtitle_track(self):
+        if not self.playbin:
+            return None
         if not self.supports_subtitles:
             return None
         if self.enabled_track is not None:
