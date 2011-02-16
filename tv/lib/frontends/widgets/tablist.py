@@ -1154,7 +1154,6 @@ class TabListBox(widgetset.Scroller):
 
     def build_vbox(self):
         tlm = app.tab_list_manager
-        self.header_left_pad = 10
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.library_tab_list.view)
         vbox.pack_start(tlm.static_tab_list.view)
