@@ -43,7 +43,7 @@ def file_path_xlat(path):
         if not path.startswith(file_url_bits):
             return None
         path = urllib.url2pathname(path[len(file_url_bits):])
-        return path
+        return path.decode('utf8')
     # bad path catchall
     except StandardError:
         return None
