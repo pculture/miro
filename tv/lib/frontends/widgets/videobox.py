@@ -469,6 +469,11 @@ class VideoBox(style.LowerBox):
         self.selected_tabs = app.tab_list_manager.selected_tabs
 
     def on_title_clicked(self, button):
+        if app.playback_manager.is_playing and not (
+            app.playback_manager.is_playing_audio or
+            app.playback_manager.detached_window):
+            # playing a video in the app, so don't bother
+            return
         tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
         app.tab_list_manager._select_from_tab_list(self.selected_tab_list,
                                                    tab_iter)
