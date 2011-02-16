@@ -250,6 +250,26 @@ class ItemView(widgetset.TableView):
         if self.scroll_pos is not None:
             self.emit('scroll-position-changed', self.scroll_pos)
 
+class SorterWidgetOwner(object):
+    """Mixin for objects that need to handle a set of ascending/descending sort
+    indicators.
+    """
+    def __init__(self):
+        self.create_signal('sort-changed')
+
+    def on_sorter_clicked(self, widget, sort_key):
+        ascending = not (widget.get_sort_indicator_visible() and
+                widget.get_sort_order_ascending())
+        self.emit('sort-changed', sort_key, ascending)
+
+    def change_sort_indicator(self, sort_key, ascending):
+        for widget_sort_key, widget in self.sorter_widget_map.iteritems():
+            if widget_sort_key == sort_key:
+                widget.set_sort_order(ascending)
+                widget.set_sort_indicator_visible(True)
+            else:
+                widget.set_sort_indicator_visible(False)
+
 class StandardView(ItemView):
     """TableView that displays a list of items using the standard
     view.
@@ -274,7 +294,7 @@ class StandardView(ItemView):
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
 
-class ListView(ItemView):
+class ListView(ItemView, SorterWidgetOwner):
     """TableView that displays a list of items using the list view."""
     COLUMN_RENDERERS = {
         'state': style.StateCircleRenderer,
@@ -301,13 +321,13 @@ class ListView(ItemView):
     def __init__(self, item_list,
             columns_enabled, column_widths, scroll_pos, selection):
         ItemView.__init__(self, item_list, scroll_pos, selection)
+        SorterWidgetOwner.__init__(self)
         self.column_widths = {}
-        self.create_signal('sort-changed')
         self.create_signal('columns-enabled-changed')
         self.create_signal('column-widths-changed')
         self._column_name_to_column = {}
+        self.sorter_widget_map = self._column_name_to_column
         self._column_by_label = {}
-        self._current_sort_column = None
         self._real_column_widths = {}
         self.columns_enabled = []
         self.set_show_headers(True)
@@ -404,7 +424,7 @@ class ListView(ItemView):
             if pad:
                 self.column_widths[column_name] += self.COLUMN_PADDING
             column.set_width(renderer.min_width)
-        column.connect_weak('clicked', self._on_column_clicked, column_name)
+        column.connect_weak('clicked', self.on_sorter_clicked, column_name)
         self._column_name_to_column[column_name] = column
         self.add_column(column)
 
@@ -433,23 +453,6 @@ class ListView(ItemView):
                 column = self._column_name_to_column[name]
                 column.set_width(width)
                 self._real_column_widths[name] = int(column.get_width())
-
-    def _on_column_clicked(self, column, column_name):
-        ascending = not (column.get_sort_indicator_visible() and
-                column.get_sort_order_ascending())
-        self.emit('sort-changed', column_name, ascending)
-
-    def change_sort_indicator(self, column_name, ascending):
-        if column_name is None:
-            # not sorted by a column - e.g. PlaylistSort
-            new_sort_column = None
-        else:
-            new_sort_column = self._column_name_to_column[column_name]
-            new_sort_column.set_sort_indicator_visible(True)
-            new_sort_column.set_sort_order(ascending)
-        if not self._current_sort_column in (new_sort_column, None):
-            self._current_sort_column.set_sort_indicator_visible(False)
-        self._current_sort_column = new_sort_column
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to
@@ -807,7 +810,7 @@ class FeedToolbar(DisplayToolbar):
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', self.autodownload_options[option][0])
 
-class HeaderToolbar(widgetset.Background):
+class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
     """Toolbar used to sort items and switch views.
 
     Signals:
@@ -826,6 +829,7 @@ class HeaderToolbar(widgetset.Background):
     """
     def __init__(self):
         widgetset.Background.__init__(self)
+        SorterWidgetOwner.__init__(self)
         self.create_signals()
 
         self._button_hbox = widgetset.HBox()
@@ -852,19 +856,17 @@ class HeaderToolbar(widgetset.Background):
 
         self.add(self._hbox)
 
-        self._current_sort_key = 'date'
-        self._ascending = False
         self._button_map = {}
+        self.sorter_widget_map = self._button_map
         self._make_button(_('Name'), 'name')
         self._make_button(_('Date'), 'date')
         self._make_button(_('Size'), 'size')
         self._make_button(_('Time'), 'length')
-        self._button_map['date'].set_sort_state(SortBarButton.SORT_DOWN)
+        self._button_map['date'].set_sort_order(ascending=False)
 
         self.filter = WidgetStateStore.get_view_all_filter()
 
     def create_signals(self):
-        self.create_signal('sort-changed')
         self.create_signal('list-view-clicked')
         self.create_signal('normal-view-clicked')
 
@@ -885,40 +887,11 @@ class HeaderToolbar(widgetset.Background):
             self._button_hbox_container.hide()
             self.view_switch.set_active('list-view')
 
-    def change_sort_indicator(self, column_name, ascending):
-        for name, button in self._button_map.iteritems():
-            if name == column_name:
-                if ascending:
-                    button.set_sort_state(SortBarButton.SORT_UP)
-                else:
-                    button.set_sort_state(SortBarButton.SORT_DOWN)
-            else:
-                button.set_sort_state(SortBarButton.SORT_NONE)
-        self._ascending = ascending
-
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
-        button.connect('clicked', self._on_button_clicked, sort_key)
+        button.connect('clicked', self.on_sorter_clicked, sort_key)
         self._button_map[sort_key] = button
         self._button_hbox.pack_start(button, padding=4)
-
-    def _on_button_clicked(self, button, sort_key):
-        if self._current_sort_key == sort_key:
-            self._ascending = not self._ascending
-        else:
-            # we want sort-by-name to default to alphabetical order
-            if sort_key == "name":
-                self._ascending = True
-            else:
-                self._ascending = False
-            old_button = self._button_map[self._current_sort_key]
-            old_button.set_sort_state(SortBarButton.SORT_NONE)
-            self._current_sort_key = sort_key
-        if self._ascending:
-            button.set_sort_state(SortBarButton.SORT_UP)
-        else:
-            button.set_sort_state(SortBarButton.SORT_DOWN)
-        self.emit('sort-changed', self._current_sort_key, self._ascending)
 
     def make_filter_switch(self, *args, **kwargs):
         """Helper method to make a SegmentedButtonsRow that switches between
@@ -1038,18 +1011,26 @@ class ChannelHeaderToolbar(HeaderToolbar):
             self.filter_switch.set_active('view-all')
 
 class SortBarButton(widgetset.CustomButton):
-    SORT_NONE = 0
-    SORT_UP = 1
-    SORT_DOWN = 2
-
     def __init__(self, text):
         widgetset.CustomButton.__init__(self)
         self._text = text
-        self._sort_state = self.SORT_NONE
+        self._enabled = False
+        self._ascending = False
 
-    def set_sort_state(self, sort_state):
-        self._sort_state = sort_state
+    def get_sort_indicator_visible(self):
+        return self._enabled
+
+    def get_sort_order_ascending(self):
+        return self._ascending
+
+    def set_sort_indicator_visible(self, visible):
+        self._enabled = visible
         self.queue_redraw()
+
+    def set_sort_order(self, ascending):
+        self._ascending = ascending
+        if self._enabled:
+            self.queue_redraw()
 
     def size_request(self, layout):
         layout.set_font(0.8, bold=True)
@@ -1059,8 +1040,8 @@ class SortBarButton(widgetset.CustomButton):
     def draw(self, context, layout):
         if ((self.state == 'hover'
              or self.state == 'pressed'
-             or self._sort_state != self.SORT_NONE)):
-            if self._sort_state != self.SORT_NONE:
+             or self._enabled)):
+            if self._enabled:
                 context.set_color((0.29, 0.29, 0.29))
             else:
                 context.set_color((0.7, 0.7, 0.7))
@@ -1077,19 +1058,19 @@ class SortBarButton(widgetset.CustomButton):
         self._draw_triangle(context, text_size[0] + 18)
 
     def _draw_triangle(self, context, left):
+        if not self._enabled:
+            return
         top = int((context.height - 4) / 2)
-        if self._sort_state == self.SORT_DOWN:
+        if self._ascending:
             context.move_to(left, top)
-            context.rel_line_to(6, 0)
-            context.rel_line_to(-3, 4)
-            context.rel_line_to(-3, -4)
-            context.fill()
-        elif self._sort_state == self.SORT_UP:
+            direction = 1
+        else:
             context.move_to(left, top + 4)
-            context.rel_line_to(6, 0)
-            context.rel_line_to(-3, -4)
-            context.rel_line_to(-3, 4)
-            context.fill()
+            direction = -1
+        context.rel_line_to(6, 0)
+        context.rel_line_to(-3, 4 * direction)
+        context.rel_line_to(-3, -4 * direction)
+        context.fill()
 
 class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.
