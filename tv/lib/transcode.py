@@ -27,6 +27,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import errno
 import logging
 import subprocess
 import tempfile
@@ -34,6 +35,7 @@ import re
 import os
 import select
 import sys
+import SocketServer
 import threading
 
 from miro import util
@@ -111,6 +113,17 @@ def needs_transcode(media_file):
 
     return (transcode, (seconds, has_audio, has_video))
 
+class TranscodeSinkServer(SocketServer.TCPServer):
+    pass
+
+class TranscodeRequestHandler(SocketServer.BaseRequestHandler):
+    def handle(self):
+        while True:
+            d = self.request.recv(8192)
+            self.server.obj.data_callback(d)
+            if not d:
+                return
+
 # How does the transcoding pipeline work?
 #
 # A media object that needs to be transcoded is basically represented
@@ -177,7 +190,7 @@ class TranscodeObject(object):
     audio_output_args = ['-f', 'mpegts', '-']
 
     segment_duration = 10
-    segmenter_args = ['-', str(segment_duration)]
+    segmenter_args = [str(segment_duration)]
 
     # Future work: we only have a high watermark, so the transcode job gets
     # throttled when it reaches the high watermark and then starts again
@@ -196,6 +209,12 @@ class TranscodeObject(object):
         # the subtask.  But I guess that's okay.
         setup_ffmpeg_presets()
         self.ffmpeg_handle = self.segmenter_handle = None
+        self.transcode_handle = None
+
+        # NB: Explicitly IPv4, FFmpeg does not understand IPv6.
+        self.sink = TranscodeSinkServer(('127.0.0.1', 0),
+                                           TranscodeRequestHandler)
+        self.sink.obj = self
 
         self.request_path_func = request_path_func
 
@@ -215,13 +234,10 @@ class TranscodeObject(object):
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
-        self.terminate_signal_thread = False
         self.create_playlist()
 
     def __del__(self):
         self.shutdown()
-        for fd in self.r, self.w, self.child_r, self.child_w:
-            os.close(fd)
 
     def create_playlist(self):
         self.playlist = ''
@@ -269,13 +285,13 @@ class TranscodeObject(object):
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
+        self.tmp_file = tempfile.TemporaryFile()
         # OK, you can restart the transcode by calling transcode()
         return True
 
     def transcode(self):
         try:
-            self.r, self.child_w = os.pipe()
-            self.child_r, self.w = os.pipe()
+            self.r, self.w = util.make_dummy_socket_pair()
             ffmpeg_exe = get_ffmpeg_executable_path()
             kwargs = {"stdin": open(os.devnull, 'rb'),
                       "stdout": subprocess.PIPE,
@@ -305,11 +321,11 @@ class TranscodeObject(object):
             #segmenter_exe = get_segmenter_executable_path()
             segmenter_exe = '/Users/glee/segmenter'
             args = [segmenter_exe]
-            child_fds = [str(self.child_r), str(self.child_w)]
-            args += TranscodeObject.segmenter_args + child_fds
-            kwargs = {"stdout": subprocess.PIPE,
+            address, port = self.sink.server_address
+            args += TranscodeObject.segmenter_args + [str(port)]
+            kwargs = {"stdout": open(os.devnull, 'rb'),
                       "stdin": self.ffmpeg_handle.stdout,
-                      "stderr": open(os.devnull, 'wb'),
+                      #"stderr": open(os.devnull, 'wb'),
                       "startupinfo": util.no_console_startupinfo()}
             # XXX Can't use this - need to pass on the child fds
             #if os.name != "nt":
@@ -317,11 +333,11 @@ class TranscodeObject(object):
     
             print 'Running command ', ' '.join(args)
             self.segmenter_handle = subprocess.Popen(args, **kwargs)
-    
-            self.thread = threading.Thread(target=thread_body,
-                                           args=[self.signal_thread],
-                                           name="Transcode Signaling")
-            self.thread.start()
+   
+            self.sink_thread = threading.Thread(target=thread_body,
+                                                args=[self.segmenter_consumer],
+                                                name="Segmenter Consumer")
+            self.sink_thread.start()
 
             return True
         except StandardError:
@@ -329,86 +345,37 @@ class TranscodeObject(object):
             logging.error('ERROR: %s %s' % (str(typ), str(value)))
             return False
 
-    def signal_thread(self):
-        i = self.start_chunk
-        eof = False
-        while i < self.nchunks and not self.terminate_signal_thread:
-            data = ''
-            rset = [self.segmenter_handle.stdout, self.r]
-            while True:
-                #print 'SELECT'
-                r, w, x = select.select(rset, [], [])
-                # 3 cases when we wake up and r is not empty:
-                # both are readable: read segmenter handle, read self.r then
-                # continue to next file.
-                #
-                # segmenter handle only: read segmenter handle then select
-                # again
-                #
-                # self.r only: read self.r and then continue to next file
-                next_file = False
-                #if self.segmenter_handle.stdout in r:
-                #    print 'SEGMENTER DATA READABLE'
-                #if self.r in r:
-                #    print 'CONTROL PIPE READABLE'
-    
-                if self.segmenter_handle.stdout in r:
-                    # Bounded read, stdout doesn't close until the program 
-                    # does!  Also, do a manual read because the stdout file
-                    # object is broken and won't return a short read.
-                    d = os.read(self.segmenter_handle.stdout.fileno(), 1024)
-                    # EOF so we can break without normal restart throttle proto
-                    if not d:
-                        eof = True
-                        break
-                    data += d
-                if self.r in r:
-                    throwaway = os.read(self.r, 1024)
-                    next_file = True
-                if next_file:
-                    break
-            if self.terminate_signal_thread:
-                return
-            self.chunk_lock.acquire()
-            # Housekeeping if next_file is set...
-            if next_file:
-                # If this was an unthrottle request, set it so and then
-                # just continue - there isn't actually any data available.
-                if self.throttled:
-                    print 'UNTHROTTLED'
-                    self.throttled = False
-                    os.write(self.w, 'b')
-                    continue
-                if (len(self.chunk_buffer) + 1 == 
-                  TranscodeObject.buffer_high_watermark):
-                    print 'THROTTLED'
-                    self.throttled = True
-                else:
-                    print 'QUEUE NOT YET FULL'
-                    os.write(self.w, 'b')
-            tmpf = tempfile.TemporaryFile()
-            tmpf.write(data)
-            tmpf.flush()
-            tmpf.seek(0, os.SEEK_SET)
-            print 'APPEND', tmpf
-            self.chunk_buffer.append(tmpf)
-            i += 1
-            self.chunk_lock.release()
+    def data_callback(self, d):
+        self.tmp_file.write(d)
+        if not d:
+            self.tmp_file.flush()
+            self.tmp_file.seek(0, os.SEEK_SET)
+            print 'APPEND', self.tmp_file
+            with self.chunk_lock:
+                self.chunk_buffer.append(self.tmp_file)
             # Tell consumer there is stuff available
             self.chunk_sem.release()
-            # If the transcode job has finished then run the shutdown 
-            # mechanism.
-            if eof:
-                # Since we are in the signaling thread, we don't want to 
-                # call shutdown() because that messes with the signaling
-                # thread.  This is just to make sure they really are gone...
-                if self.ffmpeg_handle:
-                    self.ffmpeg_handle.kill()
-                if self.segmenter_handle:
-                    self.segmenter_handle.kill()
-                self.ffmpeg_handle = self.segmenter_handle = None
-                del self.thread
-                return
+            # ready for next segment
+            self.tmp_file = tempfile.TemporaryFile()
+
+    # Data consumer from segmenter
+    def segmenter_consumer(self):
+        while True:
+            try:
+                print 'selecting'
+                r, w, x = select.select([self.sink.fileno(), self.r], [], [])
+                if self.r in r:
+                    print 'BYE BYE ...'
+                    self.sink_thread = None
+                    return
+                # XXX throttle
+                self.sink.handle_request()
+            except select.error, (err, errstring):
+                if err == errno.EINTR:
+                    continue
+                raise
+            except StandardError:
+                raise
 
     def get_chunk(self):
         # XXX: be sure to add a check to see whether there is an active
@@ -443,9 +410,11 @@ class TranscodeObject(object):
             self.ffmpeg_handle = None
         if self.segmenter_handle:
             self.segmenter_handle.kill()
-            self.terminate_signal_thread = True
-            # Wake up the signaling thread.
-            os.write(self.child_w, 'b')
-            self.thread.join()
-            self.terminate_signal_thread = False
             self.segmenter_handle = None
+        # Send regardless: transcode() creates a new control socket so
+        # they shouldn't be mucked up.
+        # XXX band-aid
+        try:
+            self.w.send('b')
+        except AttributeError:
+            pass
