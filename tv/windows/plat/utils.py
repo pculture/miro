@@ -42,10 +42,13 @@ import urllib
 
 from miro import app
 from miro import prefs
+from miro.gtcache import gettext as _
+from miro.importmedia import import_itunes_path
 from miro.plat import config as plat_config
 from miro.plat import prelogger
 from miro.plat import proxyfind
 from miro.plat import resources
+from miro.plat import specialfolders
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
 from miro import fileutil
@@ -452,9 +455,10 @@ def get_cookie_path():
         app.config.get(prefs.SUPPORT_DIRECTORY),
         'cookies.txt')
 
-# XXX: expand me: pick up Windows media players.
 def get_plat_media_player_name_path():
-    return ("Windows Media Player", None)
+    itunes_path = os.path.join(specialfolders.get_special_folder('My Music'),
+                               'iTunes')
+    return (_('iTunes'), import_itunes_path(itunes_path))
 
 def thread_body(func, *args, **kwargs):
     func(*args, **kwargs)
