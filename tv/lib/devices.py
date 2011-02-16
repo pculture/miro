@@ -678,21 +678,20 @@ class DeviceItem(object):
             return resources.path("images/thumb-default-video.png")
 
     def _migrate_thumbnail(self):
-        if self.screenshot:
-            if self.screenshot.startswith(app.config.get(
-                    prefs.ICON_CACHE_DIRECTORY)):
+        icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        if self.screenshot is not None:
+            if self.screenshot.startswith(icon_cache_directory):
                 # migrate the screenshot onto the device
                 basename = os.path.basename(self.screenshot)
                 try:
-                    shutil.copyfile(self.screenshot,
-                                    os.path.join(self.device.mount, '.miro',
-                                                 basename))
+                    new_path = os.path.join(self.device.mount, '.miro', basename)
+                    shutil.copyfile(self.screenshot, new_path)
                 except (IOError, OSError):
                     # error copying the thumbnail, just erase it
                     self.screenshot = None
                 else:
-                    if self.screenshot.startswith(
-                        moviedata.image_directory('extracted')):
+                    extracted = os.path.join(icon_cache_directory, 'extracted')
+                    if self.screenshot.startswith(extracted):
                         # moviedata extracted this for us, so we can remove it
                         try:
                             os.unlink(self.screenshot)
