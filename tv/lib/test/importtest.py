@@ -258,7 +258,7 @@ file_template = """<?xml version="1.0" encoding="UTF-8"?>
 </plist>
 """
 
-class Test_import_itunes(MiroTestCase):
+class TestImportITunes(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         ITUNES_FILE = "iTunes Music Library.xml"
