@@ -94,8 +94,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
     MIN_ICON_WIDTH = 25
     MIN_HEIGHT = 28
     MIN_HEIGHT_TALL = 32
-    TALL_FONT_SIZE = 13.0 / 17
-    FONT_SIZE = 11.0 / 17
+    TALL_FONT_SIZE = 14.0 / 17
+    FONT_SIZE = 13.0 / 17
     BOLD_TITLE = False
 
     def get_size(self, style, layout_manager):
