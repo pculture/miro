@@ -39,7 +39,7 @@ htc_android_device = MultipleDeviceInfo(
 nexus_one = DeviceInfo(u'Nexus One',
                        vendor_id=0x18d1,
                        product_id=0x4e11,
-                       device_name='Google_ Inc.Nexus_One',
+                       device_name='Google, Inc.Nexus One',
                        video_conversion='nexusone',
                        **defaults)
 
