@@ -311,15 +311,27 @@ class MovieDataUpdater(signals.SignalEmitter):
         else:
             return None
 
+    def _str_or_object_to_unicode(self, thing):
+        """Whatever thing is, get a unicode out of it at all costs."""
+        if not isinstance(thing, basestring):
+            if hasattr(thing, '__unicode__'):
+                # object explicitly supports unicode. yay!
+                thing = unicode(thing)
+            else:
+                # unicode(thing) would die if thing had funky chars,
+                # but unicode(thing, errors=FOO) can't be used for objects
+                thing = str(thing)
+        if not isinstance(thing, unicode):
+            # at this point, thing has to be descended from basestring
+            thing = unicode(thing, errors='replace')
+        return thing
+
     def _sanitize_keys(self, tags):
         """Strip useless components and strange characters from tag names
         """
         tags_cleaned = {}
         for key, value in tags.items():
-            if not isinstance(key, basestring):
-                key = str(key)
-            if isinstance(key , str):
-                key = unicode(key, 'utf-8', 'replace')
+            key = self._str_or_object_to_unicode(key)
             if key.startswith('PRIV:'):
                 key = key.split('PRIV:')[1]
             if key.startswith('TXXX:'):
@@ -341,11 +353,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                     value = None
                     break
                 value = value[0]
-            if value:
-                if not isinstance(value, basestring):
-                    value = str(value)
-                if isinstance(value, str):
-                    value = unicode(value, 'utf-8', 'replace')
+            if value is not None:
+                value = self._str_or_object_to_unicode(value)
                 tags_cleaned[key] = value.lstrip()
         return tags_cleaned
 
