@@ -33,6 +33,7 @@ This module contains self-contained utility functions.  It shouldn't import
 any other Miro modules.
 """
 
+import sys
 import itertools
 import os
 import random
@@ -228,8 +229,10 @@ def localhost_family_and_addr():
     This method is aware of ipv6 and tries to use it when possible
     """
     if use_ipv6():
+        print "using ipv6"
         return (socket.AF_INET6, '::1')
     else:
+        print "using ipv4"
         return (socket.AF_INET, '127.0.0.1')
 
 def make_dummy_socket_pair():
@@ -259,8 +262,9 @@ def make_dummy_socket_pair():
         except socket.error:
             # if we hit this, then it's hopeless--give up
             if port > 65500:
-                logging.error("tried %s attempts and failed on port %d",
-                              attempts, port)
+                sys.stderr.write(
+                    "Tried %s bind attempts and failed on addr %s port %d\n" % (
+                        attempts, addr, port))
                 raise
             # bump us into ephemeral ports if we need to try a bunch
             if port == 0:
