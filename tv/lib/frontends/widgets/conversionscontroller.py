@@ -40,9 +40,23 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemlist
 from miro.plat.frontends.widgets import widgetset
 
 from miro.conversions import conversion_manager
+
+class ConversionsSort(itemlist.ItemSort):
+    KEY = None
+
+    def __init__(self):
+        itemlist.ItemSort.__init__(self, True)
+        self.positions = []
+
+    def sort_key(self, item):
+        id_ = item.id
+        if not id_ in self.positions:
+            self.positions.append(id_)
+        return self.positions.index(id_)
 
 class ConversionsController(object):
     def __init__(self):
@@ -83,7 +97,8 @@ class ConversionsController(object):
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
-        self.model = widgetset.InfoListModel(None)
+        sorter = ConversionsSort()
+        self.model = widgetset.InfoListModel(sorter.sort_key)
         self.table = ConversionTableView(self.model)
         self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
