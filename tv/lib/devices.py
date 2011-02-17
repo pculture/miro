@@ -680,7 +680,7 @@ class DeviceItem(object):
     def _migrate_thumbnail(self):
         screenshot = self.screenshot
         icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-        cover_art_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
         if screenshot is not None:
             if (screenshot.startswith(icon_cache_directory) or
                 screenshot.startswith(cover_art_directory)):
