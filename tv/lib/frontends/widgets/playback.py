@@ -852,9 +852,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
             self.emit("position-changed")
 
     def _update_currently_playing_after_removed(self, removed_set):
-        # Note: this is usefull even if we haven't changed positions, because
+        # Note: this is useful even if we haven't changed positions, because
         # it gets us the new ItemInfo.  Don't call _change_currently_playing()
-        # because we just updating the ItemInfo, not actually changing which
+        # because we are just updating the ItemInfo, not actually changing which
         # item is playing.
         item = self.model.get_info(
                 self._items_before_change[self._index_before_change].id)
