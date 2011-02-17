@@ -229,10 +229,8 @@ def localhost_family_and_addr():
     This method is aware of ipv6 and tries to use it when possible
     """
     if use_ipv6():
-        print "using ipv6"
         return (socket.AF_INET6, '::1')
     else:
-        print "using ipv4"
         return (socket.AF_INET, '127.0.0.1')
 
 def make_dummy_socket_pair():
