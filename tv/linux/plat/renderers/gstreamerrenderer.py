@@ -579,6 +579,7 @@ class VideoRenderer(Renderer):
             return
         flags = self.playbin.get_property('flags')
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
+        self.enabled_track = None
 
     def select_subtitle_file(self, iteminfo, sub_path,
                              handle_successful_select):
