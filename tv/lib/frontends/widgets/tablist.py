@@ -972,8 +972,11 @@ class SiteList(HideableTabList):
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter][0] for iter in \
                 table_view.get_selection()]
-        editable = not bool([True for info in selected_rows if info.default])
+        editable = not bool([True for info in selected_rows
+                             if info.type != u'tab' and info.default])
         if len(selected_rows) == 1:
+            if selected_rows[0].type == u'tab':
+                return []
             rows = [(_('Copy URL to clipboard'), app.widgetapp.copy_site_url)]
             if editable:
                 rows.extend([
@@ -1000,10 +1003,12 @@ class StoreList(SiteList):
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter][0] for iter in \
                 table_view.get_selection()]
-        if len(selected_rows) == 1:
+        if len(selected_rows) == 1 and selected_rows[0].type != u'tab':
             return [
                 (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
             ]
+        else:
+            return []
 
 
 class NestedTabList(TabList):
@@ -1013,6 +1018,8 @@ class NestedTabList(TabList):
         selected_rows = [table_view.model[iter][0] for iter in \
                 table_view.get_selection()]
         if len(selected_rows) == 1:
+            if selected_rows[0].type == u'tab':
+                return []
             if selected_rows[0].is_folder:
                 return self.make_folder_context_menu(selected_rows[0])
             else:
