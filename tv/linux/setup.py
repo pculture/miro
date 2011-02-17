@@ -47,6 +47,7 @@ except ImportError:
     print "Pyrex not found.  Please install Pyrex."
     sys.exit(1)
 
+from distutils import ccompiler
 from distutils.cmd import Command
 from distutils.core import setup
 from distutils.extension import Extension
@@ -55,6 +56,7 @@ from distutils.util import change_root
 from glob import glob
 from string import Template
 import distutils.command.install_data
+import distutils.command.build
 import os
 import pwd
 import subprocess
@@ -316,6 +318,7 @@ def listfiles(path):
                  if not f.endswith("~")]
     return all_files
 
+script_files = []
 data_files = []
 # append the root resource directory.
 # filter out app.config.template (which is handled specially)
@@ -455,7 +458,25 @@ class install_data(distutils.command.install_data.install_data):
         distutils.command.install_data.install_data.run(self)
         self.install_app_config()
 
+class build(distutils.command.build.build):
+    def build_segmenter(self):
+        segmenter_src = os.path.join(platform_dir, 'miro-segmenter.c')
+        cc = ccompiler.new_compiler()
+        cc.add_library('avutil')
+        cc.add_library('avformat')
+        output_dir = os.path.join(self.build_base, 'miro-segmenter')
+        segmenter_objs = cc.compile([segmenter_src],
+                                    output_dir=output_dir)
+        cc.link_executable(segmenter_objs, 'miro-segmenter',
+                           output_dir=output_dir)
+        segmenter_exe = os.path.join(platform_dir, output_dir,
+                                     'miro-segmenter')
+        self.distribution.scripts.append(segmenter_exe)
 
+    def run(self):
+        self.build_segmenter()
+        distutils.command.build.build.run(self)
+        
 class test_system(Command):
     description = ("Allows you to test configurations without compiling "
                    "or running.")
@@ -554,6 +575,10 @@ ext_modules.append(pygtkhacks_ext)
 ext_modules.append(webkitgtkhacks_ext)
 ext_modules.append(infolist_ext)
 
+script_files += [os.path.join(platform_dir, 'miro'),
+                 os.path.join(platform_dir, 'miro.real')
+                ]
+
 #### Run setup ####
 setup(name='miro',
     version=appVersion,
@@ -561,10 +586,7 @@ setup(name='miro',
     author_email='feedback@pculture.org',
     url='http://www.getmiro.com/',
     download_url='http://www.getmiro.com/downloads/',
-    scripts=[
-        os.path.join(platform_dir, 'miro'),
-        os.path.join(platform_dir, 'miro.real')
-    ],
+    scripts=script_files,
     data_files=data_files,
     ext_modules=ext_modules,
     packages=[
@@ -592,6 +614,7 @@ setup(name='miro',
     cmdclass={
         'test_system': test_system,
         'build_ext': build_ext,
+        'build': build,
         'install_data': install_data,
         'install_theme': install_theme,
         'clean': clean,

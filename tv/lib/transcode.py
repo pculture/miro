@@ -177,10 +177,12 @@ class TranscodeObject(object):
     """
 
     time_offset_args = ['-ss']
-    # XXX these bitrate qualities are hardcoded.  Note: the fallback for 
-    # A/V is to leave the arguments empty, and that works.
+    # Note: the fallback for A/V is to leave the arguments empty, and that 
+    # works (most likely using MPEG-1 and MP2).
     has_video_args = []
+    has_audio_args = []
     has_video_has_audio_args = []
+    # XXX this stuff is hardcoded.
     has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
                       '-vpre', 'slow']
     has_video_has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
@@ -320,8 +322,7 @@ class TranscodeObject(object):
             print 'Running command ', ' '.join(args)
             self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
     
-            #segmenter_exe = get_segmenter_executable_path()
-            segmenter_exe = '/Users/glee/segmenter'
+            segmenter_exe = get_segmenter_executable_path()
             args = [segmenter_exe]
             address, port = self.sink.server_address
             args += TranscodeObject.segmenter_args + [str(port)]
