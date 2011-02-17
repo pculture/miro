@@ -839,15 +839,28 @@ class PlaybackPlaylist(signals.SignalEmitter):
                         self.currently_playing.id)
            
     def _on_items_removed_from_source(self, tracker, ids_removed):
-        old_currently_playing = self.currently_playing
         if self.currently_playing:
-            self._update_currently_playing_after_removed(ids_removed)
+            old_currently_playing = self.currently_playing
+            removed_set = set(ids_removed)
+            if self.currently_playing.id in removed_set:
+                self._change_currently_playing_after_removed(ids_removed)
+            else:
+                self._update_currently_playing_after_removed(ids_removed)
+            
         if (self.currently_playing is None
                 or old_currently_playing.id is not self.currently_playing.id):
             self.emit("position-changed")
 
-    def _update_currently_playing_after_removed(self, ids_removed):
-        removed_set = set(ids_removed)
+    def _update_currently_playing_after_removed(self, removed_set):
+        # Note: this is usefull even if we haven't changed positions, because
+        # it gets us the new ItemInfo.  Don't call _change_currently_playing()
+        # because we just updating the ItemInfo, not actually changing which
+        # item is playing.
+        item = self.model.get_info(
+                self._items_before_change[self._index_before_change].id)
+        self.currently_playing = item
+
+    def _change_currently_playing_after_removed(self, removed_set):
         def position_removed(old_index):
             old_info = self._items_before_change[old_index]
             try:
@@ -863,12 +876,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
             if new_position >= len(self._items_before_change):
                 self._change_currently_playing(None)
                 return
-        # Note: this is usefull even if we haven't changed positions, because
-        # it gets us the new ItemInfo.  Don't call _change_currently_playing()
-        # because we just updating the ItemInfo, not actually changing which
-        # item is playing.
         item = self.model.get_info(self._items_before_change[new_position].id)
-        self.currently_playing = item
+        self._change_currently_playing(item)
 
     def _on_items_changed(self, tracker, added, changed, removed):
         old_currently_playing = self.currently_playing
