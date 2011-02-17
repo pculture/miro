@@ -291,7 +291,7 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
-            os.path.join(SEGMENTER_PATH, 'segmenter.exe'),
+            os.path.join(SEGMENTER_PATH, 'miro-segmenter.exe'),
             os.path.join(FFMPEG_PATH, 'bin', 'ffmpeg.exe'),
             os.path.join(FFMPEG_PATH, 'bin', 'avcodec-52.dll'),
             os.path.join(FFMPEG_PATH, 'bin', 'avcore-0.dll'),
