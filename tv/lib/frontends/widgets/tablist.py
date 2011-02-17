@@ -264,6 +264,10 @@ class LibraryTabList(StaticTabListBase):
             if name in self.iter_map and name not in self.auto_tabs_to_show:
                 self.remove_auto_tab_if_not_selected(name)
                 self.view.model_changed()
+        if not app.config.get(prefs.MUSIC_TAB_CLICKED):
+            for iter in view.get_selection():
+                if view.model[iter][0].id == 'music':
+                    app.widgetapp.music_tab_clicked()
 
     def update_download_count(self, count, non_downloading_count):
         self.update_count('downloading', 'downloading', count,

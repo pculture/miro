@@ -431,6 +431,8 @@ def is_first_time():
 
 def mark_first_time():
     app.config.set(prefs.STARTUP_TASKS_DONE, True)
+    # we just bothered the user about importing media, don't do it again
+    app.config.set(prefs.MUSIC_TAB_CLICKED, True)
 
 def is_movies_directory_gone():
     """Checks to see if the MOVIES_DIRECTORY exists.

@@ -85,6 +85,7 @@ from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.frontends.widgets.window import MiroWindow
+from miro.plat.utils import get_plat_media_player_name_path
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
 from miro import fileutil
@@ -870,6 +871,27 @@ class Application:
         if ret == dialogs.BUTTON_REMOVE:
             for si in infos:
                 messages.DeleteSite(si.id).send_to_backend()
+
+    def music_tab_clicked(self):
+        """User clicked the Music tab for the first time, so ask them about
+        importing media.
+        """
+        app.config.set(prefs.MUSIC_TAB_CLICKED, True)
+        name, path = get_plat_media_player_name_path()
+        if path is None:
+            return
+        trans_data = {
+            'media_player': name,
+            'short_app_name': app.config.get(prefs.SHORT_APP_NAME)}
+        title = _('Import Music from %(media_player)s?', trans_data)
+        description = _("We see that you have %(media_player)s installed.  "
+                        "Would you like %(short_app_name)s to import the "
+                        "music from it?", trans_data)
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_YES,
+                                          dialogs.BUTTON_NO])
+        if ret == dialogs.BUTTON_YES:
+            app.watched_folder_manager.add(path)
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""
