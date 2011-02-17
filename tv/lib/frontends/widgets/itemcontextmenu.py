@@ -99,7 +99,19 @@ class ItemContextMenuHandler(object):
             messages.MarkItemWatched(item).send_to_backend()
 
         if item.downloaded:
-            # most recent conversion here
+            # Show File in Finder
+            if file_navigator_name:
+                reveal_text = _('Show File in %(progname)s',
+                                {"progname": file_navigator_name})
+            else:
+                reveal_text = _('File on Disk')
+
+            menu.append((
+                    reveal_text,
+                    lambda: app.widgetapp.check_then_reveal_file(
+                        item.video_path)))
+
+            # most recent conversion
             last_converter = conversion_manager.get_last_conversion()
             if last_converter is not None:
                 converter = conversion_manager.lookup_converter(last_converter)
@@ -113,19 +125,6 @@ class ItemContextMenuHandler(object):
             # Convert menu
             convert_menu = self._make_convert_menu()
             menu.append((_('Convert to...'), convert_menu))
-
-
-            # Show File in Finder
-            if file_navigator_name:
-                reveal_text = _('Show File in %(progname)s',
-                                {"progname": file_navigator_name})
-            else:
-                reveal_text = _('File on Disk')
-
-            menu.append((
-                    reveal_text,
-                    lambda: app.widgetapp.check_then_reveal_file(
-                        item.video_path)))
 
             # separator
             menu.append(None)
