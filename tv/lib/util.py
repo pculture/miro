@@ -241,9 +241,11 @@ def make_dummy_socket_pair():
     firewall software.  So if we hit a socketerror with port 0, we
     try ports between 50000 and 65500.
     """
+    attempts = 0
     port = 0
     family, addr = localhost_family_and_addr()
     while 1:
+        attempts += 1
         try:
             dummy_server = socket.socket(family, socket.SOCK_STREAM)
             dummy_server.bind((addr, port))
@@ -257,11 +259,14 @@ def make_dummy_socket_pair():
         except socket.error:
             # if we hit this, then it's hopeless--give up
             if port > 65500:
+                logging.error("tried %s attempts and failed on port %d",
+                              attempts, port)
                 raise
             # bump us into ephemeral ports if we need to try a bunch
             if port == 0:
                 port = 50000
-            port += 10
+            else:
+                port += 10
 
 
 def get_torrent_info_hash(path):
