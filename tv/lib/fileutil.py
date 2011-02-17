@@ -261,7 +261,7 @@ def miro_listdir(directory):
             pass
     return files, directories
 
-def miro_allfiles(directory):
+def miro_allfiles(directory, checked=None):
     """Directory listing that's safe and convenient for finding new
     videos in a directory.
 
@@ -270,13 +270,22 @@ def miro_allfiles(directory):
     OSErrors are silently ignored.  Hidden files aren't returned.
     Pathnames are run through os.path.normcase.
     """
+    if checked is None:
+        checked = set()
     expanded_directory = expand_filename(directory)
     expanded_directory = os.path.abspath(os.path.normcase(expanded_directory))
+    real_directory = os.path.realpath(expanded_directory)
+    if real_directory in checked:
+        logging.debug('%s is a symlink to a directory that has '
+            'already been checked; skipping', repr(expanded_directory))
+        return
+    checked.add(real_directory)
     if expanded_directory in deletes_in_progress:
         return
     try:
         listing = os.listdir(expanded_directory)
     except OSError:
+        logging.debug('OSError walking directory; continuing', exc_info=1)
         return
     for name in listing:
         name_lower = name.lower()
@@ -291,11 +300,12 @@ def miro_allfiles(directory):
             continue
         try:
             if os.path.isdir(expanded_path):
-                for fn in miro_allfiles(path):
+                for fn in miro_allfiles(path, checked):
                     yield fn
             elif os.path.isfile(expanded_path):
                 yield path
         except OSError:
+            logging.debug('OSError walking directory; continuing', exc_info=1)
             pass
 
 
