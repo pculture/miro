@@ -870,7 +870,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         db_entry = '%s_sort_state' % self.device.tab_type
         self.device.database[db_entry] = (sort_key, ascending)
 
-    def save_view(self, view, toolbar=None):
+    def save_view(self, toolbar, view):
         self.device.database['%s_view' % self.device.tab_type] = view
 
     def handle_device_changed(self, device):
