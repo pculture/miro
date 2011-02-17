@@ -34,6 +34,8 @@ import os
 import plistlib
 import urllib
 
+from xml.parsers.expat import ExpatError
+
 ITUNES_XML_FILE = "iTunes Music Library.xml"
 
 def file_path_xlat(path):
@@ -56,7 +58,7 @@ def import_itunes_path(path):
     try:
         data = plistlib.readPlist(os.path.join(path, ITUNES_XML_FILE))
         return file_path_xlat(data['Music Folder'])
-    except (IOError, KeyError):
+    except (IOError, KeyError, ExpatError):
         pass
     
 

@@ -290,7 +290,6 @@ class Test_import_itunes(MiroTestCase):
         path = import_itunes_path(tmpf_dir)
         self.assertEquals(path, None)
 
-    @only_on_platforms('osx')
     def test_goodfile(self):
         # Our file templates.  Try a vanilla version and one with escapes.
         # NB:
@@ -298,10 +297,13 @@ class Test_import_itunes(MiroTestCase):
         # windows support arrives we will need to extract the paths and
         # see what it looks like and add a test here.
         path1 = "/Users/xxx/Music/iTunes/iTunes%20Music/"
-        path2 = ("/Volumes/%E3%83%9B%E3%83%BC%E3%83%A0/" +
+        path2 = ("/Volumes/%E3%83%9B%E3%83%BC%E3%83%A0/"
                  "xxx/Music/iTunes/iTunes%20Media/")
+        path3 = ("C:/Documents%20and%20Settings/Paul/"
+                 "My%20Documents/My%20Music/iTunes/iTunes%20Media/")
         file_snippet1 = file_template % dict(path=(self.file_url + path1))
         file_snippet2 = file_template % dict(path=(self.file_url + path2))
+        file_snippet3 = file_template % dict(path=(self.file_url + path3))
 
         tmpf_dir = os.path.dirname(self.tmpf_path)
         # Test vanilla path
@@ -318,3 +320,9 @@ class Test_import_itunes(MiroTestCase):
         path = import_itunes_path(tmpf_dir)
         self.assertEquals(path, urllib.url2pathname(path2))
 
+        # Test Windows path
+        self._clean_tmpf()
+        self.tmpf.write(file_snippet3)
+        self.tmpf.flush()
+        path = import_itunes_path(tmpf_dir)
+        self.assertEquals(path, urllib.url2pathname(path3))
