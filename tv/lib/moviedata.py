@@ -68,6 +68,7 @@ TAG_MAP = {
     'album_artist': ('albumartist', 'album artist', 'tpe2'),
     'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
         'composer', u'\uFFFDart', 'album artist'),
+    'drm': ('itunmovi',),
     'title': ('tit2', 'title', u'\uFFFDnam'),
     'track': ('trck', 'tracknumber'),
     'year': ('tdrc', 'tyer', 'date', 'year'),
@@ -75,7 +76,7 @@ TAG_MAP = {
     'cover-art': ('\uFFFDart', 'apic', 'covr'),
 }
 TAG_TYPES = {
-    'album': unicode, 'album_artist': unicode, 'artist': unicode,
+    'album': unicode, 'album_artist': unicode, 'artist': unicode, 'drm': bool,
     'title': unicode, 'track': int, 'year': int, 'genre': unicode,
 }
 NOFLATTEN_TAGS = ('cover-art',)
@@ -336,6 +337,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                 key = key.split('PRIV:')[1]
             if key.startswith('TXXX:'):
                 key = key.split('TXXX:')[1]
+            if key.startswith('----:com.apple.iTunes:'):
+                # iTunes M4V
+                key = key.split('----:com.apple.iTunes:')[1]
             key = key.split(':')[0]
             if key.startswith('WM/'):
                 key = key.split('WM/')[1]
@@ -537,6 +541,9 @@ class MovieDataUpdater(signals.SignalEmitter):
             item.track = metadata.get('track', None)
             item.year = metadata.get('year', None)
             item.genre = metadata.get('genre', None)
+            item.has_drm = metadata.get('drm', False)
+            if item.has_drm:
+                mediatype = 'other'
             item.metadata_version = METADATA_VERSION
             if mediatype is not None:
                 item.file_type = unicode(mediatype)
