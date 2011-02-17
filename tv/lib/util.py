@@ -265,6 +265,7 @@ def make_dummy_socket_pair():
 
                 # if we're using ipv6 and it's sucking wind, then switch it
                 # off and try ipv4.
+                global _use_ipv6
                 if _use_ipv6:
                     sys.stdout.write(
                         "ipv6 is sucking wind, so we're switching to ipv4.")
