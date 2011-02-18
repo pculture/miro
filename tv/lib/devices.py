@@ -660,6 +660,9 @@ class DeviceItem(object):
     def get_release_date(self):
         return datetime.fromtimestamp(self.release_date)
 
+    def get_creation_time(self):
+        return datetime.fromtimestamp(self.creation_time)
+
     @returns_filename
     def get_filename(self):
         return os.path.join(self.device.mount, self.video_path)
