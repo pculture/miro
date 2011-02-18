@@ -213,17 +213,9 @@ def get_request_urls(engine_name, query, filter_adult_contents=True, limit=50):
 
     * ``LET'S TEST DTV'S CRASH REPORTER TODAY`` which rases a
       NameError thus allowing us to test the crash reporter
-
-    * ``LET'S DEBUT DTV: DUMP DATABASE`` which causes Miro to dump the
-       database to xml and place it in the Miro configuration
-       directory
     """
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         raise IntentionalCrash("intentional error here")
-
-    if query == "LET'S DEBUG DTV: DUMP DATABASE":
-        app.db.dumpDatabase()
-        return u""
 
     if engine_name == u'all':
         return [engine.get_request_url(query, filter_adult_contents, limit) \

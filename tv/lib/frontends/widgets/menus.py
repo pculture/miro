@@ -371,8 +371,7 @@ def get_menu():
         dev_menu = Menu(_("Dev"), "DevMenu", [
                 MenuItem(_("Profile Message"), "ProfileMessage"),
                 MenuItem(_("Profile Redraw"), "ProfileRedraw"),
-                MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
-                MenuItem(_("Dump Database"), "DumpDatabase")
+                MenuItem(_("Test Crash Reporter"), "TestCrashReporter")
                 ])
 
         mbar.menuitems.append(dev_menu)
