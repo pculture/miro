@@ -428,7 +428,7 @@ class PlaylistSyncWidget(SyncWidget):
     def info_key(self, info):
         return info.name
 
-    def find_info_by_key(self, key, tab_list):
+    def find_info_by_key(self, key):
         return app.tab_list_manager.playlist_list.find_playlist_with_name(key)
 
 class DeviceSettingsWidget(widgetset.Background):
