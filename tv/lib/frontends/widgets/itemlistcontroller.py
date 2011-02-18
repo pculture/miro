@@ -857,15 +857,14 @@ class ItemListControllerManager(object):
     :attribute displayed: Currently displayed ItemListController or
         None (this one is currently being displayed in the right-hand
         side)
-    :attribute all_controllers: Set of all ItemListControllers in use
+    :attribute controllers: Mapping of controller identifiers to controllers.
         (these are somewhere in the display stack, but not necessarily
         displayed currently).
     """
 
     def __init__(self):
         self.displayed = None
-        self.all_controllers = set()
-        self.controller_for_type = {}
+        self.controllers = {}
 
     def controller_displayed(self, item_list_controller):
         self.displayed = item_list_controller
@@ -879,19 +878,26 @@ class ItemListControllerManager(object):
             self.displayed.no_longer_displayed()
         self.displayed = None
 
+    @staticmethod
+    def _key_for_controller(controller):
+        if controller.type == 'music':
+            key = ('library', 'audio')
+        elif controller.type == 'videos':
+            key = ('library', 'video')
+        elif controller.type.startswith('device-'):
+            key = ('device', controller.device)
+        else:
+            # there are others, but none of them need special handling
+            key = (None, controller.id)
+        return key
+
     def controller_created(self, item_list_controller):
-        self.all_controllers.add(item_list_controller)
-        if item_list_controller.type == 'music':
-            self.controller_for_type['audio'] = item_list_controller
-        elif item_list_controller.type == 'videos':
-            self.controller_for_type['video'] = item_list_controller
+        key = self._key_for_controller(item_list_controller)
+        self.controllers[key] = item_list_controller
 
     def controller_destroyed(self, item_list_controller):
-        self.all_controllers.remove(item_list_controller)
-        if item_list_controller.type == 'music':
-            del self.controller_for_type['audio']
-        elif item_list_controller.type == 'videos':
-            del self.controller_for_type['video']
+        key = self._key_for_controller(item_list_controller)
+        del self.controllers[key]
 
     def play_selection(self, presentation_mode='fit-to-bounds'):
         if self.displayed is not None:
@@ -911,17 +917,14 @@ class ItemListControllerManager(object):
         if self.displayed:
             self.controller_no_longer_displayed(self.displayed)
 
-    def start_metadata_progress(self, mediatype, remaining, eta, new):
-        controller = self.controller_for_type.get(mediatype)
-        assert controller is not None
-        controller.start_metadata_progress(remaining, eta, new)
+    def start_metadata_progress(self, target, remaining, eta, new):
+        assert target in self.controllers, target
+        self.controllers[target].start_metadata_progress(remaining, eta, new)
 
-    def finish_metadata_progress(self, mediatype):
-        controller = self.controller_for_type.get(mediatype)
-        assert controller is not None
-        controller.finish_metadata_progress()
+    def finish_metadata_progress(self, target):
+        assert target in self.controllers, target
+        self.controllers[target].finish_metadata_progress()
 
-    def update_metadata_progress(self, mediatype, remaining, eta, new):
-        controller = self.controller_for_type.get(mediatype)
-        assert controller is not None
-        controller.update_metadata_progress(remaining, eta, new)
+    def update_metadata_progress(self, target, remaining, eta, new):
+        assert target in self.controllers, target
+        self.controllers[target].update_metadata_progress(remaining, eta, new)

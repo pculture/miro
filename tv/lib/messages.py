@@ -1701,19 +1701,19 @@ class FeedlessDownloadStarted(FrontendMessage):
     pass
 
 class MetadataProgressStart(FrontendMessage):
-    def __init__(self, mediatype, remaining, eta):
-        self.mediatype = mediatype
+    def __init__(self, target, remaining, eta):
+        self.target = target
         self.remaining = remaining
         self.eta = eta
         self.new = self.remaining
 
 class MetadataProgressFinish(FrontendMessage):
-    def __init__(self, mediatype):
-        self.mediatype = mediatype
+    def __init__(self, target):
+        self.target = target
 
 class MetadataProgressUpdate(FrontendMessage):
-    def __init__(self, mediatype, remaining, eta, new):
-        self.mediatype = mediatype
+    def __init__(self, target, remaining, eta, new):
+        self.target = target
         self.remaining = remaining
         self.eta = eta
         self.new = new

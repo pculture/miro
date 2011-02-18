@@ -1526,12 +1526,12 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_metadata_progress_start(self, message):
         app.item_list_controller_manager.start_metadata_progress(
-            message.mediatype, message.remaining, message.eta, message.new)
+            message.target, message.remaining, message.eta, message.new)
 
     def handle_metadata_progress_finish(self, message):
         app.item_list_controller_manager.finish_metadata_progress(
-            message.mediatype)
+            message.target)
 
     def handle_metadata_progress_update(self, message):
         app.item_list_controller_manager.update_metadata_progress(
-            message.mediatype, message.remaining, message.eta, message.new)
+            message.target, message.remaining, message.eta, message.new)

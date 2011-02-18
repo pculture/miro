@@ -143,9 +143,9 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.queue = Queue.PriorityQueue()
         self.thread = None
         self.media_order = ['audio', 'video', 'other']
-        self.unnotified = {'audio':0, 'video':0}
-        self.remaining = {'audio':0, 'video':0}
-        self.displayed = {'audio': False, 'video': False}
+        self.unnotified = {}
+        self.remaining = {}
+        self.displayed = {}
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
@@ -168,29 +168,40 @@ class MovieDataUpdater(signals.SignalEmitter):
             mediatype = 'other'
         return mediatype
 
-    def update_progress(self, mediatype, add_or_remove):
+    def update_progress(self, mediatype, device, add_or_remove):
         # BATCH_SIZE of 1 necessary until widget interpolation implemented
         BATCH_SIZE = 1
         if mediatype not in ('audio', 'video'):
             # I don't think it's useful to show progress for "Other" items
             return
-        self.remaining[mediatype] += add_or_remove
-        self.unnotified[mediatype] += add_or_remove
-        remaining = self.remaining[mediatype]
-        unnotified = self.unnotified[mediatype]
-        displayed = self.displayed[mediatype]
+        target = device or mediatype
+        if device is None:
+            full_target = (u'library', target)
+        else:
+            full_target = (u'device', target)
+
+        self.remaining.setdefault(target, 0)
+        self.remaining[target] += add_or_remove
+        remaining = self.remaining[target]
+
+        self.unnotified.setdefault(target, 0)
+        self.unnotified[target] += add_or_remove
+        unnotified = self.unnotified[target]
+
+        displayed = self.displayed.setdefault(target, False)
+
         news = None
         if remaining > 0 and not displayed:
             # eta is not implemented or used yet
             eta = None
-            news = models.messages.MetadataProgressStart(mediatype,
+            news = models.messages.MetadataProgressStart(full_target,
                    remaining, eta)
-            self.displayed[mediatype] = True
-            self.unnotified[mediatype] = 0
+            self.displayed[target] = True
+            self.unnotified[target] = 0
         elif remaining == 0:
-            news = models.messages.MetadataProgressFinish(mediatype)
-            self.displayed[mediatype] = False
-            self.unnotified[mediatype] = 0
+            news = models.messages.MetadataProgressFinish(full_target)
+            self.displayed[target] = False
+            self.unnotified[target] = 0
         elif add_or_remove > 0 or unnotified <= -BATCH_SIZE:
             # Most of the time, we won't get any added items after we start -
             # but whenever we do, that will affect progress.
@@ -198,9 +209,9 @@ class MovieDataUpdater(signals.SignalEmitter):
             # Otherwise, just send re-estimates every BATCH_SIZE items.
             eta = remaining
             added = max(add_or_remove, 0)
-            news = models.messages.MetadataProgressUpdate(mediatype,
+            news = models.messages.MetadataProgressUpdate(full_target,
                    remaining, eta, added)
-            self.unnotified[mediatype] = 0
+            self.unnotified[target] = 0
         if news is not None:
             news.send_to_frontend()
 
@@ -331,7 +342,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         """Strip useless components and strange characters from tag names
         """
         tags_cleaned = {}
-        for key, value in tags.items():
+        for key, value in tags.iteritems():
             key = self._str_or_object_to_unicode(key)
             if key.startswith('PRIV:'):
                 key = key.split('PRIV:')[1]
@@ -351,7 +362,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         """Flatten values into simple unicode strings
         """
         tags_cleaned = {}
-        for key, value in tags.items():
+        for key, value in tags.iteritems():
             while isinstance(value, list):
                 if not value:
                     value = None
@@ -477,7 +488,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         nonflattened_tags = tags.copy()
         tags = self._sanitize_values(tags)
 
-        for tag, sources in TAG_MAP.items():
+        for tag, sources in TAG_MAP.iteritems():
             for source in sources:
                 if source in tags:
                     if tag in NOFLATTEN_TAGS:
@@ -496,7 +507,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             cover_art = self._make_cover_art_file(item.get_filename(), image_data)
             del data['cover-art']
 
-        for tag, value in data.items():
+        for tag, value in data.iteritems():
             if not isinstance(value, TAG_TYPES[tag]):
                 try:
                     data[tag] = TAG_TYPES[tag](value)
@@ -533,7 +544,11 @@ class MovieDataUpdater(signals.SignalEmitter):
                         cover_art):
         self.in_progress.remove(item.id)
         mediatype = self.guess_mediatype(item)
-        self.update_progress(mediatype, -1)
+        if hasattr(item, 'device'):
+            device = item.device
+        else:
+            device = None
+        self.update_progress(mediatype, device, -1)
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
@@ -569,7 +584,11 @@ class MovieDataUpdater(signals.SignalEmitter):
         mediatype = self.guess_mediatype(item)
         priority = self.media_order.index(mediatype)
         self.queue.put((priority, MovieDataInfo(item)))
-        self.update_progress(mediatype, 1)
+        if hasattr(item, 'device'):
+            device = item.device
+        else:
+            device = None
+        self.update_progress(mediatype, device, 1)
 
     def shutdown(self):
         self.in_shutdown = True
