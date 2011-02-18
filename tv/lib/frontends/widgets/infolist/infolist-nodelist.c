@@ -393,7 +393,6 @@ infolist_nodelist_calc_positions(InfoListNodeList* nodelist)
         }
         nodelist->node_positions_dirty = 0;
         return 0;
-
 }
 
 int
