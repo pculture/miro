@@ -294,89 +294,64 @@ class VideoDetailsWidget(Background):
 
         info = self.item_info
 
-        outer_hbox = HBox(5)
+        left_side_hbox = HBox(5)
+        right_side_hbox = HBox(5)
 
-        if not info.is_external:
-            if info.expiration_date is not None:
-                text = displaytext.expiration_date(info.expiration_date)
-                self._expiration_label = Label(text)
-                self._expiration_label.set_size(0.77)
-                self._expiration_label.set_color(
-                    (152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
-                outer_hbox.pack_start(_align_middle(self._expiration_label))
-                outer_hbox.pack_start(_align_middle(
-                        Divider(), top_pad=3, bottom_pad=3,
-                        left_pad=5, right_pad=5))
-
-            lab = make_label(_("Keep"), self.handle_keep,
-                             info.expiration_date is not None)
-            outer_hbox.pack_start(_align_middle(lab))
-            outer_hbox.pack_start(_align_middle(
-                    Divider(), top_pad=3, bottom_pad=3,
-                    left_pad=5, right_pad=5))
-
-        outer_hbox.pack_start(self.make_subtitles_button())
-
-        outer_hbox.pack_start(_align_middle(
-                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
-
-        self._delete_link = make_label(_("Delete"), self.handle_delete)
-        outer_hbox.pack_start(_align_middle(self._delete_link))
-
-        if not info.is_external:
-            outer_hbox.pack_start(_align_middle(
-                    Divider(), top_pad=3, bottom_pad=3,
-                    left_pad=5, right_pad=5))
-
-            self._share_link = make_label(_("Share"), self.handle_share,
-                                          info.has_shareable_url)
-            outer_hbox.pack_start(_align_middle(self._share_link))
-            outer_hbox.pack_start(_align_middle(
-                    Divider(), top_pad=3, bottom_pad=3,
-                    left_pad=5, right_pad=5))
-
-            if info.commentslink:
-                self._permalink_link = make_label(_("Comments"),
-                                                  self.handle_commentslink,
-                                                  info.commentslink)
-            else:
-                self._permalink_link = make_label(_("Permalink"),
-                                                  self.handle_permalink,
-                                                  info.permalink)
-            outer_hbox.pack_start(_align_middle(self._permalink_link))
-
-        outer_hbox.pack_start(_align_middle(
-                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
-
+        # fullscreen
         if app.playback_manager.is_fullscreen:
-            fullscreen_link = make_label(_("Exit fullscreen"),
-                                         self.handle_fullscreen)
-            outer_hbox.pack_start(_align_middle(fullscreen_link))
-            fullscreen_image = make_image_button('images/fullscreen_exit.png',
-                                                 self.handle_fullscreen)
-            outer_hbox.pack_start(_align_middle(fullscreen_image))
-        else:
-            fullscreen_link = make_label(_("Fullscreen"),
-                                         self.handle_fullscreen)
-            outer_hbox.pack_start(_align_middle(fullscreen_link))
             fullscreen_image = make_image_button(
-                'images/fullscreen_enter.png', self.handle_fullscreen)
-            outer_hbox.pack_start(_align_middle(fullscreen_image))
+                'images/fullscreen.png', self.handle_fullscreen)
+        else:
+            # FIXME - need exit fullscreen button
+            fullscreen_image = make_image_button(
+                'images/fullscreen.png', self.handle_fullscreen)
+
+        fullscreen_link = make_label(_("Fullscreen"), self.handle_fullscreen)
+        left_side_hbox.pack_start(_align_middle(fullscreen_image))
+        left_side_hbox.pack_start(_align_middle(fullscreen_link))
+
+        left_side_hbox.pack_start(_align_middle(
+                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
         if app.playback_manager.detached_window is not None:
-            popin_link = make_label(_("Pop-in"), self.handle_popin_popout)
-            outer_hbox.pack_start(_align_middle(popin_link))
-            popin_image = make_image_button('images/popin.png',
-                                            self.handle_popin_popout)
-            outer_hbox.pack_start(_align_middle(popin_image))
+            pop_link = make_label(
+                _("Pop-in"), self.handle_popin_popout)
+            # FIXME - need popin image
+            pop_image = make_image_button(
+                'images/popin.png', self.handle_popin_popout)
         else:
-            popout_link = make_label(_("Pop-out"), self.handle_popin_popout)
-            outer_hbox.pack_start(_align_middle(popout_link))
-            popout_image = make_image_button('images/popout.png',
-                                             self.handle_popin_popout)
-            outer_hbox.pack_start(_align_middle(popout_image))
+            pop_link = make_label(
+                _("Pop-out"), self.handle_popin_popout)
+            pop_image = make_image_button(
+                'images/popout.png', self.handle_popin_popout)
 
-        self.add(_align_right(outer_hbox, left_pad=15, right_pad=15))
+        left_side_hbox.pack_start(_align_middle(pop_image))
+        left_side_hbox.pack_start(_align_middle(pop_link))
+
+        left_side_hbox.pack_start(_align_middle(
+                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+
+
+        right_side_hbox.pack_start(_align_middle(
+                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+
+        right_side_hbox.pack_start(self.make_subtitles_button())
+
+        right_side_hbox.pack_start(_align_middle(
+                Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+
+        self._delete_image = make_image_button(
+            'images/delete.png', self.handle_delete)
+        right_side_hbox.pack_start(_align_middle(self._delete_image))
+        self._delete_link = make_label(_("Delete"), self.handle_delete)
+        right_side_hbox.pack_start(_align_middle(self._delete_link))
+
+        outer_hbox = HBox()
+        outer_hbox.pack_start(_align_left(left_side_hbox, left_pad=10), expand=True)
+        outer_hbox.pack_start(_align_right(right_side_hbox, right_pad=10))
+        self.add(outer_hbox)
+
+        # self.add(_align_right(outer_hbox, left_pad=15, right_pad=15))
 
 
     def make_subtitles_button(self):
@@ -534,7 +509,8 @@ class VideoDetailsWidget(Background):
     def reset(self):
         if self._delete_link:
             self._delete_link.on_leave_notify(None, None)
-
+        if self._delete_image:
+            self._delete_image.on_leave_notify(None, None)
 
 class VideoPlayer(player.Player, VBox):
     """Video renderer widget.
