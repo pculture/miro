@@ -730,7 +730,7 @@ class DeviceTabListHandler(object):
                             self._fake_info(info, 'video', _('Video')),
                             info.id)
         HideableTabList.add(self.tablist,
-                            self._fake_info(info, 'audio', _('Audio')),
+                            self._fake_info(info, 'audio', _('Music')),
                             info.id)
         self.tablist.model_changed()
         self.tablist.set_folder_expanded(info.id, True)
