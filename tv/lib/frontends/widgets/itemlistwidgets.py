@@ -139,10 +139,14 @@ class ItemListTitlebar(widgetset.Background):
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
             return
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((0.95, 0.95, 0.95))
-        gradient.set_end_color((0.90, 0.90, 0.90))
-        context.rectangle(0, 0, context.width, context.height)
+        context.move_to(0, 0.5)
+        context.rel_line_to(context.width, 0)
+        context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
+        context.stroke()
+        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient.set_start_color((212.0 / 255, 212.0 / 255, 212.0 / 255))
+        gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
+        context.rectangle(0, 1, context.width, context.height)
         context.gradient_fill(gradient)
 
     def update_title(self, new_title):
@@ -891,7 +895,7 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         button = SortBarButton(text)
         button.connect('clicked', self.on_sorter_clicked, sort_key)
         self._button_map[sort_key] = button
-        self._button_hbox.pack_start(button, padding=4)
+        self._button_hbox.pack_start(button)
 
     def make_filter_switch(self, *args, **kwargs):
         """Helper method to make a SegmentedButtonsRow that switches between
@@ -918,16 +922,18 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
             self.filter_switch.make_widget(), left_pad=12))
 
     def size_request(self, layout):
-        width, height = self._hbox.get_size_request()
-        return width, max(height, 30)
+        return self._hbox.get_size_request()
 
     def draw(self, context, layout):
+        key = 74.0 / 255
+        top = 193.0 / 255
+        bottom = 169.0 / 255
         gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((0.49, 0.49, 0.49))
-        gradient.set_end_color((0.42, 0.42, 0.42))
+        gradient.set_start_color((top, top, top))
+        gradient.set_end_color((bottom, bottom, bottom))
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
-        context.set_color((0.4, 0.4, 0.4))
+        context.set_color((key, key, key))
         context.move_to(0.5, 0.5)
         context.rel_line_to(context.width, 0)
         context.stroke()
@@ -1016,6 +1022,8 @@ class SortBarButton(widgetset.CustomButton):
         self._text = text
         self._enabled = False
         self._ascending = False
+        self.set_squish_width(True)
+        self.set_squish_height(True)
 
     def get_sort_indicator_visible(self):
         return self._enabled
@@ -1033,44 +1041,84 @@ class SortBarButton(widgetset.CustomButton):
             self.queue_redraw()
 
     def size_request(self, layout):
-        layout.set_font(0.8, bold=True)
+        layout.set_font(0.8)
         text_size = layout.textbox(self._text).get_size()
-        return text_size[0] + 36, text_size[1] + 6
+        return text_size[0] + 36, max(text_size[1], 30)
 
     def draw(self, context, layout):
-        if ((self.state == 'hover'
-             or self.state == 'pressed'
-             or self._enabled)):
-            if self._enabled:
-                context.set_color((0.29, 0.29, 0.29))
-            else:
-                context.set_color((0.7, 0.7, 0.7))
-            widgetutil.round_rect(context, 0.5, 0.5, context.width - 2,
-                                  context.height - 2, 8)
-            context.fill()
-        layout.set_font(0.8, bold=True)
-        layout.set_text_color((1, 1, 1))
+        # colors are all grayscale
+        text = 87.0 / 255
+        arrow = 137.0 / 255
+        if self._enabled: # selected
+            edge = 92.0 / 255
+            key = 88.0 / 255
+            top = 97.0 / 255
+            bottom = 112.0 / 255
+            text = 1
+            arrow = 1
+        elif self.state not in ('hover', 'pressed'):
+            edge = 154.0 / 255
+            key = 210.0 / 255
+            top = 193.0 / 255
+            bottom = 169.0 / 255
+        else: # hover/pressed
+            edge = 123.0 / 255
+            key = 149.0 / 255
+            top = 145.0 / 255
+            bottom = 140.5 / 255
+
+        # key line
+        context.move_to(0, 0)
+        context.line_to(context.width, 0)
+        context.set_color((key, key, key))
+        context.stroke()
+        # borders
+        context.move_to(0.5, 0)
+        context.rel_line_to(0, context.height)
+        context.move_to(context.width, 0)
+        context.rel_line_to(0, context.height)
+        context.set_color((edge, edge, edge))
+        context.stroke()
+        # background
+        gradient = widgetset.Gradient(1, 1, 1, context.height - 1)
+        gradient.set_start_color((top, top, top))
+        gradient.set_end_color((bottom, bottom, bottom))
+        context.rectangle(1, 1, context.width - 1, context.height)
+        context.gradient_fill(gradient)
+        # text
+        layout.set_font(0.8)
+        layout.set_text_color((text, text, text))
         textbox = layout.textbox(self._text)
         text_size = textbox.get_size()
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
         textbox.draw(context, 12, y, text_size[0], text_size[1])
-        context.set_color((1, 1, 1))
+        context.set_color((arrow, arrow, arrow))
         self._draw_triangle(context, text_size[0] + 18)
 
     def _draw_triangle(self, context, left):
-        if not self._enabled:
-            return
-        top = int((context.height - 4) / 2)
-        if self._ascending:
-            context.move_to(left, top)
-            direction = 1
+        if self._enabled:
+            top = int((context.height - 4) / 2)
+            if self._ascending:
+                context.move_to(left, top)
+                direction = 1
+            else:
+                context.move_to(left, top + 4)
+                direction = -1
+            context.rel_line_to(6, 0)
+            context.rel_line_to(-3, 4 * direction)
+            context.rel_line_to(-3, -4 * direction)
+            context.fill()
         else:
-            context.move_to(left, top + 4)
-            direction = -1
-        context.rel_line_to(6, 0)
-        context.rel_line_to(-3, 4 * direction)
-        context.rel_line_to(-3, -4 * direction)
-        context.fill()
+            top = int((context.height - 4) / 2)
+            context.move_to(left, top)
+            context.rel_line_to(6, 0)
+            context.rel_line_to(-3, -4)
+            context.rel_line_to(-3, 4)
+            context.move_to(left, top + 2)
+            context.rel_line_to(6, 0)
+            context.rel_line_to(-3, 4)
+            context.rel_line_to(-3, -4)
+            context.fill()
 
 class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.
