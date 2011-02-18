@@ -111,7 +111,7 @@ class WidgetStateStore(object):
     DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
     DEFAULT_COLUMNS[u'folder-contents'] = DEFAULT_COLUMNS[u'music']
     DEFAULT_COLUMNS[u'playlist'] = DEFAULT_COLUMNS[u'music']
-    DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'videos']
+    DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'music']
 
     AVAILABLE_COLUMNS = {}
     for display_type, columns in DEFAULT_COLUMNS.items():
