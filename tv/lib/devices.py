@@ -691,7 +691,8 @@ class DeviceItem(object):
                 # migrate the screenshot onto the device
                 basename = os.path.basename(screenshot)
                 try:
-                    new_path = os.path.join(self.device.mount, '.miro', basename)
+                    new_path = os.path.join(self.device.mount, '.miro',
+                                            basename)
                     shutil.copyfile(screenshot, new_path)
                 except (IOError, OSError):
                     # error copying the thumbnail, just erase it
