@@ -907,8 +907,9 @@ class SharingManager(object):
     def disable_discover(self):
         self.discoverable = False
         if self.mdns_callback:
-            libdaap.mdns_unregister_service(self.mdns_callback)
+            old_callback = self.mdns_callback
             self.mdns_callback = None
+            libdaap.mdns_unregister_service(old_callback)
 
     def server_thread(self):
         server_fileno = self.server.fileno()
@@ -922,7 +923,12 @@ class SharingManager(object):
                 r, w, x = select.select(rset, [], [])
                 for i in r:
                     if i in refs:
-                        self.mdns_callback(i)
+                        # Possible that mdns_callback is not valid at this
+                        # point, because the this wakeup was a result of
+                        # closing of the socket (e.g. during name change
+                        # when we unpublish and republish our name).
+                        if self.mdns_callback:
+                            self.mdns_callback(i)
                         continue
                     if server_fileno == i:
                         self.server.handle_request()
