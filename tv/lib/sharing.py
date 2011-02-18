@@ -907,6 +907,7 @@ class SharingManager(object):
         self.discoverable = False
         if self.mdns_callback:
             libdaap.mdns_unregister_service(self.mdns_callback)
+            self.mdns_callback = None
 
     def server_thread(self):
         server_fileno = self.server.fileno()
