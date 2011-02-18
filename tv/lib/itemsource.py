@@ -585,7 +585,7 @@ class DeviceItemSource(ItemSource):
             skip_count=0,
             cover_art=None,
             auto_rating=0,
-            is_playing=False)
+            is_playing=item.is_playing)
 
     def fetch_all(self):
         return [self._item_info_for(devices.DeviceItem(
@@ -613,6 +613,17 @@ class DeviceItemHandler(ItemHandler):
             os.path.exists(info.cover_art)):
             os.unlink(info.cover_art)
         device.database.emit('item-removed', info)
+
+    def set_is_playing(self, info, is_playing):
+        """
+        Mark the given ItemInfo as playing, based on the is_playing bool.
+        Should also send a 'changed' message, if the is_playing state changed.
+        """
+        if info.is_playing != is_playing:
+            database = info.device.database
+            info.is_playing = is_playing
+            database[info.file_type][info.id]['is_playing'] = is_playing
+            info.device.database.emit('item-changed', info)
 
 def setup_handlers():
     app.source_handlers = {
