@@ -258,14 +258,14 @@ class FeedImpl(DDBObject):
                 "Podcast update (%s)" % self.get_title())
         else:
             if self.updateFreq > 0:
-                logging.info("scheduling update in %s minutes (%s)",
+                logging.debug("scheduling update in %s seconds (%s)",
                              self.updateFreq,
                              self.get_title())
                 self.scheduler = eventloop.add_timeout(
                     self.updateFreq, self.update,
                     "Podcast update (%s)" % self.get_title())
             else:
-                logging.info("updateFreq is %s: skipping update (%s)",
+                logging.debug("updateFreq is %s: skipping update (%s)",
                              self.updateFreq,
                              self.get_title())
 
