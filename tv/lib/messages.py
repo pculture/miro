@@ -899,6 +899,11 @@ class SharingDisappeared(FrontendMessage):
     def __init__(self, share):
         self.share = share
 
+class DeviceEjectFailed(FrontendMessage):
+    """Tell the frontend that the device eject failed."""
+    def __init__(self, device):
+        self.device = device
+
 class FrontendQuit(FrontendMessage):
     """The frontend should exit."""
     pass

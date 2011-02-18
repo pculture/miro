@@ -33,7 +33,7 @@ import os
 import gio
 
 from miro import app
-
+from miro import messages
 
 class DeviceTracker(object):
     def __init__(self):
@@ -153,11 +153,14 @@ class DeviceTracker(object):
             return
         drive = self._unix_device_to_drive[device.id]
         drive.eject(self._eject_callback,
-                    gio.MOUNT_UNMOUNT_NONE, None, None)
+                    gio.MOUNT_UNMOUNT_NONE, None, device)
 
-    def _eject_callback(self, drive, result, user_info):
+    def _eject_callback(self, drive, result, device):
         try:
-            drive.eject_finish(result)
+            result = drive.eject_finish(result)
         except gio.Error:
             # XXX notify the user in some way?
             logging.exception('eject failed for %r' % drive)
+            result = False
+        if not result:
+            messages.DeviceEjectFailed(device).send_to_frontend()

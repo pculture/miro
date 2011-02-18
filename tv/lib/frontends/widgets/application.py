@@ -1247,7 +1247,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
                         'with Miro sharing.' % fmtargs)
         dialogs.show_message(title, description, dialogs.INFO_MESSAGE)
         app.tab_list_manager.select_guide()
-        
+
+    def handle_device_eject_failed(self, message):
+        name = message.device.name
+        title = _('Eject failed')
+        description = _("Ejecting device '%(name)s' failed.\n\n"
+                        "The device is in use.", {'name': name})
+        dialogs.show_message(title, description, dialogs.WARNING_MESSAGE)
+
     def handle_frontend_quit(self, message):
         app.widgetapp.do_quit()
 

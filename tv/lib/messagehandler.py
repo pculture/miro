@@ -1599,6 +1599,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                           remaining=message.device.remaining)
 
     def handle_device_eject(self, message):
+        currently_playing = app.playback_manager.get_playing_item()
+        if currently_playing and hasattr(currently_playing, 'device'):
+            if currently_playing.device.mount == message.device.mount:
+                app.playback_manager.stop()
+                # give the stop a chance to close the files
+                eventloop.add_idle(self.handle_device_eject,
+                                          'ejecting device',
+                                          args=(message,))
+                return
         devices.write_database(message.device.database, message.device.mount)
         app.device_tracker.eject(message.device)
 
