@@ -300,11 +300,10 @@ class VideoDetailsWidget(Background):
         # fullscreen
         if app.playback_manager.is_fullscreen:
             fullscreen_image = make_image_button(
-                'images/fullscreen.png', self.handle_fullscreen)
+                'images/fullscreen_exit.png', self.handle_fullscreen)
         else:
-            # FIXME - need exit fullscreen button
             fullscreen_image = make_image_button(
-                'images/fullscreen.png', self.handle_fullscreen)
+                'images/fullscreen_enter.png', self.handle_fullscreen)
 
         fullscreen_link = make_label(_("Fullscreen"), self.handle_fullscreen)
         left_side_hbox.pack_start(_align_middle(fullscreen_image))
