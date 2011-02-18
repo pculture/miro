@@ -817,7 +817,6 @@ class HideableTabList(TabList):
     """
     def __init__(self):
         TabList.__init__(self)
-        self.added_children = False
         self.info = TabInfo(self.name, self.icon_name)
         self.view.connect('selection-changed', self.on_selection_changed)
         TabList.add(self, self.info)
@@ -827,10 +826,9 @@ class HideableTabList(TabList):
         if parent_id is None:
             parent_id = self.info.id
         TabList.add(self, info, parent_id)
-        if not self.added_children:
+        if len(self.iter_map) == 2: # just added a single child
             self.view.model_changed()
             self.set_folder_expanded(self.info.id, True)
-            self.added_children = True
 
     def _clear_list(self):
         iter = self.view.model.first_iter()
