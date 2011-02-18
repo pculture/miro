@@ -781,7 +781,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             try:
                 self.emit('changed')
             finally:
-                self.changed = False
+                self.changing = False
 
     def set_bulk_mode(self, bulk):
         self.bulk_mode = bulk
