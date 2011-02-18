@@ -808,6 +808,7 @@ class SharingManager(object):
         self.discoverable = False
         self.name = ''
         self.mdns_present = libdaap.mdns_init()
+        self.mdns_callback = None
         self.callback_handle = app.backend_config_watcher.connect('changed',
                                self.on_config_changed)
         # Create the sharing server backend that keeps track of all the list
