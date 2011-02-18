@@ -922,6 +922,7 @@ FRD_UPDATE_LIMIT = 5
 class BTDownloader(BGDownloader):
     # reannounce at most every 30 seconds
     REANNOUNCE_LIMIT = 30
+    FRD_PROBLEMS = 0
 
     def __init__(self, url=None, item=None, restore=None):
         self.metainfo = None
@@ -1149,6 +1150,10 @@ class BTDownloader(BGDownloader):
         self.update_fast_resume_data()
 
     def update_fast_resume_data(self, force=False):
+        if BTDownloader.FRD_PROBLEMS >= 5:
+            # if we've hit 5 problems, we don't keep trying
+            return
+
         if not self.info_hash:
             return
 
@@ -1157,7 +1162,22 @@ class BTDownloader(BGDownloader):
             return
         self._last_frd_update = time_now
 
-        self.fast_resume_data = lt.bencode(self.torrent.write_resume_data())
+        try:
+            # FIXME - we should switch to save_resume_data which uses
+            # an alert to save resume data rather than write_resume_data
+            # which looks deprecated in 0.15.5.
+            self.fast_resume_data = lt.bencode(
+                self.torrent.write_resume_data())
+        except RuntimeError, rte:
+            # write_resume_data can kick up a
+            # boost::filesystem::exists: Access is denied error.  If
+            # that happens, we abort.  If it happens 5 times, we don't
+            # bother trying again.  bug #16339.
+            BTDownloader.FRD_PROBLEMS += 1
+            logging.warning(
+                "RuntimeError kicked up in update_fast_resume_data: %s", rte)
+            return
+
         save_fast_resume_data(self.info_hash, self.fast_resume_data)
 
     def handle_error(self, short_reason, reason):
