@@ -611,7 +611,12 @@ class ItemRenderer(widgetset.InfoListRenderer):
         bold = False
         text_color = self.ITEM_DESC_COLOR
 
-        if (self.info.download_info
+        if self.info.has_drm:
+            bold = True
+            text = _('DRM locked')
+            text_color = widgetutil.WHITE
+            self.emblem_color = (0.8, 0.0, 0.0)
+        elif (self.info.download_info
                 and self.info.download_info.state == 'failed'):
             bold = True
             image = self.alert_image
@@ -1027,6 +1032,9 @@ class DateAddedRenderer(ListViewRendererText):
 
 class LastPlayedRenderer(ListViewRendererText):
     attr_name = 'display_last_played'
+
+class DRMRenderer(ListViewRendererText):
+    attr_name = 'drm_description'
 
 class ListViewRenderer(widgetset.InfoListRenderer):
     """Renderer for more complex list view columns.

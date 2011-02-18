@@ -628,6 +628,7 @@ class DeviceItem(object):
         self.file_type = None
         self.creation_time = None
         self.is_playing = False
+        self.has_drm = None
         self.metadata_version = 0
         self.__dict__.update(kwargs)
 
@@ -709,6 +710,12 @@ class DeviceItem(object):
                     self.screenshot = os.path.join('.miro', basename)
             elif screenshot.startswith(resources.root()):
                 self.screenshot = None # don't save a default thumbnail
+
+    def drm_description(self):
+        if self.has_drm:
+            return _("Locked")
+        else:
+            return u""
 
     def remove(self, save=True):
         file_types = [self.file_type]

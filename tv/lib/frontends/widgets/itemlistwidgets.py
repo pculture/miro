@@ -320,6 +320,7 @@ class ListView(ItemView, SorterWidgetOwner):
         'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,
         'description': style.DescriptionRenderer,
+        'drm': style.DRMRenderer,
     }
     COLUMN_PADDING = 12
     def __init__(self, item_list,

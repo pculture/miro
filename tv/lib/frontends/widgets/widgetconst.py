@@ -45,6 +45,8 @@ TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
 # column properties
+# TODO: this stuff should probably be accessed through WSS, and COLUMN_LABELS
+# should be in widgetstateconstantstest
 COLUMN_LABELS = {
     u'state': _('State'),
     u'name': _('Name'),
@@ -65,6 +67,7 @@ COLUMN_LABELS = {
     u'date-added': _('Date Added'),
     u'last-played': _('Last Played'),
     u'description': _('Description'),
+    u'drm': _('DRM'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()
@@ -76,7 +79,3 @@ COLUMN_WIDTH_WEIGHTS = {
     u'feed-name': 0.5,
     u'status': 0.2,
 }
-
-# TODO: no display has type 'all-feed-video' yet
-# TODO: rename 'feed' to 'video-feed' ?
-# TODO: special stuff for 'converting' type

@@ -73,6 +73,7 @@ class WidgetStateStore(object):
         u'torrent-details': 160,
         u'track': 30,
         u'year': 40,
+        u'drm': 40,
     }
     DEFAULT_SORT_COLUMN = {
         u'tab': u'feed-name', # all-feeds
@@ -95,7 +96,7 @@ class WidgetStateStore(object):
             [u'state', u'name', u'artist', u'album', u'track',
             u'feed-name', u'length', u'genre', u'year', u'rating'],
         u'others':
-            [u'name', u'feed-name', u'size'],
+            [u'name', u'feed-name', u'size', u'drm'],
         u'downloading':
             [u'name', u'feed-name', u'status', u'eta', u'rate',
             u'torrent-details', u'size'],

@@ -135,7 +135,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 14
+    VERSION = 15
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -210,6 +210,8 @@ class DatabaseItemSource(ItemSource):
             'cover_art': item.get_cover_art(),
             'auto_rating': item.get_auto_rating(),
             'is_playing': item.is_playing(),
+            'has_drm': item.has_drm,
+            'drm_description': item.drm_description(),
             }
         if item.isContainerItem:
             info['children'] = [DatabaseItemSource._item_info_for(i) for i in
@@ -454,6 +456,8 @@ class SharingItemSource(ItemSource):
             cover_art=None,
             host=item.host,
             port=item.port,
+            has_drm=item.has_drm,
+            drm_description=item.drm_description(),
             is_playing=False)
 
     def _ensure_info(self, obj):
@@ -585,6 +589,8 @@ class DeviceItemSource(ItemSource):
             skip_count=0,
             cover_art=None,
             auto_rating=0,
+            has_drm=item.has_drm,
+            drm_description=item.drm_description(),
             is_playing=item.is_playing)
 
     def fetch_all(self):

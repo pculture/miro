@@ -360,6 +360,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.play_count = 0
         self.skip_count = 0
         self.cover_art = None
+        self.has_drm = None
         self.metadata_version = 0
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
@@ -948,7 +949,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.isContainerItem:
             return Item.media_children_view(self.id).count() > 0
         else:
-            return self.file_type in ('audio', 'video')
+            return self.file_type in ('audio', 'video') and not self.has_drm
+
+    def drm_description(self):
+        if self.has_drm:
+            return _("Locked")
+        else:
+            return u""
 
     def set_feed(self, feed_id):
         """Moves this item to another feed.
@@ -1102,6 +1109,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Marks the item as seen.
         """
         self.confirm_db_thread()
+        self.has_drm = False
         if self.isContainerItem:
             for child in self.get_children():
                 child.seen = True

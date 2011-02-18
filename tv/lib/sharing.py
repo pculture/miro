@@ -140,6 +140,7 @@ class SharingItem(object):
         self.rating = None
         self.file_type = None
         self.creation_time = None
+        self.has_drm = None
 
         self.__dict__.update(kwargs)
 
@@ -192,6 +193,12 @@ class SharingItem(object):
         # This should not ever do anything useful.  We don't have a backing
         # database to safe this stuff.
         pass
+
+    def drm_description(self):
+        if self.has_drm:
+            return _("Locked")
+        else:
+            return u""
 
     def remove(self, save=True):
         # This should never do anything useful, we don't have a backing

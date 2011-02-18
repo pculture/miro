@@ -454,6 +454,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('skip_count', SchemaInt()),
         ('cover_art', SchemaFilename(noneOk=True)),
         ('metadata_version', SchemaInt()),
+        ('has_drm', SchemaBool(noneOk=True)),
     ]
 
     indexes = (
@@ -744,7 +745,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 143
+VERSION = 144
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

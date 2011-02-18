@@ -1134,6 +1134,7 @@ class ItemInfo(object):
     :param up_total: (Torrent only) total amount we've uploaded
     :param down_total: (Torrent only) total amount we've downloaded
     :param up_down_ratio: (Torrent only) ratio of uploaded to downloaded
+    :param has_drm: True/False if known; None if unknown (usually means no)
     """
 
     html_stripper = util.HTMLStripper()
