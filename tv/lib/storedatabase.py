@@ -914,39 +914,6 @@ class LiveStorage:
             save_name = "%s.%d" % (org_save_name, i)
         return save_name
 
-    def dumpDatabase(self):
-        output = next_free_filename(os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml"))
-        def indent(level):
-            output.write('    ' * level)
-        def output_object(table_name, values):
-            indent(1)
-            if 'id' in values:
-                output.write('<%s id="%s">\n' % (table_name, values['id']))
-            else:
-                output.write('<%s>\n' % (table_name,))
-            for key, value in values.items():
-                if key == 'id':
-                    continue
-                indent(2)
-                output.write('<%s>' % (key,))
-                if isinstance (value, unicode):
-                    output.write (value.encode('ascii', 'xmlcharrefreplace'))
-                else:
-                    output.write (str(value))
-                output.write ('</%s>\n' % (key,))
-            indent(1)
-            output.write ('</%s>\n' % (table_name))
-        output.write ('<?xml version="1.0"?>\n')
-        output.write ('<database schema="%d">\n' % (self._schema_version,))
-        for schema in self._object_schemas:
-            self.cursor.execute("SELECT * FROM %s" % schema.table_name)
-            column_names = [d[0] for d in self.cursor.description]
-            for row in self.cursor:
-                output_object(schema.table_name.replace('_', '-'),
-                        dict(zip(column_names, row)))
-        output.write ('</database>\n')
-        output.close()
-
 class SQLiteConverter(object):
     def __init__(self):
         self._to_sql_converters = {}

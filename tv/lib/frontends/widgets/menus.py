@@ -688,10 +688,6 @@ class TestIntentionalCrash(Exception):
 def on_test_crash_reporter():
     raise TestIntentionalCrash("intentional error here")
 
-@action_handler("DumpDatabase")
-def on_dump_database():
-    app.db.dumpDatabase()
-
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to
     list of menu actions in that group.
