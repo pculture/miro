@@ -436,6 +436,10 @@ class MovieDataUpdater(signals.SignalEmitter):
         try:
             muta = mutagen.File(item.get_filename())
             meta = muta.__dict__
+        except (ArithmeticError):
+            # mutagen doesn't catch these errors internally
+            logging.warn("malformed file: %s", item.get_filename())
+            return (mediatype, duration, data, cover_art)
         except (AttributeError, IOError):
             return (mediatype, duration, data, cover_art)
         except struct.error:
