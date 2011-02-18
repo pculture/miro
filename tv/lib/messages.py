@@ -1150,6 +1150,7 @@ class ItemInfo(object):
                 self.description)
         if not hasattr(self, 'search_ngrams'):
             self.search_ngrams = search.calc_ngrams(self)
+        self.name_sort_key = util.name_sort_key(self.name)
         # pre-calculate things that get displayed in list view
         self.description_oneline = (
                 self.description_stripped[0].replace('\n', '$'))

@@ -47,7 +47,6 @@ import logging
 from miro import app
 from miro import search
 from miro import signals
-from miro import util
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import timer
@@ -78,7 +77,7 @@ class DateSort(ItemSort):
 class NameSort(ItemSort):
     KEY = 'name'
     def sort_key(self, item):
-        return util.name_sort_key(item.name)
+        return item.name_sort_key
 
 class LengthSort(ItemSort):
     KEY = 'length'
@@ -167,23 +166,23 @@ class ProgressSort(ItemSort):
 class ArtistSort(ItemSort):
     KEY = 'artist'
     def sort_key(self, item):
-        return [util.name_sort_key(item.artist),
-                util.name_sort_key(item.album),
-                item.track]
+        return (item.artist,
+                item.album,
+                item.track)
 
 class AlbumSort(ItemSort):
     KEY = 'album'
     def sort_key(self, item):
-        return [util.name_sort_key(item.album),
+        return (item.album,
                 item.track,
-                util.name_sort_key(item.artist)]
+                item.artist)
 
 class TrackSort(ItemSort):
     KEY = 'track'
     def sort_key(self, item):
-        return [item.track,
-                util.name_sort_key(item.artist),
-                util.name_sort_key(item.album)]
+        return (item.track,
+                item.artist,
+                item.album)
 
 class YearSort(ItemSort):
     KEY = 'year'
