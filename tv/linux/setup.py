@@ -460,7 +460,7 @@ class install_data(distutils.command.install_data.install_data):
 
 class build(distutils.command.build.build):
     def build_segmenter(self):
-        segmenter_src = os.path.join(platform_dir, 'miro-segmenter.c')
+        segmenter_src = os.path.join(platform_package_dir, 'miro-segmenter.c')
         cc = ccompiler.new_compiler()
         cc.add_library('avutil')
         cc.add_library('avformat')
