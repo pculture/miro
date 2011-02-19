@@ -344,6 +344,14 @@ def get_logical_cpu_count():
             return ncpus
     return 1
 
+def register_exec_prefix():
+    miro_exec_prefix = os.path.dirname(os.path.abspath(sys.argv[0]))
+    global miro_exec_prefix
+
+def get_segmenter_executable_path():
+    # NB: Since this was installed using distutils this should give the right
+    # path.
+    return os.path.join(miro_exec_prefix, 'miro-segmenter')
 
 def setup_ffmpeg_presets():
     # the linux distro should handle this

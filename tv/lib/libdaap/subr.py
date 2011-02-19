@@ -86,32 +86,30 @@ class ChunkedStreamObj(object):
     """
     DEFAULT_CHUNK_SIZE = 128 * 1024
 
-    def __init__(self, path, start=0, end=0, chunksize=DEFAULT_CHUNK_SIZE):
+    def __init__(self, file_obj, start=0, end=0, chunksize=DEFAULT_CHUNK_SIZE):
         self.chunksize = chunksize
-        self.path = path
-        self.fileobj = open(path, 'rb')
+        self.file_obj = file_obj
         self.end = end
-        self.filesize = os.stat(path)[stat.ST_SIZE]
+        self.filesize = os.fstat(file_obj.fileno())[stat.ST_SIZE]
         self.streamsize = self.filesize
-        self.fileobj.seek(start)
         rangetext = ''
         if start and start < self.filesize:
-            self.fileobj.seek(start)  
             self.streamsize = self.filesize - start
             rangetext = (str(start) + '-' + str(self.filesize - 1) + '/' + 
                          str(self.filesize))
         if end and end < self.filesize and end >= start:
-            self.fileobj.seek(start)  
             self.streamsize = end - start + 1
             rangetext = (str(start) + '-' + str(end) + '/' + 
-                         str(self.filesize)) 
+                         str(self.filesize))
+        # XXX
+        # On error, I think we need to reposition the stream back to the start?
         self.unread = self.streamsize
         self.rangetext = rangetext
 
-    # Be careful: if you call this your object is consumed and you will
-    # need to create new one.
+    # Be careful: debug only: if you call this your object is consumed and 
+    # you will need to create new one.
     def __str__(self):
-        return self.fileobj.read()
+        return self.file_obj.read()
 
     def _get_readsize(self):
         readsize = 0
@@ -124,7 +122,7 @@ class ChunkedStreamObj(object):
     def __iter__(self):
         while True:
             readsize = self._get_readsize()
-            data = self.fileobj.read(readsize)
+            data = self.file_obj.read(readsize)
             self.unread -= readsize
             # Maybe file got truncated
             if data:
@@ -289,8 +287,8 @@ def encode_response(reply):
     except ValueError:
         # This is probably a file.  Just pass up to the
         # caller and let the caller deal with it.
-        [(filepath, start, end)] = reply
-        blob = ChunkedStreamObj(filepath, start, end)
+        [(file_obj, start, end)] = reply
+        blob = ChunkedStreamObj(file_obj, start, end)
     return blob
 
 def split_url_path(urlpath):
@@ -301,17 +299,16 @@ def split_url_path(urlpath):
        as a list and a dictionary of parameters.
     """
     parts = urlpath.split('?')
+    qdict = dict()
     if len(parts) > 1 and parts[1]:
         path, query = parts
-        qdict = dict()
         # I think urllib won't split these for us (?) ... oh well.
         for q in query.split('&'):
             name, sep, value = q.partition('=')
             qdict[name] = urllib.unquote(value)
-        url_sep = '/'
-        # [1:] because we want to split out the first empty string, URI in form
-        # of /xxx/yyy, '/xxx/yyy'.split(/') -> '', 'xxx', 'yyy'
-        return [urllib.unquote(x) for x in path.split(url_sep)][1:], qdict
     else:
-        # len(parts) == 1:
-        return parts, None    # path only
+        path = urlpath
+    url_sep = '/'
+    # [1:] because we want to split out the first empty string, URI in form
+    # of /xxx/yyy, '/xxx/yyy'.split(/') -> '', 'xxx', 'yyy'
+    return [urllib.unquote(x) for x in path.split(url_sep)][1:], qdict

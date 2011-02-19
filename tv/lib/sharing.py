@@ -32,6 +32,7 @@ import socket
 import select
 import struct
 import threading
+import tempfile
 import time
 import uuid
 
@@ -45,6 +46,7 @@ from miro import playlist
 from miro import prefs
 from miro import signals
 from miro import util
+from miro import transcode
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
@@ -629,6 +631,9 @@ class SharingManagerBackend(object):
     daap_playlists = dict()     # Playlist, in daap format
     playlist_item_map = dict()  # Playlist -> item mapping
 
+    def __init__(self):
+        self.transcode = dict()
+
     # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
         pass
@@ -736,8 +741,59 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
 
-    def get_filepath(self, itemid):
-        return self.daapitems[itemid]['path']
+    def get_file(self, itemid, ext, session, request_path_func, offset=0,
+                 chunk=None):
+        file_obj = None
+        path = self.daapitems[itemid]['path']
+        if ext in ('ts', 'm3u8'):
+            # If we are requesting a playlist, this basically means that
+            # transcode is required.
+            if (not self.transcode.has_key(session) or
+              (self.transcode.has_key(session) and 
+              self.transcode[session].itemid != itemid)):
+                yes, info = transcode.needs_transcode(path)
+                if self.transcode.has_key(session):
+                    self.transcode[session].shutdown()
+                self.transcode[session] = transcode.TranscodeObject(path,
+                                                            itemid,
+                                                            info,
+                                                            request_path_func)
+            transcode_obj = self.transcode[session]
+            if ext == 'm3u8':
+                file_obj = transcode_obj.get_playlist()
+                file_obj.seek(offset, os.SEEK_SET)
+            elif ext == 'ts':
+                # TODO: seek won't work on this guy, make sure that
+                # we tell the caller to return HTTP/1.1 200 instead.
+                if transcode_obj.seek(chunk):
+                    transcode_obj.transcode()
+                file_obj = transcode_obj.get_chunk()
+            else:
+                # Should this be a ValueError instead?  But returning -1
+                # will make the caller return 404.
+                print 'ERROR: transcode should be one of ts or m3u8'
+        elif ext == 'coverart':
+            try:
+                cover_art = self.daapitems[itemid]['cover_art']
+                if cover_art:
+                    file_obj = open(cover_art, 'rb')
+                    file_obj.seek(offset, os.SEEK_SET)
+            except OSError:
+                if file_obj:
+                    file_obj.close()
+        else:
+            # If there is an outstanding job delete it first.
+            try:
+                del self.transcode[session]
+            except KeyError:
+                pass
+            try:
+                file_obj = open(path, 'rb')
+                file_obj.seek(offset, os.SEEK_SET)
+            except OSError:
+                if file_obj:
+                    file_obj.close()
+        return file_obj
 
     def get_playlists(self):
         return self.daap_playlists
@@ -777,25 +833,27 @@ class SharingManagerBackend(object):
                 # Fixup the duration: need to convert to millisecond.
                 if daap_string == 'daap.songtime':
                     itemprop[daap_string] *= DURATION_SCALE
-            # Fixup the enclosure format.
-            f, e = os.path.splitext(item.video_path)
-            # Note! sometimes this doesn't work because the file has no
-            # extension!
-            e = e[1:] if e else None
-            if isinstance(e, unicode):
-                e = e.encode('utf-8')
-            itemprop['daap.songformat'] = e
+            # Fixup the enclosure format.  This is hardcoded to mp4, 
+            # as iTunes requires this.  Other clients seem to be able to sniff
+            # out the container.  We can change it if that's no longer true.
             # Fixup the media kind: XXX what about u'other'?
             if itemprop['com.apple.itunes.mediakind'] == u'video':
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_VIDEO)
+                itemprop['daap.songformat'] = 'mp4'
             else:
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_AUDIO)
+                itemprop['daap.songformat'] = 'mp3'
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
+            itemprop['cover_art'] = item.cover_art
             self.daapitems[item.id] = itemprop
+
+    def shutdown(self):
+       for key in self.transcode.keys():
+           self.transcode[key].shutdown()
 
 class SharingManager(object):
     """SharingManager is the sharing server.  It publishes Miro media items
@@ -995,3 +1053,4 @@ class SharingManager(object):
             if self.discoverable:
                 self.disable_discover()
             self.disable_sharing()
+        self.backend.shutdown()

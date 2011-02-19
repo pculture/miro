@@ -155,6 +155,8 @@ options.gconf_name = parsed_options.gconf_name
 from miro.plat import utils
 utils.initialize_locale()
 
+utils.register_exec_prefix()
+
 from miro import bootstrap
 bootstrap.bootstrap()
 

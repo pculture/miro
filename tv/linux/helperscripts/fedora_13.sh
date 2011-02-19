@@ -14,6 +14,7 @@
 yum groupinstall "Development Tools" "Development Libraries"
 
 yum install \
+   ffmpeg-devel \
    avahi-compat-libdns_sd \
    Pyrex \
    python-devel \

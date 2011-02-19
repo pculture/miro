@@ -21,6 +21,8 @@ aptitude install \
     libsoup2.4-dev
 
 aptitude install \
+    libavformat-dev \
+    libavutil-dev \
     libavahi-compat-libdnssd1 \
     libtorrent-rasterbar5 \
     python-libtorrent \

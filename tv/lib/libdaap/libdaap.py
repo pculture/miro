@@ -75,6 +75,7 @@ DAAP_NOCONTENT = 204   # Acknowledged but no content to send back
 DAAP_PARTIAL_CONTENT = 206 # Partial content, if Range header included.
 DAAP_FORBIDDEN = 403   # Access denied
 DAAP_BADREQUEST = 400  # Bad URI request
+DAAP_FILENOTFOUND = 404 # File not found
 DAAP_UNAVAILABLE = 503 # We are full
 
 DEFAULT_CONTENT_TYPE = 'application/x-dmap-tagged'
@@ -189,6 +190,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header('Daap-Server', self.server_version)
             self.send_header('Content-length', str(len(blob)))
             # Note: we currently do not have the ability to replace or 
+            # Note: we currently do not have the ability to replace or 
             # override the default headers.
             for k, v in extra_headers:
                 self.send_header(k, v)
@@ -292,7 +294,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if not session:
            return (DAAP_FORBIDDEN, [], [])
         self.server.del_session(session)
-        return (DAAP_OK, [], [])
 
     # We don't support this but Rhythmbox sends this anyway.  Grr.
     def do_update(self):
@@ -307,7 +308,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         reply.append(('mupd', [('mstt', DAAP_OK), ('musr', xxx_revision)]))
         return (DAAP_OK, reply, [])
 
-    def do_stream_file(self, db_id, item_id):
+    def do_stream_file(self, db_id, item_id, ext, chunk):
         rc = DAAP_OK
         extra_headers = []
         # NOTE: Grabbing first header only.
@@ -317,22 +318,37 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             print 'Header %s value %s' % (k, repr(self.headers.getheader(k)))
         # XXX backend API is broken FIXME  API should return a handle to the
         # open file.
-        stream_file = self.server.backend.get_filepath(item_id)
-        print 'streaming %s' % stream_file
         seekpos = seekend = 0
         rangehdr = self.headers.getheader('Range')
+        typ = ''
         if rangehdr:
-            paramstring = 'bytes='
-            if rangehdr.startswith(paramstring):
-                seekpos = atol(rangehdr[len(paramstring):])
-            idx = rangehdr.find('-')
-            if idx >= 0:
-                seekend = atol(rangehdr[(idx + 1):])
-            if seekend < seekpos:
-                seekend = 0
-            rc = DAAP_PARTIAL_CONTENT
+            bytes = 'bytes='
+            if rangehdr.startswith(bytes):
+                seekpos = atol(rangehdr[len(bytes):])
+                idx = rangehdr.find('-')
+                if idx >= 0:
+                    seekend = atol(rangehdr[(idx + 1):])
+                if seekend < seekpos:
+                    seekend = 0
+                rc = DAAP_PARTIAL_CONTENT
+        file_obj = self.server.backend.get_file(item_id, ext,
+                                                self.get_session(),
+                                                self.get_request_path,
+                                                offset=seekpos, chunk=chunk)
+        if not file_obj:
+            return (DAAP_FILENOTFOUND, [], extra_headers)
+        print 'streaming with file object ', file_obj
         # Return a special response, the encode_reponse() will handle correctly
-        return (rc, [(stream_file, seekpos, seekend)], extra_headers)
+        return (rc, [(file_obj, seekpos, seekend)], extra_headers)
+
+    def get_request_path(self, itemid, enclosure):
+        # XXX
+        # This API is bad because we can't get the address we used to connect
+        # with the client unless we poke into semi-private data.  Ugh.
+        address, addrlength = self.rfile._sock.getsockname()
+        listen_address, port = self.server.server_address
+        return ('daap://%s:%d/databases/1/items/%d.%s?session-id=%d' % 
+                (address, port, itemid, enclosure, self.get_session()))
 
     def do_databases(self):
         path, query = split_url_path(self.path)
@@ -510,8 +526,13 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # junk at the end.
             item_id = atoi(path[3])
             print 'now playing item %d' % item_id
-            return self.do_stream_file(db_id, item_id)
-        
+            name, ext = os.path.splitext(path[3])
+            ext = ext[1:]
+            chunk = None
+            if query.has_key('chunk'):
+                chunk = int(query['chunk'])
+            return self.do_stream_file(db_id, item_id, ext, chunk)
+
     def do_database_groups(self, path, query):
         db_id = int(path[1])
         if not self._check_db_id(db_id):
@@ -553,7 +574,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # XXX we should be splitting these so the path and the querystring
             # are separate.
             elif self.path.startswith('/logout'):
-               rcode, reply, extra_headers = self.do_logout()
+               self.do_logout()
                endconn = True
             elif self.path.startswith('/activity'):
                 rcode, reply, extra_headers = self.do_activity()
@@ -577,10 +598,11 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             rcode = DAAP_BADREQUEST
             reply = []
             extra_headers = []
-        print 'do_GET: send reply with HTTP code %d' % rcode
-        self.do_send_reply(rcode, reply, extra_headers=extra_headers)
         if endconn:
             self.wfile.close()
+        else:
+            print 'do_GET: send reply with HTTP code %d' % rcode
+            self.do_send_reply(rcode, reply, extra_headers=extra_headers)
 
 def mdns_init():
     return mdns.mdns_init()
@@ -675,6 +697,12 @@ class DaapClient(object):
     def __init__(self, host, port):
         self.host = host
         self.port = port
+        self.session = None
+
+    def alive(self):
+        self.timer.cancel()
+        self.heartbeat_callback()
+        return self.session is not None
 
     def heartbeat_callback(self):
         try:
@@ -687,13 +715,15 @@ class DaapClient(object):
             self.timer.start()
         # We've been disconnected, or server gave incorrect response?
         except (IOError, ValueError):
-            pass
+            self.disconnect()
 
     # Generic check for http response.  ValueError() on unexpected response.
     def check_reply(self, response, http_code=httplib.OK, callback=None,
                     args=[]):
         if response.status != http_code:
             raise ValueError('Unexpected response code %d' % http_code)
+        if response.version != 11:
+            raise ValueError('Server did not return HTTP/1.1')
         # XXX Broken - don't do an unbounded read here, this is stupid,
         # server can crash the client
         data = response.read()
@@ -834,6 +864,7 @@ class DaapClient(object):
         except (ValueError, httplib.ResponseNotReady, AttributeError, IOError):
             pass
         finally:
+            self.session = None
             self.conn.close()
 
     def daap_get_file_request(self, file_id, enclosure=None):
