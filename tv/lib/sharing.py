@@ -170,10 +170,20 @@ class SharingItem(object):
         return True
 
     def get_release_date(self):
-        return datetime.fromtimestamp(self.release_date)
+        try:
+            return datetime.fromtimestamp(self.release_date)
+        except ValueError:
+            logging.warn('SharingItem: release date time %s invalid' %
+                          self.release_date)
+            return datetime.now()
 
     def get_creation_time(self):
-        return datetime.fromtimestamp(self.creation_time)
+        try:
+            return datetime.fromtimestamp(self.creation_time)
+        except ValueError:
+            logging.warn('SharingItem: creation time %s invalid' %
+                          self.creation_time)
+            return datetime.now()
 
     @returns_filename
     def get_filename(self):

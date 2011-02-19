@@ -660,10 +660,21 @@ class DeviceItem(object):
         return True
 
     def get_release_date(self):
-        return datetime.fromtimestamp(self.release_date)
+        try:
+            return datetime.fromtimestamp(self.release_date)
+        except ValueError:
+            logging.warn('DeviceItem: release date %s invalid' % 
+                          self.release_date)
+            return datetime.now()
+           
 
     def get_creation_time(self):
-        return datetime.fromtimestamp(self.creation_time)
+        try:
+            return datetime.fromtimestamp(self.creation_time)
+        except ValueError:
+            logging.warn('DeviceItem: creation time %s invalid' % 
+                          self.creation_time)
+            return datetime.now()
 
     @returns_filename
     def get_filename(self):
