@@ -37,6 +37,7 @@ import tempfile
 import time
 import uuid
 
+from datetime import datetime
 from hashlib import md5
 
 from miro.gtcache import gettext as _
@@ -169,7 +170,10 @@ class SharingItem(object):
         return True
 
     def get_release_date(self):
-        return self.release_date
+        return datetime.fromtimestamp(self.release_date)
+
+    def get_creation_time(self):
+        return datetime.fromtimestamp(self.creation_time)
 
     @returns_filename
     def get_filename(self):
