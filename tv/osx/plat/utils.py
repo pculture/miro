@@ -438,7 +438,7 @@ def get_segmenter_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
     # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
     # Python 3.
-    path = os.path.join(bundle_path, "Contents", "Helpers", "segmenter")
+    path = os.path.join(bundle_path, "Contents", "Helpers", "miro-segmenter")
     return path.encode('utf-8')
 
 def setup_ffmpeg_presets():
