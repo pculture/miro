@@ -130,9 +130,8 @@ class MiroTextField(NSTextField):
         wrappermap.wrapper(self).emit('activate')
         return NSTextField.becomeFirstResponder(self)
 
-    def resignFirstResponder(self):
+    def textDidEndEditing_(self, notification):
         wrappermap.wrapper(self).emit('focus-out')
-        return NSTextField.resignFirstResponder(self)
 
 class TextEntry(BaseTextEntry):
     def make_view(self):
