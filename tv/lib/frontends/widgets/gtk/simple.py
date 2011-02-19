@@ -117,6 +117,9 @@ class Label(Widget):
 
     def get_alignment(self):
         return self._widget.get_justify()
+    
+    def get_width(self):
+        return self._widget.get_layout().get_pixel_size()[0]
 
     def set_text(self, text):
         self._widget.set_text(text)

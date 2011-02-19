@@ -102,6 +102,12 @@ class ProgressTrackingListMixin(object):
     """Controller that cares about item metadata extraction progress."""
     def __init__(self):
         self.postponed = None
+        if self.type == 'music':
+            self.mediatype = 'audio'
+        elif self.type == 'videos':
+            self.mediatype = 'video'
+        else:
+            self.mediatype = 'other'
 
     def start_metadata_progress(self, remaining, eta, new):
         meter = self.widget.get_progress_meter()
@@ -109,6 +115,7 @@ class ProgressTrackingListMixin(object):
             # got progress before widget
             self.postponed = (remaining, eta, new)
         else:
+            meter.set_mediatype(self.mediatype)
             meter.start(eta, new)
             self.postponed = None
 

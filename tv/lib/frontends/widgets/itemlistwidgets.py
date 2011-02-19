@@ -1187,32 +1187,47 @@ class ProgressToolbar(widgetset.HBox):
     we cheat a bit: the backend sends signals for batches of items
     (currently 10), and we interpolate the current state based on ETA.
     """
-    def __init__(self, mediatype):
+    def __init__(self):
         widgetset.HBox.__init__(self)
-        self.mediatype = mediatype
         loading_icon = widgetset.AnimatedImageDisplay(
                        resources.path('images/load-indicator.gif'))
         self.label = widgetset.Label()
         self.meter = widgetutil.HideableWidget(loading_icon)
         self.label_widget = widgetutil.HideableWidget(self.label)
-        self.pack_start(widgetutil.align(
-                        self.label_widget, 1, 0.5, 1, 0, 0, 0, 280, 10),
-                        expand=False)
-        self.pack_start(widgetutil.align_left(
-                        self.meter, 0, 0, 0, 200), expand=True)
         self.elapsed = None
         self.eta = None
         self.total = None
         self.remaining = None
+        self.mediatype = 'other'
+        self.set_up = False
+
+    def setup(self):
+        if not self.set_up:
+            self.set_up = True
+            padding = 380 - self.label.get_width()
+            self.pack_start(widgetutil.align(
+                            self.label_widget, 1, 0.5, 1, 0, 0, 0, padding, 10),
+                            expand=False)
+            self.pack_start(widgetutil.align_left(
+                            self.meter, 0, 0, 0, 200), expand=True)
+            self.label_widget.show()
+            self.meter.show()
+
+    def set_mediatype(self, mediatype):
+        self.mediatype = mediatype
 
     def _update_label(self):
-        # TODO: should be translatable
-        file_description = 'files'
-        if self.mediatype is not None:
-            file_description = self.mediatype + ' ' + file_description
-        text = "Importing: {finished} of {total} {file_description}".format(
-                finished=self.total-self.remaining, total=self.total,
-                file_description=file_description)
+        # TODO: display eta
+        state = (self.total-self.remaining, self.total)
+        if self.mediatype == 'audio':
+            text = _("Importing audio details and artwork: "
+                    "{0} of {1}").format(*state)
+        elif self.mediatype == 'video':
+            text = _("Importing video details and creating thumbnails: "
+                    "{0} of {1}").format(*state)
+        else:
+            text = _("Importing file details: "
+                    "{0} of {1}").format(*state)
         self.label.set_text(text)
 
     def finish(self):
@@ -1229,10 +1244,8 @@ class ProgressToolbar(widgetset.HBox):
         self.eta = seconds
         self.total = total
         self.remaining = remaining
-        # TODO: display eta
-        self.label_widget.show()
-        self.meter.show()
         self._update_label()
+        self.setup()
 
 class ItemContainerWidget(widgetset.VBox):
     """A Widget for displaying objects that contain items (feeds,
@@ -1244,7 +1257,7 @@ class ItemContainerWidget(widgetset.VBox):
     :attribute toolbar: HeaderToolbar for the widget
     """
 
-    def __init__(self, toolbar, view, mediatype=None):
+    def __init__(self, toolbar, view):
         widgetset.VBox.__init__(self)
         self.vbox = {}
         standard_view = WidgetStateStore.get_standard_view_type()
@@ -1254,7 +1267,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
-        self.progress_toolbar = ProgressToolbar(mediatype)
+        self.progress_toolbar = ProgressToolbar()
         self.toolbar = toolbar
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)

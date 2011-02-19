@@ -106,6 +106,9 @@ class Label(Widget):
         self.set_text(text)
         self.__color = self.view.textColor()
 
+    def get_width(self):
+        return self.calc_size_request()[0]
+
     def set_bold(self, bold):
         self.bold = bold
         self.set_font()
