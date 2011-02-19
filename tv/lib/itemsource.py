@@ -380,7 +380,6 @@ class SharingItemSource(ItemSource):
     XXX like it?
     """
     def __init__(self, tracker, playlist_id=None):
-        print 'SHARING ITEM SOURCE INIT playlist_id', playlist_id
         ItemSource.__init__(self)
         self.tracker = tracker
         self.playlist_id = playlist_id
@@ -476,12 +475,10 @@ class SharingItemSource(ItemSource):
         self.emit("removed", item.id)
 
     def fetch_all(self):
-        print 'FETCH ALL'
         return [self._item_info_for(item) for item in 
                 self.tracker.get_items(playlist_id=self.playlist_id)]
 
     def unlink(self):
-        print 'SHARING ITEM SOURCE UNLINK'
         for handle in self.signal_handles:
             self.tracker.disconnect(handle)
         self.signal_handles = []
