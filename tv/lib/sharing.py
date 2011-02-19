@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import errno
+import logging
 import os
 import socket
 import select
@@ -288,7 +289,7 @@ class SharingTracker(object):
         # Because on removal, Avahi can't do a name query, so we have no
         # hostname, port, or IP address information!
         share_id = unicode(fullname)
-        print 'gotten MDNS CALLBACK share_id'
+        logging.debug('gotten mdns callback share_id')
         # Do we have this share on record?  If so then just ignore.
         # In particular work around a problem with Avahi apparently sending
         # duplicate messages, maybe it's doing that once for IPv4 then again
@@ -402,7 +403,7 @@ class SharingTracker(object):
         try:
             return self.trackers[share_id]
         except KeyError:
-            print 'CREATING NEW TRACKER'
+            logging.debug('sharing: creating new tracker')
             share = self.available_shares[share_id]
             self.trackers[share_id] = SharingItemTrackerImpl(share)
             return self.trackers[share_id]
@@ -541,7 +542,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 is_base_playlist = playlists[k]['daap.baseplaylist']
             if is_base_playlist:
                 if self.base_playlist:
-                    print 'WARNING: more than one base playlist found'
+                    logging.debug('WARNING: more than one base playlist found')
                 self.base_playlist = k
             # This isn't the playlist id of the remote share, this is the
             # playlist id we use internally.
@@ -771,7 +772,7 @@ class SharingManagerBackend(object):
             else:
                 # Should this be a ValueError instead?  But returning -1
                 # will make the caller return 404.
-                print 'ERROR: transcode should be one of ts or m3u8'
+                logging.info('error: transcode should be one of ts or m3u8')
         elif ext == 'coverart':
             try:
                 cover_art = self.daapitems[itemid]['cover_art']
@@ -803,7 +804,6 @@ class SharingManagerBackend(object):
         if not playlist_id:
             return self.daapitems
         # XXX Somehow cache this?
-        print 'GET_ITEMS', playlist_id
         playlist = dict()
         for x in self.daapitems.keys():
             if x in self.playlist_item_map[playlist_id]:
@@ -1000,11 +1000,11 @@ class SharingManager(object):
                         continue
                     if self.r == i:
                         cmd = self.r.recv(4)
-                        print 'CMD', cmd
+                        logging.debug('sharing: CMD %s' % cmd)
                         if cmd == SharingManager.CMD_QUIT:
                             return
                         elif cmd == SharingManager.CMD_NOP:
-                            print 'RELOAD'
+                            logging.debug('sharing: reload')
                             continue
                         else:
                             raise 

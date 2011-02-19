@@ -224,9 +224,9 @@ class TranscodeObject(object):
         self.trailer = self.duration % TranscodeObject.segment_duration
         if self.trailer:
             self.nchunks += 1
-        print 'TRANSCODE INFO, duration', self.duration
-        print 'TRANSCODE INFO, nchunks ', self.nchunks
-        print 'TRANSCODE INFO, trailer', self.trailer
+        logging.debug('TRANSCODE INFO, duration %s' self.duration)
+        logging.debug('TRANSCODE INFO, nchunks %s' self.nchunks)
+        logging.debug('TRANSCODE INFO, trailer %s' self.trailer)
 
         # XXX dodgy
         # Set start_chunk != current_chunk to force seek() to return True
@@ -263,7 +263,6 @@ class TranscodeObject(object):
             urlpath += '&chunk=%d' % i
             self.playlist += urlpath + '\n'
         self.playlist += '#EXT-X-ENDLIST\n'
-        print 'PLAYLIST', self.playlist
 
     def get_playlist(self):
         tmpf = tempfile.TemporaryFile()
@@ -305,7 +304,7 @@ class TranscodeObject(object):
                 kwargs["close_fds"] = True
             args = [ffmpeg_exe, "-i", self.media_file]
             if self.time_offset:
-                print 'STARTING JOB FROM %d' % self.time_offset
+                logging.debug('transcode: start job @ %d' % self.time_offset)
                 args += TranscodeObject.time_offset_args + [str(self.time_offset)]
             if self.has_video:
                 args += TranscodeObject.has_video_args
@@ -319,7 +318,7 @@ class TranscodeObject(object):
             else:
                raise ValueError('no video or audio stream present')
     
-            print 'Running command ', ' '.join(args)
+            logging.debug('Running command %s' % ' '.join(args))
             self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
     
             segmenter_exe = get_segmenter_executable_path()
@@ -334,7 +333,7 @@ class TranscodeObject(object):
             #if os.name != "nt":
             #    kwargs["close_fds"] = True
     
-            print 'Running command ', ' '.join(args)
+            logging.debug('Running command %s' % ' '.join(args))
             self.segmenter_handle = subprocess.Popen(args, **kwargs)
    
             self.sink_thread = threading.Thread(target=thread_body,
@@ -354,7 +353,6 @@ class TranscodeObject(object):
         if not d:
             self.tmp_file.flush()
             self.tmp_file.seek(0, os.SEEK_SET)
-            print 'APPEND', self.tmp_file
             with self.chunk_lock:
                 self.chunk_buffer.append(self.tmp_file)
             # Tell consumer there is stuff available
@@ -393,9 +391,7 @@ class TranscodeObject(object):
         tmpf = self.chunk_buffer[0]
         self.current_chunk += 1
         self.chunk_buffer = self.chunk_buffer[1:]
-        print 'POP'
         self.chunk_lock.release()
-        print 'FILE', tmpf
         return tmpf
 
     # Shutdown the transcode job.  If we quitting, make sure you call this
