@@ -408,6 +408,18 @@ def get_logical_cpu_count():
 def get_segmenter_executable_path():
     return os.path.join(resources.app_root(), "miro-segmenter.exe")
 
+def get_transcode_video_options():   
+    has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
+                      '-vpre', 'slow']
+    return has_video_args
+
+def get_transcode_audio_options():
+    # XXX: should we use libmp3lame?
+    has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
+                      '-ab', '160k', '-ac', '2']
+    #has_audio_args = ['-acodec', 'libmp3lame', '-ac', '2', '-ab', '160k']
+    return has_audio_args
+
 def setup_ffmpeg_presets():
     os.environ['FFMPEG_DATADIR'] = resources.app_root()
 

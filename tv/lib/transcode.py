@@ -40,7 +40,9 @@ import threading
 
 from miro import util
 from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
-                             get_segmenter_executable_path, thread_body)
+                             get_segmenter_executable_path, thread_body,
+                             get_transcode_video_options,
+                             get_transcode_audio_options)
 
 # Transcoding
 #
@@ -177,19 +179,7 @@ class TranscodeObject(object):
     """
 
     time_offset_args = ['-ss']
-    # Note: the fallback for A/V is to leave the arguments empty, and that 
-    # works (most likely using MPEG-1 and MP2).
-    has_video_args = []
-    has_audio_args = []
-    has_video_has_audio_args = []
-    # XXX this stuff is hardcoded.
-    has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
-                      '-vpre', 'slow']
-    has_video_has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
-                      '-ab', '160k', '-ac', '2']
-    has_audio_args = ['-acodec', 'libmp3lame', '-ac', '2', '-ab', '160k']
-    video_output_args = ['-f', 'mpegts', '-']
-    audio_output_args = ['-f', 'mpegts', '-']
+    output_args = ['-f', 'mpegts', '-']
 
     segment_duration = 10
     segmenter_args = [str(segment_duration)]
@@ -224,9 +214,9 @@ class TranscodeObject(object):
         self.trailer = self.duration % TranscodeObject.segment_duration
         if self.trailer:
             self.nchunks += 1
-        logging.debug('TRANSCODE INFO, duration %s' self.duration)
-        logging.debug('TRANSCODE INFO, nchunks %s' self.nchunks)
-        logging.debug('TRANSCODE INFO, trailer %s' self.trailer)
+        logging.debug('TRANSCODE INFO, duration %s' % self.duration)
+        logging.debug('TRANSCODE INFO, nchunks %s' % self.nchunks)
+        logging.debug('TRANSCODE INFO, trailer %s' % self.trailer)
 
         # XXX dodgy
         # Set start_chunk != current_chunk to force seek() to return True
@@ -307,17 +297,13 @@ class TranscodeObject(object):
                 logging.debug('transcode: start job @ %d' % self.time_offset)
                 args += TranscodeObject.time_offset_args + [str(self.time_offset)]
             if self.has_video:
-                args += TranscodeObject.has_video_args
-                if self.has_audio:
-                    # A/V transcode
-                    args += TranscodeObject.has_video_has_audio_args
-                args += TranscodeObject.video_output_args
-            elif self.has_audio:
-                args += TranscodeObject.has_audio_args
-                args += TranscodeObject.audio_output_args
+                args += get_transcode_video_options()
+            if self.has_audio:
+                args += get_transcode_audio_options()
             else:
                raise ValueError('no video or audio stream present')
     
+            args += TranscodeObject.output_args
             logging.debug('Running command %s' % ' '.join(args))
             self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
     

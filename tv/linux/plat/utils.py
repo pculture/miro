@@ -353,6 +353,16 @@ def get_segmenter_executable_path():
     # path.
     return os.path.join(miro_exec_prefix, 'miro-segmenter')
 
+def get_transcode_video_options():   
+    # Linux ffmpeg may not have fancy pants encoders so leave to use default.
+    has_video_args = []
+    return has_video_args
+
+def get_transcode_audio_options():
+    # Linux ffmpeg may not have fancy pants encoders so leave to use default.
+    has_audio_args = []
+    return has_audio_args
+
 def setup_ffmpeg_presets():
     # the linux distro should handle this
     pass
