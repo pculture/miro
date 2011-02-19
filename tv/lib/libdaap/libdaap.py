@@ -96,10 +96,21 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     # allow_reuse_address = True    # setsockopt(... SO_REUSEADDR, 1)
     session_lock = threading.Lock()
 
+    def __init__(self, server_address, RequestHandlerClass,
+                 bind_and_activate=True):
+        SocketServer.TCPServer.__init__(self, server_address,
+                                        RequestHandlerClass,
+                                        bind_and_activate)
+        self.debug = False
+        self.log_message_func = None
+
     # New functions in subclass.  Note: we can separate some of these out
     # into separate libraries but not now.
     def set_backend(self, backend):
         self.backend = backend
+
+    def set_log_message(self, func):
+        self.log_message_func = func
 
     def set_debug(self, debug):
         self.debug = debug
@@ -167,6 +178,10 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     #    super(BaseHTTPRequestHandler, self).__init__(self, request,
     #                                                   client_address,
     #                                                   server)
+
+    def log_message(self, format, *args):
+        if self.server.log_message_func:
+            self.server.log_message_func
 
     def finish(self):
         try:
@@ -313,9 +328,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         extra_headers = []
         # NOTE: Grabbing first header only.
         # XXX debug crap
-        print 'do_stream_file'
-        for k in self.headers.keys():
-            print 'Header %s value %s' % (k, repr(self.headers.getheader(k)))
+        self.log_message('daap server: do_stream_file')
         # XXX backend API is broken FIXME  API should return a handle to the
         # open file.
         seekpos = seekend = 0
@@ -337,7 +350,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                                                 offset=seekpos, chunk=chunk)
         if not file_obj:
             return (DAAP_FILENOTFOUND, [], extra_headers)
-        print 'streaming with file object ', file_obj
+        self.log_message('daap server: streaming with filobj %s', file_obj)
         # Return a special response, the encode_reponse() will handle correctly
         return (rc, [(file_obj, seekpos, seekend)], extra_headers)
 
@@ -525,7 +538,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # Use atoi() here if only because Rhythmbox always pass us
             # junk at the end.
             item_id = atoi(path[3])
-            print 'now playing item %d' % item_id
+            self.log_message('daap server: now playing item %d', item_id)
             name, ext = os.path.splitext(path[3])
             ext = ext[1:]
             chunk = None
@@ -588,7 +601,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 reply = []
                 extra_headers = []
         except Exception, e:
-            print 'Error: Exception occurred: ' + str(e)
+            self.log_message('Error: Exception occurred: ' + str(e))
             if self.server.debug:
                 (typ, value, tb) = sys.exc_info()
                 print 'Exception: ' + str(typ)
@@ -601,7 +614,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if endconn:
             self.wfile.close()
         else:
-            print 'do_GET: send reply with HTTP code %d' % rcode
             self.do_send_reply(rcode, reply, extra_headers=extra_headers)
 
 def mdns_init():
