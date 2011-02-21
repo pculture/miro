@@ -1009,10 +1009,11 @@ class TableView(Widget):
                 if path_info is not None:
                     path, column, x, y = path_info
                     selection = self._widget.get_selection()
-                    triangle_size = treeview.style_get_property("expander_size")
                     renderer = column.get_cell_renderers()[0]
+                    click_in_expander = self._x_coord_in_expander(treeview,
+                            x, column, path)
                     if (selection.path_is_selected(path) and
-                            x > triangle_size and
+                            not click_in_expander and
                             not isinstance(renderer, GTKCheckboxCellRenderer)):
                         self.delaying_press = True
                         return True
@@ -1032,6 +1033,29 @@ class TableView(Widget):
             self.handled_last_button_press = True
             return True
         self.handled_last_button_press = False
+
+    def _x_coord_in_expander(self, treeview, x, column, path):
+        """Calculate if an x coordinate is over the expander triangle
+
+        :param treeview: Gtk.TreeView
+        :param column: Gtk.TreeColumn
+        :param x: x coordinate, relative to column's cell area
+        :param path: tree path for the cell
+        """
+        if column != treeview.get_expander_column():
+            return False
+        model = treeview.get_model()
+        if not model.iter_has_child(model.get_iter(path)):
+            return False
+        expander_size = treeview.style_get_property(
+                "expander_size")
+        # GTK allocateds an extra 4px to the right of the expanders.  This
+        # seems to be hardcoded as EXPANDER_EXTRA_PADDING in the source code.
+        total_exander_size = expander_size + 4
+        # allocate space for expanders for parent nodes
+        expander_start = total_exander_size * (len(path) - 1)
+        expander_end = expander_start + total_exander_size
+        return expander_start <= x < expander_end
 
     def on_row_activated(self, treeview, path, view_column):
         iter_ = treeview.get_model().get_iter(path[0])
