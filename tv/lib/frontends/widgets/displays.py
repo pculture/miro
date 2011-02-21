@@ -43,7 +43,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import downloadscontroller
-from miro.frontends.widgets import conversionscontroller
+from miro.frontends.widgets import convertingcontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
@@ -123,7 +123,7 @@ class DisplayManager(object):
                 SearchDisplay,
                 OtherItemsDisplay,
                 DownloadingDisplay,
-                ConversionsDisplay,
+                ConvertingDisplay,
                 GuideDisplay,
                 MultipleSelectionDisplay,
                 DeviceDisplay,
@@ -452,14 +452,14 @@ class DownloadingDisplay(ItemListDisplay):
     def make_controller(self, tab):
         return downloadscontroller.DownloadsController()
 
-class ConversionsDisplay(TabDisplay):
+class ConvertingDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'conversions'
+        return tab_type == 'converting'
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
-        self.controller = conversionscontroller.ConversionsController()
+        self.controller = convertingcontroller.ConvertingController()
         self.widget = self.controller.widget
 
 class FolderContentsDisplay(ItemListDisplayMixin, Display):

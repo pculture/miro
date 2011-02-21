@@ -45,7 +45,7 @@ from miro.plat.frontends.widgets import widgetset
 
 from miro.conversions import conversion_manager
 
-class ConversionsSort(itemlist.ItemSort):
+class ConvertingSort(itemlist.ItemSort):
     KEY = None
 
     def __init__(self):
@@ -58,15 +58,15 @@ class ConversionsSort(itemlist.ItemSort):
             self.positions.append(id_)
         return self.positions.index(id_)
 
-class ConversionsController(object):
+class ConvertingController(object):
     def __init__(self):
         self.widget = widgetset.VBox()
         self.build_widget()
 
     def build_widget(self):
-        image_path = resources.path("images/icon-conversions_large.png")
+        image_path = resources.path("images/icon-converting_large.png")
         icon = imagepool.get(image_path)
-        titlebar = ConversionsTitleBar(_("Conversions"), icon)
+        titlebar = ConvertingTitleBar(_("Converting"), icon)
         self.widget.pack_start(titlebar)
 
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
@@ -97,9 +97,9 @@ class ConversionsController(object):
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
-        sorter = ConversionsSort()
+        sorter = ConvertingSort()
         self.model = widgetset.InfoListModel(sorter.sort_key)
-        self.table = ConversionTableView(self.model)
+        self.table = ConvertingTableView(self.model)
         self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.table)
@@ -190,16 +190,16 @@ class ConversionsController(object):
         else:
             self.clear_finished_button.disable()
 
-class ConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
+class ConvertingTitleBar(itemlistwidgets.ItemListTitlebar):
     def _build_titlebar_extra(self):
         pass
 
-class ConversionTableView(widgetset.TableView):
+class ConvertingTableView(widgetset.TableView):
     def __init__(self, model):
         widgetset.TableView.__init__(self, model)
         self.set_show_headers(False)
 
-        self.renderer = ConversionCellRenderer()
+        self.renderer = ConvertingCellRenderer()
         self.column = widgetset.TableColumn('conversion', self.renderer)
         self.column.set_min_width(600)
         self.add_column(self.column)
@@ -210,7 +210,7 @@ class ConversionTableView(widgetset.TableView):
         self.set_auto_resizes(True)
         self.set_background_color(widgetutil.WHITE)
 
-class ConversionProgressBarColorSet(object):
+class ConvertingProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.75, 0.28, 0.50)
     PROGRESS_BASE_BOTTOM = (0.71, 0.16, 0.42)
     BASE = (0.76, 0.76, 0.76)
@@ -222,7 +222,7 @@ class ConversionProgressBarColorSet(object):
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
-class ConversionCellRenderer(style.ItemRenderer):
+class ConvertingCellRenderer(style.ItemRenderer):
     THUMB_WIDTH = 120
     THUMB_HEIGHT = 82
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)
@@ -304,7 +304,7 @@ class ConversionCellRenderer(style.ItemRenderer):
         hbox.pack(cellpack.align_middle(cellpack.align_center(self._progress_textbox(layout))), expand=True)
         hbox.pack(cellpack.pad(cellpack.align_right(cellpack.Hotspot('interrupt', self.INTERRUPT_BUTTON)), right=3))
         background = cellpack.Background(cellpack.align_middle(hbox), min_width=356, min_height=20)
-        background.set_callback(style.ProgressBarDrawer(self.info.progress, ConversionProgressBarColorSet).draw)
+        background.set_callback(style.ProgressBarDrawer(self.info.progress, ConvertingProgressBarColorSet).draw)
         
         vbox.pack_end(cellpack.pad(background, bottom=12))
         

@@ -456,7 +456,7 @@ class DownloadingItemList(ItemList):
                 and not item_info.download_info.finished
                 and not item_info.download_info.state == 'failed')
 
-class ConversionsItemList(ItemList):
+class ConvertingItemList(ItemList):
     """ItemList that displays items being converted."""
     def filter(self, item_info):
         return item_info.converting

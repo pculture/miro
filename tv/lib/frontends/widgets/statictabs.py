@@ -78,8 +78,8 @@ class DownloadsTab(StaticTab):
     name = _('Downloading')
     icon_name = 'icon-downloading'
 
-class ConversionsTab(StaticTab):
-    type = u'conversions'
-    id = u'conversions'
-    name = _('Conversions')
-    icon_name = 'icon-conversions'
+class ConvertingTab(StaticTab):
+    type = u'converting'
+    id = u'converting'
+    name = _('Converting')
+    icon_name = 'icon-converting'

@@ -230,7 +230,7 @@ class LibraryTabList(StaticTabListBase):
         self.add(statictabs.VideoLibraryTab())
         self.add(statictabs.AudioLibraryTab())
         self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
-                          'conversions': statictabs.ConversionsTab(),
+                          'converting': statictabs.ConvertingTab(),
                           'others': statictabs.OthersTab()}
         self.view.model_changed()
 
@@ -273,8 +273,8 @@ class LibraryTabList(StaticTabListBase):
         self.update_count('downloading', 'downloading', count,
                           non_downloading_count)
 
-    def update_conversions_count(self, running_count, other_count):
-        self.update_count('conversions', 'downloading', running_count,
+    def update_converting_count(self, running_count, other_count):
+        self.update_count('converting', 'converting', running_count,
                           other_count)
 
     def update_others_count(self, count):

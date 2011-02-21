@@ -1432,33 +1432,33 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_conversions_count_changed(self, message):
         library_tab_list = app.tab_list_manager.library_tab_list
-        library_tab_list.update_conversions_count(message.running_count,
+        library_tab_list.update_converting_count(message.running_count,
                 message.other_count)
 
     def handle_conversion_tasks_list(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.ConversionsDisplay):
+        if isinstance(current_display, displays.ConvertingDisplay):
             current_display.controller.handle_task_list(message.running_tasks,
                     message.pending_tasks, message.finished_tasks)
 
     def handle_conversion_task_created(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.ConversionsDisplay):
+        if isinstance(current_display, displays.ConvertingDisplay):
             current_display.controller.handle_task_added(message.task)
 
     def handle_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.ConversionsDisplay):
+        if isinstance(current_display, displays.ConvertingDisplay):
             current_display.controller.handle_task_removed(message.task)
 
     def handle_all_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.ConversionsDisplay):
+        if isinstance(current_display, displays.ConvertingDisplay):
             current_display.controller.handle_all_tasks_removed()
 
     def handle_conversion_task_changed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.ConversionsDisplay):
+        if isinstance(current_display, displays.ConvertingDisplay):
             current_display.controller.handle_task_changed(message.task)
 
     def handle_device_changed(self, message):
