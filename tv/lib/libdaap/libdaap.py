@@ -326,11 +326,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_stream_file(self, db_id, item_id, ext, chunk):
         rc = DAAP_OK
         extra_headers = []
-        # NOTE: Grabbing first header only.
-        # XXX debug crap
         self.log_message('daap server: do_stream_file')
-        # XXX backend API is broken FIXME  API should return a handle to the
-        # open file.
         seekpos = seekend = 0
         rangehdr = self.headers.getheader('Range')
         typ = ''
