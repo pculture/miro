@@ -207,6 +207,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def on_display_removed(self, display):
         if not self.removing_video_display:
+            self._not_skipped_by_user = True
             self.stop()
 
     def play(self, start_at=0):
