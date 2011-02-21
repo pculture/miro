@@ -114,6 +114,11 @@ class MiroWindow(NSWindow):
     def keyDown_(self, event):
         NSWindow.keyDown_(self, event)
 
+    def acceptsMouseMovedEvents(self):
+        # HACK: for some reason calling setAcceptsMouseMovedEvents_() doesn't
+        # work, we have to forcefully override this method.
+        return NO
+
     def sendEvent_(self, event):
         if event.type() == NSKeyDown:
             self.handleKeyDown_(event)

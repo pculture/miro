@@ -59,20 +59,6 @@ _disclosure_button_width = _disclosure_button.frame().size.width
 EXPANDER_PADDING = 6
 HEADER_HEIGHT = 17
 
-def _pack_row_column(row, column):
-    """Convert a row, column pair into a integer suitable for passing to
-    NSView.addTrackingRect_owner_userData_assumeInside_.
-    """
-    if column > (1 << 16):
-        raise ValueError("column value too big: ", column)
-    return (row << 16) + column
-
-def _unpack_row_column(value):
-    """Reverse the work of _pack_row_column()."""
-    row = value >> 16
-    column = value & ((1 << 16) - 1)
-    return row, column
-
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
     https://develop.participatoryculture.org/index.php/WidgetAPITableView
@@ -483,9 +469,25 @@ class TableViewCommon(object):
         self.setFocusRingType_(NSFocusRingTypeNone)
         self.handled_last_mouse_down = False
         self.gradientHighlight = False
-        self.recalcTrackingRects()
         self._column_wrappers = []
+        self.tracking_area = None
         return self
+
+    def updateTrackingAreas(self):
+        # remove existing tracking area if needed
+        if self.tracking_area:
+            self.removeTrackingArea_(self.tracking_area)
+
+        # create a new tracking area for the entire view.  This allows us to
+        # get mouseMoved events whenever the mouse is inside our view.
+        self.tracking_area = NSTrackingArea.alloc()
+        self.tracking_area.initWithRect_options_owner_userInfo_(
+                self.visibleRect(),
+                NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved |
+                NSTrackingActiveInKeyWindow,
+                self,
+                nil)
+        self.addTrackingArea_(self.tracking_area)
 
     def addTableColumn_(self, column):
         index = len(self.tableColumns())
@@ -493,7 +495,6 @@ class TableViewCommon(object):
         self._column_wrappers.append(column)
         self.column_index_map[column._column] = index
         self.SuperClass.addTableColumn_(self, column._column)
-        self.recalcTrackingRects()
 
     def removeTableColumn_(self, column):
         self.SuperClass.removeTableColumn_(self, column)
@@ -504,7 +505,6 @@ class TableViewCommon(object):
         for column in self._column_wrappers[:]:
             if column._column == column:
                 del self._column_wrappers[column]
-        self.recalcTrackingRects()
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
@@ -513,7 +513,6 @@ class TableViewCommon(object):
         for index, column in enumerate(columns):
             column.set_index(index)
         self.SuperClass.moveColumn_toColumn_(self, src, dest)
-        self.recalcTrackingRects()
 
     def highlightSelectionInClipRect_(self, rect):
         if wrappermap.wrapper(self).draws_selection:
@@ -568,54 +567,36 @@ class TableViewCommon(object):
             return drag_source.allowed_actions()
         return NSDragOperationNone
 
-    def recalcTrackingRects(self):
-        if self.hover_info is not None:
+    def mouseMoved_(self, event):
+        location = self.convertPoint_fromView_(event.locationInWindow(), nil)
+        row = self.rowAtPoint_(location)
+        column = self.columnAtPoint_(location)
+        if (self.hover_info is not None and self.hover_info != (row, column)):
+            # left a cell, redraw it the old one
             rect = self.frameOfCellAtColumn_row_(self.hover_info[1],
                     self.hover_info[0])
-            self.hover_info = None
             self.setNeedsDisplayInRect_(rect)
-        for tr in self._tracking_rects:
-            self.removeTrackingRect_(tr)
-        visible = self.visibleRect()
-        row_range = self.rowsInRect_(visible)
-        column_range = self.columnsInRect_(visible)
-        self._tracking_rects = []
-        for row in xrange(row_range.location, row_range.location +
-                row_range.length):
-            for column in xrange(column_range.location, column_range.location
-                    + column_range.length):
-                rect = self.frameOfCellAtColumn_row_(column, row)
-                tr = self.addTrackingRect_owner_userData_assumeInside_( rect,
-                        self, _pack_row_column(row, column), False)
-                self._tracking_rects.append(tr)
-
-    def mouseEntered_(self, event):
-        window = self.window()
-        if window is not nil and window.isMainWindow():
-            # TODO: get the ListViewRender and check want_hover before setting:
-            window.setAcceptsMouseMovedEvents_(YES)
-            row, column = _unpack_row_column(event.userData())
-            self.hover_info = (row, column)
-            self.mouseMoved_(None)
+        if row == -1 or column == -1:
+            # corner case: we got a mouseMoved_ event, but the pointer is
+            # outside the view
+            self.hover_pos = self.hover_info = None
+            return
+        # queue a redraw on the cell currently hovered over
+        rect = self.frameOfCellAtColumn_row_(column, row)
+        self.setNeedsDisplayInRect_(rect)
+        # recalculate hover_pos and hover_info
+        self.hover_pos = (location[0] - rect[0][0],
+                location[0] - rect[0][1])
+        self.hover_info = (row, column)
 
     def mouseExited_(self, event):
-        window = self.window()
-        if window is not nil and window.isMainWindow():
-            row, column = _unpack_row_column(event.userData())
-            if self.hover_info == (row, column):
-                self.hover_info = None
-            rect = self.frameOfCellAtColumn_row_(column, row)
+        if self.hover_info:
+            # mouse left our window, unset hover and redraw the cell that the
+            # mouse was in
+            rect = self.frameOfCellAtColumn_row_(self.hover_info[1],
+                    self.hover_info[0])
             self.setNeedsDisplayInRect_(rect)
-
-    def mouseMoved_(self, event):
-        window = self.window()
-        if window is not nil and window.isMainWindow() and self.hover_info:
-            row, column = self.hover_info
-            rect = self.frameOfCellAtColumn_row_(column, row)
-            window_coords = window.mouseLocationOutsideOfEventStream()
-            coords = self.convertPoint_fromView_(window_coords, nil)
-            self.hover_pos = (coords[0] - rect[0][0], coords[0] - rect[0][1])
-            self.setNeedsDisplayInRect_(rect)
+            self.hover_pos = self.hover_info = None
 
     def get_hover(self, row, column):
         if self.hover_info == (row, column):
@@ -948,7 +929,6 @@ class TableView(Widget):
 
     def viewport_repositioned(self):
         self._do_layout()
-        self.tableview.recalcTrackingRects()
 
     def viewport_created(self):
         wrappermap.add(self.tableview, self)
@@ -968,7 +948,6 @@ class TableView(Widget):
                     'NSTableViewSelectionDidChangeNotification')
             self.notifications.connect(self.on_column_resize,
                     'NSTableViewColumnDidResizeNotification')
-        self.tableview.recalcTrackingRects()
 
     def remove_viewport(self):
         if self.viewport is not None:
@@ -976,9 +955,6 @@ class TableView(Widget):
             wrappermap.remove(self.tableview)
             self.notifications.disconnect()
             self.viewport = None
-
-    def viewport_scrolled(self):
-        self.tableview.recalcTrackingRects()
 
     def _should_place_header_view(self):
         return self._show_headers and not self.parent_is_scroller
@@ -1078,7 +1054,6 @@ class TableView(Widget):
             self.tableview.reloadData()
             self.update_selection_after_change()
             size_changed = True
-            self.tableview.recalcTrackingRects()
         elif self.iters_to_update:
             if self.fixed_height or not self.height_changed:
                 # our rows don't change height, just update cell areas
@@ -1099,7 +1074,6 @@ class TableView(Widget):
                 for iter in self.iters_to_update:
                     index_set.addIndex_(self.row_of_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
-                self.tableview.recalcTrackingRects()
             size_changed = True
         else:
             return
