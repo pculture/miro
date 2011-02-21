@@ -270,7 +270,10 @@ class SharingTracker(object):
 
     def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
-            info = self.available_shares[share_id]
+            if self.available_shares.has_key(share_id):
+                info = self.available_shares[share_id]
+            else:
+                info = None
             # It's been deleted or worse, deleted and recreated!
             if not info or info.connect_uuid != uuid:
                 return
@@ -278,7 +281,10 @@ class SharingTracker(object):
             messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
 
         def failure(unused):
-            info = self.available_shares[share_id]
+            if self.available_shares.has_key(share_id):
+                info = self.available_shares[share_id]
+            else:
+                info = None
             if not info or info.connect_uuid != uuid:
                 return
             info.connect_uuid = None
