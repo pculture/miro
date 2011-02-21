@@ -805,7 +805,7 @@ class SharingTabListHandler(object):
         info.type = u'sharing'
         info.unwatched = info.available = 0
         if info.is_folder:
-            thumb_path = resources.path('images/phone.png')
+            thumb_path = resources.path('images/sharing.png')
         else:
             thumb_path = resources.path('images/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)
