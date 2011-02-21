@@ -650,7 +650,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.shuffle_history = []
         self.currently_playing = None
         self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
-        self._is_playing_removed_item = False
+        self._is_playing_filtered_item = False
         self._pick_initial_item(start_id)
 
     def _pick_initial_item(self, start_id):
@@ -700,8 +700,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
             self.shuffle_history.append(next_item)
             return self.model.get_info(next_item)
         else:
-            if self._is_playing_removed_item:
-                self._is_playing_removed_item = False
+            if self._is_playing_filtered_item:
+                self._is_playing_filtered_item = False
                 return self.model.get_first_info()
             else:
                 next_item = self.model.get_next_info(self.currently_playing.id)
@@ -723,8 +723,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
             last_item = self._find_playable(self.model.get_last_info(), True)
             return last_item
         else:
-            if self._is_playing_removed_item:
-                self._is_playing_removed_item = False
+            if self._is_playing_filtered_item:
+                self._is_playing_filtered_item = False
                 return None
             else:
                 prev_item = self.model.get_prev_info(self.currently_playing.id)
@@ -795,13 +795,13 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self._change_currently_playing(next_item)
 
     def is_playing_last_item(self):
-        if self._is_playing_removed_item:
+        if self._is_playing_filtered_item:
             return False
         next_item = self.model.get_next_info(self.currently_playing.id)
         return self._find_playable(next_item) == None
 
     def is_playing_first_item(self):
-        if self._is_playing_removed_item:
+        if self._is_playing_filtered_item:
             return False
         previous_item = self.model.get_prev_info(self.currently_playing.id)
         return self._find_playable(previous_item, True) == None
@@ -832,7 +832,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def _on_items_will_change(self, tracker, added, changed, removed):
         if self.currently_playing:
             self._items_before_change = self.model.info_list()
-            if self._is_playing_removed_item:
+            if self._is_playing_filtered_item:
                 self._index_before_change = -1
             else:
                 self._index_before_change = self.model.index_of_id(
@@ -883,9 +883,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
         old_currently_playing = self.currently_playing
         if self.currently_playing:
             if(self.currently_playing.id in set(removed)):
-                self._is_playing_removed_item = True
+                self._is_playing_filtered_item = True
             elif(self.currently_playing in set(added)):
-                self._is_playing_removed_item = False
+                self._is_playing_filtered_item = False
         if self.shuffle:
             for id_ in removed:
                 try:
