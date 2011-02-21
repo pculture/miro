@@ -111,7 +111,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def start_with_items(self, item_infos):
         """Start playback, playing a static list of ItemInfos."""
-        tracker = itemtrack.ManualItemListTracker(item_infos)
+        tracker = itemtrack.ManualItemListTracker.create(item_infos)
         self.start(None, tracker)
 
     def start(self, start_id, item_tracker,

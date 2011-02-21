@@ -36,6 +36,7 @@ following things:
     - Managing the life of an ItemList
 """
 
+import weakref
 import itertools
 import logging
 
@@ -72,7 +73,37 @@ class ItemListTracker(signals.SignalEmitter):
             irrespective of whether they currently are filtered out by the
             filter or not
     """
+
+
+
+    # maps (type, id) -> ItemListTracker objects
+    _live_trackers = weakref.WeakValueDictionary()
+
+    @classmethod
+    def create(cls, type_, id_):
+        """Get a ItemListTracker 
+
+        This method will return an existing ItemListTracker if one already
+        exists for (type_, id_).  If not, it will create a new one.
+        """
+        key = (type_, id_)
+        if key in cls._live_trackers:
+            return cls._live_trackers[(type_, id_)]
+        else:
+            # need to do a little bit of fancy footwork here because
+            # _live_trackers is a WeakValueDictionary.
+            retval = cls._live_trackers[key] = ItemListTracker(type_, id_)
+            return retval
+
     def __init__(self, type_, id_):
+        """Create a new ItemListTracker
+
+        Don't construct ItemListTracker's directly!  Instead use the
+        create() factory method.
+        """
+        # FIXME: there's probably a better way of doing a factory method to
+        # create ItemListTrackers.  I think a private constructor would be
+        # ideal, but that's not really possible in python.
         signals.SignalEmitter.__init__(self, 'items-will-change',
                 'initial-list', 'items-changed', 'items-removed-from-source')
         self.type = type_
@@ -169,12 +200,22 @@ class ItemListTracker(signals.SignalEmitter):
 class ManualItemListTracker(ItemListTracker):
     id_counter = itertools.count()
 
-    def __init__(self, info_list):
+    @classmethod
+    def create(cls, info_list):
+        """Create a new ManualItemListTracker
+
+        This method can safely by used, unlike regular ItemListTrackers
+        """
+        # overide the code to share ItemListTrackers, since it doesn't really
+        # make sense for ManualItemListTracker.  Note: this could just be an
+        # __init__ method, but I wanted to match the API of ItemListTracker
+        # (BDK).
         my_unique_id = ('item-list-tracker-%d' %
                 ManualItemListTracker.id_counter.next())
-        ItemListTracker.__init__(self, 'manual', my_unique_id)
+        self = ManualItemListTracker('manual', my_unique_id)
         self.info_list = info_list
         self.add_initial_items(info_list)
+        return self
 
     def _send_track_items_message(self):
         messages.TrackItemsManually(self.id, self.info_list).send_to_backend()

@@ -862,7 +862,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         return itemlistwidgets.HeaderToolbar()
 
     def build_item_tracker(self):
-        return itemtrack.ItemListTracker('device', self.device)
+        return itemtrack.ItemListTracker.create('device', self.device)
 
     def on_sort_changed(self, obj, sort_key, ascending, view):
         itemlistcontroller.AudioVideoItemsController.on_sort_changed(

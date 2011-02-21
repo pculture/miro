@@ -80,10 +80,12 @@ class PlaylistSort(itemlist.ItemSort):
     """
     KEY = None
 
-    def __init__(self):
+    def __init__(self, initial_items):
         itemlist.ItemSort.__init__(self, True)
-        self.positions = {}
         self.current_postion = itertools.count()
+        self.positions = {}
+        for item in initial_items:
+            self.positions[item.id] = self.current_postion.next()
 
     def add_items(self, item_list):
         for item in item_list:
@@ -143,8 +145,11 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         itemlistcontroller.SimpleItemListController.__init__(self)
 
     def get_sorter(self):
-        # playlists are always sorted with PlaylistSort
-        return PlaylistSort()
+        # playlists are always sorted with PlaylistSort. Set initial order if
+        # we got an ItemList that was already populated with items.  This
+        # happens when we switch back to a playlist that the PlaybackManager
+        # is playing from.
+        return PlaylistSort(initial_items=self.item_list.get_items())
 
     def build_standard_view(self, scroll_pos, selection):
         standard_view = PlaylistStandardView(self.item_list,

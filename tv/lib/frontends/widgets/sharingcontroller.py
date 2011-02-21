@@ -74,7 +74,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         pass
 
     def build_item_tracker(self):
-        return itemtrack.ItemListTracker(self.type, self.share)
+        return itemtrack.ItemListTracker.create(self.type, self.share)
 
     # note: this should never be empty, so we don't have empty view.
     def build_widget(self):

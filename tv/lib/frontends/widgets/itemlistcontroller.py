@@ -329,7 +329,7 @@ class ItemListController(object):
         return itemlistwidgets.HeaderToolbar()
 
     def build_item_tracker(self):
-        return itemtrack.ItemListTracker(self.type, self.id)
+        return itemtrack.ItemListTracker.create(self.type, self.id)
 
     def update_columns_enabled(self):
         list_view = WidgetStateStore.get_list_view_type()
