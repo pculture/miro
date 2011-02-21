@@ -443,6 +443,7 @@ class VideoBox(style.LowerBox):
         self.controls = PlaybackControls()
         self.timeline = ProgressTimeline()
         app.playback_manager.connect('will-start', self.on_playback_started)
+        app.playback_manager.connect('did-stop', self.on_playback_stopped)
         app.playback_manager.connect('selecting-file', self.on_file_selected)
         self.timeline.info.connect('clicked', self.on_title_clicked)
         self.playback_mode = PlaybackModeControls()
@@ -461,6 +462,7 @@ class VideoBox(style.LowerBox):
         self.add(widgetutil.align_middle(hbox, 0, 0, 25, 25))
 
         self.selected_tab_list = self.selected_tabs = None
+        self.selected_file = None
 
     def on_file_selected(self, manager, info):
         self.selected_file = info
@@ -469,8 +471,11 @@ class VideoBox(style.LowerBox):
         self.selected_tab_list = app.tab_list_manager.selected_tab_list
         self.selected_tabs = app.tab_list_manager.selected_tabs
 
+    def on_playback_stopped(self, manager):
+        self.selected_file = None
+
     def on_title_clicked(self, button):
-        if not self.selected_tab_list:
+        if not self.selected_tab_list or not self.selected_file:
             return
         if app.playback_manager.is_playing and not (
             app.playback_manager.is_playing_audio or
