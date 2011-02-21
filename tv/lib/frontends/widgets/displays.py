@@ -185,9 +185,9 @@ class DisplayManager(object):
 
     def deselect_all_displays(self):
         """Deselect all displays."""
-        for old_display in self.display_stack:
+        while self.display_stack:
+            old_display = self.display_stack.pop()
             self._unselect_display(old_display)
-        self.display_stack = []
 
     def push_display(self, display):
         """Select a display and push it on top of the display stack"""

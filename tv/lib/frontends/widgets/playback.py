@@ -154,7 +154,9 @@ class PlaybackManager (signals.SignalEmitter):
         app.display_manager.push_display(self.video_display)            
     
     def finish_attached_playback(self, unselect=True):
-        app.display_manager.pop_display(unselect)
+        if (self.video_display is not None and
+                app.display_manager.current_display is self.video_display):
+            app.display_manager.pop_display(unselect)
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
     
