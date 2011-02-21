@@ -1700,20 +1700,13 @@ class FeedlessDownloadStarted(FrontendMessage):
     """
     pass
 
-class MetadataProgressStart(FrontendMessage):
-    def __init__(self, target, remaining, eta):
-        self.target = target
-        self.remaining = remaining
-        self.eta = eta
-        self.new = self.remaining
-
 class MetadataProgressFinish(FrontendMessage):
     def __init__(self, target):
         self.target = target
 
 class MetadataProgressUpdate(FrontendMessage):
-    def __init__(self, target, remaining, eta, new):
+    def __init__(self, target, remaining, eta, total):
         self.target = target
         self.remaining = remaining
         self.eta = eta
-        self.new = new
+        self.total = total

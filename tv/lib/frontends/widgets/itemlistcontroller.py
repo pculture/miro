@@ -917,14 +917,14 @@ class ItemListControllerManager(object):
         if self.displayed:
             self.controller_no_longer_displayed(self.displayed)
 
-    def start_metadata_progress(self, target, remaining, eta, new):
-        assert target in self.controllers, target
-        self.controllers[target].start_metadata_progress(remaining, eta, new)
-
     def finish_metadata_progress(self, target):
-        assert target in self.controllers, target
+        if target not in self.controllers:
+            # devices can have this process started without a controller
+            return
         self.controllers[target].finish_metadata_progress()
 
     def update_metadata_progress(self, target, remaining, eta, new):
-        assert target in self.controllers, target
+        if target not in self.controllers:
+            # devices can have this process started without a controller
+            return
         self.controllers[target].update_metadata_progress(remaining, eta, new)

@@ -143,9 +143,8 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.queue = Queue.PriorityQueue()
         self.thread = None
         self.media_order = ['audio', 'video', 'other']
-        self.unnotified = {}
+        self.total = {}
         self.remaining = {}
-        self.displayed = {}
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
@@ -169,8 +168,6 @@ class MovieDataUpdater(signals.SignalEmitter):
         return mediatype
 
     def update_progress(self, mediatype, device, add_or_remove):
-        # BATCH_SIZE of 1 necessary until widget interpolation implemented
-        BATCH_SIZE = 1
         if mediatype not in ('audio', 'video'):
             # I don't think it's useful to show progress for "Other" items
             return
@@ -180,38 +177,21 @@ class MovieDataUpdater(signals.SignalEmitter):
         else:
             full_target = (u'device', target)
 
+        self.total.setdefault(target, 0)
+        if add_or_remove > 0: # add
+            self.total[target] += add_or_remove
+        total = self.total[target]
+
         self.remaining.setdefault(target, 0)
         self.remaining[target] += add_or_remove
         remaining = self.remaining[target]
 
-        self.unnotified.setdefault(target, 0)
-        self.unnotified[target] += add_or_remove
-        unnotified = self.unnotified[target]
-
-        displayed = self.displayed.setdefault(target, False)
-
         news = None
-        if remaining > 0 and not displayed:
-            # eta is not implemented or used yet
-            eta = None
-            news = models.messages.MetadataProgressStart(full_target,
-                   remaining, eta)
-            self.displayed[target] = True
-            self.unnotified[target] = 0
-        elif remaining == 0:
+        if remaining == 0:
             news = models.messages.MetadataProgressFinish(full_target)
-            self.displayed[target] = False
-            self.unnotified[target] = 0
-        elif add_or_remove > 0 or unnotified <= -BATCH_SIZE:
-            # Most of the time, we won't get any added items after we start -
-            # but whenever we do, that will affect progress.
-            # TODO: handle that case with batched signal
-            # Otherwise, just send re-estimates every BATCH_SIZE items.
-            eta = remaining
-            added = max(add_or_remove, 0)
+        else:
             news = models.messages.MetadataProgressUpdate(full_target,
-                   remaining, eta, added)
-            self.unnotified[target] = 0
+                   remaining, None, total)
         if news is not None:
             news.send_to_frontend()
 

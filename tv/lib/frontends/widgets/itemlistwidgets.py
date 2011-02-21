@@ -1184,6 +1184,7 @@ class ProgressToolbar(widgetset.HBox):
         self.remaining = None
 
     def _update_label(self):
+        # TODO: should be translatable
         file_description = 'files'
         if self.mediatype is not None:
             file_description = self.mediatype + ' ' + file_description
@@ -1192,31 +1193,23 @@ class ProgressToolbar(widgetset.HBox):
                 file_description=file_description)
         self.label.set_text(text)
 
-    def start(self, seconds, items):
-        """Set an initial time estimate, reset any previous progress to 0, and
-        begin animation. If estimate == None, just shows a bouncy bar.
-        """
-        self.elapsed = 0
-        self.total = 0
-        self.update(items, seconds, items)
-        self.label_widget.show()
-        self.meter.show()
-
     def finish(self):
         """Fast-forward through any remaining progress and then hide."""
-        self.update(0, 0.1, 0)
+        self.update(0, 0.1, self.total)
         # TODO: delay disappearance until bar finishes
         self.label_widget.hide()
         self.meter.hide()
 
-    def update(self, remaining, seconds, new):
+    def update(self, remaining, seconds, total):
         """Correct an existing time estimate. Bar will wait for progress to
         catch up to estimate rather than move backwards.
         """
         self.eta = seconds
-        self.total += new
+        self.total = total
         self.remaining = remaining
         # TODO: display eta
+        self.label_widget.show()
+        self.meter.show()
         self._update_label()
 
 class ItemContainerWidget(widgetset.VBox):
