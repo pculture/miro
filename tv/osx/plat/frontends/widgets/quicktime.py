@@ -310,9 +310,10 @@ class Player(player.Player):
             to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
 
     def disable_subtitles(self):
-        track = self.get_enabled_subtitle_track()
-        if track is not None:
-            track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+        tracks = self.get_all_enabled_subtitle_tracks()
+        if len(tracks) > 0:
+            for track in tracks:
+                track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
     def select_subtitle_file(self, sub_path, handle_successful_select):
         def handle_ok():
