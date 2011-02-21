@@ -73,6 +73,7 @@ class FeedController(itemlistcontroller.ItemListController,
             self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
                     add_icon_box=add_icon_box)
             self.titlebar.connect('save-search', self._on_save_search)
+        self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:

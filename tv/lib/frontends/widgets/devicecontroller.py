@@ -854,8 +854,8 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
 
         self.widget.switch_to_view(view_type)
 
-        self.widget.toolbar.connect('list-view-clicked', self.save_view, 'list')
-        self.widget.toolbar.connect('normal-view-clicked',
+        self.titlebar.connect('list-view-clicked', self.save_view, 'list')
+        self.titlebar.connect('normal-view-clicked',
                                     self.save_view, 'normal')
 
     def build_header_toolbar(self):

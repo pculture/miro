@@ -48,6 +48,7 @@ from miro import displaytext
 from miro import util
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
+from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -84,6 +85,42 @@ class TitleDrawer(widgetset.DrawingArea):
         self.title = new_title
         self.queue_redraw()
 
+class ViewToggler(widgetset.CustomButton):
+    def __init__(self):
+        widgetset.CustomButton.__init__(self)
+        self.selected_view = WidgetStateStore.get_standard_view_type()
+        self.normal_image = imagepool.get_surface(resources.path(
+            'images/normal-view-button-icon.png'))
+        self.list_image = imagepool.get_surface(resources.path(
+            'images/list-view-button-icon.png'))
+        self.connect('clicked', self._on_clicked)
+        self.create_signal('normal-view-clicked')
+        self.create_signal('list-view-clicked')
+
+    def size_request(self, layout):
+        return self.normal_image.width, self.normal_image.height
+
+    def draw(self, context, layout):
+        if WidgetStateStore.is_standard_view(self.selected_view):
+            image = self.normal_image
+        else:
+            image = self.list_image
+        y = int((context.height - image.height) / 2)
+        image.draw(context, 0, y, image.width, image.height)
+
+    def switch_to_view(self, view):
+        if view is not self.selected_view:
+            self.selected_view = view
+            self.queue_redraw()
+
+    def _on_clicked(self, button):
+        if WidgetStateStore.is_standard_view(self.selected_view):
+            self.emit('list-view-clicked')
+            self.switch_to_view(WidgetStateStore.get_list_view_type())
+        else:
+            self.emit('normal-view-clicked')
+            self.switch_to_view(WidgetStateStore.get_standard_view_type())
+
 class BoxedIconDrawer(widgetset.DrawingArea):
     """Draws the icon for an item list."""
     def __init__(self, image):
@@ -110,6 +147,10 @@ class ItemListTitlebar(widgetset.Background):
     """Titlebar for feeds, playlists and static tabs that display
     items.
 
+    :signal list-view-clicked: (widget) User requested to switch to
+        list view
+    :signal normal-view-clicked: (widget) User requested to switch to
+        normal view
     :signal search-changed: (self, search_text) -- The value in the
         search box changed and the items listed should be filtered
     """
@@ -139,7 +180,7 @@ class ItemListTitlebar(widgetset.Background):
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
             return
-        context.move_to(0, 0.5)
+        context.move_to(0, 0)
         context.rel_line_to(context.width, 0)
         context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
         context.stroke()
@@ -158,17 +199,35 @@ class ItemListTitlebar(widgetset.Background):
         By default we add a search box, but subclasses can override
         this.
         """
+        self._build_view_toggle()
         self.create_signal('search-changed')
         self.searchbox = widgetset.SearchTextEntry()
         self.searchbox.connect('changed', self._on_search_changed)
-        return widgetutil.align_middle(self.searchbox, right_pad=35,
-                                       left_pad=15)
+        return [self.view_toggler,
+                widgetutil.align_middle(self.searchbox, right_pad=35,
+                                        left_pad=15)]
+
+    def _build_view_toggle(self):
+        self.create_signal('list-view-clicked')
+        self.create_signal('normal-view-clicked')
+        self.view_toggler = ViewToggler()
+        self.view_toggler.connect('list-view-clicked', self._on_list_clicked)
+        self.view_toggler.connect('normal-view-clicked', self._on_normal_clicked)
 
     def _on_save_search(self, button):
         self.emit('save-search')
 
     def _on_search_changed(self, searchbox):
         self.emit('search-changed', searchbox.get_text())
+
+    def _on_normal_clicked(self, button):
+        self.emit('normal-view-clicked')
+
+    def _on_list_clicked(self, button):
+        self.emit('list-view-clicked')
+
+    def switch_to_view(self, view):
+        self.view_toggler.switch_to_view(view)
 
     def set_title(self, title):
         self.title_drawer = title
@@ -190,10 +249,9 @@ class ChannelTitlebar(ItemListTitlebar):
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=10))
-        return [
-            widgetutil.align_middle(self.save_button),
-            ItemListTitlebar._build_titlebar_extra(self),
-        ]
+        return ([
+            widgetutil.align_middle(self.save_button)] +
+                ItemListTitlebar._build_titlebar_extra(self))
 
     def _on_save_search(self, button):
         self.emit('save-search', self.searchbox.get_text())
@@ -223,6 +281,7 @@ class SearchListTitlebar(ItemListTitlebar):
         self.searchbox.select_engine(engine)
 
     def _build_titlebar_extra(self):
+        self._build_view_toggle()
         hbox = widgetset.HBox()
 
         self.searchbox = widgetset.VideoSearchTextEntry()
@@ -231,7 +290,7 @@ class SearchListTitlebar(ItemListTitlebar):
         self.searchbox.connect('validate', self._on_search_activate)
         hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
 
-        return widgetutil.align_middle(hbox, right_pad=20)
+        return [self.view_toggler, widgetutil.align_middle(hbox, right_pad=20)]
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
@@ -501,11 +560,11 @@ class DisplayToolbar(widgetset.Background):
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
             return
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((0.90, 0.90, 0.90))
-        gradient.set_end_color((0.79, 0.79, 0.79))
-        context.rectangle(0, 0, context.width, context.height)
-        context.gradient_fill(gradient)
+        # gradient = widgetset.Gradient(0, 0, 0, context.height)
+        # gradient.set_start_color((0.90, 0.90, 0.90))
+        # gradient.set_end_color((0.79, 0.79, 0.79))
+        # context.rectangle(0, 0, context.width, context.height)
+        # context.gradient_fill(gradient)
 
 class SearchToolbar(DisplayToolbar):
     """Toolbar for the search page.
@@ -823,10 +882,6 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
     :signal sort-changed: (widget, sort_key, ascending) User changed
         the sort.  sort_key will be one of 'name', 'date', 'size' or
         'length'
-    :signal list-view-clicked: (widget) User requested to switch to
-        list view
-    :signal normal-view-clicked: (widget) User requested to switch to
-        normal view
     :signal view-all-clicked: User requested to view all items
     :signal toggle-unwatched-clicked: User toggled the
         unwatched/unplayed items only view
@@ -835,7 +890,6 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
     def __init__(self):
         widgetset.Background.__init__(self)
         SorterWidgetOwner.__init__(self)
-        self.create_signals()
 
         self._button_hbox = widgetset.HBox()
         self._button_hbox_container = widgetutil.HideableWidget(
@@ -844,19 +898,8 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
 
         self._hbox = widgetset.HBox()
 
-        self.view_switch = segmented.SegmentedButtonsRow()
-        self.view_switch.add_image_button('normal-view',
-                                          'normal-view-button-icon',
-                                          self._on_normal_clicked)
-        self.view_switch.add_image_button('list-view',
-                                          'list-view-button-icon',
-                                          self._on_list_clicked)
-        self.view_switch.set_active('normal-view')
-        self._hbox.pack_start(widgetutil.align_middle(
-            self.view_switch.make_widget(), left_pad=12))
-
         self._hbox.pack_end(widgetutil.align_middle(
-            self._button_hbox_container))
+            self._button_hbox_container, top_pad=1))
         self.pack_hbox_extra()
 
         self.add(self._hbox)
@@ -871,26 +914,9 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
 
         self.filter = WidgetStateStore.get_view_all_filter()
 
-    def create_signals(self):
-        self.create_signal('list-view-clicked')
-        self.create_signal('normal-view-clicked')
-
     def pack_hbox_extra(self):
         pass
 
-    def _on_normal_clicked(self, button):
-        self.emit('normal-view-clicked')
-
-    def _on_list_clicked(self, button):
-        self.emit('list-view-clicked')
-
-    def switch_to_view(self, view):
-        if WidgetStateStore.is_standard_view(view):
-            self._button_hbox_container.show()
-            self.view_switch.set_active('normal-view')
-        else:
-            self._button_hbox_container.hide()
-            self.view_switch.set_active('list-view')
 
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
@@ -935,11 +961,7 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
         context.set_color((key, key, key))
-        context.move_to(0.5, 0.5)
-        context.rel_line_to(context.width, 0)
-        context.stroke()
-        context.set_color((0.16, 0.16, 0.16))
-        context.move_to(0.5, context.height-0.5)
+        context.move_to(0, 0)
         context.rel_line_to(context.width, 0)
         context.stroke()
 
@@ -1243,7 +1265,6 @@ class ItemContainerWidget(widgetset.VBox):
         self.selected_view = view
         self.list_empty_mode = False
         self.background.add(self.vbox[view])
-        self.toolbar.switch_to_view(view)
 
     def toggle_filter(self, filter_):
         self.toolbar.toggle_filter(filter_)
@@ -1253,8 +1274,12 @@ class ItemContainerWidget(widgetset.VBox):
             if not self.list_empty_mode:
                 self.background.remove()
                 self.background.add(self.vbox[view])
-            self.toolbar.switch_to_view(view)
             self.selected_view = view
+            if WidgetStateStore.is_standard_view(view):
+                self.toolbar._button_hbox_container.show()
+            else:
+                self.toolbar._button_hbox_container.hide()
+
 
     def set_list_empty_mode(self, enabled):
         if enabled != self.list_empty_mode:

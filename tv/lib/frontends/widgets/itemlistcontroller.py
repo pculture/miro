@@ -265,9 +265,9 @@ class ItemListController(object):
             self.on_sort_changed, standard_view)
         self.list_item_view.connect_weak('sort-changed',
             self.on_sort_changed, list_view)
-        toolbar.connect_weak('list-view-clicked',
+        self.titlebar.connect_weak('list-view-clicked',
             self.set_view, list_view)
-        toolbar.connect_weak('normal-view-clicked',
+        self.titlebar.connect_weak('normal-view-clicked',
             self.set_view, standard_view)
         self.list_item_view.connect_weak('columns-enabled-changed',
             self.on_columns_enabled_changed, list_view)
@@ -673,6 +673,7 @@ class SimpleItemListController(ItemListController):
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
+        self.titlebar.switch_to_view(self.widget.selected_view)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
     def build_standard_view(self, scroll_pos, selection):
