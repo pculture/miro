@@ -63,7 +63,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def make_titlebar(self):
         image_path = resources.path("images/icon-downloading_large.png")
         icon = imagepool.get(image_path)
-        titlebar = ItemListTitlebar(_("Downloads"), icon)
+        titlebar = ItemListTitlebar(_("Downloading"), icon)
         titlebar.connect('search-changed', self._on_search_changed)
         return titlebar
 
