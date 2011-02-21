@@ -1274,7 +1274,7 @@ class RatingRenderer(widgetset.InfoListRenderer):
         x += int(self.ICON_HORIZONTAL_SPACING / 2)
         # finally, calculate which icon is hit
         if 0 <= x < icon_width_with_pad * self.ICON_COUNT:
-            return x // icon_width_with_pad
+            return int(x // icon_width_with_pad)
         else:
             return None
 
