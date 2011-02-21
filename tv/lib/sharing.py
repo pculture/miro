@@ -1052,6 +1052,13 @@ class SharingManager(object):
         if not self.server:
             self.sharing = False
             return
+
+        def log_message_func(format, *args):
+            logging.debug(format, *args)
+
+        self.server.set_log_message(
+            lambda format, *args: logging.info(format, *args))
+
         self.thread = threading.Thread(target=thread_body,
                                        args=[self.server_thread],
                                        name='DAAP Server Thread')
