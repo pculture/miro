@@ -460,6 +460,8 @@ class VideoBox(style.LowerBox):
         hbox.pack_start(self.playback_mode)
         self.add(widgetutil.align_middle(hbox, 0, 0, 25, 25))
 
+        self.selected_tab_list = self.selected_tabs = None
+
     def on_file_selected(self, manager, info):
         self.selected_file = info
 
@@ -468,6 +470,8 @@ class VideoBox(style.LowerBox):
         self.selected_tabs = app.tab_list_manager.selected_tabs
 
     def on_title_clicked(self, button):
+        if not self.selected_tab_list:
+            return
         if app.playback_manager.is_playing and not (
             app.playback_manager.is_playing_audio or
             app.playback_manager.detached_window):
