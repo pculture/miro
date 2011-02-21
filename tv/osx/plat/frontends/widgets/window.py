@@ -174,6 +174,9 @@ class Window(signals.SignalEmitter):
         self.emit('did-move')
 
     def on_will_close(self, notification):
+        # unset the first responder.  This allows text entry widgets to get
+        # the NSControlTextDidEndEditingNotification
+        self.nswindow.makeFirstResponder_(nil)
         self.emit('will-close')
         self.emit('hide')
 
@@ -254,6 +257,7 @@ class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
         self.nswindow.setReleasedWhenClosed_(NO)
+
     def close(self):
         self.nswindow.orderOut_(nil)
 

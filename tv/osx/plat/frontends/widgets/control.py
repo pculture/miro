@@ -88,6 +88,8 @@ class BaseTextEntry(SizedControl):
     def viewport_created(self):
         SizedControl.viewport_created(self)
         self.notifications.connect(self.on_changed, 'NSControlTextDidChangeNotification')
+        self.notifications.connect(self.on_end_editing,
+                'NSControlTextDidEndEditingNotification')
 
     def remove_viewport(self):
         SizedControl.remove_viewport(self)
@@ -98,6 +100,9 @@ class BaseTextEntry(SizedControl):
 
     def on_changed(self, notification):
         self.emit('changed')
+
+    def on_end_editing(self, notification):
+        self.emit('focus-out')
 
     def calc_size_request(self):
         size = self.sizer_cell.cellSize()
@@ -129,9 +134,6 @@ class MiroTextField(NSTextField):
     def becomeFirstResponder(self):
         wrappermap.wrapper(self).emit('activate')
         return NSTextField.becomeFirstResponder(self)
-
-    def textDidEndEditing_(self, notification):
-        wrappermap.wrapper(self).emit('focus-out')
 
 class TextEntry(BaseTextEntry):
     def make_view(self):
@@ -181,6 +183,8 @@ class MultilineTextEntry(Widget):
     def viewport_created(self):
         Widget.viewport_created(self)
         self.notifications.connect(self.on_changed, 'NSTextDidChangeNotification')
+        self.notifications.connect(self.on_end_editing,
+                'NSControlTextDidEndEditingNotification')
         self.invalidate_size_request()
 
     def remove_viewport(self):
@@ -199,6 +203,10 @@ class MultilineTextEntry(Widget):
 
     def on_changed(self, notification):
         self.invalidate_size_request()
+        self.emit("changed")
+
+    def on_end_editing(self, notification):
+        self.emit("focus-out")
 
     def calc_size_request(self):
         layout_manager = self.view.layoutManager()
