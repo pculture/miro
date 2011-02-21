@@ -548,7 +548,13 @@ class DeviceSyncManager(object):
             url=item_info.file_url,
             media_type_checked=item_info.media_type_checked,
             mime_type=item_info.mime_type,
-            creation_time=time.mktime(item_info.date_added.timetuple()))
+            creation_time=time.mktime(item_info.date_added.timetuple()),
+            artist=item_info.artist,
+            album=item_info.album,
+            track=item_info.track,
+            year=item_info.year,
+            genre=item_info.genre
+            )
         device_item._migrate_thumbnail()
         database = self.device.database
         database.setdefault(device_item.file_type, [])
@@ -623,7 +629,6 @@ class DeviceItem(object):
         self.track = None
         self.year = None
         self.genre = None
-        self.title_tag = None
         self.rating = None
         self.file_type = None
         self.creation_time = None
