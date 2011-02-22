@@ -703,7 +703,7 @@ class ConversionTask(object):
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(app.config.get(prefs.LOG_PATHNAME))
         self.log_path = os.path.join(log_folder,
-                                     "conversion-%d-to-%s.log" % (
+                                     "conversion-%s-to-%s.log" % (
                 self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
