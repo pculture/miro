@@ -92,7 +92,8 @@ class ItemContextMenuHandler(object):
         #    as this normal menu
         #  - A method of some form.  In other words, a *real* callback :)
 
-        menu = []
+        menu_sections = []
+        section = []
 
         def play_externally():
             app.widgetapp.open_file(item.video_path)
@@ -106,7 +107,7 @@ class ItemContextMenuHandler(object):
             else:
                 reveal_text = _('File on Disk')
 
-            menu.append((
+            section.append((
                     reveal_text,
                     lambda: app.widgetapp.check_then_reveal_file(
                         item.video_path)))
@@ -119,95 +120,120 @@ class ItemContextMenuHandler(object):
                     if converter:
                         def convert(converter=converter.identifier):
                             app.widgetapp.convert_items(converter)
-                        menu.append((_('Convert to %(conversion)s',
-                                       {"conversion": converter.displayname}),
-                                     convert))
+                        section.append((
+                                _('Convert to %(conversion)s',
+                                  {"conversion": converter.displayname}),
+                                convert))
 
                 # Convert menu
                 convert_menu = self._make_convert_menu()
-                menu.append((_('Convert to...'), convert_menu))
+                section.append((_('Convert to...'), convert_menu))
 
-            # separator
-            menu.append(None)
+            if section:
+                menu_sections.append(section)
+                section = []
 
             # Play
-            menu.append((_('Play'), app.widgetapp.play_selection))
+            section.append((_('Play'), app.widgetapp.play_selection))
 
-            # Mark as Played, Play Just This Item, Play Externally
-            # these don't work for device or remote items.
             if not (item.device or item.remote):
                 if item.video_watched:
-                    menu.append((_('Mark as Unplayed'),
+                    section.append((_('Mark as Unplayed'),
                         messages.MarkItemUnwatched(item).send_to_backend))
                 else:
-                    menu.append((_('Mark as Played'),
+                    section.append((_('Mark as Played'),
                         messages.MarkItemWatched(item).send_to_backend))
 
+            if not item.remote:
                 if app.config.get(prefs.PLAY_IN_MIRO):
-                    menu.append((
+                    section.append((
                             _('Play Just This Item'),
                             lambda: app.playback_manager.start_with_items(
                                 [item])))
-                    menu.append((_('Play Externally'), play_externally))
+                    section.append((_('Play Externally'), play_externally))
+
+            if section:
+                menu_sections.append(section)
+                section = []
 
             # Edit Item Details, Delete, Resume/Stop Seeding
             # this doesn't work for device or remote items.
             if not (item.device or item.remote):
-                # separator
-                menu.append(None)
+                section.append((
+                        _("Edit Item Details"), app.widgetapp.edit_item))
 
-                menu.append((_("Edit Item Details"), app.widgetapp.edit_item))
+            if not item.remote:
+                section.append((
+                        _("Delete"), app.widgetapp.remove_items))
 
-                menu.append((_("Delete"), app.widgetapp.remove_items))
-
+            if not (item.device or item.remote):
                 if item.seeding_status == 'seeding':
-                    menu.append((_('Stop Seeding'),
-                                 messages.StopUpload(item.id).send_to_backend))
+                    section.append((
+                            _('Stop Seeding'),
+                            messages.StopUpload(item.id).send_to_backend))
                 elif item.seeding_status == 'stopped':
-                    menu.append((_('Resume Seeding'),
-                                 messages.StartUpload(item.id).send_to_backend))
+                    section.append((
+                            _('Resume Seeding'),
+                            messages.StartUpload(item.id).send_to_backend))
 
         elif ((item.download_info is not None and
                item.download_info.state != 'failed')):
-            menu.append((_('Cancel Download'),
-                         messages.CancelDownload(item.id).send_to_backend))
+            section.append((
+                    _('Cancel Download'),
+                    messages.CancelDownload(item.id).send_to_backend))
             if item.download_info.state != 'paused':
-                menu.append((_('Pause Download'),
-                             messages.PauseDownload(item.id).send_to_backend))
+                section.append((
+                        _('Pause Download'),
+                        messages.PauseDownload(item.id).send_to_backend))
             else:
-                menu.append((_('Resume Download'),
-                             messages.ResumeDownload(item.id).send_to_backend))
+                section.append((
+                        _('Resume Download'),
+                        messages.ResumeDownload(item.id).send_to_backend))
 
         else:
             if not (item.device or item.remote):
                 # Download
-                menu.append((_('Download'),
-                            messages.StartDownload(item.id).send_to_backend))
+                section.append((
+                        _('Download'),
+                        messages.StartDownload(item.id).send_to_backend))
 
             else:
                 # Play
-                menu.append((_('Play'), app.widgetapp.play_selection))
+                section.append((_('Play'), app.widgetapp.play_selection))
 
+        if section:
+            menu_sections.append(section)
+            section = []
 
         # don't add this section if the item is remote or a device OR
         # if it has nothing to add to the section.  that way we don't
         # end up with just a separator.
         if ((not (item.device or item.remote) and
              item.permalink or item.has_shareable_url)):
-            # separator
-            menu.append(None)
-
-            menu.append((
+            section.append((
                     _('Copy URL to clipboard'), app.widgetapp.copy_item_url))
             
             if item.permalink:
-                menu.append((_('View Web Page'),
-                             lambda: app.widgetapp.open_url(item.permalink)))
+                section.append((
+                        _('View Web Page'),
+                        lambda: app.widgetapp.open_url(item.permalink)))
 
 
             if item.has_shareable_url:
-                menu.append((
+                section.append((
                         _('Share'), lambda: app.widgetapp.share_item(item)))
+
+        if section:
+            menu_sections.append(section)
+
+        # put separators between all the menu sections
+        menu = []
+        for section in menu_sections:
+            menu.extend(section)
+            menu.append(None)
+
+        # remove the last separator from the menu
+        del menu[-1]
 
         return menu
 
