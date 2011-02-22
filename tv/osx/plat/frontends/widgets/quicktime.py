@@ -66,11 +66,11 @@ def register_components():
         if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
             ok = qtcomp.register(component.encode('utf-8'))
             if ok:
-                logging.info('Successfully registered embedded component: %s' % cmpName)
+                logging.debug('Successfully registered embedded component: %s', cmpName)
             else:
-                logging.warn('Error while registering embedded component: %s' % cmpName)
+                logging.warn('Error while registering embedded component: %s', cmpName)
         else:
-            logging.info('Skipping embedded %s registration, already installed.' % cmpName)
+            logging.debug('Skipping embedded %s registration, already installed.', cmpName)
 
 ###############################################################################
 
@@ -94,13 +94,13 @@ class WarmupProgressHandler(NSObject):
     def handleLoadStateForMovie_(self, movie):
         load_state = movie.attributeForKey_(QTMovieLoadStateAttribute).longValue()
         if load_state == QTMovieLoadStateComplete:
-            logging.info("QuickTime warm up complete")
+            logging.debug("QuickTime warm up complete")
             NSNotificationCenter.defaultCenter().removeObserver_(self)
             NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
                 10, self, 'releaseWarmupMovie:', None, False)
             self.complete = True
     def releaseWarmupMovie_(self, timer):
-        logging.info("Releasing warmup movie.")
+        logging.debug("Releasing warmup movie.")
         global warmup_movie
         del warmup_movie
 
@@ -108,7 +108,7 @@ warmup_handler = WarmupProgressHandler.alloc().init()
 warmup_movie = None
 
 def warm_up():
-    logging.info('Warming up QuickTime')
+    logging.debug('Warming up QuickTime')
     rsrcPath = bundle.getBundleResourcePath()
 
     attributes = NSMutableDictionary.dictionary()

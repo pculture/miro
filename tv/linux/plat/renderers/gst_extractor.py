@@ -263,12 +263,12 @@ class Extractor:
 
 def make_verbose():
     import logging
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
 
     def wrap_func(func):
         def _wrap_func(*args, **kwargs):
-            logging.info("calling %s (%s) (%s)",
-                         func.__name__, repr(args), repr(kwargs))
+            logging.debug("calling %s (%s) (%s)",
+                          func.__name__, repr(args), repr(kwargs))
             return func(*args, **kwargs)
         return _wrap_func
 

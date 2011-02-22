@@ -98,7 +98,7 @@ def get_all_font_info():
         try:
             name = get_font_info(path)
         except ValueError, e:
-            logging.info(e)
+            logging.debug(e)
             continue
         if name not in infos:
             infos[name] = path

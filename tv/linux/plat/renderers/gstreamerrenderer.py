@@ -145,13 +145,13 @@ class Renderer:
             gst.element_factory_make(audiosink_name, "audiosink")
 
         except gst.ElementNotFoundError:
-            logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
+            logging.warn("gstreamerrenderer: ElementNotFoundError '%s'",
                          audiosink_name)
             audiosink_name = "autoaudiosink"
             gst.element_factory_make(audiosink_name, "audiosink")
 
         except Exception, e:
-            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
+            logging.warn("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
             audiosink_name = "alsasink"
             gst.element_factory_make(audiosink_name, "audiosink")
@@ -350,13 +350,13 @@ class VideoRenderer(Renderer):
             gst.element_factory_make(videosink_name, "videosink")
 
         except gst.ElementNotFoundError:
-            logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
+            logging.warn("gstreamerrenderer: ElementNotFoundError '%s'",
                          videosink_name)
             videosink_name = "xvimagesink"
             gst.element_factory_make(videosink_name, "videosink")
 
         except Exception, e:
-            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
+            logging.warn("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
             videosink_name = "ximagesink"
             gst.element_factory_make(videosink_name, "videosink")

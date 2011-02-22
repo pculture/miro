@@ -45,4 +45,4 @@ def install_bonjour():
         "Mac OS X installations.  Please review your Mac OS X installation."
     )
     dialogs.show_message(title, description)
-    logging.info('install bonjour clicked')
+    logging.debug('install bonjour clicked')

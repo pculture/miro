@@ -153,7 +153,7 @@ def launch_downloader_daemon():
     # done here, no further logging can be done in the daemon and it gets stuck.
     try:
         import resource
-        logging.info('Increasing file descriptor count limit in Downloader')
+        logging.debug('Increasing file descriptor count limit in Downloader')
         resource.setrlimit(resource.RLIMIT_NOFILE, (10240, -1))
     except ValueError:
         logging.warn('setrlimit failed.')

@@ -361,7 +361,7 @@ class AppController(NSObject):
     def downloaderDaemonDidTerminate_(self, notification):
         task = notification.object()
         status = task.terminationStatus()
-        logging.info("Downloader daemon has been terminated (status: %d)" % status)
+        logging.warn("Downloader daemon has been terminated (status: %d)", status)
 
     def applicationWillTerminate_(self, notification):
         # Reset the application icon to its default state
@@ -400,7 +400,7 @@ class AppController(NSObject):
                     self.pausedDownloaders.append(dl)
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
-                logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
+                logging.debug("System is going to sleep, suspending %d download(s).", dlCount)
                 for dl in self.pausedDownloaders:
                     dl.pause()
         dc = eventloop.add_urgent_call(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
@@ -413,7 +413,7 @@ class AppController(NSObject):
         def restartPausedDownloaders(self=self):
             dlCount = len(self.pausedDownloaders)
             if dlCount > 0:
-                logging.info("System is awake from sleep, resuming %s download(s)." % dlCount)
+                logging.debug("System is awake from sleep, resuming %s download(s).", dlCount)
                 try:
                     for dl in self.pausedDownloaders:
                         dl.start()

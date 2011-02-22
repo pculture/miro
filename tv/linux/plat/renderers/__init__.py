@@ -50,7 +50,7 @@ def get_renderer_list():
 def set_renderer(modname):
     """Attempt to set the video renderer."""
 
-    logging.info("set_renderer: trying to add %s", modname)
+    logging.debug("set_renderer: trying to add %s", modname)
     try:
         pkg = __import__('miro.plat.renderers.' + modname)
         module = getattr(pkg.plat.renderers, modname)
@@ -60,7 +60,7 @@ def set_renderer(modname):
         app.get_item_type = module.get_item_type
         logging.info("set_renderer: successfully loaded %s", modname)
     except StandardError:
-        logging.info("set_renderer: couldn't load %s: %s", modname,
+        logging.warn("set_renderer: couldn't load %s: %s", modname,
                 traceback.format_exc())
         raise
 

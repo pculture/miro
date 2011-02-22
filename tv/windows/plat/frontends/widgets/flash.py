@@ -39,12 +39,14 @@ from miro.frontends.widgets import dialogs
 FLASH_URL = "http://get.adobe.com/flashplayer/"
 
 def _is_flash_installed():
-    logging.info("checking %s", os.path.join(
-            specialfolders.get_special_folder('System'),
-            'Macromed', 'Flash', 'flashplayer.xpt'))
-    return os.path.exists(os.path.join(
-            specialfolders.get_special_folder('System'),
-            'Macromed', 'Flash', 'flashplayer.xpt'))
+    folder = os.path.join(
+        specialfolders.get_special_folder('System'),
+        'Macromed',
+        'Flash',
+        'flashplayer.xpt')
+
+    logging.debug("checking %s", folder)
+    return os.path.exists(folder)
 
 def check_flash_install():
     request_count = app.config.get(prefs.FLASH_REQUEST_COUNT)

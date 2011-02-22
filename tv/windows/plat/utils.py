@@ -222,7 +222,7 @@ def setup_logging(in_downloader=False):
         for record in prelogger.remove():
             logger.handle(record)
     except ValueError:
-        logging.info("No records from prelogger.")
+        logging.debug("No records from prelogger.")
 
     if app.debugmode:
         stdouthandler = logging.StreamHandler(sys.stdout)

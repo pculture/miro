@@ -94,7 +94,7 @@ def handleNewUpdate(latest):
       and therefore cause bad crashes).
     """
     if not _host_supported(latest):
-        logging.info("Update available but host system not supported.")
+        logging.warn("Update available but host system not supported.")
         return
     
     dictionary = dict()
@@ -116,7 +116,7 @@ def handleNewUpdate(latest):
     skipped_version = app.config.get(SUSkippedVersionPref)
     
     if suItem.fileVersion() == skipped_version:
-        logging.info("Skipping update by user request")
+        logging.debug("Skipping update by user request")
     else:
         global updater
         objc.setInstanceVariable(updater, 'updateItem', suItem, True)

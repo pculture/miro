@@ -193,7 +193,7 @@ class Server(object):
                 kernel32.DisconnectNamedPipe(self.pipe)
             except QuitThread:
                 break
-        logging.info("Pipe reader finished")
+        logging.debug("Pipe reader finished")
 
 class MessageHandler(object):
     def handle_message(self, data):

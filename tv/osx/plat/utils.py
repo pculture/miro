@@ -371,7 +371,7 @@ def launch_download_daemon(oldpid, env):
     nc = NSNotificationCenter.defaultCenter()
     nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
 
-    logging.info('Launching Download Daemon')
+    logging.debug('Launching Download Daemon')
     dlTask.launch()
 
 def ensureDownloadDaemonIsTerminated():
@@ -382,7 +382,7 @@ def ensureDownloadDaemonIsTerminated():
     global dlTask
     if dlTask is not None:
         if dlTask.isRunning():
-            logging.info('Waiting for the downloader daemon to terminate...')
+            logging.debug('Waiting for the downloader daemon to terminate...')
             timeout = 5.0
             sleepTime = 0.2
             loopCount = int(timeout / sleepTime)
@@ -394,7 +394,7 @@ def ensureDownloadDaemonIsTerminated():
             else:
                 # If the daemon is still alive at this point, it's likely to be
                 # in a bad state, so nuke it.
-                logging.info("Timeout expired - Killing downloader daemon!")
+                logging.warn("Timeout expired - Killing downloader daemon!")
                 dlTask.terminate()
         dlTask.waitUntilExit()
     dlTask = None

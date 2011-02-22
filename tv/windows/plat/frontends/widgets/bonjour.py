@@ -74,5 +74,5 @@ def install_bonjour():
         "the changes to take effect."
     )
     dialogs.show_message(title, description)
-    logging.info('Taking to Bonjour download landing page')
+    logging.debug('Taking to Bonjour download landing page')
     app.widgetapp.open_url(BONJOUR_URL)
