@@ -172,6 +172,7 @@ class ConversionManager(signals.SignalEmitter):
                                        'task-changed',
                                        'task-staged',
                                        'task-removed',
+                                       'task-failed',
                                        'all-tasks-removed',
                                        )
         self.converters = ConverterManager()
@@ -461,6 +462,9 @@ class ConversionManager(signals.SignalEmitter):
         message = messages.ConversionTaskChanged(info)
         message.send_to_frontend()
 
+    def _notify_task_failed(self, task):
+        self.emit('task-removed', task)
+
     def _notify_tasks_count(self):
         running_count = self.running_tasks_count()
         other_count = (self.failed_tasks_count() + self.pending_tasks_count() +
@@ -670,6 +674,7 @@ class ConversionTask(object):
         finally:
             self._stop_logging(self.progress < 1.0)
             if self.is_failed():
+                conversion_manager._notify_task_failed(self)
                 conversion_manager._notify_tasks_count()
 
     def process_output(self, lines_generator):

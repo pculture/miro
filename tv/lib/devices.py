@@ -481,6 +481,7 @@ class DeviceSyncManager(object):
             for signal, callback in (
                 ('task-changed', self._conversion_changed_callback),
                 ('task-staged', self._conversion_staged_callback),
+                ('task-failed', self._conversion_removed_callback),
                 ('task-removed', self._conversion_removed_callback),
                 ('all-tasks-removed', self._conversion_removed_callback)):
                 self.signal_handles.append(conversion_manager.connect(
