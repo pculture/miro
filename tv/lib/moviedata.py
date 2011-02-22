@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2006, 2006, 2007, 2008, 2009, 2010, 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -36,8 +36,6 @@ import traceback
 import threading
 import Queue
 import logging
-import mutagen
-import struct
 
 from miro import app
 from miro import prefs
@@ -45,8 +43,9 @@ from miro import signals
 from miro import util
 from miro import fileutil
 from miro import filetypes
-from miro import coverart
 from miro import models
+from miro import filetags
+from miro.filetags import METADATA_VERSION
 from miro.fileobject import FilenameType
 from miro.plat.utils import (kill_process, movie_data_program_info,
                              thread_body)
@@ -62,30 +61,6 @@ DURATION_RE = re.compile("Miro-Movie-Data-Length: (\d+)")
 TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
-
-TAG_MAP = {
-    'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
-    'album_artist': ('albumartist', 'album artist', 'tpe2'),
-    'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
-        'composer', u'\uFFFDart', 'album artist'),
-    'drm': ('itunmovi',),
-    'title': ('tit2', 'title', u'\uFFFDnam'),
-    'track': ('trck', 'tracknumber'),
-    'album_tracks': (),
-    'year': ('tdrc', 'tyer', 'date', 'year'),
-    'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
-    'cover-art': ('\uFFFDart', 'apic', 'covr'),
-}
-TAG_TYPES = {
-    'album': unicode, 'album_artist': unicode, 'artist': unicode, 'drm': bool,
-    'title': unicode, 'track': int, 'album_tracks': int, 'year': int,
-    'genre': unicode,
-}
-NOFLATTEN_TAGS = ('cover-art',)
-
-# increment this after adding to TAG_MAP or changing read_metadata() in a way
-# that will increase data identified (will not change values already extracted)
-METADATA_VERSION = 5
 
 class MovieDataInfo(object):
     """Little utility class to keep track of data associated with each
@@ -212,7 +187,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             metadata = {}
             cover_art = FilenameType("")
             item_ = mdi.item
-            file_info = self.read_metadata(item_)
+            file_info = filetags.read_metadata(item_)
             (mime_mediatype, duration, metadata, cover_art) = file_info
             if duration > -1 and mime_mediatype is not 'video':
                 mediatype = 'audio'
@@ -286,217 +261,6 @@ class MovieDataUpdater(signals.SignalEmitter):
                 self.kill_process(pipe.pid)
             return ''
         return pipe.stdout.read()
-
-    def _mediatype_from_mime(self, mimes):
-        audio = False
-        other = False
-        for mime in mimes:
-            ext = filetypes.guess_extension(mime)
-            if ext in filetypes.VIDEO_EXTENSIONS:
-                return 'video'
-            if ext in filetypes.AUDIO_EXTENSIONS:
-                audio = True
-            if ext in filetypes.OTHER_EXTENSIONS:
-                other = True
-        if audio:
-            return 'audio'
-        elif other:
-            return 'other'
-        else:
-            return None
-
-    def _str_or_object_to_unicode(self, thing):
-        """Whatever thing is, get a unicode out of it at all costs."""
-        if not isinstance(thing, basestring):
-            if hasattr(thing, '__unicode__'):
-                # object explicitly supports unicode. yay!
-                thing = unicode(thing)
-            else:
-                # unicode(thing) would die if thing had funky chars,
-                # but unicode(thing, errors=FOO) can't be used for objects
-                thing = str(thing)
-        if not isinstance(thing, unicode):
-            # at this point, thing has to be descended from basestring
-            thing = unicode(thing, errors='replace')
-        return thing
-
-    def _sanitize_keys(self, tags):
-        """Strip useless components and strange characters from tag names
-        """
-        tags_cleaned = {}
-        for key, value in tags.iteritems():
-            key = self._str_or_object_to_unicode(key)
-            if key.startswith('PRIV:'):
-                key = key.split('PRIV:')[1]
-            if key.startswith('TXXX:'):
-                key = key.split('TXXX:')[1]
-            if key.startswith('----:com.apple.iTunes:'):
-                # iTunes M4V
-                key = key.split('----:com.apple.iTunes:')[1]
-            key = key.split(':')[0]
-            if key.startswith('WM/'):
-                key = key.split('WM/')[1]
-            key = key.lower()
-            tags_cleaned[key] = value
-        return tags_cleaned
-
-    def _sanitize_values(self, tags):
-        """Flatten values into simple unicode strings
-        """
-        tags_cleaned = {}
-        for key, value in tags.iteritems():
-            while isinstance(value, list):
-                if not value:
-                    value = None
-                    break
-                value = value[0]
-            if value is not None:
-                value = self._str_or_object_to_unicode(value)
-                tags_cleaned[key] = value.lstrip()
-        return tags_cleaned
-
-    def _special_mappings(self, data, item):
-        """Handle tags that need more than a simple TAG_MAP entry
-        """
-        if 'purd' in data:
-            data[u'year'] = data['purd'].split('-')[0]
-        if 'year' in data:
-            if not data['year'].isdigit():
-                del data['year']
-        if 'track' in data:
-            track = data['track'].split('/')[0]
-            if track.isdigit():
-                data[u'track'] = unicode(int(track))
-            else:
-                del data['track']
-        if 'trkn' in data:
-            track = data['trkn']
-            if isinstance(track, tuple):
-                track = track[0]
-            data[u'track'] = unicode(track)
-        if 'track' not in data:
-            num = ''
-            full_path = item.get_url() or item.get_filename()
-            filename = os.path.basename(full_path)
-            
-            for char in filename:
-                if not char.isdigit():
-                    break
-                num += char
-            if num.isdigit():
-                num = int(num)
-                if num > 0:
-                    while num > 100:
-                        num -= 100
-                    data[u'track'] = unicode(num)
-        return data
-
-    def _make_cover_art_file(self, track_path, objects):
-        if not isinstance(objects, list):
-            objects = [objects]
-
-        images = []
-        for image_object in objects:
-            try:
-               image = coverart.Image(image_object)
-            except coverart.UnknownImageObjectException as e:
-               logging.debug("Couldn't parse image object of type %s", e.get_type())
-            else:
-               images.append(image)
-        if not images:
-            return
-
-        cover_image = None
-        for candidate in images:
-            if candidate.is_cover_art() is not False:
-                cover_image = candidate
-                break
-        if cover_image is None:
-            # no attached image is definitively cover art. use the first one.
-            cover_image = images[0]
-
-        path = cover_image.write_to_file(track_path)
-        return path
-    
-    def read_metadata(self, item):
-        mediatype = None
-        duration = -1
-        cover_art = None
-        tags = {}
-        info = {}
-        data = {}
-
-        try:
-            muta = mutagen.File(item.get_filename())
-            meta = muta.__dict__
-        except (ArithmeticError):
-            # mutagen doesn't catch these errors internally
-            logging.warn("malformed file: %s", item.get_filename())
-            return (mediatype, duration, data, cover_art)
-        except (AttributeError, IOError):
-            return (mediatype, duration, data, cover_art)
-        except struct.error:
-            logging.warn("read_metadata on incomplete file: %s",
-                         item.get_filename())
-            return (mediatype, duration, data, cover_art)
-
-        filename = item.get_filename()
-        if filetypes.is_video_filename(filename):
-            mediatype = 'video'
-        elif filetypes.is_audio_filename(filename):
-            mediatype = 'audio'
-        elif hasattr(muta, 'mime'):
-            mediatype = self._mediatype_from_mime(muta.mime)
-
-        tags = meta['tags']
-        if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
-            tags = tags.__dict__['_DictProxy__dict']
-        tags = tags or {}
-
-        if 'info' in meta:
-            info = meta['info'].__dict__
-        if 'fps' in info or 'gsst' in tags:
-            mediatype = 'video'
-        if 'length' in info:
-            duration = int(info['length'] * 1000)
-        else:
-            try:
-                dur = meta['seektable'].__dict__['seekpoints'].pop()[1]
-                duration = int(dur / 100)
-            except (KeyError, AttributeError, TypeError, IndexError):
-                pass
-
-        tags = self._sanitize_keys(tags)
-        nonflattened_tags = tags.copy()
-        tags = self._sanitize_values(tags)
-
-        for tag, sources in TAG_MAP.iteritems():
-            for source in sources:
-                if source in tags:
-                    if tag in NOFLATTEN_TAGS:
-                        data[unicode(tag)] = nonflattened_tags[source]
-                    else:
-                        data[unicode(tag)] = tags[source]
-                    break
-
-        data = self._special_mappings(data, item)
-
-        if hasattr(muta, 'pictures'):
-            image_data = muta.pictures
-            cover_art = self._make_cover_art_file(item.get_filename(), image_data)
-        elif 'cover-art' in data:
-            image_data = data['cover-art']
-            cover_art = self._make_cover_art_file(item.get_filename(), image_data)
-            del data['cover-art']
-
-        for tag, value in data.iteritems():
-            if not isinstance(value, TAG_TYPES[tag]):
-                try:
-                    data[tag] = TAG_TYPES[tag](value)
-                except ValueError:
-                    logging.debug("Invalid type for tag %s: %s", tag, repr(value))
-                    del data[tag]
-        return (mediatype, duration, data, cover_art)
 
     def kill_process(self, pid):
         try:
