@@ -43,11 +43,12 @@ from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 class DropHandler(signals.SignalEmitter):
-    def __init__(self, playlist_id, item_view, sorter):
+    def __init__(self, playlist_id, item_list, item_views, sorter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('new-order')
         self.playlist_id = playlist_id
-        self.item_view = item_view
+        self.item_list = item_list
+        self.item_views = item_views
         self.sorter = sorter
 
     def allowed_actions(self):
@@ -70,8 +71,9 @@ class DropHandler(signals.SignalEmitter):
         else:
             insert_info = None
         new_order = self.sorter.move_ids_before(insert_info.id, dragged_ids)
-        self.item_view.item_list.resort()
-        self.item_view.model_changed()
+        self.item_list.resort()
+        for item_view in self.item_views:
+            item_view.model_changed()
         self.emit('new-order', new_order)
         return True
 
@@ -162,10 +164,9 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         sorter.forget_items(removed)
 
     def make_drop_handler(self):
-        standard_view_type = WidgetStateStore.get_standard_view_type()
-        standard_view = self.views[standard_view_type]
         sorter = self.item_list.get_sort()
-        handler = DropHandler(self.id, standard_view, sorter)
+        handler = DropHandler(self.id, self.item_list, self.views.values(),
+                sorter)
         handler.connect('new-order', self._on_new_order)
         return handler
 
