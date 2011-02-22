@@ -169,11 +169,11 @@ class DisplayManager(object):
 
         for display in self.permanent_displays:
             if display.should_display(tab_type, selected_tabs):
-                self.select_display(display)
+                self.change_bottom_display(display)
                 return
         for klass in self.on_demand_display_classes:
             if klass.should_display(tab_type, selected_tabs):
-                self.select_display(klass(tab_type, selected_tabs))
+                self.change_bottom_display(klass(tab_type, selected_tabs))
                 return
         raise AssertionError(
             "Can't find display for %s %s" % (tab_type, selected_tabs))
@@ -183,11 +183,39 @@ class DisplayManager(object):
         self.deselect_all_displays()
         self.push_display(display)
 
+    def change_bottom_display(self, display):
+        """Set the bottom display of the stack.
+
+        If there are 0 or 1 items on the display stack, then we will show this
+        display.  If there are 2 or more, then this display will be shown once
+        the rest of the displays get popped.
+
+        The main reason for this method is when we are playing video and the
+        current tab gets removed (#16225).  In this case, we want to select a
+        new tab and make a display for that tab, but not show that display
+        until video stops
+        """
+        if len(self.display_stack) < 2:
+            # display stack is shallow.  Just call select_display() to install
+            # our new display as the only one in the stack
+            self.select_display(display)
+            return
+        # remove current bottom display and replace it with our new one
+        self._unselect_display(self.display_stack[0], on_top=False)
+        self.display_stack[0] = display
+        # call on_selected() if we are creating the display.  Don't call
+        # on_activate() or show the display because it's still below other
+        # displays
+        if display not in self.permanent_displays:
+            display.on_selected()
+
     def deselect_all_displays(self):
         """Deselect all displays."""
+        on_top_display = True
         while self.display_stack:
             old_display = self.display_stack.pop()
-            self._unselect_display(old_display)
+            self._unselect_display(old_display, on_top=on_top_display)
+            on_top_display = False
 
     def push_display(self, display):
         """Select a display and push it on top of the display stack"""
@@ -205,12 +233,13 @@ class DisplayManager(object):
         """
         display = self.display_stack.pop()
         if unselect:
-            self._unselect_display(display)
+            self._unselect_display(display, on_top=True)
         self.current_display.on_activate()
         app.widgetapp.window.set_main_area(self.current_display.widget)
 
-    def _unselect_display(self, display):
-        display.on_deactivate()
+    def _unselect_display(self, display, on_top):
+        if on_top:
+            display.on_deactivate()
         if display not in self.permanent_displays:
             display.cleanup()
         display.emit("removed")
