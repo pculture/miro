@@ -169,11 +169,11 @@ class DisplayManager(object):
 
         for display in self.permanent_displays:
             if display.should_display(tab_type, selected_tabs):
-                self.change_bottom_display(display)
+                self.change_non_video_displays(display)
                 return
         for klass in self.on_demand_display_classes:
             if klass.should_display(tab_type, selected_tabs):
-                self.change_bottom_display(klass(tab_type, selected_tabs))
+                self.change_non_video_displays(klass(tab_type, selected_tabs))
                 return
         raise AssertionError(
             "Can't find display for %s %s" % (tab_type, selected_tabs))
@@ -183,26 +183,31 @@ class DisplayManager(object):
         self.deselect_all_displays()
         self.push_display(display)
 
-    def change_bottom_display(self, display):
-        """Set the bottom display of the stack.
+    def change_non_video_displays(self, display):
+        """Like select_display(), but don't replace the VideoDisplay
 
-        If there are 0 or 1 items on the display stack, then we will show this
-        display.  If there are 2 or more, then this display will be shown once
-        the rest of the displays get popped.
+        Mostly this will work like select_display().  However, if there is a
+        VideoDisplay on top of the display, it will stay on top.
 
         The main reason for this method is when we are playing video and the
         current tab gets removed (#16225).  In this case, we want to select a
         new tab and make a display for that tab, but not show that display
         until video stops
         """
-        if len(self.display_stack) < 2:
-            # display stack is shallow.  Just call select_display() to install
-            # our new display as the only one in the stack.
+
+        if (len(self.display_stack) == 0 or
+                not isinstance(self.display_stack[-1], VideoDisplay)):
+            # no video displays are on the stack, just call select_display
             self.select_display(display)
             return
-        # remove current bottom display and replace it with our new one
-        self._unselect_display(self.display_stack[0], on_top=False)
-        self.display_stack[0] = display
+        # save the video display object
+        video_display = self.display_stack.pop()
+        # unselect displays below it
+        for old_display in self.display_stack:
+            self._unselect_display(old_display, on_top=False)
+        # re-create the display stack with the new display and the video
+        # display on top of it
+        self.display_stack = [display, video_display]
         # call on_selected() if we are creating the display.  Don't call
         # on_activate() or show the display because it's still below other
         # displays
