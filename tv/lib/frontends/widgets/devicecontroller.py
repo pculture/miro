@@ -436,10 +436,10 @@ class DeviceSettingsWidget(widgetset.Background):
         widgetset.Background.__init__(self)
         self.boxes = {}
         self.device = None
-        audio_conversion_names = [_('Device Default')]
-        self.audio_conversion_values = [None]
-        video_conversion_names = [_('Device Default')]
-        self.video_conversion_values = [None]
+        audio_conversion_names = [_('Device Default'), _('Copy')]
+        self.audio_conversion_values = [None, 'copy']
+        video_conversion_names = [_('Device Default'), _('Copy')]
+        self.video_conversion_values = [None, 'copy']
         for section_name, converters in conversion_manager.get_converters():
             for converter in converters:
                 if converter.mediatype == 'video':

@@ -428,12 +428,16 @@ class DeviceSyncManager(object):
     def add_items(self, item_infos):
         device_settings = self.device.database['settings']
         device_info = self.device.info
+        audio_conversion = (device_settings.get('audio_conversion') or
+                            device_info.audio_conversion)
+        video_conversion = (device_settings.get('video_conversion') or
+                            device_info.video_conversion)
         for info in item_infos:
             if self._exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
-                if (info.file_format and
-                    info.file_format.split()[0] in device_info.audio_types):
+                if (audio_conversion == 'copy' or (info.file_format and
+                    info.file_format.split()[0] in device_info.audio_types)):
                     final_path = os.path.join(self.audio_target_folder,
                                               os.path.basename(
                             info.video_path))
@@ -447,17 +451,25 @@ class DeviceSyncManager(object):
                 else:
                     logging.debug('unable to detect format of %r: %s' % (
                             info.video_path, info.file_format))
-                    self.start_conversion(
-                        (device_settings.get('audio_conversion') or
-                         device_info.audio_conversion),
-                        info,
-                        self.audio_target_folder)
+                    self.start_conversion(audio_conversion,
+                                          info,
+                                          self.audio_target_folder)
             elif info.file_type == 'video':
-                self.start_conversion(
-                    (device_settings.get('video_conversion') or
-                     device_info.video_conversion),
-                    info,
-                    self.video_target_folder)
+                if video_conversion == 'copy':
+                    final_path = os.path.join(self.video_target_folder,
+                                              os.path.basename(
+                                                  info.video_path))
+                    try:
+                        shutil.copy(info.video_path, final_path)
+                    except IOError:
+                        # FIXME - we should pass the error back to the frontend
+                        pass
+                    else:
+                        self._add_item(final_path, info)
+                else:
+                    self.start_conversion(video_conversion,
+                                          info,
+                                          self.video_target_folder)
 
         self._check_finished()
 
