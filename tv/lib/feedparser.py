@@ -1388,10 +1388,16 @@ class _FeedParserMixin:
     def _start_media_thumbnail(self,attrsD):
         self.push('media:thumbnail',1)
         if self.inentry:
-            if self.inenclosure:
-                self.entries[-1]['enclosures'][-1]['thumbnail']=FeedParserDict(attrsD)
-            else:
-                self.entries[-1]['thumbnail'] = FeedParserDict(attrsD)
+            try:
+                if self.inenclosure:
+                    self.entries[-1]['enclosures'][-1]['thumbnail']=FeedParserDict(attrsD)
+                else:
+                    self.entries[-1]['thumbnail'] = FeedParserDict(attrsD)
+            except KeyError:
+                # we can hit this if the entry has no enclosures, but
+                # has a thumbnail.  better to ignore it than die in a
+                # mystifying traceback of ickiness.  bug #16378
+                pass
 
     def _end_media_thumbnail(self):
         self.pop('media:thumbnail')
