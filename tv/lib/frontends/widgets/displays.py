@@ -197,7 +197,7 @@ class DisplayManager(object):
         """
         if len(self.display_stack) < 2:
             # display stack is shallow.  Just call select_display() to install
-            # our new display as the only one in the stack
+            # our new display as the only one in the stack.
             self.select_display(display)
             return
         # remove current bottom display and replace it with our new one
@@ -211,11 +211,11 @@ class DisplayManager(object):
 
     def deselect_all_displays(self):
         """Deselect all displays."""
-        on_top_display = True
+        top_display = True
         while self.display_stack:
             old_display = self.display_stack.pop()
-            self._unselect_display(old_display, on_top=on_top_display)
-            on_top_display = False
+            self._unselect_display(old_display, on_top=top_display)
+            top_display = False
 
     def push_display(self, display):
         """Select a display and push it on top of the display stack"""
