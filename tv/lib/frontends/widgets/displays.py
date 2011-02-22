@@ -244,8 +244,8 @@ class DisplayManager(object):
             display.cleanup()
         display.emit("removed")
 
-    def push_folder_contents_display(self, folder_info):
-        self.push_display(FolderContentsDisplay(folder_info))
+    def push_folder_contents_display(self, folder_info, start_playing=False):
+        self.push_display(FolderContentsDisplay(folder_info, start_playing))
 
 class GuideDisplay(TabDisplay):
     @staticmethod
@@ -492,10 +492,11 @@ class ConvertingDisplay(TabDisplay):
         self.widget = self.controller.widget
 
 class FolderContentsDisplay(ItemListDisplayMixin, Display):
-    def __init__(self, info):
+    def __init__(self, info, start_playing):
         self.type = u'folder-contents'
         self.id = info.id
-        self.controller = itemlistcontroller.FolderContentsController(info)
+        self.controller = itemlistcontroller.FolderContentsController(info,
+                play_initial_list=start_playing)
         self.widget = self.controller.widget
         Display.__init__(self)
 

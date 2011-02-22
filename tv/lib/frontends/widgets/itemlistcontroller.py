@@ -388,6 +388,9 @@ class ItemListController(object):
             start_id = selected_ids[0]
         self._play_item_list(start_id, presentation_mode)
 
+    def play_items(self, presentation_mode='fit-to-bounds'):
+        self._play_item_list(None, presentation_mode)
+
     def can_play_items(self):
         for info in self.item_list.model.info_list():
             if info.is_playable:
@@ -395,13 +398,22 @@ class ItemListController(object):
         return False
 
     def _play_item_list(self, start_id, presentation_mode='fit-to-bounds'):
-        if start_id is None and not self.can_play_items():
+        if start_id is None:
+            start_info = None
+        else:
+            start_info = self.item_list.model.get_info(start_id)
+        if start_info is None and not self.can_play_items():
             return
-        elif (start_id is not None and not
-                self.item_list.model.get_info(start_id).is_playable):
+        elif start_info is not None and not start_info.is_playable:
             logging.warn("_play_item_list called with unplayable item")
             return
         app.playback_manager.stop()
+        if start_info is not None and start_info.is_container_item:
+            # If we play a container item, then switch to displaying it's
+            # contents before playing (see #16178)
+            app.display_manager.push_folder_contents_display(start_info,
+                    start_playing=True)
+            return
         app.playback_manager.start(start_id, self.item_tracker,
                 presentation_mode)
         shuffle = app.widget_state.get_shuffle(self.type, self.id)
@@ -836,11 +848,12 @@ class OtherItemsController(SimpleItemListController):
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""
 
-    def __init__(self, folder_info):
+    def __init__(self, folder_info, play_initial_list):
         self.type = u'folder-contents'
         self.id = folder_info.id
         self.title = folder_info.name
         self.info = folder_info
+        self.play_initial_list = play_initial_list
         SimpleItemListController.__init__(self)
 
     def _make_icon(self):
@@ -856,6 +869,11 @@ class FolderContentsController(SimpleItemListController):
 
     def _on_clicked(self, button):
         app.display_manager.pop_display()
+
+    def on_initial_list(self):
+        SimpleItemListController.on_initial_list(self)
+        if self.play_initial_list:
+            self.play_items()
 
 class ItemListControllerManager(object):
     """Manages ItemListController objects.
