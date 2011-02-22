@@ -90,7 +90,7 @@ class MenuItem:
 
     >>> MenuItem(_("Preferences"), "EditPreferences")
     >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
-    >>> MenuItem(_("_Update Podcasts"), "UpdatePodcasts",
+    >>> MenuItem(_("_Update Podcasts and Library"), "UpdatePodcasts",
     ...          (Shortcut("r", MOD), Shortcut(F5)))
     >>> MenuItem(_("_Play"), "PlayPauseItem",
     ...          play=_("_Play"), pause=_("_Pause"))
@@ -267,7 +267,8 @@ def get_menu():
                              (Shortcut("r", MOD), Shortcut(F5)),
                              groups=["PodcastsSelected"],
                              plural=_("_Update Podcasts")),
-                    MenuItem(_("Update _All Podcasts"), "UpdateAllPodcasts",
+                    MenuItem(_("Update _All Podcasts and Library"),
+                              "UpdateAllPodcasts",
                              Shortcut("r", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
