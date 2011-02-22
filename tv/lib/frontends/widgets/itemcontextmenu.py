@@ -111,20 +111,21 @@ class ItemContextMenuHandler(object):
                     lambda: app.widgetapp.check_then_reveal_file(
                         item.video_path)))
 
-            # most recent conversion
-            last_converter = conversion_manager.get_last_conversion()
-            if last_converter is not None:
-                converter = conversion_manager.lookup_converter(last_converter)
-                if converter:
-                    def convert(converter=converter.identifier):
-                        app.widgetapp.convert_items(converter)
-                    menu.append((_('Convert to %(conversion)s',
-                                   {"conversion": converter.displayname}),
-                                 convert))
+            if not item.remote:
+                # most recent conversion
+                last_converter = conversion_manager.get_last_conversion()
+                if last_converter is not None:
+                    converter = conversion_manager.lookup_converter(last_converter)
+                    if converter:
+                        def convert(converter=converter.identifier):
+                            app.widgetapp.convert_items(converter)
+                        menu.append((_('Convert to %(conversion)s',
+                                       {"conversion": converter.displayname}),
+                                     convert))
 
-            # Convert menu
-            convert_menu = self._make_convert_menu()
-            menu.append((_('Convert to...'), convert_menu))
+                # Convert menu
+                convert_menu = self._make_convert_menu()
+                menu.append((_('Convert to...'), convert_menu))
 
             # separator
             menu.append(None)
