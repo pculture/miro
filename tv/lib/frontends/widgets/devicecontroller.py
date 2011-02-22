@@ -864,6 +864,11 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create('device', self.device)
 
+    def make_drag_handler(self):
+        # XXX make dragging device items to the library work
+        # disabled for #16368
+        return None
+
     def on_sort_changed(self, obj, sort_key, ascending, view):
         itemlistcontroller.AudioVideoItemsController.on_sort_changed(
                         self, obj, sort_key, ascending, view)
