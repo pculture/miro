@@ -95,9 +95,9 @@ class SharingBroken(widgetset.Background):
     def on_clicked(self, button):
         self.emit('install-clicked')
 
-class PrettyToggleButton(widgetset.CustomButton):
+class PrettyToggleButton(widgetset.DragableCustomButton):
     def __init__(self):
-        widgetset.CustomButton.__init__(self)
+        widgetset.DragableCustomButton.__init__(self)
         self.value = False
         self.background = imagepool.get_surface(
             resources.path('images/connect-toggle-bg.png'))
@@ -105,8 +105,6 @@ class PrettyToggleButton(widgetset.CustomButton):
             resources.path('images/connect-toggle-on.png'))
         self.off = imagepool.get_surface(
             resources.path('images/connect-toggle-off.png'))
-
-        self.connect('clicked', self.on_clicked)
 
     def set_value(self, value):
         if value == self.value:
@@ -141,8 +139,14 @@ class PrettyToggleButton(widgetset.CustomButton):
         y = int((self.background.height - textbox.get_size()[1]) / 2)
         textbox.draw(context, x, y, *textbox.get_size())
 
-    def on_clicked(self, button):
+    def do_clicked(self):
         self.set_value(not self.value)
+
+    def do_dragged_right(self):
+        self.set_value(True)
+
+    def do_dragged_left(self):
+        self.set_value(False)
 
 class HelpButton(widgetset.CustomButton):
     def __init__(self):
@@ -237,7 +241,9 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(widgetset.Checkbox(_("Music")))
         hbox.pack_start(widgetset.Checkbox(_("Podcasts")))
         self.share_button = PrettyToggleButton()
-        self.share_button.connect('clicked', self.daap_toggled)
+        self.share_button.connect('clicked', self.daap_changed)
+        self.share_button.connect('dragged-left', self.daap_changed)
+        self.share_button.connect('dragged-right', self.daap_changed)
         self.share_button.set_value(app.config.get(prefs.SHARE_MEDIA))
         hbox.pack_end(self.share_button)
         vbox.pack_start(hbox)
@@ -337,12 +343,12 @@ class ConnectTab(widgetset.VBox):
     def on_config_changed(self, obj, key, value):
         if key == prefs.SHARE_MEDIA.key:
             self.share_button.set_value(value)
-            self.daap_toggled(self.share_button)
+            self.daap_changed(self.share_button)
 
     def daap_install_clicked(self, button):
         install_bonjour()
 
-    def daap_toggled(self, button):
+    def daap_changed(self, button):
         app.config.set(prefs.SHARE_MEDIA, button.get_value())
         if button.get_value():
             self.share_entry.enable()

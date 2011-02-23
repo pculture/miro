@@ -35,7 +35,8 @@ just imports the widgets from their actual locations.
 from miro.plat.frontends.widgets.const import *
 from miro.plat.frontends.widgets.control import TextEntry, SecureTextEntry, SearchTextEntry, VideoSearchTextEntry, MultilineTextEntry
 from miro.plat.frontends.widgets.control import Checkbox, Button, OptionMenu, RadioButtonGroup, RadioButton
-from miro.plat.frontends.widgets.customcontrol import CustomButton, ContinuousCustomButton, CustomSlider
+from miro.plat.frontends.widgets.customcontrol import (CustomButton,
+        ContinuousCustomButton, CustomSlider, DragableCustomButton)
 from miro.plat.frontends.widgets.drawing import DrawingContext, ImageSurface, Gradient
 from miro.plat.frontends.widgets.drawingwidgets import DrawingArea, Background
 from miro.plat.frontends.widgets.rect import Rect

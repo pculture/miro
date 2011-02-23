@@ -37,7 +37,7 @@ from miro.frontends.widgets.gtk.controls import TextEntry, SecureTextEntry, \
 from miro.frontends.widgets.gtk.searchentry import SearchTextEntry, \
      VideoSearchTextEntry
 from miro.frontends.widgets.gtk.customcontrols import (
-    CustomButton, ContinuousCustomButton, CustomSlider)
+    CustomButton, ContinuousCustomButton, DragableCustomButton, CustomSlider)
 # VolumeSlider and VolumeMuter aren't defined if gtk.VolumeButton
 # doesn't have get_popup.
 try:

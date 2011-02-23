@@ -73,6 +73,40 @@ class ContinuousCustomButtonWidget(CustomButtonWidget):
         return (self.state == gtk.STATE_ACTIVE or
                 wrappermap.wrapper(self).button_down)
 
+class DragableCustomButtonWidget(CustomButtonWidget):
+    def __init__(self):
+        CustomButtonWidget.__init__(self)
+        self.button_press_x = None
+        self.set_events(self.get_events() | gtk.gdk.POINTER_MOTION_MASK)
+
+    def do_button_press_event(self, event):
+        self.button_press_x = event.x
+        self.last_drag_event = None
+        gtk.Button.do_button_press_event(self, event)
+
+    def do_button_release_event(self, event):
+        self.button_press_x = None
+        gtk.Button.do_button_release_event(self, event)
+
+    def do_motion_notify_event(self, event):
+        DRAG_THRESHOLD = 15
+        if self.button_press_x is None:
+            # button not down
+            return
+        if (self.last_drag_event != 'right' and
+                event.x > self.button_press_x + DRAG_THRESHOLD):
+            wrappermap.wrapper(self).emit('dragged-right')
+            self.last_drag_event = 'right'
+        elif (self.last_drag_event != 'left' and
+                event.x < self.button_press_x - DRAG_THRESHOLD):
+            wrappermap.wrapper(self).emit('dragged-left')
+            self.last_drag_event = 'left'
+
+    def do_clicked(self):
+        # only emit clicked if we didn't emit dragged-left or dragged-right
+        if self.last_drag_event is None:
+            wrappermap.wrapper(self).emit('clicked')
+
 class CustomScaleMixin(CustomControlMixin):
     def __init__(self):
         self.in_drag = False
@@ -200,6 +234,7 @@ class CustomVScaleWidget(CustomScaleMixin, gtk.VScale):
 
 gobject.type_register(CustomButtonWidget)
 gobject.type_register(ContinuousCustomButtonWidget)
+gobject.type_register(DragableCustomButtonWidget)
 gobject.type_register(CustomHScaleWidget)
 gobject.type_register(CustomVScaleWidget)
 
@@ -260,6 +295,15 @@ class ContinuousCustomButton(Drawable, Widget):
             timer.cancel(self.timeout)
         if not self.button_held:
             self.emit('clicked')
+
+class DragableCustomButton(Drawable, Widget):
+    def __init__(self):
+        Widget.__init__(self)
+        Drawable.__init__(self)
+        self.set_widget(DragableCustomButtonWidget())
+        self.create_signal('clicked')
+        self.create_signal('dragged-left')
+        self.create_signal('dragged-right')
 
 class CustomSlider(Drawable, Widget):
     def __init__(self):

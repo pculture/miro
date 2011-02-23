@@ -55,31 +55,25 @@ class DrawableButton(NSButton):
     def init(self):
         self = super(DrawableButton, self).init()
         self.layout_manager = LayoutManager()
-        self.tracking_rect = None
+        self.tracking_area = None
         self.mouse_inside = False
         return self
 
-    def remove_tracking_rect(self):
-        if self.tracking_rect is not None:
-            self.removeTrackingRect_(self.tracking_rect)
-            self.tracking_rect = None
+    def updateTrackingAreas(self):
+        # remove existing tracking area if needed
+        if self.tracking_area:
+            self.removeTrackingArea_(self.tracking_area)
 
-    def viewDidMoveToWindow(self):
-        self.reset_tracking_rect()
-
-    def setFrame_(self, rect):
-        NSButton.setFrame_(self, rect)
-        self.reset_tracking_rect()
-
-    def setBounds_(self, rect):
-        NSButton.setBounds_(self, rect)
-        self.reset_tracking_rect()
-
-    def reset_tracking_rect(self):
-        self.remove_tracking_rect()
-        if self.window() is not None:
-            self.tracking_rect = self.addTrackingRect_owner_userData_assumeInside_(
-                    self.bounds(), self, 0, NO)
+        # create a new tracking area for the entire view.  This allows us to
+        # get mouseMoved events whenever the mouse is inside our view.
+        self.tracking_area = NSTrackingArea.alloc()
+        self.tracking_area.initWithRect_options_owner_userInfo_(
+                self.visibleRect(),
+                NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved |
+                NSTrackingActiveInKeyWindow,
+                self,
+                nil)
+        self.addTrackingArea_(self.tracking_area)
 
     def mouseEntered_(self, event):
         window = self.window()
@@ -150,6 +144,37 @@ class ContinuousDrawableButton(DrawableButton):
         self.releaseInbounds = NSPointInRect(mouseLocation, self.bounds())
         self.stopTracking = True
 ContinuousDrawableButton.setCellClass_(ContinousButtonCell)
+
+class DragableButtonCell(NSButtonCell):
+    def startTrackingAt_inView_(self, point, view):
+        self.start_x = point.x
+        return YES
+
+    def continueTracking_at_inView_(self, lastPoint, at, view):
+        DRAG_THRESHOLD = 15
+        if (view.last_drag_event != 'right' and
+                at.x > self.start_x + DRAG_THRESHOLD):
+            wrappermap.wrapper(view).emit("dragged-right")
+            view.last_drag_event = 'right'
+        elif (view.last_drag_event != 'left' and
+                at.x < self.start_x - DRAG_THRESHOLD):
+            view.last_drag_event = 'left'
+            wrappermap.wrapper(view).emit("dragged-left")
+        return YES
+
+class DragableDrawableButton(DrawableButton):
+    def mouseDown_(self, event):
+        self.last_drag_event = None
+        self.cell().trackMouse_inRect_ofView_untilMouseUp_(event,
+                self.bounds(), self, YES)
+
+    def sendAction_to_(self, action, to):
+        # only send the click event if we didn't send a
+        # dragged-left/dragged-right event
+        if self.last_drag_event is None:
+            wrappermap.wrapper(self).emit('clicked')
+        return YES
+DragableDrawableButton.setCellClass_(DragableButtonCell)
 
 class CustomSliderCell(NSSliderCell):
     def calc_slider_amount(self, view, pos, size):
@@ -224,10 +249,6 @@ class CustomButton(drawing.DrawingMixin, Widget):
         Widget.disable(self)
         self.view.setEnabled_(False)
 
-    def remove_viewport(self):
-        self.view.remove_tracking_rect()
-        Widget.remove_viewport(self)
-
 class ContinuousCustomButton(CustomButton):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
@@ -239,6 +260,14 @@ class ContinuousCustomButton(CustomButton):
 
     def set_delays(self, initial, repeat):
         self.view.cell().setPeriodicDelay_interval_(initial, repeat)
+
+class DragableCustomButton(CustomButton):
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
+    def __init__(self):
+        CustomButton.__init__(self)
+        self.create_signal('dragged-left')
+        self.create_signal('dragged-right')
+        self.view = DragableDrawableButton.alloc().init()
 
 class CustomSlider(drawing.DrawingMixin, Widget):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
