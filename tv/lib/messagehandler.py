@@ -1598,6 +1598,26 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                           size=message.device.size,
                                           remaining=message.device.remaining)
 
+    def handle_save_device_sort(self, message):
+        db_entry = '%s_sort_state' % message.tab_type
+        message.device.database[db_entry] = (message.key, message.ascending)
+
+    def handle_save_device_view(self, message):
+        message.device.database['%s_view' % message.tab_type] = message.view
+
+    def handle_change_device_sync_setting(self, message):
+        db = message.device.database
+        db['sync'][message.file_type][message.setting] = message.value
+
+    def handle_change_device_setting(self, message):
+        message.device.database.setdefault('settings', {})
+        message.device.database['settings'][message.setting] = message.value
+        if message.setting == 'name':
+            message.device.name = message.value
+            # need to send a changed message
+            message = messages.TabsChanged('devices', [], [message.device], [])
+            message.send_to_frontend()
+
     def handle_device_eject(self, message):
         currently_playing = app.playback_manager.get_playing_item()
         if currently_playing and hasattr(currently_playing, 'device'):
@@ -1613,18 +1633,26 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     @staticmethod
     def _get_sync_items_for_message(message):
+        sync = message.device.database['sync']
         views = []
         infos = set()
-        for feed_id in message.feed_ids:
-            feed_ = feed.Feed.get_by_id(feed_id)
-            if message.feed_type == 'all':
-                view = feed_.downloaded_items
-            else:
-                view = feed_.unwatched_items
-            views.append(view)
+        if sync['podcasts']['enabled']:
+            for url in sync['podcasts']['items']:
+                feed_ = lookup_feed(url)
+                if feed is not None:
+                    if sync['podcasts']['all']:
+                        view = feed_.downloaded_items
+                    else:
+                        view = feed_.unwatched_items
+                    views.append(view)
 
-        for playlist_id in message.playlist_ids:
-            views.append(item.Item.playlist_view(playlist_id))
+        if sync['playlists']['enabled']:
+            for name in sync['playlists']['items']:
+                try:
+                    playlist_ = SavedPlaylist.get_by_title(name)
+                except database.ObjectNotFoundError:
+                    continue
+                views.append(item.Item.playlist_view(playlist_.id))
 
         for view in views:
             source = itemsource.DatabaseItemSource(view)

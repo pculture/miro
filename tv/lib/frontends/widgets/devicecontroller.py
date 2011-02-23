@@ -340,11 +340,19 @@ class SyncWidget(widgetset.VBox):
 
     def select_clicked(self, obj, value):
         self.bulk_change = True
-        self.device.database.set_bulk_mode(True)
-        for box in self.info_map.values():
+        this_sync = self.device.database['sync'][self.file_type]
+        items = set(this_sync.get('items', ()))
+        for key, box in self.info_map.items():
             box.set_checked(value)
-        self.device.database.set_bulk_mode(False)
+            if value:
+                items.add(key)
+            elif key in items:
+                items.remove(key)
         self.bulk_change = False
+        message = messages.ChangeDeviceSyncSetting(self.device,
+                                                   self.file_type,
+                                                   'items', list(items))
+        message.send_to_backend()
         self.emit('changed')
 
     def get_feeds(self):
@@ -361,8 +369,13 @@ class SyncWidget(widgetset.VBox):
             self.feed_list.enable()
         else:
             self.feed_list.disable()
-        self.device.database['sync'][self.file_type]['enabled'] = checked
-        if not self.bulk_change:
+        value = self.device.database['sync'][self.file_type].get('enabled',
+                                                                 None)
+        if not self.bulk_change and checked != value:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       self.file_type,
+                                                       'enabled', checked)
+            message.send_to_backend()
             self.emit('changed')
         return checked # make it easy for subclass
 
@@ -370,13 +383,19 @@ class SyncWidget(widgetset.VBox):
         this_sync = self.device.database['sync'][self.file_type]
         key = self.info_key(info)
         items = set(this_sync.get('items', []))
+        changed = False
         if obj.get_checked():
-            items.add(key)
-        else:
-            if key in items:
-                items.remove(key)
-        this_sync['items'] = list(items)
-        if not self.bulk_change:
+            if key not in items:
+                items.add(key)
+                changed = True
+        elif key in items:
+            items.remove(key)
+            changed = True
+        if not self.bulk_change and changed:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       self.file_type,
+                                                       'items', list(items))
+            message.send_to_backend()
             self.emit('changed')
 
     def checked_feeds(self):
@@ -401,8 +420,13 @@ class PodcastSyncWidget(SyncWidget):
 
     def unwatched_toggled(self, obj):
         all_items = (not obj.get_checked())
-        self.device.database['sync'][self.file_type]['all'] = all_items
-        self.emit('changed')
+        print 'changing all', all_items
+        if self.device.database['sync'][self.file_type]['all'] != all_items:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       self.file_type,
+                                                       'all', all_items)
+            message.send_to_backend()
+            self.emit('changed')
 
     def sync_library_toggled(self, obj):
         if SyncWidget.sync_library_toggled(self, obj):
@@ -490,7 +514,8 @@ class DeviceSettingsWidget(widgetset.Background):
 
     def set_device(self, device):
         self.device = device
-        device_settings = device.database.setdefault('settings', {})
+        device_settings = device.database.get('settings', {})
+        self.bulk_change = True
         for setting in 'name', 'video_path', 'audio_path':
             self.boxes[setting].set_text(device_settings.get(
                     setting,
@@ -509,6 +534,7 @@ class DeviceSettingsWidget(widgetset.Background):
         else:
             self.boxes['always_show'].disable()
             self.boxes['always_show'].set_checked(True)
+        self.bulk_change = False
 
     def setting_changed(self, widget, setting_or_value, setting=None):
         if self.device is None:
@@ -528,12 +554,9 @@ class DeviceSettingsWidget(widgetset.Background):
             value = widget.get_text()
         elif setting == 'always_show':
             value = widget.get_checked()
-        self.device.database['settings'][setting] = value
-        if setting == 'name':
-            self.device.name = value
-            # need to send a changed message
-            message = messages.TabsChanged('devices', [], [self.device], [])
-            message.send_to_frontend()
+        if value != self.device.database['settings'][setting]:
+            message = messages.ChangeDeviceSetting(self.device, setting, value)
+            message.send_to_backend()
 
 class DeviceMountedView(widgetset.VBox):
     def __init__(self):
@@ -596,7 +619,6 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.set_size(device.size, device.remaining)
         if not self.device.mount:
             return
-        self.device.database.set_bulk_mode(True)
         for name in 'podcasts', 'playlists', 'settings':
             tab = self.tabs[name]
             tab.child.set_device(device)
@@ -605,7 +627,6 @@ class DeviceMountedView(widgetset.VBox):
         if sync_manager is not None:
             self.set_sync_status(sync_manager.get_progress(),
                                  sync_manager.get_eta())
-        self.device.database.set_bulk_mode(False)
 
     def _tab_clicked(self, button):
         key = button.key
@@ -627,14 +648,11 @@ class DeviceMountedView(widgetset.VBox):
                 sync_ids['playlists'])
 
     def sync_settings_changed(self, obj):
-        sync_state = self._get_sync_state()
-        message = messages.QuerySyncInformation(self.device,
-                                                *sync_state)
+        message = messages.QuerySyncInformation(self.device)
         message.send_to_backend()
 
     def sync_clicked(self, obj):
-        message = messages.DeviceSyncFeeds(self.device,
-                                           *self._get_sync_state())
+        message = messages.DeviceSyncFeeds(self.device)
         message.send_to_backend()
 
     def current_sync_information(self, count):
@@ -818,9 +836,7 @@ class DeviceController(object):
     def start_tracking(self):
         view = self.widget.get_view()
         if isinstance(view, DeviceMountedView):
-            sync_state = view._get_sync_state()
-            message = messages.QuerySyncInformation(self.device,
-                                                    *sync_state)
+            message = messages.QuerySyncInformation(self.device)
             message.send_to_backend()
 
     def stop_tracking(self):
@@ -872,11 +888,14 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def on_sort_changed(self, obj, sort_key, ascending, view):
         itemlistcontroller.AudioVideoItemsController.on_sort_changed(
                         self, obj, sort_key, ascending, view)
-        db_entry = '%s_sort_state' % self.device.tab_type
-        self.device.database[db_entry] = (sort_key, ascending)
+        message = messages.SaveDeviceSort(self.device, self.device.tab_type,
+                                          sort_key, ascending)
+        message.send_to_backend()
 
     def save_view(self, toolbar, view):
-        self.device.database['%s_view' % self.device.tab_type] = view
+        message = messages.SaveDeviceView(self.device, self.device.tab_type,
+                                          view)
+        message.send_to_backend()
 
     def handle_device_changed(self, device):
         if self.device.id != device.id:

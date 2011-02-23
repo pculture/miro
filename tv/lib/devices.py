@@ -37,6 +37,7 @@ import shutil
 import time
 
 from miro import app
+from miro.database import confirm_db_thread
 from miro import eventloop
 from miro import fileutil
 from miro import filetypes
@@ -798,11 +799,14 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         self.parent = parent
         self.changing = False
         self.bulk_mode = False
+        self.did_change = False
 
     def __getitem__(self, key):
         value = super(DeviceDatabase, self).__getitem__(key)
         if isinstance(value, dict) and not isinstance(value, DeviceDatabase):
-            value = self[key] = DeviceDatabase(value, self.parent or self)
+            value = DeviceDatabase(value, self.parent or self)
+             # don't trip the changed signal
+            super(DeviceDatabase, self).__setitem__(key, value)
         return value
 
     def __setitem__(self, key, value):
@@ -813,16 +817,18 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             self.notify_changed()
 
     def notify_changed(self):
+        self.did_change = True
         if not self.bulk_mode and not self.changing:
             self.changing = True
             try:
                 self.emit('changed')
             finally:
                 self.changing = False
+                self.did_change = False
 
     def set_bulk_mode(self, bulk):
         self.bulk_mode = bulk
-        if not bulk:
+        if not bulk and self.did_change:
             self.notify_changed()
 
 def load_database(mount):
@@ -850,6 +856,7 @@ def write_database(database, mount):
 
     The database lives at [MOUNT]/.miro/json
     """
+    confirm_db_thread()
     if not os.path.exists(mount):
         # device disappeared, so we can't write to it
         return

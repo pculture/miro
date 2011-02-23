@@ -839,27 +839,57 @@ class SetDeviceType(BackendMessage):
         self.device = device
         self.name = name
 
+class SaveDeviceSort(BackendMessage):
+    """
+    Saves the current sort for a device's view.
+    """
+    def __init__(self, device, tab_type, key, ascending):
+        self.device = device
+        self.tab_type = tab_type
+        self.key = key
+        self.ascending = ascending
+
+class SaveDeviceView(BackendMessage):
+    """
+    Saves the current view on a device.
+    """
+    def __init__(self, device, tab_type, view):
+        self.device = device
+        self.tab_type = tab_type
+        self.view = view
+
+class ChangeDeviceSyncSetting(BackendMessage):
+    """
+    Tell the backend to change a sync setting on the device.
+    """
+    def __init__(self, device, file_type, setting, value):
+        self.device = device
+        self.file_type = file_type
+        self.setting = setting
+        self.value = value
+
+class ChangeDeviceSetting(BackendMessage):
+    """
+    Tell the backend to change a setting on the device.
+    """
+    def __init__(self, device, setting, value):
+        self.device = device
+        self.setting = setting
+        self.value = value
+
 class QuerySyncInformation(BackendMessage):
     """
     Ask for a CurrentSyncInformation to be sent back for the given device.
     """
-    def __init__(self, device, feed_type, feed_ids, playlist_ids):
+    def __init__(self, device):
         self.device = device
-        self.feed_type = feed_type
-        self.feed_ids = feed_ids
-        self.playlist_ids = playlist_ids
 
 class DeviceSyncFeeds(BackendMessage):
     """
-    Ask the backend to sync the given feeds/playlists.
+    Ask the backend to sync feeds/playlists onto the device.
     """
-    def __init__(self, device,
-                 feed_type, feed_ids,
-                 playlist_ids):
+    def __init__(self, device):
         self.device = device
-        self.feed_type = feed_type
-        self.feed_ids = feed_ids
-        self.playlist_ids = playlist_ids
 
 class DeviceSyncMedia(BackendMessage):
     """Ask the backend to sync media to the given device.
