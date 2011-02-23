@@ -67,7 +67,15 @@ class ImageSurface:
             # down, regardless of the isFlipped() setting.
             for x_ in range(0, width, self.width):
                 for y_ in range(0, height, self.height):
-                    rect = NSRect((x + x_, y + y_), (self.width, self.height))
+                    if x_ + self.width > width:
+                        width_ = width - x_
+                    else:
+                        width_  = self.width
+                    if y_ + self.height > height:
+                        height_ = height - y_
+                    else:
+                        height_ = self.height
+                    rect = NSRect((x + x_, y + y_), (width_, height_))
                     self.image.drawInRect_fromRect_operation_fraction_(
                         rect, NSZeroRect, NSCompositeSourceOver, fraction)
 
