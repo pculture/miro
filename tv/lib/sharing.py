@@ -49,6 +49,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import transcode
+from miro import metadata
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
@@ -114,7 +115,7 @@ def inet_ntop(af, ip):
                                                                 ip))
         raise ValueError('unknown address family %d' % af)
 
-class SharingItem(object):
+class SharingItem(metadata.Source):
     """
     An item which lives on a remote share.
     """
@@ -123,7 +124,7 @@ class SharingItem(object):
             if required not in kwargs:
                 raise TypeError('SharingItem must be given a "%s" argument'
                                 % required)
-        self.name = self.file_format = self.size = None
+        self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = self.media_type_checked = True
         self.isContainerItem = False
@@ -133,18 +134,10 @@ class SharingItem(object):
         self.duration = self.screenshot = self.thumbnail_url = None
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
-        self.description = u''
-        self.album = None
-        self.artist = None
-        self.title_tag = None
-        self.track = None
-        self.year = None
-        self.genre = None
         self.metadata_version = 0
-        self.rating = None
         self.file_type = None
         self.creation_time = None
-        self.has_drm = None
+        metadata.Source.setup_new(self)
 
         self.__dict__.update(kwargs)
 

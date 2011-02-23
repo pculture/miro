@@ -149,11 +149,9 @@ class DatabaseItemSource(ItemSource):
     @staticmethod
     def _item_info_for(item):
         info = {
-            'name': item.get_title(),
             'feed_id': item.feed_id,
             'feed_name': item.get_source(),
             'feed_url': item.get_feed_url(),
-            'description': item.get_description(),
             'state': item.get_state(),
             'release_date': item.get_release_date(),
             'size': item.get_size(),
@@ -183,14 +181,6 @@ class DatabaseItemSource(ItemSource):
             'media_type_checked': item.media_type_checked,
             'seeding_status': item.torrent_seeding_status(),
             'mime_type': item.enclosure_type,
-            'album_artist': item.get_album_artist(),
-            'artist': item.get_artist(),
-            'album': item.get_album(),
-            'track': item.get_track(),
-            'year': item.get_year(),
-            'genre': item.get_genre(),
-            'title_tag': item.get_title_tag(),
-            'rating': item.get_rating(),
             'date_added': item.get_creation_time(),
             'last_played': item.get_watched_time(),
             'children': [],
@@ -208,12 +198,10 @@ class DatabaseItemSource(ItemSource):
             'source_type': 'database',
             'play_count': item.play_count,
             'skip_count': item.skip_count,
-            'cover_art': item.get_cover_art(),
             'auto_rating': item.get_auto_rating(),
             'is_playing': item.is_playing(),
-            'has_drm': item.has_drm,
-            'drm_description': item.drm_description(),
             }
+        info.update(item.get_iteminfo_metadata())
         if item.isContainerItem:
             info['children'] = [DatabaseItemSource._item_info_for(i) for i in
                                 item.get_children()]
@@ -391,14 +379,12 @@ class SharingItemSource(ItemSource):
         ]
 
     def _item_info_for(self, item):
-        return messages.ItemInfo(
+        info = dict(
             item.id,
             source_type='sharing',
-            name = item.name,
             feed_id = item.feed_id,
             feed_name = None,
             feed_url = None,
-            description = item.description,
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
@@ -432,12 +418,6 @@ class SharingItemSource(ItemSource):
             media_type_checked = True,
             mime_type = item.enclosure_type,
             artist = item.artist,
-            album = item.album,
-            track = item.track,
-            year = item.year,
-            genre = item.genre,
-            title_tag = item.title_tag,
-            rating = item.rating,
             auto_rating = None,
             date_added = item.get_creation_time(),
             last_played = item.get_creation_time(),
@@ -453,12 +433,11 @@ class SharingItemSource(ItemSource):
             up_down_ratio = 0,
             play_count=0,
             skip_count=0,
-            cover_art=None,
             host=item.host,
             port=item.port,
-            has_drm=item.has_drm,
-            drm_description=item.drm_description(),
             is_playing=False)
+        info.update(item.get_iteminfo_metadata())
+        return messages.ItemInfo(*info)
 
     def _ensure_info(self, obj):
         if not isinstance(obj, messages.ItemInfo):
@@ -523,15 +502,13 @@ class DeviceItemSource(ItemSource):
         self.emit("removed", item.id)
 
     def _item_info_for(self, item):
-        return messages.ItemInfo(
+        info = dict(
             item.id,
             source_type='device',
-            name = item.name,
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
                          self.device.name),
             feed_url = None,
-            description = item.description,
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
@@ -565,12 +542,6 @@ class DeviceItemSource(ItemSource):
             seeding_status = None,
             mime_type = item.enclosure_type,
             artist = item.artist,
-            album = item.album,
-            track = item.track,
-            year = item.year,
-            genre = item.genre,
-            title_tag = item.title_tag,
-            rating = item.rating,
             date_added = item.get_creation_time(),
             last_played = item.get_creation_time(),
             download_info = None,
@@ -585,11 +556,10 @@ class DeviceItemSource(ItemSource):
             up_down_ratio = 0,
             play_count=0,
             skip_count=0,
-            cover_art=None,
             auto_rating=0,
-            has_drm=item.has_drm,
-            drm_description=item.drm_description(),
             is_playing=item.is_playing)
+        info.update(item.get_iteminfo_metadata())
+        return messages.ItemInfo(info)
 
     def fetch_all(self):
         return [self._item_info_for(devices.DeviceItem(

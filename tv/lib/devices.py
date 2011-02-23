@@ -47,6 +47,7 @@ from miro import messages
 from miro import signals
 from miro import conversions
 from miro import moviedata
+from miro import metadata
 from miro.util import returns_filename
 
 from miro.plat import resources
@@ -616,7 +617,7 @@ class DeviceSyncManager(object):
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
 
-class DeviceItem(object):
+class DeviceItem(metadata.Store):
     """
     An item which lives on a device.  There's a separate, per-device JSON
     database, so this implements the necessary Item logic for those files.
@@ -626,7 +627,7 @@ class DeviceItem(object):
             if required not in kwargs:
                 raise TypeError('DeviceItem must be given a "%s" argument'
                                 % required)
-        self.name = self.file_format = self.size = None
+        self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = self.media_type_checked = True
         self.isContainerItem = False
@@ -636,19 +637,10 @@ class DeviceItem(object):
         self.duration = self.screenshot = self.thumbnail_url = None
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
-        self.description = u''
-        self.album = None
-        self.artist = None
-        self.title_tag = None
-        self.track = None
-        self.year = None
-        self.genre = None
-        self.rating = None
         self.file_type = None
         self.creation_time = None
         self.is_playing = False
-        self.has_drm = None
-        self.metadata_version = 0
+        metadata.Store.setup_new(self)
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -740,12 +732,6 @@ class DeviceItem(object):
                     self.screenshot = os.path.join('.miro', basename)
             elif screenshot.startswith(resources.root()):
                 self.screenshot = None # don't save a default thumbnail
-
-    def drm_description(self):
-        if self.has_drm:
-            return _("Locked")
-        else:
-            return u""
 
     def remove(self, save=True):
         file_types = [self.file_type]

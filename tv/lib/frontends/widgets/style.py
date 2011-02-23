@@ -1034,7 +1034,7 @@ class LastPlayedRenderer(ListViewRendererText):
     attr_name = 'display_last_played'
 
 class DRMRenderer(ListViewRendererText):
-    attr_name = 'drm_description'
+    attr_name = 'display_drm'
 
 class ListViewRenderer(widgetset.InfoListRenderer):
     """Renderer for more complex list view columns.

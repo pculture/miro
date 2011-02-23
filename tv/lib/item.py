@@ -62,6 +62,7 @@ from miro import searchengines
 from miro import fileutil
 from miro import search
 from miro import models
+from miro import metadata
 
 _charset = locale.getpreferredencoding()
 
@@ -313,7 +314,7 @@ class FeedParserValues(object):
 
         return datetime.min
 
-class Item(DDBObject, iconcache.IconCacheOwnerMixin):
+class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
     """
@@ -322,6 +323,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def setup_new(self, fp_values, linkNumber=0, feed_id=None, parent_id=None,
             eligibleForAutoDownload=True, channel_title=None):
+        metadata.Store.setup_new(self)
         self.is_file_item = False
         self.feed_id = feed_id
         self.parent_id = parent_id
@@ -333,12 +335,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.downloadedTime = None
         self.watchedTime = None
         self.pendingReason = u""
-        self.title = u""
-        self.description = u""
         fp_values.update_item(self)
         self.expired = False
         self.keep = False
-        self.filename = self.file_type = None
+        self.filename = None
         self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
         self.screenshot = None
@@ -349,19 +349,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.was_downloaded = False
         self.subtitle_encoding = None
         self.setup_new_icon_cache()
-        self.album = None
-        self.album_artist = None
-        self.artist = None
-        self.title_tag = None
-        self.track = None
-        self.year = None
-        self.genre = None
-        self.rating = None
         self.play_count = 0
         self.skip_count = 0
-        self.cover_art = None
-        self.has_drm = None
-        self.metadata_version = 0
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
@@ -780,10 +769,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if not self.media_type_checked:
             self.file_type = self._file_type_for_filename(filename)
 
-    def set_file_type(self, file_type):
-        self.file_type = file_type
-        self.signal_change()
-
     def _file_type_for_filename(self, filename):
         filename = filename.lower()
         for ext in filetypes.VIDEO_EXTENSIONS:
@@ -950,12 +935,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return Item.media_children_view(self.id).count() > 0
         else:
             return self.file_type in ('audio', 'video') and not self.has_drm
-
-    def drm_description(self):
-        if self.has_drm:
-            return _("Locked")
-        else:
-            return u""
 
     def set_feed(self, feed_id):
         """Moves this item to another feed.
@@ -1170,11 +1149,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.skip_count += 1
         self.signal_change()
 
-    def set_rating(self, rating):
-        self.confirm_db_thread()
-        self.rating = rating
-        self.signal_change()
-
     @returns_unicode
     def get_rss_id(self):
         self.confirm_db_thread()
@@ -1281,7 +1255,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         to signal the right set of items.
         """
         self.confirm_db_thread()
-        if self.icon_cache is not None and self.icon_cache.is_valid():
+        if self.cover_art:
+            path = self.cover_art
+            return resources.path(fileutil.expand_filename(path))
+        elif self.icon_cache is not None and self.icon_cache.is_valid():
             path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
         elif self.screenshot:
@@ -1289,9 +1266,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return resources.path(fileutil.expand_filename(path))
         elif self.isContainerItem:
             return resources.path("images/thumb-default-folder.png")
-        elif self.cover_art:
-            path = self.cover_art
-            return resources.path(fileutil.expand_filename(path))
         else:
             feed = self.get_feed()
             if feed.thumbnail_valid():
@@ -1302,37 +1276,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 return resources.path("images/thumb-default-video.png")
 
-    @returns_unicode
-    def get_album_artist(self):
-        return self.album_artist
-
-    @returns_unicode
-    def get_artist(self):
-        return self.artist
-
-    @returns_unicode
-    def get_album(self):
-        return self.album
-
-    def get_track(self):
-        return self.track
-
-    def get_year(self):
-        return self.year
-
-    @returns_unicode
-    def get_genre(self):
-        return self.genre
-
-    def get_rating(self):
-        return self.rating
-
-    def get_title_tag(self):
-        return self.title_tag
-
-    def get_cover_art(self):
-        return self.cover_art
-
     def is_downloaded_torrent(self):
         return (self.isContainerItem and self.has_downloader() and
                 self.downloader.is_finished())
@@ -1341,10 +1284,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_title(self):
         """Returns the title of the item.
         """
-        if self.title:
-            return self.title
-        if self.title_tag:
-            return self.title_tag
+        stored = metadata.Store.get_title(self)
+        if stored:
+            return stored
         if self.entry_title is not None:
             return self.entry_title
         if self.get_filename() is not None:
@@ -1362,16 +1304,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             t2.append(word.capitalize())
         title = u' '.join(t2)
         return title
-
-    def set_title(self, title):
-        self.confirm_db_thread()
-        self.title = title
-        self.signal_change()
-
-    def set_description(self, desc):
-        self.confirm_db_thread()
-        self.description = desc
-        self.signal_change()
 
     def set_channel_title(self, title):
         check_u(title)
@@ -1400,8 +1332,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         If the item is a torrent, then it adds some additional text.
         """
-        if self.description:
-            return unicode(self.description)
+        stored = metadata.Store.get_description(self)
+        if stored:
+            return stored
 
         if self.entry_description:
             return unicode(self.entry_description)

@@ -1196,6 +1196,7 @@ class ItemInfo(object):
         self.display_track = displaytext.integer(self.track)
         self.display_year = displaytext.integer(self.year)
         self.display_torrent_details = self.calc_torrent_details()
+        self.display_drm = self.has_drm and _("Locked") or u""
 
         if self.state == 'downloading':
             dl_info = self.download_info

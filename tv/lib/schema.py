@@ -406,8 +406,6 @@ class ItemSchema(MultiClassObjectSchema):
         ('autoDownloaded', SchemaBool()),
         ('pendingManualDL', SchemaBool()),
         ('pendingReason', SchemaString()),
-        ('title', SchemaString(noneOk=True)),
-        ('description', SchemaString(noneOk=True)),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
@@ -441,19 +439,23 @@ class ItemSchema(MultiClassObjectSchema):
         ('deleted', SchemaBool(noneOk=True)),
         ('shortFilename', SchemaFilename(noneOk=True)),
         ('offsetPath', SchemaFilename(noneOk=True)),
-        ('file_type', SchemaString(noneOk=True)),
-        ('album', SchemaString(noneOk=True)),
-        ('album_artist', SchemaString(noneOk=True)),
-        ('artist', SchemaString(noneOk=True)),
-        ('title_tag', SchemaString(noneOk=True)),
-        ('track', SchemaInt(noneOk=True)),
-        ('year', SchemaInt(noneOk=True)),
-        ('genre', SchemaString(noneOk=True)),
-        ('rating', SchemaInt(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
         ('cover_art', SchemaFilename(noneOk=True)),
+        # metadata:
         ('metadata_version', SchemaInt()),
+        ('title', SchemaString(noneOk=True)),
+        ('title_tag', SchemaString(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
+        ('album', SchemaString(noneOk=True)),
+        ('album_artist', SchemaString(noneOk=True)),
+        ('artist', SchemaString(noneOk=True)),
+        ('track', SchemaInt(noneOk=True)),
+        ('album_tracks', SchemaInt(noneOk=True)),
+        ('year', SchemaInt(noneOk=True)),
+        ('genre', SchemaString(noneOk=True)),
+        ('rating', SchemaInt(noneOk=True)),
+        ('file_type', SchemaString(noneOk=True)),
         ('has_drm', SchemaBool(noneOk=True)),
     ]
 
@@ -746,7 +748,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 145
+VERSION = 146
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

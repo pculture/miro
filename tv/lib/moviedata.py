@@ -71,13 +71,15 @@ TAG_MAP = {
     'drm': ('itunmovi',),
     'title': ('tit2', 'title', u'\uFFFDnam'),
     'track': ('trck', 'tracknumber'),
+    'album_tracks': (),
     'year': ('tdrc', 'tyer', 'date', 'year'),
     'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
     'cover-art': ('\uFFFDart', 'apic', 'covr'),
 }
 TAG_TYPES = {
     'album': unicode, 'album_artist': unicode, 'artist': unicode, 'drm': bool,
-    'title': unicode, 'track': int, 'year': int, 'genre': unicode,
+    'title': unicode, 'track': int, 'album_tracks': int, 'year': int,
+    'genre': unicode,
 }
 NOFLATTEN_TAGS = ('cover-art',)
 

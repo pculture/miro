@@ -3144,3 +3144,6 @@ def upgrade144(cursor):
 def upgrade145(cursor):
     cursor.execute("ALTER TABLE display_state "
             "ADD COLUMN last_played_item_id integer")
+
+def upgrade146(cursor):
+    cursor.execute("ALTER TABLE item ADD COLUMN album_tracks integer")
