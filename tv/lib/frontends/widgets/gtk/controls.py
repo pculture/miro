@@ -142,12 +142,15 @@ class Checkbox(Widget, BinBaselineCalculator):
     def set_checked(self, value):
         self._widget.set_active(value)
 
-class RadioButtonGroup:
+class RadioButtonGroup(Widget, BinBaselineCalculator):
     """RadioButtonGroup.
 
     Create the group, then create a bunch of RadioButtons passing in the group.
     """
     def __init__(self):
+        Widget.__init__(self)
+        self.set_widget(gtk.RadioButton(label=""))
+        self._widget.set_active(False)
         self._buttons = []
 
     def add_button(self, button):
@@ -168,38 +171,29 @@ class RadioButtonGroup:
             else:
                 mem._widget.set_active(False)
 
-
-# use a weakref so that we're not creating circular references between
-# RadioButtons and RadioButtonGroups
-radio_button_to_group_mapping = weakref.WeakValueDictionary()
-
 class RadioButton(Widget, BinBaselineCalculator):
     """RadioButton."""
     def __init__(self, label, group=None):
         Widget.__init__(self)
-        self.set_widget(gtk.RadioButton(label=label))
+        if group:
+            self.group = group
+        else:
+            self.group = RadioButtonGroup()
+
+        self.set_widget(gtk.RadioButton(group=self.group._widget, label=label))
         self.create_signal('clicked')
         self.forward_signal('clicked')
 
-        if group:
-            buttons = group.get_buttons()
-            if buttons:
-                self._widget.set_group(buttons[0]._widget)
-        else:
-            group = RadioButtonGroup()
-
         group.add_button(self)
-        oid = id(self)
-        radio_button_to_group_mapping[oid] = group
 
     def get_group(self):
-        return radio_button_to_group_mapping[id(self)]
+        return self.group
 
     def get_selected(self):
         return self._widget.get_active()
 
     def set_selected(self):
-        radio_button_to_group_mapping[id(self)].set_selected(self)
+        self.group.set_selected(self)
 
 class Button(Widget, BinBaselineCalculator):
     def __init__(self, text, style='normal'):
