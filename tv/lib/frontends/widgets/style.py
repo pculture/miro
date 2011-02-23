@@ -1274,7 +1274,7 @@ class RatingRenderer(widgetset.InfoListRenderer):
         x += int(self.ICON_HORIZONTAL_SPACING / 2)
         # finally, calculate which icon is hit
         if 0 <= x < icon_width_with_pad * self.ICON_COUNT:
-            return int(x // icon_width_with_pad)
+            return int(x // icon_width_with_pad) + 1
         else:
             return None
 
@@ -1289,12 +1289,12 @@ class RatingRenderer(widgetset.InfoListRenderer):
         x_pos = 0
         y_pos = int((context.height - self.icon_height) / 2)
         for i in xrange(self.ICON_COUNT):
-            icon = self._get_icon(i)
+            icon = self._get_icon(i + 1)
             icon.draw(context, x_pos, y_pos, icon.width, icon.height)
             x_pos += self.icon_width + self.ICON_HORIZONTAL_SPACING
 
     def _get_icon(self, i):
-        """Get the ith rating icon.
+        """Get the ith rating icon, starting at 1.
 
         :returns: ImageSurface
         """
