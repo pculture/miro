@@ -2169,6 +2169,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.searching = False
         if set_engine is not None:
             self.engine = set_engine
+        self.query = u''
         self.etag = {}
         self.modified = {}
         self.ufeed.icon_cache.reset()
@@ -2176,6 +2177,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.ufeed.icon_cache.request_update(is_vital=True)
         if was_searching:
             self.ufeed.emit('update-finished')
+        self.signal_change()
 
     def preserve_downloads(self, downloads_feed):
         self.ufeed.confirm_db_thread()

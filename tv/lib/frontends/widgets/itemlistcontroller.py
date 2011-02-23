@@ -782,8 +782,7 @@ class SearchController(SimpleItemListController):
         engine = self.titlebar.get_engine()
         search_text = self.titlebar.get_text()
         app.search_manager.perform_search(engine, search_text)
-        if search_text != '':
-            app.search_manager.save_search()
+        app.search_manager.save_search()
 
     def start_tracking(self):
         SimpleItemListController.start_tracking(self)
@@ -807,7 +806,7 @@ class SearchController(SimpleItemListController):
             self.toolbar.hide()
 
     def _on_search_complete(self, search_manager, result_count):
-        if search_manager.text != '' and result_count == 0:
+        if result_count == 0:
             self.widget.set_list_empty_mode(True)
 
 class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,

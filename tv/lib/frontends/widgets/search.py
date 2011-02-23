@@ -67,12 +67,14 @@ class SearchManager(signals.SignalEmitter):
     def perform_search(self, engine=None, text=None):
         if engine is not None and text is not None:
             self.set_search_info(engine, text)
-            searchengines.set_last_engine(self.engine)
         if self.text == "LET'S TEST MIRO'S FRONTEND CRASH REPORTER TODAY":
             raise searchengines.IntentionalCrash("intentional error here")
         messages.Search(self.engine, self.text).send_to_backend()
         self.searching = True
         self.emit('search-started')
+        if self.text == "":
+            self.searching = False
+            self.emit('search-complete', 0)
 
     def save_search(self):
         m = messages.NewFeedSearchEngine(
