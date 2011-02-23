@@ -67,10 +67,10 @@ class DropHandler(signals.SignalEmitter):
             position, data):
         dragged_ids = [int(id) for id in data.split('-')]
         if 0 <= position < len(model):
-            insert_info = model.nth_row(position)[0]
+            insert_id = model.nth_row(position)[0].id
         else:
-            insert_info = None
-        new_order = self.sorter.move_ids_before(insert_info.id, dragged_ids)
+            insert_id = None
+        new_order = self.sorter.move_ids_before(insert_id, dragged_ids)
         self.item_list.resort()
         for item_view in self.item_views:
             item_view.model_changed()
