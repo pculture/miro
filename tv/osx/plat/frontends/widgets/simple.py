@@ -63,10 +63,26 @@ class NSImageDisplay (NSView):
         self = super(NSImageDisplay, self).init()
         self.image = image
         return self
-    def drawRect_(self, rect):
+
+    def drawRect_(self, dest_rect):
+        source_rect = self.calculateSourceRectFromDestRect_(dest_rect)
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
-        self.image.nsimage.drawInRect_fromRect_operation_fraction_(rect, NSZeroRect, NSCompositeSourceOver, 1.0)
+        self.image.nsimage.drawInRect_fromRect_operation_fraction_(dest_rect,
+                source_rect, NSCompositeSourceOver, 1.0)
+
+    def calculateSourceRectFromDestRect_(self, dest_rect):
+        """Calulate where dest_rect maps to on our image.
+
+        This is tricky because our image might be scaled up, in which case
+        the rect from our image will be smaller than dest_rect.
+        """
+        view_size = self.frame().size
+        source_width = (float(dest_rect.size.width) * self.image.width /
+                view_size.width)
+        source_height = (float(dest_rect.size.height) * self.image.height /
+                view_size.height)
+        return NSRect(NSPoint(0, 0), NSRect(source_width, source_height))
 
 class ImageDisplay(Widget):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
