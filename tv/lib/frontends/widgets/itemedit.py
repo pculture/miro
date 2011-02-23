@@ -64,9 +64,10 @@ class DialogOwnerMixin(object):
         self._make_dialog()
 
     def _make_dialog(self):
+        """Create and return a dialog object."""
         return self._dialog_class(self._title)
 
-    def show_dialog(self, *unused):
+    def show_dialog(self, *_args):
         """Usually should be connected to some kind of button's click event.
         Accepts and discards an arbitrary number of arguments, so that it can be
         connected to any signal.
@@ -74,11 +75,19 @@ class DialogOwnerMixin(object):
         self._dialog.run()
         self._value = self._dialog.get_path()
         self._dialog.destroy()
+        self.on_dialog_close(self._value)
         # prepare for the chooser to be opened again:
         self._dialog = self._make_dialog()
 
     def get_value(self):
+        """Returns the value set by the dialog, or None if the dialog was
+        canceled.
+        """
         return self._value
+    
+    def on_dialog_close(self, _value):
+        """Override to react to newly-set values."""
+        pass
 
 class Field(object):
     """A metadata property.
@@ -86,12 +95,16 @@ class Field(object):
     :param field: the attribute of each item tied to this field
     :param items: the set of items potentially being edited
     :param label: text to display to the left of the field
+    :param readonly: Field cannot be edited
+    :param multiple: keyword for common value function
     """
     EXPAND = False
-    def __init__(self, field, items, label, readonly=False):
-        self.common_value = None
+    def __init__(self, field, items, label, readonly=False, multiple=None):
         self.mixed_values = False
-        self._find_common_value(field, iter(items))
+        if multiple is None:
+            self.common_value = self._find_common_value(field, iter(items))
+        elif multiple == 'sum':
+            self.common_value = sum(getattr(item, field) for item in items)
         self.field = field
         self.label = widgetset.Label(label)
         self.extra = []
@@ -151,7 +164,8 @@ class Field(object):
             box.pack_end(checkbox_alignment)
         return box
 
-    def _value_filter(self, value, item):
+    @classmethod
+    def _value_filter(cls, value, _item):
         """Function to be applied to all items' original values before looking
         for a common value. Noop for most fields.
         """
@@ -162,9 +176,10 @@ class Field(object):
         values = (self._value_filter(getattr(item, field), item) for item in items)
         common = values.next()
         if all(value == common for value in values):
-            self.common_value = common
+            return common
         else:
             self.mixed_values = True
+            return None
 
     def get_results(self):
         """Return a map of {field: new_value} for any changes."""
@@ -193,14 +208,16 @@ class Field(object):
 
 class DisplayField(Field):
     """A field that displays a value that is never editable, e.g. Size."""
-    def __init__(self, field, items, label, formatter):
-        Field.__init__(self, field, items, label, readonly=True)
+    def __init__(self, field, items, label, formatter, multiple=None):
+        Field.__init__(self, field, items, label,
+                       readonly=True, multiple=multiple)
         value = self.common_value
-        if value is None and len(items) > 1:
+        if self.mixed_values:
             value = _("(mixed)")
         else:
             value = formatter(value)
-        self.widget = widgetset.Label(value)
+        label = widgetset.Label(value)
+        self.widget = widgetutil.pad(label, top=6)
     
     def get_results(self):
         """Readonly field; explicitly returns no changes."""
@@ -296,7 +313,8 @@ class ThumbnailField(DialogOwnerMixin, Field):
         self.widget = widgetset.ClickableImageButton(path, 134, 134)
         self.widget.connect('clicked', self.show_dialog)
 
-    def _value_filter(self, value, item):
+    @classmethod
+    def _value_filter(cls, value, item):
         if value is not None:
             return value
         elif item.thumbnail is not None:
@@ -304,6 +322,16 @@ class ThumbnailField(DialogOwnerMixin, Field):
             if not base.startswith('thumb-default-'):
                 return item.thumbnail
         return None
+
+    def on_dialog_close(self, new_path):
+        """When the user closes the dialog, if a new path has been selected
+        update the thumbnail.
+        """
+        # FIXME: there's no way to "unset" the thumbnail; it seems an
+        # overreaction to Canceling the file chooser. Probably should have a "No
+        # image" button in the dialog?
+        if new_path:
+            self.widget.set_image(new_path)
 
 class PathField(DialogOwnerMixin, Field):
     """A field for choosing the location for a file. Becomes a
@@ -334,12 +362,9 @@ class PathField(DialogOwnerMixin, Field):
             height = 25
         # have to set height and width or gtk will make it very small
         self.widget.set_size_request(440, height)
-        self.extra.append(self._make_button())
-
-    def _make_button(self):
         button = widgetset.Button(_("Move"))
         button.connect('clicked', self.show_dialog)
-        return button
+        self.extra.append(button)
 
 class SingleFilePathField(PathField):
     """A field for choosing a file."""
@@ -351,7 +376,8 @@ class MultipleFilePathField(PathField):
     TITLE = "Choose destination directory"
     DIALOG = widgetset.DirectorySelectDialog
 
-    def _value_filter(self, value, item):
+    @classmethod
+    def _value_filter(cls, value, _item):
         """For a MultipleFile dialog, the original value is the path directly
         containing all of the items, if any.
         """
@@ -439,7 +465,7 @@ class ItemEditDialog(MainDialog):
             (u'other', _("Other"))
         ]))
         fields.append(DisplayField('size', self.items, _("Size"),
-            displaytext.size_string))
+            displaytext.size_string, multiple='sum'))
         fields.append(ThumbnailField(self.items, _("Art")))
         for field in fields:
             field.set_right()
@@ -460,12 +486,12 @@ class ItemEditDialog(MainDialog):
         widget.pack_start(widgetutil.pad(widgetset.HLine(), top=10, bottom=25,
             left=15, right=15))
         buttons = widgetset.HBox()
-        cancel = widgetset.Button(BUTTON_CANCEL.text, width=75)
-        ok = widgetset.Button(BUTTON_OK.text, width=75)
-        buttons.pack_start(widgetutil.pad(cancel, left=15))
-        buttons.pack_end(widgetutil.pad(ok, right=15))
-        cancel.connect('clicked', self._on_button, BUTTON_CANCEL)
-        ok.connect('clicked', self._on_button, BUTTON_OK)
+        cancel_button = widgetset.Button(BUTTON_CANCEL.text, width=75)
+        ok_button = widgetset.Button(BUTTON_OK.text, width=75)
+        buttons.pack_start(widgetutil.pad(cancel_button, left=15))
+        buttons.pack_end(widgetutil.pad(ok_button, right=15))
+        cancel_button.connect('clicked', self._on_button, BUTTON_CANCEL)
+        ok_button.connect('clicked', self._on_button, BUTTON_OK)
         widget.pack_end(buttons)
 
     def _pack_middle(self, widget):
@@ -474,7 +500,7 @@ class ItemEditDialog(MainDialog):
         self._pack_right(middle)
         widget.pack_start(middle)
 
-    def _on_button(self, widget, button):
+    def _on_button(self, _widget, button):
         """OK or Cancel has been pressed. Save changes, if OK; then close."""
         if button == BUTTON_OK:
             for field in self.fields:

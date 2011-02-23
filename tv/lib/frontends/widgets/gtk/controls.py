@@ -148,7 +148,7 @@ class MultilineTextEntry(Widget):
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
-    def __init__(self, label=""):
+    def __init__(self, label=None):
         Widget.__init__(self)
         self.set_widget(gtk.CheckButton(label))
         self.create_signal('toggled')

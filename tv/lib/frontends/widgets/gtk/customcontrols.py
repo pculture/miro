@@ -403,16 +403,31 @@ class ClickableImageButton(CustomButton):
     """
     def __init__(self, image_path, max_width=None, max_height=None):
         CustomButton.__init__(self)
-        self.image = ImageSurface(Image(image_path))
-        width, height = self.image.width, self.image.height
-        resize_width = min(max_width / width, 1)
-        resize_height = min(max_height / height, 1)
-        resize = min(resize_width, resize_height)
-        self._width, self._height = int(resize * width), int(resize * height)
+        self.max_width = max_width
+        self.max_height = max_height
+        self.image = None
+        self._width, self._height = None, None
+        self.set_image(image_path)
 
         self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
         self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
         self.wrapped_widget_connect('button-release-event', self.on_click)
+
+    def set_image(self, path):
+        # FIXME: probably breaks proportions if image size is changed
+        self.image = ImageSurface(Image(path))
+        width, height = self.image.width, self.image.height
+        if self.max_width:
+            resize_width = min(self.max_width / self.width, 1)
+        else:
+            resize_width = 1
+        if self.max_height:
+            resize_height = min(self.max_height / self.height, 1)
+        else:
+            resize_height = 1
+        resize = min(resize_width, resize_height)
+        # FIXME: clips; should scale
+        self._width, self._height = int(resize * width), int(resize * height)
 
     def size_request(self, layout):
         return self._width, self._height

@@ -249,6 +249,7 @@ class VideoDetailsWidget(Background):
         self.item_info = None
         self.rebuild_video_details()
         self._delete_link = None
+        self._delete_image = None
         self._will_play_handle = app.playback_manager.connect(
             'will-play', self.on_will_play)
 
