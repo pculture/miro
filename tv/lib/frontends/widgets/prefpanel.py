@@ -167,11 +167,9 @@ def attach_radio(widget_values, descriptor):
 
     app.frontend_config_watcher.connect('changed', on_config_changed)
 
-    print 'DESCRIPTOR ', descriptor
     pref_value = app.config.get(descriptor)
     for w, v in widget_values:
         if v == pref_value:
-            print 'DESCRIPTOR ', descriptor, ' VALUE ',  pref_value
             w.set_selected()
     for w, v in widget_values:
         w.connect('clicked', radio_changed)
