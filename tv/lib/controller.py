@@ -102,6 +102,7 @@ class Controller:
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
 
+            logging.info("Joining event loop ...")
             eventloop.join()
             logging.info("Saving preferences...")
             app.config.save()
