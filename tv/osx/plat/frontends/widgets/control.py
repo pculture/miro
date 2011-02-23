@@ -496,8 +496,7 @@ class NSVideoSearchField (MiroSearchTextField):
         self.cell().searchButtonCell().setImage_(_getSearchIcon(engine))
 
     def search_(self, sender):
-        if self.stringValue() != "":
-            wrappermap.wrapper(self).emit('validate')
+        wrappermap.wrapper(self).emit('validate')
 
     def menuItemForEngine_(self, engine):
         return self._engineToMenuItem[engine]
