@@ -43,6 +43,7 @@ import os
 from urlparse import urljoin
 
 from miro import app
+from miro import displaytext
 from miro import messages
 from miro import subscription
 from miro import prefs
@@ -158,6 +159,7 @@ class ItemListController(object):
         self._search_text = ''
         self._got_initial_list = False
         self._needs_scroll = None
+        self._playing_items = False
         self.item_tracker = self.build_item_tracker()
         self._init_widget()
 
@@ -276,6 +278,7 @@ class ItemListController(object):
             self.set_view, list_view)
         self.titlebar.connect_weak('normal-view-clicked',
             self.set_view, standard_view)
+        self.titlebar.connect_weak('resume-playing', self.on_resume_playing)
         self.list_item_view.connect_weak('columns-enabled-changed',
             self.on_columns_enabled_changed, list_view)
         self.list_item_view.connect_weak('column-widths-changed',
@@ -420,6 +423,7 @@ class ItemListController(object):
             app.display_manager.push_folder_contents_display(start_info,
                     start_playing=True)
             return
+        self._playing_items = True
         app.playback_manager.start(start_id, self.item_tracker,
                 presentation_mode, force_resume)
         shuffle = app.widget_state.get_shuffle(self.type, self.id)
@@ -465,6 +469,21 @@ class ItemListController(object):
         self.change_sort_indicators(sort_key, ascending)
         sort_key = self.make_sort_key(sorter)
         app.widget_state.set_sort_state(self.type, self.id, sort_key)
+
+    def on_resume_playing(self, titlebar):
+        last_played_id = app.widget_state.get_last_played_item_id(self.type,
+                self.id)
+        if last_played_id is None:
+            logging.warn("Resume playing clicked, but last_played_id is None")
+            return
+        if last_played_id:
+            try:
+                self.item_list.model.get_info(last_played_id)
+            except KeyError:
+                logging.warn("Resume playing clicked, but last_played_info "
+                        "not found")
+                return
+        self._play_item_list(last_played_id, force_resume=True)
 
     def on_columns_enabled_changed(self, object, columns, view_type):
         app.widget_state.set_columns_enabled(
@@ -592,6 +611,8 @@ class ItemListController(object):
                 self._on_playback_change),
             app.playback_manager.connect('will-stop',
                 self._playback_will_stop),
+            app.playback_manager.connect('will-play',
+                self._playback_will_play),
         ])
 
     def cancel_track_playback(self):
@@ -602,11 +623,19 @@ class ItemListController(object):
     def _on_playback_change(self, playback_manager, *args):
         # The currently playing item has changed, redraw the view to
         # change which item gets the "currently playing" badge.
-        for item_view in self.views.values():
-            item_view.queue_redraw()
+        if self._playing_items:
+            for item_view in self.views.values():
+                item_view.queue_redraw()
 
     def _playback_will_stop(self, playback_manager):
         self._on_playback_change(playback_manager)
+        self._playing_items = False
+
+    def _playback_will_play(self, playback_manager, duration):
+        if self._playing_items:
+            item = playback_manager.get_playing_item()
+            app.widget_state.set_last_played_item_id(self.type, self.id,
+                    item.id)
 
     def start_bulk_change(self):
         for item_view in self.views.values():
@@ -628,6 +657,7 @@ class ItemListController(object):
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
         self.send_model_changed()
+        self.update_resume_button()
         self._got_initial_list = True
         if self._needs_scroll:
             self.scroll_to_item(self._needs_scroll)
@@ -637,7 +667,30 @@ class ItemListController(object):
     def handle_items_changed(self, obj, added, changed, removed):
         """Handle an ItemsChanged message meant for this ItemContainer."""
         self.send_model_changed()
+        self.update_resume_button()
         self.on_items_changed()
+
+    def update_resume_button(self):
+        last_played_id = app.widget_state.get_last_played_item_id(self.type,
+                self.id)
+        last_played = None
+        if last_played_id:
+            try:
+                last_played = self.item_list.model.get_info(last_played_id)
+            except KeyError:
+                pass
+        if (last_played is None or not last_played.is_playable):
+            self.titlebar.update_resume_button(None)
+        else:
+            if last_played.resume_time > 0:
+                resumetime = displaytext.short_time_string(
+                        last_played.resume_time)
+                text = _("Resume %(item)s at %(resumetime)s",
+                        {"item": last_played.name, "resumetime": resumetime})
+            else:
+                text = _("Resume %(item)s",
+                        {"item": last_played.name})
+            self.titlebar.update_resume_button(text)
 
     def on_items_will_change(self, added, changed, removed):
         """Called before we change the list.

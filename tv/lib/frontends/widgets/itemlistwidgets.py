@@ -156,6 +156,7 @@ class ItemListTitlebar(widgetset.Background):
     """
     def __init__(self, title, icon, add_icon_box=False):
         widgetset.Background.__init__(self)
+        self.create_signal('resume-playing')
         hbox = widgetset.HBox()
         self.add(hbox)
         # Pack the icon and title
@@ -169,6 +170,11 @@ class ItemListTitlebar(widgetset.Background):
         alignment.set_size_request(-1, 61)
         hbox.pack_start(alignment, padding=15)
         hbox.pack_start(self.title_drawer, expand=True)
+        self.resume_button = widgetset.Button(_("Resume foo at x:yz"))
+        self.resume_button.connect('clicked', self._on_resume_button_clicked)
+        self.resume_button_holder = widgetutil.HideableWidget(
+                widgetutil.pad(self.resume_button, right=10))
+        hbox.pack_start(widgetutil.align_middle(self.resume_button_holder))
         # Pack stuff to the right
         extra = self._build_titlebar_extra()
         if extra:
@@ -193,6 +199,18 @@ class ItemListTitlebar(widgetset.Background):
     def update_title(self, new_title):
         self.title_drawer.update_title(new_title)
 
+    def update_resume_button(self, text):
+        """Update the resume button text.
+
+        If text is None, we will hide the resume button.  Otherwise we will
+        show the button and have it display text.
+        """
+        if text is None:
+            self.resume_button_holder.hide()
+        else:
+            self.resume_button.set_text(text)
+            self.resume_button_holder.show()
+
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
 
@@ -213,6 +231,9 @@ class ItemListTitlebar(widgetset.Background):
         self.view_toggler = ViewToggler()
         self.view_toggler.connect('list-view-clicked', self._on_list_clicked)
         self.view_toggler.connect('normal-view-clicked', self._on_normal_clicked)
+
+    def _on_resume_button_clicked(self, button):
+        self.emit('resume-playing')
 
     def _on_save_search(self, button):
         self.emit('save-search')

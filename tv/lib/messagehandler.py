@@ -1556,6 +1556,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.repeat = info.repeat
         state.selection = info.selection
         state.sort_state = info.sort_state
+        state.last_played_item_id = info.last_played_item_id
         state.signal_change()
 
     def handle_save_view_state(self, message):

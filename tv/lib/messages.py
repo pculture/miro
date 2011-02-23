@@ -1675,6 +1675,7 @@ class DisplayInfo(object):
             self.repeat = display.repeat
             self.selection = display.selection
             self.sort_state = display.sort_state
+            self.last_played_item_id = display.last_played_item_id
         else:
             self.selected_view = None
             self.active_filters = None
@@ -1682,6 +1683,7 @@ class DisplayInfo(object):
             self.repeat = None
             self.selection = None
             self.sort_state = None
+            self.last_played_item_id = None
         if display is not None and display.list_view_columns is not None:
             self.list_view_columns = display.list_view_columns[:]
         else:

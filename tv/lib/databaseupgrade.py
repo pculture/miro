@@ -3140,3 +3140,7 @@ def upgrade143(cursor):
 
 def upgrade144(cursor):
     cursor.execute("ALTER TABLE item ADD COLUMN has_drm integer")
+
+def upgrade145(cursor):
+    cursor.execute("ALTER TABLE display_state "
+            "ADD COLUMN last_played_item_id integer")

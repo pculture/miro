@@ -53,6 +53,7 @@ class DisplayState(DDBObject):
         self.list_view_widths = None
         self.selection = None
         self.sort_state = None
+        self.last_played_item_id = None
 
 class ViewState(DDBObject):
     """Properties that need to be stored for each TableView

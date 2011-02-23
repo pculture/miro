@@ -250,6 +250,15 @@ class WidgetStateStore(object):
         display.sort_state = sort_key
         self._save_display_state(display_type, display_id)
 
+    def get_last_played_item_id(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        return display.last_played_item_id
+
+    def set_last_played_item_id(self, display_type, display_id, id_):
+        display = self._get_display(display_type, display_id)
+        display.last_played_item_id = id_
+        self._save_display_state(display_type, display_id)
+
 # ViewState properties that are only valid for specific view_types:
 
     def get_columns_enabled(self, display_type, display_id, view_type):

@@ -700,6 +700,7 @@ class DisplayStateSchema(DDBObjectSchema):
         ('repeat', SchemaInt(noneOk=True)),
         ('selection', SchemaList(SchemaString(), noneOk=True)),
         ('sort_state', SchemaString(noneOk=True)),
+        ('last_played_item_id', SchemaInt(noneOk=True)),
     ]
 
     indexes = (
@@ -745,7 +746,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 144
+VERSION = 145
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
