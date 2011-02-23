@@ -115,7 +115,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.start(None, tracker)
 
     def start(self, start_id, item_tracker,
-            presentation_mode='fit-to-bounds'):
+            presentation_mode='fit-to-bounds', force_resume=False):
         """Start playback, playing the items from an ItemTracker"""
         if self.is_playing:
             self.stop()
@@ -125,6 +125,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist.connect("playing-info-changed",
                 self._on_playing_changed)
         self.presentation_mode = presentation_mode
+        self.force_resume = force_resume
         self.playlist.set_shuffle(self.shuffle)
         self.playlist.set_repeat(self.repeat)
         self._play_current()
@@ -220,8 +221,7 @@ class PlaybackManager (signals.SignalEmitter):
         resume_time = self.playlist.currently_playing.resume_time
         if start_at > 0:
             self.player.play_from_time(start_at)
-        elif (app.config.get(prefs.RESUME_VIDEOS_MODE)
-               and not self.is_paused):
+        elif self.should_resume() and not self.is_paused:
             self.player.play_from_time(resume_time)
         else:
             self.player.play()
@@ -230,6 +230,9 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_paused = False
         self.is_suspended = False
         app.menu_manager.update_menus()
+
+    def should_resume(self):
+        return self.force_resume or app.config.get(prefs.RESUME_VIDEOS_MODE)
 
     def pause(self):
         if self.is_playing:
@@ -313,20 +316,17 @@ class PlaybackManager (signals.SignalEmitter):
             # started playing yet.  Just return
             return
         item_info = self.playlist.currently_playing
-        if app.config.get(prefs.RESUME_VIDEOS_MODE):
-            if resume_time == -1:
-                resume_time = self.player.get_elapsed_playback_time()
-                # if we are 95% of the way into the movie and less than 30
-                # seconds before the end, don't save resume time (#11956)
-                if resume_time > min(item_info.duration * 0.95,
-                        item_info.duration - 30):
-                    resume_time = 0
-            if resume_time < 3:
-                # if we're in the first three seconds, don't save the
-                # resume time.
-                # Note: this should match mark_as_watched time.
+        if resume_time == -1:
+            resume_time = self.player.get_elapsed_playback_time()
+            # if we are 95% of the way into the movie and less than 30
+            # seconds before the end, don't save resume time (#11956)
+            if resume_time > min(item_info.duration * 0.95,
+                    item_info.duration - 30):
                 resume_time = 0
-        else:
+        if resume_time < 3:
+            # if we're in the first three seconds, don't save the
+            # resume time.
+            # Note: this should match mark_as_watched time.
             resume_time = 0
         m = messages.SetItemResumeTime(item_info, resume_time)
         m.send_to_backend()

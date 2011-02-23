@@ -375,7 +375,11 @@ class ItemListController(object):
         item_view = self.current_item_view
         return [item_view.model[i][0] for i in item_view.get_selection()]
 
-    def play_selection(self, presentation_mode='fit-to-bounds'):
+    def resume_play_selection(self, presentation_mode='fit-to-bounds'):
+        self.play_selection(presentation_mode, force_resume=True)
+
+    def play_selection(self, presentation_mode='fit-to-bounds',
+            force_resume=False):
         """Play the currently selected items."""
         selection = self.get_selection()
         if len(selection) == 0:
@@ -386,10 +390,11 @@ class ItemListController(object):
             selected_ids = [i.id for i in selection]
             selected_ids.sort(key=self.item_list.model.index_of_id)
             start_id = selected_ids[0]
-        self._play_item_list(start_id, presentation_mode)
+        self._play_item_list(start_id, presentation_mode,
+                force_resume=force_resume)
 
-    def play_items(self, presentation_mode='fit-to-bounds'):
-        self._play_item_list(None, presentation_mode)
+    def play_items(self, presentation_mode='fit-to-bounds', force_resume=False):
+        self._play_item_list(None, presentation_mode, force_resume)
 
     def can_play_items(self):
         for info in self.item_list.model.info_list():
@@ -397,7 +402,8 @@ class ItemListController(object):
                 return True
         return False
 
-    def _play_item_list(self, start_id, presentation_mode='fit-to-bounds'):
+    def _play_item_list(self, start_id, presentation_mode='fit-to-bounds',
+            force_resume=False):
         if start_id is None:
             start_info = None
         else:
@@ -415,7 +421,7 @@ class ItemListController(object):
                     start_playing=True)
             return
         app.playback_manager.start(start_id, self.item_tracker,
-                presentation_mode)
+                presentation_mode, force_resume)
         shuffle = app.widget_state.get_shuffle(self.type, self.id)
         app.playback_manager.set_shuffle(shuffle)
         repeat = app.widget_state.get_repeat(self.type, self.id)

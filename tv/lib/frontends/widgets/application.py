@@ -313,6 +313,9 @@ class Application:
     def play_selection(self):
         app.item_list_controller_manager.play_selection()
 
+    def resume_play_selection(self):
+        app.item_list_controller_manager.play_selection()
+
     def on_stop_clicked(self, button=None):
         app.playback_manager.stop()
 

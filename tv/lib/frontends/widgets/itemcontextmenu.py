@@ -31,6 +31,7 @@
 """
 
 from miro import app
+from miro import displaytext
 from miro import messages
 from miro import prefs
 from miro.gtcache import gettext as _
@@ -99,7 +100,7 @@ class ItemContextMenuHandler(object):
             app.widgetapp.open_file(item.video_path)
             messages.MarkItemWatched(item).send_to_backend()
 
-        if item.downloaded:
+        if item.is_playable:
             # Show File in Finder
             if file_navigator_name:
                 reveal_text = _('Show File in %(progname)s',
@@ -135,6 +136,12 @@ class ItemContextMenuHandler(object):
 
             # Play
             section.append((_('Play'), app.widgetapp.play_selection))
+            # Resume
+            if item.resume_time > 0:
+                resumetime = displaytext.short_time_string(item.resume_time)
+                text = _("Resume at %(resumetime)s",
+                         {"resumetime": resumetime})
+                section.append((text, app.widgetapp.resume_play_selection))
 
             if not (item.device or item.remote):
                 if item.video_watched:
