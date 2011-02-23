@@ -57,6 +57,20 @@ class ImageSurface:
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
         dest_rect = NSRect((x, y), (width, height))
+        if self.width >= width and self.height >= height:
+            dest_rect = NSRect((x, y), (width, height))
+            self.image.drawInRect_fromRect_operation_fraction_(
+                dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
+        else:
+            # FIXME: use NSColor.colorWithPatternImage instead of homebrew
+            # tiling code.  The issue is that method draws our image upside
+            # down, regardless of the isFlipped() setting.
+            for x_ in range(0, width, self.width):
+                for y_ in range(0, height, self.height):
+                    rect = NSRect((x + x_, y + y_), (self.width, self.height))
+                    self.image.drawInRect_fromRect_operation_fraction_(
+                        rect, NSZeroRect, NSCompositeSourceOver, fraction)
+
         self.image.drawInRect_fromRect_operation_fraction_(dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
         context.path.removeAllPoints()
 
