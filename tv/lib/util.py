@@ -544,6 +544,8 @@ def returns_unicode(func):
         if result is not None:
             check_u(result)
         return result
+    check_func.__name__ = func.__name__
+    check_func.__doc__ = func.__doc__
     return check_func
 
 def check_b(text):
