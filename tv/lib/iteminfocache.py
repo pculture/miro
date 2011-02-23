@@ -209,7 +209,15 @@ class ItemInfoCache(signals.SignalEmitter):
 
     def get_info(self, id_):
         """Get the ItemInfo for a given item id"""
-        return self.id_to_info[id_]
+        try:
+            return self.id_to_info[id_]
+        except KeyError:
+            app.controller.failed_soft("getting item info",
+                    "KeyError: %d" % id_, with_exception=True)
+            item = models.Item.get_by_id(id_)
+            info = itemsource.DatabaseItemSource._item_info_for(item)
+            self.id_to_info[id_] = info
+            return info
 
     def item_created(self, item):
         if not self.loaded:
