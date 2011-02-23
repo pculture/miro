@@ -1109,6 +1109,7 @@ class ItemInfo(object):
     :param port: port to connect to for item, only valid if remote is set
     :param license: this file's license, if known.
     :param mime_type: mime-type of the enclosure that would be downloaded
+    :param album_artist: the album artist of the album
     :param artist: the primary artist of the track
     :param album: the track's album of origin
     :param track: the track number within the album

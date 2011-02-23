@@ -135,7 +135,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 15
+    VERSION = 16
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -183,6 +183,7 @@ class DatabaseItemSource(ItemSource):
             'media_type_checked': item.media_type_checked,
             'seeding_status': item.torrent_seeding_status(),
             'mime_type': item.enclosure_type,
+            'album_artist': item.get_album_artist(),
             'artist': item.get_artist(),
             'album': item.get_album(),
             'track': item.get_track(),
