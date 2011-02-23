@@ -420,7 +420,6 @@ class PodcastSyncWidget(SyncWidget):
 
     def unwatched_toggled(self, obj):
         all_items = (not obj.get_checked())
-        print 'changing all', all_items
         if self.device.database['sync'][self.file_type]['all'] != all_items:
             message = messages.ChangeDeviceSyncSetting(self.device,
                                                        self.file_type,
