@@ -43,7 +43,7 @@ from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
-from miro.plat.utils import (filename_to_unicode, 
+from miro.plat.utils import (filename_to_unicode,
                              get_plat_media_player_name_path)
 from miro.plat.resources import get_default_search_dir
 
@@ -185,7 +185,7 @@ class FirstTimeDialog(widgetset.Window):
         vbox.pack_start(hbox)
 
         vbox.pack_start(widgetset.Label(" "), expand=True)
-        
+
         next_button = widgetset.Button(_("Next >"))
         next_button.connect('clicked', next_clicked)
 
@@ -255,6 +255,7 @@ class FirstTimeDialog(widgetset.Window):
         rbg = widgetset.RadioButtonGroup()
         no_rb = widgetset.RadioButton(_("No"), rbg)
         yes_rb = widgetset.RadioButton(_("Yes"), rbg)
+        no_rb.set_selected()
         vbox.pack_start(widgetutil.align_left(no_rb))
         vbox.pack_start(widgetutil.align_left(yes_rb, bottom_pad=5))
 
@@ -264,6 +265,7 @@ class FirstTimeDialog(widgetset.Window):
         restrict_rb = widgetset.RadioButton(
             _("Restrict to all my personal files."), rbg2)
         search_rb = widgetset.RadioButton(_("Search custom folders:"), rbg2)
+        restrict_rb.set_selected()
         group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
@@ -315,7 +317,7 @@ class FirstTimeDialog(widgetset.Window):
                 self.next_page()
             else:
                 if rbg2.get_selected() == import_rb:
-                    # Add watched folder
+                    # add watched folder
                     app.watched_folder_manager.add(self.search_directory)
                 self.on_close()
 
