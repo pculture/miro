@@ -43,7 +43,7 @@ from miro import util
 
 END_HEADERS = "ENDHEADERS\n"
 
-def format_crash_report(when, exc_info, details):
+def format_crash_report(when, exc_info, details, log_report=True):
     header = ""
     header += "App:        %s\n" % app.config.get(prefs.LONG_APP_NAME)
     header += "Publisher:  %s\n" % app.config.get(prefs.PUBLISHER)
@@ -118,9 +118,10 @@ def format_crash_report(when, exc_info, details):
     # instead of the report from the dialog box. (Note that we don't
     # do this until we've already read the log into the dialog
     # message.)
-    logging.info("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
-    logging.info(header)
-    logging.info("----- END OF CRASH REPORT -----")
+    if log_report:
+        logging.info("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
+        logging.info(header)
+        logging.info("----- END OF CRASH REPORT -----")
 
     return report
 
@@ -134,6 +135,10 @@ def extract_headers(report):
     return report
 
 def save_crash_report(report):
+    """Save a crash report to the support directory.
+
+    :returns: filename we saved to, or None if the save failed
+    """
     try:
         crash_dir = app.config.get(prefs.CRASH_PATHNAME)
 
@@ -159,3 +164,19 @@ def save_crash_report(report):
         f.close()
     except (OSError, IOError):
         logging.exception("exception while saving crash report")
+        return None
+    return fn
+
+def issue_failure_warning(when, details, with_exception):
+    """Issue warnings about a failure that we were able to recover from.
+
+    Use this function for cases when we crash, but we don't want to pop up a
+    dialog box for the user.
+    """
+    logging.warn("soft failure when: %s details: %s", when, details)
+    if with_exception:
+        exc_info = sys.exc_info()
+    else:
+        exc_info = None
+    report = format_crash_report(when, exc_info, details, log_report=False)
+    save_crash_report(report)

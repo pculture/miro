@@ -372,7 +372,9 @@ def get_menu():
         dev_menu = Menu(_("Dev"), "DevMenu", [
                 MenuItem(_("Profile Message"), "ProfileMessage"),
                 MenuItem(_("Profile Redraw"), "ProfileRedraw"),
-                MenuItem(_("Test Crash Reporter"), "TestCrashReporter")
+                MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
+                MenuItem(_("Test Soft Crash Reporter"),
+                    "TestSoftCrashReporter"),
                 ])
 
         mbar.menuitems.append(dev_menu)
@@ -688,6 +690,11 @@ class TestIntentionalCrash(Exception):
 @action_handler("TestCrashReporter")
 def on_test_crash_reporter():
     raise TestIntentionalCrash("intentional error here")
+
+@action_handler("TestSoftCrashReporter")
+def on_test_soft_crash_reporter():
+    app.widgetapp.handle_soft_failure("testing soft crash reporter",
+            'intentional error', with_exception=False)
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to

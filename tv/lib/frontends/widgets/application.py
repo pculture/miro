@@ -120,6 +120,17 @@ class Application:
         # get a fresh main loop iteration.
         call_on_ui_thread(lambda: self.handle_crash_report(report))
 
+    def handle_soft_failure(self, when, details, with_exception):
+        if app.debugmode:
+            if with_exception:
+                exc_info = sys.exc_info()
+            else:
+                exc_info = None
+            report = crashreport.format_crash_report(when, exc_info, details)
+            self.handle_crash_report(report)
+        else:
+            crashreport.issue_failure_warning(when, details, with_exception)
+
     def startup(self):
         """Connects to signals, installs handlers, and calls :meth:`startup`
         from the :mod:`miro.startup` module.

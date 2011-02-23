@@ -34,12 +34,14 @@ crashes and shutdown.
 import logging
 import os
 import threading
+import sys
 import tempfile
 import locale
 from random import randrange
 from zipfile import ZipFile
 
 from miro import app
+from miro import crashreport
 from miro import downloader
 from miro import eventloop
 from miro.gtcache import gettext as _
@@ -94,6 +96,18 @@ class Controller:
         if app.db is not None:
             app.db.close()
         signals.system.shutdown()
+
+    def failed_soft(self, when, details, with_exception=False):
+        """Handle a recoverable error
+
+        Call this when an error occurs, but we were able to catch it and
+        recover from it.  In production mode, this will be logged as a
+        warning.  For dev builds, this will kick up the crash report.
+        """
+        if app.debugmode:
+            signals.system.failed(when, details, with_exception)
+        else:
+            crashreport.issue_failure_warning(when, details, with_exception)
 
     def on_shutdown(self):
         try:
