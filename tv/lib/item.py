@@ -1758,12 +1758,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             except StandardError:
                 pass
             self.screenshot = None
-        if self.cover_art:
-            try:
-                fileutil.remove(self.cover_art)
-            except StandardError:
-                pass
-            self.cover_art = None
+        self.delete_cover_art()
 
     def remove(self):
         if self.has_downloader():

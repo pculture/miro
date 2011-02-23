@@ -35,7 +35,7 @@ import logging
 import fileutil
 
 from miro.gtcache import gettext as _
-from miro.util import returns_unicode
+from miro.util import returns_unicode, returns_filename
 from miro import coverart
 
 class Source(object):
