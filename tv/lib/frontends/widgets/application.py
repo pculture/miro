@@ -578,18 +578,23 @@ class Application:
                 else:
                     _delete_video(mem)
 
-    def edit_item(self):
+    def edit_items(self):
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]
-
         if not selection:
             return
 
-        item_info = selection[0]
+        dialog = itemedit.ItemEditDialog()
+        for item in selection:
+            dialog.add_item(item)
+        # TODO: should return a dict for each item changed to avoid writing to
+        # files that haven't been modified
+        change_dict = dialog.run()
 
-        change_dict = itemedit.run_dialog(item_info)
         if change_dict:
-            messages.EditItem(item_info.id, change_dict).send_to_backend()
+            ids = [s.id for s in selection]
+            # TODO: message for MoveItem and MoveItems
+            messages.EditItems(ids, change_dict).send_to_backend()
 
     def save_item(self):
         selection = app.item_list_controller_manager.get_selection()

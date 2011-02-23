@@ -722,11 +722,10 @@ class DeleteVideo(BackendMessage):
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", info: %s" % self.info)
 
-class EditItem(BackendMessage):
-    """Changes a bunch of things on an item.
-    """
-    def __init__(self, item_id, change_dict):
-        self.item_id = item_id
+class EditItems(BackendMessage):
+    """Set properties for one or more items to user-defined values."""
+    def __init__(self, item_ids, change_dict):
+        self.item_ids = item_ids
         self.change_dict = change_dict
 
 class RevertFeedTitle(BackendMessage):

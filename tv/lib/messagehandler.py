@@ -1373,22 +1373,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         else:
             item_.set_title(message.new_name)
 
-    def handle_edit_item(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.item_id)
-        except database.ObjectNotFoundError:
-            logging.warn("EditItem: Item not found -- %s", message.item_id)
-            return
-        change_dict = message.change_dict
-
-        if "name" in change_dict:
-            item_.set_title(change_dict["name"])
-
-        if "description" in change_dict:
-            item_.set_description(change_dict["description"])
-
-        if "file_type" in change_dict:
-            item_.set_file_type(change_dict["file_type"])
+    def handle_edit_items(self, message):
+        changes = message.change_dict
+        for id_ in message.item_ids:
+            try:
+                item_ = item.Item.get_by_id(id_)
+            except database.ObjectNotFoundError:
+                logging.warn("EditItems: Item not found -- %s", message.item_id)
+                continue
+            item_.set_metadata_from_iteminfo(changes)
 
     def handle_revert_feed_title(self, message):
         try:

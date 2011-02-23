@@ -167,7 +167,7 @@ class ItemContextMenuHandler(object):
             # this doesn't work for device or remote items.
             if not (item.device or item.remote):
                 section.append((
-                        _("Edit Item Details"), app.widgetapp.edit_item))
+                        _("Edit Item Details"), app.widgetapp.edit_items))
 
             if not item.remote:
                 section.append((
@@ -255,9 +255,12 @@ class ItemContextMenuHandler(object):
         paused = []
         uploadable = []
         expiring = []
+        editable = False
         for info in selection:
             if info.downloaded:
                 downloaded.append(info)
+                if not (info.device or info.remote):
+                    editable = True
                 if info.device:
                     device.append(info)
                 elif info.video_watched:
@@ -369,6 +372,9 @@ class ItemContextMenuHandler(object):
                 for item in uploadable:
                     messages.StartUpload(item.id).send_to_backend()
             menu.append((_('Restart Upload'), restart_all))
+
+        if editable:
+            menu.append((_("Edit Items"), app.widgetapp.edit_items))
 
         return menu
 
