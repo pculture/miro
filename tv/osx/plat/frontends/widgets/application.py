@@ -432,12 +432,13 @@ class AppController(NSObject):
         action = menuitem.representedObject()
         item = menus.osx_menu_structure.get(action)
 
-        label = item.label
+        label = None
         for state, actions in app.menu_manager.states.items():
             if action in actions:
                 label = item.state_labels.get(state, item.label)
                 break
-        menuitem.setTitleWithMnemonic_(label.replace("_", "&"))
+        if label:
+            menuitem.setTitleWithMnemonic_(label.replace("_", "&"))
 
         group_names = item.groups
         for group_name in group_names:
