@@ -133,6 +133,7 @@ class TranscodeRequestHandler(SocketServer.BaseRequestHandler):
                              err, errstring)
                 # Signal EOF
                 self.server.obj.data_callback('')
+                return
 
 # How does the transcoding pipeline work?
 #
@@ -199,6 +200,7 @@ class TranscodeObject(object):
 
     def __init__(self, media_file, itemid, media_info, request_path_func):
         self.media_file = media_file
+        self.in_shutdown = False
         self.time_offset = 0
         duration, has_audio, has_video = media_info
         self.duration = duration
@@ -292,7 +294,6 @@ class TranscodeObject(object):
 
     def transcode(self):
         try:
-            self.r, self.w = util.make_dummy_socket_pair()
             ffmpeg_exe = get_ffmpeg_executable_path()
             kwargs = {"stdin": open(os.devnull, 'rb'),
                       "stdout": subprocess.PIPE,
@@ -354,14 +355,14 @@ class TranscodeObject(object):
             # ready for next segment
             self.tmp_file = tempfile.TemporaryFile()
 
-    # Data consumer from segmenter.  Here, we listen for incoming request,
-    # and a quit signal.  One media chunk per incoming request.
+    # Data consumer from segmenter.  Here, we listen for incoming request.
+    # no need to handle quit signal - the sink should return a zero read
+    # when the segmenter goes away.
     def segmenter_consumer(self):
         while True:
             try:
-                r, w, x = select.select([self.sink.fileno(), self.r], [], [])
-                if self.r in r:
-                    
+                r, w, x = select.select([self.sink.fileno()], [], [])
+                if self.in_shutdown:
                     self.sink_thread = None
                     return
                 # XXX throttle
@@ -393,18 +394,19 @@ class TranscodeObject(object):
     def shutdown(self):
         # If we kill the segmenter thread, then the stdout and the control
         # pipe reads should return 0.  This can indicate that the transcode
-        # pipeline has been terminated.
+        # pipeline has been terminated.  But how do we know whether it's 
+        # a new file or an EOF?  We define the in_shutdown flag.  We check
+        # in two places, first right after the select multiplexing, so
+        # if someone was sleeping, it will break immediately.  But what about
+        # the bits in between?  We'd probably be blocked on the read() in the
+        # the handler and that's ok because that should return a zero read 
+        # when the segmenter goes away too and that reduces to the select().
+        self.in_shutdown = True
         if self.ffmpeg_handle:
             self.ffmpeg_handle.kill()
             self.ffmpeg_handle = None
         if self.segmenter_handle:
             self.segmenter_handle.kill()
             self.segmenter_handle = None
-        # Send regardless: transcode() creates a new control socket so
-        # they shouldn't be mucked up.
-        # XXX band-aid
-        try:
-            self.w.send('b')
         except AttributeError:
             pass
-
