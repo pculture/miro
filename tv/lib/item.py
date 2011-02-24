@@ -1332,9 +1332,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
         If the item is a torrent, then it adds some additional text.
         """
-        stored = metadata.Store.get_description(self)
-        if stored:
-            return stored
+        if self.description:
+            return self.description
 
         if self.entry_description:
             return unicode(self.entry_description)
