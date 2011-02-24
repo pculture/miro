@@ -416,10 +416,9 @@ class TranscodeObject(object):
         # we end up unblocking it anyway.
         self.in_shutdown = True
         self.chunk_throttle.set()
-        if self.ffmpeg_handle:
+        try:
             self.ffmpeg_handle.kill()
             self.ffmpeg_handle = None
-        if self.segmenter_handle:
             self.segmenter_handle.kill()
             self.segmenter_handle = None
         except AttributeError:
