@@ -166,23 +166,23 @@ class ProgressSort(ItemSort):
 class ArtistSort(ItemSort):
     KEY = 'artist'
     def sort_key(self, item):
-        return (item.artist,
-                item.album,
+        return (item.artist_sort_key,
+                item.album_sort_key,
                 item.track)
 
 class AlbumSort(ItemSort):
     KEY = 'album'
     def sort_key(self, item):
-        return (item.album,
+        return (item.album_sort_key,
                 item.track,
-                item.artist)
+                item.artist_sort_key)
 
 class TrackSort(ItemSort):
     KEY = 'track'
     def sort_key(self, item):
         return (item.track,
-                item.artist,
-                item.album)
+                item.artist_sort_key,
+                item.album_sort_key)
 
 class YearSort(ItemSort):
     KEY = 'year'

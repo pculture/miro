@@ -1052,6 +1052,7 @@ def name_sort_key(text):
 
     * names with accented characters.
     * names with numbers in them.  ex. episode 1
+    * names with a leading "the" or "a"
 
     Use it like this:
 
@@ -1059,7 +1060,12 @@ def name_sort_key(text):
     """
     if text is None:
         return text
-    return [_trynum(c) for c in NUM_RE.split(text.lower())]
+    text = text.lower()
+    if text.startswith("a "):
+        text = text[2:]
+    elif text.startswith("the "):
+        text = text[4:]
+    return [_trynum(c) for c in NUM_RE.split(text)]
 
 LOWER_TRANSLATE = string.maketrans(string.ascii_uppercase,
                                    string.ascii_lowercase)
