@@ -76,7 +76,7 @@ daap_mapping = {
     'daap.songformat': 'enclosure',
     'com.apple.itunes.mediakind': 'file_type',
     'dmap.itemid': 'id',
-    'dmap.itemname': 'name',
+    'dmap.itemname': 'title',
     'daap.songtime': 'duration',
     'daap.songsize': 'size',
     'daap.songartist': 'artist',
@@ -91,7 +91,7 @@ daap_rmapping = {
     'enclosure': 'daap.songformat',
     'file_type': 'com.apple.itunes.mediakind',
     'id': 'dmap.itemid',
-    'name': 'dmap.itemname',
+    'title': 'dmap.itemname',
     'duration': 'daap.songtime',
     'size': 'daap.songsize',
     'artist': 'daap.songartist',
@@ -142,8 +142,8 @@ class SharingItem(metadata.Source):
         self.__dict__.update(kwargs)
 
         self.video_path = FilenameType(self.video_path)
-        if self.name is None:
-            self.name = _("Unknown")
+        if self.title is None:
+            self.title = _("Unknown")
         # Do we care about file_format?
         if self.file_format is None:
             pass
