@@ -371,8 +371,7 @@ class TranscodeObject(object):
             try:
                 r, w, x = select.select([self.sink.fileno()], [], [])
                 self.chunk_throttle.wait()
-                if self.in_shutdown:
-                    self.sink_thread = None
+                if self.segmenter_handle.poll() is not None:
                     return
                 self.sink.handle_request()
             except select.error, (err, errstring):
@@ -403,23 +402,26 @@ class TranscodeObject(object):
         # If we kill the segmenter thread, then the stdout and the control
         # pipe reads should return 0.  This can indicate that the transcode
         # pipeline has been terminated.  But how do we know whether it's 
-        # a new file or an EOF?  We define the in_shutdown flag.  We check
-        # in two places, first right after the select multiplexing, so
-        # if someone was sleeping, it will break immediately.  But what about
-        # the bits in between?  We'd probably be blocked on the read() in the
-        # the handler and that's ok because that should return a zero read 
-        # when the segmenter goes away too and that reduces to the select().
+        # a new file or an EOF?  We check whether segmenter has exited.
+        # If it has break immediately.  This handles both end of transcode
+        # and abortive shutdown.  If we are somewhere in between, we'd 
+        # probably be blocked on the read() in the # the handler and that's
+        # ok because that should return a zero read when the segmenter goes 
+        # away too and that reduces to the select().
+        #
         # In case we may be throttled, prod it along by unthrottling.
         # In case we race with get_chunk() (which may run in a different
         # thread), if we clear first, it's ok because that'd have woken it up
         # anyway, and in case they get there first then it's ok too, since
         # we end up unblocking it anyway.
-        self.in_shutdown = True
         self.chunk_throttle.set()
         try:
             self.ffmpeg_handle.kill()
-            self.ffmpeg_handle = None
             self.segmenter_handle.kill()
+            self.sink_thread.join()
+            # Set these last: sink thread relies on it.
+            self.ffmpeg_handle = None
             self.segmenter_handle = None
+            self.sink_thread = None
         except AttributeError:
             pass
