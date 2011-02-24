@@ -72,6 +72,11 @@ DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
 # vs daap which is millisecond.
 DURATION_SCALE = 1000
 
+# XXX The daap mapping from the daap to the attribute is different from the
+# reverse mapping, because we use daap_mapping to import items from remote
+# side and we use daap_rmapping to create an export list.  But, when 
+# we import and create SharingItem, the attribut needs to be 'title'.  But
+# when we export, we receive ItemInfo(), which uses 'name'.
 daap_mapping = {
     'daap.songformat': 'enclosure',
     'com.apple.itunes.mediakind': 'file_type',
@@ -87,8 +92,6 @@ daap_mapping = {
     'daap.songtracknumber': 'track'
 }
 
-# XXX way to go, because of what gets sent to us and what we send back
-# the mapping and rmapping for itemname are completely different!
 daap_rmapping = {
     'enclosure': 'daap.songformat',
     'file_type': 'com.apple.itunes.mediakind',
