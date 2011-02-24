@@ -380,7 +380,6 @@ class SharingItemSource(ItemSource):
 
     def _item_info_for(self, item):
         info = dict(
-            item.id,
             source_type='sharing',
             feed_id = item.feed_id,
             feed_name = None,
@@ -437,7 +436,7 @@ class SharingItemSource(ItemSource):
             port=item.port,
             is_playing=False)
         info.update(item.get_iteminfo_metadata())
-        return messages.ItemInfo(*info)
+        return messages.ItemInfo(item.id, **info)
 
     def _ensure_info(self, obj):
         if not isinstance(obj, messages.ItemInfo):
@@ -503,7 +502,6 @@ class DeviceItemSource(ItemSource):
 
     def _item_info_for(self, item):
         info = dict(
-            item.id,
             source_type='device',
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
@@ -559,7 +557,7 @@ class DeviceItemSource(ItemSource):
             auto_rating=0,
             is_playing=item.is_playing)
         info.update(item.get_iteminfo_metadata())
-        return messages.ItemInfo(info)
+        return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):
         return [self._item_info_for(devices.DeviceItem(
