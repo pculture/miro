@@ -277,6 +277,7 @@ class ControllerDaemon(Daemon):
             prefs.UPLOAD_RATIO,
             prefs.LIMIT_CONNECTIONS_BT,
             prefs.CONNECTION_LIMIT_BT_NUM,
+            prefs.USE_DHT,
             ]
 
         data = {}

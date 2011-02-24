@@ -620,6 +620,10 @@ class DownloadsPanel(PanelBuilder):
         attach_boolean(cbx, prefs.USE_UPNP)
         vbox.pack_start(cbx, padding=4)
 
+        cbx = widgetset.Checkbox(_('Support trackerless torrents.  (DHT)'))
+        attach_boolean(cbx, prefs.USE_DHT)
+        vbox.pack_start(cbx, padding=4)
+
         cbx = widgetset.Checkbox(_('Ignore unencrypted connections.'))
         attach_boolean(cbx, prefs.BT_ENC_REQ)
         vbox.pack_start(cbx)

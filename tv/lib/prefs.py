@@ -95,6 +95,7 @@ WARN_IF_CONVERTING_ON_QUIT  = Pref(key='warnIfConvertingOnQuit', default=True, p
 TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref(key='TruncateChannelAFterXItems',  default=1000, platformSpecific=False)
 MAX_OLD_ITEMS_DEFAULT       = Pref(key='maxOldItemsDefault',    default=20,    platformSpecific=False)
 USE_UPNP                    = Pref(key='useUpnp',               default=True,  platformSpecific=False)
+USE_DHT                     = Pref(key='useDht',                default=True,  platformSpecific=False)
 BT_ENC_REQ                  = Pref(key='BitTorrentEncReq',      default=False, platformSpecific=False)
 CHANNEL_AUTO_DEFAULT        = Pref(key='ChannelAutoDefault',    default=u"new", platformSpecific=False)
 BONJOUR_REQUEST_COUNT       = Pref(key='bonjourRequestCount',   default=0,     platformSpecific=False)

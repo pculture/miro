@@ -223,6 +223,7 @@ class TorrentSession(object):
         self.info_hash_to_downloader = {}
         self.session = None
         self.pnp_on = None
+        self.dht_on = None
         self.pe_set = None
         self.enc_req = None
 
@@ -231,6 +232,7 @@ class TorrentSession(object):
         self.session = lt.session(fingerprint)
         self.listen()
         self.set_upnp()
+        self.set_dht()
         self.set_upload_limit()
         self.set_download_limit()
         self.set_encryption()
@@ -250,6 +252,21 @@ class TorrentSession(object):
             self.session.start_upnp()
         else:
             self.session.stop_upnp()
+
+    def set_dht(self):
+        use_dht = app.config.get(prefs.USE_DHT)
+        if use_dht == self.dht_on:
+            return
+        self.dht_on = use_dht
+        if use_dht:
+            self.session.start_dht()
+            self.session.add_dht_router("router.bittorrent.com", 6881)
+            self.session.add_dht_router("router.utorrent.com", 6881)
+            self.session.add_dht_router("router.bitcomet.com", 6881)
+            self.session.add_dht_router("dht.transmissionbt.com", 6881)
+            self.session.add_dht_router("dht.aelitis.com ", 6881) # Vuze
+        else:
+            self.session.stop_dht()
 
     def set_upload_limit(self):
         limit = -1
@@ -296,6 +313,7 @@ class TorrentSession(object):
 
     def shutdown(self):
         self.session.stop_upnp()
+        self.session.stop_dht()
         app.downloader_config_watcher.disconnect(self.callback_handle)
 
     def on_config_changed(self, obj, key, value):
@@ -307,6 +325,8 @@ class TorrentSession(object):
                 self.listen()
         elif key == prefs.USE_UPNP.key:
             self.set_upnp()
+        elif key == prefs.USE_DHT.key:
+            self.set_dht()
         elif key in (prefs.LIMIT_UPSTREAM.key,
                      prefs.UPSTREAM_LIMIT_IN_KBS.key):
             self.set_upload_limit()
