@@ -969,7 +969,7 @@ class ItemListControllerManager(object):
         elif controller.type == 'videos':
             key = ('library', 'video')
         elif controller.type.startswith('device-'):
-            key = ('device', controller.device)
+            key = ('device', controller.device.id)
         else:
             # there are others, but none of them need special handling
             key = (None, controller.id)

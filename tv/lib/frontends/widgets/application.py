@@ -1482,7 +1482,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_device_changed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.DeviceDisplay):
+        if isinstance(current_display, displays.DeviceDisplayMixin):
             current_display.controller.handle_device_changed(message.device)
 
     def handle_current_sync_information(self, message):

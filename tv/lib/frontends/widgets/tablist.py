@@ -714,6 +714,7 @@ class DeviceTabListHandler(object):
             'tab_type': type,
             'id': '%s-%s' % (info.id, type),
             'name': name,
+            'device_name': info.name,
             'icon': imagepool.get_surface(
                 resources.path('images/icon-%s.png' % type))
             }
@@ -724,14 +725,16 @@ class DeviceTabListHandler(object):
         di.__dict__.update(new_data)
         return di
 
+    def _get_fake_infos(self, info):
+        return [self._fake_info(info, 'video', _('Video')),
+                self._fake_info(info, 'audio', _('Music'))]
+
     def _add_fake_tabs(self, info):
         self.tablist.doing_change = True
-        HideableTabList.add(self.tablist,
-                            self._fake_info(info, 'video', _('Video')),
-                            info.id)
-        HideableTabList.add(self.tablist,
-                            self._fake_info(info, 'audio', _('Music')),
-                            info.id)
+        for fake in self._get_fake_infos(info):
+            HideableTabList.add(self.tablist,
+                                fake,
+                                info.id)
         self.tablist.model_changed()
         self.tablist.set_folder_expanded(info.id, True)
         self.tablist.doing_change = False
@@ -742,21 +745,26 @@ class DeviceTabListHandler(object):
             self._add_fake_tabs(info)
 
     def update(self, info):
-        if not self.tablist.has_info(info.id):
+        tablist = self.tablist
+        model = tablist.view.model
+        if not tablist.has_info(info.id):
             # this gets called if a sync is in progress when the device
             # disappears
             return
         if info.mount and not info.info.has_multiple_devices and \
-                not self.tablist.get_child_count(info.id):
+                not tablist.get_child_count(info.id):
             self._add_fake_tabs(info)
-        elif not info.mount and self.tablist.get_child_count(info.id):
-            parent_iter = self.tablist.iter_map[info.id]
-            model = self.tablist.view.model
+        elif not info.mount and tablist.get_child_count(info.id):
+            parent_iter = tablist.iter_map[info.id]
             next_iter = model.child_iter(parent_iter)
             while next_iter is not None:
                 iter = next_iter
                 next_iter = model.next_iter(next_iter)
                 model.remove(iter)
+        else: # also update the subtabs
+            for fake in self._get_fake_infos(info):
+                HideableTabList.update(tablist, fake)
+                messages.DeviceChanged(fake).send_to_frontend()
         HideableTabList.update(self.tablist, info)
 
     def init_info(self, info):
@@ -911,6 +919,7 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
 
     def update(self, info):
         handler = self.info_class_map[type(info)]
+        print 'TRYING TO UPDATE', info, handler
         if hasattr(handler, 'update'):
             handler.update(info)
         else:

@@ -1605,12 +1605,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         this_sync[message.setting] = message.value
 
     def handle_change_device_setting(self, message):
-        message.device.database.setdefault('settings', {})
-        message.device.database['settings'][message.setting] = message.value
+        device = message.device
+        device.database.setdefault('settings', {})
+        device.database['settings'][message.setting] = message.value
         if message.setting == 'name':
-            message.device.name = message.value
+            device.name = message.value
             # need to send a changed message
-            message = messages.TabsChanged('devices', [], [message.device], [])
+            message = messages.TabsChanged('devices', [], [device], [])
+            message.send_to_frontend()
+            message = messages.DeviceChanged(device)
             message.send_to_frontend()
 
     def handle_device_eject(self, message):

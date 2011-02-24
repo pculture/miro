@@ -496,7 +496,10 @@ class DeviceSettingsWidget(widgetset.Background):
             self.boxes[setting] = widget
             if type_ != 'bool': # has a label already
                 widgets.append((widgetset.Label(text), widget))
-                widget.connect('changed', self.setting_changed, setting)
+                if type_ == 'text':
+                    widget.connect('focus-out', self.setting_changed, setting)
+                else:
+                    widget.connect('changed', self.setting_changed, setting)
             else:
                 widgets.append((widget,))
                 widget.connect('toggled', self.setting_changed, setting)
@@ -772,15 +775,18 @@ class DeviceWidget(widgetset.VBox):
     def set_device(self, device):
         self.titlebar_view.remove()
         self.titlebar_view.set_child(self.make_titlebar(device))
-        self.device_view.remove()
         if not device.mount:
-            view = DeviceUnmountedView()
+            view_class = DeviceUnmountedView
         elif not device.info.has_multiple_devices:
-            view = DeviceMountedView()
+            view_class = DeviceMountedView
         else:
-            view = UnknownDeviceView()
-        view.set_device(device)
-        self.device_view.set_child(view)
+            view_class = UnknownDeviceView
+        if isinstance(self.device_view.child, view_class):
+            self.device_view.child.set_device(device)
+        else:
+            view = view_class()
+            view.set_device(device)
+            self.device_view.set_child(view)
 
     @staticmethod
     def make_titlebar(device):
@@ -851,7 +857,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         tab_type = device.tab_type
         self.type = u'device-%s' % tab_type
         self.image_filename = 'icon-%s_large.png' % tab_type
-        self.title = u'%s on %s' % (device.name, device.info.name)
+        self.set_title()
         itemlistcontroller.AudioVideoItemsController.__init__(self)
         if ('%s_sort_state' % tab_type) in device.database:
             sort_key, ascending = device.database['%s_sort_state' % tab_type]
@@ -873,6 +879,9 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.titlebar.connect('list-view-clicked', self.save_view, 'list')
         self.titlebar.connect('normal-view-clicked',
                                     self.save_view, 'normal')
+
+    def set_title(self):
+        self.title = u'%s on %s' % (self.device.name, self.device.device_name)
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -898,6 +907,9 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         message.send_to_backend()
 
     def handle_device_changed(self, device):
+        print 'device changed', device.id, device.name, self.device.id
         if self.device.id != device.id:
             return
         self.device = device
+        self.set_title()
+        self.titlebar.update_title(self.title)
