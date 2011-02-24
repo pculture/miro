@@ -95,12 +95,7 @@ class BooleanSearch:
         return self.string
 
 def _calc_search_text(item_info):
-    match_against = []
-    # Make sure we don't crash because our name or description is 'none'
-    if item_info.name is not None:
-        match_against.append(item_info.name)
-    if item_info.description is not None:
-        match_against.append(item_info.description)
+    match_against = [item_info.name, item_info.description]
     if item_info.artist is not None:
         match_against.append(item_info.artist)
     if item_info.album is not None:

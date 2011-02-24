@@ -138,6 +138,7 @@ class SharingItem(metadata.Source):
         self.license = self.downloader = None
         self.duration = self.screenshot = self.thumbnail_url = None
         self.resumeTime = 0
+        self.description = u''
         self.subtitle_encoding = self.enclosure_type = None
         self.metadata_version = 0
         self.file_type = None
