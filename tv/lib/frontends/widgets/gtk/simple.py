@@ -44,15 +44,20 @@ class Image(object):
 
     def resize(self, width, height):
         return ResizedImage(self, width, height)
+    
+    def resize_for_space(self, width, height):
+        """Returns an image scaled to fit into the specified space at the
+        correct height/width ratio.
+        """
+        ratio = min(1.0 * width / self.width, 1.0 * height / self.height)
+        return self.resize(ratio * self.width, ratio * self.height)
 
 class ResizedImage(Image):
     def __init__(self, image, width, height):
-        width = int(width)
-        height = int(height)
-        self.pixbuf = image.pixbuf.scale_simple(width, height,
-                gtk.gdk.INTERP_BILINEAR)
-        self.width = width
-        self.height = height
+        self.width = int(width)
+        self.height = int(height)
+        self.pixbuf = image.pixbuf.scale_simple(self.width, self.height,
+                      gtk.gdk.INTERP_BILINEAR)
 
 class ImageDisplay(Widget):
     def __init__(self, image):

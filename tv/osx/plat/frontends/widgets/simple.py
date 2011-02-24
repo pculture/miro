@@ -27,6 +27,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from __future__ import division
 import math
 
 from AppKit import *
@@ -49,6 +50,13 @@ class Image(object):
 
     def resize(self, width, height):
         return ResizedImage(self, width, height)
+    
+    def resize_for_space(self, width, height):
+        """Returns an image scaled to fit into the specified space at the
+        correct height/width ratio.
+        """
+        ratio = min(width / self.width, height / self.height)
+        return self.resize(ratio * self.width, ratio * self.height)
 
 class ResizedImage(Image):
     def __init__(self, image, width, height):
@@ -79,9 +87,9 @@ class NSImageDisplay (NSView):
         the rect from our image will be smaller than dest_rect.
         """
         view_size = self.frame().size
-        source_width = (float(dest_rect.size.width) * self.image.width /
+        source_width = (dest_rect.size.width * self.image.width /
                 view_size.width)
-        source_height = (float(dest_rect.size.height) * self.image.height /
+        source_height = (dest_rect.size.height * self.image.height /
                 view_size.height)
         return NSRect(NSPoint(0, 0), NSRect(source_width, source_height))
 
@@ -94,13 +102,17 @@ class ImageDisplay(Widget):
         Widget.__init__(self)
         self.create_signal('clicked')
         self.image = image
+        self.view = None
         if image:
             self.setup_image()
 
     def setup_image(self):
-        # TODO: find out if this works
         self.image.nsimage.setCacheMode_(NSImageCacheNever)
-        self.view = NSImageDisplay.alloc().initWithImage_(self.image)
+        if not self.view:
+            self.view = NSImageDisplay.alloc().initWithImage_(self.image)
+        else:
+            self.view.image = self.image
+            self.view.setNeedsDisplay_(YES)
 
     def calc_size_request(self):
         return self.image.width, self.image.height
@@ -116,13 +128,15 @@ class ClickableImageButton(ImageDisplay):
 
     def set_image(self, path):
         self.image = Image(path)
-        width, height = self.image.width, self.image.height
-        resize_width = min(self.max_width / width, 1)
-        resize_height = min(self.max_height / height, 1)
-        resize = min(resize_width, resize_height)
-        width, height = int(resize * width), int(resize * height)
-        self.image = self.image.resize(width, height)
+        if self.max_width:
+            self.image = self.image.resize_for_space(self.max_width, self.max_height)
         self.setup_image()
+
+    def calc_size_request(self):
+        if self.max_width:
+            return self.max_width, self.max_height
+        else:
+            return ImageDisplay.calc_size_request(self)
 
 class AnimatedImageDisplay(Widget):
     def __init__(self, path):

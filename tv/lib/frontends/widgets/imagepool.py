@@ -41,53 +41,30 @@ import weakref
 
 from miro import util
 from miro.plat import resources
-from miro.plat.frontends.widgets import widgetset
+from miro.plat.frontends.widgets.widgetset import Image, ImageSurface
 
-broken_image = widgetset.Image(resources.path('images/broken-image.gif'))
-
-def scaled_size(image, size):
-    """Takes an image which has a width and a height and a size tuple
-    that specifies the space available and returns the new width
-    and height that allows the image to fit into the sized space
-    at the correct height/width ratio.
-
-    :param image: the Image (must have width and height properties)
-    :param size: (width, height) tuple of space you want the image
-                 to fit in
-    """
-    if image.width == 0 or image.height == 0:
-        image = broken_image
-    image_ratio = float(image.width) / image.height
-    new_ratio = float(size[0]) / size[1]
-    if image_ratio == new_ratio:
-        return size
-    elif image_ratio > new_ratio:
-        # The scaled image has a wider aspect ratio than the old one.
-        height = int(round(float(size[0]) / image.width * image.height))
-        return size[0], height
-    else:
-        # The scaled image has a taller aspect ratio than the old one.
-        width = int(round(float(size[1]) / image.height * image.width))
-        return width, size[1]
+broken_image = Image(resources.path('images/broken-image.gif'))
 
 CACHE_SIZE = 2000 # number of objects to keep in memory
 
 class ImagePool(util.Cache):
     def create_new_value(self, (path, size)):
         try:
-            image = widgetset.Image(path)
+            image = Image(path)
         except StandardError:
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
             image = broken_image
         if size is not None:
-            image = image.resize(*scaled_size(image, size))
+            if size[0] * size[1] == 0:
+                image = broken_image
+            image = image.resize_for_space(*size)
         return image
 
 class ImageSurfacePool(util.Cache):
     def create_new_value(self, (path, size)):
         image = _imagepool.get((path, size))
-        return widgetset.ImageSurface(image)
+        return ImageSurface(image)
 
 _imagepool = ImagePool(CACHE_SIZE)
 _image_surface_pool = ImageSurfacePool(CACHE_SIZE)

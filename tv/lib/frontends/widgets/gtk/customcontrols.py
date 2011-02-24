@@ -40,7 +40,8 @@ import gobject
 
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.base import Widget, Bin
-from miro.frontends.widgets.gtk.simple import Label, Image
+from miro.frontends.widgets.gtk.simple import (Label, Image, ResizedImage,
+    ImageDisplay)
 from miro.frontends.widgets.gtk.drawing import (CustomDrawingMixin, Drawable,
     ImageSurface)
 from miro.plat.frontends.widgets import timer
@@ -414,20 +415,11 @@ class ClickableImageButton(CustomButton):
         self.wrapped_widget_connect('button-release-event', self.on_click)
 
     def set_image(self, path):
-        # FIXME: probably breaks proportions if image size is changed
-        self.image = ImageSurface(Image(path))
-        width, height = self.image.width, self.image.height
+        image = Image(path)
         if self.max_width:
-            resize_width = min(self.max_width / self.width, 1)
-        else:
-            resize_width = 1
-        if self.max_height:
-            resize_height = min(self.max_height / self.height, 1)
-        else:
-            resize_height = 1
-        resize = min(resize_width, resize_height)
-        # FIXME: clips; should scale
-        self._width, self._height = int(resize * width), int(resize * height)
+            image = image.resize_for_space(self.max_width, self.max_height)
+        self.image = ImageSurface(image)
+        self._width, self._height = image.width, image.height
 
     def size_request(self, layout):
         return self._width, self._height
