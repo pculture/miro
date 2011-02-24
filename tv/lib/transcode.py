@@ -382,11 +382,10 @@ class TranscodeObject(object):
         # ANS: wrap around file wrapper would be good thing to do
         # Consume an item ...
         self.chunk_sem.acquire()
-        self.chunk_lock.acquire()
-        tmpf = self.chunk_buffer[0]
-        self.current_chunk += 1
-        self.chunk_buffer = self.chunk_buffer[1:]
-        self.chunk_lock.release()
+        with self.chunk_lock:
+            tmpf = self.chunk_buffer[0]
+            self.current_chunk += 1
+            self.chunk_buffer = self.chunk_buffer[1:]
         return tmpf
 
     # Shutdown the transcode job.  If we quitting, make sure you call this
