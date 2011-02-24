@@ -93,7 +93,7 @@ def metadata_setter(attribute, type_=None):
             value = type_(value)
         if not _bulk:
             self.confirm_db_thread()
-        self.__dict__[attribute] = value
+        setattr(self, attribute, value)
         if not _bulk:
             self.signal_change()
             self.write_back((attribute,))
