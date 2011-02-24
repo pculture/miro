@@ -259,7 +259,7 @@ class TorrentSession(object):
             return
         self.dht_on = use_dht
         if use_dht:
-            self.session.start_dht()
+            self.session.start_dht(None)
             self.session.add_dht_router("router.bittorrent.com", 6881)
             self.session.add_dht_router("router.utorrent.com", 6881)
             self.session.add_dht_router("router.bitcomet.com", 6881)
