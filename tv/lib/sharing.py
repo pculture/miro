@@ -87,11 +87,13 @@ daap_mapping = {
     'daap.songtracknumber': 'track'
 }
 
+# XXX way to go, because of what gets sent to us and what we send back
+# the mapping and rmapping for itemname are completely different!
 daap_rmapping = {
     'enclosure': 'daap.songformat',
     'file_type': 'com.apple.itunes.mediakind',
     'id': 'dmap.itemid',
-    'title': 'dmap.itemname',
+    'name': 'dmap.itemname',
     'duration': 'daap.songtime',
     'size': 'daap.songsize',
     'artist': 'daap.songartist',
@@ -827,6 +829,7 @@ class SharingManagerBackend(object):
         # See the daap_rmapping/daap_mapping for a list of mappings that
         # we do.
         for item in items:
+            print item.__dict__ 
             itemprop = dict()
             for attr in daap_rmapping.keys():
                 daap_string = daap_rmapping[attr]
