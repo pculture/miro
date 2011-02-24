@@ -564,6 +564,7 @@ class DeviceSyncManager(object):
             media_type_checked=item_info.media_type_checked,
             mime_type=item_info.mime_type,
             creation_time=time.mktime(item_info.date_added.timetuple()),
+            title_tag=item_info.title_tag,
             artist=item_info.artist,
             album=item_info.album,
             track=item_info.track,
