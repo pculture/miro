@@ -34,6 +34,7 @@ import tempfile
 import re
 import os
 import select
+import socket
 import sys
 import SocketServer
 import threading
@@ -126,7 +127,7 @@ class TranscodeRequestHandler(SocketServer.BaseRequestHandler):
                 self.server.obj.data_callback(d)
                 if not d:
                     return
-            except socket.err, (err, errstring):
+            except socket.error, (err, errstring):
                 if err == errno.EINTR:
                     continue
                 logging.info('TranscodeRequestHandler err %d desc = %s',
@@ -238,6 +239,7 @@ class TranscodeObject(object):
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
         self.create_playlist()
+        logging.info('TranscodeObject created %s', self)
 
     def __del__(self):
         self.shutdown()
@@ -355,8 +357,9 @@ class TranscodeObject(object):
             with self.chunk_lock:
                 self.chunk_buffer.append(self.tmp_file)
                 chunk_buffer_size = len(self.chunk_buffer)
-                if (self.chunk_buffer_size >= 
+                if (chunk_buffer_size >= 
                   TranscodeObject.buffer_high_watermark):
+                    logging.info('TranscodeObject: throttling')
                     self.chunk_throttle.clear()
             # Tell consumer there is stuff available
             self.chunk_sem.release()
@@ -373,7 +376,11 @@ class TranscodeObject(object):
                 self.chunk_throttle.wait()
                 if self.segmenter_handle.poll() is not None:
                     return
-                self.sink.handle_request()
+                try:
+                    self.sink.handle_request()
+                except socket.error, (err, errstring):
+                    # Don't care, wait for EOF
+                    pass
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue
@@ -415,10 +422,15 @@ class TranscodeObject(object):
         # anyway, and in case they get there first then it's ok too, since
         # we end up unblocking it anyway.
         self.chunk_throttle.set()
+        logging.info('TranscodeObject.shutdown')
         try:
             self.ffmpeg_handle.kill()
             self.segmenter_handle.kill()
+            # Wait for segmenter to die so that poll() will return not None
+            self.segmenter_handle.wait()
+            logging.info('TranscodeObject reaping sink')
             self.sink_thread.join()
+            logging.info('TranscodeObject sink reaped')
             # Set these last: sink thread relies on it.
             self.ffmpeg_handle = None
             self.segmenter_handle = None
