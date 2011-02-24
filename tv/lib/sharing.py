@@ -829,7 +829,6 @@ class SharingManagerBackend(object):
         # See the daap_rmapping/daap_mapping for a list of mappings that
         # we do.
         for item in items:
-            print item.__dict__ 
             itemprop = dict()
             for attr in daap_rmapping.keys():
                 daap_string = daap_rmapping[attr]
