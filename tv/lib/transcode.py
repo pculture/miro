@@ -233,6 +233,8 @@ class TranscodeObject(object):
         self.current_chunk = -1
         self.start_chunk = 0
         self.chunk_buffer = []
+        self.chunk_throttle = threading.Event()
+        self.chunk_throttle.set()
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
         self.create_playlist()
@@ -288,6 +290,8 @@ class TranscodeObject(object):
         self.chunk_buffer = []
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
+        self.chunk_throttle = threading.Event()
+        self.chunk_throttle.set()
         self.tmp_file = tempfile.TemporaryFile()
         # OK, you can restart the transcode by calling transcode()
         return True
@@ -350,6 +354,10 @@ class TranscodeObject(object):
             self.tmp_file.seek(0, os.SEEK_SET)
             with self.chunk_lock:
                 self.chunk_buffer.append(self.tmp_file)
+                chunk_buffer_size = len(self.chunk_buffer)
+                if (self.chunk_buffer_size >= 
+                  TranscodeObject.buffer_high_watermark):
+                    self.chunk_throttle.clear()
             # Tell consumer there is stuff available
             self.chunk_sem.release()
             # ready for next segment
@@ -362,10 +370,10 @@ class TranscodeObject(object):
         while True:
             try:
                 r, w, x = select.select([self.sink.fileno()], [], [])
+                self.chunk_throttle.wait()
                 if self.in_shutdown:
                     self.sink_thread = None
                     return
-                # XXX throttle
                 self.sink.handle_request()
             except select.error, (err, errstring):
                 if err == errno.EINTR:
@@ -386,6 +394,7 @@ class TranscodeObject(object):
             tmpf = self.chunk_buffer[0]
             self.current_chunk += 1
             self.chunk_buffer = self.chunk_buffer[1:]
+            self.chunk_throttle.set()
         return tmpf
 
     # Shutdown the transcode job.  If we quitting, make sure you call this
@@ -400,7 +409,13 @@ class TranscodeObject(object):
         # the bits in between?  We'd probably be blocked on the read() in the
         # the handler and that's ok because that should return a zero read 
         # when the segmenter goes away too and that reduces to the select().
+        # In case we may be throttled, prod it along by unthrottling.
+        # In case we race with get_chunk() (which may run in a different
+        # thread), if we clear first, it's ok because that'd have woken it up
+        # anyway, and in case they get there first then it's ok too, since
+        # we end up unblocking it anyway.
         self.in_shutdown = True
+        self.chunk_throttle.set()
         if self.ffmpeg_handle:
             self.ffmpeg_handle.kill()
             self.ffmpeg_handle = None
