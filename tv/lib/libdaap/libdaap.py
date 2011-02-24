@@ -158,6 +158,9 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         # OK, thank the caller for telling us the guy's alive
         return True
 
+    def handle_error(self, request, client_address):
+        pass
+
     def del_session(self, s):
         # maybe the guy tried to trick us by running /logout with no active
         # conn.

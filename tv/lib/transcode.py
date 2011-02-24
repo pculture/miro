@@ -238,6 +238,7 @@ class TranscodeObject(object):
         self.chunk_throttle.set()
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
+        self.tmp_file = tempfile.TemporaryFile()
         self.create_playlist()
         logging.info('TranscodeObject created %s', self)
 
@@ -282,6 +283,12 @@ class TranscodeObject(object):
         if self.current_chunk == chunk:
             return False
         self.time_offset = chunk * TranscodeObject.segment_duration
+        # XXX special case: new transcode object - don't do any of the below
+        # (in fact it wont behave correctly if you do, we try to run shutdown()
+        # which will set a shutdown flag ... that's not what we want to do.)
+        if self.current_chunk == -1:
+            self.current_chunk = 0
+            return True
         self.shutdown()
         # Clear the chunk buffer, and the lock/synchronization state
         self.start_chunk = self.current_chunk = chunk
@@ -372,6 +379,8 @@ class TranscodeObject(object):
     def segmenter_consumer(self):
         while True:
             try:
+                if self.in_shutdown:
+                    return
                 r, w, x = select.select([self.sink.fileno()], [], [])
                 self.chunk_throttle.wait()
                 if self.segmenter_handle.poll() is not None:
@@ -423,6 +432,7 @@ class TranscodeObject(object):
         # we end up unblocking it anyway.
         self.chunk_throttle.set()
         logging.info('TranscodeObject.shutdown')
+        self.in_shutdown = True
         try:
             self.ffmpeg_handle.kill()
             self.segmenter_handle.kill()
@@ -435,5 +445,8 @@ class TranscodeObject(object):
             self.ffmpeg_handle = None
             self.segmenter_handle = None
             self.sink_thread = None
-        except AttributeError:
+        # Catch AttributeError in case it's not actually there, or OSError,
+        # in case it doesn't exist anymore.  We don't really care.
+        except (OSError, AttributeError):
             pass
+        self.in_shutdown = False
