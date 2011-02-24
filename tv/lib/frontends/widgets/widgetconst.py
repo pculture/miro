@@ -60,7 +60,7 @@ COLUMN_LABELS = {
     u'length': _('Length'),
     u'status': _('Status'),
     u'size': _('Size'),
-    u'feed-name': _('Podcast'),
+    u'feed-name': _('Source'),
     u'eta': _('ETA'),
     u'torrent-details': _('Torrent details'),
     u'rate': _('Speed'),
@@ -68,6 +68,8 @@ COLUMN_LABELS = {
     u'last-played': _('Last Played'),
     u'description': _('Description'),
     u'drm': _('DRM'),
+    u'file-type': _('File Type'),
+    u'show': _('Show'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()

@@ -60,13 +60,17 @@ class WidgetStateStore(object):
         u'artist': 110,
         u'date': 70,
         u'description': 160,
+        u'date': 70,
+        u'date-added': 70,
         u'eta': 60,
         u'feed-name': 70,
+        u'file-type': 70,
         u'genre': 65,
         u'length': 60,
         u'name': 130,
         u'rate': 60,
         u'rating': 75,
+        u'show': 70,
         u'size': 65,
         u'state': 20,
         u'status': 70,
@@ -91,12 +95,12 @@ class WidgetStateStore(object):
     DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_COLUMNS = {
         u'videos':
-            [u'state', u'name', u'length', u'feed-name', u'size'],
+            [u'state', u'name', u'length', u'date-added', u'feed-name', u'size'],
         u'music':
-            [u'state', u'name', u'artist', u'album', u'track',
-            u'feed-name', u'length', u'genre', u'year', u'rating'],
+            [u'name', u'artist', u'album', u'track', u'length', u'genre',
+             u'year', u'rating'],
         u'others':
-            [u'name', u'feed-name', u'size', u'drm'],
+            [u'name', u'feed-name', u'size', u'file-type'],
         u'downloading':
             [u'name', u'feed-name', u'status', u'eta', u'rate',
             u'torrent-details', u'size'],
@@ -118,10 +122,13 @@ class WidgetStateStore(object):
     for display_type, columns in DEFAULT_COLUMNS.items():
         AVAILABLE_COLUMNS[display_type] = DEFAULT_COLUMNS[display_type][:]
     # add available but non-default columns here:
-    AVAILABLE_COLUMNS['music'].extend([u'size'])
-    AVAILABLE_COLUMNS['others'].extend([u'rating'])
+    AVAILABLE_COLUMNS['music'].extend(
+        [u'state', u'date-added', u'feed-name', u'size', u'file-type']
+    )
+    AVAILABLE_COLUMNS['others'].extend(
+        [u'date-added', u'drm', u'rating'])
     AVAILABLE_COLUMNS['search'].extend([u'rating'])
-    AVAILABLE_COLUMNS['videos'].extend([u'rating'])
+    AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type']) # add 'show' when implemented
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
     def __init__(self):

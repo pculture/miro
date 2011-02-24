@@ -1036,6 +1036,12 @@ class LastPlayedRenderer(ListViewRendererText):
 class DRMRenderer(ListViewRendererText):
     attr_name = 'display_drm'
 
+class FileTypeRenderer(ListViewRendererText):
+    attr_name = 'file_format'
+
+class ShowRenderer(ListViewRendererText):
+    attr_name = 'show'
+
 class ListViewRenderer(widgetset.InfoListRenderer):
     """Renderer for more complex list view columns.
 
