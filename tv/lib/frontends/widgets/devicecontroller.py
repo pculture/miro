@@ -907,7 +907,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         message.send_to_backend()
 
     def handle_device_changed(self, device):
-        print 'device changed', device.id, device.name, self.device.id
         if self.device.id != device.id:
             return
         self.device = device

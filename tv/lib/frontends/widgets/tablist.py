@@ -919,7 +919,6 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
 
     def update(self, info):
         handler = self.info_class_map[type(info)]
-        print 'TRYING TO UPDATE', info, handler
         if hasattr(handler, 'update'):
             handler.update(info)
         else:
