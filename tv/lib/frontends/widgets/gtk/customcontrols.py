@@ -32,6 +32,7 @@ CustomControl classes.  These handle the custom buttons/sliders used during
 playback.
 """
 
+from __future__ import division
 import math
 
 import gtk
@@ -39,8 +40,9 @@ import gobject
 
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.base import Widget, Bin
-from miro.frontends.widgets.gtk.simple import Label
-from miro.frontends.widgets.gtk.drawing import CustomDrawingMixin, Drawable
+from miro.frontends.widgets.gtk.simple import Label, Image
+from miro.frontends.widgets.gtk.drawing import (CustomDrawingMixin, Drawable,
+    ImageSurface)
 from miro.plat.frontends.widgets import timer
 from miro.frontends.widgets import widgetconst
 
@@ -393,3 +395,38 @@ if hasattr(gtk.VolumeButton, "get_popup"):
         def set_value(self, value):
             value = to_gtk_volume(value)
             self._widget.set_property('value', value)
+
+class ClickableImageButton(CustomButton):
+    """Image that can send clicked events. If max_width and/or max_height are
+    specified, resizes the image proportionally such that all constraints are
+    met.
+    """
+    def __init__(self, image_path, max_width=None, max_height=None):
+        CustomButton.__init__(self)
+        self.image = ImageSurface(Image(image_path))
+        width, height = self.image.width, self.image.height
+        resize_width = min(max_width / width, 1)
+        resize_height = min(max_height / height, 1)
+        resize = min(resize_width, resize_height)
+        self._width, self._height = int(resize * width), int(resize * height)
+
+        self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
+        self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
+        self.wrapped_widget_connect('button-release-event', self.on_click)
+
+    def size_request(self, layout):
+        return self._width, self._height
+
+    def draw(self, context, layout):
+        self.image.draw(context, 0, 0, self._width, self._height)
+
+    def on_click(self, widget, event):
+        self.emit('clicked', event)
+        return True
+
+    def on_enter_notify(self, widget, event):
+        self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
+
+    def on_leave_notify(self, widget, event):
+        if self._widget.window:
+            self._widget.window.set_cursor(None)

@@ -139,6 +139,15 @@ class TextEntry(BaseTextEntry):
     def make_view(self):
         return MiroTextField.alloc().init()
 
+class NumberEntry(BaseTextEntry):
+    # TODO: disallow typing nondigits
+    def make_view(self):
+        return MiroTextField.alloc().init()
+
+    def set_max_length(self, length):
+        # TODO
+        pass
+
 class MiroSecureTextField(NSSecureTextField):
     def becomeFirstResponder(self):
         wrappermap.wrapper(self).emit('activate')
@@ -238,13 +247,12 @@ class MiroButton(NSButton):
 
 class Checkbox(SizedControl):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
-    def __init__(self, label):
+    def __init__(self, text=""):
         SizedControl.__init__(self)
         self.create_signal('toggled')
-        self.label = label
         self.view = MiroButton.alloc().initWithSignal_('toggled')
         self.view.setButtonType_(NSSwitchButton)
-        self.view.setTitle_(self.label)
+        self.view.setTitle_(text)
 
     def calc_size_request(self):
         size = self.view.cell().cellSize()
@@ -272,7 +280,7 @@ class Checkbox(SizedControl):
 
 class Button(SizedControl):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
-    def __init__(self, label, style='normal'):
+    def __init__(self, label, style='normal', width=0):
         SizedControl.__init__(self)
         self.color = None
         self.title = label
@@ -281,7 +289,7 @@ class Button(SizedControl):
         self.view.setButtonType_(NSMomentaryPushInButton)
         self._set_title()
         self.setup_style(style)
-        self.min_width = 0
+        self.min_width = width
 
     def set_text(self, label):
         self.title = label
@@ -378,6 +386,10 @@ class OptionMenu(SizedControl):
     def disable(self):
         SizedControl.disable(self)
         self.view.setEnabled_(False)
+
+    def set_width(self, width):
+        # TODO
+        pass
 
 class RadioButtonGroup:
     def __init__(self):

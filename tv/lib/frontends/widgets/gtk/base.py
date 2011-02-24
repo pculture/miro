@@ -32,7 +32,6 @@
 import gtk
 
 from miro import signals
-from miro.frontends.widgets.gtk import window
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 from miro.frontends.widgets.gtk import keymap

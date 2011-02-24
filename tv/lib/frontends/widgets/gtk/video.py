@@ -47,7 +47,7 @@ from miro.plat import screensaver
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
 from miro.frontends.widgets.gtk.widgetset import (
     Widget, VBox, Label, HBox, Alignment, Background, DrawingArea,
-    ImageSurface, Image, CustomButton)
+    ImageSurface, Image, CustomButton, ClickableImageButton)
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
@@ -112,33 +112,6 @@ class ClickableLabel(Widget):
 
     def show(self):
         self.label._widget.show()
-
-
-class ClickableImageButton(CustomButton):
-    def __init__(self, image_path):
-        CustomButton.__init__(self)
-        self.image = ImageSurface(Image(image_path))
-
-        self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
-        self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
-        self.wrapped_widget_connect('button-release-event', self.on_click)
-
-    def size_request(self, layout):
-        return self.image.width, self.image.height
-
-    def draw(self, context, layout):
-        self.image.draw(context, 0, 0, self.image.width, self.image.height)
-
-    def on_click(self, widget, event):
-        self.emit('clicked', event)
-        return True
-
-    def on_enter_notify(self, widget, event):
-        self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
-
-    def on_leave_notify(self, widget, event):
-        if self._widget.window:
-            self._widget.window.set_cursor(None)
 
 
 class NullRenderer:

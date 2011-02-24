@@ -37,6 +37,7 @@ import pango
 
 from miro import searchengines
 from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets.gtk import layout
 from miro.frontends.widgets.gtk.base import Widget
 from miro.frontends.widgets.gtk.simple import Label
 
@@ -76,6 +77,9 @@ class TextEntry(Widget):
     def get_text(self):
         return self._widget.get_text().decode('utf-8')
 
+    def set_max_length(self, chars):
+        self._widget.set_max_length(chars)
+
     def set_width(self, chars):
         self._widget.set_width_chars(chars)
 
@@ -92,6 +96,19 @@ class TextEntry(Widget):
         metrics = pango_context.get_metrics(self._widget.style.font_desc)
         return pango.PIXELS(metrics.get_descent()) + ypad
 
+class NumberEntry(TextEntry):
+    def __init__(self, initial_text=None):
+        TextEntry.__init__(self, initial_text)
+        self._widget.connect('changed', self.validate)
+        self.previous_text = initial_text or ""
+
+    def validate(self, entry):
+        text = self.get_text()
+        if text.isdigit() or not text:
+            self.previous_text = text
+        else:
+            self._widget.set_text(self.previous_text)
+
 class SecureTextEntry(TextEntry):
     def __init__(self, initial_text=None):
         TextEntry.__init__(self, initial_text)
@@ -99,12 +116,13 @@ class SecureTextEntry(TextEntry):
 
 class MultilineTextEntry(Widget):
     entry_class = gtk.TextView
-    def __init__(self, initial_text=None):
+    def __init__(self, initial_text=None, border=False):
         Widget.__init__(self)
         self.set_widget(self.entry_class())
         if initial_text is not None:
             self.set_text(initial_text)
         self._widget.set_wrap_mode(gtk.WRAP_WORD)
+        self.border = border
 
     def focus(self):
         self._widget.grab_focus()
@@ -130,7 +148,7 @@ class MultilineTextEntry(Widget):
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
-    def __init__(self, label):
+    def __init__(self, label=""):
         Widget.__init__(self)
         self.set_widget(gtk.CheckButton(label))
         self.create_signal('toggled')
@@ -201,14 +219,23 @@ class RadioButton(Widget, BinBaselineCalculator):
         self.group.set_selected(self)
 
 class Button(Widget, BinBaselineCalculator):
-    def __init__(self, text, style='normal'):
+    def __init__(self, text, style='normal', width=None):
         Widget.__init__(self)
         # We just ignore style here, GTK users expect their own buttons.
         self.set_widget(gtk.Button())
         self.create_signal('clicked')
         self.forward_signal('clicked')
         self.label = Label(text)
-        self._widget.add(self.label._widget)
+        if width:
+            current_width = self.label.get_width()
+            padding = (width - current_width) // 2
+            odd = width - current_width - padding * 2
+            alignment = layout.Alignment(0.5, 0.5, 0, 0)
+            alignment.set_padding(0, 0, padding, padding+odd)
+            alignment.add(self.label)
+            self._widget.add(alignment._widget)
+        else:
+            self._widget.add(self.label._widget)
         self.label._widget.show()
 
     def set_text(self, title):
@@ -272,3 +299,6 @@ class OptionMenu(Widget):
     def on_changed(self, widget):
         index = widget.get_active()
         self.emit('changed', index)
+
+    def set_width(self, width):
+        self._widget.set_property('width-request', width)

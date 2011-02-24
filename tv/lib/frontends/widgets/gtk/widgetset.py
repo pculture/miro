@@ -31,13 +31,14 @@ import gtk
 
 from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.const import *
-from miro.frontends.widgets.gtk.controls import TextEntry, SecureTextEntry, \
-     MultilineTextEntry, Checkbox, RadioButton, RadioButtonGroup, \
-     OptionMenu, Button
+from miro.frontends.widgets.gtk.controls import TextEntry, NumberEntry, \
+     SecureTextEntry, MultilineTextEntry, Checkbox, RadioButton, \
+     RadioButtonGroup, OptionMenu, Button
 from miro.frontends.widgets.gtk.searchentry import SearchTextEntry, \
      VideoSearchTextEntry
 from miro.frontends.widgets.gtk.customcontrols import (
-    CustomButton, ContinuousCustomButton, DragableCustomButton, CustomSlider)
+    CustomButton, ContinuousCustomButton, DragableCustomButton, CustomSlider,
+    ClickableImageButton)
 # VolumeSlider and VolumeMuter aren't defined if gtk.VolumeButton
 # doesn't have get_popup.
 try:
@@ -57,9 +58,9 @@ from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
         InfoListModel, TableColumn, TreeTableModel, CellRenderer,
         ImageCellRenderer, CheckboxCellRenderer, CustomCellRenderer,
         InfoListRenderer, InfoListRendererText)
-from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
-     AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
-     ProgressBar
+from miro.frontends.widgets.gtk.simple import (Image, ResizedImage,
+     ImageDisplay, AnimatedImageDisplay, Label, Scroller, Expander,
+     SolidBackground, ProgressBar, HLine)
 from miro.frontends.widgets.gtk.audio import AudioPlayer
 from miro.frontends.widgets.gtk.video import VideoPlayer
 from miro.frontends.widgets.gtk.widgets import Rect

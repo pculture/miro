@@ -36,6 +36,7 @@ from objc import YES, NO, nil
 from miro.plat.utils import filename_to_unicode
 from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
+from miro.plat.frontends.widgets import wrappermap
 
 """A collection of various simple widgets."""
 
@@ -84,16 +85,44 @@ class NSImageDisplay (NSView):
                 view_size.height)
         return NSRect(NSPoint(0, 0), NSRect(source_width, source_height))
 
+    def mouseDown_(self, event):
+        wrappermap.wrapper(self).emit('clicked')
+
 class ImageDisplay(Widget):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
-    def __init__(self, image):
+    def __init__(self, image=None):
         Widget.__init__(self)
+        self.create_signal('clicked')
         self.image = image
+        if image:
+            self.setup_image()
+
+    def setup_image(self):
+        # TODO: find out if this works
         self.image.nsimage.setCacheMode_(NSImageCacheNever)
         self.view = NSImageDisplay.alloc().initWithImage_(self.image)
 
     def calc_size_request(self):
         return self.image.width, self.image.height
+
+class ClickableImageButton(ImageDisplay):
+    def __init__(self, image_path, max_width=None, max_height=None):
+        ImageDisplay.__init__(self)
+        self.max_width = max_width
+        self.max_height = max_height
+        self.image = None
+        self._width, self._height = None, None
+        self.set_image(image_path)
+
+    def set_image(self, path):
+        self.image = Image(path)
+        width, height = self.image.width, self.image.height
+        resize_width = min(self.max_width / width, 1)
+        resize_height = min(self.max_height / height, 1)
+        resize = min(resize_width, resize_height)
+        width, height = int(resize * width), int(resize * height)
+        self.image = self.image.resize(width, height)
+        self.setup_image()
 
 class AnimatedImageDisplay(Widget):
     def __init__(self, path):
@@ -244,3 +273,12 @@ class ProgressBar(Widget):
 
     def stop_pulsing(self):
         self.view.stopAnimation_(nil)
+
+class HLine(Widget):
+    def __init__(self):
+        Widget.__init__(self)
+        self.view = NSBox.alloc().init()
+        self.view.setBoxType_(NSBoxSeparator)
+
+    def calc_size_request(self):
+        return self.view.frame().size.width, self.view.frame().size.height

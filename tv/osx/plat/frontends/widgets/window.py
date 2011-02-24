@@ -471,6 +471,9 @@ class FileSaveDialog(FileDialogBase):
     def destroy(self):
         self._panel = None
 
+    set_path = set_filename
+    get_path = get_filename
+
 class FileOpenDialog(FileDialogBase):
     def __init__(self, title):
         FileDialogBase.__init__(self)
@@ -498,9 +501,15 @@ class FileOpenDialog(FileDialogBase):
             self._types += t
 
     def get_filename(self):
+        if self._filenames is None:
+            # canceled
+            return None
         return self.get_filenames()[0]
 
     def get_filenames(self):
+        if self._filenames is None:
+            # canceled
+            return []
         # Use encode('utf-8') instead of unicode_to_filename, because
         # unicode_to_filename has code to make sure nextFilename works, but it's
         # more important here to not change the filename.
@@ -516,6 +525,9 @@ class FileOpenDialog(FileDialogBase):
 
     def destroy(self):
         self._panel = None
+
+    set_path = set_filename
+    get_path = get_filename
 
 class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):
@@ -545,6 +557,9 @@ class DirectorySelectDialog(FileDialogBase):
 
     def destroy(self):
         self._panel = None
+
+    set_path = set_directory
+    get_path = get_directory
 
 class AboutDialog(DialogBase):
     def run(self):

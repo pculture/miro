@@ -34,6 +34,8 @@ import StringIO
 import pango
 import gobject
 import gtk
+import os
+import logging
 
 from miro import app
 from miro import prefs
@@ -42,7 +44,7 @@ from miro import dialogs
 from miro.fileobject import FilenameType
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap, widgets
-from miro.frontends.widgets.gtk import keymap
+from miro.frontends.widgets.gtk import keymap, layout
 from miro.frontends.widgets import menus
 from miro.plat import resources
 from miro.plat import utils
@@ -663,18 +665,23 @@ class Dialog(DialogBase):
         self.create_signal('close')
         self.set_window(gtk.Dialog(title))
         self._window.set_default_size(425, -1)
-        self.packing_vbox = gtk.VBox(spacing=20)
-        self.packing_vbox.set_border_width(6)
-        self._window.vbox.pack_start(self.packing_vbox, True, True)
-        if description:
+        self.extra_widget = None
+        self.buttons_to_add = []
+        wrappermap.add(self._window, self)
+        self.description = description
+
+    def build_content(self):
+        packing_vbox = layout.VBox(spacing=20)
+        packing_vbox._widget.set_border_width(6)
+        if self.description:
             label = gtk.Label(description)
             label.set_line_wrap(True)
             label.set_size_request(390, -1)
             label.set_selectable(True)
-            self.packing_vbox.pack_start(label)
-        self.extra_widget = None
-        self.buttons_to_add = []
-        wrappermap.add(self._window, self)
+            packing_vbox._widget.pack_start(label)
+        if self.extra_widget:
+            packing_vbox._widget.pack_start(self.extra_widget._widget)
+        return packing_vbox
 
     def add_button(self, text):
         self.buttons_to_add.append(_stock.get(text, text))
@@ -695,6 +702,8 @@ class Dialog(DialogBase):
 
     def _run(self):
         self.pack_buttons()
+        packing_vbox = self.build_content()
+        self._window.vbox.pack_start(packing_vbox._widget, True, True)
         self._window.show_all()
         response = self._window.run()
         self._window.hide()
@@ -705,14 +714,9 @@ class Dialog(DialogBase):
 
     def destroy(self):
         DialogBase.destroy(self)
-        if hasattr(self, 'packing_vbox'):
-            del self.packing_vbox
 
     def set_extra_widget(self, widget):
-        if self.extra_widget:
-            self.packing_vbox.remove(widget._widget)
         self.extra_widget = widget
-        self.packing_vbox.pack_start(widget._widget)
 
     def get_extra_widget(self):
         return self.extra_widget
@@ -760,7 +764,18 @@ class FileOpenDialog(FileDialogBase):
         return [FilenameType(f) for f in self._files]
 
     def get_filename(self):
-        return FilenameType(self._files[0])
+        if self._files is None:
+            # clicked Cancel
+            return None
+        else:
+            return FilenameType(self._files[0])
+
+    # provide a common interface for file chooser dialogs
+    get_path = get_filename
+    def set_path(self, path):
+        # set_filename puts the whole path in the filename field
+        self._window.set_current_folder(os.path.dirname(path))
+        self._window.set_current_name(os.path.basename(path))
 
 class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
@@ -778,7 +793,18 @@ class FileSaveDialog(FileDialogBase):
         self._window.set_current_name(text)
 
     def get_filename(self):
-        return FilenameType(self._files[0])
+        if self._files is None:
+            # clicked Cancel
+            return None
+        else:
+            return FilenameType(self._files[0])
+
+    # provide a common interface for file chooser dialogs
+    get_path = get_filename
+    def set_path(self, path):
+        # set_filename puts the whole path in the filename field
+        self._window.set_current_folder(os.path.dirname(path))
+        self._window.set_current_name(os.path.basename(path))
 
 class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):
@@ -796,17 +822,30 @@ class DirectorySelectDialog(FileDialogBase):
         self._window.set_filename(text)
 
     def get_directory(self):
-        return FilenameType(self._files[0])
+        if self._files is None:
+            # clicked Cancel
+            return None
+        else:
+            return FilenameType(self._files[0])
+
+    # provide a common interface for file chooser dialogs
+    get_path = get_directory
+    set_path = set_directory
 
 class AboutDialog(Dialog):
     def __init__(self):
         Dialog.__init__(self,
                         _("About %(appname)s") % {
                 'appname': app.config.get(prefs.SHORT_APP_NAME)})
+        self.add_button(_("Close"))
+        self._window.set_has_separator(False)
+
+    def build_content(self):
+        packing_vbox = layout.VBox(spacing=20)
         icon_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
                 resources.share_path('icons/hicolor/128x128/apps/miro.png'),
                 48, 48)
-        self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
+        packing_vbox._widget.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
         if app.config.get(prefs.APP_REVISION_NUM):
             version = "%s (%s)" % (
                 app.config.get(prefs.APP_VERSION),
@@ -817,7 +856,7 @@ class AboutDialog(Dialog):
             '<span size="xx-large" weight="bold">%s %s</span>' % (
                 app.config.get(prefs.SHORT_APP_NAME), version))
         name_label.set_use_markup(True)
-        self.packing_vbox.pack_start(name_label)
+        packing_vbox._widget.pack_start(name_label)
         copyright_text = _(
             '%(copyright)s.  See license.txt file for details.\n'
             '%(trademark)s',
@@ -826,10 +865,10 @@ class AboutDialog(Dialog):
         copyright_label = gtk.Label('<small>%s</small>' % copyright_text)
         copyright_label.set_use_markup(True)
         copyright_label.set_justify(gtk.JUSTIFY_CENTER)
-        self.packing_vbox.pack_start(copyright_label)
+        packing_vbox._widget.pack_start(copyright_label)
 
         # FIXME - make the project url clickable
-        self.packing_vbox.pack_start(
+        packing_vbox._widget.pack_start(
             gtk.Label(app.config.get(prefs.PROJECT_URL)))
 
         contributor_label = gtk.Label(
@@ -837,7 +876,7 @@ class AboutDialog(Dialog):
               "%(version)s:",
               {"version": app.config.get(prefs.APP_VERSION)}))
         contributor_label.set_justify(gtk.JUSTIFY_CENTER)
-        self.packing_vbox.pack_start(contributor_label)
+        packing_vbox._widget.pack_start(contributor_label)
 
         # get contributors, remove newlines and wrap it
         contributors = open(resources.path('CREDITS'), 'r').readlines()
@@ -857,20 +896,18 @@ class AboutDialog(Dialog):
         contrib_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
         contrib_window.add(contrib_view)
         contrib_window.set_size_request(-1, 100)
-        self.packing_vbox.pack_start(contrib_window)
+        packing_vbox._widget.pack_start(contrib_window)
 
         # FIXME - make the project url clickable
         donate_label = gtk.Label(
             _("To help fund continued Miro development, visit the "
               "donation page at:"))
         donate_label.set_justify(gtk.JUSTIFY_CENTER)
-        self.packing_vbox.pack_start(donate_label)
+        packing_vbox._widget.pack_start(donate_label)
 
-        self.packing_vbox.pack_start(
+        packing_vbox._widget.pack_start(
             gtk.Label(app.config.get(prefs.DONATE_URL)))
-
-        self.add_button(_("Close"))
-        self._window.set_has_separator(False)
+        return packing_vbox
 
     def on_contrib_link_event(self, texttag, widget, event, iter_):
         if event.type == gtk.gdk.BUTTON_PRESS:
@@ -889,6 +926,7 @@ class AlertDialog(DialogBase):
         self.set_window(gtk.MessageDialog(type=message_type,
                                           message_format=description))
         self._window.set_title(title)
+        self.description = description
 
     def add_button(self, text):
         self._window.add_button(_stock.get(text, text), 1)

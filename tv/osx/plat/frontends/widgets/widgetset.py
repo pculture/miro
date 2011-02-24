@@ -33,7 +33,8 @@ just imports the widgets from their actual locations.
 """
 
 from miro.plat.frontends.widgets.const import *
-from miro.plat.frontends.widgets.control import TextEntry, SecureTextEntry, SearchTextEntry, VideoSearchTextEntry, MultilineTextEntry
+from miro.plat.frontends.widgets.control import (TextEntry, NumberEntry,
+     SecureTextEntry, SearchTextEntry, VideoSearchTextEntry, MultilineTextEntry)
 from miro.plat.frontends.widgets.control import Checkbox, Button, OptionMenu, RadioButtonGroup, RadioButton
 from miro.plat.frontends.widgets.customcontrol import (CustomButton,
         ContinuousCustomButton, CustomSlider, DragableCustomButton)
@@ -44,7 +45,9 @@ from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment, Splitter, 
 from miro.plat.frontends.widgets.window import Window, MainWindow, Dialog, FileSaveDialog, FileOpenDialog
 from miro.plat.frontends.widgets.window import DirectorySelectDialog, AboutDialog, AlertDialog, PreferencesWindow
 from miro.plat.frontends.widgets.browser import Browser
-from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, SolidBackground, AnimatedImageDisplay, ProgressBar
+from miro.plat.frontends.widgets.simple import (Image, ImageDisplay, Label,
+        SolidBackground, ClickableImageButton, AnimatedImageDisplay,
+        ProgressBar, HLine)
 from miro.plat.frontends.widgets.tableview import (TableView, TableColumn,
         CellRenderer, CustomCellRenderer, ImageCellRenderer,
         CheckboxCellRenderer, InfoListRenderer, InfoListRendererText)

@@ -98,6 +98,9 @@ class Label(Widget):
         self.font_description.set_size(int(baseline * self.scale_factor))
         self.set_attr(pango.AttrFontDesc(self.font_description))
 
+    def get_preferred_width(self):
+        return self._widget.size_request()[0]
+
     def on_style_set(self, widget, old_style):
         self.set_size(self.scale_factor)
 
@@ -244,3 +247,11 @@ class ProgressBar(Widget):
     def _do_pulse(self):
         self._widget.pulse()
         return True
+
+class HLine(Widget):
+    """A horizontal separator. Not to be confused with HSeparator, which is is
+    a DrawingArea, not a Widget.
+    """
+    def __init__(self):
+        Widget.__init__(self)
+        self.set_widget(gtk.HSeparator())
