@@ -71,6 +71,22 @@ epic = DeviceInfo(u'Epic',
                   video_conversion='epic',
                   **defaults)
 
+nookcolor = DeviceInfo(
+    name=u'MyNOOKColor',
+    device_name='B&N Ebook Disk',
+    vendor_id=0x2080,
+    product_id=0x0002,
+    # FIXME - the Nook Color has no way to play videos, so this should
+    # really be disabled.
+    video_conversion='copy',
+    video_path=u'My Files/Video',
+    audio_conversion='mp3',
+    audio_path=u'My Files/Music',
+    audio_types=['.mp3'],
+    mount_instructions=_('Your Nook Color must be connected to your computer '
+                         'and in USB Mode to sync files to it.\n')
+    )
+
 devices = [htc_android_device, nexus_one, motorola_droid, motorola_droid2,
-           galaxy_tab, epic]
+           galaxy_tab, epic, nookcolor]
 
