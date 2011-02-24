@@ -772,7 +772,7 @@ class DeviceItem(metadata.Store):
         data = {}
         for k, v in self.__dict__.items():
             if v is not None and k not in ('device', 'file_type', 'id',
-                                           'video_path'):
+                                           'video_path', '_deferred_update'):
                 if k == 'screenshot' or k == 'thumbnail' or k == 'cover_art':
                     v = filename_to_unicode(v)
                 data[k] = v
