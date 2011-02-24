@@ -405,10 +405,10 @@ class MultifieldRow(object):
             results.update(field.get_results())
         return results
 
-class ItemEditDialog(MainDialog):
+class ItemEditDialog(widgetset.Dialog):
     """Dialog to edit the metadata of one or more items."""
     def __init__(self):
-        MainDialog.__init__(self, _('Edit Item'))
+        widgetset.Dialog.__init__(self, _('Edit Item'))
         self.items = set()
         self.results = {}
         self.fields = []
