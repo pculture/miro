@@ -151,6 +151,7 @@ class Application:
         messages.TrackWatchedFolders().send_to_backend()
         messages.QueryDisplayStates().send_to_backend()
         messages.QueryViewStates().send_to_backend()
+        messages.QueryGlobalState().send_to_backend()
         messages.TrackChannels().send_to_backend()
 
         self.setup_globals()
@@ -1223,6 +1224,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             'search-info',
             'display-states',
             'view-states',
+            'global-state',
         ])
         if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None or \
                 app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
@@ -1524,6 +1526,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_current_view_states(self, message):
         app.widget_state.setup_views(message)
         self._saw_pre_startup_message('view-states')
+
+    def handle_current_global_state(self, message):
+        app.widget_state.setup_global_state(message)
+        self._saw_pre_startup_message('global-state')
 
     def handle_progress_dialog_start(self, message):
         self.progress_dialog = dialogs.ProgressDialog(message.title)

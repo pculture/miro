@@ -31,7 +31,8 @@
 Widgets frontend. See WidgetState design doc.
 """
 
-from miro.messages import SaveDisplayState, SaveViewState, DisplayInfo, ViewInfo
+from miro.messages import (SaveDisplayState, SaveViewState, SaveGlobalState,
+        DisplayInfo, ViewInfo, GlobalInfo)
 
 class WidgetStateStore(object):
     LIST_VIEW = 1
@@ -143,6 +144,9 @@ class WidgetStateStore(object):
         for view in message.views:
             self.views[view.key] = view
 
+    def setup_global_state(self, message):
+        self.global_info = message.info
+
     def _save_display_state(self, display_type, display_id):
         display = self._get_display(display_type, display_id)
         m = SaveDisplayState(display)
@@ -151,6 +155,10 @@ class WidgetStateStore(object):
     def _save_view_state(self, display_type, display_id, view_type):
         view = self._get_view(display_type, display_id, view_type)
         m = SaveViewState(view)
+        m.send_to_backend()
+
+    def _save_global_state(self):
+        m = SaveGlobalState(self.global_info)
         m.send_to_backend()
 
     def _get_display(self, display_type, display_id):
@@ -319,6 +327,14 @@ class WidgetStateStore(object):
             self._save_display_state(display_type, display_id)
         else:
             raise ValueError()
+
+# ViewState properties that are global to the whole frontend
+    def get_item_details_expanded(self):
+        return self.global_info.item_details_expanded
+
+    def set_item_details_expanded(self, expanded):
+        self.global_info.item_details_expanded = expanded
+        self._save_global_state()
 
 # Real ViewState properties:
 

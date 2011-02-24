@@ -830,6 +830,17 @@ class QueryViewStates(BackendMessage):
     """
     pass
 
+class SaveGlobalState(BackendMessage):
+    """Save changes to the global widgets frontend state for the frontend
+    """
+    def __init__(self, global_state_info):
+        self.info = global_state_info
+
+class QueryGlobalState(BackendMessage):
+    """Ask for a CurrentGlobalState message to be sent back.
+    """
+    pass
+
 class SetDeviceType(BackendMessage):
     """
     Tell the backend which specific type of device we're dealing with.
@@ -1658,6 +1669,12 @@ class CurrentDisplayStates(FrontendMessage):
     def __init__(self, display_infos):
         self.displays = display_infos
 
+class CurrentGlobalState(FrontendMessage):
+    """Returns the global state for the widgets frontend
+    """
+    def __init__(self, global_info):
+        self.info = global_info
+
 class CurrentViewStates(FrontendMessage):
     """Returns the states of all Views
     """
@@ -1695,6 +1712,15 @@ class DisplayInfo(object):
             self.list_view_widths = display.list_view_widths.copy()
         else:
             self.list_view_widths = None
+
+class GlobalInfo(object):
+    """Contains the properties that are global to the widgets frontend
+    """
+    def __init__(self, global_info=None):
+        if global_info is None:
+            self.item_details_expanded = True
+        else:
+            self.item_details_expanded = global_info.item_details_expanded
 
 class ViewInfo(object):
     """Contains the properties that are unique to each View

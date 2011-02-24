@@ -1269,6 +1269,201 @@ class ProgressToolbar(widgetset.HBox):
         self._update_label()
         self.setup()
 
+class ItemDetailsBackground(widgetset.Background):
+    """Nearly white background behind the item details widget
+    """
+
+    def draw(self, context, layout):
+        if context.style.use_custom_style:
+            context.set_color((0.9, 0.9, 0.9))
+            context.rectangle(0, 0, context.width, context.height)
+            context.fill()
+
+class ItemDetailsExpanderButton(widgetset.CustomButton):
+    """Button to expand/contract the item details view"""
+
+    BACKGROUND_GRADIENT_TOP = (0.977,) * 3
+    BACKGROUND_GRADIENT_BOTTOM = (0.836,) * 3
+
+    def __init__(self):
+        widgetset.CustomButton.__init__(self)
+        self.expand_image = imagepool.get_surface(resources.path(
+            'images/item-details-expander-arrow.png'))
+        self.contract_image = imagepool.get_surface(resources.path(
+            'images/item-details-expander-arrow-down.png'))
+        self.mode = 'contract'
+
+    def set_mode(self, mode):
+        """Change the mode for the widget.
+
+        possible values "expand" or "contact"
+        """
+        if mode != 'expand' and mode != 'contract':
+            raise ValueError("Unknown mode: %s", mode)
+        self.mode = mode
+        self.queue_redraw()
+
+    def size_request(self, layout):
+        return 30, 13
+
+    def draw(self, context, layout):
+        self.draw_gradient(context)
+        self.draw_icon(context)
+
+    def draw_gradient(self, context):
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color(self.BACKGROUND_GRADIENT_TOP)
+        gradient.set_end_color(self.BACKGROUND_GRADIENT_BOTTOM)
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
+
+    def draw_icon(self, context):
+        if self.mode == 'expand':
+            icon = self.expand_image
+        else:
+            icon = self.contract_image
+        x = int((context.width - icon.width) / 2)
+        y = int((context.height - icon.height) / 2)
+        icon.draw(context, x, y, icon.width, icon.height)
+
+class ItemDetailsWidget(widgetset.VBox):
+    """Widget to display detailed information about an item.
+
+    This usually shows the thumbnail, full description, etc. for the selected
+    item.
+    """
+    PADDING_MIDDLE = 25
+    PADDING_RIGHT = 22
+    PADDING_ABOVE_TITLE = 25
+    PADDING_ABOVE_DESCRIPTION = 8
+    PADDING_ABOVE_EXTRA_INFO = 25
+    IMAGE_SIZE = (215, 215)
+    TEXT_COLOR = (0.176, 0.176, 0.176)
+    TITLE_SIZE = 1.1
+    EXTRA_INFO_SIZE = 0.85
+    # give enough room to display the image, plus some more for the scrollbars
+    EXPANDED_HEIGHT = 240
+
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+        self.allocated_width = -1
+        # content_hbox holds our contents
+        content_hbox = widgetset.HBox(spacing=self.PADDING_MIDDLE)
+        # pack left side
+        self.image_widget = widgetset.ImageDisplay()
+        content_hbox.pack_start(widgetutil.align_top(self.image_widget))
+        # pack right side
+        content_hbox.pack_start(widgetutil.pad(self.build_right(),
+            right=self.PADDING_RIGHT), expand=True)
+        # expander_button is used to expand/collapse our content
+        self.expander_button = ItemDetailsExpanderButton()
+        self.expander_button.connect_weak('clicked', self.on_expander_clicked)
+        self.pack_start(self.expander_button)
+        # pack our content
+        background = ItemDetailsBackground()
+        background.add(widgetutil.align_top(content_hbox))
+        self.scroller = widgetset.Scroller(True, True)
+        self.scroller.add(background)
+        self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
+        # setup initial expanded/collapsed state
+        if app.widget_state.get_item_details_expanded():
+            self.pack_end(self.scroller)
+            self.expander_button.set_mode('contract')
+        else:
+            self.expander_button.set_mode('expand')
+
+    def build_right(self):
+        vbox = widgetset.VBox()
+        self.title_label = self.build_title()
+        self.description_label = self.build_description()
+        self.extra_info_label = self.build_extra_info()
+        vbox.pack_start(widgetutil.pad(self.title_label,
+            top=self.PADDING_ABOVE_TITLE))
+        vbox.pack_start(widgetutil.pad(self.description_label,
+            top=self.PADDING_ABOVE_DESCRIPTION))
+        vbox.pack_start(widgetutil.pad(self.extra_info_label,
+            top=self.PADDING_ABOVE_EXTRA_INFO))
+        return vbox
+
+    def build_title(self):
+        title_label = widgetset.Label()
+        title_label.set_selectable(True)
+        title_label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
+        title_label.set_wrap(True)
+        title_label.set_color(self.TEXT_COLOR)
+        title_label.set_size(self.TITLE_SIZE)
+        title_label.set_bold(True)
+        return title_label
+
+    def build_description(self):
+        description_label = widgetset.Label()
+        description_label.set_selectable(True)
+        description_label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
+        description_label.set_wrap(True)
+        description_label.set_color(self.TEXT_COLOR)
+        return description_label
+
+    def build_extra_info(self):
+        extra_info_label = widgetset.Label()
+        extra_info_label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
+        extra_info_label.set_wrap(True)
+        extra_info_label.set_color(self.TEXT_COLOR)
+        extra_info_label.set_size(self.EXTRA_INFO_SIZE)
+        return extra_info_label
+
+    def on_expander_clicked(self, button):
+        expand = (button.mode == 'expand')
+        self._set_expanded(expand)
+        app.widget_state.set_item_details_expanded(expand)
+
+    def _set_expanded(self, expanded):
+        if expanded:
+            self.pack_end(self.scroller)
+            self.expander_button.set_mode('contract')
+        else:
+            self.remove(self.scroller)
+            self.expander_button.set_mode('expand')
+
+    def set_info(self, info):
+        self.title_label.set_text(info.name)
+        self.description_label.set_text(info.description_stripped[0])
+        self.set_extra_info_text(info)
+        image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
+        self.image_widget.set_image(image)
+        self.set_label_widths()
+
+    def set_extra_info_text(self, info):
+        parts = []
+        for attr in (info.display_date, info.display_duration,
+                info.display_size, info.file_format):
+            if attr:
+                parts.append(attr)
+        self.extra_info_label.set_text(' | '.join(parts))
+
+    def clear(self):
+        self.title_label.set_text('')
+        self.description_label.set_text('')
+        self.extra_info_label.set_text('')
+        self.image_widget.set_image(None)
+
+    def do_size_allocated(self, width, height):
+        if width == self.allocated_width:
+            return
+        self.allocated_width = width
+        self.set_label_widths()
+
+    def set_label_widths(self):
+        # resize our labels so that they take up exactly all of the width
+        if self.image_widget.image is not None:
+            image_width = self.image_widget.image.width
+        else:
+            image_width = 0
+        label_width = (self.allocated_width - image_width -
+                self.PADDING_MIDDLE - self.PADDING_RIGHT)
+        self.title_label.set_size_request(label_width, -1)
+        self.description_label.set_size_request(label_width, -1)
+        self.extra_info_label.set_size_request(label_width, -1)
+
 class ItemContainerWidget(widgetset.VBox):
     """A Widget for displaying objects that contain items (feeds,
     playlists, folders, downloads tab, etc).
@@ -1277,6 +1472,7 @@ class ItemContainerWidget(widgetset.VBox):
     :attribute vbox: VBoxes for standard view and list view
     :attribute list_empty_mode_vbox: VBox for list empty mode
     :attribute toolbar: HeaderToolbar for the widget
+    :attribute item_details: ItemDetailsWidget at the bottom of the widget
     """
 
     def __init__(self, toolbar, view):
@@ -1288,6 +1484,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.vbox[list_view] = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
+        self.item_details = ItemDetailsWidget()
         self.list_empty_mode_vbox = widgetset.VBox()
         self.progress_toolbar = ProgressToolbar()
         self.toolbar = toolbar
@@ -1298,6 +1495,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()
         self.pack_start(self.background, expand=True)
+        self.pack_start(self.item_details)
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False

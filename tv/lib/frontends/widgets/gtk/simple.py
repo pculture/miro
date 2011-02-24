@@ -60,11 +60,17 @@ class ResizedImage(Image):
                       gtk.gdk.INTERP_BILINEAR)
 
 class ImageDisplay(Widget):
-    def __init__(self, image):
+    def __init__(self, image=None):
         Widget.__init__(self)
-        self.image = image
         self.set_widget(gtk.Image())
-        self._widget.set_from_pixbuf(image.pixbuf)
+        self.set_image(image)
+
+    def set_image(self, image):
+        self.image = image
+        if image is not None:
+            self._widget.set_from_pixbuf(image.pixbuf)
+        else:
+            self._widget.clear()
 
 class AnimatedImageDisplay(Widget):
     def __init__(self, path):

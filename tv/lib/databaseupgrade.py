@@ -3149,3 +3149,8 @@ def upgrade146(cursor):
     cursor.execute("ALTER TABLE item ADD COLUMN album_tracks integer")
     # starting a couple commits in the future, ratings are stored as 1-5:
     cursor.execute("UPDATE item SET rating = rating + 1 WHERE rating IS NOT NULL")
+
+def upgrade147(cursor):
+    """Add global widget state"""
+    cursor.execute("CREATE TABLE global_state (id integer PRIMARY KEY, "
+            "item_details_expanded integer)")

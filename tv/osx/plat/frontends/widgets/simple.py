@@ -68,12 +68,17 @@ class ResizedImage(Image):
         self.height = height
 
 class NSImageDisplay (NSView):
-    def initWithImage_(self, image):
+    def init(self):
         self = super(NSImageDisplay, self).init()
-        self.image = image
+        self.image = None
         return self
 
+    def set_image(self, image):
+        self.image = image
+
     def drawRect_(self, dest_rect):
+        if self.image is None:
+            return
         source_rect = self.calculateSourceRectFromDestRect_(dest_rect)
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
@@ -87,11 +92,13 @@ class NSImageDisplay (NSView):
         the rect from our image will be smaller than dest_rect.
         """
         view_size = self.frame().size
-        source_width = (dest_rect.size.width * self.image.width /
-                view_size.width)
-        source_height = (dest_rect.size.height * self.image.height /
-                view_size.height)
-        return NSRect(NSPoint(0, 0), NSRect(source_width, source_height))
+        x_scale = float(self.image.width) / view_size.width
+        y_scale = float(self.image.height) / view_size.height
+
+        return NSMakeRect(dest_rect.origin.x * x_scale,
+                dest_rect.origin.y * y_scale,
+                dest_rect.size.width * x_scale,
+                dest_rect.size.height * y_scale)
 
     def mouseDown_(self, event):
         wrappermap.wrapper(self).emit('clicked')
@@ -101,21 +108,21 @@ class ImageDisplay(Widget):
     def __init__(self, image=None):
         Widget.__init__(self)
         self.create_signal('clicked')
-        self.image = image
-        self.view = None
-        if image:
-            self.setup_image()
+        self.view = NSImageDisplay.alloc().init()
+        self.set_image(image)
 
-    def setup_image(self):
-        self.image.nsimage.setCacheMode_(NSImageCacheNever)
-        if not self.view:
-            self.view = NSImageDisplay.alloc().initWithImage_(self.image)
-        else:
-            self.view.image = self.image
-            self.view.setNeedsDisplay_(YES)
+    def set_image(self, image):
+        self.image = image
+        if image is not None:
+            image.nsimage.setCacheMode_(NSImageCacheNever)
+        self.view.set_image(image)
+        self.invalidate_size_request()
 
     def calc_size_request(self):
-        return self.image.width, self.image.height
+        if self.image is not None:
+            return self.image.width, self.image.height
+        else:
+            return (0, 0)
 
 class ClickableImageButton(ImageDisplay):
     def __init__(self, image_path, max_width=None, max_height=None):

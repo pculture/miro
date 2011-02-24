@@ -364,7 +364,7 @@ from miro.iconcache import IconCache
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.tabs import TabOrder
 from miro.theme import ThemeHistory
-from miro.widgetstate import DisplayState, ViewState
+from miro.widgetstate import DisplayState, ViewState, GlobalState
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
@@ -717,6 +717,13 @@ class DisplayStateSchema(DDBObjectSchema):
     def handle_malformed_list_view_widths(value):
         return None
 
+class GlobalStateSchema(DDBObjectSchema):
+    klass = GlobalState
+    table_name = 'global_state'
+    fields = DDBObjectSchema.fields + [
+        ('item_details_expanded', SchemaBool()),
+    ]
+
 class DBLogEntrySchema(DDBObjectSchema):
     klass = DBLogEntry
     table_name = 'db_log_entry'
@@ -748,7 +755,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 146
+VERSION = 147
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -758,6 +765,6 @@ object_schemas = [
     ChannelGuideSchema, ManualFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
-    TabOrderSchema, ThemeHistorySchema, DisplayStateSchema,
+    TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
     DBLogEntrySchema, ViewStateSchema,
 ]

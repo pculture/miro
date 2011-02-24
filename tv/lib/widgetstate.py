@@ -31,7 +31,7 @@
 See WidgetState design doc in wiki for details.
 """
 
-from miro.database import DDBObject
+from miro.database import DDBObject, ObjectNotFoundError
 
 STANDARD_VIEW = 0
 LIST_VIEW = 1
@@ -63,3 +63,16 @@ class ViewState(DDBObject):
         self.display_id = key[1]
         self.view_type = key[2]
         self.scroll_position = None
+
+class GlobalState(DDBObject):
+    """Properties that apply globally"""
+
+    @classmethod
+    def get_singleton(cls):
+        try:
+            return cls.make_view().get_singleton()
+        except ObjectNotFoundError:
+            return cls()
+
+    def setup_new(self):
+        self.item_details_expanded = True

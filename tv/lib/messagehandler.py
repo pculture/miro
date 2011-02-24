@@ -52,7 +52,7 @@ from miro import singleclick
 from miro import subscription
 from miro import tabs
 from miro import opml
-from miro.widgetstate import DisplayState, ViewState
+from miro.widgetstate import DisplayState, ViewState, GlobalState
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
@@ -1557,7 +1557,13 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state = self._get_view_state(info.key)
         state.scroll_position = info.scroll_position
         state.signal_change()
-        
+
+    def handle_save_global_state(self, message):
+        info = message.info
+        state = GlobalState.get_singleton()
+        state.item_details_expanded = info.item_details_expanded
+        state.signal_change()
+
     def _get_display_states(self):
         states = []
         for display in DisplayState.make_view():
@@ -1582,6 +1588,10 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_query_view_states(self, message):
         states = self._get_view_states()
         m = messages.CurrentViewStates(states)
+        m.send_to_frontend()
+
+    def handle_query_global_state(self, message):
+        m = messages.CurrentGlobalState(GlobalState.get_singleton())
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):

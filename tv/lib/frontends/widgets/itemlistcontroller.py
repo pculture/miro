@@ -567,6 +567,15 @@ class ItemListController(object):
 
     def on_selection_changed(self, item_view, view_type):
         app.menu_manager.update_menus()
+        self.update_item_details()
+
+    def update_item_details(self):
+        selection = self.get_selection()
+        if not selection:
+            self.widget.item_details.clear()
+        else:
+            # any selected info will do, just pick the first one in the list
+            self.widget.item_details.set_info(selection[0])
 
     def save_selection(self):
         selection = self.current_item_view.get_selection_as_strings()
