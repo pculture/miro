@@ -107,6 +107,13 @@ class DeviceInfo(BaseDeviceInfo):
         self.name = name
         self.update(kwargs)
 
+    def __repr__(self):
+        return "<DeviceInfo %r %r %r %r>" % (
+            self.__dict__.get("name", None),
+            self.__dict__.get("device_name", None),
+            self.__dict__.get("vendor_id", None),
+            self.__dict__.get("product_id", None))
+
 class MultipleDeviceInfo(BaseDeviceInfo):
     """
     Like DeviceInfo, but represents a device we can't figure out just from the
@@ -177,7 +184,7 @@ class DeviceManager(object):
             if info.product_id is None or '*' in info.device_name:
                 # generic device
                 if info.product_id is not None or '*' not in info.device_name:
-                    logging.debug('invalid generic device %s' % info.name)
+                    logging.debug('invalid generic device %s', info.name)
                 else:
                     self.generic_devices.append(info)
                     self.generic_devices_by_id[info.vendor_id] = info
@@ -320,7 +327,7 @@ class DeviceManager(object):
         if not self._is_hidden(info):
             self._send_connect(info)
         else:
-            logging.debug('ignoring %r' % info.name)
+            logging.debug('ignoring %r', info)
 
     def _send_connect(self, info):
         if info.mount:
@@ -451,8 +458,8 @@ class DeviceSyncManager(object):
                     else:
                         self._add_item(final_path, info)
                 else:
-                    logging.debug('unable to detect format of %r: %s' % (
-                            info.video_path, info.file_format))
+                    logging.debug('unable to detect format of %r: %s',
+                                  info.video_path, info.file_format)
                     self.start_conversion(audio_conversion,
                                           info,
                                           self.audio_target_folder)
@@ -678,7 +685,7 @@ class DeviceItem(metadata.Store):
         try:
             return datetime.fromtimestamp(self.release_date)
         except ValueError:
-            logging.warn('DeviceItem: release date %s invalid' % 
+            logging.warn('DeviceItem: release date %s invalid',
                           self.release_date)
             return datetime.now()
            
@@ -687,7 +694,7 @@ class DeviceItem(metadata.Store):
         try:
             return datetime.fromtimestamp(self.creation_time)
         except ValueError:
-            logging.warn('DeviceItem: creation time %s invalid' % 
+            logging.warn('DeviceItem: creation time %s invalid',
                           self.creation_time)
             return datetime.now()
 
@@ -834,7 +841,7 @@ def load_database(mount):
         try:
             db = json.load(file(file_name, 'rb'))
         except ValueError:
-            logging.exception('error loading JSON db on %s' % mount)
+            logging.exception('error loading JSON db on %s', mount)
             db = {}
     ddb = DeviceDatabase(db)
     ddb.connect('changed', write_database, mount)

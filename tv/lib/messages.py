@@ -1595,6 +1595,9 @@ class DeviceInfo(object):
         self.info = device_info
         self.name = database.get('settings', {}).get('name', device_info.name)
 
+    def __repr__(self):
+        return "<miro.messages.DeviceInfo %r %r>" % (self.id, self.info)
+
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.
     """
