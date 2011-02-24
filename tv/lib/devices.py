@@ -547,7 +547,7 @@ class DeviceSyncManager(object):
             device=self.device,
             file_type=item_info.file_type,
             video_path=new_path[len(self.device.mount):],
-            name=item_info.name,
+            title=item_info.name,
             feed_name=item_info.feed_name,
             feed_url=item_info.feed_url,
             description=item_info.description,
@@ -644,11 +644,14 @@ class DeviceItem(metadata.Store):
         metadata.Store.setup_new(self)
         self.__dict__.update(kwargs)
 
+        if 'name' in kwargs: # used to be called 'name'
+            self.title = self.name
+
         if isinstance(self.video_path, unicode):
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         if isinstance(self.screenshot, unicode):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
-        if self.title is None:
+        if not self.title:
             self.title = filename_to_unicode(os.path.basename(self.video_path))
         if self.file_format is None:
             self.file_format = filename_to_unicode(
