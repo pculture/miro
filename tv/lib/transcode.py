@@ -121,10 +121,18 @@ class TranscodeSinkServer(SocketServer.TCPServer):
 class TranscodeRequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         while True:
-            d = self.request.recv(8192)
-            self.server.obj.data_callback(d)
-            if not d:
-                return
+            try:
+                d = self.request.recv(8192)
+                self.server.obj.data_callback(d)
+                if not d:
+                    return
+            except socket.err, (err, errstring):
+                if err == errno.EINTR:
+                    continue
+                logging.info('TranscodeRequestHandler err %d desc = %s',
+                             err, errstring)
+                # Signal EOF
+                self.server.obj.data_callback('')
 
 # How does the transcoding pipeline work?
 #
