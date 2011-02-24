@@ -438,6 +438,7 @@ class TranscodeObject(object):
             self.segmenter_handle.kill()
             # Wait for segmenter to die so that poll() will return not None
             self.segmenter_handle.wait()
+            self.ffmpeg_handle.wait()
             logging.info('TranscodeObject reaping sink')
             self.sink_thread.join()
             logging.info('TranscodeObject sink reaped')
