@@ -500,9 +500,9 @@ class DeviceSyncManager(object):
             if (item_info.file_url and
                 existing.get('url') == item_info.file_url):
                 return True
-            elif ((item_info.name, item_info.description, item_info.size,
+            elif ((item_info.title, item_info.description, item_info.size,
                    item_info.duration) ==
-                  (existing.get('name'), existing.get('description'),
+                  (existing.get('title'), existing.get('description'),
                    existing.get('size'), existing.get('duration'))):
                 # if a bunch of qualities are the same, we'll call it close
                 # enough
@@ -647,8 +647,8 @@ class DeviceItem(metadata.Store):
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         if isinstance(self.screenshot, unicode):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
-        if self.name is None:
-            self.name = filename_to_unicode(os.path.basename(self.video_path))
+        if self.title is None:
+            self.title = filename_to_unicode(os.path.basename(self.video_path))
         if self.file_format is None:
             self.file_format = filename_to_unicode(
                 os.path.splitext(self.video_path)[1])
