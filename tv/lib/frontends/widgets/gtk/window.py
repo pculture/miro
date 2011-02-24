@@ -674,7 +674,7 @@ class Dialog(DialogBase):
         packing_vbox = layout.VBox(spacing=20)
         packing_vbox._widget.set_border_width(6)
         if self.description:
-            label = gtk.Label(description)
+            label = gtk.Label(self.description)
             label.set_line_wrap(True)
             label.set_size_request(390, -1)
             label.set_selectable(True)
