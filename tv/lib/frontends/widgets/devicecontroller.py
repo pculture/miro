@@ -322,9 +322,9 @@ class SyncWidget(widgetset.VBox):
         self.device = device
         sync = self.device.database.setdefault('sync', {})
         if self.file_type not in sync:
-            sync[self.file_type] = {}
-
-        this_sync = sync[self.file_type]
+            this_sync = {}
+        else:
+            this_sync = sync[self.file_type]
         self.sync_library.set_checked(
             this_sync.get('enabled', False))
         # OS X doesn't send the callback when we toggle it manually (#15392)
@@ -369,8 +369,8 @@ class SyncWidget(widgetset.VBox):
             self.feed_list.enable()
         else:
             self.feed_list.disable()
-        value = self.device.database['sync'][self.file_type].get('enabled',
-                                                                 None)
+        this_sync = self.device.database['sync'].get(self.file_type, {})
+        value = this_sync.get('enabled', None)
         if not self.bulk_change and checked != value:
             message = messages.ChangeDeviceSyncSetting(self.device,
                                                        self.file_type,
@@ -553,7 +553,8 @@ class DeviceSettingsWidget(widgetset.Background):
             value = widget.get_text()
         elif setting == 'always_show':
             value = widget.get_checked()
-        if value != self.device.database['settings'][setting]:
+        if value != self.device.database.get('settings', {}).get(setting,
+                                                                 not value):
             message = messages.ChangeDeviceSetting(self.device, setting, value)
             message.send_to_backend()
 

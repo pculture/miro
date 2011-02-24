@@ -1601,7 +1601,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_change_device_sync_setting(self, message):
         db = message.device.database
-        db['sync'][message.file_type][message.setting] = message.value
+        this_sync = db['sync'].setdefault(message.file_type, {})
+        this_sync[message.setting] = message.value
 
     def handle_change_device_setting(self, message):
         message.device.database.setdefault('settings', {})
@@ -1630,8 +1631,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         sync = message.device.database['sync']
         views = []
         infos = set()
-        if sync['podcasts']['enabled']:
-            for url in sync['podcasts']['items']:
+        if sync.setdefault('podcasts', {}).get('enabled', False):
+            for url in sync['podcasts'].setdefault('items', []):
                 feed_ = lookup_feed(url)
                 if feed is not None:
                     if sync['podcasts']['all']:
@@ -1640,8 +1641,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                         view = feed_.unwatched_items
                     views.append(view)
 
-        if sync['playlists']['enabled']:
-            for name in sync['playlists']['items']:
+        if sync.setdefault('playlists', {}).get('enabled', False):
+            for name in sync['playlists'].setdefault('items', []):
                 try:
                     playlist_ = SavedPlaylist.get_by_title(name)
                 except database.ObjectNotFoundError:
