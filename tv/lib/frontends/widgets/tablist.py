@@ -725,7 +725,7 @@ class DeviceTabListHandler(object):
         return di
 
     def _add_fake_tabs(self, info):
-        self.doing_change = True
+        self.tablist.doing_change = True
         HideableTabList.add(self.tablist,
                             self._fake_info(info, 'video', _('Video')),
                             info.id)
@@ -734,7 +734,7 @@ class DeviceTabListHandler(object):
                             info.id)
         self.tablist.model_changed()
         self.tablist.set_folder_expanded(info.id, True)
-        self.doing_change = False
+        self.tablist.doing_change = False
 
     def add(self, info):
         HideableTabList.add(self.tablist, info)
