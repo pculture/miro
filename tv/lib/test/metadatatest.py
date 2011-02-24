@@ -28,4 +28,11 @@ class Metadata(MiroTestCase):
 
         original_dict = info
         after_round_trip = store.get_iteminfo_metadata()
-        self.assertDictEqual(original_dict, after_round_trip)
+
+        if hasattr(self, 'assertDictEqual'):
+            # python2.7 includes helpful details
+            self.assertDictEqual(original_dict, after_round_trip)
+        else:
+            original_items = sorted(original_dict.items())
+            round_trip_items = sorted(after_round_trip.items())
+            self.assertEqual(original_items, round_trip_items)
