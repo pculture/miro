@@ -526,7 +526,7 @@ class DeviceSettingsWidget(widgetset.Background):
             else:
                 index = self.audio_conversion_values.index(value)
             self.boxes['%s_conversion' % conversion].set_selected(index)
-        if hasattr(device.info, 'generic'):
+        if getattr(device.info, 'generic', False):
             self.boxes['always_show'].enable()
             self.boxes['always_show'].set_checked(
                 device_settings.get('always_show', False))
