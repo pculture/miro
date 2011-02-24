@@ -754,17 +754,18 @@ class DeviceTabListHandler(object):
         if info.mount and not info.info.has_multiple_devices and \
                 not tablist.get_child_count(info.id):
             self._add_fake_tabs(info)
-        elif not info.mount and tablist.get_child_count(info.id):
-            parent_iter = tablist.iter_map[info.id]
-            next_iter = model.child_iter(parent_iter)
-            while next_iter is not None:
-                iter = next_iter
-                next_iter = model.next_iter(next_iter)
-                model.remove(iter)
-        else: # also update the subtabs
-            for fake in self._get_fake_infos(info):
-                HideableTabList.update(tablist, fake)
-                messages.DeviceChanged(fake).send_to_frontend()
+        elif tablist.get_child_count(info.id):
+            if not info.mount:
+                parent_iter = tablist.iter_map[info.id]
+                next_iter = model.child_iter(parent_iter)
+                while next_iter is not None:
+                    iter = next_iter
+                    next_iter = model.next_iter(next_iter)
+                    model.remove(iter)
+            else: # also update the subtabs
+                for fake in self._get_fake_infos(info):
+                    HideableTabList.update(tablist, fake)
+                    messages.DeviceChanged(fake).send_to_frontend()
         HideableTabList.update(self.tablist, info)
 
     def init_info(self, info):
