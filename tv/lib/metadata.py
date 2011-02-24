@@ -45,7 +45,7 @@ class Source(object):
         return dict(
             name = self.get_title(),
             title_tag = self.title_tag,
-            description = self.description,
+            description = self.get_description(),
             album = self.album,
             album_artist = self.album_artist,
             artist = self.artist,
@@ -81,6 +81,10 @@ class Source(object):
             return self.title
         else:
             return self.title_tag
+
+    @returns_unicode
+    def get_description(self):
+        return self.description
 
 def metadata_setter(attribute, type_=None):
     def set_metadata(self, value, _bulk=False):
