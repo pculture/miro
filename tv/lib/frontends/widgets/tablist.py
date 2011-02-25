@@ -815,6 +815,7 @@ class SharingTabListHandler(object):
             self.tablist.start_updating(info.id)
         else:
             self.tablist.stop_updating(info.id)
+        HideableTabList.update(self.tablist, info)
 
     def init_info(self, info):
         info.type = u'sharing'
