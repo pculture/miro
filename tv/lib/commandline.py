@@ -30,7 +30,7 @@
 """``miro.commandline`` -- This modules handles the parsing of
 files/URLs passed to Miro on the command line.
 
-Frontends should call ``set_ommand_line_args()`` passing it a list of
+Frontends should call ``set_command_line_args()`` passing it a list of
 arguments that the users gives.  This should just be suspected
 torrents/videos, not things like ``--help``, ``--version``, etc.
 

@@ -28,7 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 """xulrunnerbrowser -- Pyrex module to implement an embedded XULRunner
-broswer.
+browser.
 """
 
 import logging

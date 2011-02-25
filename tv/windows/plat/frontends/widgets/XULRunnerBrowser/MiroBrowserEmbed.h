@@ -130,7 +130,7 @@ public:
     // document and when all network activity for a document is finished
     // new URI.  It should return 0 if the URI shouldn't be loaded.
     void SetNetworkCallback(networkCallback callback, void* data);
-    // Destroy the broswer
+    // Destroy the browser
     void destroy();
 
 protected:
