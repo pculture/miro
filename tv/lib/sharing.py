@@ -628,7 +628,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                        [self.share], [])
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.  Only add
-        # those that are part of o the base playlist.
+        # those that are part of the base playlist.
         for item in self.items:
             if item.playlist_id == self.base_playlist:
                 self.emit('added', item)
