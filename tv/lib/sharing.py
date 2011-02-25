@@ -474,7 +474,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def __init__(self, share):
         self.client = None
         self.share = share
-        self.items = []
+        self.items = dict()
         self.playlists = []
         self.base_playlist = None    # Temporary
         eventloop.call_in_thread(self.client_connect_callback,
@@ -544,8 +544,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         name = self.share.name
         host = self.share.host
         port = self.share.port
-        returned_items = []
-        returned_playlists = []
         self.client = libdaap.make_daap_client(host, port)
         if not self.client.connect():
             # XXX API does not allow us to send more detailed results
@@ -563,6 +561,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         playlists = self.client.playlists()
         if playlists is None:
             raise IOError('Cannot get playlist')
+        returned_playlists = []
         for k in playlists.keys():
             is_base_playlist = None
             if playlists[k].has_key('daap.baseplaylist'):
@@ -595,12 +594,14 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
         items = self.client.items(playlist_id=self.base_playlist,
                                   meta=DAAP_META)
-        # XXX FIXME: organize this much better with a dict from ground up
-        itemdict = dict()    # XXX temporary band-aid
+        itemdict = dict()
+        returned_playlist_items = dict()
+        returned_items = []
         for itemkey in items.keys():
             item = self.sharing_item(items[itemkey], self.base_playlist)
             itemdict[itemkey] = items[itemkey]
             returned_items.append(item)
+        returned_playlist_items[self.base_playlist] = returned_items
 
         # Have to save the items from the base playlist first, because
         # Rhythmbox will get lazy and only send the ids around (expecting
@@ -608,15 +609,18 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         for k in playlists.keys():
             if k == self.base_playlist:
                 continue
+            returned_items = []
             items = self.client.items(playlist_id=k, meta=DAAP_META)
             for itemkey in items.keys():
                 rawitem = itemdict[itemkey]
                 item = self.sharing_item(rawitem, k)
                 returned_items.append(item)
+            returned_playlist_items[k] = returned_items
+        print 'BASE PLAYLIST', self.base_playlist
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
-        return (returned_items, returned_playlists)
+        return (returned_playlist_items, returned_playlists)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, args):
@@ -629,9 +633,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.  Only add
         # those that are part of the base playlist.
-        for item in self.items:
-            if item.playlist_id == self.base_playlist:
-                self.emit('added', item)
+        for item in self.items[self.base_playlist]:
+            self.emit('added', item)
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
@@ -639,14 +642,15 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
     def get_items(self, playlist_id=None):
-        # XXX SLOW!  And could possibly do with some refactoring.
-        if not playlist_id and self.base_playlist is not None:
-            return [item for item in self.items if
-                    item.playlist_id == self.base_playlist]
-        else:
-            return [item for item in self.items if  
-                    item.playlist_id == playlist_id]
-      
+        # NB: keep this in a try/except construct because this could be
+        # called before the connection actually has succeeded.
+        try:
+            if playlist_id is None:
+                return self.items[self.base_playlist]
+            else:
+                return self.items[playlist_id]
+        except KeyError:
+            return []
 
 class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It
