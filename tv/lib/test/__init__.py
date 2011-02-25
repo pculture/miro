@@ -164,10 +164,14 @@ class MiroTestRunner(unittest.TextTestRunner):
 
 def run_tests():
     failfast = False
+    verbosity = 1
     if "--failfast" in sys.argv:
         sys.argv.remove("--failfast")
         failfast = True
+    while "-v" in sys.argv:
+        sys.argv.remove("-v")
+        verbosity += 1
     from miro import test
     unittest.main(
         module=test, testLoader=MiroTestLoader(),
-        testRunner=MiroTestRunner(failfast=failfast))
+        testRunner=MiroTestRunner(failfast=failfast, verbosity=verbosity))
