@@ -54,6 +54,14 @@ from miro.plat import resources
 from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
                              utf8_to_filename)
 
+def unicode_to_path(path):
+    """
+    Convert a Unicode string into a file path.  We don't do any of the string
+    replace nonsense that unicode_to_filename does.  We also convert separators
+    into the appropriate type for the platform.
+    """
+    return utf8_to_filename(path.encode('utf8')).replace('/', os.path.sep)
+
 class BaseDeviceInfo(object):
     """
     Base class for device information.
@@ -62,9 +70,9 @@ class BaseDeviceInfo(object):
     def update(self, kwargs):
         self.__dict__.update(kwargs)
         if 'audio_path' in kwargs:
-            self.audio_path = unicode_to_filename(self.audio_path)
+            self.audio_path = unicode_to_path(self.audio_path)
         if 'video_path' in kwargs:
-            self.video_path = unicode_to_filename(self.video_path)
+            self.video_path = unicode_to_path(self.video_path)
 
     def __getattr__(self, key):
         try:
@@ -429,7 +437,7 @@ class DeviceSyncManager(object):
         if device_path is None:
             return getattr(self.device.info, setting)
         else:
-            return unicode_to_filename(device_path)
+            return unicode_to_path(device_path)
 
     def set_device(self, device):
         self.device = device
@@ -546,7 +554,8 @@ class DeviceSyncManager(object):
     def _add_item(self, final_path, item_info):
         dirname, basename = os.path.split(final_path)
         _, extension = os.path.splitext(basename)
-        new_basename = "%s%s" % (unicode_to_filename(item_info.name),
+        new_basename = "%s%s" % (unicode_to_filename(item_info.name,
+                                                     self.device.mount),
                                  extension)
         new_path = os.path.join(dirname, new_basename)
         os.rename(final_path, new_path)
