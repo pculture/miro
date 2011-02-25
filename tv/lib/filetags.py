@@ -46,7 +46,8 @@ METADATA_VERSION = 5
 
 TAG_MAP = {
     'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
-    'album_artist': ('albumartist', 'album artist', 'tpe2'),
+    'album_artist': ('aart', 'albumartist', 'album artist', 'tpe2', 'band',
+        'ensemble'),
     'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
         'composer', u'\uFFFDart', 'album artist'),
     'drm': ('itunmovi',),
