@@ -21,6 +21,7 @@ apt-get install \
     libsoup2.4-dev
 
 apt-get install \
+    libavcodec-dev \
     libavformat-dev \
     libavutil-dev \
     libavahi-compat-libdnssd1 \

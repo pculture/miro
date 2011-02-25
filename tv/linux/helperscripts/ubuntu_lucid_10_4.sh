@@ -21,6 +21,7 @@ aptitude install \
     libsoup2.4-dev
 
 aptitude install \
+    libavcodec-dev \
     libavformat-dev \
     libavutil-dev \
     libavahi-compat-libdnssd1 \

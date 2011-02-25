@@ -464,6 +464,7 @@ class build(distutils.command.build.build):
         cc = ccompiler.new_compiler()
         cc.add_library('avutil')
         cc.add_library('avformat')
+        cc.add_library('avcodec')
         output_dir = os.path.join(self.build_base, 'miro-segmenter')
         segmenter_objs = cc.compile([segmenter_src],
                                     output_dir=output_dir)
