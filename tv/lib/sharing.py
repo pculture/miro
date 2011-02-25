@@ -191,7 +191,7 @@ class SharingItem(metadata.Source):
         def daap_handler(path, host, port):
             return 'http://%s:%s%s' % (host, port, path)
         fn = FilenameType(self.video_path)
-        fn.set_urlize_handler(daap_handler, [self.host, self.port])
+        fn.set_urlize_handler(daap_handler, [self.address, self.port])
         return fn
 
     def get_url(self):
@@ -512,6 +512,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                    kwargs['enclosure'])
         kwargs['host'] = self.client.host
         kwargs['port'] = self.client.port
+        kwargs['address'] = self.address
         kwargs['file_type'] = file_type
         kwargs['playlist_id'] = playlist_id
 
@@ -550,6 +551,13 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             # XXX API does not allow us to send more detailed results
             # back to the poor user.
             raise IOError('Cannot connect')
+        # XXX Dodgy: Windows name resolution sucks so we get a free ride
+        # off the main connection with getpeername(), so we can use the IP
+        # value to connect subsequently.   But we have to poke into the 
+        # semi private data structure to get the socket structure.  
+        # Lousy Windows and Python API.
+        address, port = self.client.conn.sock.getpeername()
+        self.address = address
         if not self.client.databases():
             raise IOError('Cannot get database')
         playlists = self.client.playlists()
