@@ -40,7 +40,6 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import style
-from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 class DropHandler(signals.SignalEmitter):
     def __init__(self, playlist_id, item_list, item_views, sorter):

@@ -29,10 +29,7 @@
 
 """Controller for Feeds."""
 
-import logging
-
 from miro import app
-from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import feedsettingspanel

@@ -39,7 +39,6 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets.dialogs import MainDialog
 #from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil

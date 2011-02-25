@@ -27,13 +27,13 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.widgets.quitconfirmation -- Dialog to be shown to the
-user when user tries to quit with active downloads or conversionsquitconfirmation in progress.
+"""miro.frontends.widgets.quitconfirmation -- Dialog to be shown to
+the user when user tries to quit with active downloads or
+conversionsquitconfirmation in progress.
 """
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import prefpanel
 from miro.plat.frontends.widgets import widgetset
-from miro import prefs
 
 def rundialog(title, description, cbx_label, pref_key):
     window = dialogs.MainDialog(title, description)

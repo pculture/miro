@@ -42,9 +42,7 @@ from miro.dialogs import BUTTON_DONE
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import separator
-from miro.frontends.widgets import style
 from miro.frontends.widgets.dialogs import MainDialog
-from miro.frontends.widgets.widgetutil import build_control_line
 from miro.util import clamp_text, returns_unicode
 
 @returns_unicode

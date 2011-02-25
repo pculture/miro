@@ -39,17 +39,11 @@ They also handle temporarily filtering out items based the user's search
 terms.
 """
 
-import re
 import sys
-import unicodedata
 import logging
 
 from miro import app
-from miro import search
-from miro import signals
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
-from miro.plat.utils import filename_to_unicode
-from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 
 

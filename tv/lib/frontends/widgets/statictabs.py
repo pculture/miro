@@ -29,10 +29,7 @@
 
 """statictabs.py -- Tabs that are always present."""
 
-from miro import app, prefs
 from miro.gtcache import gettext as _
-from miro.frontends.widgets import browser
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 
 class StaticTab(object):

@@ -32,8 +32,6 @@ code for the "Add to Playlist" dialog.
 """
 
 from miro.gtcache import gettext as _
-from miro import searchengines
-
 from miro.util import clamp_text, name_sort_key
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil

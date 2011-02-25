@@ -36,7 +36,6 @@ from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro import prefs
 from miro.frontends.widgets import style
-from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
 from miro.frontends.widgets import widgetutil

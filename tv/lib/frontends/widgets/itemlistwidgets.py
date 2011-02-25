@@ -40,7 +40,6 @@ forward those signals on.  It's the job of ItemListController
 subclasses to handle the logic involved.
 """
 
-import logging
 
 from miro import app
 from miro import prefs
@@ -57,7 +56,6 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
-from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import get_available_bytes_for_movies
 
 class TitleDrawer(widgetset.DrawingArea):

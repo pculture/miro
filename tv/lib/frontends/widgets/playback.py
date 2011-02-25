@@ -28,7 +28,6 @@
 # statement from all source files in the program, then also delete it here.
 
 import logging
-import os
 from random import randrange
 from random import shuffle
 

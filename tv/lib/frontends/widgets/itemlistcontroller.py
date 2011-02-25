@@ -39,16 +39,13 @@ cases.
 """
 
 import logging
-import os
 from urlparse import urljoin
 
 from miro import app
 from miro import displaytext
 from miro import messages
 from miro import subscription
-from miro import prefs
 from miro.gtcache import gettext as _
-from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemtrack

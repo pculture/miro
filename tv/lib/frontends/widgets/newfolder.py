@@ -32,15 +32,10 @@ code for adding a new folder.
 """
 
 from miro.gtcache import gettext as _
-from miro import searchengines
 
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_FOLDER
-
-from miro import app
-from miro import feed
 
 import logging
 

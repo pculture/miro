@@ -30,18 +30,15 @@
 """Constants that define the look-and-feel."""
 
 import math
-import os
 import logging
 
 from miro import app
-from miro import util
 from miro import displaytext
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
-from miro.plat import utils
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import file_navigator_name

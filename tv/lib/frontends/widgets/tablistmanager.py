@@ -33,7 +33,6 @@ from miro import app
 from miro import prefs
 
 from miro.frontends.widgets import tablist
-from miro.plat.frontends.widgets import widgetset
 
 class TabListManager(object):
     def __init__(self):

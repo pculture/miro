@@ -28,16 +28,6 @@
 
 """playlist.py -- Handle displaying a playlist."""
 
-import itertools
-import threading
-
-from miro import app
-from miro import messages
-from miro import signals
-from miro.gtcache import gettext as _
-from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import itemcontextmenu
-from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemtrack

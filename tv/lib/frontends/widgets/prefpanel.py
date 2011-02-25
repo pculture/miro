@@ -54,18 +54,16 @@ from miro import app
 from miro import messages
 from miro import prefs
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import cellpack, widgetutil, window
+from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
-from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.gtcache import gettext as _
 from miro import gtcache
-from miro.frontends.widgets import dialogs
 
 # Note: we do an additional import from prefpanelset half way down the file.
 

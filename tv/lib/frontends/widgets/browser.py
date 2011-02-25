@@ -46,7 +46,6 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import separator
 from miro.gtcache import gettext as _
 
 class BrowserToolbarBackground(widgetset.Background):
