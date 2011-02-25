@@ -63,8 +63,10 @@ def check_url_exists(url):
         and False otherwise.
     """
     manual_feed = feed.Feed.get_manual_feed()
+    #item urls have the + sign escaped
+    escaped_url = url.replace('+', '%20')
     for i in manual_feed.items:
-        if i.get_url() == url:
+        if i.get_url() == escaped_url:
             title = _("Download already exists")
             text1 = _("That URL is already an external download.")
             download_state = None
