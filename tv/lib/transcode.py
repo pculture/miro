@@ -430,7 +430,6 @@ class TranscodeObject(object):
         # thread), if we clear first, it's ok because that'd have woken it up
         # anyway, and in case they get there first then it's ok too, since
         # we end up unblocking it anyway.
-        self.chunk_throttle.set()
         logging.info('TranscodeObject.shutdown')
         self.in_shutdown = True
         try:
@@ -440,6 +439,7 @@ class TranscodeObject(object):
             self.segmenter_handle.wait()
             self.ffmpeg_handle.wait()
             logging.info('TranscodeObject reaping sink')
+            self.chunk_throttle.set()
             self.sink_thread.join()
             logging.info('TranscodeObject sink reaped')
             # Set these last: sink thread relies on it.
@@ -448,6 +448,7 @@ class TranscodeObject(object):
             self.sink_thread = None
         # Catch AttributeError in case it's not actually there, or OSError,
         # in case it doesn't exist anymore.  We don't really care.
-        except (OSError, AttributeError):
+        # Catch RuntimeError in case sink_thread hasn't been started yet.
+        except (RuntimeError, OSError, AttributeError):
             pass
         self.in_shutdown = False
