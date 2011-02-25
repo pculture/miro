@@ -879,7 +879,7 @@ class TableView(Widget):
 
     def set_selection_as_strings(self, selected):
         """Given a list of selection strings, selects each iter represented by
-        the strings. Returns the number of rows successfully selected.
+        the strings.
         
         There's no straightforward way to wait until after the model has been
         populated to call this method, so here we actually just make a note of

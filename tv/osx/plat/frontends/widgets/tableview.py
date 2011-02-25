@@ -32,6 +32,7 @@ associated classes.
 """
 
 import math
+import logging
 
 from AppKit import *
 from Foundation import *
@@ -832,6 +833,7 @@ class TableView(Widget):
                 self.on_model_structure_change)
         self.iters_to_update = []
         self.height_changed = self.reload_needed = False
+        self.restoring_selection = None
 
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
@@ -1081,6 +1083,15 @@ class TableView(Widget):
             self.invalidate_size_request()
         self.height_changed = self.reload_needed = False
         self.iters_to_update = []
+        if self.restoring_selection:
+            # deal with any selection waiting to be added from
+            # set_selection_as_strings
+            index_set = NSMutableIndexSet.alloc().init()
+            for index in self.restoring_selection:
+                index_set.addIndex_(index)
+            self.tableview.selectRowIndexes_byExtendingSelection_(index_set, NO)
+            if self.tableview.selectedRowIndexes().isEqualToIndexSet_(index_set):
+                self.restoring_selection = None
 
     def width_for_columns(self, width):
         """If the table is width pixels big, how much width is available for
@@ -1274,7 +1285,18 @@ class TableView(Widget):
         pass
 
     def set_selection_as_strings(self, selected):
-        pass
+        """Given a list of selection strings, selects each row represented by
+        the strings.
+        
+        There's no straightforward way to wait until after the model has been
+        populated to call this method, so here we actually just make a note of
+        the values to be selected, and model_changed selects them when it can.
+        """
+        # this is copied from GTK; Cocoa may have a better way to do it
+        self.restoring_selection = sorted(int(index) for index in selected)
 
     def get_selection_as_strings(self):
-        return []
+        """Returns the current selection as a list of strings."""
+        index_set = self.tableview.selectedRowIndexes()
+        indices = tablemodel.list_from_nsindexset(index_set)
+        return indices
