@@ -152,7 +152,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         if device is None:
             full_target = (u'library', target)
         else:
-            full_target = (u'device', target.id)
+            full_target = (u'device', '%s-%s' % (target.id, mediatype))
 
         self.total.setdefault(target, 0)
         if add_or_remove > 0: # add
