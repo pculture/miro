@@ -70,7 +70,7 @@ class WidgetStateStore(object):
         u'name': 130,
         u'rate': 60,
         u'rating': 75,
-        u'show': 70,
+#        u'show': 70,
         u'size': 65,
         u'state': 20,
         u'status': 70,
