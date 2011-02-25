@@ -179,6 +179,7 @@ class DeviceManager(object):
         self.generic_devices = []
         self.generic_devices_by_id = {}
         self.connected = {}
+        self.info_cache = {} # device mount > dict
         self.syncs_in_progress = {}
         self.startup()
         self.show_unknown = app.config.get(prefs.SHOW_UNKNOWN_DEVICES)
@@ -293,6 +294,7 @@ class DeviceManager(object):
     def _set_connected(self, id_, kwargs):
         if kwargs.get('mount'):
             database = load_database(kwargs['mount'])
+            database.connect_weak('item-changed', self._clear_info_cache)
             device_name = database.get('device_name')
         else:
             device_name = None
@@ -339,6 +341,7 @@ class DeviceManager(object):
 
     def _send_connect(self, info):
         if info.mount:
+            self.info_cache.setdefault(info.mount, {})
             scan_device_for_files(info)
         messages.TabsChanged('devices', [info], [], []).send_to_frontend()
 
@@ -360,6 +363,7 @@ class DeviceManager(object):
 
 
         if info.mount:
+            self.info_cache.setdefault(info.mount, {})
             scan_device_for_files(info)
         else:
             sync_manager = app.device_manager.get_sync_for_device(info,
@@ -384,6 +388,7 @@ class DeviceManager(object):
         if sync_manager:
             sync_manager.cancel()
 
+        del self.info_cache[info.mount]
         messages.TabsChanged('devices', [], [], [info.id]).send_to_frontend()
 
     def get_sync_for_device(self, device, create=True):
@@ -403,6 +408,16 @@ class DeviceManager(object):
             dsm = self.syncs_in_progress[device.id]
             dsm.set_device(device)
             return dsm
+
+    def _clear_info_cache(self, database, info):
+        """
+        Remove an updated item from the per-device InfoCache.
+        """
+        try:
+            del self.info_cache[info.device.mount][info.video_path]
+        except KeyError:
+            # didn't actually get cached
+            pass
 
 class DeviceSyncManager(object):
     """

@@ -32,7 +32,7 @@ import os.path
 
 from miro import app
 from miro import database
-from miro import devices
+from miro.devices import DeviceItem
 from miro import item
 from miro import messages
 from miro import signals
@@ -472,6 +472,7 @@ class DeviceItemSource(ItemSource):
     def __init__(self, device):
         ItemSource.__init__(self)
         self.device = device
+        self.info_cache = app.device_manager.info_cache[device.mount]
         self.type = device.id.rsplit('-', 1)[1]
         self.signal_handles = [
             device.database.connect('item-added', self._on_device_added),
@@ -560,12 +561,26 @@ class DeviceItemSource(ItemSource):
         return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):
-        return [self._item_info_for(devices.DeviceItem(
-                    video_path=video_path,
-                    file_type=self.type,
-                    device=self.device,
-                    **json)) for video_path, json in
-                self.device.database[self.type].items()]
+        # avoid lookups
+        info_cache = self.info_cache
+        type_ = self.type
+        device = self.device
+        _item_info_for = self._item_info_for
+        data = self.device.database[type_]
+
+        def _cache(video_path):
+            if video_path in info_cache:
+                return info_cache[video_path]
+            else:
+                info = info_cache[video_path] = _item_info_for(
+                    DeviceItem(
+                        video_path=video_path,
+                        file_type=type_,
+                        device=device,
+                        **data[video_path]))
+                return info
+
+        return [_cache(video_path) for video_path in data]
 
     def unlink(self):
         for handle in self.signal_handles:
