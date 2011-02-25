@@ -915,7 +915,6 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         self._button_hbox = widgetset.HBox()
         self._button_hbox_container = widgetutil.HideableWidget(
             self._button_hbox)
-        self._button_hbox_container.show()
 
         self._hbox = widgetset.HBox()
 
@@ -970,7 +969,9 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
             self.filter_switch.make_widget(), left_pad=12))
 
     def size_request(self, layout):
-        return self._hbox.get_size_request()
+        width = self._hbox.get_size_request()[0]
+        height = self._button_hbox.get_size_request()[1]
+        return width, height
 
     def draw(self, context, layout):
         key = 74.0 / 255
@@ -1290,6 +1291,8 @@ class ItemContainerWidget(widgetset.VBox):
         self.list_empty_mode_vbox = widgetset.VBox()
         self.progress_toolbar = ProgressToolbar()
         self.toolbar = toolbar
+        if view == standard_view:
+            toolbar._button_hbox_container.show()
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
         self.pack_start(self.progress_toolbar)
