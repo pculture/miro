@@ -69,7 +69,7 @@ def run_application(frontend, props_to_set, theme):
     goodchars = string.letters + "."
     for c in frontend:
         if c not in goodchars:
-            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+            raise ValueError("Unknown frontend: %s" % frontend)
 
     attempts = [
         "miro.plat.frontends.%s" % frontend,

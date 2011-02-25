@@ -38,7 +38,6 @@ from StringIO import StringIO
 
 from miro import subscription
 from miro import feed
-from miro import guide
 from miro import prefs
 from miro import app
 from miro import folder
@@ -48,7 +47,6 @@ from miro import tabs
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
-from miro.xhtmltools import urlencode
 from miro.plat.utils import filename_to_unicode
 
 class Exporter(object):

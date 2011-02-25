@@ -1,10 +1,14 @@
+# Copyright 2009 Todd Whiteman (released into Public Domain
+# Copyright 2011 Participatory Culture Foundation (GPLv2)
+
+
 #############################################################################
 # 				Documentation				    #
 #############################################################################
-
+#
 # Author:   Todd Whiteman
 # Date:     16th March, 2009
-# Verion:   2.0.0
+# Version:  2.0.0
 # License:  Public Domain - free to do as you wish
 # Homepage: http://twhiteman.netfirms.com/des.html
 #
@@ -584,17 +588,17 @@ class des(_baseDes):
 
 		# Split the data into blocks, crypting each one seperately
 		i = 0
-		dict = {}
+		dict_ = {}
 		result = []
 		#cached = 0
 		#lines = 0
 		while i < len(data):
 			# Test code for caching encryption results
 			#lines += 1
-			#if dict.has_key(data[i:i+8]):
+			#if dict_.has_key(data[i:i+8]):
 				#print "Cached result for: %s" % data[i:i+8]
 			#	cached += 1
-			#	result.append(dict[data[i:i+8]])
+			#	result.append(dict_[data[i:i+8]])
 			#	i += 8
 			#	continue
 				
@@ -628,7 +632,7 @@ class des(_baseDes):
 			#d = self.__BitList_to_String(processed_block)
 			#result.append(d)
 			result.append(self.__BitList_to_String(processed_block))
-			#dict[data[i:i+8]] = d
+			#dict_[data[i:i+8]] = d
 			i += 8
 
 		# print "Lines: %d, cached: %d" % (lines, cached)

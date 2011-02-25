@@ -69,7 +69,7 @@ def _log(priority, message, *args):
         logging.warn("Unicode error when creating database log entry %s %s",
                      message, args)
         return
-    entry = DBLogEntry(priority, description)
+    DBLogEntry(priority, description)
     logging.dblog(description)
 
 def info(message, *args):

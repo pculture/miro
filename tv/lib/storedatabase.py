@@ -76,7 +76,6 @@ from miro import messages
 from miro import schema
 from miro import prefs
 from miro import util
-from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 

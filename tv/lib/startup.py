@@ -44,12 +44,10 @@ import traceback
 import threading
 import time
 
-from miro.clock import clock
 from miro import app
 from miro import autodler
 from miro import autoupdate
 from miro import commandline
-from miro import crashreport
 from miro import controller
 from miro import extensionmanager
 from miro import database
@@ -80,7 +78,6 @@ from miro.plat import config as platformcfg
 from miro import tabs
 from miro import theme
 from miro import util
-from miro import search
 from miro import searchengines
 from miro import storedatabase
 from miro import conversions

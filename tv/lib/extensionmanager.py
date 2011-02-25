@@ -39,11 +39,8 @@ import logging
 import os
 import sys
 import ConfigParser
-import glob
 from miro import app
 from miro import prefs
-from miro import messages
-from miro import signals
 
 # need to do this otherwise py2exe won't pick up the api module
 from miro import api
@@ -107,7 +104,7 @@ def get_extensions(ext_dir):
             extensions.append(e)
         except (ConfigParser.NoSectionError,
                 ConfigParser.NoOptionError,
-                ConfigParser.ParsingError), err:
+                ConfigParser.ParsingError):
             logging.warning("Extension file %s is malformed.\n%s",
                             f, traceback.format_exc())
 
@@ -239,7 +236,8 @@ class ExtensionManager(object):
             try:
                 self.import_extension(mem)
                 self.load_extension(mem)
-            except StandardError, ie:
-                logging.exception("Import/Load error when loading %r.  Disabling.", mem)
+            except StandardError:
+                logging.exception(
+                    "Import/Load error when loading %r.  Disabling.", mem)
                 self.disable_extension(mem)
                 continue

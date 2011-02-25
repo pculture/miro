@@ -33,7 +33,6 @@ import socket
 import select
 import struct
 import threading
-import tempfile
 import time
 import uuid
 

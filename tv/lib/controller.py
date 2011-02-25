@@ -34,7 +34,6 @@ crashes and shutdown.
 import logging
 import os
 import threading
-import sys
 import tempfile
 import locale
 from random import randrange
