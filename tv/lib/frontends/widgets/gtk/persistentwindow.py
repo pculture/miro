@@ -38,10 +38,20 @@ import gtk
 import gobject
 import weakref
 
-_dummy_window = gtk.gdk.Window(None,
-        x=0, y=0, width=1, height=1,
-        window_type=gtk.gdk.WINDOW_TOPLEVEL,
-        wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+_dummy_window = None
+
+def _get_dummy_window():
+    """Get a hidden window to use.
+
+    This method creates the hidden window lazily, as a singleton.
+    """
+    global _dummy_window
+    if _dummy_window is None:
+        _dummy_window = gtk.gdk.Window(None,
+                x=0, y=0, width=1, height=1,
+                window_type=gtk.gdk.WINDOW_TOPLEVEL,
+                wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+    return _dummy_window
 
 _persistent_window_to_widget = weakref.WeakValueDictionary()
 
@@ -56,7 +66,7 @@ class PersistentWindow(gtk.DrawingArea):
 
     def __init__(self):
         gtk.DrawingArea.__init__(self)
-        self.persistent_window = gtk.gdk.Window(_dummy_window,
+        self.persistent_window = gtk.gdk.Window(_get_dummy_window(),
                 x=0, y=0, width=1, height=1, window_type=gtk.gdk.WINDOW_CHILD,
                 wclass=gtk.gdk.INPUT_OUTPUT, event_mask=self.get_events())
         _persistent_window_to_widget[self.persistent_window] = self
@@ -88,7 +98,7 @@ class PersistentWindow(gtk.DrawingArea):
     def do_unrealize(self):
         self.persistent_window.set_user_data(None)
         self.persistent_window.hide()
-        self.persistent_window.reparent(_dummy_window, 0, 0)
+        self.persistent_window.reparent(_get_dummy_window(), 0, 0)
         gtk.DrawingArea.do_unrealize(self)
 
     def do_destroy(self):
@@ -105,6 +115,6 @@ gobject.type_register(PersistentWindow)
 
 def get_widgets():
     retval = []
-    for window in _dummy_window.get_children():
+    for window in _get_dummy_window().get_children():
         retval.append(_persistent_window_to_widget[window])
     return retval
