@@ -94,6 +94,7 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     # Use robust=True (default) in make_daap_server() and it will pick 
     # a new port.
     # allow_reuse_address = True    # setsockopt(... SO_REUSEADDR, 1)
+    daemon_threads = True
     session_lock = threading.Lock()
 
     def __init__(self, server_address, RequestHandlerClass,
