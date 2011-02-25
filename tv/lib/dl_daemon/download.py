@@ -228,7 +228,20 @@ class TorrentSession(object):
         self.enc_req = None
 
     def startup(self):
-        fingerprint = lt.fingerprint("MR", 1, 1, 0, 0)
+        version = app.config.get(prefs.APP_VERSION).split(".")
+        try:
+            major = int(version[0])
+        except ValueError:
+            logging.exception("major version is not an int!")
+            # FIXME - this is arbitrary
+            major = 1
+        try:
+            minor = int(version[1])
+        except (ValueError, IndexError):
+            minor = 0
+
+        # MR is for Miro.
+        fingerprint = lt.fingerprint("MR", major, minor, 0, 0)
         self.session = lt.session(fingerprint)
         self.listen()
         self.set_upnp()
