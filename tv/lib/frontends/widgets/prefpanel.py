@@ -80,6 +80,9 @@ def build_error_image():
         widgetutil.align_middle(
             widgetset.ImageDisplay(widgetset.Image(ERROR_IMAGE_PATH)),
             top_pad=6))
+    # reserve space for the image, since we don't want the text entry to move
+    # when we show it (#16429)
+    image.set_size_request(*image.child().get_size_request())
     image.hide()
     return image
 
