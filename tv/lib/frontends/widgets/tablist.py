@@ -810,6 +810,12 @@ class SharingTabListHandler(object):
                 app.tab_list_manager.select_guide()
             messages.SharingEject(info).send_to_backend()
 
+    def update(self, info):
+        if info.is_updating:
+            self.tablist.start_updating(info.id)
+        else:
+            self.tablist.stop_updating(info.id)
+
     def init_info(self, info):
         info.type = u'sharing'
         info.unwatched = info.available = 0

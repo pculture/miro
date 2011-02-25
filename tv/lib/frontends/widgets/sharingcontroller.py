@@ -52,6 +52,9 @@ class SharingStandardView(itemlistwidgets.StandardView):
     def build_renderer(self):
         return style.SharingItemRenderer(display_channel=False)
 
+# The spinning progress bar while a user connects is done by the backend
+# with messages sent to the frontend, the idea is the backend should know
+# when it is a connect or not so let it handle that case.
 class SharingView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'
 

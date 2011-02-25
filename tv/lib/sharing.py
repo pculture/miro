@@ -477,6 +477,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.items = dict()
         self.playlists = []
         self.base_playlist = None    # Temporary
+        self.share.is_updating = True
+        message = messages.TabsChanged('sharing', [], [self.share], [])
+        message.send_to_frontend()
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,
                                  self.client_connect,
@@ -628,6 +631,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.items = returned_items
         self.playlists = returned_playlists
         self.share.mount = True
+        self.share.is_updating = False
         message = messages.TabsChanged('sharing', self.playlists,
                                        [self.share], [])
         message.send_to_frontend()
@@ -638,6 +642,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
+        message = messages.TabsChanged('sharing', [], [self.share], [])
+        message.send_to_frontend()
         app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
