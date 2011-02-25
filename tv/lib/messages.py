@@ -1208,11 +1208,8 @@ class ItemInfo(object):
             self.display_rate = self.display_eta = ''
 
     def calc_torrent_details(self):
-        if not self.download_info:
+        if not self.download_info or not self.download_info.torrent:
             return ''
-
-        if not self.download_info.torrent:
-            return _("N/A")
 
         details = _(
             "S: %(seeders)s  |  "
