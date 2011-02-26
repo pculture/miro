@@ -218,9 +218,10 @@ class TranscodeObject(object):
                  request_path_func):
         self.media_file = media_file
         self.in_shutdown = False
-        self.time_offset = 0
         if chunk is not None:
             self.time_offset = chunk * TranscodeObject.segment_duration
+        else:
+            self.time_offset = 0
         duration, has_audio, has_video = media_info
         self.duration = duration
         self.itemid = itemid
@@ -247,7 +248,10 @@ class TranscodeObject(object):
         logging.debug('TRANSCODE INFO, nchunks %s' % self.nchunks)
         logging.debug('TRANSCODE INFO, trailer %s' % self.trailer)
 
-        self.current_chunk = self.start_chunk = 0
+        if chunk is not None:
+            self.current_chunk = self.start_chunk = chunk
+        else:
+            self.current_chunk = self.start_chunk = 0
         self.chunk_buffer = []
         self.chunk_throttle = threading.Event()
         self.chunk_throttle.set()
@@ -269,6 +273,7 @@ class TranscodeObject(object):
         self.playlist += ('#EXT-X-TARGETDURATION:%d\n' % 
                           TranscodeObject.segment_duration)
         self.playlist += '#EXT-X-MEDIA-SEQUENCE:0\n'
+        self.playlist += '#EXT-X-ALLOW-CACHE:NO\n'
         for i in xrange(self.nchunks):
             # XXX check corner case
             # Special case
