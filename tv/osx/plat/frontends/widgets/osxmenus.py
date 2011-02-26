@@ -30,7 +30,6 @@
 """menus.py -- Menu handling code."""
 
 import struct
-import logging
 
 from objc import nil, NO, YES
 from AppKit import *
@@ -41,8 +40,9 @@ from miro import prefs
 
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
-from miro.frontends.widgets.menus import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
-from miro.plat.frontends.widgets import wrappermap
+from miro.frontends.widgets.menus import (
+    CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, 
+    DOWN_ARROW, SPACE, DELETE, BKSPACE, ESCAPE)
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro.plat.appstore import appstore_edition

@@ -33,7 +33,6 @@ from PyObjCTools import Conversion
 import os
 import objc
 
-from miro import app
 from miro import prefs
 from miro.plat import bundle
 from miro.plat import keychain

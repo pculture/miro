@@ -45,13 +45,10 @@ import itertools
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil, signature, loadBundle
-import WebKit
 
 from miro.plat.frontends.widgets import tableview
 from miro.plat.frontends.widgets import wrappermap
-from miro.plat.frontends.widgets import viewport
 from miro.plat.frontends.widgets.base import Container, Bin, FlippedView
-from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.util import Matrix
 
 rbSplitViewBundlePath = '%s/RBSplitView.framework' % NSBundle.mainBundle().privateFrameworksPath()

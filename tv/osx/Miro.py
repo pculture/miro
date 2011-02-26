@@ -63,7 +63,6 @@ def activate_psyco():
 def launch_unit_tests():
     sys.argv.remove('--unittest')
 
-    import logging
     logging.basicConfig(level=logging.CRITICAL)
 
     from miro.plat.utils import initialize_locale
@@ -93,7 +92,7 @@ def launch_application(parsed_options, args):
         theme_dirs = glob(os.path.join(bundle_theme_dir_path, "*"))
         theme_dir = theme_dirs[0]
         if os.path.isdir(theme_dir):
-            theme = os.path.basename(themeDir)
+            theme = os.path.basename(theme_dir)
 
     from miro import bootstrap
     bootstrap.bootstrap()

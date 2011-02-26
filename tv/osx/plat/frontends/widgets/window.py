@@ -41,7 +41,7 @@ from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
-from miro.plat.frontends.widgets.base import Widget, Container, FlippedView
+from miro.plat.frontends.widgets.base import Widget, FlippedView
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment
 from miro.plat.frontends.widgets.control import Button
 from miro.plat.frontends.widgets.simple import Label

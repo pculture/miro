@@ -27,7 +27,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import threading
 import os
 import urllib
 import statvfs
@@ -37,11 +36,10 @@ import sys
 import time
 import errno
 import signal
-import locale
 import subprocess
 import plistlib
 
-from objc import NO, YES, nil
+from objc import nil
 from Foundation import *
 from AppKit import *
 
@@ -511,7 +509,7 @@ def get_logical_cpu_count():
     try:
         import multiprocessing
         return multiprocessing.cpu_count()
-    except ImportError, e:
+    except ImportError:
         try:
             ncpus = os.sysconf("SC_NPROCESSORS_ONLN")
             if isinstance(ncpus, int) and ncpus > 0:

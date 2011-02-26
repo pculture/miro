@@ -29,6 +29,8 @@
 
 import os
 
+migrated = False
+
 def migrateSupport(oldAppName, newAppName):
     print('Checking Miro preferences and support migration...')
 
@@ -69,7 +71,6 @@ def migrateVideos(oldAppName, newAppName):
     global migrated
     if migrated:
         moviesRootFolder = os.path.expanduser('~/Movies')
-        oldDefault = os.path.join(moviesRootFolder, oldAppName)
         newDefault = os.path.join(moviesRootFolder, newAppName)
         
         from miro import app

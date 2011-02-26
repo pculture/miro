@@ -31,7 +31,6 @@
 import os
 import sys
 import glob
-import time
 import objc
 import QTKit
 import AppKit
@@ -52,7 +51,7 @@ def register_quicktime_components():
         stdloc1 = os.path.join("/", "Library", "Quicktime", cmpName)
         stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins", "Components", cmpName)
         if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
-            ok = qtcomp.register(component.encode('utf-8'))
+            qtcomp.register(component.encode('utf-8'))
 
 # =============================================================================
 
@@ -62,7 +61,7 @@ def extract_duration(qtmovie):
         if utils.qttimescale(qttime) == 0:
             return -1
         return int((utils.qttimevalue(qttime) / float(utils.qttimescale(qttime))) * 1000)
-    except Exception, e:
+    except Exception:
         return -1
 
 def get_type(qtmovie):
@@ -138,7 +137,7 @@ def extract_thumbnail(qtmovie, target, width=0, height=0):
             return "Failure"
 
         jpeg_data.writeToFile_atomically_(target, objc.YES)
-    except Exception, e:
+    except Exception:
         return "Failure"
 
     return "Success"

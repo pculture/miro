@@ -32,11 +32,9 @@ associated classes.
 """
 
 import math
-import logging
 
 from AppKit import *
 from Foundation import *
-from PyObjCTools import AppHelper
 from objc import YES, NO, nil
 
 from miro import signals
@@ -44,7 +42,7 @@ from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
-from miro.plat.frontends.widgets.base import Widget, FlippedView
+from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle, Gradient
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager

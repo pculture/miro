@@ -29,8 +29,6 @@
 
 """tablemodel.py -- Model classes for TableView.  """
 
-import itertools
-
 from AppKit import NSDragOperationNone, NSTableViewDropOn, protocols
 from Foundation import NSObject, NSNotFound, NSMutableIndexSet
 from objc import YES, NO, nil
@@ -39,7 +37,6 @@ from miro import fasttypes
 from miro import infolist
 from miro import signals
 from miro.plat.frontends.widgets import wrappermap
-from miro.plat.frontends.widgets.simple import Image
 
 def list_from_nsindexset(index_set):
     rows = list()

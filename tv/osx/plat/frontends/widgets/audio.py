@@ -29,9 +29,6 @@
 
 from QTKit import *
 
-from miro import signals
-from miro import messages
-
 from miro.plat.frontends.widgets import mediatypes
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import quicktime

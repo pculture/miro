@@ -133,7 +133,7 @@ def _get_minimum_system_version(info):
         if len(minimum) == 2:
             minimum.append(0)
         return minimum
-    except KeyError, e:
+    except KeyError:
         return [0, 0, 0]
 
 def _get_host_version():

@@ -32,7 +32,6 @@ import time
 from objc import nil, YES, NO, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import AppHelper
 
 from miro import app
 from miro import messages

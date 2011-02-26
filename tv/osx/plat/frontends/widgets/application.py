@@ -27,13 +27,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os
-import re
 import sys
 import struct
 import logging
 import platform
-import urlparse
 import traceback
 import time
 
@@ -46,7 +43,6 @@ from miro import app
 from miro import prefs
 from miro import downloader
 from miro import messages
-from miro import filetypes
 from miro import eventloop
 from miro import moviedata
 from miro import signals
@@ -54,7 +50,6 @@ from miro import httpclient
 from miro import commandline
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.application import Application
-from miro.plat import utils
 from miro.plat import growl
 from miro.plat import bundle
 from miro.plat import _growlImage

@@ -38,7 +38,6 @@ import os
 from miro.frontends.widgets import widgetconst
 from miro.plat import resources
 from miro.plat.frontends.widgets import wrappermap
-from miro.plat.frontends.widgets import layoutmanager
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 

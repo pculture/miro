@@ -29,7 +29,7 @@
 
 """miro.plat.frontends.widgets.rect -- Simple Rectangle class."""
 
-from Foundation import NSMakeRect, NSRectFromString, NSStringFromRect
+from Foundation import NSMakeRect, NSRectFromString
 
 class Rect(object):
     @classmethod

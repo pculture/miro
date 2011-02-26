@@ -27,16 +27,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from AppKit import *
-from Foundation import *
-from objc import YES, NO, nil
-
-from miro.frontends.widgets import imagepool
-
-from miro.plat import resources
-from miro.plat.frontends.widgets import widgetset
-from miro.plat.frontends.widgets.rect import Rect
-
 def get_platform_specific(name):
     pass
 

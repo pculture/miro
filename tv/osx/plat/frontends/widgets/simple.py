@@ -230,6 +230,9 @@ class Label(Widget):
         self.view.setSelectable_(val)
 
     def set_alignment(self, alignment):
+        # FIXME - this looks wrong--why do all this work if we're
+        # just going to use the input argument?
+
         # default to left.
         nsalignment = NSLeftTextAlignment
         if alignment == widgetconst.TEXT_JUSTIFY_LEFT:

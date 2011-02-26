@@ -12,7 +12,6 @@ __contributors__ = ["Ingmar J Stein (Growl Team)",
 				   ]
 
 import _growl
-import types
 import struct
 import hashlib
 import socket

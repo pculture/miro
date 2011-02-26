@@ -36,8 +36,6 @@ from AppKit import *
 from Quartz import *
 from objc import YES, NO, nil
 
-from miro.plat import utils
-
 class ImageSurface:
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, image):

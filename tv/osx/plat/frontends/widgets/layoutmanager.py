@@ -37,7 +37,6 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
-from miro.plat import utils
 from miro.plat.frontends.widgets import drawing
 
 INFINITE = 1000000 # size of an "infinite" dimension

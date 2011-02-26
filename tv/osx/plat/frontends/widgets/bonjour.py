@@ -27,11 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os
 import logging
 
-from miro import app
-from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 
