@@ -388,7 +388,8 @@ class DeviceManager(object):
         if sync_manager:
             sync_manager.cancel()
 
-        del self.info_cache[info.mount]
+        if info.mount:
+            del self.info_cache[info.mount]
         messages.TabsChanged('devices', [], [], [info.id]).send_to_frontend()
 
     def get_sync_for_device(self, device, create=True):
