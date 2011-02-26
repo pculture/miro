@@ -224,6 +224,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             session = getattr(self, 'session', 0)
             if session:
                 self.server.del_session(session)
+            raise    # Give upper layer a chance to deal
 
     # Convenience function: convenient that session-id must be non-zero so
     # you can use it for True/False testing too.

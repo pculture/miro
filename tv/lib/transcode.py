@@ -388,6 +388,9 @@ class TranscodeObject(object):
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue
+                # Aborted: return immediately
+                if err == errno.EBADF:
+                    return
                 raise
             except StandardError:
                 raise
@@ -418,7 +421,8 @@ class TranscodeObject(object):
         # and abortive shutdown.  If we are somewhere in between, we'd 
         # probably be blocked on the read() in the # the handler and that's
         # ok because that should return a zero read when the segmenter goes 
-        # away too and that reduces to the select().
+        # away too and that reduces to the select().   XXX - not foolproof
+        # so have a watcher around to cull things when it's finished
         #
         # In case we may be throttled, prod it along by unthrottling.
         # In case we race with get_chunk() (which may run in a different
@@ -426,8 +430,8 @@ class TranscodeObject(object):
         # anyway, and in case they get there first then it's ok too, since
         # we end up unblocking it anyway.
         logging.info('TranscodeObject.shutdown')
-        self.transcode_gate.wait()
         self.in_shutdown = True
+        self.transcode_gate.wait()
         try:
             self.ffmpeg_handle.kill()
             self.segmenter_handle.kill()
