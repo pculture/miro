@@ -787,19 +787,16 @@ class SharingManagerBackend(object):
             # If we are requesting a playlist, this basically means that
             # transcode is required.
             old_transcode_obj = None
+            need_create = False
             with self.transcode_lock:
-                need_create = False
-                need_shutdown = False
                 try:
                     transcode_obj = self.transcode[session]
                     if transcode_obj.itemid != itemid:
                         need_create = True
-                        need_shutdown = True
                         old_transcode_obj = transcode_obj
                     else:
                         if chunk is not None and transcode_obj.isseek(chunk):
                             need_create = True
-                            need_shutdown = True
                             old_transcode_obj = transcode_obj
                 except KeyError:
                     need_create = True
@@ -811,7 +808,6 @@ class SharingManagerBackend(object):
                                                           chunk,
                                                           info,
                                                           request_path_func)
-                    transcode_obj.transcode()
                 self.transcode[session] = transcode_obj
 
             # If there was an old object, shut it down.  Do it outside the
@@ -819,6 +815,8 @@ class SharingManagerBackend(object):
             # time
             if old_transcode_obj:
                 old_transcode_obj.shutdown()
+            if need_create:
+                transcode_obj.transcode()
 
             if ext == 'm3u8':
                 file_obj = transcode_obj.get_playlist()
