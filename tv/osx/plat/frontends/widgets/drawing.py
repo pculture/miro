@@ -63,8 +63,8 @@ class ImageSurface:
             # FIXME: use NSColor.colorWithPatternImage instead of homebrew
             # tiling code.  The issue is that method draws our image upside
             # down, regardless of the isFlipped() setting.
-            for x_ in range(0, width, self.width):
-                for y_ in range(0, height, self.height):
+            for x_ in range(0, int(width), int(self.width)):
+                for y_ in range(0, int(height), int(self.height)):
                     if x_ + self.width > width:
                         width_ = width - x_
                     else:
