@@ -209,6 +209,11 @@ class DeviceManager(object):
         # load devices
         self.load_devices(resources.path('devices/*.py'))
 
+    def shutdown(self):
+        for device in self.connected.values():
+            if device.mount:
+                write_database(device.database, device.mount)
+
     def load_devices(self, path):
         devices = glob(path)
         for device_desc in devices:
@@ -853,6 +858,21 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         if not bulk and self.did_change:
             self.notify_changed()
 
+class DatabaseWriteManager(object):
+    """
+    Keeps track of writing a database periodically.
+    """
+    SAVE_INTERVAL = 10 # seconds between writes
+
+    def __init__(self, mount):
+        self.mount = mount
+        self.last_write = time.time()
+
+    def __call__(self, database):
+        if time.time() - self.last_write > self.SAVE_INTERVAL:
+            write_database(database, self.mount)
+            self.last_write = time.time()
+
 def load_database(mount):
     """
     Returns a dictionary of the JSON database that lives on the given device.
@@ -869,7 +889,7 @@ def load_database(mount):
             logging.exception('error loading JSON db on %s', mount)
             db = {}
     ddb = DeviceDatabase(db)
-    ddb.connect('changed', write_database, mount)
+    ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
 
 def write_database(database, mount):

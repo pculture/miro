@@ -70,6 +70,8 @@ class Controller:
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)
         try:
+            logging.info("Shutting down device manager")
+            app.device_manager.shutdown()
             logging.info("Shutting down Sharing Manager")
             app.sharing_manager.shutdown()
             logging.info("Shutting down Sharing Tracker")
