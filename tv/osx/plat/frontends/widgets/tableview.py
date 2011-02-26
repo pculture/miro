@@ -144,6 +144,7 @@ class MiroTableCell(NSTextFieldCell):
 
 class MiroTableInfoListTextCell(MiroTableCell):
     def initWithAttrName_(self, attr_name):
+        self = self.init()
         self.attr_name = attr_name
         return self
 
