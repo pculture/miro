@@ -233,6 +233,7 @@ class ConnectTab(widgetset.VBox):
               "Miro iPad app.  It's awesome!", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
+        label.set_size_request(550, -1)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         vbox = widgetset.VBox()
@@ -288,6 +289,7 @@ class ConnectTab(widgetset.VBox):
               "%(shortappname)s.  Be sure to set your device to 'USB Mass "
               "Storage' mode in your device settings.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
+        label.set_size_request(400, -1)
         label.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
@@ -304,6 +306,7 @@ class ConnectTab(widgetset.VBox):
               "you connect it to the computer, or if you want to sync with an "
               "external drive.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
+        label.set_size_request(390, -1)
         label.set_wrap(True)
         show_all_vbox.pack_start(label)
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
@@ -331,6 +334,7 @@ class ConnectTab(widgetset.VBox):
               "them with you.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)
+        label.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               right_pad=10,
                                               bottom_pad=5))
