@@ -214,10 +214,13 @@ class TranscodeObject(object):
     # as items are consumed.  It may be good to have a low watermark as well.
     buffer_high_watermark = 6
 
-    def __init__(self, media_file, itemid, media_info, request_path_func):
+    def __init__(self, media_file, itemid, chunk, media_info,
+                 request_path_func):
         self.media_file = media_file
         self.in_shutdown = False
         self.time_offset = 0
+        if chunk is not None:
+            self.time_offset = chunk * TranscodeObject.segment_duration
         duration, has_audio, has_video = media_info
         self.duration = duration
         self.itemid = itemid
@@ -244,16 +247,16 @@ class TranscodeObject(object):
         logging.debug('TRANSCODE INFO, nchunks %s' % self.nchunks)
         logging.debug('TRANSCODE INFO, trailer %s' % self.trailer)
 
-        # XXX dodgy
-        # Set start_chunk != current_chunk to force seek() to return True
-        self.current_chunk = -1
-        self.start_chunk = 0
+        self.current_chunk = self.start_chunk = 0
         self.chunk_buffer = []
         self.chunk_throttle = threading.Event()
         self.chunk_throttle.set()
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
         self.tmp_file = tempfile.TemporaryFile()
+
+        self.transcode_gate = threading.Event()
+
         self.create_playlist()
         logging.info('TranscodeObject created %s', self)
 
@@ -291,37 +294,14 @@ class TranscodeObject(object):
         tmpf.seek(0, os.SEEK_SET)
         return tmpf
 
-    def seek(self, chunk):
-        # Is it requesting the next available chunk in the sequence?  If so
-        # then it's fine, nothing to do.  Otherwise, stop the job.  Returns
-        # a booelan indicating whether a transcode needs to be restarted.
+    def isseek(self, chunk):
+        # Is it requesting the next available chunk in the sequence?
         if self.current_chunk == chunk:
             return False
-        self.time_offset = chunk * TranscodeObject.segment_duration
-        # XXX special case: new transcode object - don't do any of the below
-        # (in fact it wont behave correctly if you do, we try to run shutdown()
-        # which will set a shutdown flag ... that's not what we want to do.)
-        if self.current_chunk == -1:
-            self.current_chunk = 0
-            return True
-        self.shutdown()
-        # Clear the chunk buffer, and the lock/synchronization state
-        self.start_chunk = self.current_chunk = chunk
-        # TODO: we could turn chunk_buffer into a dictionary or maybe an
-        # out of order list of some sort to support implementations that
-        # decide to fetch things out of order (possibly by multiple client
-        # threads), within reason.
-        self.chunk_buffer = []
-        self.chunk_lock = threading.Lock()
-        self.chunk_sem = threading.Semaphore(0)
-        self.chunk_throttle = threading.Event()
-        self.chunk_throttle.set()
-        self.tmp_file = tempfile.TemporaryFile()
-        # OK, you can restart the transcode by calling transcode()
         return True
 
     def transcode(self):
-        app.transcode_manager.acquire()
+        rc = True
         try:
             ffmpeg_exe = get_ffmpeg_executable_path()
             kwargs = {"stdin": open(os.devnull, 'rb'),
@@ -366,12 +346,12 @@ class TranscodeObject(object):
             self.sink_thread.daemon = True
             self.sink_thread.start()
 
-            return True
         except StandardError:
-            self.transcode_manager.release()
             (typ, value, tb) = sys.exc_info()
             logging.error('ERROR: %s %s' % (str(typ), str(value)))
-            return False
+            rc = False
+        self.transcode_gate.set()
+        return rc
 
     def data_callback(self, d):
         self.tmp_file.write(d)
@@ -396,13 +376,9 @@ class TranscodeObject(object):
     def segmenter_consumer(self):
         while True:
             try:
-                if self.in_shutdown:
-                    app.transcode_manager.release()
-                    return
                 r, w, x = select.select([self.sink.fileno()], [], [])
                 self.chunk_throttle.wait()
                 if self.segmenter_handle.poll() is not None:
-                    app.transcode_manager.release()
                     return
                 try:
                     self.sink.handle_request()
@@ -450,6 +426,7 @@ class TranscodeObject(object):
         # anyway, and in case they get there first then it's ok too, since
         # we end up unblocking it anyway.
         logging.info('TranscodeObject.shutdown')
+        self.transcode_gate.wait()
         self.in_shutdown = True
         try:
             self.ffmpeg_handle.kill()
@@ -458,6 +435,10 @@ class TranscodeObject(object):
             self.segmenter_handle.wait()
             self.ffmpeg_handle.wait()
             logging.info('TranscodeObject reaping sink')
+            # Close the server, to make select() on the sink fd return
+            self.sink.socket.close()
+            # Nobody is producing mpegts packets at this point.  So if we 
+            # unthrottle here nobody should undo our good work
             self.chunk_throttle.set()
             self.sink_thread.join()
             logging.info('TranscodeObject sink reaped')
@@ -469,6 +450,4 @@ class TranscodeObject(object):
         # in case it doesn't exist anymore.  We don't really care.
         # Catch RuntimeError in case sink_thread hasn't been started yet.
         except (RuntimeError, OSError, AttributeError):
-            app.transcode_manager.release()
             pass
-        self.in_shutdown = False

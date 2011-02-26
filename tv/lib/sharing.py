@@ -786,32 +786,49 @@ class SharingManagerBackend(object):
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
             # transcode is required.
-            self.transcode_lock.acquire()
-            if (not self.transcode.has_key(session) or
-              (self.transcode.has_key(session) and 
-              self.transcode[session].itemid != itemid)):
-                yes, info = transcode.needs_transcode(path)
-                if self.transcode.has_key(session):
-                    self.transcode[session].shutdown()
-                self.transcode[session] = transcode.TranscodeObject(path,
-                                                            itemid,
-                                                            info,
-                                                            request_path_func)
-            transcode_obj = self.transcode[session]
+            old_transcode_obj = None
+            with self.transcode_lock:
+                need_create = False
+                need_shutdown = False
+                try:
+                    transcode_obj = self.transcode[session]
+                    if transcode_obj.itemid != itemid:
+                        need_create = True
+                        need_shutdown = True
+                        old_transcode_obj = transcode_obj
+                    else:
+                        if chunk is not None and transcode_obj.isseek(chunk):
+                            need_create = True
+                            need_shutdown = True
+                            old_transcode_obj = transcode_obj
+                except KeyError:
+                    need_create = True
+                if need_create:
+                    yes, info = transcode.needs_transcode(path)
+                    transcode_obj = transcode.TranscodeObject(
+                                                          path,
+                                                          itemid,
+                                                          chunk,
+                                                          info,
+                                                          request_path_func)
+                    transcode_obj.transcode()
+                self.transcode[session] = transcode_obj
+
+            # If there was an old object, shut it down.  Do it outside the
+            # loop so that we don't hold onto the transcode lock for excessive
+            # time
+            if old_transcode_obj:
+                old_transcode_obj.shutdown()
+
             if ext == 'm3u8':
                 file_obj = transcode_obj.get_playlist()
                 file_obj.seek(offset, os.SEEK_SET)
             elif ext == 'ts':
-                # TODO: seek won't work on this guy, make sure that
-                # we tell the caller to return HTTP/1.1 200 instead.
-                if transcode_obj.seek(chunk):
-                    transcode_obj.transcode()
                 file_obj = transcode_obj.get_chunk()
             else:
                 # Should this be a ValueError instead?  But returning -1
                 # will make the caller return 404.
                 logging.info('error: transcode should be one of ts or m3u8')
-            self.transcode_lock.release()
         elif ext == 'coverart':
             try:
                 cover_art = self.daapitems[itemid]['cover_art']
