@@ -404,10 +404,17 @@ class TranscodeObject(object):
         # Consume an item ...
         self.chunk_sem.acquire()
         with self.chunk_lock:
-            tmpf = self.chunk_buffer[0]
-            self.current_chunk += 1
-            self.chunk_buffer = self.chunk_buffer[1:]
-            self.chunk_throttle.set()
+            # If we got woken up, and there is nothing there, maybe it's
+            # because the job has been aborted?  If this is the case,
+            # ensure we return a sensible empty file. (or maybe alternatively
+            # an error).
+            if self.chunk_buffer:
+                tmpf = self.chunk_buffer[0]
+                self.current_chunk += 1
+                self.chunk_buffer = self.chunk_buffer[1:]
+                self.chunk_throttle.set()
+            else:
+                tmpf = tempfile.TemporaryFile()
         return tmpf
 
     # Shutdown the transcode job.  If we quitting, make sure you call this
@@ -445,6 +452,8 @@ class TranscodeObject(object):
             # unthrottle here nobody should undo our good work
             self.chunk_throttle.set()
             self.sink_thread.join()
+            # Ensure we unblock the get_chunk().
+            self.chunk_sem.release()
             logging.info('TranscodeObject sink reaped')
             # Set these last: sink thread relies on it.
             self.ffmpeg_handle = None
