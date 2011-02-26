@@ -669,6 +669,7 @@ class SharingManagerBackend(object):
     playlist_item_map = dict()  # Playlist -> item mapping
 
     def __init__(self):
+        self.transcode_lock = threading.Lock()
         self.transcode = dict()
 
     # Reserved for future use: you can register new sharing protocols here.
@@ -785,6 +786,7 @@ class SharingManagerBackend(object):
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
             # transcode is required.
+            self.transcode_lock.acquire()
             if (not self.transcode.has_key(session) or
               (self.transcode.has_key(session) and 
               self.transcode[session].itemid != itemid)):
@@ -809,6 +811,7 @@ class SharingManagerBackend(object):
                 # Should this be a ValueError instead?  But returning -1
                 # will make the caller return 404.
                 logging.info('error: transcode should be one of ts or m3u8')
+            self.transcode_lock.release()
         elif ext == 'coverart':
             try:
                 cover_art = self.daapitems[itemid]['cover_art']

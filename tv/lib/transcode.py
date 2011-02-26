@@ -39,6 +39,7 @@ import sys
 import SocketServer
 import threading
 
+from miro import app
 from miro import util
 from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
                              get_segmenter_executable_path, thread_body,
@@ -65,6 +66,20 @@ container_regex = re.compile('mov,mp4,m4a,3gp,3g2,mj2,')
 duration_regex = re.compile('Duration: ')
 has_video_regex = re.compile('Stream.*: Video')
 has_audio_regex = re.compile('Stream.*: Audio')
+
+
+class TranscodeManager(object):
+    MAX_TRANSCODE_PIPELINES = 5
+    def __init__(self):
+        self.ffmpeg_event = threading.Event()
+        self.ffmpeg_event.set()
+
+    def acquire(self):
+        self.ffmpeg_event.wait()
+        self.ffmpeg_event.clear()
+
+    def release(self):
+        self.ffmpeg_event.set()
 
 def needs_transcode(media_file):
     """needs_transcode()
@@ -306,6 +321,7 @@ class TranscodeObject(object):
         return True
 
     def transcode(self):
+        app.transcode_manager.acquire()
         try:
             ffmpeg_exe = get_ffmpeg_executable_path()
             kwargs = {"stdin": open(os.devnull, 'rb'),
@@ -352,6 +368,7 @@ class TranscodeObject(object):
 
             return True
         except StandardError:
+            self.transcode_manager.release()
             (typ, value, tb) = sys.exc_info()
             logging.error('ERROR: %s %s' % (str(typ), str(value)))
             return False
@@ -380,10 +397,12 @@ class TranscodeObject(object):
         while True:
             try:
                 if self.in_shutdown:
+                    app.transcode_manager.release()
                     return
                 r, w, x = select.select([self.sink.fileno()], [], [])
                 self.chunk_throttle.wait()
                 if self.segmenter_handle.poll() is not None:
+                    app.transcode_manager.release()
                     return
                 try:
                     self.sink.handle_request()
@@ -450,5 +469,6 @@ class TranscodeObject(object):
         # in case it doesn't exist anymore.  We don't really care.
         # Catch RuntimeError in case sink_thread hasn't been started yet.
         except (RuntimeError, OSError, AttributeError):
+            app.transcode_manager.release()
             pass
         self.in_shutdown = False

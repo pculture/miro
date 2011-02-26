@@ -83,6 +83,7 @@ from miro import storedatabase
 from miro import conversions
 from miro import devices
 from miro import sharing
+from miro import transcode
 from miro.plat import devicetracker
 
 DEBUG_DB_MEM_USAGE = False
@@ -308,6 +309,7 @@ def finish_startup(obj, thread):
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager = sharing.SharingManager()
+    app.transcode_manager = transcode.TranscodeManager()
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
 
