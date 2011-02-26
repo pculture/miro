@@ -419,6 +419,12 @@ class MarkItemUnwatched(BackendMessage):
     def __init__(self, info):
         self.info = info
 
+class MarkItemsWatched(BackendMessage):
+    """Mark an item as watched.
+    """
+    def __init__(self, info_list):
+        self.info_list = info_list
+
 class MarkItemCompleted(BackendMessage):
     def __init__(self, info):
         self.info = info

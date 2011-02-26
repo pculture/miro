@@ -120,6 +120,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.stop()
         self.emit('will-start')
         self.playlist = PlaybackPlaylist(item_tracker, start_id)
+        self.should_mark_watched = []
         self.playlist.connect("position-changed", self._on_position_changed)
         self.playlist.connect("playing-info-changed",
                 self._on_playing_changed)
@@ -255,6 +256,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist = None
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
+        self.send_mark_items_watched()
         self.is_playing = False
         self.is_playing_audio = False
         self.is_paused = False
@@ -399,7 +401,11 @@ class PlaybackManager (signals.SignalEmitter):
             logging.warning("mark_as_watched: not marking the item as "
                     "watched because we're in a weird state")
             return
-        messages.MarkItemWatched(info).send_to_backend()
+        self.should_mark_watched.append(info)
+
+    def send_mark_items_watched(self):
+        messages.MarkItemsWatched(self.should_mark_watched).send_to_backend()
+        self.should_mark_watched = []
 
     def get_playing_item(self):
         if self.playlist is None:
