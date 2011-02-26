@@ -87,15 +87,18 @@ def _mediatype_from_mime(mimes):
 def _str_or_object_to_unicode(thing):
     """Whatever thing is, get a unicode out of it at all costs."""
     if not isinstance(thing, basestring):
-        if hasattr(thing, '__unicode__'):
-            # object explicitly supports unicode. yay!
+        # with try/except because mutagen objects that can be unicode()d
+        # often don't haveattr __unicode__
+        try:
             thing = unicode(thing)
-        else:
-            # unicode(thing) would die if thing had funky chars,
-            # but unicode(thing, errors=FOO) can't be used for objects
-            thing = str(thing)
+        except ValueError:
+            try:
+                thing = str(thing)
+            except ValueError:
+                pass
     if not isinstance(thing, unicode):
-        # at this point, thing has to be descended from basestring
+        # thing is a str, or thing cannot be converted to unicode or str cleanly
+        # if this fails, it is caught higher up
         thing = unicode(thing, errors='replace')
     return thing
 
@@ -104,7 +107,12 @@ def _sanitize_keys(tags):
     """
     tags_cleaned = {}
     for key, value in tags.iteritems():
-        key = _str_or_object_to_unicode(key)
+        try:
+            key = _str_or_object_to_unicode(key)
+        except ValueError:
+            logging.warn("cannot convert key %s to any kind of string",
+                         repr(key))
+            continue
         if key.startswith('PRIV:'):
             key = key.split('PRIV:')[1]
         if key.startswith('TXXX:'):
@@ -129,8 +137,15 @@ def _sanitize_values(tags):
                 value = None
                 break
             value = value[0]
+        if hasattr(value, 'value'):
+            value = value.value
         if value is not None:
-            value = _str_or_object_to_unicode(value)
+            try:
+                value = _str_or_object_to_unicode(value)
+            except ValueError:
+                logging.warn("cannot convert value %s (for key %s) to any kind"
+                             "of string", repr(value), repr(key))
+                continue
             tags_cleaned[key] = value.lstrip()
     return tags_cleaned
 
