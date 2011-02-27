@@ -408,13 +408,12 @@ class ClickableImageButton(CustomButton):
         self.max_height = max_height
         self.image = None
         self._width, self._height = None, None
-        self.set_image(image_path)
-
+        self.set_path(image_path)
         self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
         self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
         self.wrapped_widget_connect('button-release-event', self.on_click)
 
-    def set_image(self, path):
+    def set_path(self, path):
         image = Image(path)
         if self.max_width:
             image = image.resize_for_space(self.max_width, self.max_height)

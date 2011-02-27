@@ -55,6 +55,10 @@ class Source(object):
             rating = self.rating,
             cover_art = self.cover_art,
             has_drm = self.has_drm,
+            show = self.show,
+            episode_id = self.episode_id,
+            episode_number = self.episode_number,
+            season_number = self.season_number,
         )
 
     def setup_new(self):
@@ -72,6 +76,10 @@ class Source(object):
         self.cover_art = None
         self.has_drm = None
         self.file_type = None
+        self.show = None
+        self.episode_id = None
+        self.episode_number = None
+        self.season_number = None
         self.metadata_version = 0
 
     @returns_unicode
@@ -114,6 +122,10 @@ class Store(Source):
     set_rating = metadata_setter('rating', int)
     set_file_type = metadata_setter('file_type', unicode)
     set_has_drm = metadata_setter('has_drm', bool)
+    set_show = metadata_setter('show', unicode)
+    set_episode_id = metadata_setter('episode_id', unicode)
+    set_episode_number = metadata_setter('episode_number', int)
+    set_season_number = metadata_setter('season_number', int)
 
     def set_cover_art(self, new_file, _bulk=False):
         """Set new cover art. Deletes any old cover art.
@@ -181,4 +193,8 @@ class Store(Source):
         file_type = set_file_type,
         cover_art = set_cover_art,
         has_drm = set_has_drm,
+        show = set_show,
+        episode_id = set_episode_id,
+        episode_number = set_episode_number,
+        season_number = set_season_number,
     )

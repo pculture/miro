@@ -3167,3 +3167,10 @@ def upgrade148(cursor):
     # SchemaDict with it
     rename_column(cursor, 'global_state', 'item_details_expanded',
             'item_details_expanded', 'pythonrepr')
+
+def upgrade149(cursor):
+    """Add some Video properties (now settable in Edit Item)"""
+    cursor.execute("ALTER TABLE item ADD COLUMN show text")
+    cursor.execute("ALTER TABLE item ADD COLUMN episode_id text")
+    cursor.execute("ALTER TABLE item ADD COLUMN episode_number integer")
+    cursor.execute("ALTER TABLE item ADD COLUMN season_number integer")

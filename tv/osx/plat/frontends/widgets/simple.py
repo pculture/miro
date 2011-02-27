@@ -113,7 +113,7 @@ class ImageDisplay(Widget):
 
     def set_image(self, image):
         self.image = image
-        if image is not None:
+        if image:
             image.nsimage.setCacheMode_(NSImageCacheNever)
         self.view.set_image(image)
         self.invalidate_size_request()
@@ -122,7 +122,7 @@ class ImageDisplay(Widget):
         if self.image is not None:
             return self.image.width, self.image.height
         else:
-            return (0, 0)
+            return 0, 0
 
 class ClickableImageButton(ImageDisplay):
     def __init__(self, image_path, max_width=None, max_height=None):
@@ -131,13 +131,14 @@ class ClickableImageButton(ImageDisplay):
         self.max_height = max_height
         self.image = None
         self._width, self._height = None, None
-        self.set_image(image_path)
+        if image_path:
+            self.set_path(image_path)
 
-    def set_image(self, path):
-        self.image = Image(path)
+    def set_path(self, path):
+        image = Image(path)
         if self.max_width:
-            self.image = self.image.resize_for_space(self.max_width, self.max_height)
-        self.setup_image()
+            image = image.resize_for_space(self.max_width, self.max_height)
+        super(ClickableImageButton, self).set_image(image)
 
     def calc_size_request(self):
         if self.max_width:
