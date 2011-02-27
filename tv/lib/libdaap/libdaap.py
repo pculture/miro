@@ -103,15 +103,15 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
                                         RequestHandlerClass,
                                         bind_and_activate)
         self.debug = False
-        self.log_message_func = None
+        self.log_message_callback = None
 
     # New functions in subclass.  Note: we can separate some of these out
     # into separate libraries but not now.
     def set_backend(self, backend):
         self.backend = backend
 
-    def set_log_message(self, func):
-        self.log_message_func = func
+    def set_log_message_callback(self, callback):
+        self.log_message_callback = callback
 
     def set_debug(self, debug):
         self.debug = debug
@@ -184,8 +184,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     #                                                   server)
 
     def log_message(self, format, *args):
-        if self.server.log_message_func:
-            self.server.log_message_func(format, *args)
+        if self.server.log_message_callback:
+            self.server.log_message_callback(format, *args)
 
     def finish(self):
         try:
