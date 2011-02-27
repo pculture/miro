@@ -1038,6 +1038,8 @@ class StoresPanel(PanelBuilder):
 
 class _ExtensionsHelper(object):
     def __init__(self):
+        self._loaded = False
+
         self._model = widgetset.TableModel('boolean', 'text')
         self._iter_map = {}
 
@@ -1076,10 +1078,12 @@ class _ExtensionsHelper(object):
         self.extension_details = widgetset.VBox()
         self.extension_details.pack_start(scroller)
 
-        # FIXME - when the user clicks on a row, show the details
-        # in the details box
-
     def load(self):
+        # we only need to load all the extensions once.  however, this
+        # gets called every time the pref panel pops up.
+        if self._loaded:
+            return
+        self._loaded = True
         for ext in app.extension_manager.extensions:
             iter_ = self._model.append(ext.loaded, ext.name)
             self._iter_map[ext.name] = iter_
