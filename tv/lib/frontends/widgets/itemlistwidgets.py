@@ -200,8 +200,8 @@ class ItemListTitlebar(widgetset.Background):
     def update_resume_button(self, text):
         """Update the resume button text.
 
-        If text is None, we will hide the resume button.  Otherwise we will
-        show the button and have it display text.
+        If text is None, we will hide the resume button.  Otherwise we
+        will show the button and have it display text.
         """
         if text is None:
             self.resume_button_holder.hide()
@@ -228,7 +228,8 @@ class ItemListTitlebar(widgetset.Background):
         self.create_signal('normal-view-clicked')
         self.view_toggler = ViewToggler()
         self.view_toggler.connect('list-view-clicked', self._on_list_clicked)
-        self.view_toggler.connect('normal-view-clicked', self._on_normal_clicked)
+        self.view_toggler.connect('normal-view-clicked',
+                                  self._on_normal_clicked)
 
     def _on_resume_button_clicked(self, button):
         self.emit('resume-playing')
@@ -333,8 +334,8 @@ class ItemView(widgetset.TableView):
             self.emit('scroll-position-changed', self.scroll_pos)
 
 class SorterWidgetOwner(object):
-    """Mixin for objects that need to handle a set of ascending/descending sort
-    indicators.
+    """Mixin for objects that need to handle a set of
+    ascending/descending sort indicators.
     """
     def __init__(self):
         self.create_signal('sort-changed')
@@ -619,7 +620,9 @@ class SearchToolbar(DisplayToolbar):
         self.hideable.hide()
 
 class DownloadStatusToolbar(DisplayToolbar):
-    """Widget that shows free space and download and upload speed status."""
+    """Widget that shows free space and download and upload speed
+    status.
+    """
 
     def __init__(self):
         DisplayToolbar.__init__(self)
@@ -639,8 +642,9 @@ class DownloadStatusToolbar(DisplayToolbar):
 
 
         # Sigh.  We want to fix these sizes so they don't jump about
-        # so reserve the maximum size for these things.  The upload and
-        # download are both the same so we only need to auto-detect for one.
+        # so reserve the maximum size for these things.  The upload
+        # and download are both the same so we only need to
+        # auto-detect for one.
         placeholder_bps = 1000 * 1024    # 1000 kb/s - not rounded 1 MB/s yet
         text_up = _("%(rate)s",
                     {"rate": displaytext.download_rate(placeholder_bps)})
@@ -658,8 +662,8 @@ class DownloadStatusToolbar(DisplayToolbar):
         h.pack_start(widgetutil.align_middle(widgetutil.align_right(
                      self._first_image)))
 
-        # Don't forget to reset the label to blank after we are done fiddling
-        # with it.
+        # Don't forget to reset the label to blank after we are done
+        # fiddling with it.
         first_label.set_text("")
         first_label.set_size_request(width, -1)
         self._first_label = first_label
@@ -700,7 +704,8 @@ class DownloadStatusToolbar(DisplayToolbar):
         """
         amount = get_available_bytes_for_movies()
         if app.config.get(prefs.PRESERVE_DISK_SPACE):
-            available = (app.config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024)
+            available = (app.config.get(prefs.PRESERVE_X_GB_FREE) *
+                         1024 * 1024 * 1024)
             available = amount - available
 
             if available < 0:
@@ -733,7 +738,8 @@ class DownloadStatusToolbar(DisplayToolbar):
                           {"rate": displaytext.download_rate(down_bps)})
 
         # first label is always used for upload, while second label is
-        # always used for download.  This prevents the text jumping around.
+        # always used for download.  This prevents the text jumping
+        # around.
         self._first_label.set_text(text_up)
         self._second_label.set_text(text_down)
         if text_up:
@@ -746,12 +752,14 @@ class DownloadStatusToolbar(DisplayToolbar):
             self._second_image.hide()
 
 class DownloadToolbar(DisplayToolbar):
-    """Widget that pause/resume/... buttons for downloads, and other data.
+    """Widget that pause/resume/... buttons for downloads, and other
+    data.
 
     :signal pause-all: All downloads should be paused
     :signal resume-all: All downloads should be resumed
     :signal cancel-all: All downloads should be canceled
-    :signal settings: The preferences panel downloads tab should be opened
+    :signal settings: The preferences panel downloads tab should be
+        opened
     """
 
     def __init__(self):
@@ -906,7 +914,8 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
     :signal view-all-clicked: User requested to view all items
     :signal toggle-unwatched-clicked: User toggled the
         unwatched/unplayed items only view
-    :signal toggle-non-feed-clicked: User toggled the non feed items only view
+    :signal toggle-non-feed-clicked: User toggled the non feed items
+        only view
     """
     def __init__(self):
         widgetset.Background.__init__(self)
@@ -945,14 +954,14 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         self._button_hbox.pack_start(button)
 
     def make_filter_switch(self, *args, **kwargs):
-        """Helper method to make a SegmentedButtonsRow that switches between
-        filters.
+        """Helper method to make a SegmentedButtonsRow that switches
+        between filters.
         """
         self.filter_switch = segmented.SegmentedButtonsRow(*args, **kwargs)
 
     def add_filter(self, button_name, signal_name, signal_param, label):
-        """Helper method to add a button to the SegmentedButtonsRow made in
-        make_filter_switch()
+        """Helper method to add a button to the SegmentedButtonsRow
+        made in make_filter_switch()
 
         :param button_name: name of the button
         :param signal_name: signal to emit
@@ -1198,16 +1207,17 @@ class EmptyListDescription(widgetset.Alignment):
         self.add(self.label)
 
 class ProgressToolbar(widgetset.HBox):
-    """Toolbar displayed above ItemViews to show the progress of reading new
-    metadata, communicating with a device, and similar time-consuming
-    operations.
+    """Toolbar displayed above ItemViews to show the progress of
+    reading new metadata, communicating with a device, and similar
+    time-consuming operations.
 
-    Assumes current ETA is accurate; keeps track of its own elapsed time.
-    Displays progress as: elapsed / (elapsed + ETA)
+    Assumes current ETA is accurate; keeps track of its own elapsed
+    time.  Displays progress as: elapsed / (elapsed + ETA)
 
-    Rather than have to send a message every time an item is found or examined,
-    we cheat a bit: the backend sends signals for batches of items
-    (currently 10), and we interpolate the current state based on ETA.
+    Rather than have to send a message every time an item is found or
+    examined, we cheat a bit: the backend sends signals for batches of
+    items (currently 10), and we interpolate the current state based
+    on ETA.
     """
     def __init__(self):
         widgetset.HBox.__init__(self)
@@ -1227,9 +1237,10 @@ class ProgressToolbar(widgetset.HBox):
         if not self.set_up:
             self.set_up = True
             padding = 380 - self.label.get_width()
-            self.pack_start(widgetutil.align(
-                            self.label_widget, 1, 0.5, 1, 0, 0, 0, padding, 10),
-                            expand=False)
+            self.pack_start(
+                widgetutil.align(
+                    self.label_widget, 1, 0.5, 1, 0, 0, 0, padding, 10),
+                expand=False)
             self.pack_start(widgetutil.align_left(
                             self.meter, 0, 0, 0, 200), expand=True)
             self.label_widget.show()
@@ -1253,15 +1264,17 @@ class ProgressToolbar(widgetset.HBox):
         self.label.set_text(text)
 
     def finish(self):
-        """Fast-forward through any remaining progress and then hide."""
+        """Fast-forward through any remaining progress and then
+        hide.
+        """
         self.update(0, 0.1, self.total)
         # TODO: delay disappearance until bar finishes
         self.label_widget.hide()
         self.meter.hide()
 
     def update(self, remaining, seconds, total):
-        """Correct an existing time estimate. Bar will wait for progress to
-        catch up to estimate rather than move backwards.
+        """Correct an existing time estimate. Bar will wait for
+        progress to catch up to estimate rather than move backwards.
         """
         self.eta = seconds
         self.total = total
@@ -1329,8 +1342,8 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
 class ItemDetailsWidget(widgetset.VBox):
     """Widget to display detailed information about an item.
 
-    This usually shows the thumbnail, full description, etc. for the selected
-    item.
+    This usually shows the thumbnail, full description, etc. for the
+    selected item.
     """
     PADDING_MIDDLE = 25
     PADDING_RIGHT = 22
@@ -1341,7 +1354,8 @@ class ItemDetailsWidget(widgetset.VBox):
     TEXT_COLOR = (0.176, 0.176, 0.176)
     TITLE_SIZE = 1.1
     EXTRA_INFO_SIZE = 0.85
-    # give enough room to display the image, plus some more for the scrollbars
+    # give enough room to display the image, plus some more for the
+    # scrollbars
     EXPANDED_HEIGHT = 240
 
     def __init__(self):

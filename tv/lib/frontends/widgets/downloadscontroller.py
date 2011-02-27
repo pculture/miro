@@ -46,8 +46,8 @@ from miro.plat.frontends.widgets import widgetset
 
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
-        itemlistcontroller.ItemListController.__init__(self, u'downloading',
-                                                       u'downloading')
+        itemlistcontroller.ItemListController.__init__(
+            self, u'downloading', u'downloading')
         self.item_list.resort_on_update = True
         self.toolbar = None
 
