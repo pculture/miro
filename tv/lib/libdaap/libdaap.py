@@ -301,7 +301,11 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if not session:
             return (DAAP_UNAVAILABLE, [], [])
         # Stash a copy in case clients pull the rug under us so we can
-        # still clean up in that case.  See the finish() routine.
+        # still clean up in that case.  See the finish() routine.  Note,
+        # this copy is significant as this establishes us as the 'control'
+        # connection.  Data connections (those that are used to stream media
+        # only) do not have this, and so when their connections close the
+        # session remains active until the 'control' is closed.
         self.session = session
         reply = []
         reply.append(('mlog', [('mstt', DAAP_OK), ('mlid', session)]))
