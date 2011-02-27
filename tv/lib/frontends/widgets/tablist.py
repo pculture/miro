@@ -715,7 +715,9 @@ class DeviceTabListHandler(object):
             'name': name,
             'device_name': info.name,
             'icon': imagepool.get_surface(
-                resources.path('images/icon-%s.png' % type))
+                resources.path('images/icon-device-%s.png' % type)),
+            'active_icon': imagepool.get_surface(
+                resources.path('images/icon-device-%s_active.png' % type))
             }
 
         # hack to create a DeviceInfo without dealing with __init__
@@ -771,8 +773,10 @@ class DeviceTabListHandler(object):
         info.type = u'device'
         info.unwatched = info.available = 0
         if not getattr(info, 'fake', False):
-            thumb_path = resources.path('images/phone.png')
-            info.icon = imagepool.get_surface(thumb_path)
+            info.icon = imagepool.get_surface(
+                resources.path('images/icon-device.png'))
+            info.active_icon = imagepool.get_surface(
+                resources.path('images/icon-device_active.png'))
             if getattr(info, 'is_updating', False):
                 self.tablist.start_updating(info.id)
             else:

@@ -790,7 +790,7 @@ class DeviceWidget(widgetset.VBox):
 
     @staticmethod
     def make_titlebar(device):
-        image_path = resources.path("images/phone-large.png")
+        image_path = resources.path("images/device-small.png")
         icon = imagepool.get(image_path)
         return DeviceTitlebar(device.name, icon)
 
