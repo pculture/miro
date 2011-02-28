@@ -820,7 +820,7 @@ class DaapClient(object):
             self.timer.start()
             return True
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
+        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
             self.disconnect()
             return False
 
@@ -832,7 +832,7 @@ class DaapClient(object):
                              callback=self.handle_db)
             return self.db_id
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
+        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
             self.disconnect()
             return None
 
@@ -848,7 +848,7 @@ class DaapClient(object):
             del self.daap_playlists
             return playlists
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
+        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
             self.disconnect()
             return None
 
@@ -873,7 +873,7 @@ class DaapClient(object):
             del self.daap_items
             return items
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
+        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
             self.disconnect()
             return None
 
@@ -883,7 +883,7 @@ class DaapClient(object):
             self.conn.request('GET', self.sessionize('/logout', []))
         # Don't care since we are going away anyway.
         except (socket.error, ValueError, httplib.ResponseNotReady,
-                AttributeError, IOError):
+                httplib.BadStatusLine, AttributeError, IOError):
             pass
         finally:
             self.session = None
