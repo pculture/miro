@@ -191,6 +191,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def finish(self):
         try:
             self.server.del_session(self.session)
+            self.log_message('finish called on session %d.  Bye ...',
+                             self.session)
         except AttributeError:
             pass
         # XXX Lousy python module.
