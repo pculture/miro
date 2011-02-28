@@ -90,6 +90,8 @@ class TabInfo(object):
 
 
 class TabListView(widgetset.TableView):
+    draws_selection = True
+
     def __init__(self, renderer, table_model_class=None):
         if table_model_class is None:
             table_model_class = widgetset.TreeTableModel

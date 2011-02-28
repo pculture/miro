@@ -1338,12 +1338,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if self.entry_description:
             return unicode(self.entry_description)
 
-        if self.is_external() and self.is_downloaded_torrent():
-            lines = [_('Contents:')]
-            lines.extend(filename_to_unicode(child.offsetPath)
-                         for child in self.get_children())
-            return u'<BR>\n'.join(lines)
-
         return u''
 
     def looks_like_torrent(self):

@@ -97,6 +97,12 @@ def time_string(secs):
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
+def time_string_0_blank(secs):
+    if secs <= 0:
+        return ''
+    else:
+        return time_string(secs)
+
 def size_string(nbytes):
     # when switching from the enclosure reported size to the
     # downloader reported size, it takes a while to get the new size

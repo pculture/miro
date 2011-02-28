@@ -264,6 +264,11 @@ class ItemListController(object):
         self.list_item_view = self.views[list_view]
         self.standard_item_view = self.views[standard_view]
         
+        self.standard_view_count_label = widgetset.Label()
+        # FIXME: should make label text white once we have our new background.
+        self.widget.vbox[standard_view].pack_start(
+                widgetutil.align_right(self.standard_view_count_label,
+                    top_pad=6, bottom_pad=6, right_pad=20))
         standard_view_scroller = widgetset.Scroller(False, True)
         standard_view_scroller.add(standard_view_widget)
         self.widget.vbox[standard_view].pack_start(
@@ -680,8 +685,7 @@ class ItemListController(object):
 
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
-        self.send_model_changed()
-        self.update_resume_button()
+        self.handle_item_list_changes()
         self._got_initial_list = True
         if self._needs_scroll:
             self.scroll_to_item(self._needs_scroll)
@@ -690,9 +694,14 @@ class ItemListController(object):
 
     def handle_items_changed(self, obj, added, changed, removed):
         """Handle an ItemsChanged message meant for this ItemContainer."""
+        self.handle_item_list_changes()
+        self.on_items_changed()
+
+    def handle_item_list_changes(self):
+        """Called whenever our ItemList changes."""
         self.send_model_changed()
         self.update_resume_button()
-        self.on_items_changed()
+        self.update_count_label()
 
     def update_resume_button(self):
         last_played_id = app.widget_state.get_last_played_item_id(self.type,
@@ -716,6 +725,10 @@ class ItemListController(object):
                 text = _("Resume %(item)s",
                         {"item": util.clamp_text(last_played.name)})
             self.titlebar.update_resume_button(text)
+
+    def update_count_label(self):
+        text = _("%(count)s videos", {'count': self.item_list.get_count()})
+        self.standard_view_count_label.set_text(text)
 
     def on_items_will_change(self, added, changed, removed):
         """Called before we change the list.

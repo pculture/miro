@@ -412,12 +412,11 @@ class StandardView(ItemView):
     view.
     """
 
-    draws_selection = True
+    draws_selection = False
 
     def __init__(self, item_list, scroll_pos, selection, display_channel=True):
         ItemView.__init__(self, item_list, scroll_pos, selection)
         self.display_channel = display_channel
-        self.set_draws_selection(False)
         self.renderer = self.build_renderer()
         self.renderer.total_width = -1
         self.column = widgetset.TableColumn('item', self.renderer)
@@ -426,7 +425,7 @@ class StandardView(ItemView):
         self.add_column(self.column)
         self.set_show_headers(False)
         self.set_auto_resizes(True)
-        self.set_background_color(widgetutil.WHITE)
+        self.set_background_color((0.15, 0.15, 0.15))
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)

@@ -40,7 +40,7 @@ class SharingStandardView(itemlistwidgets.StandardView):
         self.playlist_id = playlist_id
 
     def build_renderer(self):
-        return style.SharingItemRenderer(display_channel=False)
+        return style.ItemRenderer(display_channel=False)
 
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know

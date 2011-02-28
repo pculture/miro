@@ -798,6 +798,8 @@ class TableView(Widget):
     # Bit of a hack.  We create several views.  By setting CREATES_VIEW to
     # False, we get to position the views manually.
 
+    draws_selection = False
+
     def __init__(self, model):
         Widget.__init__(self)
         self.create_signal('selection-changed')
@@ -826,7 +828,6 @@ class TableView(Widget):
         self.tableview.setVerticalMotionCanBeginDrag_(YES)
         self.set_columns_draggable(False)
         self.set_auto_resizes(False)
-        self.draws_selection = True
         self.row_height_set = False
         self.set_fixed_height(False)
         self.auto_resizing = False
@@ -846,9 +847,6 @@ class TableView(Widget):
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
         self.emit('hotspot-clicked', tracker.name, tracker.iter)
-
-    def set_draws_selection(self, draws_selection):
-        self.draws_selection = draws_selection
 
     def get_left_offset(self):
         offset = self.tableview.intercellSpacing().width / 2

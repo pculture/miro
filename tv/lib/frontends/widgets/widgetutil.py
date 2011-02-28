@@ -128,28 +128,32 @@ def draw_rounded_icon(context, icon, x, y, width, height, inset=0, fraction=1.0)
     round_rect(context, x + inset, y + inset, width - inset*2,
             height - inset*2, 3)
     context.clip()
+    draw_icon_in_rect(context, icon, x, y, width, height, fraction)
+    context.restore()
+
+def draw_icon_in_rect(context, icon, x, y, width, height, fraction=1.0):
+    """Draw an icon inside a rectangle.
+
+    If the rectangle is bigger than the icon, the icon will be centered inside
+    the rectangle and the space around it will be filled with black.
+    """
     if icon.width != width or icon.height != height:
+        context.set_color((0, 0, 0), fraction)
         icon_x = int((width - icon.width) / 2)
         icon_y = int((height - icon.height) / 2)
-        context.set_color((0, 0, 0), fraction)
-        if fraction < 1.0:
-            if icon_x > 0:
-                context.rectangle(x, y, icon_x, height)
-                context.fill()
-                context.rectangle(x+icon_x+icon.width, y, width-(icon_x+icon.width), height)
-                context.fill()
-            else:
-                context.rectangle(x, y, width, icon_y)
-                context.fill()
-                context.rectangle(x, y+icon_y+icon.height, width, height-(icon_y+icon.height))
-                context.fill()
-        else:
-            context.rectangle(x, y, width, height)
+        if icon_x > 0:
+            context.rectangle(x, y, icon_x, height)
+            context.fill()
+            context.rectangle(x+icon_x+icon.width, y, width-(icon_x+icon.width), height)
+            context.fill()
+        if icon_y > 0:
+            context.rectangle(x, y, width, icon_y)
+            context.fill()
+            context.rectangle(x, y+icon_y+icon.height, width, height-(icon_y+icon.height))
             context.fill()
     else:
         icon_x = icon_y = 0
-    icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height, fraction)
-    context.restore()
+    icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height)
 
 def align(widget, xalign=0, yalign=0, xscale=0, yscale=0,
         top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
@@ -252,6 +256,7 @@ class ThreeImageSurface(object):
     def __init__(self, basename=None):
         self.left = self.center = self.right = None
         self.height = 0
+        self.width = None
         if basename is not None:
             left = make_surface(basename + '_left')
             center = make_surface(basename + '_center')
@@ -267,6 +272,15 @@ class ThreeImageSurface(object):
         if not (self.left.height == self.center.height == self.right.height):
             raise ValueError("Images aren't the same height")
         self.height = self.left.height
+
+    def set_width(self, width):
+        """Manually set a width.
+
+        When ThreeImageSurface have a width, then they have pretty much the
+        same API as ImageSurface does.  In particular, they can now be nested
+        in another ThreeImageSurface.
+        """
+        self.width = width
 
     def draw(self, context, x, y, width, fraction=1.0):
         left_width = min(self.left.width, width)

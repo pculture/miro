@@ -186,6 +186,8 @@ class ConvertingController(object):
             self.clear_finished_button.disable()
 
 class ConvertingTableView(widgetset.TableView):
+    draws_selection = False
+
     def __init__(self, model):
         widgetset.TableView.__init__(self, model)
         self.set_show_headers(False)
@@ -195,7 +197,6 @@ class ConvertingTableView(widgetset.TableView):
         self.column.set_min_width(600)
         self.add_column(self.column)
 
-        self.set_draws_selection(False)
         self.set_show_headers(False)
         self.allow_multiple_select(False)
         self.set_auto_resizes(True)
@@ -220,12 +221,20 @@ class ConvertingCellRenderer(style.ItemRenderer):
     FAILED_TASK_TEXT_COLOR = (0.8, 0.0, 0.0)
     FINISHED_TASK_TEXT_COLOR = (0.0, 0.8, 0.0)
     INTERRUPT_BUTTON = imagepool.get_surface(resources.path('images/video-download-cancel.png'))
-    THUMB_OVERLAY = imagepool.get_surface(resources.path('images/thumb-overlay.png'), (THUMB_WIDTH, THUMB_HEIGHT))
 
     def get_size(self, style, layout):
         return 600, self.THUMB_HEIGHT + 31
 
+    # FIXME: need to implement this
     def render(self, context, layout, selected, hotspot, hover):
+        context.rectangle(0, 0, context.width, context.height)
+        context.set_color((0, 0, 1))
+        context.fill()
+        layout.set_font(1.0)
+        layout.set_text_color((1, 1, 1))
+        textbox = layout.textbox("To be implemented...")
+        textbox.draw(context, 50, 50, 400, 30)
+        return
         self.hotspot = hotspot
         self.selected = selected
         self.setup_style(context.style)
@@ -233,6 +242,7 @@ class ConvertingCellRenderer(style.ItemRenderer):
         packing.render_layout(context)
 
     def hotspot_test(self, style, layout, x, y, width, height):
+        return None
         self.hotspot = None
         packing = self._pack_all(layout)
         hotspot_info = packing.find_hotspot(x, y, width, height)

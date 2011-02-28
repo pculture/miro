@@ -178,7 +178,7 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
                 cell_area.width - xpad * 2, cell_area.height - ypad * 2)
         context = drawing.DrawingContext(window, area, expose_area)
         widget_wrapper = wrappermap.wrapper(widget)
-        if (selected and widget_wrapper.draws_selection and
+        if (selected and not widget_wrapper.draws_selection and
                 widget_wrapper.use_custom_style):
             # Draw the base color as our background.  This erases the gradient
             # that GTK draws for selected items.
@@ -631,6 +631,7 @@ class TableView(Widget):
         self.model.add_to_tableview(self._widget)
         self._model = self._widget.get_model()
         wrappermap.add(self._model, model)
+        self._setup_colors()
         self.selection = self._widget.get_selection()
         self.columns = []
         self.attr_map_for_column = {}
@@ -728,6 +729,9 @@ class TableView(Widget):
     def set_background_color(self, color):
         self.background_color = self.make_color(color)
         self.modify_style('base', gtk.STATE_NORMAL, self.background_color)
+        if not self.draws_selection:
+            self.modify_style('base', gtk.STATE_SELECTED, self.background_color)
+            self.modify_style('base', gtk.STATE_ACTIVE, self.background_color)
         if self.use_custom_style:
             for column in self.columns:
                 column.renderer._renderer.set_property('cell-background-gdk',
@@ -828,16 +832,15 @@ class TableView(Widget):
         self._widget.set_headers_visible(show)
         self._widget.set_headers_clickable(show)
 
-    def set_draws_selection(self, draws_selection):
+    def _setup_colors(self):
         style = self._widget.style
-        if not draws_selection:
+        if not self.draws_selection:
+            # if we don't want to draw selection, make the selected/active
+            # colors the same as the normal ones 
             self.modify_style('base', gtk.STATE_SELECTED,
                 style.base[gtk.STATE_NORMAL])
             self.modify_style('base', gtk.STATE_ACTIVE,
                 style.base[gtk.STATE_NORMAL])
-        else:
-            self.unmodify_style('base', gtk.STATE_SELECTED)
-            self.unmodify_style('base', gtk.STATE_ACTIVE)
 
     def set_search_column(self, model_index):
         self._widget.set_search_column(model_index)
