@@ -77,11 +77,12 @@ def build_error_image():
     :returns: hidden error image
     """
     image = widgetutil.HideableWidget(
-        widgetutil.align_middle(
-            widgetset.ImageDisplay(widgetset.Image(ERROR_IMAGE_PATH)),
-            top_pad=6))
-    # reserve space for the image, since we don't want the text entry to move
-    # when we show it (#16429)
+        widgetutil.align_center(
+            widgetutil.align_middle(
+                widgetset.ImageDisplay(widgetset.Image(ERROR_IMAGE_PATH)),
+                top_pad=6)))
+    # reserve space for the image, since we don't want the text entry
+    # to move when we show it (#16429)
     image.set_size_request(*image.child().get_size_request())
     image.hide()
     return image
