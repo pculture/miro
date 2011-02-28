@@ -781,7 +781,6 @@ class FeedToolbar(DisplayToolbar):
 
     :signal remove-feed: (widget) The 'remove feed' button was pressed
     :signal show-settings: (widget) The show settings button was pressed
-    :signal share: (widget) The 'share' button was pressed
     :signal auto-download-changed: (widget, value) The auto-download
         setting was changed by the user
     """
@@ -790,7 +789,6 @@ class FeedToolbar(DisplayToolbar):
         DisplayToolbar.__init__(self)
         self.create_signal('remove-feed')
         self.create_signal('show-settings')
-        self.create_signal('share')
         self.create_signal('auto-download-changed')
         hbox = widgetset.HBox(spacing=5)
 
@@ -809,12 +807,6 @@ class FeedToolbar(DisplayToolbar):
         autodownload_menu.connect('changed', self._on_autodownload_changed)
         self.autodownload_menu = widgetutil.HideableWidget(autodownload_menu)
 
-        share_button = widgetset.Button(_("Share podcast"), style='smooth')
-        share_button.set_size(widgetconst.SIZE_SMALL)
-        share_button.set_color(widgetset.TOOLBAR_GRAY)
-        share_button.connect('clicked', self._on_share_clicked)
-        self.share_button = widgetutil.HideableWidget(share_button)
-
         settings_button = widgetset.Button(_("Settings"), style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
         settings_button.set_color(widgetset.TOOLBAR_GRAY)
@@ -827,13 +819,12 @@ class FeedToolbar(DisplayToolbar):
         remove_button.connect('clicked', self._on_remove_clicked)
         self.remove_button = remove_button
 
+        hbox.pack_start(widgetutil.align_middle(self.settings_button))
         hbox.pack_start(widgetutil.align_middle(self.autodownload_label,
                                                 right_pad=2, left_pad=6))
         hbox.pack_start(widgetutil.align_middle(self.autodownload_menu))
         hbox.pack_end(widgetutil.align_middle(self.remove_button))
-        hbox.pack_end(widgetutil.align_middle(self.settings_button))
-        hbox.pack_end(widgetutil.align_middle(self.share_button))
-        self.add(widgetutil.pad(hbox, top=4, bottom=4, left=10, right=14))
+        self.add(widgetutil.pad(hbox, top=4, bottom=4, left=4, right=4))
 
     def set_autodownload_mode(self, autodownload_mode):
         if autodownload_mode == 'all':
@@ -845,9 +836,6 @@ class FeedToolbar(DisplayToolbar):
 
     def _on_settings_clicked(self, button):
         self.emit('show-settings')
-
-    def _on_share_clicked(self, button):
-        self.emit('share')
 
     def _on_remove_clicked(self, button):
         self.emit('remove-feed')

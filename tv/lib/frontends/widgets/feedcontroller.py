@@ -69,9 +69,7 @@ class FeedController(itemlistcontroller.ItemListController,
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
-            sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
-            self.widget.titlebar_vbox.pack_start(sep)
-            self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
+            self.widget.statusbar_vbox.pack_start(self._make_toolbar(feed_info))
 
     def build_standard_view(self, scroll_pos, selection):
         standard_view = itemlistwidgets.StandardView(
@@ -102,17 +100,14 @@ class FeedController(itemlistcontroller.ItemListController,
         if self.is_directory_feed:
             toolbar.autodownload_label.hide()
             toolbar.autodownload_menu.hide()
-            toolbar.share_button.hide()
             toolbar.settings_button.hide()
         else:
             toolbar.autodownload_label.show()
             toolbar.autodownload_menu.show()
-            toolbar.share_button.show()
             toolbar.settings_button.show()
             toolbar.set_autodownload_mode(feed_info.autodownload_mode)
         toolbar.connect('show-settings', self._on_show_settings)
         toolbar.connect('remove-feed', self._on_remove_feed)
-        toolbar.connect('share', self._on_share)
         toolbar.connect('auto-download-changed',
                 self._on_auto_download_changed)
         return toolbar
@@ -125,9 +120,6 @@ class FeedController(itemlistcontroller.ItemListController,
         info = widgetutil.get_feed_info(self.id)
         feedsettingspanel.run_dialog(info)
 
-    def _on_share(self, widget):
-        app.widgetapp.share_feed()
-
     def _on_auto_download_changed(self, widget, setting):
         messages.AutodownloadChange(self.id, setting).send_to_backend()
 
@@ -139,7 +131,7 @@ class FeedController(itemlistcontroller.ItemListController,
 
     def _update_counts(self):
         # FIXME: either find out a UI for these counts or delete them.
-        return 
+        return
         downloads = self.downloading_view.item_list.get_count()
         watchable = self.downloaded_view.item_list.get_count()
         full_count = (self.full_view.item_list.get_count() +
