@@ -710,8 +710,19 @@ def make_daap_server(backend, debug=False, name='pydaap', port=DEFAULT_PORT,
 ###############################################################################
 
 # DaapClient class
+#
 # TODO Should check daap status codes - but it's duplicated in the http
 # response as well, so it's not very urgent.
+#
+# Proposed locking protocol: there is a main lock around the HTTPConnection 
+# object, everytime you access it via a request/response pair you should 
+# wrap this around a lock.  Disconnection detection is done via a watcher 
+# which uses select() to poll the socket for readability.  When the socket
+# returns readable, it locks the connection to check for self.sock = None.
+# If it's None then it's been closed.  Alternatively, if it is not, then
+# we do a select on this socket with a zero timeout.  If no error is
+# encountered it means the socket is closed.  This assumes that you are using
+# HTTP/1.1.
 class DaapClient(object):
     HEARTBEAT = 60    # seconds
     def __init__(self, host, port):
@@ -799,6 +810,8 @@ class DaapClient(object):
         self.daap_items = itemdict
 
     def sessionize(self, request, query):
+        if not self.session:
+            raise ValueError('no session (not logged in?)')
         new_request = request + '?session-id=%d' % self.session
         # XXX urllib.quote?
         new_request = '&'.join([new_request] + 

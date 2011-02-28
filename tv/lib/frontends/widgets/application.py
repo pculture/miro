@@ -1243,7 +1243,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         share = message.share
         host = share.host
         port = share.port
-        if share.mount:
+        if share.mount and app.playback_manager.is_playing:
             item = app.playback_manager.get_playing_item()
             if (item and item.remote and
               item.host == host and item.port == port):

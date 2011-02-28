@@ -343,6 +343,18 @@ class SharingTracker(object):
                 # otherwise the TabsChanged() message wouldn't have arrived.
                 if victim.connect_uuid is None:
                     messages.SharingDisappeared(victim).send_to_frontend()
+            else:
+                # If we are connected see if it's still alive.
+                # Note that this isn't 100% correct, because depending on the
+                # ordering of things happening there is a minute chance that
+                # the share may still be alive at this point.  There is
+                # a proposed solution in libdaap that's not implemented that
+                # details how we can do it better using only HTTP/1.1.
+                share_info = self.available_shares[share_id]
+                del self.available_shares[share_id]
+                share = self.trackers[share_id]
+                if not share.client.alive():
+                    messages.SharingDisappeared(share_info).send_to_frontend()
 
     def server_thread(self):
         # Wait for the resume message from the sharing manager as 
