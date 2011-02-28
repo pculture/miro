@@ -31,6 +31,7 @@
 
 import os
 import sys
+import socket
 import random
 import traceback
 # XXX merged into urllib.urlparse in Python 3
@@ -819,7 +820,7 @@ class DaapClient(object):
             self.timer.start()
             return True
         # We've been disconnected or there was a problem?
-        except (IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
             return False
 
@@ -831,7 +832,7 @@ class DaapClient(object):
                              callback=self.handle_db)
             return self.db_id
         # We've been disconnected or there was a problem?
-        except (IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
             return None
 
@@ -847,7 +848,7 @@ class DaapClient(object):
             del self.daap_playlists
             return playlists
         # We've been disconnected or there was a problem?
-        except (IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
             return None
 
@@ -872,7 +873,7 @@ class DaapClient(object):
             del self.daap_items
             return items
         # We've been disconnected or there was a problem?
-        except (IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
             return None
 
@@ -881,7 +882,8 @@ class DaapClient(object):
             self.timer.cancel()
             self.conn.request('GET', self.sessionize('/logout', []))
         # Don't care since we are going away anyway.
-        except (ValueError, httplib.ResponseNotReady, AttributeError, IOError):
+        except (socket.error, ValueError, httplib.ResponseNotReady,
+                AttributeError, IOError):
             pass
         finally:
             self.session = None
