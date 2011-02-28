@@ -45,6 +45,7 @@ from miro import app
 from miro import displaytext
 from miro import messages
 from miro import subscription
+from miro import util
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
@@ -705,10 +706,10 @@ class ItemListController(object):
                 resumetime = displaytext.short_time_string(
                         last_played.resume_time)
                 text = _("Resume %(item)s at %(resumetime)s",
-                        {"item": last_played.name, "resumetime": resumetime})
+                        {"item": util.clamp_text(last_played.name), "resumetime": resumetime})
             else:
                 text = _("Resume %(item)s",
-                        {"item": last_played.name})
+                        {"item": util.clamp_text(last_played.name)})
             self.titlebar.update_resume_button(text)
 
     def on_items_will_change(self, added, changed, removed):
