@@ -723,6 +723,9 @@ class DaapClient(object):
 
     def heartbeat_callback(self):
         try:
+            # NB: This is a third connection in addition to the control
+            # and a data connection which may already be running.  I think
+            # this sits well with most implementations?
             tmp_conn = httplib.HTTPConnection(self.host, self.port)
             tmp_conn.request('GET', self.sessionize('/activity', []))
             self.check_reply(tmp_conn.getresponse(), httplib.NO_CONTENT)
