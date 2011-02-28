@@ -44,6 +44,7 @@ from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import imagebutton
+from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.gtcache import gettext as _
@@ -80,6 +81,10 @@ class BrowserToolbar(widgetset.HBox):
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable()
         self.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
+
+        separator = widgetset.ImageDisplay(imagepool.get(
+            resources.path('images/navseparator.png')))
+        self.pack_start(widgetutil.align_middle(separator))
         
         self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.set_squish_width(True)
@@ -99,17 +104,15 @@ class BrowserToolbar(widgetset.HBox):
         self.home_button.connect('clicked', self._on_home_button_clicked)
         self.pack_start(widgetutil.align_middle(self.home_button, left_pad=4))
 
-        self.browser_open_button = widgetset.Button(
-            _('Open in browser'), style='smooth')
-        self.browser_open_button.set_size(widgetconst.SIZE_SMALL)
+        self.browser_open_button = widgetutil.TitlebarButton(
+            _('Open in browser'), 'navopen')
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
         self.pack_end(widgetutil.align_middle(self.browser_open_button,
                                               right_pad=4))
 
-        self.download_button = widgetset.Button(_("Download this video"),
-                                                style="smooth")
-        self.download_button.set_size(widgetconst.SIZE_SMALL)
+        self.download_button = widgetutil.TitlebarButton(
+            _("Download this video"), 'navdownload')
         self.download_button.connect('clicked',
                                      self._on_download_button_clicked)
         self.download_button = widgetutil.HideableWidget(self.download_button)

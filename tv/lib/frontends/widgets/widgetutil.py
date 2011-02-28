@@ -322,6 +322,46 @@ class HideableWidget(widgetset.VBox):
             self.remove(self._child)
             self.shown = False
 
+class TitlebarButton(widgetset.CustomButton):
+    """
+    Draws the titlebar buttoms; based on ThreeImageSurface.
+    """
+    def __init__(self, title, icon):
+        widgetset.CustomButton.__init__(self)
+        self.title = title
+        self.icon = icon
+        self.surface = ThreeImageSurface()
+        self.surface_active = ThreeImageSurface()
+        self.surface.set_images(
+            make_surface(icon),
+            make_surface('titlebar-middle'),
+            make_surface('titlebar-right'))
+        self.surface_active.set_images(
+            make_surface(icon + '_active'),
+            make_surface('titlebar-middle_active'),
+            make_surface('titlebar-right_active'))
+
+    def _get_textbox(self, layout):
+        layout.set_font(0.8)
+        return layout.textbox(self.title)
+
+    def size_request(self, layout):
+        width, height = self._get_textbox(layout).get_size()
+        return width + 40, self.surface.height
+
+    def draw(self, context, layout):
+        if self.state == 'pressed':
+            self.surface_active.draw(context, 0, 0, context.width,
+                                     context.height)
+
+        else:
+            self.surface.draw(context, 0, 0, context.width,
+                              context.height)
+        textbox = self._get_textbox(layout)
+        text_width, text_height = textbox.get_size()
+        text_y = (context.height - text_height) / 2
+        textbox.draw(context, 28, text_y, text_width, text_height)
+
 class Shadow(object):
     """Encapsulates all parameters required to draw shadows.
     """
