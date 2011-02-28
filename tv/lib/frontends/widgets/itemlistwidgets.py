@@ -133,6 +133,9 @@ class ItemListTitlebar(widgetset.Background):
         hbox = widgetset.HBox()
         self.add(hbox)
         # Pack stuff to the right
+        start = self._build_titlebar_start()
+        if start:
+            hbox.pack_start(start)
         extra = self._build_titlebar_extra()
         if extra:
             if isinstance(extra, list):
@@ -170,6 +173,10 @@ class ItemListTitlebar(widgetset.Background):
         else:
             self.resume_button.set_text(text)
             self.resume_button_holder.show()
+
+    def _build_titlebar_start(self):
+        """Builds the widgets to place at the start of the titlebar.
+        """
 
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
@@ -710,8 +717,8 @@ class DownloadStatusToolbar(DisplayToolbar):
         else:
             self._second_image.hide()
 
-class DownloadToolbar(DisplayToolbar):
-    """Widget that pause/resume/... buttons for downloads, and other
+class DownloadTitlebar(ItemListTitlebar):
+    """Titlebar with pause/resume/... buttons for downloads, and other
     data.
 
     :signal pause-all: All downloads should be paused
@@ -722,54 +729,40 @@ class DownloadToolbar(DisplayToolbar):
     """
 
     def __init__(self):
-        DisplayToolbar.__init__(self)
-        vbox = widgetset.VBox()
-
-        sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
-        vbox.pack_start(sep)
-
-        h = widgetset.HBox(spacing=5)
+        ItemListTitlebar.__init__(self)
 
         self.create_signal('pause-all')
         self.create_signal('resume-all')
         self.create_signal('cancel-all')
         self.create_signal('settings')
 
-        pause_button = widgetset.Button(_('Pause All'), style='smooth')
-        pause_button.set_size(widgetconst.SIZE_SMALL)
-        pause_button.set_color(widgetset.TOOLBAR_GRAY)
-        pause_button.connect('clicked', self._on_pause_button_clicked)
-        h.pack_start(widgetutil.align_right(pause_button, top_pad=5,
-            bottom_pad=5), expand=True)
+    def _build_titlebar_start(self):
+        h = widgetset.HBox(spacing=5)
 
-        resume_button = widgetset.Button(_('Resume All'), style='smooth')
-        resume_button.set_size(widgetconst.SIZE_SMALL)
-        resume_button.set_color(widgetset.TOOLBAR_GRAY)
+        pause_button = widgetutil.TitlebarButton(_('Pause All'),
+                                                 'download-pause')
+        pause_button.connect('clicked', self._on_pause_button_clicked)
+        h.pack_start(widgetutil.align_middle(pause_button, top_pad=5,
+            bottom_pad=5, left_pad=16))
+
+        resume_button = widgetutil.TitlebarButton(_('Resume All'),
+                                                  'download-resume')
         resume_button.connect('clicked', self._on_resume_button_clicked)
         h.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
             bottom_pad=5))
 
-        cancel_button = widgetset.Button(_('Cancel All'), style='smooth')
-        cancel_button.set_size(widgetconst.SIZE_SMALL)
-        cancel_button.set_color(widgetset.TOOLBAR_GRAY)
+        cancel_button = widgetutil.TitlebarButton(_('Cancel All'),
+                                                  'download-cancel')
         cancel_button.connect('clicked', self._on_cancel_button_clicked)
         h.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5))
 
-        settings_button = widgetset.Button(_('Download Settings'),
-                                           style='smooth')
-        settings_button.set_size(widgetconst.SIZE_SMALL)
-        settings_button.set_color(widgetset.TOOLBAR_GRAY)
+        settings_button = widgetutil.TitlebarButton(_('Download Settings'),
+                                                    'download-settings')
         settings_button.connect('clicked', self._on_settings_button_clicked)
         h.pack_start(widgetutil.align_middle(settings_button, top_pad=5,
             bottom_pad=5, right_pad=16))
-
-        vbox.pack_start(h)
-
-        h = widgetset.HBox(spacing=10)
-
-        vbox.pack_start(h)
-        self.add(vbox)
+        return h
 
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')

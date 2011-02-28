@@ -30,18 +30,14 @@
 """Controller for Downloads tab.
 """
 
-from miro.gtcache import gettext as _
-
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets.itemlistwidgets import (
-    StandardView, DownloadToolbar, DownloadStatusToolbar, ItemListTitlebar)
+    StandardView, DownloadTitlebar, DownloadStatusToolbar)
 from miro.frontends.widgets import itemcontextmenu
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import prefpanel
 
 from miro import messages
 from miro import downloader
-from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
 class DownloadsController(itemlistcontroller.ItemListController):
@@ -61,8 +57,12 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self._update_free_space()
 
     def make_titlebar(self):
-        titlebar = ItemListTitlebar()
+        titlebar = DownloadTitlebar()
         titlebar.connect('search-changed', self._on_search_changed)
+        titlebar.connect("pause-all", self._on_pause_all)
+        titlebar.connect("resume-all", self._on_resume_all)
+        titlebar.connect("cancel-all", self._on_cancel_all)
+        titlebar.connect("settings", self._on_settings)
         return titlebar
 
     def make_context_menu_handler(self):
@@ -70,12 +70,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
     def build_standard_view(self, scroll_pos, selection):
         standard_view = StandardView(self.item_list, scroll_pos, selection)
-        self.toolbar = DownloadToolbar()
-        self.toolbar.connect("pause-all", self._on_pause_all)
-        self.toolbar.connect("resume-all", self._on_resume_all)
-        self.toolbar.connect("cancel-all", self._on_cancel_all)
-        self.toolbar.connect("settings", self._on_settings)
-        self.widget.titlebar_vbox.pack_start(self.toolbar)
         background = widgetset.SolidBackground((1, 1, 1))
         background.add(standard_view)
         return standard_view, background
