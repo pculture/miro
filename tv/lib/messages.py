@@ -1722,11 +1722,8 @@ class DisplayInfo(object):
 class GlobalInfo(object):
     """Contains the properties that are global to the widgets frontend
     """
-    def __init__(self, global_info=None):
-        if global_info is None:
-            self.item_details_expanded = True
-        else:
-            self.item_details_expanded = global_info.item_details_expanded
+    def __init__(self, global_info):
+        self.item_details_expanded = global_info.item_details_expanded
 
 class ViewInfo(object):
     """Contains the properties that are unique to each View

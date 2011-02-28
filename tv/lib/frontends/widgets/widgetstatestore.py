@@ -329,11 +329,11 @@ class WidgetStateStore(object):
             raise ValueError()
 
 # ViewState properties that are global to the whole frontend
-    def get_item_details_expanded(self):
-        return self.global_info.item_details_expanded
+    def get_item_details_expanded(self, view_type):
+        return self.global_info.item_details_expanded[view_type]
 
-    def set_item_details_expanded(self, expanded):
-        self.global_info.item_details_expanded = expanded
+    def set_item_details_expanded(self, view_type, expanded):
+        self.global_info.item_details_expanded[view_type] = expanded
         self._save_global_state()
 
 # Real ViewState properties:

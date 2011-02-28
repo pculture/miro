@@ -75,4 +75,7 @@ class GlobalState(DDBObject):
             return cls()
 
     def setup_new(self):
-        self.item_details_expanded = True
+        self.item_details_expanded = {
+                LIST_VIEW: True,
+                STANDARD_VIEW: False,
+        }

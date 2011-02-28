@@ -250,6 +250,8 @@ class ItemListController(object):
         list_view = WidgetStateStore.get_list_view_type()
         self.views[list_view] = self.build_list_view()
 
+        self.expand_or_contract_item_details()
+
         standard_view = WidgetStateStore.get_standard_view_type()
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, standard_view)
@@ -269,6 +271,8 @@ class ItemListController(object):
 
         toolbar.connect_weak('sort-changed',
             self.on_sort_changed, standard_view)
+        self.widget.item_details.expander_button.connect_weak('clicked',
+                self.on_item_details_expander_clicked)
         self.list_item_view.connect_weak('sort-changed',
             self.on_sort_changed, list_view)
         self.titlebar.connect_weak('list-view-clicked',
@@ -297,6 +301,7 @@ class ItemListController(object):
         # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
         app.menu_manager.update_menus()
+        self.expand_or_contract_item_details()
 
     def get_current_item_view(self):
         return self.views[self.selected_view]
@@ -337,6 +342,11 @@ class ItemListController(object):
 
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create(self.type, self.id)
+
+    def expand_or_contract_item_details(self):
+        expanded = app.widget_state.get_item_details_expanded(
+                self.selected_view)
+        self.widget.item_details.set_expanded(expanded)
 
     def update_columns_enabled(self):
         list_view = WidgetStateStore.get_list_view_type()
@@ -481,6 +491,11 @@ class ItemListController(object):
                         "not found")
                 return
         self._play_item_list(last_played_id, force_resume=True)
+
+    def on_item_details_expander_clicked(self, button):
+        expand = button.click_should_expand()
+        self.widget.item_details.set_expanded(expand)
+        app.widget_state.set_item_details_expanded(self.selected_view, expand)
 
     def on_columns_enabled_changed(self, object, columns, view_type):
         app.widget_state.set_columns_enabled(

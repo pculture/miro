@@ -1595,7 +1595,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         m.send_to_frontend()
 
     def handle_query_global_state(self, message):
-        m = messages.CurrentGlobalState(GlobalState.get_singleton())
+        info = messages.GlobalInfo(GlobalState.get_singleton())
+        m = messages.CurrentGlobalState(info)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):

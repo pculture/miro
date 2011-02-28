@@ -721,7 +721,7 @@ class GlobalStateSchema(DDBObjectSchema):
     klass = GlobalState
     table_name = 'global_state'
     fields = DDBObjectSchema.fields + [
-        ('item_details_expanded', SchemaBool()),
+        ('item_details_expanded', SchemaDict(SchemaInt(), SchemaBool())),
     ]
 
 class DBLogEntrySchema(DDBObjectSchema):
@@ -755,7 +755,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 147
+VERSION = 148
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

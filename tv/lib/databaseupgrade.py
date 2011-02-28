@@ -101,7 +101,7 @@ def remove_column(cursor, table, column_names):
     for sql in index_sql:
         cursor.execute(sql)
 
-def rename_column(cursor, table, from_column, to_column):
+def rename_column(cursor, table, from_column, to_column, new_type=None):
     """Renames a column in a SQLITE table.
 
     .. Note::
@@ -118,6 +118,7 @@ def rename_column(cursor, table, from_column, to_column):
     :param table: the table to remove the columns from
     :param from_column: the old name
     :param to_column: the new name
+    :param new_type: new type for the column (or None to keep the old one)
     """
     cursor.execute("PRAGMA table_info('%s')" % table)
     old_columns = []
@@ -129,6 +130,8 @@ def rename_column(cursor, table, from_column, to_column):
         old_columns.append(column)
         if column == from_column:
             column = to_column
+            if new_type is not None:
+                col_type = new_type
         new_columns.append(column)
         if column == 'id':
             col_type += ' PRIMARY KEY'
@@ -3154,3 +3157,13 @@ def upgrade147(cursor):
     """Add global widget state"""
     cursor.execute("CREATE TABLE global_state (id integer PRIMARY KEY, "
             "item_details_expanded integer)")
+
+def upgrade148(cursor):
+    """Make item_details_expanded a dict"""
+    # Nuke the global state data so that we get the default values after this
+    # upgrade
+    cursor.execute("DELETE FROM global_state")
+    # change item_details_expanded to a pythonrepr column, so that we can use
+    # SchemaDict with it
+    rename_column(cursor, 'global_state', 'item_details_expanded',
+            'item_details_expanded', 'pythonrepr')

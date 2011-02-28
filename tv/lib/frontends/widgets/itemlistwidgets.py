@@ -1263,7 +1263,10 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
             'images/item-details-expander-arrow.png'))
         self.contract_image = imagepool.get_surface(resources.path(
             'images/item-details-expander-arrow-down.png'))
-        self.mode = 'contract'
+        self.mode = 'expand'
+
+    def click_should_expand(self):
+        return self.mode == 'expand'
 
     def set_mode(self, mode):
         """Change the mode for the widget.
@@ -1330,7 +1333,6 @@ class ItemDetailsWidget(widgetset.VBox):
             right=self.PADDING_RIGHT), expand=True)
         # expander_button is used to expand/collapse our content
         self.expander_button = ItemDetailsExpanderButton()
-        self.expander_button.connect_weak('clicked', self.on_expander_clicked)
         self.pack_start(self.expander_button)
         # pack our content
         background = ItemDetailsBackground()
@@ -1338,12 +1340,7 @@ class ItemDetailsWidget(widgetset.VBox):
         self.scroller = widgetset.Scroller(True, True)
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
-        # setup initial expanded/collapsed state
-        if app.widget_state.get_item_details_expanded():
-            self.pack_end(self.scroller)
-            self.expander_button.set_mode('contract')
-        else:
-            self.expander_button.set_mode('expand')
+        self._expanded = False
 
     def build_right(self):
         vbox = widgetset.VBox()
@@ -1384,18 +1381,16 @@ class ItemDetailsWidget(widgetset.VBox):
         extra_info_label.set_size(self.EXTRA_INFO_SIZE)
         return extra_info_label
 
-    def on_expander_clicked(self, button):
-        expand = (button.mode == 'expand')
-        self._set_expanded(expand)
-        app.widget_state.set_item_details_expanded(expand)
-
-    def _set_expanded(self, expanded):
+    def set_expanded(self, expanded):
+        if expanded == self._expanded:
+            return
         if expanded:
             self.pack_end(self.scroller)
             self.expander_button.set_mode('contract')
         else:
             self.remove(self.scroller)
             self.expander_button.set_mode('expand')
+        self._expanded = expanded
 
     def set_info(self, info):
         self.title_label.set_text(info.name)
@@ -1487,7 +1482,6 @@ class ItemContainerWidget(widgetset.VBox):
                 self.toolbar._button_hbox_container.show()
             else:
                 self.toolbar._button_hbox_container.hide()
-
 
     def set_list_empty_mode(self, enabled):
         if enabled != self.list_empty_mode:
