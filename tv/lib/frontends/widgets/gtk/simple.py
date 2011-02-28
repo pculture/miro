@@ -196,6 +196,7 @@ class Scroller(Bin):
             self._widget.add(self.child._widget)
         else:
             self._widget.add_with_viewport(self.child._widget)
+            self._widget.get_child().set_shadow_type(gtk.SHADOW_NONE)
         if isinstance(self.child._widget, gtk.TextView):
             self._widget.set_shadow_type(gtk.SHADOW_IN)
         else:
