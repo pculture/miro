@@ -741,7 +741,8 @@ class MenuStateManager(signals.SignalEmitter):
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
             self.enabled_groups.add('Playing')
-            if not app.playback_manager.get_playing_item().remote:
+            item = app.playback_manager.get_playing_item()
+            if item and item.remote:
                 self.enabled_groups.add('LocalPlayableSelected_PlayPause')
                 self.enabled_groups.add('LocalPlayableSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
