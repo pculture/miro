@@ -53,10 +53,6 @@ from miro.conversions import conversion_manager
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
-class DeviceTitlebar(itemlistwidgets.ItemListTitlebar):
-    def _build_titlebar_extra(self):
-        pass
-
 class DeviceTabButtonSegment(segmented.TextButtonSegment):
     PARTS = {
         'off-far-left':     segmented._get_image('device-off-far-left'),
@@ -766,15 +762,11 @@ class DeviceUnmountedView(widgetset.VBox):
 class DeviceWidget(widgetset.VBox):
     def __init__(self, device):
         widgetset.VBox.__init__(self)
-        self.titlebar_view = widgetset.Background()
         self.device_view = widgetset.Background()
-        self.pack_start(self.titlebar_view)
         self.pack_start(self.device_view, expand=True)
         self.set_device(device)
 
     def set_device(self, device):
-        self.titlebar_view.remove()
-        self.titlebar_view.set_child(self.make_titlebar(device))
         if not device.mount:
             view_class = DeviceUnmountedView
         elif not device.info.has_multiple_devices:
@@ -788,11 +780,6 @@ class DeviceWidget(widgetset.VBox):
             view.set_device(device)
             self.device_view.set_child(view)
 
-    @staticmethod
-    def make_titlebar(device):
-        image_path = resources.path("images/device-small.png")
-        icon = imagepool.get(image_path)
-        return DeviceTitlebar(device.name, icon)
 
     def current_sync_information(self, count):
         view = self.get_view()
@@ -856,8 +843,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.id = device.id
         tab_type = device.tab_type
         self.type = u'device-%s' % tab_type
-        self.image_filename = 'icon-%s_large.png' % tab_type
-        self.set_title()
         itemlistcontroller.AudioVideoItemsController.__init__(self)
         if ('%s_sort_state' % tab_type) in device.database:
             sort_key, ascending = device.database['%s_sort_state' % tab_type]
@@ -879,10 +864,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.titlebar.connect('list-view-clicked', self.save_view, 'list')
         self.titlebar.connect('normal-view-clicked',
                                     self.save_view, 'normal')
-
-    def set_title(self):
-        self.title = u'%s on %s' % (self.device.name, self.device.device_name)
-
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
 

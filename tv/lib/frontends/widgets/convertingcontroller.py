@@ -64,11 +64,6 @@ class ConvertingController(object):
         self.build_widget()
 
     def build_widget(self):
-        image_path = resources.path("images/icon-converting_large.png")
-        icon = imagepool.get(image_path)
-        titlebar = ConvertingTitleBar(_("Converting"), icon)
-        self.widget.pack_start(titlebar)
-
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
         self.widget.pack_start(sep)
 
@@ -189,10 +184,6 @@ class ConvertingController(object):
             self.clear_finished_button.enable()
         else:
             self.clear_finished_button.disable()
-
-class ConvertingTitleBar(itemlistwidgets.ItemListTitlebar):
-    def _build_titlebar_extra(self):
-        pass
 
 class ConvertingTableView(widgetset.TableView):
     def __init__(self, model):

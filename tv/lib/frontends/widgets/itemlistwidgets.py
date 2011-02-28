@@ -127,7 +127,7 @@ class ItemListTitlebar(widgetset.Background):
     :signal search-changed: (self, search_text) -- The value in the
         search box changed and the items listed should be filtered
     """
-    def __init__(self, title, icon, add_icon_box=False):
+    def __init__(self):
         widgetset.Background.__init__(self)
         self.create_signal('resume-playing')
         hbox = widgetset.HBox()

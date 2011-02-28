@@ -59,16 +59,11 @@ class FeedController(itemlistcontroller.ItemListController,
 
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
-        icon = imagepool.get(feed_info.thumbnail, size=(41, 41))
 
-        add_icon_box = (not self.is_folder
-                and not feed_info.thumbnail.startswith(resources.root()))
         if feed_info.is_directory_feed:
-            self.titlebar = itemlistwidgets.ItemListTitlebar(feed_info.name, icon,
-                    add_icon_box=add_icon_box)
+            self.titlebar = itemlistwidgets.ItemListTitlebar()
         else:
-            self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
-                    add_icon_box=add_icon_box)
+            self.titlebar = itemlistwidgets.ChannelTitlebar()
             self.titlebar.connect('save-search', self._on_save_search)
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)

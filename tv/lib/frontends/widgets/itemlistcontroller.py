@@ -50,13 +50,11 @@ from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemlistwidgets
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
-from miro.plat import resources
 
 class ItemListDragHandler(object):
     def allowed_actions(self):
@@ -781,18 +779,13 @@ class SimpleItemListController(ItemListController):
         return standard_view, standard_view
 
     def make_titlebar(self):
-        icon = self._make_icon()
-        titlebar = itemlistwidgets.ItemListTitlebar(self.title, icon)
+        titlebar = itemlistwidgets.ItemListTitlebar()
         titlebar.connect('search-changed', self._on_search_changed)
         return titlebar
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
         self.check_for_empty_list()
-
-    def _make_icon(self):
-        image_path = resources.path("images/%s" % self.image_filename)
-        return imagepool.get(image_path)
 
     def on_initial_list(self):
         self.check_for_empty_list()
@@ -807,8 +800,6 @@ class SimpleItemListController(ItemListController):
 class SearchController(SimpleItemListController):
     type = u'search'
     id = u'search'
-    image_filename = 'icon-search_large.png'
-    title = _("Video Search")
 
     def __init__(self):
         SimpleItemListController.__init__(self)
@@ -854,8 +845,7 @@ class SearchController(SimpleItemListController):
         pass
 
     def make_titlebar(self):
-        icon = self._make_icon()
-        titlebar = itemlistwidgets.SearchListTitlebar(self.title, icon)
+        titlebar = itemlistwidgets.SearchListTitlebar()
         return titlebar
 
     def _on_save_search(self, widget):
@@ -904,24 +894,18 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
 class VideoItemsController(AudioVideoItemsController):
     type = u'videos'
     id = u'videos'
-    image_filename = 'icon-video_large.png'
-    title = _("Video")
     unwatched_label =  _('Unwatched')
     display_channel = True
 
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'
     id = u'music'
-    image_filename = 'icon-audio_large.png'
-    title = _("Music")
     unwatched_label = _('Unplayed')
     display_channel = True
 
 class OtherItemsController(SimpleItemListController):
     type = u'others'
     id = u'others'
-    image_filename = 'icon-other_large.png'
-    title = _("Other")
     display_channel = True
 
 class FolderContentsController(SimpleItemListController):
@@ -930,13 +914,9 @@ class FolderContentsController(SimpleItemListController):
     def __init__(self, folder_info, play_initial_list):
         self.type = u'folder-contents'
         self.id = folder_info.id
-        self.title = folder_info.name
         self.info = folder_info
         self.play_initial_list = play_initial_list
         SimpleItemListController.__init__(self)
-
-    def _make_icon(self):
-        return imagepool.get(resources.path('images/folder-icon.png'))
 
     def build_widget(self):
         SimpleItemListController.build_widget(self)
