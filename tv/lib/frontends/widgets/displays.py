@@ -325,20 +325,8 @@ class FeedDisplay(ItemListDisplay):
         return tab_type == cls.TAB_TYPE and len(selected_tabs) == 1 and \
                selected_tabs[0].type != u'tab'
 
-    def on_selected(self):
-        ItemListDisplay.on_selected(self)
-        self._signal_handler = app.info_updater.connect(
-                self.UPDATER_SIGNAL_NAME, self._on_feeds_changed)
-
-    def _on_feeds_changed(self, updater, info_list):
-        for info in info_list:
-            if info.id == self.id:
-                self.controller.titlebar.update_title(info.name)
-                return
-
     def cleanup(self):
         ItemListDisplay.cleanup(self)
-        app.info_updater.disconnect(self._signal_handler)
         if widgetutil.feed_exists(self.feed_id):
             messages.MarkFeedSeen(self.feed_id).send_to_backend()
 
@@ -357,28 +345,12 @@ class AllFeedsDisplay(FeedDisplay):
 
     def cleanup(self):
         ItemListDisplay.cleanup(self)
-        app.info_updater.disconnect(self._signal_handler)
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return tab_type == 'playlist' and len(selected_tabs) == 1 and \
                selected_tabs[0].type != u'tab'
-
-    def on_selected(self):
-        ItemListDisplay.on_selected(self)
-        self._signal_handler = app.info_updater.connect('playlists-changed',
-                self._on_playlists_changed)
-
-    def _on_playlists_changed(self, updater, info_list):
-        for info in info_list:
-            if info.id == self.id:
-                self.controller.titlebar.update_title(info.name)
-                return
-
-    def cleanup(self):
-        ItemListDisplay.cleanup(self)
-        app.info_updater.disconnect(self._signal_handler)
 
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)

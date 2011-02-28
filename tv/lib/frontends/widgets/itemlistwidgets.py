@@ -58,31 +58,6 @@ from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.utils import get_available_bytes_for_movies
 
-class TitleDrawer(widgetset.DrawingArea):
-    """Draws the title of an item list."""
-    def __init__(self, title):
-        widgetset.DrawingArea.__init__(self)
-        self.title = title
-
-    def draw(self, context, layout):
-        layout.set_font(2.2, family="Helvetica")
-        layout.set_text_color((0.31, 0.31, 0.31))
-        layout.set_text_shadow(widgetutil.Shadow((1, 1, 1), 1,
-                                                 (1.5, -1.5), 0.5))
-        textbox = layout.textbox(self.title)
-        textbox.set_width(context.width)
-        textbox.set_wrap_style('truncated-char')
-        height = textbox.font.line_height()
-        y = (context.height - height) / 2
-        textbox.draw(context, 0, y, context.width, height)
-
-    def size_request(self, layout):
-        return (20, layout.font(2.2, family="Helvetica").line_height())
-
-    def update_title(self, new_title):
-        self.title = new_title
-        self.queue_redraw()
-
 class ViewToggler(widgetset.CustomButton):
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -96,7 +71,7 @@ class ViewToggler(widgetset.CustomButton):
         self.create_signal('list-view-clicked')
 
     def size_request(self, layout):
-        return self.normal_image.width, self.normal_image.height
+        return self.normal_image.width, 50 # want to make the titlebar higher
 
     def draw(self, context, layout):
         if WidgetStateStore.is_standard_view(self.selected_view):
@@ -157,29 +132,19 @@ class ItemListTitlebar(widgetset.Background):
         self.create_signal('resume-playing')
         hbox = widgetset.HBox()
         self.add(hbox)
-        # Pack the icon and title
-        self.title_drawer = TitleDrawer(title)
-        if add_icon_box:
-            icon_widget = BoxedIconDrawer(icon)
-        else:
-            icon_widget = widgetset.ImageDisplay(icon)
-        alignment = widgetset.Alignment(yalign=0.5, xalign=0.5)
-        alignment.add(icon_widget)
-        alignment.set_size_request(-1, 61)
-        hbox.pack_start(alignment, padding=15)
-        hbox.pack_start(self.title_drawer, expand=True)
-        self.resume_button = widgetset.Button(_("Resume foo at x:yz"))
-        self.resume_button.connect('clicked', self._on_resume_button_clicked)
-        self.resume_button_holder = widgetutil.HideableWidget(
-                widgetutil.pad(self.resume_button, right=10))
-        hbox.pack_start(widgetutil.align_middle(self.resume_button_holder))
         # Pack stuff to the right
         extra = self._build_titlebar_extra()
         if extra:
             if isinstance(extra, list):
-                [hbox.pack_start(w) for w in extra]
+                [hbox.pack_end(w) for w in extra[::-1]]
             else:
-                hbox.pack_start(extra)
+                hbox.pack_end(extra)
+        hbox.pack_end(self._build_view_toggle())
+        self.resume_button = widgetset.Button(_("Resume foo at x:yz"))
+        self.resume_button.connect('clicked', self._on_resume_button_clicked)
+        self.resume_button_holder = widgetutil.HideableWidget(
+                widgetutil.pad(self.resume_button, right=10))
+        hbox.pack_end(widgetutil.align_middle(self.resume_button_holder))
 
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
@@ -193,9 +158,6 @@ class ItemListTitlebar(widgetset.Background):
         gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
         context.rectangle(0, 1, context.width, context.height)
         context.gradient_fill(gradient)
-
-    def update_title(self, new_title):
-        self.title_drawer.update_title(new_title)
 
     def update_resume_button(self, text):
         """Update the resume button text.
@@ -215,13 +177,11 @@ class ItemListTitlebar(widgetset.Background):
         By default we add a search box, but subclasses can override
         this.
         """
-        self._build_view_toggle()
         self.create_signal('search-changed')
         self.searchbox = widgetset.SearchTextEntry()
         self.searchbox.connect('changed', self._on_search_changed)
-        return [self.view_toggler,
-                widgetutil.align_middle(self.searchbox, right_pad=35,
-                                        left_pad=15)]
+        return widgetutil.align_middle(self.searchbox, right_pad=35,
+                                       left_pad=15)
 
     def _build_view_toggle(self):
         self.create_signal('list-view-clicked')
@@ -230,6 +190,7 @@ class ItemListTitlebar(widgetset.Background):
         self.view_toggler.connect('list-view-clicked', self._on_list_clicked)
         self.view_toggler.connect('normal-view-clicked',
                                   self._on_normal_clicked)
+        return self.view_toggler
 
     def _on_resume_button_clicked(self, button):
         self.emit('resume-playing')
@@ -269,9 +230,8 @@ class ChannelTitlebar(ItemListTitlebar):
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=10))
-        return ([
-            widgetutil.align_middle(self.save_button)] +
-                ItemListTitlebar._build_titlebar_extra(self))
+        return [widgetutil.align_middle(self.save_button),
+                ItemListTitlebar._build_titlebar_extra(self)]
 
     def _on_save_search(self, button):
         self.emit('save-search', self.searchbox.get_text())
@@ -301,7 +261,6 @@ class SearchListTitlebar(ItemListTitlebar):
         self.searchbox.select_engine(engine)
 
     def _build_titlebar_extra(self):
-        self._build_view_toggle()
         hbox = widgetset.HBox()
 
         self.searchbox = widgetset.VideoSearchTextEntry()
@@ -310,7 +269,7 @@ class SearchListTitlebar(ItemListTitlebar):
         self.searchbox.connect('validate', self._on_search_activate)
         hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
 
-        return [self.view_toggler, widgetutil.align_middle(hbox, right_pad=20)]
+        return [widgetutil.align_middle(hbox, right_pad=20)]
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""

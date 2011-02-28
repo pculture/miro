@@ -910,5 +910,3 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         if self.device.id != device.id:
             return
         self.device = device
-        self.set_title()
-        self.titlebar.update_title(self.title)
