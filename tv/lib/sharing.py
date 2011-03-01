@@ -683,6 +683,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
+        self.share.is_updating = False
         message = messages.TabsChanged('sharing', [], [self.share], [])
         message.send_to_frontend()
         app.sharing_tracker.eject(self.share.id)
