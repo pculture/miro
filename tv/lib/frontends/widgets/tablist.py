@@ -29,6 +29,8 @@
 
 """Displays the list of tabs on the left-hand side of the app."""
 
+from hashlib import md5
+
 from miro import app
 from miro import signals
 from miro import messages
@@ -823,8 +825,24 @@ class SharingTabListHandler(object):
     def init_info(self, info):
         info.type = u'sharing'
         info.unwatched = info.available = 0
+        video_playlist_id = unicode(md5(
+                                    repr((u'video',
+                                    info.host,
+                                    info.port, u'video'))).hexdigest())
+        audio_playlist_id = unicode(md5(
+                                    repr((u'audio',
+                                    info.host,
+                                    info.port, u'audio'))).hexdigest())
         if info.is_folder:
             thumb_path = resources.path('images/sharing.png')
+        # Checking the name instead of a supposedly unique id is ok for now
+        # because 
+        elif info.playlist_id == video_playlist_id:
+            thumb_path = resources.path('images/icon-video.png')
+            info.name = _('Video')
+        elif info.playlist_id == audio_playlist_id:
+            thumb_path = resources.path('images/icon-audio.png')
+            info.name = _('Music')
         else:
             thumb_path = resources.path('images/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)

@@ -600,6 +600,28 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                             parent_id=self.share.id,
                                             playlist_id=k)
                 returned_playlists.append(info)
+        # Generate unique fake ids for these.
+        video_playlist_id = unicode(md5(repr((u'video',
+                                              host,
+                                              port, u'video'))).hexdigest())
+        audio_playlist_id = unicode(md5(repr((u'audio',
+                                              host,
+                                              port, u'audio'))).hexdigest())
+        video_info = messages.SharingInfo(video_playlist_id,
+                                          u'video',
+                                          host,
+                                          port,
+                                          parent_id=self.share.id,
+                                          playlist_id=video_playlist_id)
+        audio_info = messages.SharingInfo(audio_playlist_id,
+                                          u'audio',
+                                          host,
+                                          port,
+                                          parent_id=self.share.id,
+                                          playlist_id=audio_playlist_id)
+        # Place this stuff at the front
+        returned_playlists.insert(0, audio_info)
+        returned_playlists.insert(0, video_info)
 
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken?
@@ -611,10 +633,20 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         itemdict = dict()
         returned_playlist_items = dict()
         returned_items = []
+        video_items = []
+        audio_items = []
         for itemkey in items.keys():
             item = self.sharing_item(items[itemkey], self.base_playlist)
             itemdict[itemkey] = items[itemkey]
             returned_items.append(item)
+            if item.file_type == u'video':
+                video_items.append(item)
+            elif item.file_type == u'audio':
+                audio_items.append(item)
+            else:
+                logging.warn('item file type unrecognized %s', item.file_type)
+        returned_playlist_items['video'] = video_items
+        returned_playlist_items['audio'] = audio_items
         returned_playlist_items[self.base_playlist] = returned_items
 
         # Have to save the items from the base playlist first, because
@@ -630,7 +662,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 item = self.sharing_item(rawitem, k)
                 returned_items.append(item)
             returned_playlist_items[k] = returned_items
-        print 'BASE PLAYLIST', self.base_playlist
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
