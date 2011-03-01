@@ -192,10 +192,8 @@ class TranscodeObject(object):
 
     This object represents a media item which needs to be transcoded.
 
-    For video files, H.264 and AAC (if audio track present) in mpegts
-    container (using libx264 and aac)
-
-    For audio files, mp3 format (using libmp3lame).
+    The exact transcoding paramters depends on what your provided ffmpeg
+    can support.
 
     This is meant to be a use-once object.  Create, transcode, discard.
 
