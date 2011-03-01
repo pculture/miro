@@ -40,11 +40,11 @@ forward those signals on.  It's the job of ItemListController
 subclasses to handle the logic involved.
 """
 
-
 from miro import app
 from miro import prefs
 from miro import displaytext
 from miro import util
+from miro import eventloop
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 from miro.frontends.widgets import imagepool
@@ -797,20 +797,15 @@ class FeedToolbar(widgetset.Background):
         settings_button.connect('clicked', self._on_settings_clicked)
         self.settings_button = widgetutil.HideableWidget(settings_button)
 
-        label = widgetset.Label(_('Auto-download'))
-        label.set_size(widgetconst.SIZE_SMALL)
-        label.set_color(widgetset.TOOLBAR_GRAY)
-        self.autodownload_label = widgetutil.HideableWidget(label)
+        autodownload_button = widgetutil.MultiStateTitlebarButton(
+            [('autodownload-all', _("Auto-Download All"), "all"),
+             ('autodownload-new', _("Auto-Download New"), "new"),
+             ('autodownload-off', _("Auto-Download Off"), "off")])
+        autodownload_button.connect('clicked', self._on_autodownload_changed)
 
-        self.autodownload_options = (("all", _("All")),
-                                     ("new", _("New")),
-                                     ("off", _("Off")))
-
-        autodownload_menu = widgetset.OptionMenu(
-            [o[1] for o in self.autodownload_options])
-        autodownload_menu.set_size(widgetconst.SIZE_SMALL)
-        autodownload_menu.connect('changed', self._on_autodownload_changed)
-        self.autodownload_menu = widgetutil.HideableWidget(autodownload_menu)
+        self.autodownload_button_actual = autodownload_button
+        self.autodownload_button = widgetutil.HideableWidget(
+            self.autodownload_button_actual)
 
         remove_button = widgetutil.TitlebarButton(
             _("Remove podcast"), 'feed-remove-podcast')
@@ -818,19 +813,19 @@ class FeedToolbar(widgetset.Background):
         self.remove_button = remove_button
 
         hbox.pack_start(widgetutil.align_middle(self.settings_button))
-        hbox.pack_start(widgetutil.align_middle(self.autodownload_label,
-                                                right_pad=2, left_pad=6))
-        hbox.pack_start(widgetutil.align_middle(self.autodownload_menu))
+        hbox.pack_start(widgetutil.align_middle(self.autodownload_button))
         hbox.pack_end(widgetutil.align_middle(self.remove_button))
         self.add(widgetutil.pad(hbox, top=4, bottom=4, left=4, right=4))
 
+        self.autodownload_dc = None
+
     def set_autodownload_mode(self, autodownload_mode):
         if autodownload_mode == 'all':
-            self.autodownload_menu.child().set_selected(0)
+            self.autodownload_button_actual.set_toggle_state(0)
         elif autodownload_mode == 'new':
-            self.autodownload_menu.child().set_selected(1)
+            self.autodownload_button_actual.set_toggle_state(1)
         elif autodownload_mode == 'off':
-            self.autodownload_menu.child().set_selected(2)
+            self.autodownload_button_actual.set_toggle_state(2)
 
     def draw(self, context, layout):
         key = 74.0 / 255
@@ -853,8 +848,22 @@ class FeedToolbar(widgetset.Background):
     def _on_remove_clicked(self, button):
         self.emit('remove-feed')
 
-    def _on_autodownload_changed(self, widget, option):
-        self.emit('auto-download-changed', self.autodownload_options[option][0])
+    def _on_autodownload_changed(self, widget):
+        if self.autodownload_dc is not None:
+            self.autodownload_dc.cancel()
+            self.autodownload_dc = None
+
+        toggle_state = self.autodownload_button_actual.get_toggle_state()
+        toggle_state = (toggle_state + 1) % 3
+        self.autodownload_button_actual.set_toggle_state(toggle_state)
+        value = self.autodownload_button_actual.get_toggle_state_information()
+        value = value[0]
+        self.autodownload_dc = eventloop.add_timeout(
+            3, self._on_autodownload_changed_timeout, "autodownload change",
+            args=(value,))
+
+    def _on_autodownload_changed_timeout(self, value):
+        self.emit('auto-download-changed', value)
 
 class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
     """Toolbar used to sort items and switch views.

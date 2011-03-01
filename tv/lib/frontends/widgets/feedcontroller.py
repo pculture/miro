@@ -98,12 +98,10 @@ class FeedController(itemlistcontroller.ItemListController,
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()
         if self.is_directory_feed:
-            toolbar.autodownload_label.hide()
-            toolbar.autodownload_menu.hide()
+            toolbar.autodownload_button.hide()
             toolbar.settings_button.hide()
         else:
-            toolbar.autodownload_label.show()
-            toolbar.autodownload_menu.show()
+            toolbar.autodownload_button.show()
             toolbar.settings_button.show()
             toolbar.set_autodownload_mode(feed_info.autodownload_mode)
         toolbar.connect('show-settings', self._on_show_settings)

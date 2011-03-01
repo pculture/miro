@@ -118,14 +118,14 @@ def circular_rect_negative(context, x, y, width, height):
 
 def draw_rounded_icon(context, icon, x, y, width, height, inset=0, fraction=1.0):
     """Draw an icon with the corners rounded.
-    
+
     x, y, width, height define where the box is.
 
     inset creates a margin between where the images is drawn and (x, y, width,
     height)
     """
     context.save()
-    round_rect(context, x + inset, y + inset, width - inset*2, 
+    round_rect(context, x + inset, y + inset, width - inset*2,
             height - inset*2, 3)
     context.clip()
     if icon.width != width or icon.height != height:
@@ -151,7 +151,7 @@ def draw_rounded_icon(context, icon, x, y, width, height, inset=0, fraction=1.0)
     icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height, fraction)
     context.restore()
 
-def align(widget, xalign=0, yalign=0, xscale=0, yscale=0, 
+def align(widget, xalign=0, yalign=0, xscale=0, yscale=0,
         top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Create an alignment, then add widget to it and return the alignment.
     """
@@ -234,7 +234,7 @@ class ThreeImageSurface(object):
 
     >>> timelinebar = ThreeImageSurface("timelinebar")
 
-    This creates a ``ThreeImageSurface`` using the images 
+    This creates a ``ThreeImageSurface`` using the images
     ``images/timelinebar_left.png``, ``images/timelinebar_center.png``, and
     ``images/timelinebar_right.png``.
 
@@ -362,6 +362,82 @@ class TitlebarButton(widgetset.CustomButton):
         text_y = (context.height - text_height) / 2
         textbox.draw(context, 28, text_y, text_width, text_height)
 
+class MultiStateTitlebarButton(widgetset.CustomButton):
+    """
+    Same as TitlebarButton, but has multiple states.  States is a list
+    of tuples of the form (icon, title).
+
+    .. Note::
+
+       You can add other information to the tuple if you like.
+    """
+    def __init__(self, toggle_states):
+        widgetset.CustomButton.__init__(self)
+        self.toggle_states = toggle_states
+        self.titles = []
+        self.icons = []
+        self.surfaces = []
+        for mem in toggle_states:
+            icon = mem[0]
+            title = mem[1]
+            self.titles.append(title)
+            self.icons.append(icon)
+            surface = ThreeImageSurface()
+            surface.set_images(
+                make_surface(icon),
+                make_surface('titlebar-middle'),
+                make_surface('titlebar-right'))
+            surface_active = ThreeImageSurface()
+            surface_active.set_images(
+                make_surface(icon + '_active'),
+                make_surface('titlebar-middle_active'),
+                make_surface('titlebar-right_active'))
+            self.surfaces.append((surface, surface_active))
+        self.toggle_state = 0
+
+    def set_toggle_state(self, toggle_state):
+        assert toggle_state < len(self.toggle_states), "State %d doesn't exist" % toggle_state
+        self.toggle_state = toggle_state
+
+    def get_toggle_state(self):
+        return self.toggle_state
+
+    def get_toggle_state_information(self):
+        """Returns information in the state tuple beyond the icon and
+        title.  If there isn't any additional information, then it
+        returns an empty tuple.
+        """
+        return self.toggle_states[self.toggle_state][2:]
+
+    def _get_textbox(self, layout, title):
+        layout.set_font(0.8)
+        return layout.textbox(title)
+
+    def size_request(self, layout):
+        width, height = 0, 0
+        for title in self.titles:
+            w, h = self._get_textbox(layout, title).get_size()
+            width = max(width, w)
+            height = max(height, h)
+
+        # FIXME - this assumes all surfaces are the same height
+        return width + 40, self.surfaces[0][0].height
+
+    def draw(self, context, layout):
+        title = self.titles[self.toggle_state]
+        surface = self.surfaces[self.toggle_state]
+
+        if self.state == 'pressed':
+            surface[1].draw(context, 0, 0, context.width,
+                            context.height)
+        else:
+            surface[0].draw(context, 0, 0, context.width,
+                            context.height)
+        textbox = self._get_textbox(layout, title)
+        text_width, text_height = textbox.get_size()
+        text_y = (context.height - text_height) / 2
+        textbox.draw(context, 28, text_y, text_width, text_height)
+
 class Shadow(object):
     """Encapsulates all parameters required to draw shadows.
     """
@@ -372,13 +448,13 @@ class Shadow(object):
         self.blur_radius = blur_radius
 
 def get_feed_info(feed_id):
-    """Returns the :class:`FeedInfo` object for a given ``feed_id`` 
+    """Returns the :class:`FeedInfo` object for a given ``feed_id``
     regardless of whether it's an audio or video feed.
     """
     return app.tab_list_manager.feed_list.get_info(feed_id)
 
 def feed_exists(feed_id):
-    """Returns true or false as to whether a :class:`Feed` with id ``feed_id`` 
+    """Returns true or false as to whether a :class:`Feed` with id ``feed_id``
     exists.
     """
     try:
