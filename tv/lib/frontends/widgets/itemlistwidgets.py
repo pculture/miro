@@ -776,7 +776,7 @@ class DownloadTitlebar(ItemListTitlebar):
     def _on_settings_button_clicked(self, widget):
         self.emit('settings')
 
-class FeedToolbar(DisplayToolbar):
+class FeedToolbar(widgetset.Background):
     """Toolbar that appears below the title in a feed.
 
     :signal remove-feed: (widget) The 'remove feed' button was pressed
@@ -786,11 +786,16 @@ class FeedToolbar(DisplayToolbar):
     """
 
     def __init__(self):
-        DisplayToolbar.__init__(self)
+        widgetset.Background.__init__(self)
         self.create_signal('remove-feed')
         self.create_signal('show-settings')
         self.create_signal('auto-download-changed')
         hbox = widgetset.HBox(spacing=5)
+
+        settings_button = widgetutil.TitlebarButton(
+            _("Settings"), 'feed-settings')
+        settings_button.connect('clicked', self._on_settings_clicked)
+        self.settings_button = widgetutil.HideableWidget(settings_button)
 
         label = widgetset.Label(_('Auto-download'))
         label.set_size(widgetconst.SIZE_SMALL)
@@ -807,15 +812,8 @@ class FeedToolbar(DisplayToolbar):
         autodownload_menu.connect('changed', self._on_autodownload_changed)
         self.autodownload_menu = widgetutil.HideableWidget(autodownload_menu)
 
-        settings_button = widgetset.Button(_("Settings"), style='smooth')
-        settings_button.set_size(widgetconst.SIZE_SMALL)
-        settings_button.set_color(widgetset.TOOLBAR_GRAY)
-        settings_button.connect('clicked', self._on_settings_clicked)
-        self.settings_button = widgetutil.HideableWidget(settings_button)
-
-        remove_button = widgetset.Button(_("Remove podcast"), style='smooth')
-        remove_button.set_size(widgetconst.SIZE_SMALL)
-        remove_button.set_color(widgetset.TOOLBAR_GRAY)
+        remove_button = widgetutil.TitlebarButton(
+            _("Remove podcast"), 'feed-remove-podcast')
         remove_button.connect('clicked', self._on_remove_clicked)
         self.remove_button = remove_button
 
@@ -833,6 +831,21 @@ class FeedToolbar(DisplayToolbar):
             self.autodownload_menu.child().set_selected(1)
         elif autodownload_mode == 'off':
             self.autodownload_menu.child().set_selected(2)
+
+    def draw(self, context, layout):
+        key = 74.0 / 255
+        top = 223.0 / 255
+        bottom = 199.0 / 255
+
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color((top, top, top))
+        gradient.set_end_color((bottom, bottom, bottom))
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
+        context.set_color((key, key, key))
+        context.move_to(0, 0)
+        context.rel_line_to(context.width, 0)
+        context.stroke()
 
     def _on_settings_clicked(self, button):
         self.emit('show-settings')
@@ -885,7 +898,6 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
 
     def pack_hbox_extra(self):
         pass
-
 
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
