@@ -76,6 +76,11 @@ def dirfilt(root, dirs):
         dirs.remove(x)
     return dirs
 
+# A file bundle is a collection of files inside a directory.
+def is_file_bundle(path):
+    ws = NSWorkspace.sharedWorkspace()
+    return ws.isFilePackageAtPath_(path)
+
 ###############################################################################
 #### Helper method used to get the free space on the disk where downloaded ####
 #### movies are stored                                                     ####

@@ -66,7 +66,8 @@ from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
                        check_f, quote_unicode_url, escape, to_uni,
                        is_url, stringify)
 from miro import fileutil
-from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
+from miro.plat.utils import (filename_to_unicode, make_url_safe,
+                             unmake_url_safe, is_file_bundle)
 from miro import filetypes
 from miro.item import FeedParserValues
 from miro import searchengines
@@ -2041,7 +2042,7 @@ class DirectoryScannerImplBase(FeedImpl):
             finally:
                 app.bulk_sql_manager.finish()
 
-        if fileutil.isdir(scan_dir):
+        if fileutil.isdir(scan_dir) and not is_file_bundle(scan_dir):
             start = time.time()
             all_files = fileutil.miro_allfiles(scan_dir)
             for file_ in all_files:

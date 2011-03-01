@@ -60,6 +60,11 @@ def dirfilt(root, dirs):
     """
     return dirs
 
+# A file bundle is a collection of files inside a directory.  This makes
+# sense on Mac only right now but we may want to expand for other platforms
+# in the future, and is currently a portable shim.
+def is_file_bundle(path):
+    return False
 
 def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
