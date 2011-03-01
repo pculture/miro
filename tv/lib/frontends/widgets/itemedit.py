@@ -160,9 +160,9 @@ class Field(object):
         last = widgetutil.pad(packables[-1], right=right_pad)
         box.pack_start(last, expand=True)
         if self.checkbox:
-            right = self.right and 20 or 0
+            right = 20
             checkbox_alignment = widgetutil.align_top(self.checkbox,
-                                 top_pad=2, right_pad=20)
+                                 top_pad=2, right_pad=right)
             box.pack_end(checkbox_alignment)
         return box
 
@@ -562,8 +562,7 @@ class ToggleButtonBackground(widgetset.Background):
                 part=part,
             )) for part in (left, center, right))
         self.surface.set_images(*images)
-        # gap between buttons without -2/+4 hack
-        self.surface.draw(context, -2, 0, context.width+4)
+        self.surface.draw(context, 0, 0, context.width)
 
 class ToggleButton(widgetset.CustomButton):
     """Button to switch between tabs."""
