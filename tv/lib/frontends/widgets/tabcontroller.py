@@ -315,7 +315,7 @@ class ConnectTab(widgetset.VBox):
         vbox.pack_start(widgetutil.pad(bg, left=20, right=10, bottom=50))
         hbox.pack_start(vbox)
         hbox.pack_start(widgetutil.align_right(widgetset.ImageDisplay(
-            imagepool.get(resources.path('images/connect-androgid.png')))))
+            imagepool.get(resources.path('images/connect-android.png')))))
         bottom.pack_start(hbox)
 
     def _build_app_store_section(self, bottom):
