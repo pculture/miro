@@ -38,6 +38,8 @@ import shutil
 
 from miro import u3info
 
+from miro.plat.filebundle import is_file_bundle
+
 def makedirs(path):
     path = expand_filename(path)
     return os.makedirs(path)
@@ -282,6 +284,8 @@ def miro_allfiles(directory, checked=None):
     checked.add(real_directory)
     if expanded_directory in deletes_in_progress:
         return
+    if is_file_bundle(expanded_directory):
+        return
     try:
         listing = os.listdir(expanded_directory)
     except OSError:
@@ -299,7 +303,8 @@ def miro_allfiles(directory, checked=None):
         if expanded_path in deletes_in_progress:
             continue
         try:
-            if os.path.isdir(expanded_path):
+            if (os.path.isdir(expanded_path) and
+              not is_file_bundle(expanded_path)):
                 for fn in miro_allfiles(path, checked):
                     yield fn
             elif os.path.isfile(expanded_path):

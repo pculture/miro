@@ -63,12 +63,6 @@ def dirfilt(root, dirs):
     """
     return dirs
 
-# A file bundle is a collection of files inside a directory.  This makes
-# sense on Mac only right now but we may want to expand for other platforms
-# in the future, and is currently a portable shim.
-def is_file_bundle(path):
-    return False
-
 def samefile(path1, path2):
     return get_long_path_name(path1) == get_long_path_name(path2)
 

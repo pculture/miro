@@ -66,8 +66,8 @@ from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
                        check_f, quote_unicode_url, escape, to_uni,
                        is_url, stringify)
 from miro import fileutil
-from miro.plat.utils import (filename_to_unicode, make_url_safe,
-                             unmake_url_safe, is_file_bundle)
+from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
+from miro.plat.filebundle import is_file_bundle
 from miro import filetypes
 from miro.item import FeedParserValues
 from miro import searchengines
