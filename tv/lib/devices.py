@@ -181,6 +181,7 @@ class DeviceManager(object):
         self.connected = {}
         self.info_cache = {} # device mount > dict
         self.syncs_in_progress = {}
+        self.running = False
         self.startup()
         self.show_unknown = app.config.get(prefs.SHOW_UNKNOWN_DEVICES)
 
@@ -208,8 +209,10 @@ class DeviceManager(object):
     def startup(self):
         # load devices
         self.load_devices(resources.path('devices/*.py'))
+        self.running = True
 
     def shutdown(self):
+        self.running = False
         for device in self.connected.values():
             if device.mount:
                 write_database(device.database, device.mount)
@@ -962,6 +965,9 @@ def scan_device_for_files(device):
         if time.time() - start > 0.4:
             device.database.set_bulk_mode(False) # save the database
             yield # let other idle functions run
+            if not app.device_manager.running:
+                # user quit, so stop scanning
+                break
             device.database.set_bulk_mode(True)
             start = time.time()
 
