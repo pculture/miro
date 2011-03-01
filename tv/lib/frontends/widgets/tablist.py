@@ -837,10 +837,10 @@ class SharingTabListHandler(object):
             thumb_path = resources.path('images/sharing.png')
         # Checking the name instead of a supposedly unique id is ok for now
         # because 
-        elif info.playlist_id == video_playlist_id:
+        elif info.playlist_id == u'video':
             thumb_path = resources.path('images/icon-video.png')
             info.name = _('Video')
-        elif info.playlist_id == audio_playlist_id:
+        elif info.playlist_id == u'audio':
             thumb_path = resources.path('images/icon-audio.png')
             info.name = _('Music')
         else:

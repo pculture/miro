@@ -600,11 +600,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                             parent_id=self.share.id,
                                             playlist_id=k)
                 returned_playlists.append(info)
-        # Generate unique fake ids for these.
-        video_playlist_id = unicode(md5(repr((u'video',
+        video_playlist_id = unicode(md5(repr((name,
                                               host,
                                               port, u'video'))).hexdigest())
-        audio_playlist_id = unicode(md5(repr((u'audio',
+        audio_playlist_id = unicode(md5(repr((name,
                                               host,
                                               port, u'audio'))).hexdigest())
         video_info = messages.SharingInfo(video_playlist_id,
@@ -612,13 +611,13 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                           host,
                                           port,
                                           parent_id=self.share.id,
-                                          playlist_id=video_playlist_id)
+                                          playlist_id=u'video')
         audio_info = messages.SharingInfo(audio_playlist_id,
                                           u'audio',
                                           host,
                                           port,
                                           parent_id=self.share.id,
-                                          playlist_id=audio_playlist_id)
+                                          playlist_id=u'audio')
         # Place this stuff at the front
         returned_playlists.insert(0, audio_info)
         returned_playlists.insert(0, video_info)
@@ -645,8 +644,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 audio_items.append(item)
             else:
                 logging.warn('item file type unrecognized %s', item.file_type)
-        returned_playlist_items['video'] = video_items
-        returned_playlist_items['audio'] = audio_items
+        returned_playlist_items[u'video'] = video_items
+        returned_playlist_items[u'audio'] = audio_items
         returned_playlist_items[self.base_playlist] = returned_items
 
         # Have to save the items from the base playlist first, because
