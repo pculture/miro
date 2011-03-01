@@ -681,14 +681,14 @@ class SharingManagerBackend(object):
     world."""
     type = u'sharing-backend'
     id = u'sharing-backend'
-    daapitems = dict()          # DAAP format XXX - index via the items
-    # XXX daapplaylist should be hidden from view. 
-    daap_playlists = dict()     # Playlist, in daap format
-    playlist_item_map = dict()  # Playlist -> item mapping
 
     def __init__(self):
         self.transcode_lock = threading.Lock()
         self.transcode = dict()
+        # XXX daapplaylist should be hidden from view. 
+        self.daapitems = dict()         # DAAP format XXX - index via the items
+        self.daap_playlists = dict()    # Playlist, in daap format
+        self.playlist_item_map = dict() # Playlist -> item mapping
 
     # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
