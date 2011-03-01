@@ -239,29 +239,6 @@ class SharingTracker(object):
         self.paused = True
         self.event = threading.Event()
 
-    def calc_local_addresses(self):
-        # Get our own hostname so that we can filter out ourselves if we 
-        # also happen to be broadcasting.  Getaddrinfo() may block so you 
-        # MUST call in auxiliary thread context.
-        #
-        # Why isn't this cached, you may ask?  Because the system may
-        # change IP addresses while this program is running then we'd be
-        # filtering the wrong addresses.  
-        #
-        # XXX can I count on the Bonjour daemon implementation to send me
-        # the add/remove messages when the IP changes?
-        hostname = socket.gethostname()
-        local_addresses = []
-        try:
-            addrinfo = socket.getaddrinfo(hostname, 0, 0, 0, socket.SOL_TCP)
-            for family, socktype, proto, canonname, sockaddr in addrinfo:
-                local_addresses.append(canonname)
-        except socket.error, (err, errstring):
-            # What am I supposed to do here?
-            pass
-
-        return local_addresses
-
     def mdns_callback(self, added, fullname, host, port):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
                                   args=[added, fullname, host, port])
