@@ -499,7 +499,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         for sig in 'added', 'changed', 'removed':
             self.create_signal(sig)
 
-    def sharing_item(self, rawitem, playlist_id):
+    def sharing_item(self, rawitem):
         kwargs = dict()
         for k in rawitem.keys():
             try:
@@ -528,7 +528,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         kwargs['port'] = self.client.port
         kwargs['address'] = self.address
         kwargs['file_type'] = file_type
-        kwargs['playlist_id'] = playlist_id
 
         # Duration: daap uses millisecond, so we need to scale it.
         if kwargs['duration'] is not None:
@@ -635,7 +634,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         video_items = []
         audio_items = []
         for itemkey in items.keys():
-            item = self.sharing_item(items[itemkey], self.base_playlist)
+            item = self.sharing_item(items[itemkey])
             itemdict[itemkey] = items[itemkey]
             returned_items.append(item)
             if item.file_type == u'video':
@@ -1156,5 +1155,6 @@ class SharingManager(object):
         if self.sharing:
             if self.discoverable:
                 self.disable_discover()
+            # XXX: need to break off existing connections
             self.disable_sharing()
         self.backend.shutdown()
