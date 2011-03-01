@@ -635,7 +635,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         audio_items = []
         for itemkey in items.keys():
             item = self.sharing_item(items[itemkey])
-            itemdict[itemkey] = items[itemkey]
+            itemdict[itemkey] = item
             returned_items.append(item)
             if item.file_type == u'video':
                 video_items.append(item)
@@ -656,8 +656,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             returned_items = []
             items = self.client.items(playlist_id=k, meta=DAAP_META)
             for itemkey in items.keys():
-                rawitem = itemdict[itemkey]
-                item = self.sharing_item(rawitem, k)
+                item = itemdict[itemkey]
                 returned_items.append(item)
             returned_playlist_items[k] = returned_items
 
