@@ -673,6 +673,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             else:
                 return self.items[playlist_id]
         except KeyError:
+            logging.error('Cannot get playlist, was looking for %s',
+                          playlist_id)
             return []
 
 class SharingManagerBackend(object):
