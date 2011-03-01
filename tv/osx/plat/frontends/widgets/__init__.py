@@ -28,4 +28,5 @@
 # statement from all source files in the program, then also delete it here.
 
 use_custom_titlebar_background = True
+use_custom_tablist_font = True
 file_navigator_name = u"Finder"

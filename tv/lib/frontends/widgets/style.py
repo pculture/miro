@@ -40,6 +40,7 @@ from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat import resources
+from miro.plat.frontends.widgets import use_custom_tablist_font
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import file_navigator_name
 
@@ -91,12 +92,13 @@ class TabRenderer(widgetset.CustomCellRenderer):
     MIN_ICON_WIDTH = 25
     MIN_HEIGHT = 28
     MIN_HEIGHT_TALL = 32
-    TALL_FONT_SIZE = 14.0 / 17
-    FONT_SIZE = 13.0 / 17
-    BOLD_TITLE = False
+    TALL_FONT_SIZE = 1.0
+    FONT_SIZE = 0.85
+    SELECTED_FONT_COLOR = (1, 1, 1)
 
     def get_size(self, style, layout_manager):
-        if hasattr(self.data, 'tall') and self.data.tall:
+        if (not use_custom_tablist_font or
+            (hasattr(self.data, 'tall') and self.data.tall)):
             min_height = self.MIN_HEIGHT_TALL
             font_scale = self.TALL_FONT_SIZE
         else:
@@ -113,11 +115,9 @@ class TabRenderer(widgetset.CustomCellRenderer):
         bold = False
         if selected:
             bold = True
-        elif not hasattr(self.data, "bolded"):
-            bold = self.BOLD_TITLE
-        else:
-            bold = self.data.bolded
-        if getattr(self.data, 'tall', False):
+            if use_custom_tablist_font:
+                layout_manager.set_text_color(self.SELECTED_FONT_COLOR)
+        if not use_custom_tablist_font or getattr(self.data, 'tall', False):
             layout_manager.set_font(self.TALL_FONT_SIZE, bold=bold)
         else:
             layout_manager.set_font(self.FONT_SIZE, bold=bold)

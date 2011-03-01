@@ -29,4 +29,5 @@
 
 use_native_buttons = True
 use_custom_titlebar_background = False
+use_custom_tablist_font = False
 file_navigator_name = ""

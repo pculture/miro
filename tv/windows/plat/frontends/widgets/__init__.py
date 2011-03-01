@@ -29,4 +29,5 @@
 
 use_native_buttons = False
 use_custom_titlebar_background = True
+use_custom_tablist_font = True
 file_navigator_name = u"Explorer"
