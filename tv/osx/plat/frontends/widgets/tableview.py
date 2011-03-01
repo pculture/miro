@@ -531,25 +531,34 @@ class TableViewCommon(object):
 
     def drawBackgroundGradient(self, context, focused, row):
         if focused:
-            start_color = (0.412, 0.584, 0.792)
-            end_color = (0.153, 0.345, 0.62)
-            line_color = NSColor.colorWithDeviceRed_green_blue_alpha_(
-                    0.322, 0.506, 0.733, 1.0)
+            start_color = (0.588, 0.717, 0.843)
+            end_color = (0.416, 0.568, 0.713)
+            top_line_color = (0.416, 0.569, 0.714, 1.0)
+            bottom_line_color = (0.416, 0.569, 0.714, 1.0)
         else:
-            start_color = (0.671, 0.694, 0.776)
-            end_color = (0.447, 0.471, 0.596)
-            line_color = NSColor.colorWithDeviceRed_green_blue_alpha_(
-                    0.514, 0.537, 0.655, 1.0)
+            start_color = (0.675, 0.722, 0.765)
+            end_color = (0.592, 0.659, 0.710)
+            top_line_color = (0.596, 0.635, 0.671, 1.0)
+            bottom_line_color = (0.522, 0.576, 0.620, 1.0)
 
         rect = self.rectOfRow_(row)
         top = NSMakeRect(rect.origin.x, rect.origin.y, rect.size.width, 1)
         context.saveGraphicsState()
         # draw the top line
-        line_color.set()
+        NSColor.colorWithDeviceRed_green_blue_alpha_(*top_line_color).set()
         NSRectFill(top)
+        bottom = NSMakeRect(rect.origin.x, rect.origin.y + rect.size.height - 2,
+                            rect.size.width, 1)
+        NSColor.colorWithDeviceRed_green_blue_alpha_(*bottom_line_color).set()
+        NSRectFill(bottom)
+        highlight = NSMakeRect(rect.origin.x, rect.origin.y + rect.size.height - 1,
+                               rect.size.width, 1)
+        NSColor.colorWithDeviceRed_green_blue_alpha_(0.918, 0.925, 0.941, 1.0).set()
+        NSRectFill(highlight)
+
         # draw the gradient
         rect.origin.y += 1
-        rect.size.height -= 1
+        rect.size.height -= 3
         NSRectClip(rect)
         gradient = Gradient(rect.origin.x, rect.origin.y,
                 rect.origin.x, rect.origin.y + rect.size.height)
