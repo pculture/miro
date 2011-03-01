@@ -89,11 +89,6 @@ class WindowsApplication(Application):
         gtk.gdk.threads_init()
         self.startup()
         gtk.gdk.threads_enter()
-        settings = gtk.settings_get_default()
-        settings.set_property('gtk-theme-name', "MS-Windows")
-        # I'm not exactly sure why, but if this statement is not
-        # present, we can get segfaults when displaying tooltips
-        settings.set_property('gtk-tooltip-browse-mode-timeout', 0)
         try:
             gtk.main()
         finally:

@@ -304,6 +304,8 @@ data_files.append(('', [
 data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'presets', '*.ffpreset'))))
 data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
+data_files.append((os.path.join('etc', 'gtk-2.0'), [
+            os.path.join(os.path.dirname(__file__), 'gtkrc')]))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images', 'conversions', 'devices'):
