@@ -142,7 +142,7 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
             widget.thaw_signals()
 
     app.frontend_config_watcher.connect('changed', on_config_changed)
-        
+
     widget.set_checked(app.config.get(descriptor))
     if sensitive_widget != None:
         if widget.get_checked():
@@ -199,7 +199,7 @@ def attach_integer(widget, descriptor, error_widget=None, check_function=None):
     def save_value(widget):
         try:
             v = int(widget.get_text().strip())
-            if ((check_function != None and 
+            if ((check_function != None and
                  not check_function(error_widget, v))):
                 return
             app.config.set(descriptor, v)
@@ -255,7 +255,7 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
     def save_value(widget):
         try:
             v = float(widget.get_text().strip())
-            if ((check_function != None and 
+            if ((check_function != None and
                  not check_function(error_widget, v))):
                 return
             app.config.set(descriptor, v)
@@ -859,7 +859,7 @@ class SharingPanel(PanelBuilder):
         share_txt = widgetset.TextEntry()
         share_txt.connect('changed', text_changed)
 
-        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, 
+        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
                        [sharing_warnonquit_cbx, share_txt])
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
         share_error = build_error_image()
@@ -976,8 +976,8 @@ class ConversionsPanel(PanelBuilder):
 
         return vbox
 
-class _StoreHelper(object):
-    def __init__(self):
+class StoreHelper(object):
+    def __init__(self, height=120):
         self._table = widgetset.TableView(app.store_manager.model)
         store_cell_renderer = widgetset.CellRenderer()
         store_cell_renderer.set_text_size(widgetconst.SIZE_SMALL)
@@ -998,7 +998,7 @@ class _StoreHelper(object):
         scroller = widgetset.Scroller(False, True)
         scroller.set_has_borders(True)
         scroller.add(self._table)
-        scroller.set_size_request(-1, 120)
+        scroller.set_size_request(-1, height)
         self.store_list = widgetset.VBox()
         self.store_list.pack_start(scroller)
         self._changed_signal = None
@@ -1024,7 +1024,7 @@ class _StoreHelper(object):
 class StoresPanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
-        self.store_helper = _StoreHelper()
+        self.store_helper = StoreHelper()
 
         grid.pack_label(_('MP3 stores:'), span=2)
         grid.end_line(spacing=0)

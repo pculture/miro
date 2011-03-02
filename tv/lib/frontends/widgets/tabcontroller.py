@@ -479,3 +479,54 @@ class PlaylistsTab(widgetset.VBox):
         if name:
             messages.NewPlaylist(name, []).send_to_backend()
             self.name_entry.set_text('')
+
+
+class StoresTab(widgetset.VBox):
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+
+        title = widgetset.HBox()
+        logo = widgetset.ImageDisplay(imagepool.get(
+                resources.path('images/icon-store_large.png')))
+        title.pack_start(logo)
+        label = widgetset.Label(_("Stores"))
+        label.set_size(2)
+        label.set_bold(True)
+        title.pack_start(widgetutil.pad(label, left=5))
+        self.pack_start(widgetutil.align_center(
+                title, top_pad=30, bottom_pad=20))
+
+        bottom = widgetset.VBox()
+
+        self._build_note_section(bottom)
+        self._build_stores_section(bottom)
+
+        self.pack_start(widgetutil.align_center(bottom))
+
+    def _build_note_section(self, bottom):
+        label = widgetset.Label(_(
+                "Select the music and video stores you'd like to have "
+                "appear in %(shortappname)s.  Note: some other store "
+                "websites may work well with Miro if you add them as "
+                "Sources, but these are Stores that we've integrated "
+                "and tested.",
+                {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}))
+        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_wrap(True)
+        label.set_size_request(550, -1)
+
+        bottom.pack_start(widgetutil.align_left(label, bottom_pad=30))
+
+    def _build_stores_section(self, bottom):
+        vbox = widgetset.VBox()
+        from miro.frontends.widgets import prefpanel
+        self.store_helper = prefpanel.StoreHelper(height=200)
+        self.store_helper.store_list.set_size_request(550, -1)
+        vbox.pack_start(widgetutil.align_middle(
+                self.store_helper.store_list, top_pad=20, bottom_pad=15,
+                left_pad=15, right_pad=15))
+
+        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg.add(widgetutil.pad(vbox, 00, 10, 10, 10))
+
+        bottom.pack_start(bg)
