@@ -203,11 +203,11 @@ class ConnectTab(widgetset.VBox):
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
             resources.path('images/icon-connect_large.png')))
-        title.pack_start(logo)
+        title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Connect"))
         label.set_size(2)
         label.set_bold(True)
-        title.pack_start(widgetutil.pad(label, left=5))
+        title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(title, top_pad=30,
                                                 bottom_pad=20))
 
@@ -377,11 +377,11 @@ class SourcesTab(widgetset.VBox):
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
                 resources.path('images/icon-source_large.png')))
-        title.pack_start(logo)
+        title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Sources"))
         label.set_size(2)
         label.set_bold(True)
-        title.pack_start(widgetutil.pad(label, left=5))
+        title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(
                 title, top_pad=30, bottom_pad=20))
 
@@ -439,11 +439,11 @@ class PlaylistsTab(widgetset.VBox):
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
                 resources.path('images/icon-playlist_large.png')))
-        title.pack_start(logo)
+        title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Playlists"))
         label.set_size(2)
         label.set_bold(True)
-        title.pack_start(widgetutil.pad(label, left=5))
+        title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(
                 title, top_pad=30, bottom_pad=20))
 
@@ -488,11 +488,11 @@ class StoresTab(widgetset.VBox):
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
                 resources.path('images/icon-store_large.png')))
-        title.pack_start(logo)
+        title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Stores"))
         label.set_size(2)
         label.set_bold(True)
-        title.pack_start(widgetutil.pad(label, left=5))
+        title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(
                 title, top_pad=30, bottom_pad=20))
 
