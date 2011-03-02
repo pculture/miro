@@ -407,19 +407,20 @@ class SourcesTab(widgetset.VBox):
     def _build_add_source_section(self, bottom):
         hbox = widgetset.HBox()
         label = widgetset.Label(_("URL"))
-        hbox.pack_start(label)
+        hbox.pack_start(widgetutil.align_middle(label))
 
         self.source_entry = widgetset.TextEntry()
         self.source_entry.set_size_request(400, -1)
-        hbox.pack_start(widgetutil.pad(self.source_entry, left=15))
+        hbox.pack_start(widgetutil.align_middle(
+                self.source_entry, left_pad=15))
 
-        self.add_source_button = widgetset.Button(
-            _("Add Source"), style='webby')
+        # FIXME - fix the button to look right
+        self.add_source_button = widgetset.Button(_("Add Source"))
         self.add_source_button.connect('clicked', self._on_add_source)
-        hbox.pack_start(widgetutil.pad(self.add_source_button, left=15))
+        hbox.pack_start(widgetutil.align_middle(
+                self.add_source_button, left_pad=15))
 
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
-        # bg.set_size_request(550, -1)
         bg.add(widgetutil.pad(hbox, 10, 10, 10, 10))
 
         bottom.pack_start(bg)
