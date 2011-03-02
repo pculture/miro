@@ -13,4 +13,12 @@ style "PCF"
   # vertically.  Not sure why we have to use these values, but they work.
   # BDK
 }
+
+style "PCF-tablist" = "PCF" {
+  base[ACTIVE] = "#80a4c6"
+  base[SELECTED] = "#80a4c6"
+  bg[SELECTED] = "#80a4c6"
+}
+
 class "*" style "PCF"
+widget_class "*.GtkVBox.<GtkTreeView>" style "PCF-tablist"
