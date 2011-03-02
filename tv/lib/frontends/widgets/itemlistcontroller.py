@@ -867,10 +867,6 @@ class SearchController(SimpleItemListController):
         self.titlebar.set_search_text(search_manager.text)
         self.titlebar.set_search_engine(search_manager.engine)
         self.widget.set_list_empty_mode(False)
-        if search_manager.text != '':
-            self.toolbar.show()
-        else:
-            self.toolbar.hide()
 
     def _on_search_complete(self, search_manager, result_count):
         if result_count == 0:
