@@ -53,7 +53,6 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import separator
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
@@ -242,7 +241,8 @@ class ItemListController(object):
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
-        self.selected_view = app.widget_state.get_selected_view(self.type, self.id)
+        self.selected_view = app.widget_state.get_selected_view(self.type,
+                                                                self.id)
         self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
                 self.selected_view)
 
@@ -300,7 +300,8 @@ class ItemListController(object):
         self.selected_view = view
         self.widget.switch_to_view(view)
         # perform finishing touches
-        app.widget_state.set_selected_view(self.type, self.id, self.selected_view)
+        app.widget_state.set_selected_view(self.type, self.id,
+                                           self.selected_view)
         app.menu_manager.update_menus()
         self.expand_or_contract_item_details()
 
@@ -404,7 +405,8 @@ class ItemListController(object):
         self._play_item_list(start_id, presentation_mode,
                 force_resume=force_resume)
 
-    def play_items(self, presentation_mode='fit-to-bounds', force_resume=False):
+    def play_items(self, presentation_mode='fit-to-bounds',
+                   force_resume=False):
         self._play_item_list(None, presentation_mode, force_resume)
 
     def can_play_items(self):
@@ -449,7 +451,6 @@ class ItemListController(object):
 
     def _trigger_item(self, item_view, info):
         if info.downloaded:
-            items = item_view.item_list.get_items(start_id=info.id)
             self._play_item_list(info.id)
         elif info.state == 'downloading':
             messages.PauseDownload(info.id).send_to_backend()
@@ -558,7 +559,8 @@ class ItemListController(object):
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             try:
-                base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
+                base_href = widgetutil.get_feed_info(
+                    item_info.feed_id).base_href
             except KeyError:
                 logging.warn("Feed not present when clicking link (%s)",
                         item_info.feed_id)
@@ -708,7 +710,8 @@ class ItemListController(object):
                 resumetime = displaytext.short_time_string(
                         last_played.resume_time)
                 text = _("Resume %(item)s at %(resumetime)s",
-                        {"item": util.clamp_text(last_played.name), "resumetime": resumetime})
+                        {"item": util.clamp_text(last_played.name),
+                         "resumetime": resumetime})
             else:
                 text = _("Resume %(item)s",
                         {"item": util.clamp_text(last_played.name)})
