@@ -272,9 +272,9 @@ class SiteDisplay(TabDisplay):
 
     @classmethod
     def on_sites_removed(cls, info_updater, id_list):
-        for id in id_list:
+        for id_ in id_list:
             try:
-                del cls._open_sites[id]
+                del cls._open_sites[id_]
             except KeyError:
                 pass
 
