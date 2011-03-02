@@ -711,17 +711,17 @@ class DeviceTabListHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
 
-    def _fake_info(self, info, type, name):
+    def _fake_info(self, info, typ, name):
         new_data = {
             'fake': True,
-            'tab_type': type,
-            'id': '%s-%s' % (info.id, type),
+            'tab_type': typ,
+            'id': '%s-%s' % (info.id, typ),
             'name': name,
             'device_name': info.name,
             'icon': imagepool.get_surface(
-                resources.path('images/icon-device-%s.png' % type)),
+                resources.path('images/icon-device-%s.png' % typ)),
             'active_icon': imagepool.get_surface(
-                resources.path('images/icon-device-%s_active.png' % type))
+                resources.path('images/icon-device-%s_active.png' % typ))
             }
 
         # hack to create a DeviceInfo without dealing with __init__
