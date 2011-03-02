@@ -855,6 +855,8 @@ class TableView(Widget):
         self.iters_to_update = []
         self.height_changed = self.reload_needed = False
         self.restoring_selection = None
+        self.scroll_position = (0, 0)
+        self.clipview_notifications = None
 
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
@@ -972,6 +974,9 @@ class TableView(Widget):
             wrappermap.remove(self.tableview)
             self.notifications.disconnect()
             self.viewport = None
+        if self.clipview_notifications:
+            self.clipview_notifications.disconnect()
+            self.clipview_notifications = None
 
     def _should_place_header_view(self):
         return self._show_headers and not self.parent_is_scroller
@@ -1107,6 +1112,7 @@ class TableView(Widget):
             self.tableview.selectRowIndexes_byExtendingSelection_(index_set, NO)
             if self.tableview.selectedRowIndexes().isEqualToIndexSet_(index_set):
                 self.restoring_selection = None
+        self.set_scroll_position()
 
     def width_for_columns(self, width):
         """If the table is width pixels big, how much width is available for
@@ -1287,17 +1293,49 @@ class TableView(Widget):
     def scroll_to_iter(self, iter):
         self.tableview.scrollRowToVisible_(self.row_of_iter(iter))
 
-    def set_scroll_position(self, scroll_pos):
-        # FIXME: stub
-        pass
+    def set_scroll_position(self, scroll_to=None):
+        """Restore a saved scroll position."""
+        if scroll_to: # widgetstate restoring a saved position
+            self.scroll_position = scroll_to
+        else: # fixing position if it has changed
+            scroll_to = self.scroll_position
+        if self.get_scroll_position() == scroll_to: # position already correct
+            return
+        scroller = self.tableview.enclosingScrollView()
+        if not scroller: # scroller not set yet
+            return
+        content = scroller.contentView() # NSClipView
+        if not self.clipview_notifications:
+            self.clipview_notifications = NotificationForwarder.create(content)
+            # NOTE: intentional changes are BoundsChanged; bad changes are
+            # FrameChanged
+            content.setPostsFrameChangedNotifications_(YES)
+            self.clipview_notifications.connect(self.on_scroll_changed,
+                'NSViewFrameDidChangeNotification')
+        # NOTE: scrollPoint_ just scrolls the point into view; we want to
+        # scroll the view so that the point becomes the origin
+        size = scroller.contentView().documentVisibleRect().size
+        size = (size.width, size.height)
+        rect = NSMakeRect(scroll_to[0], scroll_to[1], size[0], size[1])
+        self.tableview.scrollRectToVisible_(rect)
 
     def get_scroll_position(self):
-        # FIXME: stub
-        return 0, 0
+        scroller = self.tableview.enclosingScrollView()
+        if not scroller:
+            # no scroller yet
+            return 0, 0
+        # NOTE: getDoubleValue * contentSize is different from
+        # documentVisibleRect.origin.
+        point = scroller.contentView().documentVisibleRect().origin
+        # NOTE: scroller.enclosingScrollView().contentView() gets this view's
+        # NSClipView
+        return int(point.x), int(point.y)
+    
+    def on_scroll_changed(self, notification):
+        self.set_scroll_position()
 
     def set_scroller(self, scroller):
-        # FIXME: stub
-        pass
+        """For GTK; Cocoa tableview knows its enclosingScrollView"""
 
     def set_selection_as_strings(self, selected):
         """Given a list of selection strings, selects each row represented by
