@@ -1653,7 +1653,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             for url in sync['podcasts'].setdefault('items', []):
                 feed_ = lookup_feed(url)
                 if feed_ is not None:
-                    if sync['podcasts']['all']:
+                    if sync['podcasts'].get('all', True):
                         view = feed_.downloaded_items
                     else:
                         view = feed_.unwatched_items
