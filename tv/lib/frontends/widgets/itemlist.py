@@ -209,6 +209,11 @@ class TorrentDetailsSort(ItemSort):
     def sort_key(self, info):
         return 0 # FIXME
 
+class DateAddedSort(ItemSort):
+    KEY = 'date-added'
+    def sort_key(self, info):
+        return info.date_added
+
 DEFAULT_SORT = ArtistSort(False)
 
 SORT_KEY_MAP = {
@@ -232,6 +237,7 @@ SORT_KEY_MAP = {
     DRMSort.KEY:            DRMSort,
     FileTypeSort.KEY:       FileTypeSort,
     TorrentDetailsSort.KEY: TorrentDetailsSort,
+    DateAddedSort.KEY:      DateAddedSort,
 }
 
 class ItemList(object):
