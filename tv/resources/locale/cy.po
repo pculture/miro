@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-02-19 16:36-0500\n"
+"POT-Creation-Date: 2011-02-22 06:49-0500\n"
 "PO-Revision-Date: 2010-10-05 21:43+0000\n"
 "Last-Translator: duw <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2011-02-22 11:41+0000\n"
-"X-Generator: Launchpad (build 12406)\n"
+"X-Launchpad-Export-Date: 2011-03-02 19:49+0000\n"
+"X-Generator: Launchpad (build 12486)\n"
 
 #: ../../windows/plat/utils.py:476 ../../osx/plat/utils.py:587
 msgid "iTunes"
@@ -62,11 +62,11 @@ msgstr "Diofyn System"
 msgid "Subtitle font:"
 msgstr "Ffont isdeitl"
 
-#: ../../windows/plat/frontends/widgets/flash.py:54
+#: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"
 msgstr "Ydych am Arsefydlu Adobe Flash"
 
-#: ../../windows/plat/frontends/widgets/flash.py:56
+#: ../../windows/plat/frontends/widgets/flash.py:58
 #, python-format
 msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
@@ -75,11 +75,11 @@ msgstr ""
 "Am y profiad %(appname)s gorau, rydym yn awgrymu rydych yn arsefydlu Adobe "
 "Flash. A hoffech wneud hyn nawr?"
 
-#: ../../windows/plat/frontends/widgets/flash.py:69
+#: ../../windows/plat/frontends/widgets/flash.py:71
 msgid "Install Adobe Flash"
 msgstr "Ydych am Arsefydlu Adobe Flash"
 
-#: ../../windows/plat/frontends/widgets/flash.py:71
+#: ../../windows/plat/frontends/widgets/flash.py:73
 #, python-format
 msgid ""
 "Your browser will load the web-site where you can download and install Adobe "
@@ -657,7 +657,7 @@ msgstr "Hebraeg Gweledol"
 msgid "Persian"
 msgstr "Perseg"
 
-#: ../../lib/item.py:956 ../../lib/sharing.py:216 ../../lib/devices.py:727
+#: ../../lib/item.py:956 ../../lib/sharing.py:216 ../../lib/devices.py:732
 msgid "Locked"
 msgstr ""
 
@@ -889,7 +889,7 @@ msgid "Playlists"
 msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:549
-#: ../../lib/frontends/widgets/itemlistwidgets.py:778
+#: ../../lib/frontends/widgets/itemlistwidgets.py:837
 #: ../../lib/frontends/widgets/tablist.py:1085
 msgid "Settings"
 msgstr "Gosodiadau"
@@ -1119,11 +1119,11 @@ msgstr ""
 msgid "Close"
 msgstr "Cau"
 
-#: ../../lib/frontends/widgets/playlist.py:181
+#: ../../lib/frontends/widgets/playlist.py:186
 msgid "This Playlist is Empty"
 msgstr "Mae'r Rhestr Chwarae'n Wag"
 
-#: ../../lib/frontends/widgets/playlist.py:184
+#: ../../lib/frontends/widgets/playlist.py:189
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
@@ -1266,9 +1266,8 @@ msgid "Error"
 msgstr "Gwall"
 
 #: ../../lib/frontends/widgets/style.py:277
-#: ../../lib/frontends/widgets/firsttimedialog.py:396
-#: ../../lib/frontends/widgets/conversionscontroller.py:358
-#: ../../lib/dialogs.py:97
+#: ../../lib/frontends/widgets/convertingcontroller.py:358
+#: ../../lib/frontends/widgets/firsttimedialog.py:396 ../../lib/dialogs.py:97
 msgid "Cancel"
 msgstr "Diddymu"
 
@@ -1278,9 +1277,9 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:279
 #: ../../lib/frontends/widgets/style.py:1188
-#: ../../lib/frontends/widgets/itemlistcontroller.py:818
-#: ../../lib/frontends/widgets/itemlistwidgets.py:388
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1006
+#: ../../lib/frontends/widgets/itemlistcontroller.py:826
+#: ../../lib/frontends/widgets/itemlistwidgets.py:447
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1028
 msgid "Unplayed"
 msgstr "Heb ei chwarae"
 
@@ -1290,7 +1289,7 @@ msgstr "Chwarae Nawr"
 
 #: ../../lib/frontends/widgets/style.py:281
 #: ../../lib/frontends/widgets/style.py:1206
-#: ../../lib/frontends/widgets/itemlistwidgets.py:391
+#: ../../lib/frontends/widgets/itemlistwidgets.py:450
 msgid "Newly Available"
 msgstr "Ar gael yn ddiweddar"
 
@@ -1386,16 +1385,16 @@ msgstr "Yr holl gwrthrychau db mewn cof:"
 msgid "Total db backups:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:711
+#: ../../lib/frontends/widgets/itemlistcontroller.py:719
 #: ../../lib/frontends/widgets/statictabs.py:51
 msgid "Video Search"
 msgstr "Chwilio Fideo"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:725
+#: ../../lib/frontends/widgets/itemlistcontroller.py:733
 msgid "No Results"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:729
+#: ../../lib/frontends/widgets/itemlistcontroller.py:737
 msgid ""
 "To search for media on Internet media search sites, click on the search box "
 "above, type in search terms and hit the Enter key.  To switch search "
@@ -1403,17 +1402,17 @@ msgid ""
 "the search engine from the drop down."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:809
+#: ../../lib/frontends/widgets/itemlistcontroller.py:817
 #: ../../lib/frontends/widgets/tablist.py:730
 #: ../../lib/frontends/widgets/itemedit.py:152
 msgid "Video"
 msgstr "Fideo"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:810
+#: ../../lib/frontends/widgets/itemlistcontroller.py:818
 msgid "Unwatched"
 msgstr "Heb wylio"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:817
+#: ../../lib/frontends/widgets/itemlistcontroller.py:825
 #: ../../lib/frontends/widgets/statictabs.py:64
 #: ../../lib/frontends/widgets/tabcontroller.py:237
 #: ../../lib/frontends/widgets/tablist.py:733
@@ -1421,11 +1420,11 @@ msgstr "Heb wylio"
 msgid "Music"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:825
+#: ../../lib/frontends/widgets/itemlistcontroller.py:833
 msgid "Other"
 msgstr "Arall"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:844
+#: ../../lib/frontends/widgets/itemlistcontroller.py:852
 msgid "Back to podcast"
 msgstr ""
 
@@ -1440,15 +1439,56 @@ msgid "Misc"
 msgstr ""
 
 #: ../../lib/frontends/widgets/statictabs.py:78
-#: ../../lib/frontends/widgets/itemlistwidgets.py:385
+#: ../../lib/frontends/widgets/itemlistwidgets.py:444
+#: ../../lib/frontends/widgets/downloadscontroller.py:66
 msgid "Downloading"
 msgstr "Lawrlwytho"
 
 #: ../../lib/frontends/widgets/statictabs.py:84
-#: ../../lib/frontends/widgets/prefpanel.py:1176
-#: ../../lib/frontends/widgets/conversionscontroller.py:69
-msgid "Conversions"
-msgstr "Trosiadau"
+#: ../../lib/frontends/widgets/convertingcontroller.py:69
+msgid "Converting"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:75
+msgid "Stop All Conversions"
+msgstr "Atal Pob Trosiad"
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:81
+#: ../../lib/frontends/widgets/menus.py:392
+#: ../../lib/frontends/widgets/itemcontextmenu.py:352
+msgid "Show Conversion Folder"
+msgstr "Dangos Ffolder Trosiadau"
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:87
+msgid "Clear Finished Conversions"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:285
+#, python-format
+msgid "Conversion to %(format)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:319
+#, python-format
+msgid "Failed: %(error)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:325
+msgid "Troubleshoot"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:327
+msgid "Open log"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:329
+#: ../../lib/frontends/widgets/convertingcontroller.py:348
+msgid "Clear"
+msgstr ""
+
+#: ../../lib/frontends/widgets/convertingcontroller.py:340
+msgid "Completed"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:71
 #, python-format
@@ -1877,12 +1917,6 @@ msgstr ""
 msgid "Test Crash Reporter"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:392
-#: ../../lib/frontends/widgets/conversionscontroller.py:81
-#: ../../lib/frontends/widgets/itemcontextmenu.py:352
-msgid "Show Conversion Folder"
-msgstr "Dangos Ffolder Trosiadau"
-
 #: ../../lib/frontends/widgets/menus.py:412
 msgid "_Encoding"
 msgstr ""
@@ -1911,8 +1945,8 @@ msgid ""
 "Enter the URL of the podcast to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/feedcontroller.py:168
-#: ../../lib/frontends/widgets/feedcontroller.py:195
+#: ../../lib/frontends/widgets/feedcontroller.py:169
+#: ../../lib/frontends/widgets/feedcontroller.py:196
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
@@ -1921,8 +1955,8 @@ msgstr[1] "%(count)d yn Lawrlwytho"
 msgstr[2] "%(count)d yn Lawrlwytho"
 msgstr[3] "%(count)d yn Lawrlwytho"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:179
-#: ../../lib/frontends/widgets/feedcontroller.py:191
+#: ../../lib/frontends/widgets/feedcontroller.py:180
+#: ../../lib/frontends/widgets/feedcontroller.py:192
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
@@ -1931,7 +1965,7 @@ msgstr[1] "%(count)d Eitem"
 msgstr[2] "%(count)d Eitem"
 msgstr[3] "%(count)d Eitem"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:200
+#: ../../lib/frontends/widgets/feedcontroller.py:201
 #, python-format
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
@@ -1949,7 +1983,7 @@ msgstr[3] ""
 "%(count)d Lawrlwythiad Mewn Ciw Oherwydd Eitemau Heb Eu Chwarae (Gweler "
 "Gosodiadau)"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:211
+#: ../../lib/frontends/widgets/feedcontroller.py:212
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
@@ -1997,114 +2031,126 @@ msgid ""
 "can even take more than 30 minutes)."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:189
+#: ../../lib/frontends/widgets/itemlistwidgets.py:248
 msgid "Save Search"
 msgstr "Cadw Chwiliad"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:523
+#: ../../lib/frontends/widgets/itemlistwidgets.py:582
 msgid "Save as a Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:565
-#: ../../lib/frontends/widgets/itemlistwidgets.py:649
-#: ../../lib/frontends/widgets/itemlistwidgets.py:652
+#: ../../lib/frontends/widgets/itemlistwidgets.py:624
+#: ../../lib/frontends/widgets/itemlistwidgets.py:708
+#: ../../lib/frontends/widgets/itemlistwidgets.py:711
 #, python-format
 msgid "%(rate)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:629
+#: ../../lib/frontends/widgets/itemlistwidgets.py:688
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "%(available)s o dan gyfyngiad lle ar gyfer  lawrlwythiadau (%(amount)s ar "
 "gael ar ddisg)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:636
+#: ../../lib/frontends/widgets/itemlistwidgets.py:695
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 "%(available)s ar gael am lawrlwythiadau (%(amount)s ar gael ar ddisg)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:642
+#: ../../lib/frontends/widgets/itemlistwidgets.py:701
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s ar gael ar ddisg"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:691
+#: ../../lib/frontends/widgets/itemlistwidgets.py:750
 msgid "Pause All"
 msgstr "Seibio Pob Un"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:698
+#: ../../lib/frontends/widgets/itemlistwidgets.py:757
 msgid "Resume All"
 msgstr "Ailddechrau Pob Un"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:705
+#: ../../lib/frontends/widgets/itemlistwidgets.py:764
 msgid "Cancel All"
 msgstr "Diddymu Pob Un"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:712
+#: ../../lib/frontends/widgets/itemlistwidgets.py:771
 msgid "Download Settings"
 msgstr "Gosodiadau Lawrlwytho"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:757
+#: ../../lib/frontends/widgets/itemlistwidgets.py:816
 msgid "Auto-download"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:762
+#: ../../lib/frontends/widgets/itemlistwidgets.py:821
 #: ../../lib/frontends/widgets/prefpanel.py:462
 msgid "All"
 msgstr "Pob"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:763
+#: ../../lib/frontends/widgets/itemlistwidgets.py:822
 #: ../../lib/frontends/widgets/prefpanel.py:461
 msgid "New"
 msgstr "Newydd"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:764
+#: ../../lib/frontends/widgets/itemlistwidgets.py:823
 #: ../../lib/frontends/widgets/prefpanel.py:463
 #: ../../lib/frontends/widgets/tabcontroller.py:133
 msgid "Off"
 msgstr "Bant"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:772
+#: ../../lib/frontends/widgets/itemlistwidgets.py:831
 msgid "Share podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:784
+#: ../../lib/frontends/widgets/itemlistwidgets.py:843
 msgid "Remove podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:866
+#: ../../lib/frontends/widgets/itemlistwidgets.py:909
 #: ../../lib/frontends/widgets/widgetconst.py:52
 msgid "Name"
 msgstr "Enw"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:867
+#: ../../lib/frontends/widgets/itemlistwidgets.py:910
 #: ../../lib/frontends/widgets/widgetconst.py:59
 msgid "Date"
 msgstr "Dyddiad"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:868
+#: ../../lib/frontends/widgets/itemlistwidgets.py:911
 #: ../../lib/frontends/widgets/widgetconst.py:62
 msgid "Size"
 msgstr "Maint"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:869
+#: ../../lib/frontends/widgets/itemlistwidgets.py:912
 msgid "Time"
 msgstr "Amser"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:978
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1002
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1000
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1024
 msgid "View|All"
 msgstr "Golwg|Pob"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:982
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1004
 msgid "Non Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1004
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1026
 msgid "Downloaded"
 msgstr "Lawrlwythwyd"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1223
+msgid "Importing audio details and artwork: {0} of {1}"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1226
+msgid "Importing video details and creating thumbnails: {0} of {1}"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1229
+msgid "Importing file details: {0} of {1}"
+msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:104
 msgid "Open in browser"
@@ -2495,7 +2541,6 @@ msgid "General"
 msgstr "Cyffredinol"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1171
-#: ../../lib/frontends/widgets/downloadscontroller.py:66
 msgid "Downloads"
 msgstr "Lawrlwythiadau"
 
@@ -2514,6 +2559,10 @@ msgstr "Chwarae Nôl"
 #: ../../lib/frontends/widgets/prefpanel.py:1175
 msgid "Sharing"
 msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:1176
+msgid "Conversions"
+msgstr "Trosiadau"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1177
 #: ../../lib/frontends/widgets/tablist.py:993
@@ -2721,41 +2770,6 @@ msgid ""
 "The gorgeous Miro iPad app lets you wirelessly stream music and videos from "
 "%(shortappname)s on your desktop to your iPad. You can also download songs "
 "and videos to your iPad and take them with you."
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:75
-msgid "Stop All Conversions"
-msgstr "Atal Pob Trosiad"
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:87
-msgid "Clear Finished Conversions"
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:285
-#, python-format
-msgid "Conversion to %(format)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:319
-#, python-format
-msgid "Failed: %(error)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:325
-msgid "Troubleshoot"
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:327
-msgid "Open log"
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:329
-#: ../../lib/frontends/widgets/conversionscontroller.py:348
-msgid "Clear"
-msgstr ""
-
-#: ../../lib/frontends/widgets/conversionscontroller.py:340
-msgid "Completed"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:188
@@ -3318,11 +3332,11 @@ msgstr "Ailddechrau Lanlwythiad"
 msgid "Remove From Playlist"
 msgstr "Tynnwch o'r Rhestr Chwarae"
 
-#: ../../lib/frontends/widgets/playback.py:620
+#: ../../lib/frontends/widgets/playback.py:623
 msgid "Open Subtitles File..."
 msgstr "Agor Ffeil Is-deitlau..."
 
-#: ../../lib/frontends/widgets/playback.py:621
+#: ../../lib/frontends/widgets/playback.py:624
 msgid "Subtitle files"
 msgstr "Ffeiliau Is-deitlau"
 
