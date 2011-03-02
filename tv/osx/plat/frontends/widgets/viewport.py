@@ -47,7 +47,7 @@ class Viewport(object):
         return self.placement == rect
 
     def reposition(self, rect):
-        """Move the viewport to a differennt position."""
+        """Move the viewport to a different position."""
         self.view.setFrame_(rect)
         self.placement = rect
 
