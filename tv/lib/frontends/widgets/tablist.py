@@ -148,7 +148,7 @@ class TabUpdaterMixin(object):
         self.updating_animations = {}
 
     def start_updating(self, id_):
-        # The spinning wheel is constantly updating the cell value, between 
+        # The spinning wheel is constantly updating the cell value, between
         # validating the cell value for the drag and drop and the actual drop
         # the cell value most likely changes, and some GUI toolkits may get
         # confused.
@@ -183,7 +183,7 @@ class TabUpdaterMixin(object):
 class StaticTabListBase(TabBlinkerMixin):
     def __init__(self):
         self.iter_map = {}
-        self.doing_change = False 
+        self.doing_change = False
         # doing_change will be True if we are changing a bunch of tabs.  This
         # will cause us to not try to update things based on the selection
         # changing.
@@ -249,7 +249,7 @@ class LibraryTabList(StaticTabListBase):
             tab = self.get_tab(name)
         except KeyError, e:
             self.add(self.auto_tabs[name])
-    
+
     def remove_auto_tab_if_not_selected(self, name):
         if name not in self.iter_map:
             return
@@ -287,7 +287,7 @@ class LibraryTabList(StaticTabListBase):
 
     def update_new_audio_count(self, count):
         self.update_count('music', 'unwatched', count)
-    
+
     def update_count(self, key, attr, count, other_count=0):
         if key in self.auto_tabs:
             self.update_auto_tab_count(key, count+other_count)
@@ -519,7 +519,7 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
     folder_types = ('playlist-with-folder',)
 
     def allowed_actions(self):
-        return (NestedTabListDropHandler.allowed_actions(self) | 
+        return (NestedTabListDropHandler.allowed_actions(self) |
                 widgetset.DRAG_ACTION_COPY)
 
     def allowed_types(self):
@@ -836,7 +836,7 @@ class SharingTabListHandler(object):
         if info.is_folder:
             thumb_path = resources.path('images/sharing.png')
         # Checking the name instead of a supposedly unique id is ok for now
-        # because 
+        # because
         elif info.playlist_id == u'video':
             thumb_path = resources.path('images/icon-video.png')
             info.name = _('Video')
@@ -956,7 +956,7 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
 class SiteList(HideableTabList):
     type = u'site'
     name = _('Sources')
-    icon_name = 'icon-site'
+    icon_name = 'icon-source'
 
     ALLOW_MULTIPLE = True
 
@@ -993,9 +993,9 @@ class SiteList(HideableTabList):
             if info.favicon:
                 thumb_path = info.favicon
             else:
-                thumb_path = resources.path('images/icon-site.png')
+                thumb_path = resources.path('images/icon-source.png')
                 info.active_icon = imagepool.get_surface(
-                    resources.path('image/icon-site_active.png'))
+                    resources.path('image/icon-source_active.png'))
             surface = imagepool.get_surface(thumb_path)
             if surface.width > 16 or surface.height > 16:
                 info.icon = imagepool.get_surface(thumb_path, size=(16, 16))

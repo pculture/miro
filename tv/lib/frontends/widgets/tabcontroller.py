@@ -367,3 +367,12 @@ class ConnectTab(widgetset.VBox):
 
     def app_store_button_clicked(self, button):
         print 'app store clicked'
+
+
+class SourcesTab(widgetset.VBox):
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+
+        title = widgetset.HBox()
+        logo = widgetset.ImageDisplay(imagepool.get(
+                resources.path('images/icon-sources_large.png')))
