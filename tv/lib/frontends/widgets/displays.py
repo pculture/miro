@@ -752,12 +752,8 @@ class ConnectDisplay(TabDisplay):
 class SourcesDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        ret = (tab_type == u'tab' and len(selected_tabs) == 1 and
-               selected_tabs[0].name == _('Sources'))
-
-        import logging
-        logging.info("should display? %r", ret)
-        return ret
+        return (tab_type == u'tab' and len(selected_tabs) == 1 and
+                selected_tabs[0].name == _('Sources'))
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
