@@ -33,6 +33,7 @@ import math
 
 from miro import app
 from miro import prefs
+from miro import messages
 
 from miro.gtcache import gettext as _
 
@@ -375,4 +376,56 @@ class SourcesTab(widgetset.VBox):
 
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
-                resources.path('images/icon-sources_large.png')))
+                resources.path('images/icon-source_large.png')))
+        title.pack_start(logo)
+        label = widgetset.Label(_("Sources"))
+        label.set_size(2)
+        label.set_bold(True)
+        title.pack_start(widgetutil.pad(label, left=5))
+        self.pack_start(widgetutil.align_center(
+                title, top_pad=30, bottom_pad=20))
+
+        bottom = widgetset.VBox()
+
+        self._build_note_section(bottom)
+        self._build_add_source_section(bottom)
+
+        self.pack_start(widgetutil.align_center(bottom))
+
+    def _build_note_section(self, bottom):
+        label = widgetset.Label(_(
+                "Sources are any websites that offer audio, video, or "
+                "torrents for download that you would like to use "
+                "within %(shortappname)s.",
+                {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}))
+        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_wrap(True)
+        label.set_size_request(550, -1)
+
+        bottom.pack_start(widgetutil.align_left(label, bottom_pad=30))
+
+    def _build_add_source_section(self, bottom):
+        hbox = widgetset.HBox()
+        label = widgetset.Label(_("URL"))
+        hbox.pack_start(label)
+
+        self.source_entry = widgetset.TextEntry()
+        self.source_entry.set_size_request(400, -1)
+        hbox.pack_start(widgetutil.pad(self.source_entry, left=15))
+
+        self.add_source_button = widgetset.Button(
+            _("Add Source"), style='webby')
+        self.add_source_button.connect('clicked', self._on_add_source)
+        hbox.pack_start(widgetutil.pad(self.add_source_button, left=15))
+
+        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        # bg.set_size_request(550, -1)
+        bg.add(widgetutil.pad(hbox, 10, 10, 10, 10))
+
+        bottom.pack_start(bg)
+
+    def _on_add_source(self, widget):
+        url = self.source_entry.get_text()
+        if url:
+            messages.NewGuide(url).send_to_backend()
+            self.source_entry.set_text('')

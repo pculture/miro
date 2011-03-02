@@ -130,6 +130,10 @@ class DisplayManager(object):
                 DeviceItemDisplay,
                 SharingDisplay,
                 ConnectDisplay,
+                SourcesDisplay,
+
+                # DummyDisplay should be last because it's a
+                # catch-all.
                 DummyDisplay,
         ]
         # displays that we keep alive all the time
@@ -610,10 +614,10 @@ class VideoDisplay(Display):
         #
         # This isn't just feel-good defensive programming.
         #
-        # When the tab disappears abnormally and it is a video display it 
-        # is destroyed.  That's fine.  However, it will happily try to 
-        # select a new tab, which tries to remove the video display again 
-        # because it is connected to 'removed' signal and calls 
+        # When the tab disappears abnormally and it is a video display it
+        # is destroyed.  That's fine.  However, it will happily try to
+        # select a new tab, which tries to remove the video display again
+        # because it is connected to 'removed' signal and calls
         # on_display_removed.  So we may end up calling the cleanup
         # twice.  I think the proper fix is to ensure that cleanup can only
         # be called once, but right now it's not too bad hopefully.
@@ -743,6 +747,24 @@ class ConnectDisplay(TabDisplay):
         self.widget = widgetset.Scroller(False, True)
         alignment = widgetset.Alignment(xalign=0.5, yalign=0.0, xscale=1)
         alignment.add(tabcontroller.ConnectTab())
+        self.widget.add(alignment)
+
+class SourcesDisplay(TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        ret = (tab_type == u'tab' and len(selected_tabs) == 1 and
+               selected_tabs[0].name == _('Sources'))
+
+        import logging
+        logging.info("should display? %r", ret)
+        return ret
+
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+
+        self.widget = widgetset.Scroller(False, True)
+        alignment = widgetset.Alignment(xalign=0.5, yalign=0.0, xscale=1)
+        alignment.add(tabcontroller.SourcesTab())
         self.widget.add(alignment)
 
 class DummyDisplay(TabDisplay):
