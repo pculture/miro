@@ -31,6 +31,7 @@
 
 import os
 import sys
+import itertools
 import socket
 import random
 import traceback
@@ -89,7 +90,22 @@ DEFAULT_DAAP_PLAYLIST_META = ('dmap.itemid,dmap.itemname,dmap.persistentid,' +
                               'daap.baseplaylist,dmap.itemcount,' +
                               'dmap.parentcontainerid,dmap.persistentid')
 
-class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+# This overrides the default SocketServer threading mixin, so that we can
+# have some way of enforcing the order of requests that come in.
+class DaapThreadingMixIn(SocketServer.ThreadingMixIn):
+    def init_counter(self):
+        self.counter = itertools.count()
+
+    def process_request(self, request, client_address):
+        """Start a new thread to process the request."""
+        t = threading.Thread(target = self.process_request_thread,
+                             args = (request, client_address))
+        if self.daemon_threads:
+            t.setDaemon (1)
+        t.counter = self.counter.next()
+        t.start()
+
+class DaapTCPServer(DaapThreadingMixIn, SocketServer.TCPServer):
     # GRRR!  Stupid Windows!  When bind() is called twice on a socket
     # it should return EADDRINUSE on the second one - Windows doesn't!
     # Use robust=True (default) in make_daap_server() and it will pick 
@@ -103,6 +119,7 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         SocketServer.TCPServer.__init__(self, server_address,
                                         RequestHandlerClass,
                                         bind_and_activate)
+        self.init_counter()
         self.debug = False
         self.log_message_callback = None
 
