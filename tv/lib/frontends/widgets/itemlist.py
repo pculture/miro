@@ -148,6 +148,7 @@ class DownloadRateSort(ItemSort):
             return -1
 
 class ProgressSort(ItemSort):
+# commented out in the map because I don't think it's used. delete?
     KEY = 'progress'
     def sort_key(self, item):
         if item.state in ('downloading', 'paused'):
@@ -193,26 +194,44 @@ class RatingSort(ItemSort):
     def sort_key(self, item):
         return item.rating
 
+class DRMSort(ItemSort):
+    KEY = 'drm'
+    def sort_key(self, item):
+        return item.has_drm
+
+class FileTypeSort(ItemSort):
+    KEY = 'file-type'
+    def sort_key(self, item):
+        return item.file_type
+
+class TorrentDetailsSort(ItemSort):
+    KEY = 'torrent-details'
+    def sort_key(self, item):
+        return 0 # FIXME
+
 DEFAULT_SORT = ArtistSort(False)
 
 SORT_KEY_MAP = {
-    DateSort.KEY:         DateSort,
-    NameSort.KEY:         NameSort,
-    LengthSort.KEY:       LengthSort,
-    SizeSort.KEY:         SizeSort,
-    DescriptionSort.KEY:  DescriptionSort,
-    FeedNameSort.KEY:     FeedNameSort,
-    StatusCircleSort.KEY: StatusCircleSort,
-    StatusSort.KEY:       StatusSort,
-    ETASort.KEY:          ETASort,
-    DownloadRateSort.KEY: DownloadRateSort,
-    ProgressSort.KEY:     ProgressSort,
-    ArtistSort.KEY:       ArtistSort,
-    AlbumSort.KEY:        AlbumSort,
-    TrackSort.KEY:        TrackSort,
-    YearSort.KEY:         YearSort,
-    GenreSort.KEY:        GenreSort,
-    RatingSort.KEY:       RatingSort,
+    DateSort.KEY:           DateSort,
+    NameSort.KEY:           NameSort,
+    LengthSort.KEY:         LengthSort,
+    SizeSort.KEY:           SizeSort,
+    DescriptionSort.KEY:    DescriptionSort,
+    FeedNameSort.KEY:       FeedNameSort,
+    StatusCircleSort.KEY:   StatusCircleSort,
+    StatusSort.KEY:         StatusSort,
+    ETASort.KEY:            ETASort,
+    DownloadRateSort.KEY:   DownloadRateSort,
+#    ProgressSort.KEY:       ProgressSort,
+    ArtistSort.KEY:         ArtistSort,
+    AlbumSort.KEY:          AlbumSort,
+    TrackSort.KEY:          TrackSort,
+    YearSort.KEY:           YearSort,
+    GenreSort.KEY:          GenreSort,
+    RatingSort.KEY:         RatingSort,
+    DRMSort.KEY:            DRMSort,
+    FileTypeSort.KEY:       FileTypeSort,
+    TorrentDetailsSort.KEY: TorrentDetailsSort,
 }
 
 class ItemList(object):
