@@ -322,24 +322,42 @@ class HideableWidget(widgetset.VBox):
             self.remove(self._child)
             self.shown = False
 
+
+# FIXME - we should rename the following button classes and put them
+# in another module.
+
+
 class TitlebarButton(widgetset.CustomButton):
     """
     Draws the titlebar buttoms; based on ThreeImageSurface.
     """
-    def __init__(self, title, icon):
+    def __init__(self, title, icon=None):
         widgetset.CustomButton.__init__(self)
         self.title = title
         self.icon = icon
         self.surface = ThreeImageSurface()
         self.surface_active = ThreeImageSurface()
-        self.surface.set_images(
-            make_surface(icon),
-            make_surface('titlebar-middle'),
-            make_surface('titlebar-right'))
-        self.surface_active.set_images(
-            make_surface(icon + '_active'),
-            make_surface('titlebar-middle_active'),
-            make_surface('titlebar-right_active'))
+
+        if icon is not None:
+            self.width_offset = 40
+            self.surface.set_images(
+                make_surface(icon),
+                make_surface('titlebar-middle'),
+                make_surface('titlebar-right'))
+            self.surface_active.set_images(
+                make_surface(icon + '_active'),
+                make_surface('titlebar-middle_active'),
+                make_surface('titlebar-right_active'))
+        else:
+            self.width_offset = 26
+            self.surface.set_images(
+                make_surface('titlebar-left'),
+                make_surface('titlebar-middle'),
+                make_surface('titlebar-right'))
+            self.surface_active.set_images(
+                make_surface('titlebar-left_active'),
+                make_surface('titlebar-middle_active'),
+                make_surface('titlebar-right_active'))
 
     def _get_textbox(self, layout):
         layout.set_font(0.8)
@@ -347,7 +365,7 @@ class TitlebarButton(widgetset.CustomButton):
 
     def size_request(self, layout):
         width, height = self._get_textbox(layout).get_size()
-        return width + 40, self.surface.height
+        return width + self.width_offset, self.surface.height
 
     def draw(self, context, layout):
         if self.state == 'pressed':
@@ -360,7 +378,9 @@ class TitlebarButton(widgetset.CustomButton):
         textbox = self._get_textbox(layout)
         text_width, text_height = textbox.get_size()
         text_y = (context.height - text_height) / 2
-        textbox.draw(context, 28, text_y, text_width, text_height)
+        textbox.draw(context, self.width_offset - 12,
+                     text_y, text_width, text_height)
+
 
 class MultiStateTitlebarButton(widgetset.CustomButton):
     """

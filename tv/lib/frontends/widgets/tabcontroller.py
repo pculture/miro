@@ -414,8 +414,7 @@ class SourcesTab(widgetset.VBox):
         hbox.pack_start(widgetutil.align_middle(
                 self.source_entry, left_pad=15))
 
-        # FIXME - fix the button to look right
-        self.add_source_button = widgetset.Button(_("Add Source"))
+        self.add_source_button = widgetutil.TitlebarButton(_("Add Source"))
         self.add_source_button.connect('clicked', self._on_add_source)
         hbox.pack_start(widgetutil.align_middle(
                 self.add_source_button, left_pad=15))
