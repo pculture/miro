@@ -65,71 +65,71 @@ class ItemSort(object):
 
 class DateSort(ItemSort):
     KEY = 'date'
-    def sort_key(self, item):
-        return item.release_date
+    def sort_key(self, info):
+        return info.release_date
 
 class NameSort(ItemSort):
     KEY = 'name'
-    def sort_key(self, item):
-        return item.name_sort_key
+    def sort_key(self, info):
+        return info.name_sort_key
 
 class LengthSort(ItemSort):
     KEY = 'length'
-    def sort_key(self, item):
-        return item.duration
+    def sort_key(self, info):
+        return info.duration
 
 class SizeSort(ItemSort):
     KEY = 'size'
-    def sort_key(self, item):
-        return item.size
+    def sort_key(self, info):
+        return info.size
 
 class DescriptionSort(ItemSort):
     KEY = 'description'
-    def sort_key(self, item):
-        return item.description
+    def sort_key(self, info):
+        return info.description
 
 class FeedNameSort(ItemSort):
     KEY = 'feed-name'
-    def sort_key(self, item):
-        if item.feed_name:
-            return item.feed_name.lower()
-        return item.feed_name
+    def sort_key(self, info):
+        if info.feed_name:
+            return info.feed_name.lower()
+        return info.feed_name
 
 class StatusCircleSort(ItemSort):
     KEY = 'state'
     # Weird sort, this one is for when the user clicks on the header above the
     # status bumps.  It's almost the same as StatusSort, but there isn't a
     # bump for expiring.
-    def sort_key(self, item):
-        if item.state == 'downloading':
+    def sort_key(self, info):
+        if info.state == 'downloading':
             return 1 # downloading
-        elif item.downloaded and not item.video_watched:
+        elif info.downloaded and not info.video_watched:
             return 2 # unwatched
-        elif not item.item_viewed and not item.expiration_date:
+        elif not info.info_viewed and not info.expiration_date:
             return 0 # new
         else:
             return 3 # other
 
 class StatusSort(ItemSort):
     KEY = 'status'
-    def sort_key(self, item):
-        if item.state == 'downloading':
+    def sort_key(self, info):
+        if info.state == 'downloading':
             return (2, ) # downloading
-        elif item.downloaded and not item.video_watched:
+        elif info.downloaded and not info.video_watched:
             return (3, ) # unwatched
-        elif item.expiration_date:
+        elif info.expiration_date:
             # the tuple here creates a subsort on expiration_date
-            return (4, item.expiration_date) # expiring
-        elif not item.item_viewed:
+            return (4, info.expiration_date) # expiring
+        elif not info.info_viewed:
             return (0, ) # new
         else:
             return (1, ) # other
 
 class ETASort(ItemSort):
     KEY = 'eta'
-    def sort_key(self, item):
-        if item.state == 'downloading':
-            eta = item.download_info.eta
+    def sort_key(self, info):
+        if info.state == 'downloading':
+            eta = info.download_info.eta
             if eta > 0:
                 return eta
         elif not self.reverse:
@@ -139,9 +139,9 @@ class ETASort(ItemSort):
 
 class DownloadRateSort(ItemSort):
     KEY = 'rate'
-    def sort_key(self, item):
-        if item.state == 'downloading':
-            return item.download_info.rate
+    def sort_key(self, info):
+        if info.state == 'downloading':
+            return info.download_info.rate
         elif not self.reverse:
             return sys.maxint
         else:
@@ -150,9 +150,9 @@ class DownloadRateSort(ItemSort):
 class ProgressSort(ItemSort):
 # commented out in the map because I don't think it's used. delete?
     KEY = 'progress'
-    def sort_key(self, item):
-        if item.state in ('downloading', 'paused'):
-            return float(item.download_info.downloaded_size) / item.size
+    def sort_key(self, info):
+        if info.state in ('downloading', 'paused'):
+            return float(info.download_info.downloaded_size) / info.size
         elif not self.reverse:
             return sys.maxint
         else:
@@ -160,53 +160,53 @@ class ProgressSort(ItemSort):
 
 class ArtistSort(ItemSort):
     KEY = 'artist'
-    def sort_key(self, item):
-        return (item.artist_sort_key,
-                item.album_sort_key,
-                item.track)
+    def sort_key(self, info):
+        return (info.artist_sort_key,
+                info.album_sort_key,
+                info.track)
 
 class AlbumSort(ItemSort):
     KEY = 'album'
-    def sort_key(self, item):
-        return (item.album_sort_key,
-                item.track,
-                item.artist_sort_key)
+    def sort_key(self, info):
+        return (info.album_sort_key,
+                info.track,
+                info.artist_sort_key)
 
 class TrackSort(ItemSort):
     KEY = 'track'
-    def sort_key(self, item):
-        return (item.track,
-                item.artist_sort_key,
-                item.album_sort_key)
+    def sort_key(self, info):
+        return (info.track,
+                info.artist_sort_key,
+                info.album_sort_key)
 
 class YearSort(ItemSort):
     KEY = 'year'
-    def sort_key(self, item):
-        return item.year
+    def sort_key(self, info):
+        return info.year
 
 class GenreSort(ItemSort):
     KEY = 'genre'
-    def sort_key(self, item):
-        return item.genre
+    def sort_key(self, info):
+        return info.genre
 
 class RatingSort(ItemSort):
     KEY = 'rating'
-    def sort_key(self, item):
-        return item.rating
+    def sort_key(self, info):
+        return info.rating
 
 class DRMSort(ItemSort):
     KEY = 'drm'
-    def sort_key(self, item):
-        return item.has_drm
+    def sort_key(self, info):
+        return info.has_drm
 
 class FileTypeSort(ItemSort):
     KEY = 'file-type'
-    def sort_key(self, item):
-        return item.file_type
+    def sort_key(self, info):
+        return info.file_type
 
 class TorrentDetailsSort(ItemSort):
     KEY = 'torrent-details'
-    def sort_key(self, item):
+    def sort_key(self, info):
         return 0 # FIXME
 
 DEFAULT_SORT = ArtistSort(False)
