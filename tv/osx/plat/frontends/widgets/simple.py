@@ -55,6 +55,16 @@ class Image(object):
         """Returns an image scaled to fit into the specified space at the
         correct height/width ratio.
         """
+        # this prevents division by 0.
+        if self.width == 0 and self.height == 0:
+            return self
+        elif self.width == 0:
+            ratio = height / self.height
+            return self.resize(self.width, ratio * self.height)
+        elif self.height == 0:
+            ratio = width / self.width
+            return self.resize(ratio * self.width, self.height)
+
         ratio = min(width / self.width, height / self.height)
         return self.resize(ratio * self.width, ratio * self.height)
 
