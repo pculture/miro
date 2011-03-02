@@ -303,6 +303,9 @@ def main(argv):
     if len(argv) < 3:
         argv.append(os.path.join(os.path.dirname(__file__), "thumbnail.png"))
 
+    # Gross - renice this so that it runs with a lower priority.  See #15164
+    os.nice(19)
+
     extractor = Extractor(argv[1], argv[2], handle_result)
     gtk.gdk.threads_init()
     gtk.main()

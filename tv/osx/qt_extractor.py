@@ -40,6 +40,9 @@ from miro.plat import qtcomp
 from miro.plat import utils
 from miro.plat.frontends.widgets import mediatypes
 
+# Gross - renice this so that it runs with a lower priority.  See #15164:wq
+os.nice(19)
+
 # =============================================================================
 
 def register_quicktime_components():
