@@ -960,7 +960,12 @@ class SharingManager(object):
         self.backend.start_tracking()
         # Enable sharing if necessary.
         self.twiddle_sharing()
-        if not self.mdns_present:
+        # Normally, if mDNS discovery is enabled, we call resume() in the
+        # in the registration callback, we need to do this because the
+        # sharing tracker needs to know what name we actually got registered
+        # with (instead of what we requested).   But alas, it won't be 
+        # called if sharing's off.  So we have to do it manually here.
+        if not self.mdns_present or not self.discoverable:
             app.sharing_tracker.resume()
 
     def session_count(self):
