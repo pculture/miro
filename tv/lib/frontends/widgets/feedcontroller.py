@@ -61,10 +61,11 @@ class FeedController(itemlistcontroller.ItemListController,
         feed_info = widgetutil.get_feed_info(self.id)
 
         if feed_info.is_directory_feed:
-            self.titlebar = itemlistwidgets.ItemListTitlebar()
+            self.titlebar = itemlistwidgets.FilteredTitlebar()
         else:
             self.titlebar = itemlistwidgets.ChannelTitlebar()
             self.titlebar.connect('save-search', self._on_save_search)
+        self.titlebar.connect('toggle-filter', self.on_toggle_filter)
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
@@ -77,11 +78,6 @@ class FeedController(itemlistcontroller.ItemListController,
         background = widgetset.SolidBackground((1, 1, 1))
         background.add(standard_view)
         return standard_view, background
-
-    def build_header_toolbar(self):
-        toolbar = itemlistwidgets.ChannelHeaderToolbar()
-        toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
-        return toolbar
 
     def check_for_empty_list(self):
         # TODO: should we do something here?

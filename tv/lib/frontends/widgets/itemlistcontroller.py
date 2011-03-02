@@ -47,6 +47,7 @@ from miro import messages
 from miro import subscription
 from miro import util
 from miro.gtcache import gettext as _
+from miro.gtcache import declarify
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemtrack
@@ -90,6 +91,7 @@ class FilteredListMixin(object):
 
     def update_filters(self, filters):
         """Update the display and toolbar filter switch state."""
+        self.titlebar.toggle_filter(filters)
         self.widget.toggle_filter(filters)
         self.item_list.toggle_filter(filters)
         self.send_model_changed()
@@ -889,11 +891,57 @@ class VideoItemsController(AudioVideoItemsController):
     unwatched_label =  _('Unwatched')
     display_channel = True
 
+    def make_titlebar(self):
+        titlebar = AudioVideoItemsController.make_titlebar(self)
+        # FIXME these don't work yet
+        titlebar.add_filter('view-all', 'toggle-filter', 'view-all',
+                            declarify(_('View|All')))
+        titlebar.add_filter('view-movies', 'toggle-filter','view-movies',
+                            _('Movies'))
+        titlebar.add_filter('view-shows', 'toggle-filter', 'view-shows',
+                            _('Shows'))
+        titlebar.add_filter('view-clips', 'toggle-filter', 'view-clips',
+                            _('Clips'))
+        titlebar.add_filter('view-podcasts', 'toggle-filter', 'view-podcasts',
+                            _('Podcasts'))
+        titlebar.connect_weak('toggle-filter', self._toggle_titlebar_filter)
+        return titlebar
+
+    def _toggle_titlebar_filter(self, titlebar, filter):
+        for name, button in titlebar.filters.items():
+            if name != filter:
+                button.set_enabled(False)
+            else:
+                button.set_enabled(True)
+
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'
     id = u'music'
     unwatched_label = _('Unplayed')
     display_channel = True
+
+    def make_titlebar(self):
+        titlebar = AudioVideoItemsController.make_titlebar(self)
+        # FIXME these don't work yet
+        titlebar.add_filter('view-all', 'toggle-filter', 'view-all',
+                            declarify(_('View|All')))
+        titlebar.add_filter('view-albums', 'toggle-filter','view-albums',
+                            _('Albums'))
+        titlebar.add_filter('view-songs', 'toggle-filter', 'view-songs',
+                            _('Songs'))
+        titlebar.add_filter('view-genres', 'toggle-filter', 'view-genres',
+                            _('Genres'))
+        titlebar.add_filter('view-artists', 'toggle-filter', 'view-artists',
+                            _('Artists'))
+        titlebar.connect('toggle-filter', self._toggle_titlebar_filter)
+        return titlebar
+
+    def _toggle_titlebar_filter(self, titlebar, filter):
+        for name, button in titlebar.filters.items():
+            if name != filter:
+                button.set_enabled(False)
+            else:
+                button.set_enabled(True)
 
 class OtherItemsController(SimpleItemListController):
     type = u'others'

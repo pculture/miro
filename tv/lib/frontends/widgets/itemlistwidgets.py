@@ -94,6 +94,48 @@ class ViewToggler(widgetset.CustomButton):
             self.emit('normal-view-clicked')
             self.switch_to_view(WidgetStateStore.get_standard_view_type())
 
+class FilterButton(widgetset.CustomButton):
+
+    SURFACE = widgetutil.ThreeImageSurface('filter')
+    TEXT_SIZE = 0.75
+    ON_COLOR = (1, 1, 1)
+    OFF_COLOR = (0.247, 0.247, 0.247)
+
+    def __init__(self, text, enabled=False):
+        self.text = text
+        self.enabled = enabled
+        widgetset.CustomButton.__init__(self)
+        self.connect('clicked', self._on_clicked)
+
+    def _textbox(self, layout):
+        layout.set_font(self.TEXT_SIZE)
+        return layout.textbox(self.text)
+
+    def size_request(self, layout):
+        width, height = self._textbox(layout).get_size()
+        return width + 20, max(self.SURFACE.height, height)
+
+    def draw(self, context, layout):
+        surface_y = (context.height - self.SURFACE.height) / 2
+        if self.enabled:
+            self.SURFACE.draw(context, 0, surface_y, context.width)
+            layout.set_text_color(self.ON_COLOR)
+        else:
+            layout.set_text_color(self.OFF_COLOR)
+        textbox = self._textbox(layout)
+        text_width, text_height = textbox.get_size()
+        text_x = (context.width - text_width) / 2
+        text_y = (context.height - text_height) / 2
+        textbox.draw(context, text_x, text_y, context.width, context.height)
+
+    def set_enabled(self, enabled):
+        if enabled != self.enabled:
+            self.enabled = enabled
+            self.queue_redraw()
+
+    def _on_clicked(self, button):
+        self.set_enabled(not self.enabled)
+
 class BoxedIconDrawer(widgetset.DrawingArea):
     """Draws the icon for an item list."""
     def __init__(self, image):
@@ -136,6 +178,8 @@ class ItemListTitlebar(widgetset.Background):
         start = self._build_titlebar_start()
         if start:
             hbox.pack_start(start)
+        self.filter_box = widgetset.HBox(spacing=10)
+        hbox.pack_start(self.filter_box)
         extra = self._build_titlebar_extra()
         if extra:
             if isinstance(extra, list):
@@ -148,6 +192,8 @@ class ItemListTitlebar(widgetset.Background):
         self.resume_button_holder = widgetutil.HideableWidget(
                 widgetutil.pad(self.resume_button, right=10))
         hbox.pack_end(widgetutil.align_middle(self.resume_button_holder))
+
+        self.filters = {}
 
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
@@ -202,9 +248,6 @@ class ItemListTitlebar(widgetset.Background):
     def _on_resume_button_clicked(self, button):
         self.emit('resume-playing')
 
-    def _on_save_search(self, button):
-        self.emit('save-search')
-
     def _on_search_changed(self, searchbox):
         self.emit('search-changed', searchbox.get_text())
 
@@ -223,6 +266,24 @@ class ItemListTitlebar(widgetset.Background):
 
     def set_search_text(self, text):
         self.searchbox.set_text(text)
+
+    def toggle_filter(self, filter):
+        # implemented by subclasses
+        pass
+
+    def add_filter(self, name, signal_name, signal_param, label):
+        if not self.filters:
+            enabled = True
+        else:
+            enabled = False
+        self.create_signal(signal_name)
+        def callback(button):
+            self.emit(signal_name, signal_param)
+        button = FilterButton(label, enabled=enabled)
+        button.connect('clicked', callback)
+        self.filter_box.pack_start(button)
+        self.filters[name] = button
+        return button
 
 class SearchTitlebar(ItemListTitlebar):
     """
@@ -249,10 +310,32 @@ class SearchTitlebar(ItemListTitlebar):
             self.save_button.show()
         self.emit('search-changed', searchbox.get_text())
 
-class ChannelTitlebar(SearchTitlebar):
+class FilteredTitlebar(ItemListTitlebar):
+    def __init__(self):
+        ItemListTitlebar.__init__(self)
+        # this "All" is different than other "All"s in the codebase, so it
+        # needs to be clarified
+        view_all = WidgetStateStore.get_view_all_filter()
+        unwatched = WidgetStateStore.get_unwatched_filter()
+        downloaded = WidgetStateStore.get_downloaded_filter()
+        self.add_filter('view-all', 'toggle-filter', view_all,
+                         declarify(_('View|All')))
+        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
+                        _('Downloaded'))
+        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
+                        _('Unplayed'))
+
+    def toggle_filter(self, filter):
+        view_all = WidgetStateStore.is_view_all_filter(filter)
+        downloaded = WidgetStateStore.has_downloaded_filter(filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(filter)
+        self.filters['view-all'].set_enabled(view_all)
+        self.filters['only-downloaded'].set_enabled(downloaded)
+        self.filters['only-unplayed'].set_enabled(unwatched)
+
+class ChannelTitlebar(SearchTitlebar, FilteredTitlebar):
     """Titlebar for a channel
     """
-
 
 class SearchListTitlebar(SearchTitlebar):
     """Titlebar for the search page.
@@ -977,33 +1060,6 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.filter_switch.set_active('view-all', view_all)
         self.filter_switch.set_active('view-unwatched', unwatched)
         self.filter_switch.set_active('view-non-feed', non_feed)
-
-class ChannelHeaderToolbar(HeaderToolbar):
-    def pack_hbox_extra(self):
-        self.make_filter_switch(behavior='radio')
-        # this "All" is different than other "All"s in the codebase, so it
-        # needs to be clarified
-        view_all = WidgetStateStore.get_view_all_filter()
-        unwatched = WidgetStateStore.get_unwatched_filter()
-        downloaded = WidgetStateStore.get_downloaded_filter()
-        self.add_filter('view-all', 'toggle-filter', view_all,
-                         declarify(_('View|All')))
-        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
-                        _('Downloaded'))
-        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
-                        _('Unplayed'))
-        self.add_filter_switch()
-
-    def toggle_filter(self, filter_):
-        self.toggle_radio_filter(filter_)
-
-    def update_switches(self, view_all, unwatched, non_feed, downloaded):
-        if downloaded:
-            self.filter_switch.set_active('only-downloaded')
-        elif unwatched:
-            self.filter_switch.set_active('only-unplayed')
-        else:
-            self.filter_switch.set_active('view-all')
 
 class SortBarButton(widgetset.CustomButton):
     def __init__(self, text):
