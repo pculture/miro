@@ -224,21 +224,20 @@ class ItemListTitlebar(widgetset.Background):
     def set_search_text(self, text):
         self.searchbox.set_text(text)
 
-class ChannelTitlebar(ItemListTitlebar):
-    """Titlebar for a channel
+class SearchTitlebar(ItemListTitlebar):
+    """
+    Titlebar for views which can save their view as a podcast.
 
     :signal save-search: (self, search_text) The current search
         should be saved as a search channel.
     """
-
-    def _build_titlebar_extra(self):
+    def _build_titlebar_start(self):
         self.create_signal('save-search')
-        button = widgetset.Button(_('Save Search'))
+        button = widgetset.Button(_('Save as Podcast'), style="smooth")
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
-                widgetutil.pad(button, right=10))
-        return [widgetutil.align_middle(self.save_button),
-                ItemListTitlebar._build_titlebar_extra(self)]
+                widgetutil.pad(button, right=20))
+        return widgetutil.align_middle(self.save_button, left_pad=20)
 
     def _on_save_search(self, button):
         self.emit('save-search', self.searchbox.get_text())
@@ -250,7 +249,12 @@ class ChannelTitlebar(ItemListTitlebar):
             self.save_button.show()
         self.emit('search-changed', searchbox.get_text())
 
-class SearchListTitlebar(ItemListTitlebar):
+class ChannelTitlebar(SearchTitlebar):
+    """Titlebar for a channel
+    """
+
+
+class SearchListTitlebar(SearchTitlebar):
     """Titlebar for the search page.
     """
     def _on_search_activate(self, obj):
@@ -269,11 +273,12 @@ class SearchListTitlebar(ItemListTitlebar):
 
     def _build_titlebar_extra(self):
         hbox = widgetset.HBox()
-
+        self.create_signal('search-changed')
         self.searchbox = widgetset.VideoSearchTextEntry()
         w, h = self.searchbox.get_size_request()
         self.searchbox.set_size_request(200, h)
         self.searchbox.connect('validate', self._on_search_activate)
+        self.searchbox.connect('changed', self._on_search_changed)
         hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
 
         return [widgetutil.align_middle(hbox, right_pad=20)]
@@ -553,37 +558,6 @@ class DisplayToolbar(widgetset.Background):
         # gradient.set_end_color((0.79, 0.79, 0.79))
         # context.rectangle(0, 0, context.width, context.height)
         # context.gradient_fill(gradient)
-
-class SearchToolbar(DisplayToolbar):
-    """Toolbar for the search page.
-
-    It's a hidable widget that contains the save search button.
-
-    :signal save-search (self) -- The current search should be saved
-        as a search channel.
-    """
-
-    def __init__(self):
-        DisplayToolbar.__init__(self)
-        hbox = widgetset.HBox()
-        self.add(hbox)
-        save_button = widgetset.Button(_('Save as a Podcast'), style='smooth')
-        save_button.set_size(widgetconst.SIZE_SMALL)
-        save_button.connect('clicked', self._on_save_clicked)
-        aligned = widgetutil.align_left(save_button, top_pad=5, left_pad=5,
-                                        bottom_pad=5)
-        self.hideable = widgetutil.HideableWidget(aligned)
-        hbox.pack_start(self.hideable)
-        self.create_signal('save-search')
-
-    def _on_save_clicked(self, button):
-        self.emit('save-search')
-
-    def show(self):
-        self.hideable.show()
-
-    def hide(self):
-        self.hideable.hide()
 
 class DownloadStatusToolbar(DisplayToolbar):
     """Widget that shows free space and download and upload speed

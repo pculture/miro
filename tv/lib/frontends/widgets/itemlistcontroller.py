@@ -802,16 +802,6 @@ class SearchController(SimpleItemListController):
     type = u'search'
     id = u'search'
 
-    def __init__(self):
-        SimpleItemListController.__init__(self)
-        self.toolbar = itemlistwidgets.SearchToolbar()
-        self.toolbar.connect("save-search", self._on_save_search)
-        if app.search_manager.text != '':
-            self.toolbar.show()
-        sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
-        self.widget.titlebar_vbox.pack_start(sep)
-        self.widget.titlebar_vbox.pack_start(self.toolbar)
-
     def build_widget(self):
         SimpleItemListController.build_widget(self)
         text = _('No Results')
@@ -847,6 +837,7 @@ class SearchController(SimpleItemListController):
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.SearchListTitlebar()
+        titlebar.connect('save-search', self._on_save_search)
         return titlebar
 
     def _on_save_search(self, widget):
