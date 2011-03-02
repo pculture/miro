@@ -411,6 +411,7 @@ class SourcesTab(widgetset.VBox):
 
         self.source_entry = widgetset.TextEntry()
         self.source_entry.set_size_request(400, -1)
+        self.source_entry.connect('activate', self._on_add_source)
         hbox.pack_start(widgetutil.align_middle(
                 self.source_entry, left_pad=15))
 
@@ -424,7 +425,7 @@ class SourcesTab(widgetset.VBox):
 
         bottom.pack_start(bg)
 
-    def _on_add_source(self, widget):
+    def _on_add_source(self, *args):
         url = self.source_entry.get_text()
         if url:
             messages.NewGuide(url).send_to_backend()
@@ -459,6 +460,7 @@ class PlaylistsTab(widgetset.VBox):
 
         self.name_entry = widgetset.TextEntry()
         self.name_entry.set_size_request(400, -1)
+        self.name_entry.connect('activate', self._on_add_playlist)
         hbox.pack_start(widgetutil.align_middle(
                 self.name_entry, left_pad=15))
 
@@ -472,7 +474,7 @@ class PlaylistsTab(widgetset.VBox):
 
         bottom.pack_start(bg)
 
-    def _on_add_playlist(self, widget):
+    def _on_add_playlist(self, *args):
         name = self.name_entry.get_text()
         if name:
             messages.NewPlaylist(name, []).send_to_backend()
