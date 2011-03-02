@@ -429,3 +429,51 @@ class SourcesTab(widgetset.VBox):
         if url:
             messages.NewGuide(url).send_to_backend()
             self.source_entry.set_text('')
+
+
+class PlaylistsTab(widgetset.VBox):
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+
+        title = widgetset.HBox()
+        logo = widgetset.ImageDisplay(imagepool.get(
+                resources.path('images/icon-playlist_large.png')))
+        title.pack_start(logo)
+        label = widgetset.Label(_("Playlists"))
+        label.set_size(2)
+        label.set_bold(True)
+        title.pack_start(widgetutil.pad(label, left=5))
+        self.pack_start(widgetutil.align_center(
+                title, top_pad=30, bottom_pad=20))
+
+        bottom = widgetset.VBox()
+
+        self._build_add_playlist_section(bottom)
+
+        self.pack_start(widgetutil.align_center(bottom))
+
+    def _build_add_playlist_section(self, bottom):
+        hbox = widgetset.HBox()
+        label = widgetset.Label(_("Name"))
+        hbox.pack_start(widgetutil.align_middle(label))
+
+        self.name_entry = widgetset.TextEntry()
+        self.name_entry.set_size_request(400, -1)
+        hbox.pack_start(widgetutil.align_middle(
+                self.name_entry, left_pad=15))
+
+        self.add_playlist_button = widgetutil.TitlebarButton(_("Add Playlist"))
+        self.add_playlist_button.connect('clicked', self._on_add_playlist)
+        hbox.pack_start(widgetutil.align_middle(
+                self.add_playlist_button, left_pad=15))
+
+        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg.add(widgetutil.pad(hbox, 10, 10, 10, 10))
+
+        bottom.pack_start(bg)
+
+    def _on_add_playlist(self, widget):
+        name = self.name_entry.get_text()
+        if name:
+            messages.NewPlaylist(name, []).send_to_backend()
+            self.name_entry.set_text('')

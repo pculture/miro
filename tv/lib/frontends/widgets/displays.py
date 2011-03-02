@@ -131,6 +131,7 @@ class DisplayManager(object):
                 SharingDisplay,
                 ConnectDisplay,
                 SourcesDisplay,
+                PlaylistsDisplay,
 
                 # DummyDisplay should be last because it's a
                 # catch-all.
@@ -761,6 +762,20 @@ class SourcesDisplay(TabDisplay):
         self.widget = widgetset.Scroller(False, True)
         alignment = widgetset.Alignment(xalign=0.5, yalign=0.0, xscale=1)
         alignment.add(tabcontroller.SourcesTab())
+        self.widget.add(alignment)
+
+class PlaylistsDisplay(TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return (tab_type == u'tab' and len(selected_tabs) == 1 and
+                selected_tabs[0].name == _('Playlists'))
+
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+
+        self.widget = widgetset.Scroller(False, True)
+        alignment = widgetset.Alignment(xalign=0.5, yalign=0.0, xscale=1)
+        alignment.add(tabcontroller.PlaylistsTab())
         self.widget.add(alignment)
 
 class DummyDisplay(TabDisplay):
