@@ -72,20 +72,29 @@ class Image(object):
         'image/png': PNG_EXTENSION,
     }
     COVER_ART_TYPE = 3
-    def __init__(self, image_object):
+    def __new__(cls, image_object):
         """Given a mutagen image object of any type, looks for a subclass that
         can process it. Returns an Image of the appropriate subclass, if
         available. Raises UnknownImageObjectException if there is no
         subclass capable of handling the type given.
         """
+        for subclass in cls.__subclasses__():
+            if subclass.can_process(image_object):
+                return super(cls, cls).__new__(subclass)
+        known_types = [c.PROCESSES_TYPE for c in cls.__subclasses__()]
+        raise UnknownImageObjectException(type(image_object), known_types)
+
+    def __init__(self, image_object):
         self.is_cover = None
         self.extension = None
         self.data = None
-        for cls in type(self).__subclasses__():
-            if cls.can_process(image_object):
-                self.__class__ = cls
-                break
         self.parse(image_object)
+
+    def parse(self, image_object):
+        """Should set data, extension, and optionally is_cover based on the
+        image_object.
+        """
+        raise NotImplementedError()
 
     @classmethod
     def can_process(cls, image_object):
@@ -93,12 +102,6 @@ class Image(object):
         Subclasses should just set cls.PROCESSES_TYPE.
         """
         return isinstance(image_object, cls.PROCESSES_TYPE)
-
-    def parse(self, image_object):
-        """Extract Image data from a given mutagen object."""
-        # If this method hasn't been overriden, nothing groks this image_object
-        known_types = [c.PROCESSES_TYPE for c in type(self).__subclasses__()]
-        raise UnknownImageObjectException(type(image_object), known_types)
 
     @staticmethod
     def _get_destination_path(extension, track_path):
