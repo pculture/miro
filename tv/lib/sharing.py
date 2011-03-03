@@ -691,6 +691,7 @@ class SharingManagerBackend(object):
         self.daapitems = dict()         # DAAP format XXX - index via the items
         self.daap_playlists = dict()    # Playlist, in daap format
         self.playlist_item_map = dict() # Playlist -> item mapping
+        self.in_shutdown = False
 
     # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
@@ -809,6 +810,8 @@ class SharingManagerBackend(object):
             old_transcode_obj = None
             need_create = False
             with self.transcode_lock:
+                if self.in_shutdown:
+                    return None
                 try:
                     transcode_obj = self.transcode[session]
                     if transcode_obj.itemid != itemid:
@@ -931,8 +934,14 @@ class SharingManagerBackend(object):
             self.daapitems[item.id] = itemprop
 
     def shutdown(self):
-       for key in self.transcode.keys():
-           self.transcode[key].shutdown()
+       # Set the in_shutdown flag inside the transcode lock to ensure that
+       # the transcode object synchronization gate in transcode() never creates
+       # any more objects after this flag is set (as get_file() is run
+       # in a separate thread created by libdaap)
+       with self.transcode_lock:
+           self.in_shutdown = True
+           for key in self.transcode.keys():
+               self.transcode[key].shutdown()
 
 class SharingManager(object):
     """SharingManager is the sharing server.  It publishes Miro media items
