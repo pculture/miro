@@ -80,6 +80,9 @@ class HotspotTracker(object):
             self.name = None
         self.hit = (self.name is not None)
 
+    def is_for_context_menu(self):
+        return self.name == '#show-context-menu'
+
     def calc_cell_hotspot(self, column, row):
         if (self.hit and self.column == column and self.row == row):
             return self.name
@@ -645,6 +648,12 @@ class TableViewCommon(object):
             self.hotspot_tracker = hotspot_tracker
             self.hotspot_tracker.redraw_cell()
             self.handled_last_mouse_down = True
+            if hotspot_tracker.is_for_context_menu():
+                self.popup_context_menu(self.hotspot_tracker.row, event)
+                # once we're out of that call, we know the context menu is
+                # gone
+                self.hotspot_tracker.redraw_cell()
+                self.hotspot_tracker = None
         else:
             self.handled_last_mouse_down = False
             self.SuperClass.mouseDown_(self, event)
@@ -656,6 +665,9 @@ class TableViewCommon(object):
         self.window().makeFirstResponder_(self)
         point = self.convertPoint_fromView_(event.locationInWindow(), nil)
         row = self.rowAtPoint_(point)
+        self.popup_context_menu(row, event)
+
+    def popup_context_menu(self, row, event):
         selection = self.selectedRowIndexes()
         if row != -1 and not selection.containsIndex_(row):
             index_set = NSIndexSet.alloc().initWithIndex_(row)

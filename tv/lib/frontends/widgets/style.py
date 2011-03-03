@@ -442,7 +442,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
             menu_x = (right_rect.x - self.images['menu'].width -
                     self.DOWNLOAD_MODE_CONTEXT_MENU_PAD_RIGHT)
             self._add_image_button(layout, menu_x, middle_rect.y, 'menu',
-                    'show-context-menu')
+                    '#show-context-menu')
         else:
             right_rect = main_rect.right_side(right_width)
             self.layout_main_bottom(layout, layout_manager, middle_rect)
@@ -569,7 +569,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         delete_y = int((menu_y + expire_y) // 2)
 
         self._add_image_button(layout, button_x, menu_y, 'menu',
-                'show-context-menu')
+                '#show-context-menu')
 
         if ((self.info.is_external or self.info.downloaded) and 
             self.info.source_type != 'sharing'):

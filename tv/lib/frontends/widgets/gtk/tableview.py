@@ -496,6 +496,9 @@ class HotspotTracker(object):
         if self.name is not None:
             self.hit = True
 
+    def is_for_context_menu(self):
+        return self.name == "#show-context-menu"
+
     def calc_cell_area(self):
         cell_area = self.treeview.get_cell_area(self.path, self.column)
         xpad = self.renderer._renderer.props.xpad
@@ -535,6 +538,8 @@ class HotspotTracker(object):
             return None
 
     def update_hit(self):
+        if self.is_for_context_menu():
+            return # we always keep hit = True for this one
         old_hit = self.hit
         self.hit = (self.calc_hotspot() == self.name)
         if self.hit != old_hit:
@@ -990,6 +995,8 @@ class TableView(Widget):
                 self.hotspot_tracker = hotspot_tracker
                 hotspot_tracker.redraw_cell()
                 self.handled_last_button_press = True
+                if hotspot_tracker.is_for_context_menu():
+                    self._popup_hotspot_context_menu(event)
                 return True
         if event.window != treeview.get_bin_window():
             # click is outside the content area, don't try to handle this.
@@ -1024,18 +1031,35 @@ class TableView(Widget):
         elif event.button == 3 and self.context_menu_callback:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
-                path, column, x, y = path_info
-                selection = self._widget.get_selection()
-                if not selection.path_is_selected(path):
-                    self.ignore_selection_changed = True
-                    selection.unselect_all()
-                    self.ignore_selection_changed = False
-                    selection.select_path(path)
-                menu = self.make_context_menu()
-                menu.popup(None, None, None, event.button, event.time)
+                path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+                if path_info is not None:
+                    path, column, x, y = path_info
+                    self._popup_context_menu(path, event)
             self.handled_last_button_press = True
             return True
         self.handled_last_button_press = False
+
+    def _popup_context_menu(self, path, event):
+        selection = self._widget.get_selection()
+        if not selection.path_is_selected(path):
+            self.ignore_selection_changed = True
+            selection.unselect_all()
+            self.ignore_selection_changed = False
+            selection.select_path(path)
+        menu = self.make_context_menu()
+        menu.popup(None, None, None, event.button, event.time)
+        return menu
+
+    def _popup_hotspot_context_menu(self, event):
+        menu = self._popup_context_menu(self.hotspot_tracker.path, event)
+        menu.connect('selection-done',
+                self._on_hotspot_context_menu_selection_done)
+
+    def _on_hotspot_context_menu_selection_done(self, menu):
+        # context menu is closed, we won't get the button-release-event in
+        # this case, but we can unset hotspot tracker here.
+        self.hotspot_tracker.redraw_cell()
+        self.hotspot_tracker = None
 
     def _x_coord_in_expander(self, treeview, x, column, path):
         """Calculate if an x coordinate is over the expander triangle
@@ -1105,7 +1129,8 @@ class TableView(Widget):
         if hotspot_tracker and event.button == hotspot_tracker.button:
             hotspot_tracker.update_position(event)
             hotspot_tracker.update_hit()
-            if hotspot_tracker.hit:
+            if (hotspot_tracker.hit and
+                    not hotspot_tracker.is_for_context_menu()):
                 self.emit('hotspot-clicked', hotspot_tracker.name,
                         hotspot_tracker.iter)
             hotspot_tracker.redraw_cell()
