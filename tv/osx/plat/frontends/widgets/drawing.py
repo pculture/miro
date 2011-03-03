@@ -52,33 +52,39 @@ class ImageSurface:
     def draw(self, context, x, y, width, height, fraction=1.0):
         if self.width == 0 or self.height == 0:
             return
-        NSGraphicsContext.currentContext().setShouldAntialias_(YES)
-        NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
+        current_context = NSGraphicsContext.currentContext()
+        current_context.setShouldAntialias_(YES)
+        current_context.setImageInterpolation_(NSImageInterpolationHigh)
         dest_rect = NSRect((x, y), (width, height))
         if self.width >= width and self.height >= height:
+            # drawing to area smaller than our image
             dest_rect = NSRect((x, y), (width, height))
             self.image.drawInRect_fromRect_operation_fraction_(
                 dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
         else:
-            # FIXME: use NSColor.colorWithPatternImage instead of homebrew
-            # tiling code.  The issue is that method draws our image upside
-            # down, regardless of the isFlipped() setting.
-            for x_ in range(0, int(width), int(self.width)):
-                for y_ in range(0, int(height), int(self.height)):
-                    if x_ + self.width > width:
-                        width_ = width - x_
-                    else:
-                        width_  = self.width
-                    if y_ + self.height > height:
-                        height_ = height - y_
-                    else:
-                        height_ = self.height
-                    rect = NSRect((x + x_, y + y_), (width_, height_))
-                    self.image.drawInRect_fromRect_operation_fraction_(
-                        rect, NSZeroRect, NSCompositeSourceOver, fraction)
+            # drawing to area larger than our image.  Need to tile it.
+            current_context.saveGraphicsState()
+            NSColor.colorWithPatternImage_(self.image).set()
+            current_context.setPatternPhase_(
+                    self._calc_pattern_phase(context, x, y))
+            NSBezierPath.fillRect_(dest_rect)
+            current_context.restoreGraphicsState()
 
-        self.image.drawInRect_fromRect_operation_fraction_(dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
         context.path.removeAllPoints()
+
+    def _calc_pattern_phase(self, context, x, y):
+        """Calculate the pattern phase to draw tiled images.
+
+        When we draw with a pattern, we want the image in the pattern to start
+        at the top-left of where we're drawing to.  This function does the
+        dirty work necessary.
+
+        :returns: NSPoint to send to setPatternPhase_
+        """
+        # convert to view coords
+        view_point = NSPoint(context.origin.x + x, context.origin.y + y)
+        # convert to window coords, which is setPatternPhase_ uses
+        return context.view.convertPoint_toView_(view_point, nil)
 
 def convert_cocoa_color(color):
     rgb = color.colorUsingColorSpaceName_(NSDeviceRGBColorSpace)
@@ -114,6 +120,7 @@ class DrawingContext:
         self.color = NSColor.blackColor()
         self.width = drawing_area.size.width
         self.height = drawing_area.size.height
+        self.origin = drawing_area.origin
         if drawing_area.origin != NSZeroPoint:
             xform = NSAffineTransform.transform()
             xform.translateXBy_yBy_(drawing_area.origin.x, 
