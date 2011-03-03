@@ -200,6 +200,10 @@ class TextBox(object):
             self.layout.set_wrap(pango.WRAP_CHAR)
         else:
             raise ValueError("Unknown wrap value: %s" % wrap)
+        if wrap == 'truncated-char':
+            self.layout.set_ellipsize(pango.ELLIPSIZE_END)
+        else:
+            self.layout.set_ellipsize(pango.ELLIPSIZE_NONE)
 
     def set_alignment(self, align):
         if align == 'left':

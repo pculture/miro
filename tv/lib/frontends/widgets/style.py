@@ -459,6 +459,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 family=widgetset.ITEM_TITLE_FONT, bold=True)
         layout_manager.set_text_color(self.ITEM_TITLE_COLOR)
         title = layout_manager.textbox(self.info.name)
+        title.set_wrap_style('truncated-char')
         layout.add_text_line(title, rect.x, title_y, rect.width)
 
         extra_info_y = layout.last_rect.bottom + self.TEXT_SPACING_Y
