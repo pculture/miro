@@ -858,9 +858,8 @@ class SearchController(SimpleItemListController):
         titlebar.connect('save-search', self._on_save_search)
         return titlebar
 
-    def _on_save_search(self, widget):
+    def _on_save_search(self, widget, search_text):
         engine = self.titlebar.get_engine()
-        search_text = self.titlebar.get_text()
         app.search_manager.perform_search(engine, search_text)
         app.search_manager.save_search()
 
