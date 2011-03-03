@@ -727,7 +727,7 @@ class ItemListController(object):
             self.titlebar.update_resume_button(text)
 
     def update_count_label(self):
-        text = _("%(count)s videos", {'count': self.item_list.get_count()})
+        text = _("%(count)s items", {'count': self.item_list.get_count()})
         self.standard_view_count_label.set_text(text)
 
     def on_items_will_change(self, added, changed, removed):
