@@ -1553,7 +1553,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.repeat = info.repeat
         state.selection = info.selection
         state.sort_state = info.sort_state
-        state.last_played_item_id = info.last_played_item_id
+        if isinstance(info.last_played_item_id, (int, long)):
+            state.last_played_item_id = info.last_played_item_id
+        else:
+            # don't save device/share items, since they might not be there next
+            # time
+            state.last_played_item_id = None
         state.signal_change()
 
     def handle_save_view_state(self, message):
