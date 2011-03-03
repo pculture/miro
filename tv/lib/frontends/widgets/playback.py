@@ -991,7 +991,12 @@ def handle_key_press(key, mods):
     if key == menus.DELETE or key == menus.BKSPACE:
         playing = app.playback_manager.get_playing_item()
         if playing is not None:
-            app.widgetapp.remove_items([playing])
+            if app.playback_manager.is_playing_audio:
+                # if we're playing an audio item, then we let
+                # remove_items figure out what is being deleted.
+                app.widgetapp.remove_items()
+            else:
+                app.widgetapp.remove_items([playing])
             return True
 
     if key == menus.ESCAPE:
