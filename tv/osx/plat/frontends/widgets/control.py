@@ -130,9 +130,9 @@ class BaseTextEntry(SizedControl):
         self.view.setEnabled_(False)
 
 class MiroTextField(NSTextField):
-    def becomeFirstResponder(self):
+    def textDidEndEditing_(self, notification):
         wrappermap.wrapper(self).emit('activate')
-        return NSTextField.becomeFirstResponder(self)
+        return NSTextField.textDidEndEditing_(self, notification)
 
 class TextEntry(BaseTextEntry):
     def make_view(self):
