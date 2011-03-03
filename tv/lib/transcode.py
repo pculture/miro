@@ -212,7 +212,7 @@ class TranscodeObject(object):
     # as items are consumed.  It may be good to have a low watermark as well.
     buffer_high_watermark = 6
 
-    def __init__(self, media_file, itemid, chunk, media_info,
+    def __init__(self, media_file, itemid, generation, chunk, media_info,
                  request_path_func):
         self.media_file = media_file
         self.in_shutdown = False
@@ -221,6 +221,7 @@ class TranscodeObject(object):
         else:
             self.time_offset = 0
         duration, has_audio, has_video = media_info
+        self.generation = generation
         self.duration = duration
         self.itemid = itemid
         self.has_audio = has_audio

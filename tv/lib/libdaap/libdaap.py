@@ -102,7 +102,7 @@ class DaapThreadingMixIn(SocketServer.ThreadingMixIn):
                              args = (request, client_address))
         if self.daemon_threads:
             t.setDaemon (1)
-        t.counter = self.counter.next()
+        t.generation = self.counter.next()
         t.start()
 
 class DaapTCPServer(DaapThreadingMixIn, SocketServer.TCPServer):
@@ -369,7 +369,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 if seekend < seekpos:
                     seekend = 0
                 rc = DAAP_PARTIAL_CONTENT
-        file_obj = self.server.backend.get_file(item_id, ext,
+        generation = threading.current_thread().generation
+        file_obj = self.server.backend.get_file(item_id, generation, ext,
                                                 self.get_session(),
                                                 self.get_request_path,
                                                 offset=seekpos, chunk=chunk)

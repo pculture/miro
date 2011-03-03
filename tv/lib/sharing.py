@@ -799,8 +799,8 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
 
-    def get_file(self, itemid, ext, session, request_path_func, offset=0,
-                 chunk=None):
+    def get_file(self, itemid, generation, ext, session, request_path_func,
+                 offset=0, chunk=None):
         file_obj = None
         path = self.daapitems[itemid]['path']
         if ext in ('ts', 'm3u8'):
@@ -815,6 +815,10 @@ class SharingManagerBackend(object):
                         need_create = True
                         old_transcode_obj = transcode_obj
                     else:
+                        # This request has already been satisfied by a more
+                        # recent request.  Bye ...
+                        if generation < transcode_obj.generation:
+                            return None
                         if chunk is not None and transcode_obj.isseek(chunk):
                             need_create = True
                             old_transcode_obj = transcode_obj
@@ -825,6 +829,7 @@ class SharingManagerBackend(object):
                     transcode_obj = transcode.TranscodeObject(
                                                           path,
                                                           itemid,
+                                                          generation,
                                                           chunk,
                                                           info,
                                                           request_path_func)
