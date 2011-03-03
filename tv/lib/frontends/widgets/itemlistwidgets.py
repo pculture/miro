@@ -656,11 +656,17 @@ class DownloadStatusToolbar(DisplayToolbar):
 
         h = widgetset.HBox(spacing=5)
 
+        self._free_disk_icon = widgetset.ImageDisplay(
+            imagepool.get(resources.path('images/hard-drive.png')))
+
+        h.pack_start(widgetutil.align_left(self._free_disk_icon,
+                     top_pad=10, bottom_pad=10, left_pad=12))
+
         self._free_disk_label = widgetset.Label("")
         self._free_disk_label.set_size(widgetconst.SIZE_SMALL)
 
         h.pack_start(widgetutil.align_left(self._free_disk_label,
-                     top_pad=10, bottom_pad=10, left_pad=20), expand=True)
+                     top_pad=10, bottom_pad=10, left_pad=3), expand=True)
 
 
         # Sigh.  We want to fix these sizes so they don't jump about
