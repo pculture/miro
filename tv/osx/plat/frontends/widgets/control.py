@@ -148,18 +148,18 @@ class NumberEntry(BaseTextEntry):
         pass
 
 class MiroSecureTextField(NSSecureTextField):
-    def becomeFirstResponder(self):
+    def textDidEndEditing_(self, notification):
         wrappermap.wrapper(self).emit('activate')
-        return NSSecureTextField.becomeFirstResponder(self)
+        return NSSecureTextField.textDidEndEditing_(self, notification)
 
 class SecureTextEntry(BaseTextEntry):
     def make_view(self):
         return MiroSecureTextField.alloc().init()
 
 class MiroSearchTextField(NSSearchField):
-    def becomeFirstResponder(self):
+    def textDidEndEditing_(self, notification):
         wrappermap.wrapper(self).emit('activate')
-        return NSSearchField.becomeFirstResponder(self)
+        return NSSearchField.textDidEndEditing_(self, notification)
 
 class SearchTextEntry(BaseTextEntry):
     def make_view(self):
