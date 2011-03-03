@@ -38,13 +38,16 @@ from miro.frontends.widgets.gtk.base import Widget, Bin
 
 class Image(object):
     def __init__(self, path):
-        self.pixbuf = gtk.gdk.pixbuf_new_from_file(path)
+        try:
+            self.pixbuf = gtk.gdk.pixbuf_new_from_file(path)
+        except gobject.GError, ge:
+            raise ValueError("%s" % ge)
         self.width = self.pixbuf.get_width()
         self.height = self.pixbuf.get_height()
 
     def resize(self, width, height):
         return ResizedImage(self, width, height)
-    
+
     def resize_for_space(self, width, height):
         """Returns an image scaled to fit into the specified space at the
         correct height/width ratio.
@@ -131,7 +134,7 @@ class Label(Widget):
 
     def get_alignment(self):
         return self._widget.get_justify()
-    
+
     def get_width(self):
         return self._widget.get_layout().get_pixel_size()[0]
 

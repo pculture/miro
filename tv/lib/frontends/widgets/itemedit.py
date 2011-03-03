@@ -81,7 +81,7 @@ class DialogOwnerMixin(object):
         canceled.
         """
         return self._value
-    
+
     def on_dialog_close(self, _value):
         """Override to react to newly-set values."""
         pass
@@ -219,7 +219,7 @@ class DisplayField(Field):
             value = formatter(value)
         label = widgetset.Label(value)
         self.widget = widgetutil.pad(label, top=6)
-    
+
     def get_results(self):
         """Readonly field; explicitly returns no changes."""
         return {}
@@ -309,7 +309,15 @@ class ThumbnailField(DialogOwnerMixin, Field):
         if not path:
             thumb = self.mixed_values and 'mixed' or 'none'
             path = resources.path('images/thumb-%s.png' % thumb)
-        self.widget = widgetset.ClickableImageButton(path, 134, 134)
+
+        try:
+            self.widget = widgetset.ClickableImageButton(path, 134, 134)
+        except ValueError:
+            # ValueError can happen if the image isn't valid and can't
+            # be loaded
+            path = resources.path('images/broken-image.gif')
+            self.widget = widgetset.ClickableImageButton(path, 134, 134)
+
         self.widget.connect('clicked', self.show_dialog)
 
     @classmethod
@@ -396,8 +404,8 @@ class MultifieldRow(object):
             box.pack_start(field.get_box())
         self.fields[-1].set_right()
         box.pack_end(self.fields[-1].get_box())
-        return box 
-    
+        return box
+
     def get_results(self):
         """Returns a changes map containing all child fields' changes."""
         results = {}
