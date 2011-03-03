@@ -90,22 +90,13 @@ DEFAULT_DAAP_PLAYLIST_META = ('dmap.itemid,dmap.itemname,dmap.persistentid,' +
                               'daap.baseplaylist,dmap.itemcount,' +
                               'dmap.parentcontainerid,dmap.persistentid')
 
-# This overrides the default SocketServer threading mixin, so that we can
-# have some way of enforcing the order of requests that come in.
-class DaapThreadingMixIn(SocketServer.ThreadingMixIn):
-    def init_counter(self):
-        self.counter = itertools.count()
+class SessionObject(object):
+    # Container object for a daap session.  Basically a heartbeat timeout
+    # timer object and a generation counter so we can impose some ordering
+    # on the requests which come in.
+    pass
 
-    def process_request(self, request, client_address):
-        """Start a new thread to process the request."""
-        t = threading.Thread(target = self.process_request_thread,
-                             args = (request, client_address))
-        if self.daemon_threads:
-            t.setDaemon (1)
-        t.generation = self.counter.next()
-        t.start()
-
-class DaapTCPServer(DaapThreadingMixIn, SocketServer.TCPServer):
+class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     # GRRR!  Stupid Windows!  When bind() is called twice on a socket
     # it should return EADDRINUSE on the second one - Windows doesn't!
     # Use robust=True (default) in make_daap_server() and it will pick 
@@ -119,7 +110,6 @@ class DaapTCPServer(DaapThreadingMixIn, SocketServer.TCPServer):
         SocketServer.TCPServer.__init__(self, server_address,
                                         RequestHandlerClass,
                                         bind_and_activate)
-        self.init_counter()
         self.debug = False
         self.log_message_callback = None
 
@@ -157,23 +147,28 @@ class DaapTCPServer(DaapThreadingMixIn, SocketServer.TCPServer):
             s = random.randint(1, MAX_SESSION)
             if not s in self.activeconn:
                 break
-        self.activeconn[s] = threading.Timer(DAAP_TIMEOUT,
-                                             self.daap_timeout_callback,
-                                             [s])
-        self.activeconn[s].start()
+        session_obj = SessionObject()
+        self.activeconn[s] = session_obj
+        session_obj.timer = threading.Timer(DAAP_TIMEOUT,
+                                            self.daap_timeout_callback,
+                                            [s])
+        session_obj.counter = itertools.count()
+        self.activeconn[s].timer.start()
         self.session_lock.release()
         return s
 
     def renew_session(self, s):
         try:
-            self.activeconn[s].cancel()
+            self.activeconn[s].timer.cancel()
         except KeyError:
             return False
         # Pants...  we need to create a new timer object.
-        self.activeconn[s] = threading.Timer(DAAP_TIMEOUT,
-                                             self.daap_timeout_callback,
-                                             [s])
-        self.activeconn[s].start()
+        self.activeconn[s].timer = threading.Timer(DAAP_TIMEOUT,
+                                                   self.daap_timeout_callback,
+                                                   [s])
+        current_thread = threading.current_thread()
+        current_thread.generation = self.activeconn[s].counter.next()
+        self.activeconn[s].timer.start()
         # OK, thank the caller for telling us the guy's alive
         return True
 
@@ -184,7 +179,7 @@ class DaapTCPServer(DaapThreadingMixIn, SocketServer.TCPServer):
         # maybe the guy tried to trick us by running /logout with no active
         # conn.
         try:
-            self.activeconn[s].cancel()
+            self.activeconn[s].timer.cancel()
             # XXX can't just delete? - need to keep a reference count for the
             # connection, we can have data/control connection?
             del self.activeconn[s]
@@ -200,7 +195,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     #    super(BaseHTTPRequestHandler, self).__init__(self, request,
     #                                                   client_address,
     #                                                   server)
-
     def log_message(self, format, *args):
         if self.server.log_message_callback:
             self.server.log_message_callback(format, *args)
