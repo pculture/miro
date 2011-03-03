@@ -970,6 +970,7 @@ class BTDownloader(BGDownloader):
         self.restarting = False
         self.seeders = -1
         self.leechers = -1
+        self.connections = -1
         self.metainfo_updated = False
         self.info_hash = None
         if restore is not None:
@@ -1131,6 +1132,9 @@ class BTDownloader(BGDownloader):
         fractionDone -- what portion of the download is completed.
         timeEst -- estimated completion time, in seconds.
         totalSize -- total size of the torrent in bytes
+        seeders -- number of seeders for this torrent
+        leechers -- number of leechers for this torrent
+        connecting -- nummber of peers we're connected to
         """
         status = self.torrent.status()
         self.totalSize = status.total_wanted
@@ -1139,6 +1143,7 @@ class BTDownloader(BGDownloader):
         self.uploaded = status.total_payload_upload + self.uploadedStart
         self.seeders = status.num_complete
         self.leechers = status.num_incomplete
+        self.connections = status.num_connections
         try:
             self.eta = ((status.total_wanted - status.total_wanted_done) /
                         float(status.download_payload_rate))
@@ -1251,6 +1256,7 @@ class BTDownloader(BGDownloader):
         data['dlerType'] = 'BitTorrent'
         data['seeders'] = self.seeders
         data['leechers'] = self.leechers
+        data['connections'] = self.connections
         data['info_hash'] = self.info_hash
         return data
 

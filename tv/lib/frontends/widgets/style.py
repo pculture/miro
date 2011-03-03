@@ -523,18 +523,28 @@ class ItemRenderer(widgetset.InfoListRenderer):
         emblem_width = self.emblem_drawer.add_to_layout(layout,
                 layout_manager, emblem_rect)
 
+
+        extra_button_x = emblem_width + self.EMBLEM_MARGIN_RIGHT
         # add stop seeding button
-        extra_button_x = rect.x + emblem_width + self.EMBLEM_MARGIN_RIGHT
+        extra_button_rect = emblem_rect.subsection(extra_button_x, 0, 0, 0)
+        self.add_extra_button(layout, layout_manager, extra_button_rect)
+
+    def add_extra_button(self, layout, layout_manager, rect):
         if (self.info.download_info and
                 self.info.download_info.state == 'uploading'):
-            layout_manager.set_font(self.EMBLEM_FONT_SIZE)
-            button = layout_manager.button(self.STOP_SEEDING_TEXT,
-                    pressed=(self.hotspot=='stop_seeding'),
+            text = self.STOP_SEEDING_TEXT
+            hotspot = 'stop_seeding'
+        elif self.info.pending_auto_dl:
+            text = self.CANCEL_TEXT
+            hotspot = 'cancel_auto_download'
+        else:
+            return
+        layout_manager.set_font(self.EMBLEM_FONT_SIZE)
+        button = layout_manager.button(text, pressed=(self.hotspot==hotspot),
                     style='webby')
-            button_rect = layout.add_image(button, extra_button_x,
-                    emblem_rect.y, 'stop_seeding')
-            # middle-align the button
-            button_rect.y += (emblem_rect.height - button_rect.height) // 2
+        button_rect = layout.add_image(button, rect.x, 0, hotspot)
+        # middle-align the button
+        button_rect.y = rect.y + ((rect.height - button_rect.height) // 2)
 
     def layout_right(self, layout, layout_manager, rect):
         # calculate positioning for the buttons.  There's a couple issues
@@ -729,7 +739,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         layout_manager.set_font(self.DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE,
                 family=widgetset.ITEM_DESC_FONT)
         lines = (
-                (_('PEERS'), "0"), # FIXME: need backend support for this
+                (_('PEERS'), str(self.info.connections)),
                 (_('SEEDS'), str(self.info.seeders)),
                 (_('LEECH'), str(self.info.leechers)),
                 (_('SHARE'), "%.2f" % self.info.up_down_ratio),

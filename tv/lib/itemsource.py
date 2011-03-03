@@ -220,6 +220,7 @@ class DatabaseItemSource(ItemSource):
                 # gettorrentdetails only
                 info['leechers'] = status.get('leechers', 0)
                 info['seeders'] = status.get('seeders', 0)
+                info['connections'] = status.get('connections', 0)
                 info['up_rate'] = status.get('upRate', 0)
                 info['down_rate'] = status.get('rate', 0)
 
