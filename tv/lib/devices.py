@@ -338,7 +338,9 @@ class DeviceManager(object):
 
     def device_connected(self, id_, **kwargs):
         if id_ in self.connected:
-            raise RuntimeError('device_connected() called on connected device')
+            # backend got confused
+            self.device_changed(id_, **kwargs)
+            return
 
         info = self._set_connected(id_, kwargs)
 
@@ -355,7 +357,9 @@ class DeviceManager(object):
 
     def device_changed(self, id_, **kwargs):
         if id_ not in self.connected:
-            raise RuntimeError('device_changed() called on unknown device')
+            # backend didn't send a connected message
+            self.device_connected(id_, **kwargs)
+            return
 
         info = self.connected[id_]
 
@@ -383,8 +387,7 @@ class DeviceManager(object):
 
     def device_disconnected(self, id_):
         if id_ not in self.connected:
-            raise RuntimeError(
-                'device_disconnected() called on unknown device')
+            return # don't bother with sending messages
 
         info = self.connected.pop(id_)
         if not self._is_hidden(info):

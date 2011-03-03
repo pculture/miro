@@ -133,12 +133,14 @@ class DeviceTracker(object):
         self._volume_changed(volume_monitor, mount.get_volume())
 
     def _volume_removed(self, volume_monitor, volume):
-        if volume is None or self._should_ignore_drive(volume.get_drive()):
+        if volume is None:
+            return
+        drive = volume.get_drive()
+        if drive and self._should_ignore_drive(drive):
             return
         id_ = volume.get_identifier('unix-device')
         del self._unix_device_to_drive[id_]
         app.device_manager.device_disconnected(id_)
-        drive = volume.get_drive()
         if drive is None:  # can be None on force-disconnect
             return
         drive_id = drive .get_identifier('unix-device')
