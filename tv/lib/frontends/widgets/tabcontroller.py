@@ -48,6 +48,8 @@ from miro.plat import resources
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets import widgetset
 
+APP_STORE_URL = 'http://www.getmiro.com/download/ipad'
+
 class RoundedSolidBackground(widgetset.Background):
     SIZE = 10
 
@@ -217,6 +219,7 @@ class ConnectTab(widgetset.VBox):
         self._build_daap_section(bottom)
         self._build_sync_section(bottom)
         self._build_app_store_section(bottom)
+        self._build_android_section(bottom)
 
         self.pack_start(widgetutil.align_center(bottom))
 
@@ -277,7 +280,7 @@ class ConnectTab(widgetset.VBox):
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
         label_line = widgetset.HBox()
-        label = widgetset.Label(_("Sync a Phone or Tablet"))
+        label = widgetset.Label(_("Sync a Phone, Tablet, or Digital Camera"))
         label.set_size(1.5)
         label_line.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
@@ -289,7 +292,9 @@ class ConnectTab(widgetset.VBox):
         label = widgetset.Label(
             _("Connect the USB cable to sync your Android device with "
               "%(shortappname)s.  Be sure to set your device to 'USB Mass "
-              "Storage' mode in your device settings.", self.trans_data))
+              "Storage' mode in your device settings.  Attach your digital "
+              "camera, and convert your video files to be instantly "
+              "web-ready.", self.trans_data))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_size_request(400, -1)
         label.set_wrap(True)
@@ -339,11 +344,30 @@ class ConnectTab(widgetset.VBox):
         label.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               right_pad=10,
-                                              bottom_pad=5))
+                                              bottom_pad=50))
         hbox.pack_start(vbox)
         app_store_button = AppStoreButton()
         app_store_button.connect('clicked', self.app_store_button_clicked)
         hbox.pack_start(app_store_button)
+        bottom.pack_start(hbox)
+
+    def _build_android_section(self, bottom):
+        hbox = widgetset.HBox()
+        vbox = widgetset.VBox()
+        label = widgetset.Label(_("Miro on Android"))
+        label.set_size(1.5)
+        vbox.pack_start(widgetutil.align_left(label, left_pad=20,
+                                              bottom_pad=5))
+        label = widgetset.Label(
+            _("We don't yet have a Miro app for Android, but you can stream "
+              "to your device using other DAAP apps."))
+        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_wrap(True)
+        label.set_size_request(550, -1)
+        vbox.pack_start(widgetutil.align_left(label, left_pad=20,
+                                              right_pad=10,
+                                              bottom_pad=5))
+        hbox.pack_start(vbox)
         bottom.pack_start(hbox)
 
     def on_config_changed(self, obj, key, value):
@@ -368,7 +392,7 @@ class ConnectTab(widgetset.VBox):
         app.device_manager.set_show_unknown(cb.get_checked())
 
     def app_store_button_clicked(self, button):
-        print 'app store clicked'
+        app.widgetapp.open_url(APP_STORE_URL)
 
 
 class SourcesTab(widgetset.VBox):
