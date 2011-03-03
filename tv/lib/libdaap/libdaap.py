@@ -103,13 +103,13 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     # a new port.
     # allow_reuse_address = True    # setsockopt(... SO_REUSEADDR, 1)
     daemon_threads = True
-    session_lock = threading.Lock()
 
     def __init__(self, server_address, RequestHandlerClass,
                  bind_and_activate=True):
         SocketServer.TCPServer.__init__(self, server_address,
                                         RequestHandlerClass,
                                         bind_and_activate)
+        self.session_lock = threading.Lock()
         self.debug = False
         self.log_message_callback = None
 
@@ -138,39 +138,38 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         return len(self.activeconn)
 
     def new_session(self):
-        self.session_lock.acquire()
-        if self.session_count() == self.maxconn:
-            self.session_lock.release()
-            return None
-        while True:
-            # NB: the session must be a non-zero.
-            s = random.randint(1, MAX_SESSION)
-            if not s in self.activeconn:
-                break
-        session_obj = SessionObject()
-        self.activeconn[s] = session_obj
-        session_obj.timer = threading.Timer(DAAP_TIMEOUT,
-                                            self.daap_timeout_callback,
-                                            [s])
-        session_obj.counter = itertools.count()
-        self.activeconn[s].timer.start()
-        self.session_lock.release()
+        with self.session_lock:
+            if self.session_count() == self.maxconn:
+                return None
+            while True:
+                # NB: the session must be a non-zero.
+                s = random.randint(1, MAX_SESSION)
+                if not s in self.activeconn:
+                    break
+            session_obj = SessionObject()
+            self.activeconn[s] = session_obj
+            session_obj.timer = threading.Timer(DAAP_TIMEOUT,
+                                                self.daap_timeout_callback,
+                                                [s])
+            session_obj.counter = itertools.count()
+            self.activeconn[s].timer.start()
         return s
 
     def renew_session(self, s):
-        try:
-            self.activeconn[s].timer.cancel()
-        except KeyError:
-            return False
-        # Pants...  we need to create a new timer object.
-        self.activeconn[s].timer = threading.Timer(DAAP_TIMEOUT,
+        with self.session_lock:
+            try:
+                self.activeconn[s].timer.cancel()
+            except KeyError:
+                return False
+            # Pants...  we need to create a new timer object.
+            self.activeconn[s].timer = threading.Timer(DAAP_TIMEOUT,
                                                    self.daap_timeout_callback,
                                                    [s])
-        current_thread = threading.current_thread()
-        current_thread.generation = self.activeconn[s].counter.next()
-        self.activeconn[s].timer.start()
-        # OK, thank the caller for telling us the guy's alive
-        return True
+            current_thread = threading.current_thread()
+            current_thread.generation = self.activeconn[s].counter.next()
+            self.activeconn[s].timer.start()
+            # OK, thank the caller for telling us the guy's alive
+            return True
 
     def handle_error(self, request, client_address):
         pass
@@ -178,13 +177,14 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     def del_session(self, s):
         # maybe the guy tried to trick us by running /logout with no active
         # conn.
-        try:
-            self.activeconn[s].timer.cancel()
-            # XXX can't just delete? - need to keep a reference count for the
-            # connection, we can have data/control connection?
-            del self.activeconn[s]
-        except KeyError:
-            pass
+        with self.session_lock:
+            try:
+                self.activeconn[s].timer.cancel()
+                # XXX can't just delete? - need to keep a reference count 
+                # for the connection, we can have data/control connection?
+                del self.activeconn[s]
+            except KeyError:
+                pass
 
 class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.1'
