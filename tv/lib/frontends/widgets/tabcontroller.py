@@ -31,6 +31,7 @@
 """
 import math
 
+from miro import feed
 from miro import app
 from miro import prefs
 from miro import messages
@@ -427,6 +428,7 @@ class SourcesTab(widgetset.VBox):
 
     def _on_add_source(self, *args):
         url = self.source_entry.get_text()
+        url = feed.normalize_feed_url(url)
         if url:
             messages.NewGuide(url).send_to_backend()
             self.source_entry.set_text('')
