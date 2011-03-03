@@ -152,6 +152,8 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
                                                 self.daap_timeout_callback,
                                                 [s])
             session_obj.counter = itertools.count()
+            current_thread = threading.current_thread()
+            current_thread.generation = session_obj.counter.next()
             self.activeconn[s].timer.start()
         return s
 
