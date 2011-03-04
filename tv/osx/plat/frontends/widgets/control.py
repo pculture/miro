@@ -175,6 +175,8 @@ class MultilineTextEntry(Widget):
         self.view.setHorizontallyResizable_(NO)
         self.view.setVerticallyResizable_(YES)
         self.notifications = NotificationForwarder.create(self.view)
+        self.create_signal('changed')
+        self.create_signal('focus-out')
         if initial_text is not None:
             self.set_text(initial_text)
         self.set_size(widgetconst.SIZE_NORMAL)
