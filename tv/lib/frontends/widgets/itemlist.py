@@ -148,17 +148,6 @@ class DownloadRateSort(ItemSort):
         else:
             return -1
 
-class ProgressSort(ItemSort):
-# commented out in the map because I don't think it's used. delete?
-    KEY = 'progress'
-    def sort_key(self, info):
-        if info.state in ('downloading', 'paused'):
-            return float(info.download_info.downloaded_size) / info.size
-        elif not self.reverse:
-            return sys.maxint
-        else:
-            return -1
-
 class ArtistSort(ItemSort):
     KEY = 'artist'
     def sort_key(self, info):
@@ -228,7 +217,6 @@ SORT_KEY_MAP = {
     StatusSort.KEY:         StatusSort,
     ETASort.KEY:            ETASort,
     DownloadRateSort.KEY:   DownloadRateSort,
-#    ProgressSort.KEY:       ProgressSort,
     ArtistSort.KEY:         ArtistSort,
     AlbumSort.KEY:          AlbumSort,
     TrackSort.KEY:          TrackSort,
