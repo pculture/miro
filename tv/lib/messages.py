@@ -1213,6 +1213,7 @@ class ItemInfo(object):
         self.display_year = displaytext.integer(self.year)
         self.display_torrent_details = self.calc_torrent_details()
         self.display_drm = self.has_drm and _("Locked") or u""
+        # FIXME: display_kind changes here need also be applied in itemedit
         if self.kind == 'movie':
             self.display_kind = _("Movie")
         elif self.kind == 'show':

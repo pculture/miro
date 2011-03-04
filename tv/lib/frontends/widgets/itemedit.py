@@ -527,6 +527,14 @@ class VideoPanel(DialogPanel):
             NumberField('episode_number', self.items, _("Episode Number"),
                 width=15),
         ))
+        # FIXME: changes here need also be applied in messages
+        self.fields.append(OptionsField('kind', self.items, _("Video Kind"), [
+            (None, u""),
+            (u'movie', _("Movie")),
+            (u'show', _("Show")),
+            (u'clip', _("Clip")),
+            (u'podcast', _("Podcast")),
+        ]))
         for field in self.fields:
             field.set_label_width(120)
             self.vbox.pack_start(field.get_box(), padding=5)
