@@ -66,6 +66,7 @@ class DeviceTracker(object):
         # different
         volumes = set()
         for device in usbutils.connected_devices():
+            logging.debug('%s', str(device))
             volume = device['volume']
             volumes.add(volume)
             if volume not in self._connected:
@@ -89,6 +90,9 @@ class DeviceTracker(object):
                 None)
             device['size'] = total.value
             device['remaining'] = available.value
+        else:
+            device['future_mount'] = device['mount']
+            device['mount'] = None
 
         return device['volume'], device
 
@@ -96,7 +100,9 @@ class DeviceTracker(object):
         if device['volume'] not in self._connected:
             # device was removed
             return
-        if os.path.exists(device['mount']):
+        if os.path.exists(device['future_mount']):
+            device['mount'] = device['future_mount']
+            del device['future_mount']
             self._device_changed(device)
 	    return
         timer.add(0.5, self._check_device_mount, device)
