@@ -1074,7 +1074,8 @@ class _EmblemDrawer(object):
             self.text_color = self.UNPLAYED_TEXT_COLOR
             self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.emblem = 'unplayed'
-        elif self.info.downloaded and not self.info.video_watched:
+        elif (self.info.downloaded and not self.info.video_watched and
+                self.info.is_playable):
             self.text_color = self.UNPLAYED_TEXT_COLOR
             self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.text_bold = True
