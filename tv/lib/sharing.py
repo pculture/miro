@@ -821,6 +821,8 @@ class SharingManagerBackend(object):
                         # This request has already been satisfied by a more
                         # recent request.  Bye ...
                         if generation < transcode_obj.generation:
+                            logging.info('item %s transcode out of order',
+                                         itemid)
                             return None
                         if chunk is not None and transcode_obj.isseek(chunk):
                             need_create = True
