@@ -301,11 +301,6 @@ class ItemListController(object):
         self.list_item_view = self.views[list_view]
         self.standard_item_view = self.views[standard_view]
         
-        self.standard_view_count_label = widgetset.Label()
-        # FIXME: should make label text white once we have our new background.
-        self.widget.vbox[standard_view].pack_start(
-                widgetutil.align_right(self.standard_view_count_label,
-                    top_pad=6, bottom_pad=6, right_pad=20))
         standard_view_scroller = widgetset.Scroller(False, True)
         standard_view_scroller.add(standard_view_background)
         self.widget.vbox[standard_view].pack_start(
@@ -771,7 +766,7 @@ class ItemListController(object):
 
     def update_count_label(self):
         text = _("%(count)s items", {'count': self.item_list.get_count()})
-        self.standard_view_count_label.set_text(text)
+        # FIXME: need to have a place to put this text
 
     def on_items_will_change(self, added, changed, removed):
         """Called before we change the list.
