@@ -635,7 +635,7 @@ class DownloadsPanel(PanelBuilder):
         attach_boolean(cbx, prefs.USE_UPNP)
         vbox.pack_start(cbx, padding=4)
 
-        cbx = widgetset.Checkbox(_('Support trackerless torrents.  (DHT)'))
+        cbx = widgetset.Checkbox(_('Use DHT to find more peers'))
         attach_boolean(cbx, prefs.USE_DHT)
         vbox.pack_start(cbx, padding=4)
 
