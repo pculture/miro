@@ -498,7 +498,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     @classmethod
     def toplevel_view(cls):
-        return cls.make_view('feed_id IS NOT NULL')
+        return cls.make_view('feed_id IS NOT NULL AND '
+                             "feed.origURL != 'dtv:manualFeed'",
+                             joins={'feed': 'item.feed_id = feed.id'})
 
     @classmethod
     def feed_view(cls, feed_id):
