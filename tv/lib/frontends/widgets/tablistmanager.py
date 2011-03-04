@@ -174,6 +174,15 @@ class TabListManager(object):
             app.widgetapp.handle_soft_failure("handle_no_tabs_selected",
                     'first_iter is None', with_exception=False)
             return
+        info = model[iter][0]
+        if info.type == u'tab':
+            # hideable tab list, try to select the first child
+            iter = model.child_iter(iter)
+            if iter is None:
+                self.select_guide()
+                app.widgetapp.handle_soft_failure("handle_no_tabs_selected",
+                    'HideableTabList has no child', with_exception=False)
+                return
         self._select_from_tab_list(self.selected_tab_list, iter)
 
     def get_selection(self):
