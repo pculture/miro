@@ -95,6 +95,7 @@ class Field(object):
     :param readonly: Field cannot be edited
     :param multiple: keyword for common value function
     """
+    HAS_MIXED_STATE=False
     def __init__(self, field, items, label, readonly=False, multiple=None):
         self.mixed_values = False
         if multiple is None:
@@ -108,7 +109,7 @@ class Field(object):
         self.inside = False
         self.right = False
         self.widget = NotImplemented
-        if not readonly and len(items) > 1:
+        if not readonly and len(items) > 1 and not self.HAS_MIXED_STATE:
             self.checkbox = widgetset.Checkbox()
             if not self.mixed_values:
                 self.checkbox.set_checked(True)
@@ -273,6 +274,7 @@ class NumberField(Field):
 
 class OptionsField(Field):
     """A drop-down field with text options."""
+    HAS_MIXED_STATE=True
     def __init__(self, field, items, label, option_map):
         Field.__init__(self, field, items, label)
         labels = dict(option_map)
@@ -300,6 +302,7 @@ class ThumbnailField(DialogOwnerMixin, Field):
     """Displays any available cover art or thumbnail. Allows selection of a new
     cover art file.
     """
+    HAS_MIXED_STATE=True
     TITLE = _("Choose a thumbnail file")
     DIALOG = widgetset.FileOpenDialog
     def __init__(self, items, label):
