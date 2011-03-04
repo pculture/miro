@@ -214,70 +214,71 @@ def get_menu():
             Menu(_("_File"), "FileMenu", [
                     MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
                              groups=["NonPlaying"]),
-                    MenuItem(_("_Download Item"), "NewDownload",
+                    MenuItem(_("Download Item"), "NewDownload",
                              groups=["NonPlaying"]),
-                    MenuItem(_("_Import Media"), "ImportMedia",
+                    MenuItem(_("Import Media"), "ImportMedia",
                              groups=["NonPlaying"]),
-                    MenuItem(_("Check _Version"), "CheckVersion"),
+                    MenuItem(_("Check Version"), "CheckVersion"),
                     Separator(),
-                    MenuItem(_("_Remove Item"), "RemoveItems",
+                    MenuItem(_("Remove Item"), "RemoveItems",
                              groups=["LocalPlayablesSelected_PlayPause"],
-                             plural=_("_Remove Items")),
-                    MenuItem(_("_Edit Item"), "EditItem",
-                             groups=["LocalPlayableSelected"]),
-                    MenuItem(_("Save Item _As"), "SaveItem",
+                             plural=_("Remove Items")),
+                    MenuItem(_("Edit _Item"), "EditItems", Shortcut("i", MOD),
+                             groups=["LocalPlayablesSelected"],
+                             plural=_("Edit _Items")),
+                    MenuItem(_("_Save Item As"), "SaveItem",
                              Shortcut("s", MOD),
                              groups=["LocalPlayableSelected"],
-                             plural=_("Save Items _As")),
+                             plural=_("_Save Items As")),
                     MenuItem(_("Copy Item _URL"), "CopyItemURL",
                              Shortcut("u", MOD),
                              groups=["PlayableSelected_PlayPause"]),
                     Separator(),
-                    MenuItem(_("_Preferences"), "EditPreferences"),
+                    MenuItem(_("Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
                     ]),
 
             Menu(_("_Sidebar"), "SidebarMenu", [
-                    MenuItem(_("Add _Podcast"), "NewPodcast",
+                    MenuItem(_("Add Podcast"), "NewPodcast",
                              Shortcut("n", MOD),
                              groups=["NonPlaying"]),
                     MenuItem(_("Add Source"), "NewGuide",
                              groups=["NonPlaying"]),
-                    MenuItem(_("New Searc_h Podcast"), "NewSearchPodcast",
+                    MenuItem(_("New Search Podcast"), "NewSearchPodcast",
                              groups=["NonPlaying"]),
-                    MenuItem(_("New _Folder"), "NewPodcastFolder",
+                    MenuItem(_("_New Folder"), "NewPodcastFolder",
                              Shortcut("n", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("Re_name"), "RenameSomething",
+                    MenuItem(_("Rename"), "RenameSomething",
                              groups=["RenameAllowed"],
                              # groups=["PodcastOrFolderSelected", "SiteSelected"],
-                             feed=_("Re_name Podcast"),
-                             site=_("Re_name Source")),
-                    MenuItem(_("_Remove"), "RemoveSomething",
+                             feed=_("Rename Podcast"),
+                             site=_("Rename Source")),
+                    MenuItem(_("Remove"), "RemoveSomething",
                              groups=["RemoveAllowed"],
                              # groups=["PodcastsSelected", "SitesSelected"],
-                             feed=_("_Remove Podcast"),
-                             feeds=_("_Remove Podcasts"),
-                             folder=_("_Remove Folder"),
-                             folders=_("_Remove Folders"),
-                             site=_("_Remove Source"),
-                             sites=_("_Remove Sources")),
-                    MenuItem(_("_Update Podcast"), "UpdatePodcasts",
+                             feed=_("Remove Podcast"),
+                             feeds=_("Remove Podcasts"),
+                             folder=_("Remove Folder"),
+                             folders=_("Remove Folders"),
+                             site=_("Remove Source"),
+                             sites=_("Remove Sources")),
+                    MenuItem(_("Update Podcast"), "UpdatePodcasts",
                              (Shortcut("r", MOD), Shortcut(F5)),
                              groups=["PodcastsSelected"],
-                             plural=_("_Update Podcasts")),
-                    MenuItem(_("Update _All Podcasts and Library"),
+                             plural=_("Update Podcasts")),
+                    MenuItem(_("Update All Podcasts and Library"),
                               "UpdateAllPodcasts",
                              Shortcut("r", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("_Import Podcasts (OPML)"), "ImportPodcasts",
+                    MenuItem(_("Import Podcasts (OPML)"), "ImportPodcasts",
                              groups=["NonPlaying"]),
-                    MenuItem(_("E_xport Podcasts (OPML)"), "ExportPodcasts",
+                    MenuItem(_("Export Podcasts (OPML)"), "ExportPodcasts",
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("_Share with a Friend"), "SharePodcast",
+                    MenuItem(_("Share with a Friend"), "SharePodcast",
                              groups=["PodcastSelected"]),
                     MenuItem(_("Copy URL"), "CopyPodcastURL",
                              groups=["PodcastSelected"]),
@@ -287,42 +288,42 @@ def get_menu():
                     MenuItem(_("New _Playlist"), "NewPlaylist",
                              Shortcut("p", MOD),
                              groups=["NonPlaying"]),
-                    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",
+                    MenuItem(_("New Playlist Folder"), "NewPlaylistFolder",
                              Shortcut("p", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("Re_name Playlist"),"RenamePlaylist",
+                    MenuItem(_("Rename Playlist"),"RenamePlaylist",
                              groups=["PlaylistSelected"]),
-                    MenuItem(_("_Remove Playlist"),"RemovePlaylists",
+                    MenuItem(_("Remove Playlist"),"RemovePlaylists",
                              groups=["PlaylistsSelected"],
-                             plural=_("_Remove Playlists"),
-                             folders=_("_Remove Playlist Folders"),
-                             folder=_("_Remove Playlist Folder")),
+                             plural=_("Remove Playlists"),
+                             folders=_("Remove Playlist Folders"),
+                             folder=_("Remove Playlist Folder")),
                     ]),
 
             Menu(_("P_layback"), "PlaybackMenu", [
-                    MenuItem(_("_Play"), "PlayPauseItem",
+                    MenuItem(_("Play"), "PlayPauseItem",
                              groups=["PlayPause"],
-                             play=_("_Play"),
-                             pause=_("_Pause")),
-                    MenuItem(_("_Stop"), "StopItem", Shortcut("d", MOD),
+                             play=_("Play"),
+                             pause=_("Pause")),
+                    MenuItem(_("Stop"), "StopItem", Shortcut("d", MOD),
                              groups=["Playing"]),
                     Separator(),
-                    MenuItem(_("_Next Item"), "NextItem",
+                    MenuItem(_("Next Item"), "NextItem",
                              Shortcut(RIGHT_ARROW, MOD),
                              groups=["Playing"]),
-                    MenuItem(_("_Previous Item"), "PreviousItem",
+                    MenuItem(_("Previous Item"), "PreviousItem",
                              Shortcut(LEFT_ARROW, MOD),
                              groups=["Playing"]),
                     Separator(),
-                    MenuItem(_("Skip _Forward"), "FastForward",
+                    MenuItem(_("Skip Forward"), "FastForward",
                              groups=["Playing"]),
-                    MenuItem(_("Skip _Back"), "Rewind",
+                    MenuItem(_("Skip Back"), "Rewind",
                              groups=["Playing"]),
                     Separator(),
-                    MenuItem(_("Volume _Up"), "UpVolume",
+                    MenuItem(_("Volume Up"), "UpVolume",
                              Shortcut(UP_ARROW, MOD)),
-                    MenuItem(_("Volume _Down"), "DownVolume",
+                    MenuItem(_("Volume Down"), "DownVolume",
                              Shortcut(DOWN_ARROW,MOD)),
                     Separator(),
                     MenuItem(_("_Fullscreen"), "Fullscreen",
@@ -331,7 +332,7 @@ def get_menu():
                     MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach",
                              Shortcut("t", MOD),
                              groups=["PlayingVideo"]),
-                    Menu(_("S_ubtitles"), "SubtitlesMenu", [
+                    Menu(_("Subtitles"), "SubtitlesMenu", [
                             MenuItem(_("None Available"), "NoneAvailable",
                                      groups=["NeverEnabled"]),
                             Separator(),
@@ -344,10 +345,10 @@ def get_menu():
             Menu(_("_View"), "ViewMenu", _get_view_menu(),
                 groups=["ListView"]),
 
-            Menu(_("Convert"), "ConvertMenu", _get_convert_menu()),
+            Menu(_("_Convert"), "ConvertMenu", _get_convert_menu()),
 
             Menu(_("_Help"), "HelpMenu", [
-                    MenuItem(_("_About %(name)s",
+                    MenuItem(_("About %(name)s",
                                {'name': app.config.get(prefs.SHORT_APP_NAME)}),
                              "About")
                     ])
@@ -355,18 +356,18 @@ def get_menu():
 
     help_menu = mbar.get("HelpMenu")
     if app.config.get(prefs.DONATE_URL):
-        help_menu.append(MenuItem(_("_Donate"), "Donate"))
+        help_menu.append(MenuItem(_("Donate"), "Donate"))
 
     if app.config.get(prefs.HELP_URL):
-        help_menu.append(MenuItem(_("_Help"), "Help", Shortcut(F1)))
+        help_menu.append(MenuItem(_("Help"), "Help", Shortcut(F1)))
     help_menu.append(Separator())
     help_menu.append(MenuItem(_("Diagnostics"), "Diagnostics"))
     if app.config.get(prefs.BUG_REPORT_URL):
-        help_menu.append(MenuItem(_("Report a _Bug"), "ReportBug"))
+        help_menu.append(MenuItem(_("Report a Bug"), "ReportBug"))
     if app.config.get(prefs.TRANSLATE_URL):
-        help_menu.append(MenuItem(_("_Translate"), "Translate"))
+        help_menu.append(MenuItem(_("Translate"), "Translate"))
     if app.config.get(prefs.PLANET_URL):
-        help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
+        help_menu.append(MenuItem(_("Planet Miro"), "Planet"))
 
     if app.debugmode:
         dev_menu = Menu(_("Dev"), "DevMenu", [
@@ -496,9 +497,9 @@ def on_check_version():
 def on_remove_items():
     app.widgetapp.remove_items()
 
-@action_handler("EditItem")
-def on_rename_item():
-    app.widgetapp.edit_item()
+@action_handler("EditItems")
+def on_edit_items():
+    app.widgetapp.edit_items()
 
 @action_handler("SaveItem")
 def on_save_item():
