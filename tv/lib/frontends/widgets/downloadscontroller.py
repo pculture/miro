@@ -63,6 +63,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         titlebar.connect("resume-all", self._on_resume_all)
         titlebar.connect("cancel-all", self._on_cancel_all)
         titlebar.connect("settings", self._on_settings)
+        titlebar.switch_to_view(self.widget.selected_view)
         return titlebar
 
     def make_context_menu_handler(self):
