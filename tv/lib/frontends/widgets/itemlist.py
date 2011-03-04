@@ -206,28 +206,7 @@ class DateAddedSort(ItemSort):
 
 DEFAULT_SORT = ArtistSort(False)
 
-SORT_KEY_MAP = {
-    DateSort.KEY:           DateSort,
-    NameSort.KEY:           NameSort,
-    LengthSort.KEY:         LengthSort,
-    SizeSort.KEY:           SizeSort,
-    DescriptionSort.KEY:    DescriptionSort,
-    FeedNameSort.KEY:       FeedNameSort,
-    StatusCircleSort.KEY:   StatusCircleSort,
-    StatusSort.KEY:         StatusSort,
-    ETASort.KEY:            ETASort,
-    DownloadRateSort.KEY:   DownloadRateSort,
-    ArtistSort.KEY:         ArtistSort,
-    AlbumSort.KEY:          AlbumSort,
-    TrackSort.KEY:          TrackSort,
-    YearSort.KEY:           YearSort,
-    GenreSort.KEY:          GenreSort,
-    RatingSort.KEY:         RatingSort,
-    DRMSort.KEY:            DRMSort,
-    FileTypeSort.KEY:       FileTypeSort,
-    TorrentDetailsSort.KEY: TorrentDetailsSort,
-    DateAddedSort.KEY:      DateAddedSort,
-}
+SORT_KEY_MAP = dict((sort.KEY, sort) for sort in ItemSort.__subclasses__())
 
 class ItemList(object):
     """
