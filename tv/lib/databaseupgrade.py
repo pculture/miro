@@ -3174,3 +3174,7 @@ def upgrade149(cursor):
     cursor.execute("ALTER TABLE item ADD COLUMN episode_id text")
     cursor.execute("ALTER TABLE item ADD COLUMN episode_number integer")
     cursor.execute("ALTER TABLE item ADD COLUMN season_number integer")
+
+def upgrade150(cursor):
+    """Add Kind field (for Video categories)"""
+    cursor.execute("ALTER TABLE item ADD COLUMN kind text")

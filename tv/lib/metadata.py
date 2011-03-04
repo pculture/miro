@@ -59,6 +59,7 @@ class Source(object):
             episode_id = self.episode_id,
             episode_number = self.episode_number,
             season_number = self.season_number,
+            kind = self.kind,
         )
 
     def setup_new(self):
@@ -80,6 +81,7 @@ class Source(object):
         self.episode_id = None
         self.episode_number = None
         self.season_number = None
+        self.kind = None
         self.metadata_version = 0
 
     @returns_unicode
@@ -126,6 +128,7 @@ class Store(Source):
     set_episode_id = metadata_setter('episode_id', unicode)
     set_episode_number = metadata_setter('episode_number', int)
     set_season_number = metadata_setter('season_number', int)
+    set_kind = metadata_setter('kind', unicode)
 
     def set_cover_art(self, new_file, _bulk=False):
         """Set new cover art. Deletes any old cover art.
@@ -197,4 +200,5 @@ class Store(Source):
         episode_id = set_episode_id,
         episode_number = set_episode_number,
         season_number = set_season_number,
+        kind = set_kind,
     )
