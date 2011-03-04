@@ -1766,10 +1766,6 @@ class FeedlessDownloadStarted(FrontendMessage):
     """
     pass
 
-class MetadataProgressFinish(FrontendMessage):
-    def __init__(self, target):
-        self.target = target
-
 class MetadataProgressUpdate(FrontendMessage):
     def __init__(self, target, remaining, eta, total):
         self.target = target

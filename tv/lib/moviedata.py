@@ -145,32 +145,26 @@ class MovieDataUpdater(signals.SignalEmitter):
         return mediatype
 
     def update_progress(self, mediatype, device, add_or_remove):
-        if mediatype not in ('audio', 'video'):
-            # I don't think it's useful to show progress for "Other" items
+        if device:
+            target = (u'device', '%s-%s' % (device.id, mediatype))
+        elif mediatype in ('audio', 'video'):
+            target = (u'library', mediatype)
+        else: # mediatype 'other'
             return
-        target = device or mediatype
-        if device is None:
-            full_target = (u'library', target)
-        else:
-            full_target = (u'device', '%s-%s' % (target.id, mediatype))
 
-        self.total.setdefault(target, 0)
         if add_or_remove > 0: # add
+            self.total.setdefault(target, 0)
             self.total[target] += add_or_remove
-        total = self.total[target]
 
         self.remaining.setdefault(target, 0)
         self.remaining[target] += add_or_remove
-        remaining = self.remaining[target]
 
-        news = None
-        if remaining == 0:
-            news = models.messages.MetadataProgressFinish(full_target)
-        else:
-            news = models.messages.MetadataProgressUpdate(full_target,
-                   remaining, None, total)
-        if news is not None:
-            news.send_to_frontend()
+        if not self.remaining[target]:
+            self.total[target] = 0
+
+        update = models.messages.MetadataProgressUpdate(target,
+            self.remaining[target], None, self.total[target])
+        update.send_to_frontend()
 
     def thread_loop(self):
         while not self.in_shutdown:

@@ -108,36 +108,19 @@ class ProgressTrackingListMixin(object):
         else:
             self.mediatype = 'other'
 
-    def start_metadata_progress(self, remaining, eta, new):
+    def update_metadata_progress(self, remaining, eta, total):
         meter = self.widget.get_progress_meter()
-        if meter is None:
-            # got progress before widget
-            self.postponed = (remaining, eta, new)
-        else:
-            meter.set_mediatype(self.mediatype)
-            meter.start(eta, new)
+        if meter:
+            meter.update(self.mediatype, remaining, eta, total)
             self.postponed = None
-
-    def update_metadata_progress(self, remaining, eta, new):
-        meter = self.widget.get_progress_meter()
-        if meter is None:
-            self.start_metadata_progress(remaining, eta, new)
-        else:
-            meter.update(remaining, eta, new)
-
-    def finish_metadata_progress(self):
-        meter = self.widget.get_progress_meter()
-        if meter is None:
-            # progress started and ended before we had a widget
-            self.postponed = None
-        else:
-            meter.finish()
+        else: # got progress before widget created
+            self.postponed = (remaining, eta, total)
 
     def _init_widget(self):
         """Hook that handles any updates that were waiting for the widget."""
         super(ProgressTrackingListMixin, self)._init_widget()
-        if self.postponed is not None:
-            self.start_metadata_progress(*self.postponed)
+        if self.postponed:
+            self.update_metadata_progress(*self.postponed)
 
 class AnimationManager(object):
     """Base class for animations on item lists."""
@@ -1150,14 +1133,8 @@ class ItemListControllerManager(object):
         if self.displayed:
             self.controller_no_longer_displayed(self.displayed)
 
-    def finish_metadata_progress(self, target):
+    def update_metadata_progress(self, target, remaining, eta, total):
         if target not in self.controllers:
             # devices can have this process started without a controller
             return
-        self.controllers[target].finish_metadata_progress()
-
-    def update_metadata_progress(self, target, remaining, eta, new):
-        if target not in self.controllers:
-            # devices can have this process started without a controller
-            return
-        self.controllers[target].update_metadata_progress(remaining, eta, new)
+        self.controllers[target].update_metadata_progress(remaining, eta, total)

@@ -1210,11 +1210,6 @@ class ProgressToolbar(widgetset.HBox):
 
     Assumes current ETA is accurate; keeps track of its own elapsed
     time.  Displays progress as: elapsed / (elapsed + ETA)
-
-    Rather than have to send a message every time an item is found or
-    examined, we cheat a bit: the backend sends signals for batches of
-    items (currently 10), and we interpolate the current state based
-    on ETA.
     """
     def __init__(self):
         widgetset.HBox.__init__(self)
@@ -1228,11 +1223,11 @@ class ProgressToolbar(widgetset.HBox):
         self.total = None
         self.remaining = None
         self.mediatype = 'other'
+        self.displayed = False
         self.set_up = False
 
-    def setup(self):
+    def _display(self):
         if not self.set_up:
-            self.set_up = True
             padding = 380 - self.label.get_width()
             self.pack_start(
                 widgetutil.align(
@@ -1240,11 +1235,11 @@ class ProgressToolbar(widgetset.HBox):
                 expand=False)
             self.pack_start(widgetutil.align_left(
                             self.meter, 0, 0, 0, 200), expand=True)
+            self.set_up = True
+        if not self.displayed:
             self.label_widget.show()
             self.meter.show()
-
-    def set_mediatype(self, mediatype):
-        self.mediatype = mediatype
+            self.displayed = True
 
     def _update_label(self):
         # TODO: display eta
@@ -1260,24 +1255,19 @@ class ProgressToolbar(widgetset.HBox):
                     "{0} of {1}").format(*state)
         self.label.set_text(text)
 
-    def finish(self):
-        """Fast-forward through any remaining progress and then
-        hide.
-        """
-        self.update(0, 0.1, self.total)
-        # TODO: delay disappearance until bar finishes
-        self.label_widget.hide()
-        self.meter.hide()
-
-    def update(self, remaining, seconds, total):
-        """Correct an existing time estimate. Bar will wait for
-        progress to catch up to estimate rather than move backwards.
-        """
+    def update(self, mediatype, remaining, seconds, total):
+        """Update progress."""
+        self.mediatype = mediatype
         self.eta = seconds
         self.total = total
         self.remaining = remaining
-        self._update_label()
-        self.setup()
+        if total:
+            self._update_label()
+            self._display()
+        else:
+            self.label_widget.hide()
+            self.meter.hide()
+            self.displayed = False
 
 class ItemDetailsBackground(widgetset.Background):
     """Nearly white background behind the item details widget

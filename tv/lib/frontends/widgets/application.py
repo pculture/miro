@@ -1548,10 +1548,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.blink_tab("downloading")
 
-    def handle_metadata_progress_finish(self, message):
-        app.item_list_controller_manager.finish_metadata_progress(
-            message.target)
-
     def handle_metadata_progress_update(self, message):
         app.item_list_controller_manager.update_metadata_progress(
             message.target, message.remaining, message.eta, message.total)
