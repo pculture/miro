@@ -455,9 +455,23 @@ class DeviceSettingsWidget(widgetset.Background):
         widgetset.Background.__init__(self)
         self.boxes = {}
         self.device = None
-        audio_conversion_names = [_('Device Default'), _('Copy')]
+
+    def create_table(self):
+        self.remove()
+        def _get_conversion_name(id_):
+            if id_ == 'copy':
+                return _('Copy')
+            else:
+                return conversion_manager.lookup_converter(id_).name
+        conversion_details = {
+            'audio': _get_conversion_name(self.device.info.audio_conversion),
+            'video': _get_conversion_name(self.device.info.video_conversion)
+            }
+        audio_conversion_names = [_('Device Default (%(audio)s)',
+                                    conversion_details), _('Copy')]
         self.audio_conversion_values = [None, 'copy']
-        video_conversion_names = [_('Device Default'), _('Copy')]
+        video_conversion_names = [_('Device Default (%(video)s)',
+                                    conversion_details), _('Copy')]
         self.video_conversion_values = [None, 'copy']
         for section_name, converters in conversion_manager.get_converters():
             for converter in converters:
@@ -512,6 +526,7 @@ class DeviceSettingsWidget(widgetset.Background):
 
     def set_device(self, device):
         self.device = device
+        self.create_table()
         device_settings = device.database.get('settings', {})
         self.bulk_change = True
         for setting in 'name', 'video_path', 'audio_path':
