@@ -433,6 +433,7 @@ class StandardView(ItemView):
 
 class ListView(ItemView, SorterWidgetOwner):
     """TableView that displays a list of items using the list view."""
+    # FIXME: a unittest should verify that these exist for every possible field
     COLUMN_RENDERERS = {
         'state': style.StateCircleRenderer,
         'name': style.NameRenderer,
@@ -456,6 +457,7 @@ class ListView(ItemView, SorterWidgetOwner):
         'drm': style.DRMRenderer,
         'file-type': style.FileTypeRenderer,
         'show': style.ShowRenderer,
+        'kind': style.KindRenderer,
     }
     COLUMN_PADDING = 12
     def __init__(self, item_list,

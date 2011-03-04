@@ -1243,6 +1243,9 @@ class FileTypeRenderer(ListViewRendererText):
 class ShowRenderer(ListViewRendererText):
     attr_name = 'show'
 
+class KindRenderer(ListViewRendererText):
+    attr_name = 'display_kind'
+
 class ListViewRenderer(widgetset.InfoListRenderer):
     """Renderer for more complex list view columns.
 

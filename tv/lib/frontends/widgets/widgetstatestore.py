@@ -67,11 +67,12 @@ class WidgetStateStore(object):
         u'feed-name': 70,
         u'file-type': 70,
         u'genre': 65,
+        u'kind': 70,
         u'length': 60,
         u'name': 130,
         u'rate': 60,
         u'rating': 75,
-#        u'show': 70,
+        u'show': 70,
         u'size': 65,
         u'state': 20,
         u'status': 70,
@@ -129,7 +130,7 @@ class WidgetStateStore(object):
     AVAILABLE_COLUMNS['others'].extend(
         [u'date-added', u'drm', u'rating'])
     AVAILABLE_COLUMNS['search'].extend([u'rating'])
-    AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type']) # add 'show' when implemented
+    AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type', u'show', u'kind'])
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
     def __init__(self):

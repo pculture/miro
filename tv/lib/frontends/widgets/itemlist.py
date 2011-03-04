@@ -204,6 +204,16 @@ class DateAddedSort(ItemSort):
     def sort_key(self, info):
         return info.date_added
 
+class ShowSort(ItemSort):
+    KEY = 'show'
+    def sort_key(self, info):
+        return info.show
+
+class KindSort(ItemSort):
+    KEY = 'kind'
+    def sort_key(self, info):
+        return info.kind
+
 DEFAULT_SORT = ArtistSort(False)
 
 SORT_KEY_MAP = dict((sort.KEY, sort) for sort in ItemSort.__subclasses__())

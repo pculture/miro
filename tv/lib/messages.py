@@ -1213,6 +1213,16 @@ class ItemInfo(object):
         self.display_year = displaytext.integer(self.year)
         self.display_torrent_details = self.calc_torrent_details()
         self.display_drm = self.has_drm and _("Locked") or u""
+        if self.kind == 'movie':
+            self.display_kind = _("Movie")
+        elif self.kind == 'show':
+            self.display_kind = _("Show")
+        elif self.kind == 'clip':
+            self.display_kind = _("Clip")
+        elif self.kind == 'podcast':
+            self.display_kind = _("Podcast")
+        else:
+            self.display_kind = None
 
         if self.state == 'downloading':
             dl_info = self.download_info

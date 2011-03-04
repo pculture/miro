@@ -70,6 +70,7 @@ COLUMN_LABELS = {
     u'drm': _('DRM'),
     u'file-type': _('File Type'),
     u'show': _('Show'),
+    u'kind': _('Video Kind'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()
