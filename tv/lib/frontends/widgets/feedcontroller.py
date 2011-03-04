@@ -29,6 +29,7 @@
 
 """Controller for Feeds."""
 
+from miro.gtcache import gettext as _
 from miro import app
 from miro.gtcache import ngettext
 from miro import messages
@@ -72,6 +73,12 @@ class FeedController(itemlistcontroller.ItemListController,
         if not self.is_folder:
             self.widget.statusbar_vbox.pack_start(self._make_toolbar(feed_info))
 
+        # this only gets shown when the user is searching for things
+        # in the feed and there are no results.
+        text = _('No Results')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
+
     def build_standard_view(self, scroll_pos, selection):
         standard_view = itemlistwidgets.StandardView(
                 self.item_list, scroll_pos, selection, self.is_folder)
@@ -86,6 +93,13 @@ class FeedController(itemlistcontroller.ItemListController,
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
         self._update_counts()
+
+        # if the search has no results, we show the empty_mode
+        # which says "no results"
+        if self.item_list.get_count() == 0:
+            self.widget.set_list_empty_mode(True)
+        else:
+            self.widget.set_list_empty_mode(False)
 
     def _on_save_search(self, widget, search_text):
         info = widgetutil.get_feed_info(self.id)
