@@ -54,6 +54,7 @@ class FeedController(itemlistcontroller.ItemListController,
         self.titlebar = None
         itemlistcontroller.ItemListController.__init__(self, u'feed', id)
         itemlistcontroller.FilteredListMixin.__init__(self)
+        self.show_resume_playing_button = True
 
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()

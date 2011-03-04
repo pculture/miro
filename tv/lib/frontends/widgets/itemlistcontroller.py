@@ -229,6 +229,7 @@ class ItemListController(object):
         self._got_initial_list = False
         self._needs_scroll = None
         self._playing_items = False
+        self.show_resume_playing_button = False
         self.item_tracker = self.build_item_tracker()
         self._init_widget()
 
@@ -787,6 +788,8 @@ class ItemListController(object):
         self.update_count_label()
 
     def update_resume_button(self):
+        if not self.show_resume_playing_button:
+            return
         last_played_id = app.widget_state.get_last_played_item_id(self.type,
                 self.id)
         last_played = None
