@@ -139,40 +139,97 @@ class ProgressTrackingListMixin(object):
         if self.postponed is not None:
             self.start_metadata_progress(*self.postponed)
 
-class ThrobberManager(object):
-    """Helper class to handle updating throbber counts."""
-    TIMEOUT = 0.3
+class AnimationManager(object):
+    """Base class for animations on item lists."""
 
     def __init__(self, item_list, item_views):
+        self.currently_animating = set()
         self.item_list = item_list
         self.item_views = item_views
-        self.current_ids = set()
 
-    def add(self, item_id):
-        """Add an item to be managed."""
-        if item_id not in self.current_ids:
-            self.current_ids.add(item_id)
-            timer.add(self.TIMEOUT, self.update_throbber, item_id)
+    def start(self, item_info):
+        if item_info.id not in self.currently_animating:
+            self.currently_animating.add(item_info.id)
+            self.start_animation(item_info)
+            timer.add(self.initial_delay(item_info), self._do_iteration,
+                    item_info.id, self.repeat_delay(item_info))
 
-    def update_throbber(self, item_id):
+    def _do_iteration(self, item_id, repeat_delay):
         try:
-            info = self.item_list.get_item(item_id)
+            item_info = self.item_list.get_item(item_id)
         except KeyError:
-            # item no longer in model, forget about it
-            self.current_ids.discard(item_id)
+            # item was deleted from model
+            self.currently_animating.remove(item_id)
             return
-        if info.state != 'downloading':
-            self.current_ids.discard(item_id)
-            return
-
-        self.item_list.update_throbber(item_id)
+        rv = self.continue_animation(item_info)
+        if rv != False:
+            timer.add(repeat_delay, self._do_iteration, item_id, repeat_delay)
+        else:
+            self.currently_animating.remove(item_id)
+            self.finish_animation(item_info)
         for view in self.item_views:
             view.model_changed()
-        timer.add(self.TIMEOUT, self.update_throbber, item_id)
+
+    def initial_delay(self, item_info):
+        """Delay between calls to start_animation() and continue_animation()
+        """
+        raise NotImplementedError()
+
+    def repeat_delay(self, item_info):
+        """Delay between additional continue_animation() calls"""
+        raise NotImplementedError()
+
+    def start_animation(self, item_info):
+        """Begin the animation for an item."""
+        pass
+
+    def continue_animation(self, item_info):
+        """Continue the animation.  Return False to stop."""
+        pass
+
+    def finish_animation(self, item_info):
+        """Finish the animation"""
+        pass
+
+
+class ThrobberAnimationManager(AnimationManager):
+    def initial_delay(self, item_info):
+        return 0.3
+
+    def repeat_delay(self, item_info):
+        return 0.3
+
+    def continue_animation(self, item_info):
+        if item_info.state == 'downloading':
+            self.item_list.update_throbber(item_info.id)
+        else:
+            self.item_list.finish_throbber(item_info.id)
+            return False
+
+class KeepAnimationManager(AnimationManager):
+    FADE_DELAY = 0.5
+    FADE_LENGTH = 1.0
+
+    def initial_delay(self, item_info):
+        return self.FADE_DELAY
+
+    def total_length(self, item_info):
+        return self.FADE_LENGTH
+
+    def repeat_delay(self, item_info):
+        return 0.1
+
+    def start_animation(self, item_info):
+        self.item_list.start_keep_animation(item_info.id)
+
+    def continue_animation(self, item_info):
+        animation_done = self.item_list.update_keep_animation(item_info.id,
+                self.FADE_DELAY, self.FADE_LENGTH)
+        return not animation_done
 
 class ItemListController(object):
     """Base class for controllers that manage list of items.
-    
+
     :attribute widget: Container widget used to display this controller
     :attribute views: The ListView and StandardView objects
     """
@@ -197,7 +254,9 @@ class ItemListController(object):
         self.initialize_search()
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
-        self.throbber_manager = ThrobberManager(self.item_list,
+        self.throbber_manager = ThrobberAnimationManager(self.item_list,
+                self.all_item_views())
+        self.keep_animation_manager = KeepAnimationManager(self.item_list,
                 self.all_item_views())
 
     def get_item_list(self):
@@ -551,8 +610,8 @@ class ItemListController(object):
         app.widget_state.set_scroll_position(
                 self.type, self.id, view_type, scroll_pos)
 
-    def on_throbber_drawn(self, signaler, item_id):
-        self.throbber_manager.add(item_id)
+    def on_throbber_drawn(self, signaler, item_info):
+        self.throbber_manager.start(item_info)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
@@ -576,6 +635,7 @@ class ItemListController(object):
             messages.CancelDownload(item_info.id).send_to_backend()
         elif name == 'keep':
             messages.KeepVideo(item_info.id).send_to_backend()
+            self.keep_animation_manager.start(item_info)
         elif name == 'stop_seeding':
             messages.StopUpload(item_info.id).send_to_backend()
         elif name == 'start_seeding':

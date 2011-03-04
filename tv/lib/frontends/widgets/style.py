@@ -244,7 +244,7 @@ class ItemRendererSignals(signals.SignalEmitter):
     it's set as a property of ItemRenderer
 
     signals:
-        throbber-drawn (obj, item_id) -- a progress throbber was drawn
+        throbber-drawn (obj, item_info) -- a progress throbber was drawn
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'throbber-drawn')
@@ -332,6 +332,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     CURRENTLY_PLAYING_TEXT = _("Currently Playing")
     NEWLY_AVAILABLE_TEXT = _("Newly Available")
     KEEP_TEXT = _("Keep")
+    SAVED_TEXT = _("Saved")
     REMOVE_TEXT = _("Remove")
     STOP_SEEDING_TEXT = _("Stop seeding")
     PLAYLIST_REMOVE_TEXT = _('Remove from playlist')
@@ -362,7 +363,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'keep', 'keep-pressed', 'menu', 'menu-pressed', 'pause',
                 'pause-pressed', 'play', 'play-pressed', 'remove',
                 'remove-playlist', 'remove-playlist-pressed',
-                'remove-pressed', 'status-icon-alert', 'newly-cap',
+                'remove-pressed', 'saved', 'status-icon-alert', 'newly-cap',
                 'newly-middle', 'progress-left-cap', 'progress-middle',
                 'progress-right-cap', 'progress-throbber-left-1',
                 'progress-throbber-left-2', 'progress-throbber-left-3',
@@ -621,7 +622,21 @@ class ItemRenderer(widgetset.InfoListRenderer):
         if self.info.expiration_date:
             expire_rect = cellpack.LayoutRect(button_x, expire_y, rect.width,
                     button_height)
-            self.layout_expire(layout, layout_manager, expire_rect)
+            text = displaytext.expiration_date(self.info.expiration_date)
+            image = self._make_image_button('keep', 'keep')
+            hotspot = 'keep'
+            self.layout_expire(layout, layout_manager, expire_rect, text,
+                    image, hotspot)
+            self.expire_background_alpha = 1.0
+        elif self.attrs.get('keep-animation-alpha', 0) > 0:
+            expire_rect = cellpack.LayoutRect(button_x, expire_y, rect.width,
+                    button_height)
+            text = self.SAVED_TEXT
+            image = self.images['saved']
+            hotspot = None
+            self.layout_expire(layout, layout_manager, expire_rect, text,
+                    image, hotspot)
+            self.expire_background_alpha = self.attrs['keep-animation-alpha']
 
     def add_remove_button(self, layout, x, y):
         """Add the remove button to a layout.
@@ -631,7 +646,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         """
         self._add_image_button(layout, x, y, 'remove', 'delete')
 
-    def layout_expire(self, layout, layout_manager, rect):
+    def layout_expire(self, layout, layout_manager, rect, text, image, hotspot):
         # create a new Layout for the 2 elements
         expire_layout = cellpack.Layout()
         # add the background now so that it's underneath everything else.  We
@@ -642,22 +657,19 @@ class ItemRenderer(widgetset.InfoListRenderer):
         # create text for the emblem
         layout_manager.set_font(self.EMBLEM_FONT_SIZE)
         layout_manager.set_text_color(self.EXPIRING_TEXT_COLOR)
-        textbox = layout_manager.textbox(displaytext.expiration_date(
-            self.info.expiration_date))
+        textbox = layout_manager.textbox(text)
         # add text.  completely break the bounds of our layout rect and
         # position the text to the left of our rect
         text_width, text_height = textbox.get_size()
         text_x = rect.x - self.EMBLEM_TEXT_PAD_START - text_width
         expire_layout.add(text_x, 0, text_width, text_height, textbox.draw)
         # add button
-        button_rect = self._add_image_button(expire_layout, rect.x, 0, 'keep',
-                'keep')
+        button_rect = expire_layout.add_image(image, rect.x, 0, hotspot)
         # now we can position the background, draw it to the middle of the
         # button.
         background_rect.x = text_x - self.EMBLEM_TEXT_PAD_END
         background_rect.width = (rect.x - background_rect.x +
                 button_rect.width // 2)
-
         # middle align everything and add it to layout
         expire_layout.center_y(top=rect.y, bottom=rect.bottom)
         layout.merge(expire_layout)
@@ -806,11 +818,14 @@ class ItemRenderer(widgetset.InfoListRenderer):
             layout.add_text_line(databox, rect.x, y, rect.width)
             y += line_height
 
-    def _add_image_button(self, layout, x, y, image_name, hotspot_name):
+    def _make_image_button(self, image_name, hotspot_name):
         if self.hotspot != hotspot_name:
-            image = self.images[image_name]
+            return self.images[image_name]
         else:
-            image = self.images[image_name + '-pressed']
+            return self.images[image_name + '-pressed']
+
+    def _add_image_button(self, layout, x, y, image_name, hotspot_name):
+        image = self._make_image_button(image_name, hotspot_name)
         return layout.add_image(image, x, y, hotspot=hotspot_name)
 
     def draw_background(self, context, x, y, width, height):
@@ -889,10 +904,12 @@ class ItemRenderer(widgetset.InfoListRenderer):
         middle_image = self.images['expiring-middle']
         cap_image = self.images['expiring-cap']
         # draw the cap at the left
-        cap_image.draw(context, x, y, cap_image.width, cap_image.height)
+        cap_image.draw(context, x, y, cap_image.width, cap_image.height,
+                fraction=self.expire_background_alpha)
         # repeat the middle to be as long as we need.
         middle_image.draw(context, x + cap_image.width, y,
-                width - cap_image.width, middle_image.height)
+                width - cap_image.width, middle_image.height,
+                fraction=self.expire_background_alpha)
 
     def draw_progress_bar(self, context, x, y, width, height):
         if (self.info.download_info.downloaded_size > 0 and
@@ -927,7 +944,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         index = throbber_count % len(self.progress_throbber_surfaces)
         surface = self.progress_throbber_surfaces[index]
         surface.draw(context, x, y, width)
-        self.signals.emit('throbber-drawn', self.info.id)
+        self.signals.emit('throbber-drawn', self.info)
 
 class _EmblemDrawer(object):
     """Layout and draw emblems
