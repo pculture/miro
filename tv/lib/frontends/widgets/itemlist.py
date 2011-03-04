@@ -106,7 +106,7 @@ class StatusCircleSort(ItemSort):
             return 1 # downloading
         elif info.downloaded and not info.video_watched:
             return 2 # unwatched
-        elif not info.info_viewed and not info.expiration_date:
+        elif not info.item_viewed and not info.expiration_date:
             return 0 # new
         else:
             return 3 # other
@@ -121,7 +121,7 @@ class StatusSort(ItemSort):
         elif info.expiration_date:
             # the tuple here creates a subsort on expiration_date
             return (4, info.expiration_date) # expiring
-        elif not info.info_viewed:
+        elif not info.item_viewed:
             return (0, ) # new
         else:
             return (1, ) # other
