@@ -975,6 +975,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def expire(self):
         self.confirm_db_thread()
         self._remove_from_playlists()
+        self.resumeTime = 0
         if not self.is_external():
             self.delete_files()
             self.delete_external_metadata()

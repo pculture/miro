@@ -740,12 +740,14 @@ class ItemListController(object):
     def _playback_will_stop(self, playback_manager):
         self._on_playback_change(playback_manager)
         self._playing_items = False
+        self.update_resume_button()
 
     def _playback_will_play(self, playback_manager, duration):
         if self._playing_items:
             item = playback_manager.get_playing_item()
             app.widget_state.set_last_played_item_id(self.type, self.id,
                     item.id)
+            self.update_resume_button()
 
     def start_bulk_change(self):
         for item_view in self.all_item_views():
@@ -793,7 +795,8 @@ class ItemListController(object):
                 last_played = self.item_list.model.get_info(last_played_id)
             except KeyError:
                 pass
-        if (last_played is None or not last_played.is_playable):
+        if (last_played is None or not last_played.is_playable or
+                self._playing_items):
             self.titlebar.update_resume_button(None)
         else:
             if last_played.resume_time > 0:
