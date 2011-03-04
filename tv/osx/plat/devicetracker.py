@@ -76,7 +76,7 @@ class DeviceTracker(object):
         FSEventStreamStart(self.stream)
 
         for volume in diskutil('list', '').VolumesFromDisks:
-            self._disk_mounted(volume)
+            self._disk_mounted('/Volumes/%s' % volume.encode('utf8'))
 
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
@@ -94,7 +94,7 @@ class DeviceTracker(object):
             return
         if volume_info.BusProtocol != 'USB':
             return # don't care about non-USB devices
-        volume = volume_info.MountPoint
+        real_volume = volume_info.MountPoint
         disk_info = diskutil('info', volume_info.ParentWholeDisk)
         if not disk_info:
             logging.debug('unknown device connected @ %r' % volume)
@@ -104,7 +104,7 @@ class DeviceTracker(object):
         self._mounted_volumes.add(volume)
         app.device_manager.device_connected(volume,
                                             name=device_name,
-                                            mount=volume + '/',
+                                            mount=real_volume + '/',
                                             size=volume_info.TotalSize,
                                             remaining=volume_info.FreeSpace)
 
