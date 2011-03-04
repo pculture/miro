@@ -158,6 +158,87 @@ class BoxedIconDrawer(widgetset.DrawingArea):
         widgetutil.round_rect(context, 0.5, 0.5, 40, 40, 3)
         context.stroke()
 
+class ResumePlaybackButton(widgetset.CustomButton):
+    FONT_SIZE = 0.8
+    TEXT_PADDING_LEFT = 5
+    TEXT_PADDING_RIGHT = 5
+
+    def __init__(self):
+        widgetset.CustomButton.__init__(self)
+        self.button = imagepool.get_surface(resources.path(
+            'images/resume-playback-button.png'))
+        self.button_pressed = imagepool.get_surface(resources.path(
+            'images/resume-playback-button-pressed.png'))
+        self.title_middle = imagepool.get_surface(resources.path(
+            'images/resume-playback-title-middle.png'))
+        self.title_right = imagepool.get_surface(resources.path(
+            'images/resume-playback-title-right.png'))
+        self.title = self.resume_time = None
+        self.non_text_width = (self.button.width + self.title_right.width +
+                self.TEXT_PADDING_LEFT + self.TEXT_PADDING_RIGHT)
+
+    def update(self, title, resume_time):
+        self.title = title
+        self.resume_time = resume_time
+        self.queue_redraw()
+
+    def _make_text(self, title, resume_time):
+        if resume_time > 0:
+            resume_text = displaytext.short_time_string(resume_time)
+            return _("Resume %(item)s at %(resumetime)s",
+                    {"item": title, "resumetime": resume_text})
+        else:
+            return _("Resume %(item)s", {"item": title})
+
+    def size_request(self, layout_manager):
+        if self.title is None:
+            return (0, 0)
+        layout_manager.set_font(self.FONT_SIZE)
+        # request enough space to show at least a little text
+        text = self._make_text("ABCDEF", 123)
+        text_size = layout_manager.textbox(text).get_size()
+        width = text_size[0] + self.non_text_width
+        return (width, self.button.height)
+
+    def draw(self, context, layout_manager):
+        if self.title is None:
+            return
+        if self.state == 'pressed':
+            left = self.button_pressed
+        else:
+            left = self.button
+
+        # make textbox
+        textbox = self.make_textbox(layout_manager, context.width -
+                self.non_text_width)
+        # size and layout things
+        text_width, text_height = textbox.get_size()
+        total_width = text_width + self.non_text_width
+        text_y = (self.button.height - text_height) // 2
+        text_x = self.button.width + self.TEXT_PADDING_LEFT
+        # draw the backgorund
+        surface = widgetutil.ThreeImageSurface()
+        surface.set_images(left, self.title_middle, self.title_right)
+        surface.draw(context, 0, 0, total_width)
+        # draw text
+        textbox.draw(context, text_x, text_y, text_width, text_height)
+
+    def make_textbox(self, layout_manager, max_width):
+        layout_manager.set_font(self.FONT_SIZE)
+        textbox = layout_manager.textbox(self._make_text(self.title,
+            self.resume_time))
+        if textbox.get_size()[0] <= max_width:
+            return textbox
+        # our title is to big to fit.  shrink it until it's small enough
+        for cut_off_count in xrange(4, len(self.title)):
+            title = self.title[:-cut_off_count] + '...'
+            textbox = layout_manager.textbox(self._make_text(title,
+                self.resume_time))
+            if textbox.get_size()[0] <= max_width:
+                return textbox
+        # we shouldn't get here, but as a fallback, use a blank title
+        return layout_manager.textbox(self._make_text('', self.resume_time))
+
 class ItemListTitlebar(widgetset.Background):
     """Titlebar for feeds, playlists and static tabs that display
     items.
@@ -187,11 +268,12 @@ class ItemListTitlebar(widgetset.Background):
             else:
                 hbox.pack_end(extra)
         hbox.pack_end(self._build_view_toggle())
-        self.resume_button = widgetset.Button(_("Resume foo at x:yz"))
+        self.resume_button = ResumePlaybackButton()
         self.resume_button.connect('clicked', self._on_resume_button_clicked)
         self.resume_button_holder = widgetutil.HideableWidget(
-                widgetutil.pad(self.resume_button, right=10))
-        hbox.pack_end(widgetutil.align_middle(self.resume_button_holder))
+                widgetutil.pad(self.resume_button, left=10))
+        hbox.pack_end(widgetutil.align_middle(self.resume_button_holder),
+                expand=True)
 
         self.filters = {}
 
@@ -208,7 +290,7 @@ class ItemListTitlebar(widgetset.Background):
         context.rectangle(0, 1, context.width, context.height)
         context.gradient_fill(gradient)
 
-    def update_resume_button(self, text):
+    def update_resume_button(self, text, resume_time):
         """Update the resume button text.
 
         If text is None, we will hide the resume button.  Otherwise we
@@ -217,7 +299,7 @@ class ItemListTitlebar(widgetset.Background):
         if text is None:
             self.resume_button_holder.hide()
         else:
-            self.resume_button.set_text(text)
+            self.resume_button.update(text, resume_time)
             self.resume_button_holder.show()
 
     def _build_titlebar_start(self):

@@ -797,18 +797,10 @@ class ItemListController(object):
                 pass
         if (last_played is None or not last_played.is_playable or
                 self._playing_items):
-            self.titlebar.update_resume_button(None)
+            self.titlebar.update_resume_button(None, None)
         else:
-            if last_played.resume_time > 0:
-                resumetime = displaytext.short_time_string(
-                        last_played.resume_time)
-                text = _("Resume %(item)s at %(resumetime)s",
-                        {"item": util.clamp_text(last_played.name),
-                         "resumetime": resumetime})
-            else:
-                text = _("Resume %(item)s",
-                        {"item": util.clamp_text(last_played.name)})
-            self.titlebar.update_resume_button(text)
+            self.titlebar.update_resume_button(last_played.name,
+                    last_played.resume_time)
 
     def update_count_label(self):
         text = _("%(count)s items", {'count': self.item_list.get_count()})
