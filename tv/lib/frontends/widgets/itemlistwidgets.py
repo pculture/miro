@@ -1435,13 +1435,13 @@ class ItemDetailsWidget(widgetset.VBox):
     PADDING_ABOVE_TITLE = 25
     PADDING_ABOVE_DESCRIPTION = 8
     PADDING_ABOVE_EXTRA_INFO = 25
-    IMAGE_SIZE = (215, 215)
+    IMAGE_SIZE = (165, 165)
     TEXT_COLOR = (0.176, 0.176, 0.176)
     TITLE_SIZE = 1.1
     EXTRA_INFO_SIZE = 0.85
     # give enough room to display the image, plus some more for the
-    # scrollbars
-    EXPANDED_HEIGHT = 240
+    # scrollbars and the expander
+    EXPANDED_HEIGHT = 190
 
     def __init__(self):
         widgetset.VBox.__init__(self)
@@ -1517,11 +1517,43 @@ class ItemDetailsWidget(widgetset.VBox):
 
     def set_info(self, info):
         self.title_label.set_text(info.name)
-        self.description_label.set_text(info.description_stripped[0])
+        self.description_label.set_text(self._calc_description(info))
         self.set_extra_info_text(info)
         image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
         self.image_widget.set_image(image)
         self.set_label_widths()
+
+    def _calc_description(self, info):
+        parts = []
+        if (info.download_info and info.download_info.torrent
+                and info.state in ('downloading', 'uploading')):
+            if info.seeders is None:
+                connections = seeders = leechers = down_rate = up_rate = 0
+                ratio = _("N/A")
+            else:
+                connections = info.connections
+                seeders = info.seeders
+                leechers = info.leechers
+                down_rate = displaytext.download_rate(info.down_rate)
+                up_rate = displaytext.download_rate(info.up_rate)
+                ratio = "%0.2f" % info.up_down_ratio
+            down_total = displaytext.size_string(info.down_total)
+            up_total = displaytext.size_string(info.up_total)
+            lines = (
+                (_('connected peers:'), connections),
+                (_('seeders:'), seeders),
+                (_('leechers:'), leechers),
+                (_('upload rate:'), up_rate),
+                (_('upload total:'), up_total),
+                (_('download rate:'), down_rate),
+                (_('download total:'), down_total),
+                (_('upload/download ratio:'), ratio))
+            for line in lines:
+                # FIXME: should make the values horizontally aligned
+                parts.append("%s %s\n" % line)
+            parts.append("\n")
+        parts.append(info.description_stripped[0])
+        return ''.join(parts)
 
     def set_extra_info_text(self, info):
         parts = []

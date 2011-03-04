@@ -786,6 +786,7 @@ class ItemListController(object):
         self.send_model_changed()
         self.update_resume_button()
         self.update_count_label()
+        self.update_item_details()
 
     def update_resume_button(self):
         if not self.show_resume_playing_button:
