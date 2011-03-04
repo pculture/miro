@@ -440,19 +440,34 @@ class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
         self.view = item.Item.watchable_view()
         DatabaseSourceTrackerBase.__init__(self)
 
-class VideoItemsTracker(DatabaseSourceTrackerBase):
-    type = u'videos'
-    id = u'videos'
+class PreferencedItemsTracker(DatabaseSourceTrackerBase):
+
     def __init__(self):
-        self.view = item.Item.watchable_video_view()
+        self.view = self.view_func(app.config.get(self.pref))
+        app.backend_config_watcher.connect_weak('changed',
+                                                self.on_config_changed)
         DatabaseSourceTrackerBase.__init__(self)
 
-class AudioItemsTracker(DatabaseSourceTrackerBase):
+    def on_config_changed(self, obj, key, value):
+        if key == self.pref.key:
+            self.view = self.view_func(value)
+            for source in self.trackers:
+                source.disconnect_all()
+            self.trackers = []
+            self.add_callbacks()
+            self.send_initial_list()
+
+class VideoItemsTracker(PreferencedItemsTracker):
+    type = u'videos'
+    id = u'videos'
+    pref = prefs.SHOW_PODCASTS_IN_VIDEO
+    view_func = item.Item.watchable_video_view
+
+class AudioItemsTracker(PreferencedItemsTracker):
     type = u'music'
     id = u'music'
-    def __init__(self):
-        self.view = item.Item.watchable_audio_view()
-        DatabaseSourceTrackerBase.__init__(self)
+    pref = prefs.SHOW_PODCASTS_IN_MUSIC
+    view_func = item.Item.watchable_audio_view
 
 class OtherItemsTracker(DatabaseSourceTrackerBase):
     type = u'others'
@@ -595,16 +610,34 @@ class OthersCountTracker(CountTracker):
     def make_message(self, count):
         return messages.OthersCountChanged(count)
 
-class NewVideoCountTracker(CountTracker):
+class PreferencedCountTracker(CountTracker):
+    def __init__(self):
+        CountTracker.__init__(self)
+        self.signal_handler = app.backend_config_watcher.connect(
+            'changed', self.on_config_changed)
+
     def get_view(self):
-        return item.Item.unique_new_video_view()
+        return self.view_func(app.config.get(self.pref))
+
+    def stop_tracking(self):
+        app.backend_config_watcher.disconnect(self.signal_handler)
+
+    def on_config_changed(self, obj, key, value):
+        if key == self.pref.key:
+            CountTracker.stop_tracking(self)
+            CountTracker.__init__(self)
+            self.send_message()
+
+class NewVideoCountTracker(PreferencedCountTracker):
+    view_func = item.Item.unique_new_video_view
+    pref = prefs.SHOW_PODCASTS_IN_VIDEO
 
     def make_message(self, count):
         return messages.NewVideoCountChanged(count)
 
-class NewAudioCountTracker(CountTracker):
-    def get_view(self):
-        return item.Item.unique_new_audio_view()
+class NewAudioCountTracker(PreferencedCountTracker):
+    view_func = item.Item.unique_new_audio_view
+    pref = prefs.SHOW_PODCASTS_IN_MUSIC
 
     def make_message(self, count):
         return messages.NewAudioCountChanged(count)

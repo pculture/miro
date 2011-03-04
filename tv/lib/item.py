@@ -479,22 +479,34 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def unique_new_video_view(cls):
-        return cls.make_view("NOT item.seen AND "
-                "item.file_type='video' AND "
-                "((is_file_item AND NOT deleted) OR "
-                "(rd.main_item_id=item.id AND "
-                "rd.state in ('finished', 'uploading', 'uploading-paused')))",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+    def unique_new_video_view(cls, include_podcasts=False):
+        query = ("NOT item.seen AND "
+                 "item.file_type='video' AND "
+                 "((is_file_item AND NOT deleted) OR "
+                 "(rd.main_item_id=item.id AND "
+                 "rd.state in ('finished', 'uploading', 'uploading-paused')))")
+        joins = {'remote_downloader AS rd': 'item.downloader_id=rd.id'}
+        if not include_podcasts:
+            query = query + (" AND (feed_id IS NULL OR "
+                             "feed.origURL == 'dtv:manualFeed' OR "
+                             "is_file_item)")
+            joins['feed'] = 'feed_id = feed.id'
+        return cls.make_view(query, joins=joins)
 
     @classmethod
-    def unique_new_audio_view(cls):
-        return cls.make_view("NOT item.seen AND "
-                "item.file_type='audio' AND "
-                "((is_file_item AND NOT deleted) OR "
-                "(rd.main_item_id=item.id AND "
-                "rd.state in ('finished', 'uploading', 'uploading-paused')))",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+    def unique_new_audio_view(cls, include_podcasts=False):
+        query = ("NOT item.seen AND "
+                 "item.file_type='audio' AND "
+                 "((is_file_item AND NOT deleted) OR "
+                 "(rd.main_item_id=item.id AND "
+                 "rd.state in ('finished', 'uploading', 'uploading-paused')))")
+        joins = {'remote_downloader AS rd': 'item.downloader_id=rd.id'}
+        if not include_podcasts:
+            query = query + (" AND (feed_id IS NULL OR "
+                             "feed.origURL == 'dtv:manualFeed' OR "
+                             "is_file_item)")
+            joins['feed'] = 'feed_id = feed.id'
+        return cls.make_view(query, joins=joins)
 
     @classmethod
     def toplevel_view(cls):
@@ -585,12 +597,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
-    def watchable_video_view(cls):
-        return cls.make_view(
-            "not isContainerItem AND "
-            "(deleted IS NULL or not deleted) AND "
-            "(is_file_item OR rd.main_item_id=item.id) AND "
-            "item.file_type='video'",
+    def watchable_video_view(cls, include_podcasts=False):
+        query = ("not isContainerItem AND "
+                 "(deleted IS NULL or not deleted) AND "
+                 "(is_file_item OR rd.main_item_id=item.id) AND "
+                 "item.file_type='video'")
+        if not include_podcasts:
+            query = query + (" AND (feed_id IS NULL OR "
+                             "feed.origURL == 'dtv:manualFeed' OR "
+                             "is_file_item)")
+        return cls.make_view(query,
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
@@ -605,12 +621,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def watchable_audio_view(cls):
-        return cls.make_view(
-            "not isContainerItem AND "
-            "(deleted IS NULL or not deleted) AND "
-            "(is_file_item OR rd.main_item_id=item.id) AND "
-            "item.file_type='audio'",
+    def watchable_audio_view(cls, include_podcasts=False):
+        query = ("not isContainerItem AND "
+                 "(deleted IS NULL or not deleted) AND "
+                 "(is_file_item OR rd.main_item_id=item.id) AND "
+                 "item.file_type='audio'")
+        if not include_podcasts:
+            query = query + (" AND (feed_id IS NULL OR "
+                             "feed.origURL == 'dtv:manualFeed' OR "
+                             "is_file_item)")
+        return cls.make_view(query,
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 

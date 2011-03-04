@@ -112,6 +112,8 @@ SHARE_DISCOVERABLE          = Pref(key='ShareDiscoverable',     default=True, pl
 SHARE_NAME                  = Pref(key='ShareName',             default="Miro Share", platformSpecific=False)
 SHARE_WARN_ON_QUIT          = Pref(key='ShareWarnOnQuit',       default=True, platformSpecific=False)
 MUSIC_TAB_CLICKED           = Pref(key='musicTabClicked',       default=False, platformSpecific=False)
+SHOW_PODCASTS_IN_VIDEO      = Pref(key='showPodcastsInVideo', default=True, platformSpecific=False)
+SHOW_PODCASTS_IN_MUSIC      = Pref(key='showPodcastsInMusic', default=False, platformSpecific=False)
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
 SHOW_ERROR_DIALOG           = Pref(key='showErrorDialog',       default=True,  platformSpecific=True)
 

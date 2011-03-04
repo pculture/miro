@@ -453,6 +453,20 @@ class GeneralPanel(PanelBuilder):
 
 class PodcastsPanel(PanelBuilder):
     def build_widget(self):
+        grid = dialogwidgets.ControlGrid()
+
+        cbx = widgetset.Checkbox(_('Show videos from podcasts in the Videos '
+                                   'section.'))
+        attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_VIDEO)
+        grid.pack(cbx)
+        grid.end_line(spacing=2)
+
+        cbx = widgetset.Checkbox(_('Show audio from podcasts in the Music '
+                                   'section.'))
+        attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_MUSIC)
+        grid.pack(cbx)
+        grid.end_line(spacing=12)
+
         cc_options = [(1440, _("Every day")),
                       (60, _("Every hour")),
                       (30, _("Every 30 minutes")),
@@ -478,7 +492,6 @@ class PodcastsPanel(PanelBuilder):
         attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT,
             [op[0] for op in max_options])
 
-        grid = dialogwidgets.ControlGrid()
         grid.pack(dialogwidgets.heading(
                 _("Default settings for new podcasts:")),
                 grid.ALIGN_LEFT, span=2)
