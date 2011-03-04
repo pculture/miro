@@ -431,9 +431,17 @@ cdef class InfoList:
 
     def set_attr(self, id_, name, value):
         self.attributes.set_attr(id_, name, value)
+        self._send_node_changed(id_)
 
     def unset_attr(self, id_, name):
         self.attributes.unset_attr(id_, name)
+        self._send_node_changed(id_)
+
+    def _send_node_changed(self, id_):
+        cdef InfoListNode* node
+
+        infolistplat_will_change_nodes(self.nodelist)
+        infolistplat_node_changed(self.nodelist, self._fetch_node(id_))
 
     def get_attr(self, id_, name):
         return self.attributes.get_attr(id_, name)

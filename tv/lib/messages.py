@@ -1261,6 +1261,7 @@ class DownloadInfo(object):
     """
     def __init__(self, downloader):
         self.downloaded_size = downloader.get_current_size()
+        self.total_size = downloader.get_total_size()
         self.rate = downloader.get_rate()
         self.state = downloader.get_state()
         self.startup_activity = downloader.get_startup_activity()

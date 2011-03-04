@@ -868,13 +868,10 @@ class TableView(Widget):
             offset +=  _disclosure_button_width + EXPANDER_PADDING
         return offset
 
-    def on_row_change(self, model, iter, old_row):
+    def on_row_change(self, model, iter):
         self.iters_to_update.append(iter)
         if not self.fixed_height:
-            old_height = calc_row_height(self.tableview, old_row)
-            new_height = calc_row_height(self.tableview, self.model[iter])
-            if new_height != old_height:
-                self.height_changed = True
+            self.height_changed = True
         if self.tableview.hotspot_tracker is not None:
             self.tableview.hotspot_tracker.update_hit()
 

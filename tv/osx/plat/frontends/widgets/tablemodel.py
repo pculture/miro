@@ -150,14 +150,12 @@ class TableModelBase(signals.SignalEmitter):
         return dict((name, row[index]) for name, index in attr_map.items())
 
     def update_value(self, iter, index, value):
-        old_row = list(iter.value().values)
         iter.value().values[index] = value
-        self.emit('row-changed', iter, old_row)
+        self.emit('row-changed', iter)
 
     def update(self, iter, *column_values):
-        old_row = list(iter.value().values)
         iter.value().update_values(column_values)
-        self.emit('row-changed', iter, old_row)
+        self.emit('row-changed', iter)
 
     def remove(self, iter):
         self.emit('structure-will-change')
@@ -323,6 +321,16 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
     def change_sort(self, *args, **kwargs):
         self.emit('structure-will-change')
         infolist.InfoList.change_sort(self, *args, **kwargs)
+
+    def set_attr(self, id_, name, value):
+        infolist.InfoList.set_attr(self, id_, name, value)
+        row = self.index_of_id(id_)
+        self.emit('row-changed', row)
+
+    def unset_attr(self, id_, name):
+        infolist.InfoList.unset_attr(self, id_, name)
+        row = self.index_of_id(id_)
+        self.emit('row-changed', row)
 
     def iter_for_row(self, tableview, row):
         if 0 <= row < len(self):

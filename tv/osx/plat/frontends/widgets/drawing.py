@@ -70,8 +70,6 @@ class ImageSurface:
             NSBezierPath.fillRect_(dest_rect)
             current_context.restoreGraphicsState()
 
-        context.path.removeAllPoints()
-
     def _calc_pattern_phase(self, context, x, y):
         """Calculate the pattern phase to draw tiled images.
 

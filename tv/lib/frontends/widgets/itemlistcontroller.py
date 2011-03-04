@@ -55,6 +55,7 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
+from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 
 class ItemListDragHandler(object):
@@ -138,6 +139,37 @@ class ProgressTrackingListMixin(object):
         if self.postponed is not None:
             self.start_metadata_progress(*self.postponed)
 
+class ThrobberManager(object):
+    """Helper class to handle updating throbber counts."""
+    TIMEOUT = 0.3
+
+    def __init__(self, item_list, item_views):
+        self.item_list = item_list
+        self.item_views = item_views
+        self.current_ids = set()
+
+    def add(self, item_id):
+        """Add an item to be managed."""
+        if item_id not in self.current_ids:
+            self.current_ids.add(item_id)
+            timer.add(self.TIMEOUT, self.update_throbber, item_id)
+
+    def update_throbber(self, item_id):
+        try:
+            info = self.item_list.get_item(item_id)
+        except KeyError:
+            # item no longer in model, forget about it
+            self.current_ids.discard(item_id)
+            return
+        if info.state != 'downloading':
+            self.current_ids.discard(item_id)
+            return
+
+        self.item_list.update_throbber(item_id)
+        for view in self.item_views:
+            view.model_changed()
+        timer.add(self.TIMEOUT, self.update_throbber, item_id)
+
 class ItemListController(object):
     """Base class for controllers that manage list of items.
     
@@ -165,6 +197,8 @@ class ItemListController(object):
         self.initialize_search()
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
+        self.throbber_manager = ThrobberManager(self.item_list,
+                self.all_item_views())
 
     def get_item_list(self):
         return self.item_tracker.item_list
@@ -294,6 +328,8 @@ class ItemListController(object):
             self.on_scroll_position_changed, list_view)
         self.standard_item_view.connect_weak('scroll-position-changed',
             self.on_scroll_position_changed, standard_view)
+        self.standard_item_view.renderer.signals.connect_weak(
+                'throbber-drawn', self.on_throbber_drawn)
 
     def set_view(self, _widget, view):
         if view == self.selected_view:
@@ -313,6 +349,9 @@ class ItemListController(object):
     def get_current_item_view(self):
         return self.views[self.selected_view]
     current_item_view = property(get_current_item_view)
+
+    def all_item_views(self):
+        return self.views.values()
 
     def build_widget(self):
         """Build the container widget for this controller."""
@@ -516,6 +555,9 @@ class ItemListController(object):
         app.widget_state.set_scroll_position(
                 self.type, self.id, view_type, scroll_pos)
 
+    def on_throbber_drawn(self, signaler, item_id):
+        self.throbber_manager.add(item_id)
+
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
             return self.handle_delete()
@@ -653,7 +695,7 @@ class ItemListController(object):
         # The currently playing item has changed, redraw the view to
         # change which item gets the "currently playing" badge.
         if self._playing_items:
-            for item_view in self.views.values():
+            for item_view in self.all_item_views():
                 item_view.queue_redraw()
 
     def _playback_will_stop(self, playback_manager):
@@ -667,11 +709,11 @@ class ItemListController(object):
                     item.id)
 
     def start_bulk_change(self):
-        for item_view in self.views.values():
+        for item_view in self.all_item_views():
             item_view.start_bulk_change()
 
     def send_model_changed(self):
-        for item_view in self.views.values():
+        for item_view in self.all_item_views():
             item_view.model_changed()
 
     def handle_items_will_change(self, obj, added, changed, removed):

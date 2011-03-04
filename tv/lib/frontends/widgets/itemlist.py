@@ -288,6 +288,9 @@ class ItemList(object):
         """Get the number of items in this list that are hidden."""
         return len(self._hidden_items)
 
+    def get_item(self, id):
+        return self.model.get_info(id)
+
     def get_items(self, start_id=None):
         """Get a list of ItemInfo objects in this list"""
         rv = self.model.info_list()
@@ -339,11 +342,15 @@ class ItemList(object):
             pass
 
     def update_throbber(self, item_id):
+        """Update the throbber count for an item.
+
+        raises a KeyError if item_id is not in the model.
+        """
         try:
-            counter = self.model.get_attr(item_id, 'throbber-value', 0)
+            counter = self.model.get_attr(item_id, 'throbber-value')
         except KeyError:
-            return
-        counter = self.model.set_attr(item_id, 'throbber-value', counter + 1)
+            counter = 0
+        self.model.set_attr(item_id, 'throbber-value', counter + 1)
 
     def _insert_items(self, to_add):
         if len(to_add) == 0:

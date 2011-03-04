@@ -37,6 +37,7 @@ import os
 from miro import app
 from miro import displaytext
 from miro import prefs
+from miro import signals
 from miro import util
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
@@ -235,6 +236,19 @@ class FakeDownloadInfo(object):
         self.rate = 0
         self.downloaded_size = 0
 
+class ItemRendererSignals(signals.SignalEmitter):
+    """Signal emitter for ItemRenderer.
+
+    We could make ItemRenderer subclass SignalEmitter, but since it comes from
+    widgetset that seems awkward.  Instead, this class handles the signals and
+    it's set as a property of ItemRenderer
+
+    signals:
+        throbber-drawn (obj, item_id) -- a progress throbber was drawn
+    """
+    def __init__(self):
+        signals.SignalEmitter.__init__(self, 'throbber-drawn')
+
 class ItemRenderer(widgetset.InfoListRenderer):
     # dimensions
     MIN_WIDTH = 600
@@ -318,6 +332,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
 
     def __init__(self, display_channel=True):
         widgetset.InfoListRenderer.__init__(self)
+        self.signals = ItemRendererSignals()
         self.display_channel = display_channel
         self.selected = False
         self.setup_images()
@@ -343,7 +358,12 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'remove-playlist', 'remove-playlist-pressed',
                 'remove-pressed', 'status-icon-alert', 'newly-cap',
                 'newly-middle', 'progress-left-cap', 'progress-middle',
-                'progress-right-cap', 'progress-track', 'resume-cap',
+                'progress-right-cap', 'progress-throbber-left-1',
+                'progress-throbber-left-2', 'progress-throbber-left-3',
+                'progress-throbber-middle-1', 'progress-throbber-middle-2',
+                'progress-throbber-middle-3', 'progress-throbber-right-1',
+                'progress-throbber-right-2', 'progress-throbber-right-3',
+                'progress-track', 'resume-cap',
                 'resume-middle', 'selected-background-left',
                 'selected-background-middle', 'selected-background-right',
                 'time-left', 'ul-speed', 'unplayed-cap', 'unplayed-middle', ]
@@ -356,6 +376,15 @@ class ItemRenderer(widgetset.InfoListRenderer):
         # download-arrow is a shared icon.  It doesn't have the same prefix.
         self.images['download-arrow'] = imagepool.get_surface(
                 resources.path('images/download-arrow.png'))
+        # setup progress throbber stages
+        self.progress_throbber_surfaces = []
+        for i in xrange(3):
+            left = self.images['progress-throbber-left-%d' % (i + 1)]
+            middle = self.images['progress-throbber-middle-%d' % (i + 1)]
+            right = self.images['progress-throbber-right-%d' % (i + 1)]
+            surface = widgetutil.ThreeImageSurface()
+            surface.set_images(left, middle, right)
+            self.progress_throbber_surfaces.append(surface)
 
     def get_size(self, style, layout_manager):
         return self.MIN_WIDTH, self.HEIGHT
@@ -852,8 +881,17 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 width - cap_image.width, middle_image.height)
 
     def draw_progress_bar(self, context, x, y, width, height):
+        if (self.info.download_info.downloaded_size > 0 and
+                self.info.download_info.total_size < 0):
+            # The download has started and we don't know the total size.  Draw
+            # a progress throbber.
+            self.draw_progress_throbber(context, x, y, width, height)
+            return
         if self.info.size == 0:
-            # should draw throbber
+            # We don't know the size yet, but we aren't sure that we won't in
+            # a bit.  Probably we are starting up a download and haven't
+            # gotten anything back from the server.  Don't draw the progress
+            # bar or the throbber, just leave eerything blank.
             return
         progress_ratio = (float(self.info.download_info.downloaded_size) /
                 self.info.size)
@@ -869,6 +907,13 @@ class ItemRenderer(widgetset.InfoListRenderer):
         left.draw(context, x, y, left_width, height)
         middle.draw(context, x + left.width, y, middle_width, height)
         right.draw(context, x + width - right.width, y, right_width, height)
+
+    def draw_progress_throbber(self, context, x, y, width, height):
+        throbber_count = self.attrs.get('throbber-value', 0)
+        index = throbber_count % len(self.progress_throbber_surfaces)
+        surface = self.progress_throbber_surfaces[index]
+        surface.draw(context, x, y, width)
+        self.signals.emit('throbber-drawn', self.info.id)
 
 class _EmblemDrawer(object):
     """Layout and draw emblems
