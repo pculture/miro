@@ -1199,7 +1199,7 @@ class EmptyListDescription(widgetset.Alignment):
         self.label = widgetset.Label(text)
         self.label.set_color((0.8, 0.8, 0.8))
         self.label.set_wrap(True)
-        self.label.set_size_request(250, -1)
+        self.label.set_size_request(550, -1)
         self.add(self.label)
 
 class ProgressToolbar(widgetset.HBox):
