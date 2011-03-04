@@ -323,6 +323,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     DOWN_TOTAL_TEXT = _("Down Total")
     UP_DOWN_RATIO_TEXT = _("Up/Down Ratio")
     DOWNLOAD_TEXT = _("Download")
+    DOWNLOAD_TO_MY_MIRO_TEXT = _("Download to My Miro")
     DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
     ERROR_TEXT = _("Error")
     CANCEL_TEXT = _("Cancel")
@@ -565,21 +566,29 @@ class ItemRenderer(widgetset.InfoListRenderer):
         self.add_extra_button(layout, layout_manager, extra_button_rect)
 
     def add_extra_button(self, layout, layout_manager, rect):
-        if (self.info.download_info and
-                self.info.download_info.state == 'uploading'):
-            text = self.STOP_SEEDING_TEXT
-            hotspot = 'stop_seeding'
-        elif self.info.pending_auto_dl:
-            text = self.CANCEL_TEXT
-            hotspot = 'cancel_auto_download'
-        else:
+        button_info = self.calc_extra_button()
+        if button_info is None:
             return
+        else:
+            text, hotspot = button_info
         layout_manager.set_font(self.EMBLEM_FONT_SIZE)
         button = layout_manager.button(text, pressed=(self.hotspot==hotspot),
                     style='webby')
         button_rect = layout.add_image(button, rect.x, 0, hotspot)
         # middle-align the button
         button_rect.y = rect.y + ((rect.height - button_rect.height) // 2)
+
+    def calc_extra_button(self):
+        """Calculate the button to put to the right of the emblem.
+
+        :returns: (text, hotspot_name) tuple, or None
+        """
+        if (self.info.download_info and
+                self.info.download_info.state == 'uploading'):
+            return (self.STOP_SEEDING_TEXT, 'stop_seeding')
+        elif self.info.pending_auto_dl:
+            return (self.CANCEL_TEXT, 'cancel_auto_download')
+        return None
 
     def layout_right(self, layout, layout_manager, rect):
         # calculate positioning for the buttons.  There's a couple issues
@@ -1128,6 +1137,17 @@ class _EmblemDrawer(object):
 class PlaylistItemRenderer(ItemRenderer):
     def add_remove_button(self, layout, x, y):
         self._add_image_button(layout, x, y, 'remove-playlist', 'remove')
+
+class SharingItemRenderer(ItemRenderer):
+    def calc_extra_button(self):
+        return self.DOWNLOAD_TO_MY_MIRO_TEXT, 'download-sharing-item'
+
+class DeviceItemRenderer(ItemRenderer):
+    DOWNLOAD_SHARING_ITEM_TEXT = _("Download to My Miro")
+
+    def calc_extra_button(self):
+        return self.DOWNLOAD_TO_MY_MIRO_TEXT, 'download-device-item'
+
 
 # Renderers for the list view
 class ListViewRendererText(widgetset.InfoListRendererText):

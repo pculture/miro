@@ -34,13 +34,8 @@ from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import style
 
 class SharingStandardView(itemlistwidgets.StandardView):
-    def __init__(self, item_list, scroll_pos, selection, playlist_id):
-        itemlistwidgets.StandardView.__init__(self, item_list,
-                scroll_pos, selection)
-        self.playlist_id = playlist_id
-
     def build_renderer(self):
-        return style.ItemRenderer(display_channel=False)
+        return style.SharingItemRenderer(display_channel=False)
 
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know
@@ -57,8 +52,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         return None
 
     def build_standard_view(self, scroll_pos, selection):
-        return SharingStandardView(self.item_list, scroll_pos, selection,
-                self.id)
+        return SharingStandardView(self.item_list, scroll_pos, selection)
 
     def handle_delete(self):
         pass
