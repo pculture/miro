@@ -80,11 +80,8 @@ class FeedController(itemlistcontroller.ItemListController,
                 itemlistwidgets.EmptyListHeader(text))
 
     def build_standard_view(self, scroll_pos, selection):
-        standard_view = itemlistwidgets.StandardView(
-                self.item_list, scroll_pos, selection, self.is_folder)
-        background = widgetset.SolidBackground((1, 1, 1))
-        background.add(standard_view)
-        return standard_view, background
+        return itemlistwidgets.StandardView(self.item_list, scroll_pos,
+                selection, self.is_folder)
 
     def check_for_empty_list(self):
         # TODO: should we do something here?

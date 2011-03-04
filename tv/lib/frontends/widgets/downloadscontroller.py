@@ -70,10 +70,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         return itemcontextmenu.ItemContextMenuHandler()
 
     def build_standard_view(self, scroll_pos, selection):
-        standard_view = StandardView(self.item_list, scroll_pos, selection)
-        background = widgetset.SolidBackground((1, 1, 1))
-        background.add(standard_view)
-        return standard_view, background
+        return StandardView(self.item_list, scroll_pos, selection)
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)

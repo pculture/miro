@@ -291,8 +291,11 @@ class ItemListController(object):
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, standard_view)
         selection = app.widget_state.get_selection(self.type, self.id)
-        components = self.build_standard_view(scroll_pos, selection)
-        self.views[standard_view], standard_view_widget = components
+        standard_view_widget = self.build_standard_view(scroll_pos, selection)
+        self.views[standard_view] = standard_view_widget
+        standard_view_background = widgetset.SolidBackground(
+                standard_view_widget.BACKGROUND_COLOR)
+        standard_view_background.add(standard_view_widget)
 
         # set up member attrs to easily get our list/standard view widgets
         self.list_item_view = self.views[list_view]
@@ -304,7 +307,7 @@ class ItemListController(object):
                 widgetutil.align_right(self.standard_view_count_label,
                     top_pad=6, bottom_pad=6, right_pad=20))
         standard_view_scroller = widgetset.Scroller(False, True)
-        standard_view_scroller.add(standard_view_widget)
+        standard_view_scroller.add(standard_view_background)
         self.widget.vbox[standard_view].pack_start(
                 standard_view_scroller, expand=True)
         self.views[standard_view].set_scroller(standard_view_scroller)
@@ -359,10 +362,8 @@ class ItemListController(object):
 
     def build_standard_view(self, scroll_pos, selection):
         """Build the standard view widget for this controller.
-        Return value must be a tuple of:
-        (StandardView object, container)
-        If the StandardView is not in a container (e.g. a background), the
-        container should equal the StandardView.
+
+        :returns: StandardView object
         """
         raise NotImplementedError()
 
@@ -835,9 +836,8 @@ class SimpleItemListController(ItemListController):
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
     def build_standard_view(self, scroll_pos, selection):
-        standard_view = itemlistwidgets.StandardView(
-                self.item_list, scroll_pos, selection, self.display_channel)
-        return standard_view, standard_view
+        return itemlistwidgets.StandardView(self.item_list, scroll_pos,
+                selection, self.display_channel)
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.ItemListTitlebar()

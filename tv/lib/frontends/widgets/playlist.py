@@ -151,9 +151,8 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         return PlaylistSort(initial_items=self.item_list.get_items())
 
     def build_standard_view(self, scroll_pos, selection):
-        standard_view = PlaylistStandardView(self.item_list,
-                scroll_pos, selection, self.id)
-        return standard_view, standard_view
+        return PlaylistStandardView(self.item_list, scroll_pos, selection,
+                self.id)
 
     def on_items_will_change(self, added, changed, removed):
         sorter = self.item_list.get_sort()

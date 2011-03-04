@@ -57,9 +57,8 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         return None
 
     def build_standard_view(self, scroll_pos, selection):
-        standard_view = SharingStandardView(self.item_list,
-                scroll_pos, selection, self.id)
-        return standard_view, standard_view
+        return SharingStandardView(self.item_list, scroll_pos, selection,
+                self.id)
 
     def handle_delete(self):
         pass

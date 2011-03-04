@@ -664,14 +664,10 @@ class Scroller(Bin):
 
     def place_children(self):
         if self.child is not None:
+            scroll_view_size = self.view.contentView().frame().size
             child_width, child_height = self.child.get_size_request()
-            child_width = max(child_width, self.view.contentView().frame().size.width)
-            # FIXME: in 46b4702, Luc says we don't want to expand child_height
-            # to fill our frame.  I don't really understand what's going on
-            # here.  As a hack for now, if we have a manual size request, at
-            # least make the child big enough to fill that
-            if self.manual_size_request is not None:
-                child_height = max(child_height, self.manual_size_request[1])
+            child_width = max(child_width, scroll_view_size.width)
+            child_height = max(child_height, scroll_view_size.height)
             frame = NSRect(NSPoint(0,0), NSSize(child_width, child_height))
             if isinstance(self.child, tableview.TableView) and self.child.is_showing_headers():
                 # Hack to allow the content of a table view to scroll, but not

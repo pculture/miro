@@ -411,6 +411,7 @@ class StandardView(ItemView):
     """TableView that displays a list of items using the standard
     view.
     """
+    BACKGROUND_COLOR = (0.15, 0.15, 0.15)
 
     draws_selection = False
 
@@ -425,7 +426,7 @@ class StandardView(ItemView):
         self.add_column(self.column)
         self.set_show_headers(False)
         self.set_auto_resizes(True)
-        self.set_background_color((0.15, 0.15, 0.15))
+        self.set_background_color(self.BACKGROUND_COLOR)
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
