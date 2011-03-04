@@ -347,16 +347,16 @@ class PathField(DialogOwnerMixin, Field):
     DIALOG = NotImplemented
     TITLE = NotImplemented
 
-    def __new__(cls, field, items, label):
+    def __new__(cls, field, items, label, readonly=False):
         if cls != PathField:
-            return Field.__new__(cls, field, items, label)
+            return Field.__new__(cls, field, items, label, readonly)
         if len(items) > 1:
-            return MultipleFilePathField(field, items, label)
+            return MultipleFilePathField(field, items, label, readonly)
         else:
-            return SingleFilePathField(field, items, label)
+            return SingleFilePathField(field, items, label, readonly)
 
-    def __init__(self, field, items, label):
-        Field.__init__(self, field, items, label)
+    def __init__(self, field, items, label, readonly):
+        Field.__init__(self, field, items, label, readonly=readonly)
         DialogOwnerMixin.__init__(self, self.DIALOG, self.TITLE,
                                   default=self.common_value)
         label = widgetset.Label(self.common_value)
@@ -369,9 +369,10 @@ class PathField(DialogOwnerMixin, Field):
             height = 25
         # have to set height and width or gtk will make it very small
         self.widget.set_size_request(440, height)
-        button = widgetset.Button(_("Move"))
-        button.connect('clicked', self.show_dialog)
-        self.extra.append(button)
+        if not readonly:
+            button = widgetset.Button(_("Move"))
+            button.connect('clicked', self.show_dialog)
+            self.extra.append(button)
 
 class SingleFilePathField(PathField):
     """A field for choosing a file."""
@@ -499,7 +500,7 @@ class GeneralPanel(DialogPanel):
 
     def _pack_bottom(self):
         """Pack the bottom row into the VBox."""
-        bottom = [PathField('video_path', self.items, _("Path"))]
+        bottom = [PathField('video_path', self.items, _("Path"), readonly=True)]
         self.vbox.pack_start(widgetutil.pad(widgetset.HLine(), top=25, bottom=10,
             left=15, right=15))
         for field in bottom:
