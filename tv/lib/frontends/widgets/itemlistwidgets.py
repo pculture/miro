@@ -413,7 +413,7 @@ class StandardView(ItemView):
     """TableView that displays a list of items using the standard
     view.
     """
-    BACKGROUND_COLOR = (0.15, 0.15, 0.15)
+    BACKGROUND_COLOR = (0.05, 0.10, 0.15)
 
     draws_selection = False
 

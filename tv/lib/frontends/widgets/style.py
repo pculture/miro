@@ -360,9 +360,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'dl-stats-selected-right-cap', 'download-pause',
                 'download-pause-pressed', 'download-resume',
                 'download-resume-pressed', 'download-stop',
-                'download-stop-pressed', 'expiring-cap', 'expiring-middle',
-                'keep', 'keep-pressed', 'menu', 'menu-pressed', 'pause',
-                'pause-pressed', 'play', 'play-pressed', 'remove',
+                'download-stop-pressed', 'drm-middle', 'drm-cap',
+                'expiring-cap', 'expiring-middle', 'failed-middle',
+                'failed-cap', 'keep', 'keep-pressed', 'menu', 'menu-pressed',
+                'pause', 'pause-pressed', 'play', 'play-pressed', 'remove',
                 'remove-playlist', 'remove-playlist-pressed',
                 'remove-pressed', 'saved', 'status-icon-alert', 'newly-cap',
                 'newly-middle', 'progress-left-cap', 'progress-middle',
@@ -371,7 +372,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'progress-throbber-middle-1', 'progress-throbber-middle-2',
                 'progress-throbber-middle-3', 'progress-throbber-right-1',
                 'progress-throbber-right-2', 'progress-throbber-right-3',
-                'progress-track', 'resume-cap',
+                'progress-track', 'queued-middle', 'queued-cap', 'resume-cap',
                 'resume-middle', 'selected-background-left',
                 'selected-background-middle', 'selected-background-right',
                 'time-left', 'ul-speed', 'unplayed-cap', 'unplayed-middle', ]
@@ -1081,25 +1082,28 @@ class _EmblemDrawer(object):
         self.text_bold = False
 
         if self.info.has_drm:
+            # FIXME need a new emblem for this
             self.text_bold = True
             self.text = _('DRM locked')
             self.text_color = self.UNPLAYED_TEXT_COLOR
             self.text_shadow = self.UNPLAYED_TEXT_SHADOW
-            self.emblem = 'unplayed' # FIXME need a new emblem for this
+            self.emblem = 'drm'
         elif (self.info.download_info
                 and self.info.download_info.state == 'failed'):
+            # FIXME need colors for this
             self.text_color = self.UNPLAYED_TEXT_COLOR
             self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.text_bold = True
             self.image = self.images['status-icon-alert']
             self.text = u"%s-%s" % (self.ERROR_TEXT,
                     self.info.download_info.short_reason_failed)
-            self.emblem = 'unplayed' # FIXME need a new emblem for this
+            self.emblem = 'failed'
         elif self.info.pending_auto_dl:
+            # FIXME need colors for this
             self.text_color = self.UNPLAYED_TEXT_COLOR
             self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.text = self.QUEUED_TEXT
-            self.emblem = 'unplayed' # FIXME need a new emblem for this
+            self.emblem = 'queued'
         elif (self.info.downloaded
                 and app.playback_manager.is_playing_id(self.info.id)):
             self.text = self.CURRENTLY_PLAYING_TEXT
