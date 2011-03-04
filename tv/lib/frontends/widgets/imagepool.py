@@ -54,7 +54,8 @@ class ImagePool(util.Cache):
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
             image = broken_image
-        if size is not None:
+        if (size is not None and image.width > size[0] and
+                image.height > size[1]):
             if size[0] * size[1] == 0:
                 image = broken_image
             image = image.resize_for_space(*size)

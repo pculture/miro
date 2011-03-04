@@ -255,6 +255,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     HEIGHT = 145
     RIGHT_WIDTH = 90
     RIGHT_WIDTH_DOWNLOAD_MODE = 115
+    IMAGE_WIDTH = 180
     CORNER_RADIUS = 5
     EMBLEM_HEIGHT = 20
     EMBLEM_AREA_HEIGHT = 36 # contains the emblem + the button next to it
@@ -262,7 +263,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
 
     # padding/spacing
     PADDING = (15, 15, 5, 5)
-    PADDING_BACKGROUND = (4, 6, 4, 6)
+    PADDING_BACKGROUND = (5, 5, 4, 6)
     PADDING_INNER = (20, 15, 23, 15)
     PADDING_MIDDLE_RIGHT = 15
     TEXT_SPACING_Y = 3
@@ -276,7 +277,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     # colors
     GRADIENT_TOP = css_to_color('#ffffff')
     GRADIENT_BOTTOM = css_to_color('#dfdfdf')
-    SEPARATOR_COLOR = css_to_color('#cacaca')
+    THUMBNAIL_SEPARATOR_COLOR = widgetutil.BLACK
     ITEM_TITLE_COLOR = (0.2, 0.2, 0.2)
     DOWNLOAD_INFO_COLOR = widgetutil.WHITE
     DOWNLOAD_INFO_COLOR_UNEM = (0.2, 0.2, 0.2)
@@ -449,8 +450,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         total_rect = cellpack.LayoutRect(0, 0, width, height)
         background_rect = total_rect.subsection(*self.PADDING)
         inner_rect = background_rect.subsection(*self.PADDING_BACKGROUND)
-        image_width = inner_rect.height # make image square
-        right_of_image_rect = inner_rect.subsection(image_width, 0, 0, 0)
+        right_of_image_rect = inner_rect.subsection(self.IMAGE_WIDTH, 0, 0, 0)
         main_rect = right_of_image_rect.subsection(*self.PADDING_INNER)
 
         if self.download_mode:
@@ -463,10 +463,11 @@ class ItemRenderer(widgetset.InfoListRenderer):
         # layout background and borders
         layout.add_rect(background_rect, self.draw_background)
         # left side
-        layout.add(inner_rect.x, inner_rect.y, image_width,
-                inner_rect.height, self.draw_thumbnail)
+        image_area_rect = inner_rect.left_side(self.IMAGE_WIDTH)
+        layout.add_rect(image_area_rect, self.draw_thumbnail)
         layout.add_rect(right_of_image_rect.left_side(1),
                 self.draw_thumbnail_separator)
+        self.image_end_x = image_area_rect.right
         # title/description/extra info
         self.layout_text(layout, layout_manager, middle_rect)
         # bottom and right side
@@ -831,12 +832,15 @@ class ItemRenderer(widgetset.InfoListRenderer):
     def draw_background(self, context, x, y, width, height):
         if self.selected:
             left = self.images['selected-background-left']
+            thumb = self.images['dl-stats-selected-middle']
             middle = self.images['selected-background-middle']
             right = self.images['selected-background-right']
         else:
             left = self.images['background-left']
+            thumb = self.images['dl-stats-middle']
             middle = self.images['background-middle']
             right = self.images['background-right']
+
 
         # draw left
         left.draw(context, x, y, left.width, height)
@@ -851,9 +855,14 @@ class ItemRenderer(widgetset.InfoListRenderer):
             right.draw(context, x + width - right_width, y, right_width,
                     height)
         # draw middle
-        middle_width = width - right_width - left.width
-        middle.draw(context, x + left.width, y, middle_width, height)
+        middle_end_x = x + width - right_width
+        middle_width = middle_end_x - self.image_end_x
+        middle.draw(context, self.image_end_x, y, middle_width, height)
 
+        # draw thumbnail background
+        thumbnail_background_width = self.image_end_x - (x + left.width)
+        thumb.draw(context, x + left.width, y, thumbnail_background_width,
+                height)
 
     def draw_download_info_background(self, context, x, y, width):
         if self.selected:
@@ -875,29 +884,36 @@ class ItemRenderer(widgetset.InfoListRenderer):
         context.fill()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        # save context since we are setting a clip path
-        context.save()
-        # make a path with rounded edges on the left side and clip to it
-        radius = self.CORNER_RADIUS
-        context.move_to(x + radius, y)
-        context.line_to(x + width, y)
-        context.line_to(x + width, y + height)
-        context.line_to(x + radius, y + height)
-        context.arc(x + radius, y + height - radius, radius, PI/2, PI)
-        context.line_to(x, y + radius)
-        context.arc(x + radius, y + radius, radius, PI, PI*3/2)
-        context.clip()
-        # draw the thumbnail
         icon = imagepool.get_surface(self.info.thumbnail, (width, height))
-        widgetutil.draw_icon_in_rect(context, icon, x, y, width, height)
-        # undo the clip path
-        context.restore()
+        icon_x = x + (width - icon.width) // 2
+        icon_y = y + (height - icon.height) // 2
+        # if our thumbnail is far enough to the left, we need to set a clip
+        # path to take off the left corners.
+        make_clip_path = (icon_x < x + self.CORNER_RADIUS)
+        if make_clip_path:
+            # save context since we are setting a clip path
+            context.save()
+            # make a path with rounded edges on the left side and clip to it.
+            radius = self.CORNER_RADIUS
+            context.move_to(x + radius, y)
+            context.line_to(x + width, y)
+            context.line_to(x + width, y + height)
+            context.line_to(x + radius, y + height)
+            context.arc(x + radius, y + height - radius, radius, PI/2, PI)
+            context.line_to(x, y + radius)
+            context.arc(x + radius, y + radius, radius, PI, PI*3/2)
+            context.clip()
+        # draw the thumbnail
+        icon.draw(context, icon_x, icon_y, icon.width, icon.height)
+        if make_clip_path:
+            # undo the clip path
+            context.restore()
 
     def draw_thumbnail_separator(self, context, x, y, width, height):
         """Draw the separator just to the right of the thumbnail."""
         # width should be 1px, just fill in our entire space with our color
         context.rectangle(x, y, width, height)
-        context.set_color(self.SEPARATOR_COLOR)
+        context.set_color(self.THUMBNAIL_SEPARATOR_COLOR)
         context.fill()
 
     def draw_expire_background(self, context, x, y, width, height):
