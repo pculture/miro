@@ -347,7 +347,7 @@ class AllFeedsDisplay(FeedDisplay):
                selected_tabs[0].name == _("Podcasts")
 
     def make_controller(self, tab):
-        return feedcontroller.FeedController(tab.id, True, True)
+        return feedcontroller.AllFeedsController(tab.id, True, True)
 
     def cleanup(self):
         ItemListDisplay.cleanup(self)

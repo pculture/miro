@@ -324,11 +324,13 @@ class FilteredTitlebar(ItemListTitlebar):
                         _('Downloaded'))
         self.add_filter('only-unplayed', 'toggle-filter', unwatched,
                         _('Unplayed'))
+        self.filter = view_all
 
-    def toggle_filter(self, filter):
-        view_all = WidgetStateStore.is_view_all_filter(filter)
-        downloaded = WidgetStateStore.has_downloaded_filter(filter)
-        unwatched = WidgetStateStore.has_unwatched_filter(filter)
+    def toggle_filter(self, filter_):
+        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
+        view_all = WidgetStateStore.is_view_all_filter(self.filter)
+        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
         self.filters['view-all'].set_enabled(view_all)
         self.filters['only-downloaded'].set_enabled(downloaded)
         self.filters['only-unplayed'].set_enabled(unwatched)
@@ -1026,20 +1028,28 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         # implemented by subclasses
         pass
 
-    def toggle_radio_filter(self, filter_):
-        self.filter = filter_
-        self._toggle_filter_common()
+class AllFeedsHeaderToolbar(HeaderToolbar):
+    def pack_hbox_extra(self):
+        self.make_filter_switch(behavior='radio')
+        view_all = WidgetStateStore.get_view_all_filter()
+        view_video = WidgetStateStore.get_view_video_filter()
+        view_audio = WidgetStateStore.get_view_audio_filter()
+        self.add_filter('view-all', 'toggle-filter', view_all,
+                        declarify(_('View|All')))
+        self.add_filter('view-video', 'toggle-filter', view_video,
+                        _('Video'))
+        self.add_filter('view-audio', 'toggle-filter', view_audio,
+                        _('Audio'))
+        self.add_filter_switch()
 
-    def toggle_custom_filter(self, filter_):
+    def toggle_filter(self, filter_):
         self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
-        self._toggle_filter_common()
-
-    def _toggle_filter_common(self):
-        view_all = WidgetStateStore.is_view_all_filter(self.filter)
-        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
-        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
-        self.update_switches(view_all, unwatched, non_feed, downloaded)
+        if WidgetStateStore.is_view_video_filter(self.filter):
+            self.filter_switch.set_active('view-video')
+        elif WidgetStateStore.is_view_audio_filter(self.filter):
+            self.filter_switch.set_active('view-audio')
+        else:
+            self.filter_switch.set_active('view-all')
 
 class LibraryHeaderToolbar(HeaderToolbar):
     def __init__(self, unwatched_label):
@@ -1062,9 +1072,10 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.add_filter_switch()
 
     def toggle_filter(self, filter_):
-        self.toggle_custom_filter(filter_)
-
-    def update_switches(self, view_all, unwatched, non_feed, downloaded):
+        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
+        view_all = WidgetStateStore.is_view_all_filter(self.filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
+        non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
         self.filter_switch.set_active('view-all', view_all)
         self.filter_switch.set_active('view-unwatched', unwatched)
         self.filter_switch.set_active('view-non-feed', non_feed)

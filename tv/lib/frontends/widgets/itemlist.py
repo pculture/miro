@@ -227,6 +227,8 @@ class ItemList(object):
         * show_details flag (boolean)
         * counter used to change the progress throbber (integer)
 
+    video_only -- Are we only displaying videos?
+    audio_only -- Are we only displaying audio?
     new_only -- Are we only displaying the new items?
     unwatched_only -- Are we only displaying the unwatched items?
     downloaded_only -- Are we only displaying the downloaded items?
@@ -238,6 +240,7 @@ class ItemList(object):
         self._sorter = DEFAULT_SORT
         self.model = widgetset.InfoListModel(self._sorter.sort_key,
                 self._sorter.reverse)
+        self.video_only = self.audio_only = False
         self.new_only = False
         self.unwatched_only = False
         self.downloaded_only = False
@@ -310,7 +313,9 @@ class ItemList(object):
                 not (self.downloaded_only and
                     item_info.video_path is None) and
                 not (self.non_feed_only and (not item_info.is_external and
-                    item_info.feed_url != 'dtv:searchDownloads')))
+                    item_info.feed_url != 'dtv:searchDownloads')) and
+                not (self.video_only and item_info.file_type != 'video') and
+                not (self.audio_only and item_info.file_type != 'audio'))
 
     def set_show_details(self, item_id, value):
         """Change the show details value for an item"""
@@ -413,6 +418,8 @@ class ItemList(object):
 
     def toggle_filter(self, filter_):
         self._filter = WidgetStateStore.toggle_filter(self._filter, filter_)
+        self.video_only = WidgetStateStore.is_view_video_filter(self._filter)
+        self.audio_only = WidgetStateStore.is_view_audio_filter(self._filter)
         self.unwatched_only = WidgetStateStore.has_unwatched_filter(
                 self._filter)
         self.downloaded_only = WidgetStateStore.has_downloaded_filter(

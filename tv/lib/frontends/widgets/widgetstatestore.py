@@ -55,6 +55,8 @@ class WidgetStateStore(object):
     FILTER_UNWATCHED = 1
     FILTER_NONFEED = 2
     FILTER_DOWNLOADED = 4
+    FILTER_VIEW_VIDEO = 8
+    FILTER_VIEW_AUDIO = 16
     DEFAULT_DISPLAY_FILTERS = FILTER_VIEW_ALL
     DEFAULT_COLUMN_WIDTHS = {
         u'album': 100,
@@ -375,14 +377,36 @@ class WidgetStateStore(object):
     def toggle_filter(filters, filter_):
         if filter_ == WidgetStateStore.FILTER_VIEW_ALL:
             return filter_
+        elif filter_ in (WidgetStateStore.FILTER_VIEW_VIDEO,
+                         WidgetStateStore.FILTER_VIEW_AUDIO):
+            exclude = ~(WidgetStateStore.FILTER_VIEW_VIDEO |
+                       WidgetStateStore.FILTER_VIEW_AUDIO)
+            if not ((filters & WidgetStateStore.FILTER_DOWNLOADED) or
+                    (filters & WidgetStateStore.FILTER_UNWATCHED)):
+                # only downloaded items have a file type
+                filters = filters | WidgetStateStore.FILTER_DOWNLOADED
+            return (filters & exclude) | filter_
+        elif filter_ in (WidgetStateStore.FILTER_UNWATCHED,
+                         WidgetStateStore.FILTER_DOWNLOADED):
+            exclude = ~(WidgetStateStore.FILTER_UNWATCHED |
+                         WidgetStateStore.FILTER_DOWNLOADED)
+            return (filters & exclude) | filter_
         else:
-            return filters ^ filter_
+            return filters | filter_
 
 # static properties of a filter combination:
 
     @staticmethod
     def is_view_all_filter(filters):
         return filters == WidgetStateStore.FILTER_VIEW_ALL
+
+    @staticmethod
+    def is_view_video_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_VIEW_VIDEO)
+
+    @staticmethod
+    def is_view_audio_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_VIEW_AUDIO)
 
     @staticmethod
     def has_unwatched_filter(filters):
@@ -431,6 +455,14 @@ class WidgetStateStore(object):
     @staticmethod
     def get_view_all_filter():
         return WidgetStateStore.FILTER_VIEW_ALL
+
+    @staticmethod
+    def get_view_video_filter():
+        return WidgetStateStore.FILTER_VIEW_VIDEO
+
+    @staticmethod
+    def get_view_audio_filter():
+        return WidgetStateStore.FILTER_VIEW_AUDIO
 
     @staticmethod
     def get_unwatched_filter():

@@ -111,8 +111,8 @@ class FeedController(itemlistcontroller.ItemListController,
             toolbar.autodownload_button.show()
             toolbar.settings_button.show()
             toolbar.set_autodownload_mode(feed_info.autodownload_mode)
-        toolbar.connect('show-settings', self._on_show_settings)
-        toolbar.connect('remove-feed', self._on_remove_feed)
+            toolbar.connect('show-settings', self._on_show_settings)
+            toolbar.connect('remove-feed', self._on_remove_feed)
         toolbar.connect('auto-download-changed',
                 self._on_auto_download_changed)
         return toolbar
@@ -203,3 +203,10 @@ class FeedController(itemlistcontroller.ItemListController,
                     items, {"count": items})
             text = u"|  %s" % text
         self.full_section.set_info(text)
+
+class AllFeedsController(FeedController):
+
+    def build_header_toolbar(self):
+        toolbar = itemlistwidgets.AllFeedsHeaderToolbar()
+        toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
+        return toolbar
