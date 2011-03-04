@@ -137,6 +137,7 @@ class TabListView(widgetset.TableView):
 
 class TabBlinkerMixin(object):
     def blink_tab(self, id):
+        self.show_auto_tab(id)
         self.view.blink_tab(self.iter_map[id])
         timer.add(1, self._unblink_tab, id)
 
