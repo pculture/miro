@@ -167,7 +167,9 @@ class DrawingContext:
         
     def set_shadow(self, color, opacity, offset, blur_radius):
         shadow = NSShadow.alloc().init()
-        shadow.setShadowOffset_(offset)
+        # shadow offset is always in the cocoa coordinates, so we need to
+        # reverse the y part
+        shadow.setShadowOffset_(NSPoint(offset[0], -offset[1]))
         shadow.setShadowBlurRadius_(blur_radius)
         shadow.setShadowColor_(convert_widget_color(color, opacity))
         shadow.set()

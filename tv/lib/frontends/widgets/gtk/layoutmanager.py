@@ -67,6 +67,7 @@ class LayoutManager(object):
     def reset(self):
         self.current_font = self.font(1.0)
         self.text_color = (0, 0, 0)
+        self.text_shadow = None
 
     def on_style_set(self, widget, previous_style):
         self.update_style(widget.style)
@@ -95,11 +96,11 @@ class LayoutManager(object):
         self.text_color = color
 
     def set_text_shadow(self, shadow):
-        self.shadow = shadow
+        self.text_shadow = shadow
 
     def textbox(self, text, underline=False):
         textbox = TextBox(self.pango_context, self.current_font,
-                self.text_color)
+                self.text_color, self.text_shadow)
         textbox.set_text(text, underline=underline)
         return textbox
 
@@ -144,13 +145,14 @@ class Font(object):
         return pango.PIXELS(metrics.get_ascent() + metrics.get_descent())
 
 class TextBox(object):
-    def __init__(self, context, font, color):
+    def __init__(self, context, font, color, shadow):
         self.layout = pango.Layout(context)
         self.layout.set_wrap(pango.WRAP_WORD_CHAR)
         self.font = font
         self.color = color
         self.layout.set_font_description(font.description.copy())
         self.width = self.height = None
+        self.shadow = shadow
 
     def set_text(self, text, font=None, color=None, underline=False):
         self.text_chunks = []
@@ -279,8 +281,22 @@ class TextBox(object):
         self.ensure_layout()
         cairo_context = context.context
         cairo_context.save()
-        cairo_context.set_source_rgb(*self.color)
         underline_drawer = UnderlineDrawer(self.underlines)
+        if self.shadow:
+            # draw shadow first so that it's underneath the regular text
+            # FIXME: we don't use the blur_radius setting
+            cairo_context.set_source_rgba(self.shadow.color[0],
+                    self.shadow.color[1], self.shadow.color[2],
+                    self.shadow.opacity)
+            self._draw_layout(context, x + self.shadow.offset[0], 
+                    y + self.shadow.offset[1], width, height,
+                    underline_drawer)
+        cairo_context.set_source_rgb(*self.color)
+        self._draw_layout(context, x, y, width, height, underline_drawer)
+        cairo_context.restore()
+        cairo_context.new_path()
+
+    def _draw_layout(self, context, x, y, width, height, underline_drawer):
         line_height = 0
         alignment = self.layout.get_alignment()
         for i in xrange(self.layout.get_line_count()):
@@ -297,11 +313,9 @@ class TextBox(object):
                 line_x = x
             baseline = y + line_height + pango.ASCENT(extents)
             context.move_to(line_x, baseline)
-            cairo_context.show_layout_line(line)
+            context.context.show_layout_line(line)
             underline_drawer.draw(context, line_x, baseline, line)
             line_height = next_line_height
-        cairo_context.restore()
-        cairo_context.new_path()
 
 class UnderlineDrawer(object):
     """Class to draw our own underlines because cairo's don't look

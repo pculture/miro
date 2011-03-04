@@ -287,13 +287,13 @@ class ItemRenderer(widgetset.InfoListRenderer):
     ITEM_DESC_COLOR = (0.3, 0.3, 0.3)
     FEED_NAME_COLOR = (0.5, 0.5, 0.5)
     RESUME_TEXT_COLOR = css_to_color('#306219')
-    RESUME_TEXT_SHADOW = css_to_color('#ecffe4')
+    RESUME_TEXT_SHADOW = widgetutil.WHITE
     UNPLAYED_TEXT_COLOR = css_to_color('#d8ffc7')
-    UNPLAYED_TEXT_SHADOW = css_to_color('#469226')
+    UNPLAYED_TEXT_SHADOW = widgetutil.BLACK
     EXPIRING_TEXT_COLOR = css_to_color('#6f6c28')
-    EXPIRING_TEXT_SHADOW = css_to_color('#fffef6')
+    EXPIRING_TEXT_SHADOW = widgetutil.WHITE
     NEWLY_AVAILABLE_TEXT_COLOR =  css_to_color('#e1efff')
-    NEWLY_AVAILABLE_TEXT_SHADOW = css_to_color('#346ead')
+    NEWLY_AVAILABLE_TEXT_SHADOW = widgetutil.BLACK
 
     # font sizes
     EMBLEM_FONT_SIZE = 0.80
@@ -301,6 +301,11 @@ class ItemRenderer(widgetset.InfoListRenderer):
     ITEM_DESC_FONT_SIZE = 0.85
     DOWNLOAD_INFO_FONT_SIZE = 0.70
     DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE = 0.50
+
+    # Emblem shadow settings
+    EMBLEM_SHADOW_OPACITY = 0.6
+    EMBLEM_SHADOW_OFFSET = (0, 1)
+    EMBLEM_SHADOW_BLUR_RADIUS = 0
 
     # text assets
     REVEAL_IN_TEXT = (file_navigator_name and
@@ -1032,16 +1037,17 @@ class _EmblemDrawer(object):
         self.text = self.image = None
         self.margin_right = self.EMBLEM_TEXT_PAD_END
         self.text_bold = False
-        self.text_color = self.ITEM_DESC_COLOR
 
         if self.info.has_drm:
             self.text_bold = True
             self.text = _('DRM locked')
             self.text_color = self.UNPLAYED_TEXT_COLOR
+            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.emblem = 'unplayed' # FIXME need a new emblem for this
         elif (self.info.download_info
                 and self.info.download_info.state == 'failed'):
             self.text_color = self.UNPLAYED_TEXT_COLOR
+            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.text_bold = True
             self.image = self.images['status-icon-alert']
             self.text = u"%s-%s" % (self.ERROR_TEXT,
@@ -1049,6 +1055,7 @@ class _EmblemDrawer(object):
             self.emblem = 'unplayed' # FIXME need a new emblem for this
         elif self.info.pending_auto_dl:
             self.text_color = self.UNPLAYED_TEXT_COLOR
+            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.text = self.QUEUED_TEXT
             self.emblem = 'unplayed' # FIXME need a new emblem for this
         elif (self.info.downloaded
@@ -1056,9 +1063,11 @@ class _EmblemDrawer(object):
             self.text = self.CURRENTLY_PLAYING_TEXT
             # copy the unplayed-style
             self.text_color = self.UNPLAYED_TEXT_COLOR
+            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.emblem = 'unplayed'
         elif self.info.downloaded and not self.info.video_watched:
             self.text_color = self.UNPLAYED_TEXT_COLOR
+            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
             self.text_bold = True
             self.text = self.UNPLAYED_TEXT
             self.emblem = 'unplayed'
@@ -1068,6 +1077,7 @@ class _EmblemDrawer(object):
               and app.config.get(prefs.RESUME_VIDEOS_MODE)):
             self.text_bold = True
             self.text_color = self.RESUME_TEXT_COLOR
+            self.text_shadow = self.RESUME_TEXT_SHADOW
             self.text = _("Resume at %(resumetime)s",
                      {"resumetime": displaytext.short_time_string(self.info.resume_time)})
             self.margin_right = self.EMBLEM_TEXT_PAD_END_SMALL
@@ -1075,6 +1085,7 @@ class _EmblemDrawer(object):
         elif not self.info.item_viewed and self.info.state == "new":
             self.text_bold = True
             self.text_color = self.NEWLY_AVAILABLE_TEXT_COLOR
+            self.text_shadow = self.NEWLY_AVAILABLE_TEXT_SHADOW
             self.text = self.NEWLY_AVAILABLE_TEXT
             self.margin_right = self.EMBLEM_TEXT_PAD_END_SMALL
             self.emblem = 'newly'
@@ -1093,10 +1104,15 @@ class _EmblemDrawer(object):
             layout_manager.set_font(self.EMBLEM_FONT_SIZE,
                     bold=self.text_bold)
             layout_manager.set_text_color(self.text_color)
+            shadow = widgetutil.Shadow(self.text_shadow,
+                    self.EMBLEM_SHADOW_OPACITY, self.EMBLEM_SHADOW_OFFSET,
+                    self.EMBLEM_SHADOW_BLUR_RADIUS)
+            layout_manager.set_text_shadow(shadow)
             textbox = layout_manager.textbox(self.text)
             text_width, text_height = textbox.get_size()
             emblem_layout.add(x, 0, text_width, text_height, textbox.draw)
             x += text_width
+            layout_manager.set_text_shadow(None)
         return x - left_x
 
     def draw_emblem_background(self, context, x, y, width, height):
