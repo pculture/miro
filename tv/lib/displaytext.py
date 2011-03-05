@@ -82,16 +82,16 @@ def short_time_string(secs):
 
 def time_string(secs):
     if secs >= (60 * 60 * 24):
-        t_dy = secs * 1.0 / (60 * 60 * 24)
-        return ngettext('%(num).0f day', '%(num).0f days', int(t_dy),
+        t_dy = int(round(secs * 1.0 / (60 * 60 * 24)))
+        return ngettext('%(num)d day', '%(num)d days', t_dy,
                         {"num": t_dy})
     if secs >= (60 * 60):
-        t_hr = secs * 1.0 / (60 * 60)
-        return ngettext('%(num).0f hr', '%(num).0f hrs', int(t_hr),
+        t_hr = int(round(secs * 1.0 / (60 * 60)))
+        return ngettext('%(num)d hr', '%(num)d hrs', t_hr,
                         {"num": t_hr})
     if secs >= 60:
-        t_min = secs * 1.0 / 60
-        return ngettext('%(num).0f min', '%(num).0f mins', int(t_min),
+        t_min = int(round(secs * 1.0 / 60))
+        return ngettext('%(num)d min', '%(num)d mins', t_min,
                         {"num": t_min})
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
