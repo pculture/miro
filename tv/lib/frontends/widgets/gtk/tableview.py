@@ -561,7 +561,8 @@ class TableColumn(signals.SignalEmitter):
 
         clicked (table_column) -- The header for this column was clicked.
     """
-    def __init__(self, title, renderer, **attrs):
+    def __init__(self, title, renderer, header=None, **attrs):
+        # header widget not used yet in GTK (#15800)
         signals.SignalEmitter.__init__(self)
         self.create_signal('clicked')
         self._column = gtk.TreeViewColumn(title, renderer._renderer)

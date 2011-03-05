@@ -637,7 +637,7 @@ class ListView(ItemView, SorterWidgetOwner):
 
     def _make_column(self, header, renderer, column_name, resizable=True,
             pad=True):
-        column = widgetset.TableColumn(header, renderer)
+        column = widgetset.TableColumn(header, renderer, SortBarButton(header))
         column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)

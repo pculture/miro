@@ -67,7 +67,6 @@ ERROR_COLOR = (0.90, 0.0, 0.0)
 BLINK_COLOR = css_to_color('#fffb83')
 
 class LowerBox(widgetset.Background):
-
     def size_request(self, layout_manager):
         return (0, 63)
 
@@ -193,7 +192,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
-
     def pack_leading_space(self, hbox):
         hbox.pack_space(14)
 

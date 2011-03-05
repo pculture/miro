@@ -32,6 +32,7 @@ associated classes.
 """
 
 import math
+import logging
 
 from AppKit import *
 from Foundation import *
@@ -46,6 +47,7 @@ from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle, Gradient
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
+from miro.plat.frontends.widgets.widgetset import CustomButton
 
 
 # Disclosure button used as a reference in get_left_offset()
@@ -709,11 +711,13 @@ class TableViewCommon(object):
             self.SuperClass.keyDown_(self, event)
 
 class TableColumn(signals.SignalEmitter):
-    def __init__(self, title, renderer, **attrs):
+    def __init__(self, title, renderer, header=None, **attrs):
         signals.SignalEmitter.__init__(self)
         self.create_signal('clicked')
         self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
-        self._column.setHeaderCell_(MiroTableHeaderCell.alloc().init())
+        header_cell = MiroTableHeaderCell.alloc().init()
+        header_cell.set_widget(header)
+        self._column.setHeaderCell_(header_cell)
         self._column.headerCell().setStringValue_(title)
         self._column.setEditable_(NO)
         self._column.setResizingMask_(NSTableColumnNoResizing)
@@ -792,14 +796,43 @@ class MiroTableHeaderView(NSTableHeaderView):
                         frame, self, column.sort_order_ascending, 0)
 
 class MiroTableHeaderCell(NSTableHeaderCell):
-    def drawInteriorWithFrame_inView_(self, frame, view):
-        # Take into account differences in intercellSpacing() (the default is
-        # 3, but that can change using TableView.set_column_spacing())
-        extra_space = view.tableView().intercellSpacing().width - 3
-        padded_frame = NSMakeRect(frame.origin.x + (extra_space / 2),
-                frame.origin.y, frame.size.width - extra_space,
-                frame.size.height)
-        NSTableHeaderCell.drawInteriorWithFrame_inView_(self, padded_frame, view)
+    def init(self):
+        self = super(MiroTableHeaderCell, self).init()
+        self.layout_manager = LayoutManager()
+        self.button = None
+        return self
+
+    def set_widget(self, widget):
+        if widget:
+            widget.state = 'normal'
+        self.button = widget
+
+    def cellSizeForBounds_(self, rect):
+        logging.debug('cSFB: %s', repr(rect))
+        return NSMakeSize(*self.button.size_request(self.layout_manager))
+
+    def drawingRectForBounds_(self, rect):
+        logging.debug('dRFB: %s', repr(rect))
+        size = self.cellSizeForBounds_(rect)
+        return NSMakeRect(rect.origin.x, rect.origin.y, size[0], size[1])
+
+    def drawWithFrame_inView_(self, frame, view):
+        NSGraphicsContext.currentContext().saveGraphicsState()
+        drawing_rect = NSMakeRect(frame.origin.x, frame.origin.y,
+                       frame.size.width, frame.size.height)
+        context = DrawingContext(view, drawing_rect, drawing_rect)
+        context.style = self.make_drawing_style(frame, view)
+        self.layout_manager.reset()
+        self.button.draw(context, self.layout_manager)
+        NSGraphicsContext.currentContext().restoreGraphicsState()
+
+    def make_drawing_style(self, frame, view):
+        text_color = None
+        if (self.isHighlighted() and frame is not None and
+                (view.isDescendantOf_(view.window().firstResponder()) or
+                    view.gradientHighlight)):
+            text_color = NSColor.whiteColor()
+        return DrawingStyle(text_color=text_color)
 
 class TableView(Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
