@@ -101,16 +101,17 @@ class ItemContextMenuHandler(object):
 
         if item.is_playable:
             # Show File in Finder
-            if file_navigator_name:
-                reveal_text = _('Show File in %(progname)s',
-                                {"progname": file_navigator_name})
-            else:
-                reveal_text = _('File on Disk')
+            if not item.remote:
+                if file_navigator_name:
+                    reveal_text = _('Show File in %(progname)s',
+                                    {"progname": file_navigator_name})
+                else:
+                    reveal_text = _('File on Disk')
 
-            section.append((
-                    reveal_text,
-                    lambda: app.widgetapp.check_then_reveal_file(
-                        item.video_path)))
+                section.append((
+                        reveal_text,
+                        lambda: app.widgetapp.check_then_reveal_file(
+                            item.video_path)))
 
             if not item.remote:
                 # most recent conversion
