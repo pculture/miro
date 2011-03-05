@@ -50,24 +50,25 @@ class ItemContextMenuHandler(object):
         """
         selected = [tableview.model[iter][0]
                     for iter in tableview.get_selection()]
+
         if len(selected) == 1:
             return self._make_context_menu_single(selected[0])
         else:
             return self._make_context_menu_multiple(selected)
 
     def _remove_context_menu_item(self, selection):
-        """The menu item to remove the item (or None to exclude
-        it).
+        """Returns the appropriate remove/delete menu item.
         """
-        remove = False
+        remove_external = False
         for info in selection:
             if info.is_external:
-                remove = True
+                remove_external = True
                 break
-        if remove:
+
+        if remove_external:
             return (_('Remove From the Library'), app.widgetapp.remove_items)
-        else:
-            return (_('Delete'), app.widgetapp.remove_items)
+
+        return (_('Delete from Drive'), app.widgetapp.remove_items)
 
     def _add_remove_context_menu_item(self, menu, selection):
         remove = self._remove_context_menu_item(selection)
@@ -170,8 +171,9 @@ class ItemContextMenuHandler(object):
                         _("Edit Item Details"), app.widgetapp.edit_items))
 
             if not item.remote:
-                section.append((
-                        _("Delete"), app.widgetapp.remove_items))
+                remove = self._remove_context_menu_item([item])
+                if remove:
+                    section.append(remove)
 
             if not (item.device or item.remote):
                 if item.seeding_status == 'seeding':
@@ -224,7 +226,6 @@ class ItemContextMenuHandler(object):
                 section.append((
                         _('View Web Page'),
                         lambda: app.widgetapp.open_url(item.permalink)))
-
 
             if item.has_shareable_url:
                 section.append((
