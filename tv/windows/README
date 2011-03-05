@@ -3,7 +3,7 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: January 9th, 2011
+:Date: March 5, 2011
 
 
 Summary
@@ -28,7 +28,8 @@ Setting up a build environment
 Follow the instructions at:
 https://develop.participatoryculture.org/index.php/WindowsBuildDocs
 
-That sets up Visual Studio and Python.
+That sets up Visual Studio 2008, Python, and the rest of the build
+environment.
 
 .. Note::
 
