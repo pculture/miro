@@ -30,7 +30,6 @@
 """``miro.displaytext`` -- Format strings to send to the user.
 """
 
-import math
 import datetime
 
 from miro import gtcache
@@ -133,15 +132,17 @@ def expiration_date(exp_date):
                         offset.days,
                         {"count": offset.days})
     elif offset.seconds > 3600:
+        hours = int(round(offset.seconds / 3600.0))
         return ngettext("Expires in %(count)d hour",
                         "Expires in %(count)d hours",
-                        math.ceil(offset.seconds/3600.0),
-                        {"count": math.ceil(offset.seconds/3600.0)})
+                        hours,
+                        {"count": hours})
     else:
+        minutes = int(round(offset.seconds / 60.0))
         return ngettext("Expires in %(count)d minute",
                         "Expires in %(count)d minutes",
-                        math.ceil(offset.seconds/60.0),
-                        {"count": math.ceil(offset.seconds/60.0)})
+                        minutes,
+                        {"count": minutes})
 
 def expiration_date_short(exp_date):
     offset = exp_date - datetime.datetime.now()
@@ -151,15 +152,17 @@ def expiration_date_short(exp_date):
                         offset.days,
                         {"count": offset.days})
     elif offset.seconds > 3600:
+        hours = int(round(offset.seconds / 3600.0))
         return ngettext("Expires: %(count)d hour",
                         "Expires: %(count)d hours",
-                        math.ceil(offset.seconds/3600.0),
-                        {"count": math.ceil(offset.seconds/3600.0)})
+                        hours,
+                        {"count": hours})
     else:
+        minutes = int(round(offset.seconds / 60.0))
         return ngettext("Expires: %(count)d minute",
                         "Expires: %(count)d minutes",
-                        math.ceil(offset.seconds/60.0),
-                        {"count": math.ceil(offset.seconds/60.0)})
+                        minutes,
+                        {"count": minutes})
 
 def date(rdate):
     """Takes a date object and returns the "month day, year"
