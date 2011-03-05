@@ -970,10 +970,32 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
         FilteredListMixin.__init__(self)
         ProgressTrackingListMixin.__init__(self)
 
+    def build_widget(self):
+        SimpleItemListController.build_widget(self)
+
+        # this only gets shown when the user is searching for things
+        # in the feed and there are no results.
+        text = _('No Results')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
+
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
         toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
         return toolbar
+
+    def check_for_empty_list(self):
+        pass
+
+    def _on_search_changed(self, widget, search_text):
+        self.set_search(search_text)
+
+        # if the search has no results, we show the empty_mode
+        # which says "no results"
+        if self.item_list.get_count() == 0 and search_text:
+            self.widget.set_list_empty_mode(True)
+        else:
+            self.widget.set_list_empty_mode(False)
 
 class VideoItemsController(AudioVideoItemsController):
     type = u'videos'
@@ -1037,6 +1059,28 @@ class OtherItemsController(SimpleItemListController):
     type = u'others'
     id = u'others'
     display_channel = True
+
+    def build_widget(self):
+        SimpleItemListController.build_widget(self)
+
+        # this only gets shown when the user is searching for things
+        # in the feed and there are no results.
+        text = _('No Results')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
+
+    def check_for_empty_list(self):
+        pass
+
+    def _on_search_changed(self, widget, search_text):
+        self.set_search(search_text)
+
+        # if the search has no results, we show the empty_mode
+        # which says "no results"
+        if self.item_list.get_count() == 0 and search_text:
+            self.widget.set_list_empty_mode(True)
+        else:
+            self.widget.set_list_empty_mode(False)
 
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""

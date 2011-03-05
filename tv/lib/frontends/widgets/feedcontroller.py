@@ -94,7 +94,7 @@ class FeedController(itemlistcontroller.ItemListController,
 
         # if the search has no results, we show the empty_mode
         # which says "no results"
-        if self.item_list.get_count() == 0:
+        if self.item_list.get_count() == 0 and search_text:
             self.widget.set_list_empty_mode(True)
         else:
             self.widget.set_list_empty_mode(False)
