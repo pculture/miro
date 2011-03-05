@@ -922,9 +922,13 @@ class PlaybackPanel(PanelBuilder):
         miro_cbx = widgetset.Checkbox(_('Play media in Miro.'))
         separate_cbx = widgetset.Checkbox(
             _('Always play videos in a separate window.'))
-        resume_cbx = widgetset.Checkbox(
-            _('Resume playing a video or audio item from the point '
-              'it was last stopped.'))
+
+        resume_videos_cbx = widgetset.Checkbox(
+            _('Resume playback on videos.'))
+        resume_music_cbx = widgetset.Checkbox(
+            _('Resume playback on music.'))
+        resume_podcasts_cbx = widgetset.Checkbox(
+            _('Resume playback on podcasts.'))
 
         subtitles_cbx = widgetset.Checkbox(
             _('Automatically enable movie subtitles when available.'))
@@ -935,7 +939,9 @@ class PlaybackPanel(PanelBuilder):
         stop_rb = widgetset.RadioButton(
             _("Stop after each video or audio item"), rbg)
 
-        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_cbx,
+        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_videos_cbx,
+                                                      resume_music_cbx, 
+                                                      resume_podcasts_cbx,
                                                       subtitles_cbx, play_rb,
                                                       stop_rb))
         v.pack_start(widgetutil.align_left(miro_cbx, bottom_pad=6))
@@ -943,8 +949,12 @@ class PlaybackPanel(PanelBuilder):
         attach_boolean(separate_cbx, prefs.PLAY_DETACHED)
         v.pack_start(widgetutil.align_left(separate_cbx, bottom_pad=6))
 
-        attach_boolean(resume_cbx, prefs.RESUME_VIDEOS_MODE)
-        v.pack_start(widgetutil.align_left(resume_cbx, bottom_pad=6))
+        attach_boolean(resume_videos_cbx, prefs.RESUME_VIDEOS_MODE)
+        attach_boolean(resume_music_cbx, prefs.RESUME_MUSIC_MODE)
+        attach_boolean(resume_podcasts_cbx, prefs.RESUME_PODCASTS_MODE)
+        v.pack_start(widgetutil.align_left(resume_videos_cbx, bottom_pad=6))
+        v.pack_start(widgetutil.align_left(resume_music_cbx, bottom_pad=6))
+        v.pack_start(widgetutil.align_left(resume_podcasts_cbx, bottom_pad=6))
 
         attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
         v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))

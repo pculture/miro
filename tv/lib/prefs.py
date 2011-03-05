@@ -89,6 +89,8 @@ SINGLE_VIDEO_PLAYBACK_MODE  = Pref(key='singleVideoPlaybackMode', default=False,
 PLAY_DETACHED               = Pref(key='detachedPlaybackMode',  default=False, platformSpecific=False)
 DETACHED_WINDOW_FRAME       = Pref(key='detachedWindowFrame',   default=None,  platformSpecific=False)
 RESUME_VIDEOS_MODE          = Pref(key='resumeVideosMode',      default=True,  platformSpecific=False)
+RESUME_MUSIC_MODE           = Pref(key='resumeMusicMode',       default=False, platformSpecific=False)
+RESUME_PODCASTS_MODE        = Pref(key='resumePodcastsMode',    default=True,  platformSpecific=False)
 PLAY_IN_MIRO                = Pref(key='playInMiro',            default=True,  platformSpecific=False)
 WARN_IF_DOWNLOADING_ON_QUIT = Pref(key='warnIfDownloadingOnQuit', default=True, platformSpecific=False)
 WARN_IF_CONVERTING_ON_QUIT  = Pref(key='warnIfConvertingOnQuit', default=True, platformSpecific=False)

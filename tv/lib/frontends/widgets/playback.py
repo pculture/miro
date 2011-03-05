@@ -232,7 +232,24 @@ class PlaybackManager (signals.SignalEmitter):
         app.menu_manager.update_menus()
 
     def should_resume(self):
-        return self.force_resume or app.config.get(prefs.RESUME_VIDEOS_MODE)
+        if self.force_resume:
+            return True
+
+        if(self.shuffle == True or 
+           self.repeat != WidgetStateStore.get_repeat_off()):
+           return False
+
+        # FIXME: we should have a better way of deciding
+        # which tab something is listed in.
+        # Figure out if its from a library or feed
+        if(self.playlist.currently_playing.feed_url.startswith('dtv:directoryfeed')):
+            if(self.playlist.currently_playing.file_type == u'video'):
+                resume = app.config.get(prefs.RESUME_VIDEOS_MODE)
+            else:
+                resume = app.config.get(prefs.RESUME_MUSIC_MODE)
+        else:
+            resume =  app.config.get(prefs.RESUME_PODCASTS_MODE)
+        return resume
 
     def pause(self):
         if self.is_playing:
