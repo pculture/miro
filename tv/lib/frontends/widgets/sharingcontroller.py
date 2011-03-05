@@ -32,6 +32,7 @@ from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import style
+from miro.gtcache import gettext as _
 
 class SharingStandardView(itemlistwidgets.StandardView):
     def build_renderer(self):
@@ -60,6 +61,24 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create(self.type, self.share)
 
-    # note: this should never be empty, so we don't have empty view.
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)
+
+        # this only gets shown when the user is searching for things
+        # in the feed and there are no results.
+        text = _('No Results')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
+
+    def check_for_empty_list(self):
+        pass
+
+    def _on_search_changed(self, widget, search_text):
+        self.set_search(search_text)
+
+        # if the search has no results, we show the empty_mode
+        # which says "no results"
+        if self.item_list.get_count() == 0 and search_text:
+            self.widget.set_list_empty_mode(True)
+        else:
+            self.widget.set_list_empty_mode(False)
