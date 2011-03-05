@@ -863,6 +863,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             d.run(callback)
             self.informOnError = False
         delay = app.config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
+        if delay == -1:
+            return
         eventloop.add_timeout(delay, self.update, "update failed feed")
 
     def _generate_feed_errback(self, error, removeOnError):
@@ -1404,7 +1406,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         try:
             updateFreq = self.parsed["feed"]["ttl"]
         except KeyError:
-            updateFreq = 0
+            updateFreq = -1
         self.set_update_frequency(updateFreq)
 
         self.feedparser_finished()
