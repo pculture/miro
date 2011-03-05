@@ -1168,6 +1168,7 @@ class SortBarButton(widgetset.CustomButton):
         self._text = text
         self._enabled = False
         self._ascending = False
+        self.state = 'normal'
         self.set_squish_width(True)
         self.set_squish_height(True)
 

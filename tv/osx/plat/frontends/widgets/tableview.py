@@ -58,7 +58,7 @@ _disclosure_button.sizeToFit()
 _disclosure_button_width = _disclosure_button.frame().size.width 
 
 EXPANDER_PADDING = 6
-HEADER_HEIGHT = 17
+HEADER_HEIGHT = 30
 
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
@@ -716,7 +716,8 @@ class TableColumn(signals.SignalEmitter):
         self.create_signal('clicked')
         self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
         header_cell = MiroTableHeaderCell.alloc().init()
-        header_cell.set_widget(header)
+        if header:
+            header_cell.set_widget(header)
         self._column.setHeaderCell_(header_cell)
         self._column.headerCell().setStringValue_(title)
         self._column.setEditable_(NO)
@@ -783,17 +784,28 @@ class MiroOutlineView(NSOutlineView):
         locals()[name] = value
 
 class MiroTableHeaderView(NSTableHeaderView):
+    def initWithFrame_(self, frame):
+        height = HEADER_HEIGHT
+        frame.size.height = height
+        self = super(MiroTableHeaderView, self).initWithFrame_(frame)
+        self.height = height
+        self.selected = None
+        return self
+
+    def get_height(self):
+        return self.height
+
     def drawRect_(self, rect):
-        NSTableHeaderView.drawRect_(self, rect)
         wrapper = wrappermap.wrapper(self.tableView())
-        # Manually handle sort column drawing
-        for i, column in enumerate(wrapper.columns):
+        if self.selected:
+            self.selected.set_selected(False)
+        for column in wrapper.columns:
             if column.sort_indicator_visible:
-                cell = column._column.headerCell()
-                frame = self.headerRectOfColumn_(i)
-                cell.highlight_withFrame_inView_(True, frame, self)
-                cell.drawSortIndicatorWithFrame_inView_ascending_priority_(
-                        frame, self, column.sort_order_ascending, 0)
+                self.selected = column._column.headerCell()
+                self.selected.set_selected(True)
+                self.selected.set_ascending(column.sort_order_ascending)
+                break
+        NSTableHeaderView.drawRect_(self, rect)
 
 class MiroTableHeaderCell(NSTableHeaderCell):
     def init(self):
@@ -802,19 +814,14 @@ class MiroTableHeaderCell(NSTableHeaderCell):
         self.button = None
         return self
 
+    def set_selected(self, selected):
+        self.button._enabled = selected
+
+    def set_ascending(self, ascending):
+        self.button._ascending = ascending
+
     def set_widget(self, widget):
-        if widget:
-            widget.state = 'normal'
         self.button = widget
-
-    def cellSizeForBounds_(self, rect):
-        logging.debug('cSFB: %s', repr(rect))
-        return NSMakeSize(*self.button.size_request(self.layout_manager))
-
-    def drawingRectForBounds_(self, rect):
-        logging.debug('dRFB: %s', repr(rect))
-        size = self.cellSizeForBounds_(rect)
-        return NSMakeRect(rect.origin.x, rect.origin.y, size[0], size[1])
 
     def drawWithFrame_inView_(self, frame, view):
         NSGraphicsContext.currentContext().saveGraphicsState()
@@ -877,7 +884,8 @@ class TableView(Widget):
         self.set_fixed_height(False)
         self.auto_resizing = False
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
-            NSMakeRect(0, 0, 0, HEADER_HEIGHT))
+            NSMakeRect(0, 0, 0, 0))
+        self.header_height = self.header_view.get_height()
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         self._selected_before_change = None
@@ -976,7 +984,7 @@ class TableView(Widget):
         self.tableview.tile()
         height = self.tableview.frame().size.height
         if self._show_headers:
-            height += HEADER_HEIGHT
+            height += self.header_height
         return self.calc_width(), height
 
     def viewport_repositioned(self):
@@ -1029,9 +1037,10 @@ class TableView(Widget):
         width = self.viewport.get_width()
         height = self.viewport.get_height()
         if self._should_place_header_view():
-            self.header_view.setFrame_(NSMakeRect(x, y, width, HEADER_HEIGHT))
-            self.tableview.setFrame_(NSMakeRect(x, y + HEADER_HEIGHT, 
-                width, height - HEADER_HEIGHT))
+            self.header_view.setFrame_(NSMakeRect(x, y,
+                width, self.header_height))
+            self.tableview.setFrame_(NSMakeRect(x, y + self.header_height, 
+                width, height - self.header_height))
         else:
             self.tableview.setFrame_(NSMakeRect(x, y, width, height))
 
