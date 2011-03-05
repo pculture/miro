@@ -773,7 +773,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.loading = True
             self.errorState = False
             self.signal_change()
-            return self.generate_feed()
+            self.generate_feed()
+            return
         self.actualFeed.update()
 
     def get_folder(self):
