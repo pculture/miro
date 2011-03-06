@@ -429,7 +429,6 @@ class AppController(NSObject):
 
         label = item.label
         if action == 'PlayPauseItem':
-            print 'PLAYPAUSE ITEM '
             label = item.state_labels.get(app.menu_manager.play_pause_state,
                                           item.label)
         else:
