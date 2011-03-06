@@ -232,7 +232,7 @@ def get_menu():
                              plural=_("_Save Items As")),
                     MenuItem(_("Copy Item _URL"), "CopyItemURL",
                              Shortcut("u", MOD),
-                             groups=["PlayableSelected_PlayPause"]),
+                             groups=["LocalItemSelected"]),
                     Separator(),
                     MenuItem(_("Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
@@ -878,6 +878,9 @@ class MenuStateManager(signals.SignalEmitter):
                 has_audio = True
             if item.remote:
                 is_remote = True
+
+        if len(selected_items) == 1 and not is_remote:
+            self.enabled_groups.add('LocalItemSelected')
 
         if downloaded:
             if not is_remote:
