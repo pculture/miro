@@ -77,6 +77,7 @@ class SharingBroken(widgetset.Background):
             _("You need to install the Bonjour libraries to be able to "
               "share files from Miro-to-Miro or to the Miro iPad app."))
         label.set_wrap(True)
+        label.set_size_request(550, -1)
         label.set_color((1, 1, 1))
         vbox.pack_start(widgetutil.align_left(label, top_pad=20))
         button = widgetset.Button(_("Click here to install"))
@@ -200,8 +201,7 @@ class ConnectTab(widgetset.VBox):
             sharing_broken = SharingBroken()
             sharing_broken.connect('install-clicked',
                                    self.daap_install_clicked)
-            self.pack_start(sharing_broken)
-
+            self.pack_start(widgetutil.align_center(sharing_broken))
 
         title = widgetset.HBox()
         logo = widgetset.ImageDisplay(imagepool.get(
@@ -326,7 +326,6 @@ class ConnectTab(widgetset.VBox):
         bottom.pack_start(hbox)
 
     def _build_app_store_section(self, bottom):
-
         # iPad link
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
