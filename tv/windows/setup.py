@@ -109,6 +109,7 @@ FFMPEG_PATH = os.path.join(
     BINARY_KIT_ROOT, 'ffmpeg', 'ffmpeg-r25766-swscale-r32562-mingw32-shared')
 FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 
+VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
 
 def find_data_files(dest_path_base, source_path):
@@ -302,6 +303,7 @@ data_files.append(('', [
             os.path.join(FFMPEG_PATH, 'bin', 'swscale-0.dll'),
             os.path.join(FFMPEG2THEORA_PATH, 'bin', 'ffmpeg2theora.exe')]))
 data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'presets', '*.ffpreset'))))
+data_files.append(('', glob(os.path.join(VCREDIST71_PATH, '*.dll'))))
 data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
 data_files.append((os.path.join('etc', 'gtk-2.0'), [
