@@ -1554,7 +1554,7 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
     # NOTE: we don't inherit from ListViewRenderer because we handle
     # everything ourselves, without using the Layout class
 
-    ICON_STATES = ('normal', 'unplayed', 'new', 'playing', 'downloading')
+    ICON_STATES = ('unplayed', 'new', 'playing', 'downloading')
     ICON_PROPORTIONS = 7.0 / 9.0 # width / height
     min_width = 7
     min_height = 9
@@ -1594,7 +1594,8 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         # center icon vertically and horizontally
         x = int((context.width - self.width) / 2)
         y = int((context.height - self.height) / 2)
-        icon.draw(context, x, y, icon.width, icon.height)
+        if icon:
+            icon.draw(context, x, y, icon.width, icon.height)
 
     def calc_icon(self):
         """Get the icon we should show.
@@ -1613,7 +1614,7 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
                 not self.info.is_external and not self.info.downloaded):
             return self.icon['new']
         else:
-            return self.icon['normal']
+            return None
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
