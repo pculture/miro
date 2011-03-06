@@ -204,6 +204,7 @@
 				<string>ogg</string>
 				<string>ogm</string>
 				<string>ogv</string>
+				<string>oga</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>
