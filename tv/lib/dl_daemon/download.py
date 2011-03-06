@@ -55,7 +55,8 @@ from miro import prefs
 from miro.dl_daemon import command
 from miro.dl_daemon import daemon
 from miro.util import (
-    check_f, check_u, stringify, MAX_TORRENT_SIZE, returns_filename)
+    check_f, check_u, stringify, MAX_TORRENT_SIZE, returns_filename, 
+    info_hash_from_magnet, is_magnet_uri)
 from miro.plat.utils import (
     get_available_bytes_for_movies, utf8_to_filename, PlatformFilenameType)
 
@@ -66,13 +67,15 @@ _downloads = {}
 
 _lock = RLock()
 
-def create_downloader(url, content_type, dlid):
+def create_downloader(url, content_type, dlid, magnet=None):
     """Creates a downloader based on the content_type.
     """
     check_u(url)
     check_u(content_type)
     if content_type == u'application/x-bittorrent':
         return BTDownloader(url, dlid)
+    elif content_type ==  u'application/x-magnet':
+        return BTDownloader(None, dlid, magnet=url)
     else:
         return HTTPDownloader(url, dlid, expectedContentType=content_type)
 
@@ -354,6 +357,10 @@ class TorrentSession(object):
 
     def find_duplicate_torrent(self, torrent_info):
         info_hash = info_hash_to_long(torrent_info.info_hash())
+        return self.info_hash_to_downloader.get(info_hash)
+
+    def find_duplicate_torrent_from_magnet(self, magnet):
+        info_hash = info_hash_to_long(info_hash_from_magnet(magnet))
         return self.info_hash_to_downloader.get(info_hash)
 
     def add_torrent(self, downloader):
@@ -957,7 +964,7 @@ class BTDownloader(BGDownloader):
     REANNOUNCE_LIMIT = 30
     FRD_PROBLEMS = 0
 
-    def __init__(self, url=None, item=None, restore=None):
+    def __init__(self, url=None, item=None, restore=None, magnet=None):
         self.metainfo = None
         self.torrent = None
         self.rate = self.eta = 0
@@ -973,6 +980,8 @@ class BTDownloader(BGDownloader):
         self.connections = -1
         self.metainfo_updated = False
         self.info_hash = None
+        self.magnet = magnet
+        self.get_delayed_metainfo = False
         if restore is not None:
             self.firstTime = False
             self.restore_state(restore)
@@ -987,15 +996,21 @@ class BTDownloader(BGDownloader):
 
     def _start_torrent(self):
         try:
-            torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
+            params = {}
+            if not self.magnet:
+                torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
+                params["ti"] = torrent_info
+                self.totalSize = torrent_info.total_size()
+                duplicate = TORRENT_SESSION.find_duplicate_torrent(params["ti"])
+            else:
+                duplicate = TORRENT_SESSION.find_duplicate_torrent_from_magnet(
+                                self.magnet)
 
-            duplicate = TORRENT_SESSION.find_duplicate_torrent(torrent_info)
             if duplicate is not None:
                 c = command.DuplicateTorrent(daemon.LAST_DAEMON,
                         duplicate.dlid, self.dlid)
                 c.send()
                 return
-            self.totalSize = torrent_info.total_size()
 
             if self.firstTime and not self.accept_download_size(self.totalSize):
                 self.handle_error(
@@ -1007,22 +1022,27 @@ class BTDownloader(BGDownloader):
 
             # the save_path needs to be a directory--that's where
             # libtorrent is going to save the torrent contents.
-            save_path = fileutil.expand_filename(self.filename)
-            if not os.path.isdir(save_path):
-                save_path = os.path.dirname(save_path)
+            params["save_path"] = fileutil.expand_filename(self.filename)
+            if not os.path.isdir(params["save_path"]):
+                params["save_path"] = os.path.dirname(params["save_path"])
+
+            params["auto_managed"] = False
+            params["paused"] = False
+            params["duplicate_is_error"] = True
+            params["storage_mode"] = lt.storage_mode_t.storage_mode_allocate
 
             if self.info_hash:
                 self.fast_resume_data = load_fast_resume_data(self.info_hash)
+                if self.fast_resume_data:
+                    params["resume_data"] = lt.bencode(self.fast_resume_data)
+
+            if(self.magnet):
+                self.torrent = lt.add_magnet_uri(TORRENT_SESSION.session, str(self.magnet), params)
+            else:
+                self.torrent = TORRENT_SESSION.session.add_torrent(params)
 
             if self.fast_resume_data:
-                self.torrent = TORRENT_SESSION.session.add_torrent(
-                    torrent_info, save_path, lt.bdecode(self.fast_resume_data),
-                    lt.storage_mode_t.storage_mode_allocate)
                 self.torrent.resume()
-            else:
-                self.torrent = TORRENT_SESSION.session.add_torrent(
-                    torrent_info, save_path, None,
-                    lt.storage_mode_t.storage_mode_allocate)
 
             self.info_hash = str(self.torrent.info_hash())
 
@@ -1185,6 +1205,11 @@ class BTDownloader(BGDownloader):
                      app.config.get(prefs.UPLOAD_RATIO))):
                     self.stop_upload()
 
+        # Initialize metadata once for magnet links
+        if self.get_delayed_metainfo and self.torrent.has_metadata():
+            self.got_delayed_metainfo()
+            self.get_delayed_metainfo = False
+
         self.update_fast_resume_data()
 
     def update_fast_resume_data(self, force=False):
@@ -1196,7 +1221,8 @@ class BTDownloader(BGDownloader):
             return
 
         time_now = time.time()
-        if not force and time_now < (self._last_frd_update + FRD_UPDATE_LIMIT):
+        if(not self.torrent.has_metadata() or 
+          (not force and time_now < (self._last_frd_update + FRD_UPDATE_LIMIT))):
             return
         self._last_frd_update = time_now
 
@@ -1235,6 +1261,13 @@ class BTDownloader(BGDownloader):
             BGDownloader.move_to_directory(self, directory)
 
     def restore_state(self, data):
+        # This is a bit of a hack since
+        # we currently don't differentiate 
+        # between magnet URIs and URLs 
+        # anywhere else than in this module
+        if is_magnet_uri(data['url']):
+            self.magnet = data['url']
+            data['url'] = None
         self.__dict__.update(data)
         self.rate = self.eta = 0
         self.upRate = 0
@@ -1351,6 +1384,34 @@ class BTDownloader(BGDownloader):
         self.update_client()
         self._resume_torrent()
 
+    # This does the same as got_metainfo, but for magnet links.
+    # While got_metainfo is called before a torrent is added
+    # got_delayed_metainfo() has to be called after a torrent
+    # is added and it has received the metainfo for the magnet link.
+    def got_delayed_metainfo(self):
+        if not self.torrent.has_metadata():
+            return
+        self.shortFilename =  utf8_to_filename(self.torrent.get_torrent_info().name())
+        # if torrent_info has more than one file, then this
+        # is a torrent of a bunch of files in a directory
+        is_directory = len(self.torrent.get_torrent_info().files()) > 1
+        try:
+            self.pick_initial_filename(
+                suffix="", torrent=True, is_directory=is_directory)
+            # Somewhere deep it calls makedirs() which can throw exceptions.
+            #
+            # Not sure if this is correct but if we throw a runtime error
+            # like above it can't hurt anyone.
+        except (OSError, IOError):
+            raise RuntimeError
+        # the save_path needs to be a directory--that's where
+        # libtorrent is going to save the torrent contents.
+        save_path = fileutil.expand_filename(self.filename)
+        if not os.path.isdir(save_path):
+            save_path = os.path.dirname(save_path)
+        self.torrent.move_storage(save_path)
+
+
     def handle_corrupt_torrent(self):
         self.handle_error(
             _("Corrupt Torrent"),
@@ -1380,7 +1441,20 @@ class BTDownloader(BGDownloader):
         self.handle_network_error(exception)
 
     def get_metainfo(self):
-        if self.metainfo is None:
+        # If it's a magnet link, skip getting meta info
+        if self.magnet:
+            # Use this to signal that the metainfo
+            # is not yet available and should be 
+            # added once they are available from
+            # the torrent.
+            self.get_delayed_metainfo = True
+            # This skips got metainfo and calls
+            # update_client() and _resume_torrent()
+            # directly.
+            self.update_client()
+            self._resume_torrent()
+            return
+        elif self.metainfo is None:
             if self.url.startswith('file://'):
                 path = get_file_url_path(self.url)
                 try:

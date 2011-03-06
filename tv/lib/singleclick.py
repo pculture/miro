@@ -49,6 +49,7 @@ from miro import folder
 from miro import httpclient
 from miro import prefs
 from miro import messages
+from miro.util import is_magnet_uri
 
 def check_url_exists(url):
     """Checks to see if there's an item with this url already
@@ -246,6 +247,8 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
     if metadata and 'mime_type' in metadata:
         # we've already got the mime type, don't do another call
         callback(None, metadata['mime_type'])
+    elif is_magnet_uri(url):
+        callback(None, 'application/x-magnet')
     else:
         httpclient.grab_headers(url, callback, errback)
 

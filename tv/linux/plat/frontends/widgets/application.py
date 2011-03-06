@@ -60,6 +60,7 @@ from miro.plat.utils import get_cookie_path
 from miro.plat.frontends.widgets import mediakeys
 from miro.plat.frontends.widgets import bonjour
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
+from miro.plat.associate import associate_protocols
 
 from miro.frontends.widgets.gtk.widgetset import Rect
 from miro.frontends.widgets.gtk import webkitgtkhacks
@@ -137,6 +138,7 @@ class LinuxApplication(Application):
 
         gtk.gdk.threads_init()
         self._setup_webkit()
+        associate_protocols()
         self.startup()
 
         logging.info("Linux version:     %s %s %s",

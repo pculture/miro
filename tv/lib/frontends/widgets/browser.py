@@ -203,6 +203,12 @@ class Browser(widgetset.Browser):
                                  metadata).send_to_backend()
             return False
 
+        if util.is_magnet_uri(url):
+            logging.debug("miro wants to handle %s", url)
+            messages.DownloadURL(url, unknown_callback,
+                                 metadata).send_to_backend()
+            return False
+
         return True
 
 class BrowserNav(widgetset.VBox):

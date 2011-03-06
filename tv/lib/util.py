@@ -1034,6 +1034,27 @@ def is_url(url):
         return True
     return False
 
+MAGNET_MATCH_RE = re.compile(r"^magnet:")
+
+def is_magnet_uri(uri):
+    """ Returns true if this is a magnet link
+        which can be handled by Miro.
+    """
+    if MAGNET_MATCH_RE.match(uri) is not None:
+        return True
+    return False
+
+MAGNET_INFO_HASH_MATCH = re.compile(r'(?<=btih:)[a-zA-Z0-9]+')
+
+def info_hash_from_magnet(uri):
+    """ Returns the magnet URIs bittorrent info hash if it has one.
+    """
+    m = MAGNET_INFO_HASH_MATCH.search(uri)
+    if m:
+        return m.group(0)
+    else:
+       return None
+
 def _strip_accents(text):
     nfkd_form = unicodedata.normalize('NFKD', unicode(text))
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])

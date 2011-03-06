@@ -54,7 +54,7 @@ from miro import item
 from miro import itemsource
 from miro import httpclient
 from miro import download_utils
-from miro.util import get_torrent_info_hash
+from miro.util import get_torrent_info_hash, is_magnet_uri
 from miro.plat.utils import samefile, filename_to_unicode
 from miro import singleclick
 from miro import opml
@@ -189,7 +189,8 @@ def parse_command_line_args(args):
         elif (arg.startswith('http:')
               or arg.startswith('https:')
               or arg.startswith('feed:')
-              or arg.startswith('feeds:')):
+              or arg.startswith('feeds:')
+              or is_magnet_uri(arg)):
             singleclick.add_download(filename_to_unicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()

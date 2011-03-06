@@ -64,7 +64,7 @@ from miro.plat import resources
 from miro import downloader
 from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
                        check_f, quote_unicode_url, escape, to_uni,
-                       is_url, stringify)
+                       is_url, stringify, is_magnet_uri)
 from miro import fileutil
 from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
 from miro.plat.filebundle import is_file_bundle
@@ -139,6 +139,8 @@ def validate_feed_url(url):
         return True
     if FILE_MATCH_RE.match(url) is not None:
         return True
+    if is_magnet_uri(url):
+        return True
     return False
 
 def normalize_feed_url(url):
@@ -146,6 +148,10 @@ def normalize_feed_url(url):
     # Valid URL are returned as-is
     if validate_feed_url(url):
         return url
+
+    #FIXME: actually sanitize magnet URIs
+    if is_magnet_uri(url):
+        return True
 
     originalURL = url
     url = url.strip()

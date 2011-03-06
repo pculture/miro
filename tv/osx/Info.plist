@@ -315,6 +315,17 @@
 			<string>Viewer</string>
 		</dict>
 	</array>
+        <array>
+                <dict>
+                        <key>CFBundleURLTypes</key>
+                        <key>CFBundleURLName</key>
+                        <string>BitTorrent Magnet URL</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                                <string>magnet</string>
+                        </array>
+                </dict>
+	</array>
 	<key>CFBundleGetInfoString</key>
 	<string>$appVersion ($appRevision), $copyright $publisher</string>
 	<key>CFBundleIdentifier</key>

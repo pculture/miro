@@ -176,6 +176,7 @@ def _has_video_type(enclosure):
                  or enclosure['type'] == u"application/ogg"
                  or enclosure['type'] == u"application/x-annodex"
                  or enclosure['type'] == u"application/x-bittorrent"
+                 or enclosure['type'] == u"application/x-magnet"
                  or enclosure['type'] == u"application/x-shockwave-flash")
             and (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
 

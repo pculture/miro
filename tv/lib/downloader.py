@@ -38,7 +38,7 @@ from miro.dl_daemon import daemon, command
 from miro.download_utils import (next_free_filename, get_file_url_path,
                                  filter_directory_name)
 from miro.util import (get_torrent_info_hash, returns_unicode, check_u,
-                       returns_filename, unicodify, check_f, to_uni)
+                       returns_filename, unicodify, check_f, to_uni, is_magnet_uri)
 from miro import app
 from miro import dialogs
 from miro import displaytext
@@ -205,6 +205,9 @@ class RemoteDownloader(DDBObject):
         self.run_downloader()
 
     def get_content_type(self):
+        if is_magnet_uri(self.url):
+            self.contentType = u'application/x-magnet'
+            return 
         httpclient.grab_headers(self.url, self.on_content_type,
                                 self.on_content_type_error)
 
@@ -486,7 +489,8 @@ class RemoteDownloader(DDBObject):
         "bittorrent".
         """
         self.confirm_db_thread()
-        if self.contentType == u'application/x-bittorrent':
+        if ((self.contentType == u'application/x-bittorrent'
+             or self.contentType == u'application/x-magnet')):
             return u"bittorrent"
 
         return u"http"
@@ -666,7 +670,11 @@ class RemoteDownloader(DDBObject):
         else:
             _downloads[self.dlid] = self
             dler_status = self.status
+            # FIXME: not sure why this is necessary
+            if self.contentType ==  u'application/x-magnet':
+                dler_status['url'] = self.url
             dler_status['metainfo'] = self.metainfo
+
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
                                                  dler_status)
             c.send()
@@ -885,6 +893,8 @@ def get_downloader_for_item(item):
         else:
             return RemoteDownloader(url, item, u'application/x-bittorrent',
                                     channelName=channelName)
+    elif is_magnet_uri(url):
+        return RemoteDownloader(url, item, u'application/x-magnet')
     else:
         return RemoteDownloader(url, item, channelName=channelName)
 
