@@ -1013,6 +1013,7 @@ def handle_key_press(key, mods):
                 # remove_items figure out what is being deleted.
                 app.widgetapp.remove_items()
             else:
+                app.playback_manager.on_movie_finished()
                 app.widgetapp.remove_items([playing])
             return True
 
