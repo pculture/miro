@@ -486,9 +486,9 @@ class GeneralPanel(DialogPanel):
         right = []
         right.append(RatingField(self.items))
         right.append(OptionsField('file_type', self.items, _("Type"), [
-            (u'audio', _("Audio")),
+            (u'audio', _("Music")),
             (u'video', _("Video")),
-            (u'other', _("Other"))
+            (u'other', _("Misc"))
         ]))
         right.append(DisplayField('size', self.items, _("Size"),
             displaytext.size_string, multiple='sum'))
