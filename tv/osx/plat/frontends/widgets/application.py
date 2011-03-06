@@ -427,13 +427,17 @@ class AppController(NSObject):
         action = menuitem.representedObject()
         item = menus.osx_menu_structure.get(action)
 
-        label = None
-        for state, actions in app.menu_manager.states.items():
-            if action in actions:
-                label = item.state_labels.get(state, item.label)
-                break
-        if label:
-            menuitem.setTitleWithMnemonic_(label.replace("_", "&"))
+        label = item.label
+        if action == 'PlayPauseItem':
+            print 'PLAYPAUSE ITEM '
+            label = item.state_labels.get(app.menu_manager.play_pause_state,
+                                          item.label)
+        else:
+            for state, actions in app.menu_manager.states.items():
+                if action in actions:
+                    label = item.state_labels.get(state, item.label)
+                    break
+        menuitem.setTitleWithMnemonic_(label.replace("_", "&"))
 
         group_names = item.groups
         for group_name in group_names:
