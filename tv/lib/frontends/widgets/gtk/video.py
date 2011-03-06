@@ -380,8 +380,9 @@ class VideoDetailsWidget(Background):
 
     def handle_delete(self, widget, event):
         item_info = self.item_info
-        self.reset()
+        app.playback_manager.on_movie_finished()
         app.widgetapp.remove_items([item_info])
+        self.reset()
 
     def handle_subtitles(self, widget, event):
         tracks = []
