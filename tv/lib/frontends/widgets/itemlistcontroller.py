@@ -979,11 +979,6 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
 
-    def build_header_toolbar(self):
-        toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
-        toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
-        return toolbar
-
     def check_for_empty_list(self):
         pass
 
