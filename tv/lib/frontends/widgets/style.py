@@ -92,6 +92,7 @@ class LowerBox(widgetset.Background):
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 34
+    MIN_ICON_WIDTH_TALL = 25
     MIN_ICON_WIDTH = 16
     MIN_HEIGHT = 28
     MIN_HEIGHT_TALL = 31
@@ -124,11 +125,12 @@ class TabRenderer(widgetset.CustomCellRenderer):
                 layout_manager.set_text_shadow(widgetutil.Shadow(
                         self.SELECTED_FONT_SHADOW, 0.5, (0, -1), 0))
         if not use_custom_tablist_font or getattr(self.data, 'tall', False):
+            min_icon_width = self.MIN_ICON_WIDTH_TALL
             layout_manager.set_font(self.TALL_FONT_SIZE, bold=bold)
         else:
+            min_icon_width = self.MIN_ICON_WIDTH
             layout_manager.set_font(self.FONT_SIZE, bold=bold)
         titlebox = layout_manager.textbox(self.data.name)
-
         hbox = cellpack.HBox(spacing=4)
         self.pack_leading_space(hbox)
         if selected and hasattr(self.data, 'active_icon'):
@@ -136,7 +138,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         else:
             icon = self.data.icon
         alignment = cellpack.Alignment(icon, yalign=0.5, yscale=0.0,
-                xalign=0.5, xscale=0.0, min_width=self.MIN_ICON_WIDTH)
+                xalign=0.0, xscale=0.0, min_width=min_icon_width)
         hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
         layout_manager.set_font(0.77)
@@ -195,8 +197,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
-    MIN_ICON_WIDTH = 25
-
     def pack_bubbles(self, hbox, layout_manager):
         if self.data.unwatched > 0:
             self.pack_bubble(hbox, layout_manager, self.data.unwatched,
@@ -206,8 +206,6 @@ class StaticTabRenderer(TabRenderer):
                     DOWNLOADING_COLOR)
 
 class ConnectTabRenderer(TabRenderer):
-    MIN_ICON_WIDTH = 25
-
     def pack_bubbles(self, hbox, layout_manager):
         if getattr(self.data, 'fake', False):
             return
