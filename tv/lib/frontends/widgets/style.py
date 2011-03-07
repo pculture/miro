@@ -467,7 +467,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
         layout.add_rect(background_rect, self.draw_background)
         # left side
         image_area_rect = inner_rect.left_side(self.IMAGE_WIDTH)
-        layout.add_rect(image_area_rect, self.draw_thumbnail)
+        layout.add_rect(image_area_rect, self.draw_thumbnail,
+                self.calc_thumbnail_hotspot())
         layout.add_rect(right_of_image_rect.left_side(1),
                 self.draw_thumbnail_separator)
         self.image_end_x = image_area_rect.right
@@ -488,6 +489,15 @@ class ItemRenderer(widgetset.InfoListRenderer):
             self.layout_main_bottom(layout, layout_manager, middle_rect)
             self.layout_right(layout, layout_manager, right_rect)
         return layout
+
+    def calc_thumbnail_hotspot(self):
+        """Decide what hotspot clicking on the thumbnail should activate."""
+        if not self.info.downloaded:
+            return 'thumbnail-download'
+        elif self.info.is_playable:
+            return 'thumbnail-play'
+        else:
+            return None
 
     def layout_text(self, layout, layout_manager, rect):
         """layout the text for our cell
