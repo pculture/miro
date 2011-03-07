@@ -100,7 +100,11 @@ class ItemContextMenuHandler(object):
             app.widgetapp.open_file(item.video_path)
             messages.MarkItemWatched(item).send_to_backend()
 
+        # drm items seem to go in misc and are always unplayable.
+        # given that, we check for drm first.
         if item.has_drm:
+            section.append((_('Play Externally'), play_externally))
+
             remove = self._remove_context_menu_item([item])
             if remove:
                 section.append(remove)
