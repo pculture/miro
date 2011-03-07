@@ -255,3 +255,6 @@ class DrawingMixin(object):
     def draw(self, context, layout_manager):
         pass
 
+    def viewport_repositioned(self):
+        self.queue_redraw()
+
