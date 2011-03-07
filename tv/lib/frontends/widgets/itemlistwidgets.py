@@ -162,6 +162,7 @@ class ResumePlaybackButton(widgetset.CustomButton):
     FONT_SIZE = 0.8
     TEXT_PADDING_LEFT = 5
     TEXT_PADDING_RIGHT = 5
+    MIN_TITLE_CHARS = 5
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -176,6 +177,7 @@ class ResumePlaybackButton(widgetset.CustomButton):
         self.title = self.resume_time = None
         self.non_text_width = (self.button.width + self.title_right.width +
                 self.TEXT_PADDING_LEFT + self.TEXT_PADDING_RIGHT)
+        self.min_usable_width = 0
 
     def update(self, title, resume_time):
         self.title = title
@@ -191,16 +193,22 @@ class ResumePlaybackButton(widgetset.CustomButton):
             return _("Resume %(item)s", {"item": title})
 
     def size_request(self, layout_manager):
-        if self.title is None:
-            return (0, 0)
+        # we want the button to dissapear when we get smaller than our min
+        # size.  To do that, we calculate our min size, store it, but then
+        # just return a 0 width
         layout_manager.set_font(self.FONT_SIZE)
         # request enough space to show at least a little text
-        text = self._make_text("ABCDEF", 123)
+        text = self._make_text("A" * self.MIN_TITLE_CHARS, 123)
         text_size = layout_manager.textbox(text).get_size()
-        width = text_size[0] + self.non_text_width
-        return (width, self.button.height)
+        self.min_usable_width = text_size[0] + self.non_text_width
+        return (0, self.button.height)
+
+    def do_size_allocated(self, width, height):
+        self.set_disabled(width < self.min_usable_width)
 
     def draw(self, context, layout_manager):
+        if self.get_disabled():
+            return
         if self.title is None:
             return
         if self.state == 'pressed':
@@ -236,8 +244,8 @@ class ResumePlaybackButton(widgetset.CustomButton):
                 self.resume_time))
             if textbox.get_size()[0] <= max_width:
                 return textbox
-        # we shouldn't get here, but as a fallback, use a blank title
-        return layout_manager.textbox(self._make_text('', self.resume_time))
+        # we can't fit the textbox in the space we have
+        return None
 
 class ItemListTitlebar(widgetset.Background):
     """Titlebar for feeds, playlists and static tabs that display

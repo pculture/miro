@@ -91,7 +91,7 @@ class LowerBox(widgetset.Background):
         return True
 
 class TabRenderer(widgetset.CustomCellRenderer):
-    MIN_WIDTH = 34
+    MIN_WIDTH = 120
     MIN_ICON_WIDTH_TALL = 25
     MIN_ICON_WIDTH = 16
     MIN_HEIGHT = 28
@@ -110,9 +110,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
             min_height = self.MIN_HEIGHT
             font_scale = self.FONT_SIZE
         return (self.MIN_WIDTH, max(min_height,
-            layout_manager.font(font_scale).line_height()))
-
-        return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
             layout_manager.font(font_scale).line_height()))
 
     def render(self, context, layout_manager, selected, hotspot, hover):
