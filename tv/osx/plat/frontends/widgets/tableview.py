@@ -824,6 +824,10 @@ class MiroTableHeaderCell(NSTableHeaderCell):
         self.button = widget
 
     def drawWithFrame_inView_(self, frame, view):
+        if self.button is None:
+            # use the default behavior when set_widget hasn't been called
+            return NSTableHeaderCell.drawWithFrame_inView_(self, frame, view)
+
         NSGraphicsContext.currentContext().saveGraphicsState()
         drawing_rect = NSMakeRect(frame.origin.x, frame.origin.y,
                        frame.size.width, frame.size.height)
