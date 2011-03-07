@@ -1246,11 +1246,11 @@ class SortBarButton(widgetset.CustomButton):
         if self._enabled:
             top = int((context.height - 4) / 2)
             if self._ascending:
-                context.move_to(left, top)
-                direction = 1
-            else:
                 context.move_to(left, top + 4)
                 direction = -1
+            else:
+                context.move_to(left, top)
+                direction = 1
             context.rel_line_to(6, 0)
             context.rel_line_to(-3, 4 * direction)
             context.rel_line_to(-3, -4 * direction)
