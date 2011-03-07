@@ -74,6 +74,7 @@ class WidgetStateStore(object):
         u'name': 130,
         u'rate': 60,
         u'rating': 75,
+        u'playlist': 30,
         u'show': 70,
         u'size': 65,
         u'state': 20,
@@ -115,11 +116,13 @@ class WidgetStateStore(object):
             [u'state', u'name', u'length', u'status', u'size', u'date'],
         u'search':
             [u'state', u'name', u'description'],
+        u'playlist':
+            [u'playlist', u'name', u'artist', u'album', u'track', u'length',
+                u'genre', u'year', u'rating'],
     }
     DEFAULT_COLUMNS[u'device-audio'] = DEFAULT_COLUMNS[u'music']
     DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
     DEFAULT_COLUMNS[u'folder-contents'] = DEFAULT_COLUMNS[u'music']
-    DEFAULT_COLUMNS[u'playlist'] = DEFAULT_COLUMNS[u'music']
     DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'music']
 
     AVAILABLE_COLUMNS = {}

@@ -150,15 +150,15 @@ class MiroTableCell(NSTextFieldCell):
             NSCell.setObjectValue_(self, value_dict)
 
 class MiroTableInfoListTextCell(MiroTableCell):
-    def initWithAttrName_(self, attr_name):
+    def initWithAttrGetter_(self, attr_getter):
         self = self.init()
-        self.attr_name = attr_name
+        self.attr_getter = attr_getter
         return self
 
     def setObjectValue_(self, value):
         if isinstance(value, tuple):
             info, attrs = value
-            cell_text = getattr(info, self.attr_name)
+            cell_text = self.attr_getter(info)
             NSCell.setObjectValue_(self, cell_text)
         else:
             # Getting set to a something other than a model row, usually this
@@ -377,13 +377,9 @@ class InfoListRenderer(CustomCellRenderer):
         return None
 
 class InfoListRendererText(CellRenderer):
-    def __init__(self, attr_name):
-        self.attr_name = attr_name
-        CellRenderer.__init__(self)
-
     def build_cell(self):
         cell = MiroTableInfoListTextCell.alloc()
-        return cell.initWithAttrName_(self.attr_name)
+        return cell.initWithAttrGetter_(self.get_value)
 
 def calc_row_height(view, model_row):
     row_height = 0

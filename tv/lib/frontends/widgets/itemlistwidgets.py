@@ -516,32 +516,22 @@ class SorterWidgetOwner(object):
             else:
                 widget.set_sort_indicator_visible(False)
 
-class StandardView(ItemView):
-    """TableView that displays a list of items using the standard
-    view.
-    """
-    BACKGROUND_COLOR = (0.05, 0.10, 0.15)
+class ColumnRendererSet(object):
+    """A set of potential columns for an ItemView"""
+    def __init__(self):
+        self._column_map = {}
 
-    draws_selection = False
+    def add_renderer(self, name, renderer):
+        self._column_map[name] = renderer
 
-    def __init__(self, item_list, scroll_pos, selection, display_channel=True):
-        ItemView.__init__(self, item_list, scroll_pos, selection)
-        self.display_channel = display_channel
-        self.renderer = self.build_renderer()
-        self.renderer.total_width = -1
-        self.column = widgetset.TableColumn('item', self.renderer)
-        self.set_column_spacing(0)
-        self.column.set_min_width(self.renderer.MIN_WIDTH)
-        self.add_column(self.column)
-        self.set_show_headers(False)
-        self.set_auto_resizes(True)
-        self.set_background_color(self.BACKGROUND_COLOR)
+    def get(self, name):
+        return self._column_map[name]
 
-    def build_renderer(self):
-        return style.ItemRenderer(self.display_channel)
+# FIXME: we could probably define StandardViewColumnRendererSet and that could
+# be a cleaner way of picking which ItemRenderer subclass to use and handling
+# display_channel
 
-class ListView(ItemView, SorterWidgetOwner):
-    """TableView that displays a list of items using the list view."""
+class ListViewColumnRendererSet(ColumnRendererSet):
     # FIXME: a unittest should verify that these exist for every possible field
     COLUMN_RENDERERS = {
         'state': style.StateCircleRenderer,
@@ -568,8 +558,40 @@ class ListView(ItemView, SorterWidgetOwner):
         'show': style.ShowRenderer,
         'kind': style.KindRenderer,
     }
+
+    def __init__(self):
+        ColumnRendererSet.__init__(self)
+        for name, klass in self.COLUMN_RENDERERS.items():
+            self.add_renderer(name, klass())
+
+class StandardView(ItemView):
+    """TableView that displays a list of items using the standard
+    view.
+    """
+    BACKGROUND_COLOR = (0.05, 0.10, 0.15)
+
+    draws_selection = False
+
+    def __init__(self, item_list, scroll_pos, selection, display_channel=True):
+        ItemView.__init__(self, item_list, scroll_pos, selection)
+        self.display_channel = display_channel
+        self.renderer = self.build_renderer()
+        self.renderer.total_width = -1
+        self.column = widgetset.TableColumn('item', self.renderer)
+        self.set_column_spacing(0)
+        self.column.set_min_width(self.renderer.MIN_WIDTH)
+        self.add_column(self.column)
+        self.set_show_headers(False)
+        self.set_auto_resizes(True)
+        self.set_background_color(self.BACKGROUND_COLOR)
+
+    def build_renderer(self):
+        return style.ItemRenderer(self.display_channel)
+
+class ListView(ItemView, SorterWidgetOwner):
+    """TableView that displays a list of items using the list view."""
     COLUMN_PADDING = 12
-    def __init__(self, item_list,
+    def __init__(self, item_list, renderer_set,
             columns_enabled, column_widths, scroll_pos, selection):
         ItemView.__init__(self, item_list, scroll_pos, selection)
         SorterWidgetOwner.__init__(self)
@@ -588,6 +610,7 @@ class ListView(ItemView, SorterWidgetOwner):
         self.set_grid_lines(False, False)
         self.set_alternate_row_backgrounds(True)
         self.html_stripper = util.HTMLStripper()
+        self.renderer_set = renderer_set
         self.update_columns(columns_enabled, column_widths)
 
     def _get_ui_state(self):
@@ -650,7 +673,7 @@ class ListView(ItemView, SorterWidgetOwner):
                 header = u''
             else:
                 header = widgetconst.COLUMN_LABELS[name]
-            renderer = ListView.COLUMN_RENDERERS[name]()
+            renderer = self.renderer_set.get(name)
             self._make_column(header, renderer, name, resizable, pad)
             self._column_by_label[header] = name
         for name in old_columns - set(new_columns):
@@ -678,6 +701,9 @@ class ListView(ItemView, SorterWidgetOwner):
         column.connect_weak('clicked', self.on_sorter_clicked, column_name)
         self._column_name_to_column[column_name] = column
         self.add_column(column)
+
+    def get_renderer(self, column_name):
+        return self._column_name_to_column[column_name].renderer
 
     def do_size_allocated(self, total_width, height):
         if not self._set_initial_widths:
@@ -1071,13 +1097,16 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
 
         self._button_map = {}
         self.sorter_widget_map = self._button_map
+        self._make_buttons()
+        self._button_map['date'].set_sort_order(ascending=False)
+
+        self.filter = WidgetStateStore.get_view_all_filter()
+
+    def _make_buttons(self):
         self._make_button(_('Name'), 'name')
         self._make_button(_('Date'), 'date')
         self._make_button(_('Size'), 'size')
         self._make_button(_('Time'), 'length')
-        self._button_map['date'].set_sort_order(ascending=False)
-
-        self.filter = WidgetStateStore.get_view_all_filter()
 
     def pack_hbox_extra(self):
         pass
@@ -1163,6 +1192,14 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.filter_switch.set_active('view-all', view_all)
         self.filter_switch.set_active('view-unwatched', unwatched)
         self.filter_switch.set_active('view-non-feed', non_feed)
+
+class PlaylistHeaderToolbar(HeaderToolbar):
+    def _make_buttons(self):
+        self._make_button(_('Order'), 'playlist')
+        self._make_button(_('Name'), 'name')
+        self._make_button(_('Date'), 'date')
+        self._make_button(_('Size'), 'size')
+        self._make_button(_('Time'), 'length')
 
 class SortBarButton(widgetset.CustomButton):
     def __init__(self, text):

@@ -293,15 +293,19 @@ class ItemListController(object):
 
     def get_sorter(self):
         sort_key = app.widget_state.get_sort_state(self.type, self.id)
-        return self.make_sorter(sort_key)
+        column, ascending = self.parse_sort_key(sort_key)
+        return self.make_sorter(column, ascending)
 
-    def make_sorter(self, key):
+    def parse_sort_key(self, key):
         if key.startswith('-'):
             column = key[1:]
             ascending = False
         else:
             column = key
             ascending = True
+        return column, ascending
+
+    def make_sorter(self, column, ascending):
         return itemlist.SORT_KEY_MAP[column](ascending)
 
     def make_sort_key(self, sorter):
@@ -415,18 +419,26 @@ class ItemListController(object):
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, list_view_type)
         selection = app.widget_state.get_selection(self.type, self.id)
-        list_view = itemlistwidgets.ListView(self.item_list,
+        column_renderers = self.build_column_renderers()
+        list_view = itemlistwidgets.ListView(self.item_list, column_renderers,
                 list_view_columns, list_view_widths, scroll_pos, selection)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
         return list_view
 
+    def build_column_renderers(self):
+        return itemlistwidgets.ListViewColumnRendererSet()
+
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
 
     def build_item_tracker(self):
-        return itemtrack.ItemListTracker.create(self.type, self.id)
+        tracker = itemtrack.ItemListTracker.create(self.type, self.id)
+        # call on_items_will_change with the initial items in our list
+        initial_items = tracker.item_list.get_items()
+        self.on_items_will_change(initial_items, [], [])
+        return tracker
 
     def expand_or_contract_item_details(self):
         expanded = app.widget_state.get_item_details_expanded(
@@ -455,7 +467,6 @@ class ItemListController(object):
             item_view.connect_weak('row-activated', self.on_row_activated)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
-            item_view.set_drag_dest(self.make_drop_handler())
 
     def initialize_search(self):
         search = app.inline_search_memory.get_search(self.type, self.id)
@@ -555,7 +566,7 @@ class ItemListController(object):
             self._trigger_item(item_view, info)
 
     def on_sort_changed(self, object, sort_key, ascending, view):
-        sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
+        sorter = self.make_sorter(sort_key, ascending)
         self.item_list.set_sort(sorter)
         self.send_model_changed()
         self.change_sort_indicators(sort_key, ascending)
@@ -836,9 +847,6 @@ class ItemListController(object):
 
     def make_drag_handler(self):
         return ItemListDragHandler()
-
-    def make_drop_handler(self):
-        return None
 
     def no_longer_displayed(self):
         self.save_selection()

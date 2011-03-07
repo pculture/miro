@@ -79,14 +79,21 @@ class DropHandler(signals.SignalEmitter):
 class PlaylistSort(itemlist.ItemSort):
     """Sort that orders items by their order in the playlist.
     """
-    KEY = None
+    KEY = 'playlist'
 
-    def __init__(self, initial_items):
+    def __init__(self, initial_items=None):
         itemlist.ItemSort.__init__(self, True)
-        self.current_postion = itertools.count()
+        self.reset_current_position()
         self.positions = {}
-        for item in initial_items:
-            self.positions[item.id] = self.current_postion.next()
+        if initial_items:
+            for item in initial_items:
+                self.positions[item.id] = self.current_postion.next()
+
+    def reset_current_position(self):
+        self.current_postion = itertools.count()
+
+    def set_ascending(self, ascending):
+        self.reverse = not ascending
 
     def add_items(self, item_list):
         for item in item_list:
@@ -96,8 +103,15 @@ class PlaylistSort(itemlist.ItemSort):
     def forget_items(self, id_list):
         for id in id_list:
             del self.positions[id]
+        new_items = self.positions.items()
+        new_items.sort(key=lambda row: row[1])
+        self.reset_current_position()
+        self.positions = {}
+        for id, old_position in new_items:
+            self.positions[id] = self.current_postion.next()
 
     def set_new_order(self, id_order):
+        self.reset_current_position()
         self.positions = dict((id, self.current_postion.next())
             for id in id_order)
 
@@ -127,44 +141,68 @@ class PlaylistSort(itemlist.ItemSort):
         return self.positions[item.id]
 
 class PlaylistStandardView(itemlistwidgets.StandardView):
-    def __init__(self, item_list, scroll_pos, selection, playlist_id):
+    def __init__(self, item_list, scroll_pos, selection, playlist_sorter):
+        self.playlist_sorter = playlist_sorter
         itemlistwidgets.StandardView.__init__(self, item_list,
                 scroll_pos, selection)
-        self.playlist_id = playlist_id
 
     def build_renderer(self):
-        return style.PlaylistItemRenderer(display_channel=True)
+        return style.PlaylistItemRenderer(self.playlist_sorter)
 
-class PlaylistView(itemlistcontroller.SimpleItemListController):
-
+class PlaylistItemController(itemlistcontroller.SimpleItemListController):
     def __init__(self, playlist_info):
         self.type = u'playlist'
         self.id = playlist_info.id
         self.is_folder = playlist_info.is_folder
+        self.playlist_sorter = PlaylistSort()
         itemlistcontroller.SimpleItemListController.__init__(self)
 
-    def get_sorter(self):
-        # playlists are always sorted with PlaylistSort. Set initial order if
-        # we got an ItemList that was already populated with items.  This
-        # happens when we switch back to a playlist that the PlaybackManager
-        # is playing from.
-        return PlaylistSort(initial_items=self.item_list.get_items())
+    def build_column_renderers(self):
+        column_renderers = itemlistwidgets.ListViewColumnRendererSet()
+        playlist_renderer = style.PlaylistOrderRenderer(self.playlist_sorter)
+        column_renderers.add_renderer('playlist', playlist_renderer)
+        return column_renderers
+
+    def _init_widget(self):
+        itemlistcontroller.SimpleItemListController._init_widget(self)
+        self.make_drop_handler()
+
+    def make_sorter(self, column, ascending):
+        if column == 'playlist':
+            self.playlist_sorter.set_ascending(ascending)
+            # slight bit of a hack here.  We enable/disable reordering based
+            # on the sort we return here.  The assumption is that we are going
+            # to use the sort we return, which seems reasonable.
+            if ascending:
+                self.enable_reorder()
+            else:
+                self.disable_reorder()
+            return self.playlist_sorter
+        else:
+            self.disable_reorder()
+            return itemlistcontroller.SimpleItemListController.make_sorter(
+                    self, column, ascending)
 
     def build_standard_view(self, scroll_pos, selection):
         return PlaylistStandardView(self.item_list, scroll_pos, selection,
-                self.id)
+                self.playlist_sorter)
 
     def on_items_will_change(self, added, changed, removed):
-        sorter = self.item_list.get_sort()
-        sorter.add_items(added)
-        sorter.forget_items(removed)
+        self.playlist_sorter.add_items(added)
+        self.playlist_sorter.forget_items(removed)
 
     def make_drop_handler(self):
-        sorter = self.item_list.get_sort()
-        handler = DropHandler(self.id, self.item_list, self.views.values(),
-                sorter)
-        handler.connect('new-order', self._on_new_order)
-        return handler
+        self.drop_handler = DropHandler(self.id, self.item_list,
+                self.views.values(), self.playlist_sorter)
+        self.drop_handler.connect('new-order', self._on_new_order)
+
+    def enable_reorder(self):
+        for view in self.all_item_views():
+            view.set_drag_dest(self.drop_handler)
+
+    def disable_reorder(self):
+        for view in self.all_item_views():
+            view.set_drag_dest(None)
 
     def make_context_menu_handler(self):
         if self.is_folder:
@@ -187,6 +225,9 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
                 'in the sidebar.')
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListDescription(text))
+
+    def build_header_toolbar(self):
+        return itemlistwidgets.PlaylistHeaderToolbar()
 
     def check_for_empty_list(self):
         list_empty = (self.item_list.get_count() == 0)

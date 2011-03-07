@@ -142,7 +142,7 @@ text_cell_data_func(GtkTreeViewColumn *tree_column,
                     GtkCellRenderer *cell,
                     GtkTreeModel *tree_model,
                     GtkTreeIter *iter,
-                    gchar* attr_name)
+                    PyObject* attr_getter)
 {
         PyObject* attr_obj;
         PyObject* attr_as_utf8;
@@ -153,7 +153,8 @@ text_cell_data_func(GtkTreeViewColumn *tree_column,
         gstate = PyGILState_Ensure();
         /* Get the python object for this cell */
         node = (InfoListNode*)iter->user_data;
-        attr_obj = PyObject_GetAttrString(node->info, attr_name);
+        attr_obj = PyObject_CallFunctionObjArgs(attr_getter, node->info,
+                                                NULL);
         if(!attr_obj) {
                 PyErr_Print();
                 return;
@@ -188,31 +189,36 @@ setup_text_cell_data_func(PyObject *self, PyObject *args)
 {
         PyObject* column;
         PyObject* renderer;
+        PyObject* attr_getter;
         GObject* g_column;
         GObject* g_renderer;
 
-        const char *attr_name;
-
-        if (!PyArg_ParseTuple(args, "O!O!s",
+        if (!PyArg_ParseTuple(args, "O!O!O",
                               PyGObject_Type, &column,
                               PyGObject_Type, &renderer,
-                              &attr_name)) {
+                              &attr_getter)) {
                 return NULL;
+        }
+        if(!PyCallable_Check(attr_getter)) {
+            PyErr_SetString(PyExc_TypeError,
+                            "attr_getter not callable");
+            return NULL;
         }
         /* Convert Python objects to GObjects */
         g_column = pygobject_get(column);
         g_renderer = pygobject_get(renderer);
 
         /* Set the cell data func
-         * Copy attr_name so that we own the reference, use g_free as our
+         * INCREF attr_getter so that we own a referenc.  Use Py_DECREF as our
          * destroy func to free it when we're done.
          * */
+        Py_INCREF(attr_getter);
         gtk_tree_view_column_set_cell_data_func(GTK_TREE_VIEW_COLUMN(g_column),
                                                 GTK_CELL_RENDERER(g_renderer),
                                                 (GtkTreeCellDataFunc)
                                                 text_cell_data_func,
-                                                g_strdup(attr_name),
-                                                g_free);
+                                                attr_getter,
+                                                Py_DecRef);
 
         Py_INCREF(Py_None);
         return Py_None;

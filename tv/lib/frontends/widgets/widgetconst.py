@@ -71,6 +71,7 @@ COLUMN_LABELS = {
     u'file-type': _('File Type'),
     u'show': _('Show'),
     u'kind': _('Video Kind'),
+    u'playlist': _('Order'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()

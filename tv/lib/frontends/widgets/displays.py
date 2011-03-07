@@ -359,7 +359,7 @@ class PlaylistDisplay(ItemListDisplay):
                selected_tabs[0].type != u'tab'
 
     def make_controller(self, playlist_info):
-        return playlist.PlaylistView(playlist_info)
+        return playlist.PlaylistItemController(playlist_info)
 
 class DeviceDisplayMixin(object):
     def __init__(self, tab_type, selected_tabs):

@@ -254,13 +254,9 @@ class InfoListRendererText(CellRenderer):
     """Renderer for InfoListModels that only display text
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
-    def __init__(self, attr_name):
-        CellRenderer.__init__(self)
-        self.attr_name = attr_name
-
     def setup_attributes(self, column, attr_map):
         infolist.gtk.setup_text_cell_data_func(column, self._renderer,
-                self.attr_name)
+                self.get_value)
 
 class MiroTreeView(gtk.TreeView):
     """Extends the GTK TreeView widget to help implement TableView

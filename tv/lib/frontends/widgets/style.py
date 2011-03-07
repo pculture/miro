@@ -284,6 +284,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     TORRENT_INFO_DATA_COLOR = widgetutil.WHITE
     ITEM_DESC_COLOR = (0.3, 0.3, 0.3)
     FEED_NAME_COLOR = (0.5, 0.5, 0.5)
+    PLAYLIST_ORDER_COLOR = widgetutil.BLACK
     RESUME_TEXT_COLOR = css_to_color('#306219')
     RESUME_TEXT_SHADOW = widgetutil.WHITE
     UNPLAYED_TEXT_COLOR = css_to_color('#d8ffc7')
@@ -533,12 +534,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 family=widgetset.ITEM_DESC_FONT)
         layout_manager.set_text_color(self.ITEM_DESC_COLOR)
         textbox = layout_manager.textbox("")
-        if self.display_channel and self.info.feed_name:
-            feed_text = "%s: " % self.info.feed_name
-            textbox.append_text(feed_text, color=self.FEED_NAME_COLOR)
-            self.description_text_start = len(feed_text)
-        else:
-            self.description_text_start = 0
+        self.description_text_start = self.add_description_preface(textbox)
 
         if (self.info.download_info and self.info.download_info.torrent and
                 self.info.children):
@@ -555,6 +551,14 @@ class ItemRenderer(widgetset.InfoListRenderer):
             textbox.append_text(text[pos:])
         self.description_links = links
         return textbox
+
+    def add_description_preface(self, textbox):
+        if self.display_channel and self.info.feed_name:
+            feed_preface = "%s: " % self.info.feed_name
+            textbox.append_text(feed_preface, color=self.FEED_NAME_COLOR)
+            return len(feed_preface)
+        else:
+            return 0
 
     def layout_main_bottom(self, layout, layout_manager, rect):
         """Layout the bottom part of the main section.
@@ -1180,8 +1184,21 @@ class _EmblemDrawer(object):
                 cap_image.height)
 
 class PlaylistItemRenderer(ItemRenderer):
+    def __init__(self, playlist_sorter):
+        ItemRenderer.__init__(self, display_channel=False)
+        self.playlist_sorter = playlist_sorter
+
     def add_remove_button(self, layout, x, y):
         self._add_image_button(layout, x, y, 'remove-playlist', 'remove')
+
+    def add_description_preface(self, textbox):
+        order_number = self.playlist_sorter.sort_key(self.info) + 1
+        if self.info.description_stripped[0]:
+            sort_key_preface = "%s - " % order_number
+        else:
+            sort_key_preface = str(order_number)
+        textbox.append_text(sort_key_preface, color=self.PLAYLIST_ORDER_COLOR)
+        return len(sort_key_preface)
 
 class SharingItemRenderer(ItemRenderer):
     def calc_extra_button(self):
@@ -1205,12 +1222,15 @@ class ListViewRendererText(widgetset.InfoListRendererText):
     right_aligned = False
 
     def __init__(self):
-        widgetset.InfoListRendererText.__init__(self, self.attr_name)
+        widgetset.InfoListRendererText.__init__(self)
         self.set_bold(self.bold)
         self.set_color(self.color)
         self.set_font_scale(self.font_size)
         if self.right_aligned:
             self.set_align('right')
+
+    def get_value(self, info):
+        return getattr(info, self.attr_name)
 
 class DescriptionRenderer(ListViewRendererText):
     color = (0.6, 0.6, 0.6)
@@ -1272,6 +1292,16 @@ class ShowRenderer(ListViewRendererText):
 
 class KindRenderer(ListViewRendererText):
     attr_name = 'display_kind'
+
+class PlaylistOrderRenderer(ListViewRendererText):
+    """Displays the order an item is in a particular playlist.
+    """
+    def __init__(self, playlist_sorter):
+        ListViewRendererText.__init__(self)
+        self.playlist_sorter = playlist_sorter
+
+    def get_value(self, info):
+        return str(self.playlist_sorter.sort_key(info))
 
 class ListViewRenderer(widgetset.InfoListRenderer):
     """Renderer for more complex list view columns.
