@@ -923,15 +923,10 @@ class PlaybackPanel(PanelBuilder):
         separate_cbx = widgetset.Checkbox(
             _('Always play videos in a separate window.'))
 
-        resume_videos_cbx = widgetset.Checkbox(
-            _('Resume playback on videos.'))
-        resume_music_cbx = widgetset.Checkbox(
-            _('Resume playback on music.'))
-        resume_podcasts_cbx = widgetset.Checkbox(
-            _('Resume playback on podcasts.'))
-
         subtitles_cbx = widgetset.Checkbox(
             _('Automatically enable movie subtitles when available.'))
+
+        playback_heading = dialogwidgets.heading(_("Continuous Playback"))
 
         rbg = widgetset.RadioButtonGroup()
         play_rb = widgetset.RadioButton(
@@ -939,15 +934,40 @@ class PlaybackPanel(PanelBuilder):
         stop_rb = widgetset.RadioButton(
             _("Stop after each video or audio item"), rbg)
 
-        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_videos_cbx,
+        resume_heading = dialogwidgets.heading(_("Resume Playback"))
+
+        resume_videos_cbx = widgetset.Checkbox(
+            _('Continue playing videos from where they were last stopped.'))
+        resume_music_cbx = widgetset.Checkbox(
+            _('Continue playing music files from where they were last stopped.'))
+        resume_podcasts_cbx = widgetset.Checkbox(
+            _('Continue playing podcast files from where they were last stopped.'))
+
+        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_heading,
+                                                      resume_videos_cbx,
                                                       resume_music_cbx, 
                                                       resume_podcasts_cbx,
-                                                      subtitles_cbx, play_rb,
-                                                      stop_rb))
+                                                      subtitles_cbx, playback_heading,
+                                                      play_rb, stop_rb))
+
         v.pack_start(widgetutil.align_left(miro_cbx, bottom_pad=6))
 
         attach_boolean(separate_cbx, prefs.PLAY_DETACHED)
         v.pack_start(widgetutil.align_left(separate_cbx, bottom_pad=6))
+
+        attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
+        v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))
+
+        v.pack_start(widgetutil.align_left(playback_heading, 
+                     left_pad=3, top_pad=6 , bottom_pad=6))
+
+        attach_radio([(stop_rb, True), (play_rb, False)],
+                     prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        v.pack_start(widgetutil.align_left(play_rb), padding=2)
+        v.pack_start(widgetutil.align_left(stop_rb))
+
+        v.pack_start(widgetutil.align_left(resume_heading, 
+                     left_pad=3, top_pad=12 , bottom_pad=6))
 
         attach_boolean(resume_videos_cbx, prefs.RESUME_VIDEOS_MODE)
         attach_boolean(resume_music_cbx, prefs.RESUME_MUSIC_MODE)
@@ -955,14 +975,6 @@ class PlaybackPanel(PanelBuilder):
         v.pack_start(widgetutil.align_left(resume_videos_cbx, bottom_pad=6))
         v.pack_start(widgetutil.align_left(resume_music_cbx, bottom_pad=6))
         v.pack_start(widgetutil.align_left(resume_podcasts_cbx, bottom_pad=6))
-
-        attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
-        v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))
-
-        attach_radio([(stop_rb, True), (play_rb, False)],
-                     prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-        v.pack_start(widgetutil.align_left(play_rb), padding=2)
-        v.pack_start(widgetutil.align_left(stop_rb))
 
         pack_extras(v, "playback")
 
