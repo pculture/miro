@@ -32,11 +32,11 @@
 from hashlib import md5
 
 from miro import app
+from miro import prefs
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.plat import resources
-from miro import prefs
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
@@ -44,16 +44,6 @@ from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import timer
-
-# this maps guide urls to titles we'd rather they use.
-_guide_url_to_title_map = {
-    prefs.CHANNEL_GUIDE_URL.default: _("Miro Guide")
-    }
-
-# this maps guide urls to icons we'd rather they use.
-_guide_url_to_icon_map = {
-    prefs.CHANNEL_GUIDE_URL.default: 'icon-guide'
-    }
 
 def send_new_order():
     def append_items(sequence, typ):
@@ -229,6 +219,7 @@ class LibraryTabList(StaticTabListBase):
         self.auto_tabs_to_show = set()
 
     def build_tabs(self):
+        self.add(statictabs.ChannelGuideTab())
         self.add(statictabs.VideoLibraryTab())
         self.add(statictabs.AudioLibraryTab())
         self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
@@ -962,34 +953,13 @@ class SiteList(HideableTabList):
     ALLOW_MULTIPLE = True
 
     def on_delete_key_pressed(self):
-        selected_rows = [self.view.model[iter][0] for iter in \
-                         self.view.get_selection()]
-        if len(selected_rows) == 1 and selected_rows[0].default:
-            return # don't delete the default
         app.widgetapp.remove_current_site()
 
     def init_info(self, info):
         if info is self.info:
             return
-        if info.default: # default guide has some special rules
-            self.default_info = info
-            if info.url in _guide_url_to_title_map:
-                info.name = _guide_url_to_title_map[info.url]
-            if info.url in _guide_url_to_icon_map:
-                # one of our default guides
-                info.icon_name = _guide_url_to_icon_map[info.url]
-                info.icon = widgetutil.make_surface(info.icon_name)
-            elif info.faviconIsDefault:
-                # theme guide with the default favicon
-                info.icon = widgetutil.make_surface('icon-guide')
-            else:
-                # theme guide with a favicon
-                surface = imagepool.get_surface(info.favicon)
-                if surface.width != 25 or surface.height != 25:
-                    self.icon = imagepool.get_surface(info.favicon,
-                                                      size=(25, 25))
-                else:
-                    self.icon = surface
+        if info.favicon:
+            thumb_path = info.favicon
         else:
             if info.favicon:
                 thumb_path = info.favicon
@@ -997,34 +967,27 @@ class SiteList(HideableTabList):
                 thumb_path = resources.path('images/icon-source.png')
                 info.active_icon = imagepool.get_surface(
                     resources.path('image/icon-source_active.png'))
-            surface = imagepool.get_surface(thumb_path)
-            if surface.width > 16 or surface.height > 16:
-                info.icon = imagepool.get_surface(thumb_path, size=(16, 16))
-            else:
-                info.icon = surface
+        surface = imagepool.get_surface(thumb_path)
+        if surface.width > 16 or surface.height > 16:
+            info.icon = imagepool.get_surface(thumb_path, size=(16, 16))
+        else:
+            info.icon = surface
         info.unwatched = info.available = 0
         info.type = self.type
 
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter][0] for iter in \
                 table_view.get_selection()]
-        editable = not bool([True for info in selected_rows
-                             if info.type != u'tab' and info.default])
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
                 return []
-            rows = [(_('Copy URL to clipboard'), app.widgetapp.copy_site_url)]
-            if editable:
-                rows.extend([
+            return [(_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
                     (_('Rename Source'), app.widgetapp.rename_something),
-                    (_('Remove Source'), app.widgetapp.remove_current_site)])
-            return rows
-        elif editable:
+                    (_('Remove Source'), app.widgetapp.remove_current_site)]
+        else:
             return [
                 (_('Remove Sources'), app.widgetapp.remove_current_site),
-            ]
-        else:
-            return []
+                ]
 
 class StoreList(SiteList):
     type = u'store'

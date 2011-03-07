@@ -79,6 +79,9 @@ class TabListManager(object):
         self.selected_tabs = [view.model[iter][0]]
         self.handle_new_selection()
 
+    def handle_startup_selection(self):
+        self.handle_new_selection()
+
     def handle_new_selection(self):
         app.display_manager.select_display_for_tabs(self.selected_tab_list,
                 self.selected_tabs)
@@ -99,12 +102,8 @@ class TabListManager(object):
             self.playlist_list, self.store_list)
 
     def select_guide(self):
-        default_info = self.site_list.default_info
-        iter = self.site_list.iter_map[default_info.id]
-        try:
-            self._select_from_tab_list(self.site_list, iter)
-        except ValueError:
-            self.select_search()
+        iter = self.library_tab_list.view.model.first_iter()
+        self._select_from_tab_list(self.library_tab_list, iter)
 
     def select_search(self):
         iter = self.static_tab_list.view.model.first_iter()

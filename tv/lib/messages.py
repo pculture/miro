@@ -1111,6 +1111,9 @@ class GuideInfo(object):
         self.faviconIsDefault = not (guide.icon_cache and
                                      guide.icon_cache.get_filename())
 
+    def __repr__(self):
+        return '<miro.messages.GuideInfo(%i) "%s">' % (self.id, self.name)
+
 class ItemInfo(object):
     """Tracks the state of an item
 

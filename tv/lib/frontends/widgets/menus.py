@@ -796,18 +796,17 @@ class MenuStateManager(signals.SignalEmitter):
         """Handle the user selecting things in the site list.
         selected_sites is a list of GuideInfo objects
         """
-        editable = not bool([True for info in selected_sites
-                             if info.default or info.store])
+        has_stores = bool([True for info in selected_sites if info.store])
         self.enabled_groups.add('SitesSelected')
-        if editable:
+        if not has_stores:
             self.enabled_groups.add("RemoveAllowed")
         if len(selected_sites) == 1:
             self.enabled_groups.add('SiteSelected')
-            if editable:
+            if not has_stores:
                 self.enabled_groups.add("RenameAllowed")
                 self.states["site"].append("RemoveSomething")
                 self.states["site"].append("RenameSomething")
-        elif editable:
+        elif not has_stores:
             self.states["sites"].append("RemoveSomething")
             self.states["sites"].append("RenameSomething")
 
