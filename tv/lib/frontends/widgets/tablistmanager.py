@@ -176,13 +176,11 @@ class TabListManager(object):
             return
         info = model[iter][0]
         if info.type == u'tab':
-            # hideable tab list, try to select the first child
-            iter = model.child_iter(iter)
-            if iter is None:
-                self.select_guide()
-                app.widgetapp.handle_soft_failure("handle_no_tabs_selected",
-                    'HideableTabList has no child', with_exception=False)
-                return
+            # hideable tab list.  If we have a child, select it.  Otherwise,
+            # select the top-level tab
+            child = model.child_iter(iter)
+            if child is not None:
+                iter = child
         self._select_from_tab_list(self.selected_tab_list, iter)
 
     def get_selection(self):

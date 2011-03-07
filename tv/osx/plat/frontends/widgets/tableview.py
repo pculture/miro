@@ -922,12 +922,20 @@ class TableView(Widget):
         if self._selected_before_change is None:
             self._selected_before_change = self.model.remember_selection(
                     self.tableview)
-            self.tableview.deselectAll_(nil)
 
     def update_selection_after_change(self):
+        if not self._selected_before_change:
+            # short-circuit if nothing is selected.  This actually prevents a
+            # bug in the current widgets startup code.
+            return
+        # wait until we're done with all work to emit selection changed
+        self._ignore_selection_changed = True
+        self.tableview.deselectAll_(nil)
         self.model.restore_selection(self.tableview,
                 self._selected_before_change)
+        self._ignore_selection_changed = False
         self._selected_before_change = None
+        self._emit_selection_changed()
 
     def on_model_structure_change(self, model):
         self.reload_needed = True
