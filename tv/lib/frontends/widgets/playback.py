@@ -240,9 +240,13 @@ class PlaybackManager (signals.SignalEmitter):
            return False
 
         # FIXME: we should have a better way of deciding
-        # which tab something is listed in.
+        # which tab something is listed in.  In addition, assume all items
+        # from a remote share is either audio or video (no podcast).
         # Figure out if its from a library or feed
-        if(self.playlist.currently_playing.feed_url.startswith('dtv:directoryfeed')):
+        currently_playing = self.playlist.currently_playing
+        if (currently_playing.remote or 
+          (currently_playing.feed_url and 
+          currently_playing.feed_url.startswith('dtv:directoryfeed'))):
             if(self.playlist.currently_playing.file_type == u'video'):
                 resume = app.config.get(prefs.RESUME_VIDEOS_MODE)
             else:
