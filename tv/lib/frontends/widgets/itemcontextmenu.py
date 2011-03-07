@@ -100,7 +100,12 @@ class ItemContextMenuHandler(object):
             app.widgetapp.open_file(item.video_path)
             messages.MarkItemWatched(item).send_to_backend()
 
-        if item.is_playable:
+        if item.has_drm:
+            remove = self._remove_context_menu_item([item])
+            if remove:
+                section.append(remove)
+
+        elif item.is_playable:
             # Show File in Finder
             if not item.remote:
                 if file_navigator_name:
