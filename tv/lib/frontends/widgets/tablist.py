@@ -98,7 +98,7 @@ class TabListView(widgetset.TableView):
         self.set_show_headers(False)
         self.set_gradient_highlight(True)
         self.set_background_color(style.TAB_LIST_BACKGROUND_COLOR)
-        self.set_fixed_height(True)
+        self.set_fixed_height(False)
         self.set_auto_resizes(True)
 
     def append_tab(self, tab_info):
@@ -199,7 +199,6 @@ class StaticTabList(StaticTabListBase):
         self.type = u'static'
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
-        self.view.set_fixed_height(False)
 
     def build_tabs(self):
         self.add(statictabs.SearchTab())
@@ -212,7 +211,6 @@ class LibraryTabList(StaticTabListBase):
         self.type = u'library'
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
-        self.view.set_fixed_height(False)
         self.view.set_drag_dest(MediaTypeDropHandler())
         self.view.connect('selection-changed', self.on_selection_changed)
         self.auto_tabs = None
