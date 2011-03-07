@@ -92,12 +92,13 @@ class LowerBox(widgetset.Background):
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 34
-    MIN_ICON_WIDTH = 25
+    MIN_ICON_WIDTH = 16
     MIN_HEIGHT = 28
-    MIN_HEIGHT_TALL = 32
+    MIN_HEIGHT_TALL = 31
     TALL_FONT_SIZE = 1.0
     FONT_SIZE = 0.85
-    SELECTED_FONT_COLOR = (1, 1, 1)
+    SELECTED_FONT_COLOR = widgetutil.WHITE
+    SELECTED_FONT_SHADOW = widgetutil.BLACK
 
     def get_size(self, style, layout_manager):
         if (not use_custom_tablist_font or
@@ -120,6 +121,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
             bold = True
             if use_custom_tablist_font:
                 layout_manager.set_text_color(self.SELECTED_FONT_COLOR)
+                layout_manager.set_text_shadow(widgetutil.Shadow(
+                        self.SELECTED_FONT_SHADOW, 0.5, (0, -1), 0))
         if not use_custom_tablist_font or getattr(self.data, 'tall', False):
             layout_manager.set_font(self.TALL_FONT_SIZE, bold=bold)
         else:
@@ -192,8 +195,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
-    def pack_leading_space(self, hbox):
-        hbox.pack_space(14)
+    MIN_ICON_WIDTH = 25
 
     def pack_bubbles(self, hbox, layout_manager):
         if self.data.unwatched > 0:
@@ -204,6 +206,8 @@ class StaticTabRenderer(TabRenderer):
                     DOWNLOADING_COLOR)
 
 class ConnectTabRenderer(TabRenderer):
+    MIN_ICON_WIDTH = 25
+
     def pack_bubbles(self, hbox, layout_manager):
         if getattr(self.data, 'fake', False):
             return

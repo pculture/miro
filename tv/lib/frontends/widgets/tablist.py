@@ -207,8 +207,7 @@ class StaticTabList(StaticTabListBase):
     def __init__(self):
         StaticTabListBase.__init__(self)
         self.type = u'static'
-        self.view = TabListView(style.StaticTabRenderer(),
-                widgetset.TableModel)
+        self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
 
@@ -221,8 +220,7 @@ class LibraryTabList(StaticTabListBase):
     def __init__(self):
         StaticTabListBase.__init__(self)
         self.type = u'library'
-        self.view = TabListView(style.StaticTabRenderer(),
-                                widgetset.TableModel)
+        self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
         self.view.set_drag_dest(MediaTypeDropHandler())
