@@ -31,7 +31,7 @@
 
 from miro.gtcache import gettext as _
 from miro import app
-from miro.gtcache import ngettext
+from miro.gtcache import declarify, ngettext
 from miro import messages
 from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets import itemcontextmenu
@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -62,11 +63,7 @@ class FeedController(itemlistcontroller.ItemListController,
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
 
-        if feed_info.is_directory_feed:
-            self.titlebar = itemlistwidgets.FilteredTitlebar()
-        else:
-            self.titlebar = itemlistwidgets.ChannelTitlebar()
-            self.titlebar.connect('save-search', self._on_save_search)
+        self.titlebar = self.make_titlebar(feed_info)
         self.titlebar.connect('toggle-filter', self.on_toggle_filter)
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
@@ -83,6 +80,14 @@ class FeedController(itemlistcontroller.ItemListController,
     def build_standard_view(self, scroll_pos, selection):
         return itemlistwidgets.StandardView(self.item_list, scroll_pos,
                 selection, self.is_folder)
+
+    def make_titlebar(self, feed_info):
+        if feed_info.is_directory_feed:
+            return itemlistwidgets.FilteredTitlebar()
+        else:
+            titlebar = itemlistwidgets.ChannelTitlebar()
+            titlebar.connect('save-search', self._on_save_search)
+            return titlebar
 
     def check_for_empty_list(self):
         # TODO: should we do something here?
@@ -207,7 +212,5 @@ class FeedController(itemlistcontroller.ItemListController,
 
 class AllFeedsController(FeedController):
 
-    def build_header_toolbar(self):
-        toolbar = itemlistwidgets.AllFeedsHeaderToolbar()
-        toolbar.connect_weak('toggle-filter', self.on_toggle_filter)
-        return toolbar
+    def make_titlebar(self, feed_info):
+        return itemlistwidgets.AllFeedsTitlebar()

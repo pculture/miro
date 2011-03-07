@@ -417,6 +417,23 @@ class FilteredTitlebar(ItemListTitlebar):
         self.filters['only-downloaded'].set_enabled(downloaded)
         self.filters['only-unplayed'].set_enabled(unwatched)
 
+class AllFeedsTitlebar(FilteredTitlebar):
+    def __init__(self):
+        FilteredTitlebar.__init__(self)
+        view_video = WidgetStateStore.get_view_video_filter()
+        view_audio = WidgetStateStore.get_view_audio_filter()
+        self.add_filter('view-video', 'toggle-filter', view_video,
+                        _('Video'))
+        self.add_filter('view-audio', 'toggle-filter', view_audio,
+                        _('Audio'))
+
+    def toggle_filter(self, filter_):
+        FilteredTitlebar.toggle_filter(self, filter_)
+        view_video = WidgetStateStore.is_view_video_filter(self.filter)
+        view_audio = WidgetStateStore.is_view_audio_filter(self.filter)
+        self.filters['view-video'].set_enabled(view_video)
+        self.filters['view-audio'].set_enabled(view_audio)
+
 class ChannelTitlebar(SearchTitlebar, FilteredTitlebar):
     """Titlebar for a channel
     """
@@ -1109,29 +1126,6 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
     def toggle_filter(self, filter_):
         # implemented by subclasses
         pass
-
-class AllFeedsHeaderToolbar(HeaderToolbar):
-    def pack_hbox_extra(self):
-        self.make_filter_switch(behavior='radio')
-        view_all = WidgetStateStore.get_view_all_filter()
-        view_video = WidgetStateStore.get_view_video_filter()
-        view_audio = WidgetStateStore.get_view_audio_filter()
-        self.add_filter('view-all', 'toggle-filter', view_all,
-                        declarify(_('View|All')))
-        self.add_filter('view-video', 'toggle-filter', view_video,
-                        _('Video'))
-        self.add_filter('view-audio', 'toggle-filter', view_audio,
-                        _('Audio'))
-        self.add_filter_switch()
-
-    def toggle_filter(self, filter_):
-        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
-        if WidgetStateStore.is_view_video_filter(self.filter):
-            self.filter_switch.set_active('view-video')
-        elif WidgetStateStore.is_view_audio_filter(self.filter):
-            self.filter_switch.set_active('view-audio')
-        else:
-            self.filter_switch.set_active('view-all')
 
 class LibraryHeaderToolbar(HeaderToolbar):
     def __init__(self, unwatched_label):
