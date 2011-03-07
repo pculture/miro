@@ -75,7 +75,9 @@ class SharingBroken(widgetset.Background):
         vbox.pack_start(widgetutil.align_left(label, top_pad=10))
         label = widgetset.Label(
             _("You need to install the Bonjour libraries to be able to "
-              "share files from Miro-to-Miro or to the Miro iPad app."))
+              "share files from Miro-to-Miro or to the Miro iPad app.\n\n"
+              "Once you install the Bonjour libraries, you will have "
+              "to restart Miro."))
         label.set_wrap(True)
         label.set_size_request(550, -1)
         label.set_color((1, 1, 1))
@@ -241,6 +243,14 @@ class ConnectTab(widgetset.VBox):
         label.set_size_request(550, -1)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
+
+        if not app.sharing_manager.mdns_present:
+            label = widgetset.Label(_("Disabled: Needs Bonjour"))
+            label.set_bold(True)
+            bottom.pack_start(widgetutil.align_left(
+                    label, left_pad=20, bottom_pad=20, top_pad=10))
+            return
+
         vbox = widgetset.VBox()
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.Checkbox(_("Videos")))
