@@ -39,14 +39,12 @@ from miro.frontends.widgets import widgetutil
 class StaticTab(object):
     type = u'static'
     tall = True
-    has_active = True
 
     def __init__(self):
         self.unwatched = self.downloading = 0
         self.icon = widgetutil.make_surface(self.icon_name)
-        if self.has_active:
-            self.active_icon = widgetutil.make_surface(
-                self.icon_name + '_active')
+        self.active_icon = widgetutil.make_surface(
+            self.icon_name + '_active')
 
 # this maps guide urls to titles we'd rather they use.
 _guide_url_to_title_map = {
@@ -62,7 +60,6 @@ class ChannelGuideTab(StaticTab):
     id = u'guide'
     name = u''
     icon_name = 'icon-guide'
-    has_active = False
 
     def __init__(self):
         StaticTab.__init__(self)
@@ -87,11 +84,14 @@ class ChannelGuideTab(StaticTab):
 
         if guide_info.default and guide_info.url in _guide_url_to_icon_map:
             # one of our default guides
-            self.icon_name = _guide_url_to_icon_map[guide_info.url]
-            self.icon = widgetutil.make_surface(self.icon_name)
+            icon_name = _guide_url_to_icon_map[guide_info.url]
+            if icon_name != self.icon_name:
+                self.icon_name = _guide_url_to_icon_map[guide_info.url]
+                self.icon = widgetutil.make_surface(self.icon_name)
+                del self.active_icon
         elif guide_info.faviconIsDefault:
             # theme guide that should use default favicon
-            self.icon = widgetutil.make_surface(self.icon_name)
+            pass
         else:
             # theme guide with a favicon
             surface = imagepool.get_surface(guide_info.favicon)
@@ -100,6 +100,7 @@ class ChannelGuideTab(StaticTab):
                                                   size=(23, 23))
             else:
                 self.icon = surface
+            del self.active_icon
 
 class SearchTab(StaticTab):
     type = u'search'
