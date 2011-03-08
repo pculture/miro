@@ -1601,6 +1601,7 @@ class SharingInfo(object):
         self.host = host
         self.port = port
         self.mount = False
+        self.stale = False
         self.is_updating = False
         self.playlist_id = playlist_id
         if parent_id is not None:

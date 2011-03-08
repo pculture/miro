@@ -295,17 +295,40 @@ class SharingTracker(object):
             return 
 
         if added:
-            # Create the SharingInfo eagerly, so that duplicate messages
+            # This added message could be just because the share name got
+            # changed.  And if that's the case, see if the share's connected.
+            # If it is not connected, it must have been removed from the
+            # sidebar so we can add as normal.  If it was connected, make
+            # sure we change the name of it, and just skip over adding the 
+            # tab.
+            #
+            # Else, create the SharingInfo eagerly, so that duplicate messages
             # can use it to filter out.  We also create a unique stamp on it,
             # in case of errant implementations that try to register, delete,
             # and re-register the share.  The try_to_add() success/failure
             # callback can check whether info is still valid and if so, if it
             # is this particular info (if not, the uuid will be different and
             # and so should ignore).
-            info = messages.SharingInfo(share_id, fullname, host, port)
-            info.connect_uuid = uuid.uuid4()
-            self.available_shares[share_id] = info
-            self.try_to_add(share_id, fullname, host, port, info.connect_uuid)
+            has_key = False
+            for key in self.available_shares.keys():
+                info = self.available_shares[key]
+                if info.mount and info.host == host and info.port == port:
+                    has_key = True
+                    break
+            if has_key:
+                info.name = fullname
+                info.stale = False
+                # Change the indexing keys.
+                del self.available_shares[key]
+                self.available_shares[share_id] = info
+                message = messages.TabsChanged('sharing', [], [info], [])
+                message.send_to_frontend()
+            else:
+                info = messages.SharingInfo(share_id, fullname, host, port)
+                info.connect_uuid = uuid.uuid4()
+                self.available_shares[share_id] = info
+                self.try_to_add(share_id, fullname, host, port,
+                                    info.connect_uuid)
         else:
             # The mDNS publish is going away.  Are we connected?  If we
             # are connected, keep it around.  If not, make it disappear.
@@ -327,11 +350,17 @@ class SharingTracker(object):
                 # the share may still be alive at this point.  There is
                 # a proposed solution in libdaap that's not implemented that
                 # details how we can do it better using only HTTP/1.1.
+                #
+                # We don't remove ourselves from the list of available
+                # shares though unless we are removing the tab, just mark
+                # it as stale and we'll reap it later.
                 share_info = self.available_shares[share_id]
-                del self.available_shares[share_id]
                 share = self.trackers[share_id]
                 if not share.client.alive():
+                    del self.available_shares[share_id]
                     messages.SharingDisappeared(share_info).send_to_frontend()
+                else:
+                    share_info.stale = True
 
     def server_thread(self):
         # Wait for the resume message from the sharing manager as 
@@ -403,6 +432,12 @@ class SharingTracker(object):
 
     def eject(self, share_id):
         tracker = self.trackers[share_id]
+        # Do we need to remove a available_shares that was delayed?
+        try:
+            info = self.available_shares[share_id]
+            assert info.stale
+        except KeyError:
+            pass
         del self.trackers[share_id]
         tracker.client_disconnect()
 
