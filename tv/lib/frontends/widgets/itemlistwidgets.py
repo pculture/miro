@@ -527,10 +527,6 @@ class ColumnRendererSet(object):
     def get(self, name):
         return self._column_map[name]
 
-# FIXME: we could probably define StandardViewColumnRendererSet and that could
-# be a cleaner way of picking which ItemRenderer subclass to use and handling
-# display_channel
-
 class ListViewColumnRendererSet(ColumnRendererSet):
     # FIXME: a unittest should verify that these exist for every possible field
     COLUMN_RENDERERS = {
@@ -572,11 +568,9 @@ class StandardView(ItemView):
 
     draws_selection = False
 
-    def __init__(self, item_list, scroll_pos, selection, display_channel=True):
+    def __init__(self, item_list, scroll_pos, selection, item_renderer):
         ItemView.__init__(self, item_list, scroll_pos, selection)
-        self.display_channel = display_channel
-        self.renderer = self.build_renderer()
-        self.renderer.total_width = -1
+        self.renderer = item_renderer
         self.column = widgetset.TableColumn('item', self.renderer)
         self.set_column_spacing(0)
         self.column.set_min_width(self.renderer.MIN_WIDTH)
@@ -584,9 +578,6 @@ class StandardView(ItemView):
         self.set_show_headers(False)
         self.set_auto_resizes(True)
         self.set_background_color(self.BACKGROUND_COLOR)
-
-    def build_renderer(self):
-        return style.ItemRenderer(self.display_channel)
 
 class ListView(ItemView, SorterWidgetOwner):
     """TableView that displays a list of items using the list view."""

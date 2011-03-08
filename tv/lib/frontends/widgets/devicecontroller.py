@@ -850,10 +850,6 @@ class DeviceController(object):
     def stop_tracking(self):
         pass
 
-class DeviceStandardView(itemlistwidgets.StandardView):
-    def build_renderer(self):
-        return style.DeviceItemRenderer(display_channel=False)
-
 class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     unwatched_label = u'' # everything is marked as played
 
@@ -889,8 +885,8 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create('device', self.device)
 
-    def build_standard_view(self, scroll_pos, selection):
-        return DeviceStandardView(self.item_list, scroll_pos, selection)
+    def build_renderer(self):
+        return style.DeviceItemRenderer(display_channel=False)
 
     def make_drag_handler(self):
         # XXX make dragging device items to the library work

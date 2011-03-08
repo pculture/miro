@@ -34,10 +34,6 @@ from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import style
 from miro.gtcache import gettext as _
 
-class SharingStandardView(itemlistwidgets.StandardView):
-    def build_renderer(self):
-        return style.SharingItemRenderer(display_channel=False)
-
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know
 # when it is a connect or not so let it handle that case.
@@ -52,8 +48,8 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def make_drag_handler(self):
         return None
 
-    def build_standard_view(self, scroll_pos, selection):
-        return SharingStandardView(self.item_list, scroll_pos, selection)
+    def build_renderer(self):
+        return style.SharingItemRenderer(display_channel=False)
 
     def handle_delete(self):
         pass

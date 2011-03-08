@@ -140,15 +140,6 @@ class PlaylistSort(itemlist.ItemSort):
     def sort_key(self, item):
         return self.positions[item.id]
 
-class PlaylistStandardView(itemlistwidgets.StandardView):
-    def __init__(self, item_list, scroll_pos, selection, playlist_sorter):
-        self.playlist_sorter = playlist_sorter
-        itemlistwidgets.StandardView.__init__(self, item_list,
-                scroll_pos, selection)
-
-    def build_renderer(self):
-        return style.PlaylistItemRenderer(self.playlist_sorter)
-
 class PlaylistItemController(itemlistcontroller.SimpleItemListController):
     def __init__(self, playlist_info):
         self.type = u'playlist'
@@ -183,9 +174,8 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
             return itemlistcontroller.SimpleItemListController.make_sorter(
                     self, column, ascending)
 
-    def build_standard_view(self, scroll_pos, selection):
-        return PlaylistStandardView(self.item_list, scroll_pos, selection,
-                self.playlist_sorter)
+    def build_renderer(self):
+        return style.PlaylistItemRenderer(self.playlist_sorter)
 
     def on_items_will_change(self, added, changed, removed):
         self.playlist_sorter.add_items(added)

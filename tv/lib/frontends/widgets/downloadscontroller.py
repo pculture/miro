@@ -69,9 +69,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
 
-    def build_standard_view(self, scroll_pos, selection):
-        return StandardView(self.item_list, scroll_pos, selection)
-
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 

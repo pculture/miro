@@ -1210,7 +1210,6 @@ class DeviceItemRenderer(ItemRenderer):
     def calc_extra_button(self):
         return self.DOWNLOAD_TO_MY_MIRO_TEXT, 'download-device-item'
 
-
 # Renderers for the list view
 class ListViewRendererText(widgetset.InfoListRendererText):
     """Renderer for list view columns that are just plain text"""

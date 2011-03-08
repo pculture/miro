@@ -38,6 +38,7 @@ from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
+from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
@@ -51,7 +52,6 @@ class FeedController(itemlistcontroller.ItemListController,
     def __init__(self, id, is_folder, is_directory_feed):
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
-        self.display_channel = self.is_folder
         self.titlebar = None
         itemlistcontroller.ItemListController.__init__(self, u'feed', id)
         itemlistcontroller.FilteredListMixin.__init__(self)
@@ -77,9 +77,8 @@ class FeedController(itemlistcontroller.ItemListController,
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
 
-    def build_standard_view(self, scroll_pos, selection):
-        return itemlistwidgets.StandardView(self.item_list, scroll_pos,
-                selection, self.is_folder)
+    def build_renderer(self):
+        return style.ItemRenderer(display_channel=self.is_folder)
 
     def make_titlebar(self, feed_info):
         if feed_info.is_directory_feed:

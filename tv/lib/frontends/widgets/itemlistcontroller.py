@@ -54,6 +54,7 @@ from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import menus
+from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
@@ -216,6 +217,7 @@ class ItemListController(object):
     :attribute widget: Container widget used to display this controller
     :attribute views: The ListView and StandardView objects
     """
+
     def __init__(self, typ, id_):
         """Construct a ItemListController.
 
@@ -338,7 +340,8 @@ class ItemListController(object):
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, standard_view)
         selection = app.widget_state.get_selection(self.type, self.id)
-        standard_view_widget = self.build_standard_view(scroll_pos, selection)
+        standard_view_widget = itemlistwidgets.StandardView(self.item_list,
+                scroll_pos, selection, self.build_renderer())
         self.views[standard_view] = standard_view_widget
         standard_view_background = widgetset.SolidBackground(
                 standard_view_widget.BACKGROUND_COLOR)
@@ -402,12 +405,8 @@ class ItemListController(object):
         """Build the container widget for this controller."""
         raise NotImplementedError()
 
-    def build_standard_view(self, scroll_pos, selection):
-        """Build the standard view widget for this controller.
-
-        :returns: StandardView object
-        """
-        raise NotImplementedError()
+    def build_renderer(self):
+        return style.ItemRenderer(display_channel=False)
 
     def build_list_view(self):
         """Build the list view widget for this controller."""
@@ -872,17 +871,12 @@ class ItemListController(object):
 
 class SimpleItemListController(ItemListController):
     def __init__(self):
-        self.display_channel = True
         ItemListController.__init__(self, self.type, self.id)
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
-
-    def build_standard_view(self, scroll_pos, selection):
-        return itemlistwidgets.StandardView(self.item_list, scroll_pos,
-                selection, self.display_channel)
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.ItemListTitlebar()
@@ -987,6 +981,9 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
 
+    def build_renderer(self):
+        return style.ItemRenderer(display_channel=True)
+
     def check_for_empty_list(self):
         pass
 
@@ -1004,7 +1001,6 @@ class VideoItemsController(AudioVideoItemsController):
     type = u'videos'
     id = u'videos'
     unwatched_label =  _('Unwatched')
-    display_channel = True
 
     def make_titlebar(self):
         titlebar = AudioVideoItemsController.make_titlebar(self)
@@ -1033,7 +1029,6 @@ class AudioItemsController(AudioVideoItemsController):
     type = u'music'
     id = u'music'
     unwatched_label = _('Unplayed')
-    display_channel = True
 
     def make_titlebar(self):
         titlebar = AudioVideoItemsController.make_titlebar(self)
@@ -1061,7 +1056,6 @@ class AudioItemsController(AudioVideoItemsController):
 class OtherItemsController(SimpleItemListController):
     type = u'others'
     id = u'others'
-    display_channel = True
 
     def build_widget(self):
         SimpleItemListController.build_widget(self)
@@ -1071,6 +1065,9 @@ class OtherItemsController(SimpleItemListController):
         text = _('No Results')
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
+
+    def build_renderer(self):
+        return style.ItemRenderer(display_channel=True)
 
     def check_for_empty_list(self):
         pass
