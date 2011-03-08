@@ -179,10 +179,10 @@ class AnimationManager(object):
 
 class ThrobberAnimationManager(AnimationManager):
     def initial_delay(self, item_info):
-        return 0.3
+        return 0.2
 
     def repeat_delay(self, item_info):
-        return 0.3
+        return 0.2
 
     def continue_animation(self, item_info):
         if item_info.state == 'downloading':

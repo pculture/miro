@@ -300,6 +300,12 @@ class ItemRenderer(widgetset.InfoListRenderer):
     EXPIRING_TEXT_SHADOW = widgetutil.WHITE
     NEWLY_AVAILABLE_TEXT_COLOR =  css_to_color('#e1efff')
     NEWLY_AVAILABLE_TEXT_SHADOW = widgetutil.BLACK
+    DRM_TEXT_COLOR = css_to_color('#582016')
+    DRM_TEXT_SHADOW = widgetutil.WHITE
+    QUEUED_TEXT_COLOR = css_to_color('#4a2c00')
+    QUEUED_TEXT_SHADOW = widgetutil.WHITE
+    FAILED_TEXT_COLOR = css_to_color('#ffe7e7')
+    FAILED_TEXT_SHADOW = widgetutil.BLACK
 
     # font sizes
     EMBLEM_FONT_SIZE = font_scale_from_osx_points(10)
@@ -375,11 +381,14 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'remove-playlist', 'remove-playlist-pressed',
                 'remove-pressed', 'saved', 'status-icon-alert', 'newly-cap',
                 'newly-middle', 'progress-left-cap', 'progress-middle',
-                'progress-right-cap', 'progress-throbber-left-1',
-                'progress-throbber-left-2', 'progress-throbber-left-3',
-                'progress-throbber-middle-1', 'progress-throbber-middle-2',
-                'progress-throbber-middle-3', 'progress-throbber-right-1',
-                'progress-throbber-right-2', 'progress-throbber-right-3',
+                'progress-right-cap', 'progress-throbber-1-left',
+                'progress-throbber-1-middle', 'progress-throbber-1-right',
+                'progress-throbber-2-left', 'progress-throbber-2-middle',
+                'progress-throbber-2-right', 'progress-throbber-3-left',
+                'progress-throbber-3-middle', 'progress-throbber-3-right',
+                'progress-throbber-4-left', 'progress-throbber-4-middle',
+                'progress-throbber-4-right', 'progress-throbber-5-left',
+                'progress-throbber-5-middle', 'progress-throbber-5-right',
                 'progress-track', 'queued-middle', 'queued-cap', 'resume-cap',
                 'resume-middle', 'selected-background-left',
                 'selected-background-middle', 'selected-background-right',
@@ -395,10 +404,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 resources.path('images/download-arrow.png'))
         # setup progress throbber stages
         self.progress_throbber_surfaces = []
-        for i in xrange(3):
-            left = self.images['progress-throbber-left-%d' % (i + 1)]
-            middle = self.images['progress-throbber-middle-%d' % (i + 1)]
-            right = self.images['progress-throbber-right-%d' % (i + 1)]
+        for i in xrange(5):
+            left = self.images['progress-throbber-%d-left' % (i + 1)]
+            middle = self.images['progress-throbber-%d-middle' % (i + 1)]
+            right = self.images['progress-throbber-%d-right' % (i + 1)]
             surface = widgetutil.ThreeImageSurface()
             surface.set_images(left, middle, right)
             self.progress_throbber_surfaces.append(surface)
@@ -408,6 +417,12 @@ class ItemRenderer(widgetset.InfoListRenderer):
 
     def calc_download_mode(self):
         self.download_mode = (self.info.state in ('downloading', 'paused'))
+        # If the download has started and we don't know the total size.  Draw
+        # a progress throbber.
+        if self.download_mode:
+            dl_info = self.info.download_info
+            self.throbber_mode = (dl_info.downloaded_size > 0 and
+                    dl_info.total_size < 0)
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         self.download_info = self.info.download_info
@@ -495,8 +510,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
         self.right_rect = inner_rect.right_side(right_width)
         self.middle_rect = inner_rect.subsection(self.IMAGE_WIDTH + 20,
                 right_width + 15, 0 ,0)
-        # emblem should start 28px above the top of the cell
-        self.emblem_bottom = total_rect.bottom - 28
+        # emblem/progress bar should start 29px above the top of the cell
+        self.emblem_bottom = total_rect.bottom - 29
 
     def layout_simple_elements(self, layout, layout_manager):
         # this is a place to put layout calls that are simple enough that they
@@ -713,11 +728,17 @@ class ItemRenderer(widgetset.InfoListRenderer):
         layout.merge(expire_layout)
 
     def layout_progress_bar(self, layout, layout_manager):
-        y = self.middle_rect.bottom - 39
+        left = self.middle_rect.x
+        width = self.middle_rect.width
+        top = self.emblem_bottom - self.images['progress-track'].height
         height = 22
         end_button_width = 47
         progress_cap_width = 10
-        print 'progress-top: ', y
+        if self.throbber_mode:
+            # ensure that the progress bar width is divisible by 10.  That
+            # makes the progress throbber animations line up
+            button_width_extra = end_button_width * 2 - progress_cap_width * 2
+            width -= (width - button_width_extra) % 10
         # figure out what button goes on the left
         if not self.download_info or self.download_info.state != 'paused':
             left_hotspot = 'pause'
@@ -727,22 +748,22 @@ class ItemRenderer(widgetset.InfoListRenderer):
             left_button_name = 'download-resume'
 
         # add ends of the bar
-        self._add_image_button(layout, self.middle_rect.x, y,
-                left_button_name, left_hotspot)
-        right_button_x = self.middle_rect.right - end_button_width
-        self._add_image_button(layout, right_button_x, y, 'download-stop',
+        self._add_image_button(layout, left, top, left_button_name,
+                left_hotspot)
+        right_button_x = left + width - end_button_width
+        self._add_image_button(layout, right_button_x, top, 'download-stop',
                 'cancel')
         # add track in the middle
         track = self.images['progress-track']
-        track_x = self.middle_rect.x + end_button_width
-        track_rect = cellpack.LayoutRect(track_x, y, right_button_x - track_x,
+        track_x = left + end_button_width
+        track_rect = cellpack.LayoutRect(track_x, top, right_button_x - track_x,
                 height)
         layout.add_rect(track_rect, track.draw)
 
         # add progress bar above the track
         progress_x = track_x - progress_cap_width
         bar_width_total = (right_button_x - progress_x) + progress_cap_width
-        bar_rect = cellpack.LayoutRect(progress_x, y, bar_width_total, height)
+        bar_rect = cellpack.LayoutRect(progress_x, top, bar_width_total, height)
         layout.add_rect(bar_rect, self.draw_progress_bar)
 
     def layout_download_right(self, layout, layout_manager):
@@ -954,10 +975,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 fraction=self.expire_background_alpha)
 
     def draw_progress_bar(self, context, x, y, width, height):
-        if (self.info.download_info.downloaded_size > 0 and
-                self.info.download_info.total_size < 0):
-            # The download has started and we don't know the total size.  Draw
-            # a progress throbber.
+        if self.throbber_mode:
             self.draw_progress_throbber(context, x, y, width, height)
             return
         if self.info.size == 0:
@@ -1133,14 +1151,14 @@ class _EmblemDrawer(object):
             # FIXME need a new emblem for this
             self.text_bold = True
             self.text = _('DRM locked')
-            self.text_color = self.UNPLAYED_TEXT_COLOR
-            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
+            self.text_color = self.DRM_TEXT_COLOR
+            self.text_shadow = self.DRM_TEXT_SHADOW
             self.emblem = 'drm'
         elif (self.info.download_info
                 and self.info.download_info.state == 'failed'):
             # FIXME need colors for this
-            self.text_color = self.UNPLAYED_TEXT_COLOR
-            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
+            self.text_color = self.FAILED_TEXT_COLOR
+            self.text_shadow = self.FAILED_TEXT_SHADOW
             self.text_bold = True
             self.image = self.images['status-icon-alert']
             self.text = u"%s-%s" % (self.ERROR_TEXT,
@@ -1148,8 +1166,8 @@ class _EmblemDrawer(object):
             self.emblem = 'failed'
         elif self.info.pending_auto_dl:
             # FIXME need colors for this
-            self.text_color = self.UNPLAYED_TEXT_COLOR
-            self.text_shadow = self.UNPLAYED_TEXT_SHADOW
+            self.text_color = self.QUEUED_TEXT_COLOR
+            self.text_shadow = self.QUEUED_TEXT_SHADOW
             self.text = self.QUEUED_TEXT
             self.emblem = 'queued'
         elif (self.info.downloaded

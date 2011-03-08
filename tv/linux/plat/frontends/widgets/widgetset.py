@@ -40,8 +40,8 @@ from miro.plat.frontends.widgets import webkitbrowser
 
 # Use the default font
 ITEM_TITLE_FONT = None
-ITEM_INFO_FONT = None
 ITEM_DESC_FONT = None
+
 
 class ScrolledBrowser(gtk.ScrolledWindow):
     def __init__(self):
