@@ -169,6 +169,11 @@ class LinuxApplication(Application):
     def _setup_webkit(self):
         cookie_path = get_cookie_path()
         webkitgtkhacks.setup_cookie_storage(cookie_path)
+        webkitgtkhacks.add_cookie('dmusic_download_manager_enabled',
+                                  '1.0.3',
+                                  '.amazon.com',
+                                  '/',
+                                  3600 * 365 * 10) # 10 years
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we

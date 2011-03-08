@@ -35,20 +35,28 @@ Webkit code that can't be done with the python bindings.
 cdef extern from "gtk/gtk.h":
     ctypedef void * gpointer
     ctypedef unsigned int gboolean
+    ctypedef unsigned int GType
     cdef void g_object_unref(gpointer object)
 
 cdef extern from "libsoup/soup.h":
     ctypedef void* SoupSession
     ctypedef void* SoupSessionFeature
     ctypedef void* SoupCookieJarText
+    ctypedef void* SoupCookieJar
+    ctypedef void* SoupCookie
 
     SoupCookieJarText* soup_cookie_jar_text_new(char* filename,
             gboolean read_only)
+    void soup_cookie_jar_add_cookie(SoupCookieJar *jar, SoupCookie *cookie)
+    SoupCookie* soup_cookie_new(char* name, char* value, char* domain, char* path, int max_age)
+    GType soup_cookie_jar_get_type()
+    SoupSessionFeature* soup_session_get_feature(SoupSession* session, GType feature_type)
     void soup_session_add_feature(SoupSession* session,
             SoupSessionFeature* feature)
 
 cdef extern from "webkit/webkit.h":
     cdef SoupSession* webkit_get_default_session()
+
 
 def setup_cookie_storage(object filename):
     cdef SoupSession* session
@@ -62,3 +70,19 @@ def setup_cookie_storage(object filename):
         raise AssertionError("soup_cookie_jar_text_new() returned NULL")
     soup_session_add_feature (session, <SoupSessionFeature*> cookie_jar)
     g_object_unref(cookie_jar)
+
+def add_cookie(object name, object value, object domain, object path, object age):
+    cdef SoupSession* session
+    cdef SoupCookieJar* cookie_jar
+    cdef SoupCookie* cookie
+    session = webkit_get_default_session()
+    if not session:
+        raise AssertionError("webkit_get_default_session() returned NULL")
+    cookie_jar = soup_session_get_feature(session, soup_cookie_jar_get_type())
+    if not cookie_jar:
+        raise AssertionError("soup_session_get_feature() returned NULL")
+    cookie = soup_cookie_new(name, value, domain, path, age)
+    if not cookie:
+        raise AssertionError('soup_cookie_new() returned NULL')
+    soup_cookie_jar_add_cookie(cookie_jar, cookie)
+    g_object_unref(cookie_jar) # don't need to unref the cookie per docs
