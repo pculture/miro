@@ -279,6 +279,13 @@ class Checkbox(SizedControl):
         SizedControl.disable(self)
         self.view.setEnabled_(False)
 
+    def get_text_padding(self):
+        """
+        Returns the amount of space the checkbox takes up before the label.
+        """
+        # XXX FIXME
+        return 18
+
 class Button(SizedControl):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, label, style='normal', width=0):

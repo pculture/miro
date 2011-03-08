@@ -194,6 +194,11 @@ class AppStoreButton(widgetset.CustomButton):
         self.image.draw(context, 0, 0, self.image.width, self.image.height)
 
 class ConnectTab(widgetset.VBox):
+    HEADER_SIZE = 0.83
+    HEADER_COLOR = (0.176, 0.176, 0.176)
+    TEXT_SIZE = 0.65
+    TEXT_COLOR = (0.443, 0.443, 0.443)
+
     trans_data = {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}
 
     def __init__(self):
@@ -229,16 +234,24 @@ class ConnectTab(widgetset.VBox):
             'changed',
             self.on_config_changed)
 
+    def build_header(self, text):
+        label = widgetset.Label(text)
+        label.set_size(self.HEADER_SIZE)
+        label.set_color(self.HEADER_COLOR)
+        label.set_bold(True)
+        return label
+
     def _build_daap_section(self, bottom):
-        label = widgetset.Label(_("%(shortappname)s Sharing", self.trans_data))
-        label.set_size(1.5)
+        label = self.build_header(_("%(shortappname)s Sharing",
+                                    self.trans_data))
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         label = widgetset.Label(
             _("%(shortappname)s can stream and download files to and from "
               "other %(shortappname)ss on your local network and to the "
               "Miro iPad app.  It's awesome!", self.trans_data))
-        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_size(self.TEXT_SIZE)
+        label.set_color(self.TEXT_COLOR)
         label.set_wrap(True)
         label.set_size_request(550, -1)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -252,10 +265,9 @@ class ConnectTab(widgetset.VBox):
             return
 
         vbox = widgetset.VBox()
-        hbox = widgetset.HBox()
+        hbox = widgetset.HBox(spacing=30)
         hbox.pack_start(widgetset.Checkbox(_("Videos")))
         hbox.pack_start(widgetset.Checkbox(_("Music")))
-        hbox.pack_start(widgetset.Checkbox(_("Podcasts")))
         self.share_button = PrettyToggleButton()
         self.share_button.connect('clicked', self.daap_changed)
         self.share_button.connect('dragged-left', self.daap_changed)
@@ -268,6 +280,7 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(widgetset.Label(
             _("My %(shortappname)s Share Name", self.trans_data)))
         self.share_entry = widgetset.TextEntry()
+        self.share_entry.set_size_request(300, -1)
         share_error = prefpanel.build_error_image()
         prefpanel.attach_text(self.share_entry,
                               prefs.SHARE_NAME,
@@ -290,14 +303,13 @@ class ConnectTab(widgetset.VBox):
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
         label_line = widgetset.HBox()
-        label = widgetset.Label(_("Sync a Phone, Tablet, or Digital Camera"))
-        label.set_size(1.5)
+        label = self.build_header(_("Sync a Phone, Tablet, or Digital Camera"))
         label_line.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         help_button = HelpButton()
         help_button.connect('clicked', self.help_button_clicked)
         label_line.pack_start(help_button)
-        vbox.pack_start(label_line)
+        bottom.pack_start(label_line)
 
         label = widgetset.Label(
             _("Connect the USB cable to sync your Android device with "
@@ -305,7 +317,8 @@ class ConnectTab(widgetset.VBox):
               "Storage' mode in your device settings.  Attach your digital "
               "camera, and convert your video files to be instantly "
               "web-ready.", self.trans_data))
-        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_size(self.TEXT_SIZE)
+        label.set_color(self.TEXT_COLOR)
         label.set_size_request(400, -1)
         label.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -318,20 +331,22 @@ class ConnectTab(widgetset.VBox):
             app.config.get(prefs.SHOW_UNKNOWN_DEVICES))
         self.show_unknown.connect('toggled', self.show_all_devices_toggled)
         show_all_vbox.pack_start(self.show_unknown)
+        padding = self.show_unknown.get_text_padding()
         label = widgetset.Label(
             _("Use this if your phone doesn't appear in %(shortappname)s when "
               "you connect it to the computer, or if you want to sync with an "
               "external drive.", self.trans_data))
-        label.set_size(widgetconst.SIZE_SMALL)
-        label.set_size_request(390, -1)
+        label.set_size(self.TEXT_SIZE)
+        label.set_color(self.TEXT_COLOR)
+        label.set_size_request(390 - padding, -1)
         label.set_wrap(True)
-        show_all_vbox.pack_start(label)
+        show_all_vbox.pack_start(widgetutil.pad(label, left=padding))
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
         bg.set_size_request(400, -1)
         bg.add(widgetutil.pad(show_all_vbox, 10, 10, 10, 10))
         vbox.pack_start(widgetutil.pad(bg, left=20, right=10, bottom=50))
         hbox.pack_start(vbox)
-        hbox.pack_start(widgetutil.align_right(widgetset.ImageDisplay(
+        hbox.pack_start(widgetutil.align_top(widgetset.ImageDisplay(
             imagepool.get(resources.path('images/connect-android.png')))))
         bottom.pack_start(hbox)
 
@@ -339,8 +354,7 @@ class ConnectTab(widgetset.VBox):
         # iPad link
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
-        label = widgetset.Label(_("Miro on your iPad"))
-        label.set_size(1.5)
+        label = self.build_header(_("Miro on your iPad"))
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         label = widgetset.Label(
@@ -348,7 +362,8 @@ class ConnectTab(widgetset.VBox):
               "and videos from %(shortappname)s on your desktop to your iPad. "
               "You can also download songs and videos to your iPad and take "
               "them with you.", self.trans_data))
-        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_size(self.TEXT_SIZE)
+        label.set_color(self.TEXT_COLOR)
         label.set_wrap(True)
         label.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -363,14 +378,14 @@ class ConnectTab(widgetset.VBox):
     def _build_android_section(self, bottom):
         hbox = widgetset.HBox()
         vbox = widgetset.VBox()
-        label = widgetset.Label(_("Miro on Android"))
-        label.set_size(1.5)
+        label = self.build_header(_("Miro on Android"))
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=5))
         label = widgetset.Label(
             _("We don't yet have a Miro app for Android, but you can stream "
               "to your device using other DAAP apps."))
-        label.set_size(widgetconst.SIZE_SMALL)
+        label.set_size(self.TEXT_SIZE)
+        label.set_color(self.TEXT_COLOR)
         label.set_wrap(True)
         label.set_size_request(550, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,

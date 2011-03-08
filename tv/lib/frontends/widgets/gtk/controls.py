@@ -160,6 +160,18 @@ class Checkbox(Widget, BinBaselineCalculator):
     def set_checked(self, value):
         self._widget.set_active(value)
 
+    def get_text_padding(self):
+        """
+        Returns the amount of space the checkbox takes up before the label.
+        """
+        indicator_size = self._widget.style_get_property('indicator-size')
+        indicator_spacing = self._widget.style_get_property(
+            'indicator-spacing')
+        focus_width = self._widget.style_get_property('focus-line-width')
+        focus_padding = self._widget.style_get_property('focus-padding')
+        return (indicator_size + 3 * indicator_spacing + 2 * (focus_width +
+                focus_padding))
+
 class RadioButtonGroup(Widget, BinBaselineCalculator):
     """RadioButtonGroup.
 
