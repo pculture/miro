@@ -44,6 +44,7 @@ from urlparse import urljoin
 from miro import app
 from miro import displaytext
 from miro import messages
+from miro import prefs
 from miro import subscription
 from miro import util
 from miro.gtcache import gettext as _
@@ -231,6 +232,7 @@ class ItemListController(object):
         self._got_initial_list = False
         self._needs_scroll = None
         self._playing_items = False
+        self.config_change_handle = None
         self.show_resume_playing_button = False
         self.item_tracker = self.build_item_tracker()
         self._init_widget()
@@ -268,6 +270,15 @@ class ItemListController(object):
                     self._handle_repeat_update)
         self.stop_handle = app.playback_manager.connect('did-stop',
                     self._handle_playback_did_stop)
+        self.config_change_handle = app.frontend_config_watcher.connect(
+                'changed', self.on_config_change)
+
+    def on_config_change(self, obj, key, value):
+        if (key == prefs.RESUME_VIDEOS_MODE.key or
+                key == prefs.RESUME_MUSIC_MODE.key or
+                key == prefs.RESUME_PODCASTS_MODE.key):
+            for view in self.all_item_views():
+                view.queue_redraw()
 
     def _handle_shuffle_update(self, playback_manager, *args):
         if app.item_list_controller_manager.displayed == self:
@@ -857,6 +868,9 @@ class ItemListController(object):
             app.playback_manager.disconnect(self.repeat_handle)
         if self.stop_handle:
             app.playback_manager.disconnect(self.stop_handle)
+        if self.config_change_handle:
+            app.frontend_config_watcher.disconnect(self.config_change_handle)
+            self.config_change_handle = None
 
     def scroll_to_item(self, item):
         if self._got_initial_list:
