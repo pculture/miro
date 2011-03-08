@@ -940,6 +940,7 @@ class TableView(Widget):
         if not self._selected_before_change:
             # short-circuit if nothing is selected.  This actually prevents a
             # bug in the current widgets startup code.
+            self._selected_before_change = None
             return
         # wait until we're done with all work to emit selection changed
         self._ignore_selection_changed = True
