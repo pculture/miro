@@ -249,6 +249,8 @@ def get_menu():
                     MenuItem(_("_New Folder"), "NewPodcastFolder",
                              Shortcut("n", MOD, SHIFT),
                              groups=["NonPlaying"]),
+                    MenuItem(_("New Watched Folder"), "NewWatchedFolder",
+                             groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("Rename"), "RenameSomething",
                              groups=["RenameAllowed"],
@@ -541,6 +543,10 @@ def on_new_search_podcast():
 @action_handler("NewPodcastFolder")
 def on_new_podcast_folder():
     app.widgetapp.add_new_feed_folder()
+
+@action_handler("NewWatchedFolder")
+def on_new_watched_folder():
+    app.widgetapp.add_new_watched_folder()
 
 @action_handler("RenameSomething")
 def on_rename_podcast():

@@ -63,6 +63,7 @@ from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchfeed
 from miro.frontends.widgets import newfeed
 from miro.frontends.widgets import newfolder
+from miro.frontends.widgets import newwatchedfolder
 from miro.frontends.widgets import itemedit
 from miro.frontends.widgets import addtoplaylistdialog
 from miro.frontends.widgets import removefeeds
@@ -635,6 +636,12 @@ class Application:
         url = newfeed.run_dialog()
         if url is not None:
             messages.NewFeed(url).send_to_backend()
+
+    def add_new_watched_folder(self):
+        ret = newwatchedfolder.run_dialog()
+        if ret is not None:
+            path, showinsidebar = ret
+            messages.NewWatchedFolder(path, showinsidebar).send_to_backend()
 
     def add_new_search_feed(self):
         data = newsearchfeed.run_dialog()

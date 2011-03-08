@@ -1108,7 +1108,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_new_watched_folder(self, message):
         url = u"dtv:directoryfeed:%s" % make_url_safe(message.path)
         if not lookup_feed(url):
-            feed.Feed(url)
+            feed_ = feed.Feed(url)
+            if message.visible is not None:
+                feed_.set_visible(message.visible)
         else:
             logging.info("Not adding duplicated watched folder: %s",
                     message.path)

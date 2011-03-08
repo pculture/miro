@@ -534,8 +534,9 @@ class NewFeedSearchURL(BackendMessage):
 class NewWatchedFolder(BackendMessage):
     """Creates a new watched folder.
     """
-    def __init__(self, path):
+    def __init__(self, path, visible=None):
         self.path = path
+        self.visible = visible
 
 class SetWatchedFolderVisible(BackendMessage):
     """Changes if a watched folder is visible in the tab list or not.
