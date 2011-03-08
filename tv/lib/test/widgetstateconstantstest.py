@@ -38,4 +38,8 @@ class WidgetStateConstants(MiroTestCase):
     def test_sort_key_map(self):
         columns = set(WidgetStateStore.DEFAULT_COLUMN_WIDTHS)
         sort_keys = set(SORT_KEY_MAP)
+        # remove the playlist key, since we special case creating the Sorter
+        # for that.
+        # FIXME should have a better way to handle this
+        columns.remove("playlist")
         self.assertEqual(sort_keys, columns)
