@@ -205,10 +205,17 @@ class ThreadPool(object):
     def close_threads(self):
         for x in xrange(len(self.threads)):
             self.queue.put("QUIT")
+        # Why is there a timeout on the join() here, what's wrong?  On
+        # shutdown, the system waits for the eventloop to finish using 
+        # eventloop.join() but eventloop calls close_threads() which wait
+        # for the threadpool threads to shutdown.  But these could be blocked
+        # in a blocking operation which is exactly the point of having them
+        # so eventloop.join() in turn blocks.  So if it doesn't clean up
+        # in time let the daemon flag in the Thread() do its job.  See #16584.
         while len(self.threads) > 0:
             x = self.threads.pop()
             try:
-                x.join()
+                x.join(0.5)
             except StandardError:
                 pass
 
