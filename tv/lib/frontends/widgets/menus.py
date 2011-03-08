@@ -216,8 +216,9 @@ def get_menu():
                              groups=["NonPlaying"]),
                     MenuItem(_("Download Item"), "NewDownload",
                              groups=["NonPlaying"]),
-                    MenuItem(_("Import Media"), "ImportMedia",
-                             groups=["NonPlaying"]),
+                    # FIXME - this needs to be reimplemented
+                    # MenuItem(_("Import Media"), "ImportMedia",
+                    #          groups=["NonPlaying"]),
                     MenuItem(_("Check Version"), "CheckVersion"),
                     Separator(),
                     MenuItem(_("Remove Item"), "RemoveItems",
