@@ -40,6 +40,8 @@ from objc import YES, NO, nil
 
 from miro import signals
 from miro.frontends.widgets import widgetconst
+from miro.plat import resources
+from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
@@ -430,6 +432,9 @@ class VariableHeightTableViewDelegate(TableViewDelegate):
         return calc_row_height(table_view, model[iter])
 
 class OutlineViewDelegate(NSObject):
+    expanded_path = resources.path('images/tab-expanded.png')
+    collapsed_path = resources.path('images/tab-collapsed.png')
+
     def outlineView_willDisplayCell_forTableColumn_item_(self, view, cell,
             column, item):
         row = view.rowForItem_(item)
@@ -440,6 +445,14 @@ class OutlineViewDelegate(NSObject):
             cell.hotspot = view.hotspot_tracker.calc_cell_hotspot(column, row)
         else:
             cell.hotspot = None
+
+    def outlineView_willDisplayOutlineCell_forTableColumn_item_(self, view,
+                                                                cell, column,
+                                                                item):
+        cell.setImage_(NSImage.alloc().initByReferencingFile_(
+                filename_to_unicode(self.collapsed_path)))
+        cell.setAlternateImage_(NSImage.alloc().initByReferencingFile_(
+                filename_to_unicode(self.expanded_path)))
 
     def outlineView_didClickTableColumn_(self, tableview, column):
         wrapper = wrappermap.wrapper(tableview)
