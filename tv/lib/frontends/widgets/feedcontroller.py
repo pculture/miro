@@ -78,7 +78,9 @@ class FeedController(itemlistcontroller.ItemListController,
                 itemlistwidgets.EmptyListHeader(text))
 
     def build_renderer(self):
-        return style.ItemRenderer(display_channel=self.is_folder)
+        feed_info = widgetutil.get_feed_info(self.id)
+        return style.ItemRenderer(display_channel=self.is_folder,
+                is_podcast=(not feed_info.is_directory_feed))
 
     def make_titlebar(self, feed_info):
         if feed_info.is_directory_feed:

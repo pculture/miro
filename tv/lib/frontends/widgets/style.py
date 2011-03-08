@@ -336,10 +336,11 @@ class ItemRenderer(widgetset.InfoListRenderer):
     STOP_SEEDING_TEXT = _("Stop seeding")
     PLAYLIST_REMOVE_TEXT = _('Remove from playlist')
 
-    def __init__(self, display_channel=True):
+    def __init__(self, display_channel=True, is_podcast=False):
         widgetset.InfoListRenderer.__init__(self)
         self.signals = ItemRendererSignals()
         self.display_channel = display_channel
+        self.is_podcast = is_podcast
         self.selected = False
         self.setup_images()
         self.emblem_drawer = _EmblemDrawer(self)
@@ -983,6 +984,7 @@ class _EmblemDrawer(object):
 
     def __init__(self, renderer):
         self.images = renderer.images
+        self.is_podcast = renderer.is_podcast
         self.info = None
         self.hotspot = None
         # HACK: take all the style info from the renderer
@@ -1129,10 +1131,7 @@ class _EmblemDrawer(object):
             self.text_bold = True
             self.text = self.UNPLAYED_TEXT
             self.emblem = 'unplayed'
-        elif (self.info.is_playable
-              and self.info.item_viewed
-              and self.info.resume_time > 0
-              and app.config.get(prefs.RESUME_VIDEOS_MODE)):
+        elif self.should_resume_item():
             self.text_bold = True
             self.text_color = self.RESUME_TEXT_COLOR
             self.text_shadow = self.RESUME_TEXT_SHADOW
@@ -1147,6 +1146,18 @@ class _EmblemDrawer(object):
             self.text = self.NEWLY_AVAILABLE_TEXT
             self.margin_right = self.EMBLEM_TEXT_PAD_END_SMALL
             self.emblem = 'newly'
+
+    def should_resume_item(self):
+        if self.is_podcast:
+            resume_pref = prefs.RESUME_PODCASTS_MODE
+        elif self.info.file_type == u'video':
+            resume_pref = prefs.RESUME_VIDEOS_MODE
+        else:
+            resume_pref = prefs.RESUME_MUSIC_MODE
+        return (self.info.is_playable
+              and self.info.item_viewed
+              and self.info.resume_time > 0
+              and app.config.get(resume_pref))
 
     def _add_content(self, emblem_layout, layout_manager, left_x):
         """Add the emblem text and/or image
