@@ -863,7 +863,7 @@ class TableView(Widget):
     # Bit of a hack.  We create several views.  By setting CREATES_VIEW to
     # False, we get to position the views manually.
 
-    draws_selection = False
+    draws_selection = True
 
     def __init__(self, model):
         Widget.__init__(self)

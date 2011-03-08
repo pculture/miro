@@ -624,7 +624,7 @@ class TableColumn(signals.SignalEmitter):
 class TableView(Widget):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
-    draws_selection = False
+    draws_selection = True
 
     def __init__(self, model):
         Widget.__init__(self)
