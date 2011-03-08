@@ -140,7 +140,18 @@ class OSXApplication(Application, signals.SignalEmitter):
         app.menu_manager.connect('enabled-changed', osxmenus.on_menu_change)
         app.playback_manager.connect('did-start-playing', osxmenus.on_playback_change)
         app.playback_manager.connect('did-stop', osxmenus.on_playback_change)
-        quicktime.register_components()
+        # add the Amazon cookie to Safari
+        storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        if 'dmusic_download_manager_enabled' not in [
+            cookie.name() for cookie in storage.cookiesForURL_(
+                NSURL.URLWithString_('http://www.amazon.com'))]:
+            storage.setCookie_(NSHTTPCookie.cookieWithProperties_(
+                    {NSHTTPCookieName: 'dmusic_download_manager_enabled',
+                     NSHTTPCookieValue: '1.0.3',
+                     NSHTTPCookieDomain: '.amazon.com',
+                     NSHTTPCookiePath: '/',
+                     NSHTTPCookieMaximumAge: 3600 * 365 * 10}))
+            quicktime.register_components()
         quicktime.warm_up()
         self.emit("event-processed")
 
