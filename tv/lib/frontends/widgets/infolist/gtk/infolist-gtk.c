@@ -183,6 +183,17 @@ text_cell_data_func(GtkTreeViewColumn *tree_column,
         PyGILState_Release(gstate);
 }
 
+static void
+release_attr_getter(PyObject* obj)
+{
+        PyGILState_STATE gstate;
+
+        /* Aquire the GIL before touching python data */
+        gstate = PyGILState_Ensure();
+        Py_DECREF(obj);
+        PyGILState_Release(gstate);
+}
+
 
 static PyObject *
 setup_text_cell_data_func(PyObject *self, PyObject *args)
@@ -209,8 +220,8 @@ setup_text_cell_data_func(PyObject *self, PyObject *args)
         g_renderer = pygobject_get(renderer);
 
         /* Set the cell data func
-         * INCREF attr_getter so that we own a referenc.  Use Py_DECREF as our
-         * destroy func to free it when we're done.
+         * INCREF attr_getter so that we own a reference.  DECREF the object
+         * in the destroy function to free it when we're done.
          * */
         Py_INCREF(attr_getter);
         gtk_tree_view_column_set_cell_data_func(GTK_TREE_VIEW_COLUMN(g_column),
@@ -218,7 +229,7 @@ setup_text_cell_data_func(PyObject *self, PyObject *args)
                                                 (GtkTreeCellDataFunc)
                                                 text_cell_data_func,
                                                 attr_getter,
-                                                Py_DecRef);
+                                                release_attr_getter);
 
         Py_INCREF(Py_None);
         return Py_None;
