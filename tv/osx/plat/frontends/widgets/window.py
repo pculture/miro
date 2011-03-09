@@ -590,10 +590,10 @@ class PreferenceItem(NSToolbarItem):
     def setPanel_(self, panel):
         self.panel = panel
 
-class ToolbarDelegate(NSObject):
+class PreferenceToolbarDelegate(NSObject):
 
     def initWithPanels_identifiers_window_(self, panels, identifiers, window):
-        self = super(ToolbarDelegate, self).init()
+        self = super(PreferenceToolbarDelegate, self).init()
         self.panels = panels
         self.identifiers = identifiers
         self.window = window
@@ -650,7 +650,7 @@ class PreferencesWindow (Window):
         self.identifiers.append(name)
 
     def finish_panels(self):
-        self.tbdelegate = ToolbarDelegate.alloc().initWithPanels_identifiers_window_(self.panels, self.identifiers, self)
+        self.tbdelegate = PreferenceToolbarDelegate.alloc().initWithPanels_identifiers_window_(self.panels, self.identifiers, self)
         toolbar = NSToolbar.alloc().initWithIdentifier_(u"Preferences")
         toolbar.setAllowsUserCustomization_(NO)
         toolbar.setDelegate_(self.tbdelegate)
