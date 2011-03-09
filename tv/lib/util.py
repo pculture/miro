@@ -552,7 +552,7 @@ def check_b(text):
     """Raise an exception if input isn't a binary string
     """
     if text is not None and not isinstance(text, str):
-        raise MiroUnicodeError, (u"text \"%s\" is not a binary string" % text)
+        raise MiroUnicodeError, (u"text \"%s\" is not a binary string (%r)" % (text, text))
 
 def returns_binary(func):
     """Decorator that raises an exception if the function doesn't
