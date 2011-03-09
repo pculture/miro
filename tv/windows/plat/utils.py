@@ -39,6 +39,7 @@ from logging.handlers import RotatingFileHandler
 import subprocess
 import sys
 import urllib
+import sqlite3
 
 from miro import app
 from miro import prefs
@@ -466,9 +467,33 @@ def get_cookie_path():
     Nothing is written to this file, but we use the cookies for downloading
     from Amazon.
     """
-    return os.path.join(
+    final_path = os.path.join(
         app.config.get(prefs.SUPPORT_DIRECTORY),
         'cookies.txt')
+
+    sqlite_path = os.path.join(
+        app.config.get(prefs.SUPPORT_DIRECTORY), 'profile',
+        'cookies.sqlite')
+    try:
+        conn = sqlite3.connect(sqlite_path)
+        cursor = conn.cursor()
+        cursor = cursor.execute(
+            'SELECT host, isHttpOnly, path, isSecure, expiry, name, value '
+            'FROM moz_cookies')
+        with file(final_path, 'w') as output:
+            for (domain, http_only, path, is_secure,
+                 expiry, name, value) in cursor.fetchall():
+                output.write('%s\t%s\t%s\t%s\t%i\t%s\t%s\n' % (
+                        domain.encode('utf8'), http_only and 'TRUE' or 'FALSE',
+                        path.encode('utf8'), is_secure and 'TRUE' or 'FALSE',
+                        expiry, name.encode('utf8'), value.encode('utf8')))
+        conn.close()
+    except sqlite3.OperationalError:
+        pass
+
+    return final_path
+
+
 
 def get_plat_media_player_name_path():
     itunes_path = os.path.join(specialfolders.get_special_folder('My Music'),
