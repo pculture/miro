@@ -49,16 +49,6 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.gtcache import gettext as _
 
-class BrowserToolbarBackground(widgetset.Background):
-
-    def __init__(self):
-        widgetset.Background.__init__(self)
-        self.set_size_request(-1, 33)
-        self.background = widgetutil.make_surface('navbg')
-
-    def draw(self, context, layout):
-        self.background.draw(context, 0, 0, context.width, context.height)
-
 class BrowserToolbar(widgetset.Titlebar):
     """
     Forward/back/home & "display in browser" buttons
