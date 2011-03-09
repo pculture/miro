@@ -213,8 +213,7 @@ class Window(signals.SignalEmitter):
 
     def place_child(self):
         rect = self.nswindow.contentRectForFrameRect_(self.nswindow.frame())
-        if self.content_widget:
-            self.content_widget.place(NSRect(NSPoint(0, 0), rect.size),
+        self.content_widget.place(NSRect(NSPoint(0, 0), rect.size),
                 self.content_view)
 
     def hookup_content_widget_signals(self):

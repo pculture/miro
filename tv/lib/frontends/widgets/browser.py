@@ -84,7 +84,6 @@ class BrowserToolbar(widgetset.Titlebar):
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
         self.forward_button.disable()
         hbox.pack_start(widgetutil.align_middle(self.forward_button))
-              #          top_pad=5, bottom_pad=5))
 
         self.reload_button = imagebutton.ImageButton('navreload')
         self.reload_button.connect('clicked', self._on_reload_button_clicked)
