@@ -39,14 +39,21 @@ from miro.frontends.widgets.gtk.base import Widget, Bin
 class Image(object):
     def __init__(self, path):
         try:
-            self.pixbuf = gtk.gdk.pixbuf_new_from_file(path)
+            self._set_pixbuf(gtk.gdk.pixbuf_new_from_file(path))
         except gobject.GError, ge:
             raise ValueError("%s" % ge)
         self.width = self.pixbuf.get_width()
         self.height = self.pixbuf.get_height()
 
+    def _set_pixbuf(self, pixbuf):
+        self.pixbuf = pixbuf
+        self.width = self.pixbuf.get_width()
+        self.height = self.pixbuf.get_height()
+
     def resize(self, width, height):
-        return ResizedImage(self, width, height)
+        resized_pixbuf = self.pixbuf.scale_simple(width, height,
+                gtk.gdk.INTERP_BILINEAR)
+        return TransformedImage(resized_pixbuf)
 
     def resize_for_space(self, width, height):
         """Returns an image scaled to fit into the specified space at the
@@ -55,12 +62,29 @@ class Image(object):
         ratio = min(1.0 * width / self.width, 1.0 * height / self.height)
         return self.resize(ratio * self.width, ratio * self.height)
 
-class ResizedImage(Image):
-    def __init__(self, image, width, height):
-        self.width = int(width)
-        self.height = int(height)
-        self.pixbuf = image.pixbuf.scale_simple(self.width, self.height,
-                      gtk.gdk.INTERP_BILINEAR)
+    def crop_and_scale(self, src_x, src_y, src_width, src_height, dest_width,
+            dest_height):
+        """Crop an image then scale it.
+
+        The image will be cropped to the rectangle (src_x, src_y, src_width,
+        src_height), that rectangle will be scaled to a new Image with tisez
+        (dest_width, dest_height)
+        """
+        dest = gtk.gdk.Pixbuf(self.pixbuf.get_colorspace(),
+                self.pixbuf.get_has_alpha(),
+                self.pixbuf.get_bits_per_sample(), dest_width, dest_height)
+
+        scale_x = dest_width / float(src_width)
+        scale_y = dest_height / float(src_height)
+
+        self.pixbuf.scale(dest, 0, 0, dest_width, dest_height,
+                -src_x * scale_x, -src_y * scale_y, scale_x, scale_y,
+                gtk.gdk.INTERP_BILINEAR)
+        return TransformedImage(dest)
+
+class TransformedImage(Image):
+    def __init__(self, pixbuf):
+        self._set_pixbuf(pixbuf)
 
 class ImageDisplay(Widget):
     def __init__(self, image=None):

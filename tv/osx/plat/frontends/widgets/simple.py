@@ -44,12 +44,35 @@ from miro.plat.frontends.widgets import wrappermap
 class Image(object):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, path):
-        self.nsimage = NSImage.alloc().initByReferencingFile_(filename_to_unicode(path))
+        self._set_image(NSImage.alloc().initByReferencingFile_(
+            filename_to_unicode(path)))
+
+    def _set_image(self, nsimage):
+        self.nsimage = nsimage
         self.width = self.nsimage.size().width
         self.height = self.nsimage.size().height
+        self.nsimage.setFlipped_(YES)
+
 
     def resize(self, width, height):
         return ResizedImage(self, width, height)
+
+    def crop_and_scale(self, src_x, src_y, src_width, src_height, dest_width,
+            dest_height):
+
+        source_rect = NSMakeRect(src_x, src_y, src_width, src_height)
+        dest_rect = NSMakeRect(0, 0, dest_width, dest_height)
+
+        dest = NSImage.alloc().initWithSize_(NSSize(dest_width, dest_height))
+        dest.lockFocus()
+        try:
+            NSGraphicsContext.currentContext().setImageInterpolation_(
+                    NSImageInterpolationHigh)
+            self.nsimage.drawInRect_fromRect_operation_fraction_(dest_rect,
+                    source_rect, NSCompositeCopy, 1.0)
+        finally:
+            dest.unlockFocus()
+        return TransformedImage(dest)
     
     def resize_for_space(self, width, height):
         """Returns an image scaled to fit into the specified space at the
@@ -70,12 +93,15 @@ class Image(object):
 
 class ResizedImage(Image):
     def __init__(self, image, width, height):
-        self.nsimage = image.nsimage.copy()
-        self.nsimage.setCacheMode_(NSImageCacheNever)
-        self.nsimage.setScalesWhenResized_(YES)
-        self.nsimage.setSize_(NSSize(width, height))
-        self.width = width
-        self.height = height
+        nsimage = image.nsimage.copy()
+        nsimage.setCacheMode_(NSImageCacheNever)
+        nsimage.setScalesWhenResized_(YES)
+        nsimage.setSize_(NSSize(width, height))
+        self._set_image(nsimage)
+
+class TransformedImage(Image):
+    def __init__(self, nsimage):
+        self._set_image(nsimage)
 
 class NSImageDisplay (NSView):
     def init(self):

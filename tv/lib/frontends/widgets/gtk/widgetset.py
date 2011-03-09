@@ -58,9 +58,9 @@ from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
         InfoListModel, TableColumn, TreeTableModel, CellRenderer,
         ImageCellRenderer, CheckboxCellRenderer, CustomCellRenderer,
         InfoListRenderer, InfoListRendererText)
-from miro.frontends.widgets.gtk.simple import (Image, ResizedImage,
-     ImageDisplay, AnimatedImageDisplay, Label, Scroller, Expander,
-     SolidBackground, ProgressBar, HLine)
+from miro.frontends.widgets.gtk.simple import (Image, ImageDisplay,
+        AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground,
+        ProgressBar, HLine)
 from miro.frontends.widgets.gtk.audio import AudioPlayer
 from miro.frontends.widgets.gtk.video import VideoPlayer
 from miro.frontends.widgets.gtk.widgets import Rect

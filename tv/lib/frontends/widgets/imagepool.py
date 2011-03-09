@@ -47,6 +47,8 @@ broken_image = Image(resources.path('images/broken-image.gif'))
 CACHE_SIZE = 2000 # number of objects to keep in memory
 
 class ImagePool(util.Cache):
+    UPSIZE_THRESHOLD = 1.5
+
     def create_new_value(self, (path, size)):
         try:
             image = Image(path)
@@ -54,13 +56,45 @@ class ImagePool(util.Cache):
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
             image = broken_image
-        if (size is not None and (image.width > size[0] or
-            image.height > size[1])):
-            # if we have a size, and the image is larger than that size,
-            # resize the image.
-            if size[0] * size[1] == 0:
-                image = broken_image
-            image = image.resize_for_space(*size)
+        if size is not None:
+            image = self.resize_image(image, *size)
+        return image
+
+    def resize_image(self, image, dest_width, dest_height):
+        # handle corner case of empty dest
+        if (dest_width * dest_height) == 0:
+            return broken_image
+        # calculate how much we need to enlarge/shrink the image so that a
+        # dimension lines up with the destination size
+        width_scale = float(dest_width) / image.width
+        height_scale = float(dest_height) / image.height
+        # scale such that one dimension lines up and one is overlapping
+        scale = max(width_scale, height_scale)
+        # check that we don't upsize too much
+        if scale > self.UPSIZE_THRESHOLD:
+            return self.resize_one_dimension(image, width_scale, height_scale)
+        if width_scale > height_scale:
+            # crop top/bottom
+            src_x = 0
+            src_width = image.width
+            src_height = dest_height / scale
+            src_y = (image.height - src_height) / 2
+        else:
+            # crop left/right
+            src_y = 0
+            src_height = image.height
+            src_width = dest_width / scale
+            src_x = (image.width - src_width) / 2
+        return image.crop_and_scale(src_x, src_y, src_width, src_height,
+                dest_width, dest_height)
+
+    def resize_one_dimension(self, image, width_scale, height_scale):
+        """Try to resize only 1 dimension on an image."""
+        lesser_scale = min(width_scale, height_scale)
+        if lesser_scale <= self.UPSIZE_THRESHOLD:
+            return image.resize(round(lesser_scale * image.width),
+                    round(lesser_scale * image.height))
+        # okay, give up on scaling and just return the image
         return image
 
 class ImageSurfacePool(util.Cache):
