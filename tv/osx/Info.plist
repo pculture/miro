@@ -315,17 +315,6 @@
 			<string>Viewer</string>
 		</dict>
 	</array>
-        <array>
-                <dict>
-                        <key>CFBundleURLTypes</key>
-                        <key>CFBundleURLName</key>
-                        <string>BitTorrent Magnet URL</string>
-                        <key>CFBundleURLSchemes</key>
-                        <array>
-                                <string>magnet</string>
-                        </array>
-                </dict>
-	</array>
 	<key>CFBundleGetInfoString</key>
 	<string>$appVersion ($appRevision), $copyright $publisher</string>
 	<key>CFBundleIdentifier</key>
@@ -338,6 +327,15 @@
 	<string>$appVersion</string>
 	<key>CFBundleURLTypes</key>
 	<array>
+                <dict>
+                        <key>CFBundleURLTypes</key>
+                        <key>CFBundleURLName</key>
+                        <string>BitTorrent Magnet URL</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                                <string>magnet</string>
+                        </array>
+                </dict>
 		<dict>
 			<key>CFBundleURLName</key>
 			<string>Miro URL</string>
