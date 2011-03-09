@@ -238,8 +238,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
     PROGRESS_AREA_HEIGHT = 56
 
     # padding/spacing
-    PADDING = (15, 15, 5, 5)
-    PADDING_BACKGROUND = (5, 5, 4, 8)
+    PADDING = (15, 15, 6, 6)
+    PADDING_BACKGROUND = (5, 5, 4, 6)
     TEXT_SPACING_Y = 3
     EMBLEM_PAD_TOP = 25
     EMBLEM_TEXT_PAD_START = 4
