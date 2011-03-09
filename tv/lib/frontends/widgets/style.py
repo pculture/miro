@@ -232,7 +232,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
     HEIGHT = 147
     RIGHT_WIDTH = 90
     RIGHT_WIDTH_DOWNLOAD_MODE = 115
-    IMAGE_WIDTH = 180
+    IMAGE_WIDTH_SQUARE = 125
+    IMAGE_WIDTH_WIDE = 180
     CORNER_RADIUS = 5
     EMBLEM_HEIGHT = 20
     PROGRESS_AREA_HEIGHT = 56
@@ -320,12 +321,17 @@ class ItemRenderer(widgetset.InfoListRenderer):
     STOP_SEEDING_TEXT = _("Stop seeding")
     PLAYLIST_REMOVE_TEXT = _('Remove from playlist')
 
-    def __init__(self, display_channel=True, is_podcast=False):
+    def __init__(self, display_channel=True, is_podcast=False,
+            wide_image=False):
         widgetset.InfoListRenderer.__init__(self)
         self.signals = ItemRendererSignals()
         self.display_channel = display_channel
         self.is_podcast = is_podcast
         self.selected = False
+        if wide_image:
+            self.image_width = self.IMAGE_WIDTH_WIDE
+        else:
+            self.image_width = self.IMAGE_WIDTH_SQUARE
         self.setup_images()
         self.emblem_drawer = _EmblemDrawer(self)
         self.extra_info_drawer = _ExtraInfoDrawer()
@@ -467,13 +473,13 @@ class ItemRenderer(widgetset.InfoListRenderer):
         self.background_rect = total_rect.subsection(*self.PADDING)
         # area inside the boundaries of the background
         inner_rect = self.background_rect.subsection(*self.PADDING_BACKGROUND)
-        self.image_rect = inner_rect.left_side(self.IMAGE_WIDTH)
+        self.image_rect = inner_rect.left_side(self.image_width)
         if self.download_mode:
             right_width = self.RIGHT_WIDTH_DOWNLOAD_MODE
         else:
             right_width = self.RIGHT_WIDTH
         self.right_rect = inner_rect.right_side(right_width)
-        self.middle_rect = inner_rect.subsection(self.IMAGE_WIDTH + 20,
+        self.middle_rect = inner_rect.subsection(self.image_width + 20,
                 right_width + 15, 0 ,0)
         # emblem/progress bar should start 29px above the top of the cell
         self.emblem_bottom = total_rect.bottom - 29

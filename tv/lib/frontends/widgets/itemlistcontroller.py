@@ -1032,6 +1032,9 @@ class VideoItemsController(AudioVideoItemsController):
         titlebar.connect_weak('toggle-filter', self._toggle_titlebar_filter)
         return titlebar
 
+    def build_renderer(self):
+        return style.ItemRenderer(display_channel=True, wide_image=True)
+
     def _toggle_titlebar_filter(self, titlebar, filter):
         for name, button in titlebar.filters.items():
             if name != filter:
