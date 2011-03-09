@@ -47,22 +47,11 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import menus
+from miro.frontends.widgets.tablistdnd import (FeedListDragHandler,
+     FeedListDropHandler, PlaylistListDragHandler, PlaylistListDropHandler,
+     MediaTypeDropHandler, DeviceDropHandler)
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import timer
-
-def send_new_order():
-    def append_items(sequence, typ):
-        parent = sequence[sequence.first_iter()]
-        for row in parent.iterchildren():
-            info = row[0]
-            message.append(info, typ)
-            for child in row.iterchildren():
-                message.append_child(info.id, child[0])
-
-    message = messages.TabsReordered()
-    append_items(app.tab_list_manager.feed_list.view.model, u'feed')
-    append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
-    message.send_to_backend()
 
 class TabInfo(object):
     """
@@ -82,7 +71,6 @@ class TabInfo(object):
         self.thumbnail = resources.path('images/%s.png' % icon_name)
         self.icon = widgetutil.make_surface(self.icon_name)
         self.active_icon = widgetutil.make_surface(self.icon_name + '_active')
-
 
 class TabListView(widgetset.TableView):
     draws_selection = True
@@ -107,39 +95,44 @@ class TabListView(widgetset.TableView):
         self.set_auto_resizes(True)
 
     def append_tab(self, tab_info):
+        """Add a new tab with no parent."""
         return self.model.append(tab_info, False, -1)
 
     def append_child_tab(self, parent_iter, tab_info):
+        """Add a new tab with a parent."""
         return self.model.append_child(parent_iter, tab_info, False, -1)
 
-    def update_tab(self, iter, tab_info):
-        self.model.update_value(iter, 0, tab_info)
+    def update_tab(self, iter_, tab_info):
+        """A TabInfo has changed."""
+        self.model.update_value(iter_, 0, tab_info)
 
-    def blink_tab(self, iter):
-        self.model.update_value(iter, 1, True)
+    def blink_tab(self, iter_):
+        """Draw attention to a tab, specified by its Iter."""
+        self.model.update_value(iter_, 1, True)
 
-    def unblink_tab(self, iter):
-        self.model.update_value(iter, 1, False)
+    def unblink_tab(self, iter_):
+        """Stop drawing attention to tab specified by Iter."""
+        self.model.update_value(iter_, 1, False)
 
-    def pulse_updating_image(self, iter):
-        frame = self.model[iter][2]
-        self.model.update_value(iter, 2, (frame + 1) % 12)
+    def pulse_updating_image(self, iter_):
+        frame = self.model[iter_][2]
+        self.model.update_value(iter_, 2, (frame + 1) % 12)
         self.model_changed()
 
-    def stop_updating_image(self, iter):
-        self.model.update_value(iter, 2, -1)
+    def stop_updating_image(self, iter_):
+        self.model.update_value(iter_, 2, -1)
         self.model_changed()
 
 class TabBlinkerMixin(object):
-    def blink_tab(self, id):
-        self.show_auto_tab(id)
-        self.view.blink_tab(self.iter_map[id])
-        timer.add(1, self._unblink_tab, id)
+    def blink_tab(self, id_):
+        self.show_auto_tab( id_)
+        self.view.blink_tab(self.iter_map[id_])
+        timer.add(1, self._unblink_tab, id_)
 
-    def _unblink_tab(self, id):
+    def _unblink_tab(self, id_):
         # double check that the tab still exists
-        if id in self.iter_map:
-            self.view.unblink_tab(self.iter_map[id])
+        if id_ in self.iter_map:
+            self.view.unblink_tab(self.iter_map[id_])
 
 class TabUpdaterMixin(object):
     def __init__(self):
@@ -169,12 +162,12 @@ class TabUpdaterMixin(object):
 
     def pulse_updating_animation(self, id_):
         try:
-            iter = self.iter_map[id_]
+            iter_ = self.iter_map[id_]
         except KeyError:
             # feed was removed
             del self.updating_animations[id_]
             return
-        self.view.pulse_updating_image(iter)
+        self.view.pulse_updating_image(iter_)
         timer_id = timer.add(0.1, self.pulse_updating_animation, id_)
         self.updating_animations[id_] = timer_id
 
@@ -187,12 +180,12 @@ class StaticTabListBase(TabBlinkerMixin):
         # changing.
 
     def add(self, tab):
-        iter = self.view.append_tab(tab)
-        self.iter_map[tab.id] = iter
+        iter_ = self.view.append_tab(tab)
+        self.iter_map[tab.id] = iter_
 
     def remove(self, name):
-        iter = self.iter_map.pop(name)
-        self.view.model.remove(iter)
+        iter_ = self.iter_map.pop(name)
+        self.view.model.remove(iter_)
 
     def get_tab(self, name):
         return self.view.model[self.iter_map[name]][0]
@@ -258,8 +251,8 @@ class LibraryTabList(StaticTabListBase):
         if name not in self.iter_map:
             return
         # Don't remove the tab if it's currently selected.
-        for iter in self.view.get_selection():
-            info = self.view.model[iter][0]
+        for iter_ in self.view.get_selection():
+            info = self.view.model[iter_][0]
             if info.id == name:
                 return
         self.remove(name)
@@ -270,8 +263,8 @@ class LibraryTabList(StaticTabListBase):
                 self.remove_auto_tab_if_not_selected(name)
                 self.view.model_changed()
         if not app.config.get(prefs.MUSIC_TAB_CLICKED):
-            for iter in view.get_selection():
-                if view.model[iter][0].id == 'music':
+            for iter_ in view.get_selection():
+                if view.model[iter_][0].id == 'music':
                     app.widgetapp.music_tab_clicked()
 
     def update_download_count(self, count, non_downloading_count):
@@ -296,307 +289,16 @@ class LibraryTabList(StaticTabListBase):
         if key in self.auto_tabs:
             self.update_auto_tab_count(key, count+other_count)
         try:
-            iter = self.iter_map[key]
+            iter_ = self.iter_map[key]
         except KeyError, e:
             pass
         else:
-            tab = self.view.model[iter][0]
+            tab = self.view.model[iter_][0]
             setattr(tab, attr, count)
-            self.view.update_tab(iter, tab)
+            self.view.update_tab(iter_, tab)
         self.view.model_changed()
 
-class TabListDragHandler(object):
-    def allowed_actions(self):
-        return widgetset.DRAG_ACTION_MOVE
-
-    def allowed_types(self):
-        return (self.item_type, self.folder_type)
-
-    def begin_drag(self, tableview, rows):
-        typ = self.item_type
-        for r in rows:
-            if r[0].is_folder:
-                typ = self.folder_type
-                break
-        typ = typ.encode('ascii', 'replace')
-        return { typ: '-'.join(str(r[0].id) for r in rows)}
-
-class TabDnDReorder(object):
-    """Handles re-ordering tabs for doing drag and drop
-    reordering.
-    """
-    def __init__(self):
-        self.removed_rows = []
-        self.removed_children = {}
-
-    def calc_drop_id(self, model):
-        if self.drop_row_iter is not None:
-            self.drop_id = model[self.drop_row_iter][0].id
-        else:
-            self.drop_id = None
-
-    def reorder(self, source_model, dest_model, parent, position, dragged_ids):
-        if position >= 0:
-            self.drop_row_iter = dest_model.nth_child_iter(parent, position)
-        else:
-            self.drop_row_iter = None
-        self.calc_drop_id(dest_model)
-        self.remove_dragged_rows(source_model, dragged_ids)
-        return self.put_rows_back(dest_model, parent)
-
-    def remove_row(self, model, iter, row):
-        self.removed_rows.append(row)
-        if row[0].id == self.drop_id:
-            self.drop_row_iter = model.next_iter(self.drop_row_iter)
-            self.calc_drop_id(model)
-        return model.remove(iter)
-
-    def remove_dragged_rows(self, model, dragged_ids):
-        # iterating through the entire table seems inefficient, but we have to
-        # know the order of dragged rows so we can insert them back in the
-        # right order.
-        iter = model.first_iter()
-        if iter is None:
-            return
-        iter = model.child_iter(iter)
-        while iter is not None:
-            row = model[iter]
-            row_dragged = (row[0].id in dragged_ids)
-            if row_dragged:
-                # need to make a copy of the row data, since we're removing it
-                # from the table
-                children = [tuple(r) for r in row.iterchildren()]
-                self.removed_children[row[0].id] = children
-                iter = self.remove_row(model, iter, tuple(row))
-            else:
-                child_iter = model.child_iter(iter)
-                while child_iter is not None:
-                    row = model[child_iter]
-                    if row[0].id in dragged_ids:
-                        child_iter = self.remove_row(model, child_iter,
-                                tuple(row))
-                    else:
-                        child_iter = model.next_iter(child_iter)
-                iter = model.next_iter(iter)
-
-    def put_rows_back(self, model, parent):
-        if self.drop_row_iter is None:
-            def put_back(moved_row):
-                return model.append_child(parent, *moved_row)
-        else:
-            def put_back(moved_row):
-                return model.insert_before(self.drop_row_iter, *moved_row)
-        retval = {}
-        for removed_row in self.removed_rows:
-            iter = put_back(removed_row)
-            retval[removed_row[0].id] = iter
-            children = self.removed_children.get(removed_row[0].id, [])
-            for child_row in children:
-                child_iter = model.append_child(iter, *child_row)
-                retval[child_row[0].id] = child_iter
-        return retval
-
-class MediaTypeDropHandler(object):
-    """Drop Handler that changes the media type (audio/video/other) of items
-    that get dropped on it.
-    """
-
-    def allowed_types(self):
-        return ('downloaded-item', 'device-video-item', 'device-audio-item')
-
-    def allowed_actions(self):
-        return widgetset.DRAG_ACTION_COPY
-
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
-            position):
-        if parent is None or position != -1:
-            return widgetset.DRAG_ACTION_NONE
-        if typ == 'downloaded-item':
-            return widgetset.DRAG_ACTION_COPY
-        media_type = model[parent][0].media_type
-        if typ == ('device-%s-item' % media_type):
-            return widgetset.DRAG_ACTION_COPY
-        return widgetset.DRAG_ACTION_NONE
-
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
-            position, data):
-        if parent is not None and position == -1:
-            media_type = model[parent][0].media_type
-            if typ == 'downloaded-item':
-                video_ids = [int(id) for id in data.split('-')]
-                m = messages.SetItemMediaType(media_type, video_ids)
-                m.send_to_backend()
-                return True
-            elif typ == ('device-%s-item' % media_type):
-                # copying media from the device
-                item_infos = pickle.loads(data)
-                m = messages.DownloadDeviceItems(item_infos)
-                m.send_to_backend()
-        # We shouldn't get here, because don't allow it in validate_drop.
-        # Return False just in case
-        return False
-
-class NestedTabListDropHandler(object):
-    def __init__(self, tablist):
-        self.tablist = tablist
-
-    def allowed_actions(self):
-        return widgetset.DRAG_ACTION_COPY
-
-    def allowed_types(self):
-        return self.item_types + self.folder_types
-
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
-            position):
-        if parent is None:
-            # can't drag above the root
-            return widgetset.DRAG_ACTION_NONE
-        if position < 0:
-            is_folder = model[parent][0].is_folder
-        elif position < model.children_count(parent):
-            iter = model.nth_child_iter(parent, position)
-            is_folder = model[iter][0].is_folder
-        else:
-            is_folder = False
-        parent_info = model[parent][0]
-        if position == -1 and not is_folder:
-            # Only folders can be dropped on
-            return widgetset.DRAG_ACTION_NONE
-        if (typ in self.folder_types and (
-            (position == -1 and is_folder) or parent_info.is_folder)):
-            # Don't allow folders to be dropped in other folders
-            return widgetset.DRAG_ACTION_NONE
-        elif typ not in self.item_types + self.folder_types:
-            return widgetset.DRAG_ACTION_NONE
-        return widgetset.DRAG_ACTION_MOVE
-
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
-            position, data):
-        source_tablist = dest_tablist = self.tablist
-        selected_infos = app.tab_list_manager.get_selection()[1]
-        selected_rows = [info.id for info in selected_infos]
-        source_tablist.doing_change = dest_tablist.doing_change = True
-        source_tablist.view.unselect_all()
-        dest_tablist.view.unselect_all()
-        dragged_ids = set([int(id) for id in data.split('-')])
-        expanded_rows = [id for id in dragged_ids if \
-                source_tablist.view.is_row_expanded(
-                source_tablist.iter_map[id])]
-        if source_tablist.view.is_row_expanded(
-            source_tablist.iter_map[source_tablist.info.id]):
-            # keep the root expanded, if it was before
-            expanded_rows.append(source_tablist.info.id)
-        reorderer = TabDnDReorder()
-        try:
-            new_iters = reorderer.reorder(
-                source_tablist.view.model, dest_tablist.view.model,
-                parent, position, dragged_ids)
-
-            # handle deletions for the source... delete the keys on
-            # what's returned from the source_tablist's iter_map
-            if source_tablist != dest_tablist:
-                for key in new_iters.keys():
-                    source_tablist.iter_map.pop(key)
-            dest_tablist.iter_map.update(new_iters)
-        finally:
-            if source_tablist != dest_tablist:
-                source_tablist.model_changed()
-            dest_tablist.model_changed()
-        for id in expanded_rows:
-            dest_tablist.view.set_row_expanded(dest_tablist.iter_map[id], True)
-        try:
-            for id in selected_rows:
-                iter = dest_tablist.iter_map[id]
-                parent = model.parent_iter(iter)
-                if parent is None or dest_tablist.view.is_row_expanded(parent):
-                    dest_tablist.view.select(iter)
-        except KeyError:
-            pass
-
-        send_new_order()
-        source_tablist.doing_change = False
-        dest_tablist.doing_change = False
-        app.tab_list_manager.handle_moved_tabs_to_list(dest_tablist)
-        return True
-
-class FeedListDropHandler(NestedTabListDropHandler):
-    item_types = ('feed',)
-    folder_types = ('feed-with-folder',)
-
-class FeedListDragHandler(TabListDragHandler):
-    item_type = u'feed'
-    folder_type = u'feed-with-folder'
-
-class PlaylistListDropHandler(NestedTabListDropHandler):
-    item_types = ('playlist',)
-    folder_types = ('playlist-with-folder',)
-
-    def allowed_actions(self):
-        return (NestedTabListDropHandler.allowed_actions(self) |
-                widgetset.DRAG_ACTION_COPY)
-
-    def allowed_types(self):
-        return NestedTabListDropHandler.allowed_types(self) + ('downloaded-item',)
-
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
-            position):
-        if typ == 'downloaded-item':
-            if (parent is not None and position == -1 and
-                    not model[parent][0].is_folder):
-                return widgetset.DRAG_ACTION_COPY
-            else:
-                return widgetset.DRAG_ACTION_NONE
-        return NestedTabListDropHandler.validate_drop(self, table_view, model, typ,
-                source_actions, parent, position)
-
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
-            position, data):
-        if typ == 'downloaded-item':
-            if parent is not None and position == -1:
-                playlist_id = model[parent][0].id
-                video_ids = [int(id) for id in data.split('-')]
-                messages.AddVideosToPlaylist(playlist_id,
-                        video_ids).send_to_backend()
-                return True
-            # We shouldn't get here, because don't allow it in validate_drop.
-            # Return False just in case
-            return False
-        return NestedTabListDropHandler.accept_drop(self, table_view, model, typ,
-                source_actions, parent, position, data)
-
-class DeviceDropHandler(object):
-    def __init__(self, tablist):
-        self.tablist = tablist
-
-    def allowed_actions(self):
-        return widgetset.DRAG_ACTION_COPY
-
-    def allowed_types(self):
-        return ('downloaded-item',)
-
-    def validate_drop(self, widget, model, type, source_actions, parent,
-                      position):
-        if position == -1 and parent and type in self.allowed_types():
-            device = model[parent][0]
-            if not isinstance(device, messages.DeviceInfo):
-                # DAAP share
-                return widgetset.DRAG_ACTION_NONE
-            if device.mount and not getattr(device, 'fake', False):
-                return widgetset.DRAG_ACTION_COPY
-        return widgetset.DRAG_ACTION_NONE
-
-    def accept_drop(self, widget, model, type, source_actions, parent,
-                    position, data):
-        video_ids = [int(id) for id in data.split('-')]
-        device = model[parent][0]
-        messages.DeviceSyncMedia(device, video_ids).send_to_backend()
-        return True
-
-class PlaylistListDragHandler(TabListDragHandler):
-    item_type = u'playlist'
-    folder_type = u'playlist-with-folder'
-
-class TabList(signals.SignalEmitter, TabBlinkerMixin):
+class TabList(TabBlinkerMixin, signals.SignalEmitter):
     """Handles a list of tabs on the left-side of Miro.
 
     signals:
@@ -623,7 +325,7 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
 
     def reset_list(self, message):
         self.doing_change = True
-        selected_ids = set(self.view.model[iter][0].id for iter in
+        selected_ids = set(self.view.model[iter_][0].id for iter_ in
                 self.view.get_selection())
         self._clear_list()
         for info in message.toplevels:
@@ -636,14 +338,14 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
             if info.is_folder:
                 expanded = (info.id in message.expanded_folders)
                 self.set_folder_expanded(info.id, expanded)
-        for id in selected_ids:
-            self.view.select(self.iter_map[id])
+        for id_ in selected_ids:
+            self.view.select(self.iter_map[id_])
         self.doing_change = False
 
     def _clear_list(self):
-        iter = self.view.model.first_iter()
-        while iter is not None:
-            iter = self.view.model.remove(iter)
+        iter_ = self.view.model.first_iter()
+        while iter_ is not None:
+            iter_ = self.view.model.remove(iter_)
         self.iter_map = {}
 
     def on_key_press(self, view, key, mods):
@@ -653,19 +355,19 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)
 
-    def on_row_expanded_change(self, view, iter, expanded):
-        id = self.view.model[iter][0].id
-        message = messages.FolderExpandedChange(self.type, id, expanded)
+    def on_row_expanded_change(self, view, iter_, expanded):
+        id_ = self.view.model[iter_][0].id
+        message = messages.FolderExpandedChange(self.type, id_, expanded)
         message.send_to_backend()
 
     def add(self, info, parent_id=None):
         self.init_info(info)
         if parent_id:
             parent_iter = self.iter_map[parent_id]
-            iter = self.view.append_child_tab(parent_iter, info)
+            iter_ = self.view.append_child_tab(parent_iter, info)
         else:
-            iter = self.view.append_tab(info)
-        self.iter_map[info.id] = iter
+            iter_ = self.view.append_tab(info)
+        self.iter_map[info.id] = iter_
 
     def set_folder_expanded(self, id_, expanded):
         self.view.set_row_expanded(self.iter_map[id_], expanded)
@@ -679,38 +381,38 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
 
     def remove(self, id_list):
         self.doing_change = True
-        for id in id_list:
+        for id_ in id_list:
             try:
-                iter = self.iter_map.pop(id)
+                iter_ = self.iter_map.pop(id_)
             except KeyError:
                 # child of a tab we already deleted
                 continue
-            self.forget_child_iters(iter)
-            self.view.model.remove(iter)
+            self.forget_child_iters(iter_)
+            self.view.model.remove(iter_)
         self.doing_change = False
         self.view.model_changed()
         app.tab_list_manager.recalc_selection()
 
     def forget_child_iters(self, parent_iter):
         model = self.view.model
-        iter = model.child_iter(parent_iter)
-        while iter is not None:
-            id = model[iter][0].id
-            del self.iter_map[id]
-            iter = model.next_iter(iter)
+        iter_ = model.child_iter(parent_iter)
+        while iter_ is not None:
+            id_ = model[iter_][0].id
+            del self.iter_map[id_]
+            iter_ = model.next_iter(iter_)
 
     def model_changed(self):
         self.view.model_changed()
 
-    def get_info(self, id):
-        return self.view.model[self.iter_map[id]][0]
+    def get_info(self, id_):
+        return self.view.model[self.iter_map[id_]][0]
 
-    def has_info(self, id):
-        return id in self.iter_map
+    def has_info(self, id_):
+        return id_ in self.iter_map
 
-    def get_child_count(self, id):
+    def get_child_count(self, id_):
         count = 0
-        child_iter = self.view.model.child_iter(self.iter_map[id])
+        child_iter = self.view.model.child_iter(self.iter_map[id_])
         while child_iter is not None:
             count += 1
             child_iter = self.view.model.next_iter(child_iter)
@@ -719,7 +421,6 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
     def on_delete_key_pressed(self):
         """For subclasses to override."""
         pass
-
 
 class DeviceTabListHandler(object):
     def __init__(self, tablist):
@@ -770,17 +471,17 @@ class DeviceTabListHandler(object):
             # this gets called if a sync is in progress when the device
             # disappears
             return
-        if info.mount and not info.info.has_multiple_devices and \
-                not tablist.get_child_count(info.id):
+        if (info.mount and not info.info.has_multiple_devices and
+                not tablist.get_child_count(info.id)):
             self._add_fake_tabs(info)
         elif tablist.get_child_count(info.id):
             if not info.mount:
                 parent_iter = tablist.iter_map[info.id]
                 next_iter = model.child_iter(parent_iter)
                 while next_iter is not None:
-                    iter = next_iter
+                    iter_ = next_iter
                     next_iter = model.next_iter(next_iter)
-                    model.remove(iter)
+                    model.remove(iter_)
             else: # also update the subtabs
                 for fake in self._get_fake_infos(info):
                     HideableTabList.update(tablist, fake)
@@ -800,19 +501,19 @@ class DeviceTabListHandler(object):
             else:
                 self.tablist.stop_updating(info.id)
 
-    def on_hotspot_clicked(self, view, hotspot, iter):
+    def on_hotspot_clicked(self, view, hotspot, iter_):
         if hotspot == 'eject-device':
-            info = view.model[iter][0]
+            info = view.model[iter_][0]
             messages.DeviceEject(info).send_to_backend()
 
 class SharingTabListHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
 
-    def on_hotspot_clicked(self, view, hotspot, iter):
+    def on_hotspot_clicked(self, view, hotspot, iter_):
         if hotspot == 'eject-device':
             # Don't track this tab anymore for music.
-            info = view.model[iter][0]
+            info = view.model[iter_][0]
             info.mount = False
             # We must stop the playback if we are playing from the same
             # share that we are ejecting from.
@@ -884,27 +585,27 @@ class HideableTabList(TabList):
             self.set_folder_expanded(self.info.id, True)
 
     def _clear_list(self):
-        iter = self.view.model.first_iter()
-        if iter is None:
+        iter_ = self.view.model.first_iter()
+        if iter_ is None:
             return
-        iter = self.view.model.child_iter(iter)
-        while iter is not None:
-            iter = self.view.model.remove(iter)
+        iter_ = self.view.model.child_iter(iter_)
+        while iter_ is not None:
+            iter_ = self.view.model.remove(iter_)
         self.iter_map = {self.info.id: self.iter_map[self.info.id]}
 
     def on_selection_changed(self, view):
-        for iter in view.get_selection():
-            if view.model[iter][0] is self.info:
-                if not view.is_row_expanded(iter):
+        for iter_ in view.get_selection():
+            if view.model[iter_][0] is self.info:
+                if not view.is_row_expanded(iter_):
                     self.set_folder_expanded(self.info.id, True)
                 return
 
-    def on_row_expanded_change(self, view, iter, expanded):
-        info = self.view.model[iter][0]
+    def on_row_expanded_change(self, view, iter_, expanded):
+        info = self.view.model[iter_][0]
         if info is not self.info:
-            TabList.on_row_expanded_change(self, view, iter, expanded)
+            TabList.on_row_expanded_change(self, view, iter_, expanded)
 
-class ConnectList(HideableTabList, TabUpdaterMixin):
+class ConnectList(TabUpdaterMixin, HideableTabList):
     name = _('Connect')
     icon_name = 'icon-connect'
     type = u'connect'
@@ -925,10 +626,10 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
         self.view.connect_weak('row-clicked', self.on_row_clicked)
         self.view.set_drag_dest(DeviceDropHandler(self))
 
-    def on_row_expanded_change(self, view, iter, expanded):
-        info = self.view.model[iter][0]
+    def on_row_expanded_change(self, view, iter_, expanded):
+        info = self.view.model[iter_][0]
         if info is self.info:
-            HideableTabList.on_row_expanded_change(self, view, iter, expanded)
+            HideableTabList.on_row_expanded_change(self, view, iter_, expanded)
 
     def on_delete_key_pressed(self):
         # neither handler deals with this
@@ -938,16 +639,16 @@ class ConnectList(HideableTabList, TabUpdaterMixin):
         # neither handle deals with this
         return []
 
-    def on_row_clicked(self, view, iter):
-        info = self.view.model[iter][0]
+    def on_row_clicked(self, view, iter_):
+        info = self.view.model[iter_][0]
         handler = self.info_class_map[type(info)]
         if hasattr(handler, 'on_row_clicked'):
-            return handler.on_row_clicked(view, iter)
+            return handler.on_row_clicked(view, iter_)
 
-    def on_hotspot_clicked(self, view, hotspot, iter):
-        info = self.view.model[iter][0]
+    def on_hotspot_clicked(self, view, hotspot, iter_):
+        info = self.view.model[iter_][0]
         handler = self.info_class_map[type(info)]
-        return handler.on_hotspot_clicked(view, hotspot, iter)
+        return handler.on_hotspot_clicked(view, hotspot, iter_)
 
     def init_info(self, info):
         if info is self.info:
@@ -1000,7 +701,7 @@ class SiteList(HideableTabList):
         info.type = self.type
 
     def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter][0] for iter in \
+        selected_rows = [table_view.model[iter_][0] for iter_ in
                 table_view.get_selection()]
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
@@ -1024,7 +725,7 @@ class StoreList(SiteList):
         pass # XXX: can't delete stores(?)
 
     def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter][0] for iter in \
+        selected_rows = [table_view.model[iter_][0] for iter_ in
                 table_view.get_selection()]
         if len(selected_rows) == 1 and selected_rows[0].type != u'tab':
             return [
@@ -1033,12 +734,11 @@ class StoreList(SiteList):
         else:
             return []
 
-
-class NestedTabList(TabList):
+class NestedTabListMixin(object):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""
 
     def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter][0] for iter in \
+        selected_rows = [table_view.model[iter_][0] for iter_ in
                 table_view.get_selection()]
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
@@ -1050,7 +750,7 @@ class NestedTabList(TabList):
         else:
             return self.make_multiple_context_menu()
 
-class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
+class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
     type = u'feed'
     name = _('Podcasts')
     icon_name = 'icon-podcast'
@@ -1083,8 +783,8 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
         return infos
 
     def find_feed_with_url(self, url):
-        for iter in self.iter_map.values():
-            info = self.view.model[iter][0]
+        for iter_ in self.iter_map.values():
+            info = self.view.model[iter_][0]
             if info is self.info:
                 continue
             if info.url == url:
@@ -1118,8 +818,7 @@ class FeedList(HideableTabList, NestedTabList, TabUpdaterMixin):
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 
-
-class PlaylistList(HideableTabList, NestedTabList):
+class PlaylistList(NestedTabListMixin, HideableTabList):
     type = u'playlist'
     name = _('Playlists')
     icon_name = 'icon-playlist'
@@ -1152,8 +851,8 @@ class PlaylistList(HideableTabList, NestedTabList):
         return infos
 
     def find_playlist_with_name(self, name):
-        for iter in self.iter_map.values():
-            info = self.view.model[iter][0]
+        for iter_ in self.iter_map.values():
+            info = self.view.model[iter_][0]
             if info is self:
                 continue
             if info.name == name:
