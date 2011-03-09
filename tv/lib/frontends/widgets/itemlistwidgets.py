@@ -268,7 +268,7 @@ class ItemListTitlebar(widgetset.Titlebar):
         if start:
             hbox.pack_start(start)
         self.filter_box = widgetset.HBox(spacing=10)
-        hbox.pack_start(self.filter_box)
+        hbox.pack_start(widgetutil.align_middle(self.filter_box, left_pad=10))
         extra = self._build_titlebar_extra()
         if extra:
             if isinstance(extra, list):

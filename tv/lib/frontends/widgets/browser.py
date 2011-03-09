@@ -73,7 +73,7 @@ class BrowserToolbar(widgetset.Titlebar):
         self.back_button.set_squish_width(True)
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable()
-        hbox.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
+        hbox.pack_start(widgetutil.align_middle(self.back_button, left_pad=10))
 
         separator = widgetset.ImageDisplay(imagepool.get(
             resources.path('images/navseparator.png')))
