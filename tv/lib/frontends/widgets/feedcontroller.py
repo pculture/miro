@@ -67,7 +67,7 @@ class FeedController(itemlistcontroller.ItemListController,
         self.titlebar.connect('toggle-filter', self.on_toggle_filter)
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
-        app.widgetapp.window.switch_titlebar(self.titlebar)
+        self.widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
             self.widget.statusbar_vbox.pack_start(self._make_toolbar(feed_info))
 

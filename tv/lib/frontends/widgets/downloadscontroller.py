@@ -49,7 +49,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
-        app.widgetapp.window.switch_titlebar(self.titlebar)
+        self.widget.titlebar_vbox.pack_start(self.titlebar)
 
         self.status_toolbar = DownloadStatusToolbar()
         self.widget.statusbar_vbox.pack_start(self.status_toolbar)

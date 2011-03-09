@@ -1658,6 +1658,7 @@ class ItemContainerWidget(widgetset.VBox):
     """A Widget for displaying objects that contain items (feeds,
     playlists, folders, downloads tab, etc).
 
+    :attribute titlebar_vbox: VBox for the title bar
     :attribute vbox: VBoxes for standard view and list view
     :attribute list_empty_mode_vbox: VBox for list empty mode
     :attribute toolbar: HeaderToolbar for the widget
@@ -1671,6 +1672,7 @@ class ItemContainerWidget(widgetset.VBox):
         list_view = WidgetStateStore.get_list_view_type()
         self.vbox[standard_view] = widgetset.VBox()
         self.vbox[list_view] = widgetset.VBox()
+        self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.item_details = ItemDetailsWidget()
         self.list_empty_mode_vbox = widgetset.VBox()
@@ -1678,6 +1680,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.toolbar = toolbar
         if view == standard_view:
             toolbar._button_hbox_container.show()
+        self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
         self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()

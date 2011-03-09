@@ -212,7 +212,7 @@ class BrowserNav(widgetset.VBox):
         self.toolbar = BrowserToolbar()
         self.guide_info = guide_info
         self.home_url = guide_info.url
-        app.widgetapp.window.switch_titlebar(self.toolbar)
+        self.pack_start(self.toolbar)
         self.pack_start(self.browser, expand=True)
 
         self.toolbar.connect_weak('browser-back', self._on_browser_back)

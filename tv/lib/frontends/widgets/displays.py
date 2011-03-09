@@ -267,10 +267,6 @@ class GuideDisplay(TabDisplay):
         Display.__init__(self)
         self.widget = selected_tabs[0].browser
 
-    def on_activate(self):
-        TabDisplay.on_activate(self)
-        app.widgetapp.window.switch_titlebar(self.widget.toolbar)
-
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them
 
@@ -286,11 +282,6 @@ class SiteDisplay(TabDisplay):
     def should_display(tab_type, selected_tabs):
         return tab_type in ('site', 'store') and len(selected_tabs) == 1 and \
                hasattr(selected_tabs[0], 'url')
-
-    def on_activate(self):
-        TabDisplay.on_activate(self)
-        app.menu_manager.update_menus()
-        app.widgetapp.window.switch_titlebar(self.widget.toolbar)
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)

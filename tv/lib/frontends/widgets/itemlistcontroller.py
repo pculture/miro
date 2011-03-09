@@ -272,7 +272,6 @@ class ItemListController(object):
                     self._handle_playback_did_stop)
         self.config_change_handle = app.frontend_config_watcher.connect(
                 'changed', self.on_config_change)
-        app.widgetapp.window.switch_titlebar(self.titlebar)
 
     def on_config_change(self, obj, key, value):
         if (key == prefs.RESUME_VIDEOS_MODE.key or
@@ -890,8 +889,8 @@ class SimpleItemListController(ItemListController):
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
-        app.widgetapp.window.switch_titlebar(self.titlebar)
         self.titlebar.switch_to_view(self.widget.selected_view)
+        self.widget.titlebar_vbox.pack_start(self.titlebar)
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.ItemListTitlebar()
