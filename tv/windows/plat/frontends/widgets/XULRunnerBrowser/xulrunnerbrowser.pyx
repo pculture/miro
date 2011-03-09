@@ -108,6 +108,7 @@ cdef extern from "Init.h":
     nsresult c_setup_user_agent "setup_user_agent" (char* vendor, char* vendor_sub, char* comment)
     void shutdown_xulrunner()
     nsresult c_set_profile_dir "set_profile_dir" (char* dir)
+    nsresult c_add_cookie "add_cookie" (char* name, char* value, char* domain, char* path, unsigned long expiry)
 
 cdef extern from "pythread.h":
     ctypedef struct PyThreadState
@@ -156,6 +157,12 @@ def set_profile_dir(profile_dir):
     rv = c_set_profile_dir(profile_dir)
     if rv != NS_OK:
        raise XPCOMError("set_profile_dir failed with code: %d" % rv)
+
+def add_cookie(name, value, domain, path, expiry):
+    cdef nsresult rv
+    rv = c_add_cookie(name, value, domain, path, expiry)
+    if rv != NS_OK:
+       raise XPCOMError("add_cookie failed with code: %d" % rv)
 
 class XPCOMError(Exception):
     pass

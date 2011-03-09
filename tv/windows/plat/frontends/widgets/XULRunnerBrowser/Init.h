@@ -37,6 +37,7 @@ nsresult setup_user_agent(const char* vendor, const char* vendor_sub,
         const char* comment);
 void shutdown_xulrunner();
 nsresult set_profile_dir(const char* dir);
+nsresult add_cookie(const char* name, const char* value, const char* domain, const char *path, unsigned long expiry);
 void addref(void* object);
 void release(void* object);
 

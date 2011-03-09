@@ -35,6 +35,7 @@ import traceback
 import webbrowser
 from urlparse import urlparse
 import _winreg
+import time
 
 import gtk
 
@@ -193,6 +194,11 @@ class WindowsApplication(Application):
         xulrunnerbrowser.set_profile_dir(
             os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), 'profile'))
         xulrunnerbrowser.install_window_creator(self)
+        xulrunnerbrowser.add_cookie('dmusic_download_manager_enabled',
+                                    '1.0.3',
+                                    '.amazon.com',
+                                    '/',
+                                    time.time() + 3600 * 365 * 10) # 10 years
 
     def on_new_window(self, uri):
         self.open_url(uri)

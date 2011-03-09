@@ -44,6 +44,8 @@
 #include "pref/nsIPref.h"
 #include "xulapp/nsXULAppAPI.h"
 #include "xpcom/nsServiceManagerUtils.h"
+#include "necko/nsNetCID.h"
+#include "necko/nsICookieManager2.h"
 
 #include "Init.h"
 
@@ -130,5 +132,21 @@ nsresult set_profile_dir(const char* dir)
   rv = XRE_LockProfileDirectory(profile_dir, getter_AddRefs(profile_lock));
   NS_ENSURE_SUCCESS(rv, rv);
   XRE_NotifyProfile();
+  return NS_OK;
+}
+
+// XXX maybe not the ideal place for this function
+nsresult add_cookie(const char* name, const char* value, const char *domain,
+		    const char* path, unsigned long expiry)
+{
+  nsresult rv;
+  nsCOMPtr<nsICookieManager2> cookie_manager(
+              do_GetService(NS_COOKIEMANAGER_CONTRACTID, &rv));
+  NS_ENSURE_SUCCESS(rv, rv);
+  cookie_manager->Add(nsEmbedCString(domain),
+		      nsEmbedCString(path),
+		      nsEmbedCString(name),
+		      nsEmbedCString(value),
+		      0, 0, 0, expiry);
   return NS_OK;
 }
