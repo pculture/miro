@@ -435,7 +435,9 @@ class SharingTracker(object):
         # Do we need to remove a available_shares that was delayed?
         try:
             info = self.available_shares[share_id]
-            assert info.stale
+            # If the info is stale, remove it.
+            if info.stale:
+                del self.available_shares[share_id]
         except KeyError:
             pass
         del self.trackers[share_id]
