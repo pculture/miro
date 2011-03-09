@@ -211,7 +211,8 @@ class Window(signals.SignalEmitter):
 
     def place_child(self):
         rect = self.nswindow.contentRectForFrameRect_(self.nswindow.frame())
-        self.content_widget.place(NSRect(NSPoint(0, 0), rect.size),
+        if self.content_widget:
+            self.content_widget.place(NSRect(NSPoint(0, 0), rect.size),
                 self.content_view)
 
     def hookup_content_widget_signals(self):
@@ -258,10 +259,22 @@ class Window(signals.SignalEmitter):
         # All OS X windows are connected to the menu shortcuts
         pass
 
+class MainWindowToolbar(NSToolbar):
+    pass
+
+class MainWindowToolbarDelegate(NSObject):
+    pass
+
 class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
         self.nswindow.setReleasedWhenClosed_(NO)
+        self.tbdelegate = MainWindowToolbarDelegate.alloc().init()
+        toolbar = MainWindowToolbar.alloc().initWithIdentifier_(u"MainWindow")
+        toolbar.setAllowsUserCustomization_(NO)
+        toolbar.setDelegate_(self.tbdelegate)
+
+        self.nswindow.setToolbar_(toolbar)
 
     def close(self):
         self.nswindow.orderOut_(nil)

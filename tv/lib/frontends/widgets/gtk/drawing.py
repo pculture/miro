@@ -246,3 +246,11 @@ class Background(Drawable, Bin):
         Bin.__init__(self)
         Drawable.__init__(self)
         self.set_widget(BackgroundWidget())
+
+class Titlebar(Background):
+    def __init__(self):
+        Background.__init__(self)
+        self.set_size_request(-1, 55)
+
+class Toolbar(Background):
+    pass

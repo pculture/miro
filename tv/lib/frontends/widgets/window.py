@@ -64,18 +64,25 @@ class MiroWindow(widgetset.MainWindow):
     """
     def __init__(self, title, rect):
         widgetset.MainWindow.__init__(self, title, rect)
-        
+
+        titlebar = widgetset.HBox()
+        self.titlebar = titlebar
+        # Set a dummy, when the window initializes this will be chucked away
+        self.titlebar_widget = widgetset.Titlebar()
+        self.titlebar.pack_start(self.titlebar_widget)
+
         self.main_area_holder = WidgetHolder()
         self.splitter = widgetset.Splitter()
         self.splitter.set_left(tablist.TabListBox())
         self.splitter.set_right(self.main_area_holder)
-                
+
         hbox = widgetset.HBox()
         self.videobox = videobox.VideoBox()
         hbox.pack_end(self.videobox, expand=True)
         self.controls_hbox = hbox
 
         vbox = widgetset.VBox()
+        vbox.pack_start(titlebar)
         vbox.pack_start(self.splitter, expand=True)
         vbox.pack_end(hbox)
         self.main_vbox = vbox
@@ -88,10 +95,15 @@ class MiroWindow(widgetset.MainWindow):
             if left_width is None or left_width == "":
                 left_width = 200
         except (TypeError, ValueError):
-            # Note: TypeError gets thrown becaue LEFT_VIEW_SIZE
+            # Note: TypeError gets thrown because LEFT_VIEW_SIZE
             # defaults to None.
             left_width = 200
         self.splitter.set_left_width(left_width)
+
+    def switch_titlebar(self, widget):
+        self.titlebar.remove(self.titlebar_widget)
+        self.titlebar.pack_start(widget, expand=True)
+        self.titlebar_widget = widget
 
     def on_active_change(self, window):
         self.videobox.queue_redraw()

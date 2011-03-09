@@ -59,14 +59,17 @@ class BrowserToolbarBackground(widgetset.Background):
     def draw(self, context, layout):
         self.background.draw(context, 0, 0, context.width, context.height)
 
-class BrowserToolbar(widgetset.HBox):
+class BrowserToolbar(widgetset.Titlebar):
     """
     Forward/back/home & "display in browser" buttons
     """
     def __init__(self):
-        widgetset.HBox.__init__(self)
+        widgetset.Titlebar.__init__(self)
 
-        self.set_size_request(-1, 33)
+        hbox = widgetset.HBox()
+        self.add(hbox)
+
+        #self.set_size_request(-1, 33)
         self.create_signal('browser-reload')
         self.create_signal('browser-back')
         self.create_signal('browser-forward')
@@ -80,35 +83,36 @@ class BrowserToolbar(widgetset.HBox):
         self.back_button.set_squish_width(True)
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable()
-        self.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
+        hbox.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
 
         separator = widgetset.ImageDisplay(imagepool.get(
             resources.path('images/navseparator.png')))
-        self.pack_start(widgetutil.align_middle(separator))
+        hbox.pack_start(widgetutil.align_middle(separator))
         
         self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.set_squish_width(True)
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
         self.forward_button.disable()
-        self.pack_start(widgetutil.align_middle(self.forward_button))
+        hbox.pack_start(widgetutil.align_middle(self.forward_button))
+              #          top_pad=5, bottom_pad=5))
 
         self.reload_button = imagebutton.ImageButton('navreload')
         self.reload_button.connect('clicked', self._on_reload_button_clicked)
-        self.pack_start(widgetutil.align_middle(self.reload_button, left_pad=4))
+        hbox.pack_start(widgetutil.align_middle(self.reload_button, left_pad=4))
 
         self.stop_button = imagebutton.ImageButton('navstop')
         self.stop_button.connect('clicked', self._on_stop_button_clicked)
-        self.pack_start(widgetutil.align_middle(self.stop_button, left_pad=4))
+        hbox.pack_start(widgetutil.align_middle(self.stop_button, left_pad=4))
 
         self.home_button = imagebutton.ImageButton('navhome')
         self.home_button.connect('clicked', self._on_home_button_clicked)
-        self.pack_start(widgetutil.align_middle(self.home_button, left_pad=4))
+        hbox.pack_start(widgetutil.align_middle(self.home_button, left_pad=4))
 
         self.browser_open_button = widgetutil.TitlebarButton(
             _('Open in browser'), 'navopen')
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
-        self.pack_end(widgetutil.align_middle(self.browser_open_button,
+        hbox.pack_end(widgetutil.align_middle(self.browser_open_button,
                                               right_pad=4))
 
         self.download_button = widgetutil.TitlebarButton(
@@ -116,14 +120,27 @@ class BrowserToolbar(widgetset.HBox):
         self.download_button.connect('clicked',
                                      self._on_download_button_clicked)
         self.download_button = widgetutil.HideableWidget(self.download_button)
-        self.pack_end(widgetutil.align_middle(self.download_button,
+        hbox.pack_end(widgetutil.align_middle(self.download_button,
                                               right_pad=4))
 
         self.loading_icon = widgetutil.HideableWidget(
                 widgetset.AnimatedImageDisplay(
                     resources.path('images/load-indicator.gif')))
-        self.pack_start(widgetutil.align(self.loading_icon, 0.5, 0.5,
+        hbox.pack_start(widgetutil.align(self.loading_icon, 0.5, 0.5,
                                          right_pad=6), expand=True)
+
+    def draw(self, context, layout):
+        if not context.style.use_custom_titlebar_background:
+            return
+        context.move_to(0, 0)
+        context.rel_line_to(context.width, 0)
+        context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
+        context.stroke()
+        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient.set_start_color((212.0 / 255, 212.0 / 255, 212.0 / 255))
+        gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
+        context.rectangle(0, 1, context.width, context.height)
+        context.gradient_fill(gradient)
 
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
@@ -216,11 +233,9 @@ class BrowserNav(widgetset.VBox):
         widgetset.VBox.__init__(self)
         self.browser = Browser(guide_info)
         self.toolbar = BrowserToolbar()
-        bg = BrowserToolbarBackground()
-        bg.add(self.toolbar)
         self.guide_info = guide_info
         self.home_url = guide_info.url
-        self.pack_start(bg, expand=False)
+        app.widgetapp.window.switch_titlebar(self.toolbar)
         self.pack_start(self.browser, expand=True)
 
         self.toolbar.connect_weak('browser-back', self._on_browser_back)

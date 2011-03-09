@@ -247,7 +247,7 @@ class ResumePlaybackButton(widgetset.CustomButton):
         # we can't fit the textbox in the space we have
         return None
 
-class ItemListTitlebar(widgetset.Background):
+class ItemListTitlebar(widgetset.Titlebar):
     """Titlebar for feeds, playlists and static tabs that display
     items.
 
@@ -259,7 +259,7 @@ class ItemListTitlebar(widgetset.Background):
         search box changed and the items listed should be filtered
     """
     def __init__(self):
-        widgetset.Background.__init__(self)
+        widgetset.Titlebar.__init__(self)
         self.create_signal('resume-playing')
         hbox = widgetset.HBox()
         self.add(hbox)
@@ -357,7 +357,7 @@ class ItemListTitlebar(widgetset.Background):
     def set_search_text(self, text):
         self.searchbox.set_text(text)
 
-    def toggle_filter(self, filter):
+    def toggle_filter(self, filter_):
         # implemented by subclasses
         pass
 
@@ -374,6 +374,15 @@ class ItemListTitlebar(widgetset.Background):
         self.filter_box.pack_start(button)
         self.filters[name] = button
         return button
+
+class FolderContentsTitlebar(ItemListTitlebar):
+    def _build_titlebar_start(self):
+        self.podcast_button = widgetset.Button(_('Back to podcast'))
+        self.podcast_button.connect('clicked', self._on_podcast_clicked)
+        return widgetutil.align_middle(self.podcast_button, left_pad=20)
+
+    def _on_podcast_clicked(self, button):
+        self.emit('podcast-clicked', button)
 
 class SearchTitlebar(ItemListTitlebar):
     """
@@ -1662,7 +1671,6 @@ class ItemContainerWidget(widgetset.VBox):
     """A Widget for displaying objects that contain items (feeds,
     playlists, folders, downloads tab, etc).
 
-    :attribute titlebar_vbox: VBox for the title bar
     :attribute vbox: VBoxes for standard view and list view
     :attribute list_empty_mode_vbox: VBox for list empty mode
     :attribute toolbar: HeaderToolbar for the widget
@@ -1676,7 +1684,6 @@ class ItemContainerWidget(widgetset.VBox):
         list_view = WidgetStateStore.get_list_view_type()
         self.vbox[standard_view] = widgetset.VBox()
         self.vbox[list_view] = widgetset.VBox()
-        self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.item_details = ItemDetailsWidget()
         self.list_empty_mode_vbox = widgetset.VBox()
@@ -1684,7 +1691,6 @@ class ItemContainerWidget(widgetset.VBox):
         self.toolbar = toolbar
         if view == standard_view:
             toolbar._button_hbox_container.show()
-        self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
         self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()

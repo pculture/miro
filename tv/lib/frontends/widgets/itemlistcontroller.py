@@ -272,6 +272,7 @@ class ItemListController(object):
                     self._handle_playback_did_stop)
         self.config_change_handle = app.frontend_config_watcher.connect(
                 'changed', self.on_config_change)
+        app.widgetapp.window.switch_titlebar(self.titlebar)
 
     def on_config_change(self, obj, key, value):
         if (key == prefs.RESUME_VIDEOS_MODE.key or
@@ -889,8 +890,8 @@ class SimpleItemListController(ItemListController):
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
+        app.widgetapp.window.switch_titlebar(self.titlebar)
         self.titlebar.switch_to_view(self.widget.selected_view)
-        self.widget.titlebar_vbox.pack_start(self.titlebar)
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.ItemListTitlebar()
@@ -1106,15 +1107,13 @@ class FolderContentsController(SimpleItemListController):
         self.play_initial_list = play_initial_list
         SimpleItemListController.__init__(self)
 
-    def build_widget(self):
-        SimpleItemListController.build_widget(self)
+    def make_titlebar(self):
+        titlebar = itemlistwidgets.FolderContentsTitlebar()
+        titlebar.connect('search-changed', self._on_search_changed)
+        titlebar.connect('podcast-clicked', self._on_podcast_clicked)
+        return titlebar
 
-        button = widgetset.Button(_('Back to podcast'))
-        button.connect('clicked', self._on_clicked)
-        self.widget.titlebar_vbox.pack_start(widgetutil.align_left(button,
-            left_pad=10, top_pad=6, bottom_pad=4))
-
-    def _on_clicked(self, button):
+    def _on_podcast_clicked(self, titlebar, button):
         app.display_manager.pop_display()
 
     def on_initial_list(self):
