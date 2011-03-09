@@ -43,6 +43,12 @@ from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.plat.frontends.widgets import use_custom_titlebar_background
 
+# XXX - clagged from miro.frontends.widgets.style due to circular import
+# issue
+def css_to_color(css_string):
+    parts = (css_string[1:3], css_string[3:5], css_string[5:7])
+    return tuple((int(value, 16) / 255.0) for value in parts)
+
 class ImageSurface:
     def __init__(self, image):
         format = cairo.FORMAT_RGB24
@@ -260,7 +266,7 @@ class Toolbar(Background):
         context.rel_line_to(context.width, 0)
         context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
         context.stroke()
-        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient = Gradient(0, 1, 0, context.height)
         gradient.set_start_color((212.0 / 255, 212.0 / 255, 212.0 / 255))
         gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
         context.rectangle(0, 1, context.width, context.height)
@@ -268,7 +274,7 @@ class Toolbar(Background):
 
 class LowerBox(Background):
     def draw(self, context, layout_manager):
-        gradient = widgetset.Gradient(0, 2, 0, context.height)
+        gradient = Gradient(0, 2, 0, context.height)
         gradient.set_start_color(css_to_color('#d4d4d4'))
         gradient.set_end_color(css_to_color('#a8a8a8'))
         context.rectangle(0, 2, context.width, context.height)   
