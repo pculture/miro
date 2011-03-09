@@ -40,11 +40,13 @@ from miro.dialogs import BUTTON_CANCEL, BUTTON_ADD_FOLDER
 
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
+from miro.plat.utils import filename_to_unicode, PlatformFilenameType
 
 
 class NewWatchedFolderDialog(MainDialog):
     def __init__(self, title, desc, path):
         MainDialog.__init__(self, title, desc)
+        # path is a PlatformFilenameType
         self.path = path
         self.vbox = None
 
@@ -57,7 +59,7 @@ class NewWatchedFolderDialog(MainDialog):
 
             self.folder_entry = widgetset.TextEntry()
             self.folder_entry.set_activates_default(True)
-            self.folder_entry.set_text(self.path)
+            self.folder_entry.set_text(filename_to_unicode(self.path))
             self.folder_entry.set_size_request(300, -1)
 
             choose_button = widgetset.Button(_("Choose..."))
@@ -92,13 +94,12 @@ class NewWatchedFolderDialog(MainDialog):
             logging.exception("newwatchedfolder threw exception.")
 
     def handle_choose(self, widget):
-        path = self.folder_entry.get_text()
+        path = PlatformFilenameType(self.folder_entry.get_text())
         if not os.path.exists(path):
-            # FIXME - do we have to unicodify this value?
             path = resources.get_default_search_dir()
 
         newpath = ask_for_directory(
-            _("Choose Watched Folder Directory"), path, self)
+            _("Choose Watched Folder Directory"), path)
 
         if newpath:
             self.folder_entry.set_text(newpath)
@@ -115,11 +116,13 @@ def run_dialog():
 
     while 1:
         ret = None
+        nwfd = None
         try:
             nwfd = NewWatchedFolderDialog(title, desc, path)
             ret = nwfd.run_dialog()
         finally:
-            nwfd.destroy()
+            if nwfd:
+                nwfd.destroy()
 
         if ret == None:
             return None
