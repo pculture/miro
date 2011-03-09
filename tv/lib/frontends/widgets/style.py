@@ -275,7 +275,6 @@ class ItemRenderer(widgetset.InfoListRenderer):
     EMBLEM_TEXT_PAD_END = 20
     EMBLEM_TEXT_PAD_END_SMALL = 6
     EMBLEM_MARGIN_RIGHT = 12
-    DOWNLOAD_MODE_CONTEXT_MENU_PAD_RIGHT = 15
 
     # colors
     GRADIENT_TOP = css_to_color('#ffffff')
@@ -477,11 +476,6 @@ class ItemRenderer(widgetset.InfoListRenderer):
         if self.download_mode:
             self.layout_progress_bar(layout, layout_manager)
             self.layout_download_right(layout, layout_manager)
-            # add the context menu just to the left of the download info
-            menu_x = (self.right_rect.x - self.images['menu'].width -
-                    self.DOWNLOAD_MODE_CONTEXT_MENU_PAD_RIGHT)
-            self._add_image_button(layout, menu_x, self.text_top, 'menu',
-                    '#show-context-menu')
         else:
             self.layout_main_bottom(layout, layout_manager)
             self.layout_right(layout, layout_manager)
@@ -560,7 +554,17 @@ class ItemRenderer(widgetset.InfoListRenderer):
         # the play button.
         text_bottom = min(28 + total_height, self.middle_rect.y + 80)
         self.text_top = text_bottom - total_height
-        layout.add_text_line(title, x, self.text_top, width)
+        if self.download_mode:
+            # quick interlude.  If we are in download mode, draw the menu on
+            # the right side of the title line.
+            menu_x = x + width - self.images['menu'].width
+            self._add_image_button(layout, menu_x, self.text_top, 'menu',
+                    '#show-context-menu')
+            title_width = width - self.images['menu'].width - 5
+        else:
+            title_width = width
+
+        layout.add_text_line(title, x, self.text_top, title_width)
         y = layout.last_rect.bottom + 8
         layout.add(x, y, width, self.extra_info_drawer.height,
             self.extra_info_drawer.draw)
