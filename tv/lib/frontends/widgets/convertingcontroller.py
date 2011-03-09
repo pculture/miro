@@ -220,7 +220,7 @@ class ConvertingCellRenderer(style.ItemRenderer):
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)
     FAILED_TASK_TEXT_COLOR = (0.8, 0.0, 0.0)
     FINISHED_TASK_TEXT_COLOR = (0.0, 0.8, 0.0)
-    INTERRUPT_BUTTON = imagepool.get_surface(resources.path('images/video-download-cancel.png'))
+    INTERRUPT_BUTTON = imagepool.get_surface(resources.path('images/conversion-cancel.png'))
 
     def get_size(self, style, layout):
         return 600, self.THUMB_HEIGHT + 31
