@@ -54,15 +54,6 @@ def css_to_color(css_string):
     parts = (css_string[1:3], css_string[3:5], css_string[5:7])
     return tuple((int(value, 16) / 255.0) for value in parts)
 
-def font_scale_from_osx_points(points):
-    """Create a font scale so that it's points large on OS X.
-
-    Assumptions (these should be true for OS X)
-        - the default font size is 13pt
-        - the DPI is 72ppi
-    """
-    return points / 13.0
-
 AVAILABLE_COLOR = (38/255.0, 140/255.0, 250/255.0) # blue
 UNPLAYED_COLOR = (0.31, 0.75, 0.12) # green
 DOWNLOADING_COLOR = (0.90, 0.45, 0.08) # orange
@@ -307,10 +298,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
     FAILED_TEXT_SHADOW = widgetutil.BLACK
 
     # font sizes
-    EMBLEM_FONT_SIZE = font_scale_from_osx_points(10)
-    TITLE_FONT_SIZE = font_scale_from_osx_points(14)
-    EXTRA_INFO_FONT_SIZE = font_scale_from_osx_points(10)
-    ITEM_DESC_FONT_SIZE = font_scale_from_osx_points(11)
+    EMBLEM_FONT_SIZE = widgetutil.font_scale_from_osx_points(10)
+    TITLE_FONT_SIZE = widgetutil.font_scale_from_osx_points(14)
+    EXTRA_INFO_FONT_SIZE = widgetutil.font_scale_from_osx_points(10)
+    ITEM_DESC_FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
     DOWNLOAD_INFO_FONT_SIZE = 0.70
     DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE = 0.50
 

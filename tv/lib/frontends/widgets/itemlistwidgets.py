@@ -1468,8 +1468,10 @@ class ItemDetailsWidget(widgetset.VBox):
     PADDING_ABOVE_EXTRA_INFO = 25
     IMAGE_SIZE = (165, 165)
     TEXT_COLOR = (0.176, 0.176, 0.176)
-    TITLE_SIZE = 1.1
-    EXTRA_INFO_SIZE = 0.85
+    TITLE_SIZE = widgetutil.font_scale_from_osx_points(14)
+    DESCRIPTION_SIZE = widgetutil.font_scale_from_osx_points(11)
+    TORRENT_INFO_SIZE = widgetutil.font_scale_from_osx_points(12)
+    TORRENT_INFO_LABEL_COLOR = (0.4, 0.4, 0.4)
     # give enough room to display the image, plus some more for the
     # scrollbars and the expander
     EXPANDED_HEIGHT = 190
@@ -1495,45 +1497,71 @@ class ItemDetailsWidget(widgetset.VBox):
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
         self._expanded = False
+        self.license_url = None
+
+    def on_license_clicked(self, button):
+        if self.license_url:
+            app.widgetapp.open_url(self.license_url)
 
     def build_right(self):
         vbox = widgetset.VBox()
         self.title_label = self.build_title()
-        self.description_label = self.build_description()
+        self.torrent_info_left = self.build_torrent_labels_label()
+        self.torrent_info_right = self.build_torrent_values_label()
+        self.description_label = self.build_description_label()
         self.extra_info_label = self.build_extra_info()
         vbox.pack_start(widgetutil.pad(self.title_label,
             top=self.PADDING_ABOVE_TITLE))
-        vbox.pack_start(widgetutil.pad(self.description_label,
-            top=self.PADDING_ABOVE_DESCRIPTION))
+        license_button = widgetset.Button(_('View License'))
+        license_button.connect('clicked', self.on_license_clicked)
+        self.license_button_holder = widgetutil.HideableWidget(
+                widgetutil.align_left(license_button))
+        vbox.pack_start(self.license_button_holder)
+        torrent_info_hbox = widgetset.HBox(spacing=12)
+        torrent_info_hbox.pack_start(self.torrent_info_left)
+        torrent_info_hbox.pack_start(self.torrent_info_right)
+        vbox.pack_start(widgetutil.align_left(torrent_info_hbox,
+            top_pad=self.PADDING_ABOVE_DESCRIPTION))
+        vbox.pack_start(self.description_label)
         vbox.pack_start(widgetutil.pad(self.extra_info_label,
             top=self.PADDING_ABOVE_EXTRA_INFO))
         return vbox
 
-    def build_title(self):
-        title_label = widgetset.Label()
-        title_label.set_selectable(True)
-        title_label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
-        title_label.set_wrap(True)
-        title_label.set_color(self.TEXT_COLOR)
-        title_label.set_size(self.TITLE_SIZE)
-        title_label.set_bold(True)
-        return title_label
+    def build_label(self):
+        label = widgetset.Label()
+        label.set_selectable(True)
+        label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
+        label.set_wrap(True)
+        label.set_color(self.TEXT_COLOR)
+        return label
 
-    def build_description(self):
-        description_label = widgetset.Label()
-        description_label.set_selectable(True)
-        description_label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
-        description_label.set_wrap(True)
-        description_label.set_color(self.TEXT_COLOR)
-        return description_label
+    def build_title(self):
+        label = self.build_label()
+        label.set_size(self.TITLE_SIZE)
+        label.set_bold(True)
+        return label
+
+    def build_torrent_labels_label(self):
+        label = self.build_label()
+        label.set_size(self.TORRENT_INFO_SIZE)
+        label.set_color(self.TORRENT_INFO_LABEL_COLOR)
+        return label
+
+    def build_torrent_values_label(self):
+        label = self.build_label()
+        label.set_size(self.TORRENT_INFO_SIZE)
+        return label
+
+    def build_description_label(self):
+        label = self.build_label()
+        label.set_size(self.DESCRIPTION_SIZE)
+        return label
 
     def build_extra_info(self):
-        extra_info_label = widgetset.Label()
-        extra_info_label.set_alignment(widgetconst.TEXT_JUSTIFY_LEFT)
-        extra_info_label.set_wrap(True)
-        extra_info_label.set_color(self.TEXT_COLOR)
-        extra_info_label.set_size(self.EXTRA_INFO_SIZE)
-        return extra_info_label
+        label = self.build_label()
+        label.set_selectable(False)
+        label.set_size(self.DESCRIPTION_SIZE)
+        return label
 
     def set_expanded(self, expanded):
         if expanded == self._expanded:
@@ -1548,14 +1576,15 @@ class ItemDetailsWidget(widgetset.VBox):
 
     def set_info(self, info):
         self.title_label.set_text(info.name)
-        self.description_label.set_text(self._calc_description(info))
+        self.setup_torrent_info(info)
+        self.description_label.set_text(info.description_stripped[0])
         self.set_extra_info_text(info)
+        self.setup_license_button(info)
         image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
         self.image_widget.set_image(image)
         self.set_label_widths()
 
-    def _calc_description(self, info):
-        parts = []
+    def setup_torrent_info(self, info):
         if (info.download_info and info.download_info.torrent
                 and info.state in ('downloading', 'uploading')):
             if info.seeders is None:
@@ -1579,12 +1608,16 @@ class ItemDetailsWidget(widgetset.VBox):
                 (_('download rate:'), down_rate),
                 (_('download total:'), down_total),
                 (_('upload/download ratio:'), ratio))
-            for line in lines:
-                # FIXME: should make the values horizontally aligned
-                parts.append("%s %s\n" % line)
-            parts.append("\n")
-        parts.append(info.description_stripped[0])
-        return ''.join(parts)
+            left_parts = []
+            right_parts = []
+            for left, right in lines:
+                left_parts.append(left)
+                right_parts.append(str(right))
+            self.torrent_info_left.set_text('\n'.join(left_parts) + '\n')
+            self.torrent_info_right.set_text('\n'.join(right_parts) + '\n')
+        else:
+            self.torrent_info_left.set_text('')
+            self.torrent_info_right.set_text('')
 
     def set_extra_info_text(self, info):
         parts = []
@@ -1593,6 +1626,13 @@ class ItemDetailsWidget(widgetset.VBox):
             if attr:
                 parts.append(attr)
         self.extra_info_label.set_text(' | '.join(parts))
+
+    def setup_license_button(self, info):
+        self.license_url = info.license
+        if self.license_url:
+            self.license_button_holder.show()
+        else:
+            self.license_button_holder.hide()
 
     def clear(self):
         self.title_label.set_text('')

@@ -497,3 +497,12 @@ def feed_exists(feed_id):
     except (ValueError, KeyError):
         pass
     return False
+
+def font_scale_from_osx_points(points):
+    """Create a font scale so that it's points large on OS X.
+
+    Assumptions (these should be true for OS X)
+        - the default font size is 13pt
+        - the DPI is 72ppi
+    """
+    return points / 13.0
