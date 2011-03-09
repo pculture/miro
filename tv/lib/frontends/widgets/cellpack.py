@@ -683,6 +683,22 @@ class LayoutRect(object):
         """Create a new LayoutRect from the bottom side of this one."""
         return LayoutRect(self.x, self.bottom - height, self.width, height)
 
+    def past_right(self, width):
+        """Create a LayoutRect width pixels to the right of this one>"""
+        return LayoutRect(self.right, self.y, width, self.height)
+
+    def past_left(self, width):
+        """Create a LayoutRect width pixels to the right of this one>"""
+        return LayoutRect(self.x-width, self.y, width, self.height)
+
+    def past_top(self, height):
+        """Create a LayoutRect height pixels above this one>"""
+        return LayoutRect(self.x, self.y-height, self.width, height)
+
+    def past_bottom(self, height):
+        """Create a LayoutRect height pixels below this one>"""
+        return LayoutRect(self.x, self.bottom, self.width, height)
+
     def is_point_inside(self, x, y):
         return (self.x <= x < self.x + self.width
                 and self.y <= y < self.y + self.height)
@@ -690,13 +706,13 @@ class LayoutRect(object):
     def get_right(self):
         return self.x + self.width
     def set_right(self, right):
-        self.x = right - self.width
+        self.width = right - self.x
     right = property(get_right, set_right)
 
     def get_bottom(self):
         return self.y + self.height
     def set_bottom(self, bottom):
-        self.y = bottom - self.height
+        self.height = bottom - self.y
     bottom = property(get_bottom, set_bottom)
 
 class Layout(object):

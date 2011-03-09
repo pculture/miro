@@ -54,6 +54,15 @@ def css_to_color(css_string):
     parts = (css_string[1:3], css_string[3:5], css_string[5:7])
     return tuple((int(value, 16) / 255.0) for value in parts)
 
+def font_scale_from_osx_points(points):
+    """Create a font scale so that it's points large on OS X.
+
+    Assumptions (these should be true for OS X)
+        - the default font size is 13pt
+        - the DPI is 72ppi
+    """
+    return points / 13.0
+
 AVAILABLE_COLOR = (38/255.0, 140/255.0, 250/255.0) # blue
 UNPLAYED_COLOR = (0.31, 0.75, 0.12) # green
 DOWNLOADING_COLOR = (0.90, 0.45, 0.08) # orange
@@ -249,20 +258,17 @@ class ItemRendererSignals(signals.SignalEmitter):
 class ItemRenderer(widgetset.InfoListRenderer):
     # dimensions
     MIN_WIDTH = 600
-    HEIGHT = 145
+    HEIGHT = 147
     RIGHT_WIDTH = 90
     RIGHT_WIDTH_DOWNLOAD_MODE = 115
     IMAGE_WIDTH = 180
     CORNER_RADIUS = 5
     EMBLEM_HEIGHT = 20
-    EMBLEM_AREA_HEIGHT = 36 # contains the emblem + the button next to it
     PROGRESS_AREA_HEIGHT = 56
 
     # padding/spacing
     PADDING = (15, 15, 5, 5)
-    PADDING_BACKGROUND = (5, 5, 4, 6)
-    PADDING_INNER = (20, 15, 23, 15)
-    PADDING_MIDDLE_RIGHT = 15
+    PADDING_BACKGROUND = (5, 5, 6, 6)
     TEXT_SPACING_Y = 3
     EMBLEM_PAD_TOP = 25
     EMBLEM_TEXT_PAD_START = 4
@@ -275,7 +281,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
     GRADIENT_TOP = css_to_color('#ffffff')
     GRADIENT_BOTTOM = css_to_color('#dfdfdf')
     THUMBNAIL_SEPARATOR_COLOR = widgetutil.BLACK
-    ITEM_TITLE_COLOR = (0.2, 0.2, 0.2)
+    INFO_SEPARATOR_COLOR = css_to_color('#aaaaaa')
+    ITEM_TITLE_COLOR = widgetutil.BLACK
     DOWNLOAD_INFO_COLOR = widgetutil.WHITE
     DOWNLOAD_INFO_COLOR_UNEM = (0.2, 0.2, 0.2)
     DOWNLOAD_INFO_SEPARATOR_COLOR = widgetutil.WHITE
@@ -295,9 +302,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
     NEWLY_AVAILABLE_TEXT_SHADOW = widgetutil.BLACK
 
     # font sizes
-    EMBLEM_FONT_SIZE = 0.80
-    TITLE_FONT_SIZE = 1.0
-    ITEM_DESC_FONT_SIZE = 0.85
+    EMBLEM_FONT_SIZE = font_scale_from_osx_points(10)
+    TITLE_FONT_SIZE = font_scale_from_osx_points(14)
+    EXTRA_INFO_FONT_SIZE = font_scale_from_osx_points(10)
+    ITEM_DESC_FONT_SIZE = font_scale_from_osx_points(11)
     DOWNLOAD_INFO_FONT_SIZE = 0.70
     DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE = 0.50
 
@@ -344,6 +352,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         self.selected = False
         self.setup_images()
         self.emblem_drawer = _EmblemDrawer(self)
+        self.extra_info_drawer = _ExtraInfoDrawer()
         self.setup_torrent_folder_description()
 
     def setup_torrent_folder_description(self):
@@ -409,6 +418,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         self.hover = True
         layout = self.layout_all(layout_manager, width, height)
         hotspot_info = layout.find_hotspot(x, y)
+        self.extra_info_drawer.reset()
         if hotspot_info is None:
             return None
         hotspot, x, y = hotspot_info
@@ -442,50 +452,60 @@ class ItemRenderer(widgetset.InfoListRenderer):
         layout = self.layout_all(layout_manager, context.width,
                 context.height)
         layout.draw(context)
+        self.extra_info_drawer.reset()
 
     def layout_all(self, layout_manager, width, height):
+        self.setup_guides(width, height)
         layout = cellpack.Layout()
+        self.layout_simple_elements(layout, layout_manager)
+        self.layout_text(layout, layout_manager)
+        if self.download_mode:
+            self.layout_progress_bar(layout, layout_manager)
+            self.layout_download_right(layout, layout_manager)
+            # add the context menu just to the left of the download info
+            menu_x = (self.right_rect.x - self.images['menu'].width -
+                    self.DOWNLOAD_MODE_CONTEXT_MENU_PAD_RIGHT)
+            self._add_image_button(layout, menu_x, self.text_top, 'menu',
+                    '#show-context-menu')
+        else:
+            self.layout_main_bottom(layout, layout_manager)
+            self.layout_right(layout, layout_manager)
+        return layout
 
-        # Calculate the area of the elements
+    def setup_guides(self, width, height):
+        """Setup a few dimensions to help us layout the cell:
+
+        This method sets the following attributes:
+            background_rect - area where the background image should be drawn
+            image_rect - area for the thumbnail
+            middle_rect - area for the text/badges
+            right_rect - area for the buttons/download information
+        """
         total_rect = cellpack.LayoutRect(0, 0, width, height)
-        background_rect = total_rect.subsection(*self.PADDING)
-        inner_rect = background_rect.subsection(*self.PADDING_BACKGROUND)
-        right_of_image_rect = inner_rect.subsection(self.IMAGE_WIDTH, 0, 0, 0)
-        main_rect = right_of_image_rect.subsection(*self.PADDING_INNER)
-
+        # NOTE: background image extends a few pixels beyond the actual
+        # boundaries so that it can draw shadows and other things
+        self.background_rect = total_rect.subsection(*self.PADDING)
+        # area inside the boundaries of the background
+        inner_rect = self.background_rect.subsection(*self.PADDING_BACKGROUND)
+        self.image_rect = inner_rect.left_side(self.IMAGE_WIDTH)
         if self.download_mode:
             right_width = self.RIGHT_WIDTH_DOWNLOAD_MODE
         else:
             right_width = self.RIGHT_WIDTH
-        middle_rect = main_rect.subsection(0, right_width +
-                self.PADDING_MIDDLE_RIGHT, 0, 0)
+        self.right_rect = inner_rect.right_side(right_width)
+        self.middle_rect = inner_rect.subsection(self.IMAGE_WIDTH + 20,
+                right_width + 15, 0 ,0)
+        # emblem should start 28px above the top of the cell
+        self.emblem_bottom = total_rect.bottom - 28
 
-        # layout background and borders
-        layout.add_rect(background_rect, self.draw_background)
-        # left side
-        image_area_rect = inner_rect.left_side(self.IMAGE_WIDTH)
-        layout.add_rect(image_area_rect, self.draw_thumbnail,
+    def layout_simple_elements(self, layout, layout_manager):
+        # this is a place to put layout calls that are simple enough that they
+        # don't need their own function
+        layout.add_rect(self.background_rect, self.draw_background)
+        layout.add_rect(self.image_rect, self.draw_thumbnail,
                 self.calc_thumbnail_hotspot())
-        layout.add_rect(right_of_image_rect.left_side(1),
+        layout.add_rect(self.image_rect.past_right(1),
                 self.draw_thumbnail_separator)
-        self.image_end_x = image_area_rect.right
-        # title/description/extra info
-        self.layout_text(layout, layout_manager, middle_rect)
-        # bottom and right side
-        if self.download_mode:
-            right_rect = background_rect.right_side(right_width)
-            self.layout_download_bottom(layout, layout_manager, middle_rect)
-            self.layout_download_right(layout, layout_manager, right_rect)
-            # add the context menu just to the left of the download info
-            menu_x = (right_rect.x - self.images['menu'].width -
-                    self.DOWNLOAD_MODE_CONTEXT_MENU_PAD_RIGHT)
-            self._add_image_button(layout, menu_x, middle_rect.y, 'menu',
-                    '#show-context-menu')
-        else:
-            right_rect = main_rect.right_side(right_width)
-            self.layout_main_bottom(layout, layout_manager, middle_rect)
-            self.layout_right(layout, layout_manager, right_rect)
-        return layout
 
     def calc_thumbnail_hotspot(self):
         """Decide what hotspot clicking on the thumbnail should activate."""
@@ -496,28 +516,42 @@ class ItemRenderer(widgetset.InfoListRenderer):
         else:
             return None
 
-    def layout_text(self, layout, layout_manager, rect):
-        """layout the text for our cell
-
-        rect should contain the area for the entire middle section.
-        """
-        title_y = rect.y
+    def layout_text(self, layout, layout_manager):
+        """layout the text for our cell """
+        # setup title
         layout_manager.set_font(self.TITLE_FONT_SIZE,
                 family=widgetset.ITEM_TITLE_FONT, bold=True)
         layout_manager.set_text_color(self.ITEM_TITLE_COLOR)
         title = layout_manager.textbox(self.info.name)
         title.set_wrap_style('truncated-char')
-        layout.add_text_line(title, rect.x, title_y, rect.width)
-
-        extra_info_y = layout.last_rect.bottom + self.TEXT_SPACING_Y
-        extra_info = self.make_extra_info(layout_manager)
-        layout.add_text_line(extra_info, rect.x, extra_info_y, rect.width)
-
-        description_y = layout.last_rect.bottom + self.TEXT_SPACING_Y
+        # setup info lin
+        layout_manager.set_font(self.EXTRA_INFO_FONT_SIZE,
+                family=widgetset.ITEM_INFO_FONT)
+        layout_manager.set_text_color(self.ITEM_DESC_COLOR)
+        self.extra_info_drawer.setup(self.info, layout_manager,
+            self.INFO_SEPARATOR_COLOR)
+        # setup description
         description = self.make_description(layout_manager)
-        layout.add_text_line(description, rect.x, description_y, rect.width,
-                hotspot='description')
-        self.description_width = rect.width
+
+        # position the parts.
+
+        total_height = (title.font.line_height() +
+                + self.extra_info_drawer.height +
+                description.font.line_height() + 16)
+        x = self.middle_rect.x
+        width = self.middle_rect.width
+        # Ideally, we want to start it at 28px from the start of the top of
+        # the cell.  However, if our text is big enough, don't let it overflow
+        # the play button.
+        text_bottom = min(28 + total_height, self.middle_rect.y + 80)
+        self.text_top = text_bottom - total_height
+        layout.add_text_line(title, x, self.text_top, width)
+        y = layout.last_rect.bottom + 8
+        layout.add(x, y, width, self.extra_info_drawer.height,
+            self.extra_info_drawer.draw)
+        y = layout.last_rect.bottom + 8
+        layout.add_text_line(description, x, y, width, hotspot='description')
+        self.description_width = width
 
     def make_extra_info(self, layout_manager):
         layout_manager.set_font(self.DOWNLOAD_INFO_FONT_SIZE,
@@ -561,26 +595,24 @@ class ItemRenderer(widgetset.InfoListRenderer):
         else:
             return 0
 
-    def layout_main_bottom(self, layout, layout_manager, rect):
+    def layout_main_bottom(self, layout, layout_manager):
         """Layout the bottom part of the main section.
 
         rect should contain the area for the entire middle section.  This
         method will add the progress bar, emblem and/or play button.
         """
+
         # allocate it enough size to fit the play button
-        emblem_rect = rect.bottom_side(self.EMBLEM_AREA_HEIGHT)
         self.emblem_drawer.info = self.info
         self.emblem_drawer.hotspot = self.hotspot
         emblem_width = self.emblem_drawer.add_to_layout(layout,
-                layout_manager, emblem_rect)
+                layout_manager, self.middle_rect, self.emblem_bottom)
+        # add stop seeding and similar buttons
+        extra_button_x = (self.middle_rect.x + emblem_width +
+                self.EMBLEM_MARGIN_RIGHT)
+        self.add_extra_button(layout, layout_manager, extra_button_x)
 
-
-        extra_button_x = emblem_width + self.EMBLEM_MARGIN_RIGHT
-        # add stop seeding button
-        extra_button_rect = emblem_rect.subsection(extra_button_x, 0, 0, 0)
-        self.add_extra_button(layout, layout_manager, extra_button_rect)
-
-    def add_extra_button(self, layout, layout_manager, rect):
+    def add_extra_button(self, layout, layout_manager, left):
         button_info = self.calc_extra_button()
         if button_info is None:
             return
@@ -589,9 +621,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
         layout_manager.set_font(self.EMBLEM_FONT_SIZE)
         button = layout_manager.button(text, pressed=(self.hotspot==hotspot),
                     style='webby')
-        button_rect = layout.add_image(button, rect.x, 0, hotspot)
-        # middle-align the button
-        button_rect.y = rect.y + ((rect.height - button_rect.height) // 2)
+        button_height = button.get_size()[1]
+        y = (self.emblem_bottom - (self.EMBLEM_HEIGHT - button_height) // 2 -
+                button_height)
+        layout.add_image(button, left, y, hotspot)
 
     def calc_extra_button(self):
         """Calculate the button to put to the right of the emblem.
@@ -605,36 +638,27 @@ class ItemRenderer(widgetset.InfoListRenderer):
             return (self.CANCEL_TEXT, 'cancel_auto_download')
         return None
 
-    def layout_right(self, layout, layout_manager, rect):
-        # calculate positioning for the buttons.  There's a couple issues
-        # here:
-        # 1) the expiring emblem should line up with the resume emblem if both
-        # are shown.
-        # 2) The buttons should be equally spaced
-
-        button_x = rect.right - self.images['keep'].width
-
-        # assume all buttons have the same height
-        button_height = self.images['keep'].height
+    def layout_right(self, layout, layout_manager):
+        button_width, button_height = self.images['keep'].get_size()
+        x = self.right_rect.right - button_width - 20
+        # align the buttons based on where other parts get laid out.
+        top = self.text_top - 1
+        bottom = self.emblem_bottom
 
         # top botton is easy
-        menu_y = rect.y
-        # pad the bottom button area so that it will be in the middle
-        # of the emblem area.  This should also make the emblems match up.
-        pad_bottom = int((self.EMBLEM_AREA_HEIGHT - button_height) // 2)
-        expire_y = rect.bottom - button_height - pad_bottom
-        # delete button goes in the middle
-        delete_y = int((menu_y + expire_y) // 2)
+        menu_y = top
+        expire_y = bottom - button_height
+        delete_y = ((top + bottom - button_height) // 2)
 
-        self._add_image_button(layout, button_x, menu_y, 'menu',
+        self._add_image_button(layout, x, menu_y, 'menu',
                 '#show-context-menu')
 
         if ((self.info.is_external or self.info.downloaded) and 
             self.info.source_type != 'sharing'):
-            self.add_remove_button(layout, button_x, delete_y)
+            self.add_remove_button(layout, x, delete_y)
 
         if self.info.expiration_date:
-            expire_rect = cellpack.LayoutRect(button_x, expire_y, rect.width,
+            expire_rect = cellpack.LayoutRect(x, expire_y, button_width,
                     button_height)
             text = displaytext.expiration_date(self.info.expiration_date)
             image = self._make_image_button('keep', 'keep')
@@ -643,7 +667,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                     image, hotspot)
             self.expire_background_alpha = 1.0
         elif self.attrs.get('keep-animation-alpha', 0) > 0:
-            expire_rect = cellpack.LayoutRect(button_x, expire_y, rect.width,
+            expire_rect = cellpack.LayoutRect(x, expire_y, button_width,
                     button_height)
             text = self.SAVED_TEXT
             image = self.images['saved']
@@ -688,17 +712,12 @@ class ItemRenderer(widgetset.InfoListRenderer):
         expire_layout.center_y(top=rect.y, bottom=rect.bottom)
         layout.merge(expire_layout)
 
-    def layout_download_bottom(self, layout, layout_manager, rect):
-        progress_bar_rect = rect.bottom_side(self.EMBLEM_AREA_HEIGHT)
-        progress_text_rect = rect.subsection(0, 0,
-                0,
-                self.EMBLEM_AREA_HEIGHT)
-        self.layout_progress_bar(layout, layout_manager, progress_bar_rect)
-
-    def layout_progress_bar(self, layout, layout_manager, rect):
+    def layout_progress_bar(self, layout, layout_manager):
+        y = self.middle_rect.bottom - 39
+        height = 22
         end_button_width = 47
         progress_cap_width = 10
-        bar_height = 20
+        print 'progress-top: ', y
         # figure out what button goes on the left
         if not self.download_info or self.download_info.state != 'paused':
             left_hotspot = 'pause'
@@ -707,36 +726,31 @@ class ItemRenderer(widgetset.InfoListRenderer):
             left_hotspot = 'resume'
             left_button_name = 'download-resume'
 
-        progress_bar_layout = cellpack.Layout()
         # add ends of the bar
-        self._add_image_button(progress_bar_layout, rect.x, 0,
-                left_button_name,
-                left_hotspot)
-        self._add_image_button(progress_bar_layout,
-                rect.right-end_button_width, 0, 'download-stop', 'cancel')
+        self._add_image_button(layout, self.middle_rect.x, y,
+                left_button_name, left_hotspot)
+        right_button_x = self.middle_rect.right - end_button_width
+        self._add_image_button(layout, right_button_x, y, 'download-stop',
+                'cancel')
         # add track in the middle
         track = self.images['progress-track']
-        track_rect = cellpack.LayoutRect(rect.x + end_button_width, 0,
-                rect.width - (end_button_width * 2), track.height)
-        progress_bar_layout.add_rect(track_rect, track.draw)
+        track_x = self.middle_rect.x + end_button_width
+        track_rect = cellpack.LayoutRect(track_x, y, right_button_x - track_x,
+                height)
+        layout.add_rect(track_rect, track.draw)
 
         # add progress bar above the track
-        progress_x = track_rect.x - progress_cap_width
-        bar_width_total = track_rect.width + (progress_cap_width * 2)
-        bar_rect = cellpack.LayoutRect(progress_x, 0,
-                bar_width_total, bar_height)
-        progress_bar_layout.add_rect(bar_rect, self.draw_progress_bar)
+        progress_x = track_x - progress_cap_width
+        bar_width_total = (right_button_x - progress_x) + progress_cap_width
+        bar_rect = cellpack.LayoutRect(progress_x, y, bar_width_total, height)
+        layout.add_rect(bar_rect, self.draw_progress_bar)
 
-        # align progress bar in the middle of emblem area, this makes it line
-        # up with where the emblem are
-        progress_bar_layout.center_y(rect.bottom-self.EMBLEM_AREA_HEIGHT,
-                rect.bottom)
-        layout.merge(progress_bar_layout)
-
-    def layout_download_right(self, layout, layout_manager, rect):
+    def layout_download_right(self, layout, layout_manager):
         dl_info = self.info.download_info
         # add some padding around the edges
-        content_rect = rect.subsection(6, 12, 8, 8)
+        content_rect = self.right_rect.subsection(6, 12, 8, 8)
+        x = content_rect.x
+        width = content_rect.width
 
         # layout top
         layout_manager.set_font(self.DOWNLOAD_INFO_FONT_SIZE)
@@ -746,21 +760,19 @@ class ItemRenderer(widgetset.InfoListRenderer):
         def add_line(y, image_name, text, subtext=None):
             # position image so that it's bottom is the baseline for the text
             image = self.images[image_name]
-            image_y = y + ascent - image.height + 2
-            # add 2 px to account for the shadow at the bottom of the icons
-            layout.add_image(image, content_rect.x, image_y)
+            image_y = y + ascent - image.height + 3
+            # add 3 px to account for the shadow at the bottom of the icons
+            layout.add_image(image, x, image_y)
             if text:
                 layout_manager.set_text_color(self.DOWNLOAD_INFO_COLOR)
                 textbox = layout_manager.textbox(text)
                 textbox.set_alignment('right')
-                layout.add_text_line(textbox, rect.x, y, content_rect.width)
+                layout.add_text_line(textbox, x, y, width)
             if subtext:
                 layout_manager.set_text_color(self.DOWNLOAD_INFO_COLOR_UNEM)
                 subtextbox = layout_manager.textbox(subtext)
                 subtextbox.set_alignment('right')
-                layout.add_text_line(subtextbox,
-                        content_rect.x, y + line_height,
-                        content_rect.width)
+                layout.add_text_line(subtextbox, x, y + line_height, width)
         if self.info.state == 'paused':
             eta = rate = 0
         else:
@@ -768,17 +780,17 @@ class ItemRenderer(widgetset.InfoListRenderer):
             rate = dl_info.rate
 
         # layout line 1
-        current_y = content_rect.y
+        current_y = self.right_rect.y + 10
         add_line(current_y, 'time-left', displaytext.time_string_0_blank(eta))
-        current_y += max(20, line_height)
-        layout.add(content_rect.x, current_y-1, content_rect.width, 1,
+        current_y += max(19, line_height)
+        layout.add(x, current_y-1, width, 1,
                 self.draw_download_info_separator)
         # layout line 2
         add_line(current_y, 'dl-speed',
                 displaytext.download_rate(rate),
                 displaytext.size_string(dl_info.downloaded_size))
         current_y += max(25, line_height * 2)
-        layout.add(content_rect.x, current_y-1, content_rect.width, 1,
+        layout.add(x, current_y-1, width, 1,
                 self.draw_download_info_separator)
         # layout line 3
         if dl_info.torrent:
@@ -786,7 +798,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
                     displaytext.download_rate(self.info.up_rate),
                     displaytext.size_string(self.info.up_total))
         current_y += max(25, line_height * 2)
-        layout.add(content_rect.x, current_y-1, content_rect.width, 1,
+        layout.add(x, current_y-1, width, 1,
                 self.draw_download_info_separator)
         # layout torrent info
         if dl_info.torrent and dl_info.state != 'paused':
@@ -867,13 +879,14 @@ class ItemRenderer(widgetset.InfoListRenderer):
             right_width = right.width
             right.draw(context, x + width - right_width, y, right_width,
                     height)
+        image_end_x = self.image_rect.right
         # draw middle
         middle_end_x = x + width - right_width
-        middle_width = middle_end_x - self.image_end_x
-        middle.draw(context, self.image_end_x, y, middle_width, height)
+        middle_width = middle_end_x - image_end_x
+        middle.draw(context, image_end_x, y, middle_width, height)
 
         # draw thumbnail background
-        thumbnail_background_width = self.image_end_x - (x + left.width)
+        thumbnail_background_width = image_end_x - (x + left.width)
         thumb.draw(context, x + left.width, y, thumbnail_background_width,
                 height)
 
@@ -975,6 +988,31 @@ class ItemRenderer(widgetset.InfoListRenderer):
         surface.draw(context, x, y, width)
         self.signals.emit('throbber-drawn', self.info)
 
+class _ExtraInfoDrawer(object):
+    """Layout an draw the line below the item title."""
+    def setup(self, info, layout_manager, separator_color):
+        self.separator_color = separator_color
+        self.textboxes = []
+        for attr in (info.display_date, info.display_duration,
+                info.display_size, info.file_format):
+            if attr:
+                self.textboxes.append(layout_manager.textbox(attr))
+        self.height = layout_manager.current_font.line_height()
+
+    def reset(self):
+        self.textboxes = []
+
+    def draw(self, context, x, y, width, height):
+        for textbox in self.textboxes:
+            text_width, text_height = textbox.get_size()
+            textbox.draw(context, x, y, text_width, text_height)
+            # draw separator
+            separator_x = round(x + text_width + 4)
+            context.set_color(self.separator_color)
+            context.rectangle(separator_x, y, 1, height)
+            context.fill()
+            x += text_width + 8
+
 class _EmblemDrawer(object):
     """Layout and draw emblems
 
@@ -992,49 +1030,46 @@ class _EmblemDrawer(object):
             if name.isupper():
                 setattr(self, name, getattr(renderer, name))
 
-    def add_to_layout(self, layout, layout_manager, rect):
+    def add_to_layout(self, layout, layout_manager, middle_rect, emblem_bottom):
         """Add emblem elements to a Layout()
 
         :param layout: Layout to add to
         :param layout_manager: LayoutManager to use
-        :param rect: rect sized to the area to add the emblem to
+        :param middle_rect: middle area of the cell
         """
 
+        x = middle_rect.x
+        emblem_top = emblem_bottom  - self.EMBLEM_HEIGHT
         # make the button that appears to the left of the emblem
         button, button_hotspot = self.make_emblem_button(layout_manager)
         button_width, button_height = button.get_size()
-
+        # make the button middle aligned along the emblem
+        button_y = emblem_top - (button_height - self.EMBLEM_HEIGHT) // 2
         # figure out the text and/or image inside the emblem
         self._calc_emblem_parts()
         # check if we don't have anything to put inside our emblem.  Just draw
         # the button if so
         if self.image is None and self.text is None:
-            button_y = rect.y + int((rect.height - button.get_size()[1]) // 2)
-            layout.add_image(button, rect.x, button_y, button_hotspot)
+            layout.add_image(button, x, button_y, button_hotspot)
             return layout.last_rect.width
-        # make a new Layout to put the emblem contents in.  This makes
-        # middle-aligning things easier
-        emblem_layout = cellpack.Layout()
         # add emblem background first, since we want it drawn on the bottom.
-        # Position it in the middle of the button, since we don't want it to
-        # spill over on the left side.
         # We won't know the width until we lay out the text/images, so
         # set it to 0
-        emblem_rect = emblem_layout.add(rect.x + button_width // 2, 0, 0,
+        emblem_rect = layout.add(x + button_width // 2, emblem_top, 0,
                 self.EMBLEM_HEIGHT, self.draw_emblem_background)
-        # add button
-        emblem_layout.add_image(button, rect.x, 0, button_hotspot)
-        content_x = emblem_layout.last_rect.right + self.EMBLEM_TEXT_PAD_START
-        content_width = self._add_content(emblem_layout, layout_manager,
+        # make a new Layout to vertically center the emblem images/text
+        content_layout = cellpack.Layout()
+        # Position it in the middle of the button, since we don't want it to
+        # spill over on the left side.
+        content_x = x + button_width + self.EMBLEM_TEXT_PAD_START
+        content_width = self._add_text_images(content_layout, layout_manager,
                 content_x)
-        # can set emblem width now
-        emblem_rect.width = (button_width + self.EMBLEM_TEXT_PAD_START +
-                content_width + self.margin_right)
-        # all y coordinates are set to 0.  Center them in the middle of our
-        # rect.
-        emblem_layout.center_y(top=rect.y, bottom=rect.bottom)
-        layout.merge(emblem_layout)
-        return emblem_rect.right - rect.x
+        emblem_rect.right = (content_x + content_width + self.margin_right)
+        content_layout.center_y(top=emblem_top, bottom=emblem_bottom)
+        layout.merge(content_layout)
+        # add button and we're done
+        layout.add_image(button, x, button_y, button_hotspot)
+        return emblem_rect.right - x
 
     def make_emblem_button(self, layout_manager):
         """Make the button that will go on the left of the emblem.
@@ -1159,7 +1194,7 @@ class _EmblemDrawer(object):
               and self.info.resume_time > 0
               and app.config.get(resume_pref))
 
-    def _add_content(self, emblem_layout, layout_manager, left_x):
+    def _add_text_images(self, emblem_layout, layout_manager, left_x):
         """Add the emblem text and/or image
 
         :returns: the width used
