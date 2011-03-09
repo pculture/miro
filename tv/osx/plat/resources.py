@@ -79,4 +79,4 @@ def get_osname():
     return osname
 
 def get_default_search_dir():
-    return os.path.expanduser("~/")
+    return os.path.expanduser("~/").encode("utf-8")
