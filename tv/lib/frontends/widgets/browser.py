@@ -119,19 +119,6 @@ class BrowserToolbar(widgetset.Titlebar):
         hbox.pack_start(widgetutil.align(self.loading_icon, 0.5, 0.5,
                                          right_pad=6), expand=True)
 
-    def draw(self, context, layout):
-        if not context.style.use_custom_titlebar_background:
-            return
-        context.move_to(0, 0)
-        context.rel_line_to(context.width, 0)
-        context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
-        context.stroke()
-        gradient = widgetset.Gradient(0, 1, 0, context.height)
-        gradient.set_start_color((212.0 / 255, 212.0 / 255, 212.0 / 255))
-        gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
-        context.rectangle(0, 1, context.width, context.height)
-        context.gradient_fill(gradient)
-
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
 

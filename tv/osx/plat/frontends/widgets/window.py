@@ -158,7 +158,9 @@ class Window(signals.SignalEmitter):
         alive_windows.add(self)
 
     def get_style_mask(self):
-        return NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
+        return (NSTitledWindowMask | NSClosableWindowMask |
+                NSMiniaturizableWindowMask | NSResizableWindowMask |
+                NSTexturedBackgroundWindowMask)
 
     def set_title(self, title):
         self.nswindow.setTitle_(title)
@@ -259,22 +261,10 @@ class Window(signals.SignalEmitter):
         # All OS X windows are connected to the menu shortcuts
         pass
 
-class MainWindowToolbar(NSToolbar):
-    pass
-
-class MainWindowToolbarDelegate(NSObject):
-    pass
-
 class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
         self.nswindow.setReleasedWhenClosed_(NO)
-        self.tbdelegate = MainWindowToolbarDelegate.alloc().init()
-        toolbar = MainWindowToolbar.alloc().initWithIdentifier_(u"MainWindow")
-        toolbar.setAllowsUserCustomization_(NO)
-        toolbar.setDelegate_(self.tbdelegate)
-
-        self.nswindow.setToolbar_(toolbar)
 
     def close(self):
         self.nswindow.orderOut_(nil)
@@ -656,7 +646,8 @@ class PreferencesWindow (Window):
         self.app_notifications.disconnect()
 
     def get_style_mask(self):
-        return NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask
+        return (NSTitledWindowMask | NSClosableWindowMask |
+                NSMiniaturizableWindowMask)
  
     def append_panel(self, name, panel, title, image_name):
         self.panels[name] = (panel, title)
