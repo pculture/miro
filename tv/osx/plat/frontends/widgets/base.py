@@ -250,7 +250,15 @@ class Container(Widget):
         self.children_changed()
 
     def children_changed(self):
-        self.invalidate_size_request()
+        if self.resize_on_children_change():
+            self.invalidate_size_request()
+
+    def resize_on_children_change(self):
+        """Should we check to resize if our children change?
+
+        Subclasses can override this method.
+        """
+        return True
 
     def do_invalidate_size_request(self):
         Widget.do_invalidate_size_request(self)

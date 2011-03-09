@@ -646,6 +646,9 @@ class Scroller(Bin):
         child.parent_is_scroller = False
         Bin.remove(self)
 
+    def resize_on_children_change(self):
+        return False
+
     def calc_size_request(self):
         if self.child:
             width = height = 0
