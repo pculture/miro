@@ -47,7 +47,7 @@ try:
 except ImportError:
     pass
 from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
-     DrawingArea, Titlebar, Background, Gradient, Titlebar, Toolbar
+     DrawingArea, Background, Gradient, Titlebar, Toolbar, LowerBox
 from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
      Splitter, Table, TabContainer, DetachedWindowHolder
 from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
