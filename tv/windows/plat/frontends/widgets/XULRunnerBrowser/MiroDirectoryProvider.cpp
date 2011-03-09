@@ -29,15 +29,46 @@
 # statement from all source files in the program, then also delete it here.
 */
 
-#ifndef __PCF_XULRUNNER_INIT_H__
-#define __PCF_XULRUNNER_INIT_H__
+#include "MiroDirectoryProvider.h"
+#include "nsXPCOMCID.h"
+#include "nsILocalFile.h"
+#include "nsIDirectoryService.h"
+#include "nsAppDirectoryServiceDefs.h"
+#include "xulapp/nsXULAppAPI.h"
+#include "xpcom/nsServiceManagerUtils.h"
 
-nsresult init_xulrunner(const char* xul_dir, const char* app_dir);
-nsresult setup_user_agent(const char* vendor, const char* vendor_sub, 
-        const char* comment);
-void shutdown_xulrunner();
-nsresult set_profile_dir(const char* dir);
-void addref(void* object);
-void release(void* object);
+NS_IMPL_ISUPPORTS1(MiroDirectoryProvider, nsIDirectoryServiceProvider)
 
-#endif /* __PCF_XULRUNNER_INIT_H__ */
+MiroDirectoryProvider::MiroDirectoryProvider()
+{
+}
+
+MiroDirectoryProvider::~MiroDirectoryProvider()
+{
+}
+
+nsresult MiroDirectoryProvider::install(const char* dir)
+{
+    nsresult rv;
+    rv = NS_NewNativeLocalFile(nsEmbedCString(dir), PR_FALSE, &mProfileDir);
+    NS_ENSURE_SUCCESS(rv, rv);
+    nsCOMPtr<nsIDirectoryService> directory_service(
+                do_GetService(NS_DIRECTORY_SERVICE_CONTRACTID, &rv));
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    rv = directory_service->RegisterProvider(this);
+    NS_ENSURE_SUCCESS(rv, rv);
+    return NS_OK;
+}
+
+NS_IMETHODIMP MiroDirectoryProvider::GetFile(const char *aKey,
+					     PRBool *aPersist,
+					     nsIFile* *aResult)
+{
+  if (!strcmp(aKey, NS_APP_USER_PROFILE_50_DIR) ||
+      !strcmp(aKey, NS_APP_PROFILE_DIR_STARTUP)) {
+    *aPersist = PR_TRUE;
+    return mProfileDir->Clone(aResult);
+  }
+  return NS_ERROR_FAILURE;
+}

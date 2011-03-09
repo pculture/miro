@@ -190,6 +190,8 @@ class WindowsApplication(Application):
         xulrunnerbrowser.setup_user_agent(app.config.get(prefs.LONG_APP_NAME),
                 app.config.get(prefs.APP_VERSION),
                 app.config.get(prefs.PROJECT_URL))
+        xulrunnerbrowser.set_profile_dir(
+            os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), 'profile'))
         xulrunnerbrowser.install_window_creator(self)
 
     def on_new_window(self, uri):

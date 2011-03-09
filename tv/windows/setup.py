@@ -227,6 +227,7 @@ xulrunnerbrowser_ext = Extension(
         os.path.join(portable_xpcom_dir, 'HttpObserver.cc'),
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroBrowserEmbed.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroWindowCreator.cpp'),
+        os.path.join(xulrunnerbrowser_ext_dir, 'MiroDirectoryProvider.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'FixFocus.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'Init.cpp'),
         ]

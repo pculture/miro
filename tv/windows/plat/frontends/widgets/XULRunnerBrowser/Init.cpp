@@ -49,6 +49,8 @@
 
 XRE_InitEmbeddingType XRE_InitEmbedding;
 XRE_TermEmbeddingType XRE_TermEmbedding; 
+XRE_LockProfileDirectoryType XRE_LockProfileDirectory; 
+XRE_NotifyProfileType XRE_NotifyProfile; 
 
 nsresult init_xulrunner(const char* xul_dir, const char* app_dir)
 {
@@ -70,6 +72,8 @@ nsresult init_xulrunner(const char* xul_dir, const char* app_dir)
     const nsDynamicFunctionLoad dynamicSymbols[] = {
         { "XRE_InitEmbedding", (NSFuncPtr*) &XRE_InitEmbedding },
         { "XRE_TermEmbedding", (NSFuncPtr*) &XRE_TermEmbedding },
+        { "XRE_LockProfileDirectory", (NSFuncPtr*) &XRE_LockProfileDirectory },
+        { "XRE_NotifyProfile", (NSFuncPtr*) &XRE_NotifyProfile },
         { nsnull, nsnull }
     }; 
     XPCOMGlueLoadXULFunctions(dynamicSymbols);
@@ -109,4 +113,22 @@ void shutdown_xulrunner()
 {
     XRE_TermEmbedding();
     XPCOMGlueShutdown();
+}
+
+nsresult set_profile_dir(const char* dir)
+{
+  nsCOMPtr<nsILocalFile> profile_dir;
+  nsCOMPtr<nsISupports> profile_lock;
+  nsresult rv = NS_NewNativeLocalFile(nsDependentCString(dir), PR_TRUE,
+				      getter_AddRefs(profile_dir));
+  NS_ENSURE_SUCCESS(rv, rv);
+  PRBool exists = PR_FALSE;
+  profile_dir->Exists(&exists);
+  if (!exists) {
+    profile_dir->Create(nsIFile::DIRECTORY_TYPE, 0700);
+  }
+  rv = XRE_LockProfileDirectory(profile_dir, getter_AddRefs(profile_lock));
+  NS_ENSURE_SUCCESS(rv, rv);
+  XRE_NotifyProfile();
+  return NS_OK;
 }

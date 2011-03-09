@@ -90,6 +90,16 @@ cdef extern from "MiroWindowCreator.h":
     MiroWindowCreator *new_MiroWindowCreator "new MiroWindowCreator" ()
     void del_MiroWindowCreator "delete" (MiroWindowCreator *rect)
 
+cdef extern from "MiroDirectoryProvider.h":
+
+    ctypedef struct MiroDirectoryProvider:
+        nsresult (*install)(char * dir)
+
+    # Trick Pyrex into creating constructor and destructor code
+    MiroDirectoryProvider *new_MiroDirectoryProvider "new MiroDirectoryProvider" ()
+    void del_MiroDirectoryProvider "delete" (MiroDirectoryProvider *rect)
+
+
 cdef extern from "HttpObserver.h":
     nsresult startObserving()
 
@@ -97,6 +107,7 @@ cdef extern from "Init.h":
     nsresult init_xulrunner(char* xul_dir, char* app_dir)
     nsresult c_setup_user_agent "setup_user_agent" (char* vendor, char* vendor_sub, char* comment)
     void shutdown_xulrunner()
+    nsresult c_set_profile_dir "set_profile_dir" (char* dir)
 
 cdef extern from "pythread.h":
     ctypedef struct PyThreadState
@@ -134,6 +145,17 @@ def install_window_creator(new_window_handler):
 
 def shutdown():
     shutdown_xulrunner()
+
+def set_profile_dir(profile_dir):
+    cdef nsresult rv
+    cdef MiroDirectoryProvider *provider
+    provider = new_MiroDirectoryProvider()
+    rv = provider.install(profile_dir)
+    if rv != NS_OK:
+       raise XPCOMError("MiroDirectoryProvider.install() failed with code %d" % rv)
+    rv = c_set_profile_dir(profile_dir)
+    if rv != NS_OK:
+       raise XPCOMError("set_profile_dir failed with code: %d" % rv)
 
 class XPCOMError(Exception):
     pass

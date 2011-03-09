@@ -29,15 +29,29 @@
 # statement from all source files in the program, then also delete it here.
 */
 
-#ifndef __PCF_XULRUNNER_INIT_H__
-#define __PCF_XULRUNNER_INIT_H__
+#ifndef __PCF_XULRUNNER_MIRO_DIRECTORY_PROVIDER_H__
+#define __PCF_XULRUNNER_MIRO_DIRECTORY_PROVIDER_H__
 
-nsresult init_xulrunner(const char* xul_dir, const char* app_dir);
-nsresult setup_user_agent(const char* vendor, const char* vendor_sub, 
-        const char* comment);
-void shutdown_xulrunner();
-nsresult set_profile_dir(const char* dir);
-void addref(void* object);
-void release(void* object);
+#include <Python.h>
+#include "nsIDirectoryService.h"
+#include "nsEmbedString.h"
 
-#endif /* __PCF_XULRUNNER_INIT_H__ */
+class MiroDirectoryProvider : public nsIDirectoryServiceProvider
+{
+public:
+  NS_DECL_ISUPPORTS
+  NS_DECL_NSIDIRECTORYSERVICEPROVIDER
+
+  MiroDirectoryProvider();
+
+  nsresult install(const char* dir);
+
+private:
+  ~MiroDirectoryProvider();
+
+protected:
+  nsILocalFile *mProfileDir;
+};
+
+
+#endif /* __PCF_XULRUNNER_MIRO_DIRECTORY_PROVIDER_H__ */
