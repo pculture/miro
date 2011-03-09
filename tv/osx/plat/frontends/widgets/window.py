@@ -585,12 +585,12 @@ class AlertDialog(DialogBase):
     def destroy(self):
         self._nsalert = nil
 
-class PreferenceItem (NSToolbarItem):
+class PreferenceItem(NSToolbarItem):
 
     def setPanel_(self, panel):
         self.panel = panel
 
-class ToolbarDelegate (NSObject):
+class ToolbarDelegate(NSObject):
 
     def initWithPanels_identifiers_window_(self, panels, identifiers, window):
         self = super(ToolbarDelegate, self).init()
@@ -608,7 +608,9 @@ class ToolbarDelegate (NSObject):
     def toolbarSelectableItemIdentifiers_(self, toolbar):
         return self.identifiers
 
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag):
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar,
+                                                                 itemIdentifier,
+                                                                 flag):
         panel = self.panels[itemIdentifier]
         item = PreferenceItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item.setLabel_(panel[1])
