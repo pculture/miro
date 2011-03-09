@@ -103,7 +103,7 @@ class BrowserToolbar(widgetset.Titlebar):
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
         hbox.pack_end(widgetutil.align_middle(self.browser_open_button,
-                                              right_pad=4))
+                                              right_pad=10))
 
         self.download_button = widgetutil.TitlebarButton(
             _("Download this video"), 'navdownload')
