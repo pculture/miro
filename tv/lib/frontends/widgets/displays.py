@@ -367,11 +367,11 @@ class DeviceDisplayMixin(object):
         device = selected_tabs[0]
         if getattr(device, 'fake', False):
             self.controller = devicecontroller.DeviceItemController(device)
+            self.type = self.controller.type
+            self.id = device.id
         else:
             self.controller = devicecontroller.DeviceController(device)
         self.widget = self.controller.widget
-        self.type = self.controller.type
-        self.id = device.id
 
     def handle_current_sync_information(self, message):
         return
