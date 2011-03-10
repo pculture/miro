@@ -53,7 +53,6 @@ class Image(object):
         self.height = self.nsimage.size().height
         self.nsimage.setFlipped_(YES)
 
-
     def resize(self, width, height):
         return ResizedImage(self, width, height)
 
@@ -108,6 +107,9 @@ class NSImageDisplay (NSView):
         self = super(NSImageDisplay, self).init()
         self.image = None
         return self
+
+    def isFlipped(self):
+        return YES
 
     def set_image(self, image):
         self.image = image

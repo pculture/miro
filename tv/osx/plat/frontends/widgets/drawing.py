@@ -41,8 +41,6 @@ class ImageSurface:
     def __init__(self, image):
         """Create a new ImageSurface."""
         self.image = image.nsimage.copy()
-        self.image.setFlipped_(YES)
-        self.image.setCacheMode_(NSImageCacheNever)
         self.width = image.width
         self.height = image.height
 
