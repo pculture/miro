@@ -529,7 +529,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         # Ideally, we want to start it at 28px from the start of the top of
         # the cell.  However, if our text is big enough, don't let it overflow
         # the play button.
-        text_bottom = min(28 + total_height, self.middle_rect.y + 80)
+        text_bottom = min(25 + total_height, self.middle_rect.y + 80)
         self.text_top = text_bottom - total_height
         if self.download_mode:
             # quick interlude.  If we are in download mode, draw the menu on
@@ -542,10 +542,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
             title_width = width
 
         layout.add_text_line(title, x, self.text_top, title_width)
-        y = layout.last_rect.bottom + 8
+        y = layout.last_rect.bottom + 6
         layout.add(x, y, width, self.extra_info_drawer.height,
             self.extra_info_drawer.draw)
-        y = layout.last_rect.bottom + 8
+        y = layout.last_rect.bottom + 6
         layout.add_text_line(description, x, y, width, hotspot='description')
         self.description_width = width
 
