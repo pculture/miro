@@ -36,7 +36,7 @@
 import base64
 from xml.dom import minidom
 
-
+from miro import app
 from miro import httpclient
 try:
     import pyDes as des
@@ -109,8 +109,13 @@ def _amz_callback(data):
                     additional['thumbnail'] = value
                 elif key == 'duration':
                     additional['length'] = int(value) / 1000
-        entry = _build_entry(url, 'audio/mp3', additional)
-        download_video(entry)
+        if url is None:
+            app.widgetapp.handle_soft_failure("_amz_callback",
+                                              "could not find URL for track",
+                                              with_exception=False)
+        else:
+            entry = _build_entry(url, 'audio/mp3', additional)
+            download_video(entry)
 
 def _m3u_callback(data):
     from miro.singleclick import _build_entry, download_video
