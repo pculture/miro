@@ -58,7 +58,7 @@ from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
-from miro.plat.utils import make_url_safe
+from miro.plat.utils import make_url_safe, filename_to_unicode
 
 import shutil
 
@@ -1748,3 +1748,45 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                                      create=False)
         if dsm:
             dsm.cancel()
+
+    def handle_download_device_items(self, message):
+        manual_feed = Feed.get_manual_feed()
+        video_directory = app.config.get(prefs.MOVIES_DIRECTORY)
+
+        for item_info in message.item_infos:
+            final_path = os.path.join(video_directory,
+                                      os.path.basename(item_info.video_path))
+            view = item.Item.make_view('is_file_item AND filename=?',
+                                       (filename_to_unicode(final_path),))
+            if view.count(): # file already exists
+                continue
+            shutil.copyfile(item_info.video_path, final_path)
+            fp_values = item.fp_values_for_file(final_path,
+                                                item_info.name,
+                                                item_info.description)
+            fi = item.FileItem(final_path, feed_id=manual_feed.id,
+                               fp_values=fp_values)
+            fi.releaseDateObj = item_info.release_date
+            fi.duration = item_info.duration
+            fi.permalink = item_info.permalink
+            if item_info.commentslink:
+                fi.comments_link = item_info.commentslink
+            if item_info.payment_link:
+                fi.payment_link = item_info.payment_link
+            #fi.screenshot = item_info.thumbnail
+            if item_info.thumbnail_url:
+                fi.thumbnail_url = item_info.thumbnail_url
+            fi.file_format = item_info.file_format
+            fi.license = item_info.license
+            if item_info.file_url:
+                fi.url = item_info.file_url
+            fi.media_type_checked = item_info.media_type_checked
+            fi.mime_type = item_info.mime_type
+            fi.creationTime = item_info.date_added
+            fi.title_tag = item_info.title_tag
+            fi.artist = item_info.artist
+            fi.album = item_info.album
+            fi.track = item_info.track
+            fi.year = item_info.year
+            fi.genre = item_info.genre
+            fi.signal_change()

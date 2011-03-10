@@ -687,6 +687,8 @@ class ItemListController(object):
         elif name.startswith('rate:'):
             rating = int(name.split(':', 1)[1])
             messages.RateItem(item_info, rating).send_to_backend()
+        elif name == 'download-device-item':
+            messages.DownloadDeviceItems([item_info]).send_to_backend()
         else:
             logging.debug("ItemView doesn't know how to handle hotspot %s.",
                 name)

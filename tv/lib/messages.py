@@ -927,6 +927,12 @@ class DeviceEject(BackendMessage):
     def __init__(self, device):
         self.device = device
 
+class DownloadDeviceItems(BackendMessage):
+    """Ask the backend to copy some items from a device into the main database.
+    """
+    def __init__(self, item_infos):
+        self.item_infos = item_infos
+
 class RateItem(BackendMessage):
     """Assign a rating (1-5) to an item.
     """
@@ -1192,6 +1198,13 @@ class ItemInfo(object):
 
     def __repr__(self):
         return "<ItemInfo %s>" % self.id
+
+    def __getstate__(self):
+        d = self.__dict__.copy()
+        d['device'] = None
+        del d['description_stripped']
+        del d['search_ngrams']
+        return d
 
     def __init__(self, id_, **kwargs):
         self.id = id_

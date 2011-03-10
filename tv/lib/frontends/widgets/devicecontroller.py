@@ -30,6 +30,10 @@
 """Controller for Devices tab.
 """
 import operator
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 from miro import app
 from miro import displaytext
@@ -893,9 +897,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         return style.DeviceItemRenderer(display_channel=False)
 
     def make_drag_handler(self):
-        # XXX make dragging device items to the library work
-        # disabled for #16368
-        return None
+        return DeviceItemDragHandler()
 
     def on_sort_changed(self, obj, sort_key, ascending, view):
         itemlistcontroller.AudioVideoItemsController.on_sort_changed(
@@ -913,3 +915,20 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         if self.device.id != device.id:
             return
         self.device = device
+
+
+class DeviceItemDragHandler(object):
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY
+
+    def allowed_types(self):
+        return ('device-audio-item', 'device-video-item')
+
+    def begin_drag(self, tableview, rows):
+        videos = [row[0] for row in rows]
+        file_type = videos[0].file_type
+        if videos:
+            data = pickle.dumps(videos)
+            return {'device-%s-item' % file_type:  data }
+        else:
+            return None

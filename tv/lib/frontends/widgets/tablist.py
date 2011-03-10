@@ -30,6 +30,10 @@
 """Displays the list of tabs on the left-hand side of the app."""
 
 from hashlib import md5
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 from miro import app
 from miro import prefs
@@ -388,27 +392,36 @@ class MediaTypeDropHandler(object):
     """
 
     def allowed_types(self):
-        return ('downloaded-item',)
+        return ('downloaded-item', 'device-video-item', 'device-audio-item')
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
 
     def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
-        if (typ == 'downloaded-item' and parent is not None
-            and position == -1):
+        if parent is None or position != -1:
+            return widgetset.DRAG_ACTION_NONE
+        if typ == 'downloaded-item':
+            return widgetset.DRAG_ACTION_COPY
+        media_type = model[parent][0].media_type
+        if typ == ('device-%s-item' % media_type):
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
     def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
-        if typ == 'downloaded-item':
-            if parent is not None and position == -1:
+        if parent is not None and position == -1:
+            media_type = model[parent][0].media_type
+            if typ == 'downloaded-item':
                 video_ids = [int(id) for id in data.split('-')]
-                media_type = model[parent][0].media_type
                 m = messages.SetItemMediaType(media_type, video_ids)
                 m.send_to_backend()
                 return True
+            elif typ == ('device-%s-item' % media_type):
+                # copying media from the device
+                item_infos = pickle.loads(data)
+                m = messages.DownloadDeviceItems(item_infos)
+                m.send_to_backend()
         # We shouldn't get here, because don't allow it in validate_drop.
         # Return False just in case
         return False
