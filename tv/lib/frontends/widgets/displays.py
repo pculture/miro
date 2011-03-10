@@ -370,6 +370,8 @@ class DeviceDisplayMixin(object):
         else:
             self.controller = devicecontroller.DeviceController(device)
         self.widget = self.controller.widget
+        self.type = self.controller.type
+        self.id = device.id
 
     def handle_current_sync_information(self, message):
         return
