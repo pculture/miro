@@ -254,5 +254,8 @@ class DrawingMixin(object):
         pass
 
     def viewport_repositioned(self):
+        # since this is a Mixin class, we want to make sure that our other
+        # classes see the viewport_repositioned() call.
+        super(DrawingMixin, self).viewport_repositioned()
         self.queue_redraw()
 
