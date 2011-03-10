@@ -578,6 +578,7 @@ class DeviceSyncManager(object):
                 self._add_item(task.final_output_path, task.item_info)
         self._check_finished()
 
+    @eventloop.as_idle
     def _add_item(self, final_path, item_info):
         dirname, basename = os.path.split(final_path)
         _, extension = os.path.splitext(basename)
