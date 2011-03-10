@@ -1206,6 +1206,12 @@ class ItemInfo(object):
         del d['search_ngrams']
         return d
 
+    def __setstate__(self, d):
+        self.__dict__.update(d)
+        self.description_stripped = ItemInfo.html_stripper.strip(
+                self.description)
+        self.search_ngrams = search.calc_ngrams(self)
+
     def __init__(self, id_, **kwargs):
         self.id = id_
 
