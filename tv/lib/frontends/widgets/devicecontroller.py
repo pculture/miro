@@ -525,8 +525,11 @@ class DeviceSettingsWidget(widgetset.Background):
         self.set_child(widgetutil.align(table, 0.5, top_pad=50))
 
     def set_device(self, device):
-        self.device = device
-        self.create_table()
+        if self.device is None:
+            self.device = device
+            self.create_table()
+        else:
+            self.device = device
         device_settings = device.database.get('settings', {})
         self.bulk_change = True
         for setting in 'name', 'video_path', 'audio_path':
