@@ -769,7 +769,8 @@ class DeviceItem(metadata.Store):
         file_types = [self.file_type]
         if '-' in self.device.id:
             ignored, current_file_type = self.device.id.rsplit('-', 1)
-            file_types.append(current_file_type)
+            if current_file_type in ('video', 'audio'):
+                file_types.append(current_file_type)
         for file_type in file_types:
             if self.video_path in self.device.database[file_type]:
                 del self.device.database[file_type][self.video_path]
