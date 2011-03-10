@@ -1112,8 +1112,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             if message.visible is not None:
                 feed_.set_visible(message.visible)
         else:
-            logging.info("Not adding duplicated watched folder: %s",
-                    message.path)
+            logging.warning("Not adding duplicated watched folder: %s",
+                            message.path)
 
     def handle_set_watched_folder_visible(self, message):
         try:
@@ -1376,8 +1376,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             logging.warn("SaveVideoAs: Item not found -- %s", message.id)
             return
 
-        logging.info("saving video %s to %s" % (item_.get_filename(),
-                                                message.filename))
+        logging.debug("saving video %s to %s", item_.get_filename(),
+                      message.filename)
 
 
         try:
@@ -1541,7 +1541,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 progress = float(i) / migration_count
                 messages.ProgressDialog(text, progress).send_to_frontend()
                 last_progress_time = current_time
-            logging.info("migrating %s", download.get_filename())
+            logging.debug("migrating %s", download.get_filename())
             download.migrate(new_path)
         # Pass in case they don't exist or are not empty:
         # FIXME - these will never work since they're directory trees

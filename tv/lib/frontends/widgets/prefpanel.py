@@ -687,7 +687,7 @@ class _MovieDirectoryHelper(object):
                       "choose a directory you have write access to."),
                     dialogs.WARNING_MESSAGE)
                 return
-            logging.info("Created directory.  It's valid.")
+            logging.debug("Created directory.  It's valid.")
             self.path = d
             self.label.set_text(filename_to_unicode(d))
 

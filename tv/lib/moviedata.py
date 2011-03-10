@@ -244,14 +244,14 @@ class MovieDataUpdater(signals.SignalEmitter):
         while pipe.poll() is None and not self.in_shutdown:
             time.sleep(SLEEP_DELAY)
             if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
-                logging.info("Movie data process hung, killing it")
+                logging.warning("Movie data process hung, killing it")
                 self.kill_process(pipe.pid)
                 return ''
 
         if self.in_shutdown:
             if pipe.poll() is None:
-                logging.info("Movie data process running after shutdown, "
-                             "killing it")
+                logging.warning("Movie data process running after shutdown, "
+                                "killing it")
                 self.kill_process(pipe.pid)
             return ''
         return pipe.stdout.read()
@@ -260,10 +260,10 @@ class MovieDataUpdater(signals.SignalEmitter):
         try:
             kill_process(pid)
         except OSError:
-            logging.warn("Error trying to kill the movie data process:\n%s",
-                         traceback.format_exc())
+            logging.warning("Error trying to kill the movie data process:\n%s",
+                            traceback.format_exc())
         else:
-            logging.info("Movie data process killed")
+            logging.warning("Movie data process killed")
 
     def parse_duration(self, stdout):
         duration_match = DURATION_RE.search(stdout)

@@ -57,11 +57,11 @@ def logwrap(fun):
         name = "%s %s %s" % (time.time(), fun.__module__, fun.__name__)
         ret = None
         try:
-            logging.info("START: %s", name)
+            logging.debug("START: %s", name)
             ret = fun(*args, **kwargs)
             return ret
         finally:
-            logging.info("END:   %s ret: %s", name, ret)
+            logging.debug("END:   %s ret: %s", name, ret)
     return _wrapped_fun
 
 def instrument_class(klass):

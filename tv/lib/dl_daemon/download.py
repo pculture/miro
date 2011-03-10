@@ -524,8 +524,8 @@ class BGDownloader(object):
         directory to the movies directory.
         """
         if chatter:
-            logging.info("move_to_movies_directory: filename is %s",
-                         self.filename)
+            logging.debug("move_to_movies_directory: filename is %s",
+                          self.filename)
         self.move_to_directory(app.config.get(prefs.MOVIES_DIRECTORY))
 
     def move_to_directory(self, directory):
@@ -608,8 +608,8 @@ class BGDownloader(object):
             "Logarithmic retry")
         now = datetime.datetime.now()
         self.retryTime = now + datetime.timedelta(seconds=RETRY_TIMES[self.retryCount])
-        logging.info("Temporary error: '%s' '%s'.  retrying at %s %s",
-                     short_reason, reason, self.retryTime, self.retryCount)
+        logging.warning("Temporary error: '%s' '%s'.  retrying at %s %s",
+                        short_reason, reason, self.retryTime, self.retryCount)
         self.update_client()
 
     def handle_error(self, short_reason, reason):
@@ -632,8 +632,8 @@ class BGDownloader(object):
                 self.handle_temporary_error(error.getFriendlyDescription(),
                                             error.getLongDescription())
         else:
-            logging.info("WARNING: grab_url errback not called with "
-                         "NetworkError")
+            logging.warning("grab_url errback not called with "
+                            "NetworkError")
             self.handle_error(str(error), str(error))
 
     def handle_generic_error(self, longDescription):
@@ -693,7 +693,7 @@ class HTTPDownloader(BGDownloader):
         if resume:
             resume = self._resume_sanity_check()
 
-        logging.info("start_download: %s", self.url)
+        logging.debug("start_download: %s", self.url)
 
         self.client = httpclient.grab_url(
             self.url, self.on_download_finished, self.on_download_error,
@@ -718,7 +718,7 @@ class HTTPDownloader(BGDownloader):
             # use logging.info rather than warn, since this is the
             # usual case from upgrading from 3.0.x to 3.1
             logging.info("File larger than currentSize: truncating.  "
-                    "url: %s, path: %s.", self.url, self.filename)
+                         "url: %s, path: %s.", self.url, self.filename)
             f = open(self.filename, "ab")
             f.truncate(self.currentSize)
             f.close()

@@ -287,7 +287,7 @@ class LiveStorage:
 
         :param ver: the current version (as string)
         """
-        logging.info("path of database: %s", self.path)
+        logging.info("database path: %s", self.path)
         # close database
         self.close()
 

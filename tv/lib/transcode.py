@@ -145,7 +145,7 @@ class TranscodeRequestHandler(SocketServer.BaseRequestHandler):
             except socket.error, (err, errstring):
                 if err == errno.EINTR:
                     continue
-                logging.info('TranscodeRequestHandler err %d desc = %s',
+                logging.warning('TranscodeRequestHandler err %d desc = %s',
                              err, errstring)
                 # Signal EOF
                 self.server.obj.data_callback('')
@@ -261,7 +261,7 @@ class TranscodeObject(object):
         self.transcode_gate = threading.Event()
 
         self.create_playlist()
-        logging.info('TranscodeObject created %s', self)
+        logging.debug('TranscodeObject created %s', self)
 
     def __del__(self):
         self.shutdown()
@@ -367,7 +367,7 @@ class TranscodeObject(object):
                 chunk_buffer_size = len(self.chunk_buffer)
                 if (chunk_buffer_size >= 
                   TranscodeObject.buffer_high_watermark):
-                    logging.info('TranscodeObject: throttling')
+                    logging.debug('TranscodeObject: throttling')
                     self.chunk_throttle.clear()
             # Tell consumer there is stuff available
             self.chunk_sem.release()

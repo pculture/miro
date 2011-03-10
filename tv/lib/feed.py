@@ -176,7 +176,7 @@ def normalize_feed_url(url):
     url = quote_unicode_url(url)
 
     if not validate_feed_url(url):
-        logging.info("unable to normalize URL %s", originalURL)
+        logging.warning("unable to normalize URL %s", originalURL)
         return originalURL
     else:
         return url
@@ -877,8 +877,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def _generate_feed_errback(self, error, removeOnError):
         if not self.id_exists():
             return
-        logging.info("Warning couldn't load podcast at %s (%s)",
-                     self.origURL, error)
+        logging.warning("Couldn't load podcast at %s (%s)",
+                        self.origURL, error)
         self._handle_feed_loading_error(error.getFriendlyDescription())
 
     def _generate_feed_callback(self, info, removeOnError):
@@ -1219,7 +1219,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     entry['enclosures'] = [{'url': to_uni(url),
                                             'type': to_uni("video/flv")}]
                 else:
-                    logging.info('unknown url type %s, not generating enclosure' % url)
+                    logging.warning(
+                        'unknown url type %s, not generating enclosure', url)
 
         channel_title = None
         try:
@@ -1394,7 +1395,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def feedparser_errback(self, e):
         if not self.ufeed.id_exists():
             return
-        logging.info("Error updating feed: %s: %s", self.url, e)
+        logging.warning("Error updating feed: %s: %s", self.url, e)
         self.feedparser_finished()
 
     def feedparser_callback(self, parsed):
@@ -1453,7 +1454,7 @@ class RSSFeedImpl(RSSFeedImplBase):
                 modified = self.modified
             except AttributeError:
                 modified = None
-            logging.info("updating %s", self.url)
+            logging.debug("updating %s", self.url)
             self.download = grab_url(self.url, self._update_callback,
                     self._update_errback, etag=etag, modified=modified,
                                     default_mime_type=u'application/rss+xml')
@@ -1562,9 +1563,11 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         if not self.ufeed.id_exists() or url not in self.download_dc:
             return
         if e:
-            logging.info("Error updating feed: %s (%s): %s", self.url, url, e)
+            logging.warning("Error updating feed: %s (%s): %s",
+                            self.url, url, e)
         else:
-            logging.info("Error updating feed: %s (%s)", self.url, url)
+            logging.warning("Error updating feed: %s (%s)",
+                            self.url, url)
         self.feedparser_finished(url, True)
 
     def feedparser_callback(self, parsed, url):
@@ -1748,7 +1751,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             if not self.ufeed.id_exists():
                 return
             self.downloads.discard(download)
-            logging.info("WARNING unhandled error for ScraperFeedImpl.get_html: %s", error)
+            logging.warning("unhandled error for ScraperFeedImpl.get_html: %s",
+                            error)
             self.check_done()
         download = grab_url(url, callback, errback, etag=etag,
                 modified=modified, default_mime_type='text/html')
@@ -2374,7 +2378,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler,
                     html = fix_html_header(html, self.charset)
                 self.links[:0] = lg.get_links(html, self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
-                logging.info("bad HTML in description for %s", self.baseurl)
+                logging.warning("bad HTML in description for %s", self.baseurl)
             self.inDescription = False
         elif tag.lower() == 'link':
             self.links.append((self.theLink, None, None))
@@ -2409,12 +2413,12 @@ class HTMLFeedURLParser(HTMLParser):
         self.link = None
         try:
             self.feed(data)
-        except HTMLParseError:
-            logging.info("error parsing %s", baseurl)
+        except HTMLParseError, hpe:
+            logging.warning("error parsing %s: %s", baseurl, hpe)
         try:
             self.close()
-        except HTMLParseError:
-            logging.info("error closing %s", baseurl)
+        except HTMLParseError, hpe:
+            logging.warning("error closing %s: %s", baseurl, hpe)
         return self.link
 
     def handle_starttag(self, tag, attrs):

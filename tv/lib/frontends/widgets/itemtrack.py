@@ -136,7 +136,7 @@ class ItemListTracker(signals.SignalEmitter):
     def _start_tracking(self):
         if self.is_tracking:
             return
-        logging.info("ItemListTracker -- tracking: %s, %s", self.type,
+        logging.debug("ItemListTracker -- tracking: %s, %s", self.type,
                 self.id)
         self._send_track_items_message()
         app.info_updater.item_list_callbacks.add(self.type, self.id,
@@ -151,7 +151,7 @@ class ItemListTracker(signals.SignalEmitter):
     def _stop_tracking(self):
         if not self.is_tracking:
             return
-        logging.info("ItemListTracker -- stopping tracking: %s, %s",
+        logging.debug("ItemListTracker -- stopping tracking: %s, %s",
                 self.type, self.id)
         messages.StopTrackingItems(self.type, self.id).send_to_backend()
         app.info_updater.item_list_callbacks.remove(self.type, self.id,

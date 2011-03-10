@@ -736,7 +736,8 @@ class ConversionTask(object):
 
     def interrupt(self):
         if hasattr(self.process_handle, "pid"):
-            logging.info("killing conversion task %d", self.process_handle.pid)
+            logging.warning("killing conversion task %d",
+                            self.process_handle.pid)
             utils.kill_process(self.process_handle.pid)
             if not self.temp_output_path.endswith('.tmp'):  # temp file
                 if (os.path.exists(self.temp_output_path) and

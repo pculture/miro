@@ -863,8 +863,8 @@ class SharingManagerBackend(object):
                         # This request has already been satisfied by a more
                         # recent request.  Bye ...
                         if generation < transcode_obj.generation:
-                            logging.info('item %s transcode out of order',
-                                         itemid)
+                            logging.debug('item %s transcode out of order',
+                                          itemid)
                             return None
                         if chunk is not None and transcode_obj.isseek(chunk):
                             need_create = True
@@ -898,7 +898,7 @@ class SharingManagerBackend(object):
             else:
                 # Should this be a ValueError instead?  But returning -1
                 # will make the caller return 404.
-                logging.info('error: transcode should be one of ts or m3u8')
+                logging.warning('error: transcode should be one of ts or m3u8')
         elif ext == 'coverart':
             try:
                 cover_art = self.daapitems[itemid]['cover_art']

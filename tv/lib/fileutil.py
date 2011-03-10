@@ -171,7 +171,7 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
             if is_windows_file_in_use_error(e):
                 # permission denied, assume this means it's open by
                 # another process on windows.
-                logging.info('Retrying migration')
+                logging.info('Retrying migration for %s', source)
                 eventloop.add_timeout(retry_after, migrate_file,
                         "Migrate File Retry", args=(source, dest, callback,
                             retry_after, retry_for - retry_after))
@@ -217,7 +217,7 @@ def delete(path, retry_after=10, retry_for=60):
             # permission denied, assume this means it's open by another
             # process on windows.
             deletes_in_progress.add(path)
-            logging.info('Retrying delete')
+            logging.info('Retrying delete for %s (%d)', path, retry_after)
             eventloop.add_timeout(retry_after, delete,
                     "Delete File Retry", args=(path, retry_after,
                         retry_for - retry_after))

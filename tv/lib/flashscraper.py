@@ -114,8 +114,8 @@ def _youtube_callback_step2(info, video_id, callback):
         body = info['body']
         params = cgi.parse_qs(body)
         if params.get("status", [""])[0] == "fail":
-            logging.info("youtube download failed because: %s",
-                         params.get("reason", ["unknown"])[0])
+            logging.warning("youtube download failed because: %s",
+                            params.get("reason", ["unknown"])[0])
             callback(None)
             return
 

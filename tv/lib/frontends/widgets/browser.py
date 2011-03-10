@@ -254,7 +254,7 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.stop_button.disable()
         self.enable_disable_navigation()
         self.toolbar.loading_icon.hide()
-        logging.info("checking %s", self.browser.get_current_url())
+        logging.debug("checking %s", self.browser.get_current_url())
         if flashscraper.is_maybe_flashscrapable(unicode(self.browser.get_current_url())):
             self.toolbar.download_button.show()
 

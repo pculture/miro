@@ -325,7 +325,7 @@ def check_firsttime():
     """
     callback = lambda: eventloop.add_urgent_call(check_movies_gone, "check movies gone")
     if is_first_time():
-        logging.info("First time -- calling handler.")
+        logging.info("First time run -- calling handler.")
         _first_time_handler(callback)
         return
 
@@ -411,7 +411,7 @@ def setup_tabs():
     def setup_tab_order(type):
         current_tab_orders = list(tabs.TabOrder.view_for_type(type))
         if len(current_tab_orders) == 0:
-            logging.info("Creating %s tab order" % type)
+            logging.info("Creating %s tab order", type)
             tab_order = tabs.TabOrder(type)
         else:
             current_tab_orders[0].restore_tab_list()
