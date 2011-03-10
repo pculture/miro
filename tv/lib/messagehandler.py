@@ -1710,7 +1710,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for view in views:
             source = itemsource.DatabaseItemSource(view)
             try:
-                infos.update(source.fetch_all())
+                infos.update(
+                    [info for info in source.fetch_all()
+                     if not message.device.database.item_exists(info)])
             finally:
                 source.unlink()
         return infos

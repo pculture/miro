@@ -477,7 +477,7 @@ class DeviceSyncManager(object):
         video_conversion = (device_settings.get('video_conversion') or
                             device_info.video_conversion)
         for info in item_infos:
-            if self._exists(info):
+            if self.device.database.item_exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
                 if (audio_conversion == 'copy' or (info.file_format and
@@ -534,22 +534,6 @@ class DeviceSyncManager(object):
         task = start_conversion(conversion, info, target,
                                 create_item=False)
         self.waiting.add(task.key)
-
-    def _exists(self, item_info):
-        if item_info.file_type not in self.device.database:
-            return False
-        for existing in self.device.database[item_info.file_type].values():
-            if (item_info.file_url and
-                existing.get('url') == item_info.file_url):
-                return True
-            elif ((item_info.name, item_info.description, item_info.size,
-                   item_info.duration) ==
-                  (existing.get('name'), existing.get('description'),
-                   existing.get('size'), existing.get('duration'))):
-                # if a bunch of qualities are the same, we'll call it close
-                # enough
-                return True
-        return False
 
     def _conversion_changed_callback(self, conversion_manager, task):
         self.etas[task.key] = task.get_eta()
@@ -864,6 +848,28 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         self.bulk_mode = bulk
         if not bulk and self.did_change:
             self.notify_changed()
+
+    # XXX does this belong here?
+    def item_exists(self, item_info):
+        """Checks if the given ItemInfo exists in our database.  Should only be
+        called on the parent database.
+        """
+        if self.parent:
+            raise RuntimeError('item_exists() called on sub-dictionary')
+        if item_info.file_type not in self:
+            return False
+        for existing in self[item_info.file_type].values():
+            if (item_info.file_url and
+                existing.get('url') == item_info.file_url):
+                return True
+            elif ((item_info.name, item_info.description, item_info.size,
+                   item_info.duration) ==
+                  (existing.get('name'), existing.get('description'),
+                   existing.get('size'), existing.get('duration'))):
+                # if a bunch of qualities are the same, we'll call it close
+                # enough
+                return True
+        return False
 
 class DatabaseWriteManager(object):
     """
