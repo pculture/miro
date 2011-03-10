@@ -646,8 +646,11 @@ class Scroller(Bin):
         child.parent_is_scroller = False
         Bin.remove(self)
 
-    def resize_on_children_change(self):
-        return False
+    def children_changed(self):
+        # since our size isn't dependent on our children, don't call
+        # invalidate_size_request() here.  Just call place_children() so that
+        # they get positioned correctly in the document view.
+        self.place_children()
 
     def calc_size_request(self):
         if self.child:
