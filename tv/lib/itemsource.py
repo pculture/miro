@@ -381,6 +381,7 @@ class SharingItemSource(ItemSource):
 
     def _item_info_for(self, item):
         info = dict(
+            item_source=self,
             source_type='sharing',
             feed_id = item.feed_id,
             feed_name = None,
@@ -464,7 +465,17 @@ class SharingItemSource(ItemSource):
         self.signal_handles = []
 
 class SharingItemHandler(ItemHandler):
-    pass
+    def set_is_playing(self, info, is_playing):
+        """
+        Mark the given ItemInfo as playing, based on the is_playing bool.
+        Should also send a 'changed' message, if the is_playing state changed.
+
+        Sharing items don't have a real database to back them up so just use
+        a back pointer to the item source and emit a 'changed' message.
+        """
+        if info.is_playing != is_playing:
+            info.is_playing = is_playing
+            info.item_source.emit("changed", info)
 
 class DeviceItemSource(ItemSource):
     """
