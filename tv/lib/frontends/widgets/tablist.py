@@ -779,8 +779,7 @@ class SiteList(HideableTabList):
         info.type = self.type
 
     def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter_][0] for iter_ in
-                table_view.get_selection(strict=False)]
+        tablist_type, selected_rows = app.tabs.selection
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
                 return []
@@ -807,8 +806,7 @@ class StoreList(SiteList):
         pass # XXX: can't delete stores(?)
 
     def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter_][0] for iter_ in
-                table_view.get_selection(strict=False)]
+        tablist_type, selected_rows = app.tabs.selection
         if len(selected_rows) == 1 and selected_rows[0].type != u'tab':
             return [
                 (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
@@ -819,8 +817,7 @@ class StoreList(SiteList):
 class NestedTabListMixin(object):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""
     def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter_][0] for iter_ in
-                table_view.get_selection(strict=False)]
+        tablist_type, selected_rows = app.tabs.selection
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
                 return []
