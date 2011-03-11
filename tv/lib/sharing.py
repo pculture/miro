@@ -334,8 +334,6 @@ class SharingTracker(object):
             # are connected, keep it around.  If not, make it disappear.
             # SharingDisappeared() kicks off the necessary bits in the 
             # frontend for us.
-            # Future work: we may want to update the name of the share in the
-            # sidebar if we detect it is actually a rename?
             if not share_id in self.trackers.keys():
                 victim = self.available_shares[share_id]
                 del self.available_shares[share_id]
