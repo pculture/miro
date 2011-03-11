@@ -650,6 +650,15 @@ class Scroller(Bin):
         # since our size isn't dependent on our children, don't call
         # invalidate_size_request() here.  Just call place_children() so that
         # they get positioned correctly in the document view.
+        #
+        # XXX dodgy - why are we laying out the children twice?  When the
+        # children change, the scroller could appear/disappear.  But you have
+        # no idea if that's going to happen without knowing how big your
+        # children are.  So we lay it out, get the size, then, place the 
+        # children again.  This makes sure that the right side of the children
+        # are redrawn.  There's got to be a better way??
+        self.place_children()
+        self.cached_size_request = self.calc_size_request()
         self.place_children()
 
     def calc_size_request(self):
