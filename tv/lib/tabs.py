@@ -80,9 +80,10 @@ class TabOrder(database.DDBObject):
     def _get_tab_views(self):
         if self.type == u'site':
             tab_views = (guide.ChannelGuide.site_view(),)
+#            tab_views = (guide.ChannelGuide.visible_view(),)
         elif self.type == u'channel':
             tab_views = (feed.Feed.visible_view(),
-                    folder.ChannelFolder.make_view())
+                         folder.ChannelFolder.make_view())
         elif self.type == u'playlist':
             tab_views = (playlist.SavedPlaylist.make_view(),
                     folder.PlaylistFolder.make_view())

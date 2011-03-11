@@ -747,6 +747,13 @@ class PlayAllUnwatched(BackendMessage):
     def __init__(self):
         pass
 
+class TabExpandedChange(BackendMessage):
+    """Inform the backend when a hideable tab gets expanded/collapsed.
+    """
+    def __init__(self, typ, expanded):
+        self.type = typ
+        self.expanded = expanded
+
 class FolderExpandedChange(BackendMessage):
     """Inform the backend when a folder gets expanded/collapsed.
     """
@@ -1348,24 +1355,30 @@ class GuideList(FrontendMessage):
                              StoreManager)
     """
     def __init__(self, guides):
-        self.default_guide = [g for g in guides if g.default]
-        if len(self.default_guide) == 0:
+        default_guides = [g for g in guides if g.default]
+        if not default_guides:
             # The problem here is that Miro persists guides and it's possible
             # for it to have a default channel guide persisted, but when you
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
+            logging.warning("Generating a new guide")
             cg = guide.ChannelGuide(util.to_uni(app.config.get(
                         prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
-            self.default_guide = [cg_info]
-        elif len(self.default_guide) > 1:
+            default_guides = [cg_info]
+        elif len(default_guides) > 1:
             logging.warning("Multiple default guides!  Picking the first one.")
-            self.default_guide = [self.default_guide[0]]
-        self.default_guide = self.default_guide[0]
-        self.added_guides = [g for g in guides
-                             if not g.default and not g.store]
-        self.visible_stores = [g for g in guides if g.store and g.visible]
-        self.hidden_stores = [g for g in guides if g.store and not g.visible]
+            default_guides = [default_guides[0]]
+        self.default_guide = default_guides[0]
+        self.added_guides = [g for g in guides if not g.default]
+        self.root_expanded = False
+
+class StoreList(FrontendMessage):
+    """Sends the frontend the initial list of stores"""
+    def __init__(self, stores):
+        self.hidden_stores = [s for s in stores if not s.visible]
+        self.visible_stores = [s for s in stores if s.visible]
+        self.root_expanded = False
 
 class StoresChanged(FrontendMessage):
     """Informs the frontend that the visible store list has changed.
@@ -1407,6 +1420,7 @@ class TabList(FrontendMessage):
         self.toplevels = []
         self.folder_children = {}
         self.expanded_folders = set()
+        self.root_expanded = None
 
     def append(self, info):
         self.toplevels.append(info)

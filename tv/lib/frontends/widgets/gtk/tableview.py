@@ -809,6 +809,8 @@ class TableView(Widget, SelectionOwnerMixin):
             self._widget.expand_row(path, False)
         else:
             self._widget.collapse_row(path)
+        if not self._widget.row_expanded(path):
+            raise ValueError("cannot expand the given item")
 
     def is_row_expanded(self, iter):
         path = self._model.get_path(iter)

@@ -1204,7 +1204,7 @@ class InfoUpdater(signals.SignalEmitter):
     def handle_tabs_changed(self, message):
         if message.type == 'feed':
             signal_start = 'feeds'
-        elif message.type == 'guide':
+        elif message.type == 'site':
             signal_start = 'sites'
         elif message.type == 'playlist':
             signal_start = 'playlists'
@@ -1230,6 +1230,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         # Messages that we need to see before the UI is ready
         self._pre_startup_messages = set([
             'guide-list',
+            'store-list',
             'search-info',
             'display-states',
             'view-states',
@@ -1367,16 +1368,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.search_manager.set_search_info(message.engine, message.text)
         self._saw_pre_startup_message('search-info')
 
-    def tablist_for_message(self, message):
-        if message.type in app.tabs:
-            return app.tabs[message.type]
-        elif message.type in ('devices', 'sharing'):
-            return app.tabs['connect']
-        else:
-            raise ValueError("Unknown Type: %s" % message.type)
-
     def handle_tab_list(self, message):
-        tablist = self.tablist_for_message(message)
+        tablist = app.tabs[message.type]
         tablist.setup_list(message)
         if 'feed' in message.type:
             pre_startup_message = message.type + '-tab-list'
@@ -1385,10 +1378,15 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_guide_list(self, message):
         app.widgetapp.default_guide_info = message.default_guide
         self.initial_guides = message.added_guides
-        self.initial_stores = message.visible_stores
         self._saw_pre_startup_message('guide-list')
+        app.tabs['site'].setup_list(message)
+
+    def handle_store_list(self, message):
+        self.initial_stores = message.visible_stores
+        self._saw_pre_startup_message('store-list')
         app.store_manager.handle_guide_list(message.visible_stores)
         app.store_manager.handle_guide_list(message.hidden_stores)
+        app.tabs['store'].setup_list(message)
 
     def handle_stores_changed(self, message):
         app.store_manager.handle_stores_changed(message.added,
@@ -1415,7 +1413,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
                     self.update_default_guide(info)
                     message.changed.remove(info)
                     break
-        tablist = self.tablist_for_message(message)
+        tablist = app.tabs[message.type]
         if message.removed:
             tablist.remove(message.removed)
         for info in message.changed:

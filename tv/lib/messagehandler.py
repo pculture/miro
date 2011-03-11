@@ -56,7 +56,7 @@ from miro.widgetstate import DisplayState, ViewState, GlobalState
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
-from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
+from miro.folder import HideableTab, FolderBase, ChannelFolder, PlaylistFolder
 
 from miro.plat.utils import make_url_safe, filename_to_unicode
 
@@ -64,7 +64,8 @@ import shutil
 
 class ViewTracker(object):
     """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and
-    TrackItems."""
+    TrackItems.
+    """
     type = None
     info_factory = None
 
@@ -105,8 +106,11 @@ class ViewTracker(object):
         self._last_sent_info[obj.id] = info
         return info
 
-    def _make_added_list(self, added):
-        return [self._make_new_info(obj) for obj in added]
+    def _make_added_list(self, *addeds):
+        added_list = []
+        for added in addeds:
+            added_list.extend([self._make_new_info(obj) for obj in added])
+        return added_list
 
     def _make_changed_list(self, changed):
         retval = []
@@ -224,6 +228,12 @@ class TabTracker(ViewTracker):
 
     def send_initial_list(self):
         response = messages.TabList(self.type)
+        root_view = HideableTab.make_view('type=?', (self.type,))
+        try:
+            root = root_view.get_singleton()
+        except database.ObjectNotFoundError:
+            root = HideableTab(self.type)
+        response.root_expanded = root.get_expanded()
         current_folder_id = None
         for obj in self.get_tab_order().get_all_tabs():
             info = self._make_new_info(obj)
@@ -262,42 +272,56 @@ class PlaylistTracker(TabTracker):
     def get_tab_order(self):
         return tabs.TabOrder.playlist_order()
 
-class GuideTracker(ViewTracker):
+class SimpleHideableTracker(ViewTracker):
+    """Tracker for guides and stores - hideable tabs that aren't nestable."""
     info_factory = messages.GuideInfo
 
-    def get_object_views(self):
-        return [guide.ChannelGuide.site_view()]
+    def get_initial_views(self):
+        return self.get_object_views()
 
     def make_changed_message(self, added, changed, removed):
-        return messages.TabsChanged('site', added, changed, removed)
+        return messages.TabsChanged(self.type, added, changed, removed)
 
     def send_initial_list(self):
-        # sends the list for everything (guides, stores, hidden stores)
-        info_list = self._make_added_list(guide.ChannelGuide.make_view())
-        messages.GuideList(info_list).send_to_frontend()
+        info_list = self._make_added_list(*self.get_initial_views())
+        message = self.list_message(info_list)
+        root_view = HideableTab.make_view('type=?', (self.type,))
+        try:
+            root = root_view.get_singleton()
+        except database.ObjectNotFoundError:
+            root = HideableTab(self.type)
+        message.root_expanded = root.get_expanded()
+        message.send_to_frontend()
         self.reset_changes()
 
-class StoreTracker(GuideTracker):
+class GuideTracker(SimpleHideableTracker):
+    type = 'site'
+    list_message = messages.GuideList
 
     def get_object_views(self):
-        return [guide.ChannelGuide.store_view()]
+        return (guide.ChannelGuide.site_view(),)
 
-    def make_changed_message(self, added, changed, removed):
-        return messages.TabsChanged('store', added, changed, removed)
+    def get_initial_views(self):
+        return (guide.ChannelGuide.site_view(), guide.ChannelGuide.guide_view())
+
+class StoreTracker(SimpleHideableTracker):
+    type = 'store'
+    list_message = messages.StoreList
+
+    def get_object_views(self):
+        return (guide.ChannelGuide.visible_store_view(),)
+
+    def get_initial_views(self):
+        return (guide.ChannelGuide.store_view(),)
 
     def send_messages(self):
         message = messages.StoresChanged(
             [self.info_factory(g) for g in self._get_added_objects()],
             [self.info_factory(g) for g in self.changed.values()],
-            list(self.removed))
+            frozenset(self.removed))
         message.send_to_frontend()
 
         ViewTracker.send_messages(self)
-
-    def send_initial_list(self):
-        # GuideTracker sends the message, but we still need to set up
-        # _last_sent_info
-        self._make_added_list(guide.ChannelGuide.store_view())
 
 class WatchedFolderTracker(ViewTracker):
     info_factory = messages.WatchedFolderInfo
@@ -892,12 +916,22 @@ class BackendMessageHandler(messages.MessageHandler):
             item.Item.newly_downloaded_view()).fetch_all()
         messages.PlayMovie(item_infos).send_to_frontend()
 
+    def handle_tab_expanded_change(self, message):
+        tab_view = HideableTab.make_view('type=?', (message.type,))
+        try:
+            tab = tab_view.get_singleton()
+        except database.ObjectNotFoundError:
+            tab = HideableTab(message.type)
+        else:
+            tab.set_expanded(message.expanded)
+
     def handle_folder_expanded_change(self, message):
         klass = self.folder_class_for_type(message.type)
         try:
             folder = klass.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("feed folder not found")
+            logging.warn("feed folder not found: %s",
+                    repr((message.type, message.id)))
         else:
             folder.set_expanded(message.expanded)
 

@@ -381,6 +381,7 @@ class HideableTabList(TabList):
         self.info = TabInfo(self.name, self.icon_name)
         TabList.add(self, self.info)
         self.view.model_changed()
+        self.expand_root = False
 
     def _make_view(self):
         view = TabListView(self.render_class())
@@ -399,6 +400,16 @@ class HideableTabList(TabList):
 
     def setup_list(self, message):
         """Called during startup to set up a newly-created list."""
+        logging.debug('************* setup_list: %s', self.type)
+        root_expanded = message.root_expanded
+        try:
+            self.set_folder_expanded(self.info.id, root_expanded)
+        except ValueError:
+            # there are no items yet; expand it when we get one
+            self.expand_root = root_expanded
+        if not hasattr(message, 'toplevels'):
+            # setting up a non-nestable list
+            return
         with self.adding():
             for info in message.toplevels:
                 self.add(info)
@@ -416,9 +427,13 @@ class HideableTabList(TabList):
 
     def on_row_expanded_change(self, view, iter_, path, expanded):
         info = self.view.model[iter_][0]
-        id_ = info.id
-        if info is not self.info:
-            message = messages.FolderExpandedChange(self.type, id_, expanded)
+        if info == self.info:
+            message = messages.TabExpandedChange(self.type, expanded)
+            message.send_to_backend()
+        else:
+            # non-nestable tabs don't have tablist states, so we put their root
+            # nodes all in one table
+            message = messages.FolderExpandedChange(self.type, info.id, expanded)
             message.send_to_backend()
         if not expanded:
             self.emit('row-collapsed', iter_, path)
@@ -435,8 +450,9 @@ class HideableTabList(TabList):
             else:
                 iter_ = self.view.append_tab(info)
             self.iter_map[info.id] = iter_
-        if len(self.iter_map) == 2: # just added a single child
+        if self.expand_root:
             self.set_folder_expanded(self.info.id, True)
+            self.expand_root = False
 
     def set_folder_expanded(self, id_, expanded):
         self.view.set_row_expanded(self.iter_map[id_], expanded)

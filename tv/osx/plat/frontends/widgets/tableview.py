@@ -1084,6 +1084,8 @@ class TableView(SelectionOwnerMixin, Widget):
             self.tableview.expandItem_(item)
         else:
             self.tableview.collapseItem_(item)
+        if self.tableview.isItemExpanded_(item) != expanded:
+            raise ValueError("cannot expand the given item")
         self.invalidate_size_request()
 
     def is_row_expanded(self, iter):
@@ -1245,6 +1247,9 @@ class TableView(SelectionOwnerMixin, Widget):
                     rows_to_change = [self.row_of_iter(iter) for iter in
                         self.iters_to_update]
                 except LookupError:
+                    # this shouldn't be happening; it became apparent when I
+                    # changed the model's lookup failure mode from silently
+                    # ignore to LookupError. it's probably not a big deal though.
                     logging.debug('lookup error in iters_to_update')
                 index_set = NSMutableIndexSet.alloc().init()
                 for iter in self.iters_to_update:

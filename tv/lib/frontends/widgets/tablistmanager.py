@@ -30,6 +30,7 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
+from miro import errors
 
 from miro.frontends.widgets.tablist import all_tab_lists
 
@@ -207,6 +208,8 @@ class TabListManager(dict):
             if (sel == view.model[iter_][0]):
                 break
         logging.warn('_sftl failed')
+        # FIXME: this shouldn't happen. when it doesn't, change warning to:
+        # raise errors.WidgetActionError("cannot select the given list / iter")
 
     def _restore(self):
         """Restore a saved selection."""
@@ -216,18 +219,6 @@ class TabListManager(dict):
         list_type = sel.pop(0)
         view = self[list_type].view
         # select the paths to find out what the strings translate to
-        view.set_selection_as_strings(sel)
-        view._save_selection()
-        if not hasattr(self[list_type], 'info'):
-            logging.debug('not hideable')
-            # not hideable
-            return list_type
-        logging.debug('hideable')
-        # OS X won't expand the root automatically
-        root = self[list_type].iter_map[self[list_type].info.id]
-        view.set_row_expanded(root, True)
-        # now that the root is definitely open, we can really set the sel
-        logging.debug('restoring.1: %s/%s', repr(list_type), repr(sel))
         view.set_selection_as_strings(sel)
         view._save_selection()
         return list_type
@@ -326,5 +317,6 @@ class TabListManager(dict):
         """The current selection is invalid; this happens after deleting. Select
         the root node.
         """
+        logging.debug("deleted selected node?")
         root = tab_list.iter_map[tab_list.info.id]
         self._select_from_tab_list(tab_list.type, root)

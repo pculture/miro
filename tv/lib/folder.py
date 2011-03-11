@@ -81,6 +81,26 @@ class FolderBase(DDBObject):
         """
         raise NotImplementedError()
 
+class HideableTab(DDBObject):
+    """Nestable tabs keep store their root nodes as ordinary folders;
+    Hideable non-Nestable tabs don't have folders to keep track of, so their
+    root node expansion state is stored here.
+    """
+    def setup_new(self, typ):
+        self.type = unicode(typ)
+        self.expanded = True
+
+    def get_expanded(self):
+        """Returns whether or not this folder is expanded in the ui."""
+        self.confirm_db_thread()
+        return self.expanded
+
+    def set_expanded(self, new_expanded):
+        """Changes the expanded status for this tab in the ui."""
+        self.confirm_db_thread()
+        self.expanded = new_expanded
+        self.signal_change()
+
 class ChannelFolder(FolderBase):
     def setup_new(self, title):
         self.section = u'' # not used anymore

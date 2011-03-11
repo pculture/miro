@@ -357,7 +357,8 @@ from miro.feed import (Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
 from miro.feed import (SearchFeedImpl, DirectoryWatchFeedImpl,
                        DirectoryFeedImpl, SearchDownloadsFeedImpl)
 from miro.feed import ManualFeedImpl
-from miro.folder import ChannelFolder, PlaylistFolder, PlaylistFolderItemMap
+from miro.folder import (HideableTab, ChannelFolder, PlaylistFolder,
+                         PlaylistFolderItemMap)
 from miro.guide import ChannelGuide
 from miro.item import Item, FileItem
 from miro.iconcache import IconCache
@@ -606,6 +607,18 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     def handle_malformed_status(row):
         return {}
 
+class HideableTabSchema(DDBObjectSchema):
+    klass = HideableTab
+    table_name = 'hideable_tab'
+    fields = DDBObjectSchema.fields + [
+        ('type', SchemaString()),
+        ('expanded', SchemaBool()),
+    ]
+
+    indexes = (
+        ('hideable_tab_type', ('type',)),
+    )
+
 class ChannelFolderSchema(DDBObjectSchema):
     klass = ChannelFolder
     table_name = 'channel_folder'
@@ -760,7 +773,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 150
+VERSION = 151
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -768,7 +781,7 @@ object_schemas = [
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     ChannelGuideSchema, ManualFeedImplSchema,
-    PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
+    PlaylistSchema, HideableTabSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
     DBLogEntrySchema, ViewStateSchema,

@@ -3178,3 +3178,9 @@ def upgrade149(cursor):
 def upgrade150(cursor):
     """Add Kind field (for Video categories)"""
     cursor.execute("ALTER TABLE item ADD COLUMN kind text")
+
+def upgrade151(cursor):
+    """Add table for root node expansion state of hideable tabs."""
+    cursor.execute("CREATE TABLE hideable_tab (id integer PRIMARY KEY, "
+            "expanded integer, type text)")
+    cursor.execute("CREATE INDEX hideable_tab_type ON hideable_tab (type)")

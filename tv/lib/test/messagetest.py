@@ -142,15 +142,18 @@ class GuideTrackTest(TrackerTest):
         self.assertEquals(guideInfo.default, guide.is_default())
 
     def test_initial_list(self):
-        self.assertEquals(len(self.test_handler.messages), 1)
-        message = self.test_handler.messages[0]
-        self.assert_(isinstance(message, messages.GuideList))
-        self.check_info(message.default_guide, self.guide)
-        self.check_info_list(message.added_guides, [self.guide1])
-        self.check_info_list(message.visible_stores, [self.store1])
-        self.check_info_list(message.hidden_stores, [self.store2])
+        self.assertEquals(len(self.test_handler.messages), 2)
+        guides, stores = self.test_handler.messages
 
-    def check_changed_message_type(self, message, type_='guide'):
+        self.assert_(isinstance(guides, messages.GuideList))
+        self.check_info(guides.default_guide, self.guide)
+        self.check_info_list(guides.added_guides, [self.guide1])
+
+        self.assert_(isinstance(stores, messages.StoreList))
+        self.check_info_list(stores.visible_stores, [self.store1])
+        self.check_info_list(stores.hidden_stores, [self.store2])
+
+    def check_changed_message_type(self, message, type_='site'):
         self.assertEquals(type(message), messages.TabsChanged)
         self.assertEquals(message.type, type_)
 
@@ -182,47 +185,49 @@ class GuideTrackTest(TrackerTest):
     def test_added(self):
         g = ChannelGuide(u'http://example.com/3')
         self.runUrgentCalls()
-        self.check_message_count(2)
-        self.check_changed_message(1, added=[g])
+        self.check_message_count(3) # GuideList, StoreList
+        self.check_changed_message(2, added=[g])
 
     @uses_httpclient
     def test_removed(self):
         self.guide1.remove()
         self.runUrgentCalls()
-        self.check_message_count(2)
-        self.check_changed_message(1, removed=[self.guide1])
+        self.check_message_count(3) # GuideList, StoreList, TabsChanged
+        self.check_changed_message(2, removed=[self.guide1])
 
     def test_change(self):
         self.guide1.set_title(u"Booya")
         self.runUrgentCalls()
-        self.check_message_count(2)
-        self.check_changed_message(1, changed=[self.guide1])
+        self.check_message_count(3) # GuideList, StoreList, TabsChanged
+        self.check_changed_message(2, changed=[self.guide1])
 
     def test_change_invisible(self):
         self.store1.store = ChannelGuide.STORE_INVISIBLE
         self.store1.signal_change()
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_stores_changed_message(1, removed=[self.store1])
-        self.check_changed_message(2, removed=[self.store1], type_='store')
+        # GuideList, StoreList, StoresChanged, TabsChanged
+        self.check_message_count(4)
+        self.check_stores_changed_message(2, removed=[self.store1])
+        self.check_changed_message(3, removed=[self.store1], type_='store')
 
     def test_change_visible(self):
         self.store2.store = self.guide1.STORE_VISIBLE
         self.store2.signal_change()
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_stores_changed_message(1, added=[self.store2])
-        self.check_changed_message(2, added=[self.store2], type_='store')
+        # GuideList, StoreList, StoresChanged, TabsChanged
+        self.check_message_count(4)
+        self.check_stores_changed_message(2, added=[self.store2])
+        self.check_changed_message(3, added=[self.store2], type_='store')
 
     @uses_httpclient
     def test_stop(self):
-        self.check_message_count(1)
+        self.check_message_count(2) # GuideList, StoreList
         messages.StopTrackingGuides().send_to_backend()
         self.runUrgentCalls()
         self.guide.set_title(u"Booya")
         g = ChannelGuide(u'http://example.com/3')
         self.guide1.remove()
-        self.check_message_count(1)
+        self.check_message_count(2)
 
 class PlaylistTrackTest(TrackerTest):
     def setUp(self):

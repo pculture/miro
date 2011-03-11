@@ -87,12 +87,24 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def site_view(cls):
         default_url = app.config.get(prefs.CHANNEL_GUIDE_URL)
         return cls.make_view('url != ? AND store = ?',
-                             (default_url, cls.STORE_NOT_STORE))
+                            (default_url, cls.STORE_NOT_STORE,))
 
+    @classmethod
+    def guide_view(cls):
+        default_url = app.config.get(prefs.CHANNEL_GUIDE_URL)
+        return cls.make_view('url = ?', (default_url,))
 
     @classmethod
     def store_view(cls):
+        return cls.make_view('store != ?', (cls.STORE_NOT_STORE,))
+
+    @classmethod
+    def visible_store_view(cls):
         return cls.make_view('store = ?', (cls.STORE_VISIBLE,))
+
+    @classmethod
+    def invisible_store_view(cls):
+        return cls.make_view('store = ?', (cls.STORE_INVISIBLE,))
 
     @classmethod
     def visible_view(cls):
