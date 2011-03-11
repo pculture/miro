@@ -580,6 +580,7 @@ class DeviceDropHandler(object):
         video_ids = [int(id) for id in data.split('-')]
         device = model[parent][0]
         messages.DeviceSyncMedia(device, video_ids).send_to_backend()
+        return True
 
 class PlaylistListDragHandler(TabListDragHandler):
     item_type = u'playlist'
