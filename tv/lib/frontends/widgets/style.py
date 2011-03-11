@@ -347,8 +347,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'background-right', 'dl-speed', 'dl-stats-left-cap',
                 'dl-stats-middle', 'dl-stats-right-cap',
                 'dl-stats-selected-left-cap', 'dl-stats-selected-middle',
-                'dl-stats-selected-right-cap', 'download-pause',
-                'download-pause-pressed', 'download-resume',
+                'dl-stats-selected-right-cap', 'download-icon',
+                'download-pause', 'download-pause-pressed', 'download-resume',
                 'download-resume-pressed', 'download-stop',
                 'download-stop-pressed', 'drm-middle', 'drm-cap',
                 'expiring-cap', 'expiring-middle', 'failed-middle',
@@ -383,9 +383,6 @@ class ItemRenderer(widgetset.InfoListRenderer):
             surface = imagepool.get_surface(resources.path(
                 os.path.join('images', filename)))
             self.images[image_name] = surface
-        # download-arrow is a shared icon.  It doesn't have the same prefix.
-        self.images['download-arrow'] = imagepool.get_surface(
-                resources.path('images/download-arrow.png'))
 
     def get_size(self, style, layout_manager):
         return self.MIN_WIDTH, self.HEIGHT
@@ -1109,7 +1106,7 @@ class _EmblemDrawer(object):
             button = layout_manager.button(text,
                     pressed=(self.hotspot=='download'),
                     style='webby')
-            button.set_icon(self.images['download-arrow'])
+            button.set_icon(self.images['download-icon'])
             hotspot = 'download'
         return button, hotspot
 
