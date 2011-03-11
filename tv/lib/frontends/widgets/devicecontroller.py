@@ -882,7 +882,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         else:
             view_type = WidgetStateStore.get_standard_view_type()
 
-        self.widget.switch_to_view(view_type)
+        self.set_view(None, view_type)
 
         self.titlebar.connect('list-view-clicked', self.save_view, 'list')
         self.titlebar.connect('normal-view-clicked',
