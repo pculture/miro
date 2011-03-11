@@ -400,11 +400,6 @@ class TranscodeObject(object):
                 raise
 
     def get_chunk(self):
-        # XXX: be sure to add a check to see whether there is an active
-        # transcode job or not (also make sure that transcode job isn't
-        # inactive because it's already finished
-        # XXX How do we save a reference to this guy?  discard_chunk?
-        # ANS: wrap around file wrapper would be good thing to do
         # Consume an item ...
         self.chunk_sem.acquire()
         with self.chunk_lock:
@@ -430,10 +425,9 @@ class TranscodeObject(object):
         # a new file or an EOF?  We check whether segmenter has exited.
         # If it has break immediately.  This handles both end of transcode
         # and abortive shutdown.  If we are somewhere in between, we'd 
-        # probably be blocked on the read() in the # the handler and that's
+        # probably be blocked on the read() in the the handler and that's
         # ok because that should return a zero read when the segmenter goes 
-        # away too and that reduces to the select().   XXX - not foolproof
-        # so have a watcher around to cull things when it's finished
+        # away too and that reduces to the select().
         #
         # In case we may be throttled, prod it along by unthrottling.
         # In case we race with get_chunk() (which may run in a different
