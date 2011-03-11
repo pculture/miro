@@ -163,10 +163,14 @@ class ItemListTracker(signals.SignalEmitter):
     def on_item_list(self, message):
         self.add_initial_items(message.items)
 
+    def _send_items_will_change(self, added, changed, removed):
+        self.emit('items-will-change', added, changed, removed)
+        self.item_list.get_sort().items_will_change(added, changed, removed)
+
     def add_initial_items(self, items):
         self.saw_initial_list = True
         items = self.search_filter.filter_initial_list(items)
-        self.emit("items-will-change", items, [], [])
+        self._send_items_will_change(items, [], [])
         # call remove all to handle the race described in #16089.  We may get
         # multiple ItemList messages, in which case we want the last one to be
         # the one that sticks.
@@ -182,7 +186,7 @@ class ItemListTracker(signals.SignalEmitter):
             return
         added, changed, removed = self.search_filter.filter_changes(
                 message.added, message.changed, message.removed)
-        self.emit("items-will-change", added, changed, removed)
+        self._send_items_will_change(added, changed, removed)
         self.item_list.add_items(added)
         self.item_list.update_items(changed)
         self.item_list.remove_items(removed)

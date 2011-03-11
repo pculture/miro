@@ -140,12 +140,17 @@ class PlaylistSort(itemlist.ItemSort):
     def sort_key(self, item):
         return self.positions[item.id]
 
+    def items_will_change(self, added, changed, removed):
+        self.add_items(added)
+        self.forget_items(removed)
+
 class PlaylistItemController(itemlistcontroller.SimpleItemListController):
     def __init__(self, playlist_info):
         self.type = u'playlist'
         self.id = playlist_info.id
         self.is_folder = playlist_info.is_folder
         self.playlist_sorter = PlaylistSort()
+        self.populated_sorter = False
         itemlistcontroller.SimpleItemListController.__init__(self)
 
     def build_column_renderers(self):
@@ -158,8 +163,19 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
         itemlistcontroller.SimpleItemListController._init_widget(self)
         self.make_drop_handler()
 
+    def ensure_playlist_sorter_populated(self):
+        """Enusre that self.playlist_sorter is a valid object.
+
+        We create playlist_sorter lazily so that we can pass it the list of
+        initial items.
+        """
+        if not self.populated_sorter:
+            self.playlist_sorter.add_items(self.item_list.get_items())
+            self.populated_sorter = True
+
     def make_sorter(self, column, ascending):
         if column == 'playlist':
+            self.ensure_playlist_sorter_populated()
             self.playlist_sorter.set_ascending(ascending)
             # slight bit of a hack here.  We enable/disable reordering based
             # on the sort we return here.  The assumption is that we are going
@@ -176,10 +192,6 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
 
     def build_renderer(self):
         return style.PlaylistItemRenderer(self.playlist_sorter)
-
-    def on_items_will_change(self, added, changed, removed):
-        self.playlist_sorter.add_items(added)
-        self.playlist_sorter.forget_items(removed)
 
     def make_drop_handler(self):
         self.drop_handler = DropHandler(self.id, self.item_list,

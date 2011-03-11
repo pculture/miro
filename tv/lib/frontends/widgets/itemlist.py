@@ -64,6 +64,13 @@ class ItemSort(object):
         """
         raise NotImplementedError()
 
+    def items_will_change(self, added, changed, removed):
+        """Called when the item list will change.
+
+        Subclasses can override this if they need to update things based on
+        changes to the item list.
+        """
+
 class DateSort(ItemSort):
     KEY = 'date'
     def sort_key(self, info):
