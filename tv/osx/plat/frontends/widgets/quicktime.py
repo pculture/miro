@@ -205,6 +205,8 @@ class Player(player.Player):
         attributes['QTMovieURLAttribute'] = url
         attributes['QTMovieOpenAsyncOKAttribute'] = no
         qtmovie, error = QTMovie.movieWithAttributes_error_(attributes, None)
+        if error is not None:
+            logging.debug(unicode(error).encode('utf-8'))
         if qtmovie is None or error is not None:
             return None
         if not self.can_open_file(qtmovie):

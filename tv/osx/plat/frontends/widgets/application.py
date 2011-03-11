@@ -151,7 +151,7 @@ class OSXApplication(Application, signals.SignalEmitter):
                      NSHTTPCookieDomain: '.amazon.com',
                      NSHTTPCookiePath: '/',
                      NSHTTPCookieMaximumAge: 3600 * 365 * 10}))
-            quicktime.register_components()
+        quicktime.register_components()
         quicktime.warm_up()
         self.emit("event-processed")
 
