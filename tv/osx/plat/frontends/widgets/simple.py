@@ -51,6 +51,9 @@ class Image(object):
         self.nsimage = nsimage
         self.width = self.nsimage.size().width
         self.height = self.nsimage.size().height
+        if self.width * self.height == 0:
+            raise ValueError('Image has invalid size: (%d, %d)' % (
+                    self.width, self.height))
         self.nsimage.setFlipped_(YES)
 
     def resize(self, width, height):
@@ -270,7 +273,10 @@ class Label(Widget):
         self.invalidate_size_request()
 
     def get_text(self):
-        self.view.stringValue()
+        val = self.view.stringValue()
+        if not val:
+            val = u''
+        return val
 
     def set_selectable(self, val):
         self.view.setSelectable_(val)
