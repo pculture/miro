@@ -136,6 +136,8 @@ class WidgetStateStore(object):
         [u'date-added', u'drm', u'rating'])
     AVAILABLE_COLUMNS['search'].extend([u'rating'])
     AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type', u'show', u'kind'])
+    AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music']
+    AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos']
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
     def __init__(self):
