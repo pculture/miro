@@ -670,9 +670,9 @@ class Scroller(Bin):
                 height = self.child.get_size_request()[1]
             # Add a little room for the scrollbars
             if self.view.hasHorizontalScroller():
-                height += 10
+                height += NSScroller.scrollerWidth()
             if self.view.hasVerticalScroller():
-                width += 10
+                width += NSScroller.scrollerWidth()
             return width, height
         else:
             return 0, 0
