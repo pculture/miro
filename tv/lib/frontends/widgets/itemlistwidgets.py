@@ -1458,7 +1458,7 @@ class ItemDetailsWidget(widgetset.VBox):
     selected item.
     """
     PADDING_MIDDLE = 25
-    PADDING_RIGHT = 22
+    PADDING_RIGHT = 30
     PADDING_ABOVE_TITLE = 25
     PADDING_ABOVE_DESCRIPTION = 8
     PADDING_ABOVE_EXTRA_INFO = 25
@@ -1481,8 +1481,7 @@ class ItemDetailsWidget(widgetset.VBox):
         self.image_widget = widgetset.ImageDisplay()
         content_hbox.pack_start(widgetutil.align_top(self.image_widget))
         # pack right side
-        content_hbox.pack_start(widgetutil.pad(self.build_right(),
-            right=self.PADDING_RIGHT), expand=True)
+        content_hbox.pack_start(widgetutil.pad(self.build_right()), expand=True)
         # expander_button is used to expand/collapse our content
         self.expander_button = ItemDetailsExpanderButton()
         self.pack_start(self.expander_button)
@@ -1506,8 +1505,8 @@ class ItemDetailsWidget(widgetset.VBox):
         self.torrent_info_right = self.build_torrent_values_label()
         self.description_label = self.build_description_label()
         self.extra_info_label = self.build_extra_info()
-        vbox.pack_start(widgetutil.pad(self.title_label,
-            top=self.PADDING_ABOVE_TITLE))
+        vbox.pack_start(widgetutil.align_left(self.title_label,
+            top_pad=self.PADDING_ABOVE_TITLE))
         license_button = widgetset.Button(_('View License'))
         license_button.connect('clicked', self.on_license_clicked)
         self.license_button_holder = widgetutil.HideableWidget(
@@ -1518,9 +1517,9 @@ class ItemDetailsWidget(widgetset.VBox):
         torrent_info_hbox.pack_start(self.torrent_info_right)
         vbox.pack_start(widgetutil.align_left(torrent_info_hbox,
             top_pad=self.PADDING_ABOVE_DESCRIPTION))
-        vbox.pack_start(self.description_label)
-        vbox.pack_start(widgetutil.pad(self.extra_info_label,
-            top=self.PADDING_ABOVE_EXTRA_INFO))
+        vbox.pack_start(widgetutil.align_left(self.description_label))
+        vbox.pack_start(widgetutil.align_left(self.extra_info_label,
+            top_pad=self.PADDING_ABOVE_EXTRA_INFO))
         return vbox
 
     def build_label(self):
