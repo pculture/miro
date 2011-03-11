@@ -29,7 +29,7 @@
 
 """Displays the list of tabs on the left-hand side of the app."""
 
-from __future__ import with_statement # neccessary for python2.5
+from __future__ import with_statement # python2.5
 
 from hashlib import md5
 try:
@@ -43,6 +43,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import messages
+from miro import errors
 from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.frontends.widgets import playback
@@ -191,9 +192,25 @@ class TabList(signals.SignalEmitter):
         self.iter_map = {}
         self._removing = 0
         self._adding = 0
+        self.delayed_selection_change = False
+
+    @property
+    def changing(self):
+        return self._removing or self._adding
+
+    def _make_view(self):
+        """Implementations should return a TabListView."""
+        raise NotImplementedError
+
+    def _after_change(self, now):
+        if now or not self.changing:
+            self.view.model_changed()
+        if not self.changing and self.delayed_selection_change:
+            self.delayed_selection_change = False
+            app.tabs.on_selection_changed(self.view, self)
 
     @contextmanager
-    def removing(self):
+    def removing(self, now=False):
         """For removing one or more tabs - delays updates until all changes
         finish.
         """
@@ -202,23 +219,22 @@ class TabList(signals.SignalEmitter):
             yield
         finally:
             self._removing -= 1
-        if not self._adding and not self._removing:
-            self.view.model_changed()
+        self._after_change(now)
 
     @contextmanager
-    def adding(self):
-        """For adding one or more tabs; signals tab-added when all (potentially
-        nested) tab-add operations are finished.
+    def adding(self, now=False):
+        """For adding one or more tabs; signals tab-added and updates the model
+        when all (potentially nested) tab-add operations are finished. Set
+        now=True to update the model immediately.
         """
         self._adding += 1
         try:
             yield
         finally:
             self._adding -= 1
+        self._after_change(now)
         if not self._adding:
             self.emit('tab-added')
-        if not self._adding and not self._removing:
-            self.view.model_changed()
 
     @contextmanager
     def preserving_expanded_rows(self):
@@ -231,7 +247,7 @@ class TabList(signals.SignalEmitter):
             yield
         finally:
             for id_ in expanded_rows:
-                self.view.set_row_expanded(self.iter_map[id_], True)
+                self.expand(id_)
 
     def build_tabs(self):
         """Build any standard tabs; for non-static tabs, this is a pass."""
@@ -331,9 +347,15 @@ class LibraryTabList(TabBlinkerMixin, TabList):
     def on_selection_changed(self, view):
         self.on_deselected(view)
         if not app.config.get(prefs.MUSIC_TAB_CLICKED):
-            for iter_ in view.get_selection():
-                if view.model[iter_][0].id == 'music':
-                    app.widgetapp.music_tab_clicked()
+            try:
+                iters = view.get_selection()
+            except errors.ActionUnavailableError, error:
+                logging.debug("not checking first music tab click: %s",
+                        error.reason)
+            else:
+                for iter_ in iters:
+                    if view.model[iter_][0].id == 'music':
+                        app.widgetapp.music_tab_clicked()
 
     def update_download_count(self, count, non_downloading_count):
         self.update_count('downloading', 'downloading', count,
@@ -381,7 +403,7 @@ class HideableTabList(TabList):
         self.info = TabInfo(self.name, self.icon_name)
         TabList.add(self, self.info)
         self.view.model_changed()
-        self.expand_root = False
+        self.expand_after_add_child = set()
 
     def _make_view(self):
         view = TabListView(self.render_class())
@@ -400,24 +422,20 @@ class HideableTabList(TabList):
 
     def setup_list(self, message):
         """Called during startup to set up a newly-created list."""
-        logging.debug('************* setup_list: %s', self.type)
-        root_expanded = message.root_expanded
-        try:
-            self.set_folder_expanded(self.info.id, root_expanded)
-        except ValueError:
-            # there are no items yet; expand it when we get one
-            self.expand_root = root_expanded
+        if message.root_expanded:
+            self.expand(self.info.id)
         if not hasattr(message, 'toplevels'):
             # setting up a non-nestable list
             return
-        with self.adding():
-            for info in message.toplevels:
+        for info in message.toplevels:
+            with self.adding():
                 self.add(info)
-                if info.is_folder:
+            if info.is_folder:
+                with self.adding():
                     for child_info in message.folder_children[info.id]:
                         self.add(child_info, info.id)
-                    expanded = (info.id in message.expanded_folders)
-                    self.set_folder_expanded(info.id, expanded)
+                if info.id in message.expanded_folders:
+                    self.expand(info.id)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
@@ -440,7 +458,7 @@ class HideableTabList(TabList):
 
     def add(self, info, parent_id=None):
         """Add a TabInfo to the list, with an optional parent (by id)."""
-        with self.adding():
+        with self.adding(now=True):
             if parent_id is None:
                 parent_id = self.info.id
             self.init_info(info)
@@ -450,14 +468,16 @@ class HideableTabList(TabList):
             else:
                 iter_ = self.view.append_tab(info)
             self.iter_map[info.id] = iter_
-        if self.expand_root:
-            self.set_folder_expanded(self.info.id, True)
-            self.expand_root = False
+        if parent_id in self.expand_after_add_child:
+            self.expand(parent_id)
+            self.expand_after_add_child.remove(parent_id)
 
-    def set_folder_expanded(self, id_, expanded):
-        logging.debug('expanding %s', id_)
-        logging.debug('iter: ', self.iter_map[id_])
-        self.view.set_row_expanded(self.iter_map[id_], expanded)
+    def expand(self, id_):
+        if self.get_child_count(id_):
+            iter_ = self.iter_map[id_]
+            self.view.set_row_expanded(iter_, True)
+        else:
+            self.expand_after_add_child.add(id_)
 
     def update(self, info):
         self.init_info(info)
@@ -496,7 +516,8 @@ class HideableTabList(TabList):
 
     def get_child_count(self, id_):
         count = 0
-        child_iter = self.view.model.child_iter(self.iter_map[id_])
+        iter_ = self.iter_map[id_]
+        child_iter = self.view.model.child_iter(iter_)
         while child_iter is not None:
             count += 1
             child_iter = self.view.model.next_iter(child_iter)
@@ -507,11 +528,13 @@ class HideableTabList(TabList):
         pass
 
     def on_selection_changed(self, view):
-        for iter_ in view.get_selection():
-            if view.model[iter_][0] is self.info:
-                if not view.is_row_expanded(iter_):
-                    self.set_folder_expanded(self.info.id, True)
-                return
+        """When an item is selected, also expand it."""
+        try:
+            for iter_ in view.get_selection():
+                id_ = self.view.model[iter_][0].id
+                self.expand(id_)
+        except errors.WidgetActionError, error:
+            logging.debug("not expanding: %s", error.reason)
 
 class DeviceTabListHandler(object):
     def __init__(self, tablist):
@@ -546,7 +569,7 @@ class DeviceTabListHandler(object):
                 HideableTabList.add(self.tablist,
                                     fake,
                                     info.id)
-            self.tablist.set_folder_expanded(info.id, True)
+            self.tablist.expand(info.id)
 
     def add(self, info):
         self.tablist.add(info)
@@ -757,7 +780,7 @@ class SiteList(HideableTabList):
 
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter_][0] for iter_ in
-                table_view.get_selection()]
+                table_view.get_selection(strict=False)]
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
                 return []
@@ -785,7 +808,7 @@ class StoreList(SiteList):
 
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter_][0] for iter_ in
-                table_view.get_selection()]
+                table_view.get_selection(strict=False)]
         if len(selected_rows) == 1 and selected_rows[0].type != u'tab':
             return [
                 (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
@@ -797,7 +820,7 @@ class NestedTabListMixin(object):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter_][0] for iter_ in
-                table_view.get_selection()]
+                table_view.get_selection(strict=False)]
         if len(selected_rows) == 1:
             if selected_rows[0].type == u'tab':
                 return []

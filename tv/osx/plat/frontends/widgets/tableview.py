@@ -921,18 +921,17 @@ class SelectionOwnerMixin(object):
         unset strict to get whatever is selected (though it should be about to
         be overwritten).
         """
-        # FIXME: when everything tablist-related is happening in the right
-        # order, ditch non-strict mode
+        # FIXME: non-strict mode is transitional. when everything is fixed not
+        # to need it, remove it
         if strict and self._restoring_selection:
-            raise errors.WidgetActionError("tried to get selection before "
-                    "selection successfully restored")
+            raise errors.WidgetActionError("current selection is temporary")
         selection = self.tableview.selectedRowIndexes()
         selrows = tablemodel.list_from_nsindexset(selection)
         return [self.model.iter_for_row(self.tableview, row) for row in selrows]
 
     def get_selected(self):
         if self.tableview.allowsMultipleSelection():
-            raise errors.ActionUnavailableError("Table allows multiple selection")
+            raise errors.ActionUnavailableError("table allows multiple selection")
         row = self.tableview.selectedRow()
         if row == -1:
             return None

@@ -32,6 +32,8 @@
 
 class ActionUnavailableError(ValueError):
     """The action attempted can not be done in the current state."""
+    def __init__(self, reason):
+        self.reason = reason
 
 class WidgetActionError(ActionUnavailableError):
     """The widget is not in the right state to perform the requested action.

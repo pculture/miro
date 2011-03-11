@@ -126,7 +126,8 @@ class MiroTreeView(gtk.TreeView):
 
     def _update_scrollbar_position(self, bar):
         """Move the specified scrollbar to its saved position, if it has one.
-        Succeeds or raises WidgetActionError."""
+        Succeeds or raises WidgetActionError.
+        """
         if self.scroll_positions[bar] is None:
             # nothing to restore it to yet
             return
@@ -471,11 +472,10 @@ class SelectionOwnerMixin(object):
         unset strict to get whatever is selected (though it should be about to
         be overwritten).
         """
-        # FIXME: when everything tablist-related is happening in the right
-        # order, ditch non-strict mode
+        # FIXME: non-strict mode is transitional. when everything is fixed not
+        # to need it, remove it
         if strict and self._restoring_selection:
-            raise errors.WidgetActionError("tried to get selection before "
-                    "selection successfully restored")
+            raise errors.WidgetActionError("current selection is temporary")
         iters = []
         def collect(treemodel, path, iter):
             iters.append(iter)
@@ -831,7 +831,8 @@ class TableView(Widget, SelectionOwnerMixin):
         else:
             self._widget.collapse_row(path)
         if not self._widget.row_expanded(path):
-            raise errors.WidgetActionError("cannot expand the given item")
+            raise errors.WidgetActionError("cannot expand the given item - it "
+                    "probably has no children.")
 
     def is_row_expanded(self, iter):
         path = self._model.get_path(iter)

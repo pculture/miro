@@ -104,7 +104,7 @@ class TabListManager(dict):
             return None, []
         selected_tabs = set()
         view = self._selected_tablist.view
-        for path in view.get_selection():
+        for path in view.get_selection(strict=False):
             row = view.model[path]
             # sort children before parents
             selected_tabs.add((1, row[0]))
@@ -165,8 +165,8 @@ class TabListManager(dict):
         self._selected_tablist = self[list_type]
         try:
             iters = view.get_selection()
-        except errors.WidgetActionError:
-            # not restored yet
+        except errors.ActionUnavailableError, error:
+            logging.debug("tab not selected: %s", error.reason)
             iters = []
         tabs = [view.model[i][0] for i in iters]
         # prevent selecting base and non-base at the same time
@@ -273,7 +273,10 @@ class TabListManager(dict):
             else:
                 self._path_broken = False
                 return path
-        return iter_.value()
+        try:
+            return iter_.value()
+        except ValueError:
+            raise errors.WidgetActionError("node deleted on OS X")
     
     def _locator_is_parent(self, model, parent, children):
         """This compares one locator with an iterable of other locators to see
@@ -314,7 +317,11 @@ class TabListManager(dict):
         if self._path_broken is None:
             self._path_broken = path is NotImplemented
         if self._path_broken:
-            path = self._get_locator(tab_list.view, iter_)
+            try:
+                path = self._get_locator(tab_list.view, iter_)
+            except errors.ActionUnavailableError, error:
+                logging.debug("selection invalid: %s", error.reason)
+                self.on_selection_invalid(view, self._selected_tablist)
         if self._locator_is_parent(tab_list.view.model, path, selected):
             tab_list.view.unselect_all(signal=False)
             self._restored = True
