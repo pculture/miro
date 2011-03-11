@@ -701,7 +701,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         button_rect = expire_layout.add_image(image, rect.x, 0, hotspot)
         # now we can position the background, draw it to the middle of the
         # button.
-        background_rect.x = text_x - self.EMBLEM_TEXT_PAD_END
+        background_rect.x = round(text_x - self.EMBLEM_TEXT_PAD_END)
         background_rect.width = (rect.x - background_rect.x +
                 button_rect.width // 2)
         # middle align everything and add it to layout
@@ -1063,7 +1063,7 @@ class _EmblemDrawer(object):
         content_x = x + button_width + self.EMBLEM_TEXT_PAD_START
         content_width = self._add_text_images(content_layout, layout_manager,
                 content_x)
-        emblem_rect.right = (content_x + content_width + self.margin_right)
+        emblem_rect.right = round(content_x + content_width + self.margin_right)
         content_layout.center_y(top=emblem_top, bottom=emblem_bottom)
         layout.merge(content_layout)
         # add button and we're done
