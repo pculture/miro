@@ -365,6 +365,14 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 'progress-throbber-4-left', 'progress-throbber-4-middle',
                 'progress-throbber-4-right', 'progress-throbber-5-left',
                 'progress-throbber-5-middle', 'progress-throbber-5-right',
+                'progress-throbber-6-left', 'progress-throbber-6-middle',
+                'progress-throbber-6-right', 'progress-throbber-7-left',
+                'progress-throbber-7-middle', 'progress-throbber-7-right',
+                'progress-throbber-8-left', 'progress-throbber-8-middle',
+                'progress-throbber-8-right', 'progress-throbber-9-left',
+                'progress-throbber-9-middle', 'progress-throbber-9-right',
+                'progress-throbber-10-left', 'progress-throbber-10-middle',
+                'progress-throbber-10-right',
                 'progress-track', 'queued-middle', 'queued-cap', 'resume-cap',
                 'resume-middle', 'selected-background-left',
                 'selected-background-middle', 'selected-background-right',
@@ -378,15 +386,6 @@ class ItemRenderer(widgetset.InfoListRenderer):
         # download-arrow is a shared icon.  It doesn't have the same prefix.
         self.images['download-arrow'] = imagepool.get_surface(
                 resources.path('images/download-arrow.png'))
-        # setup progress throbber stages
-        self.progress_throbber_surfaces = []
-        for i in xrange(5):
-            left = self.images['progress-throbber-%d-left' % (i + 1)]
-            middle = self.images['progress-throbber-%d-middle' % (i + 1)]
-            right = self.images['progress-throbber-%d-right' % (i + 1)]
-            surface = widgetutil.ThreeImageSurface()
-            surface.set_images(left, middle, right)
-            self.progress_throbber_surfaces.append(surface)
 
     def get_size(self, style, layout_manager):
         return self.MIN_WIDTH, self.HEIGHT
@@ -715,11 +714,6 @@ class ItemRenderer(widgetset.InfoListRenderer):
         height = 22
         end_button_width = 47
         progress_cap_width = 10
-        if self.throbber_mode:
-            # ensure that the progress bar width is divisible by 10.  That
-            # makes the progress throbber animations line up
-            button_width_extra = end_button_width * 2 - progress_cap_width * 2
-            width -= (width - button_width_extra) % 10
         # figure out what button goes on the left
         if not self.download_info or self.download_info.state != 'paused':
             left_hotspot = 'pause'
@@ -982,8 +976,17 @@ class ItemRenderer(widgetset.InfoListRenderer):
 
     def draw_progress_throbber(self, context, x, y, width, height):
         throbber_count = self.attrs.get('throbber-value', 0)
-        index = throbber_count % len(self.progress_throbber_surfaces)
-        surface = self.progress_throbber_surfaces[index]
+        index = throbber_count % 10
+        # The middle image is 10px wide, which means that we won't be drawing
+        # an entire image if width isn't divisible by 10.  Adjust the right
+        # image so that it matches.
+        right_index = (index - width) % 10
+
+        surface = widgetutil.ThreeImageSurface()
+        surface.set_images(
+            self.images['progress-throbber-%d-left' % (index + 1)],
+            self.images['progress-throbber-%d-middle' % (index + 1)],
+            self.images['progress-throbber-%d-right' % (right_index + 1)])
         surface.draw(context, x, y, width)
         self.signals.emit('throbber-drawn', self.info)
 
