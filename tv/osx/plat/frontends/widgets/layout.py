@@ -635,6 +635,17 @@ class Scroller(Bin):
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)
 
+    def viewport_repositioned(self):
+        # If the window is resized, this translates to a viewport_repositoned()
+        # event.  So, do whatever super requires of us, then place the 
+        # chilren to work out if we need a scrollbar, then get the new size,
+        # then replace the children (which now takes into account of scrollbar
+        # size.)
+        super(Scroller, self).viewport_repositioned()
+        self.place_children()
+        self.cached_size_request = self.calc_size_request()
+        self.place_children()
+
     def set_background_color(self, color):
         self.view.setBackgroundColor_(self.make_color(color))
 
