@@ -1257,7 +1257,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             if (item and item.remote and
               item.host == host and item.port == port):
                 app.playback_manager.stop()
-        message = messages.TabsChanged('sharing', [], [], [share.id])
+        message = messages.TabsChanged('connect', [], [], [share.id])
         typ, selected_tabs = app.tabs.selection
         if typ == u'connect' and share in selected_tabs:
             app.tabs.select_guide()
@@ -1370,8 +1370,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def tablist_for_message(self, message):
         if message.type in app.tabs:
             return app.tabs[message.type]
-        elif message.type == 'guide':
-            return app.tabs['site']
         elif message.type in ('devices', 'sharing'):
             return app.tabs['connect']
         else:

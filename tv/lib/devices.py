@@ -353,7 +353,7 @@ class DeviceManager(object):
         if info.mount:
             self.info_cache.setdefault(info.mount, {})
             scan_device_for_files(info)
-        messages.TabsChanged('devices', [info], [], []).send_to_frontend()
+        messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
     def device_changed(self, id_, **kwargs):
         if id_ not in self.connected:
@@ -382,7 +382,7 @@ class DeviceManager(object):
                                                                   create=False)
             if sync_manager:
                 sync_manager.cancel()
-        messages.TabsChanged('devices', [], [info], []).send_to_frontend()
+        messages.TabsChanged('connect', [], [info], []).send_to_frontend()
         messages.DeviceChanged(info).send_to_frontend()
 
     def device_disconnected(self, id_):
@@ -401,7 +401,7 @@ class DeviceManager(object):
 
         if info.mount:
             del self.info_cache[info.mount]
-        messages.TabsChanged('devices', [], [], [info.id]).send_to_frontend()
+        messages.TabsChanged('connect', [], [], [info.id]).send_to_frontend()
 
     def get_sync_for_device(self, device, create=True):
         """
@@ -443,7 +443,7 @@ class DeviceSyncManager(object):
         self.waiting = set()
 
         self.device.is_updating = True # start the spinner
-        messages.TabsChanged('devices', [], [self.device],
+        messages.TabsChanged('connect', [], [self.device],
                              []).send_to_frontend()
 
         self.audio_target_folder = os.path.join(
@@ -613,7 +613,7 @@ class DeviceSyncManager(object):
                 conversions.conversion_manager.disconnect(handle)
             self.signal_handles = None
             self.device.is_updating = False # stop the spinner
-            messages.TabsChanged('devices', [], [self.device],
+            messages.TabsChanged('connect', [], [self.device],
                                  []).send_to_frontend()
             del app.device_manager.syncs_in_progress[self.device.id]
         self._send_sync_changed()

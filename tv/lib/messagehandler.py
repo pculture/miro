@@ -269,7 +269,7 @@ class GuideTracker(ViewTracker):
         return [guide.ChannelGuide.site_view()]
 
     def make_changed_message(self, added, changed, removed):
-        return messages.TabsChanged('guide', added, changed, removed)
+        return messages.TabsChanged('site', added, changed, removed)
 
     def send_initial_list(self):
         # sends the list for everything (guides, stores, hidden stores)
@@ -491,7 +491,7 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
         DatabaseSourceTrackerBase.__init__(self)
 
 class SharingItemTracker(SourceTrackerBase):
-    type = u'sharing'
+    type = u'connect'
     def __init__(self, share):
         share_id = share.parent_id if share.parent_id else share.id
         self.id = share
@@ -1666,7 +1666,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         if message.setting == 'name':
             device.name = message.value
             # need to send a changed message
-            message = messages.TabsChanged('devices', [], [device], [])
+            message = messages.TabsChanged('connect', [], [device], [])
             message.send_to_frontend()
             message = messages.DeviceChanged(device)
             message.send_to_frontend()

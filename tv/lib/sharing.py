@@ -254,7 +254,7 @@ class SharingTracker(object):
             if not info or info.connect_uuid != uuid:
                 return
             info.connect_uuid = None
-            messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
+            messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
         def failure(unused):
             if self.available_shares.has_key(share_id):
@@ -325,7 +325,7 @@ class SharingTracker(object):
             if has_key:
                 info.name = fullname
                 info.stale = False
-                message = messages.TabsChanged('sharing', [], [info], [])
+                message = messages.TabsChanged('connect', [], [info], [])
                 message.send_to_frontend()
             else:
                 # 'Tis been already added so just return.
@@ -508,7 +508,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.playlists = []
         self.base_playlist = None    # Temporary
         self.share.is_updating = True
-        message = messages.TabsChanged('sharing', [], [self.share], [])
+        message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,
@@ -559,7 +559,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         client = self.client
         self.client = None
         playlist_ids = [playlist_.id for playlist_ in self.playlists]
-        message = messages.TabsChanged(self.type, [], [], playlist_ids)
+        message = messages.TabsChanged('connect', [], [], playlist_ids)
         message.send_to_frontend()
         eventloop.call_in_thread(self.client_disconnect_callback,
                                  self.client_disconnect_error_callback,
@@ -690,7 +690,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.playlists = returned_playlists
         self.share.mount = True
         self.share.is_updating = False
-        message = messages.TabsChanged('sharing', self.playlists,
+        message = messages.TabsChanged('connect', self.playlists,
                                        [self.share], [])
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.  Only add
@@ -701,7 +701,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
         self.share.is_updating = False
-        message = messages.TabsChanged('sharing', [], [self.share], [])
+        message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
         app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
