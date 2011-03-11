@@ -142,24 +142,24 @@ class MediaTypeDropHandler(object):
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
 
-    def _is_valid_drop(self, typ, parent, position):
+    def _is_valid_drop(self, model, typ, parent, position):
         if parent is None or position != -1:
             return False
         if typ == 'downloaded-item':
-            return True
+            return model[parent][0].id in ('videos', 'music', 'others')
         media_type = model[parent][0].media_type
         if typ == ('device-%s-item' % media_type):
             return True
 
-    def validate_drop(self, _table_view, _model, typ, _source_actions, parent,
+    def validate_drop(self, _table_view, model, typ, _source_actions, parent,
             position):
-        if self._is_valid_drop(typ, parent, position):
+        if self._is_valid_drop(model, typ, parent, position):
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
     def accept_drop(self, _table_view, model, typ, _source_actions, parent,
             position, data):
-        if self._is_valid_drop(typ, parent, position):
+        if self._is_valid_drop(model, typ, parent, position):
             video_ids = [int(id_) for id_ in data.split('-')]
             media_type = model[parent][0].media_type
             m = messages.SetItemMediaType(media_type, video_ids)
@@ -263,9 +263,10 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
 
     def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
+        if parent is None:
+            return False
         if typ == 'downloaded-item':
-            if (parent is not None and position == -1 and
-                    not model[parent][0].is_folder):
+            if position == -1 and not model[parent][0].is_folder:
                 return widgetset.DRAG_ACTION_COPY
             else:
                 return widgetset.DRAG_ACTION_NONE
