@@ -82,7 +82,7 @@ class TabListManager(dict):
         if not real_tabs:
             self._handle_no_tabs_selected(self._selected_tablist)
         view = self._selected_tablist.view
-        iters = view.get_selection()
+        iters = view.get_selection(strict=False)
         if real_tabs:
             self._previous_selection = (self._selected_tablist.type,
                     (self._get_locator(view, i) for i in iters))
@@ -163,7 +163,11 @@ class TabListManager(dict):
             # keep the current selections
             tab_list.view._save_selection() 
         self._selected_tablist = self[list_type]
-        iters = view.get_selection()
+        try:
+            iters = view.get_selection()
+        except errors.WidgetActionError:
+            # not restored yet
+            iters = []
         tabs = [view.model[i][0] for i in iters]
         # prevent selecting base and non-base at the same time
         if tabs and hasattr(self[list_type], 'info'): # hideable
@@ -195,11 +199,13 @@ class TabListManager(dict):
             # selection is set
             self._before_no_tabs = self._previous_selection
         if tabs and not restore and self._restored:
-            # save the selection
-            selected = view.get_selection_as_strings()
-            selected.insert(0, list_type)
-            logging.debug('saving: %s', repr(selected))
-            app.widget_state.set_selection(self.type, self.id, selected)
+            try:
+                selected = view.get_selection_as_strings()
+            except errors.ActionUnavailableError, error:
+                logging.debug("not saving current tab: %s", error.reason)
+            else:
+                selected.insert(0, list_type)
+                app.widget_state.set_selection(self.type, self.id, selected)
         self._restored = tabs
         if iter_ is None:
             return
@@ -237,9 +243,10 @@ class TabListManager(dict):
         """When the user has changed the selection, we set the selected tablist
         and then display the new tab(s).
         """
-        if tab_list._adding or tab_list._removing:
-            return
-        self._select_from_tab_list(tab_list.type)
+        if tab_list.changing:
+            tab_list.delayed_selection_change = True
+        else:
+            self._select_from_tab_list(tab_list.type)
 
     def on_tab_added(self, tab_list):
         """A tablist has gained a tab."""

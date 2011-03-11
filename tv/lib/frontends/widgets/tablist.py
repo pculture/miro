@@ -455,6 +455,8 @@ class HideableTabList(TabList):
             self.expand_root = False
 
     def set_folder_expanded(self, id_, expanded):
+        logging.debug('expanding %s', id_)
+        logging.debug('iter: ', self.iter_map[id_])
         self.view.set_row_expanded(self.iter_map[id_], expanded)
 
     def update(self, info):

@@ -38,6 +38,7 @@ from objc import YES, NO, nil
 from miro import fasttypes
 from miro import infolist
 from miro import signals
+from miro import errors
 from miro.plat.frontends.widgets import wrappermap
 
 def list_from_nsindexset(index_set):
@@ -141,7 +142,7 @@ class TableModelBase(signals.SignalEmitter):
             if iter.valid():
                 new_index_set.addIndex_(self.row_of_iter(tableview, iter))
             else:
-                raise ValueError('iter no longer valid')
+                raise errors.ActionUnavailableError("iter is not valid")
         tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
 
     def check_column_values(self, column_values):
@@ -294,7 +295,7 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
             try:
                 index = self.index_of_id(id_)
             except KeyError:
-                raise ValueError('iter no longer valid')
+                raise errors.ActionUnavailableError("iter is not valid")
             new_index_set.addIndex_(index)
         tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
 

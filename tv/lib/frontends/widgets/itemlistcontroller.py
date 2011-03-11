@@ -47,6 +47,7 @@ from miro import messages
 from miro import prefs
 from miro import subscription
 from miro import util
+from miro import errors
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 from miro.frontends.widgets import itemcontextmenu
@@ -489,7 +490,8 @@ class ItemListController(object):
         ItemInfos.
         """
         item_view = self.current_item_view
-        return [item_view.model[i][0] for i in item_view.get_selection()]
+        return [item_view.model[i][0] for i in
+                item_view.get_selection(strict=False)]
 
     def resume_play_selection(self, presentation_mode='fit-to-bounds'):
         self.play_selection(presentation_mode, force_resume=True)
@@ -698,16 +700,22 @@ class ItemListController(object):
         self.update_item_details()
 
     def update_item_details(self):
-        selection = self.get_selection()
-        if not selection:
+        try:
+            selection = self.get_selection()
+        except:
             self.widget.item_details.clear()
         else:
-            # any selected info will do, just pick the first one in the list
-            self.widget.item_details.set_info(selection[0])
+            if selection:
+                # any selected info will do, just pick the first one in the list
+                self.widget.item_details.set_info(selection[0])
 
     def save_selection(self):
-        selection = self.current_item_view.get_selection_as_strings()
-        app.widget_state.set_selection(self.type, self.id, selection)
+        try:
+            selection = self.current_item_view.get_selection_as_strings()
+        except errors.ActionUnavailableError, error:
+            logging.debug("not saving selection: %s", error.reason)
+        else:
+            app.widget_state.set_selection(self.type, self.id, selection)
 
     def start_tracking(self):
         """Send the message to start tracking items."""

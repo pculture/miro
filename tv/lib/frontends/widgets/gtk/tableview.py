@@ -43,6 +43,7 @@ import gtk
 
 from miro import signals
 from miro import infolist
+from miro import errors
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
@@ -106,11 +107,13 @@ class MiroTreeView(gtk.TreeView):
     def set_scroll_position(self, scroll_position):
         """Restore the scrollbars to a remembered state."""
         self.scroll_positions = list(scroll_position)
-        success = [False, False]
-        for i, scrollbar in enumerate(self.scrollbars):
-            success[i] = self._update_scrollbar_position(i)
-        # we don't really care about the horizontal scrollbar:
-        if success[1]:
+        try:
+            for i, scrollbar in enumerate(self.scrollbars):
+                self._update_scrollbar_position(i)
+        except errors.WidgetActionError:
+            # try again later
+            pass
+        else:
             self.scroll_positions_set = True
 
     def get_scroll_position(self):
@@ -122,10 +125,11 @@ class MiroTreeView(gtk.TreeView):
         return tuple(scroll_positions)
 
     def _update_scrollbar_position(self, bar):
-        """Move the specified scrollbar to its saved position."""
+        """Move the specified scrollbar to its saved position, if it has one.
+        Succeeds or raises WidgetActionError."""
         if self.scroll_positions[bar] is None:
             # nothing to restore it to yet
-            return False
+            return
         adj = self.scrollbars[bar].get_adjustment()
         pos = self.scroll_positions[bar]
         lower = adj.get_lower()
@@ -133,13 +137,12 @@ class MiroTreeView(gtk.TreeView):
         # currently, StandardView gets an upper of 2.0 when it's not ready
         # FIXME: don't count on that
         if upper < 5:
-            # not ready yet, and/or window has reset our position
             self.scroll_positions_set = False
-            return False
+            raise errors.WidgetActionError("not ready yet, or window has reset "
+                    "position")
         # have to clip it ourselves
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
-        return True
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -174,13 +177,18 @@ class MiroTreeView(gtk.TreeView):
             newly_selected = set(end_selection) - set(start_selection)
             down = (count > 0)
 
-            return self.scroll_ancestor(newly_selected, down)
+            try:
+                self.scroll_ancestor(newly_selected, down)
+            except errors.WidgetActionError:
+                # not possible
+                return False
+            return True
 
     def scroll_ancestor(self, newly_selected, down):
         # Try to figure out what just became selected.  If multiple things
         # somehow became selected, select the outermost one
         if len(newly_selected) == 0:
-            return False
+            raise errors.WidgetActionError("need at an item to scroll to")
         if down:
             path_to_show = max(newly_selected)
         else:
@@ -190,7 +198,7 @@ class MiroTreeView(gtk.TreeView):
         ancestor = self.get_parent()
         while not isinstance(ancestor, gtk.Viewport):
             if ancestor is None:
-                return False
+                raise errors.WidgetActionError("no scrollable ancestor")
             ancestor = ancestor.get_parent()
 
         vadjustment = ancestor.get_vadjustment()
@@ -206,7 +214,6 @@ class MiroTreeView(gtk.TreeView):
         else:
             if top < vadjustment.value:
                 vadjustment.set_value(max(vadjustment.lower, top))
-        return True
 
     def set_drag_dest_row(self, row, position):
         """Works like set_drag_dest_row, except row can be None which will
@@ -458,8 +465,17 @@ class SelectionOwnerMixin(object):
             mode = gtk.SELECTION_SINGLE
         self.selection.set_mode(mode)
 
-    def get_selection(self):
-        """Returns a list of GTK Iters."""
+    def get_selection(self, strict=True):
+        """Returns a list of GTK Iters. If strict is set (default), will fail
+        with WidgetActionError if there is a selection waiting to be restored;
+        unset strict to get whatever is selected (though it should be about to
+        be overwritten).
+        """
+        # FIXME: when everything tablist-related is happening in the right
+        # order, ditch non-strict mode
+        if strict and self._restoring_selection:
+            raise errors.WidgetActionError("tried to get selection before "
+                    "selection successfully restored")
         iters = []
         def collect(treemodel, path, iter):
             iters.append(iter)
@@ -476,13 +492,14 @@ class SelectionOwnerMixin(object):
         return self.selection.count_selected_rows()
 
     def select(self, iter_):
-        """Try to select an iter. Raises ValueError if iter cannot be selected.
-        Sends no signals.
+        """Try to select an iter. Succeeds or raises WidgetActionError. Sends
+        no signals.
         """
         with self.ignoring_selection_changes():
             self.selection.select_iter(iter_)
         if not self.selection.iter_is_selected(iter_):
-            raise ValueError
+            raise errors.WidgetActionError("the specified iter cannot be "
+                    "selected")
 
     def unselect(self, iter_):
         """Unselect an Iter. Fails silently if the Iter is not selected, but
@@ -804,13 +821,17 @@ class TableView(Widget, SelectionOwnerMixin):
         self._widget.set_fixed_height_mode(fixed_height)
 
     def set_row_expanded(self, iter, expanded):
+        """Expand or collapse the row specified by iter. Succeeds or raises
+        WidgetActionError. Causes row-expanded or row-collapsed to be emitted
+        when successful.
+        """
         path = self._model.get_path(iter)
         if expanded:
             self._widget.expand_row(path, False)
         else:
             self._widget.collapse_row(path)
         if not self._widget.row_expanded(path):
-            raise ValueError("cannot expand the given item")
+            raise errors.WidgetActionError("cannot expand the given item")
 
     def is_row_expanded(self, iter):
         path = self._model.get_path(iter)

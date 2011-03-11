@@ -42,6 +42,7 @@ from Foundation import *
 from objc import YES, NO, nil
 
 from miro import signals
+from miro import errors
 from miro.frontends.widgets import widgetconst
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode
@@ -895,7 +896,7 @@ class SelectionOwnerMixin(object):
             try:
                 self.model.restore_selection(self.tableview,
                         self._selected_before_change)
-            except ValueError:
+            except errors.ActionUnavailableError:
                 # FIXME: this never happens
                 self.emit('selection-invalid')
                 return
@@ -914,15 +915,24 @@ class SelectionOwnerMixin(object):
     def allow_multiple_select(self, allow):
         self.tableview.setAllowsMultipleSelection_(allow)
 
-    def get_selection(self):
+    def get_selection(self, strict=True):
+        """Returns a list of row iters. If strict is set (default), will fail
+        with WidgetActionError if there is a selection waiting to be restored;
+        unset strict to get whatever is selected (though it should be about to
+        be overwritten).
+        """
+        # FIXME: when everything tablist-related is happening in the right
+        # order, ditch non-strict mode
+        if strict and self._restoring_selection:
+            raise errors.WidgetActionError("tried to get selection before "
+                    "selection successfully restored")
         selection = self.tableview.selectedRowIndexes()
         selrows = tablemodel.list_from_nsindexset(selection)
-        logging.debug('get_selection: %s', repr(selrows))
         return [self.model.iter_for_row(self.tableview, row) for row in selrows]
 
     def get_selected(self):
         if self.tableview.allowsMultipleSelection():
-            raise ValueError("Table allows multiple selection")
+            raise errors.ActionUnavailableError("Table allows multiple selection")
         row = self.tableview.selectedRow()
         if row == -1:
             return None
@@ -1079,13 +1089,17 @@ class TableView(SelectionOwnerMixin, Widget):
         return isinstance(self.model, tablemodel.TreeTableModel)
 
     def set_row_expanded(self, iter, expanded):
+        """Expand or collapse the specified row. Succeeds or raises
+        WidgetActionError.
+        """
         item = iter.value()
         if expanded:
             self.tableview.expandItem_(item)
         else:
             self.tableview.collapseItem_(item)
         if self.tableview.isItemExpanded_(item) != expanded:
-            raise ValueError("cannot expand the given item")
+            raise errors.WidgetActionError("cannot expand iter. expandable: %s",
+                    repr(self.tableview.isExpandable_(item)))
         self.invalidate_size_request()
 
     def is_row_expanded(self, iter):
