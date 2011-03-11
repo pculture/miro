@@ -902,7 +902,7 @@ class TableView(Widget):
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         self._selected_before_change = None
-        self._ignore_selection_changed = False
+        self._ignore_selection_changed_count = 0
         self.model.connect_weak('row-changed', self.on_row_change)
         self.model.connect_weak('structure-will-change',
                 self.on_model_structure_change)
@@ -911,6 +911,20 @@ class TableView(Widget):
         self.restoring_selection = None
         self.scroll_position = (0, 0)
         self.clipview_notifications = None
+
+    def _start_ignore_selection_changed(self):
+        """Start ignoring the selection changed notification.
+
+        This call must be matched with a _stop_ignore_selection_changed() call
+        once you are done messing with the selection
+        """
+        self._ignore_selection_changed_count += 1
+
+    def _stop_ignore_selection_changed(self):
+        self._ignore_selection_changed_count -= 1
+
+    def _ignore_selection_changed(self):
+        return self._ignore_selection_changed_count > 0
 
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
@@ -943,11 +957,13 @@ class TableView(Widget):
             self._selected_before_change = None
             return
         # wait until we're done with all work to emit selection changed
-        self._ignore_selection_changed = True
-        self.tableview.deselectAll_(nil)
-        self.model.restore_selection(self.tableview,
-                self._selected_before_change)
-        self._ignore_selection_changed = False
+        self._start_ignore_selection_changed()
+        try:
+            self.tableview.deselectAll_(nil)
+            self.model.restore_selection(self.tableview,
+                    self._selected_before_change)
+        finally:
+            self._stop_ignore_selection_changed()
         self._selected_before_change = None
         self._emit_selection_changed()
 
@@ -975,14 +991,14 @@ class TableView(Widget):
         self._emit_selection_changed()
 
     def _emit_selection_changed(self):
-        if not self._ignore_selection_changed:
+        if not self._ignore_selection_changed():
             # don't bother sending out a second selection-changed signal if
             # the handler changes the selection (#15767)
-            self._ignore_selection_changed = True
+            self._start_ignore_selection_changed()
             try:
                 self.emit('selection-changed')
             finally:
-                self._ignore_selection_changed = False
+                self._stop_ignore_selection_changed()
 
     def on_column_resize(self, notification):
         if not self.auto_resizing:
