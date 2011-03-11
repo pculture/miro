@@ -194,9 +194,9 @@ class AppStoreButton(widgetset.CustomButton):
         self.image.draw(context, 0, 0, self.image.width, self.image.height)
 
 class ConnectTab(widgetset.VBox):
-    HEADER_SIZE = 0.83
+    HEADER_SIZE = 1.08
     HEADER_COLOR = (0.176, 0.176, 0.176)
-    TEXT_SIZE = 0.65
+    TEXT_SIZE = 0.85
     TEXT_COLOR = (0.443, 0.443, 0.443)
 
     trans_data = {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}
