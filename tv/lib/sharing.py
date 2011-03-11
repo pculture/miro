@@ -233,6 +233,7 @@ class SharingTracker(object):
     CMD_RESUME = 'resm'
 
     def __init__(self):
+        self.name_to_id_map = dict()
         self.trackers = dict()
         self.available_shares = dict()
         self.r, self.w = util.make_dummy_socket_pair()
@@ -278,21 +279,25 @@ class SharingTracker(object):
     def mdns_callback_backend(self, added, fullname, host, port):
         if fullname == app.sharing_manager.name:
             return
-        # Need to come up with a unique ID for the share.  Use the name
-        # only since that's supposed to be unique.  We rely on the 
-        # zeroconf daemon not telling us garbage.  Why name only though?
-        # Because on removal, Avahi can't do a name query, so we have no
-        # hostname, port, or IP address information!
-        share_id = unicode(fullname)
+        # Need to come up with a unique ID for the share.  We want to use the 
+        # name only since that's supposed to be unique, but can't because
+        # the name may change, and the id is used throughout to identify
+        # the item tracker, and we don't want to change the id mid-way.
+        # We can't use the hostname or port directly also because
+        # on removal avahi can't do a name query so we have no hostname,
+        # or port information!  So, we have a name to id map.
+        if added:
+            share_id = (host, port)
+            self.name_to_id_map[fullname] = share_id
+        else:
+            try:
+                share_id = self.name_to_id_map[fullname]
+                del self.name_to_id_map[fullname]
+            except KeyError:
+                # If it doesn't exist then it's been taken care of so return.
+                return
+
         logging.debug('gotten mdns callback share_id')
-        # Do we have this share on record?  If so then just ignore.
-        # In particular work around a problem with Avahi apparently sending
-        # duplicate messages, maybe it's doing that once for IPv4 then again
-        # for IPv6?
-        if added and share_id in self.available_shares.keys():
-            return
-        if not added and not share_id in self.available_shares.keys():
-            return 
 
         if added:
             # This added message could be just because the share name got
@@ -300,7 +305,9 @@ class SharingTracker(object):
             # If it is not connected, it must have been removed from the
             # sidebar so we can add as normal.  If it was connected, make
             # sure we change the name of it, and just skip over adding the 
-            # tab.
+            # tab..  We don't do this if the share's not a connected one
+            # because the remove/add sequence, there's no way to tell if the
+            # share's just going away or not.
             #
             # Else, create the SharingInfo eagerly, so that duplicate messages
             # can use it to filter out.  We also create a unique stamp on it,
@@ -318,12 +325,12 @@ class SharingTracker(object):
             if has_key:
                 info.name = fullname
                 info.stale = False
-                # Change the indexing keys.
-                del self.available_shares[key]
-                self.available_shares[share_id] = info
                 message = messages.TabsChanged('sharing', [], [info], [])
                 message.send_to_frontend()
             else:
+                # 'Tis been already added so just return.
+                if share_id in self.available_shares.keys():
+                    return
                 info = messages.SharingInfo(share_id, fullname, host, port)
                 info.connect_uuid = uuid.uuid4()
                 self.available_shares[share_id] = info
