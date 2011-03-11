@@ -41,6 +41,7 @@ from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.plat import resources
+from miro.frontends.widgets import playback
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
@@ -196,6 +197,13 @@ class StaticTabListBase(TabBlinkerMixin):
     def get_tab(self, name):
         return self.view.model[self.iter_map[name]][0]
 
+    def setup_view(self):
+        self.view.connect_weak('key-press', self.on_key_press)
+
+    def on_key_press(self, view, key, mods):
+        if app.playback_manager.is_playing:
+            return playback.handle_key_press(key, mods)
+
 class StaticTabList(StaticTabListBase):
     """Handles the static tabs (the tabs on top that are always the same)."""
     def __init__(self):
@@ -203,6 +211,7 @@ class StaticTabList(StaticTabListBase):
         self.type = u'static'
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
+        self.setup_view()
 
     def build_tabs(self):
         self.add(statictabs.SearchTab())
@@ -217,6 +226,7 @@ class LibraryTabList(StaticTabListBase):
         self.view.allow_multiple_select(False)
         self.view.set_drag_dest(MediaTypeDropHandler())
         self.view.connect('selection-changed', self.on_selection_changed)
+        self.setup_view()
         self.auto_tabs = None
         self.auto_tabs_to_show = set()
 
@@ -640,6 +650,8 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         if key == menus.DELETE:
             self.on_delete_key_pressed()
             return True
+        if app.playback_manager.is_playing:
+            return playback.handle_key_press(key, mods)
 
     def on_row_expanded_change(self, view, iter, expanded):
         id = self.view.model[iter][0].id
