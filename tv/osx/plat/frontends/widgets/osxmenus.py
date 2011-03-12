@@ -117,13 +117,19 @@ check_menu_handler = CheckMenuHandler.alloc().init()
 
 def update_view_menu_state():
     display = app.display_manager.get_current_display()
+    main_menu = NSApp().mainMenu()
+    # XXX: should be using the tag to prevent interface and locale breakages
+    view_menu = main_menu.itemAtIndex_(6)
     try:
         key = (display.type, display.id)
     except AttributeError:
+        view_menu.setHidden_(True)
         return
     view_type = app.widget_state.get_selected_view(display.type, display.id)
     if view_type != WidgetStateStore.get_list_view_type():
+        view_menu.setHidden_(True)
         return
+    view_menu.setHidden_(False)
     enabled = app.widget_state.get_columns_enabled(
               display.type, display.id, view_type)
 
