@@ -573,7 +573,7 @@ class DeviceTabListHandler(object):
             self.tablist.expand(info.id)
 
     def add(self, info):
-        self.tablist.add(info)
+        HideableTabList.add(self.tablist, info)
         if info.mount and not info.info.has_multiple_devices:
             self._add_fake_tabs(info)
 
