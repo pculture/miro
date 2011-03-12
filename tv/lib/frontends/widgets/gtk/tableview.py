@@ -947,7 +947,7 @@ class TableView(Widget, SelectionOwnerMixin):
                 path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
                 if path_info is not None:
                     path, column, x, y = path_info
-                    self._popup_context_menu(path, event)
+                    menu = self._popup_context_menu(path, event)
             self.handled_last_button_press = True
             return True
         self.handled_last_button_press = False
@@ -958,13 +958,17 @@ class TableView(Widget, SelectionOwnerMixin):
                 self.selection.unselect_all()
             self.selection.select_path(path)
         menu = self.make_context_menu()
-        menu.popup(None, None, None, event.button, event.time)
-        return menu
+        if menu:
+            menu.popup(None, None, None, event.button, event.time)
+            return menu
+        else:
+            return None
 
     def _popup_hotspot_context_menu(self, event):
         menu = self._popup_context_menu(self.hotspot_tracker.path, event)
-        menu.connect('selection-done',
-                self._on_hotspot_context_menu_selection_done)
+        if menu:
+            menu.connect('selection-done',
+                    self._on_hotspot_context_menu_selection_done)
 
     def _on_hotspot_context_menu_selection_done(self, menu):
         # context menu is closed, we won't get the button-release-event in
@@ -1030,7 +1034,11 @@ class TableView(Widget, SelectionOwnerMixin):
                 item.show()
             return menu
 
-        return gen_menu(self.context_menu_callback(self))
+        items = self.context_menu_callback(self)
+        if items:
+            return gen_menu(items)
+        else:
+            return None
 
     def on_context_menu_activate(self, item, callback):
         callback()
