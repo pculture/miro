@@ -92,8 +92,9 @@ class ImagePool(util.Cache):
         """Try to resize only 1 dimension on an image."""
         lesser_scale = min(width_scale, height_scale)
         if lesser_scale <= self.UPSIZE_THRESHOLD:
-            return image.resize(round(lesser_scale * image.width),
-                    round(lesser_scale * image.height))
+            # round() then int(), don't return floats here.
+            return image.resize(int(round(lesser_scale * image.width)),
+                    int(round(lesser_scale * image.height)))
         # okay, give up on scaling and just return the image
         return image
 
