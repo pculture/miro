@@ -734,6 +734,8 @@ class SharingManagerBackend(object):
         self.daap_playlists = dict()    # Playlist, in daap format
         self.playlist_item_map = dict() # Playlist -> item mapping
         self.in_shutdown = False
+        self.config_handle = app.backend_config_watcher.connect('changed',
+                             self.on_config_changed)
 
     # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
@@ -925,14 +927,30 @@ class SharingManagerBackend(object):
     def get_playlists(self):
         return self.daap_playlists
 
+    def on_config_changed(self, obj, key, value):
+        self.share_types = []
+        keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key]
+        if key in keys:
+            if app.config.get(prefs.SHARE_AUDIO):
+                self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+            if app.config.get(prefs.SHARE_VIDEO):
+                self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+
     def get_items(self, playlist_id=None):
         # Easy: just return
+        items = dict()
         if not playlist_id:
-            return self.daapitems
+            for k in self.daapitems.keys():
+                if (self.daapitems[k]['com.apple.itunes.mediakind'] in
+                  self.share_types):
+                    items[k] = self.daapitems[k]
+            return items
         # XXX Somehow cache this?
         playlist = dict()
         for x in self.daapitems.keys():
-            if x in self.playlist_item_map[playlist_id]:
+            if (x in self.playlist_item_map[playlist_id] and
+              self.daapitems[x]['com.apple.itunes.mediakind'] in
+              self.share_types):
                 playlist[x] = self.daapitems[x]
         return playlist
 
