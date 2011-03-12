@@ -867,10 +867,7 @@ class SharingPanel(PanelBuilder):
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
         sharing_warnonquit_cbx = widgetset.Checkbox(
             _('Warn on quit when others are connected to my media library.'))
-        def text_changed(widget):
-            self.new_name = widget.get_text().strip().encode('utf-8')
         share_txt = widgetset.TextEntry()
-        share_txt.connect('changed', text_changed)
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
                        [sharing_warnonquit_cbx, share_txt])
