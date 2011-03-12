@@ -263,8 +263,9 @@ class TabList(signals.SignalEmitter):
                 self.add(tab)
 
     def remove(self, name):
-        iter_ = self.iter_map.pop(name)
-        self.view.model.remove(iter_)
+        with self.removing():
+            iter_ = self.iter_map.pop(name)
+            self.view.model.remove(iter_)
 
     def get_tab(self, name):
         return self.view.model[self.iter_map[name]][0]
