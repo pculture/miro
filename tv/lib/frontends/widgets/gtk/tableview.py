@@ -555,6 +555,7 @@ class SelectionOwnerMixin(object):
         if not self._ignore_selection_changed:
             # don't bother sending out a second selection-changed signal if
             # the handler changes the selection (#15767)
+            self._save_selection()
             with self.ignoring_selection_changes():
                 self.emit('selection-changed')
 
