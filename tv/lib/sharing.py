@@ -727,6 +727,12 @@ class SharingManagerBackend(object):
     id = u'sharing-backend'
 
     def __init__(self):
+        self.share_types = []
+        if app.config.get(prefs.SHARE_AUDIO):
+            self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+        if app.config.get(prefs.SHARE_VIDEO):
+            self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+        self.item_lock = threading.Lock()
         self.transcode_lock = threading.Lock()
         self.transcode = dict()
         # XXX daapplaylist should be hidden from view. 
@@ -746,10 +752,11 @@ class SharingManagerBackend(object):
 
     def handle_items_changed(self, message):
         # If items are changed, just redelete and recreate the entry.
-        for itemid in message.removed:
-            del self.daapitems[itemid]
-        self.make_item_dict(message.added)
-        self.make_item_dict(message.changed)
+        with self.item_lock:
+            for itemid in message.removed:
+                del self.daapitems[itemid]
+            self.make_item_dict(message.added)
+            self.make_item_dict(message.changed)
 
     def make_daap_playlists(self, items):
         for item in items:
@@ -787,11 +794,11 @@ class SharingManagerBackend(object):
 
     def handle_playlist_added(self, obj, added):
         playlists = [x for x in added if not x.is_folder]
-        eventloop.add_urgent_call(lambda: self.make_daap_playlists(playlists),
-                                  "SharingManagerBackend: playlist added")
+        with self.item_lock:
+            self.make_daap_playlists(playlists)
 
     def handle_playlist_changed(self, obj, changed):
-        def _handle_playlist_changed():
+        with self.item_lock:
             # We could just overwrite everything without actually deleting
             # the object.  A missing key means it's a folder, and we skip
             # over it.
@@ -799,23 +806,20 @@ class SharingManagerBackend(object):
                 if self.daap_playlists.has_key(x.id):
                     del self.daap_playlists[x.id]
             self.make_daap_playlists(changed)
-        eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
-                                  "SharingManagerBackend: playlist changed")
 
     def handle_playlist_removed(self, obj, removed):
-        def _handle_playlist_removed():
+        with self.item_lock:
             for x in removed:
                 # Missing key means it's a folder and we skip over it.
                 if self.daap_playlists.has_key(x):
                     del self.daap_playlists[x]
-        eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
-                                  "SharingManagerBackend: playlist removed")
 
     def populate_playlists(self):
-        self.make_daap_playlists(playlist.SavedPlaylist.make_view())
-        for playlist_id in self.daap_playlists.keys():
-            self.playlist_item_map[playlist_id] = [x.item_id
-              for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
+        with self.item_lock:
+            self.make_daap_playlists(playlist.SavedPlaylist.make_view())
+            for playlist_id in self.daap_playlists.keys():
+                self.playlist_item_map[playlist_id] = [x.item_id
+                  for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
 
     def start_tracking(self):
         app.info_updater.item_list_callbacks.add(self.type, self.id,
@@ -847,7 +851,12 @@ class SharingManagerBackend(object):
     def get_file(self, itemid, generation, ext, session, request_path_func,
                  offset=0, chunk=None):
         file_obj = None
-        path = self.daapitems[itemid]['path']
+        # Get a copy of the item under the lock ... if the underlying item
+        # is going away then we'll deal with it later on.  only care about
+        # the reference being valid (?)
+        with self.item_lock:
+            daapitem = self.daapitems[itemid]
+        path = daapitem['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
             # transcode is required.
@@ -903,7 +912,7 @@ class SharingManagerBackend(object):
                 logging.warning('error: transcode should be one of ts or m3u8')
         elif ext == 'coverart':
             try:
-                cover_art = self.daapitems[itemid]['cover_art']
+                cover_art = daapitem['cover_art']
                 if cover_art:
                     file_obj = open(cover_art, 'rb')
                     file_obj.seek(offset, os.SEEK_SET)
@@ -928,31 +937,33 @@ class SharingManagerBackend(object):
         return self.daap_playlists
 
     def on_config_changed(self, obj, key, value):
-        self.share_types = []
         keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key]
         if key in keys:
-            if app.config.get(prefs.SHARE_AUDIO):
-                self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
-            if app.config.get(prefs.SHARE_VIDEO):
-                self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+            with self.item_lock:
+                self.share_types = []
+                if app.config.get(prefs.SHARE_AUDIO):
+                    self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+                if app.config.get(prefs.SHARE_VIDEO):
+                    self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
 
     def get_items(self, playlist_id=None):
         # Easy: just return
-        items = dict()
-        if not playlist_id:
-            for k in self.daapitems.keys():
-                if (self.daapitems[k]['com.apple.itunes.mediakind'] in
+        with self.item_lock:
+            items = dict()
+            if not playlist_id:
+                for k in self.daapitems.keys():
+                    if (self.daapitems[k]['com.apple.itunes.mediakind'] in
+                      self.share_types):
+                        items[k] = self.daapitems[k]
+                return items
+            # XXX Somehow cache this?
+            playlist = dict()
+            for x in self.daapitems.keys():
+                if (x in self.playlist_item_map[playlist_id] and
+                  self.daapitems[x]['com.apple.itunes.mediakind'] in
                   self.share_types):
-                    items[k] = self.daapitems[k]
-            return items
-        # XXX Somehow cache this?
-        playlist = dict()
-        for x in self.daapitems.keys():
-            if (x in self.playlist_item_map[playlist_id] and
-              self.daapitems[x]['com.apple.itunes.mediakind'] in
-              self.share_types):
-                playlist[x] = self.daapitems[x]
-        return playlist
+                    playlist[x] = self.daapitems[x]
+            return playlist
 
     def make_item_dict(self, items):
         # See the daap_rmapping/daap_mapping for a list of mappings that
