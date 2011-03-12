@@ -500,6 +500,7 @@ class SelectionOwnerMixin(object):
         if not self.selection.iter_is_selected(iter_):
             raise errors.WidgetActionError("the specified iter cannot be "
                     "selected")
+        self._save_selection()
 
     def unselect(self, iter_):
         """Unselect an Iter. Fails silently if the Iter is not selected, but
@@ -509,11 +510,13 @@ class SelectionOwnerMixin(object):
         path = self._model.get_path(iter_)
         with self.ignoring_selection_changes():
             self.selection.unselect_iter(iter_)
+            self._save_selection()
 
     def unselect_all(self, signal=True):
         """Unselect all. emits only the 'deselected' signal."""
         with self.ignoring_selection_changes():
             self.selection.unselect_all()
+            self._save_selection()
             if signal:
                 self.emit('deselected')
 
@@ -555,6 +558,7 @@ class SelectionOwnerMixin(object):
         if not self._ignore_selection_changed:
             # don't bother sending out a second selection-changed signal if
             # the handler changes the selection (#15767)
+            self._save_selection()
             with self.ignoring_selection_changes():
                 self.emit('selection-changed')
 
