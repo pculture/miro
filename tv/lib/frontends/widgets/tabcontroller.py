@@ -268,6 +268,8 @@ class ConnectTab(widgetset.VBox):
         hbox = widgetset.HBox(spacing=30)
         self.share_audio_cbx = widgetset.Checkbox(_("Music"))
         self.share_video_cbx = widgetset.Checkbox(_("Videos"))
+        self.share_warnonquit_cbx = widgetset.Checkbox(
+            _('Warn on quit when others are connected to my media library.'))
         hbox.pack_start(self.share_video_cbx)
         hbox.pack_start(self.share_audio_cbx)
         self.share_button = PrettyToggleButton()
@@ -295,10 +297,12 @@ class ConnectTab(widgetset.VBox):
             self.share_entry.disable()
             self.share_video_cbx.disable()
             self.share_audio_cbx.disable()
+            self.share_warnonquit_cbx.disable()
 
         hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
         hbox.pack_start(share_error)
         vbox.pack_start(widgetutil.pad(hbox, top=10))
+        vbox.pack_start(widgetutil.pad(self.share_warnonquit_cbx, top=10))
 
         bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
         bg.set_size_request(550, -1)
@@ -412,7 +416,7 @@ class ConnectTab(widgetset.VBox):
     def daap_changed(self, button):
         app.config.set(prefs.SHARE_MEDIA, button.get_value())
         widgets = [self.share_entry, self.share_audio_cbx,
-                   self.share_video_cbx]
+                   self.share_video_cbx, self.share_warnonquit_cbx]
         if button.get_value():
             for w in widgets:
                 w.enable()
