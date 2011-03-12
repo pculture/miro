@@ -51,6 +51,8 @@ class Image(object):
         self.height = self.pixbuf.get_height()
 
     def resize(self, width, height):
+        width = int(round(width))
+        height = int(round(height))
         resized_pixbuf = self.pixbuf.scale_simple(width, height,
                 gtk.gdk.INTERP_BILINEAR)
         return TransformedImage(resized_pixbuf)
