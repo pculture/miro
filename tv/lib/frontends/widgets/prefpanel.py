@@ -869,9 +869,15 @@ class SharingPanel(PanelBuilder):
             _('Warn on quit when others are connected to my media library.'))
         share_txt = widgetset.TextEntry()
 
+        share_audio_cbx = widgetset.Checkbox(_('Share my music library.'))
+        share_video_cbx = widgetset.Checkbox(_('Share my video library.'))
+
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
-                       [sharing_warnonquit_cbx, share_txt])
+                       [share_audio_cbx, share_video_cbx,
+                        sharing_warnonquit_cbx, share_txt])
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
+        attach_boolean(share_audio_cbx, prefs.SHARE_AUDIO)
+        attach_boolean(share_video_cbx, prefs.SHARE_VIDEO)
         share_error = build_error_image()
         attach_text(share_txt, prefs.SHARE_NAME,
                     error_widget=share_error,
@@ -883,6 +889,8 @@ class SharingPanel(PanelBuilder):
             sharing_cbx.disable()
             share_txt.disable()
             sharing_warnonquit_cbx.disable()
+            share_audio_cbx.disable()
+            share_video_cbx.disable()
 
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
         vbox.pack_start(widgetutil.align_left(sharing_warnonquit_cbx,
@@ -892,7 +900,10 @@ class SharingPanel(PanelBuilder):
                         dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(share_txt)
         grid.pack(share_error, dialogwidgets.ControlGrid.ALIGN_LEFT)
-        vbox.pack_start(widgetutil.align_left(grid.make_table()))
+        vbox.pack_start(widgetutil.align_left(grid.make_table(), bottom_pad=6))
+
+        vbox.pack_start(widgetutil.align_left(share_video_cbx, bottom_pad=6))
+        vbox.pack_start(widgetutil.align_left(share_audio_cbx, bottom_pad=6))
 
         if not app.sharing_manager.mdns_present:
             text = _("Bonjour is required for sharing. "

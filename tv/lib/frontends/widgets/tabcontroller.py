@@ -266,13 +266,17 @@ class ConnectTab(widgetset.VBox):
 
         vbox = widgetset.VBox()
         hbox = widgetset.HBox(spacing=30)
-        hbox.pack_start(widgetset.Checkbox(_("Videos")))
-        hbox.pack_start(widgetset.Checkbox(_("Music")))
+        self.share_audio_cbx = widgetset.Checkbox(_("Music"))
+        self.share_video_cbx = widgetset.Checkbox(_("Videos"))
+        hbox.pack_start(self.share_video_cbx)
+        hbox.pack_start(self.share_audio_cbx)
         self.share_button = PrettyToggleButton()
         self.share_button.connect('clicked', self.daap_changed)
         self.share_button.connect('dragged-left', self.daap_changed)
         self.share_button.connect('dragged-right', self.daap_changed)
         self.share_button.set_value(app.config.get(prefs.SHARE_MEDIA))
+        prefpanel.attach_boolean(self.share_audio_cbx, prefs.SHARE_AUDIO)
+        prefpanel.attach_boolean(self.share_video_cbx, prefs.SHARE_VIDEO)
         hbox.pack_end(self.share_button)
         vbox.pack_start(hbox)
 
@@ -289,6 +293,9 @@ class ConnectTab(widgetset.VBox):
 
         if not self.share_button.get_value():
             self.share_entry.disable()
+            self.share_video_cbx.disable()
+            self.share_audio_cbx.disable()
+
         hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
         hbox.pack_start(share_error)
         vbox.pack_start(widgetutil.pad(hbox, top=10))
@@ -404,10 +411,14 @@ class ConnectTab(widgetset.VBox):
 
     def daap_changed(self, button):
         app.config.set(prefs.SHARE_MEDIA, button.get_value())
+        widgets = [self.share_entry, self.share_audio_cbx,
+                   self.share_video_cbx]
         if button.get_value():
-            self.share_entry.enable()
+            for w in widgets:
+                w.enable()
         else:
-            self.share_entry.disable()
+            for w in widgets:
+                w.disable()
 
     def help_button_clicked(self, button):
         print 'help clicked'
