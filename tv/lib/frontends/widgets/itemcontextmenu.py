@@ -196,17 +196,18 @@ class ItemContextMenuHandler(object):
 
         elif ((item.download_info is not None and
                item.download_info.state != 'failed')):
-            section.append((
-                    _('Cancel Download'),
-                    messages.CancelDownload(item.id).send_to_backend))
-            if item.download_info.state != 'paused':
+            if item.download_info.state != 'finished':
                 section.append((
-                        _('Pause Download'),
-                        messages.PauseDownload(item.id).send_to_backend))
-            else:
-                section.append((
-                        _('Resume Download'),
-                        messages.ResumeDownload(item.id).send_to_backend))
+                        _('Cancel Download'),
+                        messages.CancelDownload(item.id).send_to_backend))
+                if item.download_info.state != 'paused':
+                    section.append((
+                            _('Pause Download'),
+                            messages.PauseDownload(item.id).send_to_backend))
+                else:
+                    section.append((
+                            _('Resume Download'),
+                            messages.ResumeDownload(item.id).send_to_backend))
 
         else:
             if not (item.device or item.remote):
