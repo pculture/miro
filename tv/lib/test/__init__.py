@@ -79,6 +79,7 @@ from miro.test.infolisttest import *
 from miro.test.fileobjecttest import *
 from miro.test.widgetstateconstantstest import *
 from miro.test.metadatatest import *
+from miro.test.tableselectiontest import *
 
 # platform specific tests
 

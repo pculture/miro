@@ -31,19 +31,14 @@
 list and the item list (AKA almost all of the miro).
 """
 
-from __future__ import with_statement # neccessary for python2.5
-
 import itertools
-from contextlib import contextmanager
-
-import logging
-
 import gobject
 import gtk
 
 from miro import signals
 from miro import infolist
 from miro import errors
+from miro.frontends.widgets.tableselection import SelectionOwnerMixin
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
@@ -435,166 +430,81 @@ class TableColumn(signals.SignalEmitter):
         """
         return self._column.get_sort_order() == gtk.SORT_ASCENDING
 
-class SelectionOwnerMixin(object):
-    """Encapsulates the selection functionality of a TableView."""
+class GTKSelectionOwnerMixin(SelectionOwnerMixin):
+    """GTK-specific methods for selection management.
+
+    This subclass should not define any behavior. Methods that cannot be
+    completed in this widget state should raise WidgetActionError.
+    """
     def __init__(self):
+        SelectionOwnerMixin.__init__(self)
         self.selection = self._widget.get_selection()
-        self._selected_before_change = None
-        self._ignore_selection_changed = 0
-        self._restoring_selection = None
-        self.create_signal('selection-changed')
-        self.create_signal('selection-invalid')
-        self.create_signal('deselected')
         weak_connect(self.selection, 'changed', self.on_selection_changed)
 
-    @contextmanager
-    def ignoring_selection_changes(self):
-        """Use this with with to prevent sending signals when we're changing our
-        own selection; that way, when we get a signal, we know it's something
-        important.
-        """
-        self._ignore_selection_changed += 1
-        try:
-            yield
-        finally:
-            self._ignore_selection_changed -= 1
-
-    def allow_multiple_select(self, allow):
+    def _set_allow_multiple_select(self, allow):
         if allow:
             mode = gtk.SELECTION_MULTIPLE
         else:
             mode = gtk.SELECTION_SINGLE
         self.selection.set_mode(mode)
 
-    def get_selection(self, strict=True):
-        """Returns a list of GTK Iters. If strict is set (default), will fail
-        with WidgetActionError if there is a selection waiting to be restored;
-        unset strict to get whatever is selected (though it should be about to
-        be overwritten).
-        """
-        # FIXME: non-strict mode is transitional. when everything is fixed not
-        # to need it, remove it
-        if strict and self._restoring_selection:
-            raise errors.WidgetActionError("current selection is temporary")
+    def _get_allow_multiple_select(self):
+        return self.selection.get_mode() == gtk.SELECTION_MULTIPLE
+
+    def _get_selected_iters(self):
         iters = []
-        def collect(treemodel, path, iter):
-            iters.append(iter)
+        def collect(treemodel, path, iter_):
+            iters.append(iter_)
         self.selection.selected_foreach(collect)
         return iters
 
-    def get_selected(self):
-        """Returns a GTK Iter."""
-        model, iter = self.selection.get_selected()
-        return iter
+    def _get_selected_iter(self):
+        model, iter_ = self.selection.get_selected()
+        return iter_
 
+    @property
     def num_rows_selected(self):
-        """Should be the same as len(get_selection()), but more efficient."""
         return self.selection.count_selected_rows()
 
-    def select(self, iter_):
-        """Try to select an iter. Succeeds or raises WidgetActionError. Sends
-        no signals.
-        """
-        with self.ignoring_selection_changes():
-            self.selection.select_iter(iter_)
-        if not self.selection.iter_is_selected(iter_):
-            raise errors.WidgetActionError("the specified iter cannot be "
-                    "selected")
+    def _is_selected(self, iter_):
+        return self.selection.iter_is_selected(iter_)
 
-    def unselect(self, iter_):
-        """Unselect an Iter. Fails silently if the Iter is not selected, but
-        raises an exception if the Iter is not selectable at all. Sends no
-        signals.
-        """
+    def _select(self, iter_):
+        self.selection.select_iter(iter_)
+
+    def _unselect(self, iter_):
+        self.selection.unselect_iter(iter_)
+
+    def _unselect_all(self):
+        self.selection.unselect_all()
+
+    def _iter_to_string(self, iter_):
+        return self._model.get_string_from_iter(iter_)
+
+    def _iter_from_string(self, string):
+        try:
+            return self._model.get_iter_from_string(string)
+        except ValueError:
+            raise errors.WidgetActionError("string does not represent a path "
+                                           "that can be selected at this time")
+
+    def _iter_to_smart_selector(self, iter_):
         path = self._model.get_path(iter_)
-        with self.ignoring_selection_changes():
-            self.selection.unselect_iter(iter_)
+        return gtk.TreeRowReference(self._model, path)
 
-    def unselect_all(self, signal=True):
-        """Unselect all. emits only the 'deselected' signal."""
-        with self.ignoring_selection_changes():
-            self.selection.unselect_all()
-            if signal:
-                self.emit('deselected')
+    def _iter_from_smart_selector(self, tree_row_reference):
+        try:
+            path = tree_row_reference.get_path()
+        except TypeError:
+            raise errors.WidgetActionError("treerowreference not valid at "
+                                           "this time")
+        else:
+            return self._model.get_iter(path)
 
-    def set_selection_as_strings(self, selected):
-        """Given a list of selection strings, selects each Iter represented by
-        the strings. Returns True if immediately successful, or False if the
-        selection given cannot be restored yet and has been postponed. Emits no
-        signals.
-        """
-        self._restoring_selection = None
-        with self.ignoring_selection_changes():
-            self.selection.unselect_all()
-        for sel_string in selected:
-            try:
-                iter_ = self._model.get_iter_from_string(sel_string)
-            except ValueError:
-                self._restoring_selection = selected
-                return False
-            with self.ignoring_selection_changes():
-                self.selection.select_iter(iter_)
-        self._save_selection() # overwrite old _save_selection
-        return True
+    def select_path(self, path):
+        self.selection.select_path(path)
 
-    def get_selection_as_strings(self):
-        """Returns the current selection as a list of strings."""
-        selected = []
-        selected_iters = self.get_selection()
-        for iter_ in selected_iters:
-            sel_string = self._model.get_string_from_iter(iter_)
-            selected.append(sel_string)
-        return selected
-
-    def on_selection_changed(self, selection):
-        """When we receive a selection-changed signal, we forward it if we're
-        not in a 'with ignoring_selection_changes' block. Selection-changed
-        handlers are run in an ignoring block, and anything that changes the
-        selection to reflect the current state.
-        """
-        if not self._ignore_selection_changed:
-            # don't bother sending out a second selection-changed signal if
-            # the handler changes the selection (#15767)
-            self._save_selection()
-            with self.ignoring_selection_changes():
-                self.emit('selection-changed')
-
-    def _save_selection(self):
-        """Save the current selection to restore with _restore_selection.
-        Selection needs to be saved/restored whenever the model is set to None
-        (bulk edits). Stores the selection as TreeRowReferences, which are
-        smarter than paths/Iters (the follow items despite changes in order) but
-        cannot be saved between sessions.
-        """
-        model, paths = self.selection.get_selected_rows()
-        self._selected_before_change = []
-        for path in paths:
-            self._selected_before_change.append(gtk.TreeRowReference(model, path))
-
-    def _restore_selection(self):
-        """Restore the selection after making changes that would unset it. If
-        there is a selection from set_selection_as_strings, restore that if
-        possible; otherwise, use what was set in _save_selection.
-        """
-        if self._restoring_selection is not None:
-            if self.set_selection_as_strings(self._restoring_selection):
-                return
-        if self._ignore_selection_changed:
-            return
-        if self._selected_before_change is None:
-            return
-        with self.ignoring_selection_changes():
-            self.selection.unselect_all()
-            for row in self._selected_before_change:
-                try:
-                    self.selection.select_path(row.get_path())
-                except TypeError:
-                    self._selected_before_change = None
-                    logging.error("can't restore selection - deleted?", exc_info=True)
-                    self.emit('selection-invalid')
-                    return
-
-class TableView(Widget, SelectionOwnerMixin):
+class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -602,7 +512,7 @@ class TableView(Widget, SelectionOwnerMixin):
     def __init__(self, model):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
-        SelectionOwnerMixin.__init__(self)
+        GTKSelectionOwnerMixin.__init__(self)
         self.model = model
         self.model.add_to_tableview(self._widget)
         self._model = self._widget.get_model()
@@ -954,9 +864,8 @@ class TableView(Widget, SelectionOwnerMixin):
 
     def _popup_context_menu(self, path, event):
         if not self.selection.path_is_selected(path):
-            with self.ignoring_selection_changes():
-                self.selection.unselect_all()
-            self.selection.select_path(path)
+            self.unselect_all(signal=False)
+            self.select_path(path)
         menu = self.make_context_menu()
         if menu:
             menu.popup(None, None, None, event.button, event.time)
@@ -1064,9 +973,8 @@ class TableView(Widget, SelectionOwnerMixin):
                 path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
                 if path_info is not None:
                     path, column, x, y = path_info
-                    with self.ignoring_selection_changes():
-                        self.selection.unselect_all()
-                    self.selection.select_path(path)
+                    self.unselect_all(signal=False)
+                    self.select_path(path)
         self.delaying_press = False
 
     def on_unrealize(self, treeview):

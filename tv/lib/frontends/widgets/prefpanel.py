@@ -728,7 +728,7 @@ class _WatchedFolderHelper(object):
         self._table.add_column(folder_column)
         self._table.add_column(visible_column)
         self._table.set_fixed_height(True)
-        self._table.allow_multiple_select(False)
+        self._table.allow_multiple_select = False
         self._table.set_alternate_row_backgrounds(True)
         self.add_button = widgetset.Button(_("Add"))
         self.add_button.set_size(widgetconst.SIZE_SMALL)
@@ -1036,7 +1036,7 @@ class StoreHelper(object):
         self._table.add_column(store_column)
         self._table.add_column(visible_column)
         self._table.set_fixed_height(True)
-        self._table.allow_multiple_select(False)
+        self._table.allow_multiple_select = False
         self._table.set_alternate_row_backgrounds(True)
         scroller = widgetset.Scroller(False, True)
         scroller.set_has_borders(True)
@@ -1102,7 +1102,7 @@ class _ExtensionsHelper(object):
         self._table.add_column(enabled_column)
         self._table.add_column(extension_column)
         self._table.set_fixed_height(True)
-        self._table.allow_multiple_select(False)
+        self._table.allow_multiple_select = False
         self._table.set_alternate_row_backgrounds(True)
         self._table.connect('row-clicked', self._show_details)
 

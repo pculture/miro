@@ -78,7 +78,7 @@ class TabListManager(dict):
         TabInfos). The list of TabInfos is never empty; if nothing is selected,
         the selection is changed to a fallback.
         """
-        real_tabs = self._selected_tablist.view.num_rows_selected()
+        real_tabs = self._selected_tablist.view.num_rows_selected
         if not real_tabs:
             self._handle_no_tabs_selected(self._selected_tablist)
         view = self._selected_tablist.view

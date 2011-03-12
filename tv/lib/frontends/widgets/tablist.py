@@ -285,7 +285,7 @@ class StaticTabList(TabList):
 
     def _make_view(self):
         view = TabListView(style.StaticTabRenderer())
-        view.allow_multiple_select(False)
+        view.allow_multiple_select = False
         return view
 
     def build_tabs(self):
@@ -305,7 +305,7 @@ class LibraryTabList(TabBlinkerMixin, TabList):
 
     def _make_view(self):
         view = TabListView(style.StaticTabRenderer())
-        view.allow_multiple_select(False)
+        view.allow_multiple_select = False
         view.set_drag_dest(MediaTypeDropHandler())
         view.connect('selection-changed', self.on_selection_changed)
         view.connect('deselected', self.on_deselected)
@@ -408,7 +408,7 @@ class HideableTabList(TabList):
 
     def _make_view(self):
         view = TabListView(self.render_class())
-        view.allow_multiple_select(self.ALLOW_MULTIPLE)
+        view.allow_multiple_select = self.ALLOW_MULTIPLE
         view.connect('row-expanded', self.on_row_expanded_change, True)
         view.connect('row-collapsed', self.on_row_expanded_change, False)
         view.connect('selection-changed', self.on_selection_changed)

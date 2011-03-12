@@ -480,7 +480,7 @@ class ItemView(widgetset.TableView):
 
         self.item_list = item_list
         self.set_fixed_height(True)
-        self.allow_multiple_select(True)
+        self.allow_multiple_select = True
 
         self.create_signal('scroll-position-changed')
         self.scroll_pos = scroll_pos

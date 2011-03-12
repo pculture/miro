@@ -38,7 +38,7 @@ from objc import YES, NO, nil
 from miro import fasttypes
 from miro import infolist
 from miro import signals
-from miro import errors
+from miro.errors import WidgetActionError
 from miro.plat.frontends.widgets import wrappermap
 
 def list_from_nsindexset(index_set):
@@ -93,7 +93,7 @@ class RowList(object):
         if index < 0:
             raise IndexError()
         elif index >= len(self):
-            return None
+            raise LookupError()
         if len(self.iter_cache) == 0:
             self.iter_cache.append(self.firstIter())
         try:
@@ -115,35 +115,6 @@ class TableModelBase(signals.SignalEmitter):
         self.column_types = column_types
         self.create_signal('row-changed')
         self.create_signal('structure-will-change')
-
-    def remember_selection(self, tableview):
-        """Remember the selection for a NSTableView using this model
-
-        Returns an object that can be passed to restore_selection() after
-        changes have been made to the model.
-
-        :param tableview: NSTableView to operate on
-
-        :returns: opaque object that can be passed to restore_selection
-        """
-        indexes = list_from_nsindexset(tableview.selectedRowIndexes())
-        return [self.iter_for_row(tableview, i) for i in indexes]
-
-    def restore_selection(self, tableview, old_selection):
-        """Restore the selection for a NSTableView using this model
-
-        :param tableview: NSTableView to operate on
-        :param old_selection: return value from remember_selection()
-        """
-        if not old_selection:
-            return
-        new_index_set = NSMutableIndexSet.alloc().init()
-        for iter in old_selection:
-            if iter.valid():
-                new_index_set.addIndex_(self.row_of_iter(tableview, iter))
-            else:
-                raise errors.ActionUnavailableError("iter is not valid")
-        tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
 
     def check_column_values(self, column_values):
         if len(self.column_types) != len(column_values):
@@ -278,27 +249,6 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
         else:
             raise IndexError()
 
-    def remember_selection(self, tableview):
-        indexes = list_from_nsindexset(tableview.selectedRowIndexes())
-        return [self[i][0].id for i in indexes]
-
-    def restore_selection(self, tableview, old_selection):
-        """Restore the selection for a NSTableView using this model
-
-        :param tableview: NSTableView to operate on
-        :param old_selection: return value from remember_selection()
-        """
-        if not old_selection:
-            return
-        new_index_set = NSMutableIndexSet.alloc().init()
-        for id_ in old_selection:
-            try:
-                index = self.index_of_id(id_)
-            except KeyError:
-                raise errors.ActionUnavailableError("iter is not valid")
-            new_index_set.addIndex_(index)
-        tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
-
     def add_infos(self, *args, **kwargs):
         self.emit('structure-will-change')
         infolist.InfoList.add_infos(self, *args, **kwargs)
@@ -337,10 +287,12 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
         self.emit('row-changed', row)
 
     def iter_for_row(self, tableview, row):
-        if 0 <= row < len(self):
-            return row # iterators are just the row index
+        if row < 0:
+            raise IndexError
+        elif row >= len(self):
+            raise WidgetActionError("iter past end of table")
         else:
-            return None
+            return row # iterators are just the row index
 
     def row_of_iter(self, tableview, iter):
         return iter # iterators are just the row index
@@ -447,8 +399,11 @@ class TreeTableModel(TableModelBase):
         item = tableview.itemAtRow_(row)
         if item in self.iter_for_item:
             return self.iter_for_item[item]
+        elif item == -1:
+            raise WidgetActionError("no item at row %s" % row)
         else:
-            logging.debug('no iter for item %s at row %s', repr(item), row)
+            raise WidgetActionError("no iter for item %s at row %s" %
+                                   (repr(item), row))
 
     def row_of_iter(self, tableview, iter):
         item = iter.value()

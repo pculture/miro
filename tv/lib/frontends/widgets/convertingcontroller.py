@@ -198,7 +198,7 @@ class ConvertingTableView(widgetset.TableView):
         self.add_column(self.column)
 
         self.set_show_headers(False)
-        self.allow_multiple_select(False)
+        self.allow_multiple_select = False
         self.set_auto_resizes(True)
         self.set_background_color(widgetutil.WHITE)
 

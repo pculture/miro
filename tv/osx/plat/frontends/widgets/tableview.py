@@ -44,6 +44,7 @@ from objc import YES, NO, nil
 from miro import signals
 from miro import errors
 from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets.tableselection import SelectionOwnerMixin
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import osxmenus
@@ -858,135 +859,56 @@ class MiroTableHeaderCell(NSTableHeaderCell):
             text_color = NSColor.whiteColor()
         return DrawingStyle(text_color=text_color)
 
-class SelectionOwnerMixin(object):
-    """Encapsulates the selection functionality of a TableView."""
-    def __init__(self):
-        self.create_signal('selection-changed')
-        self.create_signal('selection-invalid')
-        self.create_signal('deselected')
-        self._selected_before_change = None
-        self._ignore_selection_changed = 0
-        self._restoring_selection = None
+class CocoaSelectionOwnerMixin(SelectionOwnerMixin):
+    """Cocoa-specific methods for selection management.
 
-    @contextmanager
-    def ignoring_selection_changes(self):
-        self._ignore_selection_changed += 1
-        try:
-            yield
-        finally:
-            self._ignore_selection_changed -= 1
+    This subclass should not define any behavior. Methods that cannot be
+    completed in this widget state should raise WidgetActionError.
+    """
 
-    def _save_selection(self):
-        if self._selected_before_change is None:
-            self._selected_before_change = self.model.remember_selection(
-                    self.tableview)
-
-    def _restore_selection(self):
-        if self._restoring_selection is not None:
-            if self.set_selection_as_strings(self._restoring_selection):
-                return
-        if not self._selected_before_change:
-            # short-circuit if nothing is selected.  This actually prevents a
-            # bug in the current widgets startup code.
-            self._selected_before_change = None
-            return
-        self._selected_before_change = None
-        with self.ignoring_selection_changes():
-            self.tableview.deselectAll_(nil)
-            try:
-                self.model.restore_selection(self.tableview,
-                        self._selected_before_change)
-            except errors.ActionUnavailableError:
-                # FIXME: this never happens
-                self.emit('selection-invalid')
-                return
-        self._emit_selection_changed()
-
-    def on_selection_change(self, notification):
-        if not self._ignore_selection_changed:
-            self._save_selection()
-            self._emit_selection_changed()
-
-    def _emit_selection_changed(self):
-        if not self._ignore_selection_changed:
-            # don't bother sending out a second selection-changed signal if
-            # the handler changes the selection (#15767)
-            with self.ignoring_selection_changes():
-                self.emit('selection-changed')
-
-    def allow_multiple_select(self, allow):
+    def _set_allow_multiple_select(self, allow):
         self.tableview.setAllowsMultipleSelection_(allow)
 
-    def get_selection(self, strict=True):
-        """Returns a list of row iters. If strict is set (default), will fail
-        with WidgetActionError if there is a selection waiting to be restored;
-        unset strict to get whatever is selected (though it should be about to
-        be overwritten).
-        """
-        # FIXME: non-strict mode is transitional. when everything is fixed not
-        # to need it, remove it
-        if strict and self._restoring_selection:
-            raise errors.WidgetActionError("current selection is temporary")
+    def _get_allow_multiple_select(self):
+        return self.tableview.allowsMultipleSelection()
+
+    def _get_selected_iters(self):
         selection = self.tableview.selectedRowIndexes()
         selrows = tablemodel.list_from_nsindexset(selection)
         return [self.model.iter_for_row(self.tableview, row) for row in selrows]
 
-    def get_selected(self):
-        if self.tableview.allowsMultipleSelection():
-            raise errors.ActionUnavailableError("table allows multiple selection")
+    def _get_selected_iter(self):
         row = self.tableview.selectedRow()
         if row == -1:
             return None
         return self.model.iter_for_row(self.tableview, row)
 
+    @property
     def num_rows_selected(self):
-        return self.tableview.selectedRowIndexes().count()
+        return self.tableview.numberOfSelectedRows()
 
-    def select(self, iter):
-        index_set = NSIndexSet.alloc().initWithIndex_(self.row_of_iter(iter))
-        with self.ignoring_selection_changes():
-            self.tableview.selectRowIndexes_byExtendingSelection_(index_set, YES)
+    def _is_selected(self, iter_):
+        row = self.row_of_iter(iter_)
+        return self.tableview.isRowSelected_(row)
 
-    def unselect(self, iter):
-        with self.ignoring_selection_changes():
-            self.tableview.deselectRow_(self.row_of_iter(iter))
+    def _select(self, iter_):
+        row = self.row_of_iter(iter_)
+        index_set = NSIndexSet.alloc().initWithIndex_(row)
+        self.tableview.selectRowIndexes_byExtendingSelection_(index_set, YES)
 
-    def unselect_all(self, signal=True):
-        self._restoring_selection = None
-        with self.ignoring_selection_changes():
-            self.tableview.deselectAll_(nil)
-            if signal:
-                self.emit('deselected')
+    def _unselect(self, iter_):
+        self.tableview.deselectRow_(self.row_of_iter(iter_))
 
-    def set_selection_as_strings(self, selected):
-        """Given a list of selection strings, selects each row represented by
-        the strings.
-        
-        There's no straightforward way to wait until after the model has been
-        populated to call this method, so here we actually just make a note of
-        the values to be selected, and model_changed selects them when it can.
-        """
-        selected = sorted(int(index) for index in selected)
-        self._restoring_selection = None
-        index_set = NSMutableIndexSet.alloc().init()
-        for index in selected:
-            index_set.addIndex_(index)
-        with self.ignoring_selection_changes():
-            self.tableview.selectRowIndexes_byExtendingSelection_(index_set, NO)
-        if self.tableview.selectedRowIndexes().isEqualToIndexSet_(index_set):
-            return True
-        else:
-            self._restoring_selection = selected
-            logging.debug("can't restore %s yet.", repr(selected))
-            return False
+    def _unselect_all(self):
+        self.tableview.deselectAll_(nil)
 
-    def get_selection_as_strings(self):
-        """Returns the current selection as a list of strings."""
-        index_set = self.tableview.selectedRowIndexes()
-        indices = tablemodel.list_from_nsindexset(index_set)
-        return indices
+    def _iter_to_string(self, iter_):
+        return unicode(self.model.row_of_iter(self.tableview, iter_))
 
-class TableView(SelectionOwnerMixin, Widget):
+    def _iter_from_string(self, row):
+        return self.model.iter_for_row(self.tableview, int(row))
+
+class TableView(CocoaSelectionOwnerMixin, Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
     widget fairly closely.
     """
@@ -1062,7 +984,6 @@ class TableView(SelectionOwnerMixin, Widget):
 
     def on_model_structure_change(self, model):
         self.reload_needed = True
-        self._save_selection()
         self.cancel_hotspot_track()
 
     def cancel_hotspot_track(self):
@@ -1125,12 +1046,12 @@ class TableView(SelectionOwnerMixin, Widget):
                 'NSOutlineViewItemDidExpandNotification')
             self.notifications.connect(self.on_collapsed,
                 'NSOutlineViewItemDidCollapseNotification')
-            self.notifications.connect(self.on_selection_change,
+            self.notifications.connect(self.on_selection_changed,
                     'NSOutlineViewSelectionDidChangeNotification')
             self.notifications.connect(self.on_column_resize,
                     'NSOutlineViewColumnDidResizeNotification')
         else:
-            self.notifications.connect(self.on_selection_change,
+            self.notifications.connect(self.on_selection_changed,
                     'NSTableViewSelectionDidChangeNotification')
             self.notifications.connect(self.on_column_resize,
                     'NSTableViewColumnDidResizeNotification')
