@@ -57,7 +57,7 @@ COLUMN_LABELS = {
     u'genre': _('Genre'),
     u'rating': _('Rating'),
     u'date': _('Date'),
-    u'length': _('Length'),
+    u'length': _('Time'),
     u'status': _('Status'),
     u'size': _('Size'),
     u'feed-name': _('Source'),
