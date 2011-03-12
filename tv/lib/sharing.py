@@ -855,7 +855,10 @@ class SharingManagerBackend(object):
         # is going away then we'll deal with it later on.  only care about
         # the reference being valid (?)
         with self.item_lock:
-            daapitem = self.daapitems[itemid]
+            try:
+                daapitem = self.daapitems[itemid]
+            except KeyError:
+                return None
         path = daapitem['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
