@@ -468,8 +468,9 @@ class VideoBox(style.LowerBox):
         self.selected_file = info
 
     def on_playback_started(self, manager):
-        self.selected_tab_list = app.tabs.selected_tab_list
-        self.selected_tabs = app.tabs.selected_tabs
+        list_type, selected = app.tabs.selection
+        self.selected_tab_list = app.tabs[list_type]
+        self.selected_tabs = selected
 
     def on_playback_stopped(self, manager):
         self.selected_file = None
