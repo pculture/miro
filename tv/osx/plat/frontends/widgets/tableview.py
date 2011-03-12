@@ -903,7 +903,9 @@ class SelectionOwnerMixin(object):
         self._emit_selection_changed()
 
     def on_selection_change(self, notification):
-        self._emit_selection_changed()
+        if not self._ignore_selection_changed:
+            self._save_selection()
+            self._emit_selection_changed()
 
     def _emit_selection_changed(self):
         if not self._ignore_selection_changed:
@@ -1240,7 +1242,6 @@ class TableView(SelectionOwnerMixin, Widget):
         size_changed = False
         if self.reload_needed:
             self.tableview.reloadData()
-            self._restore_selection()
             size_changed = True
         elif self.iters_to_update:
             if self.fixed_height or not self.height_changed:
@@ -1278,6 +1279,7 @@ class TableView(SelectionOwnerMixin, Widget):
             self.invalidate_size_request()
         self.height_changed = self.reload_needed = False
         self.iters_to_update = []
+        self._restore_selection()
         self.set_scroll_position()
 
     def width_for_columns(self, width):
