@@ -747,7 +747,6 @@ class _WatchedFolderHelper(object):
         scroller.set_size_request(-1, 120)
         self.folder_list = widgetset.VBox()
         self.folder_list.pack_start(scroller)
-        self._check_no_folders()
         self._changed_signal = None
 
     def _on_visible_clicked(self, renderer, iter_):
@@ -766,9 +765,9 @@ class _WatchedFolderHelper(object):
 
     def _on_folders_changed(self, watched_folder_manager):
         self._table.model_changed()
-        self._check_no_folders()
+        self.check_no_folders()
 
-    def _check_no_folders(self):
+    def check_no_folders(self):
         if len(app.watched_folder_manager.model) == 0:
             self.remove_button_holder.hide()
         else:
@@ -780,7 +779,7 @@ class _WatchedFolderHelper(object):
                 transient_for=_pref_window)
         if dir is not None:
             app.watched_folder_manager.add(dir)
-            self._check_no_folders()
+            self.check_no_folders()
 
     def _remove_clicked(self, button):
         iter_ = self._table.get_selected()
@@ -813,6 +812,7 @@ class FoldersPanel(PanelBuilder):
         def query_lib(self, type):
             return self.library[type]
         self.watched_folder_helper.connect_signals()
+        self.watched_folder_helper.check_no_folders()
         self.movie_dir_helper.set_initial_path()
 
     def on_window_closed(self):
