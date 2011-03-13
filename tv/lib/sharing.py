@@ -794,25 +794,39 @@ class SharingManagerBackend(object):
 
     def handle_playlist_added(self, obj, added):
         playlists = [x for x in added if not x.is_folder]
-        with self.item_lock:
-            self.make_daap_playlists(playlists)
+
+        def _handle_playlist_added():
+            with self.item_lock:
+                self.make_daap_playlists(playlists)
+
+        eventloop.add_urgent_call(lambda: _handle_playlist_added(),
+                                  "SharingManagerBackend: playlist added")
 
     def handle_playlist_changed(self, obj, changed):
-        with self.item_lock:
-            # We could just overwrite everything without actually deleting
-            # the object.  A missing key means it's a folder, and we skip
-            # over it.
-            for x in changed:
-                if self.daap_playlists.has_key(x.id):
-                    del self.daap_playlists[x.id]
-            self.make_daap_playlists(changed)
+        def _handle_playlist_changed():
+            with self.item_lock:
+                # We could just overwrite everything without actually deleting
+                # the object.  A missing key means it's a folder, and we skip
+                # over it.
+                for x in changed:
+                    if self.daap_playlists.has_key(x.id):
+                        del self.daap_playlists[x.id]
+                self.make_daap_playlists(changed)
+
+        eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
+                                  "SharingManagerBackend: playlist changed")
+
 
     def handle_playlist_removed(self, obj, removed):
-        with self.item_lock:
-            for x in removed:
-                # Missing key means it's a folder and we skip over it.
-                if self.daap_playlists.has_key(x):
-                    del self.daap_playlists[x]
+        def _handle_playlist_removed():
+            with self.item_lock:
+                for x in removed:
+                    # Missing key means it's a folder and we skip over it.
+                    if self.daap_playlists.has_key(x):
+                        del self.daap_playlists[x]
+
+        eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
+                                  "SharingManagerBackend: playlist removed")
 
     def populate_playlists(self):
         with self.item_lock:
