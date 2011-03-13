@@ -37,7 +37,7 @@ import gtk
 
 from miro import signals
 from miro import infolist
-from miro import errors
+from miro.errors import WidgetActionError, WidgetDomainError, WidgetRangeError
 from miro.frontends.widgets.tableselection import SelectionOwnerMixin
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
@@ -105,7 +105,7 @@ class MiroTreeView(gtk.TreeView):
         try:
             for i, scrollbar in enumerate(self.scrollbars):
                 self._update_scrollbar_position(i)
-        except errors.WidgetActionError:
+        except WidgetActionError:
             # try again later
             pass
         else:
@@ -134,8 +134,7 @@ class MiroTreeView(gtk.TreeView):
         # FIXME: don't count on that
         if upper < 5:
             self.scroll_positions_set = False
-            raise errors.WidgetActionError("not ready yet, or window has reset "
-                    "position")
+            raise WidgetRangeError("scrollable area", pos, lower, upper)
         # have to clip it ourselves
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
@@ -175,7 +174,7 @@ class MiroTreeView(gtk.TreeView):
 
             try:
                 self.scroll_ancestor(newly_selected, down)
-            except errors.WidgetActionError:
+            except WidgetActionError:
                 # not possible
                 return False
             return True
@@ -184,7 +183,7 @@ class MiroTreeView(gtk.TreeView):
         # Try to figure out what just became selected.  If multiple things
         # somehow became selected, select the outermost one
         if len(newly_selected) == 0:
-            raise errors.WidgetActionError("need at an item to scroll to")
+            raise WidgetActionError("need at an item to scroll to")
         if down:
             path_to_show = max(newly_selected)
         else:
@@ -194,7 +193,7 @@ class MiroTreeView(gtk.TreeView):
         ancestor = self.get_parent()
         while not isinstance(ancestor, gtk.Viewport):
             if ancestor is None:
-                raise errors.WidgetActionError("no scrollable ancestor")
+                raise WidgetActionError("no scrollable ancestor")
             ancestor = ancestor.get_parent()
 
         vadjustment = ancestor.get_vadjustment()
@@ -485,8 +484,8 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         try:
             return self._model.get_iter_from_string(string)
         except ValueError:
-            raise errors.WidgetActionError("string does not represent a path "
-                                           "that can be selected at this time")
+            raise WidgetDomainError(
+                  "model iters", string, "%s other iters" % len(self.model))
 
     def _iter_to_smart_selector(self, iter_):
         path = self._model.get_path(iter_)
@@ -496,7 +495,7 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         try:
             path = tree_row_reference.get_path()
         except TypeError:
-            raise errors.WidgetActionError("treerowreference not valid at "
+            raise WidgetActionError("treerowreference not valid at "
                                            "this time")
         else:
             return self._model.get_iter(path)
@@ -742,7 +741,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         else:
             self._widget.collapse_row(path)
         if not self._widget.row_expanded(path):
-            raise errors.WidgetActionError("cannot expand the given item - it "
+            raise WidgetActionError("cannot expand the given item - it "
                     "probably has no children.")
 
     def is_row_expanded(self, iter):

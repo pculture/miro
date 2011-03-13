@@ -40,3 +40,27 @@ class WidgetActionError(ActionUnavailableError):
     This usually is not serious, but if not handled the UI will likely be in an
     incorrect state.
     """
+
+class WidgetDomainError(WidgetActionError):
+    """The widget element requested is not available at this time."""
+    def __init__(self, domain, needle, haystack, details=None):
+        self.domain = domain
+        self.needle = needle
+        self.haystack = haystack
+        self.details = details
+
+    @property
+    def reason(self):
+        reason = "looked for {0} in {1}, but found only {1}".format(
+                 repr(self.needle), repr(self.haystack), self.domain)
+        if self.details:
+            reason += ": " + self.details
+        return reason
+
+class WidgetRangeError(WidgetDomainError):
+    """Class to handle neat display of ranges in WidgetDomainErrors. Handlers
+    should generally catch a parent of this.
+    """
+    def __init__(self, domain, needle, start_range, end_range, details=None):
+        haystack = "{0} to {1}".format(repr(start_range), repr(end_range))
+        WidgetDomainError.__init__(self, domain, needle, haystack, details)
