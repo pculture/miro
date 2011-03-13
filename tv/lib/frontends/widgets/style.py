@@ -279,7 +279,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
     FAILED_TEXT_SHADOW = widgetutil.BLACK
 
     # font sizes
-    EMBLEM_FONT_SIZE = widgetutil.font_scale_from_osx_points(10)
+    EMBLEM_FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
     TITLE_FONT_SIZE = widgetutil.font_scale_from_osx_points(14)
     EXTRA_INFO_FONT_SIZE = widgetutil.font_scale_from_osx_points(10)
     ITEM_DESC_FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
