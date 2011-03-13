@@ -87,8 +87,10 @@ class TabListManager(dict):
             self._previous_selection = (self._selected_tablist.type,
                     (self._get_locator(view, i) for i in iters))
         try:
-            return self._selected_tablist.type, [view.model[i][0]
-                   for i in iters]
+            typ = self._selected_tablist.type
+            if not iters:
+                typ = None
+            return typ, [view.model[i][0] for i in iters]
         except AttributeError:
             logging.error('iter is None')
             return self._selected_tablist.type, [

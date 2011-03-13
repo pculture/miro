@@ -153,6 +153,8 @@ class SelectionOwnerMixin(object):
         """
         # FIXME: non-strict mode is transitional. when everything is fixed not
         # to need it, remove it
+        if self._restoring_selection:
+            self.set_selection_as_strings(self._restoring_selection)
         if strict and self._restoring_selection:
             raise WidgetActionError("current selection is temporary")
         return self._get_selected_iters()
@@ -165,10 +167,12 @@ class SelectionOwnerMixin(object):
         
         Raises a WidgetActionError if multiple select is enabled.
         """
-        if strict and self._restoring_selection:
-            raise WidgetActionError("current selection is temporary")
+        if self._restoring_selection:
+            self.set_selection_as_strings(self._restoring_selection)
         if self.allow_multiple_select:
             raise WidgetActionError("table allows multiple selection")
+        if strict and self._restoring_selection:
+            raise WidgetActionError("current selection is temporary")
         return self._get_selected_iter()
 
     def select_path(self, path):

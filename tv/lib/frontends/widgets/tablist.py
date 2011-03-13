@@ -531,7 +531,7 @@ class HideableTabList(TabList):
     def on_selection_changed(self, view):
         """When an item is selected, also expand it."""
         try:
-            for iter_ in view.get_selection():
+            for iter_ in view.get_selection(strict=False):
                 id_ = self.view.model[iter_][0].id
                 self.expand(id_)
         except errors.WidgetActionError, error:
