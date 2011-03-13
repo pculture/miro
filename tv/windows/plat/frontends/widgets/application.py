@@ -48,6 +48,7 @@ from miro.plat import migrateappname
 from miro.plat import clipboard
 from miro.plat import options
 from miro.plat import resources
+from miro.plat import associate
 from miro.plat.renderers.vlc import VLCRenderer, get_item_type
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import trayicon
@@ -60,6 +61,8 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
+        associate.associate_extensions(self._get_exe_location(),
+                                       self._get_icon_location())
         winrel = platform.release()
         if winrel == "post2008Server":
             winrel += " (could be Windows 7)"
@@ -114,7 +117,7 @@ class WindowsApplication(Application):
         elif key == prefs.RUN_AT_STARTUP.key:
             self.set_run_at_startup(value)
 
-    def _set_default_icon(self):
+    def _get_icon_location(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
         icopath = os.path.join(resources.app_root(), "Miro.ico")
@@ -126,8 +129,19 @@ class WindowsApplication(Application):
                 gtk.window_set_default_icon_from_file(icopath)
         return icopath
 
+    def _get_exe_location(self):
+            # We don't use the app name for the .exe, so branded
+            # versions work
+            filename = os.path.join(resources.root(), "..", "Miro.exe")
+            filename = os.path.normpath(filename)
+            themeName = app.config.get(prefs.THEME_NAME)
+            if themeName is not None:
+                themeName = themeName.replace("\\", "\\\\").replace('"', '\\"')
+                filename = "%s --theme \"%s\"" % (filename, themeName)
+            return filename
+
     def build_window(self):
-        icopath = self._set_default_icon()
+        icopath = self._get_icon_location()
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
@@ -281,14 +295,7 @@ class WindowsApplication(Application):
                 raise
 
         if value:
-            # We don't use the app name for the .exe, so branded
-            # versions work
-            filename = os.path.join(resources.root(), "..", "Miro.exe")
-            filename = os.path.normpath(filename)
-            themeName = app.config.get(prefs.THEME_NAME)
-            if themeName is not None:
-                themeName = themeName.replace("\\", "\\\\").replace('"', '\\"')
-                filename = "%s --theme \"%s\"" % (filename, themeName)
+            filename = self._get_exe_location()
 
             _winreg.SetValueEx(folder, app.config.get(prefs.LONG_APP_NAME), 0,
                                _winreg.REG_SZ, filename)
