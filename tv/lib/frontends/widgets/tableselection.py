@@ -89,8 +89,7 @@ class SelectionOwnerMixin(object):
         with self._ignoring_changes():
             self._select(iter_)
         if not self._is_selected(iter_):
-            raise WidgetActionError("the specified iter cannot be "
-                    "selected")
+            raise WidgetActionError("the specified iter cannot be selected")
 
     def unselect(self, iter_):
         """Unselect an Iter. Fails silently if the Iter is not selected, but
@@ -134,11 +133,13 @@ class SelectionOwnerMixin(object):
         self.unselect_all(signal=False)
         for sel_string in selected:
             try:
+                # iter may not be destringable (yet)
                 iter_ = self._iter_from_string(sel_string)
+                # destringed iter not selectable if parent isn't open (yet)
+                self.select(iter_)
             except WidgetActionError:
                 self._restoring_selection = selected
                 return False
-            self.select(iter_)
         self._save_selection() # overwrite old _save_selection
         return True
 
@@ -181,6 +182,13 @@ class SelectionOwnerMixin(object):
         NOTE: not currently implemented on OS X.
         """
         raise NotImplementedError
+
+    def forget_restore(self):
+        """This method is to be used when a selection has been given in
+        set_selection_as_strings, but that selection is not likely to be
+        restorable.
+        """
+        self._restoring_selection = None
 
     def _save_selection(self):
         """Save the current selection to restore with _restore_selection.

@@ -80,6 +80,9 @@ class MockTableView(set, SignalEmitter, TestSelectionOwnerMixin):
         SignalEmitter.__init__(self)
         TestSelectionOwnerMixin.__init__(self)
 
+# FIXME: additional testing that would be useful:
+# - test_handle_impossible_selection
+
 class TableSelectionTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)

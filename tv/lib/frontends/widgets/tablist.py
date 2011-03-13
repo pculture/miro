@@ -198,16 +198,24 @@ class TabList(signals.SignalEmitter):
     def changing(self):
         return self._removing or self._adding
 
+    def __len__(self):
+        return len(self.iter_map)
+
     def _make_view(self):
         """Implementations should return a TabListView."""
         raise NotImplementedError
 
-    def _after_change(self, now):
+    def _after_change(self, now, was_removing=False):
+        """Do anything that needs to be done after a change completes; when all
+        changes have completed, signal.
+        """
         if now or not self.changing:
             self.view.model_changed()
         if not self.changing and self.delayed_selection_change:
             self.delayed_selection_change = False
             app.tabs.on_selection_changed(self.view, self)
+        if not self.changing and not was_removing:
+            self.emit('tab-added')
 
     @contextmanager
     def removing(self, now=False):
@@ -219,7 +227,7 @@ class TabList(signals.SignalEmitter):
             yield
         finally:
             self._removing -= 1
-        self._after_change(now)
+        self._after_change(now, was_removing=True)
 
     @contextmanager
     def adding(self, now=False):
@@ -233,21 +241,6 @@ class TabList(signals.SignalEmitter):
         finally:
             self._adding -= 1
         self._after_change(now)
-        if not self._adding:
-            self.emit('tab-added')
-
-    @contextmanager
-    def preserving_expanded_rows(self):
-        """Prevent expanded rows from being collapsed by changes. Implementation
-        does not currently handle nesting.
-        """
-        expanded_rows = (id_ for id_, iter_ in self.iter_map.iteritems() if
-            id_ == self.info.id or self.view.is_row_expanded(iter_))
-        try:
-            yield
-        finally:
-            for id_ in expanded_rows:
-                self.expand(id_)
 
     def build_tabs(self):
         """Build any standard tabs; for non-static tabs, this is a pass."""
@@ -400,11 +393,29 @@ class HideableTabList(TabList):
 
     def __init__(self):
         TabList.__init__(self)
+        self._set_up = False
         self.create_signal('tab-name-changed')
         self.info = TabInfo(self.name, self.icon_name)
         TabList.add(self, self.info)
         self.view.model_changed()
         self.expand_after_add_child = set()
+
+    @contextmanager
+    def preserving_expanded_rows(self):
+        """Prevent expanded rows from being collapsed by changes. Implementation
+        does not currently handle nesting.
+        """
+        expanded_rows = (id_ for id_, iter_ in self.iter_map.iteritems() if
+            id_ == self.info.id or self.view.is_row_expanded(iter_))
+        try:
+            yield
+        finally:
+            for id_ in expanded_rows:
+                self.expand(id_)
+
+    @property
+    def changing(self):
+        return super(HideableTabList, self).changing or not self._set_up
 
     def _make_view(self):
         view = TabListView(self.render_class())
@@ -427,6 +438,7 @@ class HideableTabList(TabList):
             self.expand(self.info.id)
         if not hasattr(message, 'toplevels'):
             # setting up a non-nestable list
+            self._set_up = True
             return
         for info in message.toplevels:
             with self.adding():
@@ -437,6 +449,8 @@ class HideableTabList(TabList):
                         self.add(child_info, info.id)
                 if info.id in message.expanded_folders:
                     self.expand(info.id)
+        self._set_up = True
+        self._after_change(True)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
@@ -692,6 +706,7 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
     def __init__(self):
         HideableTabList.__init__(self)
         TabUpdaterMixin.__init__(self)
+        self._set_up = True # setup_list is never called?
         self.info_class_map = {
             messages.DeviceInfo: DeviceTabListHandler(self),
             messages.SharingInfo: SharingTabListHandler(self),

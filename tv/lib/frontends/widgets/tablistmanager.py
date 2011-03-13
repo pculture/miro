@@ -30,7 +30,7 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
-from miro import errors
+from miro.errors import WidgetActionError, ActionUnavailableError
 
 from miro.frontends.widgets.tablist import all_tab_lists
 
@@ -92,9 +92,10 @@ class TabListManager(dict):
                 typ = None
             return typ, [view.model[i][0] for i in iters]
         except AttributeError:
-            logging.error('iter is None')
+            app.widgetapp.handle_soft_failure('selection', "iter is none",
+                                              with_exception=True)
             return self._selected_tablist.type, [
-                    table_view.model[table_view.model.first_iter()][0]] 
+                    view.model[view.model.first_iter()][0]] 
 
     @property
     def selection_and_children(self):
@@ -123,26 +124,27 @@ class TabListManager(dict):
         """Select the Video Search tab."""
         self._select_from_tab_list('static', self['static'].get_default())
 
-    def _handle_no_tabs_selected(self, _selected_tablist):
+    def _handle_no_tabs_selected(self, _selected_tablist, force=False):
         """No tab is selected; select a fallback. This may be about to be
         overwritten by on_row_collapsed, but there's no way to tell.
+
+        After _handle_no_tabs_selected, something is guaranteed to be selected.
+        Selection may still fail in strict mode if the selected tab is in a list
+        that is trying to restore a different remembered selection.
+        
+        Setting force avoids this: any the remembered selection in the choosen
+        tablist is dropped, and the new selection is guaranteed to be valid.
         """
         self._restored = False
         self._before_no_tabs = self._previous_selection
-        logging.warn('_handle_no_tabs_selected')
-        model = _selected_tablist.view.model
-        # select the top-level tab for of the list
-        iter_ = model.first_iter()
-        if not iter_:
-            # somehow there's no tabs left in the list.  select the guide as a
-            # fallback
-            self.select_guide()
-            app.widgetapp.handle_soft_failure("handle_no_tabs_selected",
-                    'first_iter is None', with_exception=False)
-            return
-        self._select_from_tab_list(_selected_tablist.type, iter_)
+        logging.warn('_handle_no_tabs_selected; force=%s', repr(force))
+        if force:
+            self._selected_tablist.view.forget_restore()
+        root = _selected_tablist.iter_map[_selected_tablist.info.id]
+        self._select_from_tab_list(_selected_tablist.type, root)
 
-    def _select_from_tab_list(self, list_type=None, iter_=None, restore=False):
+    def _select_from_tab_list(self,
+            list_type=None, iter_=None, restore=False, or_bust=False):
         """Select a tab by it's type and an iter. If iter_ is None, no new
         selection will be set but the tab list will be activated.
 
@@ -150,9 +152,16 @@ class TabListManager(dict):
         selection.
 
         If restore is not set, list_type must specify the tab list to select.
+
+        or_bust should be set when all tab messages have arrived, so if the
+        selection continues to fail we need to _handle_no_tabs because it's not
+        going to work.
         """
         was_base_selected = self._is_base_selected
         if restore:
+            if self._restored:
+                logging.debug("already restored")
+                return
             list_type = self._restore()
         view = self[list_type].view
         if iter_:
@@ -167,26 +176,20 @@ class TabListManager(dict):
         self._selected_tablist = self[list_type]
         try:
             iters = view.get_selection()
-        except errors.ActionUnavailableError, error:
-            logging.debug("tab not selected: %s", error.reason)
-            iters = []
+        except ActionUnavailableError, error:
+            if or_bust:
+                logging.debug("saved tab may be permanently unavailable: %s",
+                              error.reason)
+                self._handle_no_tabs_selected(self._selected_tablist, force=True)
+                iters = view.get_selection() # must not fail now
+            else:
+                logging.debug("tab not selected: %s", error.reason)
+                iters = []
         tabs = [view.model[i][0] for i in iters]
         # prevent selecting base and non-base at the same time
         if tabs and hasattr(self[list_type], 'info'): # hideable
-            self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
-            if self._is_base_selected and len(tabs) > 1:
-                root = self[list_type].iter_map[self[list_type].info.id]
-                if was_base_selected: # unselect base if it was already selected
-                    if (self._selected_tablist.type ==
-                            self._previous_selection[0]):
-                        view.unselect(root)
-                else: # unselect everything but base if base is newly selected
-                    view.unselect_all(signal=False)
-                    view.select(root)
-                view._save_selection()
-            iters = view.get_selection()
-            tabs = [view.model[i][0] for i in iters]
-            self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
+            iters, tabs = self._disallow_base_with_child(
+                    view, tabs, was_base_selected)
         # open the ancestors
         if hasattr(view.model, 'parent_iter'): # not all models have parents
             for selected in iters:
@@ -203,21 +206,40 @@ class TabListManager(dict):
         if tabs and not restore and self._restored:
             try:
                 selected = view.get_selection_as_strings()
-            except errors.ActionUnavailableError, error:
+            except ActionUnavailableError, error:
                 logging.debug("not saving current tab: %s", error.reason)
             else:
                 selected.insert(0, list_type)
                 app.widget_state.set_selection(self.type, self.id, selected)
         self._restored = tabs
-        if iter_ is None:
-            return
-        # verify success
-        for sel in tabs:
-            if (sel == view.model[iter_][0]):
-                break
-        logging.warn('_sftl failed')
-        # FIXME: this shouldn't happen. when it doesn't, change warning to:
-        # raise errors.WidgetActionError("cannot select the given list / iter")
+        if or_bust and not tabs:
+            raise WidgetActionError("should have selected something")
+        if tabs and iter_:
+            for sel in tabs:
+                if sel == view.model[iter_][0]:
+                    break
+            else:
+                raise WidgetActionError("wrong iter selected")
+
+    def _disallow_base_with_child(self, view, tabs, was_base):
+        """Called when a base tab was selected and a child has been added to
+        the selection or visa versa; keeps whichever is newer.
+        """
+        self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
+        if self._is_base_selected and len(tabs) > 1:
+            root = self._selected_tablist.iter_map[self._selected_tablist.info.id]
+            if was_base: # unselect base if it was already selected
+                if (self._selected_tablist.type ==
+                        self._previous_selection[0]):
+                    view.unselect(root)
+            else: # unselect everything but base if base is newly selected
+                view.unselect_all(signal=False)
+                view.select(root)
+            view._save_selection()
+        iters = view.get_selection()
+        tabs = [view.model[i][0] for i in iters]
+        self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
+        return iters, tabs
 
     def _restore(self):
         """Restore a saved selection."""
@@ -251,11 +273,17 @@ class TabListManager(dict):
             self._select_from_tab_list(tab_list.type)
 
     def on_tab_added(self, tab_list):
-        """A tablist has gained a tab."""
+        """A tablist has gained a tab.
+        
+        To respond correctly to saved selections that are no longer available,
+        we need to know when all messages for existing tabs have been sent. This
+        relies on the fact that TabList's message batching causes all initial
+        tabs to arrive in the first message.
+        """
         selection = app.widget_state.get_selection(self.type, self.id)
         if not self._restored and selection and selection[0] == tab_list.type:
             # we may be waiting for this tab to switch to it
-            self._select_from_tab_list(restore=True)
+            self._select_from_tab_list(restore=True, or_bust=True)
 
     def on_moved_tabs_to_list(self, _tab_list, destination):
         """Handle tabs being moved between tab lists."""
@@ -278,7 +306,7 @@ class TabListManager(dict):
         try:
             return iter_.value()
         except ValueError:
-            raise errors.WidgetActionError("node deleted on OS X")
+            raise WidgetActionError("node deleted on OS X")
     
     def _locator_is_parent(self, model, parent, children):
         """This compares one locator with an iterable of other locators to see
@@ -321,9 +349,9 @@ class TabListManager(dict):
         if self._path_broken:
             try:
                 path = self._get_locator(tab_list.view, iter_)
-            except errors.ActionUnavailableError, error:
+            except ActionUnavailableError, error:
                 logging.debug("selection invalid: %s", error.reason)
-                self.on_selection_invalid(view, self._selected_tablist)
+                self.on_selection_invalid(tab_list.view, self._selected_tablist)
         if self._locator_is_parent(tab_list.view.model, path, selected):
             tab_list.view.unselect_all(signal=False)
             self._restored = True
