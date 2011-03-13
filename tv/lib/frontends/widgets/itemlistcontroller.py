@@ -47,7 +47,7 @@ from miro import messages
 from miro import prefs
 from miro import subscription
 from miro import util
-from miro import errors
+from miro.errors import ActionUnavailableError
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 from miro.frontends.widgets import itemcontextmenu
@@ -702,7 +702,8 @@ class ItemListController(object):
     def update_item_details(self):
         try:
             selection = self.get_selection()
-        except:
+        except ActionUnavailableError, error:
+            logging.debug("no item details: %s", error.reason)
             self.widget.item_details.clear()
         else:
             if selection:
@@ -712,7 +713,7 @@ class ItemListController(object):
     def save_selection(self):
         try:
             selection = self.current_item_view.get_selection_as_strings()
-        except errors.ActionUnavailableError, error:
+        except ActionUnavailableError, error:
             logging.debug("not saving selection: %s", error.reason)
         else:
             app.widget_state.set_selection(self.type, self.id, selection)
