@@ -97,7 +97,7 @@ class SelectionOwnerMixin(object):
         signals.
         """
         with self._ignoring_changes():
-            self._unselect_iter(iter_)
+            self._unselect(iter_)
 
     def unselect_all(self, signal=True):
         """Unselect all. emits only the 'deselected' signal."""
