@@ -354,7 +354,8 @@ class WidgetHolder(widgetset.VBox):
     def unset(self):
         """Removes the child widget from the widgetholder.
         """
-        self.remove(self.child)
+        if self.child:
+            self.remove(self.child)
         self.child = None
 
 # FIXME - we should rename the following button classes and put them
