@@ -31,7 +31,8 @@
 
 from miro import app
 from miro import prefs
-from miro.errors import WidgetActionError, ActionUnavailableError
+from miro.errors import (WidgetActionError, ActionUnavailableError,
+     WidgetNotReadyError, WidgetDomainError, UnexpectedWidgetError)
 
 from miro.frontends.widgets.tablist import all_tab_lists
 
@@ -185,7 +186,7 @@ class TabListManager(dict):
         self._selected_tablist = self[list_type]
         try:
             iters = view.get_selection()
-        except ActionUnavailableError, error:
+        except WidgetActionError, error:
             if or_bust:
                 logging.debug("saved tab may be permanently unavailable: %s",
                               error.reason)
@@ -215,21 +216,20 @@ class TabListManager(dict):
         if tabs and not restore and self._restored:
             try:
                 selected = view.get_selection_as_strings()
-            except ActionUnavailableError, error:
+            except WidgetActionError, error:
                 logging.debug("not saving current tab: %s", error.reason)
             else:
                 selected.insert(0, list_type)
                 app.widget_state.set_selection(self.type, self.id, selected)
         self._restored = tabs
         if or_bust and not tabs:
-            #raise WidgetActionError("should have selected something")
-            logging.error("should have selected something")
+            raise UnexpectedWidgetError("should have selected something")
         if tabs and iter_:
             for sel in tabs:
                 if sel == view.model[iter_][0]:
                     break
             else:
-                raise WidgetActionError("wrong iter selected")
+                raise UnexpectedWidgetError("wrong iter selected")
 
     def _disallow_base_with_child(self, view, tabs, was_base):
         """Called when a base tab was selected and a child has been added to

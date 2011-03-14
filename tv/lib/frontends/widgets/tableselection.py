@@ -36,7 +36,8 @@ from contextlib import contextmanager
 
 import logging
 
-from miro.errors import WidgetActionError
+from miro.errors import (WidgetActionError, WidgetDomainError,
+     WidgetNotReadyError, UnexpectedWidgetError, WidgetUsageError)
 
 class SelectionOwnerMixin(object):
     """Encapsulates the selection functionality of a TableView, for
@@ -83,8 +84,9 @@ class SelectionOwnerMixin(object):
             return int(self._get_selected_iter() is not None)
 
     def select(self, iter_):
-        """Try to select an iter. Succeeds or raises WidgetActionError. Sends
-        no signals.
+        """Try to select an iter.
+        
+        :raises WidgetActionError: iter does not exist or is not selectable
         """
         self._validate_iter(iter_)
         with self._ignoring_changes():
@@ -93,9 +95,9 @@ class SelectionOwnerMixin(object):
             raise WidgetActionError("the specified iter cannot be selected")
 
     def unselect(self, iter_):
-        """Unselect an Iter. Fails silently if the Iter is not selected, but
-        raises an exception if the Iter is not selectable at all. Sends no
-        signals.
+        """Unselect an Iter. Fails silently if the Iter is not selected.
+
+        :raises WidgetActionError: the Iter is not selectable
         """
         self._validate_iter(iter_)
         with self._ignoring_changes():
@@ -122,7 +124,10 @@ class SelectionOwnerMixin(object):
                 self.emit('selection-changed')
 
     def get_selection_as_strings(self):
-        """Returns the current selection as a list of strings."""
+        """Returns the current selection as a list of strings.
+        
+        :raises WidgetActionError: selection is temporary and strict is set
+        """
         return [self._iter_to_string(iter_) for iter_ in self.get_selection()]
 
     def set_selection_as_strings(self, selected):
@@ -135,47 +140,43 @@ class SelectionOwnerMixin(object):
         self.unselect_all(signal=False)
         for sel_string in selected:
             try:
-                # iter may not be destringable (yet)
+                # iter may not be destringable (yet) - bounds error
                 iter_ = self._iter_from_string(sel_string)
                 # destringed iter not selectable if parent isn't open (yet)
                 self.select(iter_)
-            except WidgetActionError:
+            except WidgetActionError, error:
+                logging.debug("cannot restore yet: %s", error.reason)
                 self._restoring_selection = selected
                 return False
         self._save_selection() # overwrite old _save_selection
         return True
 
     def get_selection(self, strict=True):
-        """Returns a list of GTK Iters.
+        """Returns a list of GTK Iters. Works regardless of whether multiple
+        selection is enabled.
         
-        If strict is set (default), will fail with WidgetActionError if there
-        is a selection waiting to be restored; unset strict to get whatever is
-        selected (though it should be about to be overwritten).
-
-        Works regardless of whether multiple selection is enabled.
+        :raises WidgetNotReadyError: selection is temporary and strict is set
         """
         # FIXME: non-strict mode is transitional. when everything is fixed not
         # to need it, remove it
         if self._restoring_selection:
             self.set_selection_as_strings(self._restoring_selection)
         if strict and self._restoring_selection:
-            raise WidgetActionError("current selection is temporary")
+            raise WidgetNotReadyError(waiting_for="saved selection to restore")
         return self._get_selected_iters()
 
     def get_selected(self, strict=False):
         """Return the single selected item.
         
-        If strict is set (disabled by default), will fail with
-        WidgetActionError if there is a selection waiting to be restored.
-        
-        Raises a WidgetActionError if multiple select is enabled.
+        :raises WidgetNotReadyError: selection is temporary and strict is set
+        :raises WidgetUsageError: multiple selection is enabled
         """
         if self._restoring_selection:
             self.set_selection_as_strings(self._restoring_selection)
         if self.allow_multiple_select:
-            raise WidgetActionError("table allows multiple selection")
+            raise WidgetUsageError("table allows multiple selection")
         if strict and self._restoring_selection:
-            raise WidgetActionError("current selection is temporary")
+            raise WidgetNotReadyError(waiting_for="saved selection to restore")
         return self._get_selected_iter()
 
     def select_path(self, path):

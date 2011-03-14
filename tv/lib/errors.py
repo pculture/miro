@@ -42,7 +42,9 @@ class WidgetActionError(ActionUnavailableError):
     """
 
 class WidgetDomainError(WidgetActionError):
-    """The widget element requested is not available at this time."""
+    """The widget element requested is not available at this time. This may be a
+    temporary condition or a result of permanent changes.
+    """
     def __init__(self, domain, needle, haystack, details=None):
         self.domain = domain
         self.needle = needle
@@ -51,7 +53,7 @@ class WidgetDomainError(WidgetActionError):
 
     @property
     def reason(self):
-        reason = "looked for {0} in {1}, but found only {1}".format(
+        reason = "looked for {0} in {2}, but found only {1}".format(
                  repr(self.needle), repr(self.haystack), self.domain)
         if self.details:
             reason += ": " + self.details
@@ -64,3 +66,24 @@ class WidgetRangeError(WidgetDomainError):
     def __init__(self, domain, needle, start_range, end_range, details=None):
         haystack = "{0} to {1}".format(repr(start_range), repr(end_range))
         WidgetDomainError.__init__(self, domain, needle, haystack, details)
+
+class WidgetNotReadyError(WidgetActionError):
+    """The widget is not ready to perfom the action given; this must be a
+    temporary condition that will be resolved when the widget finishes setting
+    up.
+    """
+    def __init__(self, waiting_for):
+        self.waiting_for = waiting_for
+
+    @property
+    def reason(self):
+        return "waiting for {0}".format(self.waiting_for)
+
+class UnexpectedWidgetError(ActionUnavailableError):
+    """The Spanish Inquisition of widget errors. A widget was asked to do
+    something, had every reason to do so, yet refused. This should always cause
+    at least a soft_failure; the UI is now in an incorrect state.
+    """
+
+class WidgetUsageError(UnexpectedWidgetError):
+    """A widget error that is likely the result of incorrect widget usage."""

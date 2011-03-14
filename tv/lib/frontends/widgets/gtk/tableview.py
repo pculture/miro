@@ -507,8 +507,11 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         if self._model.get_path(iter_) is None:
             raise WidgetDomainError(
                   "model iters", string, "%s other iters" % len(self.model))
-        if self._widget.get_model() != self._model:
+        real_model = self._widget.get_model()
+        if not real_model:
             raise WidgetActionError("no model")
+        elif real_model != self._model:
+            raise WidgetActionError("wrong model?")
 
 class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
