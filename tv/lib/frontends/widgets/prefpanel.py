@@ -419,6 +419,13 @@ class GeneralPanel(PanelBuilder):
         attach_boolean(run_at_startup_cbx, prefs.RUN_AT_STARTUP)
         v.pack_start(run_at_startup_cbx)
 
+        remember_last_display_cbx = widgetset.Checkbox(_(
+            "When starting up %(appname)s, remember what screen I was on "
+            "when I last quit.",
+            {'appname': app.config.get(prefs.SHORT_APP_NAME)}))
+        attach_boolean(remember_last_display_cbx, prefs.REMEMBER_LAST_DISPLAY)
+        v.pack_start(remember_last_display_cbx)
+
         warn_if_downloading_cbx = widgetset.Checkbox(
             _("Warn me if I attempt to quit with downloads in progress."))
         attach_boolean(warn_if_downloading_cbx,

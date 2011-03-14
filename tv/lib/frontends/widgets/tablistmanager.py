@@ -30,6 +30,7 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
+from miro import prefs
 from miro.errors import WidgetActionError, ActionUnavailableError
 
 from miro.frontends.widgets.tablist import all_tab_lists
@@ -244,7 +245,7 @@ class TabListManager(dict):
     def _restore(self):
         """Restore a saved selection."""
         sel = app.widget_state.get_selection(self.type, self.id)
-        if sel is None:
+        if sel is None or not app.config.get(prefs.REMEMBER_LAST_DISPLAY):
             sel = list(self.DEFAULT_TAB)
         list_type = sel.pop(0)
         view = self[list_type].view
