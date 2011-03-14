@@ -1658,6 +1658,9 @@ class ItemDetailsWidget(widgetset.VBox):
             image_width = 0
         label_width = (self.allocated_width - image_width -
                 self.PADDING_MIDDLE - self.PADDING_RIGHT)
+        if label_width < 1:
+            logging.warn("bad label width: %s", label_width)
+            label_width = 0
         self.title_label.set_size_request(label_width, -1)
         self.description_label.set_size_request(label_width, -1)
         self.extra_info_label.set_size_request(label_width, -1)

@@ -169,6 +169,9 @@ class Widget(signals.SignalEmitter):
         pass
 
     def set_size_request(self, width, height):
+        if not width >= -1 and height >= -1:
+            raise ValueError("invalid dimensions in set_size_request: %s" %
+                            repr((width, height)))
         self._widget.set_size_request(width, height)
 
     def relative_position(self, other_widget):
