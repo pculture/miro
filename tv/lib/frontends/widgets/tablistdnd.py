@@ -265,6 +265,8 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
             position):
         if parent is None:
             return False
+        if model[parent][0].type == 'tab':
+            return False
         if typ == 'downloaded-item':
             if position == -1 and not model[parent][0].is_folder:
                 return widgetset.DRAG_ACTION_COPY
