@@ -515,7 +515,7 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
         DatabaseSourceTrackerBase.__init__(self)
 
 class SharingItemTracker(SourceTrackerBase):
-    type = u'connect'
+    type = u'sharing'
     def __init__(self, share):
         share_id = share.parent_id if share.parent_id else share.id
         self.id = share
