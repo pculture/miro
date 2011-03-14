@@ -527,3 +527,8 @@ def font_scale_from_osx_points(points):
         - the DPI is 72ppi
     """
     return points / 13.0
+
+def css_to_color(css_string):
+    parts = (css_string[1:3], css_string[3:5], css_string[5:7])
+    return tuple((int(value, 16) / 255.0) for value in parts)
+

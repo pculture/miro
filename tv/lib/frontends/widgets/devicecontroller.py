@@ -46,6 +46,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import style
@@ -72,18 +73,18 @@ class DeviceTabButtonSegment(segmented.TextButtonSegment):
     }
 
     MARGIN = 20
-    TEXT_COLOR = {True: (1, 1, 1), False: style.css_to_color('#424242')}
+    TEXT_COLOR = {True: (1, 1, 1), False: widgetutil.css_to_color('#424242')}
 
     def size_request(self, layout):
         width, _ = segmented.TextButtonSegment.size_request(self, layout)
         return width, 23
 
 class SizeProgressBar(widgetset.Background):
-    GRADIENT_COLOR_TOP = style.css_to_color('#080808')
-    GRADIENT_COLOR_BOTTOM = style.css_to_color('#515151')
-    SIZE_COLOR_TOP = style.css_to_color('#829ac8')
-    SIZE_COLOR_BOTTOM = style.css_to_color('#697fb0')
-    SIZE_BORDER = style.css_to_color('#060606')
+    GRADIENT_COLOR_TOP = widgetutil.css_to_color('#080808')
+    GRADIENT_COLOR_BOTTOM = widgetutil.css_to_color('#515151')
+    SIZE_COLOR_TOP = widgetutil.css_to_color('#829ac8')
+    SIZE_COLOR_BOTTOM = widgetutil.css_to_color('#697fb0')
+    SIZE_BORDER = widgetutil.css_to_color('#060606')
 
     def __init__(self):
         widgetset.Background.__init__(self)
@@ -146,8 +147,8 @@ class SizeWidget(widgetset.Background):
 
     def draw(self, context, layout):
         gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color(style.css_to_color('#c2c2c2'))
-        gradient.set_end_color(style.css_to_color('#a3a3a3'))
+        gradient.set_start_color(widgetutil.css_to_color('#c2c2c2'))
+        gradient.set_end_color(widgetutil.css_to_color('#a3a3a3'))
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
 
@@ -193,10 +194,10 @@ class SizeWidget(widgetset.Background):
 
 class SyncProgressBar(widgetset.Background):
     PROGRESS_GRADIENT_TOP = (1, 1, 1)
-    PROGRESS_GRADIENT_BOTTOM = style.css_to_color('#a0a0a0')
+    PROGRESS_GRADIENT_BOTTOM = widgetutil.css_to_color('#a0a0a0')
 
-    BACKGROUND_GRADIENT_TOP = style.css_to_color('#0c0c0e')
-    BACKGROUND_GRADIENT_BOTTOM = style.css_to_color('#3f4346')
+    BACKGROUND_GRADIENT_TOP = widgetutil.css_to_color('#0c0c0e')
+    BACKGROUND_GRADIENT_BOTTOM = widgetutil.css_to_color('#3f4346')
 
     def __init__(self):
         widgetset.Background.__init__(self)
@@ -265,11 +266,11 @@ class SyncProgressWidget(widgetset.Background):
         widgetutil.round_rect(context, 0, 0, context.width,
                               context.height + 10, 10)
 
-        context.set_color(style.css_to_color('#9199bd'))
+        context.set_color(widgetutil.css_to_color('#9199bd'))
         context.fill()
         widgetutil.round_rect_reverse(context, 1, 1, context.width - 2,
                                       context.height + 10, 10)
-        context.set_color(style.css_to_color('#bec1d0'))
+        context.set_color(widgetutil.css_to_color('#bec1d0'))
         context.fill()
 
 class SyncWidget(widgetset.VBox):
@@ -296,7 +297,8 @@ class SyncWidget(widgetset.VBox):
                 self.info_map[self.info_key(info)] = checkbox
         else:
             self.sync_library.disable()
-        background = widgetset.SolidBackground(style.css_to_color('#dddddd'))
+        background = widgetset.SolidBackground(
+                widgetutil.css_to_color('#dddddd'))
         background.add(self.feed_list)
         scroller = widgetset.Scroller(False, True)
         scroller.set_child(background)
@@ -894,7 +896,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         return itemtrack.ItemListTracker.create('device', self.device)
 
     def build_renderer(self):
-        return style.DeviceItemRenderer(display_channel=False)
+        return itemrenderer.DeviceItemRenderer(display_channel=False)
 
     def make_drag_handler(self):
         return DeviceItemDragHandler()

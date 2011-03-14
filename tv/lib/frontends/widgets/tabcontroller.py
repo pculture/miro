@@ -91,8 +91,8 @@ class SharingBroken(widgetset.Background):
 
     def draw(self, context, layout):
         gradient = widgetset.Gradient(0, 0, 0, context.height - 1)
-        gradient.set_start_color(style.css_to_color('#a92928'))
-        gradient.set_end_color(style.css_to_color('#7e1c1b'))
+        gradient.set_start_color(widgetutil.css_to_color('#a92928'))
+        gradient.set_end_color(widgetutil.css_to_color('#7e1c1b'))
         context.rectangle(0, 0, context.width, context.height - 1)
         context.gradient_fill(gradient)
         context.rectangle(0, context.height -1, context.width, context.height)
@@ -304,7 +304,7 @@ class ConnectTab(widgetset.VBox):
         vbox.pack_start(widgetutil.pad(hbox, top=10))
         vbox.pack_start(widgetutil.pad(self.share_warnonquit_cbx, top=10))
 
-        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.set_size_request(550, -1)
         bg.add(widgetutil.pad(vbox, 10, 10, 10, 10))
         bottom.pack_start(widgetutil.align_left(bg, left_pad=20,
@@ -352,7 +352,7 @@ class ConnectTab(widgetset.VBox):
         label.set_size_request(390 - padding, -1)
         label.set_wrap(True)
         show_all_vbox.pack_start(widgetutil.pad(label, left=padding))
-        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.set_size_request(400, -1)
         bg.add(widgetutil.pad(show_all_vbox, 10, 10, 10, 10))
         vbox.pack_start(widgetutil.pad(bg, left=20, right=10, bottom=50))
@@ -484,7 +484,7 @@ class SourcesTab(widgetset.VBox):
         hbox.pack_start(widgetutil.align_middle(
                 self.add_source_button, left_pad=15))
 
-        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.add(widgetutil.pad(hbox, 10, 10, 10, 10))
 
         bottom.pack_start(bg)
@@ -534,7 +534,7 @@ class PlaylistsTab(widgetset.VBox):
         hbox.pack_start(widgetutil.align_middle(
                 self.add_playlist_button, left_pad=15))
 
-        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.add(widgetutil.pad(hbox, 10, 10, 10, 10))
 
         bottom.pack_start(bg)
@@ -591,7 +591,7 @@ class StoresTab(widgetset.VBox):
                 self.store_helper.store_list, top_pad=20, bottom_pad=15,
                 left_pad=15, right_pad=15))
 
-        bg = RoundedSolidBackground(style.css_to_color('#dddddd'))
+        bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.add(widgetutil.pad(vbox, 00, 10, 10, 10))
 
         bottom.pack_start(bg)

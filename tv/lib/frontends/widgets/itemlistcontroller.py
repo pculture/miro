@@ -52,11 +52,11 @@ from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import menus
-from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
@@ -418,7 +418,7 @@ class ItemListController(object):
         raise NotImplementedError()
 
     def build_renderer(self):
-        return style.ItemRenderer(display_channel=False)
+        return itemrenderer.ItemRenderer(display_channel=False)
 
     def build_list_view(self):
         """Build the list view widget for this controller."""
@@ -1007,7 +1007,7 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
                 itemlistwidgets.EmptyListHeader(text))
 
     def build_renderer(self):
-        return style.ItemRenderer(display_channel=True)
+        return itemrenderer.ItemRenderer(display_channel=True)
 
     def check_for_empty_list(self):
         pass
@@ -1044,7 +1044,7 @@ class VideoItemsController(AudioVideoItemsController):
         return titlebar
 
     def build_renderer(self):
-        return style.ItemRenderer(display_channel=True, wide_image=True)
+        return itemrenderer.ItemRenderer(display_channel=True, wide_image=True)
 
     def _toggle_titlebar_filter(self, titlebar, filter):
         for name, button in titlebar.filters.items():
@@ -1095,7 +1095,7 @@ class OtherItemsController(SimpleItemListController):
                 itemlistwidgets.EmptyListHeader(text))
 
     def build_renderer(self):
-        return style.ItemRenderer(display_channel=True)
+        return itemrenderer.ItemRenderer(display_channel=True)
 
     def check_for_empty_list(self):
         pass

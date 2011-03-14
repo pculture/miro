@@ -33,9 +33,9 @@ from miro import prefs
 
 from miro.plat import resources
 from miro.gtcache import gettext as _
-from miro.frontends.widgets import style
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -214,7 +214,7 @@ class ConvertingProgressBarColorSet(object):
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
-class ConvertingCellRenderer(style.ItemRenderer):
+class ConvertingCellRenderer(itemrenderer.ItemRenderer):
     THUMB_WIDTH = 120
     THUMB_HEIGHT = 82
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)

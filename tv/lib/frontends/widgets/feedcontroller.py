@@ -37,8 +37,8 @@ from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import separator
-from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
@@ -79,7 +79,7 @@ class FeedController(itemlistcontroller.ItemListController,
 
     def build_renderer(self):
         feed_info = widgetutil.get_feed_info(self.id)
-        return style.ItemRenderer(display_channel=self.is_folder,
+        return itemrenderer.ItemRenderer(display_channel=self.is_folder,
                 is_podcast=(not feed_info.is_directory_feed))
 
     def make_titlebar(self, feed_info):

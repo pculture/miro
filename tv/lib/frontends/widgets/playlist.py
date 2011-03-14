@@ -39,6 +39,7 @@ from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import style
 
 class DropHandler(signals.SignalEmitter):
@@ -191,7 +192,7 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
                     self, column, ascending)
 
     def build_renderer(self):
-        return style.PlaylistItemRenderer(self.playlist_sorter)
+        return itemrenderer.PlaylistItemRenderer(self.playlist_sorter)
 
     def make_drop_handler(self):
         self.drop_handler = DropHandler(self.id, self.item_list,
