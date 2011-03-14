@@ -887,7 +887,7 @@ class DatabaseWriteManager(object):
             write_database(database, self.mount)
             self.last_write = time.time()
 
-def load_database(mount):
+def load_database(mount, countdown=0):
     """
     Returns a dictionary of the JSON database that lives on the given device.
 
@@ -900,8 +900,16 @@ def load_database(mount):
         try:
             db = json.load(file(file_name, 'rb'))
         except ValueError:
-            logging.exception('error loading JSON db on %s', mount)
+            logging.exception('JSON decode error on %s', mount)
             db = {}
+        except (IOError, OSError):
+            if countdown == 5:
+                logging.exception('file error with JSON on %s', mount)
+                db = {}
+            else:
+                # wait a little while; total time is ~1.5s
+                time.sleep(0.20 * 1.2 ** countdown)
+                return load_database(mount, countdown + 1)
     ddb = DeviceDatabase(db)
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
