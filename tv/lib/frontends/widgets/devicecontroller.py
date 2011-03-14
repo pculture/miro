@@ -447,7 +447,7 @@ class PlaylistSyncWidget(SyncWidget):
     title = _("Sync Playlists")
 
     def get_items(self):
-        return app.tabs['playlist'].get_playlists()
+        return list(app.tabs['playlist'].get_playlists())
 
     def info_key(self, info):
         return info.name
