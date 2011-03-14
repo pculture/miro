@@ -545,17 +545,6 @@ class ItemRenderer(widgetset.InfoListRenderer):
         layout.add_text_line(description, x, y, width, hotspot='description')
         self.description_width = width
 
-    def make_extra_info(self, layout_manager):
-        layout_manager.set_font(self.DOWNLOAD_INFO_FONT_SIZE,
-                family=widgetset.ITEM_DESC_FONT)
-        layout_manager.set_text_color(self.ITEM_DESC_COLOR)
-        parts = []
-        for attr in (self.info.display_date, self.info.display_duration,
-                self.info.display_size, self.info.file_format):
-            if attr:
-                parts.append(attr)
-        return layout_manager.textbox(' | '.join(parts))
-
     def make_description(self, layout_manager):
         layout_manager.set_font(self.ITEM_DESC_FONT_SIZE,
                 family=widgetset.ITEM_DESC_FONT)
