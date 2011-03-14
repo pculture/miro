@@ -336,6 +336,26 @@ class HideableWidget(widgetset.VBox):
             self.remove(self._child)
             self.shown = False
 
+class WidgetHolder(widgetset.VBox):
+    """Widget used to hold a single child widget.
+    """
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+        self.child = None
+
+    def set(self, widget):
+        """Sets the child to the specified widget.
+        """
+        if self.child:
+            self.remove(self.child)
+        self.pack_start(widget, expand=True)
+        self.child = widget
+
+    def unset(self):
+        """Removes the child widget from the widgetholder.
+        """
+        self.remove(self.child)
+        self.child = None
 
 # FIXME - we should rename the following button classes and put them
 # in another module.

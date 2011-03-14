@@ -1494,11 +1494,11 @@ class ItemDetailsWidget(widgetset.VBox):
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
         self._expanded = False
-        self.license_url = None
+        self.license_info = None
 
     def on_license_clicked(self, button):
-        if self.license_url:
-            app.widgetapp.open_url(self.license_url)
+        if self.license_info:
+            app.widgetapp.open_url(self.license_info)
 
     def build_right(self):
         vbox = widgetset.VBox()
@@ -1509,11 +1509,11 @@ class ItemDetailsWidget(widgetset.VBox):
         self.extra_info_label = self.build_extra_info()
         vbox.pack_start(widgetutil.align_left(self.title_label,
             top_pad=self.PADDING_ABOVE_TITLE))
-        license_button = widgetset.Button(_('View License'))
-        license_button.connect('clicked', self.on_license_clicked)
-        self.license_button_holder = widgetutil.HideableWidget(
-                widgetutil.align_left(license_button))
-        vbox.pack_start(self.license_button_holder)
+        self.license_button = widgetset.Button(_('View License'))
+        self.license_button.connect('clicked', self.on_license_clicked)
+        self.license_label = self.build_description_label()
+        self.license_holder = widgetutil.WidgetHolder()
+        vbox.pack_start(self.license_holder)
         torrent_info_hbox = widgetset.HBox(spacing=12)
         torrent_info_hbox.pack_start(self.torrent_info_left)
         torrent_info_hbox.pack_start(self.torrent_info_right)
@@ -1625,11 +1625,14 @@ class ItemDetailsWidget(widgetset.VBox):
         self.extra_info_label.set_text(' | '.join(parts))
 
     def setup_license_button(self, info):
-        self.license_url = info.license
-        if self.license_url:
-            self.license_button_holder.show()
+        self.license_info = info.license
+        if not self.license_info:
+            self.license_holder.unset()
+        elif self.license_info.startswith("http://"):
+            self.license_holder.set(widgetutil.align_left(self.license_button))
         else:
-            self.license_button_holder.hide()
+            self.license_label.set_text(info.license)
+            self.license_holder.set(widgetutil.align_left(self.license_label))
 
     def clear(self):
         self.title_label.set_text('')
