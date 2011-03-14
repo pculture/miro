@@ -503,6 +503,13 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
     def select_path(self, path):
         self.selection.select_path(path)
 
+    def _validate_iter(self, iter_):
+        if self._model.get_path(iter_) is None:
+            raise WidgetDomainError(
+                  "model iters", string, "%s other iters" % len(self.model))
+        if self._widget.get_model() != self._model:
+            raise WidgetActionError("no model")
+
 class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 

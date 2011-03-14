@@ -86,6 +86,7 @@ class SelectionOwnerMixin(object):
         """Try to select an iter. Succeeds or raises WidgetActionError. Sends
         no signals.
         """
+        self._validate_iter(iter_)
         with self._ignoring_changes():
             self._select(iter_)
         if not self._is_selected(iter_):
@@ -96,6 +97,7 @@ class SelectionOwnerMixin(object):
         raises an exception if the Iter is not selectable at all. Sends no
         signals.
         """
+        self._validate_iter(iter_)
         with self._ignoring_changes():
             self._unselect(iter_)
 
@@ -234,6 +236,7 @@ class SelectionOwnerMixin(object):
         despite changes in order. Platforms with anything smarter than iters
         should override this method.
         """
+        self._validate_iter(iter_)
         return iter_
 
     def _iter_from_smart_selector(self, selector):
@@ -243,6 +246,13 @@ class SelectionOwnerMixin(object):
         should override this method.
         """
         return selector
+
+    def _validate_iter(self, iter_):
+        """Check whether an iter is valid.
+
+        :raises WidgetDomainError: the iter is not valid
+        :raises WidgetActionError: there is no model right now
+        """
 
     @contextmanager
     def _ignoring_changes(self):
