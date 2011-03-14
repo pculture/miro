@@ -1035,9 +1035,12 @@ class BTDownloader(BGDownloader):
                 self.fast_resume_data = load_fast_resume_data(self.info_hash)
                 if self.fast_resume_data:
                     params["resume_data"] = lt.bencode(self.fast_resume_data)
+            params["save_path"] = params["save_path"].encode('utf-8')
 
             if(self.magnet):
-                self.torrent = lt.add_magnet_uri(TORRENT_SESSION.session, str(self.magnet), params)
+                self.torrent = lt.add_magnet_uri(TORRENT_SESSION.session,
+                                                 self.magnet.encode('utf-8'),
+                                                 params)
             else:
                 self.torrent = TORRENT_SESSION.session.add_torrent(params)
 
