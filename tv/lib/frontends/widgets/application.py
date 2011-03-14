@@ -98,7 +98,6 @@ class Application:
         app.widgetapp = self
         self.ignore_errors = False
         self.message_handler = WidgetsMessageHandler()
-        self.default_guide_info = None
         self.window = None
         self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
@@ -1376,9 +1375,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
             self._saw_pre_startup_message(pre_startup_message)
 
     def handle_guide_list(self, message):
-        app.widgetapp.default_guide_info = message.default_guide
         self.initial_guides = message.added_guides
         self._saw_pre_startup_message('guide-list')
+        app.tabs['site'].default_info = message.default_guide
         app.tabs['site'].setup_list(message)
 
     def handle_store_list(self, message):
@@ -1394,8 +1393,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
                                                 message.removed)
 
     def update_default_guide(self, guide_info):
-        app.widgetapp.default_guide_info = guide_info
-        guide_tab = app.tab_list_manager.library_tab_list.get_tab('guide')
+        app.tabs['site'].default_info = guide_info
+        guide_tab = app.tabs['site'].get_tab(guide_info.id)
         guide_tab.update(guide_info)
 
     def handle_watched_folder_list(self, message):

@@ -60,6 +60,7 @@ class TabListManager(dict):
         self._restored = False
         self._path_broken = None
         self._is_base_selected = False
+        self._shown = False
 
     @property
     def tab_list_widgets(self):
@@ -143,9 +144,11 @@ class TabListManager(dict):
             self._selected_tablist.view.forget_restore()
         if hasattr(_selected_tablist, 'info'):
             root = _selected_tablist.iter_map[_selected_tablist.info.id]
-            self._select_from_tab_list(_selected_tablist.type, root)
+        elif hasattr(_selected_tablist, 'default_info'):
+            root = _selected_tablist.iter_map[_selected_tablist.default_info.id]
         else:
-            self.select_search()
+            root = _selected_tablist.view.model.first_iter()
+        self._select_from_tab_list(_selected_tablist.type, root)
 
     def _select_from_tab_list(self,
             list_type=None, iter_=None, restore=False, or_bust=False):
@@ -161,6 +164,8 @@ class TabListManager(dict):
         selection continues to fail we need to _handle_no_tabs because it's not
         going to work.
         """
+        if not self._shown:
+            return
         was_base_selected = self._is_base_selected
         if restore:
             if self._restored:
@@ -264,6 +269,7 @@ class TabListManager(dict):
         # window already to exist
         for tab_list in self.itervalues():
             tab_list.build_tabs()
+        self._shown = True
         # the default selection should have set itself by now, so now we can
         # overwrite it
         self._select_from_tab_list(restore=True)
@@ -287,6 +293,8 @@ class TabListManager(dict):
         """
         selection = app.widget_state.get_selection(self.type, self.id)
         if not self._restored and selection and selection[0] == tab_list.type:
+            logging.debug("tab added for %s; now have: %s", tab_list.type,
+                    repr(tab_list.iter_map.keys()))
             # we may be waiting for this tab to switch to it
             self._select_from_tab_list(restore=True, or_bust=True)
 
