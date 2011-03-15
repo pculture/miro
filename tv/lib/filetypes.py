@@ -38,8 +38,8 @@ import os
 
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx',
                     '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid',
-                    '.rmvb', '.mkv', '.m2v', '.ogm', '.webm']
-AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg']
+                    '.rmvb', '.mkv', '.m2v', '.ogm', '.webm', '.ogx']
+AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg', '.oga']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 OTHER_EXTENSIONS = ['.pdf', '.txt', '.html', '.doc', '.bmp', '.gif', '.jpg',
                     '.jpeg', '.png', '.psd', '.tif', '.tiff',]
@@ -59,7 +59,7 @@ MIMETYPES_EXT_MAP = {
     'video/x-ms-wmv':   ['.wmv'],
     'video/x-msvideo':  ['.avi'],
     'video/x-matroska': ['.mkv'],
-    'application/ogg':  ['.ogg'],
+    'application/ogg':  ['.ogx', '.ogm'],
     'video/ogg':        ['.ogv'],
     'video/webm':       ['.webm'],
 
@@ -68,6 +68,7 @@ MIMETYPES_EXT_MAP = {
     'audio/mp4':        ['.m4a'],
     'audio/x-ms-wma':   ['.wma'],
     'audio/x-matroska': ['.mka'],
+    'audio/ogg':        ['.oga', '.ogg'],
 
     'application/x-bittorrent': ['.torrent'],
     'application/x-magnet':     ['.magnet'],

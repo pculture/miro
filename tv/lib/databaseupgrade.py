@@ -3184,3 +3184,19 @@ def upgrade151(cursor):
     cursor.execute("CREATE TABLE hideable_tab (id integer PRIMARY KEY, "
             "expanded integer, type text)")
     cursor.execute("CREATE INDEX hideable_tab_type ON hideable_tab (type)")
+
+def upgrade152(cursor):
+    VIDEO_EXTENSIONS = ['.ogx']
+    AUDIO_EXTENSIONS = ['.oga']
+
+    video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+            for ext in VIDEO_EXTENSIONS)
+
+    audio_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+            for ext in AUDIO_EXTENSIONS)
+
+    cursor.execute("UPDATE item SET file_type = 'video' "
+            "WHERE " + video_filename_expr)
+    cursor.execute("UPDATE item SET file_type = 'audio' "
+            "WHERE " + audio_filename_expr)
+
