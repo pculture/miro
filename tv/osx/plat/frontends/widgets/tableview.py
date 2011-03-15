@@ -65,7 +65,8 @@ _disclosure_button.sizeToFit()
 _disclosure_button_width = _disclosure_button.frame().size.width 
 
 EXPANDER_PADDING = 6
-HEADER_HEIGHT = 30
+HEADER_HEIGHT = 17
+CUSTOM_HEADER_HEIGHT = 30
 
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
@@ -730,8 +731,10 @@ class TableColumn(signals.SignalEmitter):
         self.create_signal('clicked')
         self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
         header_cell = MiroTableHeaderCell.alloc().init()
+        self.custom_header = False
         if header:
             header_cell.set_widget(header)
+            self.custom_header = True
         self._column.setHeaderCell_(header_cell)
         self._column.headerCell().setStringValue_(title)
         self._column.setEditable_(NO)
@@ -799,15 +802,9 @@ class MiroOutlineView(NSOutlineView):
 
 class MiroTableHeaderView(NSTableHeaderView):
     def initWithFrame_(self, frame):
-        height = HEADER_HEIGHT
-        frame.size.height = height
         self = super(MiroTableHeaderView, self).initWithFrame_(frame)
-        self.height = height
         self.selected = None
         return self
-
-    def get_height(self):
-        return self.height
 
     def drawRect_(self, rect):
         wrapper = wrappermap.wrapper(self.tableView())
@@ -952,7 +949,8 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.auto_resizing = False
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, 0))
-        self.header_height = self.header_view.get_height()
+        self.custom_header = 0
+        self.header_height = HEADER_HEIGHT
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         self.model.connect_weak('row-changed', self.on_row_change)
@@ -1089,6 +1087,8 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
             self.tableview.setFrame_(NSMakeRect(x, y + self.header_height, 
                 width, height - self.header_height))
         else:
+            self.header_view.setFrame_(NSMakeRect(x, y,
+                width, self.header_height))
             self.tableview.setFrame_(NSMakeRect(x, y, width, height))
 
         if self.auto_resize:
@@ -1239,6 +1239,9 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         return None
 
     def add_column(self, column):
+        if column.custom_header:
+            self.custom_header += 1
+            self.header_height = CUSTOM_HEADER_HEIGHT
         self.columns.append(column)
         self.tableview.addTableColumn_(column)
         if self.column_count() == 1 and self.is_tree():
@@ -1254,6 +1257,10 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
 
     def remove_column(self, index):
         column = self.columns.pop(index)
+        if column.custom_header:
+            self.custom_header -= 1
+        if self.custom_header == 0:
+            self.header_height = HEADER_HEIGHT
         self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
 
