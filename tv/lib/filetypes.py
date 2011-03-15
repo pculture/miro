@@ -38,7 +38,7 @@ import os
 
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx',
                     '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid',
-                    '.rmvb', '.mkv', '.m2v', '.ogm', 'webm']
+                    '.rmvb', '.mkv', '.m2v', '.ogm', '.webm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 OTHER_EXTENSIONS = ['.pdf', '.txt', '.html', '.doc', '.bmp', '.gif', '.jpg',
@@ -70,6 +70,7 @@ MIMETYPES_EXT_MAP = {
     'audio/x-matroska': ['.mka'],
 
     'application/x-bittorrent': ['.torrent'],
+    'application/x-magnet':     ['.magnet'],
 
     'audio/x-mpegurl':  ['.m3u'],
     'audio/x-amzxml': ['.amz']
