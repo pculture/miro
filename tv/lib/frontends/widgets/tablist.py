@@ -707,6 +707,7 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
         HideableTabList.__init__(self)
         TabUpdaterMixin.__init__(self)
         self._set_up = True # setup_list is never called?
+        self.expand(self.info.id) # make sure the root is open
         self.info_class_map = {
             messages.DeviceInfo: DeviceTabListHandler(self),
             messages.SharingInfo: SharingTabListHandler(self),

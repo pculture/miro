@@ -750,7 +750,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self._widget.expand_row(path, False)
         else:
             self._widget.collapse_row(path)
-        if not self._widget.row_expanded(path):
+        if bool(self._widget.row_expanded(path)) != bool(expanded):
             raise WidgetActionError("cannot expand the given item - it "
                     "probably has no children.")
 
