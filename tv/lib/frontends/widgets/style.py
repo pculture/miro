@@ -580,7 +580,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
         return textbox
 
     def add_description_preface(self, textbox):
-        if self.display_channel and self.info.feed_name:
+        if (self.display_channel and self.info.feed_name and
+            not self.info.is_external):
             feed_preface = "%s: " % self.info.feed_name
             textbox.append_text(feed_preface, color=self.FEED_NAME_COLOR)
             return len(feed_preface)
