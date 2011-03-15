@@ -212,9 +212,10 @@ class ItemContextMenuHandler(object):
         else:
             if not (item.device or item.remote):
                 # Download
-                section.append((
-                        _('Download'),
-                        messages.StartDownload(item.id).send_to_backend))
+                if not item.downloaded:
+                    section.append((
+                            _('Download'),
+                            messages.StartDownload(item.id).send_to_backend))
 
             else:
                 # Play
@@ -250,8 +251,13 @@ class ItemContextMenuHandler(object):
             menu.extend(section)
             menu.append(None)
 
-        # remove the last separator from the menu
-        del menu[-1]
+        # remove the last separator from the menu ... but make sure that we
+        # don't try to do this if we came out of the block without actually
+        # creating any entries in the context menu.
+        try:
+            del menu[-1]
+        except IndexError:
+            pass
 
         return menu
 
