@@ -29,4 +29,5 @@
 
 use_custom_titlebar_background = True
 use_custom_tablist_font = True
+use_upside_down_sort = False
 file_navigator_name = u"Finder"

@@ -58,6 +58,7 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.frontends.widgets import use_upside_down_sort
 from miro.plat.utils import get_available_bytes_for_movies
 
 class ViewToggler(widgetset.CustomButton):
@@ -1273,7 +1274,10 @@ class SortBarButton(widgetset.CustomButton):
     def _draw_triangle(self, context, left):
         if self._enabled:
             top = int((context.height - 4) / 2)
-            if self._ascending:
+            ascending = self._ascending
+            if use_upside_down_sort:
+                ascending = not ascending
+            if ascending:
                 context.move_to(left, top + 4)
                 direction = -1
             else:
