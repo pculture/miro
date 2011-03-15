@@ -54,7 +54,7 @@ class TestSelectionOwnerMixin(SelectionOwnerMixin):
         else:
             self._selected_iter = None
 
-    def _unselect_iter(self, iter_):
+    def _unselect(self, iter_):
         if not iter_ in self:
             raise WidgetActionError("iter doesn't exist")
         if self.allow_multiple_select:
