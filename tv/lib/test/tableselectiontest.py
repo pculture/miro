@@ -1,6 +1,6 @@
 from miro.test.framework import MiroTestCase
 
-from miro.errors import WidgetActionError
+from miro.errors import (WidgetActionError, WidgetDomainError, WidgetUsageError)
 from miro.signals import SignalEmitter
 from miro.frontends.widgets.tableselection import SelectionOwnerMixin
 
@@ -28,13 +28,13 @@ class TestSelectionOwnerMixin(SelectionOwnerMixin):
 
     def _get_selected_iter(self):
         if self.allow_multiple_select:
-            raise WidgetActionError("get_selected with multiple select")
+            raise WidgetUsageError("get_selected with multiple select")
         else:
             return self._selected_iter
 
     def _select(self, iter_):
         if not iter_ in self:
-            raise WidgetActionError("iter doesn't exist")
+            raise WidgetDomainError("mock model's iters", iter_, self)
         if self.allow_multiple_select:
             self._selected_iters.add(iter_)
         else:
@@ -102,7 +102,7 @@ class TableSelectionTest(MiroTestCase):
         # nothing selected
         self.assert_nothing_selected()
         # select something that doesn't exist
-        self.assertRaises(WidgetActionError, lambda: self.view.select(9))
+        self.assertRaises(WidgetDomainError, lambda: self.view.select(9))
         # select first thing
         self.view.select(45)
         self.assertEquals(self.view.num_rows_selected, 1)
@@ -114,7 +114,7 @@ class TableSelectionTest(MiroTestCase):
         self.assertEquals(self.view.get_selected(), 90)
         self.assertEquals(self.view.get_selection(), [90])
         # unselect something that doesn't exist
-        self.assertRaises(WidgetActionError, lambda: self.view.select(9))
+        self.assertRaises(WidgetDomainError, lambda: self.view.select(9))
         # unselect something that isn't what's selected
         self.view.unselect(45)
         self.assertEquals(self.view.num_rows_selected, 1)
@@ -131,11 +131,11 @@ class TableSelectionTest(MiroTestCase):
 
     def test_multiple_selection_mode(self):
         self.view.allow_multiple_select = True
-        self.assertRaises(WidgetActionError, self.view.get_selected)
+        self.assertRaises(WidgetUsageError, self.view.get_selected)
         # nothing selected
         self.assert_nothing_selected()
         # select something that doesn't exist
-        self.assertRaises(WidgetActionError, lambda: self.view.select(9))
+        self.assertRaises(WidgetDomainError, lambda: self.view.select(9))
         # select first thing
         self.view.select(45)
         self.assertEquals(self.view.num_rows_selected, 1)
@@ -145,7 +145,7 @@ class TableSelectionTest(MiroTestCase):
         self.assertEquals(self.view.num_rows_selected, 2)
         self.assertEquals(set(self.view.get_selection()), set([45, 90]))
         # unselect something that doesn't exist
-        self.assertRaises(WidgetActionError, lambda: self.view.select(9))
+        self.assertRaises(WidgetDomainError, lambda: self.view.select(9))
         # unselect something that isn't what's selected
         self.view.unselect(2)
         self.assertEquals(self.view.num_rows_selected, 2)
