@@ -652,14 +652,18 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         returned_items = []
         video_items = []
         audio_items = []
+        sharing_item_meth = self.sharing_item
+        returned_items_meth = returned_items.append
+        audio_items_meth = audio_items.append
+        video_items_meth = video_items.append
         for itemkey in items.keys():
-            item = self.sharing_item(items[itemkey])
+            item = sharing_item_meth(items[itemkey])
             itemdict[itemkey] = item
-            returned_items.append(item)
+            returned_items_meth(item)
             if item.file_type == u'video':
-                video_items.append(item)
+                video_items_meth(item)
             elif item.file_type == u'audio':
-                audio_items.append(item)
+                audio_items_meth(item)
             else:
                 logging.warn('item file type unrecognized %s', item.file_type)
         returned_playlist_items[u'video'] = video_items
@@ -673,10 +677,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             if k == self.base_playlist:
                 continue
             returned_items = []
+            returned_items_meth = returned_items.append
             items = self.client.items(playlist_id=k, meta=DAAP_META)
             for itemkey in items.keys():
                 item = itemdict[itemkey]
-                returned_items.append(item)
+                returned_items_meth(item)
             returned_playlist_items[k] = returned_items
 
         # We don't append these items directly to the object and let
