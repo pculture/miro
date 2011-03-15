@@ -141,8 +141,11 @@ class TabListManager(dict):
         logging.warn('_handle_no_tabs_selected; force=%s', repr(force))
         if force:
             self._selected_tablist.view.forget_restore()
-        root = _selected_tablist.iter_map[_selected_tablist.info.id]
-        self._select_from_tab_list(_selected_tablist.type, root)
+        if hasattr(_selected_tablist, 'info'):
+            root = _selected_tablist.iter_map[_selected_tablist.info.id]
+            self._select_from_tab_list(_selected_tablist.type, root)
+        else:
+            self.select_search()
 
     def _select_from_tab_list(self,
             list_type=None, iter_=None, restore=False, or_bust=False):
@@ -214,7 +217,8 @@ class TabListManager(dict):
                 app.widget_state.set_selection(self.type, self.id, selected)
         self._restored = tabs
         if or_bust and not tabs:
-            raise WidgetActionError("should have selected something")
+            #raise WidgetActionError("should have selected something")
+            logging.error("should have selected something")
         if tabs and iter_:
             for sel in tabs:
                 if sel == view.model[iter_][0]:
