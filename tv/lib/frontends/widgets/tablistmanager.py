@@ -264,7 +264,12 @@ class TabListManager(dict):
         return list_type
 
     def on_shown(self):
-        """The window has been shown."""
+        """The window has been shown. This method is run once when the window
+        has been displayed for the first time, and then whenever the window is
+        restored from being minimized.
+        """
+        if self._shown:
+            return
         # build_tabs cannot be called until now because the guide needs the
         # window already to exist
         for tab_list in self.itervalues():
