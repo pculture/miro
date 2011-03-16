@@ -1544,7 +1544,7 @@ class ItemDetailsWidget(widgetset.VBox):
         self.license_button.connect('clicked', self.on_license_clicked)
         self.license_label = self.build_description_label()
         self.license_holder = widgetutil.WidgetHolder()
-        vbox.pack_start(self.license_holder)
+        vbox.pack_start(widgetutil.align_left(self.license_holder))
         torrent_info_hbox = widgetset.HBox(spacing=12)
         torrent_info_hbox.pack_start(self.torrent_info_left)
         torrent_info_hbox.pack_start(self.torrent_info_right)
@@ -1657,15 +1657,13 @@ class ItemDetailsWidget(widgetset.VBox):
 
     def setup_license_button(self, info):
         self.license_info = info.license
-        self.license_holder.unset()
-        if self.license_info:
-            if self.license_info.startswith("http://"):
-                self.license_holder.set(
-                    widgetutil.align_left(self.license_button))
-            else:
-                self.license_label.set_text(info.license)
-                self.license_holder.set(
-                    widgetutil.align_left(self.license_label))
+        if not self.license_info:
+            self.license_holder.unset()
+        elif self.license_info.startswith("http://"):
+            self.license_holder.set(self.license_button)
+        else:
+            self.license_label.set_text(self.license_info)
+            self.license_holder.set(self.license_label)
 
     def clear(self):
         self.title_label.set_text('')
