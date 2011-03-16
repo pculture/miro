@@ -84,7 +84,7 @@ class FeedController(itemlistcontroller.ItemListController,
 
     def make_titlebar(self, feed_info):
         if feed_info.is_directory_feed:
-            return itemlistwidgets.FilteredTitlebar()
+            return itemlistwidgets.WatchedFolderTitlebar()
         else:
             titlebar = itemlistwidgets.ChannelTitlebar()
             titlebar.connect('save-search', self._on_save_search)

@@ -399,34 +399,8 @@ class SearchTitlebar(ItemListTitlebar):
             self.save_button.show()
         self.emit('search-changed', searchbox.get_text())
 
-class FilteredTitlebar(ItemListTitlebar):
+class VideoAudioFilterMixin(object):
     def __init__(self):
-        ItemListTitlebar.__init__(self)
-        # this "All" is different than other "All"s in the codebase, so it
-        # needs to be clarified
-        view_all = WidgetStateStore.get_view_all_filter()
-        unwatched = WidgetStateStore.get_unwatched_filter()
-        downloaded = WidgetStateStore.get_downloaded_filter()
-        self.add_filter('view-all', 'toggle-filter', view_all,
-                         declarify(_('View|All')))
-        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
-                        _('Downloaded'))
-        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
-                        _('Unplayed'))
-        self.filter = view_all
-
-    def toggle_filter(self, filter_):
-        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
-        view_all = WidgetStateStore.is_view_all_filter(self.filter)
-        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
-        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        self.filters['view-all'].set_enabled(view_all)
-        self.filters['only-downloaded'].set_enabled(downloaded)
-        self.filters['only-unplayed'].set_enabled(unwatched)
-
-class AllFeedsTitlebar(FilteredTitlebar):
-    def __init__(self):
-        FilteredTitlebar.__init__(self)
         view_video = WidgetStateStore.get_view_video_filter()
         view_audio = WidgetStateStore.get_view_audio_filter()
         self.add_filter('view-video', 'toggle-filter', view_video,
@@ -434,16 +408,83 @@ class AllFeedsTitlebar(FilteredTitlebar):
         self.add_filter('view-audio', 'toggle-filter', view_audio,
                         _('Audio'))
 
-    def toggle_filter(self, filter_):
-        FilteredTitlebar.toggle_filter(self, filter_)
+    def toggle_filter(self):
         view_video = WidgetStateStore.is_view_video_filter(self.filter)
         view_audio = WidgetStateStore.is_view_audio_filter(self.filter)
         self.filters['view-video'].set_enabled(view_video)
         self.filters['view-audio'].set_enabled(view_audio)
 
-class ChannelTitlebar(SearchTitlebar, FilteredTitlebar):
+class DownloadedUnplayedFilterMixin(object):
+    def __init__(self):
+        unwatched = WidgetStateStore.get_unwatched_filter()
+        downloaded = WidgetStateStore.get_downloaded_filter()
+        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
+                        _('Downloaded'))
+        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
+                        _('Unplayed'))
+
+    def toggle_filter(self):
+        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
+        self.filters['only-downloaded'].set_enabled(downloaded)
+        self.filters['only-unplayed'].set_enabled(unwatched)
+
+class FilteredTitlebar(ItemListTitlebar):
+    def __init__(self):
+        ItemListTitlebar.__init__(self)
+        # this "All" is different than other "All"s in the codebase, so it
+        # needs to be clarified
+        view_all = WidgetStateStore.get_view_all_filter()
+        self.add_filter('view-all', 'toggle-filter', view_all,
+                         declarify(_('View|All')))
+        self.filter = view_all
+
+    def toggle_filter(self, filter_):
+        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
+        view_all = WidgetStateStore.is_view_all_filter(self.filter)
+        self.filters['view-all'].set_enabled(view_all)
+
+class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
+                       VideoAudioFilterMixin):
+    def __init__(self):
+        FilteredTitlebar.__init__(self)
+        DownloadedUnplayedFilterMixin.__init__(self)
+        VideoAudioFilterMixin.__init__(self)
+
+    def toggle_filter(self, filter_):
+        FilteredTitlebar.toggle_filter(self, filter_)
+        DownloadedUnplayedFilterMixin.toggle_filter(self)
+        VideoAudioFilterMixin.toggle_filter(self)
+
+class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
+                      DownloadedUnplayedFilterMixin):
     """Titlebar for a channel
     """
+    def __init__(self):
+        FilteredTitlebar.__init__(self)
+        DownloadedUnplayedFilterMixin.__init__(self)
+
+    def toggle_filter(self, filter_):
+        FilteredTitlebar.toggle_filter(self, filter_)
+        DownloadedUnplayedFilterMixin.toggle_filter(self)
+
+class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
+    def __init__(self):
+        FilteredTitlebar.__init__(self)
+        unwatched = WidgetStateStore.get_unwatched_filter()
+        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
+                        _('Unplayed'))
+        VideoAudioFilterMixin.__init__(self)
+
+    def toggle_filter(self, filter_):
+        FilteredTitlebar.toggle_filter(self, filter_)
+        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
+        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
+        if downloaded:
+            # make sure 'All' is on
+            self.filters['view-all'].set_enabled(downloaded)
+        self.filters['only-unplayed'].set_enabled(unwatched)
+        VideoAudioFilterMixin.toggle_filter(self)
 
 class SearchListTitlebar(SearchTitlebar):
     """Titlebar for the search page.
