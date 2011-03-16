@@ -891,8 +891,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def _on_hotspot_context_menu_selection_done(self, menu):
         # context menu is closed, we won't get the button-release-event in
         # this case, but we can unset hotspot tracker here.
-        self.hotspot_tracker.redraw_cell()
-        self.hotspot_tracker = None
+        if self.hotspot_tracker:
+            self.hotspot_tracker.redraw_cell()
+            self.hotspot_tracker = None
 
     def _x_coord_in_expander(self, treeview, x, column, path):
         """Calculate if an x coordinate is over the expander triangle
