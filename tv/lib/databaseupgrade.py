@@ -3189,10 +3189,10 @@ def upgrade152(cursor):
     VIDEO_EXTENSIONS = ['.ogx']
     AUDIO_EXTENSIONS = ['.oga']
 
-    video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+    video_filename_expr = '(%s)' % ' OR '.join("filename LIKE '%%%s'" % ext
             for ext in VIDEO_EXTENSIONS)
 
-    audio_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+    audio_filename_expr = '(%s)' % ' OR '.join("filename LIKE '%%%s'" % ext
             for ext in AUDIO_EXTENSIONS)
 
     cursor.execute("UPDATE item SET file_type = 'video' "
