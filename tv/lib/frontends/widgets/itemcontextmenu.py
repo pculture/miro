@@ -220,6 +220,12 @@ class ItemContextMenuHandler(object):
                     section.append((
                             _('Download'),
                             messages.StartDownload(item.id).send_to_backend))
+                    if (item.download_info and
+                        item.download_info.state == u'failed'):
+                        section.append((
+                            _('Cancel Download'),
+                            messages.CancelDownload(
+                                item.id).send_to_backend))
 
             else:
                 # Play

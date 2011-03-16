@@ -509,6 +509,8 @@ class Application:
             return
 
         external_count = len([s for s in selection if s.is_external])
+        failed_count = len([s for s in selection if s.download_info and
+                            s.download_info.state == u'failed'])
         folder_count = len([s for s in selection if s.is_container_item])
         total_count = len(selection)
 
@@ -517,6 +519,12 @@ class Application:
 
         if total_count == 1 and external_count == folder_count == 0:
             _delete_video(selection[0])
+            return
+
+        if failed_count == total_count:
+            # all our selection is failed downloads, just cancel them
+            for item in selection:
+                messages.CancelDownload(item.id).send_to_backend()
             return
 
         title = ngettext('Remove item', 'Remove items', total_count)
