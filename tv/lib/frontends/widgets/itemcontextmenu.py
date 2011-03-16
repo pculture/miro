@@ -197,6 +197,10 @@ class ItemContextMenuHandler(object):
         elif ((item.download_info is not None and
                item.download_info.state != 'failed')):
             if item.download_info.state != 'finished':
+                if not menu_sections:
+                    # make sure that the default menu option isn't destructive
+                    # (re: #16715)
+                    section.append(None)
                 section.append((
                         _('Cancel Download'),
                         messages.CancelDownload(item.id).send_to_backend))
