@@ -1449,6 +1449,11 @@ class TabsChanged(FrontendMessage):
         self.changed = changed
         self.removed = removed
 
+    def __str__(self):
+        return ('<miro.messages.TabsChanged %s '
+    '(%d added, %d changed, %d removed)>') % (self.type,
+    len(self.added), len(self.changed), len(self.removed))
+
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 
@@ -1477,6 +1482,11 @@ class ItemsChanged(FrontendMessage):
         self.added = added
         self.changed = changed
         self.removed = removed
+
+    def __str__(self):
+        return ('<miro.messages.ItemsChanged %s:%s '
+    '(%d added, %d changed, %d removed)>') % (self.type, self.id,
+    len(self.added), len(self.changed), len(self.removed))
 
 class WatchedFolderList(FrontendMessage):
     """Sends the frontend the initial list of watched folders.
