@@ -52,6 +52,8 @@ IMAGE_WIDTH_SQUARE = 125
 IMAGE_WIDTH_WIDE = 180
 CORNER_RADIUS = 5
 EMBLEM_HEIGHT = 20
+RIGHT_BUTTON_WIDTH = 42
+RIGHT_BUTTON_HEIGHT = 22
 
 # padding/spacing
 PADDING = (15, 15, 6, 6)
@@ -117,9 +119,9 @@ class EmblemVisuals(object):
         self.text_bold = text_bold
         self.image_name = image_name
         if pad_right_small:
-            self.pad_right = EMBLEM_TEXT_PAD_END_SMALL
+            self.pad_end = EMBLEM_TEXT_PAD_END_SMALL
         else:
-            self.pad_right = EMBLEM_TEXT_PAD_END
+            self.pad_end = EMBLEM_TEXT_PAD_END
 
 EMBLEM_VISUALS_RESUME = EmblemVisuals('#306219', 'resume', True,
         pad_right_small=True)
@@ -130,6 +132,27 @@ EMBLEM_VISUALS_NEWLY_AVAILABLE = EmblemVisuals( '#e1efff', 'newly', True,
 EMBLEM_VISUALS_DRM = EmblemVisuals('#582016', 'drm', True)
 EMBLEM_VISUALS_QUEUED = EmblemVisuals('#4a2c00', 'queued', False)
 EMBLEM_VISUALS_FAILED = EmblemVisuals('#ffe7e7', 'failed', False)
+
+class ItemDescription(object):
+    """A description line for an item.
+
+    Descriptions are actually a bit complicated, since they include both HTML
+    links, and we sometimes preface them with info about the feed or playlist
+    the order.
+
+    attributes:
+        text -- text (1st part of HTMLStripper.strip() output)
+        links -- links for text (2nd part of HTMLStripper.strip() output)
+        text_color -- color to draw the text with
+        preface -- preface to print before text
+        preface_color -- color to draw the preface with
+    """
+    def __init__(self, text, links, text_color, preface, preface_color):
+        self.text = text
+        self.links = links
+        self.text_color = text_color
+        self.preface = preface
+        self.preface_color = preface_color
 
 class ItemRendererSignals(signals.SignalEmitter):
     """Signal emitter for ItemRenderer.
@@ -144,24 +167,75 @@ class ItemRendererSignals(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'throbber-drawn')
 
-class ItemRenderer(widgetset.InfoListRenderer):
+_cached_images = {} # caches ImageSurface for get_image()
+def get_image(image_name):
+    """Get an ImageSurface to use.
+
+    image_name is the name of the image.  All ItemRenderer images have the
+    format 'item-renderer.<image_name>.png'
+    """
+    try:
+        return _cached_images[image_name]
+    except KeyError:
+        _cached_images[image_name] = _load_image(image_name)
+        return _cached_images[image_name]
+
+def _load_image(image_name):
+    """Create a new ImageSurface to use.
+
+    You probably want to use get_image() for your images, which supports
+    caching.
+    """
+    filename = 'item-renderer-%s.png' % image_name
+    path = os.path.join('images', filename)
+    return imagepool.get_surface(resources.path(path))
+
+class ItemRendererBase(widgetset.InfoListRenderer):
     MIN_WIDTH = 600
     HEIGHT = 147
 
+    def __init__(self, wide_image=False):
+        widgetset.InfoListRenderer.__init__(self)
+        self.canvas = ItemRendererCanvas(wide_image)
+
+    def get_size(self, style, layout_manager):
+        return self.MIN_WIDTH, self.HEIGHT
+
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        layout = self.layout_all(layout_manager, width, height, False, None)
+        hotspot_info = layout.find_hotspot(x, y)
+        if hotspot_info is None:
+            return None
+        hotspot, x, y = hotspot_info
+        if hotspot == 'description':
+            url = layout.calc_description_link(x, y)
+            if url is None:
+                return None
+            elif url == '#show-torrent-contents':
+                # special link that we set up in
+                # setup_torrent_folder_description()
+                return 'show_contents'
+            else:
+                return 'description-link:%s' % url
+        else:
+            return hotspot
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        layout = self.layout_all(layout_manager, context.width,
+                context.height, selected, hotspot)
+        layout.draw(context)
+
+    def layout_all(self, layout_manager, width, height, selected, hotspot):
+        """Create a ItemRendererLayout object for our cell."""
+        raise NotImplementedError()
+
+class ItemRenderer(ItemRendererBase):
     def __init__(self, display_channel=True, is_podcast=False,
             wide_image=False):
-        widgetset.InfoListRenderer.__init__(self)
+        ItemRendererBase.__init__(self, wide_image)
         self.signals = ItemRendererSignals()
         self.display_channel = display_channel
         self.is_podcast = is_podcast
-        self.selected = False
-        if wide_image:
-            self.image_width = IMAGE_WIDTH_WIDE
-        else:
-            self.image_width = IMAGE_WIDTH_SQUARE
-        self.setup_images()
-        self.emblem_drawer = _EmblemDrawer(self)
-        self.extra_info_drawer = _ExtraInfoDrawer()
         self.setup_torrent_folder_description()
 
     def setup_torrent_folder_description(self):
@@ -169,152 +243,127 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 SHOW_CONTENTS_TEXT)
         self.torrent_folder_description = util.HTMLStripper().strip(text)
 
-    def setup_images(self):
-        all_images = [ 'background-left', 'background-middle',
-                'background-right', 'dl-speed', 'dl-stats-left-cap',
-                'dl-stats-middle', 'dl-stats-right-cap',
-                'dl-stats-selected-left-cap', 'dl-stats-selected-middle',
-                'dl-stats-selected-right-cap', 'download-icon',
-                'download-pause', 'download-pause-pressed', 'download-resume',
-                'download-resume-pressed', 'download-stop',
-                'download-stop-pressed', 'drm-middle', 'drm-cap',
-                'expiring-cap', 'expiring-middle', 'failed-middle',
-                'failed-cap', 'keep', 'keep-pressed', 'menu', 'menu-pressed',
-                'pause', 'pause-pressed', 'play', 'play-pressed', 'remove',
-                'remove-playlist', 'remove-playlist-pressed',
-                'remove-pressed', 'saved', 'status-icon-alert', 'newly-cap',
-                'newly-middle', 'progress-left-cap', 'progress-middle',
-                'progress-right-cap', 'progress-throbber-1-left',
-                'progress-throbber-1-middle', 'progress-throbber-1-right',
-                'progress-throbber-2-left', 'progress-throbber-2-middle',
-                'progress-throbber-2-right', 'progress-throbber-3-left',
-                'progress-throbber-3-middle', 'progress-throbber-3-right',
-                'progress-throbber-4-left', 'progress-throbber-4-middle',
-                'progress-throbber-4-right', 'progress-throbber-5-left',
-                'progress-throbber-5-middle', 'progress-throbber-5-right',
-                'progress-throbber-6-left', 'progress-throbber-6-middle',
-                'progress-throbber-6-right', 'progress-throbber-7-left',
-                'progress-throbber-7-middle', 'progress-throbber-7-right',
-                'progress-throbber-8-left', 'progress-throbber-8-middle',
-                'progress-throbber-8-right', 'progress-throbber-9-left',
-                'progress-throbber-9-middle', 'progress-throbber-9-right',
-                'progress-throbber-10-left', 'progress-throbber-10-middle',
-                'progress-throbber-10-right',
-                'progress-track', 'queued-middle', 'queued-cap', 'resume-cap',
-                'resume-middle', 'selected-background-left',
-                'selected-background-middle', 'selected-background-right',
-                'time-left', 'ul-speed', 'unplayed-cap', 'unplayed-middle', ]
-        self.images = {}
-        for image_name in all_images:
-            filename = 'item-renderer-%s.png' % image_name
-            surface = imagepool.get_surface(resources.path(
-                os.path.join('images', filename)))
-            self.images[image_name] = surface
-
-    def get_size(self, style, layout_manager):
-        return self.MIN_WIDTH, self.HEIGHT
-
-    def calc_download_mode(self):
-        self.download_mode = (self.info.state in ('downloading', 'paused'))
-        # If the download has started and we don't know the total size.  Draw
-        # a progress throbber.
-        if self.download_mode:
-            dl_info = self.info.download_info
-            self.throbber_mode = (dl_info.downloaded_size > 0 and
-                    dl_info.total_size < 0)
-
-    def hotspot_test(self, style, layout_manager, x, y, width, height):
-        self.download_info = self.info.download_info
-        self.calc_download_mode()
-        self.hotspot = None
-        self.selected = False
-        # Assume the mouse is over the cell, since we got a mouse click
-        self.hover = True
-        layout = self.layout_all(layout_manager, width, height)
-        hotspot_info = layout.find_hotspot(x, y)
-        self.extra_info_drawer.reset()
-        if hotspot_info is None:
-            return None
-        hotspot, x, y = hotspot_info
-        if hotspot == 'description':
-            textbox = self.make_description(layout_manager)
-            textbox.set_width(self.description_width)
-            index = textbox.char_at(x, y)
-            if index is None:
-                return None
-            index -= self.description_text_start
-            if index < 0:
-                return None
-            for (start, end, url) in self.description_links:
-                if start <= index < end:
-                    if url == '#show-torrent-contents':
-                        # special link that we set up in
-                        # setup_torrent_folder_description()
-                        return 'show_contents'
-                    else:
-                        return 'description-link:%s' % url
-            return None
-        else:
-            return hotspot
-
-    def render(self, context, layout_manager, selected, hotspot, hover):
-        self.download_info = self.info.download_info
-        self.calc_download_mode()
-        self.hotspot = hotspot
-        self.selected = selected
-        self.hover = hover
-        layout = self.layout_all(layout_manager, context.width,
-                context.height)
-        layout.draw(context)
-        self.extra_info_drawer.reset()
-
-    def layout_all(self, layout_manager, width, height):
-        self.setup_guides(width, height)
-        layout = cellpack.Layout()
-        self.layout_simple_elements(layout, layout_manager)
-        self.layout_text(layout, layout_manager)
-        if self.download_mode:
-            self.layout_progress_bar(layout, layout_manager)
-            self.layout_download_right(layout, layout_manager)
-        else:
-            self.layout_main_bottom(layout, layout_manager)
-            self.layout_right(layout, layout_manager)
-        return layout
-
-    def setup_guides(self, width, height):
-        """Setup a few dimensions to help us layout the cell:
-
-        This method sets the following attributes:
-            background_rect - area where the background image should be drawn
-            image_rect - area for the thumbnail
-            middle_rect - area for the text/badges
-            right_rect - area for the buttons/download information
-        """
-        total_rect = cellpack.LayoutRect(0, 0, width, height)
-        # NOTE: background image extends a few pixels beyond the actual
-        # boundaries so that it can draw shadows and other things
-        self.background_rect = total_rect.subsection(*PADDING)
-        # area inside the boundaries of the background
-        inner_rect = self.background_rect.subsection(*PADDING_BACKGROUND)
-        self.image_rect = inner_rect.left_side(self.image_width)
-        if self.download_mode:
-            right_width = RIGHT_WIDTH_DOWNLOAD_MODE
-        else:
-            right_width = RIGHT_WIDTH
-        self.right_rect = inner_rect.right_side(right_width)
-        self.middle_rect = inner_rect.subsection(self.image_width + 20,
-                right_width + 15, 0 ,0)
-        # emblem/progress bar should start 29px above the top of the cell
-        self.emblem_bottom = total_rect.bottom - 29
-
-    def layout_simple_elements(self, layout, layout_manager):
-        # this is a place to put layout calls that are simple enough that they
-        # don't need their own function
-        layout.add_rect(self.background_rect, self.draw_background)
-        layout.add_rect(self.image_rect, self.draw_thumbnail,
+    def layout_all(self, layout_manager, width, height, selected, hotspot):
+        download_mode = (self.info.state in ('downloading', 'paused'))
+        self.canvas.start_new_cell(layout_manager, width, height, selected,
+                hotspot, download_mode)
+        # add elements that are always present
+        self.canvas.add_thumbnail(self.info.thumbnail,
                 self.calc_thumbnail_hotspot())
-        layout.add_rect(self.image_rect.past_right(1),
-                self.draw_thumbnail_separator)
+        self.canvas.add_text(self.info.name, self.calc_description(),
+                self.calc_extra_info())
+        # add elements for download-mode or non-download-mode
+        if download_mode:
+            self.add_download_mode_elements()
+        else:
+            self.add_normal_mode_elements()
+        return self.canvas.finish()
+
+    def add_normal_mode_elements(self):
+        """Add elements when we aren't in download mode."""
+        self.add_main_button()
+        self.add_emblem()
+        self.add_secondary_button()
+        self.add_right_buttons()
+
+    def add_emblem(self):
+        emblem_parts = self.calc_emblem_parts()
+        if emblem_parts is not None:
+            self.canvas.add_emblem(*emblem_parts)
+
+    def add_main_button(self):
+        if self.info.downloaded:
+            if self.info.is_playable:
+                playing_item = app.playback_manager.get_playing_item()
+                if (playing_item and playing_item.id == self.info.id):
+                    hotspot = 'play_pause'
+                    if app.playback_manager.is_paused:
+                        image_name = 'play'
+                    else:
+                        image_name = 'pause'
+                else:
+                    image_name = 'play'
+                    hotspot = 'play'
+                self.canvas.add_main_button_image(image_name, hotspot)
+            else:
+                self.canvas.add_main_button_text(REVEAL_IN_TEXT,
+                        'show_local_file')
+        else:
+            if self.info.mime_type == 'application/x-bittorrent':
+                text = DOWNLOAD_TORRENT_TEXT
+            else:
+                text = DOWNLOAD_TEXT
+            self.canvas.add_main_button_text(text, 'download',
+                    'download-icon')
+
+    def add_secondary_button(self):
+        button_info = self.calc_extra_button()
+        if button_info is not None:
+            self.canvas.add_secondary_button(*button_info)
+
+    def add_right_buttons(self):
+        self.canvas.add_menu_button()
+
+        if ((self.info.is_external or self.info.downloaded) and 
+            self.info.source_type != 'sharing'):
+            self.canvas.add_remove_button(*self.remove_button_info())
+
+        if self.info.expiration_date:
+            text = displaytext.expiration_date(self.info.expiration_date)
+            self.canvas.add_keep_button('keep', 'keep', text)
+        elif self.attrs.get('keep-animation-alpha', 0) > 0:
+            self.canvas.add_saved_emblem(SAVED_TEXT, 'saved',
+                    self.attrs['keep-animation-alpha'])
+
+    def add_download_mode_elements(self):
+        """Add the download-mode specific elements.  """
+        dl_info = self.info.download_info
+        if dl_info.state == 'paused':
+            pause_button_mode = 'resume'
+        else:
+            pause_button_mode = 'pause'
+        if dl_info.downloaded_size == 0:
+            # show empty bar before we start up
+            self.canvas.add_progress_bar(0.0)
+        elif dl_info.total_size < 0:
+            # show throbber once we've started, but still don't know the
+            # total_size
+            throbber_index = self.attrs.get('throbber-value', 0) % 10
+            self.canvas.add_progress_throbber(throbber_index,
+                    pause_button_mode)
+            self.signals.emit('throbber-drawn', self.info)
+        else:
+            # show regular bar otherwise
+            amount = float(dl_info.downloaded_size) / dl_info.total_size
+            self.canvas.add_progress_bar(amount, pause_button_mode)
+        if self.info.state == 'paused':
+            eta = down_rate = 0
+        else:
+            eta = dl_info.eta
+            down_rate = dl_info.rate
+        down_total = dl_info.downloaded_size
+        if dl_info.torrent:
+            up_rate = self.info.up_rate
+            up_total = self.info.up_total
+            if up_rate is None:
+                # if the torrent hasn't started, we don't want None values
+                # here, that causes confusion with non-torrents
+                up_rate = up_total = 0
+        else:
+            up_rate = up_total = None
+        self.canvas.add_download_info(eta, down_rate, down_total, up_rate,
+                up_total)
+        if dl_info.torrent and dl_info.state != 'paused':
+            if dl_info.rate == 0:
+                self.canvas.add_torrent_startup_info(dl_info.startup_activity)
+            else:
+                lines = (
+                        (_('PEERS'), str(self.info.connections)),
+                        (_('SEEDS'), str(self.info.seeders)),
+                        (_('LEECH'), str(self.info.leechers)),
+                        (_('SHARE'), "%.2f" % self.info.up_down_ratio),
+                )
+                self.canvas.add_torrent_info(lines)
 
     def calc_thumbnail_hotspot(self):
         """Decide what hotspot clicking on the thumbnail should activate."""
@@ -325,115 +374,25 @@ class ItemRenderer(widgetset.InfoListRenderer):
         else:
             return None
 
-    def layout_text(self, layout, layout_manager):
-        """layout the text for our cell """
-        # setup title
-        layout_manager.set_font(TITLE_FONT_SIZE,
-                family=widgetset.ITEM_TITLE_FONT, bold=True)
-        layout_manager.set_text_color(ITEM_TITLE_COLOR)
-        title = layout_manager.textbox(self.info.name)
-        title.set_wrap_style('truncated-char')
-        # setup info lin
-        layout_manager.set_font(EXTRA_INFO_FONT_SIZE,
-                family=widgetset.ITEM_INFO_FONT)
-        layout_manager.set_text_color(ITEM_DESC_COLOR)
-        self.extra_info_drawer.setup(self.info, layout_manager,
-            INFO_SEPARATOR_COLOR)
-        # setup description
-        description = self.make_description(layout_manager)
-
-        # position the parts.
-
-        total_height = (title.font.line_height() +
-                + self.extra_info_drawer.height +
-                description.font.line_height() + 16)
-        x = self.middle_rect.x
-        width = self.middle_rect.width
-        # Ideally, we want to start it at 28px from the start of the top of
-        # the cell.  However, if our text is big enough, don't let it overflow
-        # the play button.
-        text_bottom = min(25 + total_height, self.middle_rect.y + 80)
-        self.text_top = text_bottom - total_height
-        if self.download_mode:
-            # quick interlude.  If we are in download mode, draw the menu on
-            # the right side of the title line.
-            menu_x = x + width - self.images['menu'].width
-            self._add_image_button(layout, menu_x, self.text_top, 'menu',
-                    '#show-context-menu')
-            title_width = width - self.images['menu'].width - 5
-        else:
-            title_width = width
-
-        layout.add_text_line(title, x, self.text_top, title_width)
-        y = layout.last_rect.bottom + 6
-        layout.add(x, y, width, self.extra_info_drawer.height,
-            self.extra_info_drawer.draw)
-        y = layout.last_rect.bottom + 6
-        layout.add_text_line(description, x, y, width, hotspot='description')
-        self.description_width = width
-
-    def make_description(self, layout_manager):
-        layout_manager.set_font(ITEM_DESC_FONT_SIZE,
-                family=widgetset.ITEM_DESC_FONT)
-        layout_manager.set_text_color(ITEM_DESC_COLOR)
-        textbox = layout_manager.textbox("")
-        self.description_text_start = self.add_description_preface(textbox)
-
+    def calc_description(self):
         if (self.info.download_info and self.info.download_info.torrent and
                 self.info.children):
             text, links = self.torrent_folder_description
         else:
             text, links = self.info.description_stripped
+        preface, preface_color = self.calc_description_preface()
+        return ItemDescription(text, links, ITEM_DESC_COLOR, preface,
+                preface_color)
 
-        pos = 0
-        for start, end, url in links:
-            textbox.append_text(text[pos:start])
-            textbox.append_text(text[start:end], underline=True, color=ITEM_DESC_COLOR)
-            pos = end
-        if pos < len(text):
-            textbox.append_text(text[pos:])
-        self.description_links = links
-        return textbox
-
-    def add_description_preface(self, textbox):
+    def calc_description_preface(self):
         if (self.display_channel and self.info.feed_name and
                 not self.info.is_external):
-            feed_preface = "%s: " % self.info.feed_name
-            textbox.append_text(feed_preface, color=FEED_NAME_COLOR)
-            return len(feed_preface)
-        else:
-            return 0
+            return ("%s: " % self.info.feed_name, FEED_NAME_COLOR)
+        return '', widgetutil.WHITE
 
-    def layout_main_bottom(self, layout, layout_manager):
-        """Layout the bottom part of the main section.
-
-        rect should contain the area for the entire middle section.  This
-        method will add the progress bar, emblem and/or play button.
-        """
-
-        # allocate it enough size to fit the play button
-        self.emblem_drawer.info = self.info
-        self.emblem_drawer.hotspot = self.hotspot
-        emblem_width = self.emblem_drawer.add_to_layout(layout,
-                layout_manager, self.middle_rect, self.emblem_bottom)
-        # add stop seeding and similar buttons
-        extra_button_x = (self.middle_rect.x + emblem_width +
-                EMBLEM_MARGIN_RIGHT)
-        self.add_extra_button(layout, layout_manager, extra_button_x)
-
-    def add_extra_button(self, layout, layout_manager, left):
-        button_info = self.calc_extra_button()
-        if button_info is None:
-            return
-        else:
-            text, hotspot = button_info
-        layout_manager.set_font(EMBLEM_FONT_SIZE)
-        button = layout_manager.button(text, pressed=(self.hotspot==hotspot),
-                    style='webby')
-        button_height = button.get_size()[1]
-        y = (self.emblem_bottom - (EMBLEM_HEIGHT - button_height) // 2 -
-                button_height)
-        layout.add_image(button, left, y, hotspot)
+    def calc_extra_info(self):
+        return (self.info.display_date, self.info.display_duration,
+                self.info.display_size, self.info.file_format)
 
     def calc_extra_button(self):
         """Calculate the button to put to the right of the emblem.
@@ -447,89 +406,428 @@ class ItemRenderer(widgetset.InfoListRenderer):
             return (CANCEL_TEXT, 'cancel_auto_download')
         return None
 
-    def layout_right(self, layout, layout_manager):
-        button_width, button_height = self.images['keep'].get_size()
-        x = self.right_rect.right - button_width - 20
-        # align the buttons based on where other parts get laid out.
-        top = self.text_top - 1
-        bottom = self.emblem_bottom
+    def calc_emblem_parts(self):
+        """Calculate UI details for layout_emblem().
 
-        # top botton is easy
-        menu_y = top
-        expire_y = bottom - button_height
-        delete_y = ((top + bottom - button_height) // 2)
+        This returns a (text, image, visuals) tuple.  The parts mean:
+            text -- text inside the emblem
+            image -- image inside the emblem
+            visuals -- text inside the emblem
+        """
 
-        self._add_image_button(layout, x, menu_y, 'menu',
-                '#show-context-menu')
+        text = image = visuals = None
 
-        if ((self.info.is_external or self.info.downloaded) and 
-            self.info.source_type != 'sharing'):
-            self.add_remove_button(layout, x, delete_y)
+        if self.info.has_drm:
+            visuals = EMBLEM_VISUALS_DRM
+            text = _('DRM locked')
+        elif (self.info.download_info
+                and self.info.download_info.state == 'failed'):
+            visuals = EMBLEM_VISUALS_FAILED
+            image = get_image('status-icon-alert')
+            text = u"%s-%s" % (ERROR_TEXT,
+                    self.info.download_info.short_reason_failed)
+        elif self.info.pending_auto_dl:
+            visuals = EMBLEM_VISUALS_QUEUED
+            text = QUEUED_TEXT
+        elif (self.info.downloaded
+                and app.playback_manager.is_playing_id(self.info.id)):
+            # copy the unplayed-style
+            visuals = EMBLEM_VISUALS_UNPLAYED
+            text = CURRENTLY_PLAYING_TEXT
+        elif (self.info.downloaded and not self.info.video_watched and
+                self.info.is_playable):
+            visuals = EMBLEM_VISUALS_UNPLAYED
+            text = UNPLAYED_TEXT
+        elif self.should_resume_item():
+            visuals = EMBLEM_VISUALS_RESUME
+            text = _("Resume at %(resumetime)s",
+                     {"resumetime": displaytext.short_time_string(self.info.resume_time)})
+        elif not self.info.item_viewed and self.info.state == "new":
+            visuals = EMBLEM_VISUALS_NEWLY_AVAILABLE
+            text = NEWLY_AVAILABLE_TEXT
+        else:
+            return None
+        return text, image, visuals
 
-        if self.info.expiration_date:
-            expire_rect = cellpack.LayoutRect(x, expire_y, button_width,
-                    button_height)
-            text = displaytext.expiration_date(self.info.expiration_date)
-            image = self._make_image_button('keep', 'keep')
-            hotspot = 'keep'
-            self.layout_expire(layout, layout_manager, expire_rect, text,
-                    image, hotspot)
-            self.expire_background_alpha = 1.0
-        elif self.attrs.get('keep-animation-alpha', 0) > 0:
-            expire_rect = cellpack.LayoutRect(x, expire_y, button_width,
-                    button_height)
-            text = SAVED_TEXT
-            image = self.images['saved']
-            hotspot = None
-            self.layout_expire(layout, layout_manager, expire_rect, text,
-                    image, hotspot)
-            self.expire_background_alpha = self.attrs['keep-animation-alpha']
+    def should_resume_item(self):
+        if self.is_podcast:
+            resume_pref = prefs.RESUME_PODCASTS_MODE
+        elif self.info.file_type == u'video':
+            resume_pref = prefs.RESUME_VIDEOS_MODE
+        else:
+            resume_pref = prefs.RESUME_MUSIC_MODE
+        return (self.info.is_playable
+              and self.info.item_viewed
+              and self.info.resume_time > 0
+              and app.config.get(resume_pref))
 
-    def add_remove_button(self, layout, x, y):
-        """Add the remove button to a layout.
+    def remove_button_info(self):
+        """Get the image/hotspot to use for the remove button
         
         Subclasses can override this if they want different behavior/looks for
         the button.
         """
-        self._add_image_button(layout, x, y, 'remove', 'delete')
+        return ('remove', 'delete')
 
-    def layout_expire(self, layout, layout_manager, rect, text, image, hotspot):
-        # create a new Layout for the 2 elements
-        expire_layout = cellpack.Layout()
+class ItemRendererLayout(cellpack.Layout):
+    """ItemRendererLayout -- Layout subclass for ItemRenderer
+
+    This class has extra support for calculating which link was clicked on for
+    hotspot_test()
+    """
+    def __init__(self):
+        cellpack.Layout.__init__(self)
+
+    def set_description_info(self, description, textbox, width):
+        self.description = description
+        self.description_textbox = textbox
+        self.width = width
+
+    def calc_description_link(self, x, y):
+        """Calculate if a user clicked on the link in the description.
+
+        :param x: x-coordinate to test
+        :param y: x-coordinate to test
+        :returns: url clicked on, or None
+        """
+
+        self.description_textbox.set_width(self.width)
+        index = self.description_textbox.char_at(x, y)
+        if index is None:
+            return None
+        index -= len(self.description.preface)
+        if index < 0:
+            return None
+        for (start, end, url) in self.description.links:
+            if start <= index < end:
+                return url
+        return None
+
+class ItemRendererCanvas(object):
+    """ItemRendererCanvas -- layout elements for ItemRenderer
+
+    ItemRendererCanvas works with ItemRenderer to render a cell.
+    ItemRendererCanvas handles the layout/drawing aspects, while ItemRenderer
+    handles the logic of what should be displayed.
+
+    ItemRendererCanvas is meant re-used multiple times.  For a single cell,
+    you should call start_new_cell(), then add the elements you want with
+    the layout_* methods, and finally call finish() to get the Layout object
+    for the cell
+    """
+
+    def __init__(self, wide_image):
+        """Create a new ItemRendererDrawer
+
+        :param wide_image: should we draw our image with a wide aspect ratio?
+        """
+        if wide_image:
+            self.image_width = IMAGE_WIDTH_WIDE
+        else:
+            self.image_width = IMAGE_WIDTH_SQUARE
+    def start_new_cell(self, layout_manager, width, height, selected, hotspot,
+            download_mode):
+        """Prepare to render a new cell.
+
+        This method starts a new Layout() object, and prepares to draw a cell
+        inside it.
+
+        :param layout_manager: LayoutManager to use for the cell
+        :param width: width of the cell to render to
+        :param height: height of the cell to rendere to
+        :param selected: should we indicated that we are selected?
+        :param hotspot: the currently active hotspot
+        :param download_mode: draw the download_info area on the right
+        """
+        self.layout = ItemRendererLayout()
+        # layout_above is a Layout that gets rendered above self.layout.  This
+        # helps us position things like the emblem button that are added added
+        # relatively early in the process, but need to be drawn after other
+        # things.
+        self.layout_above = cellpack.Layout()
+        self.layout_manager = layout_manager
+        self.selected = selected
+        self.hotspot = hotspot
+        self.download_mode = download_mode
+        self.setup_guides(width, height)
+
+    def setup_guides(self, width, height):
+        """Setup attributes to use as guides when we lay stuff out."""
+        total_rect = cellpack.LayoutRect(0, 0, width, height)
+        # NOTE: background image extends a few pixels beyond the actual
+        # boundaries so that it can draw shadows and other things
+        background_rect = total_rect.subsection(*PADDING)
+        self.layout.add_rect(background_rect, self.draw_background)
+        # area inside the boundaries of the background
+        inner_rect = background_rect.subsection(*PADDING_BACKGROUND)
+        self.image_rect = inner_rect.left_side(self.image_width)
+        if self.download_mode:
+            right_width = RIGHT_WIDTH_DOWNLOAD_MODE
+        else:
+            right_width = RIGHT_WIDTH
+        self.right_rect = inner_rect.right_side(right_width)
+        self.middle_rect = inner_rect.subsection(self.image_width + 20,
+                right_width + 15, 0 ,0)
+        self.right_button_x = (self.right_rect.right -
+                RIGHT_BUTTON_WIDTH - 20)
+        if self.download_mode:
+            self.download_info_rect = self.right_rect.subsection(6, 12, 8, 8)
+        # emblem/progress bar should start 29px above the top of the cell
+        self.emblem_bottom = total_rect.bottom - 29
+        # reset coordinates that we set as we add elements
+        self.download_info_bottom =  None
+        self.button_right = None
+        self.emblem_right = None
+
+    def finish(self):
+        """Get a Layout object for a finished cell.
+
+        This method releases the Layout and LayoutManager objects that were
+        passed into start_new_cell()
+
+        :returns: cellpack.Layout object
+        """
+        rv = self.layout
+        rv.merge(self.layout_above)
+        self.layout = None
+        self.layout_above = None
+        self.layout_manager = None
+        return rv
+
+    def add_thumbnail(self, thumbnail, hotspot):
+        """Add a thumbnail.
+
+        :param thumbnail: image file to use
+        :param hotspot: hotspot when the user clicks on the thumbnail.
+        """
+
+        self.thumbnail = thumbnail
+        self.layout.add_rect(self.image_rect, self.draw_thumbnail, hotspot)
+        self.layout.add_rect(self.image_rect.past_right(1),
+                self.draw_thumbnail_separator)
+
+    def add_text(self, title, description, extra_info_parts):
+        """Add the text for our cell
+
+        This method adds the title, description, and extra info text.
+
+        If we are in download-mode, we also add the context-menu button to the
+        right of the title.
+        """
+        # setup title
+        self.layout_manager.set_font(TITLE_FONT_SIZE,
+                family=widgetset.ITEM_TITLE_FONT, bold=True)
+        self.layout_manager.set_text_color(ITEM_TITLE_COLOR)
+        title = self.layout_manager.textbox(title)
+        title.set_wrap_style('truncated-char')
+        # setup info line
+        self.layout_manager.set_font(EXTRA_INFO_FONT_SIZE,
+                family=widgetset.ITEM_INFO_FONT)
+        self.layout_manager.set_text_color(ITEM_DESC_COLOR)
+        extra_info_drawer = ExtraInfoDrawer(self.layout_manager,
+                extra_info_parts)
+        # setup description
+        description_textbox = self.make_description_textbox(description)
+        # position the parts.
+        total_height = (title.font.line_height() +
+                + extra_info_drawer.height +
+                description_textbox.font.line_height() + 16)
+        x = self.middle_rect.x
+        width = self.middle_rect.width
+        # Ideally, we want to start it at 28px from the start of the top of
+        # the cell.  However, if our text is big enough, don't let it overflow
+        # the play button.
+        text_bottom = min(25 + total_height, self.middle_rect.y + 80)
+        text_top = text_bottom - total_height
+        # align our right buttons just above the top of the title
+        self.right_button_top = text_top - 1
+        if self.download_mode:
+            # quick interlude.  If we are in download mode, draw the menu on
+            # the right side of the title line.
+            menu_x = x + width - get_image('menu').width
+            self._add_image_button(menu_x, text_top, 'menu',
+                    '#show-context-menu')
+            title_width = width - get_image('menu').width - 5
+        else:
+            title_width = width
+
+        self.layout.add_text_line(title, x, text_top, title_width)
+        y = self.layout.last_rect.bottom + 6
+        self.layout.add(x, y, width, extra_info_drawer.height,
+                extra_info_drawer.draw)
+        y = self.layout.last_rect.bottom + 6
+        self.layout.add_text_line(description_textbox, x, y, width,
+                hotspot='description')
+        # save description info for later use if we are testing for URL clicks
+        self.layout.set_description_info(description, description_textbox,
+                width)
+
+    def make_description_textbox(self, description):
+        self.layout_manager.set_font(ITEM_DESC_FONT_SIZE,
+                family=widgetset.ITEM_DESC_FONT)
+        self.layout_manager.set_text_color(description.text_color)
+        textbox = self.layout_manager.textbox("")
+        if description.preface:
+            textbox.append_text(description.preface,
+                    color=description.preface_color)
+
+        pos = 0
+        for start, end, url in description.links:
+            textbox.append_text(description.text[pos:start])
+            textbox.append_text(description.text[start:end], underline=True)
+            pos = end
+        if pos < len(description.text):
+            textbox.append_text(description.text[pos:])
+        return textbox
+
+    def add_emblem(self, text, icon, visuals):
+        """Add the emblem to our layout.
+
+        :param text: text to display inside the emblem (or None for no emblem)
+        :param icon: icon to display inside the emblem
+        :param visuals: EmblemVisuals to draw with
+        """
+        emblem_drawer = EmblemDrawer(text, icon, visuals)
+        self.emblem_right = emblem_drawer.add_to_layout(self.layout,
+                self.layout_manager, self.button_middle, self.button_right +
+                EMBLEM_TEXT_PAD_START, self.emblem_bottom)
+
+    def add_main_button_text(self, text, hotspot, icon=None):
+        """Add a text button as the main button for the item.
+
+        This button is the one that gets drawn on the left of the emblem
+        """
+        pressed=(self.hotspot==hotspot)
+        self.layout_manager.set_font(0.85)
+        button = self.layout_manager.button(text, pressed, style='webby')
+        if icon:
+            button.set_icon(get_image(icon))
+        self._add_button(button, hotspot)
+
+    def add_main_button_image(self, image_name, hotspot):
+        """Add an image as the main button for the item.
+
+        This button is the one that gets drawn on the left of the emblem
+        """
+        if self.hotspot == hotspot:
+            image_name += '-pressed'
+        button = get_image(image_name)
+        self._add_button(button, hotspot)
+
+    def _add_button(self, button, hotspot):
+        """Add the main button for the item.
+
+        This button gets drawn to the left of emblem.
+        """
+        x = self.middle_rect.x
+        emblem_top = self.emblem_bottom  - EMBLEM_HEIGHT
+        button_width, button_height = button.get_size()
+        # make the button middle aligned along the emblem
+        y = emblem_top - (button_height - EMBLEM_HEIGHT) // 2
+        # check if we don't have anything to put inside our emblem.  Just draw
+        # the button if so
+        self.layout_above.add_image(button, x, y, hotspot)
+        # save button positions to help us layout the emblem
+        self.button_middle = x + button_width // 2
+        self.button_right = x + button_width
+
+    def add_secondary_button(self, text, hotspot):
+        """Add a secondary button.
+
+        This button is placed to the right of the emblem.
+        """
+        if self.emblem_right:
+            left = (self.emblem_right + EMBLEM_MARGIN_RIGHT)
+        else:
+            left = (self.button_right + EMBLEM_MARGIN_RIGHT)
+        self.layout_manager.set_font(EMBLEM_FONT_SIZE)
+        button = self.layout_manager.button(text,
+                pressed=(self.hotspot==hotspot), style='webby')
+        button_height = button.get_size()[1]
+        y = (self.emblem_bottom - (EMBLEM_HEIGHT - button_height) // 2 -
+                button_height)
+        self.layout.add_image(button, left, y, hotspot)
+
+    def add_menu_button(self):
+        self._add_image_button(self.right_button_x, self.right_button_top,
+                'menu', '#show-context-menu')
+
+    def add_remove_button(self, image_name, hotspot):
+        # place the remove button in the middle-aligned
+        y = ((self.right_button_top + self.emblem_bottom -
+            RIGHT_BUTTON_HEIGHT) // 2)
+        self._add_image_button(self.right_button_x, y, image_name, hotspot)
+
+    def add_keep_button(self, image_name, hotspot, text):
+        image = self._make_image_button(image_name, hotspot)
+        self.layout_expiring_and_button(text, image_name, hotspot)
+        self.expire_background_alpha = 1.0
+
+    def add_saved_emblem(self, text, image_name, alpha):
+        self.layout_expiring_and_button(text, image_name,
+                'non-existent-hotspot')
+        self.expire_background_alpha = alpha
+
+    def layout_expiring_and_button(self, text, image_name, hotspot):
+        left = self.right_button_x
+        bottom = self.emblem_bottom
+        top = bottom - RIGHT_BUTTON_HEIGHT
+        emblem_top = top + 1
+
         # add the background now so that it's underneath everything else.  We
         # don't know anything about the x dimensions yet, so just set them to
         # 0
-        background_rect = expire_layout.add(0, 0, 0, EMBLEM_HEIGHT,
+        background_rect = self.layout.add(0, emblem_top, 0, EMBLEM_HEIGHT,
                 self.draw_expire_background)
-        # create text for the emblem
-        layout_manager.set_font(EMBLEM_FONT_SIZE)
-        layout_manager.set_text_color(EXPIRING_TEXT_COLOR)
-        textbox = layout_manager.textbox(text)
         # add text.  completely break the bounds of our layout rect and
         # position the text to the left of our rect
+        textbox = self.make_expiring_textbox(text)
         text_width, text_height = textbox.get_size()
-        text_x = rect.x - EMBLEM_TEXT_PAD_START - text_width
-        expire_layout.add(text_x, 0, text_width, text_height, textbox.draw)
-        # add button
-        button_rect = expire_layout.add_image(image, rect.x, 0, hotspot)
+        text_x = left - EMBLEM_VISUALS_EXPIRING.pad_end - text_width
+        text_y = top + (RIGHT_BUTTON_HEIGHT - text_height) // 2
+        self.layout.add(text_x, text_y, text_width, text_height, textbox.draw)
         # now we can position the background, draw it to the middle of the
         # button.
         background_rect.x = round(text_x - EMBLEM_TEXT_PAD_END)
-        background_rect.width = (rect.x - background_rect.x +
-                button_rect.width // 2)
-        # middle align everything and add it to layout
-        expire_layout.center_y(top=rect.y, bottom=rect.bottom)
-        layout.merge(expire_layout)
+        background_rect.width = (left - background_rect.x +
+                RIGHT_BUTTON_WIDTH // 2)
+        # add button last so that it's drawn on top
+        self._add_image_button(left, top, image_name, hotspot)
 
-    def layout_progress_bar(self, layout, layout_manager):
+    def make_expiring_textbox(self, text):
+        """Create a textbox for the text in the expiring emblem."""
+        visuals = EMBLEM_VISUALS_EXPIRING
+        self.layout_manager.set_font(EMBLEM_FONT_SIZE)
+        self.layout_manager.set_text_color(visuals.text_color)
+        shadow = widgetutil.Shadow(visuals.text_shadow, EMBLEM_SHADOW_OPACITY,
+                EMBLEM_SHADOW_OFFSET, EMBLEM_SHADOW_BLUR_RADIUS)
+        self.layout_manager.set_text_shadow(shadow)
+        return self.layout_manager.textbox(text)
+
+    def add_progress_throbber(self, throbber_index, pause_button_mode):
+        self.throbber_index = throbber_index
+        bar_rect = self.layout_progress_track(pause_button_mode)
+        self.layout.add_rect(bar_rect, self.draw_progress_throbber)
+
+    def add_progress_bar(self, amount, pause_button_mode):
+        self.progress_amount = amount
+        bar_rect = self.layout_progress_track(pause_button_mode)
+        if amount > 0:
+            self.layout.add_rect(bar_rect, self.draw_progress_bar)
+
+    def layout_progress_track(self, pause_button_mode):
+        """Layout the track behind the progress bar.
+
+        :returns: LayoutRect containing the area for a fully filled bar
+        """
         left = self.middle_rect.x
         width = self.middle_rect.width
-        top = self.emblem_bottom - self.images['progress-track'].height
+        top = self.emblem_bottom - get_image('progress-track').height
         height = 22
         end_button_width = 47
         progress_cap_width = 10
         # figure out what button goes on the left
-        if not self.download_info or self.download_info.state != 'paused':
+        if pause_button_mode == 'pause':
             left_hotspot = 'pause'
             left_button_name = 'download-pause'
         else:
@@ -537,106 +835,96 @@ class ItemRenderer(widgetset.InfoListRenderer):
             left_button_name = 'download-resume'
 
         # add ends of the bar
-        self._add_image_button(layout, left, top, left_button_name,
-                left_hotspot)
+        self._add_image_button(left, top, left_button_name, left_hotspot)
         right_button_x = left + width - end_button_width
-        self._add_image_button(layout, right_button_x, top, 'download-stop',
-                'cancel')
+        self._add_image_button(right_button_x, top, 'download-stop', 'cancel')
         # add track in the middle
-        track = self.images['progress-track']
+        track = get_image('progress-track')
         track_x = left + end_button_width
         track_rect = cellpack.LayoutRect(track_x, top, right_button_x - track_x,
                 height)
-        layout.add_rect(track_rect, track.draw)
+        self.layout.add_rect(track_rect, track.draw)
 
         # add progress bar above the track
         progress_x = track_x - progress_cap_width
         bar_width_total = (right_button_x - progress_x) + progress_cap_width
-        bar_rect = cellpack.LayoutRect(progress_x, top, bar_width_total, height)
-        layout.add_rect(bar_rect, self.draw_progress_bar)
+        return cellpack.LayoutRect(progress_x, top, bar_width_total, height)
 
-    def layout_download_right(self, layout, layout_manager):
-        dl_info = self.info.download_info
+    def add_download_info(self, eta, down_rate, down_total, up_rate,
+            up_total):
+        """Add the download stats to the right side.  """
         # add some padding around the edges
-        content_rect = self.right_rect.subsection(6, 12, 8, 8)
-        x = content_rect.x
-        width = content_rect.width
-
+        x = self.download_info_rect.x
+        width = self.download_info_rect.width
         # layout top
-        layout_manager.set_font(DOWNLOAD_INFO_FONT_SIZE)
-        line_height = layout_manager.current_font.line_height()
-        ascent = layout_manager.current_font.ascent()
+        self.layout_manager.set_font(DOWNLOAD_INFO_FONT_SIZE)
+        line_height = self.layout_manager.current_font.line_height()
+        ascent = self.layout_manager.current_font.ascent()
         # generic code to layout a line at the top
         def add_line(y, image_name, text, subtext=None):
             # position image so that it's bottom is the baseline for the text
-            image = self.images[image_name]
+            image = get_image(image_name)
             image_y = y + ascent - image.height + 3
             # add 3 px to account for the shadow at the bottom of the icons
-            layout.add_image(image, x, image_y)
+            self.layout.add_image(image, x, image_y)
             if text:
-                layout_manager.set_text_color(DOWNLOAD_INFO_COLOR)
-                textbox = layout_manager.textbox(text)
+                self.layout_manager.set_text_color(DOWNLOAD_INFO_COLOR)
+                textbox = self.layout_manager.textbox(text)
                 textbox.set_alignment('right')
-                layout.add_text_line(textbox, x, y, width)
+                self.layout.add_text_line(textbox, x, y, width)
             if subtext:
-                layout_manager.set_text_color(DOWNLOAD_INFO_COLOR_UNEM)
-                subtextbox = layout_manager.textbox(subtext)
+                self.layout_manager.set_text_color(DOWNLOAD_INFO_COLOR_UNEM)
+                subtextbox = self.layout_manager.textbox(subtext)
                 subtextbox.set_alignment('right')
-                layout.add_text_line(subtextbox, x, y + line_height, width)
-        if self.info.state == 'paused':
-            eta = rate = 0
-        else:
-            eta = dl_info.eta
-            rate = dl_info.rate
+                self.layout.add_text_line(subtextbox, x, y + line_height, width)
 
         # layout line 1
         current_y = self.right_rect.y + 10
         add_line(current_y, 'time-left', displaytext.time_string_0_blank(eta))
         current_y += max(19, line_height)
-        layout.add(x, current_y-1, width, 1,
+        self.layout.add(x, current_y-1, width, 1,
                 self.draw_download_info_separator)
         # layout line 2
         add_line(current_y, 'dl-speed',
-                displaytext.download_rate(rate),
-                displaytext.size_string(dl_info.downloaded_size))
+                displaytext.download_rate(down_rate),
+                displaytext.size_string(down_total))
         current_y += max(25, line_height * 2)
-        layout.add(x, current_y-1, width, 1,
+        self.layout.add(x, current_y-1, width, 1,
                 self.draw_download_info_separator)
-        # layout line 3
-        if dl_info.torrent:
+        # layout line 3 if needed
+        if up_rate is not None:
             add_line(current_y, 'ul-speed',
-                    displaytext.download_rate(self.info.up_rate),
-                    displaytext.size_string(self.info.up_total))
+                    displaytext.download_rate(up_rate),
+                    displaytext.size_string(up_total))
         current_y += max(25, line_height * 2)
-        layout.add(x, current_y-1, width, 1,
-                self.draw_download_info_separator)
-        # layout torrent info
-        if dl_info.torrent and dl_info.state != 'paused':
-            torrent_info_height = content_rect.bottom - current_y
-            self.layout_download_right_torrent(layout, layout_manager,
-                    content_rect.bottom_side(torrent_info_height))
+        if up_total is not None:
+            self.layout.add(x, current_y-1, width, 1,
+                    self.draw_download_info_separator)
+        self.download_info_bottom = current_y
 
-    def layout_download_right_torrent(self, layout, layout_manager, rect):
-        if self.info.download_info.rate == 0:
-            # not started yet, just display the startup activity
-            layout_manager.set_text_color(TORRENT_INFO_DATA_COLOR)
-            textbox = layout_manager.textbox(
-                    self.info.download_info.startup_activity)
-            height = textbox.get_size()[1]
-            y = rect.bottom - height # bottom-align the textbox.
-            layout.add(rect.x, y, rect.width, height,
-                    textbox.draw)
-            return
+    def add_torrent_startup_info(self, startup_info):
+        """Add startup info for torrents that haven't begun downloading."""
+        self.layout_manager.set_text_color(TORRENT_INFO_DATA_COLOR)
+        textbox = self.layout_manager.textbox(startup_info)
+        # bottom-align the textbox.
+        height = textbox.get_size()[1]
+        self.layout.add_rect(self.download_info_rect.bottom_side(height),
+                textbox.draw)
 
-        layout_manager.set_font(DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE,
+    def add_torrent_info(self, lines):
+        """Add the torrent stats to the right side.
+
+        Call add_download_info() before calling this method so we know where
+        put the top of the torrent info
+
+        :param lines: list of (label, data) pairs to display
+        """
+
+        height = self.download_info_rect.bottom - self.download_info_bottom
+        rect = self.download_info_rect.bottom_side(height)
+        self.layout_manager.set_font(DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE,
                 family=widgetset.ITEM_DESC_FONT)
-        lines = (
-                (_('PEERS'), str(self.info.connections)),
-                (_('SEEDS'), str(self.info.seeders)),
-                (_('LEECH'), str(self.info.leechers)),
-                (_('SHARE'), "%.2f" % self.info.up_down_ratio),
-        )
-        line_height = layout_manager.current_font.line_height()
+        line_height = self.layout_manager.current_font.line_height()
         # check that we're not drawing more lines that we have space for.  If
         # there are extras, cut them off from the bottom
         potential_lines = int(rect.height // line_height)
@@ -645,37 +933,36 @@ class ItemRenderer(widgetset.InfoListRenderer):
         y = rect.bottom - total_height
 
         for label, value in lines:
-            layout_manager.set_text_color(TORRENT_INFO_LABEL_COLOR)
-            labelbox = layout_manager.textbox(label)
-            layout_manager.set_text_color(TORRENT_INFO_DATA_COLOR)
-            databox = layout_manager.textbox(value)
+            self.layout_manager.set_text_color(TORRENT_INFO_LABEL_COLOR)
+            labelbox = self.layout_manager.textbox(label)
+            self.layout_manager.set_text_color(TORRENT_INFO_DATA_COLOR)
+            databox = self.layout_manager.textbox(value)
             databox.set_alignment('right')
-            layout.add_text_line(labelbox, rect.x, y, rect.width)
-            layout.add_text_line(databox, rect.x, y, rect.width)
+            self.layout.add_text_line(labelbox, rect.x, y, rect.width)
+            self.layout.add_text_line(databox, rect.x, y, rect.width)
             y += line_height
 
     def _make_image_button(self, image_name, hotspot_name):
         if self.hotspot != hotspot_name:
-            return self.images[image_name]
+            return get_image(image_name)
         else:
-            return self.images[image_name + '-pressed']
+            return get_image(image_name + '-pressed')
 
-    def _add_image_button(self, layout, x, y, image_name, hotspot_name):
+    def _add_image_button(self, x, y, image_name, hotspot_name):
         image = self._make_image_button(image_name, hotspot_name)
-        return layout.add_image(image, x, y, hotspot=hotspot_name)
+        return self.layout.add_image(image, x, y, hotspot=hotspot_name)
 
     def draw_background(self, context, x, y, width, height):
         if self.selected:
-            left = self.images['selected-background-left']
-            thumb = self.images['dl-stats-selected-middle']
-            middle = self.images['selected-background-middle']
-            right = self.images['selected-background-right']
+            left = get_image('selected-background-left')
+            thumb = get_image('dl-stats-selected-middle')
+            middle = get_image('selected-background-middle')
+            right = get_image('selected-background-right')
         else:
-            left = self.images['background-left']
-            thumb = self.images['dl-stats-middle']
-            middle = self.images['background-middle']
-            right = self.images['background-right']
-
+            left = get_image('background-left')
+            thumb = get_image('dl-stats-middle')
+            middle = get_image('background-middle')
+            right = get_image('background-right')
 
         # draw left
         left.draw(context, x, y, left.width, height)
@@ -702,13 +989,13 @@ class ItemRenderer(widgetset.InfoListRenderer):
 
     def draw_download_info_background(self, context, x, y, width):
         if self.selected:
-            left = self.images['dl-stats-selected-left-cap']
-            middle = self.images['dl-stats-selected-middle']
-            right = self.images['dl-stats-selected-right-cap']
+            left = get_image('dl-stats-selected-left-cap')
+            middle = get_image('dl-stats-selected-middle')
+            right = get_image('dl-stats-selected-right-cap')
         else:
-            left = self.images['dl-stats-left-cap']
-            middle = self.images['dl-stats-middle']
-            right = self.images['dl-stats-right-cap']
+            left = get_image('dl-stats-left-cap')
+            middle = get_image('dl-stats-middle')
+            right = get_image('dl-stats-right-cap')
         background = widgetutil.ThreeImageSurface()
         background.set_images(left, middle, right)
         background.draw(context, x, y, width)
@@ -720,7 +1007,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         context.fill()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        icon = imagepool.get_surface(self.info.thumbnail, (width, height))
+        icon = imagepool.get_surface(self.thumbnail, (width, height))
         icon_x = x + (width - icon.width) // 2
         icon_y = y + (height - icon.height) // 2
         # if our thumbnail is far enough to the left, we need to set a clip
@@ -753,8 +1040,8 @@ class ItemRenderer(widgetset.InfoListRenderer):
         context.fill()
 
     def draw_expire_background(self, context, x, y, width, height):
-        middle_image = self.images['expiring-middle']
-        cap_image = self.images['expiring-cap']
+        middle_image = get_image('expiring-middle')
+        cap_image = get_image('expiring-cap')
         # draw the cap at the left
         cap_image.draw(context, x, y, cap_image.width, cap_image.height,
                 fraction=self.expire_background_alpha)
@@ -764,21 +1051,10 @@ class ItemRenderer(widgetset.InfoListRenderer):
                 fraction=self.expire_background_alpha)
 
     def draw_progress_bar(self, context, x, y, width, height):
-        if self.throbber_mode:
-            self.draw_progress_throbber(context, x, y, width, height)
-            return
-        if self.info.size == 0:
-            # We don't know the size yet, but we aren't sure that we won't in
-            # a bit.  Probably we are starting up a download and haven't
-            # gotten anything back from the server.  Don't draw the progress
-            # bar or the throbber, just leave eerything blank.
-            return
-        progress_ratio = (float(self.info.download_info.downloaded_size) /
-                self.info.size)
-        progress_width = int(width * progress_ratio)
-        left = self.images['progress-left-cap']
-        middle = self.images['progress-middle']
-        right = self.images['progress-right-cap']
+        progress_width = round(width * self.progress_amount)
+        left = get_image('progress-left-cap')
+        middle = get_image('progress-middle')
+        right = get_image('progress-right-cap')
 
         left_width = min(left.width, progress_width)
         right_width = max(0, progress_width - (width - right.width))
@@ -789,8 +1065,7 @@ class ItemRenderer(widgetset.InfoListRenderer):
         right.draw(context, x + width - right.width, y, right_width, height)
 
     def draw_progress_throbber(self, context, x, y, width, height):
-        throbber_count = self.attrs.get('throbber-value', 0)
-        index = throbber_count % 10
+        index = self.throbber_index
         # The middle image is 10px wide, which means that we won't be drawing
         # an entire image if width isn't divisible by 10.  Adjust the right
         # image so that it matches.
@@ -798,25 +1073,19 @@ class ItemRenderer(widgetset.InfoListRenderer):
 
         surface = widgetutil.ThreeImageSurface()
         surface.set_images(
-            self.images['progress-throbber-%d-left' % (index + 1)],
-            self.images['progress-throbber-%d-middle' % (index + 1)],
-            self.images['progress-throbber-%d-right' % (right_index + 1)])
+            get_image('progress-throbber-%d-left' % (index + 1)),
+            get_image('progress-throbber-%d-middle' % (index + 1)),
+            get_image('progress-throbber-%d-right' % (right_index + 1)))
         surface.draw(context, x, y, width)
-        self.signals.emit('throbber-drawn', self.info)
 
-class _ExtraInfoDrawer(object):
+class ExtraInfoDrawer(object):
     """Layout an draw the line below the item title."""
-    def setup(self, info, layout_manager, separator_color):
-        self.separator_color = separator_color
+    def __init__(self, layout_manager, text_parts):
         self.textboxes = []
-        for attr in (info.display_date, info.display_duration,
-                info.display_size, info.file_format):
-            if attr:
-                self.textboxes.append(layout_manager.textbox(attr))
+        for text in text_parts:
+            if text:
+                self.textboxes.append(layout_manager.textbox(text))
         self.height = layout_manager.current_font.line_height()
-
-    def reset(self):
-        self.textboxes = []
 
     def draw(self, context, x, y, width, height):
         for textbox in self.textboxes:
@@ -824,163 +1093,51 @@ class _ExtraInfoDrawer(object):
             textbox.draw(context, x, y, text_width, text_height)
             # draw separator
             separator_x = round(x + text_width + 4)
-            context.set_color(self.separator_color)
+            context.set_color(INFO_SEPARATOR_COLOR)
             context.rectangle(separator_x, y, 1, height)
             context.fill()
             x += text_width + 8
 
-class _EmblemDrawer(object):
+class EmblemDrawer(object):
     """Layout and draw emblems
 
     This is actually a fairly complex task, so the code is split out of
     ItemRenderer to make things more managable
     """
 
-    def __init__(self, renderer):
-        self.images = renderer.images
-        self.is_podcast = renderer.is_podcast
-        self.info = None
-        self.hotspot = None
-        # HACK: take all the style info from the renderer
-        for name in dir(renderer):
-            if name.isupper():
-                setattr(self, name, getattr(renderer, name))
+    def __init__(self, text, icon, visuals):
+        self.text = text
+        self.icon = icon
+        self.visuals = visuals
 
-    def add_to_layout(self, layout, layout_manager, middle_rect, emblem_bottom):
+    def add_to_layout(self, layout, layout_manager, background_start,
+            content_start, emblem_bottom):
         """Add emblem elements to a Layout()
 
         :param layout: Layout to add to
         :param layout_manager: LayoutManager to use
-        :param middle_rect: middle area of the cell
-        """
+        :param background_start: x-coordinate for the start of the emblem
+        :param content_start: x-coordinate for the start of the text/icon
+        :param emblem_bottom: y-coordinate for the bottom of the emblem
 
-        x = middle_rect.x
-        emblem_top = emblem_bottom  - EMBLEM_HEIGHT
-        # make the button that appears to the left of the emblem
-        button, button_hotspot = self.make_emblem_button(layout_manager)
-        button_width, button_height = button.get_size()
-        # make the button middle aligned along the emblem
-        button_y = emblem_top - (button_height - EMBLEM_HEIGHT) // 2
-        # figure out the text and/or image inside the emblem
-        self._calc_emblem_parts()
-        # check if we don't have anything to put inside our emblem.  Just draw
-        # the button if so
-        if self.image is None and self.text is None:
-            layout.add_image(button, x, button_y, button_hotspot)
-            return layout.last_rect.width
+        :returns: rightmost x-coordinate for the emblem
+        """
+        emblem_top = emblem_bottom - EMBLEM_HEIGHT
         # add emblem background first, since we want it drawn on the bottom.
         # We won't know the width until we lay out the text/images, so
         # set it to 0
-        emblem_rect = layout.add(x + button_width // 2, emblem_top, 0,
+        emblem_rect = layout.add(background_start, emblem_top, 0,
                 EMBLEM_HEIGHT, self.draw_emblem_background)
         # make a new Layout to vertically center the emblem images/text
         content_layout = cellpack.Layout()
-        # Position it in the middle of the button, since we don't want it to
-        # spill over on the left side.
-        content_x = x + button_width + EMBLEM_TEXT_PAD_START
         content_width = self._add_text_images(content_layout, layout_manager,
-                content_x)
-        emblem_rect.right = round(content_x + content_width +
-                self.visuals.pad_right)
+                content_start)
         content_layout.center_y(top=emblem_top, bottom=emblem_bottom)
         layout.merge(content_layout)
-        # add button and we're done
-        layout.add_image(button, x, button_y, button_hotspot)
-        return emblem_rect.right - x
-
-    def make_emblem_button(self, layout_manager):
-        """Make the button that will go on the left of the emblem.
-
-        :returns: a tuple contaning (button, hotspot_name)
-        """
-        layout = cellpack.Layout()
-
-        layout_manager.set_font(0.85)
-        if self.info.downloaded:
-            if self.info.is_playable:
-                playing_item = app.playback_manager.get_playing_item()
-                if (playing_item and playing_item.id == self.info.id):
-                    hotspot = 'play_pause'
-                    if app.playback_manager.is_paused:
-                        button_name = 'play'
-                    else:
-                        button_name = 'pause'
-                else:
-                    button_name = 'play'
-                    hotspot = 'play'
-                if self.hotspot == hotspot:
-                    button_name += '-pressed'
-                button = self.images[button_name]
-            else:
-                button = layout_manager.button(REVEAL_IN_TEXT,
-                        pressed=(self.hotspot=='show_local_file'),
-                        style='webby')
-                hotspot = 'show_local_file'
-        else:
-            if self.info.mime_type == 'application/x-bittorrent':
-                text = DOWNLOAD_TORRENT_TEXT
-            else:
-                text = DOWNLOAD_TEXT
-            button = layout_manager.button(text,
-                    pressed=(self.hotspot=='download'),
-                    style='webby')
-            button.set_icon(self.images['download-icon'])
-            hotspot = 'download'
-        return button, hotspot
-
-    def _calc_emblem_parts(self):
-        """Calculate UI details for layout_emblem().
-
-        This will set the following attributes, which we can then use to
-        render stuff:
-            text -- text inside the emblem
-            image -- image inside the emblem
-            visuals -- text inside the emblem
-        """
-
-        self.text = self.image = None
-
-        if self.info.has_drm:
-            # FIXME need a new emblem for this
-            self.visuals = EMBLEM_VISUALS_DRM
-            self.text = _('DRM locked')
-        elif (self.info.download_info
-                and self.info.download_info.state == 'failed'):
-            self.visuals = EMBLEM_VISUALS_FAILED
-            self.image = self.images['status-icon-alert']
-            self.text = u"%s-%s" % (ERROR_TEXT,
-                    self.info.download_info.short_reason_failed)
-        elif self.info.pending_auto_dl:
-            self.visuals = EMBLEM_VISUALS_QUEUED
-            self.text = QUEUED_TEXT
-        elif (self.info.downloaded
-                and app.playback_manager.is_playing_id(self.info.id)):
-            # copy the unplayed-style
-            self.visuals = EMBLEM_VISUALS_UNPLAYED
-            self.text = CURRENTLY_PLAYING_TEXT
-        elif (self.info.downloaded and not self.info.video_watched and
-                self.info.is_playable):
-            self.visuals = EMBLEM_VISUALS_UNPLAYED
-            self.text = UNPLAYED_TEXT
-        elif self.should_resume_item():
-            self.visuals = EMBLEM_VISUALS_RESUME
-            self.text = _("Resume at %(resumetime)s",
-                     {"resumetime": displaytext.short_time_string(self.info.resume_time)})
-        elif not self.info.item_viewed and self.info.state == "new":
-            self.visuals = EMBLEM_VISUALS_NEWLY_AVAILABLE
-            self.text = NEWLY_AVAILABLE_TEXT
-
-    def should_resume_item(self):
-        if self.is_podcast:
-            resume_pref = prefs.RESUME_PODCASTS_MODE
-        elif self.info.file_type == u'video':
-            resume_pref = prefs.RESUME_VIDEOS_MODE
-        else:
-            resume_pref = prefs.RESUME_MUSIC_MODE
-        return (self.info.is_playable
-              and self.info.item_viewed
-              and self.info.resume_time > 0
-              and app.config.get(resume_pref))
+        # we know how big the emblem should be, so set it now.
+        emblem_rect.right = round(content_start + content_width +
+                self.visuals.pad_end)
+        return emblem_rect.right
 
     def _add_text_images(self, emblem_layout, layout_manager, left_x):
         """Add the emblem text and/or image
@@ -989,9 +1146,9 @@ class _EmblemDrawer(object):
         """
         x = left_x
 
-        if self.image:
-            emblem_layout.add_image(self.image, x, 0)
-            x += self.image.width
+        if self.icon:
+            emblem_layout.add_image(self.icon, x, 0)
+            x += self.icon.width
         if self.text:
             layout_manager.set_font(EMBLEM_FONT_SIZE,
                     bold=self.visuals.text_bold)
@@ -1008,8 +1165,8 @@ class _EmblemDrawer(object):
         return x - left_x
 
     def draw_emblem_background(self, context, x, y, width, height):
-        middle_image = self.images[self.visuals.image_name + '-middle']
-        cap_image = self.images[self.visuals.image_name + '-cap']
+        middle_image = get_image(self.visuals.image_name + '-middle')
+        cap_image = get_image(self.visuals.image_name + '-cap')
         # repeat the middle to be as long as we need.
         middle_image.draw(context, x, y, width - cap_image.width,
                 middle_image.height)
@@ -1022,17 +1179,16 @@ class PlaylistItemRenderer(ItemRenderer):
         ItemRenderer.__init__(self, display_channel=False)
         self.playlist_sorter = playlist_sorter
 
-    def add_remove_button(self, layout, x, y):
-        self._add_image_button(layout, x, y, 'remove-playlist', 'remove')
+    def remove_button_info(self):
+        return ('remove-playlist', 'remove')
 
-    def add_description_preface(self, textbox):
+    def calc_description_preface(self):
         order_number = self.playlist_sorter.sort_key(self.info) + 1
         if self.info.description_stripped[0]:
-            sort_key_preface = "%s - " % order_number
+            text = "%s - " % order_number
         else:
-            sort_key_preface = str(order_number)
-        textbox.append_text(sort_key_preface, color=PLAYLIST_ORDER_COLOR)
-        return len(sort_key_preface)
+            text = str(order_number)
+        return (text, PLAYLIST_ORDER_COLOR)
 
 class SharingItemRenderer(ItemRenderer):
     def calc_extra_button(self):
