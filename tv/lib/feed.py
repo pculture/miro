@@ -1125,6 +1125,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.remove_icon_cache()
         DDBObject.remove(self)
         self.actualFeed.remove()
+        if self.in_folder():
+            self.get_folder().signal_change()
 
     def thumbnail_valid(self):
         return self.icon_cache and self.icon_cache.is_valid()
