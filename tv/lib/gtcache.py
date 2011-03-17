@@ -179,14 +179,11 @@ def gettext(text, values=None):
 def ngettext(text1, text2, count, values=None):
     """Given two strings and a count.
 
-    text1
-        the singular form of the string to be translated
-    text2
-        the plural form of the string to be translated
-    count
-        the number of things involved
-    values
-        the dict of values to expand the string with
+    :param text1: the singular form of the string to be translated
+    :param text2: the plural form of the string to be translated
+    :param count: the number of things involved.  Note: if this is not
+        an int, then it will be converted to an int by rounding down.
+    :param values: the dict of values to expand the string with
 
     See Python ``gettext.ngettext`` documentation and the GNU gettext
     documentation for more details.
@@ -197,6 +194,12 @@ def ngettext(text1, text2, count, values=None):
     """
     text1 = text1.encode('utf-8')
     text2 = text2.encode('utf-8')
+
+    # count should always be an integer.  calling int an an integer is
+    # a no-op.  calling it on another thing either kicks up a
+    # ValueError or truncates it.  if the caller wants a different
+    # behavior, they should handle it on their side.
+    count = int(count)
 
     s = _translation.ngettext(text1, text2, count).decode('utf-8')
     try:

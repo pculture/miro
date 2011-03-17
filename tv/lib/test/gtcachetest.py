@@ -101,6 +101,39 @@ class GettextTest(MiroTestCase):
                          u'%(count)d vid\xe9os trouv\xe9es')
 
     @make_french
+    def test_ngettext_counts(self):
+        # test that it always truncates the count arg and we
+        # should always get the singular form.
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", 1.0),
+                         u'%(count)d vid\xe9o trouv\xe9e')
+
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", 1.5),
+                         u'%(count)d vid\xe9o trouv\xe9e')
+
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", 1.9),
+                         u'%(count)d vid\xe9o trouv\xe9e')
+
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", 2.0),
+                         u'%(count)d vid\xe9os trouv\xe9es')
+
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", 2.5),
+                         u'%(count)d vid\xe9os trouv\xe9es')
+
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", 2.9),
+                         u'%(count)d vid\xe9os trouv\xe9es')
+
+        self.assertEqual(gtcache.ngettext("%(count)d video found",
+                                          "%(count)d videos found", int(2.5)),
+                         u'%(count)d vid\xe9os trouv\xe9es')
+
+
+    @make_french
     def test_ngettext_values(self):
         # try the bad translation with no values
         self.assertEqual(gtcache.ngettext("bad %(count)d video found",
