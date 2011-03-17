@@ -1355,11 +1355,12 @@ class ListViewRenderer(widgetset.InfoListRenderer):
     """
     font_size = 0.82
     default_text_color = (0.17, 0.17, 0.17)
+    selected_text_color = widgetutil.WHITE
     min_width = 5
     min_height = 0
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
-        layout = self.layout_all(layout_manager, width, height)
+        layout = self.layout_all(layout_manager, width, height, False)
         hotspot_info = layout.find_hotspot(x, y)
         if hotspot_info is None:
             return None
@@ -1373,10 +1374,11 @@ class ListViewRenderer(widgetset.InfoListRenderer):
         return (self.min_width, height)
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        layout = self.layout_all(layout_manager, context.width, context.height)
+        layout = self.layout_all(layout_manager, context.width,
+                                 context.height, selected)
         layout.draw(context)
 
-    def layout_all(self, layout_manager, width, height):
+    def layout_all(self, layout_manager, width, height, selected):
         """Layout the contents of this cell
 
         Subclasses must implement this method
@@ -1398,7 +1400,7 @@ class NameRenderer(ListViewRenderer):
         path = resources.path('images/download-arrow.png')
         self.download_icon = imagepool.get_surface(path)
 
-    def layout_all(self, layout_manager, width, height):
+    def layout_all(self, layout_manager, width, height, selected):
         # make a Layout Object
         layout = cellpack.Layout()
         # add the button, if needed
@@ -1413,7 +1415,10 @@ class NameRenderer(ListViewRenderer):
             text_width = width
         # add the text
         layout_manager.set_font(self.font_size)
-        layout_manager.set_text_color(self.default_text_color)
+        if selected:
+            layout_manager.set_text_color(self.selected_text_color)
+        else:
+            layout_manager.set_text_color(self.default_text_color)
         textbox = layout_manager.textbox(self.info.name)
         textbox.set_wrap_style('truncated-char')
         layout.add_text_line(textbox, 0, 0, text_width)
@@ -1443,7 +1448,7 @@ class StatusRenderer(ListViewRenderer):
             path = resources.path('images/%s-button.png' % button)
             self.button[button] = imagepool.get_surface(path)
 
-    def layout_all(self, layout_manager, width, height):
+    def layout_all(self, layout_manager, width, height, selected):
         if (self.info.state in ('downloading', 'paused') and
             self.info.download_info.state != 'pending'):
             return self.layout_progress(layout_manager, width, height)
