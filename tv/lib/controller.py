@@ -148,6 +148,10 @@ class Controller:
                     'log bug report progress', args=(sender,))
 
     def _log_bug_report_progress(self, sender):
+        if sender.is_done:
+            logging.info("Crash report progress: done.")
+            return
+
         current, total = sender.progress()
         if current < total:
             logging.info("Crash report progress: %0.1f",
@@ -196,6 +200,8 @@ class BugReportSender(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('finished')
 
+        self.is_done = False
+
         backupfile = None
         if send_database:
             try:
@@ -233,10 +239,12 @@ class BugReportSender(signals.SignalEmitter):
                 result)
         else:
             logging.info("Crash report submitted successfully")
+        self.is_done = True
         self.emit("finished")
 
     def errback(self, error):
         logging.warning("Failed to submit crash report %r", error)
+        self.is_done = True
         self.emit("finished")
 
     def progress(self):
