@@ -1671,13 +1671,15 @@ class ItemDetailsWidget(widgetset.VBox):
 
     def setup_license_button(self, info):
         self.license_info = info.license
-        if not self.license_info:
-            self.license_holder.unset()
-        elif self.license_info.startswith("http://"):
-            self.license_holder.set(widgetutil.align_left(self.license_button))
-        else:
-            self.license_label.set_text(info.license)
-            self.license_holder.set(widgetutil.align_left(self.license_label))
+        self.license_holder.unset()
+        if self.license_info:
+            if self.license_info.startswith("http://"):
+                self.license_holder.set(
+                    widgetutil.align_left(self.license_button))
+            else:
+                self.license_label.set_text(info.license)
+                self.license_holder.set(
+                    widgetutil.align_left(self.license_label))
 
     def clear(self):
         self.title_label.set_text('')
