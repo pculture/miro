@@ -58,9 +58,8 @@ RIGHT_BUTTON_HEIGHT = 22
 # padding/spacing
 PADDING = (15, 15, 6, 6)
 PADDING_BACKGROUND = (5, 5, 4, 6)
-EMBLEM_TEXT_PAD_START = 4
-EMBLEM_TEXT_PAD_END = 20
-EMBLEM_TEXT_PAD_END_SMALL = 6
+EMBLEM_TEXT_PAD_START = 8
+EMBLEM_TEXT_PAD_END = 12
 EMBLEM_MARGIN_RIGHT = 12
 
 # colors
@@ -87,6 +86,7 @@ EXTRA_INFO_FONT_SIZE = widgetutil.font_scale_from_osx_points(10)
 ITEM_DESC_FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 DOWNLOAD_INFO_FONT_SIZE = 0.70
 DOWNLOAD_INFO_TORRENT_DETAILS_FONT_SIZE = 0.50
+ROUNDED_BUTTON_FONT_SIZE = 0.85
 
 # Emblem shadow settings
 EMBLEM_SHADOW_OPACITY = 0.6
@@ -111,8 +111,7 @@ STOP_SEEDING_TEXT = _("Stop seeding")
 
 class EmblemVisuals(object):
     """Holds the visual needed to draw an item's emblem."""
-    def __init__(self, text_color_css, image_name, text_bold,
-            pad_right_small=False):
+    def __init__(self, text_color_css, image_name, text_bold):
         self.text_color = widgetutil.css_to_color(text_color_css)
         text_color_average = sum(self.text_color) / 3.0
         if text_color_average > 0.5:
@@ -121,17 +120,11 @@ class EmblemVisuals(object):
             self.text_shadow = widgetutil.WHITE
         self.text_bold = text_bold
         self.image_name = image_name
-        if pad_right_small:
-            self.pad_end = EMBLEM_TEXT_PAD_END_SMALL
-        else:
-            self.pad_end = EMBLEM_TEXT_PAD_END
 
-EMBLEM_VISUALS_RESUME = EmblemVisuals('#306219', 'resume', True,
-        pad_right_small=True)
+EMBLEM_VISUALS_RESUME = EmblemVisuals('#306219', 'resume', True)
 EMBLEM_VISUALS_UNPLAYED = EmblemVisuals('#d8ffc7', 'unplayed', True)
 EMBLEM_VISUALS_EXPIRING = EmblemVisuals('#6f6c28', 'expiring', True)
-EMBLEM_VISUALS_NEWLY_AVAILABLE = EmblemVisuals( '#e1efff', 'newly', True,
-        pad_right_small=True)
+EMBLEM_VISUALS_NEWLY_AVAILABLE = EmblemVisuals( '#e1efff', 'newly', True)
 EMBLEM_VISUALS_DRM = EmblemVisuals('#582016', 'drm', True)
 EMBLEM_VISUALS_QUEUED = EmblemVisuals('#4a2c00', 'queued', False)
 EMBLEM_VISUALS_FAILED = EmblemVisuals('#ffe7e7', 'failed', False)
@@ -315,7 +308,7 @@ class ItemRenderer(ItemRendererBase):
             else:
                 text = DOWNLOAD_TEXT
             self.canvas.add_main_button_text(text, 'download',
-                    'download-icon')
+                    'download-button-large')
 
     def add_secondary_button(self):
         button_info = self.calc_extra_button()
@@ -333,8 +326,7 @@ class ItemRenderer(ItemRendererBase):
             text = displaytext.expiration_date(self.info.expiration_date)
             self.canvas.add_keep_button('keep', 'keep', text)
         elif self.attrs.get('keep-animation-alpha', 0) > 0:
-            self.canvas.add_saved_emblem(SAVED_TEXT, 'saved',
-                    self.attrs['keep-animation-alpha'])
+            self.canvas.add_saved_emblem()
 
     def add_download_mode_elements(self):
         """Add the download-mode specific elements.  """
@@ -610,7 +602,7 @@ class ItemRendererCanvas(object):
         self.right_button_x = (self.right_rect.right -
                 RIGHT_BUTTON_WIDTH - 20)
         if self.download_mode:
-            self.download_info_rect = self.right_rect.subsection(6, 12, 8, 8)
+            self.download_info_rect = self.right_rect.subsection(12, 12, 12, 15)
         # emblem/progress bar should start 29px above the top of the cell
         self.emblem_bottom = total_rect.bottom - 29
         # reset coordinates that we set as we add elements
@@ -733,16 +725,29 @@ class ItemRendererCanvas(object):
                 self.layout_manager, self.button_middle, self.button_right +
                 EMBLEM_TEXT_PAD_START, self.emblem_bottom)
 
-    def add_main_button_text(self, text, hotspot, icon=None):
+    def add_main_button_text(self, text, hotspot,
+            image_prefix='rounded-button'):
         """Add a text button as the main button for the item.
 
         This button is the one that gets drawn on the left of the emblem
+        By default we use the "rounded-button-[left,middle,right]" images to
+        draw the button.  Pass image_prefix to use a different one
         """
-        pressed=(self.hotspot==hotspot)
-        self.layout_manager.set_font(0.85)
-        button = self.layout_manager.button(text, pressed, style='webby')
-        if icon:
-            button.set_icon(get_image(icon))
+        # calculate images
+        if self.hotspot != hotspot:
+            left = get_image(image_prefix + '-left')
+            middle = get_image(image_prefix + '-middle')
+            right = get_image(image_prefix + '-right')
+        else:
+            left = get_image(image_prefix + '-left-pressed')
+            middle = get_image(image_prefix + '-middle-pressed')
+            right = get_image(image_prefix + '-right-pressed')
+        # make text box
+        self.layout_manager.set_font(ROUNDED_BUTTON_FONT_SIZE)
+        textbox = self.layout_manager.textbox(text)
+        # make button
+        button = widgetutil.ThreeImageTextSurface(textbox, left, middle,
+                right)
         self._add_button(button, hotspot)
 
     def add_main_button_image(self, image_name, hotspot):
@@ -780,15 +785,26 @@ class ItemRendererCanvas(object):
         # Add this button to right of the last element on the bottom line.
         # That might be the main button, the emblem, or another secondary
         # button.
-        left = max(self.emblem_right, self.button_right,
+        x = max(self.emblem_right, self.button_right,
                 self.last_secondary_button_right) + EMBLEM_MARGIN_RIGHT
+        # make textbox
         self.layout_manager.set_font(EMBLEM_FONT_SIZE)
-        button = self.layout_manager.button(text,
-                pressed=(self.hotspot==hotspot), style='webby')
-        button_height = button.get_size()[1]
-        y = (self.emblem_bottom - (EMBLEM_HEIGHT - button_height) // 2 -
-                button_height)
-        self.layout.add_image(button, left, y, hotspot)
+        textbox = self.layout_manager.textbox(text)
+        # make button
+        if self.hotspot != hotspot:
+            left = get_image('rounded-button-left')
+            middle = get_image('rounded-button-middle')
+            right = get_image('rounded-button-right')
+        else:
+            left = get_image('rounded-button-left-pressed')
+            middle = get_image('rounded-button-middle-pressed')
+            right = get_image('rounded-button-right-pressed')
+        button = widgetutil.ThreeImageTextSurface(textbox, left, middle,
+                right)
+        # middle-align y to the emblem
+        y = (self.emblem_bottom - (EMBLEM_HEIGHT - button.height) // 2 -
+                button.height)
+        self.layout.add_image(button, x, y, hotspot)
         self.last_secondary_button_right = self.layout.last_rect.right
 
     def add_menu_button(self):
@@ -806,10 +822,10 @@ class ItemRendererCanvas(object):
         self.layout_expiring_and_button(text, image_name, hotspot)
         self.expire_background_alpha = 1.0
 
-    def add_saved_emblem(self, text, image_name, alpha):
-        self.layout_expiring_and_button(text, image_name,
-                'non-existent-hotspot')
-        self.expire_background_alpha = alpha
+    def add_saved_emblem(self):
+        image = get_image('saved')
+        self.layout.add_image(image, self.right_button_x,
+                self.emblem_bottom-RIGHT_BUTTON_HEIGHT)
 
     def layout_expiring_and_button(self, text, image_name, hotspot):
         left = self.right_button_x
@@ -826,7 +842,7 @@ class ItemRendererCanvas(object):
         # position the text to the left of our rect
         textbox = self.make_expiring_textbox(text)
         text_width, text_height = textbox.get_size()
-        text_x = left - EMBLEM_VISUALS_EXPIRING.pad_end - text_width
+        text_x = left - EMBLEM_TEXT_PAD_END - text_width
         text_y = top + (RIGHT_BUTTON_HEIGHT - text_height) // 2
         self.layout.add(text_x, text_y, text_width, text_height, textbox.draw)
         # now we can position the background, draw it to the middle of the
@@ -889,9 +905,11 @@ class ItemRendererCanvas(object):
                 height)
         self.layout.add_rect(track_rect, track.draw)
 
-        # add progress bar above the track
-        progress_x = track_x - progress_cap_width
-        bar_width_total = (right_button_x - progress_x) + progress_cap_width
+        # add progress bar above the track.  Nudge it smaller by 1px on each
+        # side to line up with the track better.
+        progress_x = track_x - progress_cap_width + 1
+        bar_width_total = (right_button_x - progress_x + progress_cap_width -
+                2)
         return cellpack.LayoutRect(progress_x, top, bar_width_total, height)
 
     def add_download_info(self, download_info):
@@ -908,9 +926,9 @@ class ItemRendererCanvas(object):
         for icon, text, subtext in download_info.lines:
             # Add image.
             # Position it so that it's bottom is the baseline for the text.
-            # Add 3 px to account for the shadow at the bottom of the icons
+            # Add 4 px to account for the shadow at the bottom of the icons
             image = get_image(icon)
-            image_y = y + ascent - image.height + 3
+            image_y = y + ascent - image.height + 4
             self.layout.add_image(image, x, image_y)
             if text: # add text
                 self.layout_manager.set_text_color(DOWNLOAD_INFO_COLOR)
@@ -927,7 +945,7 @@ class ItemRendererCanvas(object):
             if subtext:
                 y += max(25, line_height * 2)
             else:
-                y += max(19, line_height)
+                y += max(18, line_height)
             # draw the separator just on top of the next line
             self.layout.add(x, y-1, width, 1,
                     self.draw_download_info_separator)
@@ -1122,15 +1140,22 @@ class ExtraInfoDrawer(object):
         self.height = layout_manager.current_font.line_height()
 
     def draw(self, context, x, y, width, height):
-        for textbox in self.textboxes:
+        if not self.textboxes:
+            return
+        # draw begining textboxes + a separator
+        for textbox in self.textboxes[:-1]:
             text_width, text_height = textbox.get_size()
             textbox.draw(context, x, y, text_width, text_height)
             # draw separator
-            separator_x = round(x + text_width + 4)
+            separator_x = round(x + text_width + 8)
             context.set_color(INFO_SEPARATOR_COLOR)
             context.rectangle(separator_x, y, 1, height)
             context.fill()
-            x += text_width + 8
+            x += text_width + 16
+        # draw the last textbox without a separator
+        textbox = self.textboxes[-1]
+        text_width, text_height = textbox.get_size()
+        textbox.draw(context, x, y, text_width, text_height)
 
 class EmblemDrawer(object):
     """Layout and draw emblems
@@ -1170,7 +1195,7 @@ class EmblemDrawer(object):
         layout.merge(content_layout)
         # we know how big the emblem should be, so set it now.
         emblem_rect.right = round(content_start + content_width +
-                self.visuals.pad_end)
+                EMBLEM_TEXT_PAD_END)
         return emblem_rect.right
 
     def _add_text_images(self, emblem_layout, layout_manager, left_x):
@@ -1309,3 +1334,6 @@ class ConversionItemRenderer(ItemRendererBase):
         download_info.add_line('time-left', eta_text, None)
         download_info.add_line('time-left', progress_text, None)
         self.canvas.add_download_info(download_info)
+        # slightly abuse the "torrent startup info" area and put our activity
+        # label there.
+        self.canvas.add_torrent_startup_info(_('Converting'))

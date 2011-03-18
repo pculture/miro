@@ -1237,7 +1237,7 @@ class ItemInfo(object):
         # pre-calculate things that get displayed in list view
         self.description_oneline = (
                 self.description_stripped[0].replace('\n', '$'))
-        self.display_date = displaytext.date_slashes(self.release_date)
+        self.display_date = displaytext.date(self.release_date)
         self.display_duration = displaytext.duration(self.duration)
         self.display_size = displaytext.size_string(self.size)
         self.display_date_added = displaytext.date_slashes(self.date_added)

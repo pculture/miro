@@ -200,7 +200,7 @@ def date_slashes(rdate):
 
 def duration(seconds):
     if seconds > 0:
-        return short_time_string(seconds)
+        return time_string(seconds)
     else:
         return ''
 

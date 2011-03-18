@@ -282,6 +282,9 @@ class ThreeImageSurface(object):
         """
         self.width = width
 
+    def get_size(self):
+        return self.width, self.height
+
     def draw(self, context, x, y, width, fraction=1.0):
         left_width = min(self.left.width, width)
         self.left.draw(context, x, y, left_width, self.height, fraction)
@@ -295,6 +298,35 @@ class ThreeImageSurface(object):
 
         self.center.draw(context, x, y, center_width, self.height, fraction)
         self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
+
+class ThreeImageTextSurface(object):
+    """Draw an image using 3 images + text in the middle."""
+    def __init__(self, textbox, left, middle, right, pad_left=0, pad_right=0):
+        self.textbox = textbox
+        self.left = left
+        self.middle = middle
+        self.right = right
+        self.text_width, self.text_height = textbox.get_size()
+        self.pad_left = pad_left
+        self.width = (left.width + self.text_width + right.width + pad_left +
+                pad_right)
+        self.height = middle.height # assume all images have the same height
+
+    def get_size(self):
+        return self.width, self.height
+
+    def draw(self, context, x, y, width, height):
+        # draw images
+        self.left.draw(context, x, y, self.left.width, height)
+        self.middle.draw(context, x + self.left.width, y,
+                width - self.left.width - self.right.width, height)
+        self.right.draw(context, x + width - self.right.width, y,
+            self.right.width, height)
+        # draw text
+        text_x = x + self.left.width + self.pad_left
+        text_y = y + (height - self.text_height) // 2
+        self.textbox.draw(context, text_x, text_y, self.text_width,
+                self.text_height)
 
 class HideableWidget(widgetset.VBox):
     """Creates a widget that can be hidden and shown.
