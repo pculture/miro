@@ -37,6 +37,7 @@ from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import imagebutton
+from miro.frontends.widgets import separator
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
@@ -459,7 +460,14 @@ class VideoBox(style.LowerBox):
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_slider))
         hbox.pack_start(volume_hbox)
         hbox.pack_start(self.playback_mode)
-        self.add(widgetutil.align_middle(hbox, 0, 0, 25, 25))
+
+        vbox = widgetset.VBox()
+        hline = separator.HSeparator(widgetutil.BLACK)
+        vbox.pack_start(hline)
+        vbox.pack_start(widgetutil.align_middle(hbox, 0, 0, 25, 25),
+                        expand=True)
+
+        self.add(vbox)
 
         self.selected_tab_list = self.selected_tabs = None
         self.selected_file = None
