@@ -76,6 +76,9 @@ TORRENT_INFO_DATA_COLOR = widgetutil.WHITE
 ITEM_DESC_COLOR = (0.3, 0.3, 0.3)
 FEED_NAME_COLOR = (0.5, 0.5, 0.5)
 PLAYLIST_ORDER_COLOR = widgetutil.BLACK
+PENDING_CONVERSION_TEXT_COLOR = (0.8, 0.8, 0.8)
+FAILED_CONVERSION_TEXT_COLOR = (0.8, 0.0, 0.0)
+FINISHED_CONVERSION_TEXT_COLOR = (0.0, 0.8, 0.0)
 
 # font sizes
 EMBLEM_FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
@@ -153,6 +156,24 @@ class ItemDescription(object):
         self.text_color = text_color
         self.preface = preface
         self.preface_color = preface_color
+
+class ItemDownloadInfo(object):
+    """Info in the right-hand side of the cell in download mode.  """
+    def __init__(self):
+        self.lines = []
+
+    def add_line(self, icon, text, subtext):
+        """Add a line of info.
+
+        If subtext is None, then we won't draw another, or reserve space for
+        it.  If you want to have a blank subtext, but still reserve room for
+        it, use an empty string.
+
+        :param icon: image to show on the left-hand side.
+        :param text: text to show at the top of the right-hand side
+        :param subtext: text to show underneath main text
+        """
+        self.lines.append((icon, text, subtext))
 
 class ItemRendererSignals(signals.SignalEmitter):
     """Signal emitter for ItemRenderer.
@@ -250,8 +271,8 @@ class ItemRenderer(ItemRendererBase):
         # add elements that are always present
         self.canvas.add_thumbnail(self.info.thumbnail,
                 self.calc_thumbnail_hotspot())
-        self.canvas.add_text(self.info.name, self.calc_description(),
-                self.calc_extra_info())
+        self.canvas.add_text(self.info.name, ITEM_TITLE_COLOR,
+                self.calc_description(), self.calc_extra_info())
         # add elements for download-mode or non-download-mode
         if download_mode:
             self.add_download_mode_elements()
@@ -317,6 +338,10 @@ class ItemRenderer(ItemRendererBase):
 
     def add_download_mode_elements(self):
         """Add the download-mode specific elements.  """
+        self.add_progress_bar()
+        self.add_download_info()
+
+    def add_progress_bar(self):
         dl_info = self.info.download_info
         if dl_info.state == 'paused':
             pause_button_mode = 'resume'
@@ -324,7 +349,7 @@ class ItemRenderer(ItemRendererBase):
             pause_button_mode = 'pause'
         if dl_info.downloaded_size == 0:
             # show empty bar before we start up
-            self.canvas.add_progress_bar(0.0)
+            self.canvas.add_progress_bar(0.0, pause_button_mode)
         elif dl_info.total_size < 0:
             # show throbber once we've started, but still don't know the
             # total_size
@@ -336,34 +361,40 @@ class ItemRenderer(ItemRendererBase):
             # show regular bar otherwise
             amount = float(dl_info.downloaded_size) / dl_info.total_size
             self.canvas.add_progress_bar(amount, pause_button_mode)
+
+    def add_download_info(self):
+        dl_info = self.info.download_info
         if self.info.state == 'paused':
             eta = down_rate = 0
         else:
             eta = dl_info.eta
             down_rate = dl_info.rate
-        down_total = dl_info.downloaded_size
+        download_info = ItemDownloadInfo()
+        download_info.add_line('time-left',
+                displaytext.time_string_0_blank(eta), None)
+        download_info.add_line('dl-speed',
+                displaytext.download_rate(down_rate),
+                displaytext.size_string(dl_info.downloaded_size))
         if dl_info.torrent:
-            up_rate = self.info.up_rate
-            up_total = self.info.up_total
-            if up_rate is None:
-                # if the torrent hasn't started, we don't want None values
-                # here, that causes confusion with non-torrents
-                up_rate = up_total = 0
-        else:
-            up_rate = up_total = None
-        self.canvas.add_download_info(eta, down_rate, down_total, up_rate,
-                up_total)
+            download_info.add_line('ul-speed',
+                displaytext.download_rate(self.info.up_rate),
+                displaytext.size_string(self.info.up_total))
+        self.canvas.add_download_info(download_info)
         if dl_info.torrent and dl_info.state != 'paused':
-            if dl_info.rate == 0:
-                self.canvas.add_torrent_startup_info(dl_info.startup_activity)
-            else:
-                lines = (
-                        (_('PEERS'), str(self.info.connections)),
-                        (_('SEEDS'), str(self.info.seeders)),
-                        (_('LEECH'), str(self.info.leechers)),
-                        (_('SHARE'), "%.2f" % self.info.up_down_ratio),
-                )
-                self.canvas.add_torrent_info(lines)
+            self.add_torrent_info()
+
+    def add_torrent_info(self):
+        if self.info.download_info.rate == 0:
+            self.canvas.add_torrent_startup_info(
+                self.info.download_info.startup_activity)
+        else:
+            lines = (
+                    (_('PEERS'), str(self.info.connections)),
+                    (_('SEEDS'), str(self.info.seeders)),
+                    (_('LEECH'), str(self.info.leechers)),
+                    (_('SHARE'), "%.2f" % self.info.up_down_ratio),
+            )
+            self.canvas.add_torrent_info(lines)
 
     def calc_thumbnail_hotspot(self):
         """Decide what hotspot clicking on the thumbnail should activate."""
@@ -525,6 +556,14 @@ class ItemRendererCanvas(object):
             self.image_width = IMAGE_WIDTH_WIDE
         else:
             self.image_width = IMAGE_WIDTH_SQUARE
+        self.set_progress_bar_images('progress-left-cap', 'progress-middle',
+                'progress-right-cap')
+
+    def set_progress_bar_images(self, left, middle, right):
+        self.progress_bar_left = get_image(left)
+        self.progress_bar_middle = get_image(middle)
+        self.progress_bar_right = get_image(right)
+
     def start_new_cell(self, layout_manager, width, height, selected, hotspot,
             download_mode):
         """Prepare to render a new cell.
@@ -576,8 +615,9 @@ class ItemRendererCanvas(object):
         self.emblem_bottom = total_rect.bottom - 29
         # reset coordinates that we set as we add elements
         self.download_info_bottom =  None
-        self.button_right = None
-        self.emblem_right = None
+        self.button_right = 0
+        self.emblem_right = 0
+        self.last_secondary_button_right = 0
 
     def finish(self):
         """Get a Layout object for a finished cell.
@@ -594,7 +634,7 @@ class ItemRendererCanvas(object):
         self.layout_manager = None
         return rv
 
-    def add_thumbnail(self, thumbnail, hotspot):
+    def add_thumbnail(self, thumbnail, hotspot, fraction=1.0):
         """Add a thumbnail.
 
         :param thumbnail: image file to use
@@ -602,11 +642,12 @@ class ItemRendererCanvas(object):
         """
 
         self.thumbnail = thumbnail
+        self.thumbnail_fraction = fraction
         self.layout.add_rect(self.image_rect, self.draw_thumbnail, hotspot)
         self.layout.add_rect(self.image_rect.past_right(1),
                 self.draw_thumbnail_separator)
 
-    def add_text(self, title, description, extra_info_parts):
+    def add_text(self, title, title_color, description, extra_info_parts):
         """Add the text for our cell
 
         This method adds the title, description, and extra info text.
@@ -617,7 +658,7 @@ class ItemRendererCanvas(object):
         # setup title
         self.layout_manager.set_font(TITLE_FONT_SIZE,
                 family=widgetset.ITEM_TITLE_FONT, bold=True)
-        self.layout_manager.set_text_color(ITEM_TITLE_COLOR)
+        self.layout_manager.set_text_color(title_color)
         title = self.layout_manager.textbox(title)
         title.set_wrap_style('truncated-char')
         # setup info line
@@ -736,10 +777,11 @@ class ItemRendererCanvas(object):
 
         This button is placed to the right of the emblem.
         """
-        if self.emblem_right:
-            left = (self.emblem_right + EMBLEM_MARGIN_RIGHT)
-        else:
-            left = (self.button_right + EMBLEM_MARGIN_RIGHT)
+        # Add this button to right of the last element on the bottom line.
+        # That might be the main button, the emblem, or another secondary
+        # button.
+        left = max(self.emblem_right, self.button_right,
+                self.last_secondary_button_right) + EMBLEM_MARGIN_RIGHT
         self.layout_manager.set_font(EMBLEM_FONT_SIZE)
         button = self.layout_manager.button(text,
                 pressed=(self.hotspot==hotspot), style='webby')
@@ -747,6 +789,7 @@ class ItemRendererCanvas(object):
         y = (self.emblem_bottom - (EMBLEM_HEIGHT - button_height) // 2 -
                 button_height)
         self.layout.add_image(button, left, y, hotspot)
+        self.last_secondary_button_right = self.layout.last_rect.right
 
     def add_menu_button(self):
         self._add_image_button(self.right_button_x, self.right_button_top,
@@ -826,16 +869,17 @@ class ItemRendererCanvas(object):
         height = 22
         end_button_width = 47
         progress_cap_width = 10
-        # figure out what button goes on the left
+        # add the left button
         if pause_button_mode == 'pause':
-            left_hotspot = 'pause'
-            left_button_name = 'download-pause'
+            self._add_image_button(left, top, 'download-pause', 'pause')
+        elif pause_button_mode == 'resume':
+            self._add_image_button(left, top, 'download-resume', 'resume')
+        elif pause_button_mode is None:
+            pass
         else:
-            left_hotspot = 'resume'
-            left_button_name = 'download-resume'
-
-        # add ends of the bar
-        self._add_image_button(left, top, left_button_name, left_hotspot)
+            raise ValueError("Unknown pause_button_mode: %s" %
+                    pause_button_mode)
+        # add right button
         right_button_x = left + width - end_button_width
         self._add_image_button(right_button_x, top, 'download-stop', 'cancel')
         # add track in the middle
@@ -850,57 +894,46 @@ class ItemRendererCanvas(object):
         bar_width_total = (right_button_x - progress_x) + progress_cap_width
         return cellpack.LayoutRect(progress_x, top, bar_width_total, height)
 
-    def add_download_info(self, eta, down_rate, down_total, up_rate,
-            up_total):
+    def add_download_info(self, download_info):
         """Add the download stats to the right side.  """
-        # add some padding around the edges
+        # setup coordinates
         x = self.download_info_rect.x
+        y = self.download_info_rect.y
         width = self.download_info_rect.width
-        # layout top
+        # make text mesurments to help us layout things
         self.layout_manager.set_font(DOWNLOAD_INFO_FONT_SIZE)
         line_height = self.layout_manager.current_font.line_height()
         ascent = self.layout_manager.current_font.ascent()
-        # generic code to layout a line at the top
-        def add_line(y, image_name, text, subtext=None):
-            # position image so that it's bottom is the baseline for the text
-            image = get_image(image_name)
+        # layout the lines
+        for icon, text, subtext in download_info.lines:
+            # Add image.
+            # Position it so that it's bottom is the baseline for the text.
+            # Add 3 px to account for the shadow at the bottom of the icons
+            image = get_image(icon)
             image_y = y + ascent - image.height + 3
-            # add 3 px to account for the shadow at the bottom of the icons
             self.layout.add_image(image, x, image_y)
-            if text:
+            if text: # add text
                 self.layout_manager.set_text_color(DOWNLOAD_INFO_COLOR)
                 textbox = self.layout_manager.textbox(text)
                 textbox.set_alignment('right')
                 self.layout.add_text_line(textbox, x, y, width)
-            if subtext:
+            if subtext: # add subtext
                 self.layout_manager.set_text_color(DOWNLOAD_INFO_COLOR_UNEM)
                 subtextbox = self.layout_manager.textbox(subtext)
                 subtextbox.set_alignment('right')
-                self.layout.add_text_line(subtextbox, x, y + line_height, width)
-
-        # layout line 1
-        current_y = self.right_rect.y + 10
-        add_line(current_y, 'time-left', displaytext.time_string_0_blank(eta))
-        current_y += max(19, line_height)
-        self.layout.add(x, current_y-1, width, 1,
-                self.draw_download_info_separator)
-        # layout line 2
-        add_line(current_y, 'dl-speed',
-                displaytext.download_rate(down_rate),
-                displaytext.size_string(down_total))
-        current_y += max(25, line_height * 2)
-        self.layout.add(x, current_y-1, width, 1,
-                self.draw_download_info_separator)
-        # layout line 3 if needed
-        if up_rate is not None:
-            add_line(current_y, 'ul-speed',
-                    displaytext.download_rate(up_rate),
-                    displaytext.size_string(up_total))
-        current_y += max(25, line_height * 2)
-        if up_total is not None:
-            self.layout.add(x, current_y-1, width, 1,
+                self.layout.add_text_line(subtextbox, x, y + line_height,
+                        width)
+            # move y coordinate down
+            if subtext:
+                y += max(25, line_height * 2)
+            else:
+                y += max(19, line_height)
+            # draw the separator just on top of the next line
+            self.layout.add(x, y-1, width, 1,
                     self.draw_download_info_separator)
-        self.download_info_bottom = current_y
+        # save bottom of the download info as a guide for where to display the
+        # torrent info
+        self.download_info_bottom = y
 
     def add_torrent_startup_info(self, startup_info):
         """Add startup info for torrents that haven't begun downloading."""
@@ -1027,7 +1060,8 @@ class ItemRendererCanvas(object):
             context.arc(x + radius, y + radius, radius, PI, PI*3/2)
             context.clip()
         # draw the thumbnail
-        icon.draw(context, icon_x, icon_y, icon.width, icon.height)
+        icon.draw(context, icon_x, icon_y, icon.width, icon.height,
+                fraction=self.thumbnail_fraction)
         if make_clip_path:
             # undo the clip path
             context.restore()
@@ -1052,9 +1086,9 @@ class ItemRendererCanvas(object):
 
     def draw_progress_bar(self, context, x, y, width, height):
         progress_width = round(width * self.progress_amount)
-        left = get_image('progress-left-cap')
-        middle = get_image('progress-middle')
-        right = get_image('progress-right-cap')
+        left = self.progress_bar_left
+        middle = self.progress_bar_middle
+        right = self.progress_bar_right
 
         left_width = min(left.width, progress_width)
         right_width = max(0, progress_width - (width - right.width))
@@ -1199,3 +1233,79 @@ class DeviceItemRenderer(ItemRenderer):
 
     def calc_extra_button(self):
         return DOWNLOAD_TO_MY_MIRO_TEXT, 'download-device-item'
+
+class ConversionItemRenderer(ItemRendererBase):
+    """Class to draw conversion items
+
+    This one is substantially different from ItemRenderer because it deals
+    with ConversionTaskInfo objects.
+    """
+    def __init__(self):
+        ItemRendererBase.__init__(self, wide_image=True)
+        self.canvas.set_progress_bar_images('conversion-progress-left',
+                'conversion-progress-middle', 'conversion-progress-right')
+
+    def layout_all(self, layout_manager, width, height, selected, hotspot):
+        download_mode = (self.info.state == 'running')
+        self.canvas.start_new_cell(layout_manager, width, height, selected,
+                hotspot, download_mode)
+        self.add_thumbnail()
+        self.add_text()
+        if self.info.state == 'failed':
+            self.add_failed_info()
+        elif self.info.state == 'running':
+            self.add_download_info()
+        elif self.info.state == 'finished':
+            self.add_finished_info()
+        else:
+            self.add_main_button_text(CANCEL_TEXT, 'cancel')
+        return self.canvas.finish()
+
+    def add_thumbnail(self):
+        if self.info.state == 'running':
+            fraction = 1.0
+        else:
+            fraction = 0.4
+        self.canvas.add_thumbnail(self.info.item_thumbnail, None, fraction)
+
+    def add_text(self):
+        # FIXME: should use this
+        if self.info.state == 'pending':
+            desc_color = title_color = PENDING_CONVERSION_TEXT_COLOR
+        else:
+            title_color = ITEM_TITLE_COLOR
+            desc_color = ITEM_DESC_COLOR
+        if self.info.state != 'failed':
+            description_text = _("Conversion to %(format)s",
+                    {"format": self.info.target})
+        else:
+            description_text = _("Conversion to %(format)s failed: %(error)s",
+                    {"format": self.info.target, "error": self.info.error})
+        description = ItemDescription(description_text, [], desc_color, '',
+                desc_color)
+        self.canvas.add_text(self.info.item_name, title_color, description, [])
+
+    def add_failed_info(self):
+        self.canvas.add_main_button_text(_('Clear'), 'clear-failed')
+        # FIXME: should have a separate Visuals class for this
+        self.canvas.add_emblem(_('Failed'), None, EMBLEM_VISUALS_FAILED)
+        self.canvas.add_secondary_button(_('Troubleshoot'), 'troubleshoot')
+        self.canvas.add_secondary_button(_('Open Log'), 'open-log')
+
+    def add_finished_info(self):
+        self.canvas.add_main_button_text(_('Clear'), 'clear-finished')
+        # FIXME: should have a separate Visuals class for this
+        self.canvas.add_emblem(_('Completed'), None,
+                EMBLEM_VISUALS_NEWLY_AVAILABLE)
+        self.canvas.add_secondary_button(REVEAL_IN_TEXT, 'reveal')
+
+    def add_download_info(self):
+        self.canvas.add_progress_bar(self.info.progress,
+                pause_button_mode=None)
+        download_info = ItemDownloadInfo()
+        eta_text = displaytext.time_string_0_blank(self.info.eta)
+        progress_text = _("%(percent)i%% done",
+                {'percent' : round(self.info.progress * 100)})
+        download_info.add_line('time-left', eta_text, None)
+        download_info.add_line('time-left', progress_text, None)
+        self.canvas.add_download_info(download_info)
