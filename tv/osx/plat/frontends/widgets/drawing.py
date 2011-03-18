@@ -56,9 +56,10 @@ class ImageSurface:
         dest_rect = NSRect((x, y), (width, height))
         if self.width >= width and self.height >= height:
             # drawing to area smaller than our image
-            dest_rect = NSRect((x, y), (width, height))
+            dest_rect = NSMakeRect(x, y, width, height)
+            source_rect = NSMakeRect(0, 0, width, height)
             self.image.drawInRect_fromRect_operation_fraction_(
-                dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
+                dest_rect, source_rect, NSCompositeSourceOver, fraction)
         else:
             # drawing to area larger than our image.  Need to tile it.
             current_context.saveGraphicsState()
