@@ -27,7 +27,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import logging
 import ctypes, ctypes.wintypes
+
+def warn(what, code, message):
+    logging.warn('error doing %s (%d): %s', what, code, message)
 
 INVALID_HANDLE_VALUE = -1
 DIGCF_PRESENT = 0x00000002
@@ -85,12 +89,17 @@ class SP_DEVICE_INTERFACE_DETAIL_DATA(ctypes.Structure):
 GUID_DEVINTERFACE_VOLUME = GUID(0x53F5630D, 0xB6BF, 0x11D0,
         (ctypes.c_ubyte*8)(0x94, 0xF2, 0x00, 0xA0, 0xC9, 0x1E, 0xFB, 0x8B))
 
-hDevInfo = SetupDiGetClassDevs(ctypes.byref(GUID_DEVINTERFACE_VOLUME),
-                               0,
-                               0,
-                               DIGCF_PRESENT | DIGCF_DEVICEINTERFACE)
-if hDevInfo == INVALID_HANDLE_VALUE:
-    print ctypes.windll.GetLastError(), ctypes.windll.FormatError()
+hDevInfo = None
+
+def get_class_devs():
+    global hDevInfo
+    hDevInfo = SetupDiGetClassDevs(ctypes.byref(GUID_DEVINTERFACE_VOLUME),
+                                   0,
+                                   0,
+                                   DIGCF_PRESENT | DIGCF_DEVICEINTERFACE)
+    if hDevInfo == INVALID_HANDLE_VALUE:
+        warn('get_class_devs', ctypes.windll.GetLastError(),
+             ctypes.windll.FormatError())
 
 def get_device_interface(i, device=None):
     interfaceData = SP_DEVICE_INTERFACE_DATA()
@@ -105,7 +114,8 @@ def get_device_interface(i, device=None):
     elif ctypes.GetLastError() == ERROR_NO_MORE_ITEMS:
         return
     else:
-        print ctypes.GetLastError(), ctypes.windll.FormatError()
+        warn('get_device_interface', ctypes.GetLastError(),
+             ctypes.windll.FormatError())
 
 def get_device_interface_detail(interface):
     detail = None
@@ -125,7 +135,8 @@ def get_device_interface_detail(interface):
             detail = SP_DEVICE_INTERFACE_DETAIL_DATA(
                 cbSize=6)
         else:
-            print ctypes.windll.GetLastError(), ctypes.windll.FormatError()
+            warn('get_device_interface_detail', ctypes.windll.GetLastError(),
+                 ctypes.windll.FormatError())
             return
     return detail.DevicePath, device
 
@@ -160,6 +171,7 @@ def connected_devices():
     Returns a generator which returns small dictionaries of data
     representing the connected USB storage devices.
     """
+    get_class_devs() # reset the device class to pick up all devices
     interface_index = 0
     while True:
         interface = get_device_interface(interface_index)
