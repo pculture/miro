@@ -30,6 +30,7 @@
 """Menu handling code."""
 
 from miro import app
+from miro import errors
 from miro import prefs
 from miro import signals
 from miro import conversions
@@ -844,7 +845,10 @@ class MenuStateManager(signals.SignalEmitter):
         pass
 
     def _update_menus_for_selected_tabs(self):
-        selection_type, selected_tabs = app.tabs.selection
+        try:
+            selection_type, selected_tabs = app.tabs.selection
+        except errors.WidgetActionError:
+            return
         if len(selected_tabs) == 1:
             app.menu_manager._update_view_menu()
         if selection_type is None or selected_tabs[0].type == u'tab':
