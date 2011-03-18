@@ -100,7 +100,7 @@ class ViewToggler(widgetset.CustomButton):
 class FilterButton(widgetset.CustomButton):
 
     SURFACE = widgetutil.ThreeImageSurface('filter')
-    TEXT_SIZE = 0.75
+    TEXT_SIZE = widgetutil.font_scale_from_osx_points(10)
     ON_COLOR = (1, 1, 1)
     OFF_COLOR = (0.247, 0.247, 0.247)
 
@@ -128,7 +128,7 @@ class FilterButton(widgetset.CustomButton):
         textbox = self._textbox(layout)
         text_width, text_height = textbox.get_size()
         text_x = (context.width - text_width) / 2
-        text_y = (context.height - text_height) / 2
+        text_y = (context.height - text_height) / 2 - 1
         textbox.draw(context, text_x, text_y, context.width, context.height)
 
     def set_enabled(self, enabled):
