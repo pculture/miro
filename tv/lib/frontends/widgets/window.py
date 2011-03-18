@@ -33,6 +33,7 @@
 from miro import app
 from miro import prefs
 
+from miro.frontends.widgets import separator
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox
 from miro.frontends.widgets import searchbox
@@ -45,9 +46,13 @@ class MiroWindow(widgetset.MainWindow):
     def __init__(self, title, rect):
         widgetset.MainWindow.__init__(self, title, rect)
 
+        vbox = widgetset.VBox()
+        vbox.pack_start(separator.HSeparator(widgetutil.BLACK))
+        vbox.pack_start(tablist.TabListBox(), expand=True)
+
         self.main_area_holder = widgetutil.WidgetHolder()
         self.splitter = widgetset.Splitter()
-        self.splitter.set_left(tablist.TabListBox())
+        self.splitter.set_left(vbox)
         self.splitter.set_right(self.main_area_holder)
 
         hbox = widgetset.HBox()
