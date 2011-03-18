@@ -1096,7 +1096,7 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed_timeout(self, value):
         self.emit('auto-download-changed', value)
 
-class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
+class HeaderToolbar(widgetset.Toolbar, SorterWidgetOwner):
     """Toolbar used to sort items and switch views.
 
     Signals:
@@ -1111,7 +1111,7 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         only view
     """
     def __init__(self):
-        widgetset.Background.__init__(self)
+        widgetset.Toolbar.__init__(self)
         SorterWidgetOwner.__init__(self)
 
         self._button_hbox = widgetset.HBox()
@@ -1176,20 +1176,6 @@ class HeaderToolbar(widgetset.Background, SorterWidgetOwner):
         width = self._hbox.get_size_request()[0]
         height = self._button_hbox.get_size_request()[1]
         return width, height
-
-    def draw(self, context, layout):
-        key = 74.0 / 255
-        top = 193.0 / 255
-        bottom = 169.0 / 255
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((top, top, top))
-        gradient.set_end_color((bottom, bottom, bottom))
-        context.rectangle(0, 0, context.width, context.height)
-        context.gradient_fill(gradient)
-        context.set_color((key, key, key))
-        context.move_to(0, 0)
-        context.rel_line_to(context.width, 0)
-        context.stroke()
 
     def toggle_filter(self, filter_):
         # implemented by subclasses
