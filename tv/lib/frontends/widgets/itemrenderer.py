@@ -324,7 +324,7 @@ class ItemRenderer(ItemRendererBase):
 
         if self.info.expiration_date:
             text = displaytext.expiration_date(self.info.expiration_date)
-            self.canvas.add_keep_button('keep', 'keep', text)
+            self.canvas.add_keep_button('keep', text)
         elif self.attrs.get('keep-animation-alpha', 0) > 0:
             self.canvas.add_saved_emblem()
 
@@ -817,7 +817,11 @@ class ItemRendererCanvas(object):
             RIGHT_BUTTON_HEIGHT) // 2)
         self._add_image_button(self.right_button_x, y, image_name, hotspot)
 
-    def add_keep_button(self, image_name, hotspot, text):
+    def add_keep_button(self, hotspot, text):
+        if self.selected:
+            image_name = 'keep-selected'
+        else:
+            image_name = 'keep'
         image = self._make_image_button(image_name, hotspot)
         self.layout_expiring_and_button(text, image_name, hotspot)
         self.expire_background_alpha = 1.0
