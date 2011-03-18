@@ -115,7 +115,7 @@ class FilterButton(widgetset.CustomButton):
         return layout.textbox(self.text)
 
     def size_request(self, layout):
-        width, height = self._textbox(layout).get_size()
+        width, height = [int(v) for v in self._textbox(layout).get_size()]
         return width + 20, max(self.SURFACE.height, height)
 
     def draw(self, context, layout):
