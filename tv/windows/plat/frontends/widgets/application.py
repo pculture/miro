@@ -126,7 +126,7 @@ class WindowsApplication(Application):
                                                 app.config.get(options.WINDOWS_ICON))
             if os.path.exists(themeIcoPath):
                 icopath = themeIcoPath
-                gtk.window_set_default_icon_from_file(icopath)
+        gtk.window_set_default_icon_from_file(icopath)
         return icopath
 
     def _get_exe_location(self):
@@ -312,7 +312,7 @@ class WindowsApplication(Application):
                     raise
 
     def handle_first_time(self, callback):
-        self._set_default_icon()
+        self._get_icon_location() # also sets the icon
         Application.handle_first_time(self, callback)
 
     def handle_update_available(self, obj, item):
