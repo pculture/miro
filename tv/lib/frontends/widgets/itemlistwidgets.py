@@ -313,7 +313,7 @@ class ItemListTitlebar(widgetset.Titlebar):
         self.create_signal('search-changed')
         self.searchbox = widgetset.SearchTextEntry()
         self.searchbox.connect('changed', self._on_search_changed)
-        return widgetutil.align_middle(self.searchbox, right_pad=35,
+        return widgetutil.align_middle(self.searchbox, right_pad=45,
                                        left_pad=15)
 
     def _build_view_toggle(self):
@@ -511,9 +511,9 @@ class SearchListTitlebar(SearchTitlebar):
         self.searchbox.set_size_request(200, h)
         self.searchbox.connect('validate', self._on_search_activate)
         self.searchbox.connect('changed', self._on_search_changed)
-        hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
+        hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 15, 15))
 
-        return [widgetutil.align_middle(hbox, right_pad=20)]
+        return [widgetutil.align_middle(hbox, right_pad=30)]
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
