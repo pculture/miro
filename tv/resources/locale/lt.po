@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-02 15:08-0500\n"
+"POT-Creation-Date: 2011-03-08 15:57-0500\n"
 "PO-Revision-Date: 2011-02-27 18:15+0000\n"
 "Last-Translator: Rytis Slatkevičius <rytis.s@gmail.com>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-03-08 20:52+0000\n"
-"X-Generator: Launchpad (build 12532)\n"
+"X-Launchpad-Export-Date: 2011-03-18 15:56+0000\n"
+"X-Generator: Launchpad (build 12617)\n"
 
 #: ../../windows/plat/utils.py:476 ../../osx/plat/utils.py:590
 msgid "iTunes"
@@ -126,14 +126,14 @@ msgid ""
 msgstr "Įvyko klaida atveriant %(url)s. Prašom pabandyti vėliau."
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
-#: ../../windows/plat/frontends/widgets/bonjour.py:69
+#: ../../windows/plat/frontends/widgets/bonjour.py:73
 #: ../../osx/plat/frontends/widgets/bonjour.py:38
 #: ../../linux/plat/frontends/widgets/bonjour.py:45
-#: ../../lib/frontends/widgets/prefpanel.py:894
+#: ../../lib/frontends/widgets/prefpanel.py:907
 msgid "Install Bonjour"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/bonjour.py:47
+#: ../../windows/plat/frontends/widgets/bonjour.py:48
 #, python-format
 msgid ""
 "For the best %(appname)s experience, we suggest you install Bonjour, which "
@@ -143,10 +143,12 @@ msgid ""
 "%(appname)s users on your network, as well as stream media from other "
 "%(appname)s users on your network.\n"
 "\n"
+"After installing Print Services, you will have to restart Miro.\n"
+"\n"
 "Would you like to do this now?"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/bonjour.py:71
+#: ../../windows/plat/frontends/widgets/bonjour.py:75
 msgid ""
 "Your browser will load the web-site where you can download and install "
 "Bonjour.\n"
@@ -358,8 +360,9 @@ msgid "Cut"
 msgstr "Iškirpti"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:242
-#: ../../lib/frontends/widgets/devicecontroller.py:458
-#: ../../lib/frontends/widgets/devicecontroller.py:460
+#: ../../lib/frontends/widgets/devicecontroller.py:463
+#: ../../lib/frontends/widgets/devicecontroller.py:471
+#: ../../lib/frontends/widgets/devicecontroller.py:474
 #: ../../lib/conversions.py:777
 msgid "Copy"
 msgstr "Kopijuoti"
@@ -370,9 +373,7 @@ msgstr "Įdėti"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:244
 #: ../../osx/plat/frontends/widgets/overlay.py:129
-#: ../../lib/frontends/widgets/gtk/video.py:319
-#: ../../lib/frontends/widgets/itemcontextmenu.py:70
-#: ../../lib/frontends/widgets/itemcontextmenu.py:173 ../../lib/dialogs.py:119
+#: ../../lib/frontends/widgets/gtk/video.py:319 ../../lib/dialogs.py:120
 msgid "Delete"
 msgstr "Pašalinti"
 
@@ -426,30 +427,30 @@ msgid "%(appname)s Help"
 msgstr "%(appname)s žinynas"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:439
-#: ../../lib/frontends/widgets/gtk/video.py:415
+#: ../../lib/frontends/widgets/gtk/video.py:416
 #: ../../lib/frontends/widgets/gtk/window.py:315
 msgid "Disable Subtitles"
 msgstr "Išjungti subtitrus"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:450
-#: ../../lib/frontends/widgets/gtk/video.py:393
-#: ../../lib/frontends/widgets/menus.py:335
+#: ../../lib/frontends/widgets/gtk/video.py:394
+#: ../../lib/frontends/widgets/menus.py:339
 msgid "None Available"
 msgstr "Nėra"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:457
-#: ../../lib/frontends/widgets/gtk/video.py:426
+#: ../../lib/frontends/widgets/gtk/video.py:427
 msgid "Select a Subtitles file..."
 msgstr "Pasirinkite subtitrų failą..."
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
-#: ../../lib/frontends/widgets/itemcontextmenu.py:230
+#: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Share"
 msgstr "Pasidalinti"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125
-#: ../../lib/frontends/widgets/style.py:279
-#: ../../lib/frontends/widgets/itemcontextmenu.py:315 ../../lib/dialogs.py:118
+#: ../../lib/frontends/widgets/style.py:333
+#: ../../lib/frontends/widgets/itemcontextmenu.py:326 ../../lib/dialogs.py:119
 msgid "Keep"
 msgstr "Palikti"
 
@@ -478,9 +479,11 @@ msgid ""
 msgstr ""
 
 #: ../../linux/extensions/miroappindicator/main.py:55
-#: ../../lib/frontends/widgets/itemcontextmenu.py:137
-#: ../../lib/frontends/widgets/itemcontextmenu.py:208
-#: ../../lib/frontends/widgets/itemcontextmenu.py:295
+#: ../../lib/frontends/widgets/menus.py:308
+#: ../../lib/frontends/widgets/menus.py:310
+#: ../../lib/frontends/widgets/itemcontextmenu.py:148
+#: ../../lib/frontends/widgets/itemcontextmenu.py:220
+#: ../../lib/frontends/widgets/itemcontextmenu.py:306
 msgid "Play"
 msgstr "Groti"
 
@@ -658,45 +661,41 @@ msgstr ""
 msgid "Persian"
 msgstr "Persų"
 
-#: ../../lib/item.py:1199 ../../lib/messages.py:1285
+#: ../../lib/item.py:1222 ../../lib/messages.py:1304
 msgid "queued for download"
 msgstr "laukiama siuntimo"
 
-#: ../../lib/item.py:1294
+#: ../../lib/item.py:1317
 msgid "no title"
 msgstr "nėra antraštės"
 
-#: ../../lib/item.py:1342
-msgid "Contents:"
-msgstr "Turinys:"
-
-#: ../../lib/item.py:1578
+#: ../../lib/item.py:1595
 msgid "starting up..."
 msgstr "pradedama..."
 
-#: ../../lib/feed.py:852
+#: ../../lib/feed.py:853
 msgid "Error loading podcast"
 msgstr ""
 
-#: ../../lib/feed.py:854
+#: ../../lib/feed.py:855
 #, python-format
 msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
 msgstr ""
 
-#: ../../lib/feed.py:857
+#: ../../lib/feed.py:858
 msgid "Would you like to keep the podcast?"
 msgstr ""
 
-#: ../../lib/feed.py:977
+#: ../../lib/feed.py:980
 msgid "Bad content-type"
 msgstr "Blogas turinio tipas"
 
-#: ../../lib/feed.py:990
+#: ../../lib/feed.py:993
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
 msgstr ""
 
-#: ../../lib/feed.py:993
+#: ../../lib/feed.py:996
 #, python-format
 msgid ""
 "This podcast is not compatible with %(appname)s but we'll try our best to "
@@ -709,27 +708,47 @@ msgid ""
 "Do you want to try to load this podcast anyway?"
 msgstr ""
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2738
+#: ../../lib/feed.py:1669 ../../lib/databaseupgrade.py:2738
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr ""
 
-#: ../../lib/feed.py:2130 ../../lib/feed.py:2266
+#: ../../lib/feed.py:2133 ../../lib/feed.py:2269
 msgid "Local Files"
 msgstr "Vietiniai failai"
 
-#: ../../lib/feed.py:2139 ../../lib/feed.py:2241 ../../lib/feed.py:2251
+#: ../../lib/feed.py:2142 ../../lib/feed.py:2244 ../../lib/feed.py:2254
 #: ../../lib/frontends/widgets/firsttimedialog.py:324
 #: ../../lib/frontends/widgets/firsttimedialog.py:326
 #: ../../lib/frontends/widgets/firsttimedialog.py:397
 msgid "Search"
 msgstr "Paieška"
 
-#: ../../lib/messages.py:1215 ../../lib/sharing.py:214
+#: ../../lib/messages.py:1222 ../../lib/sharing.py:214
 msgid "Locked"
 msgstr ""
 
-#: ../../lib/messages.py:1232
+#: ../../lib/messages.py:1225 ../../lib/frontends/widgets/itemedit.py:533
+msgid "Movie"
+msgstr ""
+
+#: ../../lib/messages.py:1227 ../../lib/frontends/widgets/gtk/trayicon.py:115
+#: ../../lib/frontends/widgets/diagnostics.py:81
+#: ../../lib/frontends/widgets/itemedit.py:522
+#: ../../lib/frontends/widgets/itemedit.py:534
+#: ../../lib/frontends/widgets/widgetconst.py:72
+msgid "Show"
+msgstr "Parodyti"
+
+#: ../../lib/messages.py:1229 ../../lib/frontends/widgets/itemedit.py:535
+msgid "Clip"
+msgstr ""
+
+#: ../../lib/messages.py:1231 ../../lib/frontends/widgets/itemedit.py:536
+msgid "Podcast"
+msgstr ""
+
+#: ../../lib/messages.py:1250
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
@@ -777,7 +796,7 @@ msgstr "Prisijungimas baigtas"
 
 #: ../../lib/sharing.py:151 ../../lib/downloader.py:564
 #: ../../lib/downloader.py:572 ../../lib/httpclient.py:213
-#: ../../lib/httpclient.py:709
+#: ../../lib/httpclient.py:716
 msgid "Unknown"
 msgstr "Nežinoma"
 
@@ -839,94 +858,98 @@ msgstr ""
 msgid "Sync Playlists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:458
-#: ../../lib/frontends/widgets/devicecontroller.py:460
-msgid "Device Default"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:472
-msgid "Name of Device"
+#: ../../lib/frontends/widgets/devicecontroller.py:470
+#, python-format
+msgid "Device Default (%(audio)s)"
 msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:473
+#, python-format
+msgid "Device Default (%(video)s)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:486
+msgid "Name of Device"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:487
 msgid "Video Conversion"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:474
+#: ../../lib/frontends/widgets/devicecontroller.py:488
 msgid "Audio Conversion"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:475
+#: ../../lib/frontends/widgets/devicecontroller.py:489
 msgid "Store video in this directory"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:476
+#: ../../lib/frontends/widgets/devicecontroller.py:490
 msgid "Store audio in this directory"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:477
+#: ../../lib/frontends/widgets/devicecontroller.py:491
 msgid "Always show this device, even if 'show all devices' is turned off"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:568
+#: ../../lib/frontends/widgets/devicecontroller.py:583
 msgid "Main"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:569
-#: ../../lib/frontends/widgets/displays.py:346
-#: ../../lib/frontends/widgets/itemlistcontroller.py:905
-#: ../../lib/frontends/widgets/prefpanel.py:1181
-#: ../../lib/frontends/widgets/tabcontroller.py:244
-#: ../../lib/frontends/widgets/tablist.py:1067 ../../lib/messagehandler.py:511
+#: ../../lib/frontends/widgets/devicecontroller.py:584
+#: ../../lib/frontends/widgets/displays.py:347
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1031
+#: ../../lib/frontends/widgets/prefpanel.py:1216
+#: ../../lib/frontends/widgets/tablist.py:1029 ../../lib/messagehandler.py:526
 msgid "Podcasts"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:570
-#: ../../lib/frontends/widgets/displays.py:771
-#: ../../lib/frontends/widgets/tabcontroller.py:443
-#: ../../lib/frontends/widgets/tablist.py:1136
+#: ../../lib/frontends/widgets/devicecontroller.py:585
+#: ../../lib/frontends/widgets/displays.py:769
+#: ../../lib/frontends/widgets/tabcontroller.py:493
+#: ../../lib/frontends/widgets/tablist.py:1098
 msgid "Playlists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:571
-#: ../../lib/frontends/widgets/itemlistwidgets.py:853
-#: ../../lib/frontends/widgets/tablist.py:1122
+#: ../../lib/frontends/widgets/devicecontroller.py:586
+#: ../../lib/frontends/widgets/itemlistwidgets.py:987
+#: ../../lib/frontends/widgets/tablist.py:1084
 msgid "Settings"
 msgstr "Nustatymai"
 
-#: ../../lib/frontends/widgets/devicecontroller.py:585
+#: ../../lib/frontends/widgets/devicecontroller.py:600
 msgid ""
 "Drag individual video and audio files onto the device in the sidebar to copy "
 "them."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:590
+#: ../../lib/frontends/widgets/devicecontroller.py:605
 msgid "Use these options and the tabs above for automatic syncing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:687
+#: ../../lib/frontends/widgets/devicecontroller.py:702
 msgid "Your device isn't telling us its exact model number."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:692
+#: ../../lib/frontends/widgets/devicecontroller.py:707
 msgid "For optimal video conversion, select the device model."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:708
+#: ../../lib/frontends/widgets/devicecontroller.py:723
 msgid ""
 "If you don't know the model or it doesn't appear in the list, it's fine to "
 "choose the 'Generic' device option."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:734
+#: ../../lib/frontends/widgets/devicecontroller.py:749
 msgid "This is my device"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:742
+#: ../../lib/frontends/widgets/devicecontroller.py:757
 msgid "This device is not yet mounted."
 msgstr ""
 
-#: ../../lib/frontends/widgets/displays.py:490
+#: ../../lib/frontends/widgets/displays.py:491
 #, python-format
 msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
@@ -935,48 +958,49 @@ msgstr ""
 "%(appname)s negali paleisti šio failo. Galbūt jį eitų atverti su kita "
 "programa"
 
-#: ../../lib/frontends/widgets/displays.py:500
+#: ../../lib/frontends/widgets/displays.py:501
 msgid "Filename:"
 msgstr "Failo vardas:"
 
-#: ../../lib/frontends/widgets/displays.py:503
+#: ../../lib/frontends/widgets/displays.py:504
 msgid "File type:"
 msgstr "Failo tipas:"
 
-#: ../../lib/frontends/widgets/displays.py:508
-#: ../../lib/frontends/widgets/style.py:258
+#: ../../lib/frontends/widgets/displays.py:509
+#: ../../lib/frontends/widgets/style.py:311
 msgid "Reveal File"
 msgstr "Parodyti failą"
 
-#: ../../lib/frontends/widgets/displays.py:509
-#: ../../lib/frontends/widgets/displays.py:546
-#: ../../lib/frontends/widgets/itemcontextmenu.py:159
+#: ../../lib/frontends/widgets/displays.py:510
+#: ../../lib/frontends/widgets/displays.py:547
+#: ../../lib/frontends/widgets/itemcontextmenu.py:106
+#: ../../lib/frontends/widgets/itemcontextmenu.py:170
 msgid "Play Externally"
 msgstr "Groti su kitu grotuvu"
 
-#: ../../lib/frontends/widgets/displays.py:511
+#: ../../lib/frontends/widgets/displays.py:512
 msgid "Skip"
 msgstr "Praleisti"
 
-#: ../../lib/frontends/widgets/displays.py:548
+#: ../../lib/frontends/widgets/displays.py:549
 msgid "Open Externally"
 msgstr "Atverti su kita programa"
 
-#: ../../lib/frontends/widgets/displays.py:669
+#: ../../lib/frontends/widgets/displays.py:667
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:674
+#: ../../lib/frontends/widgets/displays.py:672
 #, python-format
 msgid "(contains %(count)d podcast)"
 msgid_plural "(contains %(count)d podcasts)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:680
+#: ../../lib/frontends/widgets/displays.py:678
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
@@ -984,7 +1008,7 @@ msgstr[0] "%(count)d pažymėtas grojaraščių kanalas"
 msgstr[1] "%(count)d pažymėta grojaraščių kanalų"
 msgstr[2] "%(count)d pažymėta grojaraščių kanalų"
 
-#: ../../lib/frontends/widgets/displays.py:685
+#: ../../lib/frontends/widgets/displays.py:683
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
@@ -992,21 +1016,21 @@ msgstr[0] "(talpina %(count)d grojaraštį)"
 msgstr[1] "(talpina %(count)d grojaraščių)"
 msgstr[2] "(talpina %(count)d grojaraščių)"
 
-#: ../../lib/frontends/widgets/displays.py:695
+#: ../../lib/frontends/widgets/displays.py:693
 #, python-format
 msgid "%(count)d Podcast Selected"
 msgid_plural "%(count)d Podcasts Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:701
+#: ../../lib/frontends/widgets/displays.py:699
 #, python-format
 msgid "%(count)d Source Selected"
 msgid_plural "%(count)d Sources Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:707
+#: ../../lib/frontends/widgets/displays.py:705
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
@@ -1014,24 +1038,31 @@ msgstr[0] "%(count)d grojaraštis pažymėtas"
 msgstr[1] "%(count)d grojaščių pažymėta"
 msgstr[2] "%(count)d grojaščių pažymėta"
 
-#: ../../lib/frontends/widgets/displays.py:714
+#: ../../lib/frontends/widgets/displays.py:712
 msgid "Delete All"
 msgstr "Pašalinti visus"
 
-#: ../../lib/frontends/widgets/displays.py:718
+#: ../../lib/frontends/widgets/displays.py:716
 msgid "Put Into a New Folder"
 msgstr "Perkelti į naują katalogą"
 
-#: ../../lib/frontends/widgets/displays.py:743
-#: ../../lib/frontends/widgets/tabcontroller.py:207
-#: ../../lib/frontends/widgets/tablist.py:892
+#: ../../lib/frontends/widgets/displays.py:741
+#: ../../lib/frontends/widgets/tabcontroller.py:217
+#: ../../lib/frontends/widgets/tablist.py:882
 msgid "Connect"
 msgstr ""
 
-#: ../../lib/frontends/widgets/displays.py:757
-#: ../../lib/frontends/widgets/tabcontroller.py:381
-#: ../../lib/frontends/widgets/tablist.py:958
+#: ../../lib/frontends/widgets/displays.py:755
+#: ../../lib/frontends/widgets/tabcontroller.py:430
+#: ../../lib/frontends/widgets/tablist.py:948
 msgid "Sources"
+msgstr ""
+
+#: ../../lib/frontends/widgets/displays.py:783
+#: ../../lib/frontends/widgets/prefpanel.py:1223
+#: ../../lib/frontends/widgets/tabcontroller.py:542
+#: ../../lib/frontends/widgets/tablist.py:992
+msgid "Stores"
 msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
@@ -1058,13 +1089,6 @@ msgstr "paleisti visus siuntimus (%(paused)d)"
 msgid "Hide"
 msgstr "Paslėpti"
 
-#: ../../lib/frontends/widgets/gtk/trayicon.py:115
-#: ../../lib/frontends/widgets/diagnostics.py:81
-#: ../../lib/frontends/widgets/itemedit.py:510
-#: ../../lib/frontends/widgets/widgetconst.py:72
-msgid "Show"
-msgstr "Parodyti"
-
 #: ../../lib/frontends/widgets/gtk/video.py:282
 msgid "Fullscreen"
 msgstr "Viso ekrano režimas"
@@ -1086,6 +1110,7 @@ msgid "Subtitles Found"
 msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/video.py:349
+#: ../../lib/frontends/widgets/menus.py:338
 msgid "Subtitles"
 msgstr "Subtitrai"
 
@@ -1122,11 +1147,11 @@ msgstr ""
 msgid "To help fund continued Miro development, visit the donation page at:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/playlist.py:184
+#: ../../lib/frontends/widgets/playlist.py:211
 msgid "This Playlist is Empty"
 msgstr "Šis grojaraštis yra tuščias"
 
-#: ../../lib/frontends/widgets/playlist.py:187
+#: ../../lib/frontends/widgets/playlist.py:214
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr "Norėdami įtraukti įrašą, pertempkite pavadinimą į šoninę juostą"
@@ -1145,6 +1170,7 @@ msgid "Enter the name of the folder to add"
 msgstr "Įveskite naujo kanalų katalogo pavadinimą"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "New Search Podcast"
 msgstr ""
 
@@ -1173,170 +1199,209 @@ msgstr "Paieškos variklis:"
 msgid "URL:"
 msgstr "URL:"
 
-#: ../../lib/frontends/widgets/style.py:251
-msgid "From"
-msgstr "Iš"
-
-#: ../../lib/frontends/widgets/style.py:252
-#, python-format
-msgid "From %(podcast)s"
+#: ../../lib/frontends/widgets/newwatchedfolder.py:63
+msgid "Choose..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:253
-msgid "File name:"
-msgstr "Failo pavadinimas:"
+#: ../../lib/frontends/widgets/newwatchedfolder.py:67
+msgid "Directory:"
+msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:254
-msgid "Show More"
-msgstr "Rodyti daugiau"
+#: ../../lib/frontends/widgets/newwatchedfolder.py:74
+msgid "Show in my sidebar as a podcast"
+msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:255
-msgid "Show Less"
-msgstr "Rodyti mažiau"
+#: ../../lib/frontends/widgets/newwatchedfolder.py:101
+msgid "Choose Watched Folder Directory"
+msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:256
-msgid "Comments"
-msgstr "Komentarai"
+#: ../../lib/frontends/widgets/newwatchedfolder.py:110
+#: ../../lib/frontends/widgets/prefpanel.py:778
+msgid "Add Watched Folder"
+msgstr "Įtraukti peržiūrėtų failų katalogą"
 
-#: ../../lib/frontends/widgets/style.py:258
+#: ../../lib/frontends/widgets/newwatchedfolder.py:112
+msgid ""
+"Miro can watch a folder on your computer and show those media files in your "
+"library."
+msgstr ""
+
+#: ../../lib/frontends/widgets/newwatchedfolder.py:130
+msgid ""
+"Miro can watch a folder on your computer and show those media files in your "
+"library.\n"
+"\n"
+"That path does not exist."
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:311
 #, python-format
 msgid "Reveal in %(progname)s"
 msgstr "Parodyti naudojant %(progname)s"
 
-#: ../../lib/frontends/widgets/style.py:259
-msgid "Display Contents"
-msgstr "Parodyti turinį"
+#: ../../lib/frontends/widgets/style.py:312
+msgid "display contents"
+msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:260
+#: ../../lib/frontends/widgets/style.py:313
 msgid "Web Page"
 msgstr "Tinklalapis"
 
-#: ../../lib/frontends/widgets/style.py:261
+#: ../../lib/frontends/widgets/style.py:314
 msgid "File URL"
 msgstr "Failo nuoroda"
 
-#: ../../lib/frontends/widgets/style.py:262
+#: ../../lib/frontends/widgets/style.py:315
 msgid "License Page"
 msgstr "Licenzijos puslapis"
 
-#: ../../lib/frontends/widgets/style.py:263
+#: ../../lib/frontends/widgets/style.py:316
 #: ../../lib/frontends/widgets/widgetconst.py:71
 msgid "File Type"
 msgstr "Failo tipas"
 
-#: ../../lib/frontends/widgets/style.py:264
+#: ../../lib/frontends/widgets/style.py:317
 msgid "Seeders"
 msgstr "Skleidėjai"
 
-#: ../../lib/frontends/widgets/style.py:265
+#: ../../lib/frontends/widgets/style.py:318
 msgid "Leechers"
 msgstr "Siuntėjai"
 
-#: ../../lib/frontends/widgets/style.py:266
+#: ../../lib/frontends/widgets/style.py:319
 msgid "Upload Rate"
 msgstr "Platinimo reitingas"
 
-#: ../../lib/frontends/widgets/style.py:267
+#: ../../lib/frontends/widgets/style.py:320
 msgid "Upload Total"
 msgstr "Iš viso išsiųsta"
 
-#: ../../lib/frontends/widgets/style.py:268
+#: ../../lib/frontends/widgets/style.py:321
 msgid "Down Rate"
 msgstr "Siuntimo sparta"
 
-#: ../../lib/frontends/widgets/style.py:269
+#: ../../lib/frontends/widgets/style.py:322
 msgid "Down Total"
 msgstr "Iš viso atsiųsta"
 
-#: ../../lib/frontends/widgets/style.py:270
+#: ../../lib/frontends/widgets/style.py:323
 msgid "Up/Down Ratio"
 msgstr "Išs./Ats. santykis"
 
-#: ../../lib/frontends/widgets/style.py:271
-#: ../../lib/frontends/widgets/style.py:1117
-#: ../../lib/frontends/widgets/itemcontextmenu.py:203
-#: ../../lib/frontends/widgets/itemcontextmenu.py:333 ../../lib/dialogs.py:107
+#: ../../lib/frontends/widgets/style.py:324
+#: ../../lib/frontends/widgets/style.py:1391
+#: ../../lib/frontends/widgets/itemcontextmenu.py:215
+#: ../../lib/frontends/widgets/itemcontextmenu.py:344 ../../lib/dialogs.py:107
 msgid "Download"
 msgstr "Atsisiųsti"
 
-#: ../../lib/frontends/widgets/style.py:272
+#: ../../lib/frontends/widgets/style.py:325
+#: ../../lib/frontends/widgets/style.py:1219
+msgid "Download to My Miro"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:326
 msgid "Download Torrent"
 msgstr "Atsisiųsti Torentą"
 
-#: ../../lib/frontends/widgets/style.py:273
+#: ../../lib/frontends/widgets/style.py:327
 #: ../../lib/dl_daemon/download.py:633
 msgid "Error"
 msgstr "Klaida"
 
-#: ../../lib/frontends/widgets/style.py:274
-#: ../../lib/frontends/widgets/convertingcontroller.py:349
+#: ../../lib/frontends/widgets/style.py:328
+#: ../../lib/frontends/widgets/convertingcontroller.py:359
 #: ../../lib/frontends/widgets/firsttimedialog.py:398 ../../lib/dialogs.py:97
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: ../../lib/frontends/widgets/style.py:275
+#: ../../lib/frontends/widgets/style.py:329
 msgid "Queued for Auto-download"
 msgstr "Eilėje automatiniam parsiuntimui"
 
-#: ../../lib/frontends/widgets/style.py:276
-#: ../../lib/frontends/widgets/style.py:1191
-#: ../../lib/frontends/widgets/itemlistcontroller.py:919
-#: ../../lib/frontends/widgets/itemlistwidgets.py:326
-#: ../../lib/frontends/widgets/itemlistwidgets.py:523
+#: ../../lib/frontends/widgets/style.py:330
+#: ../../lib/frontends/widgets/style.py:1465
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1045
+#: ../../lib/frontends/widgets/itemlistwidgets.py:416
+#: ../../lib/frontends/widgets/itemlistwidgets.py:648
 msgid "Unplayed"
 msgstr "Neperžiūrėtas"
 
-#: ../../lib/frontends/widgets/style.py:277
+#: ../../lib/frontends/widgets/style.py:331
 msgid "Currently Playing"
 msgstr "Dabar leidžiama"
 
-#: ../../lib/frontends/widgets/style.py:278
-#: ../../lib/frontends/widgets/style.py:1209
-#: ../../lib/frontends/widgets/itemlistwidgets.py:526
+#: ../../lib/frontends/widgets/style.py:332
+#: ../../lib/frontends/widgets/style.py:1483
+#: ../../lib/frontends/widgets/itemlistwidgets.py:651
 msgid "Newly Available"
 msgstr "Naujas"
 
-#: ../../lib/frontends/widgets/style.py:280
-#: ../../lib/frontends/widgets/prefpanel.py:723
-#: ../../lib/frontends/widgets/tablist.py:1110
-#: ../../lib/frontends/widgets/tablist.py:1124
-#: ../../lib/frontends/widgets/tablist.py:1130
-#: ../../lib/frontends/widgets/tablist.py:1178
-#: ../../lib/frontends/widgets/tablist.py:1184
-#: ../../lib/frontends/widgets/tablist.py:1189 ../../lib/dialogs.py:120
+#: ../../lib/frontends/widgets/style.py:334
+msgid "Saved"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:335
+#: ../../lib/frontends/widgets/menus.py:261
+#: ../../lib/frontends/widgets/prefpanel.py:736
+#: ../../lib/frontends/widgets/tablist.py:1072
+#: ../../lib/frontends/widgets/tablist.py:1086
+#: ../../lib/frontends/widgets/tablist.py:1092
+#: ../../lib/frontends/widgets/tablist.py:1140
+#: ../../lib/frontends/widgets/tablist.py:1146
+#: ../../lib/frontends/widgets/tablist.py:1151 ../../lib/dialogs.py:121
 msgid "Remove"
 msgstr "Pašalinti"
 
-#: ../../lib/frontends/widgets/style.py:281
+#: ../../lib/frontends/widgets/style.py:336
 msgid "Stop seeding"
 msgstr "Stabdyti platinimą"
 
-#: ../../lib/frontends/widgets/style.py:282
+#: ../../lib/frontends/widgets/style.py:337
 msgid "Remove from playlist"
 msgstr "Ištrinti iš grojaraščio"
 
-#: ../../lib/frontends/widgets/style.py:361
-msgid "Contents appear in the library"
-msgstr "Turinys atsiranda bibliotekoje"
+#: ../../lib/frontends/widgets/style.py:812
+msgid "PEERS"
+msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:377
-#: ../../lib/frontends/widgets/style.py:1199
-msgid "paused"
-msgstr "pristabdyta"
+#: ../../lib/frontends/widgets/style.py:813
+msgid "SEEDS"
+msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:613
+#: ../../lib/frontends/widgets/style.py:814
+msgid "LEECH"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:815
+msgid "SHARE"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:1100
 msgid "DRM locked"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:643
-#: ../../lib/frontends/widgets/itemcontextmenu.py:141
+#: ../../lib/frontends/widgets/style.py:1138
+#: ../../lib/frontends/widgets/itemcontextmenu.py:152
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:1201
+#: ../../lib/frontends/widgets/style.py:1473
+msgid "paused"
+msgstr "pristabdyta"
+
+#: ../../lib/frontends/widgets/style.py:1475
 msgid "queued"
 msgstr "eilėje"
+
+#: ../../lib/frontends/widgets/sharingcontroller.py:65
+#: ../../lib/frontends/widgets/itemlistcontroller.py:920
+#: ../../lib/frontends/widgets/itemlistcontroller.py:994
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1079
+#: ../../lib/frontends/widgets/feedcontroller.py:76
+msgid "No Results"
+msgstr "Rezultatų nėra"
 
 #: ../../lib/frontends/widgets/diagnostics.py:62
 #: ../../lib/frontends/widgets/diagnostics.py:134
@@ -1345,7 +1410,7 @@ msgid "%(databasecount)s: Delete"
 msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:92
-#: ../../lib/frontends/widgets/menus.py:363
+#: ../../lib/frontends/widgets/menus.py:367
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
@@ -1389,21 +1454,12 @@ msgstr "Iš viso db objektų atmintyje:"
 msgid "Total db backups:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:712
+#: ../../lib/frontends/widgets/itemlistcontroller.py:831
 #, python-format
-msgid "Resume %(item)s at %(resumetime)s"
+msgid "%(count)s items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:716
-#, python-format
-msgid "Resume %(item)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:812
-msgid "No Results"
-msgstr "Rezultatų nėra"
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:816
+#: ../../lib/frontends/widgets/itemlistcontroller.py:924
 msgid ""
 "To search for media on Internet media search sites, click on the search box "
 "above, type in search terms and hit the Enter key.  To switch search "
@@ -1411,75 +1467,81 @@ msgid ""
 "the search engine from the drop down."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:890
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1017
 msgid "Unwatched"
 msgstr "Neperžiūrėti"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:897
-#: ../../lib/frontends/widgets/itemlistcontroller.py:926
-#: ../../lib/frontends/widgets/itemlistwidgets.py:322
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1049
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1023
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1051
+#: ../../lib/frontends/widgets/itemlistwidgets.py:412
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1171
 msgid "View|All"
 msgstr "Rodyti|Visi"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:899
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1025
 msgid "Movies"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:901
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1027
 msgid "Shows"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:903
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1029
 msgid "Clips"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:928
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1053
 msgid "Albums"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:930
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1055
 msgid "Songs"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:932
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1057
 msgid "Genres"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:934
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1059
 msgid "Artists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:963
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1112
 msgid "Back to podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/statictabs.py:48
+#: ../../lib/frontends/widgets/statictabs.py:51
+msgid "Miro"
+msgstr ""
+
+#: ../../lib/frontends/widgets/statictabs.py:108
 msgid "Video Search"
 msgstr "Video paieška"
 
-#: ../../lib/frontends/widgets/statictabs.py:54
-#: ../../lib/frontends/widgets/tabcontroller.py:242
+#: ../../lib/frontends/widgets/statictabs.py:114
+#: ../../lib/frontends/widgets/tabcontroller.py:269
 msgid "Videos"
 msgstr ""
 
-#: ../../lib/frontends/widgets/statictabs.py:61
-#: ../../lib/frontends/widgets/tabcontroller.py:243
-#: ../../lib/frontends/widgets/tablist.py:733
-#: ../../lib/frontends/widgets/tablist.py:845
+#: ../../lib/frontends/widgets/statictabs.py:121
+#: ../../lib/frontends/widgets/tabcontroller.py:270
+#: ../../lib/frontends/widgets/tablist.py:723
+#: ../../lib/frontends/widgets/tablist.py:835
+#: ../../lib/frontends/widgets/itemedit.py:489
 msgid "Music"
 msgstr ""
 
-#: ../../lib/frontends/widgets/statictabs.py:68
+#: ../../lib/frontends/widgets/statictabs.py:128
+#: ../../lib/frontends/widgets/itemedit.py:491
 msgid "Misc"
 msgstr ""
 
-#: ../../lib/frontends/widgets/statictabs.py:75
-#: ../../lib/frontends/widgets/itemlistwidgets.py:520
+#: ../../lib/frontends/widgets/statictabs.py:135
+#: ../../lib/frontends/widgets/itemlistwidgets.py:645
 msgid "Downloading"
 msgstr "Atsiunčiama"
 
-#: ../../lib/frontends/widgets/statictabs.py:81
+#: ../../lib/frontends/widgets/statictabs.py:141
 msgid "Converting"
 msgstr ""
 
@@ -1488,8 +1550,8 @@ msgid "Stop All Conversions"
 msgstr ""
 
 #: ../../lib/frontends/widgets/convertingcontroller.py:76
-#: ../../lib/frontends/widgets/menus.py:395
-#: ../../lib/frontends/widgets/itemcontextmenu.py:391
+#: ../../lib/frontends/widgets/menus.py:399
+#: ../../lib/frontends/widgets/itemcontextmenu.py:402
 msgid "Show Conversion Folder"
 msgstr ""
 
@@ -1497,30 +1559,30 @@ msgstr ""
 msgid "Clear Finished Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/convertingcontroller.py:276
+#: ../../lib/frontends/widgets/convertingcontroller.py:286
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/convertingcontroller.py:310
+#: ../../lib/frontends/widgets/convertingcontroller.py:320
 #, python-format
 msgid "Failed: %(error)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/convertingcontroller.py:316
+#: ../../lib/frontends/widgets/convertingcontroller.py:326
 msgid "Troubleshoot"
 msgstr ""
 
-#: ../../lib/frontends/widgets/convertingcontroller.py:318
+#: ../../lib/frontends/widgets/convertingcontroller.py:328
 msgid "Open log"
 msgstr "Atidaryti žurnalą"
 
-#: ../../lib/frontends/widgets/convertingcontroller.py:320
-#: ../../lib/frontends/widgets/convertingcontroller.py:339
+#: ../../lib/frontends/widgets/convertingcontroller.py:330
+#: ../../lib/frontends/widgets/convertingcontroller.py:349
 msgid "Clear"
 msgstr "Išvalyti"
 
-#: ../../lib/frontends/widgets/convertingcontroller.py:331
+#: ../../lib/frontends/widgets/convertingcontroller.py:341
 msgid "Completed"
 msgstr "Užbaigta"
 
@@ -1628,7 +1690,7 @@ msgid "Import from %(player)s as watched folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:288
-#: ../../lib/frontends/widgets/prefpanel.py:655
+#: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Change"
 msgstr "Pakeisti"
 
@@ -1670,292 +1732,291 @@ msgid "_Open"
 msgstr "_Atverti"
 
 #: ../../lib/frontends/widgets/menus.py:217
-msgid "_Download Item"
-msgstr "Par_siųsti įrašą"
-
-#: ../../lib/frontends/widgets/menus.py:219
-msgid "_Import Media"
+msgid "Download Item"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:221
-msgid "Check _Version"
-msgstr "Patikrinti _versiją"
+#: ../../lib/frontends/widgets/menus.py:222
+msgid "Check Version"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:223
-msgid "_Remove Item"
-msgstr "Išt_rinti įrašą"
-
-#: ../../lib/frontends/widgets/menus.py:225
-msgid "_Remove Items"
-msgstr "Iš_trinti elementus..."
+#: ../../lib/frontends/widgets/menus.py:224
+msgid "Remove Item"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:226
-msgid "_Edit Item"
-msgstr "_Keisti įrašą"
+msgid "Remove Items"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:228
-msgid "Save Item _As"
-msgstr "Išs_augoti įrašą kaip..."
+#: ../../lib/frontends/widgets/menus.py:227
+msgid "Edit _Item"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:231
-msgid "Save Items _As"
-msgstr "Išs_augoti įrašus kaip..."
+#: ../../lib/frontends/widgets/menus.py:229
+msgid "Edit _Items"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:232
+#: ../../lib/frontends/widgets/menus.py:230
+msgid "_Save Item As"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:233
+msgid "_Save Items As"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:234
 msgid "Copy Item _URL"
 msgstr "Kopijuoti įrašo _URL"
 
-#: ../../lib/frontends/widgets/menus.py:236
-msgid "_Preferences"
-msgstr "_Nustatymai"
+#: ../../lib/frontends/widgets/menus.py:238
+#: ../../lib/frontends/widgets/prefpanel.py:1228
+msgid "Preferences"
+msgstr "Nustatymai"
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "_Quit"
 msgstr "Iš_eiti"
 
-#: ../../lib/frontends/widgets/menus.py:240
+#: ../../lib/frontends/widgets/menus.py:242
 msgid "_Sidebar"
 msgstr "Šoninė _juosta"
 
-#: ../../lib/frontends/widgets/menus.py:241
-msgid "Add _Podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:244
-#: ../../lib/frontends/widgets/tabcontroller.py:418
-#: ../../lib/frontends/widgets/application.py:663
-msgid "Add Source"
+#: ../../lib/frontends/widgets/menus.py:243
+#: ../../lib/frontends/widgets/newfeed.py:96
+msgid "Add Podcast"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:246
-msgid "New Searc_h Podcast"
+#: ../../lib/frontends/widgets/tabcontroller.py:467
+#: ../../lib/frontends/widgets/application.py:670
+msgid "Add Source"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:248
-msgid "New _Folder"
-msgstr "Naujas _aplankas"
+#: ../../lib/frontends/widgets/menus.py:250
+msgid "_New Folder"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:252
-msgid "Re_name"
-msgstr "Per_vadinti"
-
-#: ../../lib/frontends/widgets/menus.py:255
-msgid "Re_name Podcast"
+#: ../../lib/frontends/widgets/menus.py:253
+msgid "New Watched Folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:256
-msgid "Re_name Source"
-msgstr ""
+#: ../../lib/frontends/widgets/tablist.py:1080
+msgid "Rename"
+msgstr "Pervadinti"
 
-#: ../../lib/frontends/widgets/menus.py:257
-msgid "_Remove"
-msgstr "_Pašalinti"
+#: ../../lib/frontends/widgets/menus.py:259
+#: ../../lib/frontends/widgets/application.py:824
+msgid "Rename Podcast"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:260
-msgid "_Remove Podcast"
+#: ../../lib/frontends/widgets/application.py:838
+#: ../../lib/frontends/widgets/tablist.py:983
+msgid "Rename Source"
 msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:261
-msgid "_Remove Podcasts"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:262
-msgid "_Remove Folder"
-msgstr "Pašalinti katalogą"
-
-#: ../../lib/frontends/widgets/menus.py:263
-msgid "_Remove Folders"
-msgstr "_Pašalinti katalogus"
 
 #: ../../lib/frontends/widgets/menus.py:264
-msgid "_Remove Source"
-msgstr ""
+#: ../../lib/frontends/widgets/removefeeds.py:50
+msgid "Remove Podcast"
+msgid_plural "Remove Podcasts"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/menus.py:265
-msgid "_Remove Sources"
+msgid "Remove Podcasts"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:266
-msgid "_Update Podcast"
+msgid "Remove Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:267
+msgid "Remove Folders"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:268
+#: ../../lib/frontends/widgets/tablist.py:984
+msgid "Remove Source"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:269
-msgid "_Update Podcasts"
+#: ../../lib/frontends/widgets/tablist.py:987
+msgid "Remove Sources"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:270
-msgid "Update _All Podcasts and Library"
+msgid "Update Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:275
-msgid "_Import Podcasts (OPML)"
+#: ../../lib/frontends/widgets/menus.py:273
+msgid "Update Podcasts"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:277
-msgid "E_xport Podcasts (OPML)"
+#: ../../lib/frontends/widgets/menus.py:274
+msgid "Update All Podcasts and Library"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:280
-msgid "_Share with a Friend"
-msgstr "Pasidalinti su draugais"
+#: ../../lib/frontends/widgets/menus.py:279
+msgid "Import Podcasts (OPML)"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:282
+#: ../../lib/frontends/widgets/menus.py:281
+msgid "Export Podcasts (OPML)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:284
+msgid "Share with a Friend"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "Copy URL"
 msgstr "Kopijuoti nuorodą"
 
-#: ../../lib/frontends/widgets/menus.py:286
+#: ../../lib/frontends/widgets/menus.py:290
 msgid "_Playlists"
 msgstr "Groja_raščiai"
 
-#: ../../lib/frontends/widgets/menus.py:287
+#: ../../lib/frontends/widgets/menus.py:291
 msgid "New _Playlist"
 msgstr "Naujas _grojaraštis"
 
-#: ../../lib/frontends/widgets/menus.py:290
-msgid "New Playlist Fol_der"
-msgstr "Naujas grojaraščio ap_lankas"
-
 #: ../../lib/frontends/widgets/menus.py:294
-msgid "Re_name Playlist"
-msgstr "Pe_rvadinti grojaraštį"
-
-#: ../../lib/frontends/widgets/menus.py:296
-msgid "_Remove Playlist"
-msgstr "Paša_linti grojaraštį"
+msgid "New Playlist Folder"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:298
-msgid "_Remove Playlists"
-msgstr "Paša_linti grojaraščius"
-
-#: ../../lib/frontends/widgets/menus.py:299
-msgid "_Remove Playlist Folders"
-msgstr "Paša_linti grojaraščių aplankus"
+#: ../../lib/frontends/widgets/application.py:829
+#: ../../lib/frontends/widgets/tablist.py:1145 ../../lib/playlist.py:203
+msgid "Rename Playlist"
+msgstr "Pervadinti grojaraštį"
 
 #: ../../lib/frontends/widgets/menus.py:300
-msgid "_Remove Playlist Folder"
-msgstr "Paša_linti grojaraščių aplanką"
+msgid "Remove Playlist"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:302
+msgid "Remove Playlists"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:303
+msgid "Remove Playlist Folders"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:304
+msgid "Remove Playlist Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:307
 msgid "P_layback"
 msgstr "P_eržiūra"
 
-#: ../../lib/frontends/widgets/menus.py:304
-#: ../../lib/frontends/widgets/menus.py:306
-msgid "_Play"
-msgstr "_Rodyti"
-
-#: ../../lib/frontends/widgets/menus.py:307
-msgid "_Pause"
-msgstr "_Pauzė"
-
-#: ../../lib/frontends/widgets/menus.py:308
-msgid "_Stop"
-msgstr "_Sustabdyti"
-
 #: ../../lib/frontends/widgets/menus.py:311
-msgid "_Next Item"
-msgstr "_Kitas įrašas"
+msgid "Pause"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:314
-msgid "_Previous Item"
-msgstr "An_kstesnis įrašas"
+#: ../../lib/frontends/widgets/menus.py:312
+msgid "Stop"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:315
+msgid "Next Item"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:318
-msgid "Skip _Forward"
-msgstr "Persukti į _priekį"
+msgid "Previous Item"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:320
-msgid "Skip _Back"
-msgstr "Grįžti _atgal"
+#: ../../lib/frontends/widgets/menus.py:322
+msgid "Skip Forward"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:323
-msgid "Volume _Up"
-msgstr "_Pagarsinti"
+#: ../../lib/frontends/widgets/menus.py:324
+msgid "Skip Back"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:325
-msgid "Volume _Down"
-msgstr "Pri_tildyti"
+#: ../../lib/frontends/widgets/menus.py:327
+msgid "Volume Up"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:328
+#: ../../lib/frontends/widgets/menus.py:329
+msgid "Volume Down"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:332
 msgid "_Fullscreen"
 msgstr "_Visame ekrane"
 
-#: ../../lib/frontends/widgets/menus.py:331
+#: ../../lib/frontends/widgets/menus.py:335
 msgid "_Toggle Detached/Attached"
 msgstr "Rodyti atskirame _lange"
 
-#: ../../lib/frontends/widgets/menus.py:334
-msgid "S_ubtitles"
-msgstr "S_ubtitrai"
-
-#: ../../lib/frontends/widgets/menus.py:338
+#: ../../lib/frontends/widgets/menus.py:342
 msgid "Select a Subtitles File..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:344
+#: ../../lib/frontends/widgets/menus.py:348
 msgid "_View"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:347
-msgid "Convert"
-msgstr "Konvertuoti"
+#: ../../lib/frontends/widgets/menus.py:351
+msgid "_Convert"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:349
-#: ../../lib/frontends/widgets/menus.py:361
+#: ../../lib/frontends/widgets/menus.py:353
 msgid "_Help"
 msgstr "_Pagalba"
 
-#: ../../lib/frontends/widgets/menus.py:350
+#: ../../lib/frontends/widgets/menus.py:354
 #, python-format
-msgid "_About %(name)s"
-msgstr "_Apie %(name)s"
+msgid "About %(name)s"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:358
-msgid "_Donate"
-msgstr "Pa_aukoti"
+#: ../../lib/frontends/widgets/menus.py:362
+msgid "Donate"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:365
-msgid "Report a _Bug"
-msgstr "Pranešti apie _klaidą"
-
-#: ../../lib/frontends/widgets/menus.py:367
-msgid "_Translate"
-msgstr "_Vertimai"
+msgid "Help"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:369
-msgid "_Planet Miro"
-msgstr "Miro pasaulis"
+msgid "Report a Bug"
+msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:372
-msgid "Dev"
+#: ../../lib/frontends/widgets/menus.py:371
+msgid "Translate"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:373
-msgid "Profile Message"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:374
-msgid "Profile Redraw"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:375
-msgid "Test Crash Reporter"
+msgid "Planet Miro"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:376
+msgid "Dev"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:377
+msgid "Profile Message"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:378
+msgid "Profile Redraw"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:379
+msgid "Test Crash Reporter"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:380
 msgid "Test Soft Crash Reporter"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:415
+#: ../../lib/frontends/widgets/menus.py:419
 msgid "_Encoding"
 msgstr "_Koduotė"
 
-#: ../../lib/frontends/widgets/menus.py:418
+#: ../../lib/frontends/widgets/menus.py:422
 msgid "Default (UTF-8)"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newfeed.py:96
-msgid "Add Podcast"
 msgstr ""
 
 #: ../../lib/frontends/widgets/newfeed.py:97
@@ -1974,8 +2035,8 @@ msgid ""
 "Enter the URL of the podcast to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/feedcontroller.py:147
-#: ../../lib/frontends/widgets/feedcontroller.py:174
+#: ../../lib/frontends/widgets/feedcontroller.py:165
+#: ../../lib/frontends/widgets/feedcontroller.py:192
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
@@ -1983,8 +2044,8 @@ msgstr[0] "%(count)d siunčiama"
 msgstr[1] "%(count)d siunčiama"
 msgstr[2] "%(count)d siunčiama"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:158
-#: ../../lib/frontends/widgets/feedcontroller.py:170
+#: ../../lib/frontends/widgets/feedcontroller.py:176
+#: ../../lib/frontends/widgets/feedcontroller.py:188
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
@@ -1992,7 +2053,7 @@ msgstr[0] "%(count)d įrašo"
 msgstr[1] "%(count)d įrašų"
 msgstr[2] "%(count)d įrašų"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:179
+#: ../../lib/frontends/widgets/feedcontroller.py:197
 #, python-format
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
@@ -2000,7 +2061,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/feedcontroller.py:190
+#: ../../lib/frontends/widgets/feedcontroller.py:208
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
@@ -2047,110 +2108,173 @@ msgid ""
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:190
-msgid "Resume foo at x:yz"
+#, python-format
+msgid "Resume %(item)s at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:297
+#: ../../lib/frontends/widgets/itemlistwidgets.py:193
+#, python-format
+msgid "Resume %(item)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:387
 msgid "Save as Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:324
+#: ../../lib/frontends/widgets/itemlistwidgets.py:414
 msgid "Downloaded"
 msgstr "Parsiųsta"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:672
-#: ../../lib/frontends/widgets/itemlistwidgets.py:757
-#: ../../lib/frontends/widgets/itemlistwidgets.py:760
+#: ../../lib/frontends/widgets/itemlistwidgets.py:434
+#: ../../lib/frontends/widgets/tablist.py:722
+#: ../../lib/frontends/widgets/tablist.py:832
+#: ../../lib/frontends/widgets/itemedit.py:490
+#: ../../lib/frontends/widgets/itemedit.py:741
+msgid "Video"
+msgstr "Vaizdas"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:436
+msgid "Audio"
+msgstr "Garsas"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:806
+#: ../../lib/frontends/widgets/itemlistwidgets.py:891
+#: ../../lib/frontends/widgets/itemlistwidgets.py:894
 #, python-format
 msgid "%(rate)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:737
+#: ../../lib/frontends/widgets/itemlistwidgets.py:871
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "Diske negali būti užimta mažiau kaip %(available)s vietos (%(amount)s yra "
 "laisvos vietos diske)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:744
+#: ../../lib/frontends/widgets/itemlistwidgets.py:878
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 "%(available)s laisva siuntiniams (%(amount)s yra laisvos vietos diske)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:750
+#: ../../lib/frontends/widgets/itemlistwidgets.py:884
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s yra laisvo vietos diske"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:799
+#: ../../lib/frontends/widgets/itemlistwidgets.py:933
 msgid "Pause All"
 msgstr "Sustabdyti visus"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:805
+#: ../../lib/frontends/widgets/itemlistwidgets.py:939
 msgid "Resume All"
 msgstr "Paleisti visus"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:811
+#: ../../lib/frontends/widgets/itemlistwidgets.py:945
 msgid "Cancel All"
 msgstr "Atšaukti visus"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:817
+#: ../../lib/frontends/widgets/itemlistwidgets.py:951
 msgid "Download Settings"
 msgstr "Siuntimo nuostatos"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:858
+#: ../../lib/frontends/widgets/itemlistwidgets.py:992
 msgid "Auto-Download All"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:859
+#: ../../lib/frontends/widgets/itemlistwidgets.py:993
 msgid "Auto-Download New"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:860
+#: ../../lib/frontends/widgets/itemlistwidgets.py:994
 msgid "Auto-Download Off"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:868
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1002
 msgid "Remove podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:957
-#: ../../lib/frontends/widgets/tabcontroller.py:458
-#: ../../lib/frontends/widgets/itemedit.py:456
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1097
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1190
+#: ../../lib/frontends/widgets/tabcontroller.py:508
+#: ../../lib/frontends/widgets/itemedit.py:468
 #: ../../lib/frontends/widgets/widgetconst.py:52
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:958
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1098
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1191
 #: ../../lib/frontends/widgets/widgetconst.py:59
 msgid "Date"
 msgstr "Data"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:959
-#: ../../lib/frontends/widgets/itemedit.py:481
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1099
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1192
+#: ../../lib/frontends/widgets/itemedit.py:493
 #: ../../lib/frontends/widgets/widgetconst.py:62
 msgid "Size"
 msgstr "Dydis"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:960
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1100
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1193
 msgid "Time"
 msgstr "Laikas"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1053
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1175
 msgid "Non Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1247
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1189
+#: ../../lib/frontends/widgets/widgetconst.py:74
+msgid "Order"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1374
 msgid "Importing audio details and artwork: {0} of {1}"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1250
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1377
 msgid "Importing video details and creating thumbnails: {0} of {1}"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1253
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1380
 msgid "Importing file details: {0} of {1}"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1563
+msgid "N/A"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1574
+msgid "connected peers:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1575
+msgid "seeders:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1576
+msgid "leechers:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1577
+msgid "upload rate:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1578
+msgid "upload total:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1579
+msgid "download rate:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1580
+msgid "download total:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1581
+msgid "upload/download ratio:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:108
@@ -2160,12 +2284,6 @@ msgstr "Atverti naršyklėje"
 #: ../../lib/frontends/widgets/browser.py:115
 msgid "Download this video"
 msgstr "Atsisiųsti šį vaizdo įrašą"
-
-#: ../../lib/frontends/widgets/removefeeds.py:50
-msgid "Remove Podcast"
-msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
@@ -2212,152 +2330,160 @@ msgstr ""
 msgid "(Changing the language requires you to restart Miro.)"
 msgstr "(Pakeitus kalbą, reikia iš naujo paleisti Miro.)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:456
+#: ../../lib/frontends/widgets/prefpanel.py:458
+msgid "Show videos from podcasts in the Videos section."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:464
+msgid "Show audio from podcasts in the Music section."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:470
 msgid "Every day"
 msgstr "Kasdien"
 
-#: ../../lib/frontends/widgets/prefpanel.py:457
+#: ../../lib/frontends/widgets/prefpanel.py:471
 msgid "Every hour"
 msgstr "Kas valandą"
 
-#: ../../lib/frontends/widgets/prefpanel.py:458
+#: ../../lib/frontends/widgets/prefpanel.py:472
 msgid "Every 30 minutes"
 msgstr "Kas 30 minučių"
 
-#: ../../lib/frontends/widgets/prefpanel.py:459
+#: ../../lib/frontends/widgets/prefpanel.py:473
 msgid "Manually"
 msgstr "Rankiniu būdu"
 
-#: ../../lib/frontends/widgets/prefpanel.py:464
+#: ../../lib/frontends/widgets/prefpanel.py:478
 msgid "New"
 msgstr "Nauji"
 
-#: ../../lib/frontends/widgets/prefpanel.py:465
+#: ../../lib/frontends/widgets/prefpanel.py:479
 msgid "All"
 msgstr "Visi"
 
-#: ../../lib/frontends/widgets/prefpanel.py:466
-#: ../../lib/frontends/widgets/tabcontroller.py:132
+#: ../../lib/frontends/widgets/prefpanel.py:480
+#: ../../lib/frontends/widgets/tabcontroller.py:138
 msgid "Off"
 msgstr "Išjungta"
 
-#: ../../lib/frontends/widgets/prefpanel.py:472
+#: ../../lib/frontends/widgets/prefpanel.py:486
 msgid "0"
 msgstr "0"
 
-#: ../../lib/frontends/widgets/prefpanel.py:473
+#: ../../lib/frontends/widgets/prefpanel.py:487
 msgid "20"
 msgstr "20"
 
-#: ../../lib/frontends/widgets/prefpanel.py:474
+#: ../../lib/frontends/widgets/prefpanel.py:488
 msgid "50"
 msgstr "50"
 
-#: ../../lib/frontends/widgets/prefpanel.py:475
+#: ../../lib/frontends/widgets/prefpanel.py:489
 msgid "100"
 msgstr "100"
 
-#: ../../lib/frontends/widgets/prefpanel.py:476
+#: ../../lib/frontends/widgets/prefpanel.py:490
 msgid "1000"
 msgstr "1000"
 
-#: ../../lib/frontends/widgets/prefpanel.py:483
+#: ../../lib/frontends/widgets/prefpanel.py:496
 msgid "Default settings for new podcasts:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:487
+#: ../../lib/frontends/widgets/prefpanel.py:500
 msgid "(These can be changed using the podcast's settings button)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:492
+#: ../../lib/frontends/widgets/prefpanel.py:505
 msgid "Check for new content:"
 msgstr "Tikrinti ar neatsirado naujų įrašų:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:497
+#: ../../lib/frontends/widgets/prefpanel.py:510
 msgid "Auto-download setting:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:503
+#: ../../lib/frontends/widgets/prefpanel.py:516
 msgid "Remember this many old items:"
 msgstr "Atsiminti senų įrašų:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:504
+#: ../../lib/frontends/widgets/prefpanel.py:517
 msgid "(in addition to the current contents)"
 msgstr "(dabartiniai įrašai nesiskaičiuoja)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:517
+#: ../../lib/frontends/widgets/prefpanel.py:530
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Maksimalus siuntimų skaičius vienu metu:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:529
+#: ../../lib/frontends/widgets/prefpanel.py:542
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Didžiausias automatinių siuntimų skaičius vienu metu:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:543
+#: ../../lib/frontends/widgets/prefpanel.py:556
 msgid "Bittorrent:"
 msgstr "Bittorrent:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:547
+#: ../../lib/frontends/widgets/prefpanel.py:560
 msgid "Limit upstream bandwidth to:"
 msgstr "Apriboti išsiuntimo spartą:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:561
-#: ../../lib/frontends/widgets/prefpanel.py:576
+#: ../../lib/frontends/widgets/prefpanel.py:574
+#: ../../lib/frontends/widgets/prefpanel.py:589
 msgid "KB/s"
 msgstr "KB/s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:565
+#: ../../lib/frontends/widgets/prefpanel.py:578
 msgid "Limit downstream bandwidth to:"
 msgstr "Apriboti parsiuntimo spartą:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:580
+#: ../../lib/frontends/widgets/prefpanel.py:593
 msgid "Limit torrent connections to:"
 msgstr "Apriboti torrent susijungimų skaičių:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:607
+#: ../../lib/frontends/widgets/prefpanel.py:620
 msgid "Starting port:"
 msgstr "Pradinė interneto jungtis:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:613
+#: ../../lib/frontends/widgets/prefpanel.py:626
 msgid "Ending port:"
 msgstr "Galutinė interneto jungtis:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:621
+#: ../../lib/frontends/widgets/prefpanel.py:634
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Automatiškai atidaryti interneto jungtis. (UPNP)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:625
-msgid "Support trackerless torrents.  (DHT)"
+#: ../../lib/frontends/widgets/prefpanel.py:638
+msgid "Use DHT to find more peers"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:629
+#: ../../lib/frontends/widgets/prefpanel.py:642
 msgid "Ignore unencrypted connections."
 msgstr "Ignoruoti nešifruotus susijungimus."
 
-#: ../../lib/frontends/widgets/prefpanel.py:634
+#: ../../lib/frontends/widgets/prefpanel.py:647
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Stabdyti torrento platinimą kai bus pasiektas reitingas:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:661
+#: ../../lib/frontends/widgets/prefpanel.py:674
 msgid "Choose Movies Directory"
 msgstr "Pasirinkite filmų katalogą"
 
-#: ../../lib/frontends/widgets/prefpanel.py:672
+#: ../../lib/frontends/widgets/prefpanel.py:685
 msgid "Directory not valid"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:673
+#: ../../lib/frontends/widgets/prefpanel.py:686
 #, python-format
 msgid ""
 "Directory '%s' could not be created.  Please choose a directory you have "
 "write access to."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:687
+#: ../../lib/frontends/widgets/prefpanel.py:700
 msgid "Migrate existing movies?"
 msgstr "Ar migruoti turimus filmus?"
 
-#: ../../lib/frontends/widgets/prefpanel.py:689
+#: ../../lib/frontends/widgets/prefpanel.py:702
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -2365,27 +2491,23 @@ msgid ""
 "not be moved until they finish.)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:707
+#: ../../lib/frontends/widgets/prefpanel.py:720
 msgid "folder"
 msgstr "aplankas"
 
-#: ../../lib/frontends/widgets/prefpanel.py:713
+#: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "visible"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:720 ../../lib/dialogs.py:116
+#: ../../lib/frontends/widgets/prefpanel.py:733 ../../lib/dialogs.py:117
 msgid "Add"
 msgstr "Pridėti"
 
-#: ../../lib/frontends/widgets/prefpanel.py:765
-msgid "Add Watched Folder"
-msgstr "Įtraukti peržiūrėtų failų katalogą"
-
-#: ../../lib/frontends/widgets/prefpanel.py:784
+#: ../../lib/frontends/widgets/prefpanel.py:797
 msgid "Store downloads in this folder:"
 msgstr "Saugoti siuntinius šiame kataloge:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:792
+#: ../../lib/frontends/widgets/prefpanel.py:805
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -2393,203 +2515,208 @@ msgstr ""
 "Stebėti šiuos aplankus ir įtraukti juose atsiradusius naujus vaizdo ar garso "
 "įrašus į biblioteką:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:814
+#: ../../lib/frontends/widgets/prefpanel.py:827
 msgid "Keep at least this much free space on my drive:"
 msgstr "Laikyti neužimtos disko vietos, nemažiau kaip:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:818
-#: ../../lib/frontends/widgets/prefpanel.py:829
+#: ../../lib/frontends/widgets/prefpanel.py:831
+#: ../../lib/frontends/widgets/prefpanel.py:842
 msgid "GB"
 msgstr "GB"
 
-#: ../../lib/frontends/widgets/prefpanel.py:833
+#: ../../lib/frontends/widgets/prefpanel.py:846
 msgid "1 day"
 msgstr "1 diena"
 
-#: ../../lib/frontends/widgets/prefpanel.py:834
+#: ../../lib/frontends/widgets/prefpanel.py:847
 msgid "3 days"
 msgstr "3 dienos"
 
-#: ../../lib/frontends/widgets/prefpanel.py:835
+#: ../../lib/frontends/widgets/prefpanel.py:848
 msgid "6 days"
 msgstr "6 dienos"
 
-#: ../../lib/frontends/widgets/prefpanel.py:836
+#: ../../lib/frontends/widgets/prefpanel.py:849
 msgid "10 days"
 msgstr "10 dienų"
 
-#: ../../lib/frontends/widgets/prefpanel.py:837
+#: ../../lib/frontends/widgets/prefpanel.py:850
 msgid "1 month"
 msgstr "1 mėnuo"
 
-#: ../../lib/frontends/widgets/prefpanel.py:838
+#: ../../lib/frontends/widgets/prefpanel.py:851
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:103
 msgid "never"
 msgstr "niekada"
 
-#: ../../lib/frontends/widgets/prefpanel.py:843
+#: ../../lib/frontends/widgets/prefpanel.py:856
 msgid "By default, video and audio items expire after:"
 msgstr "Standartiškai video ir audio galiojimo laikas baigiasi po:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:854
+#: ../../lib/frontends/widgets/prefpanel.py:867
 msgid "Share my media library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:856
+#: ../../lib/frontends/widgets/prefpanel.py:869
 msgid "Warn on quit when others are connected to my media library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:881
+#: ../../lib/frontends/widgets/prefpanel.py:894
 msgid "Share Name:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:888
+#: ../../lib/frontends/widgets/prefpanel.py:901
 msgid ""
 "Bonjour is required for sharing. Click on 'Install Bonjour' to install."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:909
+#: ../../lib/frontends/widgets/prefpanel.py:922
 msgid "Play media in Miro."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:911
+#: ../../lib/frontends/widgets/prefpanel.py:924
 msgid "Always play videos in a separate window."
 msgstr "Visada leisti vaizdo įrašus atskirame lange."
 
-#: ../../lib/frontends/widgets/prefpanel.py:913
-msgid ""
-"Resume playing a video or audio item from the point it was last stopped."
-msgstr ""
-"Pratęsti grojimą nuo tos vietos, kur paskutinį kartą buvo sustabdyta."
-
-#: ../../lib/frontends/widgets/prefpanel.py:917
+#: ../../lib/frontends/widgets/prefpanel.py:927
 msgid "Automatically enable movie subtitles when available."
 msgstr "Automatiškai įjungti filmo subtitrus jeigu įmanoma."
 
-#: ../../lib/frontends/widgets/prefpanel.py:921
+#: ../../lib/frontends/widgets/prefpanel.py:929
+msgid "Continuous Playback"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:933
 msgid "Play video and audio items one after another"
 msgstr "Leisti vaizdo ar garso įrašus vieną po kito"
 
-#: ../../lib/frontends/widgets/prefpanel.py:923
+#: ../../lib/frontends/widgets/prefpanel.py:935
 msgid "Stop after each video or audio item"
 msgstr "Sustabdyti po kiekvieno vaizdo ar garso įrašo"
 
-#: ../../lib/frontends/widgets/prefpanel.py:967
+#: ../../lib/frontends/widgets/prefpanel.py:937
+msgid "Resume Playback"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:940
+msgid "Continue playing videos from where they were last stopped."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:942
+msgid "Continue playing music files from where they were last stopped."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:944
+msgid "Continue playing podcast files from where they were last stopped."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:1002
 msgid "Allow this many concurrent conversions:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:968
+#: ../../lib/frontends/widgets/prefpanel.py:1003
 msgid "(changing this will not apply to currently running conversions)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:985
+#: ../../lib/frontends/widgets/prefpanel.py:1020
 msgid "Store"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:991
+#: ../../lib/frontends/widgets/prefpanel.py:1026
 msgid "Visible"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1029
+#: ../../lib/frontends/widgets/prefpanel.py:1064
 msgid "MP3 stores:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1052
+#: ../../lib/frontends/widgets/prefpanel.py:1087
 msgid "enabled"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1057
+#: ../../lib/frontends/widgets/prefpanel.py:1092
 msgid "extension"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1097
+#: ../../lib/frontends/widgets/prefpanel.py:1132
 #, python-format
 msgid "Name:  %(extensionname)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1099
+#: ../../lib/frontends/widgets/prefpanel.py:1134
 #, python-format
 msgid "Version:  %(extensionversion)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1102
+#: ../../lib/frontends/widgets/prefpanel.py:1137
 msgid "Description:"
 msgstr "Aprašymas:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1120
+#: ../../lib/frontends/widgets/prefpanel.py:1155
 #, python-format
 msgid "Extension %(extensionname)s failed to load: %(errormessage)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1125
+#: ../../lib/frontends/widgets/prefpanel.py:1160
 msgid "Extension failed to load"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1138
+#: ../../lib/frontends/widgets/prefpanel.py:1173
 #, python-format
 msgid "Extension %(extensionname)s failed to unload: %(errormessage)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1143
+#: ../../lib/frontends/widgets/prefpanel.py:1178
 msgid "Extension failed to unload"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1161
+#: ../../lib/frontends/widgets/prefpanel.py:1196
 msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1165
+#: ../../lib/frontends/widgets/prefpanel.py:1200
 msgid "Extensions:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1169
+#: ../../lib/frontends/widgets/prefpanel.py:1204
 msgid "Details:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1180
-#: ../../lib/frontends/widgets/itemedit.py:721
+#: ../../lib/frontends/widgets/prefpanel.py:1215
+#: ../../lib/frontends/widgets/itemedit.py:740
 msgid "General"
 msgstr "Bendra"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1182
+#: ../../lib/frontends/widgets/prefpanel.py:1217
 msgid "Downloads"
 msgstr "Atsiuntimai"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1183
+#: ../../lib/frontends/widgets/prefpanel.py:1218
 msgid "Folders"
 msgstr "Aplankai"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1184
+#: ../../lib/frontends/widgets/prefpanel.py:1219
 msgid "Disk space"
 msgstr "Disko vieta"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1185
+#: ../../lib/frontends/widgets/prefpanel.py:1220
 msgid "Playback"
 msgstr "Peržiūra"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1186
+#: ../../lib/frontends/widgets/prefpanel.py:1221
 msgid "Sharing"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1187
+#: ../../lib/frontends/widgets/prefpanel.py:1222
 msgid "Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1188
-#: ../../lib/frontends/widgets/tablist.py:1030
-msgid "Stores"
-msgstr ""
-
-#: ../../lib/frontends/widgets/prefpanel.py:1189
+#: ../../lib/frontends/widgets/prefpanel.py:1224
 msgid "Extensions"
 msgstr ""
-
-#: ../../lib/frontends/widgets/prefpanel.py:1193
-msgid "Preferences"
-msgstr "Nustatymai"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -2709,34 +2836,36 @@ msgstr "15 neperžiūrėtų įrašų"
 msgid "Podcast Settings"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:69
+#: ../../lib/frontends/widgets/tabcontroller.py:72
 msgid "Sharing Disabled"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:74
+#: ../../lib/frontends/widgets/tabcontroller.py:77
 msgid ""
 "You need to install the Bonjour libraries to be able to share files from "
-"Miro-to-Miro or to the Miro iPad app."
+"Miro-to-Miro or to the Miro iPad app.\n"
+"\n"
+"Once you install the Bonjour libraries, you will have to restart Miro."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:79
+#: ../../lib/frontends/widgets/tabcontroller.py:85
 msgid "Click here to install"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:126
+#: ../../lib/frontends/widgets/tabcontroller.py:132
 msgid "On"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:158
+#: ../../lib/frontends/widgets/tabcontroller.py:164
 msgid "Get Help"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:227
+#: ../../lib/frontends/widgets/tabcontroller.py:245
 #, python-format
 msgid "%(shortappname)s Sharing"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:232
+#: ../../lib/frontends/widgets/tabcontroller.py:250
 #, python-format
 msgid ""
 "%(shortappname)s can stream and download files to and from other "
@@ -2744,38 +2873,44 @@ msgid ""
 "awesome!"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:255
+#: ../../lib/frontends/widgets/tabcontroller.py:261
+msgid "Disabled: Needs Bonjour"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:281
 #, python-format
 msgid "My %(shortappname)s Share Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:279
-msgid "Sync a Phone or Tablet"
+#: ../../lib/frontends/widgets/tabcontroller.py:306
+msgid "Sync a Phone, Tablet, or Digital Camera"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:289
+#: ../../lib/frontends/widgets/tabcontroller.py:315
 #, python-format
 msgid ""
 "Connect the USB cable to sync your Android device with %(shortappname)s.  Be "
-"sure to set your device to 'USB Mass Storage' mode in your device settings."
+"sure to set your device to 'USB Mass Storage' mode in your device settings.  "
+"Attach your digital camera, and convert your video files to be instantly web-"
+"ready."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:300
+#: ../../lib/frontends/widgets/tabcontroller.py:329
 msgid "Show all attached devices and drives"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:306
+#: ../../lib/frontends/widgets/tabcontroller.py:336
 #, python-format
 msgid ""
 "Use this if your phone doesn't appear in %(shortappname)s when you connect "
 "it to the computer, or if you want to sync with an external drive."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:327
+#: ../../lib/frontends/widgets/tabcontroller.py:357
 msgid "Miro on your iPad"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:332
+#: ../../lib/frontends/widgets/tabcontroller.py:361
 #, python-format
 msgid ""
 "The gorgeous Miro iPad app lets you wirelessly stream music and videos from "
@@ -2783,26 +2918,45 @@ msgid ""
 "and videos to your iPad and take them with you."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:397
+#: ../../lib/frontends/widgets/tabcontroller.py:381
+msgid "Miro on Android"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:385
+msgid ""
+"We don't yet have a Miro app for Android, but you can stream to your device "
+"using other DAAP apps."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:446
 #, python-format
 msgid ""
 "Sources are any websites that offer audio, video, or torrents for download "
 "that you would like to use within %(shortappname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:409
+#: ../../lib/frontends/widgets/tabcontroller.py:458
 msgid "URL"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:467
+#: ../../lib/frontends/widgets/tabcontroller.py:517
 msgid "Add Playlist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:199
+#: ../../lib/frontends/widgets/tabcontroller.py:558
+#, python-format
+msgid ""
+"Select the music and video stores you'd like to have appear in "
+"%(shortappname)s.  Note: some other store websites may work well with Miro "
+"if you add them as Sources, but these are Stores that we've integrated and "
+"tested."
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:200
 msgid "Movies directory gone"
 msgstr "Filmų katalogas dingo"
 
-#: ../../lib/frontends/widgets/application.py:201
+#: ../../lib/frontends/widgets/application.py:202
 #, python-format
 msgid ""
 "%(shortappname)s can't use the primary video directory located at:\n"
@@ -2821,47 +2975,47 @@ msgid ""
 "relaunch %(shortappname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:400
+#: ../../lib/frontends/widgets/application.py:401
 msgid "Error Revealing File"
 msgstr "Klaida parodant failą"
 
-#: ../../lib/frontends/widgets/application.py:401
+#: ../../lib/frontends/widgets/application.py:402
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:412
+#: ../../lib/frontends/widgets/application.py:413
 msgid "Open Files..."
 msgstr "Atverti failus..."
 
-#: ../../lib/frontends/widgets/application.py:423
-#: ../../lib/frontends/widgets/application.py:428
+#: ../../lib/frontends/widgets/application.py:424
+#: ../../lib/frontends/widgets/application.py:429
 msgid "Open Files - Error"
 msgstr "Atverti failus - Klaida"
 
-#: ../../lib/frontends/widgets/application.py:424
-#: ../../lib/frontends/widgets/application.py:734
+#: ../../lib/frontends/widgets/application.py:425
+#: ../../lib/frontends/widgets/application.py:741
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Failas %(filename)s neegzistuoja."
 
-#: ../../lib/frontends/widgets/application.py:429
+#: ../../lib/frontends/widgets/application.py:430
 msgid "The following files do not exist:"
 msgstr "Šitie failai neegzistuoja:"
 
-#: ../../lib/frontends/widgets/application.py:466
+#: ../../lib/frontends/widgets/application.py:467
 msgid "New Download"
 msgstr "Naujas atsiuntimas"
 
-#: ../../lib/frontends/widgets/application.py:467
+#: ../../lib/frontends/widgets/application.py:468
 msgid "Enter the URL of the item to download"
 msgstr "Įveskite nuorodą, kad galėtumėte atsisiųsti"
 
-#: ../../lib/frontends/widgets/application.py:468
+#: ../../lib/frontends/widgets/application.py:469
 msgid "New Download - Invalid URL"
 msgstr "Naujas  siuntinys - Neteisinga nuoroda"
 
-#: ../../lib/frontends/widgets/application.py:469
+#: ../../lib/frontends/widgets/application.py:470
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -2872,28 +3026,28 @@ msgstr ""
 "Patikrinkite jūsų turimą URL ir banykite iš naujo. \n"
 "Įveskite nuoroda įrašo siuntimui"
 
-#: ../../lib/frontends/widgets/application.py:474
+#: ../../lib/frontends/widgets/application.py:475
 msgid "Import Media From..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:482
+#: ../../lib/frontends/widgets/application.py:483
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr "%(appname)s yra naujausia"
 
-#: ../../lib/frontends/widgets/application.py:484
+#: ../../lib/frontends/widgets/application.py:485
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr "%(appname)s yra naujausia!"
 
-#: ../../lib/frontends/widgets/application.py:519
+#: ../../lib/frontends/widgets/application.py:520
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "Pašalinti įrašą"
 msgstr[1] "Pašalinti įrašus"
 msgstr[2] "Pašalinti įrašus"
 
-#: ../../lib/frontends/widgets/application.py:523
+#: ../../lib/frontends/widgets/application.py:524
 msgid ""
 "One of these items was not downloaded from a podcast. Would you like to "
 "delete it or just remove it from the Library?"
@@ -2903,7 +3057,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:535
+#: ../../lib/frontends/widgets/application.py:536
 msgid ""
 "One of these items is a folder.  Delete/Removeing a folder will "
 "delete/remove it's contents"
@@ -2920,7 +3074,7 @@ msgstr[2] ""
 "Keletas iš šių įrašų yra katalogai. Trinant/Šalinant katalogus bus "
 "ištrintas/pašalintas jų turinys"
 
-#: ../../lib/frontends/widgets/application.py:550
+#: ../../lib/frontends/widgets/application.py:551
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
@@ -2928,7 +3082,7 @@ msgstr[0] "Ar jūs tikrai norite ištrinti įrašą?"
 msgstr[1] "Ar jūs tikrai norite ištrinti visus iš %(count)d įrašus?"
 msgstr[2] "Ar jūs tikrai norite ištrinti visus iš %(count)d įrašus?"
 
-#: ../../lib/frontends/widgets/application.py:557
+#: ../../lib/frontends/widgets/application.py:558
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -2942,19 +3096,19 @@ msgstr[2] ""
 "Keletas iš šių įrašų yra katalogai. Trinant katalogus bus ištrintas jų "
 "turinys"
 
-#: ../../lib/frontends/widgets/application.py:606
+#: ../../lib/frontends/widgets/application.py:607
 msgid "Save Item As..."
 msgstr "Išsaugoti įrašą kaip..."
 
-#: ../../lib/frontends/widgets/application.py:664
+#: ../../lib/frontends/widgets/application.py:671
 msgid "Enter the URL of the source to add"
 msgstr "Įveskite pridedamo šaltinio adresą"
 
-#: ../../lib/frontends/widgets/application.py:665
+#: ../../lib/frontends/widgets/application.py:672
 msgid "Add Source - Invalid URL"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:666
+#: ../../lib/frontends/widgets/application.py:673
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -2962,95 +3116,81 @@ msgid ""
 "Enter the URL of the source to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:724
+#: ../../lib/frontends/widgets/application.py:731
 msgid "Import OPML File"
 msgstr "Importuoti OPML failą"
 
-#: ../../lib/frontends/widgets/application.py:726
+#: ../../lib/frontends/widgets/application.py:733
 msgid "OPML Files"
 msgstr "OPML failai"
 
-#: ../../lib/frontends/widgets/application.py:733
+#: ../../lib/frontends/widgets/application.py:740
 msgid "Import OPML File - Error"
 msgstr "Importuoti OPML failą - Klaida"
 
-#: ../../lib/frontends/widgets/application.py:739
+#: ../../lib/frontends/widgets/application.py:746
 msgid "Export OPML File"
 msgstr "Eksportuoti OPML failą"
 
-#: ../../lib/frontends/widgets/application.py:768
+#: ../../lib/frontends/widgets/application.py:775
 msgid "Create Playlist"
 msgstr "Sukurti grojaraštį"
 
-#: ../../lib/frontends/widgets/application.py:769
+#: ../../lib/frontends/widgets/application.py:776
 msgid "Enter a name for the new playlist"
 msgstr "Įveskite naujo grojaraščio vardą"
 
-#: ../../lib/frontends/widgets/application.py:790
+#: ../../lib/frontends/widgets/application.py:797
 msgid "Create Playlist Folder"
 msgstr "Sukurti grojaraščio aplanką"
 
-#: ../../lib/frontends/widgets/application.py:791
+#: ../../lib/frontends/widgets/application.py:798
 msgid "Enter a name for the new playlist folder"
 msgstr "Įveskite naujo grojaraščio aplanko vardą"
 
-#: ../../lib/frontends/widgets/application.py:812
-#: ../../lib/frontends/widgets/tablist.py:1109
+#: ../../lib/frontends/widgets/application.py:819
+#: ../../lib/frontends/widgets/tablist.py:1071
 msgid "Rename Podcast Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:813
+#: ../../lib/frontends/widgets/application.py:820
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:817
-msgid "Rename Podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/application.py:818
+#: ../../lib/frontends/widgets/application.py:825
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:822
-#: ../../lib/frontends/widgets/tablist.py:1183 ../../lib/playlist.py:203
-msgid "Rename Playlist"
-msgstr "Pervadinti grojaraštį"
-
-#: ../../lib/frontends/widgets/application.py:823
+#: ../../lib/frontends/widgets/application.py:830
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Įveskite naują grojaraščio %(name)s pavadinimą"
 
-#: ../../lib/frontends/widgets/application.py:827
-#: ../../lib/frontends/widgets/tablist.py:1177
+#: ../../lib/frontends/widgets/application.py:834
+#: ../../lib/frontends/widgets/tablist.py:1139
 msgid "Rename Playlist Folder"
 msgstr "Pervadinti grojaraščio aplanką"
 
-#: ../../lib/frontends/widgets/application.py:828
+#: ../../lib/frontends/widgets/application.py:835
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Įveskite naują grojaraščių katalogo %(name)s pavadinimą"
 
-#: ../../lib/frontends/widgets/application.py:831
-#: ../../lib/frontends/widgets/tablist.py:1018
-msgid "Rename Source"
-msgstr ""
-
-#: ../../lib/frontends/widgets/application.py:832
+#: ../../lib/frontends/widgets/application.py:839
 #, python-format
 msgid "Enter a new name for the source %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:856
+#: ../../lib/frontends/widgets/application.py:863
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Pašalinti grojaraštį"
 msgstr[1] "Pašalinti grojaraščius"
 msgstr[2] "Pašalinti grojaraščius"
 
-#: ../../lib/frontends/widgets/application.py:858
+#: ../../lib/frontends/widgets/application.py:865
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -3060,48 +3200,48 @@ msgstr[1] ""
 msgstr[2] ""
 "Ar jūs tikrai norite pašalinti šiuos visus %(count)s grojaraščius?"
 
-#: ../../lib/frontends/widgets/application.py:879
+#: ../../lib/frontends/widgets/application.py:885
 msgid "Remove source"
 msgid_plural "Remove sources"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:881
+#: ../../lib/frontends/widgets/application.py:887
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:905
+#: ../../lib/frontends/widgets/application.py:911
 #, python-format
 msgid "Import Music from %(media_player)s?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:906
+#: ../../lib/frontends/widgets/application.py:912
 #, python-format
 msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:948
-#: ../../lib/frontends/widgets/application.py:972
+#: ../../lib/frontends/widgets/application.py:954
+#: ../../lib/frontends/widgets/application.py:978
 msgid "Select File to write Profile to"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:998
-#: ../../lib/frontends/widgets/application.py:1017
-#: ../../lib/frontends/widgets/application.py:1036
+#: ../../lib/frontends/widgets/application.py:1004
+#: ../../lib/frontends/widgets/application.py:1023
+#: ../../lib/frontends/widgets/application.py:1042
 msgid "Are you sure you want to quit?"
 msgstr "Ar tikrai norite išeiti?"
 
-#: ../../lib/frontends/widgets/application.py:1007
+#: ../../lib/frontends/widgets/application.py:1013
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1019
+#: ../../lib/frontends/widgets/application.py:1025
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
@@ -3109,11 +3249,11 @@ msgstr[0] "Šiuo metu siunčiamas %(count)d failas. Ar tikrai norite išeiti?"
 msgstr[1] "Šiuo metu siunčiami %(count)d failai. Ar tikrai norite išeiti?"
 msgstr[2] "Šiuo metu siunčiami %(count)d failai. Ar tikrai norite išeiti?"
 
-#: ../../lib/frontends/widgets/application.py:1024
+#: ../../lib/frontends/widgets/application.py:1030
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Įspėti mane bandant išjungti programą esant aktyviems siuntimams"
 
-#: ../../lib/frontends/widgets/application.py:1038
+#: ../../lib/frontends/widgets/application.py:1044
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -3121,15 +3261,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:1043
+#: ../../lib/frontends/widgets/application.py:1049
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1263
+#: ../../lib/frontends/widgets/application.py:1269
 msgid "Connect failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1265
+#: ../../lib/frontends/widgets/application.py:1271
 #, python-format
 msgid ""
 "Connection to share %(name)s failed.\n"
@@ -3137,11 +3277,11 @@ msgid ""
 "The share is either unreachable or incompatible with Miro sharing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1273
+#: ../../lib/frontends/widgets/application.py:1279
 msgid "Eject failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1274
+#: ../../lib/frontends/widgets/application.py:1280
 #, python-format
 msgid ""
 "Ejecting device '%(name)s' failed.\n"
@@ -3149,11 +3289,11 @@ msgid ""
 "The device is in use."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1284
+#: ../../lib/frontends/widgets/application.py:1290
 msgid "Upgrading database"
 msgstr "Atnaujinama duomenų bazė"
 
-#: ../../lib/frontends/widgets/application.py:1506
+#: ../../lib/frontends/widgets/application.py:1523
 msgid "Message"
 msgstr "Žinutė"
 
@@ -3170,129 +3310,110 @@ msgid ""
 "%(url)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:50
-msgid "Miro Guide"
-msgstr "„Miro“ gidas"
-
-#: ../../lib/frontends/widgets/tablist.py:732
-#: ../../lib/frontends/widgets/tablist.py:842
-#: ../../lib/frontends/widgets/itemedit.py:478
-#: ../../lib/frontends/widgets/itemedit.py:722
-msgid "Video"
-msgstr "Vaizdas"
-
-#: ../../lib/frontends/widgets/tablist.py:1015
-#: ../../lib/frontends/widgets/tablist.py:1043
-#: ../../lib/frontends/widgets/tablist.py:1123
-#: ../../lib/frontends/widgets/itemcontextmenu.py:220
+#: ../../lib/frontends/widgets/tablist.py:982
+#: ../../lib/frontends/widgets/tablist.py:1005
+#: ../../lib/frontends/widgets/tablist.py:1085
+#: ../../lib/frontends/widgets/itemcontextmenu.py:232
 msgid "Copy URL to clipboard"
 msgstr "Kopijuoti URL į laikinąją saugyklą"
 
-#: ../../lib/frontends/widgets/tablist.py:1019
-msgid "Remove Source"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tablist.py:1023
-msgid "Remove Sources"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tablist.py:1108
+#: ../../lib/frontends/widgets/tablist.py:1070
 msgid "Update Podcasts In Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1115
+#: ../../lib/frontends/widgets/tablist.py:1077
 msgid "Update Podcast Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1118
-msgid "Rename"
-msgstr "Pervadinti"
-
-#: ../../lib/frontends/widgets/tablist.py:1120
+#: ../../lib/frontends/widgets/tablist.py:1082
 msgid "Revert Podcast Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1129
+#: ../../lib/frontends/widgets/tablist.py:1091
 msgid "Update Podcasts Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:68
+#: ../../lib/frontends/widgets/itemcontextmenu.py:69
 msgid "Remove From the Library"
 msgstr "Pašalinti iš bibliotekos"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:105
+#: ../../lib/frontends/widgets/itemcontextmenu.py:71
+msgid "Delete from Drive"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #, python-format
 msgid "Show File in %(progname)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:108
+#: ../../lib/frontends/widgets/itemcontextmenu.py:119
 msgid "File on Disk"
 msgstr "Parodyti failą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:124
+#: ../../lib/frontends/widgets/itemcontextmenu.py:135
 #, python-format
 msgid "Convert to %(conversion)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:130
-#: ../../lib/frontends/widgets/itemcontextmenu.py:319
+#: ../../lib/frontends/widgets/itemcontextmenu.py:141
+#: ../../lib/frontends/widgets/itemcontextmenu.py:330
 msgid "Convert to..."
 msgstr "Konvertuoti į..."
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:147
-#: ../../lib/frontends/widgets/itemcontextmenu.py:304
+#: ../../lib/frontends/widgets/itemcontextmenu.py:158
+#: ../../lib/frontends/widgets/itemcontextmenu.py:315
 msgid "Mark as Unplayed"
 msgstr "Pažymėti kaip nežiūrėtą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:150
-#: ../../lib/frontends/widgets/itemcontextmenu.py:309
+#: ../../lib/frontends/widgets/itemcontextmenu.py:161
+#: ../../lib/frontends/widgets/itemcontextmenu.py:320
 msgid "Mark as Played"
 msgstr "Pažymėti kaip žiūrėtą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:156
+#: ../../lib/frontends/widgets/itemcontextmenu.py:167
 msgid "Play Just This Item"
 msgstr "Groti tik šį įrašą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:169
+#: ../../lib/frontends/widgets/itemcontextmenu.py:180
 msgid "Edit Item Details"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:178
+#: ../../lib/frontends/widgets/itemcontextmenu.py:190
 msgid "Stop Seeding"
 msgstr "Sustabdyti skleidimą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:182
+#: ../../lib/frontends/widgets/itemcontextmenu.py:194
 msgid "Resume Seeding"
 msgstr "Tęsti skleidimą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:188
-#: ../../lib/frontends/widgets/itemcontextmenu.py:349
-#: ../../lib/frontends/widgets/itemcontextmenu.py:367
+#: ../../lib/frontends/widgets/itemcontextmenu.py:200
+#: ../../lib/frontends/widgets/itemcontextmenu.py:360
+#: ../../lib/frontends/widgets/itemcontextmenu.py:378
 msgid "Cancel Download"
 msgstr "Nutraukti siuntimą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:192
-#: ../../lib/frontends/widgets/itemcontextmenu.py:350
+#: ../../lib/frontends/widgets/itemcontextmenu.py:204
+#: ../../lib/frontends/widgets/itemcontextmenu.py:361
 msgid "Pause Download"
 msgstr "Pristabdyti siuntimą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:196
-#: ../../lib/frontends/widgets/itemcontextmenu.py:363
+#: ../../lib/frontends/widgets/itemcontextmenu.py:208
+#: ../../lib/frontends/widgets/itemcontextmenu.py:374
 msgid "Resume Download"
 msgstr "Pratęsti siuntimą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:224
+#: ../../lib/frontends/widgets/itemcontextmenu.py:236
 msgid "View Web Page"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:284
+#: ../../lib/frontends/widgets/itemcontextmenu.py:295
 #, python-format
 msgid "%(count)d Device Item"
 msgid_plural "%(count)d Device Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:290
+#: ../../lib/frontends/widgets/itemcontextmenu.py:301
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
@@ -3300,11 +3421,11 @@ msgstr[0] "%(count)d Parsiųsta įrašo"
 msgstr[1] "%(count)d Parsiųsta įrašų"
 msgstr[2] "%(count)d Parsiųsta įrašų"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:297
+#: ../../lib/frontends/widgets/itemcontextmenu.py:308
 msgid "Add to Playlist"
 msgstr "Įdėti į grojaraštį"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:325
+#: ../../lib/frontends/widgets/itemcontextmenu.py:336
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
@@ -3312,7 +3433,7 @@ msgstr[0] "%(count)d galimas įrašas"
 msgstr[1] "%(count)d galimi įrašai"
 msgstr[2] "%(count)d galimi įrašai"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:338
+#: ../../lib/frontends/widgets/itemcontextmenu.py:349
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
@@ -3320,7 +3441,7 @@ msgstr[0] "%(count)d Siunčiamas įrašas"
 msgstr[1] "%(count)d Siunčiami įrašai"
 msgstr[2] "%(count)d Siunčiami įrašai"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:355
+#: ../../lib/frontends/widgets/itemcontextmenu.py:366
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
@@ -3328,129 +3449,126 @@ msgstr[0] "%(count)d Sustabdytas įrašas"
 msgstr[1] "%(count)d Sustabdyti įrašai"
 msgstr[2] "%(count)d Sustabdyti įrašai"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:373
+#: ../../lib/frontends/widgets/itemcontextmenu.py:384
 msgid "Restart Upload"
 msgstr "Iš naujo pradėti išsiuntimą"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:376
+#: ../../lib/frontends/widgets/itemcontextmenu.py:387
 msgid "Edit Items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:405
+#: ../../lib/frontends/widgets/itemcontextmenu.py:416
 msgid "Remove From Playlist"
 msgstr "Pašalinti iš grojaraščio"
 
-#: ../../lib/frontends/widgets/playback.py:628
+#: ../../lib/frontends/widgets/playback.py:649
 msgid "Open Subtitles File..."
 msgstr "Atverti subtitrų failą..."
 
-#: ../../lib/frontends/widgets/playback.py:629
+#: ../../lib/frontends/widgets/playback.py:650
 msgid "Subtitle files"
 msgstr "Subtitrų failai"
 
-#: ../../lib/frontends/widgets/itemedit.py:217
-#: ../../lib/frontends/widgets/itemedit.py:279
+#: ../../lib/frontends/widgets/itemedit.py:218
+#: ../../lib/frontends/widgets/itemedit.py:281
 msgid "(mixed)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:296
+#: ../../lib/frontends/widgets/itemedit.py:298
 msgid "None"
 msgstr "Jokia"
 
-#: ../../lib/frontends/widgets/itemedit.py:297
+#: ../../lib/frontends/widgets/itemedit.py:299
 #: ../../lib/frontends/widgets/widgetconst.py:58
 msgid "Rating"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:303
+#: ../../lib/frontends/widgets/itemedit.py:306
 msgid "Choose a thumbnail file"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:364
+#: ../../lib/frontends/widgets/itemedit.py:376
 msgid "Move"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:370
+#: ../../lib/frontends/widgets/itemedit.py:382
 msgid "Choose location for file"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:457
+#: ../../lib/frontends/widgets/itemedit.py:469
 #: ../../lib/frontends/widgets/widgetconst.py:53
 msgid "Artist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:458
+#: ../../lib/frontends/widgets/itemedit.py:470
 #: ../../lib/frontends/widgets/widgetconst.py:54
 msgid "Album"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:459
+#: ../../lib/frontends/widgets/itemedit.py:471
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "Genre"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:461
+#: ../../lib/frontends/widgets/itemedit.py:473
 #: ../../lib/frontends/widgets/widgetconst.py:55
 msgid "Track"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:462
+#: ../../lib/frontends/widgets/itemedit.py:474
 msgid "of"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:463
+#: ../../lib/frontends/widgets/itemedit.py:475
 #: ../../lib/frontends/widgets/widgetconst.py:56
 msgid "Year"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:465
+#: ../../lib/frontends/widgets/itemedit.py:477
 msgid "About"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:476
+#: ../../lib/frontends/widgets/itemedit.py:488
 msgid "Type"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:477
-msgid "Audio"
-msgstr "Garsas"
-
-#: ../../lib/frontends/widgets/itemedit.py:479
-msgid "Other"
-msgstr "Kita"
-
-#: ../../lib/frontends/widgets/itemedit.py:483
+#: ../../lib/frontends/widgets/itemedit.py:495
 msgid "Art"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:494
+#: ../../lib/frontends/widgets/itemedit.py:506
 msgid "Path"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:511
+#: ../../lib/frontends/widgets/itemedit.py:523
 msgid "Episode ID"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:513
+#: ../../lib/frontends/widgets/itemedit.py:525
 msgid "Season Number"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:515
+#: ../../lib/frontends/widgets/itemedit.py:527
 msgid "Episode Number"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:630
+#: ../../lib/frontends/widgets/itemedit.py:531
+#: ../../lib/frontends/widgets/widgetconst.py:73
+msgid "Video Kind"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemedit.py:649
 msgid "Edit Item"
 msgstr "Keisti įrašą"
 
-#: ../../lib/frontends/widgets/itemedit.py:652
+#: ../../lib/frontends/widgets/itemedit.py:671
 #, python-format
 msgid "%(items)d"
 msgid_plural "%(items)d items selected to edit"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/itemedit.py:659
+#: ../../lib/frontends/widgets/itemedit.py:678
 msgid ""
 "To change a field for all the selected items, check the checkbox next to the "
 "field you'd like to change."
@@ -3524,15 +3642,15 @@ msgstr "Vartotojo vardas:"
 msgid "Password:"
 msgstr "Slaptažodis:"
 
-#: ../../lib/messagehandler.py:1476
+#: ../../lib/messagehandler.py:1511
 msgid "Subscribed to new podcast:"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1479
+#: ../../lib/messagehandler.py:1514
 msgid "Subscribed to new podcasts:"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1500
+#: ../../lib/messagehandler.py:1535
 msgid "Migrating Files"
 msgstr "Perkeliami failai"
 
@@ -3581,11 +3699,11 @@ msgstr "Ieškoti visur"
 msgid "Could not write to %(filename)s"
 msgstr "Nepavyko įrašyti į %(filename)s"
 
-#: ../../lib/dl_daemon/download.py:764 ../../lib/dl_daemon/download.py:1001
+#: ../../lib/dl_daemon/download.py:764 ../../lib/dl_daemon/download.py:1002
 msgid "Not enough disk space"
 msgstr "Nepakanka vietos diske"
 
-#: ../../lib/dl_daemon/download.py:765 ../../lib/dl_daemon/download.py:1002
+#: ../../lib/dl_daemon/download.py:765 ../../lib/dl_daemon/download.py:1003
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "Trūksta %(amount)s MB vietos šiam filmui"
@@ -3594,40 +3712,40 @@ msgstr "Trūksta %(amount)s MB vietos šiam filmui"
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1031
+#: ../../lib/dl_daemon/download.py:1032
 msgid "BitTorrent failure"
 msgstr "BitTorrent klaida"
 
-#: ../../lib/dl_daemon/download.py:1032
+#: ../../lib/dl_daemon/download.py:1033
 msgid "BitTorrent failed to startup"
 msgstr "Nepavyko paleisti BitTorrent"
 
-#: ../../lib/dl_daemon/download.py:1154
+#: ../../lib/dl_daemon/download.py:1159
 msgid "waiting to check existing files"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1156
+#: ../../lib/dl_daemon/download.py:1161
 msgid "checking existing files"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1158
+#: ../../lib/dl_daemon/download.py:1163
 msgid "allocating disk space"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1350
+#: ../../lib/dl_daemon/download.py:1356
 msgid "Corrupt Torrent"
 msgstr "Sugadintas „.torrent“ failas"
 
-#: ../../lib/dl_daemon/download.py:1351
+#: ../../lib/dl_daemon/download.py:1357
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Torrent failas adresu %(url)s buvo netinkamas"
 
-#: ../../lib/dl_daemon/download.py:1384
+#: ../../lib/dl_daemon/download.py:1390
 msgid "Torrent file deleted"
 msgstr "Torrent failas ištrintas"
 
-#: ../../lib/dl_daemon/download.py:1385
+#: ../../lib/dl_daemon/download.py:1391
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
@@ -3696,27 +3814,27 @@ msgstr[0] "%(num)d s"
 msgstr[1] "%(num)d s"
 msgstr[2] "%(num)d s"
 
-#: ../../lib/displaytext.py:112
+#: ../../lib/displaytext.py:118
 #, python-format
 msgid "%(size)s GB"
 msgstr "%(size)s GB"
 
-#: ../../lib/displaytext.py:115
+#: ../../lib/displaytext.py:121
 #, python-format
 msgid "%(size)s MB"
 msgstr "%(size)s MB"
 
-#: ../../lib/displaytext.py:118
+#: ../../lib/displaytext.py:124
 #, python-format
 msgid "%(size)s KB"
 msgstr "%(size)s KB"
 
-#: ../../lib/displaytext.py:120
+#: ../../lib/displaytext.py:126
 #, python-format
 msgid "%(size)s B"
 msgstr "%(size)s B"
 
-#: ../../lib/displaytext.py:125
+#: ../../lib/displaytext.py:131
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
@@ -3724,7 +3842,7 @@ msgstr[0] "Pasibaigs saugojimo laikas po %(count)d dienos"
 msgstr[1] "Pasibaigs saugojimo laikas po %(count)d dienų"
 msgstr[2] "Pasibaigs saugojimo laikas po %(count)d dienų"
 
-#: ../../lib/displaytext.py:130
+#: ../../lib/displaytext.py:136
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
@@ -3732,7 +3850,7 @@ msgstr[0] "Expires in %(count)d hour"
 msgstr[1] "Pasibaigs saugojimo laikas po %(count)d valandų"
 msgstr[2] "Pasibaigs saugojimo laikas po %(count)d valandų"
 
-#: ../../lib/displaytext.py:135
+#: ../../lib/displaytext.py:141
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
@@ -3740,7 +3858,7 @@ msgstr[0] "Pasibaigs saugojimo laikas po %(count)d minutės"
 msgstr[1] "Pasibaigs saugojimo laikas po %(count)d minučių"
 msgstr[2] "Pasibaigs saugojimo laikas po %(count)d minučių"
 
-#: ../../lib/displaytext.py:143
+#: ../../lib/displaytext.py:149
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
@@ -3748,7 +3866,7 @@ msgstr[0] "Pasibaigs saugojimo laikas: %(count)d dienos"
 msgstr[1] "Pasibaigs saugojimo laikas: %(count)d dienų"
 msgstr[2] "Pasibaigs saugojimo laikas: %(count)d dienų"
 
-#: ../../lib/displaytext.py:148
+#: ../../lib/displaytext.py:154
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
@@ -3756,7 +3874,7 @@ msgstr[0] "Pasibaigs saugojimo laikas: %(count)d valandos"
 msgstr[1] "Pasibaigs saugojimo laikas: %(count)d valandų"
 msgstr[2] "Pasibaigs saugojimo laikas: %(count)d valandų"
 
-#: ../../lib/displaytext.py:153
+#: ../../lib/displaytext.py:159
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
@@ -3764,7 +3882,7 @@ msgstr[0] "Pasibaigs saugojimo laikas: %(count)d minutės"
 msgstr[1] "Pasibaigs saugojimo laikas: %(count)d minučių"
 msgstr[2] "Pasibaigs saugojimo laikas: %(count)d minučių"
 
-#: ../../lib/displaytext.py:172
+#: ../../lib/displaytext.py:178
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(year)s m. %(month)s %(dayofmonth)s d."
@@ -3925,65 +4043,69 @@ msgstr ""
 msgid "Create Folder"
 msgstr "Sukurti katalogą"
 
-#: ../../lib/dialogs.py:117
+#: ../../lib/dialogs.py:116
+msgid "Add Folder"
+msgstr ""
+
+#: ../../lib/dialogs.py:118
 msgid "Add Into New Folder"
 msgstr "Pridėti į naują aplanką"
 
-#: ../../lib/dialogs.py:121
+#: ../../lib/dialogs.py:122
 msgid "Not Now"
 msgstr "Ne dabar"
 
-#: ../../lib/dialogs.py:122
+#: ../../lib/dialogs.py:123
 msgid "Close to Tray"
 msgstr "Užverti į sisteminį skydelį"
 
-#: ../../lib/dialogs.py:123
+#: ../../lib/dialogs.py:124
 msgid "Launch Miro"
 msgstr "Paleisti „Miro“"
 
-#: ../../lib/dialogs.py:124
+#: ../../lib/dialogs.py:125
 msgid "Download Anyway"
 msgstr "Vistiek atsisiųsti"
 
-#: ../../lib/dialogs.py:125
+#: ../../lib/dialogs.py:126
 msgid "Open in External Browser"
 msgstr "Atverti kitoje naršyklėje"
 
-#: ../../lib/dialogs.py:126
+#: ../../lib/dialogs.py:127
 msgid "Don't Install"
 msgstr "Neisnstaliuoti"
 
-#: ../../lib/dialogs.py:127
+#: ../../lib/dialogs.py:128
 msgid "Subscribe"
 msgstr "Prenumeruoti"
 
-#: ../../lib/dialogs.py:128
+#: ../../lib/dialogs.py:129
 msgid "Stop Watching"
 msgstr "Sustabdyti peržiūrą"
 
-#: ../../lib/dialogs.py:129
+#: ../../lib/dialogs.py:130
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
-#: ../../lib/dialogs.py:130
+#: ../../lib/dialogs.py:131
 msgid "Start Fresh"
 msgstr "Pradėti iš pradžių"
 
-#: ../../lib/dialogs.py:131
+#: ../../lib/dialogs.py:132
 msgid "Include Database"
 msgstr ""
 
-#: ../../lib/dialogs.py:132
+#: ../../lib/dialogs.py:133
 msgid "Don't Include Database"
 msgstr ""
 
-#: ../../lib/dialogs.py:213
+#: ../../lib/dialogs.py:214
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
 
-#: ../../lib/dialogs.py:216
+#: ../../lib/dialogs.py:217
 msgid "Login Required"
 msgstr ""
 
@@ -4308,6 +4430,9 @@ msgid ""
 "it."
 msgstr ""
 
+#~ msgid "Miro Guide"
+#~ msgstr "„Miro“ gidas"
+
 #~ msgid "activity"
 #~ msgstr "veikla"
 
@@ -4319,6 +4444,9 @@ msgstr ""
 
 #~ msgid "Playing File"
 #~ msgstr "Grojantysis failas"
+
+#~ msgid "Check _Version"
+#~ msgstr "Patikrinti _versiją"
 
 #~ msgid "_Paste"
 #~ msgstr "Į_dėti"
@@ -4332,14 +4460,41 @@ msgstr ""
 #~ msgid "Cu_t"
 #~ msgstr "_Iškirpti"
 
+#~ msgid "New Playlist Fol_der"
+#~ msgstr "Naujas grojaraščio ap_lankas"
+
+#~ msgid "_Remove Playlist"
+#~ msgstr "Paša_linti grojaraštį"
+
 #~ msgid "_Next Video"
 #~ msgstr "_Kitas video"
+
+#~ msgid "_Remove Playlists"
+#~ msgstr "Paša_linti grojaraščius"
+
+#~ msgid "_Play"
+#~ msgstr "_Rodyti"
+
+#~ msgid "_Stop"
+#~ msgstr "_Sustabdyti"
+
+#~ msgid "Skip _Forward"
+#~ msgstr "Persukti į _priekį"
+
+#~ msgid "Report a _Bug"
+#~ msgstr "Pranešti apie _klaidą"
+
+#~ msgid "_Donate"
+#~ msgstr "Pa_aukoti"
 
 #~ msgid "_Video"
 #~ msgstr "_Video"
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Vidinė klaida: nepasiruošta išsiųsti"
+
+#~ msgid "_Pause"
+#~ msgstr "_Pauzė"
 
 #~ msgid "Use this for video when playing audio:"
 #~ msgstr "Rodyti šį filmuką grojant muziką:"
@@ -4354,8 +4509,26 @@ msgstr ""
 #~ msgid "Re_name Item"
 #~ msgstr "Pe_rvadinti elementą"
 
+#~ msgid "_Remove Items"
+#~ msgstr "Iš_trinti elementus..."
+
+#~ msgid "Re_name Playlist"
+#~ msgstr "Pe_rvadinti grojaraštį"
+
+#~ msgid "_Remove Playlist Folders"
+#~ msgstr "Paša_linti grojaraščių aplankus"
+
+#~ msgid "_Remove Playlist Folder"
+#~ msgstr "Paša_linti grojaraščių aplanką"
+
+#~ msgid "Comments"
+#~ msgstr "Komentarai"
+
 #~ msgid "License"
 #~ msgstr "Licenzija"
+
+#~ msgid "New _Folder"
+#~ msgstr "Naujas _aplankas"
 
 #~ msgid "Add to Library"
 #~ msgstr "Įtraukti į archyvą"
@@ -4398,6 +4571,18 @@ msgstr ""
 #~ msgid "%(size)s gb"
 #~ msgstr "%(size)s gb"
 
+#~ msgid "_Download Item"
+#~ msgstr "Par_siųsti įrašą"
+
+#~ msgid "_Remove Item"
+#~ msgstr "Išt_rinti įrašą"
+
+#~ msgid "Save Items _As"
+#~ msgstr "Išs_augoti įrašus kaip..."
+
+#~ msgid "Save Item _As"
+#~ msgstr "Išs_augoti įrašą kaip..."
+
 #~ msgid "_Options"
 #~ msgstr "_Nustatymai"
 
@@ -4409,6 +4594,9 @@ msgstr ""
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Naujas paieškos puslapis"
+
+#~ msgid "_Share with a Friend"
+#~ msgstr "Pasidalinti su draugais"
 
 #~ msgid "_Import Feeds (OPML)"
 #~ msgstr "Importuoti kanalus (OPML)"
@@ -4425,8 +4613,20 @@ msgstr ""
 #~ msgid "_Update Feed"
 #~ msgstr "Atnaujinti kanalą"
 
+#~ msgid "_Remove Folder"
+#~ msgstr "Pašalinti katalogą"
+
+#~ msgid "_Remove"
+#~ msgstr "_Pašalinti"
+
+#~ msgid "Re_name"
+#~ msgstr "Per_vadinti"
+
 #~ msgid "_Previous Video"
 #~ msgstr "_Ankstesnis video"
+
+#~ msgid "_Planet Miro"
+#~ msgstr "Miro pasaulis"
 
 #~ msgid ""
 #~ "Include entire program database including all video and feed metadata with "
@@ -4443,6 +4643,12 @@ msgstr ""
 
 #~ msgid "Feed Settings"
 #~ msgstr "Kanalo nuostatos"
+
+#~ msgid "From"
+#~ msgstr "Iš"
+
+#~ msgid "File name:"
+#~ msgstr "Failo pavadinimas:"
 
 #~ msgid "queued for autodownload"
 #~ msgstr "Laukiama parsiunčiant"
@@ -4679,6 +4885,12 @@ msgstr ""
 #~ msgid "Permalink"
 #~ msgstr "Originalus šaltinis"
 
+#~ msgid "Show More"
+#~ msgstr "Rodyti daugiau"
+
+#~ msgid "Show Less"
+#~ msgstr "Rodyti mažiau"
+
 #~ msgid "Rename Item"
 #~ msgstr "Pervadinti įrašą"
 
@@ -4908,6 +5120,12 @@ msgstr ""
 #~ msgstr[1] "Pavyko perkelti %(count)d kanalų."
 #~ msgstr[2] "Pavyko perkelti %(count)d kanalų."
 
+#~ msgid "Volume _Up"
+#~ msgstr "_Pagarsinti"
+
+#~ msgid "Volume _Down"
+#~ msgstr "Pri_tildyti"
+
 #~ msgid "Feed should go in this section:"
 #~ msgstr "Kanalo tipas yra:"
 
@@ -4932,6 +5150,9 @@ msgstr ""
 
 #~ msgid "Revert Item Name"
 #~ msgstr "Atstatyti elemento pavadinimą"
+
+#~ msgid "Other"
+#~ msgstr "Kita"
 
 #~ msgid "Pipeline request never started"
 #~ msgstr "Konvejerio užklausa nebuvo pradėta"
@@ -4978,6 +5199,11 @@ msgstr ""
 #~ "perkelti esamus parsiuntimus tenai? (Šiuo metu siunčiami filmai nebus "
 #~ "perkelti, kol baigs siųstis)."
 
+#~ msgid ""
+#~ "Resume playing a video or audio item from the point it was last stopped."
+#~ msgstr ""
+#~ "Pratęsti grojimą nuo tos vietos, kur paskutinį kartą buvo sustabdyta."
+
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTEKA"
 
@@ -4991,6 +5217,10 @@ msgstr ""
 #~ msgstr "Pašalinti svetaines"
 
 #, python-format
+#~ msgid "_About %(name)s"
+#~ msgstr "_Apie %(name)s"
+
+#, python-format
 #~ msgid ""
 #~ "Not enough disk space to upgrade your database from the previous version of "
 #~ "%(appname)s.  Please delete some files and try again."
@@ -5000,6 +5230,9 @@ msgstr ""
 
 #~ msgid "Insufficient disk space"
 #~ msgstr "Nepakanka vietos diske"
+
+#~ msgid "Contents:"
+#~ msgstr "Turinys:"
 
 #, python-format
 #~ msgid ""
@@ -5013,6 +5246,9 @@ msgstr ""
 #~ "iš kolekcijos.\n"
 #~ "Paskutiniai pakeitimai gali būti dingę."
 
+#~ msgid "Contents appear in the library"
+#~ msgstr "Turinys atsiranda bibliotekoje"
+
 #, python-format
 #~ msgid "Welcome to the %(name)s First Time Setup"
 #~ msgstr "Sveiki, čia %(name)s pradiniai nustatymai"
@@ -5020,6 +5256,9 @@ msgstr ""
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "Tikėtasi CRLF, gauta %(character)r"
+
+#~ msgid "Display Contents"
+#~ msgstr "Parodyti turinį"
 
 #, python-format
 #~ msgid ""
@@ -5061,11 +5300,20 @@ msgstr ""
 #~ msgid "Re_name Website"
 #~ msgstr "Pervadi_nti tinklapį"
 
+#~ msgid "_Preferences"
+#~ msgstr "_Nustatymai"
+
 #~ msgid "_Remove Feeds"
 #~ msgstr "_Pašalinti srautus"
 
+#~ msgid "_Remove Folders"
+#~ msgstr "_Pašalinti katalogus"
+
 #~ msgid "_Remove Feed"
 #~ msgstr "_Pašalinti srautą"
+
+#~ msgid "S_ubtitles"
+#~ msgstr "S_ubtitrai"
 
 #~ msgid "_Remove Websites"
 #~ msgstr "_Pašalinti tinklapius"
@@ -5081,6 +5329,24 @@ msgstr ""
 
 #~ msgid "Exit fullscreen"
 #~ msgstr "Palikti viso ekrano režimą"
+
+#~ msgid "Convert"
+#~ msgstr "Konvertuoti"
+
+#~ msgid "_Next Item"
+#~ msgstr "_Kitas įrašas"
+
+#~ msgid "_Previous Item"
+#~ msgstr "An_kstesnis įrašas"
+
+#~ msgid "Skip _Back"
+#~ msgstr "Grįžti _atgal"
+
+#~ msgid "_Translate"
+#~ msgstr "_Vertimai"
+
+#~ msgid "_Edit Item"
+#~ msgstr "_Keisti įrašą"
 
 #~ msgid "Path:"
 #~ msgstr "Kelias:"
