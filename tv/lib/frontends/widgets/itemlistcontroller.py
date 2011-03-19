@@ -357,7 +357,8 @@ class ItemListController(object):
         self.views[standard_view] = standard_view_widget
         standard_view_background = widgetset.SolidBackground(
                 standard_view_widget.BACKGROUND_COLOR)
-        standard_view_background.add(standard_view_widget)
+        standard_view_background.add(widgetutil.pad(standard_view_widget,
+            top=10, bottom=10))
 
         # set up member attrs to easily get our list/standard view widgets
         self.list_item_view = self.views[list_view]
