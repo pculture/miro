@@ -28,7 +28,6 @@
 # statement from all source files in the program, then also delete it here.
 
 use_native_buttons = False
-use_custom_titlebar_background = True
 use_custom_tablist_font = True
 use_upside_down_sort = False
 file_navigator_name = u"Explorer"

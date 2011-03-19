@@ -802,8 +802,8 @@ class HideableSection(widgetutil.HideableWidget):
 
 class DisplayToolbar(widgetset.Background):
     def draw(self, context, layout):
-        if not context.style.use_custom_titlebar_background:
-            return
+        pass
+        # XXX review me
         # gradient = widgetset.Gradient(0, 0, 0, context.height)
         # gradient.set_start_color((0.90, 0.90, 0.90))
         # gradient.set_end_color((0.79, 0.79, 0.79))

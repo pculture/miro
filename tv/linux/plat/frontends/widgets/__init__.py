@@ -28,7 +28,6 @@
 # statement from all source files in the program, then also delete it here.
 
 use_native_buttons = True
-use_custom_titlebar_background = False
 use_custom_tablist_font = False
 use_upside_down_sort = True
 file_navigator_name = ""

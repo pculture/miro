@@ -96,7 +96,6 @@ class DrawingStyle(object):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, bg_color=None, text_color=None):
         self.use_custom_style = True
-        self.use_custom_titlebar_background = True
         if text_color is None:
             self.text_color = self.default_text_color
         else:

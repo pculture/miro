@@ -41,7 +41,6 @@ import pango
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
-from miro.plat.frontends.widgets import use_custom_titlebar_background
 
 # XXX - clagged from miro.frontends.widgets.style due to circular import
 # issue
@@ -89,7 +88,6 @@ class DrawingStyle(object):
         if state is None:
             state = widget._widget.state
         self.use_custom_style = widget.use_custom_style
-        self.use_custom_titlebar_background = use_custom_titlebar_background
         self.style = widget._widget.style
         self.text_color = widget.convert_gtk_color(self.style.text[state])
         if use_base_color:
@@ -253,15 +251,8 @@ class Background(Drawable, Bin):
         Drawable.__init__(self)
         self.set_widget(BackgroundWidget())
 
-class Titlebar(Background):
-    def __init__(self):
-        Background.__init__(self)
-        self.set_size_request(-1, 55)
-
 class Toolbar(Background):
     def draw(self, context, layout):
-        if not context.style.use_custom_titlebar_background:
-            return
         context.move_to(0, 0)
         context.rel_line_to(context.width, 0)
         context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
@@ -271,6 +262,11 @@ class Toolbar(Background):
         gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
         context.rectangle(0, 1, context.width, context.height)
         context.gradient_fill(gradient)
+
+class Titlebar(Toolbar):
+    def __init__(self):
+        Toolbar.__init__(self)
+        self.set_size_request(-1, 55)
 
 class LowerBox(Background):
     def draw(self, context, layout_manager):
