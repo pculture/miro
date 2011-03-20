@@ -275,8 +275,8 @@ class FirstTimeDialog(widgetset.Window):
         (name, path) = get_plat_media_player_name_path()
         if path:
             import_rb = widgetset.RadioButton(
-                _("Import from %(player)s as watched folder" % \
-                dict(player=name)), rbg2)
+                _("Import from %(player)s as watched folder",
+                  {"player": name}), rbg2)
             self.search_directory = path
             group_box.pack_start(widgetutil.align_left(import_rb, left_pad=30))
         else:

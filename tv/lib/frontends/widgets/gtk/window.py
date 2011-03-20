@@ -837,8 +837,8 @@ class DirectorySelectDialog(FileDialogBase):
 class AboutDialog(Dialog):
     def __init__(self):
         Dialog.__init__(self,
-                        _("About %(appname)s") % {
-                'appname': app.config.get(prefs.SHORT_APP_NAME)})
+            _("About %(appname)s",
+              {'appname': app.config.get(prefs.SHORT_APP_NAME)}))
         self.add_button(_("Close"))
         self._window.set_has_separator(False)
 

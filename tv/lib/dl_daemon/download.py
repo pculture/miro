@@ -760,7 +760,7 @@ class HTTPDownloader(BGDownloader):
         BGDownloader.handle_temporary_error(self, short_reason, reason)
 
     def handle_write_error(self, error):
-        text = (_("Could not write to %(filename)s") %
+        text = _("Could not write to %(filename)s",
                 {"filename": stringify(self.filename)})
         self.handle_generic_error(text)
 
@@ -769,8 +769,8 @@ class HTTPDownloader(BGDownloader):
             self.totalSize = info['total-size']
         if not self.accept_download_size(self.totalSize):
             self.handle_error(_("Not enough disk space"),
-                _("%(amount)s MB required to store this video") %
-                  {"amount": self.totalSize / (2 ** 20)})
+                _("%(amount)s MB required to store this video",
+                  {"amount": self.totalSize / (2 ** 20)}))
             return
         # We should successfully download the file.  Reset retryCount
         # and accept defeat if we see an error.

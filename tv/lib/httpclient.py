@@ -177,8 +177,8 @@ class WriteError(NetworkError):
     """
 
     def __init__(self, path):
-        msg = _("Could not write to %(filename)s") % \
-            {"filename": util.stringify(self.filename)}
+        msg = _("Could not write to %(filename)s",
+            {"filename": util.stringify(self.filename)})
         NetworkError.__init__(self, _('Write error'), msg)
 
 class TransferOptions(object):
