@@ -67,7 +67,17 @@ class DropHandler(signals.SignalEmitter):
             position, data):
         dragged_ids = [int(id) for id in data.split('-')]
         if 0 <= position < len(model):
-            insert_id = model.nth_row(position)[0].id
+            insert_id =  model.nth_row(position)[0].id
+            # If we try to insert before an ID that iself is being
+            # dragged we get an error
+            while insert_id in dragged_ids:
+                position += 1
+                # If we iterate to the end of the playlist
+                # we cancel the iteration
+                if position > len(model):
+                    insert_id = None
+                    break
+                insert_id = model.nth_row(position)[0].id
         else:
             insert_id = None
         new_order = self.sorter.move_ids_before(insert_id, dragged_ids)
