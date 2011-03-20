@@ -66,11 +66,13 @@ def _build_title(text):
     return widgetutil.align_left(lab, bottom_pad=10)
 
 class FirstTimeDialog(widgetset.Window):
-    def __init__(self, done_firsttime_callback):
+    def __init__(self, done_firsttime_callback, title=None):
+        if title == None:
+            title = _("%(appname)s First Time Setup",
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+
         widgetset.Window.__init__(
-            self, _("%(name)s First Time Setup",
-                    {'name': app.config.get(prefs.SHORT_APP_NAME)}),
-            widgetset.Rect(100, 100, 475, 500))
+            self, title, widgetset.Rect(100, 100, 475, 500))
 
         # the directory panel 3 searches for files in
         self.search_directory = None
@@ -237,6 +239,10 @@ class FirstTimeDialog(widgetset.Window):
         return vbox
 
     def build_import_page(self):
+        # NOTE: This is essentially duplicated in importmediadialog.
+        # There are minor differences, so it couldn't really be reused
+        # (which is annoying).
+
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_title(_("Finding Files")))
@@ -306,8 +312,11 @@ class FirstTimeDialog(widgetset.Window):
 
         vbox.pack_start(widgetset.Label(" "), expand=True)
 
+        hbox = widgetset.HBox()
+
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
+        hbox.pack_start(prev_button)
 
         def handle_search_finish_clicked(widget):
             if widget.mode == "search":
@@ -331,7 +340,7 @@ class FirstTimeDialog(widgetset.Window):
             search_button.set_text(search_button.text_faces[mode])
             search_button.mode = mode
 
-        hbox = widgetutil.build_hbox((prev_button, search_button))
+        hbox.pack_start(search_button)
         vbox.pack_start(widgetutil.align_right(hbox))
 
         def handle_radio_button_clicked(widget):
@@ -383,6 +392,10 @@ class FirstTimeDialog(widgetset.Window):
         return vbox
 
     def build_search_page(self):
+        # NOTE: This is essentially duplicated in importmediadialog.
+        # There are minor differences, so it couldn't really be reused
+        # (which is annoying).
+
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_title(_("Searching for media files")))

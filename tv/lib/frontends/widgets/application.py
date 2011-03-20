@@ -66,6 +66,7 @@ from miro.frontends.widgets import newfolder
 from miro.frontends.widgets import newwatchedfolder
 from miro.frontends.widgets import itemedit
 from miro.frontends.widgets import addtoplaylistdialog
+from miro.frontends.widgets import importmediadialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
@@ -110,6 +111,7 @@ class Application:
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
         self.crash_reports_to_handle = []
         app.widget_state = WidgetStateStore()
+        self._importmediadialog = None
 
     def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
@@ -474,9 +476,11 @@ class Application:
             messages.DownloadURL(url).send_to_backend()
 
     def import_media(self):
-        directory = dialogs.ask_for_directory(_("Import Media From..."))
-        if directory is not None:
-            app.watched_folder_manager.add(directory)
+        if self._importmediadialog:
+            return
+
+        self._importmediadialog = importmediadialog.ImportMediaDialog()
+        self._importmediadialog.run()
 
     def check_version(self):
         # this gets called by the backend, so it has to send a message to
