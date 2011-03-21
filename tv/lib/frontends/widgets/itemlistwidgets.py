@@ -1430,6 +1430,8 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
 
     BACKGROUND_GRADIENT_TOP = (0.977,) * 3
     BACKGROUND_GRADIENT_BOTTOM = (0.836,) * 3
+    LINE_TOP = widgetutil.css_to_color('#949494')
+    LINE_BOTTOM = widgetutil.css_to_color('#161616')
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -1453,18 +1455,30 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
         self.queue_redraw()
 
     def size_request(self, layout):
-        return 30, 13
+        return 30, 15
 
     def draw(self, context, layout):
         self.draw_gradient(context)
+        self.draw_lines(context)
         self.draw_icon(context)
 
     def draw_gradient(self, context):
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        # leave 1px on the top and bottom for the black links
+        top = 1
+        height = context.height - 1
+        gradient = widgetset.Gradient(0, top, 0, top+height)
         gradient.set_start_color(self.BACKGROUND_GRADIENT_TOP)
         gradient.set_end_color(self.BACKGROUND_GRADIENT_BOTTOM)
-        context.rectangle(0, 0, context.width, context.height)
+        context.rectangle(0, 1, context.width, height)
         context.gradient_fill(gradient)
+
+    def draw_lines(self, context):
+        context.set_color(self.LINE_TOP)
+        context.rectangle(0, 0, context.width, 1)
+        context.fill()
+        context.set_color(self.LINE_BOTTOM)
+        context.rectangle(0, context.height-1, context.width, 1)
+        context.fill()
 
     def draw_icon(self, context):
         if self.mode == 'expand':
