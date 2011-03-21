@@ -321,3 +321,4 @@ class DeviceDropHandler(object):
         video_ids = [int(id_) for id_ in data.split('-')]
         device = model[parent][0]
         messages.DeviceSyncMedia(device, video_ids).send_to_backend()
+        return True
