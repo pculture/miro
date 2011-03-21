@@ -34,7 +34,7 @@ Holds functions that associate Miro with certain protocols
 import gconf
 
 def associate_protocols():
-    _associate_protocol("magnet", True)
+    _associate_protocol("magnet", False)
 
 def _associate_protocol(name, overwrite_existing=False):
     url_handlers_key = "/desktop/gnome/url-handlers/" + name + "/"
