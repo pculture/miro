@@ -42,6 +42,7 @@ import logging
 from urlparse import urljoin
 
 from miro import app
+from miro.errors import WidgetActionError
 from miro import displaytext
 from miro import messages
 from miro import prefs
@@ -396,8 +397,13 @@ class ItemListController(object):
         if view == self.selected_view:
             return
         # set selection for the view we will switch to
-        current_selection = self.current_item_view.get_selection_as_strings()
-        self.views[view].set_selection_as_strings(current_selection)
+        current_view = self.current_item_view
+        try:
+            current_selection = current_view.get_selection_as_strings()
+        except WidgetActionError:
+            pass # don't bother setting the selection if we can't get it
+        else:
+            self.views[view].set_selection_as_strings(current_selection)
         # do the switch
         self.selected_view = view
         self.widget.switch_to_view(view)
