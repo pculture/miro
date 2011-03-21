@@ -440,7 +440,11 @@ class DeviceSyncManager(object):
         self.start_time = time.time()
         self.etas = {}
         self.signal_handles = []
+        self.finished = 0
+        self.total = 0
+        self.copying = set()
         self.waiting = set()
+        self.stopping = False
 
         self.device.is_updating = True # start the spinner
         messages.TabsChanged('connect', [], [self.device],
@@ -476,7 +480,12 @@ class DeviceSyncManager(object):
                             device_info.audio_conversion)
         video_conversion = (device_settings.get('video_conversion') or
                             device_info.video_conversion)
+        self.total += len(item_infos)
+        self._send_sync_changed()
         for info in item_infos:
+            if self.stopping:
+                self._check_finished()
+                return
             if self.device.database.item_exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
@@ -485,13 +494,7 @@ class DeviceSyncManager(object):
                     final_path = os.path.join(self.audio_target_folder,
                                               os.path.basename(
                             info.video_path))
-                    try:
-                        shutil.copy(info.video_path, final_path)
-                    except IOError:
-                        # FIXME - we should pass the error back to the frontend
-                        pass
-                    else:
-                        self._add_item(final_path, info)
+                    self.copy_file(info, final_path)
                 else:
                     logging.debug('unable to detect format of %r: %s',
                                   info.video_path, info.file_format)
@@ -503,13 +506,7 @@ class DeviceSyncManager(object):
                     final_path = os.path.join(self.video_target_folder,
                                               os.path.basename(
                                                   info.video_path))
-                    try:
-                        shutil.copy(info.video_path, final_path)
-                    except IOError:
-                        # FIXME - we should pass the error back to the frontend
-                        pass
-                    else:
-                        self._add_item(final_path, info)
+                    self.copy_file(info, final_path)
                 else:
                     self.start_conversion(video_conversion,
                                           info,
@@ -535,23 +532,50 @@ class DeviceSyncManager(object):
                                 create_item=False)
         self.waiting.add(task.key)
 
+    def copy_file(self, info, final_path):
+        self.copying.add(info.id)
+        eventloop.call_in_thread(lambda x: self._copy_file_callback(x),
+                                 lambda x: None,
+                                 self._copy_in_thread,
+                                 self, info, final_path)
+
+    def _copy_in_thread(self, info, final_path):
+        if self.stopping:
+            raise RuntimeError('got sync stop message')
+        try:
+            shutil.copy(info.video_path, final_path)
+        except IOError:
+            return None, info
+        else:
+            return final_path, info
+
+    def _copy_file_callback(self, (final_path, info)):
+        if final_path:
+            self._add_item(final_path, info)
+        self.copying.remove(info.id)
+        self.finished += 1
+        self._check_finished()
+
     def _conversion_changed_callback(self, conversion_manager, task):
         self.etas[task.key] = task.get_eta()
         self._send_sync_changed()
 
     def _conversion_removed_callback(self, conversion_manager, task=None):
         if task is not None:
+            self.finished += 1
             try:
                 self.waiting.remove(task.key)
                 del self.etas[task.key]
             except KeyError:
                 pass
         else: # remove all tasks
+            self.finished += len(self.waiting)
             self.etas = {}
             self.waiting = set()
         self._check_finished()
 
     def _conversion_staged_callback(self, conversion_manager, task):
+        self.finished += 1
         try:
             self.waiting.remove(task.key)
             del self.etas[task.key]
@@ -607,7 +631,7 @@ class DeviceSyncManager(object):
         database.emit('item-added', device_item)
 
     def _check_finished(self):
-        if not self.waiting:
+        if not self.waiting and not self.copying:
             # finished!
             for handle in self.signal_handles:
                 conversions.conversion_manager.disconnect(handle)
@@ -623,7 +647,7 @@ class DeviceSyncManager(object):
         message.send_to_frontend()
 
     def is_finished(self):
-        if self.waiting:
+        if self.waiting or self.copying:
             return False
         return self.device.id not in app.device_manager.syncs_in_progress
 
@@ -637,7 +661,7 @@ class DeviceSyncManager(object):
     def get_progress(self):
         eta = self.get_eta()
         if eta is None:
-            return 0.0 # no progress
+            return float(self.finished) / self.total
         total_time = time.time() - self.start_time
         total_eta = total_time + eta
         return total_time / total_eta
@@ -645,6 +669,7 @@ class DeviceSyncManager(object):
     def cancel(self):
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
+        self.stopping = True # kill in-progress copies
 
 class DeviceItem(metadata.Store):
     """
