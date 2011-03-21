@@ -43,6 +43,7 @@ from miro import util
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
+from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetconst
@@ -217,6 +218,7 @@ class BrowserNav(widgetset.VBox):
         self.guide_info = guide_info
         self.home_url = guide_info.url
         self.pack_start(self.toolbar)
+        self.pack_start(separator.HSeparator((0.85, 0.85, 0.85)))
         self.pack_start(self.browser, expand=True)
 
         self.toolbar.connect_weak('browser-back', self._on_browser_back)
