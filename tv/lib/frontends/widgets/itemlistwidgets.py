@@ -1425,6 +1425,15 @@ class ItemDetailsBackground(widgetset.Background):
             context.rectangle(0, 0, context.width, context.height)
             context.fill()
 
+class ItemDetailsImageBackground(widgetset.Background):
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.image = imagepool.get_surface(resources.path(
+            'images/item-details-image-bg.png'))
+
+    def draw(self, context, layout):
+        self.image.draw(context, 0, 0, context.width, context.height)
+
 class ItemDetailsExpanderButton(widgetset.CustomButton):
     """Button to expand/contract the item details view"""
 
@@ -1517,7 +1526,11 @@ class ItemDetailsWidget(widgetset.VBox):
         content_hbox = widgetset.HBox(spacing=self.PADDING_MIDDLE)
         # pack left side
         self.image_widget = widgetset.ImageDisplay()
-        content_hbox.pack_start(widgetutil.align_top(self.image_widget))
+        image_background = ItemDetailsImageBackground()
+        image_background.add(widgetutil.align(self.image_widget,
+                xalign=0.5, yalign=0.5))
+        image_background.set_size_request(*self.IMAGE_SIZE)
+        content_hbox.pack_start(widgetutil.align_top(image_background))
         # pack right side
         content_hbox.pack_start(widgetutil.pad(self.build_right()), expand=True)
         # expander_button is used to expand/collapse our content
