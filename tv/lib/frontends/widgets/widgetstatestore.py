@@ -71,7 +71,7 @@ class WidgetStateStore(object):
         u'genre': 65,
         u'kind': 70,
         u'length': 60,
-        u'name': 130,
+        u'name': 200,
         u'rate': 60,
         u'rating': 75,
         u'playlist': 30,
