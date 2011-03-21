@@ -90,20 +90,9 @@ class FeedController(itemlistcontroller.ItemListController,
             titlebar.connect('save-search', self._on_save_search)
             return titlebar
 
-    def check_for_empty_list(self):
-        # TODO: should we do something here?
-        pass
-
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
         self._update_counts()
-
-        # if the search has no results, we show the empty_mode
-        # which says "no results"
-        if self.item_list.get_count() == 0 and search_text:
-            self.widget.set_list_empty_mode(True)
-        else:
-            self.widget.set_list_empty_mode(False)
 
     def _on_save_search(self, widget, search_text):
         info = widgetutil.get_feed_info(self.id)

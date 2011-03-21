@@ -66,9 +66,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
 
-    def check_for_empty_list(self):
-        pass
-
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 

@@ -242,9 +242,5 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
     def build_header_toolbar(self):
         return itemlistwidgets.PlaylistHeaderToolbar()
 
-    def check_for_empty_list(self):
-        list_empty = (self.item_list.get_count() == 0)
-        self.widget.set_list_empty_mode(list_empty)
-
     def _on_new_order(self, drop_handler, order):
         messages.PlaylistReordered(self.id, order).send_to_backend()

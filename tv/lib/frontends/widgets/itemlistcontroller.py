@@ -826,6 +826,11 @@ class ItemListController(object):
         self.update_resume_button()
         self.update_count_label()
         self.update_item_details()
+        self.check_for_empty_list()
+
+    def check_for_empty_list(self):
+        list_empty = (self.item_list.get_count() == 0)
+        self.widget.set_list_empty_mode(list_empty)
 
     def update_resume_button(self):
         if not self.show_resume_playing_button:
@@ -917,17 +922,6 @@ class SimpleItemListController(ItemListController):
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
-        self.check_for_empty_list()
-
-    def on_initial_list(self):
-        self.check_for_empty_list()
-
-    def on_items_changed(self):
-        self.check_for_empty_list()
-
-    def check_for_empty_list(self):
-        list_empty = (self.item_list.get_count() == 0)
-        self.widget.set_list_empty_mode(list_empty)
 
 class SearchController(SimpleItemListController):
     type = u'search'
@@ -1016,9 +1010,6 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True)
 
-    def check_for_empty_list(self):
-        pass
-
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 
@@ -1103,9 +1094,6 @@ class OtherItemsController(SimpleItemListController):
 
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True)
-
-    def check_for_empty_list(self):
-        pass
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
