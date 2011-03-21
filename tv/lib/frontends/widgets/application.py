@@ -111,7 +111,6 @@ class Application:
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
         self.crash_reports_to_handle = []
         app.widget_state = WidgetStateStore()
-        self._importmediadialog = None
 
     def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
@@ -476,11 +475,9 @@ class Application:
             messages.DownloadURL(url).send_to_backend()
 
     def import_media(self):
-        if self._importmediadialog:
-            return
-
-        self._importmediadialog = importmediadialog.ImportMediaDialog()
-        self._importmediadialog.run()
+        files = importmediadialog.run_dialog()
+        if files:
+            messages.AddFiles(files).send_to_backend()
 
     def check_version(self):
         # this gets called by the backend, so it has to send a message to

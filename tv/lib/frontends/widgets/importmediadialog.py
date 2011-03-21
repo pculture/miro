@@ -30,35 +30,36 @@
 """Defines the import items dialog.
 """
 
+import logging
+
 from miro import app
 from miro import prefs
 from miro import util
+from miro import messages
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.fileobject import FilenameType
 from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import dialogs
-from miro.plat.utils import (filename_to_unicode,
-                             get_plat_media_player_name_path)
+from miro.plat.utils import (
+    filename_to_unicode, get_plat_media_player_name_path)
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 
-class ImportMediaDialog(firsttimedialog.FirstTimeDialog):
+from miro.dialogs import BUTTON_CANCEL, BUTTON_IMPORT_FILES
+from miro.frontends.widgets.dialogs import MainDialog, ask_for_directory
+from miro.plat.resources import get_default_search_dir
+
+
+class ImportMediaDialog(MainDialog):
     def __init__(self):
-        done_callback_handler = lambda: 0
-        firsttimedialog.FirstTimeDialog.__init__(
-            self,
-            done_callback_handler,
-            _("Import Media"))
+        MainDialog.__init__(self, _("Import Media"), "")
+        self.vbox = None
 
-    def build_pages(self):
-        return [self.build_import_page(),
-                self.build_search_page()]
+    def build_import_section(self):
+        vbox = widgetset.VBox()
 
-
-    def build_import_page(self):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(firsttimedialog._build_title(_("Finding Files")))
@@ -70,188 +71,191 @@ class ImportMediaDialog(firsttimedialog.FirstTimeDialog):
         lab.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(lab))
 
-        group_box = widgetset.VBox(spacing=5)
-
-        rbg2 = widgetset.RadioButtonGroup()
-        restrict_rb = widgetset.RadioButton(
-            _("Restrict to all my personal files."), rbg2)
-        search_rb = widgetset.RadioButton(_("Search custom folders:"), rbg2)
-        restrict_rb.set_selected()
-        group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
-        group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
+        self.search_type_rbg = widgetset.RadioButtonGroup()
+        self.restrict_rb = widgetset.RadioButton(
+            _("Restrict to all my personal files."), self.search_type_rbg)
+        self.search_rb = widgetset.RadioButton(_("Search custom folders:"), self.search_type_rbg)
+        self.restrict_rb.set_selected()
+        vbox.pack_start(widgetutil.align_left(self.restrict_rb, left_pad=30))
+        vbox.pack_start(widgetutil.align_left(self.search_rb, left_pad=30))
 
         # FIXME: we can think about providing a list of media players installed
         # and search through those, but right now the code doesn't handle
         # a list of search directories to search.
         (name, path) = get_plat_media_player_name_path()
         if path:
-            import_rb = widgetset.RadioButton(
+            self.import_rb = widgetset.RadioButton(
                 _("Import from %(player)s as watched folder",
-                  {"player": name}), rbg2)
+                  {"player": name}), self.search_type_rbg)
             self.search_directory = path
-            group_box.pack_start(widgetutil.align_left(import_rb, left_pad=30))
+            vbox.pack_start(widgetutil.align_left(self.import_rb, left_pad=30))
         else:
             # can't import - import_rb doesn't exist.
-            import_rb = None
+            self.import_rb = None
 
-        search_entry = widgetset.TextEntry()
-        search_entry.set_width(20)
-        change_button = widgetset.Button(_("Change"))
-        hbox = widgetutil.build_hbox((search_entry, change_button))
-        group_box.pack_start(widgetutil.align_left(hbox, left_pad=30))
+        self.search_entry = widgetset.TextEntry()
+        self.search_entry.set_text(get_default_search_dir())
+        self.search_entry.set_width(25)
+        self.search_entry.disable()
 
-        def handle_change_clicked(widget):
-            dir_ = dialogs.ask_for_directory(
-                _("Choose directory to search for media files"),
-                initial_directory=firsttimedialog._get_user_media_directory(),
-                transient_for=self)
-            if dir_:
-                search_entry.set_text(filename_to_unicode(dir_))
-                self.search_directory = dir_
-            else:
-                self.search_directory = firsttimedialog._get_user_media_directory()
+        self.change_button = widgetset.Button(_("Change"))
+        hbox = widgetutil.build_hbox((self.search_entry, self.change_button))
+        vbox.pack_start(widgetutil.align_left(hbox, left_pad=30))
 
-        change_button.connect('clicked', handle_change_clicked)
-
-        vbox.pack_start(group_box)
+        self.change_button.connect('clicked', self.handle_change_clicked)
 
         vbox.pack_start(widgetset.Label(" "), expand=True)
 
-        def handle_search_clicked(widget):
-            if rbg2.get_selected() == restrict_rb:
-                self.search_directory = firsttimedialog._get_user_media_directory()
-
-            self.next_page()
-
-        search_button = widgetset.Button(_("Search"))
-        search_button.connect('clicked', handle_search_clicked)
+        search_button = widgetset.Button(_("Search for files"))
+        search_button.connect('clicked', self.handle_search_clicked)
 
         vbox.pack_start(widgetutil.align_right(search_button))
 
-        def handle_radio_button_clicked(widget):
-            # if widget is yes_rb:
-            #     group_box.enable()
-            #     if (rbg2.get_selected() is restrict_rb or
-            #       rbg2.get_selected() is import_rb):
-            #         search_entry.disable()
-            #         change_button.disable()
-            #     else:
-            #         search_entry.enable()
-            #         change_button.enable()
+        self.restrict_rb.connect('clicked', self.handle_radio_button_clicked)
+        self.search_rb.connect('clicked', self.handle_radio_button_clicked)
+        if self.import_rb:
+            self.import_rb.connect('clicked', self.handle_radio_button_clicked)
 
-            #     if rbg2.get_selected() is import_rb:
-            #         switch_mode("finish")
-            #     else:
-            #         switch_mode("search")
-
-            if widget is restrict_rb or widget is import_rb:
-                search_entry.disable()
-                change_button.disable()
-
-            elif widget is search_rb:
-                search_entry.enable()
-                change_button.enable()
-
-
-        # no_rb.connect('clicked', handle_radio_button_clicked)
-        # yes_rb.connect('clicked', handle_radio_button_clicked)
-        restrict_rb.connect('clicked', handle_radio_button_clicked)
-        search_rb.connect('clicked', handle_radio_button_clicked)
-        if import_rb:
-            import_rb.connect('clicked', handle_radio_button_clicked)
-
-        handle_radio_button_clicked(restrict_rb)
-
-        group_box.enable()
-        search_entry.disable()
-        change_button.disable()
+        self.handle_radio_button_clicked(self.restrict_rb)
+        self.change_button.disable()
 
         return vbox
 
-    def build_search_page(self):
+    def build_search_section(self):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(firsttimedialog._build_title(_("Searching for media files")))
 
-        progress_bar = widgetset.ProgressBar()
-        vbox.pack_start(progress_bar)
+        self.progress_bar = widgetset.ProgressBar()
+        vbox.pack_start(self.progress_bar)
 
-        progress_label = widgetset.Label("")
-        progress_label.set_size_request(400, -1)
-        vbox.pack_start(widgetutil.align_left(progress_label))
+        self.progress_label = widgetset.Label("")
+        self.progress_label.set_size_request(400, -1)
+        vbox.pack_start(widgetutil.align_left(self.progress_label))
 
-        search_button = widgetset.Button(_("Search"))
-        cancel_button = widgetset.Button(_("Cancel"))
+        cancel_button = widgetset.Button(_("Cancel Search"))
 
-        hbox = widgetutil.build_hbox((search_button, cancel_button))
-        vbox.pack_start(widgetutil.align_left(hbox))
+        vbox.pack_start(widgetutil.align_right(cancel_button))
 
         vbox.pack_start(widgetset.Label(" "), expand=True)
 
-        prev_button = widgetset.Button(_("< Previous"))
-        prev_button.connect('clicked', lambda x: self.prev_page())
+        cancel_button.connect('clicked', self.handle_cancel_clicked)
 
-        finish_button = widgetset.Button(_("Finish"))
-        finish_button.connect('clicked', lambda x: self.on_close())
-
-        hbox = widgetutil.build_hbox((prev_button, finish_button))
-        vbox.pack_start(widgetutil.align_right(hbox))
-
-        def handle_cancel_clicked(widget):
-            progress_bar.stop_pulsing()
-            progress_bar.set_progress(1.0)
-            search_button.enable()
-            cancel_button.disable()
-
-            prev_button.enable()
-            finish_button.enable()
-            self.cancelled = True
-
-        def make_progress():
-            if self.cancelled:
-                self.gathered_media_files = []
-                self.finder = None
-                progress_label.set_text("")
-                return
-
-            try:
-                num_parsed, found = self.finder.next()
-                self.gathered_media_files = found
-
-                num_found = len(found)
-                num_files = ngettext("parsed %(count)s file",
-                        "parsed %(count)s files",
-                        num_parsed,
-                        {"count": num_parsed})
-
-                num_media_files = ngettext("found %(count)s media file",
-                        "found %(count)s media files",
-                        num_found,
-                        {"count": num_found})
-                progress_label.set_text(u"%s - %s" % (num_files,
-                                                      num_media_files))
-
-                threads.call_on_ui_thread(make_progress)
-
-            except StopIteration:
-                handle_cancel_clicked(None)
-                self.finder = None
-
-        def handle_search_clicked(widget):
-            self.cancelled = False
-            search_button.disable()
-            cancel_button.enable()
-
-            prev_button.disable()
-            finish_button.disable()
-
-            search_directory = FilenameType(self.search_directory)
-            self.finder = util.gather_media_files(search_directory)
-            progress_bar.start_pulsing()
-            threads.call_on_ui_thread(make_progress)
-
-        search_button.connect('clicked', handle_search_clicked)
-        cancel_button.connect('clicked', handle_cancel_clicked)
-
-        cancel_button.disable()
         return vbox
+
+    def handle_radio_button_clicked(self, widget):
+        if widget is self.restrict_rb or widget is self.import_rb:
+            self.search_entry.disable()
+            self.change_button.disable()
+
+        elif widget is self.search_rb:
+            self.search_entry.enable()
+            self.change_button.enable()
+
+    def handle_search_clicked(self, widget):
+        self.cancelled = False
+
+        if self.search_type_rbg.get_selected() == self.restrict_rb:
+            search_directory = get_default_search_dir()
+        else:
+            search_directory = FilenameType(self.search_directory)
+        self.finder = util.gather_media_files(search_directory)
+        self.progress_bar.start_pulsing()
+        self.search_section.show()
+
+        threads.call_on_ui_thread(self.make_progress)
+
+    def handle_change_clicked(self, widget):
+        dir_ = ask_for_directory(
+            _("Choose directory to search for media files"),
+            initial_directory=get_default_search_dir(),
+            transient_for=self)
+        if dir_:
+            self.search_entry.set_text(filename_to_unicode(dir_))
+            self.search_directory = dir_
+        else:
+            self.search_directory = get_default_search_dir()
+
+
+    def handle_cancel_clicked(self, widget):
+        self.end_file_search()
+        self.cancelled = True
+        self.search_section.hide()
+
+    def end_file_search(self):
+        self.progress_bar.stop_pulsing()
+        self.progress_bar.set_progress(1.0)
+
+    def make_progress(self):
+        if self.cancelled:
+            self.gathered_media_files = []
+            self.finder = None
+            self.progress_label.set_text("")
+            return
+
+        try:
+            num_parsed, found = self.finder.next()
+            self.gathered_media_files = found
+
+            num_found = len(found)
+            num_files = ngettext("parsed %(count)s file",
+                                 "parsed %(count)s files",
+                                 num_parsed,
+                                 {"count": num_parsed})
+
+            num_media_files = ngettext("found %(count)s media file",
+                                       "found %(count)s media files",
+                                       num_found,
+                                       {"count": num_found})
+            self.progress_label.set_text(u"%s - %s" % (num_files,
+                                                  num_media_files))
+
+            threads.call_on_ui_thread(self.make_progress)
+
+        except StopIteration:
+            self.end_file_search()
+            self.finder = None
+
+    def run_dialog(self):
+        """Returns the gathered files or None.
+        """
+        try:
+            self.vbox = widgetset.VBox()
+
+            self.vbox.pack_start(self.build_import_section())
+
+            self.search_section = widgetutil.HideableWidget(
+                self.build_search_section())
+            # do this so we reserve space for the search_section so the dialog
+            # doesn't need to resize which doesn't work on osx.
+            self.search_section.set_size_request(
+                *self.search_section.child().get_size_request())
+            self.search_section.hide()
+            self.vbox.pack_start(self.search_section)
+
+            self.set_extra_widget(self.vbox)
+
+            self.add_button(BUTTON_IMPORT_FILES.text)
+            self.add_button(BUTTON_CANCEL.text)
+
+            ret = self.run()
+            if ret == 0:
+                return self.gathered_media_files
+            return None
+
+        except StandardError:
+            logging.exception("importmediadialog threw exception.")
+
+
+def run_dialog():
+    """Returns files to add.
+    """
+    files = None
+    try:
+        imd = ImportMediaDialog()
+        files = imd.run_dialog()
+    finally:
+        if imd:
+            imd.destroy()
+
+    return files
