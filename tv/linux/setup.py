@@ -337,6 +337,7 @@ for dir in ('searchengines',
         os.path.join('testdata', 'feedparsertests', 'output'),
         os.path.join('testdata', 'stripperdata'),
         os.path.join('testdata', 'httpserver'),
+        os.path.join('testdata', 'metadata'),
         os.path.join('testdata', 'locale', 'fr', 'LC_MESSAGES')):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
