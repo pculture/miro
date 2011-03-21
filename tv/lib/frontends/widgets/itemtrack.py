@@ -169,15 +169,7 @@ class ItemListTracker(signals.SignalEmitter):
 
     def add_initial_items(self, items):
         self.saw_initial_list = True
-        print 'items added...'
-        for i in items:
-            print i.name
-        print
         items = self.search_filter.filter_initial_list(items)
-        print 'items added after...'
-        for i in items:
-            print i.name
-        print
         self._send_items_will_change(items, [], [])
         # call remove all to handle the race described in #16089.  We may get
         # multiple ItemList messages, in which case we want the last one to be
@@ -192,16 +184,8 @@ class ItemListTracker(signals.SignalEmitter):
             # way, we could get an ItemsChanged message for our old list,
             # before the ItemList message for our new one.
             return
-        print 'items changed...'
-        for i in added:
-            print i.name
-        print
         added, changed, removed = self.search_filter.filter_changes(
                 message.added, message.changed, message.removed)
-        print 'items changed after...'
-        for i in added:
-            print i.name
-        print
         self._send_items_will_change(added, changed, removed)
         self.item_list.add_items(added)
         self.item_list.update_items(changed)
