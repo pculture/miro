@@ -78,7 +78,7 @@ NOFLATTEN_ATTRIBUTES = frozenset(['cover_art'])
 
 # For most files, the extension is the most reliable indicator of format;
 # see 16436#c14.
-UNRELIABLE_EXTENSIONS = frozenset(['ogg'])
+UNRELIABLE_EXTENSIONS = frozenset(['ogg','ogm', 'ogx', 'oga', 'ogv'])
 
 def _get_duration(muta, info):
     """This function attempts to determine the length of an item from its
