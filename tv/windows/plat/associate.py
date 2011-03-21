@@ -32,16 +32,17 @@ from miro import prefs
 from miro import app
 
 def associate_extensions(executable_path, icon_path):
-    if not _is_magnet_exe_associated():
+    if not _is_associated():
         _asssociate_extension("Magnet", "Magnet URI", ".magnet",
                               "application/x-magnet", executable_path,
                               icon_path, is_protocol=True)
-    #always register with magnet.exe.
     _register_with_magnet_exe(executable_path, icon_path)
 
-def _is_magnet_exe_associated():
+def _is_associated(executable_path=None):
     """ Checks whether the magnet protocol currently is
-        associated with the magnet_exe utility
+        associated with the given executable path, or,
+        if none is given, whether the magnet protocol
+        is associated with anything at all.
     """
     
     sub_key = "magnet\\shell\\open\\command"
@@ -56,22 +57,33 @@ def _is_magnet_exe_associated():
             raise RunTimeError()
     try:
         path = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
-        magnet_exe_associated = path.lower().index("\\magnet.exe") > 0
+        if executable_path:
+            is_associated = path.lower() == executable_path
+        else:
+            is_associated = len(path) > 0
     except ValueError:
-        magnet_exe_associated = False
-    return magnet_exe_associated
+        is_associated = False
+    return is_associated
 
 def _register_with_magnet_exe(executable_path, icon_path):
     """ Registers Miro with the magnet.exe utlity
     """
     sub_key = ("Software\\magnet\\handlers\\" +
-               str(app.config.get(prefs.SHORT_APP_NAME) + "\\"))
-    save_string_HKLM(sub_key, "DefaultIcon", "\"" + icon_path + ", 0\"")
-    value = "Download with " + app.config.get(prefs.SHORT_APP_NAME)
-    save_string_HKLM(sub_key, "Description", value)
-    save_string_HKLM(sub_key, "ShellExecute",
-                     "\"" + executable_path + "\" %URL")
-    save_word_HKLM(sub_key + "\\Type", "urn:btih", 0)
+               app.config.get(prefs.SHORT_APP_NAME) + "\\")
+    try:
+        handle = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, sub_key,
+                                 0, _winreg.KEY_SET_VALUE)
+    except WindowsError, e:
+        if e.errno == 2:
+            # Key does not exist
+            save_string_HKLM(sub_key, "DefaultIcon", "\"" + icon_path + ", 0\"")
+            value = "Download with " + app.config.get(prefs.SHORT_APP_NAME)
+            save_string_HKLM(sub_key, "Description", value)
+            save_string_HKLM(sub_key, "ShellExecute",
+                             "\"" + executable_path + "\" %URL")
+            save_word_HKLM(sub_key + "\\Type", "urn:btih", 0)
+        else:
+            raise RunTimeError()
 
 def _asssociate_extension(name, description, extension, content_type,
                           executable_path, icon_path, is_protocol):
