@@ -367,7 +367,7 @@ class ItemListTitlebar(widgetset.Titlebar):
 
 class FolderContentsTitlebar(ItemListTitlebar):
     def _build_titlebar_start(self):
-        self.podcast_button = widgetset.Button(_('Back to podcast'))
+        self.podcast_button = widgetutil.TitlebarButton(_('Back to podcast'))
         self.podcast_button.connect('clicked', self._on_podcast_clicked)
         return widgetutil.align_middle(self.podcast_button, left_pad=20)
 
@@ -383,7 +383,7 @@ class SearchTitlebar(ItemListTitlebar):
     """
     def _build_titlebar_start(self):
         self.create_signal('save-search')
-        button = widgetset.Button(_('Save as Podcast'), style="smooth")
+        button = widgetutil.TitlebarButton(_('Save as Podcast'))
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=20))
