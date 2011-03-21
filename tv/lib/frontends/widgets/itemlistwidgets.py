@@ -1709,7 +1709,6 @@ class ItemContainerWidget(widgetset.VBox):
         if view == standard_view:
             toolbar._button_hbox_container.show()
         self.pack_start(self.titlebar_vbox)
-        self.pack_start(self.toolbar)
         self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()
         self.pack_start(self.background, expand=True)
@@ -1717,6 +1716,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False
+        self.vbox[standard_view].pack_start(self.toolbar)
         self.background.add(self.vbox[view])
 
     def toggle_filter(self, filter_):
