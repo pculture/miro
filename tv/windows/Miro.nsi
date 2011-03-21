@@ -876,6 +876,9 @@ SectionEnd
 Section "Handle Ogg Media files" SecRegisterOgg
   WriteRegStr HKCR ".ogg" "" "${CONFIG_PROG_ID}"
   WriteRegStr HKCR ".ogm" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".oga" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".ogv" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".ogx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Matroska Media files" SecRegisterMkv
@@ -1181,6 +1184,9 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".dts" ${SecRegisterDts}
   !insertmacro checkExtensionHandled ".ogg" ${SecRegisterOgg}
   !insertmacro checkExtensionHandled ".ogm" ${SecRegisterOgg}
+  !insertmacro checkExtensionHandled ".oga" ${SecRegisterOgg}
+  !insertmacro checkExtensionHandled ".ogv" ${SecRegisterOgg}
+  !insertmacro checkExtensionHandled ".ogx" ${SecRegisterOgg}
   !insertmacro checkExtensionHandled ".mkv" ${SecRegisterMkv}
   !insertmacro checkExtensionHandled ".mka" ${SecRegisterMkv}
   !insertmacro checkExtensionHandled ".mks" ${SecRegisterMkv}
