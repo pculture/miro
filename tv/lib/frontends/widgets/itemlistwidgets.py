@@ -800,23 +800,13 @@ class HideableSection(widgetutil.HideableWidget):
         hbox.pack_start(widgetutil.pad(self.info_label, left=7))
         self.expander.set_label(hbox)
 
-class DisplayToolbar(widgetset.Background):
-    def draw(self, context, layout):
-        pass
-        # XXX review me
-        # gradient = widgetset.Gradient(0, 0, 0, context.height)
-        # gradient.set_start_color((0.90, 0.90, 0.90))
-        # gradient.set_end_color((0.79, 0.79, 0.79))
-        # context.rectangle(0, 0, context.width, context.height)
-        # context.gradient_fill(gradient)
-
-class DownloadStatusToolbar(DisplayToolbar):
+class DownloadStatusToolbar(widgetset.Toolbar):
     """Widget that shows free space and download and upload speed
     status.
     """
 
     def __init__(self):
-        DisplayToolbar.__init__(self)
+        widgetset.Toolbar.__init__(self)
 
         v = widgetset.VBox()
 
