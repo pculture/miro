@@ -59,7 +59,6 @@ class BrowserToolbar(widgetset.Titlebar):
         hbox = widgetset.HBox()
         self.add(hbox)
 
-        #self.set_size_request(-1, 33)
         self.create_signal('browser-reload')
         self.create_signal('browser-back')
         self.create_signal('browser-forward')
