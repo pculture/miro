@@ -108,6 +108,8 @@ def init(languages=None, localedir=None):
             codeset="UTF-8",
             fallback=True)
 
+    codeset = locale.getlocale()[1]
+
     _gtcache = {}
 
 def declarify(text):
