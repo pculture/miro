@@ -1515,11 +1515,11 @@ class ItemDetailsWidget(widgetset.VBox):
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
         self._expanded = False
-        self.license_info = None
+        self.license_url = None
 
     def on_license_clicked(self, button):
-        if self.license_info:
-            app.widgetapp.open_url(self.license_info)
+        if self.license_url:
+            app.widgetapp.open_url(self.license_url)
 
     def build_right(self):
         vbox = widgetset.VBox()
@@ -1532,7 +1532,6 @@ class ItemDetailsWidget(widgetset.VBox):
             top_pad=self.PADDING_ABOVE_TITLE))
         self.license_button = widgetset.Button(_('View License'))
         self.license_button.connect('clicked', self.on_license_clicked)
-        self.license_label = self.build_description_label()
         self.license_holder = widgetutil.WidgetHolder()
         vbox.pack_start(widgetutil.align_left(self.license_holder))
         torrent_info_hbox = widgetset.HBox(spacing=12)
@@ -1646,14 +1645,23 @@ class ItemDetailsWidget(widgetset.VBox):
         self.extra_info_label.set_text(' | '.join(parts))
 
     def setup_license_button(self, info):
-        self.license_info = info.license
-        if not self.license_info:
-            self.license_holder.unset()
-        elif self.license_info.startswith("http://"):
-            self.license_holder.set(self.license_button)
+        if info.license and info.license.startswith("http://"):
+            # try license_info first
+            self._set_license_url(info.license)
+        elif info.permalink:
+            # Fallback to the website
+            self._set_license_url(info.permalink)
         else:
-            self.license_label.set_text(self.license_info)
-            self.license_holder.set(self.license_label)
+            # hide the button if nothing else works
+            self._unset_license_url()
+
+    def _set_license_url(self, url):
+        self.license_holder.set(self.license_button)
+        self.license_url = url
+
+    def _unset_license_url(self):
+        self.license_holder.unset()
+        self.license_url = None
 
     def clear(self):
         self.title_label.set_text('')
