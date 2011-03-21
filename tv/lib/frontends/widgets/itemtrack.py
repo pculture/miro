@@ -167,6 +167,10 @@ class ItemListTracker(signals.SignalEmitter):
         self.emit('items-will-change', added, changed, removed)
         self.item_list.get_sort().items_will_change(added, changed, removed)
 
+    def is_filtering(self):
+        """Check if we are filtering out any items."""
+        return self.search_filter.is_filtering()
+
     def add_initial_items(self, items):
         self.saw_initial_list = True
         items = self.search_filter.filter_initial_list(items)
@@ -235,6 +239,9 @@ class SearchFilter(object):
         self._pending_adds = []
         self._pending_changes = []
         self._pending_removals = []
+
+    def is_filtering(self):
+        return len(self.all_items) > len(self.matching_ids)
 
     def filter_initial_list(self, items):
         """Filter a list of incoming items.

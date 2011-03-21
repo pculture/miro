@@ -829,7 +829,8 @@ class ItemListController(object):
         self.check_for_empty_list()
 
     def check_for_empty_list(self):
-        list_empty = (self.item_list.get_count() == 0)
+        list_empty = (self.item_list.get_count() == 0 and
+                self.item_tracker.is_filtering())
         self.widget.set_list_empty_mode(list_empty)
 
     def update_resume_button(self):
