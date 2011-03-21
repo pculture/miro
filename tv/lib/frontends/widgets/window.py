@@ -48,17 +48,17 @@ class MiroWindow(widgetset.MainWindow):
 
         GREY = (0.85, 0.85, 0.85)
         vbox = widgetset.VBox()
-        vbox.pack_start(separator.HSeparator(GREY))
+        vbox.pack_start(separator.HThinSeparator(GREY))
         vbox.pack_start(tablist.TabListBox(), expand=True)
 
         hbox = widgetset.HBox()
         hbox.pack_start(vbox, expand=True)
-        hbox.pack_start(separator.VSeparator(GREY))
+        hbox.pack_start(separator.VThinSeparator(GREY))
 
         self.main_area_holder = widgetutil.WidgetHolder()
 
         main_hbox = widgetset.HBox()
-        main_hbox.pack_start(separator.VSeparator(GREY))
+        main_hbox.pack_start(separator.VThinSeparator(GREY))
         main_hbox.pack_start(self.main_area_holder, expand=True)
         
         self.splitter = widgetset.Splitter()
