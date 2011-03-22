@@ -744,6 +744,7 @@ class ItemRendererCanvas(object):
             right = get_image(image_prefix + '-right-pressed')
         # make text box
         self.layout_manager.set_font(ROUNDED_BUTTON_FONT_SIZE)
+        self.layout_manager.set_text_color(ITEM_DESC_COLOR)
         textbox = self.layout_manager.textbox(text)
         # make button
         button = widgetutil.ThreeImageTextSurface(textbox, left, middle,
@@ -1287,7 +1288,7 @@ class ConversionItemRenderer(ItemRendererBase):
         elif self.info.state == 'finished':
             self.add_finished_info()
         else:
-            self.add_main_button_text(CANCEL_TEXT, 'cancel')
+            self.canvas.add_main_button_text(CANCEL_TEXT, 'cancel')
         return self.canvas.finish()
 
     def add_thumbnail(self):
