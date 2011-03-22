@@ -6,7 +6,6 @@ from miro.item import Item, FeedParserValues
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.folder import PlaylistFolder, PlaylistFolderItemMap
 from miro import app
-from miro import storedatabase
 from miro import tabs
 from miro.test.framework import (
     EventLoopTest, MiroTestCase, skip_for_platforms)
@@ -192,8 +191,10 @@ class Upgrade88TestCase(MiroTestCase):
             playlist_maps.add((map.playlist_id, map.item_id, map.position))
             self.assert_(map.id is not None)
 
-        playlist1 = SavedPlaylist.make_view("title='playlist1'").get_singleton()
-        playlist2 = SavedPlaylist.make_view("title='playlist2'").get_singleton()
+        playlist1 = SavedPlaylist.make_view(
+            "title='playlist1'").get_singleton()
+        playlist2 = SavedPlaylist.make_view(
+            "title='playlist2'").get_singleton()
         folder = PlaylistFolder.make_view().get_singleton()
 
         # Double check that we have the right item ids

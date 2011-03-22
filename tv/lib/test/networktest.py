@@ -1,7 +1,6 @@
 import email.Utils
 import socket
 
-from miro import download_utils
 from miro import net
 from miro.test.framework import EventLoopTest, MiroTestCase
 
@@ -105,8 +104,8 @@ class FakeStream:
         if text is not None:
             if method == "GET":
                 if ((uri == '/BasicAuthentication/'
-                     and (not headers.has_key('Authorization')
-                          or headers['Authorization'] != 'Basic Z3Vlc3Q6Z3Vlc3Q='))):
+                     and (headers.get('Authorization') !=
+                          'Basic Z3Vlc3Q6Z3Vlc3Q='))):
                     text = "Not authorized"
                     return "\r\n".join([
                             "HTTP/1.1 401 Unauthorized",
@@ -123,7 +122,9 @@ class FakeStream:
                     text = "Not authorized"
                     return "\r\n".join([
                             "HTTP/1.1 401 Unauthorized",
-                            "WWW-Authenticate: Digest realm=\"test\",domain=\"/DigestAuthentication\",nonce=\"13dc6f6b70fec989c0d5bd5956818b33\"",
+                            ("WWW-Authenticate: Digest realm=\"test\","
+                             "domain=\"/DigestAuthentication\","
+                             "nonce=\"13dc6f6b70fec989c0d5bd5956818b33\""),
                             "Content-Type: text/html; charset=UTF-8",
                             "Date: %s" % now,
                             "Content-Length: %d" % len(text),
@@ -154,7 +155,8 @@ class FakeStream:
                     return "\r\n".join([
                             "HTTP/1.1 200 OK",
                             "Content-Type: text/plain; charset=UTF-8",
-                            "Set-Cookie: MiroTestCookie=foobar; path=/; domain=pculture.org",
+                            ("Set-Cookie: MiroTestCookie=foobar; path=/; "
+                             "domain=pculture.org"),
                             "Last-Modified: %s" % now,
                             "Date: %s" % now,
                             "Content-Length: %d" % len(text),
@@ -376,7 +378,8 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             conn = net.AsyncSocket()
-            conn.accept_connection(socket.AF_INET, '127.0.0.1', 0, self.callback, self.errback)
+            conn.accept_connection(socket.AF_INET, '127.0.0.1', 0,
+                                   self.callback, self.errback)
             sock.connect((conn.addr, conn.port))
             conn.close_connection()
             self.runEventLoop(timeout=1, timeoutNormal=True)

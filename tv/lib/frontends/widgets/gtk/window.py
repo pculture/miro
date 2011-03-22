@@ -31,11 +31,9 @@
 
 import StringIO
 
-import pango
 import gobject
 import gtk
 import os
-import logging
 
 from miro import app
 from miro import prefs
@@ -47,7 +45,6 @@ from miro.frontends.widgets.gtk import wrappermap, widgets
 from miro.frontends.widgets.gtk import keymap, layout
 from miro.frontends.widgets import menus
 from miro.plat import resources
-from miro.plat import utils
 
 # keeps the objects alive until destroy() is called
 alive_windows = set()
@@ -81,7 +78,8 @@ for i in range(1, 13):
     keymap.menubar_key_map[getattr(menus, name)] = name
 
 def get_accel_string(shortcut):
-    mod_str = ''.join(keymap.menubar_mod_map[mod] for mod in shortcut.modifiers)
+    mod_str = ''.join(
+        keymap.menubar_mod_map[mod] for mod in shortcut.modifiers)
     key_str = keymap.menubar_key_map.get(shortcut.shortcut, shortcut.shortcut)
     return mod_str + key_str
 
@@ -200,7 +198,8 @@ class WindowBase(signals.SignalEmitter):
 
         # If the renderer supports it, create a the subtitle encodings menu
         try:
-            app.video_renderer.setup_subtitle_encoding_menu(self.menu_structure)
+            app.video_renderer.setup_subtitle_encoding_menu(
+                self.menu_structure)
         except AttributeError:
             pass
 
@@ -213,7 +212,6 @@ class WindowBase(signals.SignalEmitter):
 
         outstream = StringIO.StringIO()
         outstream.write('<ui><menubar name="MiroMenu">')
-        extra_accelerators = []
         for mem in self.menu_structure.menuitems:
             self._add_menu(mem, outstream)
         outstream.write('</menubar>')
@@ -314,7 +312,8 @@ class WindowBase(signals.SignalEmitter):
         # make a bunch of SubtitleTrack# actions
         self._raw_check_action("SubtitlesDisabled", _("Disable Subtitles"),
                                ["AlwaysOn"], self.on_subtitles_change, -1)
-        radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
+        radio_group = self.action_groups["AlwaysOn"].get_action(
+            "SubtitlesDisabled")
         for i in range(199):
             self._raw_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
@@ -330,10 +329,12 @@ class WindowBase(signals.SignalEmitter):
     def on_subtitles_change(self, action, track_index):
         if hasattr(self, "_ignore_on_subtitles_change"):
             return
-        if action.get_property("current-value") != action.get_property("value"):
+        if action.get_property("current-value") != action.get_property(
+            "value"):
             return
         action_group = self.action_groups["AlwaysOn"]
-        action_group.get_action("SubtitlesDisabled").current_value = track_index
+        action_group.get_action(
+            "SubtitlesDisabled").current_value = track_index
         if track_index == -1:
             app.video_renderer.disable_subtitles()
         else:
@@ -464,7 +465,8 @@ class MainWindow(Window):
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
         app.menu_manager.connect('radio-group-changed', self.on_radio_change)
         app.menu_manager.connect('checked-changed', self.on_checked_change)
-        app.playback_manager.connect('did-start-playing', self.on_playback_change)
+        app.playback_manager.connect('did-start-playing',
+                                     self.on_playback_change)
         app.playback_manager.connect('will-play', self.on_playback_change)
         app.playback_manager.connect('did-stop', self.on_playback_change)
 
@@ -487,7 +489,8 @@ class MainWindow(Window):
         self.emit('save-dimensions', x, y, width, height)
 
     def on_window_state_event(self, widget, event):
-        maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
+        maximized = bool(
+            event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         self.emit('save-maximized', maximized)
 
     def on_key_release(self, widget, event):
@@ -507,8 +510,8 @@ class MainWindow(Window):
                 action_group.set_visible(True)
                 action_group.set_sensitive(True)
             else:
-                # TODO: don't hard-code this here; probably put a "hide when not
-                # checked" property on check menu class --Kaz
+                # TODO: don't hard-code this here; probably put a "hide when
+                # not checked" property on check menu class --Kaz
                 if name.startswith('column-'):
                     action_group.set_visible(False)
                 else:
@@ -536,14 +539,17 @@ class MainWindow(Window):
         action_groups = self.action_groups
 
         def change_label(group, action, newlabel):
-            action_groups[group].get_action(action).set_property("label", newlabel)
+            action_groups[group].get_action(action).set_property("label",
+                                                                 newlabel)
 
         change_label("RemoveAllowed", "RemoveSomething", removeSomething)
         change_label("PodcastsSelected", "UpdatePodcasts", updatePodcasts)
         change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
-        change_label("LocalPlayablesSelected_PlayPause", "RemoveItems", removeItems)
+        change_label("LocalPlayablesSelected_PlayPause", "RemoveItems",
+                     removeItems)
 
-        play_pause = self.menu_structure.get("PlayPauseItem").state_labels[menu_manager.play_pause_state]
+        play_pause = self.menu_structure.get("PlayPauseItem").state_labels[
+            menu_manager.play_pause_state]
         change_label("PlayPause", "PlayPauseItem", play_pause)
 
     def on_radio_change(self, menu_manager, radio_group, value):
@@ -594,7 +600,8 @@ class MainWindow(Window):
       <menu action="SubtitlesMenu">
 ''')
         for i, lang in tracks:
-            outstream.write('         <menuitem action="SubtitleTrack%d"/>\n' % i)
+            outstream.write(
+                '         <menuitem action="SubtitleTrack%d"/>\n' % i)
         outstream.write('''         <separator/>
          <menuitem action="SubtitlesDisabled"/>
          <menuitem action="SubtitlesSelect"/>
@@ -603,13 +610,16 @@ class MainWindow(Window):
 </menubar>
 </ui>''')
 
-        self._merge_id = self.ui_manager.add_ui_from_string(outstream.getvalue())
+        self._merge_id = self.ui_manager.add_ui_from_string(
+            outstream.getvalue())
 
         action_group = self.action_groups["AlwaysOn"]
         for i, lang in tracks:
-            action_group.get_action("SubtitleTrack%d" % i).set_property("label", lang)
+            action_group.get_action("SubtitleTrack%d" % i).set_property(
+                "label", lang)
 
-        action_group.get_action("SubtitlesDisabled").set_property("current-value", enabled_track)
+        action_group.get_action("SubtitlesDisabled").set_property(
+            "current-value", enabled_track)
 
     def _clear_subtitles_menu(self):
         if self._merge_id is not None:
@@ -813,11 +823,12 @@ class DirectorySelectDialog(FileDialogBase):
         FileDialogBase.__init__(self)
         self._files = None
         choose_str =_('Choose').encode('utf-8')
-        fcd = gtk.FileChooserDialog(title,
-                                    action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                                    buttons=(gtk.STOCK_CANCEL,
-                                             gtk.RESPONSE_CANCEL,
-                                             choose_str, gtk.RESPONSE_OK))
+        fcd = gtk.FileChooserDialog(
+            title,
+            action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+            buttons=(gtk.STOCK_CANCEL,
+                     gtk.RESPONSE_CANCEL,
+                     choose_str, gtk.RESPONSE_OK))
         self.set_window(fcd)
 
     def set_directory(self, text):

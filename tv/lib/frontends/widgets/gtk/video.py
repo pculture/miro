@@ -33,21 +33,17 @@ import time
 
 import gobject
 import gtk
-import logging
 
 from miro import app
 from miro import player
 from miro.gtcache import gettext as _
-from miro import signals
-from miro import util
 from miro import messages
-from miro import displaytext
 from miro.plat import resources
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
 from miro.frontends.widgets.gtk.widgetset import (
     Widget, VBox, Label, HBox, Alignment, Background, DrawingArea,
-    ImageSurface, Image, CustomButton, ClickableImageButton)
+    ClickableImageButton)
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
@@ -266,8 +262,6 @@ class VideoDetailsWidget(Background):
             self.add(HBox())
             return
 
-        info = self.item_info
-
         left_side_hbox = HBox(5)
         right_side_hbox = HBox(5)
 
@@ -320,7 +314,8 @@ class VideoDetailsWidget(Background):
         right_side_hbox.pack_start(_align_middle(self._delete_link))
 
         outer_hbox = HBox()
-        outer_hbox.pack_start(_align_left(left_side_hbox, left_pad=10), expand=True)
+        outer_hbox.pack_start(_align_left(left_side_hbox, left_pad=10),
+                              expand=True)
         outer_hbox.pack_start(_align_right(right_side_hbox, right_pad=10))
         self.add(outer_hbox)
 
@@ -582,8 +577,7 @@ class VideoPlayer(player.Player, VBox):
         duration = self.get_total_playback_time()
         if duration is None:
             return
-        time = duration * position
-        self.seek_to_time(time)
+        self.seek_to_time(duration * position)
 
     def seek_to_time(self, time_pos):
         self.renderer.set_current_time(time_pos)

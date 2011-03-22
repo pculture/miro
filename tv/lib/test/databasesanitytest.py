@@ -3,14 +3,10 @@ because we don't do that much sanity checking.
 """
 
 import os
-import unittest
 
-from miro import iconcache
 from miro import item
 from miro import feed
 from miro import databasesanity
-from miro import database
-from miro import util
 from miro.fileobject import FilenameType
 
 from miro.test.framework import MiroTestCase

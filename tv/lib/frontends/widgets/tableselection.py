@@ -36,8 +36,8 @@ from contextlib import contextmanager
 
 import logging
 
-from miro.errors import (WidgetActionError, WidgetDomainError,
-     WidgetNotReadyError, UnexpectedWidgetError, WidgetUsageError)
+from miro.errors import (WidgetActionError, WidgetNotReadyError,
+                         WidgetUsageError)
 
 class SelectionOwnerMixin(object):
     """Encapsulates the selection functionality of a TableView, for
@@ -85,7 +85,7 @@ class SelectionOwnerMixin(object):
 
     def select(self, iter_):
         """Try to select an iter.
-        
+
         :raises WidgetActionError: iter does not exist or is not selectable
         """
         self._validate_iter(iter_)
@@ -225,7 +225,8 @@ class SelectionOwnerMixin(object):
                 iter_ = self._iter_from_smart_selector(selector)
             except WidgetActionError:
                 self._real_selection = None
-                logging.warning("can't restore selection - deleted?", exc_info=True)
+                logging.warning("can't restore selection - deleted?",
+                                exc_info=True)
                 self.emit('selection-invalid')
                 break
             else:
@@ -257,9 +258,9 @@ class SelectionOwnerMixin(object):
 
     @contextmanager
     def _ignoring_changes(self):
-        """Use this with with to prevent sending signals when we're changing our
-        own selection; that way, when we get a signal, we know it's something
-        important.
+        """Use this with with to prevent sending signals when we're changing
+        our own selection; that way, when we get a signal, we know it's
+        something important.
         """
         self._ignore_selection_changed += 1
         try:

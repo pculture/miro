@@ -1,15 +1,11 @@
 import os
 import unittest
-from datetime import datetime
 from time import sleep
 
 from miro import app
 from miro import prefs
 from miro import dialogs
-from miro import database
-from miro import storedatabase
 from miro import feedparserutil
-from miro.plat import resources
 from miro.item import Item
 from miro.feed import validate_feed_url, normalize_feed_url, Feed
 
@@ -153,26 +149,36 @@ class SimpleFeedTestCase(FeedTestCase):
       <item>
          <title>Star City</title>
          <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.mov</link>
-         <description>How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's &lt;a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm"&gt;Star City&lt;/a&gt;.</description>
+         <description>How do Americans get ready to work with Russians aboard \
+the International Space Station? They take a crash course in culture, \
+language and protocol at Russia's &lt;a href="http://howe.iki.rssi.ru/GCTC/\
+gctc_e.htm"&gt;Star City&lt;/a&gt;.</description>
          <pubDate>Tue, 03 Jun 2003 09:39:21 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</guid>
       </item>
       <item>
-         <description>Sky watchers in Europe, Asia, and parts of Alaska and Canada will experience a &lt;a href="http://science.nasa.gov/headlines/y2003/30may_solareclipse.htm"&gt;partial eclipse of the Sun&lt;/a&gt; on Saturday, May 31st.</description>
+         <description>Sky watchers in Europe, Asia, and parts of Alaska and \
+Canada will experience a &lt;a href="http://science.nasa.gov/headlines/y2003/\
+30may_solareclipse.htm"&gt;partial eclipse of the Sun&lt;/a&gt; on Saturday, \
+May 31st.</description>
          <pubDate>Fri, 30 May 2003 11:06:42 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/05/30.html#item572</guid>
       </item>
       <item>
          <title>The Engine That Does More</title>
          <link>http://liftoff.msfc.nasa.gov/news/2003/news-VASIMR.asp</link>
-         <description>Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar System more quickly.  The proposed VASIMR engine would do that.</description>
+         <description>Before man travels to Mars, NASA hopes to design new \
+engines that will let us fly through the Solar System more quickly.  The \
+proposed VASIMR engine would do that.</description>
          <pubDate>Tue, 27 May 2003 08:37:32 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/05/27.html#item571</guid>
       </item>
       <item>
          <title>Astronauts' Dirty Laundry</title>
          <link>http://liftoff.msfc.nasa.gov/news/2003/news-laundry.asp</link>
-         <description>Compared to earlier spacecraft, the International Space Station has many luxuries, but laundry facilities are not one of them.  Instead, astronauts have other options.</description>
+         <description>Compared to earlier spacecraft, the International Space \
+Station has many luxuries, but laundry facilities are not one of them.  \
+Instead, astronauts have other options.</description>
          <pubDate>Tue, 20 May 2003 08:56:02 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/05/20.html#item570</guid>
       </item>
@@ -226,7 +232,8 @@ class MultiFeedExpireTest(FeedTestCase):
    <channel>
       <title>Downhill Battle Pics</title>
       <link>http://downhillbattle.org/</link>
-      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <description>Downhill Battle is a non-profit organization working to \
+support participatory culture and build a fairer music industry.</description>
       <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
 """)
 
@@ -266,7 +273,8 @@ class EnclosureFeedTestCase(FeedTestCase):
    <channel>
       <title>Downhill Battle Pics</title>
       <link>http://downhillbattle.org/</link>
-      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <description>Downhill Battle is a non-profit organization working to \
+support participatory culture and build a fairer music industry.</description>
       <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
       <item>
          <title>Bumper Sticker</title>
@@ -276,17 +284,20 @@ class EnclosureFeedTestCase(FeedTestCase):
       </item>
       <item>
          <title>T-shirt</title>
-         <enclosure url="http://downhillbattle.org/key/gallery/payola_tshirt.mpg" />
+         <enclosure url="http://downhillbattle.org/key/gallery/\
+payola_tshirt.mpg" />
       </item>
       <item>
          <enclosure url="http://downhillbattle.org/key/gallery/chriscE.mpg" />
          <description>Flyer in Yucaipa, CA</description>
       </item>
       <item>
-         <enclosure url="http://downhillbattle.org/key/gallery/jalabel_nov28.mpg" />
+         <enclosure url="http://downhillbattle.org/key/gallery/\
+jalabel_nov28.mpg" />
       </item>
       <item>
-         <enclosure url="http://downhillbattle.org/key/gallery/jalabel_nov28.jpg" />
+         <enclosure url="http://downhillbattle.org/key/gallery/\
+jalabel_nov28.jpg" />
       </item>
 
    </channel>
@@ -321,7 +332,8 @@ class OldItemExpireTest(FeedTestCase):
    <channel>
       <title>Downhill Battle Pics</title>
       <link>http://downhillbattle.org/</link>
-      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <description>Downhill Battle is a non-profit organization working to \
+support participatory culture and build a fairer music industry.</description>
       <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
 """)
 
@@ -382,7 +394,8 @@ class OldItemExpireTest(FeedTestCase):
         self.check_guids(2, 3, 4, 5, 6)
 
     def test_overflow_with_max_old_items(self):
-        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
+        app.config.set(
+            prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
         self.assertEqual(Item.make_view().count(), 2)
         self.parse_new_feed()
         self.assertEquals(Item.make_view().count(), 4)
@@ -404,7 +417,8 @@ class OldItemExpireTest(FeedTestCase):
         self.check_guids(3, 4, 5, 6)
 
     def test_overflow_with_global_max_old_items(self):
-        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
+        app.config.set(
+            prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
         self.assertEqual(Item.make_view().count(), 2)
         self.parse_new_feed()
         self.assertEquals(Item.make_view().count(), 4)
@@ -460,20 +474,23 @@ class FeedParserAttributesTestCase(FeedTestCase):
     <channel>
         <title>Downhill Battle Pics</title>
         <link>http://downhillbattle.org/</link>
-        <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+        <description>Downhill Battle is a non-profit organization working to \
+support participatory culture and build a fairer music industry.</description>
         <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
 
         <item>
             <title>Bumper Sticker</title>
             <link>http://downhillbattle.org/item</link>
             <comments>http://downhillbattle.org/item/comments</comments>
-            <creativeCommons:license>http://www.creativecommons.org/licenses/by-nd/1.0</creativeCommons:license>
+            <creativeCommons:license>http://www.creativecommons.org/licenses/\
+by-nd/1.0</creativeCommons:license>
             <guid>guid-1234</guid>
             <enclosure url="http://downhillbattle.org/key/gallery/movie.mpg"
                 length="1234"
                 type="video/mpeg"
                 />
-            <description>I'm a musician and I support filesharing.</description>
+            <description>I'm a musician and I support filesharing.\
+</description>
             <pubDate>Fri, 18 Mar 2005 12:03:42 EST</pubDate>
             <media:thumbnail url="%(thumburl)s" />
             <dtv:paymentlink url="http://www.example.com/payment.html" />
@@ -487,7 +504,8 @@ class FeedParserAttributesTestCase(FeedTestCase):
     def test_attributes(self):
         entry = self.parsed_feed.entries[0]
         self.assertEquals(self.item.get_rss_id(), entry.id)
-        self.assertEquals(self.item.get_thumbnail_url(), entry.thumbnail['url'])
+        self.assertEquals(self.item.get_thumbnail_url(),
+                          entry.thumbnail['url'])
         self.assertEquals(self.item.get_title(), entry.title)
         self.assertEquals(self.item.get_description(), entry.description)
         self.assertEquals(self.item.get_link(), entry.link)

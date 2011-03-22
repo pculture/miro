@@ -32,13 +32,12 @@
 
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets.itemlistwidgets import (
-    StandardView, DownloadTitlebar, DownloadStatusToolbar)
+    DownloadTitlebar, DownloadStatusToolbar)
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import prefpanel
 
 from miro import messages
 from miro import downloader
-from miro.plat.frontends.widgets import widgetset
 
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):

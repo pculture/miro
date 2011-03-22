@@ -1,7 +1,6 @@
 from datetime import datetime
 import os
 import unittest
-from glob import glob
 import time
 
 from miro import app
@@ -24,11 +23,10 @@ from miro import storedatabase
 from miro.plat import resources
 from miro.plat.utils import PlatformFilenameType
 
-from miro.test.framework import (
-    MiroTestCase, EventLoopTest, skip_for_platforms)
+from miro.test.framework import EventLoopTest, skip_for_platforms
 from miro.schema import (SchemaString, SchemaInt, SchemaFloat,
                          SchemaReprContainer, SchemaList, SchemaDict,
-                         SchemaObject, SchemaBool, SchemaFilename,
+                         SchemaBool, SchemaFilename,
                          SchemaBinary)
 
 # create a dummy object schema
@@ -530,7 +528,9 @@ class ConverterTest(StoreDatabaseTest):
         self.assertEquals(val, {"updated_parsed":
                                 (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
 
-        test2 = """{'updated_parsed': time.struct_time(tm_year=2009, tm_mon=6, tm_mday=5, tm_hour=1, tm_min=30, tm_sec=0, tm_wday=4, tm_yday=156, tm_isdst=0)}"""
+        test2 = """{'updated_parsed': time.struct_time(tm_year=2009, \
+tm_mon=6, tm_mday=5, tm_hour=1, tm_min=30, tm_sec=0, tm_wday=4, tm_yday=156, \
+tm_isdst=0)}"""
         val = converter._convert_repr(test2)
         self.assertEquals(val, {"updated_parsed":
                                 (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
@@ -601,7 +601,8 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
 
     def test_corrupt_past_themes(self):
         app.db.cursor.execute("UPDATE theme_history "
-                "SET pastThemes='[1, 2; 3 ]' WHERE id=?", (self.theme_hist.id,))
+                "SET pastThemes='[1, 2; 3 ]' WHERE id=?",
+                              (self.theme_hist.id,))
         self.check_fixed_value(self.theme_hist, 'pastThemes', [])
 
     def test_corrupt_display_state(self):

@@ -32,7 +32,6 @@ handles laying out complex objects for the custom drawing code like
 text blocks and buttons.
 """
 
-import itertools
 import math
 
 import cairo
@@ -487,7 +486,8 @@ class StyledButton(object):
         inner_width = width - radius * 2
         context.move_to(x + radius, y)
         context.rel_line_to(inner_width, 0)
-        context.arc(x + width - radius, y+radius, radius, -math.pi/2, math.pi/2)
+        context.arc(x + width - radius, y+radius, radius, -math.pi/2,
+                    math.pi/2)
         context.rel_line_to(-inner_width, 0)
         context.arc(x + radius, y+radius, radius, math.pi/2, -math.pi/2)
 

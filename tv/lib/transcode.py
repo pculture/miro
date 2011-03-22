@@ -39,7 +39,6 @@ import sys
 import SocketServer
 import threading
 
-from miro import app
 from miro import util
 from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
                              get_segmenter_executable_path, thread_body,
@@ -317,18 +316,19 @@ class TranscodeObject(object):
             args = [ffmpeg_exe, "-i", self.media_file]
             if self.time_offset:
                 logging.debug('transcode: start job @ %d' % self.time_offset)
-                args += TranscodeObject.time_offset_args + [str(self.time_offset)]
+                args += TranscodeObject.time_offset_args + [
+                    str(self.time_offset)]
             if self.has_video:
                 args += get_transcode_video_options()
             if self.has_audio:
                 args += get_transcode_audio_options()
             else:
                raise ValueError('no video or audio stream present')
-    
+
             args += TranscodeObject.output_args
             logging.debug('Running command %s' % ' '.join(args))
             self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
-    
+
             segmenter_exe = get_segmenter_executable_path()
             args = [segmenter_exe]
             address, port = self.sink.server_address
@@ -340,7 +340,7 @@ class TranscodeObject(object):
             # XXX Can't use this - need to pass on the child fds
             #if os.name != "nt":
             #    kwargs["close_fds"] = True
-    
+
             logging.debug('Running command %s' % ' '.join(args))
             self.segmenter_handle = subprocess.Popen(args, **kwargs)
    

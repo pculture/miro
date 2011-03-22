@@ -34,7 +34,6 @@ innards.
 import readline
 import rlcompleter
 import code
-import threading
 
 from miro import app
 from miro import startup
@@ -59,7 +58,8 @@ class MessageHandler(messages.MessageHandler):
         imported_objects = {}
         for mod in ('database', 'feed', 'item', 'models'):
             imported_objects[mod] = getattr(__import__('miro.%s' % mod), mod)
-        readline.set_completer(rlcompleter.Completer(imported_objects).complete)
+        readline.set_completer(
+            rlcompleter.Completer(imported_objects).complete)
         readline.parse_and_bind("tab:complete")
         code.interact(local=imported_objects)
 

@@ -1,7 +1,5 @@
-import os
 import unittest
 
-from miro import subscription
 from miro import autodiscover
 from miro import feed
 from miro import opml
@@ -33,7 +31,7 @@ def _get_subs(entry):
   %s
 </body>
 </opml>""" % entry
-        
+
     return autodiscover.parse_content(teststring)
 
 class TestImporter(unittest.TestCase):
@@ -56,8 +54,8 @@ class TestImporter(unittest.TestCase):
 
         subscriptions = autodiscover.parse_content(teststring)
         self.assertEquals(len(subscriptions), 4)
-        for feed in subscriptions:
-            self.assertEquals(feed['type'], 'feed')
+        for feed_ in subscriptions:
+            self.assertEquals(feed_['type'], 'feed')
         self.assertEquals(subscriptions[0]['url'], URL_1)
         self.assertEquals(subscriptions[1]['url'], URL_3)
         self.assertEquals(subscriptions[2]['url'], URL_2)
@@ -90,8 +88,8 @@ class TestImporter(unittest.TestCase):
 
         subscriptions = autodiscover.parse_content(teststring)
         self.assertEquals(len(subscriptions), 4)
-        for feed in subscriptions:
-            self.assertEquals(feed['type'], 'feed')
+        for feed_ in subscriptions:
+            self.assertEquals(feed_['type'], 'feed')
 
         self.assertEquals(subscriptions[0]['url'], URL_1)
         self.assertEquals(subscriptions[1]['url'], URL_3)
@@ -104,35 +102,35 @@ class TestImporter(unittest.TestCase):
     text="GeekBeat.TV (Large MP4)"
     xmlUrl="http://revision3.com/geekbeattv/feed/MP4-Large" />
 """)
-        feed = subs[0]
+        feed_ = subs[0]
 
-        self.assertEquals(feed['type'], 'feed')
+        self.assertEquals(feed_['type'], 'feed')
         self.assertEquals(
-            feed['url'], u"http://revision3.com/geekbeattv/feed/MP4-Large")
+            feed_['url'], u"http://revision3.com/geekbeattv/feed/MP4-Large")
         self.assertEquals(
-            feed['title'], u"GeekBeat.TV (Large MP4)")
-        
+            feed_['title'], u"GeekBeat.TV (Large MP4)")
+
     def test_basic_feed_2(self):
         subs = _get_subs("""\
   <outline type="rss"
     text="The Economist: All video"
     xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
-    miro:autoDownload="off"/>  
+    miro:autoDownload="off"/>
 """)
-        feed = subs[0]
+        feed_ = subs[0]
 
-        self.assertEquals(feed['type'], 'feed')
+        self.assertEquals(feed_['type'], 'feed')
         self.assertEquals(
-            feed['url'], u"http://feeds2.feedburner.com/feedroom/xDDO")
+            feed_['url'], u"http://feeds2.feedburner.com/feedroom/xDDO")
         self.assertEquals(
-            feed['title'], u"The Economist: All video")
+            feed_['title'], u"The Economist: All video")
         self.assertEquals(
-            feed["auto_download_mode"], u"off")
+            feed_["auto_download_mode"], u"off")
 
     def test_url(self):
         # if there's no url, there shouldn't be a subscription
         subs = _get_subs("""\
-  <outline type="rss" />  
+  <outline type="rss" />
 """)
         self.assert_(len(subs) == 0)
 

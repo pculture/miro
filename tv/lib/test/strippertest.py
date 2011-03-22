@@ -13,11 +13,8 @@ You can verify the output, then copy and paste it into a .expected
 file.
 """
 
-from StringIO import StringIO
-
 import os.path
 import os
-from miro.test.framework import MiroTestCase
 from miro import util
 from miro.plat import resources
 import unittest

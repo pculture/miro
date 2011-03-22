@@ -5,8 +5,7 @@ from miro import downloader
 from miro import eventloop
 from miro import models
 from miro import prefs
-from miro.dl_daemon import command
-from miro.test.framework import MiroTestCase, EventLoopTest, uses_httpclient
+from miro.test.framework import EventLoopTest, uses_httpclient
 
 class DownloaderTest(EventLoopTest):
     """Test feeds that download things.

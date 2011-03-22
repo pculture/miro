@@ -361,7 +361,8 @@ class LibraryTabList(TabBlinkerMixin, TabList):
 
     def update_others_count(self, count):
         self.update_count('others', 'others', count) # second param no special
-                                                     # meaning for this case... ?
+                                                     # meaning for this
+                                                     # case... ?
 
     def update_new_video_count(self, count):
         self.update_count('videos', 'unwatched', count)
@@ -402,8 +403,8 @@ class HideableTabList(TabList):
 
     @contextmanager
     def preserving_expanded_rows(self):
-        """Prevent expanded rows from being collapsed by changes. Implementation
-        does not currently handle nesting.
+        """Prevent expanded rows from being collapsed by
+        changes. Implementation does not currently handle nesting.
         """
         expanded_rows = (id_ for id_, iter_ in self.iter_map.iteritems() if
             id_ == self.info.id or self.view.is_row_expanded(iter_))
@@ -466,7 +467,8 @@ class HideableTabList(TabList):
         else:
             # non-nestable tabs don't have tablist states, so we put their root
             # nodes all in one table
-            message = messages.FolderExpandedChange(self.type, info.id, expanded)
+            message = messages.FolderExpandedChange(self.type, info.id,
+                                                    expanded)
             message.send_to_backend()
         if not expanded:
             self.emit('row-collapsed', iter_, path)
@@ -672,11 +674,11 @@ class SharingTabListHandler(object):
     def init_info(self, info):
         info.type = u'sharing'
         info.unwatched = info.available = 0
-        video_playlist_id = unicode(md5(
+        info.video_playlist_id = unicode(md5(
                                     repr((u'video',
                                     info.host,
                                     info.port, u'video'))).hexdigest())
-        audio_playlist_id = unicode(md5(
+        info.audio_playlist_id = unicode(md5(
                                     repr((u'audio',
                                     info.host,
                                     info.port, u'audio'))).hexdigest())
@@ -720,7 +722,8 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
     def on_row_expanded_change(self, view, iter_, path, expanded):
         info = self.view.model[iter_][0]
         if info is self.info:
-            HideableTabList.on_row_expanded_change(self, view, iter_, path, expanded)
+            HideableTabList.on_row_expanded_change(self, view, iter_, path,
+                                                   expanded)
 
     def on_delete_key_pressed(self):
         # neither handler deals with this
@@ -888,7 +891,8 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
 
     def make_folder_context_menu(self, obj):
         return [
-            (_('Update Podcasts In Folder'), app.widgetapp.update_selected_feeds),
+            (_('Update Podcasts In Folder'),
+             app.widgetapp.update_selected_feeds),
             (_('Rename Podcast Folder'), app.widgetapp.rename_something),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]

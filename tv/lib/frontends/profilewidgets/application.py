@@ -38,14 +38,14 @@ from miro.frontends.profilewidgets import portable
 from miro.frontends.widgets import application
 
 def run_application():
-    application = build_platform_app()
+    app = build_platform_app()
     portable.setup()
 
     # monkey patch the startup method so that we don't startup the miro
     # backend.  Dirty, but it works.
-    application.startup = tests.startup
-    application.run()
-    application.setup_globals()
+    app.startup = tests.startup
+    app.run()
+    app.setup_globals()
 
 def build_platform_app():
     for name in dir(plat_application):

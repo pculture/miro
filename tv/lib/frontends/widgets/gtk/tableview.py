@@ -354,7 +354,8 @@ class HotspotTracker(object):
         # views in response to a hotspot being clicked.
         if self.treeview.flags() & gtk.REALIZED:
             cell_area = self.treeview.get_cell_area(self.path, self.column)
-            x, y = self.treeview.tree_to_widget_coords(cell_area.x, cell_area.y)
+            x, y = self.treeview.tree_to_widget_coords(cell_area.x,
+                                                       cell_area.y)
             self.treeview.queue_draw_area(x, y,
                     cell_area.width, cell_area.height)
 
@@ -506,7 +507,7 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
     def _validate_iter(self, iter_):
         if self._model.get_path(iter_) is None:
             raise WidgetDomainError(
-                  "model iters", string, "%s other iters" % len(self.model))
+                  "model iters", iter_, "%s other iters" % len(self.model))
         real_model = self._widget.get_model()
         if not real_model:
             raise WidgetActionError("no model")
@@ -622,7 +623,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self.background_color = self.make_color(color)
         self.modify_style('base', gtk.STATE_NORMAL, self.background_color)
         if not self.draws_selection:
-            self.modify_style('base', gtk.STATE_SELECTED, self.background_color)
+            self.modify_style('base', gtk.STATE_SELECTED,
+                              self.background_color)
             self.modify_style('base', gtk.STATE_ACTIVE, self.background_color)
         if self.use_custom_style:
             for column in self.columns:
@@ -645,7 +647,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self._renderer_xpad = space / 2
         for column in self.columns:
             if column.do_horizontal_padding:
-                column.renderer._renderer.set_property('xpad', self._renderer_xpad)
+                column.renderer._renderer.set_property('xpad',
+                                                       self._renderer_xpad)
 
     def set_row_spacing(self, space):
         """Set the amount of space between columns."""
@@ -863,10 +866,11 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         elif event.button == 3 and self.context_menu_callback:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
-                path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+                path_info = treeview.get_path_at_pos(int(event.x),
+                                                     int(event.y))
                 if path_info is not None:
                     path, column, x, y = path_info
-                    menu = self._popup_context_menu(path, event)
+                    self._popup_context_menu(path, event)
             self.handled_last_button_press = True
             return True
         self.handled_last_button_press = False
@@ -944,7 +948,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                     if callback is None:
                         item.set_sensitive(False)
                     elif isinstance(callback, list):
-                        submenu = gen_menu(callback)
                         item.set_submenu(gen_menu(callback))
                     else:
                         item.connect('activate', self.on_context_menu_activate,
@@ -980,7 +983,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if self.delaying_press:
                 # if dragging did not happen, unselect other rows and
                 # select current row
-                path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+                path_info = treeview.get_path_at_pos(int(event.x),
+                                                     int(event.y))
                 if path_info is not None:
                     path, column, x, y = path_info
                     self.unselect_all(signal=False)
@@ -993,7 +997,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
 
     def _redraw_cell(self, treeview, path, column):
         cell_area = treeview.get_cell_area(path, column)
-        x, y = treeview.convert_bin_window_to_widget_coords(cell_area.x, cell_area.y)
+        x, y = treeview.convert_bin_window_to_widget_coords(cell_area.x,
+                                                            cell_area.y)
         treeview.queue_draw_area(x, y, cell_area.width, cell_area.height)
 
     def _update_hover(self, treeview, event):
@@ -1007,8 +1012,10 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         else:
             self.hover_info = None
             self.hover_pos = None
-        if old_hover_info != self.hover_info or old_hover_pos != self.hover_pos:
-            if old_hover_info != self.hover_info and old_hover_info is not None:
+        if (old_hover_info != self.hover_info or
+            old_hover_pos != self.hover_pos):
+            if (old_hover_info != self.hover_info and
+                old_hover_info is not None):
                 self._redraw_cell(treeview, *old_hover_info)
             if self.hover_info is not None:
                 self._redraw_cell(treeview, *self.hover_info)
@@ -1279,7 +1286,7 @@ class TableModel(object):
 
     def get_rows(self, row_paths):
         return [self._model[path] for path in row_paths]
-    
+
     def get_path(self, iter_):
         return self._model.get_path(iter_)
 
@@ -1288,7 +1295,8 @@ class TreeTableModel(TableModel):
     MODEL_CLASS = gtk.TreeStore
 
     def append(self, *column_values):
-        return self._model.append(None, self.convert_row_for_gtk(column_values))
+        return self._model.append(None, self.convert_row_for_gtk(
+            column_values))
 
     def insert_before(self, iter, *column_values):
         parent = self._model.iter_parent(iter)
@@ -1296,7 +1304,8 @@ class TreeTableModel(TableModel):
         return self._model.insert_before(parent, iter, row)
 
     def append_child(self, iter, *column_values):
-        return self._model.append(iter, self.convert_row_for_gtk(column_values))
+        return self._model.append(iter, self.convert_row_for_gtk(
+            column_values))
 
     def child_iter(self, iter):
         return self._model.iter_children(iter)

@@ -40,19 +40,10 @@ difference is that all of the dialogs run modally.
 """
 
 from miro import app
-from miro.frontends.widgets import style
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
-from miro.dialogs import (
-    BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE,
-    BUTTON_SUBMIT_REPORT, BUTTON_YES, BUTTON_NO, BUTTON_KEEP_VIDEOS,
-    BUTTON_DELETE_VIDEOS, BUTTON_DELETE_FILE,
-    BUTTON_REMOVE_ENTRY, BUTTON_REMOVE, BUTTON_SUBSCRIBE,
-    BUTTON_CREATE_FEED, BUTTON_CONTINUE, BUTTON_QUIT, BUTTON_DELETE,
-    BUTTON_CLOSE_TO_TRAY, BUTTON_MIGRATE, BUTTON_DONT_MIGRATE,
-    BUTTON_NOT_NOW, BUTTON_ADD, BUTTON_CREATE_FOLDER,
-    BUTTON_START_FRESH)
+from miro.dialogs import BUTTON_OK, BUTTON_CANCEL
 
 WARNING_MESSAGE = 0
 INFO_MESSAGE = 1
@@ -87,7 +78,6 @@ class ProgressDialog(MainDialog):
         self.vbox = widgetset.VBox(spacing=6)
         self.vbox.pack_end(widgetutil.align_center(self.label))
         self.vbox.pack_end(self.progress_bar)
-        height = self.vbox.get_size_request()[1] + 24
         self.set_extra_widget(self.vbox)
 
     def update(self, description, progress):
@@ -115,7 +105,6 @@ class DBUpgradeProgressDialog(MainDialog):
         self.vbox.pack_end(widgetutil.align_center(self.label))
         self.vbox.pack_end(self.progress_bar)
         self.vbox.pack_end(widgetutil.pad(self.top_label, bottom=6))
-        height = self.vbox.get_size_request()[1] + 24
         self.set_extra_widget(self.vbox)
 
     def update(self, stage, stage_progress, progress):

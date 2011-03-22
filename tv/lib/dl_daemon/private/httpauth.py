@@ -30,12 +30,10 @@
 import itertools
 
 from miro.dl_daemon import command
-from miro import eventloop
 
 # Hack: we import from miro.httpauth here even though this module is about to
 # replace it.  This works because the timing of how we override modules
-from miro.httpauthtools import (HTTPAuthPassword, HTTPPasswordList,
-        decode_auth_header)
+from miro.httpauthtools import HTTPPasswordList, decode_auth_header
 
 requestIdGenerator = itertools.count()
 waitingHTTPAuthCallbacks = {}
@@ -63,7 +61,8 @@ def remove(auth):
     global password_list
     password_list.remove(auth)
     from miro.dl_daemon import daemon
-    command.RemoveHTTPAuthCommand(daemon.LAST_DAEMON, auth.url, auth.realm).send()
+    command.RemoveHTTPAuthCommand(daemon.LAST_DAEMON, auth.url,
+                                  auth.realm).send()
 
 def update_passwords(passwords):
     global password_list

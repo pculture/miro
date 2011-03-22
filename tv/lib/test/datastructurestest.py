@@ -1,4 +1,3 @@
-import unittest
 from miro import datastructures
 
 from miro.test.framework import MiroTestCase

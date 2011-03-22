@@ -110,7 +110,8 @@ class ItemContextMenuHandler(object):
                 # most recent conversion
                 last_converter = conversion_manager.get_last_conversion()
                 if last_converter is not None:
-                    converter = conversion_manager.lookup_converter(last_converter)
+                    converter = conversion_manager.lookup_converter(
+                        last_converter)
                     if converter:
                         def convert(converter=converter.identifier):
                             app.widgetapp.convert_items(converter)
@@ -275,6 +276,34 @@ class ItemContextMenuHandler(object):
         uploadable = []
         expiring = []
         editable = False
+
+        # local functions
+        def mark_unwatched():
+            for item in watched:
+                messages.MarkItemUnwatched(item).send_to_backend()
+        def mark_watched():
+            for item in unwatched:
+                messages.MarkItemWatched(item).send_to_backend()
+        def keep_videos():
+            for item in expiring:
+                if item.expiration_date:
+                    messages.KeepVideo(item.id).send_to_backend()
+        def download_all():
+            for item in available:
+                messages.StartDownload(item.id).send_to_backend()
+        def cancel_all():
+            for item in downloading:
+                messages.CancelDownload(item.id).send_to_backend()
+        def pause_all():
+            for item in downloading:
+                messages.PauseDownload(item.id).send_to_backend()
+        def resume_all():
+            for item in paused:
+                messages.ResumeDownload(item.id).send_to_backend()
+        def restart_all():
+            for item in uploadable:
+                messages.StartUpload(item.id).send_to_backend()
+
         for info in selection:
             if info.downloaded:
                 downloaded.append(info)
@@ -321,20 +350,10 @@ class ItemContextMenuHandler(object):
                                  app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
             if watched:
-                def mark_unwatched():
-                    for item in watched:
-                        messages.MarkItemUnwatched(item).send_to_backend()
                 menu.append((_('Mark as Unplayed'), mark_unwatched))
             if unwatched:
-                def mark_watched():
-                    for item in unwatched:
-                        messages.MarkItemWatched(item).send_to_backend()
                 menu.append((_('Mark as Played'), mark_watched))
             if expiring:
-                def keep_videos():
-                    for item in expiring:
-                        if item.expiration_date:
-                            messages.KeepVideo(item.id).send_to_backend()
                 menu.append((_('Keep'), keep_videos))
             if playable and not device:
                 menu.append(None)
@@ -350,9 +369,6 @@ class ItemContextMenuHandler(object):
                                   len(available),
                                   {"count": len(available)}),
                          None))
-            def download_all():
-                for item in available:
-                    messages.StartDownload(item.id).send_to_backend()
             menu.append((_('Download'), download_all))
 
         if downloading:
@@ -363,12 +379,6 @@ class ItemContextMenuHandler(object):
                                   len(downloading),
                                   {"count": len(downloading)}),
                          None))
-            def cancel_all():
-                for item in downloading:
-                    messages.CancelDownload(item.id).send_to_backend()
-            def pause_all():
-                for item in downloading:
-                    messages.PauseDownload(item.id).send_to_backend()
             menu.append((_('Cancel Download'), cancel_all))
             menu.append((_('Pause Download'), pause_all))
 
@@ -380,19 +390,10 @@ class ItemContextMenuHandler(object):
                                   len(paused),
                                   {"count": len(paused)}),
                          None))
-            def resume_all():
-                for item in paused:
-                    messages.ResumeDownload(item.id).send_to_backend()
             menu.append((_('Resume Download'), resume_all))
-            def cancel_all():
-                for item in paused:
-                    messages.CancelDownload(item.id).send_to_backend()
             menu.append((_('Cancel Download'), cancel_all))
 
         if uploadable:
-            def restart_all():
-                for item in uploadable:
-                    messages.StartUpload(item.id).send_to_backend()
             menu.append((_('Restart Upload'), restart_all))
 
         if editable:

@@ -334,7 +334,6 @@ class Table(Packer):
 
     def _generate_table_multiarray(self):
         table_multiarray = []
-        row_count = 0
         table_multiarray = [
             [None for col in range(self.col_length)]
             for row in range(self.row_length)]
@@ -373,7 +372,7 @@ class Table(Packer):
                 child_width, child_height = packing.calc_size(self._translate)
                 if packing.child:
                     if (col_distance <= x < col_distance + child_width
-                            and row_distance <= y < row_distance + child_height):
+                        and row_distance <= y < row_distance + child_height):
                         return (packing.child,
                                 col_distance, row_distance,
                                 child_width, child_height)
@@ -382,19 +381,22 @@ class Table(Packer):
 
     def _calc_size(self):
         col_sizes, row_sizes = self._get_grid_sizes()
-        x = sum(col_sizes.values()) + ((self.col_length - 1) * self.col_spacing)
-        y = sum(row_sizes.values()) + ((self.row_length - 1) * self.row_spacing)
+        x = sum(col_sizes.values()) + (
+            (self.col_length - 1) * self.col_spacing)
+        y = sum(row_sizes.values()) + (
+            (self.row_length - 1) * self.row_spacing)
         return x, y
-        
+
     def _layout(self, context, x, y, width, height):
         col_sizes, row_sizes = self._get_grid_sizes()
-  
+
         row_distance = 0
         for row_count, row in enumerate(self.table_multiarray):
             col_distance = 0
             for col_count, packing in enumerate(row):
                 if packing:
-                    child_width, child_height = packing.calc_size(self._translate)
+                    child_width, child_height = packing.calc_size(
+                        self._translate)
                     packing.child.draw(context,
                                        x + col_distance, y + row_distance,
                                        child_width, child_height)
@@ -659,7 +661,7 @@ class LayoutRect(object):
         try:
             other_values = (other.x, other.y, other.width, other.height)
         except AttributeError:
-            return value
+            return NotImplemented
         return my_values == other_values
 
     def subsection(self, left, right, top, bottom):

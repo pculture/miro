@@ -39,8 +39,8 @@ import gtk
 import gobject
 
 from miro.frontends.widgets.gtk import wrappermap
-from miro.frontends.widgets.gtk.base import Widget, Bin
-from miro.frontends.widgets.gtk.simple import (Label, Image, ImageDisplay)
+from miro.frontends.widgets.gtk.base import Widget
+from miro.frontends.widgets.gtk.simple import Label, Image
 from miro.frontends.widgets.gtk.drawing import (CustomDrawingMixin, Drawable,
     ImageSurface)
 from miro.plat.frontends.widgets import timer

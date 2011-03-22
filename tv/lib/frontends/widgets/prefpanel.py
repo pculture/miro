@@ -193,7 +193,7 @@ def attach_integer(widget, descriptor, error_widget=None, check_function=None):
     def check_value(widget):
         try:
             check_function(error_widget, int(widget.get_text().strip()))
-        except ValueError, ve:
+        except ValueError:
             error_widget.show()
 
     def save_value(widget):
@@ -243,8 +243,9 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
     :param descriptor: prefs preference
     :param error_widget: widget with show/hide methods that shows when
         the value is bad
-    :param check_function: function with signature ``widget * float -> boolean``
-        that checks the value for appropriateness
+    :param check_function: function with signature
+        ``widget * float -> boolean`` that checks the value for
+        itemappropriateness
     """
     def check_value(widget):
         try:
@@ -434,7 +435,8 @@ class GeneralPanel(PanelBuilder):
 
         warn_if_converting_cbx = widgetset.Checkbox(
             _("Warn me if I attempt to quit with conversions in progress."))
-        attach_boolean(warn_if_converting_cbx, prefs.WARN_IF_CONVERTING_ON_QUIT)
+        attach_boolean(warn_if_converting_cbx,
+                       prefs.WARN_IF_CONVERTING_ON_QUIT)
         v.pack_start(warn_if_converting_cbx)
 
         # FIXME - need to automatically generate list of available
@@ -802,8 +804,6 @@ class FoldersPanel(PanelBuilder):
 
         grid.pack_label(_('Store downloads in this folder:'), span=2)
         grid.end_line(spacing=0)
-        movies_directory_label = widgetset.Label(
-                app.config.get(prefs.MOVIES_DIRECTORY))
         grid.pack(self.movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
         grid.pack(self.movie_dir_helper.button)
         grid.end_line(spacing=18)
@@ -833,7 +833,6 @@ class DiskSpacePanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(6)
         limit_error = build_error_image()
-        note = widgetset.Label(_('GB'))
         attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
 
         def set_library_filter(self, typ, filter):
@@ -860,7 +859,8 @@ class DiskSpacePanel(PanelBuilder):
 
         grid.pack_label(_('By default, video and audio items expire after:'),
                         extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
-        grid.pack(expire_menu, extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
+        grid.pack(expire_menu,
+                  extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
 
         return grid.make_table()
 
@@ -952,16 +952,19 @@ class PlaybackPanel(PanelBuilder):
         resume_videos_cbx = widgetset.Checkbox(
             _('Continue playing videos from where they were last stopped.'))
         resume_music_cbx = widgetset.Checkbox(
-            _('Continue playing music files from where they were last stopped.'))
+            _('Continue playing music files from '
+              'where they were last stopped.'))
         resume_podcasts_cbx = widgetset.Checkbox(
-            _('Continue playing podcast files from where they were last stopped.'))
+            _('Continue playing podcast files from '
+              'where they were last stopped.'))
 
-        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_heading,
-                                                      resume_videos_cbx,
-                                                      resume_music_cbx, 
-                                                      resume_podcasts_cbx,
-                                                      subtitles_cbx, playback_heading,
-                                                      play_rb, stop_rb))
+        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO,
+                       (separate_cbx, resume_heading,
+                        resume_videos_cbx,
+                        resume_music_cbx,
+                        resume_podcasts_cbx,
+                        subtitles_cbx, playback_heading,
+                        play_rb, stop_rb))
 
         v.pack_start(widgetutil.align_left(miro_cbx, bottom_pad=6))
 
@@ -971,7 +974,7 @@ class PlaybackPanel(PanelBuilder):
         attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
         v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))
 
-        v.pack_start(widgetutil.align_left(playback_heading, 
+        v.pack_start(widgetutil.align_left(playback_heading,
                      left_pad=3, top_pad=6 , bottom_pad=6))
 
         attach_radio([(stop_rb, True), (play_rb, False)],
@@ -979,7 +982,7 @@ class PlaybackPanel(PanelBuilder):
         v.pack_start(widgetutil.align_left(play_rb), padding=2)
         v.pack_start(widgetutil.align_left(stop_rb))
 
-        v.pack_start(widgetutil.align_left(resume_heading, 
+        v.pack_start(widgetutil.align_left(resume_heading,
                      left_pad=3, top_pad=12 , bottom_pad=6))
 
         attach_boolean(resume_videos_cbx, prefs.RESUME_VIDEOS_MODE)
@@ -1203,8 +1206,6 @@ class ExtensionsPanel(PanelBuilder):
         grid = dialogwidgets.ControlGrid()
         self.extensions_helper = _ExtensionsHelper()
 
-        message_grid = dialogwidgets.ControlGrid()
-
         grid.pack_label(
             _("Extensions are a beta feature.  Developers interested "
               "in writing extensions can learn more on our wiki."))
@@ -1227,14 +1228,19 @@ class ExtensionsPanel(PanelBuilder):
 # Add the initial panels
 add_panel("general", _("General"), GeneralPanel, 'images/pref_tab_general.png')
 add_panel("feeds", _("Podcasts"), PodcastsPanel, 'images/pref_tab_feeds.png')
-add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref_tab_downloads.png')
+add_panel("downloads", _("Downloads"), DownloadsPanel,
+          'images/pref_tab_downloads.png')
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref_tab_folders.png')
-add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref_tab_disk_space.png')
-add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref_tab_playback.png')
+add_panel("disk_space", _("Disk space"), DiskSpacePanel,
+          'images/pref_tab_disk_space.png')
+add_panel("playback", _("Playback"), PlaybackPanel,
+          'images/pref_tab_playback.png')
 add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref_tab_sharing.png')
-add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref_tab_conversions.png')
+add_panel("conversions", _("Conversions"), ConversionsPanel,
+          'images/pref_tab_conversions.png')
 add_panel("stores", _("Stores"), StoresPanel, 'images/pref_tab_stores.png')
-add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref_tab_extensions.png')
+add_panel("extensions", _("Extensions"), ExtensionsPanel,
+          'images/pref_tab_extensions.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):

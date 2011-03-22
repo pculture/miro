@@ -1,8 +1,6 @@
-import logging
 import os
 import unittest
 import pprint
-import time
 
 from miro import feedparserutil
 from miro.item import FeedParserValues
@@ -162,11 +160,16 @@ class FeedParserValuesTest(unittest.TestCase):
         d = _parse_feed("http___feeds_miroguide_com_miroguide_featured.xml")
 
         for i, url in (
-            (0, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14094.jpeg"),
-            (1, u"http://s3.miroguide.com/static/media/thumbnails/200x134/5152.jpeg"),
-            (2, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14086.jpeg"),
-            (3, u"http://s3.miroguide.com/static/media/thumbnails/200x134/11717.jpeg"),
-            (4, u"http://s3.miroguide.com/static/media/thumbnails/200x134/13422.jpeg")):
+            (0, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/14094.jpeg")),
+            (1, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/5152.jpeg")),
+            (2, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/14086.jpeg")),
+            (3, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/11717.jpeg")),
+            (4, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/13422.jpeg"))):
 
             fpv = FeedParserValues(d.entries[i])
             self.assertEquals(fpv.data["thumbnail_url"], url)
@@ -174,15 +177,18 @@ class FeedParserValuesTest(unittest.TestCase):
         d = _parse_feed("http___feeds_miroguide_com_miroguide_new.xml")
 
         for i, url in (
-            (0, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14280.jpeg"),
-            (1, u"http://s3.miroguide.com/static/media/thumbnails/200x134/11715.jpeg")):
+            (0, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/14280.jpeg")),
+            (1, (u"http://s3.miroguide.com/static/media/thumbnails/"
+                 "200x134/11715.jpeg"))):
 
             fpv = FeedParserValues(d.entries[i])
             self.assertEquals(fpv.data["thumbnail_url"], url)
 
         # this feed has no thumbnails in the enclosures or in the
         # items.
-        d = _parse_feed("http___feeds_feedburner_com_earth-touch_podcast_720p.xml")
+        d = _parse_feed("http___feeds_feedburner_com_earth-touch_"
+                        "podcast_720p.xml")
 
         for i, url in (
             (0, None),
@@ -208,9 +214,12 @@ class FeedParserValuesTest(unittest.TestCase):
         d = _parse_feed("http___vodo_net_feeds_promoted.xml")
 
         for i, url in (
-            (0, u'http://vodo.net/media/thumbnails/work_127_pioneerone_uploaded.jpeg'),
-            (1, u'http://vodo.net/assets/thumbnails/snowblindmovie_QM5moDpN.jpeg'),
-            (2, u'http://vodo.net/media/thumbnails/work_142_foureyedmonsters_uploaded.jpeg')):
+            (0, (u'http://vodo.net/media/thumbnails/'
+                 'work_127_pioneerone_uploaded.jpeg')),
+            (1, (u'http://vodo.net/assets/thumbnails/'
+                 'snowblindmovie_QM5moDpN.jpeg')),
+            (2, (u'http://vodo.net/media/thumbnails/'
+                 'work_142_foureyedmonsters_uploaded.jpeg'))):
 
             fpv = FeedParserValues(d.entries[i])
             self.assertEquals(fpv.data["thumbnail_url"], url)
@@ -222,9 +231,12 @@ class FeedParserValuesTest(unittest.TestCase):
         d = _parse_feed("http___www_linktv_org_rss_hq_globalpulse.xml")
 
         for i, url in (
-            (0, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100709.jpg'),
-            (1, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100625.jpg'),
-            (2, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100611.jpg')):
+            (0, (u'http://www.linktv.org/sitecontent/videothumbs/'
+                 'globalpulse20100709.jpg')),
+            (1, (u'http://www.linktv.org/sitecontent/videothumbs/'
+                 'globalpulse20100625.jpg')),
+            (2, (u'http://www.linktv.org/sitecontent/videothumbs/'
+                 'globalpulse20100611.jpg'))):
 
             fpv = FeedParserValues(d.entries[i])
             self.assertEquals(fpv.data["thumbnail_url"], url)

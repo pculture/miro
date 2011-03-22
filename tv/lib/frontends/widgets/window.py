@@ -36,7 +36,6 @@ from miro import prefs
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox
-from miro.frontends.widgets import searchbox
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 

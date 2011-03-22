@@ -1,5 +1,5 @@
 import unittest
-from miro.httpauthtools import decode_auth_header, HTTPAuthPassword
+from miro.httpauthtools import decode_auth_header
 
 class DecodeAuthHeaderTest(unittest.TestCase):
     def test_valid_basic(self):

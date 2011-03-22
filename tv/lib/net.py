@@ -67,13 +67,14 @@ class NetworkError(Exception):
     """Base class for all errors that will be passed to errbacks from get_url
     and friends.  NetworkErrors can be display in 2 ways:
 
-    getFriendlyDescription() -- short, newbie friendly description 
+    getFriendlyDescription() -- short, newbie friendly description
     getLongDescription() -- detailed description
     """
     def __init__(self, shortDescription, longDescription=None):
         if longDescription is None:
             longDescription = shortDescription
-        self.friendlyDescription = _("Error: %(msg)s", {"msg": shortDescription})
+        self.friendlyDescription = _("Error: %(msg)s",
+                                     {"msg": shortDescription})
         self.longDescription = longDescription
 
     def getFriendlyDescription(self):
@@ -84,7 +85,7 @@ class NetworkError(Exception):
 
     def __str__(self):
         return "%s: %s -- %s" % (self.__class__,
-                util.stringify(self.getFriendlyDescription()), 
+                util.stringify(self.getFriendlyDescription()),
                 util.stringify(self.getLongDescription()))
 
 class ConnectionError(NetworkError):
@@ -107,7 +108,8 @@ def trap_call(object, function, *args, **kwargs):
     """Convenience function do a trapcall.trap_call, where when is
     'While talking to the network'
     """
-    return trapcall.time_trap_call("Calling %s on %s" % (function, object), function, *args, **kwargs)
+    return trapcall.time_trap_call("Calling %s on %s" % (function, object),
+                                   function, *args, **kwargs)
 
 class NetworkBuffer(object):
     """Responsible for storing incomming network data and doing some basic
@@ -225,8 +227,9 @@ class AsyncSocket(object):
         self.lastClock = clock()
         if self.readTimeout is not None:
             return
-        self.readTimeout = eventloop.add_timeout(SOCKET_INITIAL_READ_TIMEOUT, self.onReadTimeout,
-                "AsyncSocket.onReadTimeout")
+        self.readTimeout = eventloop.add_timeout(SOCKET_INITIAL_READ_TIMEOUT,
+                                                 self.onReadTimeout,
+                                                 "AsyncSocket.onReadTimeout")
 
     def stopReadTimeout(self):
         if self.readTimeout is not None:
@@ -264,7 +267,8 @@ class AsyncSocket(object):
                 # called connectionErrback while we were waiting for
                 # getaddrinfo
                 return
-            trap_call(self, errback, ConnectionError(e[1] + " (host: %s)" % host))
+            trap_call(self, errback,
+                      ConnectionError(e[1] + " (host: %s)" % host))
         def createSocketHandle(family):
             try:
                 self.socket = socket.socket(family, socket.SOCK_STREAM)
@@ -319,7 +323,9 @@ class AsyncSocket(object):
             trap_call(self, errback, ConnectionTimeout(host))
             self.connectionErrback = None
         eventloop.call_in_thread(onAddressLookup, handleGetAddrInfoException,
-                socket.getaddrinfo, "getAddrInfo - %s:%s" % (host, port), host, port)
+                                 socket.getaddrinfo,
+                                 "getAddrInfo - %s:%s" % (host, port),
+                                 host, port)
 
     def accept_connection(self, family, host, port, callback, errback):
         def finishAccept():
@@ -341,7 +347,8 @@ class AsyncSocket(object):
         if self.socket.family == socket.AF_INET:
             (self.addr, self.port) = self.socket.getsockname()
         elif self.socket.family == socket.AF_INET6:
-            (self.addr, self.port, self.flowinfo, self.scopeid) = self.socket.getsockname()
+            (self.addr, self.port, self.flowinfo,
+             self.scopeid) = self.socket.getsockname()
         else:
             raise ValueError("Unknown socket family: %s", self.socket.family)
         self.socket.listen(63)
@@ -402,7 +409,8 @@ class AsyncSocket(object):
             timeout = SOCKET_INITIAL_READ_TIMEOUT
 
         if clock() < self.lastClock + timeout:
-            self.readTimeout = eventloop.add_timeout(self.lastClock + timeout - clock(), self.onReadTimeout,
+            self.readTimeout = eventloop.add_timeout(
+                self.lastClock + timeout - clock(), self.onReadTimeout,
                 "AsyncSocket.onReadTimeout")
         else:
             self.readTimeout = None
@@ -418,7 +426,8 @@ class AsyncSocket(object):
         else:
             expectedErrors = (errno.ECONNREFUSED, errno.ECONNRESET)
         if code not in expectedErrors:
-            logging.warning("WARNING, got unexpected error during %s", operation)
+            logging.warning("WARNING, got unexpected error during %s",
+                            operation)
             logging.warning("%s: %s", errno.errorcode.get(code), msg)
         self.handleEarlyClose(operation)
 
@@ -458,7 +467,8 @@ class AsyncSocket(object):
                 logging.error("ERROR: Too many MemoryErrors on %s", self)
                 self.handleEarlyClose('read')
             else:
-                logging.warning("WARNING: Memory error while reading from %s", self)
+                logging.warning(
+                    "WARNING: Memory error while reading from %s", self)
         else:
             self.memoryErrors = 0
             self.handleReadData(data)

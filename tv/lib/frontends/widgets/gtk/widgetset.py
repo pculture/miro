@@ -27,8 +27,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import gtk
-
 from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.const import *
 from miro.frontends.widgets.gtk.controls import TextEntry, NumberEntry, \

@@ -32,7 +32,7 @@ Widgets frontend. See WidgetState design doc.
 """
 
 from miro.messages import (SaveDisplayState, SaveViewState, SaveGlobalState,
-        DisplayInfo, ViewInfo, GlobalInfo)
+        DisplayInfo, ViewInfo)
 
 class WidgetStateStore(object):
     LIST_VIEW = 1
@@ -100,7 +100,8 @@ class WidgetStateStore(object):
     DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_COLUMNS = {
         u'videos':
-            [u'state', u'name', u'length', u'date-added', u'feed-name', u'size'],
+            [u'state', u'name', u'length', u'date-added', u'feed-name',
+             u'size'],
         u'music':
             [u'name', u'artist', u'album', u'track', u'length', u'genre',
              u'year', u'rating'],
@@ -135,7 +136,8 @@ class WidgetStateStore(object):
     AVAILABLE_COLUMNS['others'].extend(
         [u'date-added', u'drm', u'rating'])
     AVAILABLE_COLUMNS['search'].extend([u'rating'])
-    AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type', u'show', u'kind'])
+    AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type', u'show',
+                                        u'kind'])
     AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music']
     AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos']
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
@@ -294,7 +296,8 @@ class WidgetStateStore(object):
         else:
             raise ValueError()
 
-    def set_columns_enabled(self, display_type, display_id, view_type, enabled):
+    def set_columns_enabled(self, display_type, display_id, view_type,
+                            enabled):
         if WidgetStateStore.is_list_view(view_type):
             display = self._get_display(display_type, display_id)
             display.list_view_columns = enabled
@@ -304,12 +307,14 @@ class WidgetStateStore(object):
 
     def toggle_column(self, display_type, display_id, view_type, column):
         if WidgetStateStore.is_list_view(view_type):
-            columns = self.get_columns_enabled(display_type, display_id, view_type)
+            columns = self.get_columns_enabled(display_type, display_id,
+                                               view_type)
             if column in columns:
                 columns.remove(column)
             else:
                 columns.append(column)
-            self.set_columns_enabled(display_type, display_id, view_type, columns)
+            self.set_columns_enabled(display_type, display_id, view_type,
+                                     columns)
         else:
             raise ValueError()
 
@@ -317,7 +322,8 @@ class WidgetStateStore(object):
         if WidgetStateStore.is_list_view(view_type):
             display = self._get_display(display_type, display_id)
             column_widths = display.list_view_widths or {}
-            columns = self.get_columns_enabled(display_type, display_id, view_type)
+            columns = self.get_columns_enabled(display_type, display_id,
+                                               view_type)
             for name in columns:
                 default = WidgetStateStore.DEFAULT_COLUMN_WIDTHS[name]
                 column_widths.setdefault(name, default)
@@ -325,7 +331,8 @@ class WidgetStateStore(object):
         else:
             raise ValueError()
 
-    def update_column_widths(self, display_type, display_id, view_type, widths):
+    def update_column_widths(self, display_type, display_id, view_type,
+                             widths):
         if WidgetStateStore.is_list_view(view_type):
             display = self._get_display(display_type, display_id)
             if display.list_view_widths is None:

@@ -28,7 +28,6 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
-import re
 import stat
 import time
 from threading import RLock
@@ -55,7 +54,7 @@ from miro import prefs
 from miro.dl_daemon import command
 from miro.dl_daemon import daemon
 from miro.util import (
-    check_f, check_u, stringify, MAX_TORRENT_SIZE, returns_filename, 
+    check_f, check_u, stringify, MAX_TORRENT_SIZE, returns_filename,
     info_hash_from_magnet, is_magnet_uri)
 from miro.plat.utils import (
     get_available_bytes_for_movies, utf8_to_filename, PlatformFilenameType)
@@ -607,7 +606,8 @@ class BGDownloader(object):
             RETRY_TIMES[self.retryCount], self.retry_download,
             "Logarithmic retry")
         now = datetime.datetime.now()
-        self.retryTime = now + datetime.timedelta(seconds=RETRY_TIMES[self.retryCount])
+        self.retryTime = now + datetime.timedelta(
+            seconds=RETRY_TIMES[self.retryCount])
         logging.warning("Temporary error: '%s' '%s'.  retrying at %s %s",
                         short_reason, reason, self.retryTime, self.retryCount)
         self.update_client()
@@ -808,7 +808,8 @@ class HTTPDownloader(BGDownloader):
         # bug 14131 -- if there's nothing here, treat it like a temporary
         # error
         if self.currentSize == 0:
-            self.handle_network_error(httpclient.PossiblyTemporaryError(_("no content")))
+            self.handle_network_error(httpclient.PossiblyTemporaryError(
+                _("no content")))
 
         else:
             if self.totalSize == -1:
@@ -1004,7 +1005,8 @@ class BTDownloader(BGDownloader):
                 torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
                 params["ti"] = torrent_info
                 self.totalSize = torrent_info.total_size()
-                duplicate = TORRENT_SESSION.find_duplicate_torrent(params["ti"])
+                duplicate = TORRENT_SESSION.find_duplicate_torrent(
+                    params["ti"])
 
             if duplicate is not None:
                 c = command.DuplicateTorrent(daemon.LAST_DAEMON,
@@ -1012,7 +1014,8 @@ class BTDownloader(BGDownloader):
                 c.send()
                 return
 
-            if self.firstTime and not self.accept_download_size(self.totalSize):
+            if self.firstTime and not self.accept_download_size(
+                self.totalSize):
                 self.handle_error(
                     _("Not enough disk space"),
                     _("%(amount)s MB required to store this video",
@@ -1224,8 +1227,9 @@ class BTDownloader(BGDownloader):
             return
 
         time_now = time.time()
-        if(not self.torrent.has_metadata() or 
-          (not force and time_now < (self._last_frd_update + FRD_UPDATE_LIMIT))):
+        if(not self.torrent.has_metadata() or
+          (not force and time_now < (
+               self._last_frd_update + FRD_UPDATE_LIMIT))):
             return
         self._last_frd_update = time_now
 
@@ -1396,7 +1400,8 @@ class BTDownloader(BGDownloader):
         """
         if not self.torrent.has_metadata():
             return
-        self.shortFilename =  utf8_to_filename(self.torrent.get_torrent_info().name())
+        self.shortFilename =  utf8_to_filename(
+            self.torrent.get_torrent_info().name())
         # if torrent_info has more than one file, then this is a
         # torrent of a bunch of files in a directory
         is_directory = len(self.torrent.get_torrent_info().files()) > 1

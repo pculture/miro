@@ -1,22 +1,13 @@
-from time import sleep
 import time
 import types
 
 from miro import feed
 from miro import item
-from miro import database
 from miro import feedparserutil
-from miro import app
 from miro import dialogs
 import framework
-import os
-from miro import gtcache
-import gettext
 from miro import signals
 from miro.plat import resources
-from miro import util
-
-from miro.test.framework import MiroTestCase
 
 class UnicodeFeedTestCase(framework.EventLoopTest):
     def setUp(self):
@@ -41,7 +32,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def force_feed_parser_callback(self, my_feed):
         # a hack to get the feed to update without eventloop
         feedimpl = my_feed.actualFeed
-        feedimpl.feedparser_callback(feedparserutil.parse(feedimpl.initialHTML))
+        feedimpl.feedparser_callback(
+            feedparserutil.parse(feedimpl.initialHTML))
 
     def is_proper_feed_parser_dict(self, parsed, name="top"):
         if isinstance(parsed, types.DictionaryType):
@@ -65,7 +57,30 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_valid_utf_feed(self):
         self.filename = self.make_temp_path(".xml")
         handle = open(self.filename, "wb")
-        handle.write(u'<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n <title>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</title>\n      <description>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</description>\n      <language>zh-zh</language>\n     <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n\n         <title>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</title>\n     <link>http://participatoryculture.org/boguslink</link>\n         <description>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</description>\n        <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>'.encode('utf-8'))
+        handle.write(u'''<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+ <title>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\
+\u516b\u4e5d</title>
+      <description>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\
+\u4e03\u516b\u4e5d</description>
+      <language>zh-zh</language>
+     <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
+      <generator>Weblog Editor 2.0</generator>
+      <managingEditor>editor@example.com</managingEditor>
+      <webMaster>webmaster@example.com</webMaster>
+      <item>
+
+         <title>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\
+</title>
+     <link>http://participatoryculture.org/boguslink</link>
+         <description>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\
+\u4e5d</description>
+        <enclosure url="file://crap" length="0" type="video/mpeg"/>
+         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
+      </item>
+   </channel>
+</rss>'''.encode('utf-8'))
 
         handle.close()
 
@@ -78,20 +93,44 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         # Python automatically converts bytes strings to unicode
         # strings using the current system character set
         self.assertEqual(type(my_feed.get_title()), unicode)
-        self.assertEqual(u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d", my_feed.get_title())
+        self.assertEqual(
+            (u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d"
+             u"\u4e03\u516b\u4e5d"), my_feed.get_title())
 
         i = item.Item.make_view().get_singleton()
         self.assertEqual(type(i.get_title()), unicode)
-        self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.get_title())
+        self.assertEqual(
+            u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",
+            i.get_title())
 
         self.assertEqual(type(i.get_description()), unicode)
-        self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d", i.get_description())
+        self.assertEqual(
+            u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",
+            i.get_description())
 
     # This is a latin1 feed that claims to be UTF-8
     def test_invalid_latin1_feed(self):
         self.filename = self.make_temp_path(".xml")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n      <title>H\xe4ppy Birthday</title>\n      <description>H\xe4ppy Birthday</description>\n <language>zh-zh</language>\n      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n         <title>H\xe4ppy Birthday</title>\n         <link>http://participatoryculture.org/boguslink</link>\n         <description>H\xe4ppy Birthday</description>\n         <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>')
+        handle.write('''<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>H\xe4ppy Birthday</title>
+      <description>H\xe4ppy Birthday</description>
+ <language>zh-zh</language>
+      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
+      <generator>Weblog Editor 2.0</generator>
+      <managingEditor>editor@example.com</managingEditor>
+      <webMaster>webmaster@example.com</webMaster>
+      <item>
+         <title>H\xe4ppy Birthday</title>
+         <link>http://participatoryculture.org/boguslink</link>
+         <description>H\xe4ppy Birthday</description>
+         <enclosure url="file://crap" length="0" type="video/mpeg"/>
+         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
+      </item>
+   </channel>
+</rss>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -110,7 +149,17 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_latin1_html(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n  <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; \
+charset=iso-8859-1" />
+  <title>H\xe4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -128,7 +177,16 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_invalid_latin1_html(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>H\xe4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -146,7 +204,17 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_utf8_html(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>H\xc3\xa4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">\
+H\xc3\xa4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -163,7 +231,17 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_utf8_html_links(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>H\xc3\xa4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">\
+H\xc3\xa4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -182,7 +260,17 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_latin1_html_links(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n   <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xe4ppy.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+   <title>H\xe4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/H\xe4ppy.mov">\
+H\xe4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -201,7 +289,18 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_invalid_latin1_html_links(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; \
+charset=iso-8859-1" />
+      <title>H\xc3\xa4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">\
+H\xc3\xa4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -220,7 +319,18 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_utf8_html_thumbs(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="utf-8"?>
+<html>
+   <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>H\xc3\xa4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">\
+<img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>\
+H\xc3\xa4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -242,7 +352,18 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_latin1_html_thumbs(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n    <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xe4ppy.png"/>H\xe4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>H\xe4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">\
+<img src="http://www.wccatv.com/files/video/H\xe4ppy.png"/>\
+H\xe4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES
@@ -264,7 +385,19 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def test_invalid_latin1_html_thumbs(self):
         self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
-        handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
+        handle.write('''<?xml version="1.0" encoding="iso-8859-1"?>
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; \
+charset=iso-8859-1" />
+ <title>H\xc3\xa4ppy Birthday</title>
+   </head>
+   <body>
+   <a href="http://www.wccatv.com/files/video/hbml.mov">\
+<img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>\
+H\xc3\xa4ppy Birthday</a>
+   </body>
+</html>''')
         handle.close()
 
         self.choice = dialogs.BUTTON_YES

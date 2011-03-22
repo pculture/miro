@@ -28,13 +28,9 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
-from miro import displaytext
 from miro import prefs
 
-from miro.plat import resources
 from miro.gtcache import gettext as _
-from miro.frontends.widgets import cellpack
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import widgetconst
@@ -66,13 +62,15 @@ class ConvertingController(object):
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
         self.widget.pack_start(sep)
 
-        self.stop_all_button = widgetset.Button(_('Stop All Conversions'), style='smooth')
+        self.stop_all_button = widgetset.Button(_('Stop All Conversions'),
+                                                style='smooth')
         self.stop_all_button.set_size(widgetconst.SIZE_SMALL)
         self.stop_all_button.set_color(widgetset.TOOLBAR_GRAY)
         self.stop_all_button.disable()
         self.stop_all_button.connect('clicked', self.on_cancel_all)
 
-        reveal_button = widgetset.Button(_('Show Conversion Folder'), style='smooth')
+        reveal_button = widgetset.Button(_('Show Conversion Folder'),
+                                         style='smooth')
         reveal_button.set_size(widgetconst.SIZE_SMALL)
         reveal_button.set_color(widgetset.TOOLBAR_GRAY)
         reveal_button.connect('clicked', self.on_reveal_conversions_folder)
@@ -85,12 +83,14 @@ class ConvertingController(object):
 
         toolbar = widgetset.Toolbar()
         hbox = widgetset.HBox()
-        hbox.pack_start(widgetutil.pad(self.stop_all_button, top=8, bottom=8, left=8))
+        hbox.pack_start(widgetutil.pad(self.stop_all_button, top=8, bottom=8,
+                                       left=8))
         hbox.pack_end(widgetutil.pad(reveal_button, top=8, bottom=8, right=8))
-        hbox.pack_end(widgetutil.pad(self.clear_finished_button, top=8, bottom=8, right=8))
+        hbox.pack_end(widgetutil.pad(self.clear_finished_button, top=8,
+                                     bottom=8, right=8))
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
-        
+
         sorter = ConvertingSort()
         self.model = widgetset.InfoListModel(sorter.sort_key)
         self.table = ConvertingTableView(self.model)
@@ -101,7 +101,7 @@ class ConvertingController(object):
         self.widget.pack_start(scroller, expand=True)
 
         conversion_manager.fetch_tasks_list()
-    
+
     def on_cancel_all(self, obj):
         conversion_manager.cancel_all()
 

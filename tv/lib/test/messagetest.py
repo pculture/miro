@@ -67,7 +67,8 @@ class TrackerTest(EventLoopTest):
         Feed(u'dtv:search')
         self.test_handler = TestFrontendMessageHandler()
         messages.FrontendMessage.install_handler(self.test_handler)
-        self.backend_message_handler = messagehandler.BackendMessageHandler(None)
+        self.backend_message_handler = messagehandler.BackendMessageHandler(
+            None)
         messages.BackendMessage.install_handler(self.backend_message_handler)
         self.channelTabOrder = TabOrder(u'channel')
         self.playlistTabOrder = TabOrder(u'playlist')
@@ -225,7 +226,7 @@ class GuideTrackTest(TrackerTest):
         messages.StopTrackingGuides().send_to_backend()
         self.runUrgentCalls()
         self.guide.set_title(u"Booya")
-        g = ChannelGuide(u'http://example.com/3')
+        ChannelGuide(u'http://example.com/3')
         self.guide1.remove()
         self.check_message_count(2)
 
@@ -306,7 +307,7 @@ class PlaylistTrackTest(TrackerTest):
         messages.StopTrackingPlaylists().send_to_backend()
         self.runUrgentCalls()
         self.playlist1.set_title(u"Booya")
-        f = Feed(u'http://example.com/3')
+        Feed(u'http://example.com/3')
         self.playlist2.remove()
         self.check_message_count(1)
 
@@ -397,7 +398,7 @@ class FeedTrackTest(TrackerTest):
         messages.StopTrackingChannels().send_to_backend()
         self.runUrgentCalls()
         self.feed1.set_title(u"Booya")
-        f = Feed(u'http://example.com/3')
+        Feed(u'http://example.com/3')
         self.feed2.remove()
         self.check_message_count(1)
 

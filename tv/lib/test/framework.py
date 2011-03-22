@@ -1,5 +1,4 @@
 import os
-import logging
 import unittest
 import tempfile
 import threading
@@ -15,13 +14,10 @@ from miro import httpauth
 from miro import httpclient
 from miro import iteminfocache
 from miro import util
-from miro import databaseupgrade
 from miro import prefs
 from miro import searchengines
-from miro import search
 from miro import signals
 from miro import storedatabase
-from miro import subscription
 from time import sleep
 from miro import models
 
@@ -387,8 +383,9 @@ class EventLoopTest(MiroTestCase):
         eventloop._eventloop.urgent_queue.quit_flag = False
         try:
             self.hadToStopEventLoop = False
-            timeout_handle = eventloop.add_timeout(timeout, self.stopEventLoop, 
-                                           "Stop test event loop")
+            timeout_handle = eventloop.add_timeout(timeout,
+                                                   self.stopEventLoop,
+                                                   "Stop test event loop")
             eventloop._eventloop.quit_flag = False
             eventloop._eventloop.loop()
             if self.hadToStopEventLoop and not timeoutNormal:

@@ -40,7 +40,6 @@ from miro.gtcache import gettext as _
 
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import prefpanel
-from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 

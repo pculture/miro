@@ -7,7 +7,7 @@ import shutil
 import unittest
 import sys
 
-from miro.test.framework import MiroTestCase, skip_for_platforms
+from miro.test.framework import skip_for_platforms
 from miro import download_utils
 from miro import util
 from miro.fileobject import FilenameType
@@ -251,8 +251,10 @@ class UtilTest(unittest.TestCase):
             combinations_entry)
 
         # now make sure they returned what we expected..
-        self.assertEqual(selected_filesize['href'], u'http://example.org/4.ogg')
-        self.assertEqual(selected_type['href'], u'http://example.org/4.torrent')
+        self.assertEqual(selected_filesize['href'],
+                         u'http://example.org/4.ogg')
+        self.assertEqual(selected_type['href'],
+                         u'http://example.org/4.torrent')
         self.assertEqual(selected_combination['href'],
                          u'http://example.org/1.ogg')
 
@@ -266,7 +268,8 @@ class UtilTest(unittest.TestCase):
         self.assertEqual('12345678901234567...',
                          util.clamp_text('123456789012345678901'))
         self.assertEqual('12345678901234567...',
-                         util.clamp_text('12345678901234567890 1234 1234 1234'))
+                         util.clamp_text(
+                             '12345678901234567890 1234 1234 1234'))
 
         # limit 4
         self.assertRaises(TypeError, util.clamp_text, None, 4)
@@ -318,7 +321,8 @@ class UtilTest(unittest.TestCase):
 
     def assertEqualWithType(self, expected, expectedType, val):
         self.assertEqual(val, expected)
-        self.assertTrue(isinstance(val, expectedType), "Not of type " + str(expectedType))
+        self.assertTrue(isinstance(val, expectedType),
+                        "Not of type " + str(expectedType))
 
     def test_unicodify(self):
 
@@ -341,7 +345,8 @@ class UtilTest(unittest.TestCase):
         self.assertEqualWithType('123', unicode, res['b'])
 
         # List of dicts
-        res = util.unicodify([{'a': 'abc', 'b': '$$$'}, {'y': u'25', 'z': '28'}])
+        res = util.unicodify([{'a': 'abc', 'b': '$$$'},
+                              {'y': u'25', 'z': '28'}])
         self.assertEqualWithType('abc', unicode, res[0]['a'])
         self.assertEqualWithType('$$$', unicode, res[0]['b'])
         self.assertEqualWithType('25', unicode, res[1]['y'])
@@ -384,8 +389,10 @@ class UtilTest(unittest.TestCase):
             self.assertEqualWithType('', unicode, util.to_uni(u''))
             self.assertEqualWithType('abc', unicode, util.to_uni('abc'))
             self.assertEqualWithType('abc', unicode, util.to_uni(u'abc'))
-            self.assertEqualWithType('!@^)!@%I*', unicode, util.to_uni('!@^)!@%I*'))
-            self.assertEqualWithType('!@^)!@%I*', unicode, util.to_uni(u'!@^)!@%I*'))
+            self.assertEqualWithType('!@^)!@%I*', unicode,
+                                     util.to_uni('!@^)!@%I*'))
+            self.assertEqualWithType('!@^)!@%I*', unicode,
+                                     util.to_uni(u'!@^)!@%I*'))
 
     def test_escape(self):
         # try it twice to make sure the cached value is correct as well
@@ -394,11 +401,14 @@ class UtilTest(unittest.TestCase):
             self.assertEqualWithType('&amp;', unicode, util.escape('&'))
             self.assertEqualWithType('&lt;', unicode, util.escape('<'))
             self.assertEqualWithType('&gt;', unicode, util.escape('>'))
-            self.assertEqualWithType('la &amp; &lt;html&gt;', unicode, util.escape('la & <html>'))
+            self.assertEqualWithType('la &amp; &lt;html&gt;', unicode,
+                                     util.escape('la & <html>'))
 
     def test_entity_replace(self):
         self.assertEqual('', util.entity_replace(''))
-        self.assertEqual('abcd yz XXX i!@#$%^&*()= 123 <>&', util.entity_replace('abcd yz XXX i!@#$%^&*()= 123 <>&'))
+        self.assertEqual('abcd yz XXX i!@#$%^&*()= 123 <>&',
+                         util.entity_replace(
+                             'abcd yz XXX i!@#$%^&*()= 123 <>&'))
         self.assertEqual('&#35;', util.entity_replace('&#35;'))
         self.assertEqual('\'', util.entity_replace('&#39;'))
         self.assertEqual('\'', util.entity_replace('&apos;'))
@@ -410,7 +420,9 @@ class UtilTest(unittest.TestCase):
         self.assertEqual('<', util.entity_replace('&lt;'))
         self.assertEqual('>', util.entity_replace('&#62;'))
         self.assertEqual('>', util.entity_replace('&gt;'))
-        self.assertEqual('abcd yz XX<X i!@#$%^&*()=& 123 <>&', util.entity_replace('abcd yz XX&lt;X i!@#$%^&*()=&#38; 123 <>&'))
+        self.assertEqual('abcd yz XX<X i!@#$%^&*()=& 123 <>&',
+                         util.entity_replace(
+                             'abcd yz XX&lt;X i!@#$%^&*()=&#38; 123 <>&'))
 
     def test_ascii_lower(self):
         self.assertEqual('', util.ascii_lower(''))

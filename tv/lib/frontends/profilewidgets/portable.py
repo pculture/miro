@@ -30,12 +30,8 @@
 """miro.frontends.profilewidgets.portable -- Setup or Fake portable code
 """
 
-import threading
 
 from miro import app
-from miro import models
-from miro import iteminfocache
-from miro import storedatabase
 from miro import searchengines
 
 

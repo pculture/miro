@@ -323,7 +323,8 @@ def fix_database_inconsistencies():
 def check_firsttime():
     """Run the first time wizard if need be.
     """
-    callback = lambda: eventloop.add_urgent_call(check_movies_gone, "check movies gone")
+    callback = lambda: eventloop.add_urgent_call(check_movies_gone,
+                                                 "check movies gone")
     if is_first_time():
         logging.info("First time run -- calling handler.")
         _first_time_handler(callback)
@@ -343,13 +344,15 @@ def check_movies_gone():
         _movies_directory_gone_handler(callback)
         return
 
-    movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
+    movies_dir = fileutil.expand_filename(app.config.get(
+        prefs.MOVIES_DIRECTORY))
     # if the directory doesn't exist, create it.
     if not os.path.exists(movies_dir):
         try:
             os.makedirs(movies_dir)
         except OSError:
-            logging.info("Movies directory can't be created -- calling handler")
+            logging.info(
+                "Movies directory can't be created -- calling handler")
             # FIXME - this isn't technically correct, but it's probably
             # close enough that a user can fix the issue and Miro can
             # run happily.
@@ -364,7 +367,8 @@ def check_movies_gone():
 
 @startup_function
 def fix_movies_gone():
-    app.config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
+    app.config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(
+        prefs.MOVIES_DIRECTORY))
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
@@ -412,7 +416,7 @@ def setup_tabs():
         current_tab_orders = list(tabs.TabOrder.view_for_type(type))
         if len(current_tab_orders) == 0:
             logging.info("Creating %s tab order", type)
-            tab_order = tabs.TabOrder(type)
+            tabs.TabOrder(type)
         else:
             current_tab_orders[0].restore_tab_list()
     setup_tab_order(u'site')
@@ -438,7 +442,8 @@ def is_movies_directory_gone():
 
     Returns True if yes, False if no.
     """
-    movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
+    movies_dir = fileutil.expand_filename(app.config.get(
+        prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
     logging.info("Checking movies directory %r...", movies_dir)
@@ -500,7 +505,8 @@ def clear_icon_cache_orphans():
     # delete files in the icon cache directory that don't belong to IconCache
     # objects.
 
-    cachedir = fileutil.expand_filename(app.config.get(prefs.ICON_CACHE_DIRECTORY))
+    cachedir = fileutil.expand_filename(app.config.get(
+        prefs.ICON_CACHE_DIRECTORY))
     if not os.path.isdir(cachedir):
         return
 

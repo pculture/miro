@@ -70,21 +70,19 @@ def _run_dialog(title, description, default_type):
                 name = name_entry.get_text()
                 if name:
                     return name
-            
+
             return None
 
         except StandardError:
             logging.exception("newfeed threw exception.")
     finally:
         window.destroy()
-        
+
 def run_dialog(default_type):
     """Creates and launches the New Folder dialog.  This dialog waits for
     the user to press "Create Folder" or "Cancel".
 
     Returns the name, or None.
     """
-    title = _('Create Podcast Folder')
-
     return _run_dialog(_('Create Podcast Folder'),
             _('Enter the name of the folder to add'), default_type)

@@ -1,6 +1,5 @@
 import gc
 
-from miro import app
 from miro import messages
 from miro import models
 from miro import search

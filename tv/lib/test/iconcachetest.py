@@ -1,6 +1,5 @@
 from miro import database
 
-from miro import app
 from miro import iconcache
 from miro import item
 from miro import feed

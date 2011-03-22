@@ -1,4 +1,3 @@
-import unittest
 from time import time, sleep
 import threading
 
@@ -10,7 +9,7 @@ class SchedulerTest(EventLoopTest):
         self.got_args = []
         self.got_kwargs = []
         EventLoopTest.setUp(self)
-    
+
     def callback(self, *args, **kwargs):
         self.got_args.append(args)
         self.got_kwargs.append(kwargs)
@@ -19,9 +18,9 @@ class SchedulerTest(EventLoopTest):
 
     def test_callbacks(self):
         eventloop.add_idle(self.callback, "foo")
-        eventloop.add_timeout(0.1, self.callback, "foo", args=("chris",), 
+        eventloop.add_timeout(0.1, self.callback, "foo", args=("chris",),
                              kwargs={'hula': "hula"})
-        eventloop.add_timeout(0.2, self.callback, "foo", args=("ben",), 
+        eventloop.add_timeout(0.2, self.callback, "foo", args=("ben",),
                              kwargs={'hula': 'moreHula', 'stop': 1})
         self.runEventLoop()
         self.assertEquals(self.got_args[0], ())

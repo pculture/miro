@@ -46,7 +46,6 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import imagepool
-from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.gtcache import gettext as _
 
@@ -75,10 +74,10 @@ class BrowserToolbar(widgetset.Titlebar):
         self.back_button.disable()
         hbox.pack_start(widgetutil.align_middle(self.back_button, left_pad=10))
 
-        separator = widgetset.ImageDisplay(imagepool.get(
+        nav_separator = widgetset.ImageDisplay(imagepool.get(
             resources.path('images/navseparator.png')))
-        hbox.pack_start(widgetutil.align_middle(separator))
-        
+        hbox.pack_start(widgetutil.align_middle(nav_separator))
+
         self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.set_squish_width(True)
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
@@ -87,7 +86,8 @@ class BrowserToolbar(widgetset.Titlebar):
 
         self.reload_button = imagebutton.ImageButton('navreload')
         self.reload_button.connect('clicked', self._on_reload_button_clicked)
-        hbox.pack_start(widgetutil.align_middle(self.reload_button, left_pad=4))
+        hbox.pack_start(widgetutil.align_middle(self.reload_button,
+                                                left_pad=4))
 
         self.stop_button = imagebutton.ImageButton('navstop')
         self.stop_button.connect('clicked', self._on_stop_button_clicked)
@@ -226,7 +226,8 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.connect_weak('browser-reload', self._on_browser_reload)
         self.toolbar.connect_weak('browser-stop', self._on_browser_stop)
         self.toolbar.connect_weak('browser-home', self._on_browser_home)
-        self.toolbar.connect_weak('browser-download', self._on_browser_download)
+        self.toolbar.connect_weak('browser-download',
+                                  self._on_browser_download)
         self.toolbar.connect_weak('browser-open', self._on_browser_open)
 
         self.browser.connect_weak('net-start', self._on_net_start)
@@ -256,7 +257,8 @@ class BrowserNav(widgetset.VBox):
         self.enable_disable_navigation()
         self.toolbar.loading_icon.hide()
         logging.debug("checking %s", self.browser.get_current_url())
-        if flashscraper.is_maybe_flashscrapable(unicode(self.browser.get_current_url())):
+        if flashscraper.is_maybe_flashscrapable(
+            unicode(self.browser.get_current_url())):
             self.toolbar.download_button.show()
 
     def _on_browser_back(self, widget):
@@ -276,7 +278,8 @@ class BrowserNav(widgetset.VBox):
 
     def _on_browser_download(self, widget):
         metadata = {"title": unicode(self.browser.get_current_title())}
-        messages.DownloadURL(self.browser.get_current_url(), metadata=metadata).send_to_backend()
+        messages.DownloadURL(self.browser.get_current_url(),
+                             metadata=metadata).send_to_backend()
 
     def _on_browser_open(self, widget):
         app.widgetapp.open_url(self.browser.get_current_url())

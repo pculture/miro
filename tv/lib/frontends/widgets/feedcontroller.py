@@ -31,19 +31,14 @@
 
 from miro.gtcache import gettext as _
 from miro import app
-from miro.gtcache import declarify, ngettext
+from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
-from miro.frontends.widgets import separator
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets.widgetstatestore import WidgetStateStore
-from miro.plat.frontends.widgets import widgetset
-from miro.plat import resources
 
 class FeedController(itemlistcontroller.ItemListController,
                      itemlistcontroller.FilteredListMixin):
@@ -69,7 +64,8 @@ class FeedController(itemlistcontroller.ItemListController,
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
-            self.widget.statusbar_vbox.pack_start(self._make_toolbar(feed_info))
+            self.widget.statusbar_vbox.pack_start(
+                self._make_toolbar(feed_info))
 
         # this only gets shown when the user is searching for things
         # in the feed and there are no results.
@@ -183,8 +179,10 @@ class FeedController(itemlistcontroller.ItemListController,
                                        downloads,
                                        {"count": downloads})
             if autoqueued_count:
-                queuedtext = ngettext("%(count)d Download Queued Due To Unplayed Items (See Settings)",
-                                      "%(count)d Downloads Queued Due To Unplayed Items (See Settings)",
+                queuedtext = ngettext("%(count)d Download Queued Due To "
+                                      "Unplayed Items (See Settings)",
+                                      "%(count)d Downloads Queued Due To "
+                                      "Unplayed Items (See Settings)",
                                       autoqueued_count,
                                       {"count": autoqueued_count})
 

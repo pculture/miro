@@ -32,7 +32,6 @@
 
 import logging
 
-from miro import search
 from miro import signals
 from miro import messages
 from miro import searchengines

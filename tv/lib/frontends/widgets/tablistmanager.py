@@ -32,7 +32,7 @@
 from miro import app
 from miro import prefs
 from miro.errors import (WidgetActionError, ActionUnavailableError,
-     WidgetNotReadyError, WidgetDomainError, UnexpectedWidgetError)
+     WidgetNotReadyError, UnexpectedWidgetError)
 
 from miro.frontends.widgets.tablist import all_tab_lists
 

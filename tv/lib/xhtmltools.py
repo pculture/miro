@@ -33,7 +33,7 @@
 import xml.sax.saxutils
 import xml.dom
 import re
-from urllib import quote, quote_plus, unquote
+from urllib import quote, quote_plus
 from HTMLParser import HTMLParser, HTMLParseError
 import random
 import logging
@@ -194,7 +194,9 @@ def fix_html_header(data, charset):
     if head_tags.lower().find('content-type') != -1:
         return data
 
-    return header.expand('\\1<head\\2><meta http-equiv="Content-Type" content="text/html; charset=') + charset + header.expand('">\\3</head>\\4')
+    return (header.expand('\\1<head\\2><meta http-equiv="Content-Type" '
+                          'content="text/html; charset=') + charset +
+            header.expand('">\\3</head>\\4'))
 
 def url_encode_dict(orig):
     """Converts a Python dictionary to data suitable for a POST or GET
@@ -208,7 +210,9 @@ def url_encode_dict(orig):
         elif isinstance(val, basestring):
             output.append('%s=%s' % (quote_plus(key), quote_plus(orig[key])))
         else:
-            logging.warning("url_encode_dict: trying to encode non-string: '%s'", repr(val))
+            logging.warning(
+                "url_encode_dict: trying to encode non-string: '%s'",
+                repr(val))
     return '&'.join(output)
 
 def multipart_encode(post_vars, files):
@@ -227,7 +231,8 @@ def multipart_encode(post_vars, files):
     if files is not None:
         for key in files.keys():
             output.append('--%s\r\n' % boundary)
-            output.append('Content-Disposition: form-data; name="%s"; filename="%s"\r\n' %
+            output.append(('Content-Disposition: form-data; name="%s"; '
+                           'filename="%s"\r\n') %
                           (quote_plus(key),
                            quote_plus(files[key]['filename'])))
             output.append('Content-Type: %s\r\n\r\n' % files[key]['mimetype'])

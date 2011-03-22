@@ -31,12 +31,9 @@
 widgets.
 """
 
-import math
-
 import cairo
 import gobject
 import gtk
-import pango
 
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.base import Widget, Bin

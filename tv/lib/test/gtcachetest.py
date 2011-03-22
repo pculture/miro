@@ -1,7 +1,3 @@
-import os
-import os.path
-import unittest
-import gettext
 import logging
 
 from miro import gtcache
@@ -33,7 +29,8 @@ def make_french(f):
     return _make_french
 
 INPUT = "parsed %(countfiles)d files - found %(countvideos)d videos"
-OUTPUT = u'%(countfiles)d fichiers analys\xe9s  - %(countvideos)d vid\xe9os trouv\xe9es'
+OUTPUT = (u'%(countfiles)d fichiers analys\xe9s  - '
+          u'%(countvideos)d vid\xe9os trouv\xe9es')
 
 class GettextTest(MiroTestCase):
     # FIXME - we probably want to test that something is logged instead of
@@ -58,11 +55,12 @@ class GettextTest(MiroTestCase):
         self.assertEqual(gtcache.gettext(INPUT), OUTPUT)
 
         # test with old value expansion
-        self.assertEqual(gtcache.gettext(INPUT) % {"countfiles": 1, "countvideos": 2},
+        self.assertEqual(gtcache.gettext(INPUT) % {"countfiles": 1,
+                                                   "countvideos": 2},
                          OUTPUT % {"countfiles": 1, "countvideos": 2})
 
         # test with value expansion done by gtcache.gettext
-        self.assertEqual(gtcache.gettext(INPUT, 
+        self.assertEqual(gtcache.gettext(INPUT,
                                          {"countfiles": 1, "countvideos": 2}),
                          OUTPUT % {"countfiles": 1, "countvideos": 2})
 
@@ -71,17 +69,19 @@ class GettextTest(MiroTestCase):
         # try gettext with a bad translation.  the string is fine, but
         # the translated version of the string is missing the d
         # characters which causes a Python formatting syntax error.
-        input2 = "bad parsed %(countfiles)d files - found %(countvideos)d videos"
+        input2 = ("bad parsed %(countfiles)d files - "
+                  "found %(countvideos)d videos")
 
         # first we call gettext on the string by itself--this is fine,
         # so we should get the translated version of the string.
         self.assertEqual(gtcache.gettext(input2),
-                         u'bad %(countfiles) fichiers analys\xe9s  - %(countvideos) vid\xe9os trouv\xe9es')
+                         (u'bad %(countfiles) fichiers analys\xe9s  - '
+                          u'%(countvideos) vid\xe9os trouv\xe9es'))
 
         # now we pass in a values dict which will kick up a ValueError
         # when trying to expand the values.  that causes gettext to
         # return the english form of the string with values expanded.
-        self.assertEqual(gtcache.gettext(input2, 
+        self.assertEqual(gtcache.gettext(input2,
                                          {"countfiles": 1, "countvideos": 2}),
                          input2 % {"countfiles": 1, "countvideos": 2})
 

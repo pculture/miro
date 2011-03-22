@@ -30,12 +30,10 @@
 """preferenceswindow.py -- Preferences window. """
 
 import gtk
-import gobject
 
 from miro.frontends.widgets.gtk import layout
 from miro.frontends.widgets.gtk import simple
 from miro.frontends.widgets.gtk import window
-from miro.frontends.widgets.gtk import wrappermap
 from miro.plat import resources
 
 class PreferencesWindow(window.Window):

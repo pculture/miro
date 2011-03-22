@@ -37,7 +37,6 @@ from miro import dialogs
 from miro import eventloop
 from miro import item
 from miro import folder
-from miro import util
 from miro import tabs
 from miro.frontends.cli import clidialog
 from miro.plat import resources
@@ -153,15 +152,18 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def complete_feed(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, list(self.feed_tabs.get_all_tabs()))
+        return self.handle_tab_complete(text,
+                                        list(self.feed_tabs.get_all_tabs()))
 
     @run_in_event_loop
     def complete_rmfeed(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, list(self.feed_tabs.get_all_tabs()))
+        return self.handle_tab_complete(text,
+                                        list(self.feed_tabs.get_all_tabs()))
 
     @run_in_event_loop
     def complete_playlist(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, self.playlist_tabs.get_all_tabs())
+        return self.handle_tab_complete(text,
+                                        self.playlist_tabs.get_all_tabs())
 
     def handle_tab_complete(self, text, view_items):
         text = text.lower()
@@ -174,10 +176,10 @@ class MiroInterpreter(cmd.Cmd):
     def handle_item_complete(self, text, view, filterFunc=lambda i: True):
         text = text.lower()
         matches = []
-        for item in view:
-            if (item.get_title().lower().startswith(text) and
-                    filterFunc(item)):
-                matches.append(item.get_title())
+        for item_ in view:
+            if (item_.get_title().lower().startswith(text) and
+                    filterFunc(item_)):
+                matches.append(item_.get_title())
         return matches
 
     def _print_feeds(self, feeds):
@@ -206,14 +208,14 @@ class MiroInterpreter(cmd.Cmd):
         if self.selection_type is None:
             print "Error: No feed/playlist selected."
             return
-        item = self._find_item(line)
-        if item is None:
+        item_ = self._find_item(line)
+        if item_ is None:
             print "No item named %r" % line
             return
-        if item.is_downloaded():
-            resources.open_file(item.get_video_filename())
+        if item_.is_downloaded():
+            resources.open_file(item_.get_video_filename())
         else:
-            print '%s is not downloaded' % item.get_title()
+            print '%s is not downloaded' % item_.get_title()
 
     @run_in_event_loop
     def do_playlists(self, line):
@@ -275,8 +277,9 @@ class MiroInterpreter(cmd.Cmd):
                     state = item.get_state()
                     if state == 'downloading':
                         state += ' (%0.0f%%)' % item.download_progress()
-                    print "%-20s %-10s %s" % (state, item.get_size_for_display(),
-                            item.get_title())
+                    print "%-20s %-10s %s" % (state,
+                                              item.get_size_for_display(),
+                                              item.get_title())
             print
         else:
             print "No items"
@@ -322,7 +325,9 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_download(self, line):
-        """download <name> -- Downloads an item by name in the feed/playlist selected."""
+        """download <name> -- Downloads an item by name in the feed/playlist
+        selected.
+        """
         if self.selection_type is None:
             print "Error: No feed/playlist selected."
             return
@@ -384,7 +389,8 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_rm(self, line):
-        """rm <name> -- Removes an item by name in the feed/playlist selected."""
+        """rm <name> -- Removes an item by name in the feed/playlist selected.
+        """
         if self.selection_type is None:
             print "Error: No feed/playlist selected."
             return

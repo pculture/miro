@@ -28,6 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import logging
+import os
 import platform
 
 from miro import app
@@ -68,7 +69,8 @@ def run_application():
 
     print "Starting up %s" % app.config.get(prefs.LONG_APP_NAME)
     print "Version:    %s" % app.config.get(prefs.APP_VERSION)
-    print "OS:         %s %s %s" % (platform.system(), platform.release(), platform.machine())
+    print "OS:         %s %s %s" % (platform.system(), platform.release(),
+                                    platform.machine())
     print "Revision:   %s" % app.config.get(prefs.APP_REVISION)
     print "Builder:    %s" % app.config.get(prefs.BUILD_MACHINE)
     print "Build Time: %s" % app.config.get(prefs.BUILD_TIME)

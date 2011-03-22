@@ -36,7 +36,6 @@ Add new items to the ITEMS variable.
 
 import os
 import stat
-import logging
 
 from miro.gtcache import gettext as _
 
@@ -95,11 +94,13 @@ def run_dialog():
             {"label": _("Movies location:"),
              "data": app.config.get(prefs.MOVIES_DIRECTORY),
              "button_face": SHOW,
-             "button_fun": open_helper(app.config.get(prefs.MOVIES_DIRECTORY))},
+             "button_fun": open_helper(
+                 app.config.get(prefs.MOVIES_DIRECTORY))},
             {"label": _("Icon cache location:"),
              "data": app.config.get(prefs.ICON_CACHE_DIRECTORY),
              "button_face": SHOW,
-             "button_fun": open_helper(app.config.get(prefs.ICON_CACHE_DIRECTORY))},
+             "button_fun": open_helper(
+                 app.config.get(prefs.ICON_CACHE_DIRECTORY))},
             {"label": _("Log file location:"),
              "data": app.config.get(prefs.LOG_PATHNAME),
              "button_face": SHOW,
@@ -107,7 +108,8 @@ def run_dialog():
             {"label": _("Downloader log file location:"),
              "data": app.config.get(prefs.DOWNLOADER_LOG_PATHNAME),
              "button_face": SHOW,
-             "button_fun": open_helper(app.config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
+             "button_fun": open_helper(
+                 app.config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
             {"label": _("Database file location:"),
              "data": app.config.get(prefs.SQLITE_PATHNAME),
              "button_face": SHOW,
@@ -121,9 +123,11 @@ def run_dialog():
             SEPARATOR,
 
             {"label": _("Space free on disk:"),
-             "data": lambda: util.format_size_for_user(get_available_bytes_for_movies(), "0B", False)},
+             "data": lambda: util.format_size_for_user(
+                 get_available_bytes_for_movies(), "0B", False)},
             {"label": _("Database size:"),
-             "data": lambda: util.format_size_for_user(get_database_size(), "0B", False)},
+             "data": lambda: util.format_size_for_user(
+                 get_database_size(), "0B", False)},
             {"label": _("Total db objects in memory:"),
              "data": lambda: "%d" % get_database_object_count()},
 
@@ -132,7 +136,8 @@ def run_dialog():
             {"label": _("Total db backups:"),
              "data": "",
              "button_face": _("%(databasecount)s: Delete",
-                              {"databasecount": len(app.db.get_backup_databases())}),
+                              {"databasecount": len(
+                                  app.db.get_backup_databases())}),
              "button_fun": delete_backups}
             ]
 

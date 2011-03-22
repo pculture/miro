@@ -1,8 +1,8 @@
-import sys
 import itertools
 import weakref
 
-from miro.test.framework import MiroTestCase, skip_for_platforms, only_on_platforms
+from miro.test.framework import (MiroTestCase, skip_for_platforms,
+                                 only_on_platforms)
 from miro import infolist
 
 class FakeInfo(object):
@@ -402,10 +402,10 @@ class InfoListCocoaTest(InfoListDataTest):
 
     def setUp(self):
         from miro.plat.frontends.widgets import tablemodel
-        from miro.plat.frontends.widgets import tableview
 
         InfoListDataTest.setUp(self)
-        self.data_source = tablemodel.MiroInfoListDataSource.alloc().initWithModel_(self.infolist)
+        source = tablemodel.MiroInfoListDataSource.alloc()
+        self.data_source = source.initWithModel_(self.infolist)
 
     def build_infolist(self):
         from miro.plat.frontends.widgets import tablemodel

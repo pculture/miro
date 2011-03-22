@@ -121,7 +121,8 @@ def read_simple_config_file(path):
         key = match.group(1)
         value = match.group(2)
         if key in ret:
-            print "WARNING: %s: ignored duplicate directive '%s'" % (path, line)
+            print "WARNING: %s: ignored duplicate directive '%s'" % (path,
+                                                                     line)
             continue
 
         ret[key] = value
@@ -271,7 +272,8 @@ def make_dummy_socket_pair():
                     return make_dummy_socket_pair()
 
                 sys.stderr.write(
-                    "Tried %s bind attempts and failed on addr %s port %d\n" % (
+                    ("Tried %s bind attempts and failed on "
+                     "addr %s port %d\n") % (
                         attempts, addr, port))
                 raise
             # bump us into ephemeral ports if we need to try a bunch
@@ -283,7 +285,7 @@ def make_dummy_socket_pair():
 
 def get_torrent_info_hash(path):
     """get_torrent_info_hash(path)
-    
+
     NOTE: Important.  These OS functions can throw IOError or OSError.  Make
     sure you catch these in the caller.
     """
@@ -513,15 +515,19 @@ def setup_logging():
     """
     logging.addLevelName(15, "STACK TRACE")
     logging.stacktrace = lambda msg, *args, **kargs: logging.log(
-        15, "%s\n%s" % ("".join(traceback.format_stack()), msg), *args, **kargs)
+        15, "%s\n%s" % ("".join(traceback.format_stack()), msg),
+        *args, **kargs)
 
     logging.addLevelName(25, "TIMING")
-    logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
+    logging.timing = lambda msg, *args, **kargs: logging.log(25, msg,
+                                                             *args, **kargs)
     logging.addLevelName(26, "JSALERT")
-    logging.jsalert = lambda msg, *args, **kargs: logging.log(26, msg, *args, **kargs)
+    logging.jsalert = lambda msg, *args, **kargs: logging.log(26, msg,
+                                                              *args, **kargs)
 
     logging.addLevelName(21, "DBLOG")
-    logging.dblog = lambda msg, *args, **kargs: logging.log(21, msg, *args, **kargs)
+    logging.dblog = lambda msg, *args, **kargs: logging.log(21, msg,
+                                                            *args, **kargs)
 
 class MiroUnicodeError(StandardError):
     """Returned when input to a template function isn't unicode
@@ -552,7 +558,8 @@ def check_b(text):
     """Raise an exception if input isn't a binary string
     """
     if text is not None and not isinstance(text, str):
-        raise MiroUnicodeError, (u"text \"%s\" is not a binary string (%r)" % (text, text))
+        raise MiroUnicodeError(
+            u"text \"%s\" is not a binary string (%r)" % (text, text))
 
 def returns_binary(func):
     """Decorator that raises an exception if the function doesn't

@@ -1,6 +1,6 @@
 """testhttpserver.py -- Testing HTTP Server
 
-The code here is based off of the standard SimpleHTTPServer code. 
+The code here is based off of the standard SimpleHTTPServer code.
 """
 
 
@@ -9,9 +9,7 @@ import hashlib
 import cgi
 import os
 import posixpath
-import random
 import urllib
-import shutil
 import socket
 import threading
 

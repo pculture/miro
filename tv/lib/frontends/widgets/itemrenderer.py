@@ -95,7 +95,9 @@ EMBLEM_SHADOW_BLUR_RADIUS = 0
 
 # text assets
 REVEAL_IN_TEXT = (file_navigator_name and
-        _("Reveal in %(progname)s", {"progname": file_navigator_name}) or _("Reveal File"))
+                  _("Reveal in %(progname)s",
+                    {"progname": file_navigator_name}) or
+                  _("Reveal File"))
 SHOW_CONTENTS_TEXT = _("display contents")
 DOWNLOAD_TEXT = _("Download")
 DOWNLOAD_TO_MY_MIRO_TEXT = _("Download to My Miro")
@@ -464,7 +466,8 @@ class ItemRenderer(ItemRendererBase):
         elif self.should_resume_item():
             visuals = EMBLEM_VISUALS_RESUME
             text = _("Resume at %(resumetime)s",
-                     {"resumetime": displaytext.short_time_string(self.info.resume_time)})
+                     {"resumetime": displaytext.short_time_string(
+                         self.info.resume_time)})
         elif not self.info.item_viewed and self.info.state == "new":
             visuals = EMBLEM_VISUALS_NEWLY_AVAILABLE
             text = NEWLY_AVAILABLE_TEXT
@@ -486,7 +489,7 @@ class ItemRenderer(ItemRendererBase):
 
     def remove_button_info(self):
         """Get the image/hotspot to use for the remove button
-        
+
         Subclasses can override this if they want different behavior/looks for
         the button.
         """
@@ -602,7 +605,8 @@ class ItemRendererCanvas(object):
         self.right_button_x = (self.right_rect.right -
                 RIGHT_BUTTON_WIDTH - 20)
         if self.download_mode:
-            self.download_info_rect = self.right_rect.subsection(12, 12, 12, 15)
+            self.download_info_rect = self.right_rect.subsection(
+                12, 12, 12, 15)
         # emblem/progress bar should start 29px above the top of the cell
         self.emblem_bottom = total_rect.bottom - 29
         # reset coordinates that we set as we add elements
@@ -823,7 +827,6 @@ class ItemRendererCanvas(object):
             image_name = 'keep-selected'
         else:
             image_name = 'keep'
-        image = self._make_image_button(image_name, hotspot)
         self.layout_expiring_and_button(text, image_name, hotspot)
         self.expire_background_alpha = 1.0
 
@@ -906,8 +909,9 @@ class ItemRendererCanvas(object):
         # add track in the middle
         track = get_image('progress-track')
         track_x = left + end_button_width
-        track_rect = cellpack.LayoutRect(track_x, top, right_button_x - track_x,
-                height)
+        track_rect = cellpack.LayoutRect(track_x, top,
+                                         right_button_x - track_x,
+                                         height)
         self.layout.add_rect(track_rect, track.draw)
 
         # add progress bar above the track.  Nudge it smaller by 1px on each

@@ -43,11 +43,9 @@ from urlparse import urljoin
 
 from miro import app
 from miro.errors import WidgetActionError
-from miro import displaytext
 from miro import messages
 from miro import prefs
 from miro import subscription
-from miro import util
 from miro.errors import ActionUnavailableError
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
@@ -852,7 +850,7 @@ class ItemListController(object):
                     last_played.resume_time)
 
     def update_count_label(self):
-        text = _("%(count)s items", {'count': self.item_list.get_count()})
+        _("%(count)s items", {'count': self.item_list.get_count()})
         # FIXME: need to have a place to put this text
 
     def on_items_will_change(self, added, changed, removed):

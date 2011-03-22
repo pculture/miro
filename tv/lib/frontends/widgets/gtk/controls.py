@@ -29,13 +29,9 @@
 
 """miro.frontends.widgets.gtk.controls -- Control Widgets."""
 
-import weakref
-
 import gtk
-import gobject
 import pango
 
-from miro import searchengines
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gtk import layout
 from miro.frontends.widgets.gtk.base import Widget
@@ -178,8 +174,8 @@ class RadioButtonGroup(Widget, BinBaselineCalculator):
     Create the group, then create a bunch of RadioButtons passing in the group.
 
     NB: GTK has built-in radio button grouping functionality, and we should
-    be using that but we need this widget for portable code.  We create 
-    a dummy GTK radio button and make this the "root" button which gets 
+    be using that but we need this widget for portable code.  We create
+    a dummy GTK radio button and make this the "root" button which gets
     inherited by all buttons in this radio button group.
     """
     def __init__(self):

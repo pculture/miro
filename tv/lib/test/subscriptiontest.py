@@ -1,5 +1,4 @@
 import os
-import unittest
 
 from miro import subscription
 from miro import autodiscover
@@ -82,16 +81,19 @@ REFLEXIVE_AUTO_DISCOVERY_IN_RSS = u"""\
 </rss>
 """
 
-REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME = "reflexive-auto-discovery-page-rss.html"
+REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME = \
+    "reflexive-auto-discovery-page-rss.html"
 REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS = u"""\
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
                           "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
-                <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+                <meta http-equiv="Content-type" content="text/html; \
+charset=utf-8" />
                 <title>Reflexive Auto Discovery Page</title>
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="%s" />
+            <link rel="alternate" type="application/rss+xml" title="RSS" \
+href="%s" />
         </head>
         <body>
             This place intentionally (almost) blank... :)
@@ -116,7 +118,8 @@ REFLEXIVE_AUTO_DISCOVERY_IN_ATOM = u"""\
         href="reflexive-auto-discovery-page-atom.html" />
 </feed>
 """
-REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME = "reflexive-auto-discovery-page-atom.html"
+REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME = \
+    "reflexive-auto-discovery-page-atom.html"
 REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM = u"""\
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -125,7 +128,8 @@ REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM = u"""\
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <title>Reflexive Auto Discovery Page</title>
-        <link rel="alternate" type="application/atom+xml" title="RSS" href="%s" />
+        <link rel="alternate" type="application/atom+xml" title="RSS" \
+href="%s" />
     </head>
     <body>
         This place intentionally (almost) blank... :)
@@ -172,7 +176,8 @@ class TestSubscription(MiroTestCase):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS)
         pageFile.close()
-        subscriptions = autodiscover.parse_content(REFLEXIVE_AUTO_DISCOVERY_IN_RSS)
+        subscriptions = autodiscover.parse_content(
+            REFLEXIVE_AUTO_DISCOVERY_IN_RSS)
         try:
             self.assertDiscovered(subscriptions, SAMPLE_RSS_SUBSCRIPTION_URL_1)
         finally:
@@ -182,9 +187,11 @@ class TestSubscription(MiroTestCase):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM)
         pageFile.close()
-        subscriptions = autodiscover.parse_content(REFLEXIVE_AUTO_DISCOVERY_IN_ATOM)
+        subscriptions = autodiscover.parse_content(
+            REFLEXIVE_AUTO_DISCOVERY_IN_ATOM)
         try:
-            self.assertDiscovered(subscriptions, SAMPLE_ATOM_SUBSCRIPTION_URL_1)
+            self.assertDiscovered(subscriptions,
+                                  SAMPLE_ATOM_SUBSCRIPTION_URL_1)
         finally:
             os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
 
@@ -293,7 +300,8 @@ class Testfind_subscribe_links(MiroTestCase):
         url = ('http://subscribe.getdemocracy.com/download.php' +
                '?url1=http%3A//www.myblog.com/videos/cats.ogm')
         self.assertEquals(subscription.find_subscribe_links(url),
-                [{'type': 'download', 'url': 'http://www.myblog.com/videos/cats.ogm'}])
+                [{'type': 'download',
+                  'url': 'http://www.myblog.com/videos/cats.ogm'}])
 
 class Testis_subscribe_links(MiroTestCase):
     def test_garbage(self):

@@ -29,8 +29,6 @@
 
 from miro import app
 from miro import player
-from miro import signals
-from miro import messages
 
 class NullRenderer:
     def __init__(self):
@@ -52,7 +50,8 @@ class AudioPlayer(player.Player):
     """Audio renderer widget.
 
     Note: ``app.audio_renderer`` must be inititalized before instantiating this
-    class.  If no renderers can be found, set ``app.audio_renderer`` to ``None``.
+    class.  If no renderers can be found, set ``app.audio_renderer`` to
+    ``None``.
     """
     def __init__(self):
         player.Player.__init__(self)

@@ -35,7 +35,6 @@ import logging
 from miro import app
 from miro import prefs
 from miro import util
-from miro import messages
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
@@ -77,7 +76,8 @@ class ImportMediaDialog(MainDialog):
         self.restrict_rb.set_selected()
         vbox.pack_start(widgetutil.align_left(self.restrict_rb, left_pad=30))
 
-        self.search_rb = widgetset.RadioButton(_("Search custom folders:"), self.search_type_rbg)
+        self.search_rb = widgetset.RadioButton(_("Search custom folders:"),
+                                               self.search_type_rbg)
         vbox.pack_start(widgetutil.align_left(self.search_rb, left_pad=30))
 
         self.search_entry = widgetset.TextEntry()
@@ -109,7 +109,8 @@ class ImportMediaDialog(MainDialog):
     def build_search_section(self):
         vbox = widgetset.VBox(spacing=5)
 
-        vbox.pack_start(firsttimedialog._build_title(_("Searching for media files")))
+        vbox.pack_start(firsttimedialog._build_title(
+            _("Searching for media files")))
 
         self.progress_bar = widgetset.ProgressBar()
         vbox.pack_start(self.progress_bar)

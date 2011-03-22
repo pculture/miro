@@ -29,8 +29,6 @@
 
 """searchentry.py -- Search entry text box.
 """
-import logging
-import os.path
 import gobject
 import gtk
 
@@ -87,7 +85,8 @@ class GtkSearchTextEntry(gtk.EventBox):
         self.queue_draw()
 
     def _clear_icon_position(self):
-        return (self.allocation.width - 20, ((self.allocation.height - 16) / 2))
+        return (self.allocation.width - 20,
+                ((self.allocation.height - 16) / 2))
 
     def _engine_icon_position(self):
         return (6, ((self.allocation.height - 16) / 2))

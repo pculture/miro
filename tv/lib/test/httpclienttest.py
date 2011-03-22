@@ -1,8 +1,6 @@
 import functools
-import rfc822
 import os
 import pycurl
-import urllib
 import pickle
 from cStringIO import StringIO
 
@@ -133,7 +131,8 @@ class HTTPClientTest(HTTPClientTestBase):
 
     @uses_httpclient
     def test_post_vars(self):
-        self.grab_url(self.httpserver.build_url('test.txt'), post_vars={'abc': '123', 'foo': 'bar'})
+        self.grab_url(self.httpserver.build_url('test.txt'),
+                      post_vars={'abc': '123', 'foo': 'bar'})
         self.assertEqual(self.last_http_info('method'), 'POST')
         post_data = self.last_http_info('post_data')
         self.assertSameSet(post_data.keys(), ['abc', 'foo'])
@@ -150,8 +149,9 @@ class HTTPClientTest(HTTPClientTestBase):
                     'mimetype': 'application/unknown',
                     'handle': StringIO('abc\0\0def')
         }
-        self.grab_url(self.httpserver.build_url('test.txt'), post_vars={'abc': '123'},
-                post_files={'file1': f1, 'file2': f2})
+        self.grab_url(self.httpserver.build_url('test.txt'),
+                      post_vars={'abc': '123'},
+                      post_files={'file1': f1, 'file2': f2})
         post_data = self.last_http_info('post_data')
         self.assertEquals(post_data.getvalue('abc'), '123')
         self.assertEquals(post_data.getvalue('file1'), 'contents#1')
@@ -198,7 +198,8 @@ class HTTPClientTest(HTTPClientTestBase):
 
         def on_headers(headers):
             self.header_callback_info = headers.copy()
-        self.grab_url(self.httpserver.build_url('test.txt'), header_callback=on_headers)
+        self.grab_url(self.httpserver.build_url('test.txt'),
+                      header_callback=on_headers)
         self.assertEquals(self.header_callback_info['x-foo'], 'bar')
         path = resources.path("testdata/httpserver/test.txt")
         self.assertEquals(self.header_callback_info['content-length'],
@@ -286,7 +287,6 @@ class HTTPClientTest(HTTPClientTestBase):
         }
         self.event_loop_timeout = 5
         TIMEOUT = 0.001
-        progress_stats = []
 
         self.last_uploaded = None
         self.last_total = None
@@ -632,7 +632,8 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('digest-protected/index2.txt'))
         self.assertEquals(self.dialogs_seen, 1)
         # Even for ones in a subdirectory
-        self.grab_url(self.httpserver.build_url('digest-protected/foo/index2.txt'))
+        self.grab_url(self.httpserver.build_url(
+                'digest-protected/foo/index2.txt'))
         self.assertEquals(self.dialogs_seen, 1)
         # Or even for ones outside the directory (only true for digest auth)
         self.grab_url(self.httpserver.build_url('digest-protected2/index.txt'))
@@ -876,7 +877,6 @@ class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
         self.ask_for_http_auth(url, header)
 
         from miro.dl_daemon import daemon
-        from miro.dl_daemon import command
 
         class FakeDaemon(daemon.ControllerDaemon):
             def __init__(self):

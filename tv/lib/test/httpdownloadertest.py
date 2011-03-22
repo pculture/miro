@@ -1,7 +1,5 @@
 import os
-import threading
 
-from miro import util # This adds logging.timing
 from miro import download_utils
 from miro import httpclient
 from miro.test.framework import (
@@ -69,7 +67,8 @@ class HTTPDownloaderTest(EventLoopTest):
 
 #    Really slow test that downloads a very large file.
 #    def testHuge(self):
-#        url = 'http://archive-c01.libsyn.com/aXdueJh2m32XeGh6l3efp5qtZXiX/podcasts/askaninja/AANQ21.m4v'
+#        url = ('http://archive-c01.libsyn.com/aXdueJh2m32XeGh6l3efp5qtZXiX/'
+#               'podcasts/askaninja/AANQ21.m4v')
 #        self.downloader = TestingDownloader(url, "ID1")
 #        self.downloader.statusCallback = self.stopOnFinished
 #        self.runEventLoop(timeout=120)

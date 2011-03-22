@@ -41,13 +41,14 @@ else:
     # Boo, we have to calculate it manually.
     #
     # The formula we use is
-    # pangos/pixel == (pangos/point) * (points/inch) * (inches/mm) * (mm/pixels)
+    # pangos/pixel == ((pangos/point) * (points/inch) *
+    #                  (inches/mm) * (mm/pixels))
     # Where:
     # pangos/point == pango.SCALE
     # points/inch == 72
     # inches/mm == 0.0394
     # mm/pixel == (screen_height_mm() / screen_height())
-    PANGO_SCALE_PIXELS = int(round(pango.SCALE * 72 * 0.0394 * 
+    PANGO_SCALE_PIXELS = int(round(pango.SCALE * 72 * 0.0394 *
             gtk.gdk.screen_height_mm() / gtk.gdk.screen_height()))
     def set_font_pixel_size(font_description, size):
         font_description.set_size(size * PANGO_SCALE_PIXELS)
