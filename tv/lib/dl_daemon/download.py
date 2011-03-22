@@ -1025,6 +1025,7 @@ class BTDownloader(BGDownloader):
             params["save_path"] = fileutil.expand_filename(self.filename)
             if not os.path.isdir(params["save_path"]):
                 params["save_path"] = os.path.dirname(params["save_path"])
+            params["save_path"] = params["save_path"].encode('utf-8')
 
             params["auto_managed"] = False
             params["paused"] = False
@@ -1035,7 +1036,6 @@ class BTDownloader(BGDownloader):
                 self.fast_resume_data = load_fast_resume_data(self.info_hash)
                 if self.fast_resume_data:
                     params["resume_data"] = lt.bencode(self.fast_resume_data)
-            params["save_path"] = params["save_path"].encode('utf-8')
 
             if(self.magnet):
                 self.torrent = lt.add_magnet_uri(TORRENT_SESSION.session,
@@ -1044,7 +1044,7 @@ class BTDownloader(BGDownloader):
             else:
                 self.torrent = TORRENT_SESSION.session.add_torrent(params)
 
-            if self.fast_resume_data:
+            if not self.firstTime:
                 self.torrent.resume()
 
             self.info_hash = str(self.torrent.info_hash())
