@@ -151,9 +151,17 @@ class BrowserDelegate (NSObject):
     def webView_didFinishLoadForFrame_(self, webview, frame):
         self.browser.emit('net-stop')
 
+    def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(
+            self, webview, action_information, request, frame, listener):
+        url = unicode(request.URL())
+        if self.browser.should_load_url(url):
+            listener.use()
+        else:
+            listener.ignore()
+
     def webView_decidePolicyForMIMEType_request_frame_decisionListener_(self, webview, mtype, request, frame, listener):
         url = unicode(request.URL())
-        if self.browser.should_load_url(url, mtype):
+        if self.browser.should_load_mimetype(url, mtype):
             listener.use()
         else:
             listener.ignore()        

@@ -150,7 +150,11 @@ class Browser(widgetset.Browser):
         self.seen_cache[url] = 1
         self.navigate(url)
 
-    def should_load_url(self, url, mimetype=None):
+    def unknown_callback(self, url):
+        """ callback to use for unknown URLs"""
+        call_on_ui_thread(self.handle_unknown_url, url)
+
+    def should_load_url(self, url):
         """Returns True if the Miro browser should handle the url and
         False otherwise.
 
@@ -159,15 +163,8 @@ class Browser(widgetset.Browser):
         * if the url is something that Miro should download instead
         * other things?
         """
-        if mimetype is not None:
-            logging.debug("got %s (%s)", url, mimetype)
-        else:
-            logging.debug("got %s", url)
+        logging.debug("got %s", url)
 
-        if mimetype:
-            metadata = {'mime_type': mimetype}
-        else:
-            metadata = None
         if url in self.seen_cache:
             del self.seen_cache[url]
             return True
@@ -177,13 +174,10 @@ class Browser(widgetset.Browser):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
 
-        def unknown_callback(url):
-            call_on_ui_thread(self.handle_unknown_url, url)
 
         if filetypes.is_maybe_rss_url(url):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback,
-                                 metadata).send_to_backend()
+            messages.DownloadURL(url, self.unknown_callback).send_to_backend()
             return False
 
         # parse the path out of the url and run that through the filetypes
@@ -192,19 +186,25 @@ class Browser(widgetset.Browser):
         ret = urlparse(url)
         if filetypes.is_allowed_filename(ret[2]):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback,
-                                 metadata).send_to_backend()
-            return False
-
-        if mimetype is not None and filetypes.is_allowed_mimetype(mimetype):
-            logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback,
-                                 metadata).send_to_backend()
+            messages.DownloadURL(url, self.unknown_callback).send_to_backend()
             return False
 
         if util.is_magnet_uri(url):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback,
+            messages.DownloadURL(url, self.unknown_callback).send_to_backend()
+            return False
+
+        return True
+
+    def should_load_mimetype(self, url, mimetype):
+        """Like should_load_url(), but for mimetype checking.  """
+
+        # FIXME: this never gets called on windows
+
+        if filetypes.is_allowed_mimetype(mimetype):
+            logging.debug("miro wants to handle %s", url)
+            metadata = {'mime_type': mimetype}
+            messages.DownloadURL(url, self.unknown_callback,
                                  metadata).send_to_backend()
             return False
 

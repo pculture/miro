@@ -62,8 +62,10 @@ class Browser(Widget):
 
         self.wrapped_browser_connect('load-started', self.on_net_start)
         self.wrapped_browser_connect('load-finished', self.on_net_stop)
-        self.wrapped_browser_connect(
-            'mime-type-policy-decision-requested', self.on_mime_type)
+        self.wrapped_browser_connect('navigation-policy-decision-requested',
+                self.on_navigate)
+        self.wrapped_browser_connect('mime-type-policy-decision-requested',
+                self.on_mime_type)
 
         self.create_signal('net-start')
         self.create_signal('net-stop')
@@ -84,9 +86,16 @@ class Browser(Widget):
     def on_net_stop(self, view, frame):
         self.emit('net-stop')
 
+    def on_navigate(self, view, frame, request, navigation_action,
+            policy_decision):
+        uri = request.get_uri()
+        if not self.should_load_url(uri):
+            policy_decision.ignore()
+            return True
+
     def on_mime_type(self, view, frame, request, mtype, policy_decision):
         uri = request.get_uri()
-        if not self.should_load_url(uri, mtype):
+        if not self.should_load_mimetype(uri, mtype):
             policy_decision.ignore()
             return True
 
