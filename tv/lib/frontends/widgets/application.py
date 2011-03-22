@@ -434,10 +434,7 @@ class Application:
                                     '\n' + '\n'.join(filenames_bad),
                                      dialogs.WARNING_MESSAGE)
         else:
-            if len(filenames_good) == 1:
-                messages.OpenIndividualFile(filenames_good[0]).send_to_backend()
-            else:
-                messages.OpenIndividualFiles(filenames_good).send_to_backend()
+            messages.OpenIndividualFiles(filenames_good).send_to_backend()
 
     def ask_for_url(self, title, description, error_title, error_description):
         """Ask the user to enter a url in a TextEntry box.

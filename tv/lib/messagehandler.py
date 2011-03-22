@@ -1170,9 +1170,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         singleclick.add_download(message.url, message.handle_unknown_callback,
                                  message.metadata)
 
-    def handle_open_individual_file(self, message):
-        commandline.parse_command_line_args([message.filename])
-
     def handle_open_individual_files(self, message):
         commandline.parse_command_line_args(message.filenames)
 

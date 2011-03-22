@@ -606,12 +606,6 @@ class DownloadURL(BackendMessage):
         self.handle_unknown_callback = handle_unknown_callback
         self.metadata = metadata
 
-class OpenIndividualFile(BackendMessage):
-    """Open a single file item in Miro.
-    """
-    def __init__(self, filename):
-        self.filename = filename
-
 class OpenIndividualFiles(BackendMessage):
     """Open a list of file items in Miro.
     """
