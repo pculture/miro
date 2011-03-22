@@ -35,6 +35,7 @@ import select
 import struct
 import threading
 import time
+import traceback
 import uuid
 
 from datetime import datetime
@@ -1201,13 +1202,18 @@ class SharingManager(object):
                 if err == errno.EINTR:
                     continue 
                 else:
+                    typ, value, tb = sys.exc_info()
                     logging.error('sharing:server_thread: err %d reason = %s',
                                   err, errstring)
+                    for line in traceback.format_tb(tb):
+                        logging.error('%s', line) 
             # XXX How to pass error, send message to the backend/frontend?
             except StandardError:
                 typ, value, tb = sys.exc_info()
                 logging.error('sharing:server_thread: type %s exception %s',
                        typ, value)
+                for line in traceback.format_tb(tb):
+                    logging.error('%s', line) 
 
     def enable_sharing(self):
         # Can we actually enable sharing.  The Bonjour client-side libraries
