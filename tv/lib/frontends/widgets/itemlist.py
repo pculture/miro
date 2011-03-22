@@ -39,6 +39,7 @@ They also handle temporarily filtering out items based the user's search
 terms.
 """
 
+import itertools
 import sys
 import time
 import logging
@@ -220,6 +221,82 @@ class KindSort(ItemSort):
     KEY = 'kind'
     def sort_key(self, info):
         return info.kind
+
+class PlaylistSort(ItemSort):
+    """Sort that orders items by their order in the playlist.
+    """
+    KEY = 'playlist'
+
+    def __init__(self, initial_items=None):
+        ItemSort.__init__(self, True)
+        self.reset_current_position()
+        self.positions = {}
+        if initial_items:
+            for item in initial_items:
+                self.positions[item.id] = self.current_postion.next()
+
+    def reset_current_position(self):
+        self.current_postion = itertools.count()
+
+    def set_ascending(self, ascending):
+        self.reverse = not ascending
+
+    def add_items(self, item_list):
+        for item in item_list:
+            if item.id not in self.positions:
+                self.positions[item.id] = self.current_postion.next()
+
+    def forget_items(self, id_list):
+        for id in id_list:
+            del self.positions[id]
+        new_items = self.positions.items()
+        new_items.sort(key=lambda row: row[1])
+        self.reset_current_position()
+        self.positions = {}
+        for id, old_position in new_items:
+            self.positions[id] = self.current_postion.next()
+
+    def set_new_order(self, id_order):
+        self.reset_current_position()
+        self.positions = dict((id, self.current_postion.next())
+            for id in id_order)
+
+    def move_ids_before(self, before_id, id_list):
+        """Move ids around in the position list
+
+        The ids in id_list will be placed before before_id.  If before_id is
+        None, then they will be placed at the end of the list.
+
+        :returns: new sort order as a list of ids
+        """
+
+        # calculate order of ids not in id_list
+        moving = set(id_list)
+        new_order = [id_ for id_ in self.positions if id_ not in moving]
+        new_order.sort(key=lambda id_: self.positions[id_])
+        # insert id_list into new_order
+        if before_id is not None:
+            insert_pos = new_order.index(before_id)
+            new_order[insert_pos:insert_pos] = id_list
+        else:
+            new_order.extend(id_list)
+        self.set_new_order(new_order)
+        return new_order
+
+    def sort_key(self, item):
+        try:
+            return self.positions[item.id]
+        except KeyError:
+            # Something wrong happened and the item is not in our internal
+            # list.  Let's add it to the end to prevent endless crash reports.
+            self.add_items([item])
+            app.widgetapp.handle_soft_failure("getting playlist sort key",
+                    'Key Error: %s' % item.id, with_exception=True)
+            return self.positions[item.id]
+
+    def items_will_change(self, added, changed, removed):
+        self.add_items(added)
+        self.forget_items(removed)
 
 DEFAULT_SORT = ArtistSort(False)
 

@@ -92,7 +92,11 @@ class ItemListTracker(signals.SignalEmitter):
         else:
             # need to do a little bit of fancy footwork here because
             # _live_trackers is a WeakValueDictionary.
-            retval = cls._live_trackers[key] = ItemListTracker(type_, id_)
+            if type_ == 'playlist':
+                tracker = PlaylistItemListTracker(type_, id_)
+            else:
+                tracker = ItemListTracker(type_, id_)
+            retval = cls._live_trackers[key] = tracker
             return retval
 
     def __init__(self, type_, id_):
@@ -163,10 +167,6 @@ class ItemListTracker(signals.SignalEmitter):
     def on_item_list(self, message):
         self.add_initial_items(message.items)
 
-    def _send_items_will_change(self, added, changed, removed):
-        self.emit('items-will-change', added, changed, removed)
-        self.item_list.get_sort().items_will_change(added, changed, removed)
-
     def is_filtering(self):
         """Check if we are filtering out any items."""
         return self.search_filter.is_filtering()
@@ -174,7 +174,7 @@ class ItemListTracker(signals.SignalEmitter):
     def add_initial_items(self, items):
         self.saw_initial_list = True
         items = self.search_filter.filter_initial_list(items)
-        self._send_items_will_change(items, [], [])
+        self.emit('items-will-change', items, [], [])
         # call remove all to handle the race described in #16089.  We may get
         # multiple ItemList messages, in which case we want the last one to be
         # the one that sticks.
@@ -190,7 +190,7 @@ class ItemListTracker(signals.SignalEmitter):
             return
         added, changed, removed = self.search_filter.filter_changes(
                 message.added, message.changed, message.removed)
-        self._send_items_will_change(added, changed, removed)
+        self.emit('items-will-change', added, changed, removed)
         self.item_list.add_items(added)
         self.item_list.update_items(changed)
         self.item_list.remove_items(removed)
@@ -204,6 +204,19 @@ class ItemListTracker(signals.SignalEmitter):
         self.item_list.add_items(added)
         self.item_list.remove_items(removed)
         self.emit("items-changed", added, [], removed)
+
+class PlaylistItemListTracker(ItemListTracker):
+    """ItemListTracker for playlists.
+
+    This class adds a playlist_sort attribute, that contains a
+    itemlist.PlaylistSort object that is kept up to date.
+    """
+    def __init__(self, type_, id_):
+        ItemListTracker.__init__(self, type_, id_)
+        self.playlist_sort = itemlist.PlaylistSort()
+
+    def do_items_will_change(self, added, changed, removed):
+        self.playlist_sort.items_will_change(added, changed, removed)
 
 class ManualItemListTracker(ItemListTracker):
     id_counter = itertools.count()

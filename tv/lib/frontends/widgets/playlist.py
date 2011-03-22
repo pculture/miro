@@ -29,8 +29,7 @@
 
 """playlist.py -- Handle displaying a playlist."""
 
-import itertools
-
+from miro import app
 from miro import messages
 from miro import signals
 from miro.gtcache import gettext as _
@@ -87,86 +86,18 @@ class DropHandler(signals.SignalEmitter):
         self.emit('new-order', new_order)
         return True
 
-class PlaylistSort(itemlist.ItemSort):
-    """Sort that orders items by their order in the playlist.
-    """
-    KEY = 'playlist'
-
-    def __init__(self, initial_items=None):
-        itemlist.ItemSort.__init__(self, True)
-        self.reset_current_position()
-        self.positions = {}
-        if initial_items:
-            for item in initial_items:
-                self.positions[item.id] = self.current_postion.next()
-
-    def reset_current_position(self):
-        self.current_postion = itertools.count()
-
-    def set_ascending(self, ascending):
-        self.reverse = not ascending
-
-    def add_items(self, item_list):
-        for item in item_list:
-            if item.id not in self.positions:
-                self.positions[item.id] = self.current_postion.next()
-
-    def forget_items(self, id_list):
-        for id in id_list:
-            del self.positions[id]
-        new_items = self.positions.items()
-        new_items.sort(key=lambda row: row[1])
-        self.reset_current_position()
-        self.positions = {}
-        for id, old_position in new_items:
-            self.positions[id] = self.current_postion.next()
-
-    def set_new_order(self, id_order):
-        self.reset_current_position()
-        self.positions = dict((id, self.current_postion.next())
-            for id in id_order)
-
-    def move_ids_before(self, before_id, id_list):
-        """Move ids around in the position list
-
-        The ids in id_list will be placed before before_id.  If before_id is
-        None, then they will be placed at the end of the list.
-
-        :returns: new sort order as a list of ids
-        """
-
-        # calculate order of ids not in id_list
-        moving = set(id_list)
-        new_order = [id_ for id_ in self.positions if id_ not in moving]
-        new_order.sort(key=lambda id_: self.positions[id_])
-        # insert id_list into new_order
-        if before_id is not None:
-            insert_pos = new_order.index(before_id)
-            new_order[insert_pos:insert_pos] = id_list
-        else:
-            new_order.extend(id_list)
-        self.set_new_order(new_order)
-        return new_order
-
-    def sort_key(self, item):
-        return self.positions[item.id]
-
-    def items_will_change(self, added, changed, removed):
-        self.add_items(added)
-        self.forget_items(removed)
-
 class PlaylistItemController(itemlistcontroller.SimpleItemListController):
     def __init__(self, playlist_info):
         self.type = u'playlist'
         self.id = playlist_info.id
         self.is_folder = playlist_info.is_folder
-        self.playlist_sorter = PlaylistSort()
         self.populated_sorter = False
         itemlistcontroller.SimpleItemListController.__init__(self)
 
     def build_column_renderers(self):
         column_renderers = itemlistwidgets.ListViewColumnRendererSet()
-        playlist_renderer = style.PlaylistOrderRenderer(self.playlist_sorter)
+        playlist_renderer = style.PlaylistOrderRenderer(
+                self.item_tracker.playlist_sort)
         column_renderers.add_renderer('playlist', playlist_renderer)
         return column_renderers
 
@@ -174,20 +105,12 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
         itemlistcontroller.SimpleItemListController._init_widget(self)
         self.make_drop_handler()
 
-    def ensure_playlist_sorter_populated(self):
-        """Enusre that self.playlist_sorter is a valid object.
-
-        We create playlist_sorter lazily so that we can pass it the list of
-        initial items.
-        """
-        if not self.populated_sorter:
-            self.playlist_sorter.add_items(self.item_list.get_items())
-            self.populated_sorter = True
 
     def make_sorter(self, column, ascending):
         if column == 'playlist':
-            self.ensure_playlist_sorter_populated()
-            self.playlist_sorter.set_ascending(ascending)
+            # take the playlist sorter from our item tracker
+            playlist_sort = self.item_tracker.playlist_sort
+            playlist_sort.set_ascending(ascending)
             # slight bit of a hack here.  We enable/disable reordering based
             # on the sort we return here.  The assumption is that we are going
             # to use the sort we return, which seems reasonable.
@@ -195,18 +118,19 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
                 self.enable_reorder()
             else:
                 self.disable_reorder()
-            return self.playlist_sorter
+            return playlist_sort
         else:
             self.disable_reorder()
             return itemlistcontroller.SimpleItemListController.make_sorter(
                     self, column, ascending)
 
     def build_renderer(self):
-        return itemrenderer.PlaylistItemRenderer(self.playlist_sorter)
+        return itemrenderer.PlaylistItemRenderer(
+                self.item_tracker.playlist_sort)
 
     def make_drop_handler(self):
         self.drop_handler = DropHandler(self.id, self.item_list,
-                self.views.values(), self.playlist_sorter)
+                self.views.values(), self.item_tracker.playlist_sort)
         self.drop_handler.connect('new-order', self._on_new_order)
 
     def enable_reorder(self):
