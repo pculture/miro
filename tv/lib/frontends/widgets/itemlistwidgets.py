@@ -1685,9 +1685,9 @@ class TorrentInfoWidget(widgetset.Background):
                     self.down_rate, self.up_rate, self.ratio, self.eta):
                 label.set_text("")
         else:
-            self.connections.set_text(info.connections)
-            self.seeders.set_text(info.seeders)
-            self.leechers.set_text(info.leechers)
+            self.connections.set_text(str(info.connections))
+            self.seeders.set_text(str(info.seeders))
+            self.leechers.set_text(str(info.leechers))
             self.down_rate.set_text(displaytext.download_rate(info.down_rate))
             self.up_rate.set_text(displaytext.download_rate(info.up_rate))
             self.ratio.set_text("%0.2f" % info.up_down_ratio)
