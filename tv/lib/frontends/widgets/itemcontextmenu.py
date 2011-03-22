@@ -104,25 +104,8 @@ class ItemContextMenuHandler(object):
         # given that, we check for drm first.
         if item.has_drm:
             section.append((_('Play Externally'), play_externally))
-
-            remove = self._remove_context_menu_item([item])
-            if remove:
-                section.append(remove)
-
         elif item.is_playable:
             # Show File in Finder
-            if not item.remote:
-                if file_navigator_name:
-                    reveal_text = _('Show File in %(progname)s',
-                                    {"progname": file_navigator_name})
-                else:
-                    reveal_text = _('File on Disk')
-
-                section.append((
-                        reveal_text,
-                        lambda: app.widgetapp.check_then_reveal_file(
-                            item.video_path)))
-
             if not item.remote:
                 # most recent conversion
                 last_converter = conversion_manager.get_last_conversion()
@@ -179,11 +162,6 @@ class ItemContextMenuHandler(object):
                 section.append((
                         _("Edit Item Details"), app.widgetapp.edit_items))
 
-            if not item.remote:
-                remove = self._remove_context_menu_item([item])
-                if remove:
-                    section.append(remove)
-
             if not (item.device or item.remote):
                 if item.seeding_status == 'seeding':
                     section.append((
@@ -231,6 +209,19 @@ class ItemContextMenuHandler(object):
                 # Play
                 section.append((_('Play'), app.widgetapp.play_selection))
 
+        if item.downloaded and not item.remote:
+            if file_navigator_name:
+                reveal_text = _('Show File in %(progname)s',
+                                {"progname": file_navigator_name})
+            else:
+                reveal_text = _('File on Disk')
+
+            section.append((reveal_text,
+                lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
+            remove = self._remove_context_menu_item([item])
+            if remove:
+                section.append(remove)
+
         if section:
             menu_sections.append(section)
             section = []
@@ -277,6 +268,7 @@ class ItemContextMenuHandler(object):
         watched = []
         unwatched = []
         downloaded = []
+        playable = []
         downloading = []
         available = []
         paused = []
@@ -286,16 +278,18 @@ class ItemContextMenuHandler(object):
         for info in selection:
             if info.downloaded:
                 downloaded.append(info)
-                if not (info.device or info.remote):
-                    editable = True
-                if info.device:
-                    device.append(info)
-                elif info.video_watched:
-                    watched.append(info)
-                    if info.expiration_date:
-                        expiring.append(info)
-                else:
-                    unwatched.append(info)
+                if info.is_playable:
+                    playable.append(info)
+                    if not (info.device or info.remote):
+                        editable = True
+                    if info.device:
+                        device.append(info)
+                    elif info.video_watched:
+                        watched.append(info)
+                        if info.expiration_date:
+                            expiring.append(info)
+                    else:
+                        unwatched.append(info)
             elif info.state == 'paused':
                 paused.append(info)
             elif info.state == 'downloading':
@@ -320,10 +314,11 @@ class ItemContextMenuHandler(object):
                                       len(downloaded),
                                       {"count": len(downloaded)}),
                              None))
-            menu.append((_('Play'), app.widgetapp.play_selection)),
-            if not device:
-                menu.append((_('Add to Playlist'),
-                             app.widgetapp.add_to_playlist))
+            if playable:
+                menu.append((_('Play'), app.widgetapp.play_selection)),
+                if not device:
+                    menu.append((_('Add to Playlist'),
+                                 app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
             if watched:
                 def mark_unwatched():
@@ -341,7 +336,7 @@ class ItemContextMenuHandler(object):
                         if item.expiration_date:
                             messages.KeepVideo(item.id).send_to_backend()
                 menu.append((_('Keep'), keep_videos))
-            if not device:
+            if playable and not device:
                 menu.append(None)
                 convert_menu = self._make_convert_menu()
                 menu.append((_('Convert to...'), convert_menu))
