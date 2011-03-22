@@ -1251,6 +1251,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         # call noteNumberOfRowsChanged() to have OS X recalculate the heights
         self.tableview.noteNumberOfRowsChanged()
         self.invalidate_size_request()
+        self.try_to_set_row_height()
 
     def column_count(self):
         return len(self.tableview.tableColumns())

@@ -28,6 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from __future__ import division
+import logging
 import math
 
 from AppKit import *
@@ -61,6 +62,10 @@ class Image(object):
 
     def crop_and_scale(self, src_x, src_y, src_width, src_height, dest_width,
             dest_height):
+        if dest_width <= 0 or dest_height <= 0:
+            logging.stacktrace("invalid dest sizes: %s %s" % (dest_width,
+                    dest_height))
+            return TransformedImage(self.nsimage)
 
         source_rect = NSMakeRect(src_x, src_y, src_width, src_height)
         dest_rect = NSMakeRect(0, 0, dest_width, dest_height)
