@@ -1509,7 +1509,7 @@ class TorrentInfoWidget(widgetset.Background):
     BACKGROUND_COLOR = widgetutil.css_to_color('#d5d5d5')
     BACKGROUND_LINE_COLOR = widgetutil.css_to_color('#b9b9b9')
     BACKGROUND_LINE_COLOR_BOTTOM = widgetutil.css_to_color('#f1f1f1')
-    WIDTH = 310
+    WIDTH = 370
 
     def __init__(self):
         widgetset.Background.__init__(self)
@@ -1523,14 +1523,14 @@ class TorrentInfoWidget(widgetset.Background):
         self.layout_contents()
 
     def layout_contents(self):
-        # make the left/right sections take up half the space minus 10px
-        # pading on both sides
-        section_width = (self.WIDTH / 2) - 20
+        # make the left/right sections take up half the space minus 15px
+        # pading for the sides
+        section_width = (self.WIDTH / 2) - 15
         main_hbox = widgetset.HBox()
         left_side = self.build_left(section_width)
         right_side = self.build_right(section_width)
-        main_hbox.pack_start(widgetutil.pad(left_side, left=10, right=10))
-        main_hbox.pack_start(widgetutil.pad(right_side, left=10, right=10))
+        main_hbox.pack_start(widgetutil.pad(left_side, left=10, right=5))
+        main_hbox.pack_start(widgetutil.pad(right_side, left=5, right=10))
         self.add(widgetutil.pad(main_hbox, top=10, bottom=10))
 
     def _label(self, text=''):
