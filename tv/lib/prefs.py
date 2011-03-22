@@ -167,6 +167,10 @@ DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donat
                          platformSpecific=False)
 TROUBLESHOOT_URL  = Pref(key='TroubleshootURL', default=u"http://manual.getmiro.com/troubleshooting.html",
                          platformSpecific=False)
+DEVICE_SYNCING_URL = Pref(key='DeviceSyncingURL', default=u"http://manual.getmiro.com/devicesyncing.html",
+                         platformSpecific=False)
+APP_STORE_URL = Pref(key='AppStoreURL', default=u"http://www.getmiro.com/download/ipad",
+                         platformSpecific=False)
 HELP_URL          = Pref(key='HelpURL', default=u"http://www.getmiro.com/help/",
                          platformSpecific=False)
 BUG_REPORT_URL    = Pref(key='ReportURL', default=u"http://www.getmiro.com/bug.html",

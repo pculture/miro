@@ -48,8 +48,6 @@ from miro.plat import resources
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets import widgetset
 
-APP_STORE_URL = 'http://www.getmiro.com/download/ipad'
-
 class RoundedSolidBackground(widgetset.Background):
     SIZE = 10
 
@@ -425,13 +423,13 @@ class ConnectTab(widgetset.VBox):
                 w.disable()
 
     def help_button_clicked(self, button):
-        print 'help clicked'
+        app.widgetapp.open_url(app.config.get(prefs.DEVICE_SYNCING_URL))
 
     def show_all_devices_toggled(self, cb):
         app.device_manager.set_show_unknown(cb.get_checked())
 
     def app_store_button_clicked(self, button):
-        app.widgetapp.open_url(APP_STORE_URL)
+        app.widgetapp.open_url(app.config.get(prefs.APP_STORE_URL))
 
 
 class SourcesTab(widgetset.VBox):
