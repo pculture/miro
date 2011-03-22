@@ -38,6 +38,7 @@ import re
 from miro import ngrams
 from miro.plat.utils import filename_to_unicode
 
+# XXX not correct as we don't take into account of foreign quotation marks
 QUOTEKILLER = re.compile(r'(?<!\\)"')
 SLASHKILLER = re.compile(r'\\.')
 # Let's hope all this stuff is in Unicode...
