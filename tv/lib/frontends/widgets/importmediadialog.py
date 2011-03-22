@@ -153,8 +153,7 @@ class ImportMediaDialog(MainDialog):
     def handle_change_clicked(self, widget):
         dir_ = ask_for_directory(
             _("Choose directory to search for media files"),
-            initial_directory=get_default_search_dir(),
-            transient_for=self)
+            initial_directory=get_default_search_dir())
         if dir_:
             self.search_entry.set_text(filename_to_unicode(dir_))
             self.search_directory = dir_
