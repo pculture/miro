@@ -199,7 +199,6 @@ class TabList(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('tab-added')
         self.create_signal('moved-tabs-to-list')
-        self.create_signal('row-collapsed')
         self.view = self._make_view()
         self.setup_view()
         self.iter_map = {}
@@ -583,8 +582,6 @@ class HideableTabList(TabList):
             message = messages.FolderExpandedChange(self.type, info.id,
                                                     expanded)
             message.send_to_backend()
-        if not expanded:
-            self.emit('row-collapsed', iter_, path)
 
     def add(self, info, parent_id=None):
         """Add a TabInfo to the list, with an optional parent (by id)."""

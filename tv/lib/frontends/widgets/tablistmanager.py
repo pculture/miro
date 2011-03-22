@@ -48,7 +48,6 @@ class TabListManager(dict):
         self.type, self.id = u'tablist', u'tablist'
         for tab_list in all_tab_lists():
             tab_list.connect('tab-added', self.on_tab_added)
-            tab_list.connect('row-collapsed', self.on_row_collapsed)
             tab_list.connect('moved-tabs-to-list', self.on_moved_tabs_to_list)
             tab_list.view.connect('selection-changed',
                     self.on_selection_changed, tab_list)
@@ -56,7 +55,7 @@ class TabListManager(dict):
                     self.on_selection_invalid, tab_list)
             self[tab_list.type] = tab_list
         self._selected_tablist = None
-        self._previous_selection = (None, [])
+        self._previous_selection = None
         self._before_no_tabs = self._previous_selection
         self._restored = False
         self._path_broken = None
@@ -89,8 +88,7 @@ class TabListManager(dict):
         view = self._selected_tablist.view
         iters = view.get_selection(strict=False)
         if real_tabs:
-            self._previous_selection = (self._selected_tablist.type,
-                    (self._get_locator(view, i) for i in iters))
+            self._previous_selection = self._selected_tablist.type
         try:
             typ = self._selected_tablist.type
             if not iters:
@@ -151,8 +149,12 @@ class TabListManager(dict):
             return None
 
     def _handle_no_tabs_selected(self, _selected_tablist, force=False):
-        """No tab is selected; select a fallback. This may be about to be
-        overwritten by on_row_collapsed, but there's no way to tell.
+        """No tab is selected; select a fallback.
+        
+        [XXX:historical note:'This may be about to be overwritten by
+        on_row_collapsed, but there's no way to tell.' This is no longer true -
+        we should check whether that means this method can be simplified, then
+        delete this note.]
 
         After _handle_no_tabs_selected, something is guaranteed to be selected.
         Selection may still fail in strict mode if the selected tab is in a list
@@ -267,7 +269,7 @@ class TabListManager(dict):
             root = self._selected_tablist.iter_map[self._selected_tablist.info.id]
             if was_base: # unselect base if it was already selected
                 if (self._selected_tablist.type ==
-                        self._previous_selection[0]):
+                        self._previous_selection):
                     view.unselect(root)
             else: # unselect everything but base if base is newly selected
                 view.unselect_all(signal=False)
@@ -331,74 +333,6 @@ class TabListManager(dict):
     def on_moved_tabs_to_list(self, _tab_list, destination):
         """Handle tabs being moved between tab lists."""
         self._select_from_tab_list(destination.type)
-
-    def _get_locator(self, view, iter_):
-        """OS X doesn't have hierarchial paths; this returns whatever type of
-        locator is useful on this platform.
-
-        The ideal replacement for hack would be to implement hierarchial paths
-        on OS X.
-        """
-        if not self._path_broken:
-            path = view.model.get_path(iter_)
-            if path is NotImplemented:
-                self._path_broken = True
-            else:
-                self._path_broken = False
-                return path
-        try:
-            return iter_.value()
-        except ValueError:
-            raise WidgetActionError("node deleted on OS X")
-    
-    def _locator_is_parent(self, model, parent, children):
-        """This compares one locator with an iterable of other locators to see
-        whether the one is the parent of any of the others.
-
-        With hierarchial rows, this is O(n).
-        """
-        if self._path_broken:
-            # breadth-first search from children upwards to the root node
-            to_check = set(children)
-            while to_check:
-                checked = set()
-                for node in to_check.copy():
-                    if node == parent:
-                        return True
-                    checked.add(node)
-                    if node.parent is not None:
-                        to_check.add(node.parent.value())
-                to_check.difference_update(checked)
-            return False
-        else:
-            # if a path starts with parent but is longer than parent, it's a
-            # child of parent
-            depth = len(parent)
-            return any(len(sel) > depth and sel[:depth] == parent
-                       for sel in children)
-
-    def on_row_collapsed(self, tab_list, iter_, path):
-        """When an ancestor of a selected tab is collapsed, we lose the
-        selection before we get the row-collapsed signal. The approach taken
-        here is to check whether the last real selection included descendants of
-        the collapsed row, and if so select the collapsed row.
-        """
-        previous_tab_list, selected = self._before_no_tabs
-        selected = list(selected)
-        if tab_list == previous_tab_list or not selected:
-            return
-        if self._path_broken is None:
-            self._path_broken = path is NotImplemented
-        if self._path_broken:
-            try:
-                path = self._get_locator(tab_list.view, iter_)
-            except ActionUnavailableError, error:
-                logging.debug("selection invalid: %s", error.reason)
-                self.on_selection_invalid(tab_list.view, self._selected_tablist)
-        if self._locator_is_parent(tab_list.view.model, path, selected):
-            tab_list.view.unselect_all(signal=False)
-            self._restored = True
-            self._select_from_tab_list(tab_list.type, iter_)
 
     def on_selection_invalid(self, _table_view, tab_list):
         """The current selection is invalid; this happens after deleting. Select
