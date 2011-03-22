@@ -40,9 +40,9 @@ import traceback
 
 from miro import util
 from miro.plat import resources
-from miro.plat.frontends.widgets.widgetset import Image, ImageSurface
+from miro.plat.frontends.widgets import widgetset
 
-broken_image = Image(resources.path('images/broken-image.gif'))
+broken_image = widgetset.Image(resources.path('images/broken-image.gif'))
 
 CACHE_SIZE = 2000 # number of objects to keep in memory
 
@@ -51,7 +51,7 @@ class ImagePool(util.Cache):
 
     def create_new_value(self, (path, size)):
         try:
-            image = Image(path)
+            image = widgetset.Image(path)
         except StandardError:
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
@@ -101,7 +101,7 @@ class ImagePool(util.Cache):
 class ImageSurfacePool(util.Cache):
     def create_new_value(self, (path, size)):
         image = _imagepool.get((path, size))
-        return ImageSurface(image)
+        return widgetset.ImageSurface(image)
 
 _imagepool = ImagePool(CACHE_SIZE)
 _image_surface_pool = ImageSurfacePool(CACHE_SIZE)
@@ -127,3 +127,14 @@ def get_surface(path, size=None):
                  returns the default sized image
     """
     return _image_surface_pool.get((path, size))
+
+def get_image_display(path, size=None):
+    """Returns an ImageDisplay for path.
+
+    :param path: the filename for the image
+    :param size: if the image needs to fit into a specified sized
+                 space, then specify this and get will return a
+                 scaled image; if size is not specified, then this
+                 returns the default sized image
+    """
+    return widgetset.ImageDisplay(_imagepool.get((path, size)))

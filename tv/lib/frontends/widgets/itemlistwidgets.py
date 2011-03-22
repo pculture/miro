@@ -41,6 +41,7 @@ subclasses to handle the logic involved.
 """
 
 import logging
+import math
 
 from miro import app
 from miro import prefs
@@ -1498,6 +1499,203 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
         y = int((context.height - icon.height) / 2)
         icon.draw(context, x, y, icon.width, icon.height)
 
+class TorrentInfoWidget(widgetset.Background):
+    PADDING_TOP = 10
+    PADDING_BOTTOM = 5
+    LABEL_TEXT_COLOR = widgetutil.css_to_color('#686868')
+    FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
+    FONT_SIZE_SMALL = widgetutil.font_scale_from_osx_points(9)
+    VALUE_TEXT_COLOR = widgetutil.BLACK
+    BACKGROUND_COLOR = widgetutil.css_to_color('#d5d5d5')
+    BACKGROUND_LINE_COLOR = widgetutil.css_to_color('#b9b9b9')
+    BACKGROUND_LINE_COLOR_BOTTOM = widgetutil.css_to_color('#f1f1f1')
+    WIDTH = 310
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.eta_icon = imagepool.get_image_display(resources.path(
+            'images/torrent-info-eta.png'))
+        self.down_rate_icon = imagepool.get_image_display(resources.path(
+            'images/torrent-info-down-rate.png'))
+        self.up_rate_icon = imagepool.get_image_display(resources.path(
+            'images/torrent-info-up-rate.png'))
+        self.should_show = False
+        self.layout_contents()
+
+    def layout_contents(self):
+        # make the left/right sections take up half the space minus 10px
+        # pading on both sides
+        section_width = (self.WIDTH / 2) - 20
+        main_hbox = widgetset.HBox()
+        left_side = self.build_left(section_width)
+        right_side = self.build_right(section_width)
+        main_hbox.pack_start(widgetutil.pad(left_side, left=10, right=10))
+        main_hbox.pack_start(widgetutil.pad(right_side, left=10, right=10))
+        self.add(widgetutil.pad(main_hbox, top=10, bottom=10))
+
+    def _label(self, text=''):
+        label = widgetset.Label(text)
+        label.set_size(self.FONT_SIZE)
+        if text:
+            # inital text means this is a label, rather than a value
+            label.set_color(self.LABEL_TEXT_COLOR)
+        return label
+
+    def _small_label(self, text=''):
+        label = widgetset.Label(text)
+        label.set_size(self.FONT_SIZE_SMALL)
+        if text:
+            label.set_color(self.LABEL_TEXT_COLOR)
+        return label
+
+    def build_left(self, width):
+        remaining = self._label(_('Remaining'))
+        download = self._label(_('Download'))
+        upload = self._label(_('Upload'))
+        total1 = self._small_label(_('Total'))
+        total2 = self._small_label(_('Total'))
+        self.eta = self._label()
+        self.down_rate = self._label()
+        self.up_rate= self._label()
+        self.down_total = self._small_label()
+        self.up_total = self._small_label()
+        # pack each line.  Set expand=True for lines before spacing
+        vbox = widgetset.VBox()
+        vbox.set_size_request(width, -1)
+        self.build_left_line(vbox, remaining, self.eta, width,
+                self.eta_icon, True)
+        self.build_left_line(vbox, download, self.down_rate, width,
+                self.down_rate_icon, False)
+        self.build_left_line(vbox, total1, self.down_total, width, None,
+                True)
+        self.build_left_line(vbox, upload, self.up_rate, width,
+                self.up_rate_icon, False)
+        self.build_left_line(vbox, total2, self.up_total, width, None,
+                True)
+        return vbox
+
+    def build_left_line(self, vbox, label, value, width, icon, expand):
+        ICON_AREA_WIDTH = 15
+
+        line = widgetset.HBox()
+        # pack label
+        line.pack_start(label, expand=True)
+        # pack icon, or pad empty space
+        if icon:
+            line.pack_start(widgetutil.align_bottom(icon,
+                bottom_pad=label.baseline()), expand=False)
+            left_pad = ICON_AREA_WIDTH - icon.image.width
+        else:
+            left_pad = ICON_AREA_WIDTH
+        # pack value, set it's width so that it plus the icon takes up half
+        # the line.
+        value.set_size_request((width / 2) - ICON_AREA_WIDTH, -1)
+        line.pack_start(widgetutil.pad(value, left=left_pad), expand=False)
+        if expand:
+            vbox.pack_start(widgetutil.align_top(line), expand=True)
+        else:
+            vbox.pack_start(line)
+
+    def build_right(self, width):
+        connected_peers = self._label(_('Connected Peers'))
+        seeders = self._label(_('Seeders'))
+        leechers = self._label(_('Leechers'))
+        share_ratio = self._label(_('Share Ratio'))
+
+        self.connections = self._label()
+        self.seeders = self._label()
+        self.leechers = self._label()
+        self.ratio = self._label()
+        # pack each line.  Set expand=True for all lines except the last to
+        # ensure equal spacing
+        vbox = widgetset.VBox()
+        vbox.set_size_request(width, -1)
+        self.build_right_line(vbox, connected_peers, self.connections, True)
+        self.build_right_line(vbox, seeders, self.seeders, True)
+        self.build_right_line(vbox, leechers, self.leechers, True)
+        self.build_right_line(vbox, share_ratio, self.ratio, False)
+        return vbox
+
+    def build_right_line(self, vbox, label, value, expand):
+        hbox = widgetset.HBox()
+        hbox.pack_start(label)
+        value.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
+        hbox.pack_end(value)
+        vbox.pack_start(widgetutil.align_top(hbox), expand=expand)
+
+    def size_request(self, layout):
+        if self.should_show:
+            # hopefully this is big enough to fit all text
+            return (self.WIDTH, 105)
+        else:
+            return (0, 0)
+
+    def draw(self, context, layout_manager):
+        # draw background for the torrent info section
+        context.set_color(self.BACKGROUND_COLOR)
+        widgetutil.round_rect(context, 0, 0, context.width, context.height, 5)
+        context.fill()
+        # prepare to draw lines.
+        context.set_line_width(1)
+        # offset coordinates by 0.5 so the stroke falls solidly on a pixel
+        top = 0.5
+        bottom = context.height-0.5
+        left = 0.5
+        right = context.width-0.5
+        middle = round(context.width / 2.0) + 0.5
+        radius = 5
+        # draw top and middle lines with our dark line color
+        context.set_color(self.BACKGROUND_LINE_COLOR)
+        context.move_to(middle, 0)
+        context.line_to(middle, context.height)
+        context.stroke()
+        context.move_to(left, top+radius)
+        context.arc(left+radius, top+radius, radius, math.pi, math.pi * 3 / 2)
+        context.line_to(right - radius, top)
+        context.arc(right - radius, top + radius, radius, math.pi * 3 / 2,
+                math.pi * 2)
+        context.stroke()
+        # draw bottom lines with our light line color
+        context.set_color(self.BACKGROUND_LINE_COLOR_BOTTOM)
+        context.arc(right-radius, bottom-radius, radius, 0, math.pi/2)
+        context.line_to(left+radius, bottom)
+        context.arc(left+radius, bottom-radius, radius, math.pi/2, math.pi)
+        context.stroke()
+        # draw side lines with a gradient from the left to the right colors
+        # we use rectangles here to make gradients work, so we don't use the
+        # top/bottom/left/right coordinates above.
+        gradient = widgetset.Gradient(0, radius, 0, context.height-radius)
+        gradient.set_start_color(self.BACKGROUND_LINE_COLOR)
+        gradient.set_end_color(self.BACKGROUND_LINE_COLOR_BOTTOM)
+        context.rectangle(0, radius, 1, context.height-radius*2)
+        context.gradient_fill(gradient)
+        context.rectangle(context.width-1, radius, 1,
+                context.height-radius*2)
+        context.gradient_fill(gradient)
+
+    def set_info(self, info):
+        self.should_show = (info.download_info and info.download_info.torrent
+                and info.state in ('downloading', 'uploading'))
+        if not self.should_show:
+            return
+
+        if info.seeders is None:
+            # torrent still starting up
+            for label in (self.connections, self.seeders, self.leechers,
+                    self.down_rate, self.up_rate, self.ratio, self.eta):
+                label.set_text("")
+        else:
+            self.connections.set_text(info.connections)
+            self.seeders.set_text(info.seeders)
+            self.leechers.set_text(info.leechers)
+            self.down_rate.set_text(displaytext.download_rate(info.down_rate))
+            self.up_rate.set_text(displaytext.download_rate(info.up_rate))
+            self.ratio.set_text("%0.2f" % info.up_down_ratio)
+            self.eta.set_text(displaytext.time_string_0_blank(
+                info.download_info.eta))
+        self.down_total.set_text(displaytext.size_string(info.down_total))
+        self.up_total.set_text(displaytext.size_string(info.up_total))
+
 class ItemDetailsWidget(widgetset.VBox):
     """Widget to display detailed information about an item.
 
@@ -1506,15 +1704,14 @@ class ItemDetailsWidget(widgetset.VBox):
     """
     PADDING_MIDDLE = 25
     PADDING_RIGHT = 30
-    PADDING_ABOVE_TITLE = 25
+    PADDING_ABOVE_TORRENT_INFO = 25
+    PADDING_ABOVE_TITLE = 20
     PADDING_ABOVE_DESCRIPTION = 8
     PADDING_ABOVE_EXTRA_INFO = 25
     IMAGE_SIZE = (165, 165)
     TEXT_COLOR = (0.176, 0.176, 0.176)
     TITLE_SIZE = widgetutil.font_scale_from_osx_points(14)
     DESCRIPTION_SIZE = widgetutil.font_scale_from_osx_points(11)
-    TORRENT_INFO_SIZE = widgetutil.font_scale_from_osx_points(12)
-    TORRENT_INFO_LABEL_COLOR = (0.4, 0.4, 0.4)
     # give enough room to display the image, plus some more for the
     # scrollbars and the expander
     EXPANDED_HEIGHT = 190
@@ -1552,21 +1749,19 @@ class ItemDetailsWidget(widgetset.VBox):
     def build_right(self):
         vbox = widgetset.VBox()
         self.title_label = self.build_title()
-        self.torrent_info_left = self.build_torrent_labels_label()
-        self.torrent_info_right = self.build_torrent_values_label()
+        self.torrent_info = TorrentInfoWidget()
         self.description_label = self.build_description_label()
         self.extra_info_label = self.build_extra_info()
+        self.torrent_info_holder = widgetutil.HideableWidget(
+                widgetutil.align_left(self.torrent_info,
+                    top_pad=self.PADDING_ABOVE_TORRENT_INFO))
+        vbox.pack_start(self.torrent_info_holder)
         vbox.pack_start(widgetutil.align_left(self.title_label,
             top_pad=self.PADDING_ABOVE_TITLE))
         self.license_button = widgetset.Button(_('View License'))
         self.license_button.connect('clicked', self.on_license_clicked)
         self.license_holder = widgetutil.WidgetHolder()
         vbox.pack_start(widgetutil.align_left(self.license_holder))
-        torrent_info_hbox = widgetset.HBox(spacing=12)
-        torrent_info_hbox.pack_start(self.torrent_info_left)
-        torrent_info_hbox.pack_start(self.torrent_info_right)
-        vbox.pack_start(widgetutil.align_left(torrent_info_hbox,
-            top_pad=self.PADDING_ABOVE_DESCRIPTION))
         vbox.pack_start(widgetutil.align_left(self.description_label))
         vbox.pack_start(widgetutil.align_left(self.extra_info_label,
             top_pad=self.PADDING_ABOVE_EXTRA_INFO))
@@ -1584,17 +1779,6 @@ class ItemDetailsWidget(widgetset.VBox):
         label = self.build_label()
         label.set_size(self.TITLE_SIZE)
         label.set_bold(True)
-        return label
-
-    def build_torrent_labels_label(self):
-        label = self.build_label()
-        label.set_size(self.TORRENT_INFO_SIZE)
-        label.set_color(self.TORRENT_INFO_LABEL_COLOR)
-        return label
-
-    def build_torrent_values_label(self):
-        label = self.build_label()
-        label.set_size(self.TORRENT_INFO_SIZE)
         return label
 
     def build_description_label(self):
@@ -1621,48 +1805,17 @@ class ItemDetailsWidget(widgetset.VBox):
 
     def set_info(self, info):
         self.title_label.set_text(info.name)
-        self.setup_torrent_info(info)
+        self.torrent_info.set_info(info)
+        if self.torrent_info.should_show:
+            self.torrent_info_holder.show()
+        else:
+            self.torrent_info_holder.hide()
         self.description_label.set_text(info.description_stripped[0])
         self.set_extra_info_text(info)
         self.setup_license_button(info)
         image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
         self.image_widget.set_image(image)
         self.set_label_widths()
-
-    def setup_torrent_info(self, info):
-        if (info.download_info and info.download_info.torrent
-                and info.state in ('downloading', 'uploading')):
-            if info.seeders is None:
-                connections = seeders = leechers = down_rate = up_rate = 0
-                ratio = _("N/A")
-            else:
-                connections = info.connections
-                seeders = info.seeders
-                leechers = info.leechers
-                down_rate = displaytext.download_rate(info.down_rate)
-                up_rate = displaytext.download_rate(info.up_rate)
-                ratio = "%0.2f" % info.up_down_ratio
-            down_total = displaytext.size_string(info.down_total)
-            up_total = displaytext.size_string(info.up_total)
-            lines = (
-                (_('connected peers:'), connections),
-                (_('seeders:'), seeders),
-                (_('leechers:'), leechers),
-                (_('upload rate:'), up_rate),
-                (_('upload total:'), up_total),
-                (_('download rate:'), down_rate),
-                (_('download total:'), down_total),
-                (_('upload/download ratio:'), ratio))
-            left_parts = []
-            right_parts = []
-            for left, right in lines:
-                left_parts.append(left)
-                right_parts.append(str(right))
-            self.torrent_info_left.set_text('\n'.join(left_parts) + '\n')
-            self.torrent_info_right.set_text('\n'.join(right_parts) + '\n')
-        else:
-            self.torrent_info_left.set_text('')
-            self.torrent_info_right.set_text('')
 
     def set_extra_info_text(self, info):
         parts = []

@@ -212,6 +212,14 @@ def build_hbox(items, padding=5):
     map(lambda item: h.pack_start(item, padding=padding), items)
     return h
 
+def build_vbox(items, padding=0):
+    """Builds an VBox and packs with the list of widgets.  Padding defaults to
+    0 pixels.
+    """
+    v = widgetset.VBox()
+    map(lambda item: v.pack_start(item, padding=padding), items)
+    return v
+
 def build_control_line(items, padding=5):
     max_baseline = -1
     for item in items:
