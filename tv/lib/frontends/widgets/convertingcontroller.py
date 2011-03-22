@@ -39,7 +39,6 @@ from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemlist
 from miro.plat.frontends.widgets import widgetset
 
@@ -84,7 +83,7 @@ class ConvertingController(object):
         self.clear_finished_button.set_color(widgetset.TOOLBAR_GRAY)
         self.clear_finished_button.connect('clicked', self.on_clear_finished)
 
-        toolbar = itemlistwidgets.DisplayToolbar()
+        toolbar = widgetset.Toolbar()
         hbox = widgetset.HBox()
         hbox.pack_start(widgetutil.pad(self.stop_all_button, top=8, bottom=8, left=8))
         hbox.pack_end(widgetutil.pad(reveal_button, top=8, bottom=8, right=8))
