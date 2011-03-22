@@ -29,6 +29,7 @@
 import errno
 import logging
 import os
+import sys
 import socket
 import select
 import struct
@@ -1200,10 +1201,13 @@ class SharingManager(object):
                 if err == errno.EINTR:
                     continue 
                 else:
-                    pass
+                    logging.error('sharing:server_thread: err %d reason = %s',
+                                  err, errstring)
             # XXX How to pass error, send message to the backend/frontend?
             except StandardError:
-                pass
+                typ, value, tb = sys.exc_info()
+                logging.error('sharing:server_thread: type %s exception %s',
+                       typ, value)
 
     def enable_sharing(self):
         # Can we actually enable sharing.  The Bonjour client-side libraries
