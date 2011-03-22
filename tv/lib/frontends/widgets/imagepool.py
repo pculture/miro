@@ -74,11 +74,11 @@ def resize_image(image, dest_width, dest_height, upsize_threshold=1.5):
     return image.crop_and_scale(src_x, src_y, src_width, src_height,
             dest_width, dest_height)
 
-def resize_one_dimension(self, image, width_scale, height_scale,
+def resize_one_dimension(image, width_scale, height_scale,
                          upsize_threshold=1.5):
     """Try to resize only 1 dimension on an image."""
     lesser_scale = min(width_scale, height_scale)
-    if lesser_scale <= self.UPSIZE_THRESHOLD:
+    if lesser_scale <= upsize_threshold:
         # round() then int(), don't return floats here.
         return image.resize(int(round(lesser_scale * image.width)),
                 int(round(lesser_scale * image.height)))
