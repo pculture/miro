@@ -367,6 +367,7 @@ class ItemListTitlebar(widgetset.Titlebar):
 
 class FolderContentsTitlebar(ItemListTitlebar):
     def _build_titlebar_start(self):
+        self.create_signal('podcast-clicked')
         self.podcast_button = widgetutil.TitlebarButton(_('Back to podcast'))
         self.podcast_button.connect('clicked', self._on_podcast_clicked)
         return widgetutil.align_middle(self.podcast_button, left_pad=20)
