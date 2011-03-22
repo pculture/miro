@@ -397,8 +397,8 @@ class DownloadStatusUpdater(object):
 
     Because updates happen infrequently, DownloadStatusUpdaters should
     only be used for progress updates, not events like downloads
-    starting/finishing.  For those just call update_client() since they
-    are more urgent, and don't happen often enough to cause CPU
+    starting/finishing.  For those just call update_client() since
+    they are more urgent, and don't happen often enough to cause CPU
     problems.
     """
 
@@ -509,9 +509,9 @@ class BGDownloader(object):
             filename = clean_filename(filename)
 
         if is_directory:
-            # if this is a torrent and it's a directory of files,
-            # then we create a temp directory to put the directory
-            # of files in.
+            # if this is a torrent and it's a directory of files, then
+            # we create a temp directory to put the directory of files
+            # in.
             new_filename = tempfile.mkdtemp(prefix=filename, dir=download_dir)
         else:
             new_filename, fp = next_free_filename(
@@ -832,9 +832,9 @@ class HTTPDownloader(BGDownloader):
             return
         stats = self.client.get_stats()
         if stats.status_code in (200, 206):
-            # Only upload currentSize/rate if we are currently downloading
-            # something.  Don't change them before the transfer starts, while
-            # we are handling redirects, etc.
+            # Only upload currentSize/rate if we are currently
+            # downloading something.  Don't change them before the
+            # transfer starts, while we are handling redirects, etc.
             self.currentSize = stats.downloaded + stats.initial_size
             self.rate = stats.download_rate
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
@@ -997,14 +997,14 @@ class BTDownloader(BGDownloader):
     def _start_torrent(self):
         try:
             params = {}
-            if not self.magnet:
+            if self.magnet:
+                duplicate = TORRENT_SESSION.find_duplicate_torrent_from_magnet(
+                    self.magnet)
+            else:
                 torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
                 params["ti"] = torrent_info
                 self.totalSize = torrent_info.total_size()
                 duplicate = TORRENT_SESSION.find_duplicate_torrent(params["ti"])
-            else:
-                duplicate = TORRENT_SESSION.find_duplicate_torrent_from_magnet(
-                                self.magnet)
 
             if duplicate is not None:
                 c = command.DuplicateTorrent(daemon.LAST_DAEMON,
@@ -1037,7 +1037,7 @@ class BTDownloader(BGDownloader):
                 if self.fast_resume_data:
                     params["resume_data"] = lt.bencode(self.fast_resume_data)
 
-            if(self.magnet):
+            if self.magnet:
                 self.torrent = lt.add_magnet_uri(TORRENT_SESSION.session,
                                                  self.magnet.encode('utf-8'),
                                                  params)
@@ -1231,8 +1231,8 @@ class BTDownloader(BGDownloader):
 
         try:
             # FIXME - we should switch to save_resume_data which uses
-            # an alert to save resume data rather than write_resume_data
-            # which looks deprecated in 0.15.5.
+            # an alert to save resume data rather than
+            # write_resume_data which looks deprecated in 0.15.5.
             self.fast_resume_data = lt.bencode(
                 self.torrent.write_resume_data())
         except RuntimeError, rte:
@@ -1264,10 +1264,9 @@ class BTDownloader(BGDownloader):
             BGDownloader.move_to_directory(self, directory)
 
     def restore_state(self, data):
-        # This is a bit of a hack since
-        # we currently don't differentiate 
-        # between magnet URIs and URLs 
-        # anywhere else than in this module
+        # This is a bit of a hack since we currently don't
+        # differentiate between magnet URIs and URLs anywhere else
+        # than in this module
         if is_magnet_uri(data['url']):
             self.magnet = data['url']
             data['url'] = None
@@ -1287,7 +1286,6 @@ class BTDownloader(BGDownloader):
         if self.metainfo_updated:
             data['metainfo'] = self.metainfo
             self.metainfo_updated = False
-        # data['fast_resume_data'] = self.fast_resume_data
         data['activity'] = self.activity
         data['dlerType'] = 'BitTorrent'
         data['seeders'] = self.seeders
@@ -1335,8 +1333,8 @@ class BTDownloader(BGDownloader):
         self.update_client()
 
     def start(self, resume=True):
-        # for BT downloads, resume doesn't mean anything, so we
-        # ignore it.
+        # for BT downloads, resume doesn't mean anything, so we ignore
+        # it.
         if self.state not in (u'paused', u'stopped', u'offline'):
             return
 
@@ -1358,8 +1356,9 @@ class BTDownloader(BGDownloader):
         if not self.restarting:
             try:
                 metainfo = lt.bdecode(self.metainfo)
-                # if we don't get valid torrent metadata back, then the
-                # metainfo is None.  treat that like a runtime error.
+                # if we don't get valid torrent metadata back, then
+                # the metainfo is None.  treat that like a runtime
+                # error.
                 if not metainfo:
                     raise RuntimeError()
                 name = metainfo['info']['name']
@@ -1367,9 +1366,10 @@ class BTDownloader(BGDownloader):
                 # is a torrent of a bunch of files in a directory
                 is_directory = "files" in metainfo['info']
 
-            # Note: handle KeyError as well because bdecode() may return
-            # an object with no 'info' key, or with 'info' key but no 'name'
-            # key.  This allows us to catch lousily made torrent files.
+            # Note: handle KeyError as well because bdecode() may
+            # return an object with no 'info' key, or with 'info' key
+            # but no 'name' key.  This allows us to catch lousily made
+            # torrent files.
             except (KeyError, RuntimeError):
                 self.handle_corrupt_torrent()
                 return
@@ -1378,33 +1378,36 @@ class BTDownloader(BGDownloader):
                 self.pick_initial_filename(
                     suffix="", torrent=True, is_directory=is_directory)
 
-            # Somewhere deep it calls makedirs() which can throw exceptions.
+            # Somewhere deep it calls makedirs() which can throw
+            # exceptions.
             #
-            # Not sure if this is correct but if we throw a runtime error
-            # like above it can't hurt anyone.
+            # Not sure if this is correct but if we throw a runtime
+            # error like above it can't hurt anyone.
             except (OSError, IOError):
                 raise RuntimeError
         self.update_client()
         self._resume_torrent()
 
-    # This does the same as got_metainfo, but for magnet links.
-    # While got_metainfo is called before a torrent is added
-    # got_delayed_metainfo() has to be called after a torrent
-    # is added and it has received the metainfo for the magnet link.
     def got_delayed_metainfo(self):
+        """This does the same as got_metainfo, but for magnet links.
+        While got_metainfo is called before a torrent is added
+        got_delayed_metainfo() has to be called after a torrent is
+        added and it has received the metainfo for the magnet link.
+        """
         if not self.torrent.has_metadata():
             return
         self.shortFilename =  utf8_to_filename(self.torrent.get_torrent_info().name())
-        # if torrent_info has more than one file, then this
-        # is a torrent of a bunch of files in a directory
+        # if torrent_info has more than one file, then this is a
+        # torrent of a bunch of files in a directory
         is_directory = len(self.torrent.get_torrent_info().files()) > 1
         try:
             self.pick_initial_filename(
                 suffix="", torrent=True, is_directory=is_directory)
-            # Somewhere deep it calls makedirs() which can throw exceptions.
+            # Somewhere deep it calls makedirs() which can throw
+            # exceptions.
             #
-            # Not sure if this is correct but if we throw a runtime error
-            # like above it can't hurt anyone.
+            # Not sure if this is correct but if we throw a runtime
+            # error like above it can't hurt anyone.
         except (OSError, IOError):
             raise RuntimeError
         # the save_path needs to be a directory--that's where
@@ -1446,14 +1449,12 @@ class BTDownloader(BGDownloader):
     def get_metainfo(self):
         # If it's a magnet link, skip getting meta info
         if self.magnet:
-            # Use this to signal that the metainfo
-            # is not yet available and should be 
-            # added once they are available from
-            # the torrent.
+            # Use this to signal that the metainfo is not yet
+            # available and should be added once they are available
+            # from the torrent.
             self.get_delayed_metainfo = True
-            # This skips got metainfo and calls
-            # update_client() and _resume_torrent()
-            # directly.
+            # This skips got metainfo and calls update_client() and
+            # _resume_torrent() directly.
             self.update_client()
             self._resume_torrent()
             return
