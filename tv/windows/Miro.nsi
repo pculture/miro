@@ -431,6 +431,21 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Pop $0
 !macroend
 
+; This does the oppsite of checkExtensionHandled
+; it enables a section if the extension is already
+; handled by Miro
+!macro checkExtensionNotHandled ext sectionName
+  Push $0
+  ReadRegStr $0 HKCR "${ext}" ""
+  StrCmp $0 "" +3 +6
+  StrCmp $0 "DemocracyPlayer" +2 +5
+  StrCmp $0 "${CONFIG_PROG_ID}" +1 +4
+    SectionGetFlags ${sectionName} $0
+    IntOp $0 $0 & 0xFFFFFFFE
+    SectionSetFlags ${sectionName} $0
+  Pop $0
+!macroend
+
 !macro uninstall directory
   ; Remove the program
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
@@ -828,16 +843,32 @@ Section "Handle Miro files" SecRegisterMiro
   WriteRegStr HKCR ".miro" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Miro files" SecUnregisterMiro
+  DeleteRegKey HKCR ".miro"
+SectionEnd
+
 Section "Handle Democracy files" SecRegisterDemocracy
   WriteRegStr HKCR ".democracy" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of Democracy files" SecUnregisterDemocracy
+  DeleteRegKey HKCR ".democracy"
 SectionEnd
 
 Section "Handle Torrent files" SecRegisterTorrent
   WriteRegStr HKCR ".torrent" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Torrent files" SecUnregisterTorrent
+  DeleteRegKey HKCR ".torrent"
+SectionEnd
+
 Section "Handle AVI files" SecRegisterAvi
   WriteRegStr HKCR ".avi" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of AVI files" SecUnregisterAvi
+  DeleteRegKey HKCR ".avi"
 SectionEnd
 
 Section "Handle MPEG files" SecRegisterMpg
@@ -851,9 +882,25 @@ Section "Handle MPEG files" SecRegisterMpg
   WriteRegStr HKCR ".mpv2" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of MPEG files" SecUnregisterMpg
+  DeleteRegKey HKCR ".m4v"
+  DeleteRegKey HKCR ".mpg"
+  DeleteRegKey HKCR ".mpeg"
+  DeleteRegKey HKCR ".mp2"
+  DeleteRegKey HKCR ".mp4"
+  DeleteRegKey HKCR ".mpe"
+  DeleteRegKey HKCR ".mpv"
+  DeleteRegKey HKCR ".mpv2"
+SectionEnd
+
 Section "Handle MP3 files" SecRegisterMp3
   WriteRegStr HKCR ".mp3" "" "${CONFIG_PROG_ID}"
   WriteRegStr HKCR ".mpa" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of MP3 files" SecUnregisterMp3
+  DeleteRegKey HKCR ".mp3"
+  DeleteRegKey HKCR ".mpa"
 SectionEnd
 
 Section "Handle Quicktime files" SecRegisterMov
@@ -861,16 +908,33 @@ Section "Handle Quicktime files" SecRegisterMov
   WriteRegStr HKCR ".qt" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Quicktime files" SecUnregisterMov
+  DeleteRegKey HKCR ".mov"
+  DeleteRegKey HKCR ".qt"
+SectionEnd
+
 Section "Handle ASF files" SecRegisterAsf
   WriteRegStr HKCR ".asf" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of ASF files" SecUnregisterAsf
+  DeleteRegKey HKCR ".asf"
 SectionEnd
 
 Section "Handle Windows Media files" SecRegisterWmv
   WriteRegStr HKCR ".wmv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Windows Media files" SecUnregisterWmv
+  DeleteRegKey HKCR ".wmv"
+SectionEnd
+
 Section "Handle DTS Media files" SecRegisterDts
   WriteRegStr HKCR ".dts" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of DTS Media files" SecUnregisterDts
+  DeleteRegKey HKCR ".dts"
 SectionEnd
 
 Section "Handle Ogg Media files" SecRegisterOgg
@@ -881,39 +945,82 @@ Section "Handle Ogg Media files" SecRegisterOgg
   WriteRegStr HKCR ".ogx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Ogg Media files" SecUnregisterOgg
+  DeleteRegKey HKCR ".ogg"
+  DeleteRegKey HKCR ".ogm"
+  DeleteRegKey HKCR ".oga"
+  DeleteRegKey HKCR ".ogv"
+  DeleteRegKey HKCR ".ogx"
+SectionEnd
+
 Section "Handle Matroska Media files" SecRegisterMkv
   WriteRegStr HKCR ".mkv" "" "${CONFIG_PROG_ID}"
   WriteRegStr HKCR ".mka" "" "${CONFIG_PROG_ID}"
   WriteRegStr HKCR ".mks" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Matroska Media files" SecUnregisterMkv
+  DeleteRegKey HKCR ".mkv"
+  DeleteRegKey HKCR ".mka"
+  DeleteRegKey HKCR ".mks"
+SectionEnd
+
 Section "Handle 3gp Media files" SecRegister3gp
   WriteRegStr HKCR ".3gp" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of 3gp Media files" SecUnregister3gp
+  DeleteRegKey HKCR ".3gp"
 SectionEnd
 
 Section "Handle 3g2 Media files" SecRegister3g2
   WriteRegStr HKCR ".3g2" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of 3g2 Media files" SecUnregister3g2
+  DeleteRegKey HKCR ".3g2"
+SectionEnd
+
 Section "Handle Flash Video files" SecRegisterFlv
   WriteRegStr HKCR ".flv" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of Flash Video files" SecUnregisterFlv
+  DeleteRegKey HKCR ".flv"
 SectionEnd
 
 Section "Handle Nullsoft Video files" SecRegisterNsv
   WriteRegStr HKCR ".nsv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Nullsoft Video files" SecUnregisterNsv
+  DeleteRegKey HKCR ".nsv"
+SectionEnd
+
 Section "Handle pva Video files" SecRegisterPva
   WriteRegStr HKCR ".pva" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of pva Video files" SecUnregisterPva
+  DeleteRegKey HKCR ".pva"
 SectionEnd
 
 Section "Handle Annodex Video files" SecRegisterAnx
   WriteRegStr HKCR ".anx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
+Section "Remove handling of Annodex Video files" SecUnregisterAnx
+  DeleteRegKey HKCR ".anx"
+SectionEnd
+
 Section "Handle Xvid Video files" SecRegisterXvid
   WriteRegStr HKCR ".xvid" "" "${CONFIG_PROG_ID}"
   WriteRegStr HKCR ".3ivx" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
+Section "Remove handling of Xvid Video files" SecUnregisterXvid
+  DeleteRegKey HKCR ".xvid"
+  DeleteRegKey HKCR ".3ivx"
 SectionEnd
 
 Section -NotifyShellExentionChange
@@ -1259,6 +1366,41 @@ Section "Uninstall" SEC91
   ${un.GetParameters} $R0
   ${un.GetOptions} "$R0" "--theme" $THEME_NAME
   IfErrors continue
+
+  !insertmacro checkExtensionNotHandled ".miro" ${SecUnregisterMiro}
+  !insertmacro checkExtensionNotHandled ".democracy" ${SecUnregisterDemocracy}
+  !insertmacro checkExtensionNotHandled ".avi" ${SecUnregisterAvi}
+  !insertmacro checkExtensionNotHandled ".m4v" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mpg" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mpeg" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mp2" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mp4" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mpe" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mpv" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mpv2" ${SecUnregisterMpg}
+  !insertmacro checkExtensionNotHandled ".mp3" ${SecUnregisterMp3}
+  !insertmacro checkExtensionNotHandled ".mpa" ${SecUnregisterMp3}
+  !insertmacro checkExtensionNotHandled ".mov" ${SecUnregisterMov}
+  !insertmacro checkExtensionNotHandled ".qa" ${SecUnregisterMov}
+  !insertmacro checkExtensionNotHandled ".asf" ${SecUnregisterAsf}
+  !insertmacro checkExtensionNotHandled ".wmv" ${SecUnregisterWmv}
+  !insertmacro checkExtensionNotHandled ".dts" ${SecUnregisterDts}
+  !insertmacro checkExtensionNotHandled ".ogg" ${SecUnregisterOgg}
+  !insertmacro checkExtensionNotHandled ".ogm" ${SecUnregisterOgg}
+  !insertmacro checkExtensionNotHandled ".oga" ${SecUnregisterOgg}
+  !insertmacro checkExtensionNotHandled ".ogv" ${SecUnregisterOgg}
+  !insertmacro checkExtensionNotHandled ".ogx" ${SecUnregisterOgg}
+  !insertmacro checkExtensionNotHandled ".mkv" ${SecUnregisterMkv}
+  !insertmacro checkExtensionNotHandled ".mka" ${SecUnregisterMkv}
+  !insertmacro checkExtensionNotHandled ".mks" ${SecUnregisterMkv}
+  !insertmacro checkExtensionNotHandled ".3gp" ${SecUnregister3gp}
+  !insertmacro checkExtensionNotHandled ".3g2" ${SecUnregister3g2}
+  !insertmacro checkExtensionNotHandled ".flv" ${SecUnregisterFlv}
+  !insertmacro checkExtensionNotHandled ".nsv" ${SecUnregisterNsv}
+  !insertmacro checkExtensionNotHandled ".pva" ${SecUnregisterPva}
+  !insertmacro checkExtensionNotHandled ".anx" ${SecUnregisterAnx}
+  !insertmacro checkExtensionNotHandled ".xvid" ${SecUnregisterXvid}
+  !insertmacro checkExtensionNotHandled ".3ivx" ${SecUnregisterXvid}
 
   StrCmp "$THEME_NAME" "" continue
 
