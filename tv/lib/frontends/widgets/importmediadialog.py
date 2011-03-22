@@ -42,8 +42,7 @@ from miro.gtcache import ngettext
 from miro.fileobject import FilenameType
 from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets import widgetutil
-from miro.plat.utils import (
-    filename_to_unicode, get_plat_media_player_name_path)
+from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 
@@ -72,26 +71,14 @@ class ImportMediaDialog(MainDialog):
         vbox.pack_start(widgetutil.align_left(lab))
 
         self.search_type_rbg = widgetset.RadioButtonGroup()
+
         self.restrict_rb = widgetset.RadioButton(
             _("Restrict to all my personal files."), self.search_type_rbg)
-        self.search_rb = widgetset.RadioButton(_("Search custom folders:"), self.search_type_rbg)
         self.restrict_rb.set_selected()
         vbox.pack_start(widgetutil.align_left(self.restrict_rb, left_pad=30))
-        vbox.pack_start(widgetutil.align_left(self.search_rb, left_pad=30))
 
-        # FIXME: we can think about providing a list of media players installed
-        # and search through those, but right now the code doesn't handle
-        # a list of search directories to search.
-        (name, path) = get_plat_media_player_name_path()
-        if path:
-            self.import_rb = widgetset.RadioButton(
-                _("Import from %(player)s as watched folder",
-                  {"player": name}), self.search_type_rbg)
-            self.search_directory = path
-            vbox.pack_start(widgetutil.align_left(self.import_rb, left_pad=30))
-        else:
-            # can't import - import_rb doesn't exist.
-            self.import_rb = None
+        self.search_rb = widgetset.RadioButton(_("Search custom folders:"), self.search_type_rbg)
+        vbox.pack_start(widgetutil.align_left(self.search_rb, left_pad=30))
 
         self.search_entry = widgetset.TextEntry()
         self.search_entry.set_text(get_default_search_dir())
@@ -113,8 +100,6 @@ class ImportMediaDialog(MainDialog):
 
         self.restrict_rb.connect('clicked', self.handle_radio_button_clicked)
         self.search_rb.connect('clicked', self.handle_radio_button_clicked)
-        if self.import_rb:
-            self.import_rb.connect('clicked', self.handle_radio_button_clicked)
 
         self.handle_radio_button_clicked(self.restrict_rb)
         self.change_button.disable()
@@ -144,7 +129,7 @@ class ImportMediaDialog(MainDialog):
         return vbox
 
     def handle_radio_button_clicked(self, widget):
-        if widget is self.restrict_rb or widget is self.import_rb:
+        if widget is self.restrict_rb:
             self.search_entry.disable()
             self.change_button.disable()
 
