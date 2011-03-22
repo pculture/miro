@@ -40,7 +40,8 @@ from miro.plat.utils import filename_to_unicode
 
 QUOTEKILLER = re.compile(r'(?<!\\)"')
 SLASHKILLER = re.compile(r'\\.')
-WORDMATCHER = re.compile("\w+")
+# Let's hope all this stuff is in Unicode...
+WORDMATCHER = re.compile("\w+", re.UNICODE)
 NGRAM_MAX = 5
 SEARCHOBJECTS = {}
 
