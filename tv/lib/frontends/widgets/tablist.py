@@ -787,11 +787,12 @@ class SiteList(HideableTabList):
                 thumb_path = resources.path('images/icon-source.png')
                 info.active_icon = imagepool.get_surface(
                     resources.path('image/icon-source_active.png'))
-        surface = imagepool.get_surface(thumb_path)
-        if surface.width > 16 or surface.height > 16:
-            info.icon = imagepool.get_surface(thumb_path, size=(16, 16))
-        else:
-            info.icon = surface
+        # we don't use the ImagePool because 'favicon.ico' is a name with too
+        # many hits (#16573).
+        image = widgetset.Image(thumb_path)
+        if image.width > 16 or image.height > 16:
+            image = imagepool.resize_image(image, 16, 16)
+        info.icon = widgetset.ImageSurface(image)
         info.unwatched = info.available = 0
         info.type = self.type
 
