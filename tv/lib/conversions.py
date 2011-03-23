@@ -75,19 +75,21 @@ class ConverterInfo(object):
     """Holds the data for a specific conversion that allows us to
     convert to this target.
     """
-
     def __init__(self, name, parser):
         self.name = name
-        self.mediatype = self._get_config_value(name, parser, "mediatype", {})
+        self.mediatype = self._get_config_value(
+            name, parser, "mediatype", {})
         self.identifier = NON_WORD_CHARS.sub("", name).lower()
-        self.executable = self._get_config_value(name, parser,
-                                                 "executable", {})
-        self.parameters = self._get_config_value(name, parser,
-                                                 "parameters", {})
-        self.extension = self._get_config_value(name, parser, "extension", {})
-        self.screen_size = self._get_config_value(name, parser, "ssize", {})
-        self.platforms = self._get_config_value(name, parser, "only_on",
-                                                {'only_on': None})
+        self.executable = self._get_config_value(
+            name, parser, "executable", {})
+        self.parameters = self._get_config_value(
+            name, parser, "parameters", {})
+        self.extension = self._get_config_value(
+            name, parser, "extension", {})
+        self.screen_size = self._get_config_value(
+            name, parser, "ssize", {})
+        self.platforms = self._get_config_value(
+            name, parser, "only_on", {'only_on': None})
         self.displayname = _(
             "%(name)s (%(mediatype)s)",
             {"name": self.name, "mediatype": self.mediatype})
@@ -385,8 +387,8 @@ class ConversionManager(signals.SignalEmitter):
             shutil.move(source, destination)
         except OSError, e:
             if fileutil.is_windows_file_in_use_error(e):
-                # File is in use on windows (#15312) try to copy
-                # the file, then use fileutil.delete.
+                # File is in use on windows (#15312) try to copy the
+                # file, then use fileutil.delete.
                 shutil.copy(source, destination)
                 fileutil.delete(source)
             else:
@@ -523,8 +525,8 @@ def build_output_paths(item_info, target_folder, converter_info):
 
 
 def build_parameters(input_path, output_path, converter_info):
-    """Performs the substitutions on the converter_info parameters
-    and returns a list of arguments.
+    """Performs the substitutions on the converter_info parameters and
+    returns a list of arguments.
 
     :param input_path: absolute path of the file to convert
     :param output_path: absolute path of output file
@@ -550,8 +552,8 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
         try:
             os.remove(temp_file)
         except EnvironmentError, e:
-            logging.debug("clean_up: %s kicked up while removing %s",
-                          e, temp_file)
+            logging.warning("clean_up: %s kicked up while removing %s",
+                            e, temp_file)
             timeout = 1.0 * attempts
             eventloop.add_timeout(
                 timeout, clean_up, "conversion clean_up attempt",
@@ -563,8 +565,8 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
             try:
                 os.rmdir(path)
             except EnvironmentError, e:
-                logging.debug("clean_up: %s kicked up while removing %s",
-                              e, path)
+                logging.warning("clean_up: %s kicked up while removing %s",
+                                e, path)
                 timeout = 1.0 * attempts
                 eventloop.add_timeout(
                     timeout, clean_up, "conversion clean_up attempt",
@@ -581,7 +583,7 @@ class ConversionTask(object):
             item_info, target_folder, converter_info)
         self.create_item = create_item
 
-        logging.debug("temp_output_path: %s  final_output_path: %s",
+        logging.debug("temp_output_path: [%s] final_output_path: [%s]",
                       self.temp_output_path, self.final_output_path)
 
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
@@ -916,6 +918,7 @@ def _create_item_for_conversion(filename, source_info, conversion_name):
     manual_feed = models.Feed.get_manual_feed()
     models.FileItem(filename, feed_id=manual_feed.id,
                     fp_values=fp_values)
+
 
 # FIXME - this should be in an init() and not module-level
 utils.setup_ffmpeg_presets()
