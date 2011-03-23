@@ -170,17 +170,24 @@ class ResumePlaybackButton(widgetset.CustomButton):
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
-        self.button = imagepool.get_surface(resources.path(
-            'images/resume-playback-button.png'))
-        self.button_pressed = imagepool.get_surface(resources.path(
-            'images/resume-playback-button-pressed.png'))
+        button_images = ('resume-playback-button.png',
+                'titlebar-middle.png', 'titlebar-right.png')
+        button_images_pressed = ('resume-playback-button-pressed.png',
+                'titlebar-middle_active.png', 'titlebar-right_active.png')
+        self.button_surfaces = [
+                imagepool.get_surface(resources.path('images/%s' % i))
+                for i in button_images
+        ]
+        self.button_surfaces_pressed = [
+                imagepool.get_surface(resources.path('images/%s' % i))
+                for i in button_images_pressed
+        ]
+        self.button_height = self.button_surfaces[0].height
         self.title_middle = imagepool.get_surface(resources.path(
             'images/resume-playback-title-middle.png'))
         self.title_right = imagepool.get_surface(resources.path(
             'images/resume-playback-title-right.png'))
         self.title = self.resume_time = None
-        self.non_text_width = (self.button.width + self.title_right.width +
-                self.TEXT_PADDING_LEFT + self.TEXT_PADDING_RIGHT)
         self.min_usable_width = 0
 
     def update(self, title, resume_time):
@@ -191,10 +198,23 @@ class ResumePlaybackButton(widgetset.CustomButton):
     def _make_text(self, title, resume_time):
         if resume_time > 0:
             resume_text = displaytext.short_time_string(resume_time)
-            return _("Resume %(item)s at %(resumetime)s",
+            return _("%(item)s at %(resumetime)s",
                     {"item": title, "resumetime": resume_text})
         else:
-            return _("Resume %(item)s", {"item": title})
+            return _("%(item)s", {"item": title})
+
+    def make_button(self, layout_manager, pressed):
+        layout_manager.set_font(self.FONT_SIZE)
+        textbox = layout_manager.textbox(_("Resume"))
+        if pressed:
+            left, middle, right = self.button_surfaces_pressed
+        else:
+            left, middle, right = self.button_surfaces
+        return widgetutil.ThreeImageTextSurface(textbox, left, middle, right)
+
+    def non_text_width(self, button):
+        return (button.width + self.TEXT_PADDING_LEFT +
+                self.TEXT_PADDING_RIGHT)
 
     def size_request(self, layout_manager):
         # we want the button to dissapear when we get smaller than our min
@@ -204,8 +224,9 @@ class ResumePlaybackButton(widgetset.CustomButton):
         # request enough space to show at least a little text
         text = self._make_text("A" * self.MIN_TITLE_CHARS, 123)
         text_size = layout_manager.textbox(text).get_size()
-        self.min_usable_width = text_size[0] + self.non_text_width
-        return (0, self.button.height)
+        button = self.make_button(layout_manager, False)
+        self.min_usable_width = text_size[0] + self.non_text_width(button)
+        return (0, self.button_height)
 
     def do_size_allocated(self, width, height):
         self.set_disabled(width < self.min_usable_width)
@@ -215,23 +236,29 @@ class ResumePlaybackButton(widgetset.CustomButton):
             return
         if self.title is None:
             return
-        if self.state == 'pressed':
-            left = self.button_pressed
-        else:
-            left = self.button
-
+        # make button on the left
+        pressed = (self.state == 'pressed')
+        left_button = self.make_button(layout_manager, pressed)
+        non_text_width = self.non_text_width(left_button)
         # make textbox
         textbox = self.make_textbox(layout_manager, context.width -
-                self.non_text_width)
+            non_text_width)
         # size and layout things
         text_width, text_height = textbox.get_size()
-        total_width = text_width + self.non_text_width
-        text_y = (self.button.height - text_height) // 2
-        text_x = self.button.width + self.TEXT_PADDING_LEFT
-        # draw the backgorund
-        surface = widgetutil.ThreeImageSurface()
-        surface.set_images(left, self.title_middle, self.title_right)
-        surface.draw(context, 0, 0, total_width)
+        total_width = text_width + non_text_width
+        text_y = (left_button.height - text_height) // 2
+        text_x = left_button.width + self.TEXT_PADDING_LEFT
+        # draw the title background, position it just under the right cap of
+        # the left button so that the lines appear solid
+        title_background_x = left_button.width - left_button.right.width
+        title_middle_width = (total_width - title_background_x -
+                self.title_right.width)
+        self.title_middle.draw(context, title_background_x, 0,
+                title_middle_width, self.title_middle.height)
+        self.title_right.draw(context, total_width-self.title_right.width,
+                0, self.title_right.width, self.title_right.height)
+        # draw the button
+        left_button.draw(context, 0, 0, left_button.width, left_button.height)
         # draw text
         textbox.draw(context, text_x, text_y, text_width, text_height)
 

@@ -323,13 +323,13 @@ class ThreeImageTextSurface(object):
     def get_size(self):
         return self.width, self.height
 
-    def draw(self, context, x, y, width, height):
+    def draw(self, context, x, y, width, height, fraction=1.0):
         # draw images
-        self.left.draw(context, x, y, self.left.width, height)
+        self.left.draw(context, x, y, self.left.width, height, fraction)
         self.middle.draw(context, x + self.left.width, y,
-                width - self.left.width - self.right.width, height)
+                width - self.left.width - self.right.width, height, fraction)
         self.right.draw(context, x + width - self.right.width, y,
-            self.right.width, height)
+            self.right.width, height, fraction)
         # draw text
         text_x = x + self.left.width + self.pad_left
         text_y = y + (height - self.text_height) // 2
