@@ -806,11 +806,11 @@ install_reg_keys:
   WriteRegStr HKCR "${CONFIG_PROG_ID}" "" "${CONFIG_LONG_APP_NAME}"
   WriteRegDword HKCR "${CONFIG_PROG_ID}" "EditFlags" 0x00010000
   ; FTA_OpenIsSafe flag
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell" "" "open"
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\DefaultIcon" "" "$INSTDIR\${CONFIG_EXECUTABLE},0"
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\open\command" "" "$R3"
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit" "" "Edit Options File"
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit\command" "" "$R3"
+  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell" "" "open"
+  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\DefaultIcon" "" "$INSTDIR\${CONFIG_EXECUTABLE},0"
+  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell\open\command" "" "$R3"
+  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell\edit" "" "Edit Options File"
+  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell\edit\command" "" "$R3"
 
   ; Delete our old, poorly formatted ProgID
   DeleteRegKey HKCR "DemocracyPlayer"
@@ -843,7 +843,7 @@ Section "Handle Miro files" SecRegisterMiro
   WriteRegStr HKCR ".miro" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Miro files" SecUnregisterMiro
+Section "un.Remove handling of Miro files" SecUnregisterMiro
   DeleteRegKey HKCR ".miro"
 SectionEnd
 
@@ -851,7 +851,7 @@ Section "Handle Democracy files" SecRegisterDemocracy
   WriteRegStr HKCR ".democracy" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Democracy files" SecUnregisterDemocracy
+Section "un.Remove handling of Democracy files" SecUnregisterDemocracy
   DeleteRegKey HKCR ".democracy"
 SectionEnd
 
@@ -859,7 +859,7 @@ Section "Handle Torrent files" SecRegisterTorrent
   WriteRegStr HKCR ".torrent" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Torrent files" SecUnregisterTorrent
+Section "un.Remove handling of Torrent files" SecUnregisterTorrent
   DeleteRegKey HKCR ".torrent"
 SectionEnd
 
@@ -867,8 +867,16 @@ Section "Handle AVI files" SecRegisterAvi
   WriteRegStr HKCR ".avi" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of AVI files" SecUnregisterAvi
+Section "un.Remove handling of AVI files" SecUnregisterAvi
   DeleteRegKey HKCR ".avi"
+SectionEnd
+
+; Magnet extension handling is done in Miro, not in the installer
+
+Section "un.Remove handling of Magnet files" SecUnregisterMagnet
+  DeleteRegKey HKCR ".magnet"
+  DeleteRegKey HKCR "MIME\Database\Content Type\magnet"
+  DeleteRegKey HKCR "magnet"
 SectionEnd
 
 Section "Handle MPEG files" SecRegisterMpg
@@ -882,7 +890,7 @@ Section "Handle MPEG files" SecRegisterMpg
   WriteRegStr HKCR ".mpv2" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of MPEG files" SecUnregisterMpg
+Section "un.Remove handling of MPEG files" SecUnregisterMpg
   DeleteRegKey HKCR ".m4v"
   DeleteRegKey HKCR ".mpg"
   DeleteRegKey HKCR ".mpeg"
@@ -898,7 +906,7 @@ Section "Handle MP3 files" SecRegisterMp3
   WriteRegStr HKCR ".mpa" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of MP3 files" SecUnregisterMp3
+Section "un.Remove handling of MP3 files" SecUnregisterMp3
   DeleteRegKey HKCR ".mp3"
   DeleteRegKey HKCR ".mpa"
 SectionEnd
@@ -908,7 +916,7 @@ Section "Handle Quicktime files" SecRegisterMov
   WriteRegStr HKCR ".qt" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Quicktime files" SecUnregisterMov
+Section "un.Remove handling of Quicktime files" SecUnregisterMov
   DeleteRegKey HKCR ".mov"
   DeleteRegKey HKCR ".qt"
 SectionEnd
@@ -917,7 +925,7 @@ Section "Handle ASF files" SecRegisterAsf
   WriteRegStr HKCR ".asf" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of ASF files" SecUnregisterAsf
+Section "un.Remove handling of ASF files" SecUnregisterAsf
   DeleteRegKey HKCR ".asf"
 SectionEnd
 
@@ -925,7 +933,7 @@ Section "Handle Windows Media files" SecRegisterWmv
   WriteRegStr HKCR ".wmv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Windows Media files" SecUnregisterWmv
+Section "un.Remove handling of Windows Media files" SecUnregisterWmv
   DeleteRegKey HKCR ".wmv"
 SectionEnd
 
@@ -933,7 +941,7 @@ Section "Handle DTS Media files" SecRegisterDts
   WriteRegStr HKCR ".dts" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of DTS Media files" SecUnregisterDts
+Section "un.Remove handling of DTS Media files" SecUnregisterDts
   DeleteRegKey HKCR ".dts"
 SectionEnd
 
@@ -945,7 +953,7 @@ Section "Handle Ogg Media files" SecRegisterOgg
   WriteRegStr HKCR ".ogx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Ogg Media files" SecUnregisterOgg
+Section "un.Remove handling of Ogg Media files" SecUnregisterOgg
   DeleteRegKey HKCR ".ogg"
   DeleteRegKey HKCR ".ogm"
   DeleteRegKey HKCR ".oga"
@@ -959,7 +967,7 @@ Section "Handle Matroska Media files" SecRegisterMkv
   WriteRegStr HKCR ".mks" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Matroska Media files" SecUnregisterMkv
+Section "un.Remove handling of Matroska Media files" SecUnregisterMkv
   DeleteRegKey HKCR ".mkv"
   DeleteRegKey HKCR ".mka"
   DeleteRegKey HKCR ".mks"
@@ -969,7 +977,7 @@ Section "Handle 3gp Media files" SecRegister3gp
   WriteRegStr HKCR ".3gp" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of 3gp Media files" SecUnregister3gp
+Section "un.Remove handling of 3gp Media files" SecUnregister3gp
   DeleteRegKey HKCR ".3gp"
 SectionEnd
 
@@ -977,7 +985,7 @@ Section "Handle 3g2 Media files" SecRegister3g2
   WriteRegStr HKCR ".3g2" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of 3g2 Media files" SecUnregister3g2
+Section "un.Remove handling of 3g2 Media files" SecUnregister3g2
   DeleteRegKey HKCR ".3g2"
 SectionEnd
 
@@ -985,7 +993,7 @@ Section "Handle Flash Video files" SecRegisterFlv
   WriteRegStr HKCR ".flv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Flash Video files" SecUnregisterFlv
+Section "un.Remove handling of Flash Video files" SecUnregisterFlv
   DeleteRegKey HKCR ".flv"
 SectionEnd
 
@@ -993,7 +1001,7 @@ Section "Handle Nullsoft Video files" SecRegisterNsv
   WriteRegStr HKCR ".nsv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Nullsoft Video files" SecUnregisterNsv
+Section "un.Remove handling of Nullsoft Video files" SecUnregisterNsv
   DeleteRegKey HKCR ".nsv"
 SectionEnd
 
@@ -1001,7 +1009,7 @@ Section "Handle pva Video files" SecRegisterPva
   WriteRegStr HKCR ".pva" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of pva Video files" SecUnregisterPva
+Section "un.Remove handling of pva Video files" SecUnregisterPva
   DeleteRegKey HKCR ".pva"
 SectionEnd
 
@@ -1009,7 +1017,7 @@ Section "Handle Annodex Video files" SecRegisterAnx
   WriteRegStr HKCR ".anx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Annodex Video files" SecUnregisterAnx
+Section "un.Remove handling of Annodex Video files" SecUnregisterAnx
   DeleteRegKey HKCR ".anx"
 SectionEnd
 
@@ -1018,7 +1026,7 @@ Section "Handle Xvid Video files" SecRegisterXvid
   WriteRegStr HKCR ".3ivx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "Remove handling of Xvid Video files" SecUnregisterXvid
+Section "un.Remove handling of Xvid Video files" SecUnregisterXvid
   DeleteRegKey HKCR ".xvid"
   DeleteRegKey HKCR ".3ivx"
 SectionEnd
@@ -1367,6 +1375,27 @@ Section "Uninstall" SEC91
   ${un.GetOptions} "$R0" "--theme" $THEME_NAME
   IfErrors continue
 
+  StrCmp "$THEME_NAME" "" continue
+
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\app.config"
+  Call un.GetConfigOption
+  Pop $R0
+  Delete "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\*.*"
+  RMDir "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
+
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $R1
+  Delete "$SMPROGRAMS\$R1\$R0.lnk"
+  Delete "$SMPROGRAMS\$R1\Uninstall $R0.lnk"
+
+  Delete "$DESKTOP\$R0.lnk"
+  Delete "$QUICKLAUNCH\$R0.lnk"
+
+  RMDir "$SMPROGRAMS\$R1"
+
+continue:
+  ClearErrors
+
   !insertmacro checkExtensionNotHandled ".miro" ${SecUnregisterMiro}
   !insertmacro checkExtensionNotHandled ".democracy" ${SecUnregisterDemocracy}
   !insertmacro checkExtensionNotHandled ".avi" ${SecUnregisterAvi}
@@ -1401,27 +1430,10 @@ Section "Uninstall" SEC91
   !insertmacro checkExtensionNotHandled ".anx" ${SecUnregisterAnx}
   !insertmacro checkExtensionNotHandled ".xvid" ${SecUnregisterXvid}
   !insertmacro checkExtensionNotHandled ".3ivx" ${SecUnregisterXvid}
+  !insertmacro checkExtensionNotHandled ".magnet" ${SecUnregisterMagnet}
 
-  StrCmp "$THEME_NAME" "" continue
-
-  StrCpy $R0 "longAppName"
-  StrCpy $R1 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\app.config"
-  Call un.GetConfigOption
-  Pop $R0
-  Delete "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\*.*"
-  RMDir "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
-
-  !insertmacro MUI_STARTMENU_GETFOLDER Application $R1
-  Delete "$SMPROGRAMS\$R1\$R0.lnk"
-  Delete "$SMPROGRAMS\$R1\Uninstall $R0.lnk"
-
-  Delete "$DESKTOP\$R0.lnk"
-  Delete "$QUICKLAUNCH\$R0.lnk"
-
-  RMDir "$SMPROGRAMS\$R1"
-
-continue:
-  ClearErrors
+  ; remove from magnet.exe registration
+  DeleteRegKey HKLM "Software\magnet\handlers\${CONFIG_SHORT_APP_NAME}"
 
   !insertmacro uninstall $INSTDIR
   RMDIR "$PROGRAMFILES\$PUBLISHER"
