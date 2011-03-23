@@ -145,6 +145,12 @@ def validate_feed_url(url):
 
 def normalize_feed_url(url):
     check_u(url)
+
+    # this removes whitespace from the beginning and end of the url.
+    # pre and post whitespace sometimes happens when the url comes from a 
+    # copy-and-paste.
+    url = url.strip()
+
     # Valid URL are returned as-is
     if validate_feed_url(url):
         return url
