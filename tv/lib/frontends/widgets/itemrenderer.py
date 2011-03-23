@@ -334,6 +334,7 @@ class ItemRenderer(ItemRendererBase):
         """Add the download-mode specific elements.  """
         self.add_progress_bar()
         self.add_download_info()
+        self.canvas.add_menu_button_download_mode()
 
     def add_progress_bar(self):
         dl_info = self.info.download_info
@@ -678,17 +679,7 @@ class ItemRendererCanvas(object):
         text_top = text_bottom - total_height
         # align our right buttons just above the top of the title
         self.right_button_top = text_top - 1
-        if self.download_mode:
-            # quick interlude.  If we are in download mode, draw the menu on
-            # the right side of the title line.
-            menu_x = x + width - get_image('menu').width
-            self._add_image_button(menu_x, text_top, 'menu',
-                    '#show-context-menu')
-            title_width = width - get_image('menu').width - 5
-        else:
-            title_width = width
-
-        self.layout.add_text_line(title, x, text_top, title_width)
+        self.title_rect = self.layout.add_text_line(title, x, text_top, width)
         y = self.layout.last_rect.bottom + 6
         self.layout.add(x, y, width, extra_info_drawer.height,
                 extra_info_drawer.draw)
@@ -794,6 +785,7 @@ class ItemRendererCanvas(object):
                 self.last_secondary_button_right) + EMBLEM_MARGIN_RIGHT
         # make textbox
         self.layout_manager.set_font(EMBLEM_FONT_SIZE)
+        self.layout_manager.set_text_color(ITEM_DESC_COLOR)
         textbox = self.layout_manager.textbox(text)
         # make button
         if self.hotspot != hotspot:
@@ -815,6 +807,20 @@ class ItemRendererCanvas(object):
     def add_menu_button(self):
         self._add_image_button(self.right_button_x, self.right_button_top,
                 'menu', '#show-context-menu')
+
+    def add_menu_button_download_mode(self):
+        """Add the menu button when in download mode.
+
+        This method puts the menu button on the right side of the title area.
+        It should be called after add_text() so that we know where the title
+        is.
+        """
+        button_width = get_image('menu').width
+        menu_x = self.title_rect.right - button_width
+        self._add_image_button(menu_x, self.title_rect.y, 'menu',
+                '#show-context-menu')
+        # shorten title_rect to make room for the button
+        self.title_rect.width -= button_width + 5
 
     def add_remove_button(self, image_name, hotspot):
         # place the remove button in the middle-aligned
