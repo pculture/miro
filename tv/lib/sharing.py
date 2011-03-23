@@ -1192,6 +1192,8 @@ class SharingManager(object):
                         cmd = self.r.recv(4)
                         logging.debug('sharing: CMD %s' % cmd)
                         if cmd == SharingManager.CMD_QUIT:
+                            del self.thread
+                            del self.server
                             return
                         elif cmd == SharingManager.CMD_NOP:
                             logging.debug('sharing: reload')
@@ -1201,12 +1203,16 @@ class SharingManager(object):
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue 
-                else:
-                    typ, value, tb = sys.exc_info()
-                    logging.error('sharing:server_thread: err %d reason = %s',
-                                  err, errstring)
-                    for line in traceback.format_tb(tb):
-                        logging.error('%s', line) 
+                # If we end up here, it could mean that the mdns has
+                # been closed.  Alternatively the server fileno has been 
+                # closed or the command pipe has been closed (not likely).
+                if err == errno.EBADF:
+                    continue
+                typ, value, tb = sys.exc_info()
+                logging.error('sharing:server_thread: err %d reason = %s',
+                              err, errstring)
+                for line in traceback.format_tb(tb):
+                    logging.error('%s', line) 
             # XXX How to pass error, send message to the backend/frontend?
             except StandardError:
                 typ, value, tb = sys.exc_info()
@@ -1250,8 +1256,6 @@ class SharingManager(object):
         self.sharing = False
         # What to do in case of socket error here?
         self.w.send(SharingManager.CMD_QUIT)
-        del self.thread
-        del self.server
 
     def shutdown(self):
         if self.sharing:
