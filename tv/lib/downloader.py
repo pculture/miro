@@ -329,6 +329,7 @@ class RemoteDownloader(DDBObject):
                                                 self.channelName)
             c.send()
             _downloads[self.dlid] = self
+            self.status["state"] = u"downloading"
         else:
             self.status["state"] = u'failed'
             self.status["shortReasonFailed"] = _('File not found')
@@ -341,11 +342,10 @@ class RemoteDownloader(DDBObject):
             c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
                                              self.dlid)
             c.send()
-        else:
-            self.before_changing_status()
-            self.status["state"] = u"paused"
-            self.after_changing_status()
-            self.signal_change()
+        self.before_changing_status()
+        self.status["state"] = u"paused"
+        self.after_changing_status()
+        self.signal_change()
 
     def stop(self, delete):
         """Stops the download and removes the partially downloaded
@@ -358,11 +358,11 @@ class RemoteDownloader(DDBObject):
                                                 self.dlid, delete)
                 c.send()
                 del _downloads[self.dlid]
-        else:
-            if delete:
-                self.delete()
-            self.status["state"] = u"stopped"
-            self.signal_change()
+
+        if delete:
+            self.delete()
+        self.status["state"] = u"stopped"
+        self.signal_change()
 
     def delete(self):
         if "filename" in self.status:
@@ -410,10 +410,10 @@ class RemoteDownloader(DDBObject):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                                  self.dlid)
                 c.send()
-            else:
-                self.status['state'] = u'downloading'
-                self.restart()
-                self.signal_change()
+
+            self.status['state'] = u'downloading'
+            self.restart()
+            self.signal_change()
 
     def migrate(self, directory):
         if _downloads.has_key(self.dlid):
@@ -678,6 +678,9 @@ class RemoteDownloader(DDBObject):
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
                                                  dler_status)
             c.send()
+            self.before_changing_status()
+            self.status['state'] = u'downloading'
+            self.after_changing_status()
 
     def start_upload(self):
         """
