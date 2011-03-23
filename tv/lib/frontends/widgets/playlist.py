@@ -105,19 +105,18 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
         itemlistcontroller.SimpleItemListController._init_widget(self)
         self.make_drop_handler()
 
-
     def make_sorter(self, column, ascending):
         if column == 'playlist':
             # take the playlist sorter from our item tracker
             playlist_sort = self.item_tracker.playlist_sort
-            playlist_sort.set_ascending(ascending)
+            if playlist_sort.should_reverse_order(ascending):
+                new_order = playlist_sort.reverse_order()
+                m = messages.PlaylistReordered(self.id, new_order)
+                m.send_to_backend()
             # slight bit of a hack here.  We enable/disable reordering based
             # on the sort we return here.  The assumption is that we are going
             # to use the sort we return, which seems reasonable.
-            if ascending:
-                self.enable_reorder()
-            else:
-                self.disable_reorder()
+            self.enable_reorder()
             return playlist_sort
         else:
             self.disable_reorder()

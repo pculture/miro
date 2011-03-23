@@ -231,6 +231,13 @@ class PlaylistSort(ItemSort):
         ItemSort.__init__(self, True)
         self.reset_current_position()
         self.positions = {}
+        # ascending works weirdly for playlist.  We always sort items in
+        # their playlist order.  When the user asks to reverse the sort, we
+        # reverse the actual order of items.  So self.reverse is always false,
+        # and self.order_is_reversed tracks our internal notion if we've
+        # reversed the order or not.
+        self.order_is_reversed = False
+        self.reverse = False
         if initial_items:
             for item in initial_items:
                 self.positions[item.id] = self.current_postion.next()
@@ -255,6 +262,29 @@ class PlaylistSort(ItemSort):
         self.positions = {}
         for id, old_position in new_items:
             self.positions[id] = self.current_postion.next()
+
+    def should_reverse_order(self, ascending):
+        """Should we reverse the playlist order?
+        
+        This method is called after the user clicks on a sort header.  If the
+        sort header direction is different then our internal notion of if we
+        are reversed or not, then we return true.
+        """
+        return ascending == self.order_is_reversed
+
+    def reverse_order(self):
+        """Reverse the order of our playlist
+
+        :returns: the new order as a list of ids
+        """
+        last_position = len(self.positions) - 1
+        new_order = [None] * len(self.positions)
+        for id_ in self.positions:
+            index = last_position - self.positions[id_]
+            self.positions[id_] = index
+            new_order[index] = id_
+        self.order_is_reversed = not self.order_is_reversed
+        return new_order
 
     def set_new_order(self, id_order):
         self.reset_current_position()
