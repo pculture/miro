@@ -1747,7 +1747,7 @@ class ItemDetailsWidget(widgetset.VBox):
             app.widgetapp.open_url(self.license_url)
 
     def build_right(self):
-        vbox = widgetset.VBox()
+        vbox = widgetset.VBox(spacing=10)
         self.title_label = self.build_title()
         self.torrent_info = TorrentInfoWidget()
         self.description_label = self.build_description_label()
