@@ -103,6 +103,7 @@ class Application:
         self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
         app.info_updater = InfoUpdater()
+        app.saved_items = set()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
         app.store_manager = stores.StoreManager()
         self.download_count = 0

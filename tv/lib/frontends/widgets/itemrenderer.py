@@ -327,7 +327,7 @@ class ItemRenderer(ItemRendererBase):
         if self.info.expiration_date:
             text = displaytext.expiration_date(self.info.expiration_date)
             self.canvas.add_keep_button('keep', text)
-        elif self.attrs.get('keep-animation-alpha', 0) > 0:
+        elif self.info.id in app.saved_items:
             self.canvas.add_saved_emblem()
 
     def add_download_mode_elements(self):

@@ -190,28 +190,6 @@ class ThrobberAnimationManager(AnimationManager):
         else:
             self.item_list.finish_throbber(item_info.id)
             return False
-
-class KeepAnimationManager(AnimationManager):
-    FADE_DELAY = 0.5
-    FADE_LENGTH = 1.0
-
-    def initial_delay(self, item_info):
-        return self.FADE_DELAY
-
-    def total_length(self, item_info):
-        return self.FADE_LENGTH
-
-    def repeat_delay(self, item_info):
-        return 0.1
-
-    def start_animation(self, item_info):
-        self.item_list.start_keep_animation(item_info.id)
-
-    def continue_animation(self, item_info):
-        animation_done = self.item_list.update_keep_animation(item_info.id,
-                self.FADE_DELAY, self.FADE_LENGTH)
-        return not animation_done
-
 class ItemListController(object):
     """Base class for controllers that manage list of items.
 
@@ -243,8 +221,6 @@ class ItemListController(object):
         self._item_tracker_callbacks = []
         self._playback_callbacks = []
         self.throbber_manager = ThrobberAnimationManager(self.item_list,
-                self.all_item_views())
-        self.keep_animation_manager = KeepAnimationManager(self.item_list,
                 self.all_item_views())
 
     def get_item_list(self):
@@ -647,7 +623,7 @@ class ItemListController(object):
             messages.CancelDownload(item_info.id).send_to_backend()
         elif name == 'keep':
             messages.KeepVideo(item_info.id).send_to_backend()
-            self.keep_animation_manager.start(item_info)
+            app.saved_items.add(item_info.id)
         elif name == 'stop_seeding':
             messages.StopUpload(item_info.id).send_to_backend()
         elif name == 'start_seeding':

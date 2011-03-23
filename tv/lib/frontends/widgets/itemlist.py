@@ -452,27 +452,6 @@ class ItemList(object):
     def finish_throbber(self, item_id):
         self.model.unset_attr(item_id, 'throbber-value')
 
-    def start_keep_animation(self, item_id):
-        self.model.set_attr(item_id, 'keep-animation-start', time.time())
-        self.model.set_attr(item_id, 'keep-animation-alpha', 1.0)
-
-    def update_keep_animation(self, item_id, fade_delay, fade_length):
-        start_time = self.model.get_attr(item_id, 'keep-animation-start')
-        elapsed = time.time() - start_time
-        if elapsed < fade_delay:
-            # waiting to start the fade
-            return False
-        elif elapsed < fade_delay + fade_length:
-            # doing the fade
-            alpha = 1.0 - (float(elapsed - fade_delay) / fade_length)
-            self.model.set_attr(item_id, 'keep-animation-alpha', alpha)
-            return False
-        else:
-            # done with the fade
-            self.model.unset_attr(item_id, 'keep-animation-start')
-            self.model.unset_attr(item_id, 'keep-animation-alpha')
-            return True
-
     def _insert_items(self, to_add):
         if len(to_add) == 0:
             return
