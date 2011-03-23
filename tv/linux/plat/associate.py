@@ -32,19 +32,65 @@ Holds functions that associate Miro with certain protocols
 """
 
 import gconf
+from miro.plat.config import gconf_lock
 
-def associate_protocols():
-    _associate_protocol("magnet", False)
+def associate_protocols(command):
+    _associate_protocol("magnet", command, False)
 
-def _associate_protocol(name, overwrite_existing=False):
+def disassociate_protocols(command):
+    _disassociate_protocol("magnet", command)
+
+def _associate_protocol(name, command, overwrite_existing=False):
     url_handlers_key = "/desktop/gnome/url-handlers/" + name + "/"
-    gconf_client = gconf.client_get_default()
-    key = gconf_client.get(url_handlers_key + "command")
-    if not key or overwrite_existing:
-        if gconf_client.set_string(url_handlers_key + "command", "miro '%s'"):
-            gconf_client.set_bool(url_handlers_key + "needs_terminal", False)
-            gconf_client.set_bool(url_handlers_key + "enabled", True)
-            return True
+    if not _is_associated(name) or overwrite_existing:
+        gconf_lock.acquire()
+        try:
+            gconf_client = gconf.client_get_default()
+            if gconf_client.set_string(url_handlers_key + "command", command):
+                gconf_client.set_bool(url_handlers_key + "needs_terminal", False)
+                gconf_client.set_bool(url_handlers_key + "enabled", True)
+                success = True
+            else:
+                success = False
+        finally:
+            gconf_lock.release()
+    else:
+        success = True
+    return success
+
+def _disassociate_protocol(name, command):
+    url_handlers_key = "/desktop/gnome/url-handlers/" + name + "/"
+    if _is_associated(name, command):
+        gconf_lock.acquire()
+        try:
+            gconf_client = gconf.client_get_default()
+            if gconf_client.set_bool(url_handlers_key + "enabled", False):
+                success = True
+            else:
+                success = False
+        finally:
+            gconf_lock.release()
+    else:
+        success = True
+    return success
+
+def _is_associated(protocol, command=None):
+    """ Checks whether a protocol currently is
+        associated with the given command, or,
+        if none is given, whether the protocol
+        is associated with anything at all.
+    """
+    url_handlers_key = "/desktop/gnome/url-handlers/" + protocol + "/"
+    gconf_lock.acquire()
+    try:
+        gconf_client = gconf.client_get_default()
+        key = gconf_client.get(url_handlers_key + "command")
+        enabled = gconf_client.get(url_handlers_key + "enabled")
+        if command:
+            associated = key.get_string() == command and enabled.get_bool()
         else:
-            return False
-    return False
+            associated = key.get_string() != "" and enabled.get_bool()
+    finally:
+        gconf_lock.release()
+    return associated
+

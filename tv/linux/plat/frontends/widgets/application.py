@@ -138,7 +138,7 @@ class LinuxApplication(Application):
 
         gtk.gdk.threads_init()
         self._setup_webkit()
-        associate_protocols()
+        associate_protocols(self._get_command())
         self.startup()
 
         logging.info("Linux version:     %s %s %s",
@@ -176,6 +176,17 @@ class LinuxApplication(Application):
                                   '.amazon.com',
                                   '/',
                                   3600 * 365 * 10) # 10 years
+
+    def _get_command(self):
+        # The command is always "miro" but the 
+        # the argument varies according to branding
+        themeName = app.config.get(prefs.THEME_NAME)
+        if themeName is not None:
+            themeName = themeName.replace("\\", "\\\\").replace('"', '\\"')
+            command = "miro --theme \"%s\"" % (themeName)
+        else:
+            command = "miro \"%s\""
+        return command
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
