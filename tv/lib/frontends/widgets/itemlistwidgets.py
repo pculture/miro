@@ -1349,8 +1349,15 @@ class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.
     """
 
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.empty_mode = False
+
+    def set_empty_mode(empty):
+        self.empty_mode = empty
+
     def draw(self, context, layout):
-        if context.style.use_custom_style:
+        if context.style.use_custom_style and self.empty_mode:
             context.set_color((1, 1, 1))
             context.rectangle(0, 0, context.width, context.height)
             context.fill()
@@ -1953,8 +1960,10 @@ class ItemContainerWidget(widgetset.VBox):
         if enabled != self.list_empty_mode:
             self.background.remove()
             if enabled:
+                self.background.set_empty(True)
                 self.background.add(self.list_empty_mode_vbox)
             else:
+                self.background.set_empty(False)
                 self.background.add(self.vbox[self.selected_view])
             self.list_empty_mode = enabled
 
