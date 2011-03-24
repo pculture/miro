@@ -1134,8 +1134,8 @@ class HeaderToolbar(widgetset.Toolbar, SorterWidgetOwner):
         SorterWidgetOwner.__init__(self)
 
         self._button_hbox = widgetset.HBox()
-        self._button_hbox_container = widgetutil.HideableWidget(
-            self._button_hbox)
+        self._button_hbox_container = widgetutil.WidgetHolder()
+        self._button_hbox_container.set(self._button_hbox)
 
         self._hbox = widgetset.HBox()
 
@@ -1151,6 +1151,13 @@ class HeaderToolbar(widgetset.Toolbar, SorterWidgetOwner):
         self._button_map['date'].set_sort_order(ascending=False)
 
         self.filter = WidgetStateStore.get_view_all_filter()
+
+    def switch_to_view(self, view):
+        standard_view = WidgetStateStore.get_standard_view_type()
+        # NB: SAFE - even if no child widget stored.
+        self._button_hbox_container.unset()
+        if view == standard_view:
+            self._button_hbox_container.set(self._button_hbox)
 
     def _make_buttons(self):
         self._make_button(_('Name'), 'name')
@@ -1929,8 +1936,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.list_empty_mode_vbox = widgetset.VBox()
         self.progress_toolbar = ProgressToolbar()
         self.toolbar = toolbar
-        if view == standard_view:
-            toolbar._button_hbox_container.show()
+        toolbar.switch_to_view(view)
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()
@@ -1951,10 +1957,7 @@ class ItemContainerWidget(widgetset.VBox):
                 self.background.remove()
                 self.background.add(self.vbox[view])
             self.selected_view = view
-            if WidgetStateStore.is_standard_view(view):
-                self.toolbar._button_hbox_container.show()
-            else:
-                self.toolbar._button_hbox_container.hide()
+            self.toolbar.switch_to_view(view)
 
     def set_list_empty_mode(self, enabled):
         if enabled != self.list_empty_mode:
