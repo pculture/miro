@@ -241,7 +241,7 @@ class OverlayPalette (NSWindowController):
         self.resetAutoHiding()
         if (not self.window().isVisible() and not self.revealing) or (self.window().isVisible() and self.hiding):
             self.update_(nil)
-            if self.renderer.movie is not None:
+            if self.renderer and self.renderer.movie is not None:
                 self.set_volume(self.renderer.movie.volume())
 
             self.adjustPosition(videoWindow)
