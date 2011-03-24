@@ -333,6 +333,7 @@ class ItemListTitlebar(widgetset.Titlebar):
     def _build_titlebar_start(self):
         """Builds the widgets to place at the start of the titlebar.
         """
+        return None
 
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
