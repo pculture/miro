@@ -189,6 +189,15 @@ class ThemeHistory(DDBObject):
              'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
              'creative=9325', u"Amazon MP3 Store", True)
             ]
+
+        if app.debugmode:
+            default_guides.append(
+                (u"http://bugzilla.pculture.org/enter_bug.cgi?product=Miro",
+                 u"Report a Miro Bug", False))
+            default_guides.append(
+                (u"http://develop.participatoryculture.org/index.php/Miro-Current-Release-Testing",
+                 u"Miro Testing", False))
+
         for default in default_guides:
             try:
                 cg = guide.ChannelGuide.get_by_url(default[0])
