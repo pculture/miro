@@ -422,6 +422,7 @@ def add_timeout(delay, function, name, args=None, kwargs=None):
     call.
     """
     dc = _eventloop.scheduler.add_timeout(delay, function, name, args, kwargs)
+    _eventloop.wakeup()
     return dc
 
 def add_idle(function, name, args=None, kwargs=None):

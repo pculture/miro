@@ -64,6 +64,7 @@ from miro.plat.associate import associate_protocols
 
 from miro.frontends.widgets.gtk.widgetset import Rect
 from miro.frontends.widgets.gtk import webkitgtkhacks
+from miro.frontends.widgets.gtk import gtkdirectorywatch
 
 import logging
 import sys
@@ -139,6 +140,7 @@ class LinuxApplication(Application):
         gtk.gdk.threads_init()
         self._setup_webkit()
         associate_protocols(self._get_command())
+        gtkdirectorywatch.GTKDirectoryWatcher.install()
         self.startup()
 
         logging.info("Linux version:     %s %s %s",

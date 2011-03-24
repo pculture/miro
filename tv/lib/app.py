@@ -60,6 +60,9 @@ device_manager = None
 # platform-specific device tracker
 device_tracker = None
 
+# platform/frontend specific directory watcher
+directory_watcher = None
+
 # signal emiters for when config data changes
 backend_config_watcher = None
 frontend_config_watcher = None

@@ -2015,12 +2015,81 @@ class DirectoryScannerImplBase(FeedImpl):
     def _make_child(self, file_):
         models.FileItem(file_, feed_id=self.ufeed.id)
 
-    @eventloop.idle_iterator
-    def update(self):
-        self.ufeed.confirm_db_thread()
+    def start_watching_directory(self):
+        if app.directory_watcher is not None:
+            scan_dir = self._scan_dir()
+            logging.info("Watching directory %s with class %s", scan_dir,
+                    app.directory_watcher)
+            self._watcher_paths_added = set()
+            self._watcher_paths_deleted = set()
+            self._watcher_update_timeout = None
+            self.watcher = app.directory_watcher(scan_dir)
+            self.watcher.connect("added", self._on_file_added)
+            self.watcher.connect("deleted", self._on_file_deleted)
+        else:
+            logging.info("No directory watcher available")
 
-        self._before_update()
+    def _on_file_added(self, watcher, path):
+        if path in self._watcher_paths_deleted:
+            # ignore pairs of deleted/added callbacks
+            self._watcher_paths_deleted.remove(path)
+        else:
+            self._watcher_paths_added.add(path)
+            self._add_watcher_timeout()
 
+    def _on_file_deleted(self, watcher, path):
+        if path in self._watcher_paths_added:
+            # ignore pairs of deleted/added callbacks
+            self._watcher_paths_added.remove(path)
+        else:
+            self._watcher_paths_deleted.add(path)
+            self._add_watcher_timeout()
+
+    def _add_watcher_timeout(self):
+        """Add a timeout do deal with changes from the directory watcher
+
+        We don't deal with changes immediately for a couple reasons:
+            1) It's faster because we don't need to keep recalculating the
+               known files
+            2) When a download completely, the download process moves the file
+               into the videos directory.  We want to give the downloader time
+               to inform the main process of this new file to avoid creating a
+               FileItem for it.
+        """
+        if self._watcher_update_timeout is None:
+            self._watcher_update_timeout = eventloop.add_timeout(1,
+                    self.handle_watcher_updates,
+                    "handle directory watcher updates")
+
+    def handle_watcher_updates(self):
+        # find deleted paths that we have items for
+        to_remove = []
+        for item in self.items:
+            if item.get_filename() in self._watcher_paths_deleted:
+                to_remove.append(item)
+        # find added paths don't have an item
+        known_files = self.calc_known_files()
+        to_add = []
+        for path in self._watcher_paths_added:
+            ufile = filename_to_unicode(path)
+            if (path not in known_files and
+                    filetypes.is_media_filename(ufile)):
+                to_add.append(path)
+        # commit changes
+        app.bulk_sql_manager.start()
+        try:
+            for item in to_remove:
+                item.remove()
+            for path in to_add:
+                self._make_child(path)
+        finally:
+            app.bulk_sql_manager.finish()
+        # cleanup and prepare for the next change
+        self._watcher_paths_deleted = set()
+        self._watcher_paths_added = set()
+        self._watcher_update_timeout = None
+
+    def calc_known_files(self):
         # Calculate files known about by feeds other than the directory feed
         # Using a select statement is good here because we don't want to
         # construct all the Item objects if we don't need to.
@@ -2029,6 +2098,15 @@ class DirectoryScannerImplBase(FeedImpl):
                     'filename IS NOT NULL AND '
                     '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
         self._add_known_files(known_files)
+        return known_files
+
+    @eventloop.idle_iterator
+    def update(self):
+        self.ufeed.confirm_db_thread()
+
+        self._before_update()
+
+        known_files = self.calc_known_files()
 
         # Remove items with deleted files or that that are in feeds
         to_remove = []
@@ -2100,6 +2178,11 @@ class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
         self.firstUpdate = True
         self.set_update_frequency(5)
         self.schedule_update_events(0)
+        self.start_watching_directory()
+
+    def setup_restored(self):
+        DirectoryScannerImplBase.setup_restored(self)
+        self.start_watching_directory()
 
     def _scan_dir(self):
         return self.dir
@@ -2123,6 +2206,11 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
         FeedImpl.setup_new(self, url=u"dtv:directoryfeed", ufeed=ufeed, title=None)
         self.set_update_frequency(5)
         self.schedule_update_events(0)
+        self.start_watching_directory()
+
+    def setup_restored(self):
+        DirectoryScannerImplBase.setup_restored(self)
+        self.start_watching_directory()
 
     def _before_update(self):
         # Make sure container items have created FileItems for their contents

@@ -51,6 +51,7 @@ from miro.plat import resources
 from miro.plat import associate
 from miro.plat.renderers.vlc import VLCRenderer, get_item_type
 from miro.plat.frontends.widgets import xulrunnerbrowser
+from miro.frontends.widgets.gtk import gtkdirectorywatch
 from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
@@ -91,6 +92,7 @@ class WindowsApplication(Application):
         app.get_item_type = get_item_type
         self.initXULRunner()
         gtk.gdk.threads_init()
+        gtkdirectorywatch.GTKDirectoryWatcher.install()
         self.startup()
         gtk.gdk.threads_enter()
         try:
