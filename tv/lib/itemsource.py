@@ -135,7 +135,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 24
+    VERSION = 25
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -183,6 +183,8 @@ class DatabaseItemSource(ItemSource):
             'mime_type': item.enclosure_type,
             'date_added': item.get_creation_time(),
             'last_played': item.get_watched_time(),
+            'last_watched': item.lastWatched,
+            'downloaded_time': item.downloadedTime,
             'children': [],
             'expiration_date': None,
             'download_info': None,

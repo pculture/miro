@@ -333,7 +333,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.autoDownloaded = False
         self.pendingManualDL = False
         self.downloadedTime = None
-        self.watchedTime = None
+        self.watchedTime = self.lastWatched = None
         self.pendingReason = u""
         fp_values.update_item(self)
         self.expired = False
@@ -447,7 +447,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 "(item.file_type != 'other') AND "
                 "((is_file_item AND NOT deleted) OR "
                 "rd.state in ('finished', 'uploading', 'uploading-paused'))",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
+                order_by='downloadedTime DESC')
 
     @classmethod
     def downloaded_view(cls):
@@ -677,6 +678,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def orphaned_from_parent_view(cls):
         return cls.make_view('parent_id IS NOT NULL AND '
                 'parent_id NOT IN (SELECT id from item)')
+
+    @classmethod
+    def recently_watched_video_view(cls):
+        return cls.make_view("file_type = 'video' AND seen",
+                             order_by="lastWatched DESC")
+
+    @classmethod
+    def recently_watched_audio_view(cls):
+        return cls.make_view("file_type = 'audio' AND seen",
+                             order_by="lastWatched DESC")
 
     @classmethod
     def update_folder_trackers(cls):
@@ -994,7 +1005,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.expired = True
             self.seen = self.keep = self.pendingManualDL = False
             self.filename = None
-            self.file_type = self.watchedTime = self.duration = None
+            self.file_type = self.watchedTime = self.lastWatched = None
+            self.duration = None
             self.isContainerItem = None
             self.signal_change()
         self.recalc_feed_counts()
@@ -1124,6 +1136,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                     self.subtitle_encoding = unicode(config_value)
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
+            self.lastWatched = datetime.now()
             self.signal_change()
             self.update_parent_seen()
             if mark_other_items and self.downloader:
@@ -1131,6 +1144,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                     if item != self:
                         item.mark_item_seen(False)
             self.recalc_feed_counts()
+        else:
+            self.lastWatched = datetime.now()
+            self.signal_change()
 
     def update_parent_seen(self):
         if self.parent_id:
@@ -1150,7 +1166,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 item.signal_change()
         if self.seen:
             self.seen = False
-            self.watchedTime = None
+            self.watchedTime = self.lastWatched = None
             self.resumeTime = 0
             self.signal_change()
             self.update_parent_seen()

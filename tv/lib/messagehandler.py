@@ -514,6 +514,19 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
         self.id = folder_id
         DatabaseSourceTrackerBase.__init__(self)
 
+class GuideSidebarTracker(DatabaseSourceTrackerBase):
+    type = u'guide-sidebar'
+    id = None
+
+    def __init__(self):
+        DatabaseSourceTrackerBase.__init__(self)
+
+    def get_object_views(self):
+        return [
+            item.Item.recently_watched_video_view(),
+            item.Item.recently_watched_audio_view(),
+            item.Item.unwatched_downloaded_items()]
+
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
     def __init__(self, share):
@@ -570,6 +583,8 @@ def make_item_tracker(message):
         return SharingItemTracker(message.id)
     elif message.type == 'sharing-backend':
         return SharingBackendItemsTracker()
+    elif message.type == 'guide-sidebar':
+        return GuideSidebarTracker()
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 

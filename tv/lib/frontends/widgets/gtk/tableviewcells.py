@@ -90,6 +90,7 @@ class ImageCellRenderer(object):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = gtk.CellRendererPixbuf()
+        self.want_hover = False
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'pixbuf', attr_map['image'])

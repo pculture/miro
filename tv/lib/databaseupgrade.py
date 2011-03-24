@@ -3188,3 +3188,11 @@ def upgrade151(cursor):
 def upgrade152(cursor):
     #removed upgrade
     pass
+
+def upgrade153(cursor):
+    """
+    Adds the lastWatched column to Item, and sets its value to that of
+    'watchedTime'.
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN lastWatched")
+    cursor.execute("UPDATE item SET lastWatched=watchedTime")

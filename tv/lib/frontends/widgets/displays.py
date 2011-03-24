@@ -45,6 +45,7 @@ from miro.frontends.widgets import browser
 from miro.frontends.widgets import downloadscontroller
 from miro.frontends.widgets import convertingcontroller
 from miro.frontends.widgets import feedcontroller
+from miro.frontends.widgets import guidecontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
 from miro.frontends.widgets import sharingcontroller
@@ -267,7 +268,21 @@ class GuideDisplay(TabDisplay):
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
-        self.widget = selected_tabs[0].browser
+        self.widget = guidecontroller.GuideTab(selected_tabs[0].browser)
+        app.info_updater.item_list_callbacks.add(u'guide-sidebar', None,
+                                                 self.on_item_list),
+        app.info_updater.item_changed_callbacks.add(u'guide-sidebar', None,
+                                                    self.on_item_changed),
+        messages.TrackItems(u'guide-sidebar', None).send_to_backend()
+        app.display_manager.add_permanent_display(self) # once we're loaded,
+                                                        # stay loaded
+
+    def on_item_list(self, message):
+        self.widget.on_item_list(message.items)
+
+    def on_item_changed(self, message):
+        self.widget.on_item_changed(message.added, message.changed,
+                                    message.removed)
 
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them
@@ -340,7 +355,8 @@ class FeedDisplay(ItemListDisplay):
 
     def make_controller(self, tab):
         self.feed_id = tab.id
-        return feedcontroller.FeedController(tab.id, tab.is_folder, tab.is_directory_feed)
+        return feedcontroller.FeedController(tab.id, tab.is_folder,
+                                             tab.is_directory_feed)
 
 class AllFeedsDisplay(FeedDisplay):
     @staticmethod
@@ -512,7 +528,8 @@ class CantPlayWidget(widgetset.SolidBackground):
         hbox = widgetset.HBox(spacing=12)
         reveal_button = widgetset.Button(_('Reveal File'))
         self.play_externally_button = widgetset.Button(_('Play Externally'))
-        self.play_externally_button.connect('clicked', self._on_play_externally)
+        self.play_externally_button.connect('clicked',
+                                            self._on_play_externally)
         skip_button = widgetset.Button(_('Skip'))
         reveal_button.connect('clicked', self._on_reveal)
         skip_button.connect('clicked', self._on_skip)
