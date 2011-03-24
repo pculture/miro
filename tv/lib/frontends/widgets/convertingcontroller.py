@@ -32,6 +32,7 @@ from miro import prefs
 
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import itemrenderer
+from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -53,43 +54,19 @@ class ConvertingSort(itemlist.ItemSort):
             self.positions.append(id_)
         return self.positions.index(id_)
 
+# XXX: why doesn't this guy derive from something sensible and use 
+# ItemListController instead?
 class ConvertingController(object):
     def __init__(self):
         self.widget = widgetset.VBox()
         self.build_widget()
 
     def build_widget(self):
-        sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
-        self.widget.pack_start(sep)
-
-        self.stop_all_button = widgetset.Button(_('Stop All Conversions'),
-                                                style='smooth')
-        self.stop_all_button.set_size(widgetconst.SIZE_SMALL)
-        self.stop_all_button.set_color(widgetset.TOOLBAR_GRAY)
-        self.stop_all_button.disable()
-        self.stop_all_button.connect('clicked', self.on_cancel_all)
-
-        reveal_button = widgetset.Button(_('Show Conversion Folder'),
-                                         style='smooth')
-        reveal_button.set_size(widgetconst.SIZE_SMALL)
-        reveal_button.set_color(widgetset.TOOLBAR_GRAY)
-        reveal_button.connect('clicked', self.on_reveal_conversions_folder)
-
-        self.clear_finished_button = widgetset.Button(
-                _('Clear Finished Conversions'), style='smooth')
-        self.clear_finished_button.set_size(widgetconst.SIZE_SMALL)
-        self.clear_finished_button.set_color(widgetset.TOOLBAR_GRAY)
-        self.clear_finished_button.connect('clicked', self.on_clear_finished)
-
-        toolbar = widgetset.Toolbar()
-        hbox = widgetset.HBox()
-        hbox.pack_start(widgetutil.pad(self.stop_all_button, top=8, bottom=8,
-                                       left=8))
-        hbox.pack_end(widgetutil.pad(reveal_button, top=8, bottom=8, right=8))
-        hbox.pack_end(widgetutil.pad(self.clear_finished_button, top=8,
-                                     bottom=8, right=8))
-        toolbar.add(hbox)
-        self.widget.pack_start(toolbar)
+        self.titlebar = itemlistwidgets.ConvertingTitlebar()
+        self.widget.pack_start(self.titlebar)
+        self.titlebar.connect('stop-all', self.on_cancel_all)
+        self.titlebar.connect('reveal', self.on_reveal_conversions_folder)
+        self.titlebar.connect('clear-finished', self.on_clear_finished)
 
         sorter = ConvertingSort()
         self.model = widgetset.InfoListModel(sorter.sort_key)
@@ -174,15 +151,11 @@ class ConvertingController(object):
             else:
                 not_finished_count += 1
 
-        if not_finished_count > 0:
-            self.stop_all_button.enable()
-        else:
-            self.stop_all_button.disable()
+        enable_stop_all = not_finished_count > 0
+        self.titlebar.enable_stop_all(enable_stop_all)
 
-        if finished_count > 0:
-            self.clear_finished_button.enable()
-        else:
-            self.clear_finished_button.disable()
+        enable_clear_finished = finished_count > 0
+        self.titlebar.enable_clear_finished(enable_clear_finished)
 
 class ConvertingTableView(widgetset.TableView):
     draws_selection = False

@@ -306,7 +306,9 @@ class ItemListTitlebar(widgetset.Titlebar):
                 [hbox.pack_end(w) for w in extra[::-1]]
             else:
                 hbox.pack_end(extra)
-        hbox.pack_end(self._build_view_toggle())
+        toggle = self._build_view_toggle()
+        if toggle:
+            hbox.pack_end(toggle)
         self.resume_button = ResumePlaybackButton()
         self.resume_button.connect('clicked', self._on_resume_button_clicked)
         self.resume_button_holder = widgetutil.HideableWidget(
@@ -403,6 +405,71 @@ class FolderContentsTitlebar(ItemListTitlebar):
     def _on_podcast_clicked(self, button):
         self.emit('podcast-clicked', button)
 
+class ConvertingTitlebar(ItemListTitlebar):
+    """
+    Titlebar for conversion display.
+
+    :signal stop-all: (self) The stop all button was clicked.
+    :signal reveal: (self) The reveal button was clicked.
+    :signal clear-finished: (self) The clear finished button was clicked.
+    """
+    def _build_titlebar_start(self):
+        self.create_signal('stop-all')
+        self.create_signal('reveal')
+        self.create_signal('clear-finished')
+
+        stop_all_button = widgetutil.TitlebarButton(_('Stop All Conversions'))
+        stop_all_button.disable()
+        stop_all_button.connect('clicked', self._on_stop_all_clicked)
+        self.stop_all_button = stop_all_button
+
+        reveal_button = widgetutil.TitlebarButton(_('Show Conversion Folder'))
+        reveal_button.connect('clicked', self._on_reveal_clicked)
+        self.reveal_button = reveal_button
+
+        clear_finished_button = widgetutil.TitlebarButton(
+                _('Clear Finished Conversions'))
+        clear_finished_button.connect('clicked',
+                self._on_clear_finished_clicked)
+        self.clear_finished_button = clear_finished_button
+
+        h = widgetset.HBox(spacing=20)
+        h.pack_start(widgetutil.align_middle(stop_all_button, left_pad=25))
+        h.pack_start(widgetutil.align_middle(reveal_button))
+        h.pack_start(widgetutil.align_middle(clear_finished_button))
+
+        return h
+
+    # Don't build anything special.
+    def _build_titlebar_extra(self):
+        return None
+
+    # Cannot toggle view for converting controller.
+    def _build_view_toggle(self):
+        return None
+
+    def _on_stop_all_clicked(self, button):
+        self.emit('stop-all')
+
+    def _on_reveal_clicked(self, button):
+        self.emit('reveal')
+
+    def _on_clear_finished_clicked(self, button):
+        self.emit('clear-finished')
+
+    def enable_stop_all(self, enable):
+        if enable:
+            self.stop_all_button.enable()
+        else:
+            self.stop_all_button.disable()
+
+    def enable_clear_finished(self, enable):
+        if enable:
+            self.clear_finished_button.enable()
+        else:
+            self.clear_finished_button.disable()
+
+    
 class SearchTitlebar(ItemListTitlebar):
     """
     Titlebar for views which can save their view as a podcast.
