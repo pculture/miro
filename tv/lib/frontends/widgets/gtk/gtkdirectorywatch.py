@@ -40,7 +40,8 @@ from miro.plat.utils import utf8_to_filename
 
 class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
     def startup(self, directory):
-        self._monitors = {}
+        self._monitors = {} # map path -> GFileMonitor
+        self._contents = {} # map path -> set of children
         # Note: we are in the event loop thread here use idle_add to move into
         # the frontend thread
         glib.idle_add(self._add_directory, gio.File(directory))
@@ -49,6 +50,7 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         monitor = f.monitor_directory()
         monitor.connect('changed', self._on_directory_changed)
         self._monitors[f.get_path()] = monitor
+        self._contents[f.get_path()] = set()
         f.monitor_directory()
         glib.idle_add(self._add_subdirectories, f, priority=glib.PRIORITY_LOW)
 
@@ -59,6 +61,8 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
                 child = f.get_child(child_info.get_name())
                 glib.idle_add(self._add_directory, child,
                         priority=glib.PRIORITY_LOW)
+            elif file_type == gio.FILE_TYPE_REGULAR:
+                self._contents[f.get_path()].add(child_info.get_name())
 
     def _on_directory_changed(self, monitor, file_, other, event):
         if event == gio.FILE_MONITOR_EVENT_CREATED:
@@ -70,10 +74,13 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         info = f.query_info('standard::*')
         file_type = info.get_attribute_uint32('standard::type')
         if file_type == gio.FILE_TYPE_REGULAR:
-            # use add_idle() to pass things over to the backend thread
-            # FIXME: there should be a cleaner way to do this
-            eventloop.add_idle(self.emit, "emit added signal",
-                    args=("added", utf8_to_filename(f.get_path()),))
+            self._send_added(f.get_path())
+            try:
+                content_set = self._contents[f.get_parent().get_path()]
+            except KeyError:
+                logging.stacktrace("Error getting content_set")
+            else:
+                content_set.add(f.get_basename())
         elif file_type == gio.FILE_TYPE_DIRECTORY:
             self._add_directory(f)
 
@@ -83,6 +90,10 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
             # file is one of the things we were monitoring.  Looks like it's a
             # directory
             del self._monitors[path]
+            # send deleted events for the children
+            for filename in self._contents[path]:
+                self._send_deleted(f.get_child(filename).get_path())
+            del self._contents[path]
         else:
             # Assume that if we weren't monitoring it, it was a regular file.
             # This isn't always true, but it's not a big deal if we send a
@@ -90,5 +101,16 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
 
             # use add_idle() to pass things over to the backend thread
             # FIXME: there should be a cleaner way to do this
-            eventloop.add_idle(self.emit, "emit deleted signal",
-                    args=("deleted", utf8_to_filename(path)))
+            parent_path = f.get_parent().get_path()
+            self._contents[parent_path].discard(f.get_basename())
+            self._send_deleted(path)
+
+    def _send_added(self, path):
+        # use add_idle() to pass things over to the backend thread
+        # FIXME: there should be a cleaner way to do this
+        eventloop.add_idle(self.emit, "emit added signal",
+                args=("added", utf8_to_filename(path)))
+
+    def _send_deleted(self, path):
+        eventloop.add_idle(self.emit, "emit deleted signal",
+                args=("deleted", utf8_to_filename(path)))
