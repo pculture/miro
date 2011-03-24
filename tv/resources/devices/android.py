@@ -21,6 +21,16 @@ htc_hero = DeviceInfo(u'HTC Hero',
                       video_path=u'Video',
                       audio_path=u'Music')
 
+htc_evo = DeviceInfo(u'HTC EVO',
+                     video_conversion='epic',
+                     video_path=u'Video',
+                     audio_path=u'Music')
+
+htc_legend = DeviceInfo(u'HTC Legend',
+                        video_conversion='dreamg1',
+                        video_path=u'/media/video',
+                        audio_path=u'/media/audio')
+
 tmobile_g1 = DeviceInfo(u'T-Mobile G1',
                         video_conversion='dreamg1')
 
@@ -31,10 +41,18 @@ generic_htc = DeviceInfo(_('Generic %(name)s Device', {'name': 'HTC'}),
                          video_conversion='hero')
 
 htc_android_device = MultipleDeviceInfo(
-    'HTC Android Phone', [htc_hero, tmobile_g1, tmobile_g2, generic_htc],
+    'HTC Android Phone', [htc_hero, htc_evo, htc_legend,
+                          tmobile_g1, tmobile_g2, generic_htc],
     vendor_id=0x0bb4,
     product_id=0x0ff9,
     **defaults)
+
+htc_desire = DeviceInfo(u'HTC Desire',
+                        vendor_id=0x0bb4,
+                        product_id=0x0c87,
+                        device_name='HTC Android Phone',
+                        video_conversion='epic',
+                        **defaults)
 
 nexus_one = DeviceInfo(u'Nexus One',
                        vendor_id=0x18d1,
@@ -54,6 +72,13 @@ motorola_droid2 = DeviceInfo(u'Motorola Droid 2',
                              vendor_id=0x22b8,
                              product_id=0x42a3,
                              device_name='Motorola A955',
+                             video_conversion='droid',
+                             **defaults)
+
+motorola_droidx = DeviceInfo(u'Motorola Droid X',
+                             vendor_id=0x22b8,
+                             product_id=0x4285,
+                             device_name='Motorola MB810',
                              video_conversion='droid',
                              **defaults)
 
@@ -87,6 +112,7 @@ nookcolor = DeviceInfo(
                          'and in USB Mode to sync files to it.\n')
     )
 
-devices = [htc_android_device, nexus_one, motorola_droid, motorola_droid2,
+devices = [htc_android_device, htc_desire, nexus_one,
+           motorola_droid, motorola_droid2, motorola_droidx,
            galaxy_tab, epic, nookcolor]
 

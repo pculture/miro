@@ -185,6 +185,23 @@ class DeviceManager(object):
         self.startup()
         self.show_unknown = app.config.get(prefs.SHOW_UNKNOWN_DEVICES)
 
+    def _merge(self, one, two):
+        """
+        Merge two devices into one MultipleDeviceInfo.
+        """
+        if isinstance(one, MultipleDeviceInfo):
+            if isinstance(two, MultipleDeviceInfo):
+                for child in two.devices.values():
+                    one.add_device(child)
+            else:
+                one.add_device(two)
+            return one
+        elif isinstance(two, MultipleDeviceInfo):
+            two.add_device(one)
+            return two
+        else: # new MDI
+            return MultipleDeviceInfo(one.device_name, [one, two])
+
     def add_device(self, info):
         try:
             info.validate()
@@ -199,8 +216,18 @@ class DeviceManager(object):
                     self.generic_devices.append(info)
                     self.generic_devices_by_id[info.vendor_id] = info
             else:
-                self.device_by_name[info.device_name] = info
-                self.device_by_id[(info.vendor_id, info.product_id)] = info
+                if info.device_name not in self.device_by_name:
+                    self.device_by_name[info.device_name] = info
+                else:
+                    existing = self.device_by_name[info.device_name]
+                    self.device_by_name[info.device_name] = self._merge(
+                        existing, info)
+                if (info.vendor_id, info.product_id) not in self.device_by_id:
+                    self.device_by_id[(info.vendor_id, info.product_id)] = info
+                else:
+                    key = (info.vendor_id, info.product_id)
+                    existing = self.device_by_id[key]
+                    self.device_by_id[key] = self.merge(existing, info)
 
     def remove_device(self, info):
         # FIXME - need this
