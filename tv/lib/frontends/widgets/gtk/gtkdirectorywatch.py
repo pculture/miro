@@ -35,6 +35,7 @@ import glib
 import gtk
 
 from miro import directorywatch
+from miro import eventloop
 from miro.plat.utils import utf8_to_filename
 
 class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
@@ -67,7 +68,10 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         info = f.query_info('standard::*')
         file_type = info.get_attribute_uint32('standard::type')
         if file_type == gio.FILE_TYPE_REGULAR:
-            self.emit("added", utf8_to_filename(f.get_path()))
+            # use add_idle() to pass things over to the backend thread
+            # FIXME: there should be a cleaner way to do this
+            eventloop.add_idle(self.emit, "emit added signal",
+                    args=("added", utf8_to_filename(f.get_path()),))
         elif file_type == gio.FILE_TYPE_DIRECTORY:
             self._add_directory(f)
 
@@ -81,4 +85,8 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
             # Assume that if we weren't monitoring it, it was a regular file.
             # This isn't always true, but it's not a big deal if we send a
             # delete event for a path that we don't have a FileItem for.
-            self.emit("deleted", utf8_to_filename(path))
+
+            # use add_idle() to pass things over to the backend thread
+            # FIXME: there should be a cleaner way to do this
+            eventloop.add_idle(self.emit, "emit deleted signal",
+                    args=("deleted", utf8_to_filename(path)))
