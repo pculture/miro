@@ -41,7 +41,9 @@ from miro.plat.utils import utf8_to_filename
 class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
     def startup(self, directory):
         self._monitors = {}
-        self._add_directory(gio.File(directory))
+        # Note: we are in the event loop thread here use idle_add to move into
+        # the frontend thread
+        glib.idle_add(self._add_directory, gio.File(directory))
 
     def _add_directory(self, f):
         monitor = f.monitor_directory()
