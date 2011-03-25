@@ -1332,20 +1332,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if self.entry_title is not None:
             return self.entry_title
         if self.get_filename() is not None:
-            return self._filename_to_title(self.get_filename())
+            return filename_to_title(self.get_filename())
         return _('no title')
-
-    @returns_unicode
-    def _filename_to_title(self, filename):
-        title = filename_to_unicode(os.path.basename(filename))
-        title = title.rsplit('.', 1)[0]
-        title = title.replace('_', ' ')
-        title = title.lstrip('0123456789. -')
-        t2 = []
-        for word in title.split(' '):
-            t2.append(word.capitalize())
-        title = u' '.join(t2)
-        return title
 
     def set_channel_title(self, title):
         check_u(title)
@@ -2113,12 +2101,26 @@ filename was %s""", stringify(self.filename))
                             self.filename, parent_file)
         Item.setup_links(self)
 
+
+@returns_unicode
+def filename_to_title(filename):
+    title = filename_to_unicode(os.path.basename(filename))
+    title = title.rsplit('.', 1)[0]
+    title = title.replace('_', ' ')
+    title = title.lstrip('0123456789. -')
+    t2 = []
+    for word in title.split(' '):
+        t2.append(word.capitalize())
+    title = u' '.join(t2)
+    return title
+
+
 def fp_values_for_file(filename, title=None, description=None):
     data = {
             'enclosures': [{'url': resources.url(filename)}]
     }
     if title is None:
-        data['title'] = filename_to_unicode(os.path.basename(filename))
+        data['title'] = filename_to_title(filename)
     else:
         data['title'] = title
     if description is not None:
