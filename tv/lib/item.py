@@ -680,14 +680,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 'parent_id NOT IN (SELECT id from item)')
 
     @classmethod
-    def recently_watched_video_view(cls):
-        return cls.make_view("file_type = 'video' AND seen",
-                             order_by="lastWatched DESC")
+    def recently_watched_view(cls):
+        return cls.make_view("file_type IN ('video', 'audio') AND seen")
 
     @classmethod
-    def recently_watched_audio_view(cls):
-        return cls.make_view("file_type = 'audio' AND seen",
-                             order_by="lastWatched DESC")
+    def recently_downloaded_view(cls):
+        return cls.make_view("NOT item.seen AND "
+                "item.parent_id IS NULL AND "
+                "NOT is_file_item AND downloadedTime AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
 
     @classmethod
     def update_folder_trackers(cls):

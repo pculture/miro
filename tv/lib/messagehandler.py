@@ -523,9 +523,8 @@ class GuideSidebarTracker(DatabaseSourceTrackerBase):
 
     def get_object_views(self):
         return [
-            item.Item.recently_watched_video_view(),
-            item.Item.recently_watched_audio_view(),
-            item.Item.unwatched_downloaded_items()]
+            item.Item.recently_watched_view(),
+            item.Item.recently_downloaded_view()]
 
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
