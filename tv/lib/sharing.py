@@ -547,7 +547,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         kwargs['file_type'] = file_type
         kwargs['video_path'] = self.client.daap_get_file_request(
                                    kwargs['id'],
-                                   kwargs['enclosure'])
+                                   kwargs['file_format'])
         kwargs['host'] = self.client.host
         kwargs['port'] = self.client.port
         kwargs['address'] = self.address
