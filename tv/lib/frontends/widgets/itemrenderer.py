@@ -716,7 +716,7 @@ class ItemRendererCanvas(object):
         """
         emblem_drawer = EmblemDrawer(text, icon, visuals)
         self.emblem_right = emblem_drawer.add_to_layout(self.layout,
-                self.layout_manager, self.button_middle, self.button_right +
+                self.layout_manager, self.emblem_start_x, self.button_right +
                 EMBLEM_TEXT_PAD_START, self.emblem_bottom)
 
     def _get_rounded_buttons(self, hotspot):
@@ -771,6 +771,8 @@ class ItemRendererCanvas(object):
         button = widgetutil.ThreeImageTextSurface(textbox, left, middle,
                 right)
         self._add_button(button, hotspot)
+        # start the emblem at the start of the right cap
+        self.emblem_start_x = self.middle_rect.x + button.width - right.width
 
     def add_main_button_image(self, image_name, hotspot):
         """Add an image as the main button for the item.
@@ -781,6 +783,8 @@ class ItemRendererCanvas(object):
             image_name += '-pressed'
         button = get_image(image_name)
         self._add_button(button, hotspot)
+        # start the emblem in the middle of the image
+        self.emblem_start_x = self.middle_rect.x + button.width // 2
 
     def _add_button(self, button, hotspot):
         """Add the main button for the item.
@@ -795,8 +799,7 @@ class ItemRendererCanvas(object):
         # check if we don't have anything to put inside our emblem.  Just draw
         # the button if so
         self.layout_above.add_image(button, x, y, hotspot)
-        # save button positions to help us layout the emblem
-        self.button_middle = x + button_width // 2
+        # save button position to help us layout other stuff
         self.button_right = x + button_width
 
     def add_secondary_button(self, text, hotspot):
