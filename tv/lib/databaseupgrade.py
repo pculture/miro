@@ -3196,3 +3196,52 @@ def upgrade153(cursor):
     """
     cursor.execute("ALTER TABLE item ADD COLUMN lastWatched timestamp")
     cursor.execute("UPDATE item SET lastWatched=watchedTime")
+
+def upgrade154(cursor):
+    """
+    Adds the Amazon and Google Android stores.
+    """
+        # if the user is using a theme, we don't do anything
+    if not app.config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
+        return
+
+    new_ids = []
+    for name, store_url, favicon_url in (
+        (u"Amazon Android Store",
+         u"http://www.amazon.com/gp/redirect.html?ie=UTF8&location="
+         u"http%3A%2F%2Fwww.amazon.com%2Fmobile-apps%2Fb%3Fie%3DUTF8"
+         u"%26node%3D2350149011&tag=pcultureorg-20&linkCode=ur2&camp="
+         u"1789&creative=9325", u'http://www.amazon.com/favicon.ico'),
+        (u"Google Android Store", u"http://market.android.com/",
+         u"https://market.android.com/static/client/images/favicon.ico")):
+        cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
+                   (store_url,))
+        count = cursor.fetchone()[0]
+        if count > 0:
+            continue
+
+        next_id = get_next_id(cursor)
+
+        cursor.execute("INSERT INTO channel_guide "
+                       "(id, url, allowedURLs, updated_url, favicon, "
+                       "firstTime, store, userTitle) "
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                       (next_id, store_url, "[]", store_url,
+                        favicon_url, True, 1, name)) # 1 is a visible store
+        new_ids.append(next_id)
+
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('site',))
+    row = cursor.fetchone()
+    if row is not None:
+        try:
+            tab_ids = eval_container(row[0])
+        except StandardError:
+            tab_ids = []
+        tab_ids.extend(new_ids)
+        cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                       (repr(tab_ids), 'site'))
+    else:
+        # no site taborder (#11985).  We will create the TabOrder
+        # object on startup, so no need to do anything here
+        pass

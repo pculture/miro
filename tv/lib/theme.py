@@ -31,8 +31,6 @@
 """``miro.theme`` -- Holds the ThemeHistory object.
 """
 
-import urllib
-
 from miro.gtcache import gettext as _
 import logging
 from miro import app
@@ -162,10 +160,11 @@ class ThemeHistory(DDBObject):
     def _install_default_feeds(self):
         logging.info("Adding default feeds")
         default_feeds = [
-            (u'http://vodo.net/feeds/promoted', False),
-            (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
-            (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
-            (u'http://feeds.thisamericanlife.org/talpodcast', False)
+            (u"http://feeds.feedburner.com/tedtalks_video", False),
+            (u"http://revision3.com/lifehacker/feed/MP4-hd30", False),
+            (u"http://feeds.thisamericanlife.org/talpodcast", False),
+            (u"http://feeds.themoth.org/themothpodcast", False),
+            (u"http://feeds.feedburner.com/VodoPromotedWorks", False),
             ]
 
         for default in default_feeds:
@@ -182,12 +181,19 @@ class ThemeHistory(DDBObject):
                 playlist.SavedPlaylist(_("Example Playlist"))
 
         default_guides = [
-            (u"http://www.clearbits.net/", u"ClearBits", False),
+            (u"http://www.youtube.com", u"YouTube", False),
             (u"http://www.youtorrent.com/", u"YouTorrent", False),
-            (u"https://www.miroguide.com/audio/", u"Miro Audio Guide", False),
+            (u"http://www.hulu.com/", u"Hulu", False),
+            (u"http://video.pbs.org/", u"PBS", False),
+            (u"http://www.clearbits.net/", u"ClearBits", False),
             (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
              'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
-             'creative=9325', u"Amazon MP3 Store", True)
+             'creative=9325', u"Amazon MP3 Store", True),
+            (u"http://www.amazon.com/gp/redirect.html?ie=UTF8&location="
+             u"http%3A%2F%2Fwww.amazon.com%2Fmobile-apps%2Fb%3Fie%3DUTF8"
+             u"%26node%3D2350149011&tag=pcultureorg-20&linkCode=ur2&camp="
+             u"1789&creative=9325", u"Amazon Android Store", True),
+            (u"http://market.android.com/", u"Google Android Store", True),
             ]
 
         if app.debugmode:
@@ -207,15 +213,13 @@ class ThemeHistory(DDBObject):
                                       # object
                 cg.set_title(default[1])
 
-        base_url = u"http://www.amazon.com/gp/redirect.html?ie=UTF8&location=%s&tag=pcultureorg-20&linkCode=ur2&camp=1789&creative=9325"
         other_stores = (
-            ('http://www.amazon.fr/T%C3%A9l%C3%A9charger-Musique-mp3/b/ref=sa_menu_mp31?ie=UTF8&node=77196031', u'Amazon Téléchargements MP3 (FR)'),
-            ('http://www.amazon.de/MP3-Musik-Downloads/b/ref=sa_menu_mp31?ie=UTF8&node=77195031', u'Amazon MP3-Downloads (DE/AT/CH)'),
-            ('http://www.amazon.co.jp/MP3-%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89-%E9%9F%B3%E6%A5%BD%E9%85%8D%E4%BF%A1-DRM%E3%83%95%E3%83%AA%E3%83%BC/b/ref=sa_menu_dmusic1?ie=UTF8&node=2128134051', u'Amazon MP3ダウンロード (JP)'),
-            ('http://www.amazon.co.uk/MP3-Music-Download/b/ref=sa_menu_dm1?ie=UTF8&node=77197031', u'Amazon MP3 Downloads (UK)'))
+            (u'http://www.amazon.fr/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.fr%2FT%25C3%25A9l%25C3%25A9charger-Musique-mp3%2Fb%3Fie%3DUTF8%26node%3D77196031&tag=miro0e-21&linkCode=ur2&camp=1642&creative=6746', u'Amazon Téléchargements MP3 (FR)'),
+            (u'http://www.amazon.de/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.de%2FMP3-Musik-Downloads%2Fb%3F_encoding%3DUTF8%26node%3D77195031&site-redirect=de&tag=miro09-21&linkCode=ur2&camp=1638&creative=6742', u'Amazon MP3-Downloads (DE/AT/CH)'),
+            (u'http://www.amazon.co.jp/MP3-%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89-%E9%9F%B3%E6%A5%BD%E9%85%8D%E4%BF%A1-DRM%E3%83%95%E3%83%AA%E3%83%BC/b/ref=sa_menu_dmusic1?ie=UTF8&node=2128134051', u'Amazon MP3ダウンロード (JP)'),
+            (u'http://www.amazon.co.uk/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.co.uk%2FMP3-Music-Download%2Fb%3Fie%3DUTF8%26node%3D77197031&tag=miro00-21&linkCode=ur2&camp=1634&creative=6738', u'Amazon MP3 Downloads (UK)'))
 
-        for url, name in other_stores:
-            store_url = base_url % urllib.quote(url, safe='')
+        for store_url, name in other_stores:
             try:
                 cg = guide.ChannelGuide.get_by_url(store_url)
             except ObjectNotFoundError:
