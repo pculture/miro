@@ -1428,7 +1428,7 @@ class ItemListBackground(widgetset.Background):
         widgetset.Background.__init__(self)
         self.empty_mode = False
 
-    def set_empty_mode(empty):
+    def set_empty(self, empty):
         self.empty_mode = empty
 
     def draw(self, context, layout):
