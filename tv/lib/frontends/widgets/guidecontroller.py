@@ -78,6 +78,7 @@ class GuideSidebarCollection(widgetset.VBox):
 
     def __init__(self, title, icon, sort_key):
         widgetset.VBox.__init__(self)
+        self.current_limit = self.ITEM_LIMIT
         hbox = widgetset.HBox()
         label = widgetset.Label(title.upper())
         label.set_size(0.7)
@@ -94,6 +95,17 @@ class GuideSidebarCollection(widgetset.VBox):
         self.items = {}
         self.currently_packed = []
         self.sorter = operator.attrgetter(sort_key)
+
+    def set_limit(self, limit):
+        if limit > self.ITEM_LIMIT:
+            limit = self.ITEM_LIMIT
+        if self.current_limit < limit:
+            self.current_limit = limit
+            self.resort()
+        else:
+            self.current_limit = limit
+            self.currently_packed = self.currently_packed[:limit]
+            self.repack()
 
     def get_label_for(self, text):
         goal = self.WIDTH - 34
@@ -125,7 +137,7 @@ class GuideSidebarCollection(widgetset.VBox):
     def resort(self):
         self.currently_packed = list(sorted(self.items.values(),
                                             key=self.sorter,
-                                            reverse=True))[:self.ITEM_LIMIT]
+                                            reverse=True))[:self.current_limit]
         self.repack()
 
     def set_items(self, items):
@@ -136,7 +148,7 @@ class GuideSidebarCollection(widgetset.VBox):
 
     def add(self, info):
         self.items[info.id] = info
-        if len(self.currently_packed) < self.ITEM_LIMIT:
+        if len(self.currently_packed) < self.current_limit:
             self.currently_packed.append(info)
             self.currently_packed.sort(key=self.sorter, reverse=True)
             self.repack()
@@ -172,6 +184,30 @@ class GuideSidebarDetails(widgetset.Background):
         self.add(widgetutil.pad(self.vbox, left=17, right=17))
 
         self.id_to_collection = {}
+
+        self.changing_size = False
+        self.current_height = None
+        self.connect('size-allocated', self.on_size_allocated)
+
+        self.set_size_request(172, 220)
+
+    def on_size_allocated(self, widget, width, height):
+        """
+        If our height changes, tell the collections to limit their items.
+        """
+        if height == self.current_height:
+            return
+        if self.changing_size:
+            return
+        self.changing_size = True
+        self.current_height = height
+        # 35 is the height of the title, 33 is each item's height
+        item_count = int(((height / 3 - 35) / 33))
+        print height, item_count
+        self.video.set_limit(item_count)
+        self.audio.set_limit(item_count)
+        self.download.set_limit(item_count)
+        self.changing_size = False
 
     def collection_for(self, info):
         if not info.last_watched:
