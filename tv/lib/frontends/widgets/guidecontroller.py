@@ -44,11 +44,11 @@ from miro.plat.frontends.widgets import widgetset
 
 class GuideSidebarExpander(widgetset.CustomButton):
     SIDEBAR_BG = imagepool.get_surface(
-        resources.path('images/guide-sidebar.gif'))
+        resources.path('images/guide-sidebar.png'))
     SIDEBAR_ARROW = imagepool.get_surface(
         resources.path('images/guide-sidebar-arrow.png'))
     SIDEBAR_DOT = imagepool.get_surface(
-        resources.path('images/guide-sidebar-dot.gif'))
+        resources.path('images/guide-sidebar-dot.png'))
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -84,7 +84,7 @@ class GuideSidebarCollection(widgetset.VBox):
         label.set_color((0.5, 0.5, 0.5))
         hbox.pack_start(widgetutil.align_left(label), expand=True)
         hbox.pack_end(imagepool.get_image_display(
-            resources.path('images/guide-sidebar-%s.gif' % icon)))
+            resources.path('images/guide-sidebar-%s.png' % icon)))
         self.pack_start(widgetutil.pad(hbox, top=20, bottom=12))
 
         self.item_box = widgetset.VBox(spacing=8) # we want 17px of padding, so
