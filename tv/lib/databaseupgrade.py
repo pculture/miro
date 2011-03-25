@@ -3194,5 +3194,5 @@ def upgrade153(cursor):
     Adds the lastWatched column to Item, and sets its value to that of
     'watchedTime'.
     """
-    cursor.execute("ALTER TABLE item ADD COLUMN lastWatched")
+    cursor.execute("ALTER TABLE item ADD COLUMN lastWatched timestamp")
     cursor.execute("UPDATE item SET lastWatched=watchedTime")
