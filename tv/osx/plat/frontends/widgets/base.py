@@ -61,6 +61,13 @@ class Widget(signals.SignalEmitter):
         self.cached_size_request = None
         self._disabled = False
 
+    def set_can_focus(self, allow):
+        if isinstance(self.view, NSControl):
+            self.view.setRefusesFirstResponder_(YES)
+        else:
+            logging.warn("Don't know what to do with set_can_focus for %s",
+                    self.view)
+
     def set_size_request(self, width, height):
         self.manual_size_request = (width, height)
         self.invalidate_size_request()

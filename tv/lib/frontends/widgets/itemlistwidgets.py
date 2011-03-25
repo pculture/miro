@@ -82,6 +82,7 @@ class Titlebar(Toolbar):
 class ViewToggler(widgetset.CustomButton):
     def __init__(self):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.selected_view = WidgetStateStore.get_standard_view_type()
         self.normal_image = imagepool.get_surface(resources.path(
             'images/normal-view-button-icon.png'))
@@ -126,6 +127,7 @@ class FilterButton(widgetset.CustomButton):
         self.text = text
         self.enabled = enabled
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.connect('clicked', self._on_clicked)
 
     def _textbox(self, layout):
@@ -187,6 +189,7 @@ class ResumePlaybackButton(widgetset.CustomButton):
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         button_images = ('resume-playback-button.png',
                 'titlebar-middle.png', 'titlebar-right.png')
         button_images_pressed = ('resume-playback-button-pressed.png',
@@ -498,6 +501,9 @@ class SearchTitlebar(ItemListTitlebar):
     def _build_titlebar_start(self):
         self.create_signal('save-search')
         button = widgetutil.TitlebarButton(_('Save as Podcast'))
+        # FIXME: it would be nicer not to set can focus to be true, but we
+        # need another way to save the search then
+        button.set_can_focus(True)
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=20))
@@ -1369,6 +1375,7 @@ class PlaylistHeaderToolbar(HeaderToolbar):
 class SortBarButton(widgetset.CustomButton):
     def __init__(self, text):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self._text = text
         self._enabled = False
         self._ascending = False
@@ -1602,6 +1609,7 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.expand_image = imagepool.get_surface(resources.path(
             'images/item-details-expander-arrow.png'))
         self.contract_image = imagepool.get_surface(resources.path(

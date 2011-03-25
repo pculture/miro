@@ -65,6 +65,7 @@ class PlaybackControls(widgetset.HBox):
             button.set_delays(0.6, 0.3)
         else:
             button = imagebutton.ImageButton(name)
+        button.set_can_focus(False)
         button.disable()
         return button
     
@@ -109,6 +110,7 @@ class PlaybackInfo(widgetset.CustomButton):
     
     def __init__(self):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.video_icon = imagepool.get_surface(resources.path('images/mini-icon-video.png'))
         self.audio_icon = imagepool.get_surface(resources.path('images/mini-icon-audio.png'))
         self.reset()
@@ -222,6 +224,7 @@ class ProgressTime(widgetset.DrawingArea):
 class ProgressTimeRemaining(widgetset.CustomButton):
     def __init__(self):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.duration = self.current_time = None
         self.display_remaining = True
         app.playback_manager.connect('selecting-file', self.handle_selecting)
@@ -279,6 +282,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
 class ProgressSlider(widgetset.CustomSlider):
     def __init__(self):
         widgetset.CustomSlider.__init__(self)
+        self.set_can_focus(False)
         self.background_surface = widgetutil.ThreeImageSurface('playback_track')
         self.progress_surface = widgetutil.ThreeImageSurface('playback_track_progress')
         self.progress_cursor = widgetutil.make_surface('playback_cursor')
@@ -411,6 +415,7 @@ class ProgressTimeline(widgetset.Background):
 class VolumeSlider(widgetset.CustomSlider):
     def __init__(self):
         widgetset.CustomSlider.__init__(self)
+        self.set_can_focus(False)
         self.set_range(0.0, MAX_VOLUME)
         self.set_increments(0.05, 0.20)
         self.track = widgetutil.make_surface('volume_track')
@@ -455,6 +460,7 @@ class VideoBox(style.LowerBox):
         self.timeline.info.connect('clicked', self.on_title_clicked)
         self.playback_mode = PlaybackModeControls()
         self.volume_muter = imagebutton.ImageButton('volume')
+        self.volume_muter.set_can_focus(False)
         self.volume_slider = VolumeSlider()
         self.time_slider = self.timeline.slider
 
@@ -509,14 +515,18 @@ class VideoBox(style.LowerBox):
 class PlaybackModeControls(widgetset.HBox):
     def __init__(self):
         widgetset.HBox.__init__(self, spacing=0)
-        self.shuffle = imagebutton.ImageButton('shuffle')
-        self.shuffle.set_squish_width(True)
-        self.repeat = imagebutton.ImageButton('repeat')
-        self.repeat.set_squish_width(True)
+        self.shuffle = self._make_button('shuffle')
+        self.repeat = self._make_button('repeat')
         self.pack_start(widgetutil.align_middle(self.shuffle))
         self.pack_start(widgetutil.align_middle(self.repeat))
         app.playback_manager.connect('update-shuffle', self.handle_shuffle)
         app.playback_manager.connect('update-repeat', self.handle_repeat)
+
+    def _make_button(self, image_name):
+        button = imagebutton.ImageButton(image_name)
+        button.set_squish_width(True)
+        button.set_can_focus(False)
+        return button
 
     def handle_shuffle(self, obj):
         if app.playback_manager.shuffle:

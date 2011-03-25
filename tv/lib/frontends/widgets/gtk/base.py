@@ -80,6 +80,11 @@ class Widget(signals.SignalEmitter):
         self.wrapped_widget_connect('focus-out-event', self.on_focus_out)
         self.use_custom_style_callback = None
 
+    def set_can_focus(self, allow):
+        """Set if we allow the widget to hold keyboard focus.
+        """
+        self._widget.set_can_focus(allow)
+
     def on_hierarchy_changed(self, widget, previous_toplevel):
         toplevel = widget.get_toplevel()
         if not (toplevel.flags() & gtk.TOPLEVEL):
@@ -239,7 +244,6 @@ class Widget(signals.SignalEmitter):
 
     def get_disabled(self):
         return self._disabled
-
 
 class Bin(Widget):
     def __init__(self):

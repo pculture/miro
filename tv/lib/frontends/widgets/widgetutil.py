@@ -412,6 +412,7 @@ class TitlebarButton(widgetset.CustomButton):
 
     def __init__(self, title, icon=None):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.title = title
         self.icon = icon
         self.surface = ThreeImageSurface()
@@ -476,6 +477,7 @@ class MultiStateTitlebarButton(widgetset.CustomButton):
     """
     def __init__(self, toggle_states):
         widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
         self.toggle_states = toggle_states
         self.titles = []
         self.icons = []
