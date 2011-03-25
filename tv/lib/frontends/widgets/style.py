@@ -107,6 +107,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
         hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
         layout_manager.set_font(0.77)
+        layout_manager.set_text_shadow(widgetutil.Shadow(
+            self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
         layout_manager.set_text_color(widgetutil.WHITE)
         self.pack_bubbles(hbox, layout_manager)
         hbox.pack_space(2)
@@ -144,17 +146,24 @@ class TabRenderer(widgetset.CustomCellRenderer):
         hbox.pack(cellpack.align_middle(background))
 
     def draw_bubble(self, context, x, y, width, height, color):
-        radius = height / 2.0
-        inner_width = width - radius * 2
-        mid = y + radius
+        if color == AVAILABLE_COLOR:
+            name = 'blue-bubble'
+        else:
+            name = 'green-bubble'
+        def get_surface(part):
+            return imagepool.get_surface(resources.path(
+                'images/%s_%s.png' % (name, part)))
+        left_surface = get_surface('left')
+        center_surface = get_surface('center')
+        right_surface = get_surface('right')
 
-        context.move_to(x + radius, y)
-        context.rel_line_to(inner_width, 0)
-        context.arc(x + width - radius, mid, radius, -PI/2, PI/2)
-        context.rel_line_to(-inner_width, 0)
-        context.arc(x + radius, mid, radius, PI/2, -PI/2)
-        context.set_color(color)
-        context.fill()
+        center_width = width - left_surface.width - right_surface.width
+
+        left_surface.draw(context, x, y, left_surface.width, height)
+        center_surface.draw(context, x + left_surface.width, y, center_width,
+                            height)
+        right_surface.draw(context, x + width - right_surface.width, y,
+                           right_surface.width, height)
 
     def draw_blink_background(self, context, x, y, width, height):
         context.rectangle(x, y, width, height)
