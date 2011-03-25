@@ -111,7 +111,9 @@ class WrappedWindow(gtk.Window):
         ret = keymap.translate_gtk_event(event)
         if ret is not None:
             key, modifiers = ret
-            wrappermap.wrapper(self).emit('key-press', key, modifiers)
+            rv = wrappermap.wrapper(self).emit('key-press', key, modifiers)
+            if not rv:
+                gtk.Window.do_key_press_event(self, event)
 
 gobject.type_register(WrappedWindow)
 
