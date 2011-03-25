@@ -48,6 +48,7 @@ from miro import messages
 from miro import playlist
 from miro import prefs
 from miro import signals
+from miro import filetypes
 from miro import util
 from miro import transcode
 from miro import metadata
@@ -69,6 +70,8 @@ DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
              'daap.songyear,daap.songtracknumber,daap.songuserrating,' +
              'com.apple.itunes.mediakind')
 
+supported_filetypes = filetypes.VIDEO_EXTENSIONS + filetypes.AUDIO_EXTENSIONS
+
 # Conversion factor between our local duration (10th of a second)
 # vs daap which is millisecond.
 DURATION_SCALE = 1000
@@ -79,7 +82,7 @@ DURATION_SCALE = 1000
 # we import and create SharingItem, the attribut needs to be 'title'.  But
 # when we export, we receive ItemInfo(), which uses 'name'.
 daap_mapping = {
-    'daap.songformat': 'enclosure',
+    'daap.songformat': 'file_format',
     'com.apple.itunes.mediakind': 'file_type',
     'dmap.itemid': 'id',
     'dmap.itemname': 'title',
@@ -94,7 +97,7 @@ daap_mapping = {
 }
 
 daap_rmapping = {
-    'enclosure': 'daap.songformat',
+    'file_format': 'daap.songformat',
     'file_type': 'com.apple.itunes.mediakind',
     'id': 'dmap.itemid',
     'name': 'dmap.itemname',
@@ -1016,14 +1019,29 @@ class SharingManagerBackend(object):
             # as iTunes requires this.  Other clients seem to be able to sniff
             # out the container.  We can change it if that's no longer true.
             # Fixup the media kind: XXX what about u'other'?
+            enclosure = item.file_format
+            if not enclosure:
+                nam, ext = os.path.splitext(item.video_path)
+                if ext in supported_filetypes:
+                    enclosure = ext
+
             if itemprop['com.apple.itunes.mediakind'] == u'video':
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_VIDEO)
-                itemprop['daap.songformat'] = 'mp4'
+                if not itemprop['daap.songformat']:
+                    if not enclosure:
+                        enclosure = '.mp4'
+                    enclosure = enclosure[1:]
+                    itemprop['daap.songformat'] = enclosure
             else:
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_AUDIO)
-                itemprop['daap.songformat'] = 'mp3'
+                if not itemprop['daap.songformat']:
+                    if not enclosure:
+                        enclosure = '.mp3'
+                    enclosure = enclosure[1:]
+                    itemprop['daap.songformat'] = enclosure
+
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
