@@ -203,7 +203,6 @@ class GuideSidebarDetails(widgetset.Background):
         self.current_height = height
         # 35 is the height of the title, 33 is each item's height
         item_count = int(((height / 3 - 35) / 33))
-        print height, item_count
         self.video.set_limit(item_count)
         self.audio.set_limit(item_count)
         self.download.set_limit(item_count)
