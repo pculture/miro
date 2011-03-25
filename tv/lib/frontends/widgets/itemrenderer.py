@@ -309,8 +309,7 @@ class ItemRenderer(ItemRendererBase):
                 text = DOWNLOAD_TORRENT_TEXT
             else:
                 text = DOWNLOAD_TEXT
-            self.canvas.add_main_button_text(text, 'download',
-                    'download-button-large')
+            self.canvas.add_main_button_download(text, 'download')
 
     def add_secondary_button(self):
         button_info = self.calc_extra_button()
@@ -720,23 +719,50 @@ class ItemRendererCanvas(object):
                 self.layout_manager, self.button_middle, self.button_right +
                 EMBLEM_TEXT_PAD_START, self.emblem_bottom)
 
-    def add_main_button_text(self, text, hotspot,
-            image_prefix='rounded-button'):
+    def _get_rounded_buttons(self, hotspot):
+        """Calculate which rounded button images to use
+
+        Returns the tuple (left, middle, right), where the 3 elements create a
+        3 image surface to draw the button with.
+        """
+        if self.hotspot == hotspot:
+            return (get_image('rounded-button-left-pressed'),
+                    get_image('rounded-button-middle-pressed'),
+                    get_image('rounded-button-right-pressed'))
+        elif self.selected:
+            return (get_image('rounded-button-left-selected'),
+                    get_image('rounded-button-middle-selected'),
+                    get_image('rounded-button-right-selected'))
+        else:
+            return (get_image('rounded-button-left'),
+                    get_image('rounded-button-middle'),
+                    get_image('rounded-button-right'))
+
+    def add_main_button_text(self, text, hotspot):
         """Add a text button as the main button for the item.
 
         This button is the one that gets drawn on the left of the emblem
-        By default we use the "rounded-button-[left,middle,right]" images to
-        draw the button.  Pass image_prefix to use a different one
+        We use the rounded-button-* images to draw the button
         """
         # calculate images
+        left, middle, right = self._get_rounded_buttons(hotspot)
+        self._add_main_button_text(text, hotspot, left, middle, right)
+
+    def add_main_button_download(self, text, hotspot):
+        """Add a main button with the download icon."""
         if self.hotspot != hotspot:
-            left = get_image(image_prefix + '-left')
-            middle = get_image(image_prefix + '-middle')
-            right = get_image(image_prefix + '-right')
+            left = get_image('download-button-large-left')
+            middle = get_image('download-button-large-middle')
+            right = get_image('download-button-large-right')
         else:
-            left = get_image(image_prefix + '-left-pressed')
-            middle = get_image(image_prefix + '-middle-pressed')
-            right = get_image(image_prefix + '-right-pressed')
+            left = get_image('download-button-large-left-pressed')
+            middle = get_image('download-button-large-middle-pressed')
+            right = get_image('download-button-large-right-pressed')
+        self._add_main_button_text(text, hotspot, left, middle, right)
+
+    def _add_main_button_text(self, text, hotspot, left, middle, right):
+        """Does the work for add_main_button_[text|download]
+        """
         # make text box
         self.layout_manager.set_font(ROUNDED_BUTTON_FONT_SIZE)
         self.layout_manager.set_text_color(ITEM_DESC_COLOR)
@@ -765,7 +791,7 @@ class ItemRendererCanvas(object):
         emblem_top = self.emblem_bottom  - EMBLEM_HEIGHT
         button_width, button_height = button.get_size()
         # make the button middle aligned along the emblem
-        y = emblem_top - (button_height - EMBLEM_HEIGHT) // 2
+        y = emblem_top - round((button_height - EMBLEM_HEIGHT) / 2.0)
         # check if we don't have anything to put inside our emblem.  Just draw
         # the button if so
         self.layout_above.add_image(button, x, y, hotspot)
@@ -788,14 +814,7 @@ class ItemRendererCanvas(object):
         self.layout_manager.set_text_color(ITEM_DESC_COLOR)
         textbox = self.layout_manager.textbox(text)
         # make button
-        if self.hotspot != hotspot:
-            left = get_image('rounded-button-left')
-            middle = get_image('rounded-button-middle')
-            right = get_image('rounded-button-right')
-        else:
-            left = get_image('rounded-button-left-pressed')
-            middle = get_image('rounded-button-middle-pressed')
-            right = get_image('rounded-button-right-pressed')
+        left, middle, right = self._get_rounded_buttons(hotspot)
         button = widgetutil.ThreeImageTextSurface(textbox, left, middle,
                 right)
         # middle-align y to the emblem
