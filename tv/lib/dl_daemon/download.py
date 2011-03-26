@@ -36,6 +36,7 @@ import sys
 import datetime
 import logging
 import tempfile
+import base64
 
 from miro.gtcache import gettext as _
 
@@ -359,7 +360,16 @@ class TorrentSession(object):
         return self.info_hash_to_downloader.get(info_hash)
 
     def find_duplicate_torrent_from_magnet(self, magnet):
-        info_hash = info_hash_to_long(info_hash_from_magnet(magnet))
+        info_hash = info_hash_from_magnet(magnet)
+        # There are two possibilities here: it is either a base32 encoded
+        # or a hex encoded hash. If it is base32 we have to change it
+        # to the hex encoding. base32 info hashes should have a length
+        # of 32, and hex info hashes a length of 40.
+        # See #16794 for more info.
+        if len(info_hash) == 32:
+             info_hash = base64.b32decode(info_hash)
+             info_hash = base64.b16encode(info_hash)
+        info_hash = info_hash_to_long(info_hash)
         return self.info_hash_to_downloader.get(info_hash)
 
     def add_torrent(self, downloader):
