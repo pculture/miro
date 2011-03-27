@@ -928,6 +928,13 @@ class DeviceEject(BackendMessage):
     def __init__(self, device):
         self.device = device
 
+class DownloadSharingItems(BackendMessage):
+    """Ask the backend to download some items from a remote share into the
+    main database. 
+    """
+    def __init__(self, item_infos):
+        self.item_infos = item_infos
+
 class DownloadDeviceItems(BackendMessage):
     """Ask the backend to copy some items from a device into the main database.
     """

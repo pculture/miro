@@ -630,13 +630,13 @@ class CurlTransfer(object):
                 self.saw_head_success = True
         elif info['status'] == 401:
             self.handle_http_auth()
-        elif info['status'] == 405:
+        elif info['status'] in (405, 501):
             if self.trying_head_request:
                 # server didn't like the HEAD request, so just try the GET
                 self._send_new_request()
                 self.saw_head_success = True
             else:
-                self.call_errback(UnexpectedStatusCode(405))
+                self.call_errback(UnexpectedStatusCode(info['status']))
         elif info['status'] == 407:
             self.handle_proxy_auth()
         elif info['status'] >= 500 and info['status'] < 600:

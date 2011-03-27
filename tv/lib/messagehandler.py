@@ -47,6 +47,7 @@ from miro import commandline
 from miro import item
 from miro import itemsource
 from miro import messages
+from miro import filetypes
 from miro import prefs
 from miro import singleclick
 from miro import subscription
@@ -1793,6 +1794,22 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                                      create=False)
         if dsm:
             dsm.cancel()
+
+    def handle_download_sharing_items(self, message):
+        from miro.singleclick import _build_entry, download_video
+
+        for item_info in message.item_infos:
+            # notes:
+            # For sharing item the URL is encoded directory into the path.
+            url = item_info.video_path.urlize().decode('utf-8', 'replace')
+            file_format = item_info.file_format
+            try:
+                # So many to choose from ... let's just pick the first one.
+                content_type = filetypes.EXT_MIMETYPES_MAP[file_format][0]
+            except KeyError:
+                content_type = 'audio/unknown'
+            entry = _build_entry(url, content_type)
+            download_video(entry)
 
     def handle_download_device_items(self, message):
         manual_feed = Feed.get_manual_feed()
