@@ -689,8 +689,8 @@ class ItemEditDialog(widgetset.Dialog):
         buttons = widgetset.HBox()
         cancel_button = widgetset.Button(BUTTON_CANCEL.text, width=75)
         ok_button = widgetset.Button(BUTTON_OK.text, width=75)
-        buttons.pack_start(cancel_button)
         buttons.pack_end(ok_button)
+        buttons.pack_end(cancel_button)
         cancel_button.connect('clicked', self._on_button, BUTTON_CANCEL)
         ok_button.connect('clicked', self._on_button, BUTTON_OK)
         # FIXME: if we pack_end the buttons hbox, there are no buttons after
