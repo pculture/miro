@@ -77,6 +77,7 @@ class OverlayPalette (NSWindowController):
     fsButton            = IBOutlet('fsButton')
     popInOutButton      = IBOutlet('popInOutButton')
     popInOutLabel       = IBOutlet('popInOutLabel')
+    subtitlesButton     = IBOutlet('subtitlesButton')
     
     playbackControls    = IBOutlet('playbackControls')
     playPauseButton     = IBOutlet('playPauseButton')
@@ -116,6 +117,8 @@ class OverlayPalette (NSWindowController):
         return self
 
     def awakeFromNib(self):
+        image_path = resources.path('images/subtitles_down.png')
+        self.subtitlesButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
         self.shareButton.setImage_(getOverlayButtonImage(self.shareButton.bounds().size))
         self.shareButton.setAlternateImage_(getOverlayButtonAlternateImage(self.shareButton.bounds().size))
         self.shareButton.setTitle_(_("Share"))
@@ -204,8 +207,8 @@ class OverlayPalette (NSWindowController):
         if videoWindow.is_fullscreen:
             self.popInOutButton.setHidden_(YES)
             self.popInOutLabel.setHidden_(YES)
-            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
-            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
+            image_path = resources.path('images/fullscreen_exit.png')
+            self.fsButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
         else:
             if app.playback_manager.detached_window is None:
                 image_path = resources.path('images/popout.png')
@@ -217,8 +220,8 @@ class OverlayPalette (NSWindowController):
             self.popInOutButton.setHidden_(NO)
             self.popInOutLabel.setHidden_(NO)
             self.popInOutLabel.setStringValue_(label)
-            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
-            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
+            image_path = resources.path('images/fullscreen_enter.png')
+            self.fsButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
 
         newFrame = self.window().frame() 
         if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None: 
