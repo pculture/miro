@@ -41,11 +41,12 @@ LOCALE_HAS_UNIT_CONVERSIONS = True
 def strftime_to_unicode(nbytes):
     """Convert the value return by strftime() to a unicode string.
 
-    By default, it's in whatever the default codeset is.
+    By default, it's in whatever the default codeset is.  If we can't find a
+    codeset then assume utf-8 to give us a base to always return unicode.
     """
     global LOCALE_HAS_UNIT_CONVERSIONS
     if gtcache.codeset is None or not LOCALE_HAS_UNIT_CONVERSIONS:
-        return nbytes
+        return nbytes.decode('utf-8', 'replace')
     else:
         # bug #14713: some locales don't have unit conversions
         # defined, so then decode throws an error
@@ -53,7 +54,7 @@ def strftime_to_unicode(nbytes):
             return nbytes.decode(gtcache.codeset)
         except LookupError:
             LOCALE_HAS_UNIT_CONVERSIONS = False
-            return nbytes
+            return nbytes.decode('utf-8', 'replace')
 
 def download_rate(rate):
     if rate >= (1 << 30):
