@@ -225,7 +225,7 @@ def get_menu():
                              groups=["LocalPlayablesSelected_PlayPause"],
                              plural=_("Remove Items")),
                     MenuItem(_("Edit _Item"), "EditItems", Shortcut("i", MOD),
-                             groups=["LocalPlayablesSelected"],
+                             groups=["LocalItemsSelected"],
                              plural=_("Edit _Items")),
                     MenuItem(_("_Save Item As"), "SaveItem",
                              Shortcut("s", MOD),
@@ -745,6 +745,7 @@ class MenuStateManager(signals.SignalEmitter):
                        "site": [],
                        "sites": [],
                        "plural": []}
+        self.plural = False
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
@@ -889,8 +890,12 @@ class MenuStateManager(signals.SignalEmitter):
             if item.remote:
                 is_remote = True
 
-        if len(selected_items) == 1 and not is_remote:
-            self.enabled_groups.add('LocalItemSelected')
+        if selected_items and not is_remote:
+            if len(selected_items) == 1:
+                self.enabled_groups.add('LocalItemSelected')
+            else:
+                self.states['plural'].append('EditItems')
+            self.enabled_groups.add('LocalItemsSelected')
 
         if downloaded:
             if not is_remote:
