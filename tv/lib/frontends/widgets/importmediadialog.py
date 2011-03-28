@@ -54,6 +54,7 @@ class ImportMediaDialog(MainDialog):
     def __init__(self):
         MainDialog.__init__(self, _("Import Media"), "")
         self.vbox = None
+        self.gathered_media_files = []
 
     def build_import_section(self):
         vbox = widgetset.VBox()
@@ -173,7 +174,6 @@ class ImportMediaDialog(MainDialog):
 
     def make_progress(self):
         if self.cancelled:
-            self.gathered_media_files = []
             self.finder = None
             self.progress_label.set_text("")
             return
