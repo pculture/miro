@@ -743,6 +743,10 @@ class MultipleSelectionDisplay(TabDisplay):
             app.widgetapp.remove_current_site()
         else:
             app.widgetapp.remove_current_playlist()
+        iter_ = app.tabs[self.type].view.model.first_iter()
+        row = app.tabs[self.type].view.model[iter_]
+        root = app.tabs[self.type].get_tab(row[0].id)
+        app.display_manager.select_display_for_tabs(self.type, [root])
 
     def _on_new_folder_clicked(self, button):
         if self.type == 'feed':
