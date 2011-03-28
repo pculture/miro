@@ -1845,7 +1845,7 @@ class ItemDetailsWidget(widgetset.VBox):
         # pack our content
         background = ItemDetailsBackground()
         background.add(widgetutil.align_top(content_hbox))
-        self.scroller = widgetset.Scroller(True, True)
+        self.scroller = widgetset.Scroller(False, True)
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
         self._expanded = False
@@ -1967,10 +1967,10 @@ class ItemDetailsWidget(widgetset.VBox):
 
     def set_label_widths(self):
         # resize our labels so that they take up exactly all of the width
-        if self.image_widget.image is not None:
-            image_width = self.image_widget.image.width
-        else:
-            image_width = 0
+        # Take into account that the image background will always be present
+        # and be self.IMAGE_SIZE in size, regardless of whether we have a thumb
+        # for it or not.
+        image_width = self.IMAGE_SIZE[0]
         label_width = (self.allocated_width - image_width -
                 self.PADDING_MIDDLE - self.PADDING_RIGHT)
         if label_width < 1:
