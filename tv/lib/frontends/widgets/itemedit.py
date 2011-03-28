@@ -351,8 +351,6 @@ class PathField(DialogOwnerMixin, Field):
     TITLE = NotImplemented
 
     def __new__(cls, field, items, label, readonly=False):
-        if cls != PathField:
-            return cls(field, items, label, readonly)
         if len(items) > 1:
             return object.__new__(MultipleFilePathField, field, items, label, readonly)
         else:
