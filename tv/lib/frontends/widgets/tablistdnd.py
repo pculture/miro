@@ -264,9 +264,9 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
     def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
         if parent is None:
-            return False
+            return widgetset.DRAG_ACTION_NONE
         if model[parent][0].type == 'tab':
-            return False
+            return widgetset.DRAG_ACTION_NONE
         if typ == 'downloaded-item':
             if position == -1 and not model[parent][0].is_folder:
                 return widgetset.DRAG_ACTION_COPY
