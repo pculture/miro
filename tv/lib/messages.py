@@ -950,6 +950,15 @@ class RateItem(BackendMessage):
 
 # Frontend Messages
 
+class JettisonTabs(FrontendMessage):
+    """Tell the frontend to remove certain sidebar tabs from its model.  Done
+    when selecting multiple items in the sidebar using the add to new folder
+    button in the main display.
+    """
+    def __init__(self, typ, ids):
+        self.type = typ
+        self.ids = ids
+
 class SharingConnectFailed(FrontendMessage):
     """Tell the frontend the request to connect a share failed."""
     def __init__(self, share):

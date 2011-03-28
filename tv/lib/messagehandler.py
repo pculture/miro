@@ -1145,14 +1145,16 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         folder = ChannelFolder(message.name)
 
         if message.child_feed_ids is not None:
-            for id in message.child_feed_ids:
-                feed_ = feed.Feed.get_by_id(id)
+            for id_ in message.child_feed_ids:
+                feed_ = feed.Feed.get_by_id(id_)
                 feed_.set_folder(folder)
             tab_order = tabs.TabOrder.feed_order()
             tracker = self.channel_tracker
             # NB: no need to call signal_change() as move_tabs_after() does it
             tab_order.move_tabs_after(folder.id, message.child_feed_ids)
             tracker.send_whole_list = True
+            messages.JettisonTabs(u'feed',
+                message.child_feed_ids).send_to_frontend()
 
     def handle_new_watched_folder(self, message):
         url = u"dtv:directoryfeed:%s" % make_url_safe(message.path)
@@ -1201,13 +1203,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_new_playlist_folder(self, message):
         folder = PlaylistFolder(message.name)
         if message.child_playlist_ids is not None:
-            for id in message.child_playlist_ids:
-                playlist = SavedPlaylist.get_by_id(id)
+            for id_ in message.child_playlist_ids:
+                playlist = SavedPlaylist.get_by_id(id_)
                 playlist.set_folder(folder)
             tab_order = tabs.TabOrder.playlist_order()
             # NB: no need to call signal_change() as move_tabs_after() does it.
             tab_order.move_tabs_after(folder.id, message.child_playlist_ids)
             self.playlist_tracker.send_whole_list = True
+            messages.JettisonTabs(u'playlist',
+                message.child_playlist_ids).send_to_frontend()
 
     def handle_add_videos_to_playlist(self, message):
         try:

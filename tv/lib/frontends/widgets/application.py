@@ -665,8 +665,8 @@ class Application:
         elif data[0] == "url":
             messages.NewFeedSearchURL(data[1], data[2]).send_to_backend()
 
-    def add_new_feed_folder(self, add_selected=False, default_type='feed'):
-        name = newfolder.run_dialog(default_type)
+    def add_new_feed_folder(self, add_selected=False):
+        name = newfolder.run_dialog(u'feed')
         if name is not None:
             if add_selected:
                 t, infos = app.tabs.selection
@@ -1273,7 +1273,35 @@ class WidgetsMessageHandler(messages.MessageHandler):
         # Now, reply to backend, and eject the share.
         if share.mount:
             messages.SharingEject(share).send_to_backend()
-        
+
+    def handle_jettison_tabs(self, message):
+        typ = message.type
+        item_ids = message.ids
+
+        tablist = app.tabs[typ]
+        view = tablist.view
+        iter_ = view.model.first_iter()
+        if not iter_:
+            app.widgetapp.handle_soft_failure('handle_jettison_tabs',
+                "no tabs to jettison from sidebar model?",
+                with_exception=False)
+            return
+        iter_ = view.model.child_iter(iter_)
+        while iter_:
+            row = view.model[iter_]
+            if row[0].id in item_ids:
+                iter_ = view.model.remove(iter_)
+            else:
+                child_iter = view.model.child_iter(iter_)
+                while child_iter:
+                    row = view.model[child_iter]
+                    if row[0].id in item_ids:
+                        child_iter = view.model.remove(child_iter)
+                    else:
+                        child_iter = view.model.next_iter(child_iter)
+                iter_ = view.model.next_iter(iter_)
+        tablist.model_changed()
+
     def handle_sharing_connect_failed(self, message):
         name = message.share.name
         title = _('Connect failed')
