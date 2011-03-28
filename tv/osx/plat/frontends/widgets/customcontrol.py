@@ -94,20 +94,28 @@ class DrawableButton(NSButton):
         context = drawing.DrawingContext(self, self.bounds(), rect)
         context.style = drawing.DrawingStyle()
         wrapper = wrappermap.wrapper(self)
-        if self.state() == NSOnState:
-            wrapper.state = 'pressed'
-        elif self.mouse_inside:
-            wrapper.state = 'hover'
-        else:
-            wrapper.state = 'normal'
+        wrapper.state = 'normal'
+        disabled = wrapper.get_disabled()
+        if not disabled:
+            if self.state() == NSOnState:
+                wrapper.state = 'pressed'
+            elif self.mouse_inside:
+                wrapper.state = 'hover'
+            else:
+                wrapper.state = 'normal'
 
-        wrappermap.wrapper(self).draw(context, self.layout_manager)
+        wrapper.draw(context, self.layout_manager)
         self.layout_manager.reset()
 
     def sendAction_to_(self, action, to):
         # We override the Cocoa machinery here and just send it to our wrapper
         # widget.
-        wrappermap.wrapper(self).emit('clicked')
+        wrapper = wrappermap.wrapper(self)
+        disabled = wrapper.get_disabled()
+        if not disabled:
+            wrapper.emit('clicked')
+        # Tell Cocoa we handled it anyway, just not emit the actual clicked
+        # event.
         return YES
 DrawableButton.setCellClass_(DrawableButtonCell)
 
@@ -229,7 +237,12 @@ class CustomSliderView(NSSlider):
     def sendAction_to_(self, action, to):
         # We override the Cocoa machinery here and just send it to our wrapper
         # widget.
-        wrappermap.wrapper(self).emit('changed', self.floatValue())
+        wrapper = wrappermap.wrapper(self)
+        disabled = wrapper.get_disabled()
+        if not disabled:
+            wrappermap.wrapper(self).emit('changed', self.floatValue())
+        # Total Cocoa we handled it anyway to prevent the event passed to
+        # upper layer.
         return YES
 CustomSliderView.setCellClass_(CustomSliderCell)
 
@@ -240,14 +253,13 @@ class CustomButton(drawing.DrawingMixin, Widget):
         self.create_signal('clicked')
         self.view = DrawableButton.alloc().init()
         self.view.setRefusesFirstResponder_(NO)
+        self.view.setEnabled_(True)
     
     def enable(self):
         Widget.enable(self)
-        self.view.setEnabled_(True)
 
     def disable(self):
         Widget.disable(self)
-        self.view.setEnabled_(False)
 
 class ContinuousCustomButton(CustomButton):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
@@ -283,6 +295,7 @@ class CustomSlider(drawing.DrawingMixin, Widget):
             self.view.setContinuous_(YES)
         else:
             self.view.setContinuous_(NO)
+        self.view.setEnabled_(True)
 
     def viewport_created(self):
         self.view.cell().setKnobThickness_(self.slider_size())
@@ -305,8 +318,6 @@ class CustomSlider(drawing.DrawingMixin, Widget):
 
     def enable(self):
         Widget.enable(self)
-        self.view.setEnabled_(True)
 
     def disable(self):
         Widget.disable(self)
-        self.view.setEnabled_(False)
