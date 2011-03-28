@@ -245,7 +245,9 @@ class WindowBase(signals.SignalEmitter):
             gtk_action.set_group(root_action)
 
     def setup_action(self, gtk_action, groups, shortcuts):
-        callback = menus.lookup_handler(gtk_action.get_name())
+        action_name = gtk_action.get_name()
+        self.actions[action_name] = gtk_action
+        callback = menus.lookup_handler(action_name)
         if callback is not None:
             gtk_action.connect("activate", self.on_activate, callback)
         action_group_name = groups[0]
@@ -275,6 +277,7 @@ class WindowBase(signals.SignalEmitter):
 
     def make_check_action(self, action, check_group, label, groups, shortcuts):
         gtk_action = gtk.ToggleAction(action, label, None, None)
+        self.actions[action] = gtk_action
         callback = menus.lookup_handler(gtk_action.get_name())
         if callback is not None:
             gtk_action.connect("toggled", self.on_activate, callback)
@@ -285,6 +288,7 @@ class WindowBase(signals.SignalEmitter):
 
     def make_actions(self):
         self.action_groups = {}
+        self.actions = {}
         self.radio_group_actions = {}
         self.check_groups = {}
 
@@ -517,40 +521,23 @@ class MainWindow(Window):
                 else:
                     action_group.set_sensitive(False)
 
-        removeSomething = self.menu_structure.get("RemoveSomething").label
-        updatePodcasts = self.menu_structure.get("UpdatePodcasts").label
-        removePlaylists = self.menu_structure.get("RemovePlaylists").label
-        removeItems = self.menu_structure.get("RemoveItems").label
-
         def get_state_label(action, state):
             menu = self.menu_structure.get(action)
             return menu.state_labels.get(state, menu.label)
 
-        for state, actions in menu_manager.states.items():
-            if "RemoveSomething" in actions:
-                removeSomething = get_state_label("RemoveSomething", state)
-            if "UpdatePodcasts" in actions:
-                updatePodcasts = get_state_label("UpdatePodcasts", state)
-            if "RemovePlaylists" in actions:
-                removePlaylists = get_state_label("RemovePlaylists", state)
-            if "RemoveItems" in actions:
-                removeItems = get_state_label("RemoveItems", state)
+        action_labels = {}
+        for state, actions in menu_manager.states.iteritems():
+            for action in actions:
+                action_labels[action] = get_state_label(action, state)
 
-        action_groups = self.action_groups
+        for name, action in self.actions.iteritems():
+            default = self.menu_structure.get(name).label
+            new_label = action_labels.get(name, default)
+            action.set_property('label', new_label)
 
-        def change_label(group, action, newlabel):
-            action_groups[group].get_action(action).set_property("label",
-                                                                 newlabel)
-
-        change_label("RemoveAllowed", "RemoveSomething", removeSomething)
-        change_label("PodcastsSelected", "UpdatePodcasts", updatePodcasts)
-        change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
-        change_label("LocalPlayablesSelected_PlayPause", "RemoveItems",
-                     removeItems)
-
-        play_pause = self.menu_structure.get("PlayPauseItem").state_labels[
+        play_pause = self.menu_structure.get('PlayPauseItem').state_labels[
             menu_manager.play_pause_state]
-        change_label("PlayPause", "PlayPauseItem", play_pause)
+        self.actions['PlayPauseItem'].set_property('label', play_pause)
 
     def on_radio_change(self, menu_manager, radio_group, value):
         root_action = self.radio_group_actions[radio_group]
