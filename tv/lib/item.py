@@ -681,7 +681,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     @classmethod
     def recently_watched_view(cls):
-        return cls.make_view("file_type IN ('video', 'audio') AND seen")
+        return cls.make_view("file_type IN ('video', 'audio') AND watchedTime")
 
     @classmethod
     def recently_downloaded_view(cls):
