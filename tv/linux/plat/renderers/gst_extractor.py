@@ -94,19 +94,16 @@ class Extractor:
         self.pipeline.set_state(gst.STATE_PAUSED)
 
     def on_bus_message(self, bus, message):
-        if message.src == self.pipeline:
-            if message.type == gst.MESSAGE_STATE_CHANGED:
-                prev, new_, pending = message.parse_state_changed()
-                if new_ == gst.STATE_PAUSED:
+        if message.type == gst.MESSAGE_ERROR:
+            gobject.idle_add(self.error_occurred)
+
+        elif message.type == gst.MESSAGE_STATE_CHANGED:
+            _prev, state, _pending = message.parse_state_changed()
+            if state == gst.STATE_PAUSED:
+                if message.src == self.pipeline:
                     gobject.idle_add(self.paused_reached)
 
-            elif message.type == gst.MESSAGE_ERROR:
-                gobject.idle_add(self.error_occurred)
-
-        elif message.src == self.thumbnail_pipeline:
-            if message.type == gst.MESSAGE_STATE_CHANGED:
-                prev, new_, pending = message.parse_state_changed()
-                if new_ == gst.STATE_PAUSED:
+                elif message.src == self.thumbnail_pipeline:
                     for sink in self.thumbnail_pipeline.sinks():
                         name = sink.get_name()
                         factoryname = sink.get_factory().get_name()
@@ -125,12 +122,6 @@ class Extractor:
                     if not seek_result:
                         self.disconnect()
                         self.done()
-
-            elif message.type == gst.MESSAGE_ERROR:
-                gobject.idle_add(self.error_occurred)
-
-        elif message.type == gst.MESSAGE_ERROR:
-            gobject.idle_add(self.error_occurred)
 
     def done(self):
         if self.saw_video_tag:
