@@ -697,7 +697,7 @@ class MultipleSelectionDisplay(TabDisplay):
                         {"count": self.folder_count}))
                 label_parts.append(ngettext(
                         '(contains %(count)d playlist)',
-                        '(contains %(count)d playlist)',
+                        '(contains %(count)d playlists)',
                         self.folder_child_count,
                         {"count": self.folder_child_count}))
 
