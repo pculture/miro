@@ -398,6 +398,9 @@ class ItemListTitlebar(Titlebar):
     def set_search_text(self, text):
         self.searchbox.set_text(text)
 
+    def start_editing_search(self, text):
+        self.searchbox.start_editing(text)
+
     def toggle_filter(self, filter_):
         # implemented by subclasses
         pass

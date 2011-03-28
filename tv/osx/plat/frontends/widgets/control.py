@@ -84,6 +84,14 @@ class BaseTextEntry(SizedControl):
     def focus(self):
         self.view.window().makeFirstResponder_(self.view)
 
+
+    def start_editing(self, initial_text):
+        self.set_text(initial_text)
+        self.focus()
+        # unselect the text and locate the cursor at the end of the entry
+        text_field = self.view.window().fieldEditor_forObject_(YES, self.view)
+        text_field.setSelectedRange_(NSMakeRange(len(self.get_text()), 0))
+
     def viewport_created(self):
         SizedControl.viewport_created(self)
         self.notifications.connect(self.on_changed, 'NSControlTextDidChangeNotification')

@@ -83,16 +83,23 @@ class SelectionOwnerMixin(object):
         else:
             return int(self._get_selected_iter() is not None)
 
-    def select(self, iter_):
+    def select(self, iter_, signal=False):
         """Try to select an iter.
 
         :raises WidgetActionError: iter does not exist or is not selectable
         """
         self._validate_iter(iter_)
-        with self._ignoring_changes():
+        if signal:
             self._select(iter_)
+        else:
+            with self._ignoring_changes():
+                self._select(iter_)
         if not self._is_selected(iter_):
             raise WidgetActionError("the specified iter cannot be selected")
+
+    def is_selected(self, iter_):
+        """Test if an iter is selected"""
+        return self._is_selected(iter_)
 
     def unselect(self, iter_):
         """Unselect an Iter. Fails silently if the Iter is not selected.

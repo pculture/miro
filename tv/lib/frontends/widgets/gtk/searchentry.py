@@ -129,6 +129,12 @@ class GtkSearchTextEntry(gtk.EventBox):
     def set_text(self, text):
         return self.entry.set_text(text)
 
+    def emit(self, *args, **kwargs):
+        return self.entry.emit(*args, **kwargs)
+
+    def grab_focus(self):
+        self.entry.grab_focus()
+
 gobject.type_register(GtkSearchTextEntry)
 
 class SearchTextEntry(controls.TextEntry):

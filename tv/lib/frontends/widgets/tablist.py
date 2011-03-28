@@ -175,6 +175,14 @@ class TabBlinkerMixin(object):
         if tab_id in self.iter_map:
             self.view.unblink_tab(self.iter_map[tab_id])
 
+def _last_iter(model):
+    """Get an iter for the row will be at the bottom of the table.  """
+    last_iter = model.nth_iter(len(model) - 1)
+    while model.has_child(last_iter):
+        count = model.children_count(last_iter)
+        last_iter = model.nth_child_iter(last_iter, count-1)
+    return last_iter
+
 class TabList(signals.SignalEmitter):
     """Handles a list of tabs on the left-side of Miro.
     
@@ -267,8 +275,56 @@ class TabList(signals.SignalEmitter):
         self.view.connect_weak('key-press', self.on_key_press)
 
     def on_key_press(self, view, key, mods):
+        if key == menus.DOWN_ARROW and len(mods) == 0:
+            # Test if the user is trying to move down past the last row in the
+            # table, if so, select the next tablist.
+            if view.is_selected(_last_iter(view.model)):
+                if self._move_to_next_tablist():
+                    return True
+        elif key == menus.UP_ARROW and len(mods) == 0:
+            # Test if the user is trying to move up past the first row in the
+            # table, if so, select the next tablist.
+            if view.is_selected(view.model.first_iter()):
+                if self._move_to_prev_tablist():
+                    return True
+        elif key == menus.RIGHT_ARROW and len(mods) == 0:
+            if app.item_list_controller_manager.focus_view():
+                return True
+
         if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)
+
+    def _move_to_next_tablist(self):
+        """Move focus to the next tablist and select the first item
+
+        :returns: True if the operation succeeded.
+        """
+        all_views = list(app.tabs.tab_list_widgets)
+        my_index = all_views.index(self.view)
+        try:
+            next_view = all_views[my_index+1]
+        except IndexError:
+            # bail if we're the last tablist displayed
+            return False
+        self.view.unselect_all(signal=False)
+        next_view.focus()
+        next_view.select(next_view.model.first_iter(), signal=True)
+        return True
+
+    def _move_to_prev_tablist(self):
+        """Move focus to the previous tablist and select the last item
+
+        :returns: True if the operation succeeded.
+        """
+        all_views = list(app.tabs.tab_list_widgets)
+        my_index = all_views.index(self.view)
+        if my_index == 0:
+            return False # bail if we're the first tablist displayed
+        prev_view = all_views[my_index-1]
+        self.view.unselect_all(signal=False)
+        prev_view.focus()
+        prev_view.select(_last_iter(prev_view.model), signal=True)
+        return True
 
 class StaticTabList(TabList):
     """Handles the static tabs (the tabs on top that are always the same)."""
@@ -454,7 +510,7 @@ class HideableTabList(TabList):
         self._after_change(True)
 
     def on_key_press(self, view, key, mods):
-        if key == menus.DELETE:
+        if key == menus.DELETE or key == menus.BKSPACE:
             self.on_delete_key_pressed()
             return True
         return TabList.on_key_press(self, view, key, mods)

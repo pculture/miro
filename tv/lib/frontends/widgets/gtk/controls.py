@@ -67,6 +67,11 @@ class TextEntry(Widget):
     def focus(self):
         self._widget.grab_focus()
 
+    def start_editing(self, text):
+        self.set_text(text)
+        self.focus()
+        self._widget.emit('move-cursor', gtk.MOVEMENT_BUFFER_ENDS, 1, False)
+
     def set_text(self, text):
         self._widget.set_text(text)
 

@@ -394,6 +394,14 @@ class ItemListController(object):
     def all_item_views(self):
         return self.views.values()
 
+    def focus_view(self):
+        self.current_item_view.focus()
+        if len(self.get_selection()) == 0:
+            first = self.current_item_view.model.get_first_info()
+            if first is not None:
+                iter_ = self.current_item_view.model.iter_for_id(first.id)
+                self.current_item_view.select(iter_)
+
     def build_widget(self):
         """Build the container widget for this controller."""
         raise NotImplementedError()
@@ -602,11 +610,31 @@ class ItemListController(object):
         self.throbber_manager.start(item_info)
 
     def on_key_press(self, view, key, mods):
-        if key == menus.DELETE:
+        if key == menus.DELETE or key == menus.BKSPACE:
             return self.handle_delete()
+        elif key == menus.ESCAPE:
+            return self.handle_escape()
+        elif key == menus.ENTER:
+            self.play_selection()
+            return True
+        elif key == menus.LEFT_ARROW:
+            app.tabs.focus_view()
+            return True
+        elif isinstance(key, basestring) and len(key) == 1 and key.isalnum():
+            self.titlebar.start_editing_search(key)
+            return True
+        return False
 
     def handle_delete(self):
         app.widgetapp.remove_items(self.get_selection())
+        return True
+
+    def handle_escape(self):
+        for info in self.get_selection():
+            if info.state == 'downloading':
+                messages.CancelDownload(info.id).send_to_backend()
+            else:
+                messages.StopUpload(info.id).send_to_backend()
         return True
 
     def on_hotspot_clicked(self, itemview, name, iter_):
@@ -1105,6 +1133,17 @@ class ItemListControllerManager(object):
     def __init__(self):
         self.displayed = None
         self.controllers = {}
+
+    def focus_view(self):
+        """Focus the currently displayed item list.
+
+        :returns: True if we successfully focused the item list.
+        """
+        if self.displayed:
+            self.displayed.focus_view()
+            return True
+        else:
+            return False
 
     def controller_displayed(self, item_list_controller):
         self.displayed = item_list_controller

@@ -129,6 +129,17 @@ class TabListManager(dict):
         """Select the Video Search tab."""
         self._select_from_tab_list('static', self['static'].get_default())
 
+    def focus_view(self):
+        """Focus the tablist that contains the current selection.
+
+        :returns: True if we successfully focused the tablist.
+        """
+        if self._selected_tablist:
+            self._selected_tablist.view.focus()
+            return True
+        else:
+            return False
+
     def _handle_no_tabs_selected(self, _selected_tablist, force=False):
         """No tab is selected; select a fallback. This may be about to be
         overwritten by on_row_collapsed, but there's no way to tell.

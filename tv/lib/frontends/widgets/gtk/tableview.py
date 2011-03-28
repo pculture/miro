@@ -728,6 +728,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def column_count(self):
         return len(self._widget.get_columns())
 
+    def focus(self):
+        self._widget.grab_focus()
+
     def set_show_headers(self, show):
         self._widget.set_headers_visible(show)
         self._widget.set_headers_clickable(show)

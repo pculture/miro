@@ -96,7 +96,7 @@ class MiroResponderInterceptor(NSResponder):
         Return True if the wrapper handled the event
         """
         key = event.charactersIgnoringModifiers()
-        if len(key) != 1 or not key.isalpha():
+        if len(key) != 1 or not key.isalnum():
             key = osxmenus.REVERSE_KEYS_MAP.get(key)
         mods = osxmenus.translate_event_modifiers(event)
         wrapper = wrappermap.wrapper(self.responder)

@@ -42,7 +42,7 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.menus import (
     CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, 
-    DOWN_ARROW, SPACE, DELETE, BKSPACE, ESCAPE)
+    DOWN_ARROW, ENTER, SPACE, DELETE, BKSPACE, ESCAPE)
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro.plat.appstore import appstore_edition
@@ -79,6 +79,7 @@ else:
     
 KEYS_MAP = {
     SPACE: " ",
+    ENTER: "\r",
     BKSPACE: struct.pack("H", backspace),
     DELETE: NSDeleteFunctionKey,
     RIGHT_ARROW: NSRightArrowFunctionKey,
