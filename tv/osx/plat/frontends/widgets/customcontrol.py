@@ -257,9 +257,11 @@ class CustomButton(drawing.DrawingMixin, Widget):
     
     def enable(self):
         Widget.enable(self)
+        self.view.setNeedsDisplay_(YES)
 
     def disable(self):
         Widget.disable(self)
+        self.view.setNeedsDisplay_(YES)
 
 class ContinuousCustomButton(CustomButton):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
@@ -318,6 +320,8 @@ class CustomSlider(drawing.DrawingMixin, Widget):
 
     def enable(self):
         Widget.enable(self)
+        self.view.setNeedsDisplay_(YES)
 
     def disable(self):
         Widget.disable(self)
+        self.view.setNeedsDisplay_(YES)

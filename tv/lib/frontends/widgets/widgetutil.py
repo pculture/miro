@@ -406,6 +406,10 @@ class TitlebarButton(widgetset.CustomButton):
     """
     Draws the titlebar buttoms; based on ThreeImageSurface.
     """
+
+    DISABLED_TEXT_COLOR = (0.43, 0.43, 0.43)
+    TEXT_COLOR = (0.19, 0.19, 0.19)
+
     def __init__(self, title, icon=None):
         widgetset.CustomButton.__init__(self)
         self.title = title
@@ -450,6 +454,10 @@ class TitlebarButton(widgetset.CustomButton):
         else:
             self.surface.draw(context, 0, 0, context.width,
                               context.height)
+        if self.get_disabled():
+            layout.set_text_color(TitlebarButton.DISABLED_TEXT_COLOR)
+        else:
+            layout.set_text_color(TitlebarButton.TEXT_COLOR)
         textbox = self._get_textbox(layout)
         text_width, text_height = textbox.get_size()
         text_y = (context.height - text_height) / 2
