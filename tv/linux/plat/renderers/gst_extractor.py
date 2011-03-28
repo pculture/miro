@@ -103,25 +103,27 @@ class Extractor:
                 if message.src == self.pipeline:
                     gobject.idle_add(self.paused_reached)
 
-                elif message.src == self.thumbnail_pipeline:
-                    for sink in self.thumbnail_pipeline.sinks():
-                        name = sink.get_name()
-                        factoryname = sink.get_factory().get_name()
-                        if factoryname == "fakesink":
-                            pad = sink.get_pad("sink")
-                            self.buffer_probes[name] = pad.add_buffer_probe(
-                                self.buffer_probe_handler, name)
+                elif self.thumbnail_pipeline:
+                    thumbsinks = set(self.thumbnail_pipeline.sinks())
+                    if message.src in thumbsinks:
+                        for sink in thumbsinks:
+                            name = sink.get_name()
+                            factoryname = sink.get_factory().get_name()
+                            if factoryname == "fakesink":
+                                pad = sink.get_pad("sink")
+                                self.buffer_probes[name] = pad.add_buffer_probe(
+                                    self.buffer_probe_handler, name)
 
-                    seek_amount = min(self.duration / 2, 20 * gst.SECOND)
-                    seek_result = self.thumbnail_pipeline.seek(
-                        1.0, gst.FORMAT_TIME,
-                        gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
-                        gst.SEEK_TYPE_SET, seek_amount,
-                        gst.SEEK_TYPE_NONE, 0)
+                        seek_amount = min(self.duration / 2, 20 * gst.SECOND)
+                        seek_result = self.thumbnail_pipeline.seek(
+                            1.0, gst.FORMAT_TIME,
+                            gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
+                            gst.SEEK_TYPE_SET, seek_amount,
+                            gst.SEEK_TYPE_NONE, 0)
 
-                    if not seek_result:
-                        self.disconnect()
-                        self.done()
+                        if not seek_result:
+                            self.disconnect()
+                            self.done()
 
     def done(self):
         if self.saw_video_tag:
