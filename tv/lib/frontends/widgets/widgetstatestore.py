@@ -57,6 +57,10 @@ class WidgetStateStore(object):
     FILTER_DOWNLOADED = 4
     FILTER_VIEW_VIDEO = 8
     FILTER_VIEW_AUDIO = 16
+    FILTER_VIEW_MOVIES = 32
+    FILTER_VIEW_SHOWS = 64
+    FILTER_VIEW_CLIPS = 128
+    FILTER_VIEW_PODCASTS = 256
     DEFAULT_DISPLAY_FILTERS = FILTER_VIEW_ALL
     DEFAULT_COLUMN_WIDTHS = {
         u'album': 100,
@@ -403,6 +407,15 @@ class WidgetStateStore(object):
             exclude = ~(WidgetStateStore.FILTER_UNWATCHED |
                          WidgetStateStore.FILTER_DOWNLOADED)
             return (filters & exclude) | filter_
+        elif filter_ in (WidgetStateStore.FILTER_VIEW_MOVIES,
+                         WidgetStateStore.FILTER_VIEW_SHOWS,
+                         WidgetStateStore.FILTER_VIEW_CLIPS,
+                         WidgetStateStore.FILTER_VIEW_PODCASTS):
+            exclude = ~(WidgetStateStore.FILTER_VIEW_MOVIES |
+                         WidgetStateStore.FILTER_VIEW_SHOWS |
+                         WidgetStateStore.FILTER_VIEW_CLIPS |
+                         WidgetStateStore.FILTER_VIEW_PODCASTS)
+            return (filters & exclude) | filter_
         else:
             return filters | filter_
 
@@ -419,6 +432,22 @@ class WidgetStateStore(object):
     @staticmethod
     def is_view_audio_filter(filters):
         return bool(filters & WidgetStateStore.FILTER_VIEW_AUDIO)
+
+    @staticmethod
+    def is_view_movies_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_VIEW_MOVIES)
+
+    @staticmethod
+    def is_view_shows_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_VIEW_SHOWS)
+
+    @staticmethod
+    def is_view_clips_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_VIEW_CLIPS)
+
+    @staticmethod
+    def is_view_podcasts_filter(filters):
+        return bool(filters & WidgetStateStore.FILTER_VIEW_PODCASTS)
 
     @staticmethod
     def has_unwatched_filter(filters):
@@ -475,6 +504,22 @@ class WidgetStateStore(object):
     @staticmethod
     def get_view_audio_filter():
         return WidgetStateStore.FILTER_VIEW_AUDIO
+
+    @staticmethod
+    def get_view_movies_filter():
+        return WidgetStateStore.FILTER_VIEW_MOVIES
+
+    @staticmethod
+    def get_view_shows_filter():
+        return WidgetStateStore.FILTER_VIEW_SHOWS
+
+    @staticmethod
+    def get_view_clips_filter():
+        return WidgetStateStore.FILTER_VIEW_CLIPS
+
+    @staticmethod
+    def get_view_podcasts_filter():
+        return WidgetStateStore.FILTER_VIEW_PODCASTS
 
     @staticmethod
     def get_unwatched_filter():

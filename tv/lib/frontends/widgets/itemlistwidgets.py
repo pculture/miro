@@ -558,6 +558,38 @@ class FilteredTitlebar(ItemListTitlebar):
         view_all = WidgetStateStore.is_view_all_filter(self.filter)
         self.filters['view-all'].set_enabled(view_all)
 
+# Note that this is not related to VideoAudioFilterMixin.
+# VideoAudioFilterMixin adds video and audio filtering, 
+# while VideosTitlebar is the static video tab.
+class VideosTitlebar(FilteredTitlebar):
+    def __init__(self):
+        FilteredTitlebar.__init__(self)
+        view_all = WidgetStateStore.get_view_all_filter()
+        view_movies = WidgetStateStore.get_view_movies_filter()
+        view_shows = WidgetStateStore.get_view_shows_filter()
+        view_clips = WidgetStateStore.get_view_clips_filter()
+        view_podcasts = WidgetStateStore.get_view_podcasts_filter()
+
+        self.add_filter('view-movies', 'toggle-filter', view_movies,
+                            _('Movies'))
+        self.add_filter('view-shows', 'toggle-filter', view_shows,
+                            _('Shows'))
+        self.add_filter('view-clips', 'toggle-filter', view_clips,
+                            _('Clips'))
+        self.add_filter('view-podcasts', 'toggle-filter', view_podcasts,
+                            _('Podcasts'))
+
+    def toggle_filter(self, filter_):
+        FilteredTitlebar.toggle_filter(self, filter_)
+        view_movies = WidgetStateStore.is_view_movies_filter(self.filter)
+        view_shows = WidgetStateStore.is_view_shows_filter(self.filter)
+        view_clips = WidgetStateStore.is_view_clips_filter(self.filter)
+        view_podcasts = WidgetStateStore.is_view_podcasts_filter(self.filter)
+        self.filters['view-movies'].set_enabled(view_movies)
+        self.filters['view-shows'].set_enabled(view_shows)
+        self.filters['view-clips'].set_enabled(view_clips)
+        self.filters['view-podcasts'].set_enabled(view_podcasts)
+
 class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
                        VideoAudioFilterMixin):
     def __init__(self):

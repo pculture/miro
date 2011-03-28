@@ -355,6 +355,8 @@ class ItemList(object):
         self.model = widgetset.InfoListModel(self._sorter.sort_key,
                 self._sorter.reverse)
         self.video_only = self.audio_only = False
+        self.movies_only = self.shows_only = False
+        self.clips_only = self.podcasts_only = False
         self.new_only = False
         self.unwatched_only = False
         self.downloaded_only = False
@@ -429,7 +431,11 @@ class ItemList(object):
                 not (self.non_feed_only and (not item_info.is_external and
                     item_info.feed_url != 'dtv:searchDownloads')) and
                 not (self.video_only and item_info.file_type != 'video') and
-                not (self.audio_only and item_info.file_type != 'audio'))
+                not (self.audio_only and item_info.file_type != 'audio') and
+                not (self.movies_only and item_info.kind != 'movie') and
+                not (self.shows_only and item_info.kind != 'show') and
+                not (self.clips_only and item_info.kind != 'clip') and
+                not (self.podcasts_only and item_info.kind != 'podcast'))
 
     def set_show_details(self, item_id, value):
         """Change the show details value for an item"""
@@ -513,6 +519,10 @@ class ItemList(object):
         self._filter = WidgetStateStore.toggle_filter(self._filter, filter_)
         self.video_only = WidgetStateStore.is_view_video_filter(self._filter)
         self.audio_only = WidgetStateStore.is_view_audio_filter(self._filter)
+        self.movies_only = WidgetStateStore.is_view_movies_filter(self._filter)
+        self.shows_only = WidgetStateStore.is_view_shows_filter(self._filter)
+        self.clips_only = WidgetStateStore.is_view_clips_filter(self._filter)
+        self.podcasts_only = WidgetStateStore.is_view_podcasts_filter(self._filter)
         self.unwatched_only = WidgetStateStore.has_unwatched_filter(
                 self._filter)
         self.downloaded_only = WidgetStateStore.has_downloaded_filter(
