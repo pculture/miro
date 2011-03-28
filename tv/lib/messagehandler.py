@@ -1063,8 +1063,8 @@ class BackendMessageHandler(messages.MessageHandler):
                     child = child_class.get_by_id(info.id)
                     new_folders.append((child, None))
             child_class.bulk_set_folders(new_folders)
+            # NB: signal_change() is implicit
             tab_order.reorder(order)
-            tab_order.signal_change()
 
     def handle_playlist_reordered(self, message):
         try:
@@ -1088,8 +1088,8 @@ class BackendMessageHandler(messages.MessageHandler):
 Original Ids: %s
 New ids: %s""", playlist_item_ids, message.item_ids)
             return
+        # signal_change() implicit in reorder()
         playlist.reorder(message.item_ids)
-        playlist.signal_change()
 
     def handle_new_guide(self, message):
         url = message.url
@@ -1150,8 +1150,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 feed_.set_folder(folder)
             tab_order = tabs.TabOrder.feed_order()
             tracker = self.channel_tracker
+            # NB: no need to call signal_change() as move_tabs_after() does it
             tab_order.move_tabs_after(folder.id, message.child_feed_ids)
-            tab_order.signal_change()
             tracker.send_whole_list = True
 
     def handle_new_watched_folder(self, message):
@@ -1205,8 +1205,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 playlist = SavedPlaylist.get_by_id(id)
                 playlist.set_folder(folder)
             tab_order = tabs.TabOrder.playlist_order()
+            # NB: no need to call signal_change() as move_tabs_after() does it.
             tab_order.move_tabs_after(folder.id, message.child_playlist_ids)
-            tab_order.signal_change()
             self.playlist_tracker.send_whole_list = True
 
     def handle_add_videos_to_playlist(self, message):
