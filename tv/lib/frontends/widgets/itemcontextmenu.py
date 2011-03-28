@@ -104,6 +104,7 @@ class ItemContextMenuHandler(object):
         # given that, we check for drm first.
         if item.has_drm:
             section.append((_('Play Externally'), play_externally))
+            section.append((_("Edit Item Details"), app.widgetapp.edit_items))
         elif item.is_playable:
             # Show File in Finder
             if not item.remote:
