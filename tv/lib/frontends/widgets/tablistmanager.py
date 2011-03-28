@@ -300,8 +300,6 @@ class TabListManager(dict):
         """
         selection = app.widget_state.get_selection(self.type, self.id)
         if not self._restored and selection and selection[0] == tab_list.type:
-            logging.debug("tab added for %s; now have: %s", tab_list.type,
-                    repr(tab_list.iter_map.keys()))
             # we may be waiting for this tab to switch to it
             self._select_from_tab_list(restore=True, or_bust=True)
 
