@@ -292,7 +292,9 @@ class FirstTimeDialog(widgetset.Window):
         search_entry = widgetset.TextEntry()
         search_entry.set_width(20)
         change_button = widgetset.Button(_("Change"))
-        hbox = widgetutil.build_hbox((search_entry, change_button))
+        hbox = widgetutil.build_hbox((
+            widgetutil.align_middle(search_entry),
+            widgetutil.align_middle(change_button)))
         group_box.pack_start(widgetutil.align_left(hbox, left_pad=30))
 
         def handle_change_clicked(widget):
