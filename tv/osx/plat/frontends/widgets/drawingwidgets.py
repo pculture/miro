@@ -73,6 +73,3 @@ class Titlebar(Background):
     def __init__(self):
         Background.__init__(self)
         self.set_size_request(-1, 50)
-
-class LowerBox(Background):
-    pass

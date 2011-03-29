@@ -54,9 +54,26 @@ TAB_LIST_BACKGROUND_COLOR = (221/255.0, 227/255.0, 234/255.0)
 ERROR_COLOR = (0.90, 0.0, 0.0)
 BLINK_COLOR = widgetutil.css_to_color('#fffb83')
 
-class LowerBox(widgetset.LowerBox):
+class LowerBox(widgetset.Background):
     def size_request(self, layout_manager):
         return (0, 63)
+
+    def draw(self, context, layout_manager):  
+        gradient = widgetset.Gradient(0, 2, 0, context.height)
+        gradient.set_start_color(widgetutil.css_to_color('#d4d4d4'))
+        gradient.set_end_color(widgetutil.css_to_color('#a8a8a8'))
+        context.rectangle(0, 2, context.width, context.height)
+        context.gradient_fill(gradient)
+
+        context.set_line_width(1)
+        context.move_to(0, 0.5)
+        context.line_to(context.width, 0.5)
+        context.set_color(widgetutil.css_to_color('#585858'))
+        context.stroke()
+        context.move_to(0, 1.5)
+        context.line_to(context.width, 1.5)
+        context.set_color(widgetutil.css_to_color('#e6e6e6'))
+        context.stroke()
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 120
