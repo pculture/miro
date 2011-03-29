@@ -360,7 +360,7 @@ class PathField(DialogOwnerMixin, Field):
         Field.__init__(self, field, items, label, readonly=readonly)
         DialogOwnerMixin.__init__(self, self.DIALOG, self.TITLE,
                                   default=self.common_value)
-        label = widgetset.Label(self.common_value)
+        label = widgetset.Label(self.common_value or '')
         self.widget = widgetset.Scroller(True, False)
         self.widget.set_has_borders(False)
         self.widget.add(label)
