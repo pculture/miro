@@ -242,7 +242,7 @@ class ConnectTab(widgetset.VBox):
         label = self.build_header(_("%(shortappname)s Sharing",
                                     self.trans_data))
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
-                                              bottom_pad=5))
+                                              bottom_pad=10))
         label = widgetset.Label(
             _("%(shortappname)s can stream and download files to and from "
               "other %(shortappname)ss on your local network and to the "
@@ -252,7 +252,7 @@ class ConnectTab(widgetset.VBox):
         label.set_wrap(True)
         label.set_size_request(550, -1)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
-                                              bottom_pad=5))
+                                              bottom_pad=20))
 
         if not app.sharing_manager.mdns_present:
             label = widgetset.Label(_("Disabled: Needs Bonjour"))
@@ -267,8 +267,8 @@ class ConnectTab(widgetset.VBox):
         self.share_video_cbx = widgetset.Checkbox(_("Videos"))
         self.share_warnonquit_cbx = widgetset.Checkbox(
             _('Warn on quit when others are connected to my media library.'))
-        hbox.pack_start(self.share_video_cbx)
-        hbox.pack_start(self.share_audio_cbx)
+        hbox.pack_start(widgetutil.align_top(self.share_video_cbx))
+        hbox.pack_start(widgetutil.align_top(self.share_audio_cbx))
         self.share_button = PrettyToggleButton()
         self.share_button.connect('clicked', self.daap_changed)
         self.share_button.connect('dragged-left', self.daap_changed)
@@ -276,14 +276,14 @@ class ConnectTab(widgetset.VBox):
         self.share_button.set_value(app.config.get(prefs.SHARE_MEDIA))
         prefpanel.attach_boolean(self.share_audio_cbx, prefs.SHARE_AUDIO)
         prefpanel.attach_boolean(self.share_video_cbx, prefs.SHARE_VIDEO)
-        hbox.pack_end(self.share_button)
+        hbox.pack_end(widgetutil.align_top(self.share_button))
         vbox.pack_start(hbox)
 
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.Label(
             _("My %(shortappname)s Share Name", self.trans_data)))
         self.share_entry = widgetset.TextEntry()
-        self.share_entry.set_size_request(300, -1)
+        self.share_entry.set_size_request(230, -1)
         share_error = prefpanel.build_error_image()
         prefpanel.attach_text(self.share_entry,
                               prefs.SHARE_NAME,
@@ -298,12 +298,12 @@ class ConnectTab(widgetset.VBox):
 
         hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
         hbox.pack_start(share_error)
-        vbox.pack_start(widgetutil.pad(hbox, top=10))
-        vbox.pack_start(widgetutil.pad(self.share_warnonquit_cbx, top=10))
+        vbox.pack_start(hbox)
+        vbox.pack_start(widgetutil.pad(self.share_warnonquit_cbx, top=20))
 
         bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.set_size_request(550, -1)
-        bg.add(widgetutil.pad(vbox, 10, 10, 10, 10))
+        bg.add(widgetutil.pad(vbox, 20, 20, 20, 20))
         bottom.pack_start(widgetutil.align_left(bg, left_pad=20,
                                                 bottom_pad=50))
 
@@ -313,10 +313,10 @@ class ConnectTab(widgetset.VBox):
         label_line = widgetset.HBox()
         label = self.build_header(_("Sync a Phone, Tablet, or Digital Camera"))
         label_line.pack_start(widgetutil.align_left(label, left_pad=20,
-                                              bottom_pad=5))
+                                              bottom_pad=10))
         help_button = HelpButton()
         help_button.connect('clicked', self.help_button_clicked)
-        label_line.pack_start(help_button)
+        label_line.pack_start(widgetutil.align_top(help_button))
         bottom.pack_start(label_line)
 
         label = widgetset.Label(
@@ -330,7 +330,7 @@ class ConnectTab(widgetset.VBox):
         label.set_size_request(400, -1)
         label.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
-                                              bottom_pad=5))
+                                              bottom_pad=20))
 
         show_all_vbox = widgetset.VBox()
         self.show_unknown = widgetset.Checkbox(
@@ -348,10 +348,10 @@ class ConnectTab(widgetset.VBox):
         label.set_color(self.TEXT_COLOR)
         label.set_size_request(390 - padding, -1)
         label.set_wrap(True)
-        show_all_vbox.pack_start(widgetutil.pad(label, left=padding))
+        show_all_vbox.pack_start(widgetutil.pad(label, top=10, left=padding))
         bg = RoundedSolidBackground(widgetutil.css_to_color('#dddddd'))
         bg.set_size_request(400, -1)
-        bg.add(widgetutil.pad(show_all_vbox, 10, 10, 10, 10))
+        bg.add(widgetutil.pad(show_all_vbox, 20, 20, 20, 20))
         vbox.pack_start(widgetutil.pad(bg, left=20, right=10, bottom=50))
         hbox.pack_start(vbox)
         hbox.pack_start(widgetutil.align_top(widgetset.ImageDisplay(
@@ -364,7 +364,7 @@ class ConnectTab(widgetset.VBox):
         vbox = widgetset.VBox()
         label = self.build_header(_("Miro on your iPad"))
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
-                                              bottom_pad=5))
+                                              bottom_pad=10))
         label = widgetset.Label(
             _("The gorgeous Miro iPad app lets you wirelessly stream music "
               "and videos from %(shortappname)s on your desktop to your iPad. "
@@ -388,7 +388,7 @@ class ConnectTab(widgetset.VBox):
         vbox = widgetset.VBox()
         label = self.build_header(_("Miro on Android"))
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
-                                              bottom_pad=5))
+                                              bottom_pad=10))
         label = widgetset.Label(
             _("We don't yet have a Miro app for Android, but you can stream "
               "to your device using other DAAP apps."))
@@ -398,7 +398,7 @@ class ConnectTab(widgetset.VBox):
         label.set_size_request(550, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               right_pad=10,
-                                              bottom_pad=5))
+                                              bottom_pad=20))
         hbox.pack_start(vbox)
         bottom.pack_start(hbox)
 
