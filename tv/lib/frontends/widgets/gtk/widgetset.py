@@ -50,7 +50,7 @@ from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
      Splitter, Table, TabContainer, DetachedWindowHolder
 from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
      FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
-     AlertDialog
+     AlertDialog, DialogWindow
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
         InfoListModel, TableColumn, TreeTableModel, CUSTOM_HEADER_HEIGHT)
