@@ -176,11 +176,13 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
         center_width = width - left_surface.width - right_surface.width
 
-        left_surface.draw(context, x, y, left_surface.width, height)
+        # Let's just take one image height, they should be the same
+        y -= int((center_surface.height - height) / 2)
+        left_surface.draw(context, x, y, left_surface.width, left_surface.height)
         center_surface.draw(context, x + left_surface.width, y, center_width,
-                            height)
+                            center_surface.height)
         right_surface.draw(context, x + width - right_surface.width, y,
-                           right_surface.width, height)
+                           right_surface.width, right_surface.height)
 
     def draw_blink_background(self, context, x, y, width, height):
         context.rectangle(x, y, width, height)
