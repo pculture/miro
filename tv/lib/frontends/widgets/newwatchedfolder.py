@@ -35,6 +35,7 @@ import logging
 import os
 
 from miro.gtcache import gettext as _
+from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog, ask_for_directory
 from miro.dialogs import BUTTON_CANCEL, BUTTON_ADD_FOLDER
 
@@ -55,7 +56,7 @@ class NewWatchedFolderDialog(MainDialog):
         Returns (directory, show-in-sidebar) or None
         """
         try:
-            extra = widgetset.VBox()
+            extra = widgetset.VBox(spacing=10)
 
             self.folder_entry = widgetset.TextEntry()
             self.folder_entry.set_activates_default(True)
@@ -66,9 +67,10 @@ class NewWatchedFolderDialog(MainDialog):
             choose_button.connect('clicked', self.handle_choose)
 
             h = widgetset.HBox(spacing=5)
-            h.pack_start(widgetset.Label(_("Directory:")))
-            h.pack_start(self.folder_entry)
-            h.pack_start(choose_button)
+            h.pack_start(widgetutil.align_middle(
+                widgetset.Label(_("Directory:"))))
+            h.pack_start(widgetutil.align_middle(self.folder_entry))
+            h.pack_start(widgetutil.align_middle(choose_button))
 
             extra.pack_start(h)
 
