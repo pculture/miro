@@ -135,17 +135,20 @@ class ContinuousDrawableButton(DrawableButton):
         self.releaseInbounds = self.stopTracking = self.firedOnce = False
         self.cell().trackMouse_inRect_ofView_untilMouseUp_(event,
                 self.bounds(), self, YES)
-        if self.releaseInbounds:
+        wrapper = wrappermap.wrapper(self)
+        if self.releaseInbounds and not wrapper.get_disabled():
             if self.firedOnce:
-                wrappermap.wrapper(self).emit('released')
+                wrapper.emit('released')
             else:
-                wrappermap.wrapper(self).emit('clicked')
+                wrapper.emit('clicked')
 
     def sendAction_to_(self, action, to):
         if self.stopTracking:
             return NO
         self.firedOnce = True
-        wrappermap.wrapper(self).emit('held-down')
+        wrapper = wrappermap.wrapper(self)
+        if not wrapper.get_disabled():
+        wrapper.emit('held-down')
         return YES
 
     def onStopTracking(self, mouseLocation):
@@ -160,14 +163,16 @@ class DragableButtonCell(NSButtonCell):
 
     def continueTracking_at_inView_(self, lastPoint, at, view):
         DRAG_THRESHOLD = 15
-        if (view.last_drag_event != 'right' and
-                at.x > self.start_x + DRAG_THRESHOLD):
-            wrappermap.wrapper(view).emit("dragged-right")
-            view.last_drag_event = 'right'
-        elif (view.last_drag_event != 'left' and
-                at.x < self.start_x - DRAG_THRESHOLD):
-            view.last_drag_event = 'left'
-            wrappermap.wrapper(view).emit("dragged-left")
+        wrapper = wrappermap.wrapper(view)
+        if not wrapper.get_disabled():
+            if (view.last_drag_event != 'right' and
+                    at.x > self.start_x + DRAG_THRESHOLD):
+                wrapper.emit("dragged-right")
+                view.last_drag_event = 'right'
+            elif (view.last_drag_event != 'left' and
+                    at.x < self.start_x - DRAG_THRESHOLD):
+                view.last_drag_event = 'left'
+                wrapper.emit("dragged-left")
         return YES
 
 class DragableDrawableButton(DrawableButton):
@@ -179,8 +184,9 @@ class DragableDrawableButton(DrawableButton):
     def sendAction_to_(self, action, to):
         # only send the click event if we didn't send a
         # dragged-left/dragged-right event
-        if self.last_drag_event is None:
-            wrappermap.wrapper(self).emit('clicked')
+        wrapper = wrappermap.wrapper(self)
+        if self.last_drag_event is None and not wrapper.get_disabled():
+            wrapper.emit('clicked')
         return YES
 DragableDrawableButton.setCellClass_(DragableButtonCell)
 
@@ -192,7 +198,9 @@ class CustomSliderCell(NSSliderCell):
         return max(0, min(1, float(pos) / size))
 
     def startTrackingAt_inView_(self, at, view):
-        wrappermap.wrapper(view).emit('pressed')
+        wrapper = wrappermap.wrapper(view)
+        if not wrapper.get_disabled():
+            wrapper.emit('pressed')
         return self.continueTracking_at_inView_(at, at, view)
 
     def continueTracking_at_inView_(self, lastPoint, at, view):
@@ -205,13 +213,17 @@ class CustomSliderCell(NSSliderCell):
         slider_amount = self.calc_slider_amount(view, pos, size)
         value = (self.maxValue() - self.minValue()) * slider_amount
         self.setFloatValue_(value)
-        wrappermap.wrapper(view).emit('moved', value)
-        if self.isContinuous():
-            wrappermap.wrapper(view).emit('changed', value)
+        wrapper = wrappermap.wrapper(view)
+        if not wrapper.get_disabled():
+            wrapper.emit('moved', value)
+            if self.isContinuous():
+                wrapper.emit('changed', value)
         return YES
     
     def stopTracking_at_inView_mouseIsUp_(self, lastPoint, at, view, mouseUp):
-        wrappermap.wrapper(view).emit('released')
+        wrapper = wrappermap.wrapper(view)
+        if not wrapper.get_disabled():
+            wrapper.emit('released')
 
 class CustomSliderView(NSSlider):
     def init(self):
@@ -240,7 +252,7 @@ class CustomSliderView(NSSlider):
         wrapper = wrappermap.wrapper(self)
         disabled = wrapper.get_disabled()
         if not disabled:
-            wrappermap.wrapper(self).emit('changed', self.floatValue())
+            wrapper.emit('changed', self.floatValue())
         # Total Cocoa we handled it anyway to prevent the event passed to
         # upper layer.
         return YES
