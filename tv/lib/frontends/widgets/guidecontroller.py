@@ -242,7 +242,7 @@ class GuideSidebarDetails(widgetset.Background):
             # if the collection that the info was is changed, send an
             # add/remove pair, otherwise update the info
             collection = self.collection_for(info)
-            if collection != self.id_to_collection[info.id]:
+            if collection != self.id_to_collection.get(info.id):
                 self.id_to_collection[info.id].remove(info.id)
                 collection.add(info)
                 self.id_to_collection[info.id] = collection
