@@ -1612,9 +1612,11 @@ class ItemDetailsExpanderButton(widgetset.CustomButton):
         context.set_color(self.LINE_TOP)
         context.rectangle(0, 0, context.width, 1)
         context.fill()
-        context.set_color(self.LINE_BOTTOM)
-        context.rectangle(0, context.height-1, context.width, 1)
-        context.fill()
+        # NB: mode indicates alternate state, not our current state.
+        if not self.mode == 'expand':
+            context.set_color(self.LINE_BOTTOM)
+            context.rectangle(0, context.height-1, context.width, 1)
+            context.fill()
 
     def draw_icon(self, context):
         if self.mode == 'expand':
