@@ -416,8 +416,9 @@ class Dialog(DialogBase):
         if self.running:
             NSApp().stopModalWithCode_(-1)
 
-        self.window.setContentView_(None)
-        self.window.close()
+        if self.window is not None:
+            self.window.setContentView_(None)
+            self.window.close()
         self.window = None
         self.buttons = None
         self.extra_widget = None
