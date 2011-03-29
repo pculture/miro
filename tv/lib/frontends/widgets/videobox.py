@@ -460,7 +460,8 @@ class VideoBox(style.LowerBox):
 
         hbox = widgetset.HBox(spacing=20)
         hbox.pack_start(self.controls, expand=False)
-        hbox.pack_start(widgetutil.align_middle(self.timeline), expand=True)
+        hbox.pack_start(widgetutil.align_middle(self.timeline, top_pad=3),
+                        expand=True)
         volume_hbox = widgetset.HBox(spacing=4)
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_muter))
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_slider))
