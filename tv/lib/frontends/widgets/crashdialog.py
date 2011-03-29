@@ -48,42 +48,54 @@ IGNORE_ERRORS = -1
 
 class CrashDialog(MainDialog):
     def __init__(self):
-        MainDialog.__init__(self, _("Internal Error"))
+        MainDialog.__init__(
+            self,
+            _("Oops!  %(appname)s has encountered an internal error",
+              {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
         self.vbox = None
         self.report = ""
 
     def on_see_crash_report(self, widget):
         self.hidden_vbox.show()
+        self.see_crash_button.disable()
 
     def run_dialog(self, report):
         self.report = report
         try:
-            vbox = widgetset.VBox(spacing=5)
+            vbox = widgetset.VBox(spacing=8)
 
             lab = widgetset.Label(_(
-                    "%(appname)s has encountered an internal error.  You can "
-                    "help us track down this problem and fix it by submitting "
-                    "an error report.",
-                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-                    ))
-
+                    "You can help us fix this problem by submitting an "
+                    "error report."))
             lab.set_wrap(True)
             lab.set_size_request(600, -1)
-
             vbox.pack_start(widgetutil.align_left(lab))
 
+            warning = widgetset.Label(_(
+                    "Note: This error report will not be posted publicly, "
+                    "but may include uniquely identifable information "
+                    "including file names, website URLs, podcast URLs, "
+                    "and disk paths."))
+            warning.set_wrap(True)
+            warning.set_size_request(600, -1)
+            vbox.pack_start(widgetutil.align_left(warning))
+
+            self.see_crash_button = widgetset.Button(_("See crash report"))
+            self.see_crash_button.set_size(widgetconst.SIZE_SMALL)
+            self.see_crash_button.connect('clicked', self.on_see_crash_report)
+            vbox.pack_start(widgetutil.align_right(self.see_crash_button))
+
             cbx = widgetset.Checkbox(_(
-                    "Include entire program database including all video and "
-                    "podcast metadata with error report"
-                    ))
+                    "Include entire program database including all "
+                    "filenames, websites, and podcasts with the "
+                    "error report."))
             vbox.pack_start(widgetutil.align_left(cbx))
 
-            button = widgetset.Button(_("See crash report"))
-            button.set_size(widgetconst.SIZE_SMALL)
-            button.connect('clicked', self.on_see_crash_report)
-            vbox.pack_start(widgetutil.align_right(button))
-
-            lab2 = widgetset.Label(_("Describe what you were doing when you got this error:"))
+            lab2 = widgetset.Label(
+                _("What were you doing when you got this message?  "
+                  "(Helpful, but not required.)"))
+            lab2.set_wrap(True)
+            lab2.set_size_request(600, -1)
             vbox.pack_start(widgetutil.align_left(lab2))
 
             text = widgetset.MultilineTextEntry()
