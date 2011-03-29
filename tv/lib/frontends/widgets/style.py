@@ -190,7 +190,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
         # Let's just take one image height, they should be the same
         y -= int((center_surface.height - height) / 2)
-        left_surface.draw(context, x, y, left_surface.width, left_surface.height)
+        left_surface.draw(context, x, y, left_surface.width,
+                          left_surface.height)
         center_surface.draw(context, x + left_surface.width, y, center_width,
                             center_surface.height)
         right_surface.draw(context, x + width - right_surface.width, y,
@@ -221,7 +222,8 @@ class ConnectTabRenderer(TabRenderer):
             eject_image = widgetutil.make_surface('icon-eject')
             hotspot = cellpack.Hotspot('eject-device', eject_image)
             alignment = cellpack.Alignment(hotspot, yalign=0.5, yscale=0.0,
-                                           xalign=0.0, xscale=0.0, min_width=20)
+                                           xalign=0.0, xscale=0.0,
+                                           min_width=20)
             hbox.pack(alignment)
             self.hbox = hbox
 
@@ -593,8 +595,8 @@ class RatingRenderer(widgetset.InfoListRenderer):
 
         :returns: ImageSurface
         """
-        # yes/no for explicit ratings; maybe/no for hover ratings;
-        # probably/no for auto ratings; unset when no explicit, auto, or hover rating
+        # yes/no for explicit ratings; maybe/no for hover ratings; probably/no
+        # for auto ratings; unset when no explicit, auto, or hover rating
         if self.hover is not None:
             if self.hover >= i:
                 state = 'yes'
@@ -675,7 +677,8 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
             return self.icon['playing']
         elif self.info.state == 'newly-downloaded':
             return self.icon['unplayed']
-        elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
+        elif (self.info.downloaded and self.info.is_playable and
+              not self.info.video_watched):
             return self.icon['new']
         elif (not self.info.item_viewed and not self.info.expiration_date and
                 not self.info.is_external and not self.info.downloaded):
@@ -757,7 +760,8 @@ class ProgressBarDrawer(cellpack.Packer):
         context.fill()
         self._non_progress_rectangle(context)
         gradient = widgetset.Gradient(self.x + self.progress_width, self.y,
-                                      self.x + self.progress_width, self.y + self.height)
+                                      self.x + self.progress_width,
+                                      self.y + self.height)
         gradient.set_start_color(self.color_set.BORDER_GRADIENT_TOP)
         gradient.set_end_color(self.color_set.BORDER_GRADIENT_BOTTOM)
         context.gradient_fill(gradient)
