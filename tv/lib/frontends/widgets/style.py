@@ -122,12 +122,16 @@ class TabRenderer(widgetset.CustomCellRenderer):
         alignment = cellpack.Alignment(icon, yalign=0.5, yscale=0.0,
                 xalign=0.0, xscale=0.0, min_width=min_icon_width)
         hbox.pack(alignment)
-        hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
+        # morgan wants the text to be 1px higher than align_middle() would
+        # place it, so we align to slightly less than 0.5
+        alignment = cellpack.Alignment(cellpack.TruncatedTextLine(titlebox),
+                                       yalign=0.45, yscale=0.0)
+        hbox.pack(alignment, expand=True)
         layout_manager.set_font(0.77)
         layout_manager.set_text_shadow(widgetutil.Shadow(
             self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
         layout_manager.set_text_color(widgetutil.WHITE)
-        self.pack_bubbles(hbox, layout_manager)
+        self.pack_bubbles(hbox, layout_manager, selected=selected)
         hbox.pack_space(2)
         alignment = cellpack.Alignment(hbox, yscale=0.0, yalign=0.5)
         if self.blink:
@@ -140,23 +144,29 @@ class TabRenderer(widgetset.CustomCellRenderer):
     def pack_leading_space(self, hbox):
         pass
 
-    def pack_bubbles(self, hbox, layout_manager):
+    def pack_bubbles(self, hbox, layout_manager, selected=False):
         if self.updating_frame > -1:
             image_name = 'icon-updating-%s' % self.updating_frame
             updating_image = widgetutil.make_surface(image_name)
-            alignment = cellpack.Alignment(updating_image, yalign=0.5, yscale=0.0,
-                    xalign=0.0, xscale=0.0, min_width=20)
+            alignment = cellpack.Alignment(
+                updating_image, yalign=0.5,yscale=0.0,
+                xalign=0.0, xscale=0.0, min_width=20)
             hbox.pack(alignment)
         else:
             if self.data.unwatched > 0:
                 self.pack_bubble(hbox, layout_manager, self.data.unwatched,
-                        UNPLAYED_COLOR)
+                        UNPLAYED_COLOR, selected=selected)
             if self.data.available > 0:
                 self.pack_bubble(hbox, layout_manager, self.data.available,
-                        AVAILABLE_COLOR)
+                        AVAILABLE_COLOR, selected=selected)
 
-    def pack_bubble(self, hbox, layout_manager, count, color):
+    def pack_bubble(self, hbox, layout_manager, count, color, selected=False):
         radius = (layout_manager.current_font.line_height() + 2) / 2.0
+        if selected:
+            layout_manager.set_text_color(color)
+            color = widgetutil.WHITE
+        else:
+            layout_manager.set_text_color(widgetutil.WHITE)
         background = cellpack.Background(layout_manager.textbox(str(count)),
                 margin=(1, radius, 1, radius))
         background.set_callback(self.draw_bubble, color)
@@ -165,6 +175,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
     def draw_bubble(self, context, x, y, width, height, color):
         if color == AVAILABLE_COLOR:
             name = 'blue-bubble'
+        elif color == widgetutil.WHITE:
+            name = 'white-bubble'
         else:
             name = 'green-bubble'
         def get_surface(part):
@@ -190,16 +202,16 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
-    def pack_bubbles(self, hbox, layout_manager):
+    def pack_bubbles(self, hbox, layout_manager, selected=False):
         if self.data.unwatched > 0:
             self.pack_bubble(hbox, layout_manager, self.data.unwatched,
-                    UNPLAYED_COLOR)
+                    UNPLAYED_COLOR, selected=selected)
         if self.data.downloading > 0:
             self.pack_bubble(hbox, layout_manager, self.data.downloading,
-                    DOWNLOADING_COLOR)
+                    DOWNLOADING_COLOR, selected=selected)
 
 class ConnectTabRenderer(TabRenderer):
-    def pack_bubbles(self, hbox, layout_manager):
+    def pack_bubbles(self, hbox, layout_manager, selected=False):
         if getattr(self.data, 'fake', False):
             return
         self.hbox = None
