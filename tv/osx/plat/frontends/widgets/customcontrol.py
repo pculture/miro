@@ -148,7 +148,7 @@ class ContinuousDrawableButton(DrawableButton):
         self.firedOnce = True
         wrapper = wrappermap.wrapper(self)
         if not wrapper.get_disabled():
-        wrapper.emit('held-down')
+            wrapper.emit('held-down')
         return YES
 
     def onStopTracking(self, mouseLocation):
