@@ -456,7 +456,9 @@ class Window(WindowBase):
                            monitor_geom.y + (position[1] - frame_extents.y))
 
 class DialogWindow(Window):
-    pass
+    def __init__(self, title, rect=None):
+        Window.__init__(self, title, rect)
+        self._window.set_resizable(false)
 
 class MainWindow(Window):
     def __init__(self, title, rect):
