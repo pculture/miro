@@ -66,7 +66,7 @@ _disclosure_button_width = _disclosure_button.frame().size.width
 
 EXPANDER_PADDING = 6
 HEADER_HEIGHT = 17
-CUSTOM_HEADER_HEIGHT = 30
+CUSTOM_HEADER_HEIGHT = 25
 
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:

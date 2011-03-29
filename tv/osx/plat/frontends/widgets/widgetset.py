@@ -50,7 +50,8 @@ from miro.plat.frontends.widgets.simple import (Image, ImageDisplay, Label,
         ProgressBar, HLine)
 from miro.plat.frontends.widgets.tableview import (TableView, TableColumn,
         CellRenderer, CustomCellRenderer, ImageCellRenderer,
-        CheckboxCellRenderer, InfoListRenderer, InfoListRendererText)
+        CheckboxCellRenderer, InfoListRenderer, InfoListRendererText,
+        CUSTOM_HEADER_HEIGHT)
 from miro.plat.frontends.widgets.tablemodel import (TableModel,
         TreeTableModel, InfoListModel)
 from miro.plat.frontends.widgets.audio import AudioPlayer

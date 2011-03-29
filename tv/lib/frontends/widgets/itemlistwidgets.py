@@ -1218,6 +1218,9 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         Toolbar.__init__(self)
         SorterWidgetOwner.__init__(self)
 
+        self.background_image = imagepool.get_surface(
+            resources.path('images/headertoolbar.png'))
+
         self._button_hbox = widgetset.HBox()
         self._button_hbox_container = widgetutil.WidgetHolder()
         self._button_hbox_container.set(self._button_hbox)
@@ -1253,6 +1256,8 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
     def pack_hbox_extra(self):
         pass
 
+    def draw(self, context, layout):
+        self.background_image.draw(context, 0, 0, context.width, context.height)   
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
         button.connect('clicked', self.on_sorter_clicked, sort_key)
@@ -1338,6 +1343,10 @@ class SortBarButton(widgetset.CustomButton):
         self.state = 'normal'
         self.set_squish_width(True)
         self.set_squish_height(True)
+        self.surface = imagepool.get_surface(
+            resources.path('images/headertoolbar.png'))
+        self.active_surface = imagepool.get_surface(
+            resources.path('images/headertoolbar_active.png'))
 
     def get_sort_indicator_visible(self):
         return self._enabled
@@ -1357,19 +1366,19 @@ class SortBarButton(widgetset.CustomButton):
     def size_request(self, layout):
         layout.set_font(0.8)
         text_size = layout.textbox(self._text).get_size()
-        return text_size[0] + 36, max(text_size[1], 30)
+        return text_size[0] + 36, max(text_size[1],
+                                      widgetset.CUSTOM_HEADER_HEIGHT - 1)
 
     def draw(self, context, layout):
-        # colors are all grayscale
-        text = 87.0 / 255
-        arrow = 137.0 / 255
+        text = 1
+        arrow = 1
+        surface = self.surface
         if self._enabled: # selected
             edge = 92.0 / 255
             key = 88.0 / 255
             top = 97.0 / 255
             bottom = 112.0 / 255
-            text = 1
-            arrow = 1
+            surface = self.active_surface
         elif self.state not in ('hover', 'pressed'):
             edge = 154.0 / 255
             key = 210.0 / 255
@@ -1394,13 +1403,9 @@ class SortBarButton(widgetset.CustomButton):
         context.set_color((edge, edge, edge))
         context.stroke()
         # background
-        gradient = widgetset.Gradient(1, 1, 1, context.height - 1)
-        gradient.set_start_color((top, top, top))
-        gradient.set_end_color((bottom, bottom, bottom))
-        context.rectangle(1, 1, context.width - 1, context.height)
-        context.gradient_fill(gradient)
+        surface.draw(context, 0, 0, context.width, context.height)
         # text
-        layout.set_font(0.8)
+        layout.set_font(0.8, bold=True)
         layout.set_text_color((text, text, text))
         textbox = layout.textbox(self._text)
         text_size = textbox.get_size()

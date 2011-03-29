@@ -35,6 +35,11 @@ import itertools
 import gobject
 import gtk
 
+# These are probably wrong, and are placeholders for now, until custom headers
+# are also implemented for GTK.
+CUSTOM_HEADER_HEIGHT = 25
+HEADER_HEIGHT = 25
+
 from miro import signals
 from miro import infolist
 from miro.errors import WidgetActionError, WidgetDomainError, WidgetRangeError
