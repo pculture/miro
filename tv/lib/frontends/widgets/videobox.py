@@ -119,7 +119,10 @@ class PlaybackInfo(widgetset.CustomButton):
     def handle_selecting(self, obj, item_info):
         self.item_name = item_info.name
         self.feed_name = item_info.feed_name
+        # XXX Possibly dodgy?  What about other if we choose to allow playback
+        # in future?
         self.is_audio = (item_info.file_type == 'audio')
+        self.is_video = (item_info.file_type == 'video')
 
     def handle_play(self, obj, duration):
         self.queue_redraw()
@@ -131,7 +134,7 @@ class PlaybackInfo(widgetset.CustomButton):
     def reset(self):
         self.item_name = ""
         self.feed_name = ""
-        self.is_audio = False
+        self.is_audio = self.is_video = False
     
     def get_full_text(self):
         if self.feed_name is None:
@@ -142,7 +145,7 @@ class PlaybackInfo(widgetset.CustomButton):
         layout.set_font(0.8)
         sizer_text = layout.textbox(self.get_full_text())
         width, height = sizer_text.get_size()
-        if self.is_audio:
+        if self.is_audio or self.is_video:
             width = width + 20
         return width, height
 
@@ -158,6 +161,9 @@ class PlaybackInfo(widgetset.CustomButton):
 
         if self.is_audio:        
             self.audio_icon.draw(context, x, 0, 15, 12, 1.0)
+            x = x + 20
+        elif self.is_video:
+            self.video_icon.draw(context, x, 0, 15, 12, 1.0)
             x = x + 20
 
         layout.set_text_color((0.9, 0.9, 0.9))
