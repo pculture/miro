@@ -54,6 +54,7 @@ from miro import app
 from miro import messages
 from miro import prefs
 from miro.plat.frontends.widgets import widgetset
+from miro.frontends.widgets import menus
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import widgetconst
@@ -1265,6 +1266,12 @@ class PreferencesWindow(widgetset.PreferencesWindow):
                 if bits[0] == selection:
                     widgetset.PreferencesWindow.select_panel(self, i)
                     break
+
+    def do_key_press(self, key, mods):
+        if key == menus.ESCAPE:
+            self.close()
+            return True
+        return False
 
     def do_show(self):
         for panel_builder in self.panel_builders:

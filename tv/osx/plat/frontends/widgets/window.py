@@ -282,6 +282,10 @@ class DialogBase(object):
     def set_transient_for(self, window):
         self.sheet_parent = window
 
+class MiroPanel(NSPanel):
+    def cancelOperation_(self, event):
+        wrappermap.wrapper(self).end_with_code(-1)
+
 class Dialog(DialogBase):
     def __init__(self, title, description=None):
         DialogBase.__init__(self)
@@ -299,6 +303,9 @@ class Dialog(DialogBase):
         self.buttons.append(button)
 
     def on_button_clicked(self, button, code):
+        self.end_with_code(code)
+
+    def end_with_code(self, code):
         if self.sheet_parent is not None:
             NSApp().endSheet_returnCode_(self.window, code)
         else:
@@ -336,7 +343,7 @@ class Dialog(DialogBase):
         self.content_widget = self.build_content()
         width, height = self.content_widget.get_size_request()
         width = max(width, 400)
-        window = NSPanel.alloc()
+        window = MiroPanel.alloc()
         window.initWithContentRect_styleMask_backing_defer_(
                 NSMakeRect(400, 400, width, height),
                 NSTitledWindowMask, NSBackingStoreBuffered, NO)
@@ -381,10 +388,13 @@ class Dialog(DialogBase):
 
     def run(self):
         self.window = self.build_window()
+        wrappermap.add(self.window, self)
         self.hookup_content_widget_signals()
         self.running = True
         if self.sheet_parent is None:
             response = NSApp().runModalForWindow_(self.window)
+            if self.window:
+                self.window.close()
         else:
             delegate = SheetDelegate.alloc().init()
             NSApp().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
