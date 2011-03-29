@@ -160,8 +160,7 @@ class Window(signals.SignalEmitter):
 
     def get_style_mask(self):
         return (NSTitledWindowMask | NSClosableWindowMask |
-                NSMiniaturizableWindowMask | NSResizableWindowMask |
-                NSTexturedBackgroundWindowMask)
+                NSMiniaturizableWindowMask | NSResizableWindowMask)
 
     def set_title(self, title):
         self.nswindow.setTitle_(title)
