@@ -65,7 +65,7 @@ def _build_title(text):
     lab.set_wrap(True)
     return widgetutil.align_left(lab, bottom_pad=10)
 
-class FirstTimeDialog(widgetset.Window):
+class FirstTimeDialog(widgetset.DialogWindow):
     def __init__(self, done_firsttime_callback, title=None):
         if title == None:
             title = _("%(appname)s First Time Setup",

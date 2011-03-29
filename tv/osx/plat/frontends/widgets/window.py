@@ -636,7 +636,19 @@ class PreferenceToolbarDelegate(NSObject):
     def switchPreferenceView_(self, sender):
         self.window.do_select_panel(sender.panel, YES)
 
-class PreferencesWindow (Window):
+class DialogWindow(Window):
+    def __init__(self, title, rect, allow_miniaturize=False):
+        Window.__init__(self, title, rect)
+        self.allow_miniaturize = allow_miniaturize
+        self.nswindow.setShowsToolbarButton_(NO)
+
+    def get_style_mask(self):
+        mask = (NSTitledWindowMask | NSClosableWindowMask)
+        if self.allow_miniaturize:
+            mask |= NSMiniaturizableWindowMask
+        return mask
+
+class PreferencesWindow(Window):
     def __init__(self, title):
         Window.__init__(self, title, Rect(0, 0, 640, 440))
         self.panels = dict()
