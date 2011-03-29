@@ -52,6 +52,7 @@ from miro.frontends.widgets import sharingcontroller
 from miro.frontends.widgets import tabcontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets import widgetset
 
 class Display(signals.SignalEmitter):
@@ -73,9 +74,12 @@ class Display(signals.SignalEmitter):
         """
         pass
 
-    def on_activate(self):
+    def on_activate(self, is_push):
         """Perform code that needs to be run when the display becomes the
         active display (the one on the top of the display stack).
+
+        :param is_push: are we pushing the display on top (as opposed to
+            having a display that was on top of us get popped off)
         """
         pass
 
@@ -97,7 +101,7 @@ class TabDisplay(Display):
     def __init__(self, tab_type, selected_tabs):
         raise NotImplementedError()
 
-    def on_activate(self):
+    def on_activate(self, is_push):
         app.menu_manager.update_menus()
 
     @staticmethod
@@ -238,7 +242,7 @@ class DisplayManager(object):
         self.display_stack.append(display)
         if display not in self.permanent_displays:
             display.on_selected()
-        display.on_activate()
+        display.on_activate(is_push=True)
         app.widgetapp.window.set_main_area(display.widget)
 
     def pop_display(self, unselect=True):
@@ -248,7 +252,7 @@ class DisplayManager(object):
         display = self.display_stack.pop()
         if unselect:
             self._unselect_display(display, on_top=True)
-        self.current_display.on_activate()
+        self.current_display.on_activate(is_push=False)
         app.widgetapp.window.set_main_area(self.current_display.widget)
 
     def _unselect_display(self, display, on_top):
@@ -312,9 +316,16 @@ class ItemListDisplayMixin(object):
         app.item_list_controller_manager.controller_created(self.controller)
         self.controller.start_tracking()
 
-    def on_activate(self):
+    def on_activate(self, is_push):
         app.item_list_controller_manager.controller_displayed(self.controller)
-        super(ItemListDisplayMixin, self).on_activate()
+        if not is_push:
+            # Focus the item list when we pop the video display from being on
+            # top of us.
+            #
+            # FIXME: call_on_ui_thread is a bit weird here.  It's needed
+            # because on OS X we can't call focus() yet on our tableview.
+            call_on_ui_thread(self.controller.focus_view)
+        super(ItemListDisplayMixin, self).on_activate(is_push)
 
     def on_deactivate(self):
         app.item_list_controller_manager.controller_no_longer_displayed(
