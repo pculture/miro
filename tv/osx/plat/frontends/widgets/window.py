@@ -125,6 +125,10 @@ class MiroWindow(NSWindow):
         else:
             NSWindow.sendEvent_(self, event)
 
+class MainMiroWindow(MiroWindow):
+    def isMovableByWindowBackground(self):
+        return YES
+
 class Window(signals.SignalEmitter):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, title, rect):
@@ -136,7 +140,7 @@ class Window(signals.SignalEmitter):
         self.create_signal('show')
         self.create_signal('hide')
         self.create_signal('on-shown')
-        self.nswindow = MiroWindow.alloc().initWithContentRect_styleMask_backing_defer_(
+        self.nswindow = MainMiroWindow.alloc().initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
                 self.get_style_mask(),
                 NSBackingStoreBuffered,
