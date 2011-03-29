@@ -455,6 +455,9 @@ class Window(WindowBase):
             gtkwindow.move(position[0],
                            monitor_geom.y + (position[1] - frame_extents.y))
 
+class DialogWindow(Window):
+    pass
+
 class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
