@@ -1376,19 +1376,13 @@ class SortBarButton(widgetset.CustomButton):
         if self._enabled: # selected
             edge = 92.0 / 255
             key = 88.0 / 255
-            top = 97.0 / 255
-            bottom = 112.0 / 255
             surface = self.active_surface
         elif self.state not in ('hover', 'pressed'):
             edge = 154.0 / 255
             key = 210.0 / 255
-            top = 193.0 / 255
-            bottom = 169.0 / 255
         else: # hover/pressed
             edge = 123.0 / 255
             key = 149.0 / 255
-            top = 145.0 / 255
-            bottom = 140.5 / 255
 
         # key line
         context.move_to(0, 0)
