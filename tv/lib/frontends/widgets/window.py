@@ -45,24 +45,10 @@ class MiroWindow(widgetset.MainWindow):
     def __init__(self, title, rect):
         widgetset.MainWindow.__init__(self, title, rect)
 
-        GREY = (0.85, 0.85, 0.85)
-        vbox = widgetset.VBox()
-        vbox.pack_start(separator.HThinSeparator(GREY))
-        vbox.pack_start(tablist.TabListBox(), expand=True)
-
-        hbox = widgetset.HBox()
-        hbox.pack_start(vbox, expand=True)
-        hbox.pack_start(separator.VThinSeparator(GREY))
-
         self.main_area_holder = widgetutil.WidgetHolder()
-
-        main_hbox = widgetset.HBox()
-        main_hbox.pack_start(separator.VThinSeparator(GREY))
-        main_hbox.pack_start(self.main_area_holder, expand=True)
-        
         self.splitter = widgetset.Splitter()
-        self.splitter.set_left(hbox)
-        self.splitter.set_right(main_hbox)
+        self.splitter.set_left(tablist.TabListBox())
+        self.splitter.set_right(self.main_area_holder)
 
         hbox = widgetset.HBox()
         self.videobox = videobox.VideoBox()
