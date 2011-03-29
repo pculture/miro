@@ -87,7 +87,9 @@ class ImportMediaDialog(MainDialog):
         self.search_entry.disable()
 
         self.change_button = widgetset.Button(_("Change"))
-        hbox = widgetutil.build_hbox((self.search_entry, self.change_button))
+        hbox = widgetutil.build_hbox((
+            widgetutil.align_middle(self.search_entry),   
+            widgetutil.align_middle(self.change_button)))
         vbox.pack_start(widgetutil.align_left(hbox, left_pad=30))
 
         self.change_button.connect('clicked', self.handle_change_clicked)
