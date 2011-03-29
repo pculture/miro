@@ -190,6 +190,7 @@ class ThrobberAnimationManager(AnimationManager):
         else:
             self.item_list.finish_throbber(item_info.id)
             return False
+
 class ItemListController(object):
     """Base class for controllers that manage list of items.
 
@@ -279,6 +280,22 @@ class ItemListController(object):
         sorter = self.get_sorter()
         self.change_sort_indicators(sorter.KEY, sorter.is_ascending())
         self.item_list.set_sort(sorter)
+
+    def get_saved_search_text(self):
+        """Get the text we would use to create a saved search.
+
+        By default we return None, subclasses should override it if they
+        support saving searching.
+        """
+        return None
+
+    def get_saved_search_source(self):
+        """Get info we should use to save a search for the current item list.
+
+        By default we return None.  Subclasses that support saved searches
+        should override it and return a tuple in the form of (type, id)
+        """
+        return None
 
     def get_sorter(self):
         sort_key = app.widget_state.get_sort_state(self.type, self.id)
@@ -970,6 +987,12 @@ class SearchController(SimpleItemListController):
         titlebar.connect('save-search', self._on_save_search)
         return titlebar
 
+    def get_saved_search_text(self):
+        return self.titlebar.get_search_text()
+
+    def get_saved_search_source(self):
+        return 'search', self.titlebar.get_engine()
+
     def _on_save_search(self, widget, search_text):
         engine = self.titlebar.get_engine()
         app.search_manager.perform_search(engine, search_text)
@@ -1144,6 +1167,22 @@ class ItemListControllerManager(object):
             return True
         else:
             return False
+
+    def get_saved_search_text(self):
+        """Get the saved search text for the current item list.
+        """
+        if self.displayed:
+            return self.displayed.get_saved_search_text()
+        else:
+            return None
+
+    def get_saved_search_source(self):
+        """Get the saved search source info for the current item list
+        """
+        if self.displayed:
+            return self.displayed.get_saved_search_source()
+        else:
+            return None
 
     def controller_displayed(self, item_list_controller):
         self.displayed = item_list_controller

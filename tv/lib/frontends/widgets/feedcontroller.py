@@ -86,6 +86,18 @@ class FeedController(itemlistcontroller.ItemListController,
             titlebar.connect('save-search', self._on_save_search)
             return titlebar
 
+    def get_saved_search_text(self):
+        if not self.is_folder:
+            return self.titlebar.get_search_text()
+        else:
+            return None
+
+    def get_saved_search_source(self):
+        if not self.is_folder:
+            return 'channel', self.id
+        else:
+            return None
+
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
         self._update_counts()

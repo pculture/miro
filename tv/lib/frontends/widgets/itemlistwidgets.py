@@ -504,16 +504,16 @@ class SearchTitlebar(ItemListTitlebar):
     def _build_titlebar_start(self):
         self.create_signal('save-search')
         button = widgetutil.TitlebarButton(_('Save as Podcast'))
-        # FIXME: it would be nicer not to set can focus to be true, but we
-        # need another way to save the search then
-        button.set_can_focus(True)
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=20))
         return widgetutil.align_middle(self.save_button, left_pad=20)
 
+    def get_search_text(self):
+        return self.searchbox.get_text()
+
     def _on_save_search(self, button):
-        self.emit('save-search', self.searchbox.get_text())
+        self.emit('save-search', self.get_search_text())
 
     def _on_search_changed(self, searchbox):
         if searchbox.get_text() == '':
