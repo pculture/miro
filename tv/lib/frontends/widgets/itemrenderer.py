@@ -851,11 +851,7 @@ class ItemRendererCanvas(object):
         self._add_image_button(self.right_button_x, y, image_name, hotspot)
 
     def add_keep_button(self, hotspot, text):
-        if self.selected:
-            image_name = 'keep-selected'
-        else:
-            image_name = 'keep'
-        self.layout_expiring_and_button(text, image_name, hotspot)
+        self.layout_expiring_and_button(text, hotspot)
         self.expire_background_alpha = 1.0
 
     def add_saved_emblem(self):
@@ -863,7 +859,7 @@ class ItemRendererCanvas(object):
         self.layout.add_image(image, self.right_button_x,
                 self.emblem_bottom-RIGHT_BUTTON_HEIGHT)
 
-    def layout_expiring_and_button(self, text, image_name, hotspot):
+    def layout_expiring_and_button(self, text, hotspot):
         left = self.right_button_x
         bottom = self.emblem_bottom
         top = bottom - RIGHT_BUTTON_HEIGHT
@@ -887,7 +883,13 @@ class ItemRendererCanvas(object):
         background_rect.width = (left - background_rect.x +
                 RIGHT_BUTTON_WIDTH // 2)
         # add button last so that it's drawn on top
-        self._add_image_button(left, top, image_name, hotspot)
+        if self.hotspot == hotspot:
+            image = get_image('keep-pressed')
+        elif self.selected:
+            image = get_image('keep-selected')
+        else:
+            image = get_image('keep')
+        self.layout.add_image(image, left, top, hotspot=hotspot)
 
     def make_expiring_textbox(self, text):
         """Create a textbox for the text in the expiring emblem."""
