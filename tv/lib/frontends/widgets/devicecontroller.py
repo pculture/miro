@@ -287,6 +287,7 @@ class SyncWidget(widgetset.VBox):
         self._pack_extra_buttons()
 
         self.feed_list = widgetset.VBox()
+        self.feed_list.set_size_request(450, -1)
         self.info_map = {}
         feeds = self.get_feeds()
         if feeds:
@@ -500,12 +501,14 @@ class DeviceSettingsWidget(widgetset.Background):
             ):
             if type_ == 'text':
                 widget = widgetset.TextEntry()
+                widget.set_size_request(260, -1)
             elif type_.endswith('conversion'):
                 if type_ == 'video_conversion':
                     options = video_conversion_names
                 elif type_ == 'audio_conversion':
                     options = audio_conversion_names
                 widget = widgetset.OptionMenu(options)
+                widget.set_size_request(260, -1)
             elif type_== 'bool':
                 widget = widgetset.Checkbox(text)
             else:
@@ -527,7 +530,7 @@ class DeviceSettingsWidget(widgetset.Background):
             else:
                 table.pack(widgetutil.align_right(widget[0]), 0, row)
                 table.pack(widgetutil.align_left(widget[1]), 1, row)
-        table.set_column_spacing(15)
+        table.set_column_spacing(20)
         table.set_row_spacing(20)
         self.set_child(widgetutil.align(table, 0.5, top_pad=50))
 
@@ -787,7 +790,8 @@ class DeviceUnmountedView(widgetset.VBox):
 class DeviceWidget(widgetset.VBox):
     def __init__(self, device):
         widgetset.VBox.__init__(self)
-        self.device_view = widgetset.Background()
+        # color is #f0f0f0
+        self.device_view = widgetset.SolidBackground((0.94, 0.94, 0.94))
         self.pack_start(self.device_view, expand=True)
         self.set_device(device)
 
