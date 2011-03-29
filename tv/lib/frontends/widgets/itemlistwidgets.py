@@ -62,6 +62,23 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import use_upside_down_sort
 from miro.plat.utils import get_available_bytes_for_movies
 
+class Toolbar(widgetset.Background):
+    def draw(self, context, layout):
+        context.move_to(0, 0)
+        context.rel_line_to(context.width, 0)
+        context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
+        context.stroke()
+        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient.set_start_color((212.0 / 255, 212.0 / 255, 212.0 / 255))
+        gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
+        context.rectangle(0, 1, context.width, context.height)
+        context.gradient_fill(gradient)
+
+class Titlebar(Toolbar):
+    def __init__(self):
+        Toolbar.__init__(self)
+        self.set_size_request(-1, 55)
+
 class ViewToggler(widgetset.CustomButton):
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -278,7 +295,7 @@ class ResumePlaybackButton(widgetset.CustomButton):
         # we can't fit the textbox in the space we have
         return None
 
-class ItemListTitlebar(widgetset.Titlebar):
+class ItemListTitlebar(Titlebar):
     """Titlebar for feeds, playlists and static tabs that display
     items.
 
@@ -290,7 +307,7 @@ class ItemListTitlebar(widgetset.Titlebar):
         search box changed and the items listed should be filtered
     """
     def __init__(self):
-        widgetset.Titlebar.__init__(self)
+        Titlebar.__init__(self)
         self.create_signal('resume-playing')
         hbox = widgetset.HBox()
         self.add(hbox)
@@ -897,13 +914,13 @@ class HideableSection(widgetutil.HideableWidget):
         hbox.pack_start(widgetutil.pad(self.info_label, left=7))
         self.expander.set_label(hbox)
 
-class DownloadStatusToolbar(widgetset.Toolbar):
+class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed
     status.
     """
 
     def __init__(self):
-        widgetset.Toolbar.__init__(self)
+        Toolbar.__init__(self)
 
         v = widgetset.VBox()
 
@@ -1183,7 +1200,7 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed_timeout(self, value):
         self.emit('auto-download-changed', value)
 
-class HeaderToolbar(widgetset.Toolbar, SorterWidgetOwner):
+class HeaderToolbar(Toolbar, SorterWidgetOwner):
     """Toolbar used to sort items and switch views.
 
     Signals:
@@ -1198,7 +1215,7 @@ class HeaderToolbar(widgetset.Toolbar, SorterWidgetOwner):
         only view
     """
     def __init__(self):
-        widgetset.Toolbar.__init__(self)
+        Toolbar.__init__(self)
         SorterWidgetOwner.__init__(self)
 
         self._button_hbox = widgetset.HBox()

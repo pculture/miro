@@ -65,11 +65,3 @@ class Background(drawing.DrawingMixin, SimpleBin):
         container_size = SimpleBin.calc_size_request(self)
         return (max(container_size[0], drawing_size[0]), 
                 max(container_size[1], drawing_size[1]))
-
-class Toolbar(Background):
-    pass
-
-class Titlebar(Background):
-    def __init__(self):
-        Background.__init__(self)
-        self.set_size_request(-1, 50)

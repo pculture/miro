@@ -247,20 +247,3 @@ class Background(Drawable, Bin):
         Bin.__init__(self)
         Drawable.__init__(self)
         self.set_widget(BackgroundWidget())
-
-class Toolbar(Background):
-    def draw(self, context, layout):
-        context.move_to(0, 0)
-        context.rel_line_to(context.width, 0)
-        context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
-        context.stroke()
-        gradient = Gradient(0, 1, 0, context.height)
-        gradient.set_start_color((212.0 / 255, 212.0 / 255, 212.0 / 255))
-        gradient.set_end_color((168.0 / 255, 168.0 / 255, 168.0 / 255))
-        context.rectangle(0, 1, context.width, context.height)
-        context.gradient_fill(gradient)
-
-class Titlebar(Toolbar):
-    def __init__(self):
-        Toolbar.__init__(self)
-        self.set_size_request(-1, 55)

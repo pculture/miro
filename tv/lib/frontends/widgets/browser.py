@@ -43,18 +43,19 @@ from miro import util
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
+from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.gtcache import gettext as _
 
-class BrowserToolbar(widgetset.Titlebar):
+class BrowserToolbar(itemlistwidgets.Titlebar):
     """
     Forward/back/home & "display in browser" buttons
     """
     def __init__(self):
-        widgetset.Titlebar.__init__(self)
+        itemlistwidgets.Titlebar.__init__(self)
 
         hbox = widgetset.HBox()
         self.add(hbox)
