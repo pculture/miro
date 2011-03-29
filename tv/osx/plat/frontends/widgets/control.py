@@ -157,6 +157,13 @@ class SecureTextEntry(BaseTextEntry):
         return MiroSecureTextField.alloc().init()
 
 class MiroSearchTextField(NSSearchField):
+    def init(self):
+        self = super(NSSearchField, self).init()
+        image = NSImage.alloc().initByReferencingFile_(resources.path('images/search_icon_all.png'))
+        self.cell().searchButtonCell().setImage_(image)
+        self.cell().searchButtonCell().setAlternateImage_(image)
+        return self
+
     def textDidEndEditing_(self, notification):
         wrappermap.wrapper(self).emit('activate')
         return NSSearchField.textDidEndEditing_(self, notification)
