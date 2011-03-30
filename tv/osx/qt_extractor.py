@@ -54,7 +54,7 @@ def register_quicktime_components():
         stdloc1 = os.path.join("/", "Library", "Quicktime", cmpName)
         stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins", "Components", cmpName)
         if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
-            qtcomp.register(component.encode('utf-8'))
+            qtcomp.register(component)
 
 # =============================================================================
 
