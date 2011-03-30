@@ -1410,7 +1410,7 @@ class SortBarButton(widgetset.CustomButton):
         layout.set_font(0.8)
         text_size = layout.textbox(self._text).get_size()
         return text_size[0] + 36, max(text_size[1],
-                                      widgetset.CUSTOM_HEADER_HEIGHT - 1)
+                                      widgetset.CUSTOM_HEADER_HEIGHT - 2)
 
     def draw(self, context, layout):
         text = 1
@@ -1418,20 +1418,10 @@ class SortBarButton(widgetset.CustomButton):
         surface = self.surface
         if self._enabled or self.state == 'pressed': # selected/pressed
             edge = 92.0 / 255
-            key = 88.0 / 255
             surface = self.active_surface
-        elif self.state not in ('hover', 'pressed'):
-            edge = 154.0 / 255
-            key = 210.0 / 255
-        else: # hover
-            edge = 123.0 / 255
-            key = 149.0 / 255
+        else:
+            edge = 72.0 / 255
 
-        # key line
-        context.move_to(0, 0)
-        context.line_to(context.width, 0)
-        context.set_color((key, key, key))
-        context.stroke()
         # borders
         context.move_to(0.5, 0)
         context.rel_line_to(0, context.height)
@@ -2075,7 +2065,10 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False
+        color = widgetutil.css_to_color('#020202')
+        self.vbox[standard_view].pack_start(separator.HThinSeparator(color))
         self.vbox[standard_view].pack_start(self.toolbar)
+        self.vbox[standard_view].pack_start(separator.HThinSeparator(color))
         self.background.add(self.vbox[view])
 
     def toggle_filter(self, filter_):
