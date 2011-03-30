@@ -470,6 +470,10 @@ class CurlTransfer(object):
         else:
             self.handle.setopt(pycurl.WRITEFUNCTION, self.buffer.write)
         self.handle.setopt(pycurl.HEADERFUNCTION, self.header_func)
+        if self.should_debug_request():
+            logging.warn("debugging request: %s", self.options.url)
+            self.handle.setopt(pycurl.VERBOSE, 1)
+            self.handle.setopt(pycurl.DEBUGFUNCTION, self.debug_func)
 
     def _lookup_auth(self):
         """Lookup existing HTTP passwords to use.
@@ -532,6 +536,23 @@ class CurlTransfer(object):
             self._filehandle = fileutil.open_file(self.options.write_file, mode)
         except IOError:
             raise WriteError(self.filename)
+
+    def should_debug_request(self):
+        # return True here to debug HTTP requests in the log file
+        return False
+
+
+    def debug_func(self, type, msg):
+        type_map = {
+                pycurl.INFOTYPE_HEADER_IN: 'header-in',
+                pycurl.INFOTYPE_HEADER_OUT: 'header-out',
+                pycurl.INFOTYPE_DATA_IN: 'data-in',
+                pycurl.INFOTYPE_DATA_OUT: 'data-out',
+                pycurl.INFOTYPE_TEXT: 'text',
+        }
+        type_str = type_map.get(type, type)
+        logging.warn("libcurl debug (%s) %r", type_str, msg)
+
 
     def header_func(self, line):
         line = line.strip()
