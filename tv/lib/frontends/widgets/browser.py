@@ -50,6 +50,35 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.gtcache import gettext as _
 
+class BrowserLoadingIcon(widgetset.Alignment):
+
+    def __init__(self):
+        widgetset.Alignment.__init__(self, 0.5, 0.5, 1, 1,
+                                     left_pad=6, right_pad=6)
+        self.large_icon = widgetset.AnimatedImageDisplay(
+            resources.path('images/load-indicator.gif'))
+        self.small_icon = widgetset.AnimatedImageDisplay(
+            resources.path('images/load-indicator-small.gif'))
+        self._width = 16
+        self.set_size_request(28, 16)
+        self.connect('size-allocated', self.on_size_allocated)
+
+    def on_size_allocated(self, widget, width, height):
+        if width != self._width:
+            self._width = width
+            if self.child:
+                self.show()
+
+    def hide(self):
+        self.remove()
+
+    def show(self):
+        if self._width < 206: # large icon width + padding
+            icon = self.small_icon
+        else:
+            icon = self.large_icon
+        self.set_child(icon)
+
 class BrowserToolbar(itemlistwidgets.Titlebar):
     """
     Forward/back/home & "display in browser" buttons
@@ -113,11 +142,8 @@ class BrowserToolbar(itemlistwidgets.Titlebar):
         hbox.pack_end(widgetutil.align_middle(self.download_button,
                                               right_pad=4))
 
-        self.loading_icon = widgetutil.HideableWidget(
-                widgetset.AnimatedImageDisplay(
-                    resources.path('images/load-indicator.gif')))
-        hbox.pack_start(widgetutil.align(self.loading_icon, 0.5, 0.5,
-                                         right_pad=6), expand=True)
+        self.loading_icon = BrowserLoadingIcon()
+        hbox.pack_start(self.loading_icon, expand=True)
 
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
