@@ -206,6 +206,9 @@ class ItemContextMenuHandler(object):
                             _('Cancel Download'),
                             messages.CancelDownload(
                                 item.id).send_to_backend))
+                else:
+                    # Other
+                    section.append((_("Edit Item Details"), app.widgetapp.edit_items))
 
             else:
                 # Play
@@ -310,8 +313,6 @@ class ItemContextMenuHandler(object):
                 downloaded.append(info)
                 if info.is_playable:
                     playable.append(info)
-                    if not (info.device or info.remote):
-                        editable = True
                     if info.device:
                         device.append(info)
                     elif info.video_watched:
@@ -320,6 +321,8 @@ class ItemContextMenuHandler(object):
                             expiring.append(info)
                     else:
                         unwatched.append(info)
+                if not (info.device or info.remote):
+                    editable = True
             elif info.state == 'paused':
                 paused.append(info)
             elif info.state == 'downloading':
