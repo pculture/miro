@@ -177,7 +177,10 @@ class PlaybackInfo(widgetset.CustomButton):
         text.draw(context, x, 0, width1, height1)
 
         if self.feed_name is not None:
-            layout.set_text_color((0.7, 0.7, 0.7))
+            if self.get_window().is_active():
+                layout.set_text_color((0.7, 0.7, 0.7))
+            else:
+                layout.set_text_color((0.9, 0.9, 0.9))
             text = layout.textbox(" - %s" % self.feed_name)
             width2, height2 = text.get_size()
             width2 = min(width2, context.width - self.TOTAL_MARGIN - width1 - x)
