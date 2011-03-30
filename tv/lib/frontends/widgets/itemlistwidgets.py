@@ -140,7 +140,7 @@ class FilterButton(widgetset.CustomButton):
 
     def draw(self, context, layout):
         surface_y = (context.height - self.SURFACE.height) / 2
-        if self.enabled or self.state == 'pressed':
+        if self.enabled:
             self.SURFACE.draw(context, 0, surface_y, context.width)
             layout.set_text_color(self.ON_COLOR)
         else:
