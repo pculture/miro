@@ -383,7 +383,7 @@ class ListViewRenderer(widgetset.InfoListRenderer):
 
 
 class NameRenderer(ListViewRenderer):
-    min_width = 100
+    min_width = 120 # GTK isn't returning enough size, so add some extra
     button_font_size = 0.77
 
     def __init__(self):
@@ -430,7 +430,7 @@ class NameRenderer(ListViewRenderer):
 
 class StatusRenderer(ListViewRenderer):
     BUTTONS = ('pause', 'resume', 'cancel', 'keep')
-    min_width = 40
+    min_width = 100
     min_height = 20
 
     def __init__(self):

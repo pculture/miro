@@ -158,6 +158,7 @@ class MiroTableCell(NSTextFieldCell):
 class MiroTableInfoListTextCell(MiroTableCell):
     def initWithAttrGetter_(self, attr_getter):
         self = self.init()
+        self.setWraps_(NO)
         self.attr_getter = attr_getter
         return self
 
