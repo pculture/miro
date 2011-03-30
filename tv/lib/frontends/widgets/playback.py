@@ -927,7 +927,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 except ValueError:
                     pass
             for item in added:
-                index = randrange(0, len(self.shuffle_upcoming))
+                shuffle_upcoming_len = len(self.shuffle_upcoming)
+                if shuffle_upcoming_len:
+                    index = randrange(0, shuffle_upcoming_len)
+                else:
+                    index = 0
                 self.shuffle_upcoming.insert(index, item.id)
         self._index_before_change = None
         self._items_before_change = None
