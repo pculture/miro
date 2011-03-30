@@ -45,10 +45,10 @@ from miro.plat.frontends.widgets import widgetset
 class GuideSidebarExpander(widgetset.CustomButton):
     SIDEBAR_BG = imagepool.get_surface(
         resources.path('images/guide-sidebar.png'))
-    SIDEBAR_ARROW = imagepool.get_surface(
-        resources.path('images/guide-sidebar-arrow.png'))
-    SIDEBAR_DOT = imagepool.get_surface(
-        resources.path('images/guide-sidebar-dot.png'))
+    SIDEBAR_ARROW_OPEN = imagepool.get_surface(
+        resources.path('images/guide-sidebar-arrow-open.png'))
+    SIDEBAR_ARROW_CLOSE = imagepool.get_surface(
+        resources.path('images/guide-sidebar-arrow-close.png'))
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -65,9 +65,9 @@ class GuideSidebarExpander(widgetset.CustomButton):
     def draw(self, context, layout):
         self.SIDEBAR_BG.draw(context, 0, 0, 8, context.height)
         if self.expanded:
-            image = self.SIDEBAR_DOT
+            image = self.SIDEBAR_ARROW_CLOSE
         else:
-            image = self.SIDEBAR_ARROW
+            image = self.SIDEBAR_ARROW_OPEN
         vpos = int((context.height - image.height) / 2)
         hpos = int((8 - image.width) / 2)
         image.draw(context, hpos, vpos, image.width, image.height)
