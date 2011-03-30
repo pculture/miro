@@ -424,8 +424,9 @@ class NameRenderer(ListViewRenderer):
         return button
 
     def should_show_download_button(self):
-        return (not self.info.downloaded and
-                self.info.state not in ('downloading', 'paused'))
+        nonlocal = self.info.device or self.info.remote
+        return ((not self.info.downloaded and
+                self.info.state not in ('downloading', 'paused')) or nonlocal)
 
 class StatusRenderer(ListViewRenderer):
     BUTTONS = ('pause', 'resume', 'cancel', 'keep')

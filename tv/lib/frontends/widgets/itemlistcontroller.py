@@ -658,6 +658,11 @@ class ItemListController(object):
         """Hotspot handler for ItemViews."""
 
         item_info, attrs = itemview.model[iter_]
+        if name == 'download':
+            if item_info.remote:
+                name = 'download-sharing-item'
+            elif item_info.device:
+                name = 'download-device-item'
         if name in ('download', 'thumbnail-download'):
             messages.StartDownload(item_info.id).send_to_backend()
         elif name == 'pause':
