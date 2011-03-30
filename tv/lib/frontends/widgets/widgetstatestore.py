@@ -87,6 +87,7 @@ class WidgetStateStore(object):
         u'track': 30,
         u'year': 40,
         u'drm': 40,
+        u'watched': 40,
     }
     DEFAULT_SORT_COLUMN = {
         u'tab': u'feed-name', # all-feeds
@@ -105,7 +106,7 @@ class WidgetStateStore(object):
     DEFAULT_COLUMNS = {
         u'videos':
             [u'state', u'name', u'length', u'date-added', u'feed-name',
-             u'size'],
+             u'size', u'watched'],
         u'music':
             [u'name', u'artist', u'album', u'track', u'length', u'genre',
              u'year', u'rating'],
