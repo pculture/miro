@@ -1457,17 +1457,6 @@ class SortBarButton(widgetset.CustomButton):
             context.rel_line_to(-3, 4 * direction)
             context.rel_line_to(-3, -4 * direction)
             context.fill()
-        else:
-            top = int((context.height - 4) / 2)
-            context.move_to(left, top)
-            context.rel_line_to(6, 0)
-            context.rel_line_to(-3, -4)
-            context.rel_line_to(-3, 4)
-            context.move_to(left, top + 2)
-            context.rel_line_to(6, 0)
-            context.rel_line_to(-3, 4)
-            context.rel_line_to(-3, -4)
-            context.fill()
 
 class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.
@@ -2065,10 +2054,11 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False
-        color = widgetutil.css_to_color('#020202')
-        self.vbox[standard_view].pack_start(separator.HThinSeparator(color))
+        color1 = widgetutil.css_to_color('#020202')
+        color2 = widgetutil.css_to_color('#333333')
+        self.vbox[standard_view].pack_start(separator.HThinSeparator(color1))
         self.vbox[standard_view].pack_start(self.toolbar)
-        self.vbox[standard_view].pack_start(separator.HThinSeparator(color))
+        self.vbox[standard_view].pack_start(separator.HThinSeparator(color2))
         self.background.add(self.vbox[view])
 
     def toggle_filter(self, filter_):
