@@ -29,6 +29,7 @@
 
 """gtkdirectorywatch -- GTK implementation of DirectoryWatcher."""
 
+import logging
 import os
 import gio
 import glib
@@ -55,7 +56,14 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         glib.idle_add(self._add_subdirectories, f, priority=glib.PRIORITY_LOW)
 
     def _add_subdirectories(self, f):
-        for child_info in f.enumerate_children('standard::*'):
+        try:
+            dir_list = f.enumerate_children('standard::*')
+        except gio.Error, e:
+            logging.warn("Error calling enumerate_children on %s: %s",
+                    f.get_path(), e)
+            return
+
+        for child_info in dir_list:
             file_type = child_info.get_attribute_uint32('standard::type')
             if file_type == gio.FILE_TYPE_DIRECTORY:
                 child = f.get_child(child_info.get_name())
@@ -71,7 +79,12 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
             self._on_file_deleted(file_)
 
     def _on_file_added(self, f):
-        info = f.query_info('standard::*')
+        try:
+            info = f.query_info('standard::*')
+        except gio.Error, e:
+            logging.warn("Error calling query_info on %s: %s",
+                    f.get_path(), e)
+            return
         file_type = info.get_attribute_uint32('standard::type')
         if file_type == gio.FILE_TYPE_REGULAR:
             self._send_added(f.get_path())
