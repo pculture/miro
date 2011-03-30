@@ -106,6 +106,11 @@ class ServerClosedConnection(HTTPError):
         HTTPError.__init__(self, _('%(host)s closed connection',
                                    {"host": host}))
 
+class EmptyResponse(HTTPError):
+    def __init__(self, host):
+        HTTPError.__init__(self, _('%(host)s gave us an empty response',
+                                   {"host": host}))
+
 class PossiblyTemporaryError(HTTPError):
     def __init__(self, status):
         self.friendlyDescription = _("Host returned %(status)s",
@@ -720,6 +725,8 @@ class CurlTransfer(object):
             error = ConnectionError(self.options.host)
         elif code == pycurl.E_PARTIAL_FILE:
             error = ServerClosedConnection(self.options.host)
+        elif code == pycurl.E_GOT_NOTHING:
+            error = EmptyResponse(self.options.host)
         elif code == pycurl.E_HTTP_RANGE_ERROR:
             error = ResumeFailed(self.options.host)
         elif code == pycurl.E_TOO_MANY_REDIRECTS:
