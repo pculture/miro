@@ -374,21 +374,20 @@ class ItemRenderer(ItemRendererBase):
                 displaytext.download_rate(self.info.up_rate),
                 displaytext.size_string(self.info.up_total))
         self.canvas.add_download_info(download_info)
-        if dl_info.torrent and dl_info.state != 'paused':
+        if self.info.download_info.rate == 0:
+            self.canvas.add_startup_info(
+                self.info.download_info.startup_activity)
+        elif dl_info.torrent and dl_info.state != 'paused':
             self.add_torrent_info()
 
     def add_torrent_info(self):
-        if self.info.download_info.rate == 0:
-            self.canvas.add_torrent_startup_info(
-                self.info.download_info.startup_activity)
-        else:
-            lines = (
-                    (_('PEERS'), str(self.info.connections)),
-                    (_('SEEDS'), str(self.info.seeders)),
-                    (_('LEECH'), str(self.info.leechers)),
-                    (_('SHARE'), "%.2f" % self.info.up_down_ratio),
-            )
-            self.canvas.add_torrent_info(lines)
+        lines = (
+                (_('PEERS'), str(self.info.connections)),
+                (_('SEEDS'), str(self.info.seeders)),
+                (_('LEECH'), str(self.info.leechers)),
+                (_('SHARE'), "%.2f" % self.info.up_down_ratio),
+        )
+        self.canvas.add_torrent_info(lines)
 
     def calc_thumbnail_hotspot(self):
         """Decide what hotspot clicking on the thumbnail should activate."""
@@ -992,11 +991,12 @@ class ItemRendererCanvas(object):
         # torrent info
         self.download_info_bottom = y
 
-    def add_torrent_startup_info(self, startup_info):
+    def add_startup_info(self, startup_info):
         """Add startup info for torrents that haven't begun downloading."""
         self.layout_manager.set_text_color(TORRENT_INFO_DATA_COLOR)
         textbox = self.layout_manager.textbox(startup_info)
         # bottom-align the textbox.
+        textbox.set_width(self.download_info_rect.width)
         height = textbox.get_size()[1]
         self.layout.add_rect(self.download_info_rect.bottom_side(height),
                 textbox.draw)
@@ -1375,4 +1375,4 @@ class ConversionItemRenderer(ItemRendererBase):
         self.canvas.add_download_info(download_info)
         # slightly abuse the "torrent startup info" area and put our activity
         # label there.
-        self.canvas.add_torrent_startup_info(_('Converting'))
+        self.canvas.add_startup_info(_('Converting'))
