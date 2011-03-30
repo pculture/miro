@@ -650,7 +650,7 @@ class ItemListController(object):
         for info in self.get_selection():
             if info.state == 'downloading':
                 messages.CancelDownload(info.id).send_to_backend()
-            else:
+            elif info.state == 'uploading':
                 messages.StopUpload(info.id).send_to_backend()
         return True
 
