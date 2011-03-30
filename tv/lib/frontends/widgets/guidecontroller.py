@@ -168,9 +168,10 @@ class GuideSidebarCollection(widgetset.VBox):
         messages.PlayMovie([info]).send_to_frontend()
 
 
-class GuideSidebarDetails(widgetset.Background):
+class GuideSidebarDetails(widgetset.SolidBackground):
     def __init__(self):
-        widgetset.Background.__init__(self)
+        widgetset.SolidBackground.__init__(self)
+        self.set_background_color(widgetutil.css_to_color('#e7e7e7'))
         self.video = GuideSidebarCollection(_("Recently Watched"), 'video',
                                             'last_watched')
         self.audio = GuideSidebarCollection(_("Recently Listened To"), 'audio',
