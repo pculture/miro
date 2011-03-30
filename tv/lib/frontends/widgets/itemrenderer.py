@@ -929,7 +929,7 @@ class ItemRendererCanvas(object):
         elif pause_button_mode == 'resume':
             self._add_image_button(left, top, 'download-resume', 'resume')
         elif pause_button_mode is None:
-            pass
+            self.layout.add_image(get_image('track-left'), left, top)
         else:
             raise ValueError("Unknown pause_button_mode: %s" %
                     pause_button_mode)
