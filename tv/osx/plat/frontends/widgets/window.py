@@ -649,8 +649,8 @@ class PreferenceToolbarDelegate(NSObject):
 
 class DialogWindow(Window):
     def __init__(self, title, rect, allow_miniaturize=False):
-        Window.__init__(self, title, rect)
         self.allow_miniaturize = allow_miniaturize
+        Window.__init__(self, title, rect)
         self.nswindow.setShowsToolbarButton_(NO)
 
     def get_style_mask(self):

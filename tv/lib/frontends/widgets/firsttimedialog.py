@@ -71,7 +71,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             title = _("%(appname)s First Time Setup",
                       {"appname": app.config.get(prefs.SHORT_APP_NAME)})
 
-        widgetset.Window.__init__(
+        widgetset.DialogWindow.__init__(
             self, title, widgetset.Rect(100, 100, 475, 500))
 
         # the directory panel 3 searches for files in
