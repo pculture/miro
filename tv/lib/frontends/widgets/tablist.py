@@ -837,18 +837,21 @@ class SiteList(HideableTabList):
     def init_info(self, info):
         if info is self.info:
             return
+        fallback_icon_path = resources.path('images/icon-source.png')
         if info.favicon:
             thumb_path = info.favicon
         else:
-            if info.favicon:
-                thumb_path = info.favicon
-            else:
-                thumb_path = resources.path('images/icon-source.png')
-                info.active_icon = imagepool.get_surface(
-                    resources.path('image/icon-source_active.png'))
+            thumb_path = fallback_icon_path
+            info.active_icon = imagepool.get_surface(
+                resources.path('image/icon-source_active.png'))
         # we don't use the ImagePool because 'favicon.ico' is a name with too
         # many hits (#16573).
-        image = widgetset.Image(thumb_path)
+        try:
+            image = widgetset.Image(thumb_path)
+        except ValueError:
+            # 16842 - if we ever get sent an invalid icon - don't crash with
+            # ValueError.
+            image = widgetset.Image(fallback_icon_path)
         if image.width > 16 or image.height > 16:
             image = imagepool.resize_image(image, 16, 16)
         info.icon = widgetset.ImageSurface(image)
