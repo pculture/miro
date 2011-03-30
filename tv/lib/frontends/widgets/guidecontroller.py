@@ -86,7 +86,7 @@ class GuideSidebarCollection(widgetset.VBox):
         hbox.pack_start(widgetutil.align_left(label), expand=True)
         hbox.pack_end(imagepool.get_image_display(
             resources.path('images/guide-sidebar-%s.png' % icon)))
-        self.pack_start(widgetutil.pad(hbox, top=20, bottom=12))
+        self.pack_start(widgetutil.pad(hbox, top=20, bottom=10))
 
         self.item_box = widgetset.VBox(spacing=8) # we want 17px of padding, so
                                                   # 17/2 is close to 8
