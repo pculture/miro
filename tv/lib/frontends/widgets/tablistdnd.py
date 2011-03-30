@@ -65,7 +65,7 @@ class TabDnDReorder(object):
         self.drop_id = None
 
     def reorder(self, model, parent, position, dragged_ids):
-        if position >= 0:
+        if position >= 0 and parent:
             self.drop_row_iter = model.nth_child_iter(parent, position)
         else:
             self.drop_row_iter = None
