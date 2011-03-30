@@ -83,7 +83,10 @@ class Widget(signals.SignalEmitter):
     def set_can_focus(self, allow):
         """Set if we allow the widget to hold keyboard focus.
         """
-        self._widget.set_can_focus(allow)
+        if allow:
+            self._widget.set_flags(gtk.CAN_FOCUS)
+        else:
+            self._widget.unset_flags(gtk.CAN_FOCUS)
 
     def on_hierarchy_changed(self, widget, previous_toplevel):
         toplevel = widget.get_toplevel()
