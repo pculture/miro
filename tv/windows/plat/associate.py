@@ -54,7 +54,7 @@ def _is_associated(executable_path=None):
             # Key does not exist
             return False
         else:
-            raise RuntimeError()
+            raise
     try:
         path = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
         if executable_path:
