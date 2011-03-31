@@ -599,6 +599,16 @@ class VideosTitlebar(FilteredTitlebar):
         self.filters['view-clips'].set_enabled(view_clips)
         self.filters['view-podcasts'].set_enabled(view_podcasts)
 
+class MusicTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin):
+   def __init__(self):
+        FilteredTitlebar.__init__(self)
+        DownloadedUnplayedFilterMixin.__init__(self)
+
+   def toggle_filter(self, filter_):
+       FilteredTitlebar.toggle_filter(self, filter_)
+       DownloadedUnplayedFilterMixin.toggle_filter(self)
+
+
 class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
                        VideoAudioFilterMixin):
     def __init__(self):

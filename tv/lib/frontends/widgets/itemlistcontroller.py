@@ -1073,27 +1073,9 @@ class AudioItemsController(AudioVideoItemsController):
     unwatched_label = _('Unplayed')
 
     def make_titlebar(self):
-        titlebar = AudioVideoItemsController.make_titlebar(self)
-        # FIXME these don't work yet
-        titlebar.add_filter('view-all', 'toggle-filter', 'view-all',
-                            declarify(_('View|All')))
-        titlebar.add_filter('view-albums', 'toggle-filter','view-albums',
-                            _('Albums'))
-        titlebar.add_filter('view-songs', 'toggle-filter', 'view-songs',
-                            _('Songs'))
-        titlebar.add_filter('view-genres', 'toggle-filter', 'view-genres',
-                            _('Genres'))
-        titlebar.add_filter('view-artists', 'toggle-filter', 'view-artists',
-                            _('Artists'))
-        titlebar.connect('toggle-filter', self._toggle_titlebar_filter)
+        titlebar = itemlistwidgets.MusicTitlebar()
+        titlebar.connect('toggle-filter', self.on_toggle_filter)
         return titlebar
-
-    def _toggle_titlebar_filter(self, titlebar, filter):
-        for name, button in titlebar.filters.items():
-            if name != filter:
-                button.set_enabled(False)
-            else:
-                button.set_enabled(True)
 
 class OtherItemsController(SimpleItemListController):
     type = u'others'
