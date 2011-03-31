@@ -82,7 +82,7 @@ class PlaylistMixin:
         """Add a new item to end of the playlist.  """
         self.MapClass.add_item_id(self.id, item_id)
         item = models.Item.get_by_id(item_id)
-        item.save()
+        item.save(always_signal=True)
 
         folder = self.get_folder()
         if folder is not None:

@@ -1745,10 +1745,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.downloader_id = None
         self.signal_change()
 
-    def save(self):
+    def save(self, always_signal=False):
         self.confirm_db_thread()
         if self.keep != True:
             self.keep = True
+            always_signal = True
+        if always_signal:
             self.signal_change()
 
     @returns_filename
