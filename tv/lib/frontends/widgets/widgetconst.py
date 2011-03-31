@@ -72,7 +72,6 @@ COLUMN_LABELS = {
     u'show': _('Show'),
     u'kind': _('Video Kind'),
     u'playlist': _('Order'),
-    u'watched': _('Watched'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()

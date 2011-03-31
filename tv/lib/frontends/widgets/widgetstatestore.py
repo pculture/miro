@@ -87,7 +87,6 @@ class WidgetStateStore(object):
         u'track': 30,
         u'year': 40,
         u'drm': 40,
-        u'watched': 40,
     }
     DEFAULT_SORT_COLUMN = {
         u'tab': u'feed-name', # all-feeds
