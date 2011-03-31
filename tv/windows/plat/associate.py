@@ -44,7 +44,7 @@ def _is_associated(executable_path=None):
         if none is given, whether the magnet protocol
         is associated with anything at all.
     """
-    
+
     sub_key = "magnet\\shell\\open\\command"
     try:
         handle = _winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, sub_key,
@@ -54,7 +54,7 @@ def _is_associated(executable_path=None):
             # Key does not exist
             return False
         else:
-            raise RunTimeError()
+            raise RuntimeError()
     try:
         path = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
         if executable_path:
@@ -83,7 +83,7 @@ def _register_with_magnet_exe(executable_path, icon_path):
                              "\"" + executable_path + "\" %URL")
             save_word_HKLM(sub_key + "\\Type", "urn:btih", 0)
         else:
-            raise RunTimeError()
+            raise RuntimeError()
 
 def _asssociate_extension(name, description, extension, content_type,
                           executable_path, icon_path, is_protocol):
@@ -123,5 +123,5 @@ def save_value(constant, sub_key, name, value, type_=_winreg.REG_SZ):
         if e.errno == 2:
             handle = _winreg.CreateKey(constant, sub_key)
         else:
-            raise RunTimeError()
+            raise RuntimeError()
     _winreg.SetValueEx(handle, name, 0, type_, value)
