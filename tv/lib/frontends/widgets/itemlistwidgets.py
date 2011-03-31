@@ -1303,7 +1303,6 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         self._make_button(_('Date'), 'date')
         self._make_button(_('Size'), 'size')
         self._make_button(_('Time'), 'length')
-        self._make_button(_('Watched'), 'watched')
 
     def pack_hbox_extra(self):
         pass

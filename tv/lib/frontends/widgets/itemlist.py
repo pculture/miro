@@ -328,11 +328,6 @@ class PlaylistSort(ItemSort):
         self.add_items(added)
         self.forget_items(removed)
 
-class WatchedSort(ItemSort):
-    KEY = 'watched'
-    def sort_key(self, info):
-        return info.video_watched
-
 DEFAULT_SORT = ArtistSort(False)
 
 SORT_KEY_MAP = dict((sort.KEY, sort) for sort in ItemSort.__subclasses__())
