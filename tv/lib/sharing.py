@@ -1035,7 +1035,8 @@ class SharingManagerBackend(object):
                     itemprop['daap.songformat'] = enclosure
                 else:
                     # make sure we strip away the .dot
-                    itemprop['daap.songformat'] = enclosure[1:]
+                    enclosure = itemprop['daap.songformat'][1:]
+                    itemprop['daap.songformat'] = enclosure
             else:
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_AUDIO)
@@ -1043,6 +1044,10 @@ class SharingManagerBackend(object):
                     if not enclosure:
                         enclosure = '.mp3'
                     enclosure = enclosure[1:]
+                    itemprop['daap.songformat'] = enclosure
+                else:
+                    # make sure we strip away the .dot
+                    enclosure = itemprop['daap.songformat'][1:]
                     itemprop['daap.songformat'] = enclosure
 
             # don't forget to set the path..
