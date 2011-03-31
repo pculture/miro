@@ -47,6 +47,7 @@ from miro import app
 from miro import prefs
 from miro import messages
 from miro import dialogs
+from miro import filetags
 from miro import autodiscover
 from miro import subscription
 from miro import feed
@@ -86,6 +87,12 @@ def add_video(path, manual_feed=None):
         manual_feed = feed.Feed.get_manual_feed()
     file_item = item.FileItem(
         path, feed_id=manual_feed.get_id(), mark_seen=True)
+    # FIXME: this means we'll run mutagen twice
+    (mediatype, duration, data, cover_art) = filetags.read_metadata(path,
+                                                                    test=True)
+    file_item.file_type = mediatype
+    file_item.has_drm = data.get('drm', False)
+    file_item.signal_change()
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
 
