@@ -840,6 +840,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 self.handled_last_button_press = True
                 if hotspot_tracker.is_for_context_menu():
                     self._popup_hotspot_context_menu(event)
+                # grab keyboard focus since we handled the event
+                self.focus()
                 return True
         if event.window != treeview.get_bin_window():
             # click is outside the content area, don't try to handle this.
@@ -869,6 +871,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                             not click_in_expander and
                             not isinstance(renderer, GTKCheckboxCellRenderer)):
                         self.delaying_press = True
+                        # grab keyboard focus since we handled the event
+                        self.focus()
                         return True
 
         elif event.button == 3 and self.context_menu_callback:
@@ -880,6 +884,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                     path, column, x, y = path_info
                     self._popup_context_menu(path, event)
             self.handled_last_button_press = True
+            # grab keyboard focus since we handled the event
+            self.focus()
             return True
         self.handled_last_button_press = False
 
