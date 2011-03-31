@@ -106,7 +106,7 @@ class WidgetStateStore(object):
     DEFAULT_COLUMNS = {
         u'videos':
             [u'state', u'name', u'length', u'date-added', u'feed-name',
-             u'size', u'watched'],
+             u'size'],
         u'music':
             [u'name', u'artist', u'album', u'track', u'length', u'genre',
              u'year', u'rating'],
