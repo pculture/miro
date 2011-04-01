@@ -907,7 +907,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self._change_currently_playing(item)
 
     def _on_items_changed(self, tracker, added, changed, removed):
-        old_currently_playing = self.currently_playing
         if self.currently_playing:
             if(self.currently_playing.id in set(removed)):
                 self._is_playing_filtered_item = True
@@ -932,15 +931,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 self.shuffle_upcoming.insert(index, item.id)
         self._index_before_change = None
         self._items_before_change = None
-        if (self.currently_playing is None
-                or old_currently_playing.id is not self.currently_playing.id):
-            self.emit("position-changed")
-        else:
-            for info in changed:
-                if info.id == self.currently_playing.id:
-                    self._update_currently_playing(info)
-                    self.emit("playing-info-changed")
-                    break
+        for info in changed:
+            if info.id == self.currently_playing.id:
+                self._update_currently_playing(info)
+                self.emit("playing-info-changed")
+                break
 
     def _info_is_playable(self, item_info):
         return not item_info.is_container_item and item_info.is_playable
