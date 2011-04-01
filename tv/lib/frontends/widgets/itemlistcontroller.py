@@ -1074,6 +1074,7 @@ class AudioItemsController(AudioVideoItemsController):
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.MusicTitlebar()
+        titlebar.connect('search-changed', self._on_search_changed)
         titlebar.connect('toggle-filter', self.on_toggle_filter)
         return titlebar
 
