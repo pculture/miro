@@ -307,13 +307,11 @@ class SyncWidget(widgetset.VBox):
         self.pack_start(widgetutil.pad(scroller, top=20, bottom=5),
                         expand=True)
 
-        line = widgetset.HBox()
-        button = widgetset.Button(_("Select none"))
-        button.set_size(widgetconst.SIZE_SMALL)
+        line = widgetset.HBox(spacing=5)
+        button = widgetutil.TitlebarButton(_("Select none"))
         button.connect('clicked', self.select_clicked, False)
         line.pack_end(button)
-        button = widgetset.Button(_("Select all"))
-        button.set_size(widgetconst.SIZE_SMALL)
+        button = widgetutil.TitlebarButton(_("Select all"))
         button.connect('clicked', self.select_clicked, True)
         line.pack_end(button)
         self.pack_start(widgetutil.pad(line, bottom=20))
