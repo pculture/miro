@@ -1,4 +1,5 @@
 import os
+import glob
 
 from miro.test.framework import MiroTestCase
 
@@ -159,4 +160,27 @@ class FFMpeg2TheoraConversionTaskTest(MiroTestCase):
             self.assertEquals(mock.duration, 368)
         finally:
             f.close()
+
+class ConversionInfoTest(MiroTestCase):
+    def get_output_file(self, filepath):
+        filename = os.path.basename(filepath)
+        return os.path.join(DATA, "output", filename + ".output")
+
+    def test_parse_ffmpeg_output(self):
+        for mem in glob.glob(os.path.join(DATA, "ffmpeg_info*")):
+            lines = open(mem, "r").read().splitlines()
+            ast = conversions.parse_ffmpeg_output(lines)
+            try:
+                info = conversions.extract_info(ast)
+            except ValueError, ve:
+                info = str(ve)
+
+            output_file = self.get_output_file(mem)
+            if not os.path.exists(output_file):
+                print "output file does not exist! ", output_file
+                print ast.pformat()
+                print "output:", repr(info)
+            else:
+                output = open(output_file, "r").read()
+                self.assertEquals(eval(output.strip()), info)
 

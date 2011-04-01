@@ -1,0 +1,11 @@
+FFmpeg version UNKNOWN, Copyright (c) 2000-2010 the FFmpeg developers
+  built on Nov  9 2010 12:08:03 with gcc 4.2.1 (Apple Inc. build 5664)
+  configuration: --prefix=/Users/worth/OtherApps/ffmpeg/ffmpeg/../local/i386 --enable-static --enable-shared --enable-gpl --enable-version3 --enable-libmp3lame --enable-pthreads --enable-libvorbis --enable-libx264 --enable-libxvid --enable-libspeex --enable-libopencore_amrwb --enable-libopencore_amrnb --enable-libvpx --enable-memalign-hack --disable-debug --disable-stripping --arch=x86_32
+  libavutil     50.33. 0 / 50.33. 0
+  libavcore      0.12. 0 /  0.12. 0
+  libavcodec    52.94. 3 / 52.94. 3
+  libavformat   52.84. 0 / 52.84. 0
+  libavdevice   52. 2. 2 / 52. 2. 2
+  libavfilter    1.59. 0 /  1.59. 0
+  libswscale     0.12. 0 /  0.12. 0
+/Users/willg/Movies/Miro/video.dreamg1.mp4: Invalid data found when processing input

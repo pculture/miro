@@ -71,6 +71,134 @@ def get_conversions_folder():
     return target_folder
 
 
+class Node(object):
+    def __init__(self, line="", children=None):
+        self.line = line
+        if not children:
+            self.children = []
+        else:
+            self.children = children
+
+        if ": " in line:
+            self.key, self.value = line.split(": ", 1)
+        else:
+            self.key = ""
+            self.value = ""
+
+    def add_node(self, node):
+        self.children.append(node)
+
+    def pformat(self, indent=0):
+        s = (" " * indent) + ("Node: %s" % self.line) + "\n"
+        for mem in self.children:
+            s += mem.pformat(indent + 2)
+        return s
+
+    def get_by_key(self, key):
+        if self.line.startswith(key):
+            return self
+        for mem in self.children:
+            ret = mem.get_by_key(key)
+            if ret:
+                return ret
+        return None
+
+
+def get_indent(line):
+    length = len(line)
+    line = line.lstrip()
+    return (length - len(line), line)
+
+
+def parse_ffmpeg_output(output):
+    """Takes a list of strings and parses it into a loose AST-ish
+    thing.
+
+    ffmpeg output uses indentation levels to indicate a hierarchy of
+    data.
+
+    If there's a : in the line, then it's probably a key/value pair.
+
+    :param output: the content to parse as a list of strings.
+
+    :returns: a top level node of the ffmpeg output AST
+    """
+    ast = Node()
+    node_stack = [ast]
+    indent_level = 0
+
+    for mem in output:
+        # skip blank lines
+        if len(mem.strip()) == 0:
+            continue
+
+        indent, line = get_indent(mem)
+        node = Node(line)
+
+        if indent == indent_level:
+            node_stack[-1].add_node(node)
+        elif indent > indent_level:
+            node_stack.append(node_stack[-1].children[-1])
+            indent_level = indent
+            node_stack[-1].add_node(node)
+        else:
+            for dedent in range(indent, indent_level, 2):
+                node_stack.pop()
+            indent_level = indent
+            node_stack[-1].add_node(node)
+
+    return ast
+
+
+SIZE_RE = re.compile("(\\d+)x(\\d+)")
+
+
+def extract_info(ast):
+    info = {}
+    # logging.info("get_media_info: %s", ast.pformat())
+
+    input0 = ast.get_by_key("Input #0")
+    if not input0:
+        raise ValueError("no input #0")
+
+    duration = input0.get_by_key("Duration:")
+    if not duration:
+        raise ValueError("no duration:")
+    for stream_node in duration.children:
+        stream = stream_node.line
+        if "Video:" in stream:
+            match = SIZE_RE.search(stream)
+            if match:
+                info["width"] = int(match.group(1))
+                info["height"] = int(match.group(2))
+    return info
+
+
+def get_media_info(filepath):
+    """Takes a file path and returns a dict of information about
+    this media file that it extracted from ffmpeg -i.
+
+    :param filepath: absolute path to the media file in question
+
+    :returns: dict of media info possibly containing: height, width
+    """
+
+    ffmpeg_bin = utils.get_ffmpeg_executable_path()
+    retcode, stdout, stderr = util.call_command(
+        ffmpeg_bin, "-i", "%s" % filepath,
+        return_everything=True)
+
+    if stdout:
+        output = stdout
+    else:
+        output = stderr
+
+    # logging.info("get_media_info: %s %s", filepath, output)
+    ast = parse_ffmpeg_output(output.splitlines())
+
+    return extract_info(ast)
+
+
 class ConverterInfo(object):
     """Holds the data for a specific conversion that allows us to
     convert to this target.
@@ -524,23 +652,51 @@ def build_output_paths(item_info, target_folder, converter_info):
     return (final_path, temp_path)
 
 
-def build_parameters(input_path, output_path, converter_info):
+def round_even(num):
+    """This takes a number, converts it to an integer, then makes
+    sure it's even.
+    """
+    num = int(num)
+    return num + (num % 2)
+
+
+def build_parameters(input_path, output_path, converter_info, media_info):
     """Performs the substitutions on the converter_info parameters and
     returns a list of arguments.
 
     :param input_path: absolute path of the file to convert
     :param output_path: absolute path of output file
     :param converter_info: ConverterInfo object
+    :param media_info: information about the source media file
 
     :returns: list of arguments
     """
+    if "width" in media_info and "height" in media_info:
+        target_size = [int(x) for x in converter_info.screen_size.split("x")]
+        source_size = (media_info["width"], media_info["height"])
+
+        if source_size[0] > target_size[0] or source_size[1] > target_size[1]:
+            # one of the source dimensions is larger than the target
+            # dimensions, so we want to downsize
+            w_ratio = float(source_size[0]) / float(target_size[0])
+            h_ratio = float(source_size[1]) / float(target_size[1])
+            ratio = max(w_ratio, h_ratio)
+            target_size = "%dx%d" % (round_even(source_size[0] / ratio),
+                                     round_even(source_size[1] / ratio))
+        else:
+            # neither source dimension is larger than the target
+            # dimensions, so we leave it as is
+            target_size = "%dx%d" % source_size
+    else:
+        target_size = converter_info.screen_size
+
     def substitute(param):
         if param == "{input}":
             return input_path
         elif param == "{output}":
             return output_path
         elif param == "{ssize}":
-            return converter_info.screen_size
+            return target_size
         return param
     return [substitute(p) for p in converter_info.parameters.split()]
 
@@ -806,8 +962,13 @@ class FFMpegConversionTask(ConversionTask):
         return utils.get_ffmpeg_executable_path()
 
     def get_parameters(self):
+        try:
+            media_info = get_media_info(self.input_path)
+        except ValueError:
+            media_info = {}
+
         default_parameters = build_parameters(
-            self.input_path, self.temp_output_path, self.converter_info)
+            self.input_path, self.temp_output_path, self.converter_info, media_info)
         # insert -strict experimental
         default_parameters.insert(0, 'experimental')
         default_parameters.insert(0, '-strict')
@@ -863,8 +1024,13 @@ class FFMpeg2TheoraConversionTask(ConversionTask):
         return utils.get_ffmpeg2theora_executable_path()
 
     def get_parameters(self):
+        try:
+            media_info = get_media_info(self.input_path)
+        except ValueError:
+            media_info = {}
+
         default_parameters = build_parameters(
-            self.input_path, self.temp_output_path, self.converter_info)
+            self.input_path, self.temp_output_path, self.converter_info, media_info)
         return utils.customize_ffmpeg2theora_parameters(default_parameters)
 
     def check_for_errors(self, line):

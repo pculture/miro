@@ -1,0 +1,21 @@
+FFmpeg version UNKNOWN, Copyright (c) 2000-2010 the FFmpeg developers
+  built on Nov  9 2010 12:08:03 with gcc 4.2.1 (Apple Inc. build 5664)
+  configuration: --prefix=/Users/worth/OtherApps/ffmpeg/ffmpeg/../local/i386 --enable-static --enable-shared --enable-gpl --enable-version3 --enable-libmp3lame --enable-pthreads --enable-libvorbis --enable-libx264 --enable-libxvid --enable-libspeex --enable-libopencore_amrwb --enable-libopencore_amrnb --enable-libvpx --enable-memalign-hack --disable-debug --disable-stripping --arch=x86_32
+  libavutil     50.33. 0 / 50.33. 0
+  libavcore      0.12. 0 /  0.12. 0
+  libavcodec    52.94. 3 / 52.94. 3
+  libavformat   52.84. 0 / 52.84. 0
+  libavdevice   52. 2. 2 / 52. 2. 2
+  libavfilter    1.59. 0 /  1.59. 0
+  libswscale     0.12. 0 /  0.12. 0
+
+Seems stream 1 codec frame rate differs from container frame rate: 47972.00 (47972/1) -> 23.99 (11993/500)
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/willg/Movies/Miro/videoplayback-ip=71.0.0.0_sparams=id,expire,ip,ipbits,itag,algorithm,burst,fa.25_id=6009f26138e3849d':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isomavc1mp42
+  Duration: 00:03:40.29, start: 0.000000, bitrate: 517 kb/s
+    Stream #0.0(und): Audio: aac, 44100 Hz, stereo, s16, 125 kb/s
+    Stream #0.1(und): Video: h264, yuv420p, 480x270 [PAR 1:1 DAR 16:9], 389 kb/s, 23.99 fps, 23.99 tbr, 23986 tbn, 47972 tbc
+At least one output file must be specified

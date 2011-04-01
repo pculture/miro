@@ -678,8 +678,18 @@ def call_command(*args, **kwargs):
     """Call an external command.  If the command doesn't exit with
     status 0, or if it outputs to stderr, an exception will be raised.
     Returns stdout.
+
+    :param ignore_stderr: boolean.  defaults to False.  If True and
+        the command returns stderr, it's ignored rather than raising
+        an exception.
+    :param return_everything: boolean.  defaults to False.  If True,
+        then this returns (retcode, stdout, stderr).  This implies
+        ignore_stderr is True, so you don't need to explicitly state
+        that, too.
     """
     ignore_stderr = kwargs.pop('ignore_stderr', False)
+    return_everything = kwargs.pop('return_everything', False)
+
     if kwargs:
         raise TypeError('extra keyword arguments: %s' % kwargs)
 
@@ -687,7 +697,9 @@ def call_command(*args, **kwargs):
             stdin=subprocess.PIPE, stderr=subprocess.PIPE,
             startupinfo=no_console_startupinfo())
     stdout, stderr = pipe.communicate()
-    if pipe.returncode != 0:
+    if return_everything:
+        return (pipe.returncode, stdout, stderr)
+    elif pipe.returncode != 0:
         raise OSError("call_command with %s has return code %s\n"
                       "stdout:%s\nstderr:%s" %
                       (args, pipe.returncode, stdout, stderr))

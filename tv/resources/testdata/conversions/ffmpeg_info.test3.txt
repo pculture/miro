@@ -1,0 +1,20 @@
+FFmpeg version UNKNOWN, Copyright (c) 2000-2010 the FFmpeg developers
+  built on Nov  9 2010 12:08:03 with gcc 4.2.1 (Apple Inc. build 5664)
+  configuration: --prefix=/Users/worth/OtherApps/ffmpeg/ffmpeg/../local/i386 --enable-static --enable-shared --enable-gpl --enable-version3 --enable-libmp3lame --enable-pthreads --enable-libvorbis --enable-libx264 --enable-libxvid --enable-libspeex --enable-libopencore_amrwb --enable-libopencore_amrnb --enable-libvpx --enable-memalign-hack --disable-debug --disable-stripping --arch=x86_32
+  libavutil     50.33. 0 / 50.33. 0
+  libavcore      0.12. 0 /  0.12. 0
+  libavcodec    52.94. 3 / 52.94. 3
+  libavformat   52.84. 0 / 52.84. 0
+  libavdevice   52. 2. 2 / 52. 2. 2
+  libavfilter    1.59. 0 /  1.59. 0
+  libswscale     0.12. 0 /  0.12. 0
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/willg/Movies/Miro/Converted/The Dresden Dolls _Coin-Operated Boy_ music video.dreamg1.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2mp41
+    encoder         : Lavf52.64.0
+  Duration: 00:03:40.33, start: 0.000000, bitrate: 1172 kb/s
+    Stream #0.0(und): Video: mpeg4, yuv420p, 480x320 [PAR 32:27 DAR 16:9], 1009 kb/s, PAR 71:60 DAR 71:40, 18 fps, 18 tbr, 18 tbn, 18 tbc
+    Stream #0.1(und): Audio: aac, 44100 Hz, stereo, s16, 158 kb/s
+At least one output file must be specified
