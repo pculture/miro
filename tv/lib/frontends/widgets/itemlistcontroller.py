@@ -48,7 +48,6 @@ from miro import prefs
 from miro import subscription
 from miro.errors import ActionUnavailableError
 from miro.gtcache import gettext as _
-from miro.gtcache import declarify
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemrenderer
