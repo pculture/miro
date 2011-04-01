@@ -99,11 +99,11 @@ def _mediatype_from_mime(mimes):
     """Used as a fallback if the extension isn't specific."""
     types = frozenset(mime.split('/', 2)[0] for mime in mimes)
     if 'video' in types:
-        return 'video'
+        return u'video'
     elif 'audio' in types:
-        return 'audio'
+        return u'audio'
     elif types.intersection(['other', 'application']):
-        return 'other'
+        return u'other'
 
 def _get_mediatype(muta, filename, info, tags):
     """This function is the sole determinant of an object's initial file_type,
@@ -111,11 +111,11 @@ def _get_mediatype(muta, filename, info, tags):
     movie_data_program's data overrides anything set here).
     """
     if 'fps' in info or 'gsst' in tags:
-        mediatype = 'video'
+        mediatype = u'video'
     elif filetypes.is_video_filename(filename):
-        mediatype = 'video'
+        mediatype = u'video'
     elif filetypes.is_audio_filename(filename):
-        mediatype = 'audio'
+        mediatype = u'audio'
     else:
         mediatype = None
     extension = os.path.splitext(filename)[-1].lstrip('.').lower()

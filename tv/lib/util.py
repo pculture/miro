@@ -326,7 +326,8 @@ def gather_media_files(path):
     for root, dirs, files in os.walk(path):
         for f in files:
             parsed = parsed + 1
-            if filetypes.is_video_filename(f):
+            if (filetypes.is_video_filename(f) or
+                filetypes.is_audio_filename(f)):
                 found.append(os.path.join(root, f))
 
         if short_app_name in dirs:
