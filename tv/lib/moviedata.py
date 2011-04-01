@@ -222,7 +222,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             item_ = mdi.item
             file_info = filetags.read_metadata(item_.get_filename())
             (mime_mediatype, duration, metadata, cover_art) = file_info
-            if duration > -1 and mime_mediatype is not 'video':
+            if duration > -1 and mime_mediatype != u'video':
                 mediatype = 'audio'
                 screenshot = item_.screenshot or FilenameType("")
                 if cover_art is None:
