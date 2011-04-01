@@ -742,6 +742,8 @@ class ItemListController(object):
             if selection:
                 # any selected info will do, just pick the first one in the list
                 self.widget.item_details.set_info(selection[0])
+            else:
+                self.widget.item_details.clear()
 
     def save_selection(self):
         try:
