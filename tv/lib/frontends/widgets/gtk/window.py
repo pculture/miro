@@ -460,7 +460,7 @@ class Window(WindowBase):
 class DialogWindow(Window):
     def __init__(self, title, rect=None):
         Window.__init__(self, title, rect)
-        self._window.set_resizable(false)
+        self._window.set_resizable(False)
 
 class MainWindow(Window):
     def __init__(self, title, rect):
