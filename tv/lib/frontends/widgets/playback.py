@@ -71,6 +71,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.presentation_mode = 'fit-to-bounds'
         self.create_signal('will-start')
         self.create_signal('selecting-file')
+        self.create_signal('playing-info-changed')
         self.create_signal('cant-play-file')
         self.create_signal('will-play')
         self.create_signal('did-start-playing')
@@ -144,6 +145,7 @@ class PlaybackManager (signals.SignalEmitter):
         if self.detached_window:
             if self.detached_window.get_title() != new_info.name:
                 self.detached_window.set_title(new_info.name)
+        self.emit('playing-info-changed', new_info)
 
     def prepare_attached_playback(self):
         self.emit('will-play-attached')
