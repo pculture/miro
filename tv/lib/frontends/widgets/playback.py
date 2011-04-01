@@ -874,21 +874,14 @@ class PlaybackPlaylist(signals.SignalEmitter):
             removed_set = set(ids_removed)
             if self.currently_playing.id in removed_set:
                 self._change_currently_playing_after_removed(ids_removed)
-            else:
-                self._update_currently_playing_after_removed(ids_removed)
             
         if (self.currently_playing is None
                 or old_currently_playing.id is not self.currently_playing.id):
             self.emit("position-changed")
 
-    def _update_currently_playing_after_removed(self, removed_set):
-        # Note: this is useful even if we haven't changed positions, because
-        # it gets us the new ItemInfo.  Don't call _change_currently_playing()
-        # because we are just updating the ItemInfo, not actually changing which
-        # item is playing.
-        item = self.model.get_info(
-                self._items_before_change[self._index_before_change].id)
-        self.currently_playing = item
+    def _update_currently_playing(self, new_info):
+        """Update our currently-playing ItemInfo."""
+        self.currently_playing = new_info
 
     def _change_currently_playing_after_removed(self, removed_set):
         def position_removed(old_index):
@@ -901,6 +894,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 return True
 
         new_position = self._index_before_change
+        if new_position == -1:
+            # we were playing an item that was filtered by the search and
+            # it got removed.  Start with the top of the list
+            new_position = 0
         while position_removed(new_position):
             new_position += 1
             if new_position >= len(self._items_before_change):
@@ -939,9 +936,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 or old_currently_playing.id is not self.currently_playing.id):
             self.emit("position-changed")
         else:
-            # Note that we aren't quite sure that we actually changed the info
-            # here, but emit our signal just to be sure
-            self.emit("playing-info-changed")
+            for info in changed:
+                if info.id == self.currently_playing.id:
+                    self._update_currently_playing(info)
+                    self.emit("playing-info-changed")
+                    break
 
     def _info_is_playable(self, item_info):
         return not item_info.is_container_item and item_info.is_playable
