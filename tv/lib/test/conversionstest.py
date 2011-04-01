@@ -63,7 +63,7 @@ class ConverterManagerTest(MiroTestCase):
             )
         cm = conversions.ConverterManager()
         cm.load_converters(os.path.join(self.tempdir, "*.conv"))
-        
+
         self.assertEqual(len(cm.get_converters()), 1)
         converter = cm.lookup_converter("target1")
         self.assertEqual(
@@ -78,7 +78,7 @@ class MockFFMpegConversionTask(conversions.FFMpegConversionTask):
         self.error = None
         self.progress = 0
         self.duration = None
-        
+
     def _log_progress(self, line):
         pass
 
@@ -138,7 +138,7 @@ class MockFFMpeg2TheoraConversionTask(conversions.FFMpeg2TheoraConversionTask):
         self.error = None
         self.progress = 0
         self.duration = None
-        
+
     def _log_progress(self, line):
         pass
 
@@ -159,4 +159,4 @@ class FFMpeg2TheoraConversionTaskTest(MiroTestCase):
             self.assertEquals(mock.duration, 368)
         finally:
             f.close()
-        
+
