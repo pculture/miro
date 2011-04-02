@@ -28,15 +28,23 @@
 # statement from all source files in the program, then also delete it here.
 
 import _winreg
+import logging
 from miro import prefs
 from miro import app
 
 def associate_extensions(executable_path, icon_path):
-    if not _is_associated():
-        _asssociate_extension("Magnet", "Magnet URI", ".magnet",
-                              "application/x-magnet", executable_path,
-                              icon_path, is_protocol=True)
-    _register_with_magnet_exe(executable_path, icon_path)
+    try:
+        if not _is_associated():
+            _asssociate_extension("Magnet", "Magnet URI", ".magnet",
+                                  "application/x-magnet", executable_path,
+                                  icon_path, is_protocol=True)
+        _register_with_magnet_exe(executable_path, icon_path)
+    except WindowsError, e:
+        if e.winerror == 5:
+            logging.debug("Access denied when trying to associate "
+                          "the magnet protocol")
+        else:
+            raise
 
 def _is_associated(executable_path=None):
     """ Checks whether the magnet protocol currently is
