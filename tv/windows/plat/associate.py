@@ -83,7 +83,7 @@ def _register_with_magnet_exe(executable_path, icon_path):
                              "\"" + executable_path + "\" %URL")
             save_word_HKLM(sub_key + "\\Type", "urn:btih", 0)
         else:
-            raise RuntimeError()
+            raise
 
 def _asssociate_extension(name, description, extension, content_type,
                           executable_path, icon_path, is_protocol):
@@ -123,5 +123,5 @@ def save_value(constant, sub_key, name, value, type_=_winreg.REG_SZ):
         if e.errno == 2:
             handle = _winreg.CreateKey(constant, sub_key)
         else:
-            raise RuntimeError()
+            raise
     _winreg.SetValueEx(handle, name, 0, type_, value)
