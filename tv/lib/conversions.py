@@ -671,7 +671,8 @@ def build_parameters(input_path, output_path, converter_info, media_info):
 
     :returns: list of arguments
     """
-    if "width" in media_info and "height" in media_info:
+    if (("width" in media_info and "height" in media_info and
+         converter_info.screen_size)):
         target_size = [int(x) for x in converter_info.screen_size.split("x")]
         source_size = (media_info["width"], media_info["height"])
 
@@ -688,6 +689,10 @@ def build_parameters(input_path, output_path, converter_info, media_info):
             # dimensions, so we leave it as is
             target_size = "%dx%d" % source_size
     else:
+        # FIXME - this is a little weird.  screen_size can be None.
+        # so while this currently does the right thing because of the
+        # way conversions with a screen_size of None are set up, it's
+        # not bad-configuration-proof.
         target_size = converter_info.screen_size
 
     def substitute(param):
