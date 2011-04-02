@@ -42,6 +42,15 @@ from miro import conversions
 USAGE = "usage: miro --convert [target] [inputfile [inputfile...]]"
 
 
+class FakeInfo(object):
+    """This implements just enough ItemInfo to get
+    conversions going.
+    """
+    def __init__(self, video_path):
+        self.name = unicode(os.path.basename(video_path))
+        self.video_path = video_path
+
+
 def convert(args):
     cm = conversions.ConverterManager()
     cm.load_converters(resources.path('conversions/*.conv'))
@@ -69,11 +78,13 @@ def convert(args):
         if not os.path.exists(input_file):
             print "File %s does not exist.  Skipping." % input_file
             continue
-        final_path, temp_path = videoconversion.build_output_paths(
-            input_file, os.getcwd(), converter_info)
+        final_path, temp_path = conversions.build_output_paths(
+            FakeInfo(input_file), os.getcwd(), converter_info)
 
-        params = videoconversion.build_parameters(
-            mem, temp_path, converter_info)
+        media_info = conversions.get_media_info(input_file)
+
+        params = conversions.build_parameters(
+            mem, temp_path, converter_info, media_info)
         if converter_info.executable == "ffmpeg":
             cmd = utils.get_ffmpeg_executable_path()
             params = utils.customize_ffmpeg_parameters(params)
@@ -84,6 +95,10 @@ def convert(args):
         params.insert(0, cmd)
 
         print "\nCONVERTING %s -> %s\n" % (mem, final_path)
+        print "ffmpeg command line:"
+        print " ".join(params)
+        print "\n"
+
         retcall = subprocess.call(params)
         if retcall == 0:
             shutil.move(temp_path, final_path)
