@@ -311,7 +311,12 @@ class ItemListController(object):
         return column, ascending
 
     def make_sorter(self, column, ascending):
-        return itemlist.SORT_KEY_MAP[column](ascending)
+        try:
+            sorter = itemlist.SORT_KEY_MAP[column](ascending)
+        except KeyError:
+            column = WidgetStateStore.DEFAULT_SORT_COLUMN[self.type]
+            sorter = itemlist.SORT_KEY_MAP[column](ascending)
+        return sorter
 
     def make_sort_key(self, sorter):
         key = unicode(sorter.KEY)
