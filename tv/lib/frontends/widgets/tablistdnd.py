@@ -65,10 +65,13 @@ class TabDnDReorder(object):
         self.drop_id = None
 
     def reorder(self, model, parent, position, dragged_ids):
+        self.drop_row_iter = None
         if position >= 0 and parent:
-            self.drop_row_iter = model.nth_child_iter(parent, position)
-        else:
-            self.drop_row_iter = None
+            try:
+                self.drop_row_iter = model.nth_child_iter(parent, position)
+            except LookupError:
+                # 16834 - invalid drop position, that's past the end.
+                pass
         self.drop_id = self._calc_drop_id(model)
         self._remove_dragged_rows(model, dragged_ids)
         return self._put_rows_back(model, parent)
