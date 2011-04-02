@@ -52,6 +52,8 @@ from os.path import samefile
 # this is used in lib/gtcache.py
 _locale_initialized = False
 
+miro_exec_prefix = None
+
 
 def dirfilt(root, dirs):
     """
@@ -344,8 +346,8 @@ def get_logical_cpu_count():
     return 1
 
 def register_exec_prefix():
-    miro_exec_prefix = os.path.dirname(os.path.abspath(sys.argv[0]))
     global miro_exec_prefix
+    miro_exec_prefix = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 def get_segmenter_executable_path():
     # NB: Since this was installed using distutils this should give the right
