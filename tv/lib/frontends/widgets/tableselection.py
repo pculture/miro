@@ -237,7 +237,15 @@ class SelectionOwnerMixin(object):
                 self.emit('selection-invalid')
                 break
             else:
-                self.select(iter_)
+                try:
+                    self.select(iter_)
+                # Hack for #16835
+                except ValueError:
+                    self._real_selection = None
+                    logging.warning("can't restore selection - deleted?",
+                                    exc_info=True)
+                    self.emit('selection-invalid')
+                    break
 
     def _iter_to_smart_selector(self, iter_):
         """Smart selectors are objects that keep track of selection; they don't
