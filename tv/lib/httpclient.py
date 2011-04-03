@@ -577,7 +577,12 @@ class CurlTransfer(object):
                     self.saw_temporary_redirect = True
             return
         if line == '':
-            if 'location' in self.headers:
+            if self.status_code == 100:
+                # server sent a HTTP 100 continue.  we ditch the data
+                # we got so far and ignore this "empty header" because
+                # it's not the response we're looking for.
+                self.status_code = None
+            elif 'location' in self.headers:
                 # doing a redirect, clear out the headers
                 self.headers = {}
             elif not self.headers_finished:
