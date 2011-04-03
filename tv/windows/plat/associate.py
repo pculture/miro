@@ -53,9 +53,9 @@ def _is_associated(executable_path=None):
         is associated with anything at all.
     """
 
-    sub_key = "magnet\\shell\\open\\command"
+    sub_key = "Software\\Classes\\magnet\\shell\\open\\command"
     try:
-        handle = _winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, sub_key,
+        handle = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, sub_key,
                                  0, _winreg.KEY_SET_VALUE)
     except WindowsError, e:
         if e.errno == 2:
@@ -64,7 +64,7 @@ def _is_associated(executable_path=None):
         else:
             raise
     try:
-        path = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
+        path = _winreg.QueryValue(_winreg.HKEY_CURRENT_USER, sub_key)
         if executable_path:
             is_associated = path.lower() == executable_path
         else:
@@ -90,23 +90,26 @@ def _register_with_magnet_exe(executable_path, icon_path):
             save_string_HKLM(sub_key, "ShellExecute",
                              "\"" + executable_path + "\" %URL")
             save_word_HKLM(sub_key + "\\Type", "urn:btih", 0)
+        elif e.winerror == 5:
+            logging.debug("Access denied when trying to register with magnet.exe")
         else:
             raise
 
 def _asssociate_extension(name, description, extension, content_type,
                           executable_path, icon_path, is_protocol):
-    save_string_HKCR(extension, "", name)
-    save_string_HKCR(extension, "Content Type", content_type)
-    save_string_HKCR("MIME\\Database\\Content Type\\" + content_type,
+    prefix = "Software\\Classes\\"
+    save_string_HKCU(prefix + extension, "", name)
+    save_string_HKCU(prefix + extension, "Content Type", content_type)
+    save_string_HKCU(prefix + "MIME\\Database\\Content Type\\" + content_type,
                      "Extension", extension)
-    save_string_HKCR(name, "", description)
-    save_string_HKCR(name + "\\shell", "", "open")
-    save_string_HKCR(name + "\\DefaultIcon", "", icon_path + ", 0")
-    sub_key = name + "\\shell\\open\\command"
-    save_string_HKCR(sub_key, "", "\"" + executable_path + "\" \"%1\"")
-    save_string_HKCR(name, "Content Type", content_type);
+    save_string_HKCU(prefix + name, "", description)
+    save_string_HKCU(prefix + name + "\\shell", "", "open")
+    save_string_HKCU(prefix + name + "\\DefaultIcon", "", icon_path + ", 0")
+    sub_key = prefix + name + "\\shell\\open\\command"
+    save_string_HKCU(sub_key, "", "\"" + executable_path + "\" \"%1\"")
+    save_string_HKCU(prefix + name, "Content Type", content_type)
     if is_protocol:
-        save_string_HKCR(name, "URL Protocol", "")
+        save_string_HKCU(prefix + name, "URL Protocol", "")
 
 def save_string_HKCR(sub_key, name, value):
     save_value(_winreg.HKEY_CLASSES_ROOT, sub_key, name, value,
@@ -116,12 +119,20 @@ def save_string_HKLM(sub_key, name, value):
     save_value(_winreg.HKEY_LOCAL_MACHINE, sub_key, name, value,
                _winreg.REG_SZ)
 
+def save_string_HKCU(sub_key, name, value):
+    save_value(_winreg.HKEY_CURRENT_USER, sub_key, name, value,
+               _winreg.REG_SZ)
+
 def save_word_HKCR(sub_key, name, value):
     save_value(_winreg.HKEY_CLASSES_ROOT, sub_key, name, value,
                _winreg.REG_DWORD)
 
 def save_word_HKLM(sub_key, name, value):
     save_value(_winreg.HKEY_LOCAL_MACHINE, sub_key, name, value,
+               _winreg.REG_DWORD)
+
+def save_word_HKCU(sub_key, name, value):
+    save_value(_winreg.HKEY_CURRENT_USER, sub_key, name, value,
                _winreg.REG_DWORD)
 
 def save_value(constant, sub_key, name, value, type_=_winreg.REG_SZ):
