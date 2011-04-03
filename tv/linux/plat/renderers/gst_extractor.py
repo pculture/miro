@@ -290,8 +290,8 @@ def main(argv):
         argv.remove("--verbose")
 
     if len(argv) < 2:
-        print "Syntax: gst_extractor.py <media-file> <path-to-thumbnail>"
-        sys.exit(1)
+        print "Syntax: gst_extractor.py <media-file> [path-to-thumbnail]"
+        return 1
 
     if len(argv) < 3:
         argv.append(os.path.join(os.path.dirname(__file__), "thumbnail.png"))
@@ -302,7 +302,8 @@ def main(argv):
     extractor = Extractor(argv[1], argv[2], handle_result)
     gtk.gdk.threads_init()
     gtk.main()
+    return 0
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    sys.exit(main(sys.argv))
