@@ -150,7 +150,9 @@ def parse_ffmpeg_output(output):
     return ast
 
 
-SIZE_RE = re.compile("(\\d+)x(\\d+)")
+# there's always a space before the size and either a space or a comma
+# afterwards.
+SIZE_RE = re.compile(" (\\d+)x(\\d+)[ ,]")
 
 
 def extract_info(ast):

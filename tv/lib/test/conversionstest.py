@@ -182,5 +182,7 @@ class ConversionInfoTest(MiroTestCase):
                 print "output:", repr(info)
             else:
                 output = open(output_file, "r").read()
-                self.assertEquals(eval(output.strip()), info)
+                self.assertEquals(
+                    eval(output.strip()), info,
+                    "%s != %s (%s)" % (eval(output.strip()), info, mem))
 

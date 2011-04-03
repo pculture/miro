@@ -1,0 +1,15 @@
+FFmpeg version UNKNOWN, Copyright (c) 2000-2010 the FFmpeg developers
+  built on Nov  9 2010 12:20:29 with gcc 4.2.1 (Apple Inc. build 5664)
+  configuration: --prefix=/Users/worth/OtherApps/ffmpeg/ffmpeg/../local/x86_64 --enable-static --enable-shared --enable-gpl --enable-version3 --enable-libmp3lame --enable-pthreads --enable-libvorbis --enable-libx264 --enable-libxvid --enable-libspeex --enable-libopencore_amrwb --enable-libopencore_amrnb --enable-libvpx --enable-memalign-hack --disable-debug --disable-stripping --arch=x86_64
+  libavutil     50.33. 0 / 50.33. 0
+  libavcore      0.12. 0 /  0.12. 0
+  libavcodec    52.94. 3 / 52.94. 3
+  libavformat   52.84. 0 / 52.84. 0
+  libavdevice   52. 2. 2 / 52. 2. 2
+  libavfilter    1.59. 0 /  1.59. 0
+  libswscale     0.12. 0 /  0.12. 0
+[mpeg @ 0x10180b010] max_analyze_duration reached
+Input #0, mpeg, from 'vcd-478x299.mpg':
+  Duration: 00:00:33.93, start: 0.797367, bitrate: 1399 kb/s
+    Stream #0.0[0x1e0]: Video: mpeg1video, yuv420p, 352x240 [PAR 178:163 DAR 3916:2445], 1150 kb/s, 29.97 fps, 29.97 tbr, 90k tbn, 29.97 tbc
+    Stream #0.1[0x1c0]: Audio: mp2, 44100 Hz, 2 channels, s16, 224 kb/s
