@@ -208,6 +208,10 @@ class TabListManager(dict):
             else:
                 logging.debug("tab not selected: %s", error.reason)
                 iters = []
+        if or_bust and not iters:
+            logging.debug('no tabs selected, but really need a selection')
+            self._handle_no_tabs_selected(self._selected_tablist, force=True)
+            iters = view.get_selection()
         tabs = [view.model[i][0] for i in iters]
         # prevent selecting base and non-base at the same time
         if tabs and hasattr(self[list_type], 'info'): # hideable
@@ -299,7 +303,7 @@ class TabListManager(dict):
         if tab_list.changing:
             tab_list.delayed_selection_change = True
         else:
-            self._select_from_tab_list(tab_list.type)
+            self._select_from_tab_list(tab_list.type, or_bust=True)
 
     def on_tab_added(self, tab_list):
         """A tablist has gained a tab.
