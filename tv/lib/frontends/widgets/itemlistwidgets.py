@@ -363,6 +363,7 @@ class ItemListTitlebar(Titlebar):
         """
         self.create_signal('search-changed')
         self.searchbox = widgetset.SearchTextEntry()
+        self.searchbox.connect('activate', self._on_search_activate)
         self.searchbox.connect('changed', self._on_search_changed)
         return widgetutil.align_middle(self.searchbox, right_pad=14,
                                        left_pad=15)
@@ -378,6 +379,10 @@ class ItemListTitlebar(Titlebar):
 
     def _on_resume_button_clicked(self, button):
         self.emit('resume-playing')
+
+    def _on_search_activate(self, searchbox):
+        # User hit enter in the searchbox, focus the item list.
+        app.item_list_controller_manager.focus_view()
 
     def _on_search_changed(self, searchbox):
         self.emit('search-changed', searchbox.get_text())
