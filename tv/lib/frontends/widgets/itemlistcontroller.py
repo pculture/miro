@@ -402,6 +402,7 @@ class ItemListController(object):
         # do the switch
         self.selected_view = view
         self.widget.switch_to_view(view)
+        self.current_item_view.focus()
         # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id,
                                            self.selected_view)
