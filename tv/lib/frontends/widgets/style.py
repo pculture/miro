@@ -339,7 +339,7 @@ class PlaylistOrderRenderer(ListViewRendererText):
         self.playlist_sorter = playlist_sorter
 
     def get_value(self, info):
-        return str(self.playlist_sorter.sort_key(info))
+        return str(self.playlist_sorter.sort_key(info) + 1)
 
 class ListViewRenderer(widgetset.InfoListRenderer):
     """Renderer for more complex list view columns.
