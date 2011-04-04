@@ -515,7 +515,6 @@ class HideableTabList(TabList):
         view.allow_multiple_select = self.ALLOW_MULTIPLE
         view.connect('row-expanded', self.on_row_expanded_change, True)
         view.connect('row-collapsed', self.on_row_expanded_change, False)
-        view.connect('selection-changed', self.on_selection_changed)
         view.set_context_menu_callback(self.on_context_menu)
         return view
 
@@ -635,15 +634,6 @@ class HideableTabList(TabList):
     def on_delete_key_pressed(self):
         """For subclasses to override."""
         pass
-
-    def on_selection_changed(self, view):
-        """When an item is selected, also expand it."""
-        try:
-            for iter_ in view.get_selection(strict=False):
-                id_ = self.view.model[iter_][0].id
-                self.expand(id_)
-        except errors.WidgetActionError, error:
-            logging.debug("not expanding: %s", error.reason)
 
 class DeviceTabListHandler(object):
     def __init__(self, tablist):
