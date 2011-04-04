@@ -571,6 +571,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     @classmethod
     def feed_unwatched_view(cls, feed_id):
         return cls.make_view("feed_id=? AND not seen AND "
+                "file_type !='other' AND "
                 "(is_file_item OR rd.state in ('finished', 'uploading', "
                 "'uploading-paused'))",
                 (feed_id,),
