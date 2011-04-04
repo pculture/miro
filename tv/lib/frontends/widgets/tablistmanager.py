@@ -123,7 +123,7 @@ class TabListManager(dict):
 
     def select_guide(self):
         """Select the default Source - usually, the Guide tab."""
-        self._select_from_tab_list('site', self['site'].get_default())
+        self._select_from_tab_list('library', self['library'].get_default())
 
     def select_search(self):
         """Select the Video Search tab."""

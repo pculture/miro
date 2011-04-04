@@ -382,6 +382,10 @@ class LibraryTabList(TabBlinkerMixin, TabList):
                                'others': statictabs.OthersTab()})
         self.auto_tab_order = ['others', 'downloading', 'converting']
 
+    def get_default(self):
+        """Returns an iter pointing to the channel guide tab."""
+        return self.view.model.first_iter()
+
     def update_auto_tab_count(self, name, count):
         if count > 0:
             self.auto_tabs_to_show.add(name)
