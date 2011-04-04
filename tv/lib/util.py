@@ -1060,9 +1060,7 @@ def is_magnet_uri(uri):
     """ Returns true if this is a magnet link
         which can be handled by Miro.
     """
-    if MAGNET_MATCH_RE.match(uri) is not None:
-        return True
-    return False
+    return MAGNET_MATCH_RE.match(uri) and info_hash_from_magnet(uri)
 
 MAGNET_INFO_HASH_MATCH = re.compile(r'(?<=btih:)[a-zA-Z0-9]+')
 

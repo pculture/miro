@@ -361,6 +361,10 @@ class TorrentSession(object):
 
     def find_duplicate_torrent_from_magnet(self, magnet):
         info_hash = info_hash_from_magnet(magnet)
+        # If the magnet link does not have an info hash we skip finding
+        # duplicates
+        if not info_hash:
+            return None
         # There are two possibilities here: it is either a base32 encoded
         # or a hex encoded hash. If it is base32 we have to change it
         # to the hex encoding. base32 info hashes should have a length
