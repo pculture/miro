@@ -91,7 +91,7 @@ class DialogButton(object):
     def __str__(self):
         return "DialogButton(%r)" % util.stringify(self.text)
 
-BUTTON_OK = DialogButton(_("Ok"))
+BUTTON_OK = DialogButton(_("OK"))
 BUTTON_APPLY = DialogButton(_("Apply"))
 BUTTON_CLOSE = DialogButton(_("Close"))
 BUTTON_CANCEL = DialogButton(_("Cancel"))
@@ -183,7 +183,7 @@ class MessageBoxDialog(Dialog):
             Dialog.run_callback(self, choice)
 
 class ChoiceDialog(Dialog):
-    """Give the user a choice of 2 options (Yes/No, Ok/Cancel,
+    """Give the user a choice of 2 options (Yes/No, OK/Cancel,
     Migrate/Don't Migrate, etc.)
     """
     def __init__(self, title, description, default_button, other_button):
