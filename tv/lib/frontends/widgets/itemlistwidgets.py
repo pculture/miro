@@ -537,20 +537,27 @@ class VideoAudioFilterMixin(object):
         self.filters['view-video'].set_enabled(view_video)
         self.filters['view-audio'].set_enabled(view_audio)
 
-class DownloadedUnplayedFilterMixin(object):
+class UnplayedFilterMixin(object):
     def __init__(self):
         unwatched = WidgetStateStore.get_unwatched_filter()
-        downloaded = WidgetStateStore.get_downloaded_filter()
-        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
-                        _('Downloaded'))
         self.add_filter('only-unplayed', 'toggle-filter', unwatched,
                         _('Unplayed'))
 
     def toggle_filter(self):
-        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
         unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        self.filters['only-downloaded'].set_enabled(downloaded)
         self.filters['only-unplayed'].set_enabled(unwatched)
+
+class DownloadedUnplayedFilterMixin(UnplayedFilterMixin):
+    def __init__(self):
+        downloaded = WidgetStateStore.get_downloaded_filter()
+        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
+                        _('Downloaded'))
+        UnplayedFilterMixin.__init__(self)
+
+    def toggle_filter(self):
+        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
+        self.filters['only-downloaded'].set_enabled(downloaded)
+        UnplayedFilterMixin.toggle_filter(self)
 
 class FilteredTitlebar(ItemListTitlebar):
     def __init__(self):
@@ -599,14 +606,14 @@ class VideosTitlebar(FilteredTitlebar):
         self.filters['view-clips'].set_enabled(view_clips)
         self.filters['view-podcasts'].set_enabled(view_podcasts)
 
-class MusicTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin):
+class MusicTitlebar(FilteredTitlebar, UnplayedFilterMixin):
    def __init__(self):
         FilteredTitlebar.__init__(self)
-        DownloadedUnplayedFilterMixin.__init__(self)
+        UnplayedFilterMixin.__init__(self)
 
    def toggle_filter(self, filter_):
        FilteredTitlebar.toggle_filter(self, filter_)
-       DownloadedUnplayedFilterMixin.toggle_filter(self)
+       UnplayedFilterMixin.toggle_filter(self)
 
 
 class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
