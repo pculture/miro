@@ -284,6 +284,7 @@ class TabList(signals.SignalEmitter):
 
     def setup_view(self):
         self.view.connect_weak('key-press', self.on_key_press)
+        self.view.connect_weak('row-activated', self.on_row_activated)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DOWN_ARROW and len(mods) == 0:
@@ -304,6 +305,11 @@ class TabList(signals.SignalEmitter):
 
         if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)
+
+
+    def on_row_activated(self, view, iter_):
+        if view.model.has_child(iter_):
+            view.set_row_expanded(iter_, not view.is_row_expanded(iter_))
 
     def _move_to_next_tablist(self):
         """Move focus to the next tablist and select the first item
