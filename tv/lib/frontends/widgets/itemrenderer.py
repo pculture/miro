@@ -100,7 +100,8 @@ REVEAL_IN_TEXT = (file_navigator_name and
                   _("Reveal File"))
 SHOW_CONTENTS_TEXT = _("display contents")
 DOWNLOAD_TEXT = _("Download")
-DOWNLOAD_TO_MY_MIRO_TEXT = _("Download to My Miro")
+DOWNLOAD_TO_MY_MIRO_TEXT = _("Copy to %(appname)s",
+                             {'appname': app.config.get(prefs.SHORT_APP_NAME)})
 DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
 ERROR_TEXT = _("Error")
 CANCEL_TEXT = _("Cancel")
@@ -1293,7 +1294,6 @@ class SharingItemRenderer(ItemRenderer):
         return DOWNLOAD_TO_MY_MIRO_TEXT, 'download-sharing-item'
 
 class DeviceItemRenderer(ItemRenderer):
-    DOWNLOAD_SHARING_ITEM_TEXT = _("Download to My Miro")
 
     def calc_extra_button(self):
         return DOWNLOAD_TO_MY_MIRO_TEXT, 'download-device-item'

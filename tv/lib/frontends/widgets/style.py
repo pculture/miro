@@ -36,6 +36,8 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.itemrenderer import (DOWNLOAD_TEXT,
+                                                 DOWNLOAD_TO_MY_MIRO_TEXT)
 from miro.plat import resources
 from miro.plat.frontends.widgets import use_custom_tablist_font
 from miro.plat.frontends.widgets import widgetset
@@ -419,7 +421,11 @@ class NameRenderer(ListViewRenderer):
 
     def make_button(self, layout_manager):
         layout_manager.set_font(self.button_font_size)
-        button = layout_manager.button(_("Download"))
+        if self.info.device:
+            text = DOWNLOAD_TO_MY_MIRO_TEXT
+        else:
+            text = DOWNLOAD_TEXT
+        button = layout_manager.button(text)
         button.set_icon(self.download_icon)
         return button
 
