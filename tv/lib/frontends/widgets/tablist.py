@@ -102,6 +102,10 @@ class TabListView(widgetset.TableView):
         """Add a new tab with no parent."""
         return self.model.append(tab_info, False, -1)
 
+    def insert_tab(self, iter_, tab_info):
+        """Insert a new tab before iter_."""
+        return self.model.insert_before(iter_, tab_info, False, -1)
+
     def append_child_tab(self, parent_iter, tab_info):
         """Add a new tab with a parent."""
         return self.model.append_child(parent_iter, tab_info, False, -1)
@@ -258,6 +262,13 @@ class TabList(signals.SignalEmitter):
             iter_ = self.view.append_tab(tab)
             self.iter_map[tab.id] = iter_
 
+    def insert_before(self, current_tab, new_tab):
+        """Insert current_tab before new_tab."""
+        with self.adding():
+            sibling_iter = self.iter_map[current_tab.id]
+            iter_ = self.view.insert_tab(sibling_iter, new_tab)
+            self.iter_map[new_tab.id] = iter_
+
     def extend(self, tabs):
         with self.adding():
             for tab in tabs:
@@ -369,6 +380,7 @@ class LibraryTabList(TabBlinkerMixin, TabList):
         self.auto_tabs.update({'downloading': statictabs.DownloadsTab(),
                                'converting': statictabs.ConvertingTab(),
                                'others': statictabs.OthersTab()})
+        self.auto_tab_order = ['others', 'downloading', 'converting']
 
     def update_auto_tab_count(self, name, count):
         if count > 0:
@@ -380,7 +392,21 @@ class LibraryTabList(TabBlinkerMixin, TabList):
 
     def show_auto_tab(self, name):
         if name not in self.iter_map:
-            self.add(self.auto_tabs[name])
+            new_tab = self.auto_tabs[name]
+            # we need to keep the auto-tabs in the currect order.  First try
+            # to insert the new tab below the one that's below it.
+            for other in self._auto_tabs_after(name):
+                if other in self.iter_map:
+                    self.insert_before(self.auto_tabs[other], new_tab)
+                    break
+            else:
+                # if we didn't break, append the new tab to the bottom
+                self.add(new_tab)
+
+    def _auto_tabs_after(self, name):
+        """Get the auto-tabs that should be below name."""
+        pos = self.auto_tab_order.index(name)
+        return self.auto_tab_order[pos+1:]
 
     def remove_auto_tab_if_not_selected(self, name):
         if name in app.tabs.selected_ids:
