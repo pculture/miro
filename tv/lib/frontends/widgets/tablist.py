@@ -299,9 +299,6 @@ class TabList(signals.SignalEmitter):
             if view.is_selected(view.model.first_iter()):
                 if self._move_to_prev_tablist():
                     return True
-        elif key == menus.RIGHT_ARROW and len(mods) == 0:
-            if app.item_list_controller_manager.focus_view():
-                return True
 
         if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)

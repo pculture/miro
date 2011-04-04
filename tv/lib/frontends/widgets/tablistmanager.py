@@ -140,6 +140,16 @@ class TabListManager(dict):
         else:
             return False
 
+    def get_view(self):
+        """Get the currently active tablist.
+
+        :returns: TabList widget
+        """
+        if self._selected_tablist:
+            return self._selected_tablist.view
+        else:
+            return None
+
     def _handle_no_tabs_selected(self, _selected_tablist, force=False):
         """No tab is selected; select a fallback. This may be about to be
         overwritten by on_row_collapsed, but there's no way to tell.

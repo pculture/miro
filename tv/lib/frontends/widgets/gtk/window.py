@@ -115,6 +115,39 @@ class WrappedWindow(gtk.Window):
             if not rv:
                 gtk.Window.do_key_press_event(self, event)
 
+    def _get_focused_wrapper(self):
+        """Get the wrapper of the widget with keyboard focus"""
+        focused = self.get_focus()
+        # some of our widgets created children for their use
+        # (GtkSearchTextEntry).  If we don't find a wrapper for
+        # focused, try it's parents
+        while focused is not None:
+            try:
+                wrapper = wrappermap.wrapper(focused)
+            except KeyError:
+                focused = focused.get_parent()
+            else:
+                return wrapper
+        return None
+
+    def change_focus_using_wrapper(self, direction):
+        my_wrapper = wrappermap.wrapper(self)
+        focused_wrapper = self._get_focused_wrapper()
+        if direction == gtk.DIR_TAB_FORWARD:
+            to_focus = my_wrapper.get_next_tab_focus(focused_wrapper, True)
+        elif direction == gtk.DIR_TAB_BACKWARD:
+            to_focus = my_wrapper.get_next_tab_focus(focused_wrapper, False)
+        else:
+            return False
+        if to_focus is not None:
+            to_focus.focus()
+            return True
+        return False
+
+    def do_focus(self, direction):
+        if not self.change_focus_using_wrapper(direction):
+            gtk.Window.do_focus(self, direction)
+
 gobject.type_register(WrappedWindow)
 
 class WrappedMainWindow(WrappedWindow):
@@ -409,6 +442,9 @@ class Window(WindowBase):
 
     def is_visible(self):
         return self._window.props.visible
+
+    def get_next_tab_focus(self, current, is_forward):
+        return None
 
     def set_content_widget(self, widget):
         """Set the widget that will be drawn in the content area for this

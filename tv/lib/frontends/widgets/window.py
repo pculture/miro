@@ -73,6 +73,23 @@ class MiroWindow(widgetset.MainWindow):
             left_width = 200
         self.splitter.set_left_width(left_width)
 
+    def get_next_tab_focus(self, current, is_forward):
+        tab_list = app.tabs.get_view()
+        item_list = app.item_list_controller_manager.get_view()
+        search_box = app.item_list_controller_manager.get_searchbox_view()
+
+        #  have tab cycle between item list and tab list.  Tab from the search
+        #  box should move to the item list.  Note that this means that
+        #  is_forward can be ignored, since we are basically always moving
+        #  between 2 widgets
+
+        if current is tab_list:
+            return item_list
+        elif current is search_box:
+            return item_list
+        else:
+            return tab_list
+
     def on_active_change(self, window):
         self.videobox.queue_redraw()
 

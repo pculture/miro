@@ -638,9 +638,6 @@ class ItemListController(object):
         elif key == menus.ENTER:
             self.play_selection()
             return True
-        elif key == menus.LEFT_ARROW:
-            app.tabs.focus_view()
-            return True
         elif isinstance(key, basestring) and len(key) == 1 and key.isalnum():
             self.titlebar.start_editing_search(key)
             return True
@@ -1161,6 +1158,26 @@ class ItemListControllerManager(object):
             return True
         else:
             return False
+
+    def get_view(self):
+        """Get the currently displayed item list widget.
+
+        :returns: A Widget or None if no item lists are displayed
+        """
+        if self.displayed:
+            return self.displayed.current_item_view
+        else:
+            return None
+
+    def get_searchbox_view(self):
+        """Get the search entry for the currently displayed item list.
+
+        :returns: A Widget or None if no item lists are displayed
+        """
+        if self.displayed:
+            return self.displayed.titlebar.searchbox
+        else:
+            return None
 
     def get_saved_search_text(self):
         """Get the saved search text for the current item list.

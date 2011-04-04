@@ -106,13 +106,27 @@ class MiroResponderInterceptor(NSResponder):
         return False
 
 class MiroWindow(NSWindow):
+    def initWithContentRect_styleMask_backing_defer_(self, rect, mask,
+            backing, defer):
+        self = NSWindow.initWithContentRect_styleMask_backing_defer_(self,
+                rect, mask, backing, defer)
+        self._last_focus_chain = None
+        return self
+
     def handleKeyDown_(self, event):
         interceptor = MiroResponderInterceptor.alloc()
         interceptor.initWithResponder_(self.firstResponder())
         interceptor.keyDown_(event)
 
     def keyDown_(self, event):
-        NSWindow.keyDown_(self, event)
+        keystr = event.charactersIgnoringModifiers()
+        if keystr[0] == NSTabCharacter:
+            # handle cycling through views with Tab.
+            self.focusNextKeyView_(True)
+        elif keystr[0] == NSBackTabCharacter:
+            self.focusNextKeyView_(False)
+        else:
+            NSWindow.keyDown_(self, event)
 
     def acceptsMouseMovedEvents(self):
         # HACK: for some reason calling setAcceptsMouseMovedEvents_() doesn't
@@ -124,6 +138,16 @@ class MiroWindow(NSWindow):
             self.handleKeyDown_(event)
         else:
             NSWindow.sendEvent_(self, event)
+
+    def focusNextKeyView_(self, is_forward):
+        print 'focus next'
+        current_focus = wrappermap.wrapper(self.firstResponder())
+        print 'current: ', current_focus
+        my_wrapper = wrappermap.wrapper(self)
+        next_focus = my_wrapper.get_next_tab_focus(current_focus, is_forward)
+        print 'next: ', next_focus
+        if next_focus is not None:
+            next_focus.focus()
 
 class MainMiroWindow(MiroWindow):
     def isMovableByWindowBackground(self):
@@ -161,6 +185,17 @@ class Window(signals.SignalEmitter):
         self.window_notifications.connect(self.on_will_close, 'NSWindowWillCloseNotification')
         wrappermap.add(self.nswindow, self)
         alive_windows.add(self)
+
+    def get_next_tab_focus(self, current, is_forward):
+        """Return the next widget to cycle through for keyboard focus
+
+        Subclasses can override this to for find-grained control of keyboard
+        focus.
+
+        :param current: currently-focused widget
+        :param is_forward: are we tabbing forward?
+        """
+        return None
 
     def get_style_mask(self):
         return (NSTitledWindowMask | NSClosableWindowMask |
