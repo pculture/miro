@@ -719,10 +719,13 @@ class TableViewCommon(object):
     def keyDown_(self, event):
         mods = osxmenus.translate_event_modifiers(event)
         if event.charactersIgnoringModifiers() == ' ' and len(mods) == 0:
-            # handle spacebar with no modifiers
+            # handle spacebar with no modifiers by sending the row-activated
+            # signal
             wrapper = wrappermap.wrapper(self)
-            iter = wrapper.model.iter_for_row(self, self.selectedRow())
-            wrapper.emit('row-activated', iter)
+            row = self.selectedRow()
+            if row >= 0:
+                iter = wrapper.model.iter_for_row(self, row)
+                wrapper.emit('row-activated', iter)
         else:
             self.SuperClass.keyDown_(self, event)
 

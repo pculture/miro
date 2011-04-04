@@ -91,7 +91,7 @@ class RowList(object):
 
     def nth_iter(self, index):
         if index < 0:
-            raise IndexError()
+            raise IndexError(index)
         elif index >= len(self):
             raise LookupError()
         if len(self.iter_cache) == 0:
@@ -247,7 +247,7 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
         if len(self) > 0:
             return 0
         else:
-            raise IndexError()
+            raise IndexError(0)
 
     def add_infos(self, *args, **kwargs):
         self.emit('structure-will-change')
@@ -288,7 +288,7 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
 
     def iter_for_row(self, tableview, row):
         if row < 0:
-            raise IndexError
+            raise IndexError(row)
         elif row >= len(self):
             raise WidgetActionError("iter past end of table")
         else:
