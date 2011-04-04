@@ -179,10 +179,10 @@ class TabBlinkerMixin(object):
         if tab_id in self.iter_map:
             self.view.unblink_tab(self.iter_map[tab_id])
 
-def _last_iter(model):
+def _last_iter(view, model):
     """Get an iter for the row will be at the bottom of the table.  """
     last_iter = model.nth_iter(len(model) - 1)
-    while model.has_child(last_iter):
+    while view.is_row_expanded(last_iter) and model.has_child(last_iter):
         count = model.children_count(last_iter)
         last_iter = model.nth_child_iter(last_iter, count-1)
     return last_iter
@@ -289,7 +289,7 @@ class TabList(signals.SignalEmitter):
         if key == menus.DOWN_ARROW and len(mods) == 0:
             # Test if the user is trying to move down past the last row in the
             # table, if so, select the next tablist.
-            if view.is_selected(_last_iter(view.model)):
+            if view.is_selected(_last_iter(view, view.model)):
                 if self._move_to_next_tablist():
                     return True
         elif key == menus.UP_ARROW and len(mods) == 0:
@@ -334,7 +334,7 @@ class TabList(signals.SignalEmitter):
         prev_view = all_views[my_index-1]
         self.view.unselect_all(signal=False)
         prev_view.focus()
-        prev_view.select(_last_iter(prev_view.model), signal=True)
+        prev_view.select(_last_iter(prev_view, prev_view.model), signal=True)
         return True
 
 class StaticTabList(TabList):
