@@ -140,12 +140,6 @@ class Widget(signals.SignalEmitter):
             if self.CREATES_VIEW:
                 wrappermap.remove(self.view)
 
-    def create_view(self, rect):
-        """Implemented by subclasses with CREATES_VIEW set.  It must return a
-        NSView with a frame size equal to rect.
-        """
-        raise NotImplementedError("%s has CREATES_VIEW set, but doesn't implement create_view" % self.__class__)
-
     def viewport_created(self):
         """Called after we first create a viewport.  Subclasses can override
         this method if they want to handle this event.
