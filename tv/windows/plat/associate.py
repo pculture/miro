@@ -56,7 +56,7 @@ def _is_associated(executable_path=None):
     sub_key = "Software\\Classes\\magnet\\shell\\open\\command"
     try:
         handle = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, sub_key,
-                                 0, _winreg.KEY_SET_VALUE)
+                                 0, _winreg.KEY_QUERY_VALUE)
     except WindowsError, e:
         if e.errno == 2:
             # Key does not exist
