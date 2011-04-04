@@ -114,19 +114,26 @@ class MiroWindow(NSWindow):
         return self
 
     def handleKeyDown_(self, event):
+        if self.handle_tab_navigation(event):
+            return
         interceptor = MiroResponderInterceptor.alloc()
         interceptor.initWithResponder_(self.firstResponder())
         interceptor.keyDown_(event)
 
-    def keyDown_(self, event):
+    def handle_tab_navigation(self, event):
+        """Handle tab navigation through the window.
+
+        :returns: True if we handled the event
+        """
         keystr = event.charactersIgnoringModifiers()
         if keystr[0] == NSTabCharacter:
             # handle cycling through views with Tab.
             self.focusNextKeyView_(True)
+            return True
         elif keystr[0] == NSBackTabCharacter:
             self.focusNextKeyView_(False)
-        else:
-            NSWindow.keyDown_(self, event)
+            return True
+        return False
 
     def acceptsMouseMovedEvents(self):
         # HACK: for some reason calling setAcceptsMouseMovedEvents_() doesn't
@@ -139,13 +146,21 @@ class MiroWindow(NSWindow):
         else:
             NSWindow.sendEvent_(self, event)
 
+    def _calc_current_focus_wrapper(self):
+        responder = self.firstResponder()
+        while responder:
+            wrapper = wrappermap.wrapper(responder)
+            # check if we have a wrapper for the view, if not try the parent
+            # view
+            if wrapper is not None:
+                return wrapper
+            responder = responder.superview()
+        return None
+
     def focusNextKeyView_(self, is_forward):
-        print 'focus next'
-        current_focus = wrappermap.wrapper(self.firstResponder())
-        print 'current: ', current_focus
+        current_focus = self._calc_current_focus_wrapper()
         my_wrapper = wrappermap.wrapper(self)
         next_focus = my_wrapper.get_next_tab_focus(current_focus, is_forward)
-        print 'next: ', next_focus
         if next_focus is not None:
             next_focus.focus()
 
