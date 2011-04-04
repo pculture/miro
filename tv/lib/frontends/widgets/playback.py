@@ -145,7 +145,8 @@ class PlaybackManager (signals.SignalEmitter):
         if self.detached_window:
             if self.detached_window.get_title() != new_info.name:
                 self.detached_window.set_title(new_info.name)
-        self.emit('playing-info-changed', new_info)
+        if app.config.get(prefs.PLAY_IN_MIRO):
+            self.emit('playing-info-changed', new_info)
 
     def prepare_attached_playback(self):
         self.emit('will-play-attached')
