@@ -594,7 +594,14 @@ class DeviceItemSource(ItemSource):
                         **data[video_path]))
                 return info
 
-        return [_cache(video_path) for video_path in data]
+        def _all_videos():
+            for video_path in list(data.keys()):
+                try:
+                    yield _cache(video_path)
+                except (OSError, IOError): # couldn't find the file
+                    pass
+
+        return list(_all_videos())
 
     def unlink(self):
         for handle in self.signal_handles:
