@@ -102,6 +102,7 @@ def run_dialog():
 
             existing_rb.connect('clicked', handle_clicked)
             new_rb.connect('clicked', handle_clicked)
+            existing_rb.set_selected()
 
             extra.pack_start(widgetutil.align_top(choice_table, top_pad=6))
 
