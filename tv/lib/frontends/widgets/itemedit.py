@@ -109,6 +109,7 @@ class Field(object):
         self.inside = False
         self.right = False
         self.widget = NotImplemented
+        self.read_only = readonly
         if not readonly and len(items) > 1 and not self.HAS_MIXED_STATE:
             self.checkbox = widgetset.Checkbox()
             if not self.mixed_values:
@@ -185,19 +186,16 @@ class Field(object):
 
     def get_results(self):
         """Return a map of {field: new_value} for any changes."""
-        if self.checkbox is not None and not self.checkbox.get_checked():
-            # change is not enabled
-            logging.debug("%s: checkbox not set", self.field)
+        if self.read_only or (self.checkbox and not self.checkbox.get_checked()):
+            # field is read only, or field has a checkbox because selection is
+            # multiple and checkbox is unchecked
             return {}
         new_value = self.get_value()
         if not self.mixed_values and new_value == self.common_value:
             # nothing has been changed
-            logging.debug("%s: new == common", self.field)
             return {}
         else:
             # this field has is enabled and has been changed
-            logging.debug("%s: new value = %s; old = %s", self.field,
-                    repr(new_value), repr(self.common_value))
             return {self.field: new_value}
 
     def get_value(self):
@@ -220,10 +218,6 @@ class DisplayField(Field):
             value = formatter(value)
         label = widgetset.Label(value)
         self.widget = widgetutil.pad(label, top=6)
-
-    def get_results(self):
-        """Readonly field; explicitly returns no changes."""
-        return {}
 
 class TextField(Field):
     """A single-line field for editing a text property."""
