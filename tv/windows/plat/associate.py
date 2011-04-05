@@ -111,10 +111,6 @@ def _asssociate_extension(name, description, extension, content_type,
     if is_protocol:
         save_string_HKCU(prefix + name, "URL Protocol", "")
 
-def save_string_HKCR(sub_key, name, value):
-    save_value(_winreg.HKEY_CLASSES_ROOT, sub_key, name, value,
-               _winreg.REG_SZ)
-
 def save_string_HKLM(sub_key, name, value):
     save_value(_winreg.HKEY_LOCAL_MACHINE, sub_key, name, value,
                _winreg.REG_SZ)
@@ -122,10 +118,6 @@ def save_string_HKLM(sub_key, name, value):
 def save_string_HKCU(sub_key, name, value):
     save_value(_winreg.HKEY_CURRENT_USER, sub_key, name, value,
                _winreg.REG_SZ)
-
-def save_word_HKCR(sub_key, name, value):
-    save_value(_winreg.HKEY_CLASSES_ROOT, sub_key, name, value,
-               _winreg.REG_DWORD)
 
 def save_word_HKLM(sub_key, name, value):
     save_value(_winreg.HKEY_LOCAL_MACHINE, sub_key, name, value,
