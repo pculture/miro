@@ -76,7 +76,7 @@ class GuideSidebarCollection(widgetset.VBox):
     WIDTH = 138
     ITEM_LIMIT = 6
 
-    def __init__(self, title, icon, sort_key):
+    def __init__(self, title, sort_key):
         widgetset.VBox.__init__(self)
         self.current_limit = self.ITEM_LIMIT
         hbox = widgetset.HBox()
@@ -84,8 +84,6 @@ class GuideSidebarCollection(widgetset.VBox):
         label.set_size(0.7)
         label.set_color((0.5, 0.5, 0.5))
         hbox.pack_start(widgetutil.align_left(label), expand=True)
-        hbox.pack_end(imagepool.get_image_display(
-            resources.path('images/guide-sidebar-%s.png' % icon)))
         self.pack_start(widgetutil.pad(hbox, top=20, bottom=10))
 
         self.item_box = widgetset.VBox(spacing=8) # we want 17px of padding, so
@@ -172,12 +170,12 @@ class GuideSidebarDetails(widgetset.SolidBackground):
     def __init__(self):
         widgetset.SolidBackground.__init__(self)
         self.set_background_color(widgetutil.css_to_color('#e7e7e7'))
-        self.video = GuideSidebarCollection(_("Recently Watched"), 'video',
+        self.video = GuideSidebarCollection(_("Recently Watched"),
                                             'last_watched')
-        self.audio = GuideSidebarCollection(_("Recently Listened To"), 'audio',
+        self.audio = GuideSidebarCollection(_("Recently Listened To"),
                                             'last_watched')
         self.download = GuideSidebarCollection(_("Recent Downloads"),
-                                               'download', 'downloaded_time')
+                                               'downloaded_time')
         self.vbox = widgetset.VBox()
         self.vbox.pack_start(self.video)
         self.vbox.pack_start(self.audio)
