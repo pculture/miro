@@ -62,8 +62,9 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
-        associate.associate_extensions(self._get_exe_location(),
-                                       self._get_icon_location())
+        # FIXME - bug 16880 - commenting this out until it's working.
+        # associate.associate_extensions(self._get_exe_location(),
+        #                                self._get_icon_location())
         winrel = platform.release()
         if winrel == "post2008Server":
             winrel += " (could be Windows 7)"
