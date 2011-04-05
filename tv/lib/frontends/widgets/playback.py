@@ -935,7 +935,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self._index_before_change = None
         self._items_before_change = None
         for info in changed:
-            if info.id == self.currently_playing.id:
+            if (self.currently_playing is not None and
+                    info.id == self.currently_playing.id):
                 self._update_currently_playing(info)
                 self.emit("playing-info-changed")
                 break
