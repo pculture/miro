@@ -508,11 +508,14 @@ class SearchTitlebar(ItemListTitlebar):
     """
     def _build_titlebar_start(self):
         self.create_signal('save-search')
-        button = widgetutil.TitlebarButton(_('Save as Podcast'))
+        button = widgetutil.TitlebarButton(self.save_search_title())
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=20))
         return widgetutil.align_middle(self.save_button, left_pad=20)
+
+    def save_search_title(self):
+        return _('Save as Podcast')
 
     def get_search_text(self):
         return self.searchbox.get_text()
@@ -579,10 +582,14 @@ class FilteredTitlebar(ItemListTitlebar):
         view_all = WidgetStateStore.is_view_all_filter(self.filter)
         self.filters['view-all'].set_enabled(view_all)
 
+class MediaTitlebar(SearchTitlebar, FilteredTitlebar):
+    def save_search_title(self):
+        return _('Save as playlist')
+
 # Note that this is not related to VideoAudioFilterMixin.
 # VideoAudioFilterMixin adds video and audio filtering, 
 # while VideosTitlebar is the static video tab.
-class VideosTitlebar(FilteredTitlebar):
+class VideosTitlebar(MediaTitlebar):
     def __init__(self):
         FilteredTitlebar.__init__(self)
         view_all = WidgetStateStore.get_view_all_filter()
@@ -611,7 +618,7 @@ class VideosTitlebar(FilteredTitlebar):
         self.filters['view-clips'].set_enabled(view_clips)
         self.filters['view-podcasts'].set_enabled(view_podcasts)
 
-class MusicTitlebar(FilteredTitlebar, UnplayedFilterMixin):
+class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
    def __init__(self):
         FilteredTitlebar.__init__(self)
         UnplayedFilterMixin.__init__(self)

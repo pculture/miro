@@ -48,6 +48,7 @@ from miro import prefs
 from miro import subscription
 from miro.errors import ActionUnavailableError
 from miro.gtcache import gettext as _
+from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemrenderer
@@ -1044,8 +1045,23 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
 
-    def build_renderer(self):
-        return itemrenderer.ItemRenderer(display_channel=True)
+    def make_titlebar(self):
+        titlebar = self.titlebar_class()
+        titlebar.connect('search-changed', self._on_search_changed)
+        titlebar.connect('toggle-filter', self.on_toggle_filter)
+        titlebar.connect('save-search', self._on_save_search)
+        return titlebar
+
+    def _on_save_search(self, titlebar, query):
+        items = self.item_list.get_items()
+        ids = [s.id for s in items if s.downloaded]
+        title = _('Create Playlist')
+        description = _('Enter a name for the new playlist')
+        playlist_name = dialogs.ask_for_string(title, description,
+                initial_text=query)
+        if not playlist_name:
+            return
+        messages.NewPlaylist(playlist_name, ids).send_to_backend()
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
@@ -1061,12 +1077,7 @@ class VideoItemsController(AudioVideoItemsController):
     type = u'videos'
     id = u'videos'
     unwatched_label =  _('Unwatched')
-
-    def make_titlebar(self):
-        titlebar = itemlistwidgets.VideosTitlebar()
-        titlebar.connect('search-changed', self._on_search_changed)
-        titlebar.connect('toggle-filter', self.on_toggle_filter)
-        return titlebar
+    titlebar_class = itemlistwidgets.VideosTitlebar
 
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True, wide_image=True)
@@ -1075,12 +1086,10 @@ class AudioItemsController(AudioVideoItemsController):
     type = u'music'
     id = u'music'
     unwatched_label = _('Unplayed')
+    titlebar_class = itemlistwidgets.MusicTitlebar
 
-    def make_titlebar(self):
-        titlebar = itemlistwidgets.MusicTitlebar()
-        titlebar.connect('search-changed', self._on_search_changed)
-        titlebar.connect('toggle-filter', self.on_toggle_filter)
-        return titlebar
+    def build_renderer(self):
+        return itemrenderer.ItemRenderer(display_channel=True)
 
 class OtherItemsController(SimpleItemListController):
     type = u'others'
