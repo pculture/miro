@@ -398,10 +398,10 @@ class TableColumn(signals.SignalEmitter):
         self._column.props.max_width = width
 
     def set_width(self, width):
-        self._column.props.fixed_width = width
+        self._column.set_fixed_width(width)
 
     def get_width(self):
-        return self._column.get_width()
+        return self._column.get_fixed_width()
 
     def _header_clicked(self, tablecolumn):
         self.emit('clicked')

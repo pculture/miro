@@ -816,7 +816,6 @@ class ListView(ItemView, SorterWidgetOwner):
         self._column_name_to_column = {}
         self.sorter_widget_map = self._column_name_to_column
         self._column_by_label = {}
-        self._real_column_widths = {}
         self.columns_enabled = []
         self.set_show_headers(True)
         self.set_columns_draggable(True)
@@ -830,19 +829,16 @@ class ListView(ItemView, SorterWidgetOwner):
 
     def _get_ui_state(self):
         if not self._set_initial_widths:
-            return
-        enabled = []
-        widths = {}
-        for label in self.get_columns():
-            name = self._column_by_label[label]
-            enabled.append(name)
-            column = self._column_name_to_column[name]
-            width = int(column.get_width())
-            if width != self._real_column_widths[name]:
-                widths[name] = width
-        self.columns_enabled = enabled
-        self._real_column_widths.update(widths)
-        self.column_widths.update(widths)
+            return # don't save if view isn't set up
+        order = []
+        # FIXME: though identifying columns by their labels should always work,
+        # it's really gross
+        for name in (self._column_by_label[l] for l in self.get_columns()):
+            order.append(name)
+            self.column_widths[name] = int(
+                self._column_name_to_column[name].get_width())
+        assert set(self.columns_enabled) == set(order)
+        self.columns_enabled = order
 
     def on_undisplay(self):
         self._get_ui_state()
@@ -921,30 +917,28 @@ class ListView(ItemView, SorterWidgetOwner):
         return self._column_name_to_column[column_name].renderer
 
     def do_size_allocated(self, total_width, height):
-        if not self._set_initial_widths:
-            self._set_initial_widths = True
+        if self._set_initial_widths:
+            return
+        self._set_initial_widths = True
 
-            total_weight = 0
-            min_width = 0
-            for name in self.columns_enabled:
-                total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
-                min_width += self.column_widths[name]
-            if total_weight is 0:
-                total_weight = 1
+        available_width = self.width_for_columns(total_width)
+        extra_width = available_width 
 
-            available_width = self.width_for_columns(total_width)
-            extra_width = available_width - min_width
+        total_weight = 0
+        for name in self.columns_enabled:
+            total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
+            extra_width -= self.column_widths[name]
 
-            diff = 0 # prevent cumulative rounding errors
-            for name in self.columns_enabled:
-                weight = widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
-                extra = extra_width * weight / total_weight + diff
-                diff = extra - int(extra)
-                width = self.column_widths[name]
-                width += int(extra)
-                column = self._column_name_to_column[name]
-                column.set_width(width)
-                self._real_column_widths[name] = int(column.get_width())
+        rounded_off = 0 # carry forward rounded-off part of each value
+        for name in self.columns_enabled:
+            if total_weight:
+                weight = (1.0 * widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0) /
+                    total_weight)
+            else: # if no columns are weighted, all are weighted equally
+                weight = 1.0 / len(self.columns_enabled)
+            extra, rounded_off = divmod(extra_width * weight + rounded_off, 1)
+            self.column_widths[name] += int(extra)
+            self._column_name_to_column[name].set_width(self.column_widths[name])
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to
