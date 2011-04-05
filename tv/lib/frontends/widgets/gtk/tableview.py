@@ -616,9 +616,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self._last_tooltip_place = None
             return False
         self._last_tooltip_place = path_info[:2]
-        iter = treeview.get_model().get_iter(path_info[0])
+        iter_ = treeview.get_model().get_iter(path_info[0])
         column = self.gtk_column_to_wrapper[path_info[1]]
-        text = self.get_tooltip(iter, column)
+        text = self.get_tooltip(iter_, column)
         if text is None:
             return False
         pygtkhacks.set_tooltip_text(tooltip, text)
@@ -751,12 +751,12 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def set_fixed_height(self, fixed_height):
         self._widget.set_fixed_height_mode(fixed_height)
 
-    def set_row_expanded(self, iter, expanded):
-        """Expand or collapse the row specified by iter. Succeeds or raises
+    def set_row_expanded(self, iter_, expanded):
+        """Expand or collapse the row specified by iter_. Succeeds or raises
         WidgetActionError. Causes row-expanded or row-collapsed to be emitted
         when successful.
         """
-        path = self._model.get_path(iter)
+        path = self._model.get_path(iter_)
         if expanded:
             self._widget.expand_row(path, False)
         else:
@@ -765,8 +765,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             raise WidgetActionError("cannot expand the given item - it "
                     "probably has no children.")
 
-    def is_row_expanded(self, iter):
-        path = self._model.get_path(iter)
+    def is_row_expanded(self, iter_):
+        path = self._model.get_path(iter_)
         return self._widget.row_expanded(path)
 
     def set_context_menu_callback(self, callback):
@@ -800,7 +800,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def on_row_collapsed(self, _widget, iter_, path):
         self.emit('row-collapsed', iter_, path)
 
-    def on_row_inserted(self, model, path, iter):
+    def on_row_inserted(self, model, path, iter_):
         if self.hotspot_tracker:
             self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
@@ -810,7 +810,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
 
-    def on_row_changed(self, model, path, iter):
+    def on_row_changed(self, model, path, iter_):
         if self.hotspot_tracker:
             self.hotspot_tracker.update_hit()
 
@@ -820,8 +820,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 return
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
-                iter = treeview.get_model().get_iter(path_info[0])
-                self.emit('row-double-clicked', iter)
+                iter_ = treeview.get_model().get_iter(path_info[0])
+                self.emit('row-double-clicked', iter_)
             return
 
         # Check for single click.  Emit the event but keep on running
@@ -829,8 +829,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         if event.type == gtk.gdk.BUTTON_PRESS:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
-                iter = treeview.get_model().get_iter(path_info[0])
-                self.emit('row-clicked', iter)
+                iter_ = treeview.get_model().get_iter(path_info[0])
+                self.emit('row-clicked', iter_)
 
         if self.hotspot_tracker is None:
             hotspot_tracker = HotspotTracker(treeview, event)
@@ -1084,12 +1084,12 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             yield (None, len(model), None, None)
             return
 
-        iter = model.get_iter(gtk_path)
+        iter_ = model.get_iter(gtk_path)
         if gtk_position in (gtk.TREE_VIEW_DROP_INTO_OR_BEFORE,
                 gtk.TREE_VIEW_DROP_INTO_OR_AFTER):
-            yield (iter, -1, gtk_path, gtk_position)
+            yield (iter_, -1, gtk_path, gtk_position)
 
-        parent_iter = model.iter_parent(iter)
+        parent_iter = model.iter_parent(iter_)
         position = gtk_path[-1]
         if gtk_position in (gtk.TREE_VIEW_DROP_BEFORE,
                 gtk.TREE_VIEW_DROP_INTO_OR_BEFORE):
@@ -1099,9 +1099,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             # gtk gave us an "after" position, translate that to before the
             # next row for miro.
             if (self._widget.row_expanded(gtk_path) and
-                    model.iter_has_child(iter)):
+                    model.iter_has_child(iter_)):
                 child_path = gtk_path + (0,)
-                yield (iter, 0, child_path, gtk.TREE_VIEW_DROP_BEFORE)
+                yield (iter_, 0, child_path, gtk.TREE_VIEW_DROP_BEFORE)
             else:
                 yield (parent_iter, position+1, gtk_path,
                         gtk.TREE_VIEW_DROP_AFTER)
@@ -1186,8 +1186,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def get_left_offset(self):
         return self._widget.get_left_offset()
 
-    def scroll_to_iter(self, iter):
-        path = self._model.get_path(iter)
+    def scroll_to_iter(self, iter_):
+        path = self._model.get_path(iter_)
         self._widget.scroll_to_cell(path)
 
     def set_scroll_position(self, scroll_pos):
@@ -1264,27 +1264,27 @@ class TableModel(object):
     def append(self, *column_values):
         return self._model.append(self.convert_row_for_gtk(column_values))
 
-    def update_value(self, iter, index, value):
-        self._model.set(iter, index, self.convert_value_for_gtk(value))
+    def update_value(self, iter_, index, value):
+        self._model.set(iter_, index, self.convert_value_for_gtk(value))
 
-    def update(self, iter, *column_values):
-        self._model[iter] = self.convert_value_for_gtk(column_values)
+    def update(self, iter_, *column_values):
+        self._model[iter_] = self.convert_value_for_gtk(column_values)
 
-    def remove(self, iter):
-        if self._model.remove(iter):
-            return iter
+    def remove(self, iter_):
+        if self._model.remove(iter_):
+            return iter_
         else:
             return None
 
-    def insert_before(self, iter, *column_values):
+    def insert_before(self, iter_, *column_values):
         row = self.convert_row_for_gtk(column_values)
-        return self._model.insert_before(iter, row)
+        return self._model.insert_before(iter_, row)
 
     def first_iter(self):
         return self._model.get_iter_first()
 
-    def next_iter(self, iter):
-        return self._model.iter_next(iter)
+    def next_iter(self, iter_):
+        return self._model.iter_next(iter_)
 
     def nth_iter(self, index):
         return self._model.iter_nth_child(None, index)
@@ -1295,8 +1295,8 @@ class TableModel(object):
     def __len__(self):
         return len(self._model)
 
-    def __getitem__(self, iter):
-        return self._model[iter]
+    def __getitem__(self, iter_):
+        return self._model[iter_]
 
     def get_rows(self, row_paths):
         return [self._model[path] for path in row_paths]
@@ -1312,29 +1312,29 @@ class TreeTableModel(TableModel):
         return self._model.append(None, self.convert_row_for_gtk(
             column_values))
 
-    def insert_before(self, iter, *column_values):
-        parent = self._model.iter_parent(iter)
+    def insert_before(self, iter_, *column_values):
+        parent = self._model.iter_parent(iter_)
         row = self.convert_row_for_gtk(column_values)
-        return self._model.insert_before(parent, iter, row)
+        return self._model.insert_before(parent, iter_, row)
 
-    def append_child(self, iter, *column_values):
-        return self._model.append(iter, self.convert_row_for_gtk(
+    def append_child(self, iter_, *column_values):
+        return self._model.append(iter_, self.convert_row_for_gtk(
             column_values))
 
-    def child_iter(self, iter):
-        return self._model.iter_children(iter)
+    def child_iter(self, iter_):
+        return self._model.iter_children(iter_)
 
-    def nth_child_iter(self, iter, index):
-        return self._model.iter_nth_child(iter, index)
+    def nth_child_iter(self, iter_, index):
+        return self._model.iter_nth_child(iter_, index)
 
-    def has_child(self, iter):
-        return self._model.iter_has_child(iter)
+    def has_child(self, iter_):
+        return self._model.iter_has_child(iter_)
 
-    def children_count(self, iter):
-        return self._model.iter_n_children(iter)
+    def children_count(self, iter_):
+        return self._model.iter_n_children(iter_)
 
-    def parent_iter(self, iter):
-        return self._model.iter_parent(iter)
+    def parent_iter(self, iter_):
+        return self._model.iter_parent(iter_)
 
 class InfoListModel(infolist.InfoList):
     # InfoList is a special model for quick handling of ItemInfo lists
