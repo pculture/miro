@@ -215,9 +215,9 @@ def get_menu():
             Menu(_("_File"), "FileMenu", [
                     MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
                              groups=["NonPlaying"]),
-                    MenuItem(_("Download Item"), "NewDownload",
+                    MenuItem(_("Add files or folders..."), "AddFiles",
                              groups=["NonPlaying"]),
-                    MenuItem(_("Import Media"), "ImportMedia",
+                    MenuItem(_("Download Item"), "NewDownload",
                              groups=["NonPlaying"]),
                     MenuItem(_("Check Version"), "CheckVersion"),
                     Separator(),
@@ -488,9 +488,9 @@ def on_open():
 def on_new_download():
     app.widgetapp.new_download()
 
-@action_handler("ImportMedia")
-def on_import_media():
-    app.widgetapp.import_media()
+@action_handler("AddFiles")
+def on_add_files():
+    app.widgetapp.add_files()
 
 @action_handler("CheckVersion")
 def on_check_version():

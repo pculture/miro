@@ -66,7 +66,7 @@ from miro.frontends.widgets import newfolder
 from miro.frontends.widgets import newwatchedfolder
 from miro.frontends.widgets import itemedit
 from miro.frontends.widgets import addtoplaylistdialog
-from miro.frontends.widgets import importmediadialog
+from miro.frontends.widgets import addfilesdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
@@ -472,10 +472,8 @@ class Application:
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
-    def import_media(self):
-        files = importmediadialog.run_dialog()
-        if files:
-            messages.AddFiles(files).send_to_backend()
+    def add_files(self):
+        addfilesdialog.AddFilesDialog().run()
 
     def check_version(self):
         # this gets called by the backend, so it has to send a message to
