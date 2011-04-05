@@ -1249,6 +1249,8 @@ class ItemInfo(object):
                 self.description_stripped[0].replace('\n', '$'))
         self.display_date = displaytext.date(self.release_date)
         self.display_duration = displaytext.duration(self.duration)
+        self.display_duration_short = displaytext.short_time_string(
+                self.duration)
         self.display_size = displaytext.size_string(self.size)
         self.display_date_added = displaytext.date_slashes(self.date_added)
         self.display_last_played = displaytext.date_slashes(self.last_played)

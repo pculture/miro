@@ -281,7 +281,7 @@ class DateRenderer(ListViewRendererText):
     attr_name = 'display_date'
 
 class LengthRenderer(ListViewRendererText):
-    attr_name = 'display_duration'
+    attr_name = 'display_duration_short'
 
 class ETARenderer(ListViewRendererText):
     right_aligned = True

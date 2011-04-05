@@ -83,18 +83,29 @@ def short_time_string(secs):
 
 def time_string(secs):
     if secs >= (60 * 60 * 24):
-        t_dy = int(round(secs * 1.0 / (60 * 60 * 24)))
-        return ngettext('%(num)d day', '%(num)d days', t_dy,
-                        {"num": t_dy})
+        return days_string(secs)
     if secs >= (60 * 60):
-        t_hr = int(round(secs * 1.0 / (60 * 60)))
-        return ngettext('%(num)d hr', '%(num)d hrs', t_hr,
-                        {"num": t_hr})
+        return hrs_string(secs)
     if secs >= 60:
-        t_min = int(round(secs * 1.0 / 60))
-        return ngettext('%(num)d min', '%(num)d mins', t_min,
-                        {"num": t_min})
+        return mins_string(secs)
+    return secs_string(secs)
 
+def days_string(secs):
+    t_dy = int(round(secs / (60.0 * 60.0 * 24.0)))
+    return ngettext('%(num)d day', '%(num)d days', t_dy,
+                    {"num": t_dy})
+
+def hrs_string(secs):
+    t_hr = int(round(secs / (60.0 * 60.0)))
+    return ngettext('%(num)d hr', '%(num)d hrs', t_hr,
+                    {"num": t_hr})
+
+def mins_string(secs):
+    t_min = int(round(secs / 60.0))
+    return ngettext('%(num)d min', '%(num)d mins', t_min,
+                    {"num": t_min})
+
+def secs_string(secs):
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
 def time_string_0_blank(secs):
@@ -199,9 +210,11 @@ def date_slashes(rdate):
     else:
         return ''
 
-def duration(seconds):
-    if seconds > 0:
-        return time_string(seconds)
+def duration(secs):
+    if secs >= 60:
+        return mins_string(secs)
+    elif secs > 0:
+        return secs_string(secs)
     else:
         return ''
 
