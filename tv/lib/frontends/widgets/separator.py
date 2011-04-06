@@ -84,9 +84,10 @@ class ThinSeparator(DrawingArea):
 
 class HThinSeparator(ThinSeparator):
     def draw(self, context, layout_manager):
+        context.set_line_width(1)
         context.set_color(self.color)
-        context.move_to(0, 0)
-        context.line_to(context.width, 0)
+        context.move_to(0, 0.5)
+        context.line_to(context.width, 0.5)
         context.stroke()
 
     def size_request(self, layout):
@@ -94,9 +95,10 @@ class HThinSeparator(ThinSeparator):
 
 class VThinSeparator(ThinSeparator):
     def draw(self, context, layout_manager):
+        context.set_line_width(1)
         context.set_color(self.color)
-        context.move_to(0, 0)
-        context.line_to(0, context.height)
+        context.move_to(0.5, 0)
+        context.line_to(0.5, context.height)
         context.stroke()
 
     def size_request(self, layout):
