@@ -64,7 +64,7 @@ from miro.plat.utils import get_available_bytes_for_movies
 
 class Toolbar(widgetset.Background):
     def draw(self, context, layout):
-        context.move_to(0, 0)
+        context.move_to(0, 0.5)
         context.rel_line_to(context.width, 0)
         context.set_color((224.0 / 255, 224.0 / 255, 224.0 / 255))
         context.stroke()
@@ -1243,7 +1243,7 @@ class FeedToolbar(widgetset.Background):
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
         context.set_color((key, key, key))
-        context.move_to(0, 0)
+        context.move_to(0, 0.5)
         context.rel_line_to(context.width, 0)
         context.stroke()
 
