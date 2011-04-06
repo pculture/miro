@@ -799,7 +799,7 @@ class MenuStateManager(signals.SignalEmitter):
                 self.states["plural"].append("RemoveSomething")
                 self.states["feeds"].append("RemoveSomething")
                 self.states["feeds"].append("RenameSomething")
-            self.states["plural"].append("UpdatePodcastss")
+            self.states["plural"].append("UpdatePodcasts")
 
     def _handle_site_selection(self, selected_sites):
         """Handle the user selecting things in the site list.
