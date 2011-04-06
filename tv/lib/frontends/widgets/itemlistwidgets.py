@@ -1447,7 +1447,7 @@ class SortBarButton(widgetset.CustomButton):
         text = 1
         arrow = 1
         surface = self.surface
-        if self._enabled or self.state == 'pressed': # selected/pressed
+        if self._enabled:
             edge = 92.0 / 255
             surface = self.active_surface
         else:
