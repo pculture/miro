@@ -57,11 +57,11 @@ class AddFilesDialog(widgetset.DialogWindow):
         except AttributeError:
             x, y = 100, 100
 
-        # note: we make this 600 x 210 so that on OSX the ask_for_directory
+        # note: we make this 600 x 230 so that on OSX the ask_for_directory
         # sheet doesn't look weird by sticking out the sides.
         widgetset.DialogWindow.__init__(
             self, _("Add Files and Folders"),
-            widgetset.Rect(x + 100, y + 100, 600, 210))
+            widgetset.Rect(x + 100, y + 100, 600, 230))
 
         self.gathered_media_files = []
         self.searching = False
@@ -70,14 +70,7 @@ class AddFilesDialog(widgetset.DialogWindow):
         self._pages = self.build_pages()
         self._page_index = -1
 
-        # FIXME - this is totally goofy--we do an align_bottom here so
-        # that the bottom buttons are in the same place from page to
-        # page on OSX.  otherwise they kept floating around
-        # vertically-speaking.
-        self.set_content_widget(
-            widgetutil.align_bottom(
-                self._page_box,
-                top_pad=20, bottom_pad=20, left_pad=20, right_pad=20))
+        self.set_content_widget(widgetutil.pad(self._page_box, 20, 20, 20, 20))
 
         self.on_close_handler = self.connect('will-close', self.on_close)
 

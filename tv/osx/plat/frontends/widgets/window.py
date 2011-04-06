@@ -29,6 +29,8 @@
 
 """miro.plat.frontends.widgets.window -- Top-level Window class.  """
 
+import logging
+
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
@@ -305,6 +307,11 @@ class Window(signals.SignalEmitter):
             # think it should also call setContentSize_ if the window is
             # currently too small to fit the content - BDK
             self.nswindow.setContentMinSize_(NSSize(width, height))
+            rect = self.nswindow.contentRectForFrameRect_(self.nswindow.frame())
+            if rect.size.width < width or rect.size.height < height:
+                logging.warn("Content widget too large for this window "
+                        "size available: %dx%d widget size: %dx%d",
+                        rect.size.width, rect.size.height, width, height)
 
     def get_content_widget(self):
         return self.content_widget
