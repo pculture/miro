@@ -650,12 +650,15 @@ class ItemListController(object):
         return True
 
     def handle_escape(self):
+        handled = False
         for info in self.get_selection():
             if info.state == 'downloading':
                 messages.CancelDownload(info.id).send_to_backend()
+                handled = True
             elif info.state == 'uploading':
                 messages.StopUpload(info.id).send_to_backend()
-        return True
+                handled = True
+        return handled
 
     def on_hotspot_clicked(self, itemview, name, iter_):
         """Hotspot handler for ItemViews."""
