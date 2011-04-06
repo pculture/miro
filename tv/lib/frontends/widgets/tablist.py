@@ -970,7 +970,7 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
         info.type = self.type
         # It's too difficult to override the guts of the feed backend
         # to pick out the right icon so we just do it here.
-        if info.url.startswith('dtv:directoryfeed:'):
+        if info.url and info.url.startswith('dtv:directoryfeed:'):
             icon = resources.path('images/watched-folder.png')
             active_icon = resources.path('images/watched-folder-a.png')
             info.icon = imagepool.get_surface(icon, size=(16, 16))
