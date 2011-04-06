@@ -144,6 +144,9 @@ class WidgetStateStore(object):
                                         u'kind'])
     AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music']
     AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos']
+    AVAILABLE_COLUMNS[u'feed'] = list(DEFAULT_COLUMN_WIDTHS.keys()) # all of
+                                                                    # them
+
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
     def __init__(self):
