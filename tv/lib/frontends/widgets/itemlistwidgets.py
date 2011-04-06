@@ -1438,8 +1438,10 @@ class SortBarButton(widgetset.CustomButton):
     def size_request(self, layout):
         layout.set_font(0.8)
         text_size = layout.textbox(self._text).get_size()
+        # Minus 1 because custom widgets don't currently draw a separator
+        # at bottom ..
         return text_size[0] + 36, max(text_size[1],
-                                      widgetset.CUSTOM_HEADER_HEIGHT - 2)
+                                      widgetset.CUSTOM_HEADER_HEIGHT - 1)
 
     def draw(self, context, layout):
         text = 1
@@ -2078,6 +2080,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.titlebar_vbox)
         color1 = widgetutil.css_to_color('#303030')
         color2 = widgetutil.css_to_color('#bcbcbc')
+        color3 = widgetutil.css_to_color('#020202')
         self.pack_start(separator.HThinSeparator(color1))
         self.pack_start(separator.HThinSeparator(color2))
         self.pack_start(self.progress_toolbar)
@@ -2088,6 +2091,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.selected_view = view
         self.list_empty_mode = False
         self.vbox[standard_view].pack_start(self.toolbar)
+        self.vbox[standard_view].pack_start(separator.HThinSeparator(color3))
         self.background.add(self.vbox[view])
 
     def toggle_filter(self, filter_):
