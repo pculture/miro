@@ -436,7 +436,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 ; handled by Miro
 !macro checkExtensionNotHandled ext sectionName
   Push $0
-  ReadRegStr $0 HKCR "${ext}" ""
+  ReadRegStr $0 HKCU "Software\\Classes\${ext}" ""
   StrCmp $0 "" +3 +6
   StrCmp $0 "DemocracyPlayer" +2 +5
   StrCmp $0 "${CONFIG_PROG_ID}" +1 +4
@@ -874,9 +874,9 @@ SectionEnd
 ; Magnet extension handling is done in Miro, not in the installer
 
 Section "un.Remove handling of Magnet files" SecUnregisterMagnet
-  DeleteRegKey HKCR ".magnet"
-  DeleteRegKey HKCR "MIME\Database\Content Type\magnet"
-  DeleteRegKey HKCR "magnet"
+  DeleteRegKey HKCU "Software\Classes\.magnet"
+  DeleteRegKey HKCU "Software\Classes\MIME\Database\Content Type\magnet"
+  DeleteRegKey HKCU "Software\Classes\magnet"
 SectionEnd
 
 Section "Handle MPEG files" SecRegisterMpg
