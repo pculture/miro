@@ -1453,20 +1453,25 @@ class SortBarButton(widgetset.CustomButton):
         else:
             edge = 72.0 / 255
 
+        # background
+        surface.draw(context, 0, 0, context.width, context.height)
         # borders
         context.move_to(0.5, 0)
         context.rel_line_to(0, context.height)
         context.move_to(context.width, 0)
-        context.rel_line_to(0, context.height)
         context.set_color((edge, edge, edge))
         context.stroke()
-        # background
-        surface.draw(context, 0, 0, context.width, context.height)
         # text
         layout.set_font(0.8, bold=True)
         layout.set_text_color((text, text, text))
         textbox = layout.textbox(self._text)
         text_size = textbox.get_size()
+        triangle_padding = 0
+        if self._enabled:
+            triangle_padding = 18 + 6
+        x = (context.width - text_size[0] + triangle_padding) / 2
+        if x < 0:
+            x = 12
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
         textbox.draw(context, 12, y, text_size[0], text_size[1])
         context.set_color((arrow, arrow, arrow))
