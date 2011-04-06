@@ -807,6 +807,7 @@ class MiroOutlineView(NSOutlineView):
 class MiroTableHeaderView(NSTableHeaderView):
     def initWithFrame_(self, frame):
         self = super(MiroTableHeaderView, self).initWithFrame_(frame)
+        self.custom_header = False
         self.selected = None
         return self
 
@@ -821,6 +822,16 @@ class MiroTableHeaderView(NSTableHeaderView):
                 self.selected.set_ascending(column.sort_order_ascending)
                 break
         NSTableHeaderView.drawRect_(self, rect)
+        if self.custom_header:
+            NSGraphicsContext.currentContext().saveGraphicsState()
+            # Draw the separator between the header and the contents.
+            context = DrawingContext(self, rect, rect)
+            context.set_line_width(1)
+            context.set_color((2 / 255.0, 2 / 255.0, 2 / 255.0))
+            context.move_to(0, context.height - 0.5)
+            context.rel_line_to(context.width, 0)
+            context.stroke()
+            NSGraphicsContext.currentContext().restoreGraphicsState()
 
 class MiroTableHeaderCell(NSTableHeaderCell):
     def init(self):
@@ -953,6 +964,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.auto_resizing = False
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, 0))
+        self.header_view.custom_header = False
         self.custom_header = 0
         self.header_height = HEADER_HEIGHT
         self.set_show_headers(True)
@@ -1247,6 +1259,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
 
     def add_column(self, column):
         if column.custom_header:
+            self.header_view.custom_header = True
             self.custom_header += 1
             self.header_height = CUSTOM_HEADER_HEIGHT
         self.columns.append(column)
@@ -1268,6 +1281,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         if column.custom_header:
             self.custom_header -= 1
         if self.custom_header == 0:
+            self.header_view.custom_header = False
             self.header_height = HEADER_HEIGHT
         self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
