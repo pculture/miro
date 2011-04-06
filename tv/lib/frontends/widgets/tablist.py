@@ -542,7 +542,9 @@ class HideableTabList(TabList):
                 old_info = model[old_iter][0]
                 if old_info.id == info.id:
                     continue
-            except (IndexError, LookupError):
+            except (IndexError, LookupError, TypeError):
+                # Catch IndexError, LookupError.  TypeError for Linux on
+                # startup when this stuff's not been populated yet.
                 pass
             with self.adding():
                 self.add(info)
