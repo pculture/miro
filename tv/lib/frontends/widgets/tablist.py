@@ -544,7 +544,7 @@ class HideableTabList(TabList):
                     continue
             except (IndexError, LookupError, TypeError):
                 # Catch IndexError, LookupError.  TypeError for Linux on
-                # startup when this stuff's not been populated yet.
+                # startup when this stuff's not been populated yet, see #16934.
                 pass
             with self.adding():
                 self.add(info)
