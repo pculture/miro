@@ -53,9 +53,9 @@ def _is_associated(executable_path=None):
         is associated with anything at all.
     """
 
-    sub_key = "Software\\Classes\\magnet\\shell\\open\\command"
+    sub_key = "magnet\\shell\\open\\command"
     try:
-        handle = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, sub_key,
+        handle = _winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, sub_key,
                                  0, _winreg.KEY_QUERY_VALUE)
     except WindowsError, e:
         if e.errno == 2:
@@ -64,7 +64,7 @@ def _is_associated(executable_path=None):
         else:
             raise
     try:
-        path = _winreg.QueryValue(_winreg.HKEY_CURRENT_USER, sub_key)
+        path = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
         if executable_path:
             is_associated = path.lower() == executable_path
         else:
