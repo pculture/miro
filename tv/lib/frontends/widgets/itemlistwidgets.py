@@ -1298,7 +1298,7 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         self._hbox = widgetset.HBox()
 
         self._hbox.pack_end(widgetutil.align_middle(
-            self._button_hbox_container, top_pad=1))
+            self._button_hbox_container))
         self.pack_hbox_extra()
 
         self.add(self._hbox)
