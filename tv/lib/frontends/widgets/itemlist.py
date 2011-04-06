@@ -41,8 +41,6 @@ terms.
 
 import itertools
 import sys
-import time
-import logging
 
 from miro import app
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
