@@ -728,6 +728,7 @@ class DeviceItem(metadata.Store):
             self.title = self.name
 
         if isinstance(self.video_path, unicode):
+            # make sure video path is a filename
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         if isinstance(self.screenshot, unicode):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
@@ -746,7 +747,8 @@ class DeviceItem(metadata.Store):
                 self.release_date = ctime
             if self.creation_time is None:
                 self.creation_time = ctime
-        self.id = self.video_path
+        # make sure ID is unicode
+        self.id = filename_to_unicode(self.video_path)
         if self.duration is None: # -1 is unknown
             moviedata.movie_data_updater.request_update(self)
 
