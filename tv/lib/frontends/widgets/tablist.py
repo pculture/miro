@@ -510,6 +510,7 @@ class HideableTabList(TabList):
     def _make_view(self):
         view = TabListView(self.render_class())
         view.allow_multiple_select = self.ALLOW_MULTIPLE
+        view.connect('row-clicked', self.on_row_clicked)
         view.connect('row-expanded', self.on_row_expanded_change, True)
         view.connect('row-collapsed', self.on_row_expanded_change, False)
         view.set_context_menu_callback(self.on_context_menu)
@@ -562,6 +563,12 @@ class HideableTabList(TabList):
             self.on_delete_key_pressed()
             return True
         return TabList.on_key_press(self, view, key, mods)
+
+    def on_row_clicked(self, view, iter_):
+        if view.model[iter_][0] is self.info:
+            if not view.is_row_expanded(iter_):
+                self.expand(self.info.id)
+                self.view.model_changed()
 
     def on_row_expanded_change(self, view, iter_, path, expanded):
         info = self.view.model[iter_][0]
@@ -811,7 +818,6 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
             TabInfo: None,
             }
         self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
-        self.view.connect_weak('row-clicked', self.on_row_clicked)
         self.view.set_drag_dest(DeviceDropHandler(self))
 
     def on_row_expanded_change(self, view, iter_, path, expanded):
@@ -827,12 +833,6 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
     def on_context_menu(self, view):
         # neither handle deals with this
         return []
-
-    def on_row_clicked(self, view, iter_):
-        info = self.view.model[iter_][0]
-        handler = self.info_class_map[type(info)]
-        if hasattr(handler, 'on_row_clicked'):
-            return handler.on_row_clicked(view, iter_)
 
     def on_hotspot_clicked(self, view, hotspot, iter_):
         info = self.view.model[iter_][0]
