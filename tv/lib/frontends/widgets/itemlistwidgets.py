@@ -2076,6 +2076,10 @@ class ItemContainerWidget(widgetset.VBox):
         self.toolbar = toolbar
         toolbar.switch_to_view(view)
         self.pack_start(self.titlebar_vbox)
+        color1 = widgetutil.css_to_color('#303030')
+        color2 = widgetutil.css_to_color('#bcbcbc')
+        self.pack_start(separator.HThinSeparator(color1))
+        self.pack_start(separator.HThinSeparator(color2))
         self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()
         self.pack_start(self.background, expand=True)
@@ -2083,11 +2087,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False
-        color1 = widgetutil.css_to_color('#020202')
-        color2 = widgetutil.css_to_color('#333333')
-        self.vbox[standard_view].pack_start(separator.HThinSeparator(color1))
         self.vbox[standard_view].pack_start(self.toolbar)
-        self.vbox[standard_view].pack_start(separator.HThinSeparator(color2))
         self.background.add(self.vbox[view])
 
     def toggle_filter(self, filter_):
