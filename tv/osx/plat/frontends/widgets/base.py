@@ -251,7 +251,7 @@ class Container(Widget):
         self.children_changed()
 
     def children_changed(self):
-        self.invalidate_size_request()
+        self.do_invalidate_size_request()
 
     def do_invalidate_size_request(self):
         Widget.do_invalidate_size_request(self)

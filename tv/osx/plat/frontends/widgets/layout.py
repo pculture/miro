@@ -699,7 +699,8 @@ class Scroller(Bin):
                 # Hack to allow the content of a table view to scroll, but not
                 # the headers
                 self.child.place(frame, self.document_view)
-                self.view.setDocumentView_(self.child.tableview)
+                if self.view.documentView() is not self.child.tableview:
+                    self.view.setDocumentView_(self.child.tableview)
             else:
                 self.child.place(frame, self.document_view)
             self.document_view.setFrame_(frame)

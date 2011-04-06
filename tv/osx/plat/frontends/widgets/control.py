@@ -82,8 +82,8 @@ class BaseTextEntry(SizedControl):
         self.create_signal('validate')
 
     def focus(self):
-        self.view.window().makeFirstResponder_(self.view)
-
+        if self.view.window() is not None:
+            self.view.window().makeFirstResponder_(self.view)
 
     def start_editing(self, initial_text):
         self.set_text(initial_text)
@@ -217,7 +217,8 @@ class MultilineTextEntry(Widget):
         self.notifications.disconnect()
 
     def focus(self):
-        self.view.window().makeFirstResponder_(self.view)
+        if self.view.window() is not None:
+            self.view.window().makeFirstResponder_(self.view)
 
     def set_text(self, text):
         self.view.setString_(text)

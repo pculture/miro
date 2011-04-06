@@ -978,7 +978,8 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.clipview_notifications = None
 
     def focus(self):
-        self.tableview.window().makeFirstResponder_(self.tableview)
+        if self.tableview.window() is not None:
+            self.tableview.window().makeFirstResponder_(self.tableview)
 
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
