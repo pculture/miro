@@ -53,6 +53,7 @@ from miro import extensionmanager
 from miro import database
 from miro import databaselog
 from miro import databaseupgrade
+from miro import dbupgradeprogress
 from miro import dialogs
 from miro import downloader
 from miro import eventloop
@@ -288,6 +289,7 @@ def finish_startup(obj, thread):
         mem_usage_test_event.set()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
+    dbupgradeprogress.upgrade_end()
 
     logging.info("Loading video converters...")
     conversions.conversion_manager.startup()

@@ -49,9 +49,11 @@ is slightly naughty, but results in fast peformance.
 """
 
 import cPickle
+import itertools
 import logging
 
 from miro import app
+from miro import dbupgradeprogress
 from miro import eventloop
 from miro import itemsource
 from miro import models
@@ -138,10 +140,12 @@ class ItemInfoCache(signals.SignalEmitter):
             for row in app.db.cursor:
                 quick_load_values[row[0]] = self._blob_to_info(row[1])
             # double check that we have the right number of rows
-            app.db.cursor.execute("SELECT COUNT(*) from item")
-            item_count = app.db.cursor.fetchone()[0]
-            if item_count == len(quick_load_values):
+            if len(quick_load_values) == self._db_item_count():
                 self.id_to_info = quick_load_values
+
+    def _db_item_count(self):
+        app.db.cursor.execute("SELECT COUNT(*) from item")
+        return app.db.cursor.fetchone()[0]
 
     def _failsafe_load(self):
         """Load ItemInfos using Item objects.
@@ -150,9 +154,13 @@ class ItemInfoCache(signals.SignalEmitter):
         """
 
         self.id_to_info = {}
+
+        count = itertools.count(1)
+        total_count = self._db_item_count()
         for item in models.Item.make_view():
             info = itemsource.DatabaseItemSource._item_info_for(item)
             self.id_to_info[info.id] = info
+            dbupgradeprogress.infocache_progress(count.next(), total_count)
 
     def schedule_save_to_db(self):
         if self._save_dc is None:

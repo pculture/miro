@@ -330,19 +330,16 @@ class LiveStorage:
 
         if current_version < self._schema_version:
             dbupgradeprogress.upgrade_start()
-            try:
-                self._upgrade_20_database()
-                # need to pull the variable again here because
-                # _upgrade_20_database will have done an upgrade
-                current_version = self._get_version()
-                self._change_database_file(current_version)
-                databaseupgrade.new_style_upgrade(self.cursor,
-                                                  current_version,
-                                                  self._schema_version)
-                self._set_version()
-                self._change_database_file_back()
-            finally:
-                dbupgradeprogress.upgrade_end()
+            self._upgrade_20_database()
+            # need to pull the variable again here because
+            # _upgrade_20_database will have done an upgrade
+            current_version = self._get_version()
+            self._change_database_file(current_version)
+            databaseupgrade.new_style_upgrade(self.cursor,
+                                              current_version,
+                                              self._schema_version)
+            self._set_version()
+            self._change_database_file_back()
         self.current_version = self._schema_version
 
     def _upgrade_20_database(self):

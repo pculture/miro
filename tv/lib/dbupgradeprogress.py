@@ -63,20 +63,25 @@ def old_style_progress(start_version, current_version, end_version):
 def convert20_progress(current_step, total_step):
     """Call while stepping through 2.0 DB conversion code."""
     progress = _calc_progress(0, current_step, total_step)
-    total = 0.05 + 0.80 * progress # conversion take us from 5% -> 85%
+    total = 0.05 + 0.50 * progress # conversion take us from 5% -> 50%
     _send_message(_('Converting Old Database'), progress, total)
 
 def new_style_progress(start_version, current_version, end_version):
     """Call while stepping through new-style upgrades"""
     progress = _calc_progress(start_version, current_version, end_version)
+    # new style upgrades take us to %75
     if _doing_20_upgrade:
-        total = 0.85 + 0.15 * progress
-        # new style upgrades take us from 85% -> 100%
+        total = 0.50 + 0.25 * progress
     else:
-        total = progress
-        # We didn't do 2.0 conversion.  New style upgrades take us
-        # from 0% to 100%.
+        total = 0.75 * progress
     _send_message(_('Upgrading Database'), progress, total)
+
+def infocache_progress(current_item, total_items):
+    """Call while stepping through new-style upgrades"""
+    progress = _calc_progress(0, current_item, total_items)
+    # item info cache takes us from %75 to %100
+    total = 0.75 + 0.25 * progress
+    _send_message(_('Preparing Items'), progress, total)
 
 def _send_message(stage, stage_progress, total_progress):
     messages.DatabaseUpgradeProgress(stage, stage_progress,
