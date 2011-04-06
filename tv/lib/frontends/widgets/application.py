@@ -1334,8 +1334,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 message.stage_progress, message.total_progress)
 
     def handle_database_upgrade_end(self, message):
-        self.dbupgrade_progress_dialog.destroy()
-        self.dbupgrade_progress_dialog = None
+        # we don't do anything here because we actually want to keep the
+        # dialog shown until just before we pop up the main window
+        pass
+
+    def close_upgrade_dialog(self):
+        if self.dbupgrade_progress_dialog:
+            self.dbupgrade_progress_dialog.destroy()
+            self.dbupgrade_progress_dialog = None
 
     def handle_startup_failure(self, message):
         if hasattr(self, "_startup_failure_mode"):
@@ -1380,6 +1386,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return
         self._pre_startup_messages.remove(name)
         if len(self._pre_startup_messages) == 0:
+            self.close_upgrade_dialog()
             app.widgetapp.build_window()
 
     def call_handler(self, method, message):
