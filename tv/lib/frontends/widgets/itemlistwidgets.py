@@ -1436,7 +1436,7 @@ class SortBarButton(widgetset.CustomButton):
             self.queue_redraw()
 
     def size_request(self, layout):
-        layout.set_font(0.8)
+        layout.set_font(0.8, bold=True)
         text_size = layout.textbox(self._text).get_size()
         # Minus 1 because custom widgets don't currently draw a separator
         # at bottom ..
@@ -1458,7 +1458,7 @@ class SortBarButton(widgetset.CustomButton):
         # borders
         context.move_to(0.5, 0)
         context.rel_line_to(0, context.height)
-        context.move_to(context.width, 0)
+        #context.move_to(context.width, 0)
         context.set_color((edge, edge, edge))
         context.stroke()
         # text
@@ -1468,14 +1468,16 @@ class SortBarButton(widgetset.CustomButton):
         text_size = textbox.get_size()
         triangle_padding = 0
         if self._enabled:
-            triangle_padding = 18 + 6
-        x = (context.width - text_size[0] + triangle_padding) / 2
+            triangle_padding = 6 + 6
+        x = (context.width - text_size[0] - triangle_padding) / 2
+        left = text_size[0] + x + 6
         if x < 0:
             x = 12
+            left = text_size[0] + 18
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
-        textbox.draw(context, 12, y, text_size[0], text_size[1])
+        textbox.draw(context, x, y, text_size[0], text_size[1])
         context.set_color((arrow, arrow, arrow))
-        self._draw_triangle(context, text_size[0] + 18)
+        self._draw_triangle(context, left)
 
     def _draw_triangle(self, context, left):
         if self._enabled:
