@@ -30,7 +30,7 @@
 """Displays the list of tabs on the left-hand side of the app."""
 
 from __future__ import with_statement # python2.5
-
+import itertools
 from hashlib import md5
 try:
     import cPickle as pickle
@@ -529,7 +529,21 @@ class HideableTabList(TabList):
             # setting up a non-nestable list
             self._set_up = True
             return
-        for info in message.toplevels:
+        model = self.view.model
+        iter_ = model.first_iter()
+        for c, info in zip(itertools.count(), message.toplevels):
+            try:
+                # HACK: bz:16780.  There is currently no way to reload
+                # a list that has been reordered somehow by the backend,
+                # e.g. due to addition of a folder with existing playlists
+                # put into it.  So, add some crappy code so that things don't
+                # get duplicated.
+                old_iter = model.nth_child_iter(iter_, c)
+                old_info = model[old_iter][0]
+                if old_info.id == info.id:
+                    continue
+            except (IndexError, LookupError):
+                pass
             with self.adding():
                 self.add(info)
             if info.is_folder:
