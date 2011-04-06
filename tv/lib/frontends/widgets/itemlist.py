@@ -249,9 +249,27 @@ class PlaylistSort(ItemSort):
         self.reverse = not ascending
 
     def add_items(self, item_list):
+        if not self.order_is_reversed:
+            self.add_items_at_end(item_list)
+        else:
+            self.add_items_at_start(item_list)
+
+    def add_items_at_end(self, item_list):
         for item in item_list:
             if item.id not in self.positions:
                 self.positions[item.id] = self.current_postion.next()
+
+    def add_items_at_start(self, item_list):
+        new_items = [i for i in item_list if i.id not in self.positions]
+        new_count = len(new_items)
+        # move current positions forward
+        for key, pos in self.positions.iteritems():
+            self.positions[key] = pos + new_count
+        # add new positions
+        for pos, item in enumerate(new_items):
+            self.positions[item.id] = pos
+        # fix current_postion
+        self.current_postion = itertools.count(len(self.positions))
 
     def forget_items(self, id_list):
         for id in id_list:
