@@ -493,19 +493,6 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
             raise WidgetDomainError(
                   "model iters", string, "%s other iters" % len(self.model))
 
-    def _iter_to_smart_selector(self, iter_):
-        path = self._model.get_path(iter_)
-        return gtk.TreeRowReference(self._model, path)
-
-    def _iter_from_smart_selector(self, tree_row_reference):
-        try:
-            path = tree_row_reference.get_path()
-        except TypeError:
-            raise WidgetActionError("treerowreference not valid at "
-                                           "this time")
-        else:
-            return self._model.get_iter(path)
-
     def select_path(self, path):
         self.selection.select_path(path)
 

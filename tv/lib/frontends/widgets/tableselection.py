@@ -207,12 +207,9 @@ class SelectionOwnerMixin(object):
         (bulk edits).
         """
         try:
-            selected = self._get_selected_iters()
+            self._real_selection = self._get_selected_iters()
         except WidgetActionError, error:
             logging.debug("not saving selection: %s", error.reason)
-        else:
-            self._real_selection = [self._iter_to_smart_selector(iter_)
-                                            for iter_ in selected]
 
     def _restore_selection(self):
         """Restore the selection after making changes that would unset it. If
@@ -227,42 +224,16 @@ class SelectionOwnerMixin(object):
         if self._real_selection is None:
             return
         self.unselect_all(signal=False)
-        for selector in self._real_selection:
+        for iter_ in self._real_selection:
             try:
-                iter_ = self._iter_from_smart_selector(selector)
-            except WidgetActionError:
+                self.select(iter_)
+            # Hack for #16835
+            except ValueError:
                 self._real_selection = None
                 logging.warning("can't restore selection - deleted?",
                                 exc_info=True)
                 self.emit('selection-invalid')
                 break
-            else:
-                try:
-                    self.select(iter_)
-                # Hack for #16835
-                except ValueError:
-                    self._real_selection = None
-                    logging.warning("can't restore selection - deleted?",
-                                    exc_info=True)
-                    self.emit('selection-invalid')
-                    break
-
-    def _iter_to_smart_selector(self, iter_):
-        """Smart selectors are objects that keep track of selection; they don't
-        need to be persistable between sessions, so they may be able to work
-        despite changes in order. Platforms with anything smarter than iters
-        should override this method.
-        """
-        self._validate_iter(iter_)
-        return iter_
-
-    def _iter_from_smart_selector(self, selector):
-        """Smart selectors are objects that keep track of selection; they don't
-        need to be persistable between sessions, so they may be able to work
-        despite changes in order. Platforms with anything smarter than iters
-        should override this method.
-        """
-        return selector
 
     def _validate_iter(self, iter_):
         """Check whether an iter is valid.
