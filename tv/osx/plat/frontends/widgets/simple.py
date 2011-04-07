@@ -110,7 +110,7 @@ class TransformedImage(Image):
     def __init__(self, nsimage):
         self._set_image(nsimage)
 
-class NSImageDisplay (NSView):
+class NSImageDisplay(NSView):
     def init(self):
         self = super(NSImageDisplay, self).init()
         self.image = None
@@ -146,6 +146,8 @@ class NSImageDisplay (NSView):
                 dest_rect.size.width * x_scale,
                 dest_rect.size.height * y_scale)
 
+    # XXX FIXME: should track mouse movement - mouseDown is not the correct
+    # event.
     def mouseDown_(self, event):
         wrappermap.wrapper(self).emit('clicked')
 
