@@ -163,8 +163,10 @@ pyobjc_version = int(pyobjc_version[0])
 # XXX bz:15481.  This shouldn't be synchronous.
 attrib = Foundation.NSMutableDictionary.dictionary()
 no = Foundation.NSNumber.alloc().initWithBool_(objc.NO)
+yes = Foundation.NSNumber.alloc().initWithBool_(objc.YES)
 attrib['QTMovieFileNameAttribute'] = movie_path
 attrib['QTMovieOpenAsyncOKAttribute'] = no
+attrib['QTMovieOpenForPlaybackAttribute'] = yes
 
 if pyobjc_version == 2:
     qtmovie, error = QTKit.QTMovie.movieWithAttributes_error_(attrib, None)
