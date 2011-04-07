@@ -338,6 +338,7 @@ class TabList(signals.SignalEmitter):
         prev_view = all_views[my_index-1]
         self.view.unselect_all(signal=False)
         prev_view.focus()
+        prev_view.unselect_all(signal=False)
         prev_view.select(_last_iter(prev_view, prev_view.model), signal=True)
         return True
 
