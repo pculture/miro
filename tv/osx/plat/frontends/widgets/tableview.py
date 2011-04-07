@@ -647,7 +647,8 @@ class TableViewCommon(object):
                 return
             wrapper = wrappermap.wrapper(self)
             row = self.rowAtPoint_(point)
-            if row != -1:
+            if (row != -1 and
+                not NSPointInRect(point, self.frameOfOutlineCellAtRow_(row))):
                 iter = wrapper.model.iter_for_row(self, row)
                 wrapper.emit('row-double-clicked', iter)
             return
@@ -657,7 +658,8 @@ class TableViewCommon(object):
         if event.clickCount() == 1:
             wrapper = wrappermap.wrapper(self)
             row = self.rowAtPoint_(point)
-            if row != -1:
+            if (row != -1 and
+                not NSPointInRect(point, self.frameOfOutlineCellAtRow_(row))):
                 iter = wrapper.model.iter_for_row(self, row)
                 wrapper.emit('row-clicked', iter)
 
