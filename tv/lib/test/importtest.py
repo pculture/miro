@@ -401,6 +401,7 @@ class TestImportITunes(MiroTestCase):
         self.tmpf.write(file_snippet1)
         self.tmpf.flush()
         path = import_itunes_path(tmpf_dir)
+        self.assertEquals(type(path), unicode)
         self.assertEquals(path, urllib.url2pathname(path1))
 
         # Test path with utf-8 escapes
@@ -408,6 +409,7 @@ class TestImportITunes(MiroTestCase):
         self.tmpf.write(file_snippet2)
         self.tmpf.flush()
         path = import_itunes_path(tmpf_dir)
+        self.assertEquals(type(path), unicode)
         self.assertEquals(path, urllib.url2pathname(path2))
 
         # Test Windows path
@@ -415,4 +417,5 @@ class TestImportITunes(MiroTestCase):
         self.tmpf.write(file_snippet3)
         self.tmpf.flush()
         path = import_itunes_path(tmpf_dir)
+        self.assertEquals(type(path), unicode)
         self.assertEquals(path, urllib.url2pathname(path3))

@@ -37,6 +37,8 @@ import xml.sax
 import xml.sax.handler
 import xml.sax.saxutils
 
+from miro.plat.utils import filename_to_unicode
+
 ITUNES_XML_FILE = "iTunes Music Library.xml"
 
 class iTunesMusicLibraryContentHandler(xml.sax.handler.ContentHandler):
@@ -101,8 +103,6 @@ def import_itunes_path(path):
         parser.setFeature(xml.sax.handler.feature_external_pes, False)
         parser.parse(os.path.join(path, ITUNES_XML_FILE))
         music_path = file_path_xlat(handler.music_path)
-        return music_path
+        return filename_to_unicode(music_path)
     except (IOError, xml.sax.SAXParseException):
         pass
-    return music_path
-
