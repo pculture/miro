@@ -64,7 +64,7 @@ class Source(object):
 
     def setup_new(self):
         self.title = u""
-        self.title_tag = u""
+        self.title_tag = None
         self.description = u""
         self.album = None
         self.album_artist = None
@@ -89,7 +89,7 @@ class Source(object):
         if self.title:
             return self.title
         else:
-            return self.title_tag
+            return self.title_tag if self.title_tag else u''
 
     @returns_unicode
     def get_description(self):
