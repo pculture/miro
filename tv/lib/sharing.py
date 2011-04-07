@@ -259,6 +259,7 @@ class SharingTracker(object):
             if not info or info.connect_uuid != uuid:
                 return
             info.connect_uuid = None
+            info.share_available = True
             messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
         def failure(unused):
@@ -298,11 +299,18 @@ class SharingTracker(object):
             try:
                 share_id = self.name_to_id_map[fullname]
                 del self.name_to_id_map[fullname]
+                if share_id in self.name_to_id_map.values():
+                    logging.debug('sharing: out of order add/remove during '
+                                  'rename?')
+                    return
             except KeyError:
                 # If it doesn't exist then it's been taken care of so return.
+                logging.debug('KeyError: name %s', fullname)
                 return
 
-        logging.debug('gotten mdns callback share_id')
+        logging.debug(('gotten mdns callback share_id, added = %s '
+                       ' fullname = %s host = %s port = %s'),
+                      added, fullname, host, port)
 
         if added:
             # This added message could be just because the share name got
@@ -322,8 +330,7 @@ class SharingTracker(object):
             # is this particular info (if not, the uuid will be different and
             # and so should ignore).
             has_key = False
-            for key in self.available_shares.keys():
-                info = self.available_shares[key]
+            for info in self.available_shares.values():
                 if info.mount and info.host == host and info.port == port:
                     has_key = True
                     break
@@ -333,8 +340,19 @@ class SharingTracker(object):
                 message = messages.TabsChanged('connect', [], [info], [])
                 message.send_to_frontend()
             else:
-                # 'Tis been already added so just return.
+                # If the share has already been previously added, update the
+                # fullname, and ensure it is not stale.  Furthermore, if
+                # this share is actually displayed, then change the tab.
                 if share_id in self.available_shares.keys():
+                    info = self.available_shares[share_id]
+                    info.name = fullname
+                    info.stale = False
+                    if info.share_available:
+                        logging.debug('Share already registered and '
+                                      'available, sending TabsChanged only')
+                        message = messages.TabsChanged('connect', [],
+                                                       [info], [])
+                        message.send_to_frontend()
                     return
                 info = messages.SharingInfo(share_id, fullname, host, port)
                 info.connect_uuid = uuid.uuid4()
