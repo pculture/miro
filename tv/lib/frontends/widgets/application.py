@@ -380,8 +380,11 @@ class Application:
                        "item_name": item.name.encode('utf-8')}
         if item.feed_url:
             share_items["feed_url"] = item.feed_url
-        query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-        share_url = "%s/item/?%s" % (app.config.get(prefs.SHARE_URL), query_string)
+        query_string = "&".join([
+            "%s=%s" % (key, urllib.quote(val.encode('utf8')))
+            for key, val in share_items.items()])
+        share_url = "%s/item/?%s" % (app.config.get(prefs.SHARE_URL),
+                                     query_string)
         self.open_url(share_url)
 
     def share_feed(self):
@@ -389,8 +392,11 @@ class Application:
         if t == 'feed' and len(channel_infos) == 1:
             ci = channel_infos[0]
             share_items = {"feed_url": ci.base_href}
-            query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-            share_url = "%s/feed/?%s" % (app.config.get(prefs.SHARE_URL), query_string)
+            query_string = "&".join([
+                "%s=%s" % (key, urllib.quote(val.encode('utf8')))
+                for key, val in share_items.items()])
+            share_url = "%s/feed/?%s" % (app.config.get(prefs.SHARE_URL),
+                                         query_string)
             self.open_url(share_url)
 
     def delete_backup_databases(self):
