@@ -40,7 +40,7 @@ from miro.plat import qtcomp
 from miro.plat import utils
 from miro.plat.frontends.widgets import mediatypes
 
-# Gross - renice this so that it runs with a lower priority.  See #15164:wq
+# Gross - renice this so that it runs with a lower priority.  See #15164.
 os.nice(19)
 
 # =============================================================================
