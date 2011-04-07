@@ -64,7 +64,7 @@ class Source(object):
 
     def setup_new(self):
         self.title = u""
-        self.title_tag = None
+        self.title_tag = u""
         self.description = u""
         self.album = None
         self.album_artist = None
