@@ -865,8 +865,11 @@ class DaapClient(object):
             self.timer.start()
             return True
         # We've been disconnected or there was a problem?
-        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
+            return False
+        except httplib.BadStatusLine:
+            self.disconnect(polite=False)
             return False
 
     # XXX Right now, there is only one db_id.
@@ -877,8 +880,11 @@ class DaapClient(object):
                              callback=self.handle_db)
             return self.db_id
         # We've been disconnected or there was a problem?
-        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
+            return None
+        except httplib.BadStatusLine:
+            self.disconnect(polite=False)
             return None
 
     def playlists(self, meta=DEFAULT_DAAP_PLAYLIST_META):
@@ -893,8 +899,11 @@ class DaapClient(object):
             del self.daap_playlists
             return playlists
         # We've been disconnected or there was a problem?
-        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
+            return None
+        except httplib.BadStatusLine
+            self.disconnect(polite=False)
             return None
 
     # XXX: I think this could be cleaner, maybe abstract to have an
@@ -918,14 +927,18 @@ class DaapClient(object):
             del self.daap_items
             return items
         # We've been disconnected or there was a problem?
-        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+        except (socket.error, IOError, ValueError):
             self.disconnect()
             return None
+        except httplib.BadStatusLine:
+            self.disconnect(polite=False)
+            return None
 
-    def disconnect(self):
+    def disconnect(self, polite=True):
         try:
             self.timer.cancel()
-            self.conn.request('GET', self.sessionize('/logout', []))
+            if polite:
+                self.conn.request('GET', self.sessionize('/logout', []))
         # Don't care since we are going away anyway.
         except (socket.error, ValueError, httplib.ResponseNotReady,
                 httplib.BadStatusLine, AttributeError, IOError):
