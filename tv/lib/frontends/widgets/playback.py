@@ -521,9 +521,6 @@ class PlaybackManager (signals.SignalEmitter):
             self.player.stop(will_play_another=play_in_miro)
 
         if not play_in_miro:
-            # FIXME - do this to avoid "currently playing green thing.
-            # should be a better way.
-            self.playlist = None
             app.widgetapp.open_file(info_to_play.video_path)
             messages.MarkItemWatched(info_to_play).send_to_backend()
             return
@@ -955,7 +952,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
         return item_info
 
     def _send_item_is_playing(self, info, value):
-        messages.SetItemIsPlaying(info, value).send_to_backend()
+        play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
+        if play_in_miro:
+            messages.SetItemIsPlaying(info, value).send_to_backend()
 
     def _change_currently_playing(self, new_info):
         if self.currently_playing:

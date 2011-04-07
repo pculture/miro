@@ -291,8 +291,10 @@ class ItemRenderer(ItemRendererBase):
     def add_main_button(self):
         if self.info.downloaded:
             if self.info.is_playable:
+                play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
                 playing_item = app.playback_manager.get_playing_item()
-                if (playing_item and playing_item.id == self.info.id):
+                if (play_in_miro and playing_item and
+                  playing_item.id == self.info.id):
                     hotspot = 'play_pause'
                     if app.playback_manager.is_paused:
                         image_name = 'play'
@@ -442,6 +444,7 @@ class ItemRenderer(ItemRendererBase):
 
         text = image = visuals = None
 
+        play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
         if self.info.has_drm:
             visuals = EMBLEM_VISUALS_DRM
             text = _('DRM locked')
@@ -455,7 +458,8 @@ class ItemRenderer(ItemRendererBase):
             visuals = EMBLEM_VISUALS_QUEUED
             text = QUEUED_TEXT
         elif (self.info.downloaded
-                and app.playback_manager.is_playing_id(self.info.id)):
+                and app.playback_manager.is_playing_id(self.info.id)
+                and play_in_miro):
             # copy the unplayed-style
             visuals = EMBLEM_VISUALS_UNPLAYED
             text = CURRENTLY_PLAYING_TEXT
