@@ -647,8 +647,7 @@ class TableViewCommon(object):
                 return
             wrapper = wrappermap.wrapper(self)
             row = self.rowAtPoint_(point)
-            if (row != -1 and
-                not NSPointInRect(point, self.frameOfOutlineCellAtRow_(row))):
+            if (row != -1 and self.point_should_click(point, row)):
                 iter = wrapper.model.iter_for_row(self, row)
                 wrapper.emit('row-double-clicked', iter)
             return
@@ -658,8 +657,8 @@ class TableViewCommon(object):
         if event.clickCount() == 1:
             wrapper = wrappermap.wrapper(self)
             row = self.rowAtPoint_(point)
-            if (row != -1 and
-                not NSPointInRect(point, self.frameOfOutlineCellAtRow_(row))):
+            if (row != -1 and self.point_should_click(point, row)):
+
                 iter = wrapper.model.iter_for_row(self, row)
                 wrapper.emit('row-clicked', iter)
 
@@ -677,6 +676,13 @@ class TableViewCommon(object):
         else:
             self.handled_last_mouse_down = False
             self.SuperClass.mouseDown_(self, event)
+
+    def point_should_click(self, point, row):
+        """Should a click on a point result in a row-clicked signal?
+
+        Subclasses can override if not every point should result in a click.
+        """
+        return True
 
     def rightMouseDown_(self, event):
         self.handleContextMenu_(event)
@@ -805,6 +811,9 @@ class MiroOutlineView(NSOutlineView):
     SuperClass = NSOutlineView
     for name, value in TableViewCommon.__dict__.items():
         locals()[name] = value
+
+    def point_should_click(self, point, row):
+        return not NSPointInRect(point, self.frameOfOutlineCellAtRow_(row))
 
 class MiroTableHeaderView(NSTableHeaderView):
     def initWithFrame_(self, frame):
