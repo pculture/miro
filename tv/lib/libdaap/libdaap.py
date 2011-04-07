@@ -42,7 +42,6 @@ import BaseHTTPServer
 import SocketServer
 import threading
 import httplib
-import socket
 
 # Where do I get this guy in Python?
 # NB: equivalent to INT32_MAX.
