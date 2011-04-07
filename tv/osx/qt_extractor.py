@@ -160,7 +160,8 @@ pyobjc_version = objc.__version__
 pyobjc_version = pyobjc_version.split('.')
 pyobjc_version = int(pyobjc_version[0])
 
-# XXX bz:15481.  This shouldn't be synchronous.
+# XXX bz:15481.  This shouldn't be synchronous.  We have to use sync anyway
+# because the load state doesn't change, we don't have a runloop here.
 attrib = Foundation.NSMutableDictionary.dictionary()
 no = Foundation.NSNumber.alloc().initWithBool_(objc.NO)
 yes = Foundation.NSNumber.alloc().initWithBool_(objc.YES)
