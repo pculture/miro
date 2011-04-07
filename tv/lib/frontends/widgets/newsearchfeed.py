@@ -166,7 +166,7 @@ class NewSearchFeedDialogRunner(object):
             elif selected_option is self.search_engine_rb:
                 index = self.search_engine_option.get_selected()
                 return ("search_engine",
-                        search_engines[index],
+                        self.search_engines[index],
                         term)
             else:
                 return ("url",
