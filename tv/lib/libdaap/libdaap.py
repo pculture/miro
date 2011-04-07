@@ -29,6 +29,7 @@
 # libdaap.py
 # Server/Client implementation of DAAP
 
+import errno
 import os
 import sys
 import itertools
@@ -739,14 +740,30 @@ def make_daap_server(backend, debug=False, name='pydaap', port=DEFAULT_PORT,
 class DaapClient(object):
     HEARTBEAT = 60    # seconds
     def __init__(self, host, port):
+        self.conn = None
         self.host = host
         self.port = port
         self.session = None
 
+    # Caveat emptor when using it.
+    # if (test) { do_something(); } is NOT SAFE generally!
     def alive(self):
-        self.timer.cancel()
-        self.heartbeat_callback()
-        return self.session is not None
+        # XXX dodgy: pokes into the sock of HTTPConnection but we have no
+        # choice.
+        if not self.conn or not self.conn.sock:
+            return False
+        sock = self.conn.sock
+        buf = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVLOWAT)
+        while True:
+            try:
+                data = sock.recv(buf, socket.MSG_PEEK)
+            except socket.error, (err, errstring):
+                if err == errno.EAGAIN:
+                    return True
+                # Anything else we treat as a connection failure.
+                if err in (errno.EINTR, errno.ENOBUFS):
+                    continue
+                return False
 
     def heartbeat_callback(self):
         try:
@@ -916,6 +933,7 @@ class DaapClient(object):
         finally:
             self.session = None
             self.conn.close()
+            self.conn = None
 
     def daap_get_file_request(self, file_id, enclosure=None):
         """daap_file_get_url(file_id) -> url
