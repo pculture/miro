@@ -820,8 +820,14 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 return
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
-                iter_ = treeview.get_model().get_iter(path_info[0])
-                self.emit('row-double-clicked', iter_)
+                send_clicked = True
+                if (treeview.get_show_expanders() and
+                    path_info[1] is treeview.get_expander_column()):
+                    if event.x < treeview.style_get_property('expander-size'):
+                        send_clicked = False
+                if send_clicked:
+                    iter_ = treeview.get_model().get_iter(path_info[0])
+                    self.emit('row-double-clicked', iter_)
             return
 
         # Check for single click.  Emit the event but keep on running
@@ -829,8 +835,14 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         if event.type == gtk.gdk.BUTTON_PRESS:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
-                iter_ = treeview.get_model().get_iter(path_info[0])
-                self.emit('row-clicked', iter_)
+                send_clicked = True
+                if (treeview.get_show_expanders() and
+                    path_info[1] is treeview.get_expander_column()):
+                    if event.x < treeview.style_get_property('expander-size'):
+                        send_clicked = False
+                if send_clicked:
+                    iter_ = treeview.get_model().get_iter(path_info[0])
+                    self.emit('row-clicked', iter_)
 
         if self.hotspot_tracker is None:
             hotspot_tracker = HotspotTracker(treeview, event)
