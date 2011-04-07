@@ -928,6 +928,10 @@ class DaapClient(object):
             return items
         # We've been disconnected or there was a problem?
         except (socket.error, IOError, ValueError):
+            typ, value, tb = sys.exc_info()
+            print 'items: typ = %s value = %s' % (str(typ), str(value))
+            for line in traceback.format_tb(tb):
+                print line
             self.disconnect()
             return None
         except httplib.BadStatusLine:
