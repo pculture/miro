@@ -1,5 +1,6 @@
 import sys
 
+from miro.plat.utils import unicode_to_filename
 from miro.test.framework import MiroTestCase
 from miro import fileobject
 
@@ -17,7 +18,10 @@ class Test_url_encode_dict(MiroTestCase):
         self.assertEquals(type(filename.urlize()), str)
 
     def test_file_urlize_with_unicode(self):
-        filename = fileobject.FilenameType(u'/foo/b\u0103r')
+        # contrived way of getting unicode characters in a filename
+        basename = unicode_to_filename(u'b\u0103r')
+        directory = fileobject.FilenameType('/foo/')
+        filename = fileobject.FilenameType(directory + basename)
         # "/foo/bar" with a breve over the "a"
         self.assertEquals(filename.urlize(), "file:///foo/b%C4%83r")
         # urlize() should convert it to utf-8 then quote it
