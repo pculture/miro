@@ -384,6 +384,8 @@ class SharingTracker(object):
                 # it as stale and we'll reap it later.
                 share_info = self.available_shares[share_id]
                 share = self.trackers[share_id]
+                if share.share != share_info:
+                    logging.error('Share disconn error: share info != share')
                 if not share.client.alive():
                     del self.available_shares[share_id]
                     messages.SharingDisappeared(share_info).send_to_frontend()
