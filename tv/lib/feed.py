@@ -75,8 +75,7 @@ from miro.clock import clock
 
 WHITESPACE_PATTERN = re.compile(r"^[ \t\r\n]*$")
 
-DEFAULT_FEED_ICON = "images/feedicon.png"
-DEFAULT_FEED_ICON_TABLIST = "images/icon-rss.png"
+DEFAULT_FEED_ICON = "images/icon-podcast-small.png"
 
 @returns_unicode
 def default_feed_icon_url():
@@ -84,9 +83,6 @@ def default_feed_icon_url():
 
 def default_feed_icon_path():
     return resources.path(DEFAULT_FEED_ICON)
-
-def default_tablist_feed_icon_path():
-    return resources.path(DEFAULT_FEED_ICON_TABLIST)
 
 # Notes on character set encoding of feeds:
 #
@@ -1136,12 +1132,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def thumbnail_valid(self):
         return self.icon_cache and self.icon_cache.is_valid()
-
-    def calc_tablist_thumbnail(self):
-        if self.thumbnail_valid():
-            return fileutil.expand_filename(self.icon_cache.get_filename())
-        else:
-            return default_tablist_feed_icon_path()
 
     @returns_filename
     def get_thumbnail_path(self):

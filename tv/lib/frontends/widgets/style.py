@@ -88,9 +88,14 @@ class TabRenderer(widgetset.CustomCellRenderer):
     SELECTED_FONT_COLOR = widgetutil.WHITE
     SELECTED_FONT_SHADOW = widgetutil.BLACK
 
-    def get_size(self, style, layout_manager):
+    def is_tall(self):
         if (not use_custom_tablist_font or
             (hasattr(self.data, 'tall') and self.data.tall)):
+            return True
+        return False
+
+    def get_size(self, style, layout_manager):
+        if self.is_tall():
             min_height = self.MIN_HEIGHT_TALL
             font_scale = self.TALL_FONT_SIZE
         else:
@@ -107,7 +112,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
             if use_custom_tablist_font:
                 layout_manager.set_text_color(self.SELECTED_FONT_COLOR)
                 layout_manager.set_text_shadow(widgetutil.Shadow(
-                        self.SELECTED_FONT_SHADOW, 0.5, (0, -1), 0))
+                        self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
         if not use_custom_tablist_font or getattr(self.data, 'tall', False):
             min_icon_width = self.MIN_ICON_WIDTH_TALL
             layout_manager.set_font(self.TALL_FONT_SIZE, bold=bold)
@@ -129,7 +134,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         alignment = cellpack.Alignment(cellpack.TruncatedTextLine(titlebox),
                                        yalign=0.45, yscale=0.0)
         hbox.pack(alignment, expand=True)
-        layout_manager.set_font(0.77)
+        layout_manager.set_font(0.77, bold=True)
         layout_manager.set_text_shadow(widgetutil.Shadow(
             self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
         layout_manager.set_text_color(widgetutil.WHITE)
@@ -163,14 +168,18 @@ class TabRenderer(widgetset.CustomCellRenderer):
                         AVAILABLE_COLOR, selected=selected)
 
     def pack_bubble(self, hbox, layout_manager, count, color, selected=False):
-        radius = (layout_manager.current_font.line_height() + 2) / 2.0
+        radius = int(layout_manager.current_font.line_height() / 2.0 )+ 1
         if selected:
-            layout_manager.set_text_color(color)
+            layout_manager.set_text_color(widgetutil.BLACK)
             color = widgetutil.WHITE
         else:
             layout_manager.set_text_color(widgetutil.WHITE)
+        if self.is_tall():
+            margin = (0, radius, 2, radius)
+        else:
+            margin = (1, radius, 1, radius)
         background = cellpack.Background(layout_manager.textbox(str(count)),
-                margin=(1, radius, 1, radius))
+                margin=margin)
         background.set_callback(self.draw_bubble, color)
         hbox.pack(cellpack.align_middle(background))
 
@@ -190,9 +199,10 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
         center_width = int(width - left_surface.width - right_surface.width)
         center_height = int(center_surface.height)
-
         # Let's just take one image height, they should be the same
         y -= int((center_surface.height - height) / 2)
+        if self.is_tall():
+            y -= 1 # start 1px higher
         x = int(x)
 
         left_width = int(left_surface.width)
@@ -655,8 +665,6 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         """Create icons that will fill our allocated area correctly. """
         if (width, height) == self.setup_size:
             return
-
-        print "SETUP: ", width, height
 
         icon_width = int(height / 2.0)
         icon_height = int((icon_width / self.ICON_PROPORTIONS) + 0.5)

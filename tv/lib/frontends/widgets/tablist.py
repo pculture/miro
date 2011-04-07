@@ -38,6 +38,7 @@ except ImportError:
     import pickle
 from contextlib import contextmanager
 import logging
+import os
 
 from miro import app
 from miro import prefs
@@ -971,13 +972,18 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
         # It's too difficult to override the guts of the feed backend
         # to pick out the right icon so we just do it here.
         if info.url and info.url.startswith('dtv:directoryfeed:'):
-            icon = resources.path('images/watched-folder.png')
-            active_icon = resources.path('images/watched-folder-a.png')
+            icon = resources.path('images/icon-watched-folder.png')
+            active_icon = resources.path(
+                'images/icon-watched-folder_active.png')
             info.icon = imagepool.get_surface(icon, size=(16, 16))
             info.active_icon = imagepool.get_surface(active_icon,
                                                      size=(16, 16))
         else:
             info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
+            active_path = info.tab_icon.replace('.png', '_active.png')
+            if os.path.exists(active_path):
+                info.active_icon = imagepool.get_surface(active_path,
+                                                         size=(16, 16))
         if info.is_updating:
             self.start_updating(info.id)
         else:
@@ -1045,9 +1051,9 @@ class PlaylistList(NestedTabListMixin, HideableTabList):
                 resources.path('images/icon-folder.png'))
         else:
             info.icon = imagepool.get_surface(
-                resources.path('images/icon-playlist.png'))
+                resources.path('images/icon-playlist-small.png'))
             info.active_icon = imagepool.get_surface(
-                resources.path('images/icon-playlist_active.png'))
+                resources.path('images/icon-playlist-small_active.png'))
         info.type = self.type
         info.unwatched = info.available = 0
 
