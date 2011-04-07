@@ -160,20 +160,17 @@ pyobjc_version = objc.__version__
 pyobjc_version = pyobjc_version.split('.')
 pyobjc_version = int(pyobjc_version[0])
 
-# XXX bz:15481.  This shouldn't be synchronous.  We have to use sync anyway
-# because the load state doesn't change, we don't have a runloop here.
-attrib = Foundation.NSMutableDictionary.dictionary()
-no = Foundation.NSNumber.alloc().initWithBool_(objc.NO)
-yes = Foundation.NSNumber.alloc().initWithBool_(objc.YES)
-attrib['QTMovieFileNameAttribute'] = movie_path
-attrib['QTMovieOpenAsyncOKAttribute'] = no
-attrib['QTMovieOpenForPlaybackAttribute'] = yes
+# XXX bz:15481.  movieWithFile_error_ may be asynchronous, but at least when
+# it is done locally it seems to return in such a way that makes it possible
+# to extract stuff.  The QTMovieLoadState attribute never seems to update,
+# maybe because we are missing some Cocoa runloop stuff or something.
 
-if pyobjc_version == 2:
-    qtmovie, error = QTKit.QTMovie.movieWithAttributes_error_(attrib, None)
-else:
-    qtmovie, error = QTKit.QTMovie.movieWithAttributes_error_(attrib)
-if qtmovie is None or error is not objc.nil:
+qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path, None)
+load_state = QTKit.QTMovieLoadStateError
+if qtmovie:
+    load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute).longValue()
+if (qtmovie is None or error is not objc.nil or
+  load_state < QTKit.QTMovieLoadStateLoaded):
     print "Miro-Movie-Data-Length: -1"
     print "Miro-Movie-Data-Thumbnail: Failure"
     print "Miro-Movie-Data-Type: other"
