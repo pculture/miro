@@ -246,8 +246,18 @@ class SharingTracker(object):
         self.event = threading.Event()
 
     def mdns_callback(self, added, fullname, host, port):
+        # alive is used to determine whether the client is still alive or not
+        # when the share goes away so we may be able to keep it.  Done here
+        # because we don't want to block the backend thread.
+        alive = False
+        try:
+            share_id = self.name_to_id_map[fullname]
+            tracker = self.trackers[share_id]
+            alive = tracker.client.alive()
+        except KeyError:
+            pass
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
-                                  args=[added, fullname, host, port])
+                                  args=[added, fullname, host, port, alive])
 
     def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
@@ -282,7 +292,7 @@ class SharingTracker(object):
                                  testconnect,
                                  'DAAP test connect')
 
-    def mdns_callback_backend(self, added, fullname, host, port):
+    def mdns_callback_backend(self, added, fullname, host, port, alive):
         if fullname == app.sharing_manager.name:
             return
         # Need to come up with a unique ID for the share.  We want to use the 
@@ -386,7 +396,7 @@ class SharingTracker(object):
                 share = self.trackers[share_id]
                 if share.share != share_info:
                     logging.error('Share disconn error: share info != share')
-                if not share.client.alive():
+                if not alive:
                     del self.available_shares[share_id]
                     messages.SharingDisappeared(share_info).send_to_frontend()
                 else:
