@@ -902,7 +902,7 @@ class DaapClient(object):
         except (socket.error, IOError, ValueError):
             self.disconnect()
             return None
-        except httplib.BadStatusLine
+        except httplib.BadStatusLine:
             self.disconnect(polite=False)
             return None
 
