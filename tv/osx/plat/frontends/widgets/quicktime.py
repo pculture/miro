@@ -202,8 +202,10 @@ class Player(player.Player):
         attributes = NSMutableDictionary.dictionary()
         # XXX bz:15481.  This shouldn't be synchronous.
         no = NSNumber.alloc().initWithBool_(NO)
+        yes = NSNumber.alloc().initWithBool_(YES)
         attributes['QTMovieURLAttribute'] = url
         attributes['QTMovieOpenAsyncOKAttribute'] = no
+        attributes['QTMovieOpenForPlaybackAttribute'] = yes
         qtmovie, error = QTMovie.movieWithAttributes_error_(attributes, None)
         if error is not None:
             logging.debug(unicode(error).encode('utf-8'))
