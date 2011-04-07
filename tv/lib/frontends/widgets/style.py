@@ -135,9 +135,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
                                        yalign=0.45, yscale=0.0)
         hbox.pack(alignment, expand=True)
         layout_manager.set_font(0.77, bold=True)
-        layout_manager.set_text_shadow(widgetutil.Shadow(
-            self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
-        layout_manager.set_text_color(widgetutil.WHITE)
         self.pack_bubbles(hbox, layout_manager, selected=selected)
         hbox.pack_space(2)
         alignment = cellpack.Alignment(hbox, yscale=0.0, yalign=0.5)
@@ -171,9 +168,13 @@ class TabRenderer(widgetset.CustomCellRenderer):
         radius = int(layout_manager.current_font.line_height() / 2.0 )+ 1
         if selected:
             layout_manager.set_text_color(widgetutil.BLACK)
+            layout_manager.set_text_shadow(None)
             color = widgetutil.WHITE
         else:
             layout_manager.set_text_color(widgetutil.WHITE)
+            layout_manager.set_text_shadow(widgetutil.Shadow(
+                self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
+
         if self.is_tall():
             margin = (0, radius, 2, radius)
         else:
