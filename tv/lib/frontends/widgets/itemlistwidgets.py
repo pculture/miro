@@ -1907,28 +1907,45 @@ class ItemDetailsWidget(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
         self.allocated_width = -1
+        self.empty_thumbnail = imagepool.get(
+                resources.path('images/item-details-empty-thumb.png'),
+                self.IMAGE_SIZE)
         # content_hbox holds our contents
-        content_hbox = widgetset.HBox(spacing=self.PADDING_MIDDLE)
+        self.content_hbox = widgetset.HBox(spacing=self.PADDING_MIDDLE)
         # pack left side
         self.image_widget = widgetset.ImageDisplay()
         image_background = ItemDetailsImageBackground()
         image_background.add(widgetutil.align(self.image_widget,
                 xalign=0.5, yalign=0.5))
         image_background.set_size_request(*self.IMAGE_SIZE)
-        content_hbox.pack_start(widgetutil.align_top(image_background))
+        self.content_hbox.pack_start(widgetutil.align_top(image_background))
         # pack right side
-        content_hbox.pack_start(widgetutil.pad(self.build_right()), expand=True)
+        self.right_side_normal = self.build_right()
+        self.right_side_empty = self.build_right_empty()
+        self.empty_mode = True
+        self.content_hbox.pack_end(self.right_side_empty, expand=True)
         # expander_button is used to expand/collapse our content
         self.expander_button = ItemDetailsExpanderButton()
         self.pack_start(self.expander_button)
         # pack our content
         background = ItemDetailsBackground()
-        background.add(widgetutil.align_top(content_hbox))
+        background.add(widgetutil.align_top(self.content_hbox))
         self.scroller = widgetset.Scroller(False, True)
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
         self._expanded = False
         self.license_url = None
+
+    def _set_empty_mode(self, empty_mode):
+        if empty_mode == self.empty_mode:
+            return
+        self.empty_mode = empty_mode
+        if empty_mode:
+            self.content_hbox.remove(self.right_side_normal)
+            self.content_hbox.pack_end(self.right_side_empty, expand=True)
+        else:
+            self.content_hbox.remove(self.right_side_empty)
+            self.content_hbox.pack_end(self.right_side_normal, expand=True)
 
     def on_license_clicked(self, button):
         if self.license_url:
@@ -1954,6 +1971,22 @@ class ItemDetailsWidget(widgetset.VBox):
         vbox.pack_start(widgetutil.align_left(self.extra_info_label,
             top_pad=self.PADDING_ABOVE_EXTRA_INFO))
         return vbox
+
+    def build_right_empty(self):
+        hbox = widgetset.HBox(spacing=16)
+        left_image = imagepool.get(resources.path('images/filigree-left.png'))
+        right_image = imagepool.get(
+                resources.path('images/filigree-right.png'))
+        hbox.pack_start(widgetset.ImageDisplay(left_image))
+        label = self.build_label()
+        label.set_text(_("Select an item to view more of its details"))
+        hbox.pack_start(label)
+        hbox.pack_start(widgetset.ImageDisplay(right_image))
+        # align things so that it's in the middle of the area available
+        alignment = widgetset.Alignment(0.5, 0.5)
+        alignment.add(hbox)
+        alignment.set_size_request(-1, self.EXPANDED_HEIGHT)
+        return alignment
 
     def build_label(self):
         label = widgetset.Label()
@@ -2004,6 +2037,7 @@ class ItemDetailsWidget(widgetset.VBox):
         image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
         self.image_widget.set_image(image)
         self.set_label_widths()
+        self._set_empty_mode(False)
 
     def set_extra_info_text(self, info):
         parts = []
@@ -2036,7 +2070,8 @@ class ItemDetailsWidget(widgetset.VBox):
         self.title_label.set_text('')
         self.description_label.set_text('')
         self.extra_info_label.set_text('')
-        self.image_widget.set_image(None)
+        self.image_widget.set_image(self.empty_thumbnail)
+        self._set_empty_mode(True)
 
     def do_size_allocated(self, width, height):
         if width == self.allocated_width:
