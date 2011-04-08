@@ -33,6 +33,7 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
+from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets import drawing
@@ -57,7 +58,13 @@ class DrawableButton(NSButton):
         self.layout_manager = LayoutManager()
         self.tracking_area = None
         self.mouse_inside = False
+        self.custom_cursor = None
         return self
+
+    def resetCursorRects(self):
+        if self.custom_cursor is not None:
+            self.addCursorRect_cursor_(self.visibleRect(), self.custom_cursor)
+            self.custom_cursor.setOnMouseEntered_(YES)
 
     def updateTrackingAreas(self):
         # remove existing tracking area if needed
@@ -229,7 +236,13 @@ class CustomSliderView(NSSlider):
     def init(self):
         self = super(CustomSliderView, self).init()
         self.layout_manager = LayoutManager()
+        self.custom_cursor = None
         return self
+
+    def resetCursorRects(self):
+        if self.custom_cursor is not None:
+            self.addCursorRect_cursor_(self.visibleRect(), self.custom_cursor)
+            self.custom_cursor.setOnMouseEntered_(YES)
 
     def isOpaque(self):
         return wrappermap.wrapper(self).is_opaque()
@@ -258,10 +271,21 @@ class CustomSliderView(NSSlider):
         return YES
 CustomSliderView.setCellClass_(CustomSliderCell)
 
-class CustomButton(drawing.DrawingMixin, Widget):
+class CustomControlBase(drawing.DrawingMixin, Widget):
+    def set_cursor(self, cursor):
+        if cursor == widgetconst.CURSOR_NORMAL:
+            self.view.custom_cursor = None
+        elif cursor == widgetconst.CURSOR_POINTING_HAND:
+            self.view.custom_cursor = NSCursor.pointingHandCursor()
+        else:
+            raise ValueError("Unknown cursor: %s" % cursor)
+        if self.view.window():
+            self.view.window().invalidateCursorRectsForView_(self.view)
+
+class CustomButton(CustomControlBase):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
-        Widget.__init__(self)
+        CustomControlBase.__init__(self)
         self.create_signal('clicked')
         self.view = DrawableButton.alloc().init()
         self.view.setRefusesFirstResponder_(NO)
@@ -295,10 +319,10 @@ class DragableCustomButton(CustomButton):
         self.create_signal('dragged-right')
         self.view = DragableDrawableButton.alloc().init()
 
-class CustomSlider(drawing.DrawingMixin, Widget):
+class CustomSlider(CustomControlBase):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
-        Widget.__init__(self)
+        CustomControlBase.__init__(self)
         self.create_signal('pressed')
         self.create_signal('released')
         self.create_signal('changed')

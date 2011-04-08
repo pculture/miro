@@ -2020,7 +2020,8 @@ class ItemDetailsWidget(widgetset.VBox):
         vbox.pack_start(self.torrent_info_holder)
         vbox.pack_start(widgetutil.align_left(self.title_label,
             top_pad=self.PADDING_ABOVE_TITLE))
-        self.license_button = widgetset.Button(_('View License'))
+        self.license_button = widgetutil.LinkButton(_('View License'),
+                font_size=self.DESCRIPTION_SIZE)
         self.license_button.connect('clicked', self.on_license_clicked)
         self.license_holder = widgetutil.WidgetHolder()
         vbox.pack_start(widgetutil.align_left(self.license_holder))

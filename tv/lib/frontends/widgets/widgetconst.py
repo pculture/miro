@@ -44,6 +44,10 @@ TEXT_JUSTIFY_LEFT = 0
 TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
+# cursors
+CURSOR_NORMAL = 0
+CURSOR_POINTING_HAND = 1
+
 # column properties
 # TODO: this stuff should probably be accessed through WSS, and COLUMN_LABELS
 # should be in widgetstateconstantstest

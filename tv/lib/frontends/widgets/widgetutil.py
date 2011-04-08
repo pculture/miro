@@ -34,6 +34,7 @@ import math
 
 from miro import app
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import widgetconst
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
@@ -401,6 +402,26 @@ class WidgetHolder(widgetset.VBox):
 # FIXME - we should rename the following button classes and put them
 # in another module.
 
+class LinkButton(widgetset.CustomButton):
+    """Button that emulates a hyperlink.
+    """
+    def __init__(self, text, font_size=1.0):
+        widgetset.CustomButton.__init__(self)
+        self.text = text
+        self.font_size = font_size
+        self.set_cursor(widgetconst.CURSOR_POINTING_HAND)
+
+    def _make_textbox(self, layout):
+        layout.set_font(self.font_size)
+        layout.set_text_color((0.0, 0.0, 1.0)) # blue
+        return layout.textbox(self.text, underline=True)
+
+    def size_request(self, layout):
+        return self._make_textbox(layout).get_size()
+
+    def draw(self, context, layout):
+        textbox = self._make_textbox(layout)
+        textbox.draw(context, 0, 0, context.width, context.height)
 
 class TitlebarButton(widgetset.CustomButton):
     """

@@ -240,21 +240,58 @@ gobject.type_register(DragableCustomButtonWidget)
 gobject.type_register(CustomHScaleWidget)
 gobject.type_register(CustomVScaleWidget)
 
-class CustomButton(Drawable, Widget):
+class CustomControlBase(Drawable, Widget):
+    def __init__(self):
+        Widget.__init__(self)
+        Drawable.__init__(self)
+        self._gtk_cursor = None
+        self._entry_handlers = None
+
+    def _connect_enter_notify_handlers(self):
+        if self._entry_handlers is None:
+            self._entry_handlers = [
+                    self.wrapped_widget_connect('enter-notify-event',
+                        self.on_enter_notify),
+                    self.wrapped_widget_connect('leave-notify-event',
+                        self.on_leave_notify),
+            ]
+
+    def _disconnect_enter_notify_handlers(self):
+        if self._entry_handlers is not None:
+            for handle in self._entry_handlers:
+                self._widget.disconnect(handle)
+            self._entry_handlers = None
+
+    def set_cursor(self, cursor):
+        if cursor == widgetconst.CURSOR_NORMAL:
+            self._gtk_cursor = None
+            self._disconnect_enter_notify_handlers()
+        elif cursor == widgetconst.CURSOR_POINTING_HAND:
+            self._gtk_cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
+            self._connect_enter_notify_handlers()
+        else:
+            raise ValueError("Unknown cursor: %s" % cursor)
+
+    def on_enter_notify(self, widget, event):
+        self._widget.window.set_cursor(self._gtk_cursor)
+
+    def on_leave_notify(self, widget, event):
+        if self._widget.window:
+            self._widget.window.set_cursor(None)
+
+class CustomButton(CustomControlBase):
     def __init__(self):
         """Create a new CustomButton.  active_image will be displayed while
         the button is pressed.  The image must have the same size.
         """
-        Widget.__init__(self)
-        Drawable.__init__(self)
+        CustomControlBase.__init__(self)
         self.set_widget(CustomButtonWidget())
         self.create_signal('clicked')
         self.forward_signal('clicked')
 
-class ContinuousCustomButton(Drawable, Widget):
+class ContinuousCustomButton(CustomControlBase):
     def __init__(self):
-        Widget.__init__(self)
-        Drawable.__init__(self)
+        CustomControlBase.__init__(self)
         self.set_widget(ContinuousCustomButtonWidget())
         self.button_down = False
         self.button_held = False
@@ -298,19 +335,17 @@ class ContinuousCustomButton(Drawable, Widget):
         if not self.button_held:
             self.emit('clicked')
 
-class DragableCustomButton(Drawable, Widget):
+class DragableCustomButton(CustomControlBase):
     def __init__(self):
-        Widget.__init__(self)
-        Drawable.__init__(self)
+        CustomControlBase.__init__(self)
         self.set_widget(DragableCustomButtonWidget())
         self.create_signal('clicked')
         self.create_signal('dragged-left')
         self.create_signal('dragged-right')
 
-class CustomSlider(Drawable, Widget):
+class CustomSlider(CustomControlBase):
     def __init__(self):
-        Widget.__init__(self)
-        Drawable.__init__(self)
+        CustomControlBase.__init__(self)
         self.create_signal('pressed')
         self.create_signal('released')
         self.create_signal('changed')
@@ -409,8 +444,7 @@ class ClickableImageButton(CustomButton):
         self._width, self._height = None, None
         if image_path:
             self.set_path(image_path)
-        self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
-        self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
+        self.set_cursor(widgetconst.CURSOR_POINTING_HAND)
 
     def set_path(self, path):
         image = Image(path)
@@ -443,10 +477,3 @@ class ClickableImageButton(CustomButton):
         context.set_color((0, 0, 0))    # black
         context.set_line_width(1)
         context.stroke()
-
-    def on_enter_notify(self, widget, event):
-        self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
-
-    def on_leave_notify(self, widget, event):
-        if self._widget.window:
-            self._widget.window.set_cursor(None)
