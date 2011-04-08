@@ -1322,7 +1322,8 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         pass
 
     def draw(self, context, layout):
-        self.background_image.draw(context, 0, 0, context.width, context.height)   
+        self.background_image.draw(context, 0, 0, context.width, context.height)
+
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
         button.connect('clicked', self.on_sorter_clicked, sort_key)
@@ -1434,8 +1435,8 @@ class SortBarButton(widgetset.CustomButton):
         text_size = layout.textbox(self._text).get_size()
         # Minus 1 because custom widgets don't currently draw a separator
         # at bottom ..
-        return text_size[0] + 36, max(text_size[1],
-                                      widgetset.CUSTOM_HEADER_HEIGHT - 1)
+        return int(text_size[0]) + 36, int(max(text_size[1],
+                                      widgetset.CUSTOM_HEADER_HEIGHT - 1))
 
     def draw(self, context, layout):
         text = 1    # white text
