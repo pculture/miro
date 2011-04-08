@@ -1438,22 +1438,22 @@ class SortBarButton(widgetset.CustomButton):
                                       widgetset.CUSTOM_HEADER_HEIGHT - 1)
 
     def draw(self, context, layout):
-        text = 1
-        arrow = 1
-        surface = self.surface
+        text = 1    # white text
+        arrow = 1   # white arrow
         if self._enabled:
             edge = 92.0 / 255
             surface = self.active_surface
         else:
+            surface = self.surface
             edge = 72.0 / 255
 
         # background
         surface.draw(context, 0, 0, context.width, context.height)
         # borders
-        context.move_to(0.5, 0)
-        context.rel_line_to(0, context.height)
-        #context.move_to(context.width, 0)
+        context.set_line_width(1)
         context.set_color((edge, edge, edge))
+        context.move_to(0.5, 0)
+        context.line_to(0.5, context.height)
         context.stroke()
         # text
         layout.set_font(0.8, bold=True)
