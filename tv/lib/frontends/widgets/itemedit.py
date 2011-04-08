@@ -133,7 +133,7 @@ class Field(object):
     def set_label_width(self, width):
         self.label_width = width
 
-    def get_box(self):
+    def get_box(self, parts=False):
         """Return the displayable widget for this field."""
         box = widgetset.HBox()
         if self.inside:
@@ -154,14 +154,18 @@ class Field(object):
         packables.extend(self.extra)
         for packable in packables[:-1]:
             box.pack_start(packable, expand=True)
+        if parts:
+            parts_right_pad = 4
+        else:
+            parts_right_pad = 20
         if self.checkbox:
             right_pad = 12
         else:
-            right_pad = 20
+            right_pad = parts_right_pad
         last = widgetutil.pad(packables[-1], right=right_pad)
         box.pack_start(last, expand=True)
         if self.checkbox:
-            right = 20
+            right = parts_right_pad
             checkbox_alignment = widgetutil.align_top(self.checkbox,
                                  top_pad=2, right_pad=right)
             box.pack_end(checkbox_alignment)
@@ -394,10 +398,10 @@ class MultifieldRow(object):
     def get_box(self):
         """Return a widget containing all child widgets."""
         box = widgetset.HBox()
-        for field in self.fields[1:]:
+        for field in self.fields[1:-1]:
             field.set_inside()
         for field in self.fields[:-1]:
-            box.pack_start(field.get_box())
+            box.pack_start(field.get_box(parts=True))
         self.fields[-1].set_right()
         box.pack_end(self.fields[-1].get_box())
         return box
