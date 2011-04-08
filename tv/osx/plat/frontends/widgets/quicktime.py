@@ -205,7 +205,8 @@ class Player(player.Player):
         yes = NSNumber.alloc().initWithBool_(YES)
         attributes['QTMovieURLAttribute'] = url
         attributes['QTMovieOpenAsyncOKAttribute'] = no
-        attributes['QTMovieOpenForPlaybackAttribute'] = yes
+        # FIXME: Can't use yet or can_open_file() fails.
+        #attributes['QTMovieOpenForPlaybackAttribute'] = yes
         qtmovie, error = QTMovie.movieWithAttributes_error_(attributes, None)
         if error is not None:
             logging.debug(unicode(error).encode('utf-8'))
