@@ -38,6 +38,7 @@ from objc import YES, NO, nil
 from miro.plat.utils import filename_to_unicode
 from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
+from miro.plat.frontends.widgets import drawing
 from miro.plat.frontends.widgets import wrappermap
 
 """A collection of various simple widgets."""
@@ -110,17 +111,18 @@ class TransformedImage(Image):
     def __init__(self, nsimage):
         self._set_image(nsimage)
 
-class NSImageDisplay(NSBox):
+class NSImageDisplay(NSView):
     def init(self):
         self = super(NSImageDisplay, self).init()
-        self.setTitle_('')
-        self.setBoxType_(NSBoxCustom)
-        self.setBorderType_(NSLineBorder)
+        self.border = False
         self.image = None
         return self
 
     def isFlipped(self):
         return YES
+
+    def set_border(self, border):
+        self.border = border
 
     def set_image(self, image):
         self.image = image
@@ -133,9 +135,13 @@ class NSImageDisplay(NSBox):
                 NSImageInterpolationHigh)
             self.image.nsimage.drawInRect_fromRect_operation_fraction_(
                 dest_rect, source_rect, NSCompositeSourceOver, 1.0)
-
-        # Draw this last so the borders are always visible.
-        super(NSImageDisplay, self).drawRect_(dest_rect)
+        if self.border:
+            context = drawing.DrawingContext(self, self.bounds(), dest_rect)
+            context.style = drawing.DrawingStyle()
+            context.set_line_width(1)
+            context.set_color((0, 0, 0))    # black
+            context.rectangle(0, 0, context.width, context.height)
+            context.stroke()
 
     def calculateSourceRectFromDestRect_(self, dest_rect):
         """Calulate where dest_rect maps to on our image.
@@ -172,6 +178,9 @@ class ImageDisplay(Widget):
         self.view.set_image(image)
         self.invalidate_size_request()
 
+    def set_border(self, border):
+        self.view.set_border(border)
+
     def calc_size_request(self):
         if self.image is not None:
             return self.image.width, self.image.height
@@ -181,6 +190,7 @@ class ImageDisplay(Widget):
 class ClickableImageButton(ImageDisplay):
     def __init__(self, image_path, max_width=None, max_height=None):
         ImageDisplay.__init__(self)
+        self.set_border(True)
         self.max_width = max_width
         self.max_height = max_height
         self.image = None
