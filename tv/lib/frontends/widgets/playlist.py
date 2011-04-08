@@ -56,20 +56,19 @@ class DropHandler(signals.SignalEmitter):
     def allowed_types(self):
         return ('downloaded-item',)
 
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
-            position):
+    def validate_drop(self,
+            table_view, model, typ, source_actions, parent, position):
         if position != -1 and typ == 'downloaded-item':
             return widgetset.DRAG_ACTION_MOVE
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
-            position, data):
-        dragged_ids = [int(id) for id in data.split('-')]
+    def accept_drop(self,
+            table_view, model, typ, source_actions, parent, position, dragged):
         if 0 <= position < len(model):
             insert_id =  model.nth_row(position)[0].id
             # If we try to insert before an ID that iself is being
             # dragged we get an error
-            while insert_id in dragged_ids:
+            while insert_id in dragged:
                 position += 1
                 # If we iterate to the end of the playlist
                 # we cancel the iteration
@@ -79,7 +78,7 @@ class DropHandler(signals.SignalEmitter):
                 insert_id = model.nth_row(position)[0].id
         else:
             insert_id = None
-        new_order = self.sorter.move_ids_before(insert_id, dragged_ids)
+        new_order = self.sorter.move_ids_before(insert_id, dragged)
         self.item_list.resort()
         for item_view in self.item_views:
             item_view.model_changed()

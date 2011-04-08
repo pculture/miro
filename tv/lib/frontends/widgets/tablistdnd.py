@@ -31,7 +31,6 @@
 
 import logging
 
-from miro import app
 from miro import messages
 from miro.plat.frontends.widgets import widgetset
 
@@ -45,16 +44,14 @@ class TabListDragHandler(object):
         return (self.item_type, self.folder_type)
 
     def begin_drag(self, _tableview, rows):
-        """Returns (tablist.type as a str, drag_data)"""
-        typ = self.item_type
-        for row in rows:
-            if row[0].type == 'tab':
-                return None
-            if row[0].is_folder:
-                typ = self.folder_type
-                break
-        typ = typ.encode('ascii', 'replace')
-        return { typ: '-'.join(str(r[0].id) for r in rows)}
+        """Returns {(tablist.type as a str): (repr of a set of ids)}"""
+        if rows[0][0].type == 'tab': # first is a tab if and only if all are
+            return None
+        if any(row[0].is_folder for row in rows):
+            typ = self.folder_type
+        else:
+            typ = self.item_type
+        return { str(typ): repr(set(row[0].id for row in rows)) }
 
 class TabDnDReorder(object):
     """Handles re-ordering tabs for doing drag and drop reordering."""
@@ -88,8 +85,7 @@ class TabDnDReorder(object):
         iter_ = model.first_iter()
         if not iter_:
             app.widgetapp.handle_soft_failure('_remove_dragged_rows',
-                "tried to drag no rows?",
-                with_exception=False)
+                "tried to drag no rows?", with_exception=False)
             return
         iter_ = model.child_iter(iter_)
         while iter_:
@@ -145,33 +141,23 @@ class MediaTypeDropHandler(object):
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
 
-    def _is_valid_drop(self, model, typ, parent, position):
+    def validate_drop(self,
+            _table_view, model, typ, _source_actions, parent, position):
         if parent is None or position != -1:
-            return False
+            return widgetset.DRAG_ACTION_NONE
         if typ == 'downloaded-item':
-            return model[parent][0].id in ('videos', 'music', 'others')
-        media_type = model[parent][0].media_type
-        if typ == ('device-%s-item' % media_type):
-            return True
-
-    def validate_drop(self, _table_view, model, typ, _source_actions, parent,
-            position):
-        if self._is_valid_drop(model, typ, parent, position):
+            if model[parent][0].id in ('videos', 'music', 'others'):
+                return widgetset.DRAG_ACTION_COPY
+            else:
+                return widgetset.DRAG_ACTION_NONE
+        elif typ == 'device-%s-item' % model[parent][0].media_type:
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, _table_view, model, typ, _source_actions, parent,
-            position, data):
-        if self._is_valid_drop(model, typ, parent, position):
-            video_ids = [int(id_) for id_ in data.split('-')]
-            media_type = model[parent][0].media_type
-            m = messages.SetItemMediaType(media_type, video_ids)
-            m.send_to_backend()
-            return True
-        app.widgetapp.handle_soft_failure('accept_drop',
-            "tried to accept a drop that shouldn't have validated!",
-            with_exception=False)
-        return False
+    def accept_drop(self,
+            _table_view, model, typ, _source_actions, parent, position, videos):
+        media_type = model[parent][0].media_type
+        messages.SetItemMediaType(media_type, videos).send_to_backend()
 
 class NestedTabListDropHandler(object):
     item_types = NotImplemented
@@ -186,34 +172,21 @@ class NestedTabListDropHandler(object):
     def allowed_types(self):
         return self.item_types + self.folder_types
 
-    def validate_drop(self, _table_view, model, typ, _source_actions, parent,
-            position):
-        if parent is None:
-            # can't drag above the root
+    def validate_drop(self,
+            _table_view, model, typ, _source_actions, parent, position):
+        if parent is None: # trying to drag above the root
             return widgetset.DRAG_ACTION_NONE
-        if position < 0:
-            is_folder = model[parent][0].is_folder
-        elif position < model.children_count(parent):
-            iter_ = model.nth_child_iter(parent, position)
-            is_folder = model[iter_][0].is_folder
-        else:
-            is_folder = False
-        parent_info = model[parent][0]
-        if position == -1 and not is_folder:
-            # Only folders can be dropped on
+        if model[parent][0].is_folder:
+            if typ in self.folder_types:
+                return widgetset.DRAG_ACTION_NONE
+        elif position < 0: # trying to drag onto non-folder
             return widgetset.DRAG_ACTION_NONE
-        if (typ in self.folder_types and (
-            (position == -1 and is_folder) or parent_info.is_folder)):
-            # Don't allow folders to be dropped in other folders
-            return widgetset.DRAG_ACTION_NONE
-        elif typ not in self.item_types + self.folder_types:
+        if typ not in self.allowed_types():
             return widgetset.DRAG_ACTION_NONE
         return widgetset.DRAG_ACTION_MOVE
 
-    def accept_drop(self, _table_view, model, typ, _source_actions, parent,
-            position, data):
-        dragged_ids = set(int(id_) for id_ in data.split('-'))
-        view = self.tablist.view
+    def accept_drop(self,
+            view, model, typ, _source_actions, parent, position, dragged_ids):
         # NOTE: combine 'with' statements in python2.7+
         with self.tablist.preserving_expanded_rows():
             with self.tablist.adding():
@@ -241,9 +214,7 @@ class NestedTabListDropHandler(object):
             message.append(row[0], self.tablist.type)
             for child in row.iterchildren():
                 message.append_child(row[0].id, child[0])
-
         message.send_to_backend()
-        return True
 
 class FeedListDropHandler(NestedTabListDropHandler):
     item_types = ('feed',)
@@ -264,35 +235,25 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
     def allowed_types(self):
         return NestedTabListDropHandler.allowed_types(self) + ('downloaded-item',)
 
-    def validate_drop(self, table_view, model, typ, source_actions, parent,
-            position):
-        if parent is None:
-            return widgetset.DRAG_ACTION_NONE
-        if model[parent][0].type == 'tab' and position == -1:
-            return widgetset.DRAG_ACTION_NONE
+    def validate_drop(self,
+            table_view, model, typ, source_actions, parent, position):
         if typ == 'downloaded-item':
-            if position == -1 and not model[parent][0].is_folder:
-                return widgetset.DRAG_ACTION_COPY
-            else:
+            if position != -1:
                 return widgetset.DRAG_ACTION_NONE
-        return NestedTabListDropHandler.validate_drop(self, table_view, model, typ,
-                source_actions, parent, position)
+            if (not parent or model[parent][0].type == 'tab'
+                    or model[parent][0].is_folder):
+                return widgetset.DRAG_ACTION_NONE
+            return widgetset.DRAG_ACTION_COPY
+        return NestedTabListDropHandler.validate_drop(self,
+                table_view, model, typ, source_actions, parent, position)
 
-    def accept_drop(self, table_view, model, typ, source_actions, parent,
-            position, data):
+    def accept_drop(self,
+            table_view, model, typ, source_actions, parent, position, ids):
         if typ == 'downloaded-item':
-            if parent is not None and position == -1:
-                playlist_id = model[parent][0].id
-                video_ids = [int(id_) for id_ in data.split('-')]
-                messages.AddVideosToPlaylist(playlist_id,
-                        video_ids).send_to_backend()
-                return True
-            app.widgetapp.handle_soft_failure('accept_drop',
-                "tried to accept a drop that shouldn't have validated!",
-                with_exception=False)
-            return False
-        return NestedTabListDropHandler.accept_drop(self, table_view, model, typ,
-                source_actions, parent, position, data)
+            playlist_id = model[parent][0].id
+            messages.AddVideosToPlaylist(playlist_id, ids).send_to_backend()
+        NestedTabListDropHandler.accept_drop(self,
+                table_view, model, typ, source_actions, parent, position, ids)
 
 class PlaylistListDragHandler(TabListDragHandler):
     item_type = u'playlist'
@@ -308,8 +269,8 @@ class DeviceDropHandler(object):
     def allowed_types(self):
         return ('downloaded-item',)
 
-    def validate_drop(self, _widget, model, typ, _source_actions, parent,
-                      position):
+    def validate_drop(self,
+            _widget, model, typ, _source_actions, parent, position):
         if position == -1 and parent and typ in self.allowed_types():
             device = model[parent][0]
             if not isinstance(device, messages.DeviceInfo):
@@ -319,9 +280,7 @@ class DeviceDropHandler(object):
                 return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, _widget, model, _type, _source_actions, parent,
-                    _position, data):
-        video_ids = [int(id_) for id_ in data.split('-')]
+    def accept_drop(self,
+            _widget, model, _type, _source_actions, parent, _position, videos):
         device = model[parent][0]
-        messages.DeviceSyncMedia(device, video_ids).send_to_backend()
-        return True
+        messages.DeviceSyncMedia(device, videos).send_to_backend()

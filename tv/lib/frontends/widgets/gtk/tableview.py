@@ -1160,7 +1160,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if drop_action:
                 self.drag_dest.accept_drop(self, self.model, type,
                         drag_context.actions, pos_info[0], pos_info[1],
-                        selection.data)
+                        eval(selection.data))
                 return True
         return False
 

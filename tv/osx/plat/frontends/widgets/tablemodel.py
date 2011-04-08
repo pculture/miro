@@ -467,11 +467,12 @@ class DataSourceBase(NSObject):
             parent, position):
         typ = self.calcType_(drag_info)
         if typ:
-            data = drag_info.draggingPasteboard().stringForType_(typ)
+            ids = eval(drag_info.draggingPasteboard().stringForType_(typ))
             wrapper = wrappermap.wrapper(view)
-            return self.drag_dest.accept_drop(wrapper, self.model, typ, 
-                    drag_info.draggingSourceOperationMask(), parent,
-                    position, data)
+            self.drag_dest.accept_drop(wrapper, self.model, typ, 
+                drag_info.draggingSourceOperationMask(), parent,
+                position, ids)
+            return YES
         else:
             return NO
 

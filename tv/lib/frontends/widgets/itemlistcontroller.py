@@ -68,14 +68,9 @@ class ItemListDragHandler(object):
         return ('downloaded-item',)
 
     def begin_drag(self, tableview, rows):
-        videos = []
-        for row in rows:
-            item_info = row[0]
-            if item_info.downloaded:
-                videos.append(item_info)
+        videos = set(row[0].id for row in rows if row[0].downloaded)
         if videos:
-            data = '-'.join(str(info.id) for info in videos)
-            return {'downloaded-item':  data }
+            return {'downloaded-item': repr(videos)}
         else:
             return None
 
