@@ -463,7 +463,7 @@ class GeneralPanel(DialogPanel):
         left.append(TextField('genre', self.items, _("Genre")))
         left.append(MultifieldRow(
             NumberField('track', self.items, _("Track"), width=2),
-            NumberField('album_tracks', self.items, _("of"), width=2),
+            NumberField('album_tracks', self.items, _("/"), width=2),
             NumberField('year', self.items, _("Year"), width=4),
         ))
         left.append(LongTextField('description', self.items, _("About")))
