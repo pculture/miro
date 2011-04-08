@@ -189,6 +189,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
             name = 'blue-bubble'
         elif color == widgetutil.WHITE:
             name = 'white-bubble'
+        elif color == DOWNLOADING_COLOR:
+            name = 'orange-bubble'
         else:
             name = 'green-bubble'
         def get_surface(part):
