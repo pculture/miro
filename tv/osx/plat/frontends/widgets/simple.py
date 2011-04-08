@@ -110,9 +110,12 @@ class TransformedImage(Image):
     def __init__(self, nsimage):
         self._set_image(nsimage)
 
-class NSImageDisplay(NSView):
+class NSImageDisplay(NSBox):
     def init(self):
         self = super(NSImageDisplay, self).init()
+        self.setTitle_('')
+        self.setBoxType_(NSBoxCustom)
+        self.setBorderType_(NSLineBorder)
         self.image = None
         return self
 
@@ -124,12 +127,14 @@ class NSImageDisplay(NSView):
 
     def drawRect_(self, dest_rect):
         if self.image is None:
+            super(NSImageDisplay, self).drawRect_(dest_rect)
             return
         source_rect = self.calculateSourceRectFromDestRect_(dest_rect)
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
         self.image.nsimage.drawInRect_fromRect_operation_fraction_(dest_rect,
                 source_rect, NSCompositeSourceOver, 1.0)
+        super(NSImageDisplay, self).drawRect_(dest_rect)
 
     def calculateSourceRectFromDestRect_(self, dest_rect):
         """Calulate where dest_rect maps to on our image.
