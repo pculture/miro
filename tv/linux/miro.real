@@ -84,6 +84,10 @@ group.add_option('--set',
                  help="Sets a preference and saves the new value for "
                  "future Miro runs.  Example: miro --set renderer=gstreamer")
 parser.set_defaults(set_prefs=[])
+parser.add_option('--window',
+                  dest='window',
+                  metavar='<WINDOW>',
+                  help='<width>x<height> dimensions for the main window.')
 parser.add_option_group(group)
 
 group = optparse.OptionGroup(parser, "Tools")
@@ -244,6 +248,17 @@ def startapp():
     if parsed_options.theme:
         options.themeName = parsed_options.theme
         print 'Theme is %s' % parsed_options.theme
+
+    if parsed_options.window:
+        try:
+            width, height = [int(mem) for mem in parsed_options.window.split("x")]
+            width = max(800, width)
+            height = max(600, height)
+            options.override_dimensions = (width, height)
+        except ValueError:
+            print "'%s' is not a valid value." % parsed_options.window
+            print "Usage: --window=<width>x<height>"
+            sys.exit(1)
 
     commandline.set_command_line_args(args)
     startfrontend.run_application(parsed_options.frontend, props_to_set,

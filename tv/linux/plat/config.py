@@ -48,7 +48,7 @@ client = gconf.client_get_default()
 gconf_lock = threading.RLock()
 
 
-def _gconf_key(key):
+def gconf_key(key):
     if options.gconf_name is None:
         options.gconf_name = "miro"
     return '/apps/%s/%s' % (options.gconf_name, key)
@@ -91,7 +91,7 @@ class GconfDict:
         if "MIRO_%s" % key.upper() in os.environ:
             return os.environ["MIRO_%s" % key.upper()]
 
-        fullkey = _gconf_key(key)
+        fullkey = gconf_key(key)
         return _get_gconf(fullkey, default)
 
     def __contains__(self, key):
@@ -100,7 +100,7 @@ class GconfDict:
 
         gconf_lock.acquire()
         try:
-            fullkey = _gconf_key(key)
+            fullkey = gconf_key(key)
             return client.get(fullkey) is not None
         finally:
             gconf_lock.release()
@@ -121,7 +121,7 @@ class GconfDict:
             if not isinstance(key, str):
                 raise TypeError()
 
-            fullkey = _gconf_key(key)
+            fullkey = gconf_key(key)
             if isinstance(value, str):
                 client.set_string(fullkey, value)
             elif isinstance(value, bool):

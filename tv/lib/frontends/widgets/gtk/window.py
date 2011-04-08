@@ -470,6 +470,19 @@ class Window(WindowBase):
         size = self._window.get_size()
         return widgets.Rect(pos[0], pos[1], size[0], size[1])
 
+    def set_frame(self, x=None, y=None, width=None, height=None):
+        if x is not None or y is not None:
+            pos = self._window.get_position()
+            x = x if x is not None else pos[0]
+            y = y if y is not None else pos[1]
+            self._window.move(x, y)
+
+        if width is not None or height is not None:
+            size = self._window.get_size()
+            width = width if width is not None else size[0]
+            height = height if height is not None else size[1]
+            self._window.resize(width, height)
+
     def check_position_and_fix(self):
         """This pulls the geometry of the monitor of the screen this
         window is on as well as the position of the window.

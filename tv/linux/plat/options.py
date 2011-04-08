@@ -38,6 +38,7 @@ frontend = 'html'
 themeName = None
 gconf_name = None
 user_home = "~/"
+override_dimensions = None
 
 from miro.prefs import Pref
 

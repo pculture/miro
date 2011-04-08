@@ -53,7 +53,7 @@ from miro import prefs
 from miro.frontends.widgets.application import Application
 # from miro.plat.frontends.widgets import threads
 from miro.plat import renderers, options
-from miro.plat.config import gconf_lock
+from miro.plat.config import gconf_lock, gconf_key
 from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
 from miro.plat.utils import get_cookie_path
@@ -74,7 +74,7 @@ def _get_pref(key, getter_name):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
-        fullkey = '/apps/miro/' + key
+        fullkey = gconf_key(key)
         value = client.get(fullkey)
         if value is not None:
             getter = getattr(value, getter_name)
@@ -89,7 +89,7 @@ def _set_pref(key, setter_name, value):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
-        fullkey = '/apps/miro/' + key
+        fullkey = gconf_key(key)
         setter = getattr(client, setter_name)
         setter(fullkey, value)
     finally:
@@ -245,6 +245,13 @@ class LinuxApplication(Application):
             self.trayicon.set_visible(True)
         else:
             self.trayicon.set_visible(False)
+
+        # if the user specified override dimensions on the command line,
+        # set them here.
+        if options.override_dimensions:
+            self.window.set_frame(
+                width=options.override_dimensions[0],
+                height=options.override_dimensions[1])
 
         # check x, y to make sure the window is visible and fix it
         # if not
