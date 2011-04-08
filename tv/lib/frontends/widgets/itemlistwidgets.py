@@ -1597,6 +1597,8 @@ class ProgressToolbar(Toolbar):
         Toolbar.__init__(self)
         loading_icon = widgetset.AnimatedImageDisplay(
                        resources.path('images/load-indicator.gif'))
+        self.hbox = widgetset.HBox()
+        self.add(self.hbox)
         self.label = widgetset.Label()
         self.meter = widgetutil.HideableWidget(loading_icon)
         self.label_widget = widgetutil.HideableWidget(self.label)
@@ -1611,11 +1613,11 @@ class ProgressToolbar(Toolbar):
     def _display(self):
         if not self.set_up:
             padding = 380 - self.label.get_width()
-            self.pack_start(
+            self.hbox.pack_start(
                 widgetutil.align(
                     self.label_widget, 1, 0.5, 1, 0, 0, 0, padding, 10),
                 expand=False)
-            self.pack_start(widgetutil.align_left(
+            self.hbox.pack_start(widgetutil.align_left(
                             self.meter, 0, 0, 0, 200), expand=True)
             self.set_up = True
         if not self.displayed:
