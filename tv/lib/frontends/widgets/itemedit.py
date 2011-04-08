@@ -410,7 +410,11 @@ class MultifieldRow(object):
             field.set_inside()
         for field in self.fields[:-1]:
             box.pack_start(field.get_box(parts=True))
-        self.fields[-1].set_right()
+        # XXX: not quite right when you enable this - the layout API needs
+        # to improve.  Needs to be able to set left/middle/right and also
+        # deal with things packed into different hbox and vboxes.  But
+        # at least with this disabled things look right.
+        #self.fields[-1].set_right()
         box.pack_end(self.fields[-1].get_box())
         return box
 
