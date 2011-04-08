@@ -1950,7 +1950,7 @@ class ItemDetailsWidget(widgetset.VBox):
     PADDING_ABOVE_TITLE = 20
     PADDING_ABOVE_DESCRIPTION = 8
     PADDING_ABOVE_EXTRA_INFO = 25
-    IMAGE_SIZE = (165, 165)
+    IMAGE_SIZE = (190, 190)
     TEXT_COLOR = (0.176, 0.176, 0.176)
     TITLE_SIZE = widgetutil.font_scale_from_osx_points(14)
     DESCRIPTION_SIZE = widgetutil.font_scale_from_osx_points(11)
