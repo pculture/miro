@@ -79,42 +79,91 @@ class Titlebar(Toolbar):
         Toolbar.__init__(self)
         self.set_size_request(-1, 55)
 
-class ViewToggler(widgetset.CustomButton):
-    def __init__(self):
+class TogglerButton(widgetset.CustomButton):
+    LEFT = 0
+    RIGHT = 1
+    def __init__(self, image_name, pos):
         widgetset.CustomButton.__init__(self)
         self.set_can_focus(False)
-        self.selected_view = WidgetStateStore.get_standard_view_type()
-        self.normal_image = imagepool.get_surface(resources.path(
-            'images/normal-view-button-icon.png'))
-        self.list_image = imagepool.get_surface(resources.path(
-            'images/list-view-button-icon.png'))
-        self.connect('clicked', self._on_clicked)
-        self.create_signal('normal-view-clicked')
-        self.create_signal('list-view-clicked')
+        self.state = 'normal'
+        self._enabled = False
+        self._pos = pos
+        self.surface = imagepool.get_surface(
+            resources.path('images/%s.png' % image_name))
+        self.active_surface = imagepool.get_surface(
+            resources.path('images/%s_active.png' % image_name))
+
+    def do_size_request(self):
+        return (max(self.surface.width, self.active_surface.width),
+                max(self.surface.height, self.active_surface.height))
 
     def size_request(self, layout):
-        return self.normal_image.width, 50 # want to make the titlebar higher
+        return self.do_size_request()
+
+    def set_pressed(self, pressed):
+        self._enabled = pressed
+        self.queue_redraw()
 
     def draw(self, context, layout):
-        if WidgetStateStore.is_standard_view(self.selected_view):
-            image = self.normal_image
+        if self._enabled:
+            surface = self.active_surface
         else:
-            image = self.list_image
-        y = int((context.height - image.height) / 2)
-        image.draw(context, 0, y, image.width, image.height)
+            surface = self.surface
+        # XXX Working on the basis of LEFT/RIGHT only does not allow toggles
+        # with multiple states.
+        w = int(surface.width)
+        h = int(surface.height)
+        y = 0
+        if self._pos == TogglerButton.RIGHT:
+            x = 0
+        else:
+            x = int(self.do_size_request()[0] - surface.width)
+        surface.draw(context, x, y, w, h)
+
+class ViewToggler(widgetset.HBox):
+    def __init__(self):
+        widgetset.HBox.__init__(self)
+        self.create_signal('normal-view-clicked')
+        self.create_signal('list-view-clicked')
+        self.selected_view = WidgetStateStore.get_standard_view_type()
+        self.togglers = dict()
+        standard_view = WidgetStateStore.get_standard_view_type()
+        list_view = WidgetStateStore.get_list_view_type()
+
+        self.toggler_events = dict()
+
+        self.toggler_events[standard_view] = 'normal-view-clicked'
+        self.toggler_events[list_view] = 'list-view-clicked'
+
+        self.togglers[standard_view] = TogglerButton('standard-view',
+                                                     TogglerButton.LEFT)
+        self.togglers[list_view]= TogglerButton('list-view',
+                                                 TogglerButton.RIGHT)
+
+        for t in self.togglers.values():
+            t.connect('clicked', self.on_clicked)
+
+        self.togglers[self.selected_view].set_pressed(True)
+        self.pack_start(self.togglers[standard_view])
+        self.pack_start(self.togglers[list_view])
+
+    def size_request(self, layout):
+        w = sum([widget.size_request()[0] for widget in self.togglers.values()])
+        return w, 50 # want to make the titlebar higher
 
     def switch_to_view(self, view):
         if view is not self.selected_view:
             self.selected_view = view
-            self.queue_redraw()
+            for key in self.togglers:
+                enabled = key == self.selected_view
+                self.togglers[key].set_pressed(enabled)
 
-    def _on_clicked(self, button):
-        if WidgetStateStore.is_standard_view(self.selected_view):
-            self.emit('list-view-clicked')
-            self.switch_to_view(WidgetStateStore.get_list_view_type())
-        else:
-            self.emit('normal-view-clicked')
-            self.switch_to_view(WidgetStateStore.get_standard_view_type())
+    def on_clicked(self, button):
+        for key in self.togglers:
+            if self.togglers[key] is button:
+                self.emit(self.toggler_events[key])
+                self.switch_to_view(key)
+                break
 
 class FilterButton(widgetset.CustomButton):
 
@@ -328,7 +377,7 @@ class ItemListTitlebar(Titlebar):
                 hbox.pack_end(extra)
         toggle = self._build_view_toggle()
         if toggle:
-            hbox.pack_end(toggle)
+            hbox.pack_end(widgetutil.align_middle(toggle))
         self.resume_button = ResumePlaybackButton()
         self.resume_button.connect('clicked', self._on_resume_button_clicked)
         self.resume_button_holder = widgetutil.HideableWidget(
