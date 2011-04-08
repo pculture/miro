@@ -80,7 +80,7 @@ class DeviceTracker(object):
 
     def _get_device_info(self, device):
         mount = device['mount']
-        if os.path.exists(mount):
+        if mount and os.path.exists(mount):
             available = ctypes.wintypes.LARGE_INTEGER()
             total = ctypes.wintypes.LARGE_INTEGER()
             ctypes.windll.kernel32.GetDiskFreeSpaceExW(
@@ -90,7 +90,7 @@ class DeviceTracker(object):
                 None)
             device['size'] = total.value
             device['remaining'] = available.value
-        else:
+        elif mount:
             device['future_mount'] = device['mount']
             device['mount'] = None
 
