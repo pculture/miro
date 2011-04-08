@@ -495,10 +495,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     # XXX TODO: a lot of junk we want to do here:
     # sort-headers - seems to be like asking the server to sort something
-    # metadata - no support for this at the moment either.  Pretend we don't
-    #            have any!!
     # type=xxx - not parsed yet.  I don't think it's actually used (?)
-    # transcoding - nupe, no support yet.
     # try to invoke any of this the server will go BOH BOH!!!! no support!!!
     def do_itemlist(self, path, query, playlist_id=None):
         # Library playlist?
