@@ -307,19 +307,26 @@ class ThumbnailField(DialogOwnerMixin, Field):
         Field.__init__(self, 'cover_art', items, label)
         DialogOwnerMixin.__init__(self, self.DIALOG, self.TITLE)
         path = self.common_value
-        if not path:
-            thumb = self.mixed_values and 'mixed' or 'none'
-            path = resources.path('images/thumb-%s.png' % thumb)
 
+        vbox = widgetset.VBox(spacing=5)
+        label = widgetset.Label()
+        label.set_text(_('Click to choose image.'))
+        label.set_color(widgetutil.css_to_color('#a9a9a9'))
         try:
-            self.widget = widgetset.ClickableImageButton(path, 134, 134)
+            widget = widgetset.ClickableImageButton(path, 134, 134)
         except ValueError:
             # ValueError can happen if the image isn't valid and can't
             # be loaded
             path = resources.path('images/broken-image.gif')
-            self.widget = widgetset.ClickableImageButton(path, 134, 134)
+            widget = widgetset.ClickableImageButton(path, 134, 134)
 
-        self.widget.connect('clicked', self.show_dialog)
+        widget.connect('clicked', self.show_dialog)
+
+        vbox.pack_start(widget)
+        vbox.pack_start(label)
+
+        self.thumb_widget = widget
+        self.widget = vbox
 
     @classmethod
     def _value_filter(cls, value, item):
@@ -339,7 +346,7 @@ class ThumbnailField(DialogOwnerMixin, Field):
         # overreaction to Canceling the file chooser. Probably should have a "No
         # image" button in the dialog?
         if new_path:
-            self.widget.set_path(new_path)
+            self.thumb_widget.set_path(new_path)
 
 class PathField(DialogOwnerMixin, Field):
     """A field for choosing the location for a file. Becomes a
