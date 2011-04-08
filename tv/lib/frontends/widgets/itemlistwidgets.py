@@ -1984,7 +1984,10 @@ class ItemDetailsWidget(widgetset.VBox):
         # pack our content
         background = ItemDetailsBackground()
         background.add(widgetutil.align_top(self.content_hbox))
-        self.scroller = widgetset.Scroller(False, True)
+        # HACK: we need to set the horizontal scroller to True, even though we
+        # don't intend to use it.  Otherwise we can't make the window narrower
+        # after we set the size request for our labels.
+        self.scroller = widgetset.Scroller(True, True)
         self.scroller.add(background)
         self.scroller.set_size_request(-1, self.EXPANDED_HEIGHT)
         self._expanded = False
