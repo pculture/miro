@@ -939,7 +939,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 break
 
     def _info_is_playable(self, item_info):
-        return not item_info.is_container_item
+        return not item_info.is_container_item and item_info.downloaded
 
     def _find_playable(self, item_info, backwards=False):
         if backwards:
