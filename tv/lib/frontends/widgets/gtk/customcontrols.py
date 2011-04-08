@@ -407,7 +407,8 @@ class ClickableImageButton(CustomButton):
         self.max_height = max_height
         self.image = None
         self._width, self._height = None, None
-        self.set_path(image_path)
+        if image_path:
+            self.set_path(image_path)
         self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
         self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
         self.wrapped_widget_connect('button-release-event', self.on_click)
@@ -420,10 +421,29 @@ class ClickableImageButton(CustomButton):
         self._width, self._height = image.width, image.height
 
     def size_request(self, layout):
-        return self._width, self._height
+        w = self._width
+        h = self._height
+        if not w:
+            w = self.max_width
+        if not h:
+            h = self.max_height
+        return w, h
 
     def draw(self, context, layout):
-        self.image.draw(context, 0, 0, self._width, self._height)
+        if self.image:
+            self.image.draw(context, 0, 0, self._width, self._height)
+        w = self._width
+        h = self._height
+        if not w:
+            w = self.max_width
+        if not h:
+            h = self.max_height
+        w = min(context.width, w)
+        h = min(context.height, h)
+        context.rectangle(0, 0, w, h)
+        context.set_color((0, 0, 0))    # black
+        context.set_line_width(1)
+        context.stroke()
 
     def on_click(self, widget, event):
         self.emit('clicked', event)
