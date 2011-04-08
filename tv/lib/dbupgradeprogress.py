@@ -69,11 +69,13 @@ def convert20_progress(current_step, total_step):
 def new_style_progress(start_version, current_version, end_version):
     """Call while stepping through new-style upgrades"""
     progress = _calc_progress(start_version, current_version, end_version)
-    # new style upgrades take us to %75
     if _doing_20_upgrade:
+        # new style upgrades take us from 50% to %75
         total = 0.50 + 0.25 * progress
     else:
-        total = 0.75 * progress
+        # Take us from 5% to 75%.  Start at 5% progress to make things feel a
+        # bit faster (#16383)
+        total = 0.05 + (0.70 * progress)
     _send_message(_('Upgrading Database'), progress, total)
 
 def infocache_progress(current_item, total_items):
