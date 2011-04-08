@@ -1536,7 +1536,7 @@ class EmptyListDescription(widgetset.Alignment):
         self.label.set_size_request(550, -1)
         self.add(self.label)
 
-class ProgressToolbar(widgetset.HBox):
+class ProgressToolbar(Toolbar):
     """Toolbar displayed above ItemViews to show the progress of
     reading new metadata, communicating with a device, and similar
     time-consuming operations.
@@ -1545,7 +1545,7 @@ class ProgressToolbar(widgetset.HBox):
     time.  Displays progress as: elapsed / (elapsed + ETA)
     """
     def __init__(self):
-        widgetset.HBox.__init__(self)
+        Toolbar.__init__(self)
         loading_icon = widgetset.AnimatedImageDisplay(
                        resources.path('images/load-indicator.gif'))
         self.label = widgetset.Label()
