@@ -411,7 +411,6 @@ class ClickableImageButton(CustomButton):
             self.set_path(image_path)
         self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
         self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
-        self.wrapped_widget_connect('button-release-event', self.on_click)
 
     def set_path(self, path):
         image = Image(path)
@@ -444,10 +443,6 @@ class ClickableImageButton(CustomButton):
         context.set_color((0, 0, 0))    # black
         context.set_line_width(1)
         context.stroke()
-
-    def on_click(self, widget, event):
-        self.emit('clicked', event)
-        return True
 
     def on_enter_notify(self, widget, event):
         self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
