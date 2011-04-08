@@ -126,14 +126,15 @@ class NSImageDisplay(NSBox):
         self.image = image
 
     def drawRect_(self, dest_rect):
-        if self.image is None:
-            super(NSImageDisplay, self).drawRect_(dest_rect)
-            return
-        source_rect = self.calculateSourceRectFromDestRect_(dest_rect)
-        NSGraphicsContext.currentContext().setShouldAntialias_(YES)
-        NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
-        self.image.nsimage.drawInRect_fromRect_operation_fraction_(dest_rect,
-                source_rect, NSCompositeSourceOver, 1.0)
+        if self.image is not None:
+            source_rect = self.calculateSourceRectFromDestRect_(dest_rect)
+            NSGraphicsContext.currentContext().setShouldAntialias_(YES)
+            NSGraphicsContext.currentContext().setImageInterpolation_(
+                NSImageInterpolationHigh)
+            self.image.nsimage.drawInRect_fromRect_operation_fraction_(
+                dest_rect, source_rect, NSCompositeSourceOver, 1.0)
+
+        # Draw this last so the borders are always visible.
         super(NSImageDisplay, self).drawRect_(dest_rect)
 
     def calculateSourceRectFromDestRect_(self, dest_rect):
