@@ -480,7 +480,7 @@ class PlaybackManager (signals.SignalEmitter):
             if self.video_display is None or not self.is_playing:
                 self._build_video_player(item_info, volume)
             self.is_playing = True
-            self.video_display.setup(item_info, volume)
+            self.video_display.setup(item_info, item_type, volume)
             if self.detached_window is not None:
                 self.detached_window.set_title(item_info.name)
         self.emit('did-start-playing')
@@ -939,7 +939,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 break
 
     def _info_is_playable(self, item_info):
-        return not item_info.is_container_item and item_info.is_playable
+        return not item_info.is_container_item
 
     def _find_playable(self, item_info, backwards=False):
         if backwards:

@@ -541,9 +541,6 @@ class ItemListController(object):
             start_info = self.item_list.model.get_info(start_id)
         if start_info is None and not self.can_play_items():
             return
-        elif start_info is not None and not start_info.is_playable:
-            logging.warn("_play_item_list called with unplayable item")
-            return
         app.playback_manager.stop()
         if start_info is not None and start_info.is_container_item:
             # If we play a container item, then switch to displaying it's

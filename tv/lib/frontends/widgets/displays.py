@@ -614,12 +614,16 @@ class VideoDisplay(Display):
         self.show_play_external()
         self.emit('cant-play')
 
-    def setup(self, item_info, volume):
+    def setup(self, item_info, item_type, volume):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info = item_info
-        self.renderer.set_item(item_info, self._open_success, self._open_error)
-        self.renderer.set_volume(volume)
+        if item_type != 'video':
+            self._open_error()
+        else:
+            self.renderer.set_item(item_info, self._open_success,
+                                   self._open_error)
+            self.renderer.set_volume(volume)
 
     def enter_fullscreen(self):
         self.renderer.enter_fullscreen()
