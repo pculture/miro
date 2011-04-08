@@ -975,6 +975,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.auto_resizing = False
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, 0))
+        self.tableview.setCornerView_(None)
         self.header_view.custom_header = False
         self.custom_header = 0
         self.header_height = HEADER_HEIGHT
