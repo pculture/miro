@@ -875,6 +875,8 @@ class ListView(ItemView, SorterWidgetOwner):
         self.html_stripper = util.HTMLStripper()
         self.renderer_set = renderer_set
         self.update_columns(columns_enabled, column_widths)
+        # ensure that we request the same size as standard view
+        self.set_size_request(600, -1)
 
     def _get_ui_state(self):
         if not self._set_initial_widths:
