@@ -185,6 +185,8 @@ class FilterButton(widgetset.CustomButton):
     def __init__(self, text, enabled=False):
         self.text = text
         self.enabled = enabled
+        self.current_surface = None
+        self.current_text_color = self.OFF_COLOR
         widgetset.CustomButton.__init__(self)
         self.set_can_focus(False)
         self.connect('clicked', self._on_clicked)
@@ -199,11 +201,23 @@ class FilterButton(widgetset.CustomButton):
 
     def draw(self, context, layout):
         surface_y = (context.height - self.SURFACE.height) / 2
-        if self.enabled:
-            self.SURFACE.draw(context, 0, surface_y, context.width)
-            layout.set_text_color(self.ON_COLOR)
+        if self.state == 'pressed' or self.enabled:
+            surface = self.SURFACE
+            text_color = self.ON_COLOR
+        elif self.state == 'hover':
+            surface = self.current_surface
+            text_color = self.current_text_color
         else:
-            layout.set_text_color(self.OFF_COLOR)
+            surface = None
+            text_color = self.OFF_COLOR
+
+        if surface:
+            surface.draw(context, 0, surface_y, context.width)
+        layout.set_text_color(text_color)
+
+        self.current_surface = surface
+        self.current_text_color = text_color
+
         textbox = self._textbox(layout)
         text_width, text_height = textbox.get_size()
         text_x = (context.width - text_width) / 2
