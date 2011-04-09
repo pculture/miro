@@ -116,6 +116,7 @@ class SelectionOwnerMixin(object):
             self._unselect_all()
             if signal:
                 self.emit('deselected')
+        self.forget_restore()
 
     def on_selection_changed(self, _widget_or_notification):
         """When we receive a selection-changed signal, we forward it if we're
@@ -144,19 +145,15 @@ class SelectionOwnerMixin(object):
         signals.
         """
         self._restoring_selection = None
-        self.unselect_all(signal=False)
-        for sel_string in selected:
-            try:
-                # iter may not be destringable (yet) - bounds error
-                iter_ = self._iter_from_string(sel_string)
-                # destringed iter not selectable if parent isn't open (yet)
-                self.select(iter_)
-            except WidgetActionError, error:
-                logging.debug("cannot restore yet: %s", error.reason)
-                self._restoring_selection = selected
-                return False
-        self._save_selection() # overwrite old _save_selection
-        return True
+        try:
+            # iter may not be destringable (yet) - bounds error
+            # destringed iter not selectable if parent isn't open (yet)
+            self.set_selection(self._iter_from_string(sel) for sel in selected)
+        except WidgetActionError, error:
+            logging.debug("cannot restore yet: %s", error.reason)
+            self._restoring_selection = selected
+        else:
+            return True
 
     def get_selection(self, strict=True):
         """Returns a list of GTK Iters. Works regardless of whether multiple
@@ -223,17 +220,13 @@ class SelectionOwnerMixin(object):
             return
         if self._real_selection is None:
             return
-        self.unselect_all(signal=False)
-        for iter_ in self._real_selection:
-            try:
-                self.select(iter_)
-            # Hack for #16835
-            except ValueError:
-                self._real_selection = None
-                logging.warning("can't restore selection - deleted?",
-                                exc_info=True)
-                self.emit('selection-invalid')
-                break
+        try:
+            self.set_selection(self._real_selection)
+        # Hack for #16835
+        except ValueError:
+            self._real_selection = None
+            logging.warning("can't restore selection - deleted?", exc_info=True)
+            self.emit('selection-invalid')
 
     def _validate_iter(self, iter_):
         """Check whether an iter is valid.
@@ -253,3 +246,13 @@ class SelectionOwnerMixin(object):
             yield
         finally:
             self._ignore_selection_changed -= 1
+
+    def set_selection(self, iters, signal=False):
+        """Set the selection to the given iters, replacing any previous
+        selection and signaling at most once.
+        """
+        self.unselect_all(signal=False)
+        for iter_ in iters:
+            self.select(iter_, signal=False)
+        self._save_selection()
+        if signal: self.emit('selection-changed')
