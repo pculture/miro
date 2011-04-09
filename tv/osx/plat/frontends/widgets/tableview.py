@@ -551,7 +551,9 @@ class TableViewCommon(object):
         self.SuperClass.setFrameSize_(self, size)
 
     def drawBackgroundGradient(self, context, focused, row):
-        if focused:
+        widget = wrappermap.wrapper(self)
+        window = widget.get_window()
+        if window and window.is_active():
             start_color = (0.588, 0.717, 0.843)
             end_color = (0.416, 0.568, 0.713)
             top_line_color = (0.416, 0.569, 0.714, 1.0)
