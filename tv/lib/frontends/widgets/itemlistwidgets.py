@@ -92,6 +92,8 @@ class TogglerButton(widgetset.CustomButton):
             resources.path('images/%s.png' % image_name))
         self.active_surface = imagepool.get_surface(
             resources.path('images/%s_active.png' % image_name))
+        self.selected_surface = imagepool.get_surface(
+            resources.path('images/%s_pressed.png' % image_name))
 
     def do_size_request(self):
         return (max(self.surface.width, self.active_surface.width),
@@ -105,7 +107,9 @@ class TogglerButton(widgetset.CustomButton):
         self.queue_redraw()
 
     def draw(self, context, layout):
-        if self._enabled:
+        if self.state == 'pressed':
+            surface = self.selected_surface
+        elif self._enabled:
             surface = self.active_surface
         else:
             surface = self.surface
