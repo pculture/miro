@@ -51,7 +51,7 @@ WATCHED_COLOR = (0.33, 0.33, 0.33) # dark grey
 EXPIRING_COLOR = (0.95, 0.82, 0.11) # yellow-ish
 EXPIRING_TEXT_COLOR = widgetutil.css_to_color('#7b949d')
 
-TAB_LIST_BACKGROUND_COLOR = (221/255.0, 227/255.0, 234/255.0)
+TAB_LIST_BACKGROUND_COLOR = widgetutil.css_to_color('#e1edf7')
 
 ERROR_COLOR = (0.90, 0.0, 0.0)
 BLINK_COLOR = widgetutil.css_to_color('#fffb83')
