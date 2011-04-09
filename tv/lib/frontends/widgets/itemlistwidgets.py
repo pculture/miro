@@ -77,7 +77,7 @@ class Toolbar(widgetset.Background):
 class Titlebar(Toolbar):
     def __init__(self):
         Toolbar.__init__(self)
-        self.set_size_request(-1, 55)
+        self.set_size_request(-1, 45)
 
 class TogglerButton(widgetset.CustomButton):
     LEFT = 0
@@ -158,8 +158,8 @@ class ViewToggler(widgetset.HBox):
         self.pack_start(self.togglers[list_view])
 
     def size_request(self, layout):
-        w = sum([widget.size_request()[0] for widget in self.togglers.values()])
-        return w, 50 # want to make the titlebar higher
+        width = sum([w.size_request()[0] for w in self.togglers.values()])
+        return w, -1
 
     def switch_to_view(self, view):
         if view is not self.selected_view:
