@@ -316,6 +316,7 @@ class ItemListController(object):
             sorter = itemlist.SORT_KEY_MAP[column](ascending)
         except KeyError:
             column = WidgetStateStore.DEFAULT_SORT_COLUMN[self.type]
+            column, ascending = self.parse_sort_key(column)
             sorter = itemlist.SORT_KEY_MAP[column](ascending)
         return sorter
 
