@@ -50,6 +50,7 @@ class DrawableButtonCell(NSButtonCell):
 
     def stopTracking_at_inView_mouseIsUp_(self, lastPoint, at, view, mouseIsUp):
         if not mouseIsUp:
+            view.mouse_inside = False
             view.setState_(NSOffState)
 
 class DrawableButton(NSButton):
