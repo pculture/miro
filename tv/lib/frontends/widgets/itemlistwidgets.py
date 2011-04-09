@@ -1477,6 +1477,8 @@ class SortBarButton(widgetset.CustomButton):
             resources.path('images/headertoolbar.png'))
         self.active_surface = imagepool.get_surface(
             resources.path('images/headertoolbar_active.png'))
+        self.current_surface = self.surface
+        self.current_edge = 72.0 / 255
 
     def get_sort_indicator_visible(self):
         return self._enabled
@@ -1504,12 +1506,18 @@ class SortBarButton(widgetset.CustomButton):
     def draw(self, context, layout):
         text = 1    # white text
         arrow = 1   # white arrow
-        if self._enabled:
+        if self.state == 'pressed' or self._enabled:
             edge = 92.0 / 255
             surface = self.active_surface
+        elif self.state == 'hover':
+            surface = self.current_surface
+            edge = self.current_edge
         else:
             surface = self.surface
             edge = 72.0 / 255
+
+        self.current_surface = surface
+        self.current_edge = edge
 
         # background
         surface.draw(context, 0, 0, context.width, context.height)
