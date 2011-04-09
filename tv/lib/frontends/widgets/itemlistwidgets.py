@@ -94,6 +94,7 @@ class TogglerButton(widgetset.CustomButton):
             resources.path('images/%s_active.png' % image_name))
         self.selected_surface = imagepool.get_surface(
             resources.path('images/%s_pressed.png' % image_name))
+        self.current_surface = self.surface
 
     def do_size_request(self):
         return (max(self.surface.width, self.active_surface.width),
@@ -111,8 +112,13 @@ class TogglerButton(widgetset.CustomButton):
             surface = self.selected_surface
         elif self._enabled:
             surface = self.active_surface
+        elif self.state == 'hover':
+            surface = self.current_surface
         else:
             surface = self.surface
+
+        self.current_surface = surface
+
         # XXX Working on the basis of LEFT/RIGHT only does not allow toggles
         # with multiple states.
         w = int(surface.width)
@@ -165,8 +171,8 @@ class ViewToggler(widgetset.HBox):
     def on_clicked(self, button):
         for key in self.togglers:
             if self.togglers[key] is button:
-                self.emit(self.toggler_events[key])
                 self.switch_to_view(key)
+                self.emit(self.toggler_events[key])
                 break
 
 class FilterButton(widgetset.CustomButton):
