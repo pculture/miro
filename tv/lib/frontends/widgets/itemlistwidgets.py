@@ -392,7 +392,7 @@ class ItemListTitlebar(Titlebar):
         if start:
             hbox.pack_start(start)
         self.filter_box = widgetset.HBox(spacing=10)
-        hbox.pack_start(widgetutil.align_middle(self.filter_box, left_pad=10))
+        hbox.pack_start(widgetutil.align_middle(self.filter_box, left_pad=15))
         extra = self._build_titlebar_extra()
         if extra:
             if isinstance(extra, list):
@@ -584,8 +584,8 @@ class SearchTitlebar(ItemListTitlebar):
         button = widgetutil.TitlebarButton(self.save_search_title())
         button.connect('clicked', self._on_save_search)
         self.save_button = widgetutil.HideableWidget(
-                widgetutil.pad(button, right=20))
-        return widgetutil.align_middle(self.save_button, left_pad=20)
+                widgetutil.pad(button, left=20, right=20))
+        return widgetutil.align_middle(self.save_button)
 
     def save_search_title(self):
         return _('Save as Podcast')
