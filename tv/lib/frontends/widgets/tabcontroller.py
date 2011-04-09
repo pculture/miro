@@ -346,7 +346,7 @@ class ConnectTab(widgetset.VBox):
               "external drive.", self.trans_data))
         label.set_size(self.TEXT_SIZE)
         label.set_color(self.TEXT_COLOR)
-        label.set_size_request(390 - padding, -1)
+        label.set_size_request(370 - padding, -1)
         label.set_wrap(True)
         show_all_vbox.pack_start(widgetutil.pad(label, top=10, left=padding))
         bg = RoundedSolidBackground(widgetutil.css_to_color('#e4e4e4'))
