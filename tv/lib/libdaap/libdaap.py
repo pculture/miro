@@ -109,6 +109,7 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         SocketServer.TCPServer.__init__(self, server_address,
                                         RequestHandlerClass,
                                         bind_and_activate)
+        self.finished_callback = None
         self.session_lock = threading.Lock()
         self.debug = False
         self.log_message_callback = None
@@ -117,6 +118,9 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     # into separate libraries but not now.
     def set_backend(self, backend):
         self.backend = backend
+
+    def set_finished_callback(self, callback):
+        self.finished_callback = callback
 
     def set_log_message_callback(self, callback):
         self.log_message_callback = callback
@@ -133,6 +137,7 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
     def daap_timeout_callback(self, s):
         self.del_session(s)
+        self.finished_callback(s)
 
     def session_count(self):
         return len(self.activeconn)
@@ -204,6 +209,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def finish(self):
         try:
             self.server.del_session(self.session)
+            if self.server.finished_callback:
+                self.server.finished_callback(self.session)
             self.log_message('finish called on session %d.  Bye ...',
                              self.session)
         except AttributeError:

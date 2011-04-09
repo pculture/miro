@@ -1086,15 +1086,25 @@ class SharingManagerBackend(object):
             itemprop['cover_art'] = item.cover_art
             self.daapitems[item.id] = itemprop
 
+    def finished_callback(self, session):
+        # Like shutdown but only shuts down one of the sessions.  No need to
+        # set shutdown.   XXX - could race - if we terminate control connection
+        # and and reach here, before a transcode job arrives.  Then the
+        # transcode job gets created anyway.
+        with self.transcode_lock:
+            try:
+                self.transcode[session].shutdown()
+            except KeyError:
+                pass
+
     def shutdown(self):
-       # Set the in_shutdown flag inside the transcode lock to ensure that
-       # the transcode object synchronization gate in transcode() never creates
-       # any more objects after this flag is set (as get_file() is run
-       # in a separate thread created by libdaap)
-       with self.transcode_lock:
-           self.in_shutdown = True
-           for key in self.transcode.keys():
-               self.transcode[key].shutdown()
+        # Set the in_shutdown flag inside the transcode lock to ensure that
+        # the transcode object synchronization gate in get_file() does not
+        # waste time creating any more objects after this flag is set.
+        with self.transcode_lock:
+            self.in_shutdown = True
+            for key in self.transcode.keys():
+                self.transcode[key].shutdown()
 
 class SharingManager(object):
     """SharingManager is the sharing server.  It publishes Miro media items
@@ -1179,12 +1189,17 @@ class SharingManager(object):
             self.disable_discover()
             app.sharing_tracker.pause()
             self.server.set_name(name)
+            self.server.set_finished_callback(self.finished_callback)
 
         if discoverable != self.discoverable:
             if discoverable:
                 self.enable_discover()
             else:
                 self.disable_discover()
+
+    def finished_callback(self, session):
+        eventloop.add_idle(lambda: self.backend.finished_callback(session),
+                           'daap logout notification')
 
     def get_address(self):
         server_address = (None, None)
