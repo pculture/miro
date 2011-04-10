@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-29 18:03-0400\n"
-"PO-Revision-Date: 2011-02-16 16:52+0000\n"
-"Last-Translator: Sean Larkin <Unknown>\n"
+"POT-Creation-Date: 2011-04-05 10:50-0400\n"
+"PO-Revision-Date: 2011-04-05 19:38+0000\n"
+"Last-Translator: Seanan <Unknown>\n"
 "Language-Team: Irish <ga@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-04-05 14:16+0000\n"
-"X-Generator: Launchpad (build 12734)\n"
+"X-Launchpad-Export-Date: 2011-04-10 12:05+0000\n"
+"X-Generator: Launchpad (build 12757)\n"
 
 #: ../../windows/plat/utils.py:501 ../../osx/plat/utils.py:590
 msgid "iTunes"
-msgstr ""
+msgstr "iTunes"
 
 #: ../../windows/plat/frontends/widgets/update.py:150
 msgid "Update Available"
@@ -130,9 +130,9 @@ msgstr "Tharla botún ag oscailt %(url)s. Triail arís é i roinnt soicindí"
 #: ../../windows/plat/frontends/widgets/bonjour.py:73
 #: ../../osx/plat/frontends/widgets/bonjour.py:38
 #: ../../linux/plat/frontends/widgets/bonjour.py:45
-#: ../../lib/frontends/widgets/prefpanel.py:920
+#: ../../lib/frontends/widgets/prefpanel.py:921
 msgid "Install Bonjour"
-msgstr ""
+msgstr "Suiteáil Bonjour"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:48
 #, python-format
@@ -194,7 +194,7 @@ msgstr "Iarthar na hEorpa"
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Celtic"
-msgstr ""
+msgstr "Ceiltis"
 
 #: ../../windows/plat/renderers/vlc.py:731
 msgid "Esperanto"
@@ -248,7 +248,7 @@ msgstr "Coiréis"
 
 #: ../../windows/plat/renderers/vlc.py:745
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "Sínis Thraidisiúnta"
 
 #: ../../windows/plat/renderers/vlc.py:746
 msgid "Traditional Chinese Unix"
@@ -325,132 +325,132 @@ msgstr "Unicode"
 msgid "Universal"
 msgstr "Uilíoch"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:224
-#: ../../osx/plat/frontends/widgets/osxmenus.py:299
+#: ../../osx/plat/frontends/widgets/osxmenus.py:225
+#: ../../osx/plat/frontends/widgets/osxmenus.py:300
 msgid "Services"
 msgstr "Seirbhísí"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:226
+#: ../../osx/plat/frontends/widgets/osxmenus.py:227
 #, python-format
 msgid "Hide %(appname)s"
 msgstr "Folaigh %(appname)s"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:228
+#: ../../osx/plat/frontends/widgets/osxmenus.py:229
 msgid "Hide Others"
 msgstr "Folaigh Rudaí Eile"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:230
+#: ../../osx/plat/frontends/widgets/osxmenus.py:231
 msgid "Show All"
 msgstr "Taispeáin Uile"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:235
+#: ../../osx/plat/frontends/widgets/osxmenus.py:236
 msgid "Preferences..."
 msgstr "Sainroghanna..."
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:237
+#: ../../osx/plat/frontends/widgets/osxmenus.py:238
 #, python-format
 msgid "Quit %(appname)s"
 msgstr "Scoir ó %(appname)s"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:241
+#: ../../osx/plat/frontends/widgets/osxmenus.py:242
 msgid "Close Window"
 msgstr "Dún an Fhuinneog"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:247
+#: ../../osx/plat/frontends/widgets/osxmenus.py:248
 msgid "Cut"
 msgstr "Gearr"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:248
-#: ../../lib/frontends/widgets/devicecontroller.py:471
-#: ../../lib/frontends/widgets/devicecontroller.py:479
-#: ../../lib/frontends/widgets/devicecontroller.py:482
-#: ../../lib/conversions.py:780
+#: ../../osx/plat/frontends/widgets/osxmenus.py:249
+#: ../../lib/frontends/widgets/devicecontroller.py:469
+#: ../../lib/frontends/widgets/devicecontroller.py:477
+#: ../../lib/frontends/widgets/devicecontroller.py:480
+#: ../../lib/conversions.py:943
 msgid "Copy"
 msgstr "Macasamhlaigh"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:249
+#: ../../osx/plat/frontends/widgets/osxmenus.py:250
 msgid "Paste"
 msgstr "Greamaigh"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:250
+#: ../../osx/plat/frontends/widgets/osxmenus.py:251
 #: ../../osx/plat/frontends/widgets/overlay.py:132
 #: ../../lib/frontends/widgets/gtk/video.py:313 ../../lib/dialogs.py:121
 msgid "Delete"
 msgstr "Scrios"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:252
+#: ../../osx/plat/frontends/widgets/osxmenus.py:253
 msgid "Select All"
 msgstr "Roghnaigh Uile"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:254
+#: ../../osx/plat/frontends/widgets/osxmenus.py:255
 msgid "Edit"
 msgstr "Eagar"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:259
+#: ../../osx/plat/frontends/widgets/osxmenus.py:260
 msgid "Present Half Size"
 msgstr "Leathmhéid Faoi Láthair"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:262
+#: ../../osx/plat/frontends/widgets/osxmenus.py:263
 msgid "Present Actual Size"
 msgstr "An Fíormhéid Faoi Láthair"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:265
+#: ../../osx/plat/frontends/widgets/osxmenus.py:266
 msgid "Present Double Size"
 msgstr "An Mhéid Reatha Faoi Dhó"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:272
+#: ../../osx/plat/frontends/widgets/osxmenus.py:273
 msgid "Present Video"
 msgstr "An Físeán Reatha"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:278
+#: ../../osx/plat/frontends/widgets/osxmenus.py:279
 msgid "Zoom"
 msgstr "Súmáil"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:279
+#: ../../osx/plat/frontends/widgets/osxmenus.py:280
 msgid "Minimize"
 msgstr "Íoslaghdaigh"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:281
+#: ../../osx/plat/frontends/widgets/osxmenus.py:282
 msgid "Main Window"
 msgstr "Príomhfhuinneog"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:284
+#: ../../osx/plat/frontends/widgets/osxmenus.py:285
 msgid "Bring All to Front"
 msgstr "Tabhair Uile Chuig an Tosach"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:286
+#: ../../osx/plat/frontends/widgets/osxmenus.py:287
 msgid "Window"
 msgstr "Fuinneog"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:291
+#: ../../osx/plat/frontends/widgets/osxmenus.py:292
 #, python-format
 msgid "%(appname)s Help"
 msgstr "Cabhair %(appname)s"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:445
+#: ../../osx/plat/frontends/widgets/osxmenus.py:446
 #: ../../lib/frontends/widgets/gtk/video.py:411
-#: ../../lib/frontends/widgets/gtk/window.py:317
+#: ../../lib/frontends/widgets/gtk/window.py:352
 msgid "Disable Subtitles"
 msgstr "Díchumasaigh na Fotheidil"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:456
+#: ../../osx/plat/frontends/widgets/osxmenus.py:457
 #: ../../lib/frontends/widgets/gtk/video.py:389
 #: ../../lib/frontends/widgets/menus.py:339
 msgid "None Available"
 msgstr "Níl Faic Ar Fáil"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:463
+#: ../../osx/plat/frontends/widgets/osxmenus.py:464
 #: ../../lib/frontends/widgets/gtk/video.py:422
 msgid "Select a Subtitles file..."
 msgstr "Roghnaigh comhad Fotheidil..."
 
 #: ../../osx/plat/frontends/widgets/overlay.py:124
-#: ../../lib/frontends/widgets/itemcontextmenu.py:246
+#: ../../lib/frontends/widgets/itemcontextmenu.py:249
 msgid "Share"
 msgstr "Roinn"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:128
-#: ../../lib/frontends/widgets/itemcontextmenu.py:358 ../../lib/dialogs.py:120
+#: ../../lib/frontends/widgets/itemcontextmenu.py:361 ../../lib/dialogs.py:120
 msgid "Keep"
 msgstr "Coimeád"
 
@@ -482,22 +482,22 @@ msgstr ""
 #: ../../lib/frontends/widgets/menus.py:308
 #: ../../lib/frontends/widgets/menus.py:310
 #: ../../lib/frontends/widgets/itemcontextmenu.py:133
-#: ../../lib/frontends/widgets/itemcontextmenu.py:212
-#: ../../lib/frontends/widgets/itemcontextmenu.py:348
+#: ../../lib/frontends/widgets/itemcontextmenu.py:215
+#: ../../lib/frontends/widgets/itemcontextmenu.py:351
 msgid "Play"
 msgstr "Seinn"
 
 #: ../../linux/extensions/miroappindicator/main.py:56
 msgid "Pause all downloads"
-msgstr ""
+msgstr "Cuir ar sos gach íosluchtú"
 
 #: ../../linux/extensions/miroappindicator/main.py:57
 msgid "Resume all downloads"
-msgstr ""
+msgstr "Lean le gach íosluchtú"
 
 #: ../../linux/extensions/miroappindicator/main.py:59
 msgid "Show Miro"
-msgstr ""
+msgstr "Taispeáin Miro"
 
 #: ../../linux/extensions/miroappindicator/main.py:60 ../../lib/dialogs.py:101
 msgid "Quit"
@@ -578,7 +578,7 @@ msgstr "Cróaitis"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:612
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 msgid "Cyrillic"
-msgstr ""
+msgstr "Coireallach"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Cyrillic/Russian"
@@ -625,25 +625,25 @@ msgstr "Iartharach"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:641
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Sínis Shimplithe"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Sínis Thraidisiúnta"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:655
 msgid "Armenian"
-msgstr ""
+msgstr "Airméinis"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:656
 msgid "Georgian"
-msgstr ""
+msgstr "Seoirsis"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:657
 msgid "Gujarati"
-msgstr ""
+msgstr "Gúisearáitis"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:658
 msgid "Gurmukhi"
@@ -651,40 +651,41 @@ msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:659
 msgid "Hindi"
-msgstr ""
+msgstr "Hiondis"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:678
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Eabhrais Radharcach"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:679
 msgid "Persian"
-msgstr ""
+msgstr "Peirsis"
 
-#: ../../lib/item.py:1242 ../../lib/messages.py:1340
+#: ../../lib/item.py:1243 ../../lib/messages.py:1340
 msgid "queued for download"
 msgstr "i scuaine le híosluchtú"
 
-#: ../../lib/item.py:1337
+#: ../../lib/item.py:1338
 msgid "no title"
 msgstr "gan teideal"
 
-#: ../../lib/item.py:1603
+#: ../../lib/item.py:1604
 msgid "starting up..."
 msgstr "ag tosú..."
 
 #: ../../lib/feed.py:865
 msgid "Error loading podcast"
-msgstr ""
+msgstr "Tharla botún ag luchtú an podchraoladh"
 
 #: ../../lib/feed.py:867
 #, python-format
 msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
 msgstr ""
+"Níorbh fhéidir an podchraoladh ag %(url)s (%(errordescription)s) a luchtú."
 
 #: ../../lib/feed.py:870
 msgid "Would you like to keep the podcast?"
-msgstr ""
+msgstr "An mian leat an podchraoladh a choimeád?"
 
 #: ../../lib/feed.py:992
 msgid "Bad content-type"
@@ -693,7 +694,7 @@ msgstr "Droch cineál-ábhar"
 #: ../../lib/feed.py:1005
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
-msgstr ""
+msgstr "Níl an podchraoladh comhoiriúnach le %(appname)s"
 
 #: ../../lib/feed.py:1008
 #, python-format
@@ -726,11 +727,11 @@ msgstr "Cuardaigh"
 
 #: ../../lib/messages.py:1258 ../../lib/sharing.py:219
 msgid "Locked"
-msgstr ""
+msgstr "Faoi Ghlas"
 
 #: ../../lib/messages.py:1261 ../../lib/frontends/widgets/itemedit.py:531
 msgid "Movie"
-msgstr ""
+msgstr "Scannán"
 
 #: ../../lib/messages.py:1263 ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/diagnostics.py:80
@@ -742,11 +743,11 @@ msgstr "Taispeáin"
 
 #: ../../lib/messages.py:1265 ../../lib/frontends/widgets/itemedit.py:533
 msgid "Clip"
-msgstr ""
+msgstr "Gearrthóg"
 
 #: ../../lib/messages.py:1267 ../../lib/frontends/widgets/itemedit.py:534
 msgid "Podcast"
-msgstr ""
+msgstr "Podchraoladh"
 
 #: ../../lib/messages.py:1286
 #, python-format
@@ -754,6 +755,8 @@ msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
+"S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
+"|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 
 #: ../../lib/net.py:76
 #, python-format
@@ -795,8 +798,8 @@ msgid "Connection closed"
 msgstr "Dúnadh an ceangal"
 
 #: ../../lib/sharing.py:156 ../../lib/downloader.py:568
-#: ../../lib/downloader.py:576 ../../lib/httpclient.py:213
-#: ../../lib/httpclient.py:717
+#: ../../lib/downloader.py:576 ../../lib/httpclient.py:218
+#: ../../lib/httpclient.py:750
 msgid "Unknown"
 msgstr "Anaithnid"
 
@@ -808,7 +811,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/devicecontroller.py:158
 #, python-format
 msgid "%(used)s used / %(total)s total - %(percent)i%% full"
-msgstr ""
+msgstr "%(used)s i bhfeidhm / %(total)s iomlán - %(percent)i%% lán"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:175
 #, python-format
@@ -819,21 +822,21 @@ msgstr[1] ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:181
 msgid "Up to date"
-msgstr ""
+msgstr "Cothrom le dáta"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:188
 msgid "In Progress"
-msgstr ""
+msgstr "Ar Siúl"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:258
 #, python-format
 msgid "%(eta)s left"
-msgstr ""
+msgstr "%(eta)s fágtha"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:261
 #, python-format
 msgid "%(percent)i%% percent complete"
-msgstr ""
+msgstr "%(percent)i%% faoin gcéad críochnaithe"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:277
 msgid "Sync These Podcasts"
@@ -841,116 +844,117 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:311
 msgid "Select none"
-msgstr ""
+msgstr "Ná roghnaigh ceann ar bith"
 
-#: ../../lib/frontends/widgets/devicecontroller.py:315
+#: ../../lib/frontends/widgets/devicecontroller.py:314
 msgid "Select all"
-msgstr ""
+msgstr "Roghnaigh uile"
 
-#: ../../lib/frontends/widgets/devicecontroller.py:417
+#: ../../lib/frontends/widgets/devicecontroller.py:415
 msgid "Sync Podcasts"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:420
+#: ../../lib/frontends/widgets/devicecontroller.py:418
 msgid "Only sync unplayed items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:449
+#: ../../lib/frontends/widgets/devicecontroller.py:447
 msgid "Sync These Playlists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:450
+#: ../../lib/frontends/widgets/devicecontroller.py:448
 msgid "Sync Playlists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:478
+#: ../../lib/frontends/widgets/devicecontroller.py:476
 #, python-format
 msgid "Device Default (%(audio)s)"
-msgstr ""
+msgstr "Réamhshocrú an ghléis (%(audio)s)"
 
-#: ../../lib/frontends/widgets/devicecontroller.py:481
+#: ../../lib/frontends/widgets/devicecontroller.py:479
 #, python-format
 msgid "Device Default (%(video)s)"
-msgstr ""
+msgstr "Réamshocrú an ghléis (%(video)s)"
+
+#: ../../lib/frontends/widgets/devicecontroller.py:492
+msgid "Name of Device"
+msgstr "Ainm an ghléis"
+
+#: ../../lib/frontends/widgets/devicecontroller.py:493
+msgid "Video Conversion"
+msgstr "Físthiontú"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:494
-msgid "Name of Device"
-msgstr ""
+msgid "Audio Conversion"
+msgstr "Tiontú fuaime"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:495
-msgid "Video Conversion"
-msgstr ""
+msgid "Store video in this directory"
+msgstr "Cuir físeáin i dtaisce sa chomhadlann seo"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:496
-msgid "Audio Conversion"
-msgstr ""
+msgid "Store audio in this directory"
+msgstr "Cuir fuaimeanna i dtaisce sa chomhadlann seo"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:497
-msgid "Store video in this directory"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:498
-msgid "Store audio in this directory"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:499
 msgid "Always show this device, even if 'show all devices' is turned off"
 msgstr ""
+"Taispeáin an gléas seo i gcónaí, fiú má tá 'taispeáin gach gléas' múchta"
+
+#: ../../lib/frontends/widgets/devicecontroller.py:594
+msgid "Main"
+msgstr "Príomh"
+
+#: ../../lib/frontends/widgets/devicecontroller.py:595
+#: ../../lib/frontends/widgets/displays.py:376
+#: ../../lib/frontends/widgets/itemlistwidgets.py:601
+#: ../../lib/frontends/widgets/prefpanel.py:1231
+#: ../../lib/frontends/widgets/tablist.py:936 ../../lib/messagehandler.py:563
+msgid "Podcasts"
+msgstr "Podchraoltaí"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:596
-msgid "Main"
-msgstr ""
+#: ../../lib/frontends/widgets/displays.py:800
+#: ../../lib/frontends/widgets/tabcontroller.py:505
+#: ../../lib/frontends/widgets/tablist.py:1004
+msgid "Playlists"
+msgstr "Seinmréimeanna"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:597
-#: ../../lib/frontends/widgets/displays.py:365
-#: ../../lib/frontends/widgets/itemlistwidgets.py:580
-#: ../../lib/frontends/widgets/prefpanel.py:1230
-#: ../../lib/frontends/widgets/tablist.py:854 ../../lib/messagehandler.py:563
-msgid "Podcasts"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:598
-#: ../../lib/frontends/widgets/displays.py:789
-#: ../../lib/frontends/widgets/tabcontroller.py:505
-#: ../../lib/frontends/widgets/tablist.py:922
-msgid "Playlists"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:599
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1163
-#: ../../lib/frontends/widgets/tablist.py:909
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1194
+#: ../../lib/frontends/widgets/tablist.py:991
 msgid "Settings"
 msgstr "Socruithe"
 
-#: ../../lib/frontends/widgets/devicecontroller.py:613
+#: ../../lib/frontends/widgets/devicecontroller.py:611
 msgid ""
 "Drag individual video and audio files onto the device in the sidebar to copy "
 "them."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:618
+#: ../../lib/frontends/widgets/devicecontroller.py:616
 msgid "Use these options and the tabs above for automatic syncing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:715
+#: ../../lib/frontends/widgets/devicecontroller.py:713
 msgid "Your device isn't telling us its exact model number."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:720
+#: ../../lib/frontends/widgets/devicecontroller.py:718
 msgid "For optimal video conversion, select the device model."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:736
+#: ../../lib/frontends/widgets/devicecontroller.py:734
 msgid ""
 "If you don't know the model or it doesn't appear in the list, it's fine to "
 "choose the 'Generic' device option."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:762
+#: ../../lib/frontends/widgets/devicecontroller.py:760
 msgid "This is my device"
-msgstr ""
+msgstr "Seo é mo ghléas"
 
-#: ../../lib/frontends/widgets/devicecontroller.py:770
+#: ../../lib/frontends/widgets/devicecontroller.py:768
 msgid "This device is not yet mounted."
 msgstr ""
 
@@ -960,87 +964,86 @@ msgid "Reveal in %(progname)s"
 msgstr "Nocht i %(progname)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:100
-#: ../../lib/frontends/widgets/displays.py:529
+#: ../../lib/frontends/widgets/displays.py:540
 msgid "Reveal File"
 msgstr "Taispeáin an Comhad"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:101
 msgid "display contents"
-msgstr ""
+msgstr "taispeáin na hinneachair"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:102
-#: ../../lib/frontends/widgets/style.py:411
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1712
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1725
 #: ../../lib/frontends/widgets/itemcontextmenu.py:201
-#: ../../lib/frontends/widgets/itemcontextmenu.py:373 ../../lib/dialogs.py:108
+#: ../../lib/frontends/widgets/itemcontextmenu.py:376 ../../lib/dialogs.py:108
 msgid "Download"
 msgstr "Íosluchtaigh"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:103
-#: ../../lib/frontends/widgets/itemrenderer.py:1294
-msgid "Download to My Miro"
+#, python-format
+msgid "Copy to %(appname)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:104
+#: ../../lib/frontends/widgets/itemrenderer.py:105
 msgid "Download Torrent"
 msgstr "Íosluchtaigh an Torrent"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:105
-#: ../../lib/dl_daemon/download.py:650
+#: ../../lib/frontends/widgets/itemrenderer.py:106
+#: ../../lib/dl_daemon/download.py:654
 msgid "Error"
 msgstr "Botún"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:106
+#: ../../lib/frontends/widgets/itemrenderer.py:107
 #: ../../lib/frontends/widgets/firsttimedialog.py:413 ../../lib/dialogs.py:97
 msgid "Cancel"
 msgstr "Cealaigh"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:107
+#: ../../lib/frontends/widgets/itemrenderer.py:108
 msgid "Queued for Auto-download"
 msgstr "I scuaine le haghaidh íosluchtú uathoibríoch"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:108
-#: ../../lib/frontends/widgets/style.py:485
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1017
-#: ../../lib/frontends/widgets/itemlistwidgets.py:538
-#: ../../lib/frontends/widgets/itemlistwidgets.py:622
-#: ../../lib/frontends/widgets/itemlistwidgets.py:834
+#: ../../lib/frontends/widgets/itemrenderer.py:109
+#: ../../lib/frontends/widgets/style.py:503
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1077
+#: ../../lib/frontends/widgets/itemlistwidgets.py:549
+#: ../../lib/frontends/widgets/itemlistwidgets.py:653
+#: ../../lib/frontends/widgets/itemlistwidgets.py:865
 msgid "Unplayed"
 msgstr "Neamhsheinnte"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:109
+#: ../../lib/frontends/widgets/itemrenderer.py:110
 msgid "Currently Playing"
 msgstr "Á Seinm Faoi Láthair"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:110
-#: ../../lib/frontends/widgets/style.py:503
-#: ../../lib/frontends/widgets/itemlistwidgets.py:837
+#: ../../lib/frontends/widgets/itemrenderer.py:111
+#: ../../lib/frontends/widgets/style.py:521
+#: ../../lib/frontends/widgets/itemlistwidgets.py:868
 msgid "Newly Available"
 msgstr "Ar Fáil Anois"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:111
+#: ../../lib/frontends/widgets/itemrenderer.py:112
 msgid "Saved"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:112
+#: ../../lib/frontends/widgets/itemrenderer.py:113
 msgid "Stop seeding"
 msgstr "Stad ag síolú"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:386
 msgid "PEERS"
-msgstr ""
+msgstr "COMHGHLEACAITHE"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:387
 msgid "SEEDS"
-msgstr ""
+msgstr "SÍOLTA"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:388
 msgid "LEECH"
-msgstr ""
+msgstr "SÚMAIRÍ"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:389
 msgid "SHARE"
-msgstr ""
+msgstr "ROINN"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:447
 msgid "DRM locked"
@@ -1052,48 +1055,48 @@ msgstr ""
 msgid "Resume at %(resumetime)s"
 msgstr "Atosaigh ag %(resumetime)s"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1341
+#: ../../lib/frontends/widgets/itemrenderer.py:1343
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr "Tiontú go %(format)s"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1344
+#: ../../lib/frontends/widgets/itemrenderer.py:1346
 #, python-format
 msgid "Conversion to %(format)s failed: %(error)s"
-msgstr ""
+msgstr "Theip ar an tiontú go %(format)s: %(error)s"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1351
-#: ../../lib/frontends/widgets/itemrenderer.py:1358
+#: ../../lib/frontends/widgets/itemrenderer.py:1353
+#: ../../lib/frontends/widgets/itemrenderer.py:1360
 msgid "Clear"
 msgstr "Glan"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1353
+#: ../../lib/frontends/widgets/itemrenderer.py:1355
 msgid "Failed"
-msgstr ""
+msgstr "Teipthe"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1354
+#: ../../lib/frontends/widgets/itemrenderer.py:1356
 msgid "Troubleshoot"
 msgstr "Fabhtcheartaigh"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1355
+#: ../../lib/frontends/widgets/itemrenderer.py:1357
 msgid "Open Log"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1360
+#: ../../lib/frontends/widgets/itemrenderer.py:1362
 msgid "Completed"
 msgstr "Críochnaithe"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1369
+#: ../../lib/frontends/widgets/itemrenderer.py:1371
 #, python-format
 msgid "%(percent)i%% done"
-msgstr ""
+msgstr "%(percent)i%% déanta"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1376
+#: ../../lib/frontends/widgets/itemrenderer.py:1378
 #: ../../lib/frontends/widgets/statictabs.py:141
 msgid "Converting"
-msgstr ""
+msgstr "Ag tiontú"
 
-#: ../../lib/frontends/widgets/displays.py:511
+#: ../../lib/frontends/widgets/displays.py:522
 #, python-format
 msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
@@ -1102,44 +1105,46 @@ msgstr ""
 "Ní féidir le %(appname)s an comhad seo a sheinm. Is féidir leat é a oscailt "
 "le clár eile"
 
-#: ../../lib/frontends/widgets/displays.py:521
+#: ../../lib/frontends/widgets/displays.py:532
 msgid "Filename:"
 msgstr "Ainm comhaid:"
 
-#: ../../lib/frontends/widgets/displays.py:524
+#: ../../lib/frontends/widgets/displays.py:535
 msgid "File type:"
 msgstr "Cineál comhaid:"
 
-#: ../../lib/frontends/widgets/displays.py:530
-#: ../../lib/frontends/widgets/displays.py:568
+#: ../../lib/frontends/widgets/displays.py:541
+#: ../../lib/frontends/widgets/displays.py:579
 #: ../../lib/frontends/widgets/itemcontextmenu.py:106
 #: ../../lib/frontends/widgets/itemcontextmenu.py:155
 msgid "Play Externally"
 msgstr "Seinn Lasmuigh"
 
-#: ../../lib/frontends/widgets/displays.py:533
+#: ../../lib/frontends/widgets/displays.py:544
 msgid "Skip"
 msgstr "Léim"
 
-#: ../../lib/frontends/widgets/displays.py:570
+#: ../../lib/frontends/widgets/displays.py:581
 msgid "Open Externally"
 msgstr "Oscail Go Seachtrach"
 
-#: ../../lib/frontends/widgets/displays.py:683
+#: ../../lib/frontends/widgets/displays.py:694
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Fhillteán Podchraolta roghnaithe"
+msgstr[1] "%(count)d Fhillteán Podchraolta roghnaithe"
+msgstr[2] "%(count)d bhFillteán Podchraolta roghnaithe"
 
-#: ../../lib/frontends/widgets/displays.py:688
+#: ../../lib/frontends/widgets/displays.py:699
 #, python-format
 msgid "(contains %(count)d podcast)"
 msgid_plural "(contains %(count)d podcasts)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(tá %(count)d phodchraoladh ann)"
+msgstr[1] "(tá %(count)d phodchraoladh ann)"
+msgstr[2] "(tá %(count)d bpodchraoladh ann)"
 
-#: ../../lib/frontends/widgets/displays.py:694
+#: ../../lib/frontends/widgets/displays.py:705
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
@@ -1147,28 +1152,30 @@ msgstr[0] "%(count)d Fillteán Sheinnréime Roghnaithe"
 msgstr[1] "%(count)d Fhillteán Sheinnréime Roghnaithe"
 msgstr[2] "%(count)d bhFillteán Sheinnmréime Roghnaithe"
 
-#: ../../lib/frontends/widgets/displays.py:699
+#: ../../lib/frontends/widgets/displays.py:710
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlists)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:709
+#: ../../lib/frontends/widgets/displays.py:720
 #, python-format
 msgid "%(count)d Podcast Selected"
 msgid_plural "%(count)d Podcasts Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Phodchraoladh roghnaithe"
+msgstr[1] "%(count)d Phodchraoladh roghnaithe"
+msgstr[2] "%(count)d bPodchraoladh roghnaithe"
 
-#: ../../lib/frontends/widgets/displays.py:715
+#: ../../lib/frontends/widgets/displays.py:726
 #, python-format
 msgid "%(count)d Source Selected"
 msgid_plural "%(count)d Sources Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Fhoinse roghnaithe"
+msgstr[1] "%(count)d Fhoinse roghnaithe"
+msgstr[2] "%(count)d bhFoinse roghnaithe"
 
-#: ../../lib/frontends/widgets/displays.py:721
+#: ../../lib/frontends/widgets/displays.py:732
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
@@ -1176,32 +1183,32 @@ msgstr[0] "%(count)d Sheinnréim Roghnaithe"
 msgstr[1] "%(count)d Sheinnréim Roghnaithe"
 msgstr[2] "%(count)d Seinnréim Roghnaithe"
 
-#: ../../lib/frontends/widgets/displays.py:728
+#: ../../lib/frontends/widgets/displays.py:739
 msgid "Delete All"
 msgstr "Scrios Uile"
 
-#: ../../lib/frontends/widgets/displays.py:732
+#: ../../lib/frontends/widgets/displays.py:743
 msgid "Put Into a New Folder"
 msgstr "Cuir I bhFillteán Nua É"
 
-#: ../../lib/frontends/widgets/displays.py:761
+#: ../../lib/frontends/widgets/displays.py:772
 #: ../../lib/frontends/widgets/tabcontroller.py:214
-#: ../../lib/frontends/widgets/tablist.py:700
+#: ../../lib/frontends/widgets/tablist.py:779
 msgid "Connect"
-msgstr ""
+msgstr "Ceangail"
 
-#: ../../lib/frontends/widgets/displays.py:775
+#: ../../lib/frontends/widgets/displays.py:786
 #: ../../lib/frontends/widgets/tabcontroller.py:442
-#: ../../lib/frontends/widgets/tablist.py:769
+#: ../../lib/frontends/widgets/tablist.py:848
 msgid "Sources"
-msgstr ""
+msgstr "Foinsí"
 
-#: ../../lib/frontends/widgets/displays.py:803
-#: ../../lib/frontends/widgets/prefpanel.py:1241
+#: ../../lib/frontends/widgets/displays.py:814
+#: ../../lib/frontends/widgets/prefpanel.py:1242
 #: ../../lib/frontends/widgets/tabcontroller.py:554
-#: ../../lib/frontends/widgets/tablist.py:821
+#: ../../lib/frontends/widgets/tablist.py:903
 msgid "Stores"
-msgstr ""
+msgstr "Díolbhothanna"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
 #, python-format
@@ -1241,35 +1248,35 @@ msgstr "Brúigh-amach"
 
 #: ../../lib/frontends/widgets/gtk/video.py:334
 msgid "Subtitles On"
-msgstr ""
+msgstr "Fotheidil Ar Siúl"
 
 #: ../../lib/frontends/widgets/gtk/video.py:340
 msgid "Subtitles Found"
-msgstr ""
+msgstr "Aimsíodh Fotheidil"
 
 #: ../../lib/frontends/widgets/gtk/video.py:344
 #: ../../lib/frontends/widgets/menus.py:338
 msgid "Subtitles"
 msgstr "Fotheidil"
 
-#: ../../lib/frontends/widgets/gtk/window.py:763
+#: ../../lib/frontends/widgets/gtk/window.py:801
 msgid "All files"
 msgstr "Gach comhad"
 
-#: ../../lib/frontends/widgets/gtk/window.py:817
+#: ../../lib/frontends/widgets/gtk/window.py:855
 msgid "Choose"
 msgstr "Roghnaigh"
 
-#: ../../lib/frontends/widgets/gtk/window.py:843
+#: ../../lib/frontends/widgets/gtk/window.py:881
 #, python-format
 msgid "About %(appname)s"
 msgstr "Maidir le %(appname)s"
 
-#: ../../lib/frontends/widgets/gtk/window.py:845 ../../lib/dialogs.py:96
+#: ../../lib/frontends/widgets/gtk/window.py:883 ../../lib/dialogs.py:96
 msgid "Close"
 msgstr "Dún"
 
-#: ../../lib/frontends/widgets/gtk/window.py:866
+#: ../../lib/frontends/widgets/gtk/window.py:904
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
@@ -1278,12 +1285,12 @@ msgstr ""
 "%(copyright)s.  Féach an comhad license.txt do na sonraí.\n"
 "%(trademark)s"
 
-#: ../../lib/frontends/widgets/gtk/window.py:880
+#: ../../lib/frontends/widgets/gtk/window.py:918
 #, python-format
 msgid "Thank you to all the people who contributed to Miro %(version)s:"
-msgstr ""
+msgstr "MÍle buíochas do chách a chabhraigh le cruthú Miro %(version)s:"
 
-#: ../../lib/frontends/widgets/gtk/window.py:908
+#: ../../lib/frontends/widgets/gtk/window.py:946
 msgid "To help fund continued Miro development, visit the donation page at:"
 msgstr ""
 
@@ -1303,7 +1310,7 @@ msgstr "Ainm an fhillteáin:"
 
 #: ../../lib/frontends/widgets/newfolder.py:87
 msgid "Create Podcast Folder"
-msgstr ""
+msgstr "Cruthaigh Fillteán Podchraoltaí"
 
 #: ../../lib/frontends/widgets/newfolder.py:88
 msgid "Enter the name of the folder to add"
@@ -1318,34 +1325,34 @@ msgstr ""
 msgid "A search podcast contains items that match a search term."
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:75
+#: ../../lib/frontends/widgets/newsearchfeed.py:92
 msgid "Search for:"
 msgstr "Déan cuardach ar:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:83
+#: ../../lib/frontends/widgets/newsearchfeed.py:100
 msgid "In this:"
 msgstr "Sa:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:90
+#: ../../lib/frontends/widgets/newsearchfeed.py:107
 msgid "Podcast:"
-msgstr ""
+msgstr "Podchraoladh:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:97
+#: ../../lib/frontends/widgets/newsearchfeed.py:114
 msgid "Search engine:"
 msgstr "Inneall cuardaigh:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:104
+#: ../../lib/frontends/widgets/newsearchfeed.py:121
 #: ../../lib/frontends/widgets/newfeed.py:59
 msgid "URL:"
 msgstr "URL:"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:66
 msgid "Choose..."
-msgstr ""
+msgstr "Roghnaigh..."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:71
 msgid "Directory:"
-msgstr ""
+msgstr "Comhadlann:"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:78
 msgid "Show in my sidebar as a podcast"
@@ -1356,7 +1363,7 @@ msgid "Choose Watched Folder Directory"
 msgstr ""
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:113
-#: ../../lib/frontends/widgets/prefpanel.py:786
+#: ../../lib/frontends/widgets/prefpanel.py:787
 msgid "Add Watched Folder"
 msgstr "Cuir Fillteán Feicthe leis"
 
@@ -1365,6 +1372,8 @@ msgid ""
 "Miro can watch a folder on your computer and show those media files in your "
 "library."
 msgstr ""
+"Tig le Miro breathnú ar fhillteán ar do ríomhaire agus na comhaid mheáin a "
+"thaispeáint i do leabharlann."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:135
 msgid ""
@@ -1374,18 +1383,18 @@ msgid ""
 "That path does not exist."
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:493
+#: ../../lib/frontends/widgets/style.py:511
 msgid "paused"
 msgstr "moillithe"
 
-#: ../../lib/frontends/widgets/style.py:495
+#: ../../lib/frontends/widgets/style.py:513
 msgid "queued"
-msgstr ""
+msgstr "i scuaine"
 
 #: ../../lib/frontends/widgets/sharingcontroller.py:65
-#: ../../lib/frontends/widgets/itemlistcontroller.py:909
-#: ../../lib/frontends/widgets/itemlistcontroller.py:983
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1051
+#: ../../lib/frontends/widgets/itemlistcontroller.py:963
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1043
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1094
 #: ../../lib/frontends/widgets/feedcontroller.py:72
 msgid "No Results"
 msgstr "Gan Torthaí"
@@ -1441,12 +1450,12 @@ msgstr "Líon iomlán na réadanna bhunachair shonraí atá sa chuimhne:"
 msgid "Total db backups:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:831
+#: ../../lib/frontends/widgets/itemlistcontroller.py:885
 #, python-format
 msgid "%(count)s items"
-msgstr ""
+msgstr "%(count)s m(h)íreanna"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:913
+#: ../../lib/frontends/widgets/itemlistcontroller.py:967
 msgid ""
 "To search for media on Internet media search sites, click on the search box "
 "above, type in search terms and hit the Enter key.  To switch search "
@@ -1454,35 +1463,13 @@ msgid ""
 "the search engine from the drop down."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1003
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1063
 msgid "Unwatched"
 msgstr "Neamhfheicthe"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1023
-#: ../../lib/frontends/widgets/itemlistwidgets.py:553
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1345
-msgid "View|All"
-msgstr "Féach Orthu Uile"
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1025
-msgid "Albums"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1027
-msgid "Songs"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1029
-msgid "Genres"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1031
-msgid "Artists"
-msgstr ""
-
 #: ../../lib/frontends/widgets/statictabs.py:51
 msgid "Miro"
-msgstr ""
+msgstr "Miro"
 
 #: ../../lib/frontends/widgets/statictabs.py:108
 msgid "Video Search"
@@ -1491,42 +1478,42 @@ msgstr "Cuardach Físeáin"
 #: ../../lib/frontends/widgets/statictabs.py:114
 #: ../../lib/frontends/widgets/tabcontroller.py:267
 msgid "Videos"
-msgstr ""
+msgstr "Físeáin"
 
 #: ../../lib/frontends/widgets/statictabs.py:121
 #: ../../lib/frontends/widgets/tabcontroller.py:266
-#: ../../lib/frontends/widgets/tablist.py:581
-#: ../../lib/frontends/widgets/tablist.py:694
+#: ../../lib/frontends/widgets/tablist.py:660
+#: ../../lib/frontends/widgets/tablist.py:773
 #: ../../lib/frontends/widgets/itemedit.py:487
 msgid "Music"
-msgstr ""
+msgstr "Ceol"
 
 #: ../../lib/frontends/widgets/statictabs.py:128
 #: ../../lib/frontends/widgets/itemedit.py:489
 msgid "Misc"
-msgstr ""
+msgstr "Ilghnéitheach"
 
 #: ../../lib/frontends/widgets/statictabs.py:135
-#: ../../lib/frontends/widgets/itemlistwidgets.py:831
+#: ../../lib/frontends/widgets/itemlistwidgets.py:862
 msgid "Downloading"
 msgstr "Á Íosluchtú"
 
-#: ../../lib/frontends/widgets/guidecontroller.py:174
+#: ../../lib/frontends/widgets/guidecontroller.py:175
 msgid "Recently Watched"
-msgstr ""
+msgstr "Feicthe Le Déanaí"
 
-#: ../../lib/frontends/widgets/guidecontroller.py:176
+#: ../../lib/frontends/widgets/guidecontroller.py:177
 msgid "Recently Listened To"
-msgstr ""
+msgstr "Éiste Le Déanaí"
 
-#: ../../lib/frontends/widgets/guidecontroller.py:178
+#: ../../lib/frontends/widgets/guidecontroller.py:179
 msgid "Recent Downloads"
-msgstr ""
+msgstr "Íosluchtuithe Le Déanaí"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:71
 #, python-format
 msgid "%(appname)s First Time Setup"
-msgstr ""
+msgstr "Socrú %(appname)s Don Chéad Uair"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:141
 msgid "Choose Language"
@@ -1550,7 +1537,7 @@ msgstr ""
 "Cén teanga ar mhaith leat a bheith ar Miro?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:156
-#: ../../lib/frontends/widgets/prefpanel.py:445
+#: ../../lib/frontends/widgets/prefpanel.py:446
 msgid "System default"
 msgstr "Réamhshocrú an chórais"
 
@@ -1559,7 +1546,7 @@ msgid "Update"
 msgstr "Nuashonraigh"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:183
-#: ../../lib/frontends/widgets/prefpanel.py:452
+#: ../../lib/frontends/widgets/prefpanel.py:453
 msgid "Language:"
 msgstr "Teanga:"
 
@@ -1640,13 +1627,13 @@ msgid "Import from %(player)s as watched folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:294
-#: ../../lib/frontends/widgets/prefpanel.py:677
+#: ../../lib/frontends/widgets/prefpanel.py:678
 #: ../../lib/frontends/widgets/importmediadialog.py:89
 msgid "Change"
 msgstr "Athraigh"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:302
-#: ../../lib/frontends/widgets/importmediadialog.py:157
+#: ../../lib/frontends/widgets/importmediadialog.py:159
 msgid "Choose directory to search for media files"
 msgstr "Roghnaigh an chomhadlann le cuardach le haghaidh comhaid meáin"
 
@@ -1656,12 +1643,12 @@ msgid "Finish"
 msgstr "Críochnaigh"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:403
-#: ../../lib/frontends/widgets/importmediadialog.py:114
+#: ../../lib/frontends/widgets/importmediadialog.py:116
 msgid "Searching for media files"
 msgstr "Ag cuardach comhaid meáin"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:451
-#: ../../lib/frontends/widgets/importmediadialog.py:186
+#: ../../lib/frontends/widgets/importmediadialog.py:188
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
@@ -1670,7 +1657,7 @@ msgstr[1] "miondealaíodh %(count)s comhaid"
 msgstr[2] "miondealaíodh %(count)s comhaid"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:456
-#: ../../lib/frontends/widgets/importmediadialog.py:191
+#: ../../lib/frontends/widgets/importmediadialog.py:193
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
@@ -1688,24 +1675,24 @@ msgstr "_Oscail"
 
 #: ../../lib/frontends/widgets/menus.py:218
 msgid "Download Item"
-msgstr ""
+msgstr "Íosluchtaigh an Mhír"
 
 #: ../../lib/frontends/widgets/menus.py:220
 #: ../../lib/frontends/widgets/importmediadialog.py:55
 msgid "Import Media"
-msgstr ""
+msgstr "Tabhair Isteach Meáin"
 
 #: ../../lib/frontends/widgets/menus.py:222
 msgid "Check Version"
-msgstr ""
+msgstr "Dearbháil an Leagan"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "Remove Item"
-msgstr ""
+msgstr "Bain mír"
 
 #: ../../lib/frontends/widgets/menus.py:226
 msgid "Remove Items"
-msgstr ""
+msgstr "Bain Míreanna"
 
 #: ../../lib/frontends/widgets/menus.py:227
 msgid "Edit _Item"
@@ -1728,7 +1715,7 @@ msgid "Copy Item _URL"
 msgstr "Macasamhlaigh Mír _URL"
 
 #: ../../lib/frontends/widgets/menus.py:238
-#: ../../lib/frontends/widgets/prefpanel.py:1247
+#: ../../lib/frontends/widgets/prefpanel.py:1248
 msgid "Preferences"
 msgstr "Sainroghanna"
 
@@ -1743,46 +1730,46 @@ msgstr "_Taobh Stiall"
 #: ../../lib/frontends/widgets/menus.py:243
 #: ../../lib/frontends/widgets/newfeed.py:96
 msgid "Add Podcast"
-msgstr ""
+msgstr "Cuir Podchraoladh Leis"
 
 #: ../../lib/frontends/widgets/menus.py:246
 #: ../../lib/frontends/widgets/tabcontroller.py:479
 #: ../../lib/frontends/widgets/application.py:679
 msgid "Add Source"
-msgstr ""
+msgstr "Cuir Foinse Leis"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "_New Folder"
-msgstr ""
+msgstr "Fillteán _Nua"
 
 #: ../../lib/frontends/widgets/menus.py:253
 msgid "New Watched Folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:256
-#: ../../lib/frontends/widgets/tablist.py:905
+#: ../../lib/frontends/widgets/tablist.py:987
 msgid "Rename"
 msgstr "Athainmnigh"
 
 #: ../../lib/frontends/widgets/menus.py:259
 #: ../../lib/frontends/widgets/application.py:833
 msgid "Rename Podcast"
-msgstr ""
+msgstr "Athainmnigh an Podchraoladh"
 
 #: ../../lib/frontends/widgets/menus.py:260
 #: ../../lib/frontends/widgets/application.py:847
-#: ../../lib/frontends/widgets/tablist.py:808
+#: ../../lib/frontends/widgets/tablist.py:890
 msgid "Rename Source"
-msgstr ""
+msgstr "Athainmnigh an Fhoinse"
 
 #: ../../lib/frontends/widgets/menus.py:261
-#: ../../lib/frontends/widgets/prefpanel.py:745
-#: ../../lib/frontends/widgets/tablist.py:897
-#: ../../lib/frontends/widgets/tablist.py:911
-#: ../../lib/frontends/widgets/tablist.py:917
-#: ../../lib/frontends/widgets/tablist.py:963
-#: ../../lib/frontends/widgets/tablist.py:969
-#: ../../lib/frontends/widgets/tablist.py:974 ../../lib/dialogs.py:122
+#: ../../lib/frontends/widgets/prefpanel.py:746
+#: ../../lib/frontends/widgets/tablist.py:979
+#: ../../lib/frontends/widgets/tablist.py:993
+#: ../../lib/frontends/widgets/tablist.py:999
+#: ../../lib/frontends/widgets/tablist.py:1045
+#: ../../lib/frontends/widgets/tablist.py:1051
+#: ../../lib/frontends/widgets/tablist.py:1056 ../../lib/dialogs.py:122
 msgid "Remove"
 msgstr "Bain"
 
@@ -1790,42 +1777,43 @@ msgstr "Bain"
 #: ../../lib/frontends/widgets/removefeeds.py:50
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Bain Podchraoladh"
+msgstr[1] "Bain Podchraoltaí"
+msgstr[2] "Bain Podchraoltaí"
 
 #: ../../lib/frontends/widgets/menus.py:265
 msgid "Remove Podcasts"
-msgstr ""
+msgstr "Bain Podchraoltaí"
 
 #: ../../lib/frontends/widgets/menus.py:266
 msgid "Remove Folder"
-msgstr ""
+msgstr "Bain Fillteán"
 
 #: ../../lib/frontends/widgets/menus.py:267
 msgid "Remove Folders"
-msgstr ""
+msgstr "Bain Fillteáin"
 
 #: ../../lib/frontends/widgets/menus.py:268
-#: ../../lib/frontends/widgets/tablist.py:809
+#: ../../lib/frontends/widgets/tablist.py:891
 msgid "Remove Source"
-msgstr ""
+msgstr "Bain Foinse"
 
 #: ../../lib/frontends/widgets/menus.py:269
-#: ../../lib/frontends/widgets/tablist.py:812
+#: ../../lib/frontends/widgets/tablist.py:894
 msgid "Remove Sources"
-msgstr ""
+msgstr "Bain Foinsí"
 
 #: ../../lib/frontends/widgets/menus.py:270
 msgid "Update Podcast"
-msgstr ""
+msgstr "Nuashonraigh an Podchraoladh"
 
 #: ../../lib/frontends/widgets/menus.py:273
 msgid "Update Podcasts"
-msgstr ""
+msgstr "Nuashonraigh na Podchraoltaí"
 
 #: ../../lib/frontends/widgets/menus.py:274
 msgid "Update All Podcasts and Library"
-msgstr ""
+msgstr "Nuashonraigh na Podchraoltaí Uile agus an Leabharlann"
 
 #: ../../lib/frontends/widgets/menus.py:279
 msgid "Import Podcasts (OPML)"
@@ -1837,7 +1825,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:284
 msgid "Share with a Friend"
-msgstr ""
+msgstr "Roinn le cara"
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "Copy URL"
@@ -1857,7 +1845,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:298
 #: ../../lib/frontends/widgets/application.py:838
-#: ../../lib/frontends/widgets/tablist.py:968 ../../lib/playlist.py:203
+#: ../../lib/frontends/widgets/tablist.py:1050 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "Athainmnigh Seinnréim"
 
@@ -1883,35 +1871,35 @@ msgstr "Athsh_einm"
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Pause"
-msgstr ""
+msgstr "Cuir ar Shos"
 
 #: ../../lib/frontends/widgets/menus.py:312
 msgid "Stop"
-msgstr ""
+msgstr "Stad"
 
 #: ../../lib/frontends/widgets/menus.py:315
 msgid "Next Item"
-msgstr ""
+msgstr "Mír ar aghaidh"
 
 #: ../../lib/frontends/widgets/menus.py:318
 msgid "Previous Item"
-msgstr ""
+msgstr "Mír roimhe"
 
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "Skip Forward"
-msgstr ""
+msgstr "Léim ar aghaidh"
 
 #: ../../lib/frontends/widgets/menus.py:324
 msgid "Skip Back"
-msgstr ""
+msgstr "Siar"
 
 #: ../../lib/frontends/widgets/menus.py:327
 msgid "Volume Up"
-msgstr ""
+msgstr "Airde Suas"
 
 #: ../../lib/frontends/widgets/menus.py:329
 msgid "Volume Down"
-msgstr ""
+msgstr "Airde Síos"
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "_Fullscreen"
@@ -1927,11 +1915,11 @@ msgstr "Roghnaigh Comhad Fotheidil"
 
 #: ../../lib/frontends/widgets/menus.py:348
 msgid "_View"
-msgstr ""
+msgstr "_Amharc"
 
 #: ../../lib/frontends/widgets/menus.py:351
 msgid "_Convert"
-msgstr ""
+msgstr "_Tiontaigh"
 
 #: ../../lib/frontends/widgets/menus.py:353
 msgid "_Help"
@@ -1940,31 +1928,31 @@ msgstr "_Cabhair"
 #: ../../lib/frontends/widgets/menus.py:354
 #, python-format
 msgid "About %(name)s"
-msgstr ""
+msgstr "Maidir le %(name)s"
 
 #: ../../lib/frontends/widgets/menus.py:362
 msgid "Donate"
-msgstr ""
+msgstr "Bronn Airgead"
 
 #: ../../lib/frontends/widgets/menus.py:365
 msgid "Help"
-msgstr ""
+msgstr "Cabhair"
 
 #: ../../lib/frontends/widgets/menus.py:369
 msgid "Report a Bug"
-msgstr ""
+msgstr "Fógraigh Fadhb."
 
 #: ../../lib/frontends/widgets/menus.py:371
 msgid "Translate"
-msgstr ""
+msgstr "Aistrigh"
 
 #: ../../lib/frontends/widgets/menus.py:373
 msgid "Planet Miro"
-msgstr ""
+msgstr "Planet Miro"
 
 #: ../../lib/frontends/widgets/menus.py:376
 msgid "Dev"
-msgstr ""
+msgstr "Forbairt"
 
 #: ../../lib/frontends/widgets/menus.py:377
 msgid "Profile Message"
@@ -1983,14 +1971,14 @@ msgid "Test Soft Crash Reporter"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:399
-#: ../../lib/frontends/widgets/itemlistwidgets.py:444
-#: ../../lib/frontends/widgets/itemcontextmenu.py:416
+#: ../../lib/frontends/widgets/itemlistwidgets.py:455
+#: ../../lib/frontends/widgets/itemcontextmenu.py:419
 msgid "Show Conversion Folder"
 msgstr "Taispeáin Fillteán an Tiontaithe"
 
 #: ../../lib/frontends/widgets/menus.py:419
 msgid "_Encoding"
-msgstr ""
+msgstr "_Ionchodú"
 
 #: ../../lib/frontends/widgets/menus.py:422
 msgid "Default (UTF-8)"
@@ -1998,11 +1986,11 @@ msgstr "Réamhshocrú (UTF-8)"
 
 #: ../../lib/frontends/widgets/newfeed.py:97
 msgid "Enter the URL of the podcast to add"
-msgstr ""
+msgstr "Cuir isteach URL an phodchraolta atá le cur leis"
 
 #: ../../lib/frontends/widgets/newfeed.py:108
 msgid "Add Podcast - Invalid URL"
-msgstr ""
+msgstr "Cuir Podchraoladh Leis - URL neamhbhailí"
 
 #: ../../lib/frontends/widgets/newfeed.py:110
 msgid ""
@@ -2012,8 +2000,8 @@ msgid ""
 "Enter the URL of the podcast to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/feedcontroller.py:150
-#: ../../lib/frontends/widgets/feedcontroller.py:177
+#: ../../lib/frontends/widgets/feedcontroller.py:162
+#: ../../lib/frontends/widgets/feedcontroller.py:189
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
@@ -2021,8 +2009,8 @@ msgstr[0] "%(count)d Á Íosluchtú"
 msgstr[1] "%(count)d Á Íosluchtú"
 msgstr[2] "%(count)d Á Íosluchtú"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:161
 #: ../../lib/frontends/widgets/feedcontroller.py:173
+#: ../../lib/frontends/widgets/feedcontroller.py:185
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
@@ -2030,7 +2018,7 @@ msgstr[0] "%(count)d M(h)ír"
 msgstr[1] "%(count)d Míreanna"
 msgstr[2] "%(count)d Míreanna"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:182
+#: ../../lib/frontends/widgets/feedcontroller.py:194
 #, python-format
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
@@ -2045,7 +2033,7 @@ msgstr[2] ""
 "%(count)d Íosluchtuithe i scuaine de bharr míreanna neamhsheinnte (Féach na "
 "socruithe)"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:195
+#: ../../lib/frontends/widgets/feedcontroller.py:207
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
@@ -2056,11 +2044,13 @@ msgstr[2] "Comhoiriúnaíonn %(count)d Mír leis an gCuardach"
 #: ../../lib/frontends/widgets/crashdialog.py:53
 #, python-format
 msgid "Oops!  %(appname)s has encountered an internal error"
-msgstr ""
+msgstr "Ochón! Tharla fadhb inmheánach i %(appname)s"
 
 #: ../../lib/frontends/widgets/crashdialog.py:68
 msgid "You can help us fix this problem by submitting an error report."
 msgstr ""
+"Is féidir leat cabhrú linn an fhadhb seo a dheisiú trí fógra tuairte a "
+"sheoladh chugainn."
 
 #: ../../lib/frontends/widgets/crashdialog.py:75
 msgid ""
@@ -2071,7 +2061,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/crashdialog.py:83
 msgid "See crash report"
-msgstr ""
+msgstr "Féach ar an bhfógra tuairte"
 
 #: ../../lib/frontends/widgets/crashdialog.py:89
 msgid ""
@@ -2083,10 +2073,12 @@ msgstr ""
 msgid ""
 "What were you doing when you got this message?  (Helpful, but not required.)"
 msgstr ""
+"Cad a bhí ar siúl agat nuair a bhfuair tú an teachtaireacht seo? (Bheadh sé "
+"mar chabhair dúinn, ach níl sé éigeantach.)"
 
 #: ../../lib/frontends/widgets/crashdialog.py:108
 msgid "Crash Report:"
-msgstr ""
+msgstr "Fógra Tuairte:"
 
 #: ../../lib/frontends/widgets/dialogs.py:105
 msgid ""
@@ -2095,215 +2087,225 @@ msgid ""
 "can even take more than 30 minutes)."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:218
-#, python-format
-msgid "%(item)s at %(resumetime)s"
-msgstr ""
-
 #: ../../lib/frontends/widgets/itemlistwidgets.py:221
 #, python-format
+msgid "%(item)s at %(resumetime)s"
+msgstr "%(item)s ag %(resumetime)s"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:224
+#, python-format
 msgid "%(item)s"
-msgstr ""
+msgstr "%(item)s"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:225
+#: ../../lib/frontends/widgets/itemlistwidgets.py:228
 msgid "Resume"
-msgstr ""
+msgstr "Lean ar aghaidh"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:419
+#: ../../lib/frontends/widgets/itemlistwidgets.py:430
 msgid "Back to podcast"
-msgstr ""
+msgstr "Ar ais chuig an podchraoladh"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:439
+#: ../../lib/frontends/widgets/itemlistwidgets.py:450
 msgid "Stop All Conversions"
 msgstr "Stad Gach Tiontú"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:449
+#: ../../lib/frontends/widgets/itemlistwidgets.py:460
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Glan Tiontuithe Críochnaithe"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:500
+#: ../../lib/frontends/widgets/itemlistwidgets.py:511
 msgid "Save as Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:521
-#: ../../lib/frontends/widgets/tablist.py:580
-#: ../../lib/frontends/widgets/tablist.py:691
+#: ../../lib/frontends/widgets/itemlistwidgets.py:535
+#: ../../lib/frontends/widgets/tablist.py:659
+#: ../../lib/frontends/widgets/tablist.py:770
 #: ../../lib/frontends/widgets/itemedit.py:488
 #: ../../lib/frontends/widgets/itemedit.py:739
 msgid "Video"
 msgstr "Físeán"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:523
+#: ../../lib/frontends/widgets/itemlistwidgets.py:537
 msgid "Audio"
 msgstr "Fuaim"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:536
+#: ../../lib/frontends/widgets/itemlistwidgets.py:559
 msgid "Downloaded"
 msgstr "Íosluchtaithe"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:574
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1377
+msgid "View|All"
+msgstr "Féach Orthu Uile"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:595
 msgid "Movies"
-msgstr ""
+msgstr "Scannáin"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:576
+#: ../../lib/frontends/widgets/itemlistwidgets.py:597
 msgid "Shows"
-msgstr ""
+msgstr "Cláir"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:578
+#: ../../lib/frontends/widgets/itemlistwidgets.py:599
 msgid "Clips"
-msgstr ""
+msgstr "Gearrthóga"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:982
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1067
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1070
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1013
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1098
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1101
 #, python-format
 msgid "%(rate)s"
-msgstr ""
+msgstr "%(rate)s"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1047
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1078
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "Tá %(available)s faoi theorainn shlí na n-íosluchtú (%(amount)s saor ar an "
 "diosca)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1054
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1085
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 "Tá %(available)s saor do íosluchtuithe (%(amount)s saor ar an diosca)"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1060
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1091
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s saor ar an diosca"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1109
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1140
 msgid "Pause All"
 msgstr "Cuir Ar Sos Uile"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1115
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1146
 msgid "Resume All"
 msgstr "Atosaigh Uile"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1121
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1152
 msgid "Cancel All"
 msgstr "Cealaigh Uile"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1127
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1158
 msgid "Download Settings"
 msgstr "Socruithe Íosluchtaithe"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1168
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1199
 msgid "Auto-Download All"
-msgstr ""
+msgstr "Uath-íosluchtaigh Uile"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1169
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1200
 msgid "Auto-Download New"
-msgstr ""
+msgstr "Uath-íosluchtaigh Míreanna Nua"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1170
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1201
 msgid "Auto-Download Off"
-msgstr ""
+msgstr "Uath-íosluchtú As"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1178
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1209
 msgid "Remove podcast"
-msgstr ""
+msgstr "Bain podchraoladh"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1283
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1364
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1314
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1396
 #: ../../lib/frontends/widgets/tabcontroller.py:520
 #: ../../lib/frontends/widgets/itemedit.py:466
 #: ../../lib/frontends/widgets/widgetconst.py:52
 msgid "Name"
 msgstr "Ainm"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1284
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1365
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1315
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1397
 #: ../../lib/frontends/widgets/widgetconst.py:59
 msgid "Date"
 msgstr "Dáta"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1285
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1366
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1316
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1398
 #: ../../lib/frontends/widgets/itemedit.py:491
 #: ../../lib/frontends/widgets/widgetconst.py:62
 msgid "Size"
 msgstr "Méid"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1286
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1367
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1317
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1399
 #: ../../lib/frontends/widgets/widgetconst.py:60
 msgid "Time"
 msgstr "Am"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1349
-msgid "Non Podcast"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1318
+msgid "Watched"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1363
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1381
+msgid "Non Podcast"
+msgstr "Ní podchraoladh é"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1395
 #: ../../lib/frontends/widgets/widgetconst.py:74
 msgid "Order"
-msgstr ""
+msgstr "Inneall"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1552
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1564
 msgid "Importing audio details and artwork: {0} of {1}"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1555
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1567
 msgid "Importing video details and creating thumbnails: {0} of {1}"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1558
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1570
 msgid "Importing file details: {0} of {1}"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1711
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1724
 msgid "Remaining"
-msgstr ""
+msgstr "Fágtha"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1713
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1726
 msgid "Upload"
-msgstr ""
+msgstr "Uasluchtaigh"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1714
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1715
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1727
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1728
 msgid "Total"
-msgstr ""
+msgstr "Iomlán"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1759
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1772
 msgid "Connected Peers"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1760
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1773
 msgid "Seeders"
 msgstr "Síoladóirí"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1761
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1774
 msgid "Leechers"
 msgstr "Súmairí"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1762
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1775
 msgid "Share Ratio"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1920
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1933
 msgid "View License"
-msgstr ""
+msgstr "Féach ar an gCeadúnas"
 
-#: ../../lib/frontends/widgets/browser.py:102
+#: ../../lib/frontends/widgets/browser.py:131
 msgid "Open in browser"
 msgstr "Oscail i líonléitheoir"
 
-#: ../../lib/frontends/widgets/browser.py:109
+#: ../../lib/frontends/widgets/browser.py:138
 msgid "Download this video"
 msgstr "Íosluchtaigh an físeán seo"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
 msgid_plural "Are you sure you want to remove these podcasts:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "An bhfuil tú cinnte gur mian leat an podchraoladh seo a bhaint?"
+msgstr[1] "An bhfuil tú cinnte gur mian leat na podchraoltaí seo a bhaint?"
+msgstr[2] "An bhfuil tú cinnte gur mian leat na podchraoltaí seo a bhaint?"
 
 #: ../../lib/frontends/widgets/removefeeds.py:87
 msgid "Keep items that have been downloaded in my library."
@@ -2328,188 +2330,199 @@ msgid_plural ""
 "Are you sure you want to remove these podcasts?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"An bhfuil tú cinnte gur mian leat an podchraoladh seo a bhaint?  Cuirfear na "
+"híosluchtuithe ar siúl faoi láthair ar ceal."
 msgstr[1] ""
+"An bhfuil tú cinnte gur mian leat na podchraoltaí seo a bhaint?  Cuirfear na "
+"híosluchtuithe ar siúl faoi láthair ar ceal."
+msgstr[2] ""
+"An bhfuil tú cinnte gur mian leat na podchraoltaí seo a bhaint?  Cuirfear na "
+"híosluchtuithe ar siúl faoi láthair ar ceal."
 
-#: ../../lib/frontends/widgets/prefpanel.py:418
+#: ../../lib/frontends/widgets/prefpanel.py:419
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
 msgstr "Rith %(appname)s go huathoibríoch nuair a thosaím."
 
-#: ../../lib/frontends/widgets/prefpanel.py:424
+#: ../../lib/frontends/widgets/prefpanel.py:425
 #, python-format
 msgid ""
 "When starting up %(appname)s, remember what screen I was on when I last quit."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:431
+#: ../../lib/frontends/widgets/prefpanel.py:432
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr ""
 "Tabhair rabhadh dom nuair a dhéanaim iarracht scoir nuair atá míreanna á "
 "íosluchtú."
 
-#: ../../lib/frontends/widgets/prefpanel.py:437
+#: ../../lib/frontends/widgets/prefpanel.py:438
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:456
+#: ../../lib/frontends/widgets/prefpanel.py:457
 msgid "(Changing the language requires you to restart Miro.)"
 msgstr "(Ní mór Miro a atosú má athraítear an teanga.)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:467
+#: ../../lib/frontends/widgets/prefpanel.py:468
 msgid "Show videos from podcasts in the Videos section."
-msgstr ""
+msgstr "Taispeáin físeáin ó phodchraoltaí i rannóg na bhfíseán."
 
-#: ../../lib/frontends/widgets/prefpanel.py:473
+#: ../../lib/frontends/widgets/prefpanel.py:474
 msgid "Show audio from podcasts in the Music section."
-msgstr ""
+msgstr "Taispeáin ceol ó phodchraoltaí sa rannóg cheoil."
 
-#: ../../lib/frontends/widgets/prefpanel.py:479
+#: ../../lib/frontends/widgets/prefpanel.py:480
 msgid "Every day"
 msgstr "Gach lá"
 
-#: ../../lib/frontends/widgets/prefpanel.py:480
+#: ../../lib/frontends/widgets/prefpanel.py:481
 msgid "Every hour"
 msgstr "Gach uair a chlog"
 
-#: ../../lib/frontends/widgets/prefpanel.py:481
+#: ../../lib/frontends/widgets/prefpanel.py:482
 msgid "Every 30 minutes"
 msgstr "Gach 30 nóiméid"
 
-#: ../../lib/frontends/widgets/prefpanel.py:482
+#: ../../lib/frontends/widgets/prefpanel.py:483
 msgid "Manually"
 msgstr "De Láimh"
 
-#: ../../lib/frontends/widgets/prefpanel.py:487
+#: ../../lib/frontends/widgets/prefpanel.py:488
 msgid "New"
 msgstr "Nua"
 
-#: ../../lib/frontends/widgets/prefpanel.py:488
+#: ../../lib/frontends/widgets/prefpanel.py:489
 msgid "All"
 msgstr "Uile"
 
-#: ../../lib/frontends/widgets/prefpanel.py:489
+#: ../../lib/frontends/widgets/prefpanel.py:490
 #: ../../lib/frontends/widgets/tabcontroller.py:135
 msgid "Off"
 msgstr "As"
 
-#: ../../lib/frontends/widgets/prefpanel.py:495
+#: ../../lib/frontends/widgets/prefpanel.py:496
 msgid "0"
 msgstr "0"
 
-#: ../../lib/frontends/widgets/prefpanel.py:496
+#: ../../lib/frontends/widgets/prefpanel.py:497
 msgid "20"
 msgstr "20"
 
-#: ../../lib/frontends/widgets/prefpanel.py:497
+#: ../../lib/frontends/widgets/prefpanel.py:498
 msgid "50"
 msgstr "50"
 
-#: ../../lib/frontends/widgets/prefpanel.py:498
+#: ../../lib/frontends/widgets/prefpanel.py:499
 msgid "100"
 msgstr "100"
 
-#: ../../lib/frontends/widgets/prefpanel.py:499
+#: ../../lib/frontends/widgets/prefpanel.py:500
 msgid "1000"
 msgstr "1000"
 
-#: ../../lib/frontends/widgets/prefpanel.py:505
+#: ../../lib/frontends/widgets/prefpanel.py:506
 msgid "Default settings for new podcasts:"
-msgstr ""
+msgstr "Réamhshocruithe do phodchraoltaí nua:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:509
+#: ../../lib/frontends/widgets/prefpanel.py:510
 msgid "(These can be changed using the podcast's settings button)"
 msgstr ""
+"(Is féidir iad seo a athrú ag baint feidhm as chnaipe socruithe an "
+"phodchraolta)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:514
+#: ../../lib/frontends/widgets/prefpanel.py:515
 msgid "Check for new content:"
 msgstr "Dearbháil le haghaidh ábhar nua:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:519
+#: ../../lib/frontends/widgets/prefpanel.py:520
 msgid "Auto-download setting:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:525
+#: ../../lib/frontends/widgets/prefpanel.py:526
 msgid "Remember this many old items:"
 msgstr "Cuimhnigh ar an méid seo seanmhíreanna:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:526
+#: ../../lib/frontends/widgets/prefpanel.py:527
 msgid "(in addition to the current contents)"
 msgstr "(le cois an t-inneachair reatha)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:539
+#: ../../lib/frontends/widgets/prefpanel.py:540
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Uasmhéid líon na n-íosluchtaithe de láimh ag aon uair amháin:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:551
+#: ../../lib/frontends/widgets/prefpanel.py:552
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Uaslíon na n-íosluchtú uathoibríoch in aon dreas amháin:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:565
+#: ../../lib/frontends/widgets/prefpanel.py:566
 msgid "Bittorrent:"
 msgstr "Bittorrent:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:569
+#: ../../lib/frontends/widgets/prefpanel.py:570
 msgid "Limit upstream bandwidth to:"
 msgstr "Teorannaigh bandaleithead réamhtheachtach go:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:583
-#: ../../lib/frontends/widgets/prefpanel.py:598
+#: ../../lib/frontends/widgets/prefpanel.py:584
+#: ../../lib/frontends/widgets/prefpanel.py:599
 msgid "KB/s"
 msgstr "KB/s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:587
+#: ../../lib/frontends/widgets/prefpanel.py:588
 msgid "Limit downstream bandwidth to:"
 msgstr "\"Teorannaigh bandaleithead iartheachtach go:\""
 
-#: ../../lib/frontends/widgets/prefpanel.py:602
+#: ../../lib/frontends/widgets/prefpanel.py:603
 msgid "Limit torrent connections to:"
 msgstr "Teorannaigh ceangail torrent go:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:629
+#: ../../lib/frontends/widgets/prefpanel.py:630
 msgid "Starting port:"
 msgstr "An port tosaithe:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:635
+#: ../../lib/frontends/widgets/prefpanel.py:636
 msgid "Ending port:"
 msgstr "Port deiridh:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:643
+#: ../../lib/frontends/widgets/prefpanel.py:644
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Cuir poirt ar aghaidh go huathoibríoch. (UPNP)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:647
+#: ../../lib/frontends/widgets/prefpanel.py:648
 msgid "Use DHT to find more peers"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:651
+#: ../../lib/frontends/widgets/prefpanel.py:652
 msgid "Ignore unencrypted connections."
 msgstr "Déan neamhaird de ceangail gan criptiú."
 
-#: ../../lib/frontends/widgets/prefpanel.py:656
+#: ../../lib/frontends/widgets/prefpanel.py:657
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 "Cuir deireadh le uasluchtaithe torrentí nuair a sroichtear an cóimheas seo:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:683
+#: ../../lib/frontends/widgets/prefpanel.py:684
 msgid "Choose Movies Directory"
 msgstr "Roghnaigh Comhadlann na Scannáin"
 
-#: ../../lib/frontends/widgets/prefpanel.py:694
+#: ../../lib/frontends/widgets/prefpanel.py:695
 msgid "Directory not valid"
 msgstr "Níl an chomhadlann bailí"
 
-#: ../../lib/frontends/widgets/prefpanel.py:695
+#: ../../lib/frontends/widgets/prefpanel.py:696
 #, python-format
 msgid ""
 "Directory '%s' could not be created.  Please choose a directory you have "
 "write access to."
 msgstr ""
+"Níorbh fhéidir an chomhadlann '%s' a chruthú. Roghnaigh comhadlann a bhfuil "
+"rochtain agat uirthi chun scríobh inti."
 
-#: ../../lib/frontends/widgets/prefpanel.py:709
+#: ../../lib/frontends/widgets/prefpanel.py:710
 msgid "Migrate existing movies?"
 msgstr "Ascain na scannáin atá ann cheana?"
 
-#: ../../lib/frontends/widgets/prefpanel.py:711
+#: ../../lib/frontends/widgets/prefpanel.py:712
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -2517,23 +2530,23 @@ msgid ""
 "not be moved until they finish.)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:729
+#: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "folder"
 msgstr "fillteán"
 
-#: ../../lib/frontends/widgets/prefpanel.py:735
+#: ../../lib/frontends/widgets/prefpanel.py:736
 msgid "visible"
 msgstr "infheicthe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:742 ../../lib/dialogs.py:118
+#: ../../lib/frontends/widgets/prefpanel.py:743 ../../lib/dialogs.py:118
 msgid "Add"
 msgstr "Cuir Leis"
 
-#: ../../lib/frontends/widgets/prefpanel.py:805
+#: ../../lib/frontends/widgets/prefpanel.py:806
 msgid "Store downloads in this folder:"
 msgstr "Cuir íosluchtaithe i dtaisce san fhillteán seo:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:811
+#: ../../lib/frontends/widgets/prefpanel.py:812
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -2541,218 +2554,223 @@ msgstr ""
 "Fair amach do mhíreanna físeáin agus fuaime nua sna fillteáin seo agus "
 "iniaigh sa leabharlann iad:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:832
+#: ../../lib/frontends/widgets/prefpanel.py:833
 msgid "Keep at least this much free space on my drive:"
 msgstr "Coinnigh ar a laghad an mhéid seo slí ar mo thiomántán:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:846
+#: ../../lib/frontends/widgets/prefpanel.py:847
 msgid "GB"
 msgstr "GB"
 
-#: ../../lib/frontends/widgets/prefpanel.py:850
+#: ../../lib/frontends/widgets/prefpanel.py:851
 msgid "1 day"
 msgstr "Lá amháin"
 
-#: ../../lib/frontends/widgets/prefpanel.py:851
+#: ../../lib/frontends/widgets/prefpanel.py:852
 msgid "3 days"
 msgstr "3 lá"
 
-#: ../../lib/frontends/widgets/prefpanel.py:852
+#: ../../lib/frontends/widgets/prefpanel.py:853
 msgid "6 days"
 msgstr "6 lá"
 
-#: ../../lib/frontends/widgets/prefpanel.py:853
+#: ../../lib/frontends/widgets/prefpanel.py:854
 msgid "10 days"
 msgstr "10 lá"
 
-#: ../../lib/frontends/widgets/prefpanel.py:854
+#: ../../lib/frontends/widgets/prefpanel.py:855
 msgid "1 month"
 msgstr "Mí amháin"
 
-#: ../../lib/frontends/widgets/prefpanel.py:855
+#: ../../lib/frontends/widgets/prefpanel.py:856
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:103
 msgid "never"
 msgstr "riamh"
 
-#: ../../lib/frontends/widgets/prefpanel.py:860
+#: ../../lib/frontends/widgets/prefpanel.py:861
 msgid "By default, video and audio items expire after:"
 msgstr ""
 "Mar réamhshocrú, téann míreanna físeáin agus fuaime as feidhm tar éis:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:872
+#: ../../lib/frontends/widgets/prefpanel.py:873
 msgid "Share my media library."
-msgstr ""
+msgstr "Roinn mo mheánleabharlann ."
 
-#: ../../lib/frontends/widgets/prefpanel.py:874
+#: ../../lib/frontends/widgets/prefpanel.py:875
 #: ../../lib/frontends/widgets/tabcontroller.py:269
 msgid "Warn on quit when others are connected to my media library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:877
-msgid "Share my music library."
-msgstr ""
-
 #: ../../lib/frontends/widgets/prefpanel.py:878
-msgid "Share my video library."
-msgstr ""
+msgid "Share my music library."
+msgstr "Roinn mo leabharlann ceoil."
 
-#: ../../lib/frontends/widgets/prefpanel.py:904
+#: ../../lib/frontends/widgets/prefpanel.py:879
+msgid "Share my video library."
+msgstr "Roinn mo leabharlann físeáin."
+
+#: ../../lib/frontends/widgets/prefpanel.py:905
 msgid "Share Name:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:914
+#: ../../lib/frontends/widgets/prefpanel.py:915
 msgid ""
 "Bonjour is required for sharing. Click on 'Install Bonjour' to install."
 msgstr ""
+"Tá Bonjour de dhíth chun míreanna a roinnt. Brúigh ar 'Suiteáil Bonjour' "
+"chun é a shuiteáil."
 
-#: ../../lib/frontends/widgets/prefpanel.py:935
+#: ../../lib/frontends/widgets/prefpanel.py:936
 msgid "Play media in Miro."
 msgstr "Seinn i Miro é."
 
-#: ../../lib/frontends/widgets/prefpanel.py:937
+#: ../../lib/frontends/widgets/prefpanel.py:938
 msgid "Always play videos in a separate window."
 msgstr "Seinn físeáin i bhfuinneog faoi leith i gcónaí."
 
-#: ../../lib/frontends/widgets/prefpanel.py:940
+#: ../../lib/frontends/widgets/prefpanel.py:941
 msgid "Automatically enable movie subtitles when available."
 msgstr ""
 "Cumasaigh fotheidil do scannán go huathoibríoch nuair atáthar ar fáil."
 
-#: ../../lib/frontends/widgets/prefpanel.py:942
+#: ../../lib/frontends/widgets/prefpanel.py:943
 msgid "Continuous Playback"
-msgstr ""
+msgstr "Athsheinm Leanúnach"
 
-#: ../../lib/frontends/widgets/prefpanel.py:946
+#: ../../lib/frontends/widgets/prefpanel.py:947
 msgid "Play video and audio items one after another"
 msgstr "Seinn na míreanna fhíseáin agus fhuaime ina gceann agus ina gceann"
 
-#: ../../lib/frontends/widgets/prefpanel.py:948
+#: ../../lib/frontends/widgets/prefpanel.py:949
 msgid "Stop after each video or audio item"
 msgstr "Stad tar éis gach físeán nó mír fhuaime"
 
-#: ../../lib/frontends/widgets/prefpanel.py:950
+#: ../../lib/frontends/widgets/prefpanel.py:951
 msgid "Resume Playback"
-msgstr ""
+msgstr "Lean leis an Athsheinm"
 
-#: ../../lib/frontends/widgets/prefpanel.py:953
+#: ../../lib/frontends/widgets/prefpanel.py:954
 msgid "Continue playing videos from where they were last stopped."
 msgstr ""
+"Lean ar aghaidh ag seinm físeáin ón áit a stadadh iad an uair dheiridh."
 
-#: ../../lib/frontends/widgets/prefpanel.py:955
+#: ../../lib/frontends/widgets/prefpanel.py:956
 msgid "Continue playing music files from where they were last stopped."
 msgstr ""
+"Lean ar aghaidh ag seinm comhaid fhuaime ón áit a stadadh iad an uair "
+"dheiridh."
 
-#: ../../lib/frontends/widgets/prefpanel.py:958
+#: ../../lib/frontends/widgets/prefpanel.py:959
 msgid "Continue playing podcast files from where they were last stopped."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1018
+#: ../../lib/frontends/widgets/prefpanel.py:1019
 msgid "Allow this many concurrent conversions:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1019
+#: ../../lib/frontends/widgets/prefpanel.py:1020
 msgid "(changing this will not apply to currently running conversions)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1036
+#: ../../lib/frontends/widgets/prefpanel.py:1037
 msgid "Store"
-msgstr ""
+msgstr "Díolbhoth"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1042
+#: ../../lib/frontends/widgets/prefpanel.py:1043
 msgid "Visible"
-msgstr ""
+msgstr "Infheicthe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1080
+#: ../../lib/frontends/widgets/prefpanel.py:1081
 msgid "MP3 stores:"
-msgstr ""
+msgstr "Díolbhothanna MP3:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1103
+#: ../../lib/frontends/widgets/prefpanel.py:1104
 msgid "enabled"
-msgstr ""
+msgstr "cumasaithe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1108
+#: ../../lib/frontends/widgets/prefpanel.py:1109
 msgid "extension"
-msgstr ""
+msgstr "síneadh"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1148
+#: ../../lib/frontends/widgets/prefpanel.py:1149
 #, python-format
 msgid "Name:  %(extensionname)s"
-msgstr ""
+msgstr "Ainm:  %(extensionname)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1150
+#: ../../lib/frontends/widgets/prefpanel.py:1151
 #, python-format
 msgid "Version:  %(extensionversion)s"
-msgstr ""
+msgstr "Leagan:  %(extensionversion)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1153
+#: ../../lib/frontends/widgets/prefpanel.py:1154
 msgid "Description:"
 msgstr "Cur Síos:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1171
+#: ../../lib/frontends/widgets/prefpanel.py:1172
 #, python-format
 msgid "Extension %(extensionname)s failed to load: %(errormessage)s"
-msgstr ""
+msgstr "Theip ar an Síneadh %(extensionname)s luchtú: %(errormessage)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1176
+#: ../../lib/frontends/widgets/prefpanel.py:1177
 msgid "Extension failed to load"
-msgstr ""
+msgstr "Theip ar an síneadh luchtú"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1189
+#: ../../lib/frontends/widgets/prefpanel.py:1190
 #, python-format
 msgid "Extension %(extensionname)s failed to unload: %(errormessage)s"
-msgstr ""
+msgstr "Theip ar an síneadh %(extensionname)s díluchtú: %(errormessage)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1194
+#: ../../lib/frontends/widgets/prefpanel.py:1195
 msgid "Extension failed to unload"
-msgstr ""
+msgstr "Theip ar an síneadh díluchtú"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1210
+#: ../../lib/frontends/widgets/prefpanel.py:1211
 msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1214
+#: ../../lib/frontends/widgets/prefpanel.py:1215
 msgid "Extensions:"
-msgstr ""
+msgstr "Síntí:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1218
+#: ../../lib/frontends/widgets/prefpanel.py:1219
 msgid "Details:"
-msgstr ""
+msgstr "Sonraí:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1229
+#: ../../lib/frontends/widgets/prefpanel.py:1230
 #: ../../lib/frontends/widgets/itemedit.py:738
 msgid "General"
 msgstr "Coiteann"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1231
+#: ../../lib/frontends/widgets/prefpanel.py:1232
 msgid "Downloads"
 msgstr "Íosluchtaithe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1233
+#: ../../lib/frontends/widgets/prefpanel.py:1234
 msgid "Folders"
 msgstr "Fillteáin"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1234
+#: ../../lib/frontends/widgets/prefpanel.py:1235
 msgid "Disk space"
 msgstr "Slí sa diosca"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1236
+#: ../../lib/frontends/widgets/prefpanel.py:1237
 msgid "Playback"
 msgstr "Athsheinm"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1238
-msgid "Sharing"
-msgstr ""
-
 #: ../../lib/frontends/widgets/prefpanel.py:1239
+msgid "Sharing"
+msgstr "Ag Comhroinnt"
+
+#: ../../lib/frontends/widgets/prefpanel.py:1240
 msgid "Conversions"
 msgstr "Tiontuithe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1242
+#: ../../lib/frontends/widgets/prefpanel.py:1243
 msgid "Extensions"
-msgstr ""
+msgstr "Síntí"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -2870,7 +2888,7 @@ msgstr "15 mhíreanna neamhsheinnte"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:242
 msgid "Podcast Settings"
-msgstr ""
+msgstr "Socruithe an Phodchraolta"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:69
 msgid "Sharing Disabled"
@@ -2886,20 +2904,20 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:82
 msgid "Click here to install"
-msgstr ""
+msgstr "Brúigh anseo chun é a shuiteáil"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:129
 msgid "On"
-msgstr ""
+msgstr "Ar Siúl"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:161
 msgid "Get Help"
-msgstr ""
+msgstr "Faigh Cabhair"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:242
 #, python-format
 msgid "%(shortappname)s Sharing"
-msgstr ""
+msgstr "Comhroinnt %(shortappname)s"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:247
 #, python-format
@@ -2911,7 +2929,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:258
 msgid "Disabled: Needs Bonjour"
-msgstr ""
+msgstr "Díchumasaithe: Bonjour De Dhíth"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:284
 #, python-format
@@ -2944,7 +2962,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:365
 msgid "Miro on your iPad"
-msgstr ""
+msgstr "Miro ar do iPad"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:369
 #, python-format
@@ -2956,7 +2974,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:389
 msgid "Miro on Android"
-msgstr ""
+msgstr "Miro ar Android"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:393
 msgid ""
@@ -2973,7 +2991,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:470
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:529
 msgid "Add Playlist"
@@ -3154,7 +3172,7 @@ msgstr "Cuir An Mhír i dTaisce Mar..."
 
 #: ../../lib/frontends/widgets/application.py:680
 msgid "Enter the URL of the source to add"
-msgstr ""
+msgstr "Cuir isteach URL na foinse chun í a chur leis"
 
 #: ../../lib/frontends/widgets/application.py:681
 msgid "Add Source - Invalid URL"
@@ -3201,9 +3219,9 @@ msgid "Enter a name for the new playlist folder"
 msgstr "Cuir isteach ainm do fillteán na seinnréime"
 
 #: ../../lib/frontends/widgets/application.py:828
-#: ../../lib/frontends/widgets/tablist.py:896
+#: ../../lib/frontends/widgets/tablist.py:978
 msgid "Rename Podcast Folder"
-msgstr ""
+msgstr "Athainmnigh Fillteán na bPodchraoltaí"
 
 #: ../../lib/frontends/widgets/application.py:829
 #, python-format
@@ -3221,7 +3239,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr "Cuir isteach ainm nua don sheinnréim %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:843
-#: ../../lib/frontends/widgets/tablist.py:962
+#: ../../lib/frontends/widgets/tablist.py:1044
 msgid "Rename Playlist Folder"
 msgstr "Athainmnigh Fillteán na Seinnréime"
 
@@ -3253,20 +3271,22 @@ msgstr[2] "An bhfuil tú cinnte gur mian leat na seinnréimeanna seo a bhaint?"
 #: ../../lib/frontends/widgets/application.py:894
 msgid "Remove source"
 msgid_plural "Remove sources"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Bain foinse"
+msgstr[1] "Bain foinse"
+msgstr[2] "Bain foinsí"
 
 #: ../../lib/frontends/widgets/application.py:896
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "An bhfuil tú cinnte gur mian leat an fhoinse seo a bhaint?"
+msgstr[1] "An bhfuil tú cinnte gur mian leat na foinsí seo a bhaint?"
+msgstr[2] "An bhfuil tú cinnte gur mian leat na foinsí seo a bhaint?"
 
 #: ../../lib/frontends/widgets/application.py:920
 #, python-format
 msgid "Import Music from %(media_player)s?"
-msgstr ""
+msgstr "Tabhair isteach ceol ó %(media_player)s?"
 
 #: ../../lib/frontends/widgets/application.py:921
 #, python-format
@@ -3274,6 +3294,8 @@ msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr ""
+"Feictear go bhfuil %(media_player)s suiteáilte agat. Ar mhaith leat go "
+"dtabharfaidh %(short_app_name)s an ceol isteach uaidh?"
 
 #: ../../lib/frontends/widgets/application.py:963
 #: ../../lib/frontends/widgets/application.py:987
@@ -3331,7 +3353,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1317
 msgid "Eject failed"
-msgstr ""
+msgstr "Theip ar an ndíchuir"
 
 #: ../../lib/frontends/widgets/application.py:1318
 #, python-format
@@ -3362,41 +3384,41 @@ msgid ""
 "%(url)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:807
-#: ../../lib/frontends/widgets/tablist.py:833
-#: ../../lib/frontends/widgets/tablist.py:910
-#: ../../lib/frontends/widgets/itemcontextmenu.py:237
+#: ../../lib/frontends/widgets/tablist.py:889
+#: ../../lib/frontends/widgets/tablist.py:915
+#: ../../lib/frontends/widgets/tablist.py:992
+#: ../../lib/frontends/widgets/itemcontextmenu.py:240
 msgid "Copy URL to clipboard"
 msgstr "Macasamhlaigh an tURL chuig an ngearrthaisce"
 
-#: ../../lib/frontends/widgets/tablist.py:894
+#: ../../lib/frontends/widgets/tablist.py:976
 msgid "Update Podcasts In Folder"
-msgstr ""
+msgstr "Nuashonraigh Podchraoltaí sa bhFillteán"
 
-#: ../../lib/frontends/widgets/tablist.py:902
+#: ../../lib/frontends/widgets/tablist.py:984
 msgid "Update Podcast Now"
-msgstr ""
+msgstr "Nuashonraigh Podchraoladh Anois"
 
-#: ../../lib/frontends/widgets/tablist.py:907
+#: ../../lib/frontends/widgets/tablist.py:989
 msgid "Revert Podcast Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:916
+#: ../../lib/frontends/widgets/tablist.py:998
 msgid "Update Podcasts Now"
-msgstr ""
+msgstr "Nuashonraigh Podchraoltaí Anois"
 
 #: ../../lib/frontends/widgets/importmediadialog.py:67
 #, python-format
 msgid "What media would you like %(appname)s to import?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/importmediadialog.py:97
+#: ../../lib/frontends/widgets/importmediadialog.py:99
 msgid "Search for files"
-msgstr ""
+msgstr "Cuardaigh do chomhaid"
 
-#: ../../lib/frontends/widgets/importmediadialog.py:123
+#: ../../lib/frontends/widgets/importmediadialog.py:125
 msgid "Cancel Search"
-msgstr ""
+msgstr "Cealaigh an Cuardach"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:69
 msgid "Remove From the Library"
@@ -3404,30 +3426,31 @@ msgstr "Bain ón Leabharlann"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:71
 msgid "Delete from Drive"
-msgstr ""
+msgstr "Scrios ón Tiomántán"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:107
 #: ../../lib/frontends/widgets/itemcontextmenu.py:165
+#: ../../lib/frontends/widgets/itemcontextmenu.py:211
 msgid "Edit Item Details"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:120
 #, python-format
 msgid "Convert to %(conversion)s"
-msgstr ""
+msgstr "Tiontaigh go %(conversion)s"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
-#: ../../lib/frontends/widgets/itemcontextmenu.py:362
+#: ../../lib/frontends/widgets/itemcontextmenu.py:365
 msgid "Convert to..."
 msgstr "Tiontaigh go..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
-#: ../../lib/frontends/widgets/itemcontextmenu.py:354
+#: ../../lib/frontends/widgets/itemcontextmenu.py:357
 msgid "Mark as Unplayed"
 msgstr "Rianaigh mar Neamhsheinnte"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:146
-#: ../../lib/frontends/widgets/itemcontextmenu.py:356
+#: ../../lib/frontends/widgets/itemcontextmenu.py:359
 msgid "Mark as Played"
 msgstr "Rianaigh mar Seinnte"
 
@@ -3445,42 +3468,42 @@ msgstr "Lean Leis an Síolú"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:185
 #: ../../lib/frontends/widgets/itemcontextmenu.py:206
-#: ../../lib/frontends/widgets/itemcontextmenu.py:383
-#: ../../lib/frontends/widgets/itemcontextmenu.py:395
+#: ../../lib/frontends/widgets/itemcontextmenu.py:386
+#: ../../lib/frontends/widgets/itemcontextmenu.py:398
 msgid "Cancel Download"
 msgstr "Cealaigh an t-Íosluchtú"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:189
-#: ../../lib/frontends/widgets/itemcontextmenu.py:384
+#: ../../lib/frontends/widgets/itemcontextmenu.py:387
 msgid "Pause Download"
 msgstr "Moilligh an t-Íosluchtú"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:193
-#: ../../lib/frontends/widgets/itemcontextmenu.py:394
+#: ../../lib/frontends/widgets/itemcontextmenu.py:397
 msgid "Resume Download"
 msgstr "Atosaigh an t-Íosluchtú"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:216
+#: ../../lib/frontends/widgets/itemcontextmenu.py:219
 #, python-format
 msgid "Show File in %(progname)s"
-msgstr ""
+msgstr "Taispeáin Comhad i %(progname)s"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:219
+#: ../../lib/frontends/widgets/itemcontextmenu.py:222
 msgid "File on Disk"
 msgstr "Comhad ar an Dhiosca"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:241
+#: ../../lib/frontends/widgets/itemcontextmenu.py:244
 msgid "View Web Page"
-msgstr ""
+msgstr "Féach an Leathanach Gréasáin"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:336
+#: ../../lib/frontends/widgets/itemcontextmenu.py:339
 #, python-format
 msgid "%(count)d Device Item"
 msgid_plural "%(count)d Device Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:342
+#: ../../lib/frontends/widgets/itemcontextmenu.py:345
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
@@ -3488,11 +3511,11 @@ msgstr[0] "%(count)d Mír Íosluchtaithe"
 msgstr[1] "%(count)d Míreanna Íosluchtaithe"
 msgstr[2] "%(count)d Míreanna Íosluchtaithe"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:350
+#: ../../lib/frontends/widgets/itemcontextmenu.py:353
 msgid "Add to Playlist"
 msgstr "Cuir leis an Seinnréim"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:368
+#: ../../lib/frontends/widgets/itemcontextmenu.py:371
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
@@ -3500,7 +3523,7 @@ msgstr[0] "%(count)d Mír Ar Fáil"
 msgstr[1] "%(count)d Míreanna Ar Fáil"
 msgstr[2] "%(count)d Míreanna Ar Fáil"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:378
+#: ../../lib/frontends/widgets/itemcontextmenu.py:381
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
@@ -3508,7 +3531,7 @@ msgstr[0] "%(count)d Mír Á Íosluchtú"
 msgstr[1] "%(count)d Míreanna Á Íosluchtú"
 msgstr[2] "%(count)d Míreanna Á Íosluchtú"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:389
+#: ../../lib/frontends/widgets/itemcontextmenu.py:392
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
@@ -3516,30 +3539,30 @@ msgstr[0] "%(count)d Mhír Ar Sos"
 msgstr[1] "%(count)d M(h)íreanna Ar Sos"
 msgstr[2] "%(count)d M(h)íreanna Ar Sos"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:398
+#: ../../lib/frontends/widgets/itemcontextmenu.py:401
 msgid "Restart Upload"
 msgstr "Atosaigh an t-Uasluchtú"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:401
+#: ../../lib/frontends/widgets/itemcontextmenu.py:404
 msgid "Edit Items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:430
+#: ../../lib/frontends/widgets/itemcontextmenu.py:433
 msgid "Remove From Playlist"
 msgstr "Bain As An Sheinnréim"
 
-#: ../../lib/frontends/widgets/playback.py:650
+#: ../../lib/frontends/widgets/playback.py:653
 msgid "Open Subtitles File..."
 msgstr "Oscail Comhad Fotheidil..."
 
-#: ../../lib/frontends/widgets/playback.py:651
+#: ../../lib/frontends/widgets/playback.py:654
 msgid "Subtitle files"
 msgstr "Comhaid fotheidil"
 
 #: ../../lib/frontends/widgets/itemedit.py:218
 #: ../../lib/frontends/widgets/itemedit.py:281
 msgid "(mixed)"
-msgstr ""
+msgstr "(measctha)"
 
 #: ../../lib/frontends/widgets/itemedit.py:298
 msgid "None"
@@ -3548,15 +3571,15 @@ msgstr "Dada"
 #: ../../lib/frontends/widgets/itemedit.py:299
 #: ../../lib/frontends/widgets/widgetconst.py:58
 msgid "Rating"
-msgstr ""
+msgstr "Measúnú"
 
 #: ../../lib/frontends/widgets/itemedit.py:306
 msgid "Choose a thumbnail file"
-msgstr ""
+msgstr "Roghnaigh comhad mionsamhla"
 
 #: ../../lib/frontends/widgets/itemedit.py:374
 msgid "Move"
-msgstr ""
+msgstr "Bog"
 
 #: ../../lib/frontends/widgets/itemedit.py:380
 msgid "Choose location for file"
@@ -3565,51 +3588,51 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemedit.py:467
 #: ../../lib/frontends/widgets/widgetconst.py:53
 msgid "Artist"
-msgstr ""
+msgstr "Ealaíontóir"
 
 #: ../../lib/frontends/widgets/itemedit.py:468
 #: ../../lib/frontends/widgets/widgetconst.py:54
 msgid "Album"
-msgstr ""
+msgstr "Albam"
 
 #: ../../lib/frontends/widgets/itemedit.py:469
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "Genre"
-msgstr ""
+msgstr "Aicme"
 
 #: ../../lib/frontends/widgets/itemedit.py:471
 #: ../../lib/frontends/widgets/widgetconst.py:55
 msgid "Track"
-msgstr ""
+msgstr "Rian"
 
 #: ../../lib/frontends/widgets/itemedit.py:472
 msgid "of"
-msgstr ""
+msgstr "as"
 
 #: ../../lib/frontends/widgets/itemedit.py:473
 #: ../../lib/frontends/widgets/widgetconst.py:56
 msgid "Year"
-msgstr ""
+msgstr "Bliain"
 
 #: ../../lib/frontends/widgets/itemedit.py:475
 msgid "About"
-msgstr ""
+msgstr "Maidir Leis"
 
 #: ../../lib/frontends/widgets/itemedit.py:486
 msgid "Type"
-msgstr ""
+msgstr "Cineál"
 
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Art"
-msgstr ""
+msgstr "Ealaín"
 
 #: ../../lib/frontends/widgets/itemedit.py:504
 msgid "Path"
-msgstr ""
+msgstr "Conair"
 
 #: ../../lib/frontends/widgets/itemedit.py:521
 msgid "Episode ID"
-msgstr ""
+msgstr "Aitheantas an eagráin"
 
 #: ../../lib/frontends/widgets/itemedit.py:523
 msgid "Season Number"
@@ -3643,7 +3666,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:51
 msgid "State"
-msgstr ""
+msgstr "Stát"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 msgid "Status"
@@ -3651,7 +3674,7 @@ msgstr "Treo"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 msgid "Source"
-msgstr ""
+msgstr "Foinse"
 
 #: ../../lib/frontends/widgets/widgetconst.py:64
 msgid "ETA"
@@ -3667,15 +3690,15 @@ msgstr "Luas"
 
 #: ../../lib/frontends/widgets/widgetconst.py:67
 msgid "Date Added"
-msgstr ""
+msgstr "Dáta Curtha Leis"
 
 #: ../../lib/frontends/widgets/widgetconst.py:68
 msgid "Last Played"
-msgstr ""
+msgstr "Seinnte Is Déanaí"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Description"
-msgstr ""
+msgstr "Cur Síos"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "DRM"
@@ -3763,58 +3786,58 @@ msgstr "Cuir isteach ainm nua don seinnréim %s"
 msgid "Search All"
 msgstr "Cuardaigh Uile"
 
-#: ../../lib/dl_daemon/download.py:773 ../../lib/httpclient.py:180
+#: ../../lib/dl_daemon/download.py:777 ../../lib/httpclient.py:185
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Níorbh fhéidir scríobh chuig %(filename)s"
 
-#: ../../lib/dl_daemon/download.py:781 ../../lib/dl_daemon/download.py:1030
+#: ../../lib/dl_daemon/download.py:785 ../../lib/dl_daemon/download.py:1034
 msgid "Not enough disk space"
 msgstr "Níl go leor slí diosca saor"
 
-#: ../../lib/dl_daemon/download.py:782 ../../lib/dl_daemon/download.py:1031
+#: ../../lib/dl_daemon/download.py:786 ../../lib/dl_daemon/download.py:1035
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "Tá %(amount)s MB de dhíth chun an físeán seo a chur i dtaisce."
 
-#: ../../lib/dl_daemon/download.py:822
+#: ../../lib/dl_daemon/download.py:826
 msgid "no content"
-msgstr ""
+msgstr "gan inneachair"
 
-#: ../../lib/dl_daemon/download.py:1068
+#: ../../lib/dl_daemon/download.py:1072
 msgid "BitTorrent failure"
 msgstr "Teip BitTorrent"
 
-#: ../../lib/dl_daemon/download.py:1069
+#: ../../lib/dl_daemon/download.py:1073
 msgid "BitTorrent failed to startup"
 msgstr "Theip ar BitTorrent tosú"
 
-#: ../../lib/dl_daemon/download.py:1195
+#: ../../lib/dl_daemon/download.py:1199
 msgid "waiting to check existing files"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1197
+#: ../../lib/dl_daemon/download.py:1201
 msgid "checking existing files"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1199
+#: ../../lib/dl_daemon/download.py:1203
 msgid "allocating disk space"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1438
+#: ../../lib/dl_daemon/download.py:1442
 msgid "Corrupt Torrent"
 msgstr "Torrent Truallaithe"
 
-#: ../../lib/dl_daemon/download.py:1439
+#: ../../lib/dl_daemon/download.py:1443
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Níl an comhad torrent ag %(url)s ceart"
 
-#: ../../lib/dl_daemon/download.py:1483
+#: ../../lib/dl_daemon/download.py:1487
 msgid "Torrent file deleted"
 msgstr "Scriosadh an comhad torrent"
 
-#: ../../lib/dl_daemon/download.py:1484
+#: ../../lib/dl_daemon/download.py:1488
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "Scriosadh an comhad torrent don mhír seo lasmuigh de %(appname)s."
@@ -3855,15 +3878,17 @@ msgstr "%(size)s B/s"
 #, python-format
 msgid "%(num)d day"
 msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d lá"
+msgstr[1] "%(num)d lá"
+msgstr[2] "%(num)d lá"
 
 #: ../../lib/displaytext.py:91
 #, python-format
 msgid "%(num)d hr"
 msgid_plural "%(num)d hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d uair"
+msgstr[1] "%(num)d uair"
+msgstr[2] "%(num)d uaire"
 
 #: ../../lib/displaytext.py:95
 #, python-format
@@ -3962,8 +3987,8 @@ msgstr "Ag seoladh fógra tuairte"
 msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
 
-#: ../../lib/downloader.py:335 ../../lib/httpclient.py:135
-#: ../../lib/httpclient.py:166
+#: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
+#: ../../lib/httpclient.py:171
 msgid "File not found"
 msgstr "Níor aimsíodh an comhad"
 
@@ -4046,8 +4071,8 @@ msgid ""
 msgstr ""
 
 #: ../../lib/dialogs.py:94
-msgid "Ok"
-msgstr "Tá go maith"
+msgid "OK"
+msgstr ""
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
@@ -4067,7 +4092,7 @@ msgstr "Déan neamhaird de"
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "Tabhair Isteach Comhaid"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -4107,7 +4132,7 @@ msgstr "Cruthaigh"
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
-msgstr ""
+msgstr "Cruthaigh Podchraoladh"
 
 #: ../../lib/dialogs.py:116
 msgid "Create Folder"
@@ -4115,7 +4140,7 @@ msgstr "Cruthaigh Fillteán"
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
-msgstr ""
+msgstr "Cuir Fillteán Leis"
 
 #: ../../lib/dialogs.py:119
 msgid "Add Into New Folder"
@@ -4174,6 +4199,8 @@ msgstr "Ná Iniaigh an Bunachar Sonraí"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"Tá ainm úsáideora agus focal faire á lorg ag %(authtype)s %(url)s do "
+"\"%(realm)s\"."
 
 #: ../../lib/dialogs.py:218
 msgid "Login Required"
@@ -4190,109 +4217,114 @@ msgstr "Dún %(host)s an ceangal"
 
 #: ../../lib/httpclient.py:111
 #, python-format
+msgid "%(host)s gave us an empty response"
+msgstr ""
+
+#: ../../lib/httpclient.py:116
+#, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:113
+#: ../../lib/httpclient.py:118
 msgid "Please retry later"
-msgstr ""
-
-#: ../../lib/httpclient.py:117
-#, python-format
-msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
 #: ../../lib/httpclient.py:122
 #, python-format
+msgid "%(host)s doesn't support HTTP resume"
+msgstr ""
+
+#: ../../lib/httpclient.py:127
+#, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:128
+#: ../../lib/httpclient.py:133
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:136
+#: ../../lib/httpclient.py:141
 msgid "Got 404 status code"
 msgstr "Fuarthas tagairt stádais 404"
 
-#: ../../lib/httpclient.py:138
+#: ../../lib/httpclient.py:143
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:144 ../../lib/httpclient.py:145
+#: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
 msgid "Authorization failed"
 msgstr "Theip ar an údarú"
 
-#: ../../lib/httpclient.py:149
+#: ../../lib/httpclient.py:154
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Údarú cealaithe"
 
-#: ../../lib/httpclient.py:150
+#: ../../lib/httpclient.py:155
 msgid "Authorization canceled by user"
 msgstr ""
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:159
 msgid "Invalid URL"
 msgstr "URL Neamhbhailí"
 
-#: ../../lib/httpclient.py:155
+#: ../../lib/httpclient.py:160
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "Ní URL ceart é \"%(url)s\""
 
-#: ../../lib/httpclient.py:160
+#: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Óstríomhaire anaithnid"
 
-#: ../../lib/httpclient.py:161
+#: ../../lib/httpclient.py:166
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:167
+#: ../../lib/httpclient.py:172
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Níl an conair \"%(path)s\" ann"
 
-#: ../../lib/httpclient.py:171
+#: ../../lib/httpclient.py:176
 msgid "Read error"
 msgstr "Tharla botún sa léamh"
 
-#: ../../lib/httpclient.py:172
+#: ../../lib/httpclient.py:177
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "Tharla botún fad agus a bhí sé ag léamh ó \"%(path)s\""
 
-#: ../../lib/httpclient.py:182
+#: ../../lib/httpclient.py:187
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:379
+#: ../../lib/httpclient.py:384
 msgid "Website"
 msgstr "Láithreán Gréasáin"
 
-#: ../../lib/httpclient.py:384
+#: ../../lib/httpclient.py:389
 msgid "Proxy"
 msgstr "Seachfhreastalaí"
 
-#: ../../lib/util.py:440 ../../lib/util.py:442
+#: ../../lib/util.py:441 ../../lib/util.py:443
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../lib/util.py:446 ../../lib/util.py:448
+#: ../../lib/util.py:447 ../../lib/util.py:449
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../lib/util.py:452 ../../lib/util.py:454
+#: ../../lib/util.py:453 ../../lib/util.py:455
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../lib/util.py:458 ../../lib/util.py:460
+#: ../../lib/util.py:459 ../../lib/util.py:461
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -4401,7 +4433,7 @@ msgstr "Íosluchtú an Chomhaid"
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or a podcast."
-msgstr ""
+msgstr "Ceaptar nach ceol, físeán nó podchraoladh é an comhad ag %(url)s."
 
 #: ../../lib/singleclick.py:171
 msgid "Download Error"
@@ -4417,24 +4449,24 @@ msgid ""
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
 
-#: ../../lib/conversions.py:94
+#: ../../lib/conversions.py:224
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
 msgstr "%(name)s (%(mediatype)s)"
 
-#: ../../lib/conversions.py:380
+#: ../../lib/conversions.py:510
 msgid "Reason unknown--check log"
 msgstr ""
 
-#: ../../lib/conversions.py:671
+#: ../../lib/conversions.py:834
 #, python-format
 msgid "%(program)s does not exist."
-msgstr ""
+msgstr "Níl %(program)s ann."
 
-#: ../../lib/conversions.py:913
+#: ../../lib/conversions.py:1086
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Tiontaithe go %(format)s)"
 
 #: ../../lib/devices.py:163
 msgid "Your drive must be mounted."
@@ -4442,36 +4474,36 @@ msgstr ""
 
 #: ../../lib/devices.py:350
 msgid "USB Device"
-msgstr ""
+msgstr "Gléas USB"
 
-#: ../../lib/commandline.py:116
+#: ../../lib/commandline.py:123
 msgid "Subscription error"
 msgstr "Botún síntiúis"
 
-#: ../../lib/commandline.py:126
+#: ../../lib/commandline.py:133
 #, python-format
 msgid ""
 "This %(appname)s podcast file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
 
-#: ../../lib/commandline.py:137
+#: ../../lib/commandline.py:144
 #, python-format
 msgid ""
 "This %(appname)s podcast file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
 
-#: ../../lib/commandline.py:146
+#: ../../lib/commandline.py:153
 #, python-format
 msgid "Could not download the %(appname)s podcast file: %(url)s"
 msgstr ""
 
-#: ../../lib/commandline.py:201
+#: ../../lib/commandline.py:208
 msgid "Invalid Torrent"
 msgstr "Torrent Neamhsheasmhach"
 
-#: ../../lib/commandline.py:203
+#: ../../lib/commandline.py:210
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
@@ -4479,11 +4511,11 @@ msgstr ""
 "Tá an cuma air go bhfuil an comhad torrent %(filename)s truaillithe agus ní "
 "féidir é a oscailt."
 
-#: ../../lib/commandline.py:210
+#: ../../lib/commandline.py:217
 msgid "File Error"
 msgstr ""
 
-#: ../../lib/commandline.py:212
+#: ../../lib/commandline.py:219
 #, python-format
 msgid ""
 "The torrent file %(filename)s could not be opened. Please ensure it exists "
@@ -4502,7 +4534,7 @@ msgstr ""
 #: ../../resources/devices/generic_phone.py:25
 #, python-format
 msgid "Generic %(name)s Device"
-msgstr ""
+msgstr "Gléas %(name)s Cineálach"
 
 #: ../../resources/devices/android.py:111
 msgid ""
@@ -4782,6 +4814,9 @@ msgstr ""
 
 #~ msgid "Playing File"
 #~ msgstr "Ag Seinm an Comhad"
+
+#~ msgid "Ok"
+#~ msgstr "Tá go maith"
 
 #~ msgid "Create Feed"
 #~ msgstr "Cruthaigh Fotha"
@@ -5508,3 +5543,18 @@ msgstr ""
 
 #~ msgid "Unknow Host"
 #~ msgstr "Óstach Anaithnid"
+
+#~ msgid "Download to My Miro"
+#~ msgstr "Íosluchtaigh chuig Mo Mhiro"
+
+#~ msgid "Artists"
+#~ msgstr "Ealaíontóirí"
+
+#~ msgid "Genres"
+#~ msgstr "Aicmí"
+
+#~ msgid "Albums"
+#~ msgstr "Albaim"
+
+#~ msgid "Songs"
+#~ msgstr "Amhráin"
