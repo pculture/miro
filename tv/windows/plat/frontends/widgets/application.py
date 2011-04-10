@@ -36,6 +36,7 @@ import webbrowser
 from urlparse import urlparse
 import _winreg
 import time
+import subprocess
 
 import gtk
 
@@ -254,7 +255,11 @@ class WindowsApplication(Application):
         os.startfile(fn)
 
     def open_file(self, fn):
-        os.startfile(fn)
+        try:
+            os.startfile(fn)
+        except WindowsError, e:
+            if e.winerror == 1155:
+                subprocess.Popen(r'explorer /select,' + fn + '\"')
 
     def get_main_window_dimensions(self):
         """Gets x, y, width, height from config.
