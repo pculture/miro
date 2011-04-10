@@ -416,7 +416,6 @@ class Window(WindowBase):
         return WrappedWindow()
 
     def on_delete(self, widget, event):
-        self.emit('will-close')
         return True
 
     def set_title(self, title):
@@ -431,9 +430,11 @@ class Window(WindowBase):
         self._window.show()
 
     def close(self):
+        self.emit('will-close')
         self._window.hide()
 
     def destroy(self):
+        self.close()
         self._window.destroy()
         alive_windows.discard(self)
 

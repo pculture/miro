@@ -107,10 +107,6 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def on_close(self, widget=None):
         if self.gathered_media_files:
             messages.AddFiles(self.gathered_media_files).send_to_backend()
-
-        self.disconnect(self.on_close_handler)
-        self.on_close_handler = None
-        self.close()
         self._done_firsttime_callback()
 
     def _switch_page(self, i, rebuild=False):
@@ -330,7 +326,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                 if rbg2.get_selected() == import_rb:
                     # add watched folder
                     app.watched_folder_manager.add(self.search_directory)
-                self.on_close()
+                self.destroy()
 
         search_button = widgetset.Button(_("Search"))
         search_button.connect('clicked', handle_search_finish_clicked)
@@ -421,7 +417,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         prev_button.connect('clicked', lambda x: self.prev_page())
 
         finish_button = widgetset.Button(_("Finish"))
-        finish_button.connect('clicked', lambda x: self.on_close())
+        finish_button.connect('clicked', lambda x: self.destroy())
 
         hbox = widgetutil.build_hbox((prev_button, finish_button))
         vbox.pack_start(widgetutil.align_right(hbox))

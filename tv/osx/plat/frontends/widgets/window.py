@@ -264,6 +264,7 @@ class Window(signals.SignalEmitter):
         self.nswindow.close()
 
     def destroy(self):
+        self.close()
         self.window_notifications.disconnect()
         self.view_notifications.disconnect()
         self.nswindow.setContentView_(nil)

@@ -72,8 +72,6 @@ class AddFilesDialog(widgetset.DialogWindow):
 
         self.set_content_widget(widgetutil.pad(self._page_box, 20, 20, 20, 20))
 
-        self.on_close_handler = self.connect('will-close', self.on_close)
-
     def build_pages(self):
         return [
             self.build_choice_page(),
@@ -85,13 +83,9 @@ class AddFilesDialog(widgetset.DialogWindow):
         self._switch_page(0)
         self.show()
 
-    def on_close(self, widget=None):
-        self.close()
-
     def destroy_dialog(self):
         if self.gathered_media_files:
             messages.AddFiles(self.gathered_media_files).send_to_backend()
-        self.close()
         self.destroy()
 
     def _switch_page(self, i, rebuild=False):
