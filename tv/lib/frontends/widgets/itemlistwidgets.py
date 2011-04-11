@@ -887,8 +887,8 @@ class ListView(ItemView, SorterWidgetOwner):
         self.column_widths = {}
         self.create_signal('columns-enabled-changed')
         self.create_signal('column-widths-changed')
-        self._column_name_to_column = {}
-        self.sorter_widget_map = self._column_name_to_column
+        self._columns = {}
+        self.sorter_widget_map = self._columns
         self._column_by_label = {}
         self.columns_enabled = []
         self.set_show_headers(True)
@@ -903,28 +903,20 @@ class ListView(ItemView, SorterWidgetOwner):
         # ensure that we request the same size as standard view
         self.set_size_request(600, -1)
 
-    def _get_ui_state(self):
+    def on_undisplay(self):
+        ItemView.on_undisplay(self)
         if not self._width_allocated:
             return # don't save if view isn't set up
-        order = []
         # FIXME: though identifying columns by their labels should always work,
         # it's really gross
-        for name in (self._column_by_label[l] for l in self.get_columns()):
-            order.append(name)
-            self.column_widths[name] = int(
-                self._column_name_to_column[name].get_width())
-        assert set(self.columns_enabled) == set(order)
-        self.columns_enabled = order
-
-    def on_undisplay(self):
-        self._get_ui_state()
-        ItemView.on_undisplay(self)
-        self.emit('column-widths-changed', self.column_widths)
-        self.emit('columns-enabled-changed', self.columns_enabled)
+        columns = [self._column_by_label[l] for l in self.get_columns()]
+        widths = dict((name, int(self._columns[name].get_width())) for name in columns)
+        self.emit('columns-enabled-changed', columns)
+        self.emit('column-widths-changed', widths)
 
     def get_tooltip(self, iter_, column):
-        if ('name' in self._column_name_to_column and
-                self._column_name_to_column['name'] == column):
+        if ('name' in self._columns and
+                self._columns['name'] == column):
             info = self.item_list.model[iter_][0]
             text, links = self.html_stripper.strip(info.description)
             if text:
@@ -932,8 +924,8 @@ class ListView(ItemView, SorterWidgetOwner):
                     text = text[:994] + ' [...]'
                 return text
 
-        elif ('state' in self._column_name_to_column and
-                self._column_name_to_column['state'] is column):
+        elif ('state' in self._columns and
+                self._columns['state'] is column):
             info = self.item_list.model[iter_][0]
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
@@ -964,10 +956,10 @@ class ListView(ItemView, SorterWidgetOwner):
             self._make_column(header, renderer, name, resizable, pad)
             self._column_by_label[header] = name
         for name in old_columns - set(new_columns):
-            column = self._column_name_to_column[name]
+            column = self._columns[name]
             index = self.columns.index(column)
             self.remove_column(index)
-            del self._column_name_to_column[name]
+            del self._columns[name]
         self._width_allocated = None
 
     def _make_column(self, header, renderer, column_name, resizable=True,
@@ -987,11 +979,11 @@ class ListView(ItemView, SorterWidgetOwner):
                 self.column_widths[column_name] += self.COLUMN_PADDING
             column.set_width(renderer.min_width)
         column.connect_weak('clicked', self.on_sorter_clicked, column_name)
-        self._column_name_to_column[column_name] = column
+        self._columns[column_name] = column
         self.add_column(column)
 
     def get_renderer(self, column_name):
-        return self._column_name_to_column[column_name].renderer
+        return self._columns[column_name].renderer
 
     def do_size_allocated(self, total_width, height):
         # OS X gets multiple size-allocateds; the first are fake
@@ -1007,7 +999,7 @@ class ListView(ItemView, SorterWidgetOwner):
             sum(self.column_widths[name] for name in self.columns_enabled))
         extra_width /= total_weight
 
-        columns = self._column_name_to_column
+        columns = self._columns
         rounded = 0 # carry forward rounded-off part of each value
         for name in self.columns_enabled:
             extra, rounded = divmod(extra_width * weights[name] + rounded, 1)

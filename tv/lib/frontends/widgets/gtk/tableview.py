@@ -401,7 +401,7 @@ class TableColumn(signals.SignalEmitter):
         self._column.set_fixed_width(width)
 
     def get_width(self):
-        return self._column.get_fixed_width()
+        return self._column.get_width()
 
     def _header_clicked(self, tablecolumn):
         self.emit('clicked')
