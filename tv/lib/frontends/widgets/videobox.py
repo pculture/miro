@@ -415,7 +415,7 @@ class ProgressTimeline(widgetset.Background):
         else:
             surface = self.inactive
 
-        surface.draw(context, 0, 0, context.width, context.height)
+        surface.draw(context, 0, 0, context.width, 46)
 
 
 class VolumeSlider(widgetset.CustomSlider):
@@ -472,7 +472,7 @@ class VideoBox(style.LowerBox):
 
         hbox = widgetset.HBox(spacing=20)
         hbox.pack_start(self.controls, expand=False)
-        hbox.pack_start(widgetutil.align_middle(self.timeline, top_pad=3),
+        hbox.pack_start(widgetutil.align_middle(self.timeline),
                         expand=True)
         volume_hbox = widgetset.HBox(spacing=4)
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_muter))
