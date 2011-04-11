@@ -42,6 +42,7 @@ subclasses to handle the logic involved.
 
 import logging
 import math
+from collections import defaultdict
 
 from miro import app
 from miro import prefs
@@ -903,7 +904,7 @@ class ListView(ItemView, SorterWidgetOwner):
         self.set_size_request(600, -1)
 
     def _get_ui_state(self):
-        if not self._set_initial_widths:
+        if not self._width_allocated:
             return # don't save if view isn't set up
         order = []
         # FIXME: though identifying columns by their labels should always work,
@@ -967,7 +968,7 @@ class ListView(ItemView, SorterWidgetOwner):
             index = self.columns.index(column)
             self.remove_column(index)
             del self._column_name_to_column[name]
-        self._set_initial_widths = False
+        self._width_allocated = None
 
     def _make_column(self, header, renderer, column_name, resizable=True,
             pad=True):
@@ -993,28 +994,24 @@ class ListView(ItemView, SorterWidgetOwner):
         return self._column_name_to_column[column_name].renderer
 
     def do_size_allocated(self, total_width, height):
-        if self._set_initial_widths:
+        # OS X gets multiple size-allocateds; the first are fake
+        if self._width_allocated == total_width:
             return
-        self._set_initial_widths = True
+        self._width_allocated = total_width
 
-        available_width = self.width_for_columns(total_width)
-        extra_width = available_width 
+        weights = widgetconst.COLUMN_WIDTH_WEIGHTS
+        total_weight = math.fsum(weights[name] for name in self.columns_enabled)
+        if not total_weight:
+            weights, total_weight = defaultdict(lambda: 1), len(self.columns_enabled)
+        extra_width = (self.width_for_columns(total_width) -
+            sum(self.column_widths[name] for name in self.columns_enabled))
+        extra_width /= total_weight
 
-        total_weight = 0
+        columns = self._column_name_to_column
+        rounded = 0 # carry forward rounded-off part of each value
         for name in self.columns_enabled:
-            total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
-            extra_width -= self.column_widths[name]
-
-        rounded_off = 0 # carry forward rounded-off part of each value
-        for name in self.columns_enabled:
-            if total_weight:
-                weight = (1.0 * widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0) /
-                    total_weight)
-            else: # if no columns are weighted, all are weighted equally
-                weight = 1.0 / len(self.columns_enabled)
-            extra, rounded_off = divmod(extra_width * weight + rounded_off, 1)
-            self.column_widths[name] += int(extra)
-            self._column_name_to_column[name].set_width(self.column_widths[name])
+            extra, rounded = divmod(extra_width * weights[name] + rounded, 1)
+            columns[name].set_width(self.column_widths[name] + int(extra))
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to

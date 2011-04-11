@@ -828,6 +828,7 @@ class MiroOutlineView(NSOutlineView):
 
 class MiroTableHeaderView(NSTableHeaderView):
     def initWithFrame_(self, frame):
+        # frame is not used
         self = super(MiroTableHeaderView, self).initWithFrame_(frame)
         self.custom_header = False
         self.selected = None
@@ -979,6 +980,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.data_source.initWithModel_(self.model)
         self.tableview.setDataSource_(self.data_source)
         self.tableview.setVerticalMotionCanBeginDrag_(YES)
+        self.tableview.setColumnAutoresizingStyle_(NSTableViewLastColumnOnlyAutoresizingStyle)
         self.set_columns_draggable(False)
         self.set_auto_resizes(False)
         self.row_height_set = False
@@ -1136,44 +1138,13 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
 
         if self.auto_resize:
             self.auto_resizing = True
-            self._autoresize_columns()
+            # ListView sizes itself in do_size_allocated;
+            # this is necessary for tablist and StandardView
+            columns = self.tableview.tableColumns()
+            if len(columns) == 1:
+                columns[0].setWidth_(self.viewport.area().size.width)
             self.auto_resizing = False
         self.queue_redraw()
-
-    def _autoresize_columns(self):
-        # Resize the column so that they take up the width we are allocated,
-        # but keep in mind the min/max width constraints.
-        # The algorithm we use is to add/subtract width evenly between the
-        # columns, but not more than their max/min width.  Repeat the process
-        # until there is no extra space.
-        columns = self.tableview.tableColumns()
-        if len(columns) == 1:
-            # we can special case this easily
-            total_width = self.viewport.area().size.width
-            columns[0].setWidth_(total_width)
-            return
-        column_width = sum(column.width() for column in columns)
-        width_difference = self.viewport.area().size.width - column_width
-        width_difference -= self.tableview.intercellSpacing().width * len(columns)
-        while width_difference != 0:
-            did_something = False
-            columns_left = len(columns)
-            for column in columns:
-                old_width = column.width()
-                ideal_change = round(width_difference / columns_left)
-                ideal_new_width = old_width + ideal_change
-                if width_difference < 0:
-                    column.setWidth_(max(ideal_new_width, column.minWidth()))
-                else:
-                    column.setWidth_(min(ideal_new_width, column.maxWidth()))
-                if column.width() != old_width:
-                    width_difference -= (column.width() - old_width)
-                    did_something = True
-                columns_left -= 1
-            if not did_something:
-                # We couldn't change any widths because they were all at their
-                # max/min sizes.  Bailout
-                break
 
     def calc_width(self):
         if self.column_count() == 0:
@@ -1251,8 +1222,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         the table's columns.
         """
         spacing = self.tableview.intercellSpacing().width * self.column_count()
-        scrollbar = 40 # TODO: query actual width
-        return width - spacing - scrollbar
+        return width - spacing
 
     def set_column_spacing(self, column_spacing):
         spacing = self.tableview.intercellSpacing()

@@ -31,6 +31,8 @@
 frontend.
 """
 
+from collections import defaultdict
+
 from miro.gtcache import gettext as _
 
 # Control sizes
@@ -79,11 +81,12 @@ COLUMN_LABELS = {
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()
-COLUMN_WIDTH_WEIGHTS = {
+COLUMN_WIDTH_WEIGHTS = defaultdict(lambda: 0)
+COLUMN_WIDTH_WEIGHTS.update({
     u'description': 1.2,
     u'name': 1.0,
     u'artist': 0.7,
     u'album': 0.7,
     u'feed-name': 0.5,
     u'status': 0.2,
-}
+})
