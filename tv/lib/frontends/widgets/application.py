@@ -1066,8 +1066,6 @@ class Application:
         return True
 
     def do_quit(self):
-        if self.window is not None:
-            self.window.close()
         if prefpanel.is_window_shown():
             prefpanel.hide_window()
         if self.ui_initialized:

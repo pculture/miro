@@ -410,13 +410,20 @@ class Window(WindowBase):
         self.create_signal('did-move')
         alive_windows.add(self)
 
-        self._window.connect('delete-event', self.on_delete)
+        self._window.connect('delete-event', self.on_delete_window)
+
+    def on_delete_window(self, widget, event):
+        # when the user clicks on the X in the corner of the window we
+        # want that to close the window, but also trigger our
+        # will-close signal and all that machinery unless the window
+        # is currently hidden--then we don't do anything.
+        if not self._window.window.is_visible():
+            return
+        self.close()
+        return True
 
     def _make_gtk_window(self):
         return WrappedWindow()
-
-    def on_delete(self, widget, event):
-        return True
 
     def set_title(self, title):
         self._window.set_title(title)
@@ -430,8 +437,12 @@ class Window(WindowBase):
         self._window.show()
 
     def close(self):
+        if hasattr(self, "_closing"):
+            return
+        self._closing = True
         self.emit('will-close')
         self._window.hide()
+        del self._closing
 
     def destroy(self):
         self.close()
@@ -534,15 +545,15 @@ class MainWindow(Window):
         self._window.connect('key-release-event', self.on_key_release)
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
-        self.connect('will-close', self.on_close)
         self._window.connect('map-event', lambda w, a: self.emit('on-shown'))
         self._clear_subtitles_menu()
 
     def _make_gtk_window(self):
         return WrappedMainWindow()
 
-    def on_close(self, window):
+    def on_delete_window(self, widget, event):
         app.widgetapp.on_close()
+        return True
 
     def on_configure_event(self, widget, event):
         (x, y) = self._window.get_position()
