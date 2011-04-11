@@ -1439,35 +1439,6 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         # implemented by subclasses
         pass
 
-class LibraryHeaderToolbar(HeaderToolbar):
-    def __init__(self, unwatched_label):
-        self.unwatched_label = unwatched_label
-        HeaderToolbar.__init__(self)
-
-    def pack_hbox_extra(self):
-        self.make_filter_switch(behavior='custom')
-        # this "All" is different than other "All"s in the codebase, so it
-        # needs to be clarified
-        view_all = WidgetStateStore.get_view_all_filter()
-        unwatched = WidgetStateStore.get_unwatched_filter()
-        non_feed = WidgetStateStore.get_non_feed_filter()
-        self.add_filter('view-all', 'toggle-filter', view_all,
-                         declarify(_('View|All')))
-        self.add_filter('view-unwatched', 'toggle-filter', unwatched,
-                        self.unwatched_label)
-        self.add_filter('view-non-feed', 'toggle-filter', non_feed,
-                        _('Non Podcast'))
-        self.add_filter_switch()
-
-    def toggle_filter(self, filter_):
-        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
-        view_all = WidgetStateStore.is_view_all_filter(self.filter)
-        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        non_feed = WidgetStateStore.has_non_feed_filter(self.filter)
-        self.filter_switch.set_active('view-all', view_all)
-        self.filter_switch.set_active('view-unwatched', unwatched)
-        self.filter_switch.set_active('view-non-feed', non_feed)
-
 class PlaylistHeaderToolbar(HeaderToolbar):
     def _make_buttons(self):
         self._make_button(_('Order'), 'playlist')
