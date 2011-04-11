@@ -1083,6 +1083,9 @@ class VideoItemsController(AudioVideoItemsController):
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True, wide_image=True)
 
+    def build_header_toolbar(self):
+        return itemlistwidgets.VideosHeaderToolbar()
+
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'
     id = u'music'

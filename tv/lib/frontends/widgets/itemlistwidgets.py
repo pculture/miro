@@ -1389,7 +1389,6 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         self._make_button(_('Date'), 'date')
         self._make_button(_('Size'), 'size')
         self._make_button(_('Time'), 'length')
-        self._make_button(_('Watched'), 'status')
 
     def pack_hbox_extra(self):
         pass
@@ -1435,6 +1434,11 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
     def toggle_filter(self, filter_):
         # implemented by subclasses
         pass
+
+class VideosHeaderToolbar(HeaderToolbar):
+    def _make_buttons(self):
+        HeaderToolbar._make_buttons(self)
+        self._make_button(_('Watched'), 'status')
 
 class PlaylistHeaderToolbar(HeaderToolbar):
     def _make_buttons(self):
