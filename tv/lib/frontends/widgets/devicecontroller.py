@@ -870,6 +870,11 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.id = device.id
         tab_type = device.tab_type
         self.type = u'device-%s' % tab_type
+        if tab_type == 'audio':
+            self.titlebar_class = itemlistwidgets.MusicTitlebar
+        else:
+            self.titlebar_class = itemlistwidgets.VideosTitlebar
+
         itemlistcontroller.AudioVideoItemsController.__init__(self)
         if ('%s_sort_state' % tab_type) in device.database:
             sort_key, ascending = device.database['%s_sort_state' % tab_type]
