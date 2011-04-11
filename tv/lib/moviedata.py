@@ -131,44 +131,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.thread.setDaemon(True)
         self.thread.start()
 
-    def guess_mediatype(self, item_):
-        """Guess the mediatype of a file. Needs to be quick, as it's executed by
-        the requesting thread in request_update(), and nothing will break if it
-        isn't always accurate - so just checks filename.
-        """
-        filename = item_.get_filename()
-        if filetypes.is_video_filename(filename):
-            mediatype = 'video'
-        elif filetypes.is_audio_filename(filename):
-            mediatype = 'audio'
-        else:
-            mediatype = 'other'
-        return mediatype
-
-    def update_progress(self, mediatype, device, add_or_remove):
-        if device:
-            target = (u'device', '%s-%s' % (device.id, mediatype))
-        elif mediatype in ('audio', 'video'):
-            target = (u'library', mediatype)
-        else: # mediatype 'other'
-            return
-
-        if add_or_remove > 0: # add
-            self.total.setdefault(target, 0)
-            self.total[target] += add_or_remove
-
-        self.remaining.setdefault(target, 0)
-        self.remaining[target] += add_or_remove
-
-        if not self.remaining[target]:
-            self.total[target] = 0
-
-        update = models.messages.MetadataProgressUpdate(target,
-            self.remaining[target], None, self.total[target])
-        update.send_to_frontend()
-
-    def process_with_movie_data_program(self,
-            mdi, duration, mediatype, metadata, cover_art):
+    def process_with_movie_data_program(self, mdi):
         screenshot_worked = False
         screenshot = None
 
@@ -176,74 +139,40 @@ class MovieDataUpdater(signals.SignalEmitter):
         stdout = self.run_movie_data_program(command_line, env)
 
         if TRY_AGAIN_RE.search(stdout):
-            # if the moviedata program tells us to try again, we move
-            # along without updating the item at all
-            if mdi.item in self.retrying:
-                # but don't retry indefinitely
-                self.update_finished(
-                    mdi.item, -1, screenshot, mediatype, metadata, cover_art)
-            else:
-                self.retrying.add(mdi.item)
+            # FIXME: we should try again at some point, but right now we just
+            # ignore this
             return
 
-        if duration == -1 or not duration:
-            duration = self.parse_duration(stdout)
+        duration = self.parse_duration(stdout)
         mediatype = self.parse_type(stdout) or 'other'
         if THUMBNAIL_SUCCESS_RE.search(stdout):
             screenshot_worked = True
         if ((screenshot_worked and
              fileutil.exists(mdi.thumbnail_path))):
             screenshot = mdi.thumbnail_path
-        else:
-            # All the programs failed, maybe it's an audio
-            # file?  Setting it to "" instead of None, means
-            # that we won't try to take the screenshot again.
-            screenshot = FilenameType("")
 
         logging.debug("moviedata: mdp %s %s %s", duration, screenshot,
-                      mediatype)
-        self.update_finished(
-            mdi.item, duration, screenshot, mediatype, metadata, cover_art)
+                mediatype)
+        self.update_finished(mdi.item, duration, screenshot, mediatype)
 
     def thread_loop(self):
         while not self.in_shutdown:
             self.emit('begin-loop')
             if self.queue.empty():
                 self.emit('queue-empty')
-            _discard_, mdi = self.queue.get(block=True)
+            mdi = self.queue.get(block=True)
             if mdi is None or mdi.program_info is None:
                 # shutdown() was called or there's no moviedata
                 # implemented.
                 self.emit('end-loop')
                 break
-            duration = -1
-            metadata = {}
-            cover_art = FilenameType("")
-            item_ = mdi.item
-            file_info = filetags.read_metadata(item_.get_filename())
-            (mime_mediatype, duration, metadata, cover_art) = file_info
-            if duration > -1 and mime_mediatype != u'video':
-                mediatype = 'audio'
-                screenshot = item_.screenshot or FilenameType("")
-                if cover_art is None:
-                    logging.debug("moviedata: mutagen %s %s", duration, mediatype)
-                else:
-                    logging.debug("moviedata: mutagen %s %s %s",
-                                  duration, cover_art, mediatype)
-
-                self.update_finished(item_, duration, screenshot, mediatype,
-                                     metadata, cover_art)
-            else:
-                try:
-                    self.process_with_movie_data_program(
-                        mdi, duration, mime_mediatype, metadata, cover_art)
-                except StandardError:
-                    if self.in_shutdown:
-                        break
-                    signals.system.failed_exn(
-                        "When running external movie data program")
-                    self.update_finished(item_, -1, None, None, metadata,
-                                         cover_art)
+            try:
+                self.process_with_movie_data_program(mdi)
+            except StandardError:
+                if self.in_shutdown:
+                    break
+                signals.system.failed_exn(
+                    "When running external movie data program")
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
@@ -290,31 +219,12 @@ class MovieDataUpdater(signals.SignalEmitter):
             return None
 
     @as_idle
-    def update_finished(self, item, duration, screenshot, mediatype, metadata,
-                        cover_art):
+    def update_finished(self, item, duration, screenshot, mediatype):
         self.in_progress.remove(item.id)
-        progress_mediatype = self.guess_mediatype(item)
-        if hasattr(item, 'device'):
-            device = item.device
-        else:
-            device = None
-        self.update_progress(progress_mediatype, device, -1)
         if item.id_exists():
-            if not duration:
-                # duration == None is how we know it's not parsed yet
-                duration = -1
-            item.duration = duration
             item.screenshot = screenshot
-            item.cover_art = cover_art
-            item.album = metadata.get('album', None)
-            item.album_artist = metadata.get('album_artist', None)
-            item.artist = metadata.get('artist', None)
-            item.title_tag = metadata.get('title', None)
-            item.track = metadata.get('track', None)
-            item.year = metadata.get('year', None)
-            item.genre = metadata.get('genre', None)
-            item.has_drm = metadata.get('drm', False)
-            item.metadata_version = METADATA_VERSION
+            if duration is not None:
+                item.duration = duration
             if mediatype is not None:
                 item.file_type = unicode(mediatype)
                 item.media_type_checked = True
@@ -331,20 +241,17 @@ class MovieDataUpdater(signals.SignalEmitter):
         if item.id in self.in_progress:
             return
 
-        self.in_progress.add(item.id)
-        mediatype = self.guess_mediatype(item)
-        priority = self.media_order.index(mediatype)
-        self.queue.put((priority, MovieDataInfo(item)))
-        if hasattr(item, 'device'):
-            device = item.device
-        else:
-            device = None
-        self.update_progress(mediatype, device, 1)
+        # Only run the movie data program for video items, or audio items that
+        # we don't know the duration for.
+        if (item.duration is None or item.duration < 0 or
+                item.file_type == u'video'):
+            self.in_progress.add(item.id)
+            self.queue.put(MovieDataInfo(item))
 
     def shutdown(self):
         self.in_shutdown = True
         # wake up our thread
-        self.queue.put((-1000, None))
+        self.queue.put(None)
         if self.thread is not None:
             self.thread.join()
 

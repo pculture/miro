@@ -278,6 +278,7 @@ class EventLoop(SimpleEventLoop):
         self.read_callbacks = {}
         self.write_callbacks = {}
         self.clear_removed_callbacks()
+        self.idles_for_next_loop = []
 
     def clear_removed_callbacks(self):
         self.removed_read_callbacks = set()
@@ -302,6 +303,10 @@ class EventLoop(SimpleEventLoop):
         self.threadpool.queue_call(callback, errback, function, name,
                                   *args, **kwargs)
 
+    def run_idle_next_loop(self, function, name, args=None, kwargs=None):
+        """Add an idle callback to be called on the next event loop."""
+        self.idles_for_next_loop.append((function, name, args, kwargs))
+
     def process_events(self, read_fds_ready, write_fds_ready, exc_fds_ready):
         self._process_urgent_events()
         if self.quit_flag:
@@ -323,6 +328,9 @@ class EventLoop(SimpleEventLoop):
 
     def do_begin_loop(self):
         self.clear_removed_callbacks()
+        for func, name, args, kwargs in self.idles_for_next_loop:
+            self.idle_queue.add_idle(func, name, args, kwargs)
+        self.idles_for_next_loop = []
 
     def _process_urgent_events(self):
         queue = self.urgent_queue
@@ -566,7 +574,8 @@ def _idle_iterate_step(iterator, name):
         if retval is not None:
             logging.warn("idle_iterate yield value ignored: %s (%s)",
                          retval, name)
-        add_idle(_idle_iterate_step, name, args=(iterator, name))
+        _eventloop.run_idle_next_loop(_idle_iterate_step, name,
+                args=(iterator, name))
 
 def idle_iterator(func):
     """Decorator to wrap a generator function in a ``idle_iterate()``

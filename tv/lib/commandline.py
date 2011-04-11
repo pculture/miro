@@ -40,14 +40,15 @@ or ``add_torrent`` to be called in the existing Miro process.
 """
 
 from miro.gtcache import gettext as _
+import time
 
 import os.path
 import logging
 from miro import app
+from miro import eventloop
 from miro import prefs
 from miro import messages
 from miro import dialogs
-from miro import filetags
 from miro import autodiscover
 from miro import subscription
 from miro import feed
@@ -87,23 +88,35 @@ def add_video(path, manual_feed=None):
         manual_feed = feed.Feed.get_manual_feed()
     file_item = item.FileItem(
         path, feed_id=manual_feed.get_id(), mark_seen=True)
-    # FIXME: this means we'll run mutagen twice
-    (mediatype, duration, data, cover_art) = filetags.read_metadata(path,
-                                                                    test=True)
-    logging.debug('adding %s from commandline: %r', path, mediatype)
-    if mediatype is not None:
-        file_item.file_type = mediatype
-        file_item.has_drm = data.get('drm', False)
-        file_item.signal_change()
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
 
+@eventloop.idle_iterator
 def add_videos(paths):
+    path_iter = iter(paths)
+    finished = False
+    yield # yield after doing prep work
+    while not finished:
+        finished = _add_batch_of_videos(path_iter, 0.5)
+        yield # yield after each batch
+
+def _add_batch_of_videos(path_iter, max_time):
+    """Add a batch of videos for add_video()
+
+    This method consumes the paths in path_iter until the iterator finishes,
+    or max_time elapses.  It creates videos with add_video().
+
+    :returns: True if we returned because path_iter was finished
+    """
+    start_time = time.time()
     manual_feed = feed.Feed.get_manual_feed()
     app.bulk_sql_manager.start()
     try:
-        for path in paths:
+        for path in path_iter:
             add_video(path, manual_feed=manual_feed)
+            if time.time() - start_time > max_time:
+                return False
+        return True
     finally:
         app.bulk_sql_manager.finish()
 
