@@ -167,7 +167,10 @@ class LinuxApplication(Application):
         except ImportError:
             logging.exception("pycurl won't load")
         renderers.init_renderer()
-        gtk.main()
+        try:
+            gtk.main()
+        except (KeyboardInterrupt, SystemExit):
+            self.do_quit()
         app.controller.on_shutdown()
 
     def _setup_webkit(self):
@@ -261,7 +264,12 @@ class LinuxApplication(Application):
         self.mediakeyhandler = mediakeys.get_media_key_handler(self.window)
 
     def quit_ui(self):
-        gtk.main_quit()
+        try:
+            gtk.main_quit()
+        except RuntimeError:
+            # main_quit throws a runtimeerror if it's called outside
+            # of the gtk main loop.
+            pass
 
     def update_autostart(self, value):
         autostart_dir = resources.get_autostart_dir()
