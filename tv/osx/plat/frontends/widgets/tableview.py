@@ -160,7 +160,15 @@ class MiroTableInfoListTextCell(MiroTableCell):
         self = self.init()
         self.setWraps_(NO)
         self.attr_getter = attr_getter
+        self._textColor = self.textColor()
         return self
+
+    def drawWithFrame_inView_(self, frame, view):
+        if self.isHighlighted():
+            self.setTextColor_(NSColor.whiteColor())
+        else:
+            self.setTextColor_(self._textColor)
+        return MiroTableCell.drawWithFrame_inView_(self, frame, view)
 
     def setObjectValue_(self, value):
         if isinstance(value, tuple):
@@ -269,6 +277,7 @@ class CellRenderer(CellRendererBase):
     def set_color(self, color):
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0],
                 color[1], color[2], 1.0)
+        self.cell._textColor = color
         self.cell.setTextColor_(color)
 
     def set_align(self, align):
