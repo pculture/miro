@@ -789,7 +789,8 @@ class DaapClient(object):
     def check_reply(self, response, http_code=httplib.OK, callback=None,
                     args=[]):
         if response.status != http_code:
-            raise ValueError('Unexpected response code %d' % http_code)
+            raise ValueError(
+                'Unexpected code %d, wanted %d' % (response.status, http_code))
         if response.version != 11:
             raise ValueError('Server did not return HTTP/1.1')
         # XXX Broken - don't do an unbounded read here, this is stupid,
