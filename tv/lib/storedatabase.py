@@ -329,7 +329,6 @@ class LiveStorage:
             raise databaseupgrade.DatabaseTooNewError(msg)
 
         if current_version < self._schema_version:
-            dbupgradeprogress.upgrade_start()
             self._upgrade_20_database()
             # need to pull the variable again here because
             # _upgrade_20_database will have done an upgrade

@@ -35,6 +35,7 @@ from miro.gtcache import gettext as _
 from miro import messages
 
 _doing_20_upgrade = False
+_sent_upgrade_start = False
 
 def doing_20_upgrade():
     """Call this if we are upgrading from a 2.0-style database.
@@ -86,6 +87,10 @@ def infocache_progress(current_item, total_items):
     _send_message(_('Preparing Items'), progress, total)
 
 def _send_message(stage, stage_progress, total_progress):
+    global _sent_upgrade_start
+    if not _sent_upgrade_start:
+        upgrade_start()
+        _sent_upgrade_start = True
     messages.DatabaseUpgradeProgress(stage, stage_progress,
             total_progress).send_to_frontend()
 
