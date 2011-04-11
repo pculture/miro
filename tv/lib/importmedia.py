@@ -78,8 +78,8 @@ def file_path_xlat(path):
         if not path.startswith(file_url_bits):
             return None
         path = urllib.url2pathname(path[len(file_url_bits):])
-        if isinstance(path, unicode):
-            return path.encode('utf-8')
+        if isinstance(path, str):
+            return path.decode('utf-8')
         return path
     # bad path catchall
     except StandardError:
@@ -90,8 +90,6 @@ def import_itunes_path(path):
        path.  Returns the path of the music library as specified in the
        iTunes settings or None if it cannot find the xml file, or does not
        contain the path for some reason."""
-    from miro.plat.utils import filename_to_unicode # avoid circular import :(
-
     music_path = None
     try:
         parser = xml.sax.make_parser()
@@ -103,6 +101,6 @@ def import_itunes_path(path):
         parser.setFeature(xml.sax.handler.feature_external_pes, False)
         parser.parse(os.path.join(path, ITUNES_XML_FILE))
         music_path = file_path_xlat(handler.music_path)
-        return filename_to_unicode(music_path)
+        return music_path
     except (IOError, xml.sax.SAXParseException):
         pass
