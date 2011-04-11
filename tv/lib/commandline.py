@@ -90,9 +90,11 @@ def add_video(path, manual_feed=None):
     # FIXME: this means we'll run mutagen twice
     (mediatype, duration, data, cover_art) = filetags.read_metadata(path,
                                                                     test=True)
-    file_item.file_type = mediatype
-    file_item.has_drm = data.get('drm', False)
-    file_item.signal_change()
+    logging.debug('adding %s from commandline: %r', path, mediatype)
+    if mediatype is not None:
+        file_item.file_type = mediatype
+        file_item.has_drm = data.get('drm', False)
+        file_item.signal_change()
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
 

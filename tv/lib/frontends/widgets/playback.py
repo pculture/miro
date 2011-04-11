@@ -445,8 +445,12 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _setup_player(self, item_info, volume):
         def _handle_successful_sniff(item_type):
+            logging.debug("sniffer got '%s' for %s", item_type,
+                          item_info.video_path)
             self._finish_setup_player(item_info, item_type, volume)
         def _handle_unsuccessful_sniff():
+            logging.debug("sniffer got 'unplayable' for %s",
+                          item_info.video_path)
             self._finish_setup_player(item_info, "unplayable", volume)
         if item_info.media_type_checked:
             typ = item_info.file_type
