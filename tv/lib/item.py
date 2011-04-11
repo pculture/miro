@@ -314,6 +314,30 @@ class FeedParserValues(object):
 
         return datetime.min
 
+class FileFeedParserValues(FeedParserValues):
+    """FeedParserValues for FileItems"""
+    def __init__(self, filename, title=None, description=None):
+        self.first_video_enclosure = {'url': resources.url(filename)}
+        if title is None:
+            title = filename_to_title(filename)
+        if description is None:
+            description = u''
+        self.data = {
+            'license': None,
+            'rss_id': None,
+            'entry_title': title,
+            'thumbnail_url': None,
+            'entry_description': description,
+            'link': u'',
+            'payment_link': u'',
+            'comments_link': u'',
+            'url': u'',
+            'enclosure_size': None,
+            'enclosure_type': None,
+            'enclosure_format': self._calc_enclosure_format(),
+            'releaseDateObj': datetime.min,
+        }
+
 class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -2120,16 +2144,7 @@ def filename_to_title(filename):
 
 
 def fp_values_for_file(filename, title=None, description=None):
-    data = {
-            'enclosures': [{'url': resources.url(filename)}]
-    }
-    if title is None:
-        data['title'] = filename_to_title(filename)
-    else:
-        data['title'] = title
-    if description is not None:
-        data['description'] = description
-    return FeedParserValues(FeedParserDict(data))
+    return FileFeedParserValues(filename, title, description)
 
 def update_incomplete_movie_data():
     IncompleteMovieDataUpdator()
