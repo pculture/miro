@@ -336,9 +336,9 @@ class TabList(signals.SignalEmitter):
             return False # bail if we're the first tablist displayed
         prev_view = all_views[my_index-1]
         self.view.unselect_all(signal=False)
-        prev_view.focus()
         prev_view.unselect_all(signal=False)
         prev_view.select(_last_iter(prev_view, prev_view.model), signal=True)
+        prev_view.focus()
         return True
 
 class StaticTabList(TabList):
