@@ -1641,7 +1641,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def get_duration_value(self):
         """Returns the length of the video in seconds.
         """
-        secs = 0
+        secs = None
         if self.duration not in (-1, None):
             secs = self.duration / 1000
         return secs

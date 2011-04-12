@@ -79,7 +79,7 @@ def short_time_string(secs):
     try:
         return "%d:%02d" % divmod(int(round(secs)), 60)
     except TypeError:
-        return "0:00"
+        return ""
 
 def time_string(secs):
     if secs >= (60 * 60 * 24):

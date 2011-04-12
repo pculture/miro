@@ -1044,7 +1044,10 @@ class SharingManagerBackend(object):
                         itemprop[daap_string] = int(itemprop[daap_string])
                 # Fixup the duration: need to convert to millisecond.
                 if daap_string == 'daap.songtime':
-                    itemprop[daap_string] *= DURATION_SCALE
+                    if itemprop[daap_string]:
+                        itemprop[daap_string] *= DURATION_SCALE
+                    else:
+                        itemprop[daap_string] = 0
             # Fixup the enclosure format.  This is hardcoded to mp4, 
             # as iTunes requires this.  Other clients seem to be able to sniff
             # out the container.  We can change it if that's no longer true.
