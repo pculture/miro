@@ -61,12 +61,20 @@ nexus_one = DeviceInfo(u'Nexus One',
                        video_conversion='nexusone',
                        **defaults)
 
-motorola_droid = DeviceInfo(u'Motorola Droid',
+# the Droid apparently can have two different USB IDs
+motorola_droid_one = DeviceInfo(u'Motorola Droid',
                             vendor_id=0x22b8,
                             product_id=0x41db,
                             device_name='Motorola A855',
                             video_conversion='droid',
                             **defaults)
+
+motorola_droid_two = DeviceInfo(u'Motorola Droid',
+                                vendor_id=0x22b,
+                                product_id=0x41d9,
+                                device_name='Motorola A855',
+                                video_conversion='droid',
+                                **defaults)
 
 motorola_droid2 = DeviceInfo(u'Motorola Droid 2',
                              vendor_id=0x22b8,
@@ -113,6 +121,7 @@ nookcolor = DeviceInfo(
     )
 
 devices = [htc_android_device, htc_desire, nexus_one,
-           motorola_droid, motorola_droid2, motorola_droidx,
+           motorola_droid_one, motorola_droid_two, motorola_droid2,
+           motorola_droidx,
            galaxy_tab, epic, nookcolor]
 
