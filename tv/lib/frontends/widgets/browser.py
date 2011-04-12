@@ -245,7 +245,9 @@ class BrowserNav(widgetset.VBox):
         self.guide_info = guide_info
         self.home_url = guide_info.url
         self.pack_start(self.toolbar)
-        self.pack_start(separator.HSeparator((0.85, 0.85, 0.85)))
+        color1 = widgetutil.css_to_color('#bcbcbc')
+        color2 = widgetutil.css_to_color('#020202')
+        self.pack_start(separator.HSeparator(color1, color2))
         self.pack_start(self.browser, expand=True)
 
         self.toolbar.connect_weak('browser-back', self._on_browser_back)
