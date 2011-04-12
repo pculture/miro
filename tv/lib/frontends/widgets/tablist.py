@@ -687,7 +687,10 @@ class DeviceTabListHandler(object):
                 HideableTabList.add(self.tablist,
                                     fake,
                                     info.id)
-            self.tablist.expand(info.id)
+            try:
+                self.tablist.expand(info.id)
+            except errors.WidgetActionError:
+                pass # if the Connect Tab isn't open, we can't expand the tab
 
     def add(self, info):
         HideableTabList.add(self.tablist, info)
