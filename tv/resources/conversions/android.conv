@@ -18,6 +18,7 @@ ssize: 480x320
 ssize: 480x320
 
 [Droid]
+parameters: -i {input} -y -acodec aac -ab 160k -s {ssize} -vcodec libx264 -vpre slow -vpre ipod640 -f mp4 -threads 0 {output}
 ssize: 854x480
 
 [Eris / Desire]
