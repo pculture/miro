@@ -134,8 +134,7 @@ for pkg in "setuptools-0.6c11" \
            "mutagen-1.20" \
            "modulegraph-0.7.3" \
            "py2app-0.4.3" \
-           "Pyrex-0.9.9" \
-           "psyco-1.6"
+           "Pyrex-0.9.9"
 do
     cd $WORK_DIR
     if [[ ! -e $BKIT_DIR/$pkg.tar.gz ]]; then
