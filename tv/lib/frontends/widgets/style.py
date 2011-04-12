@@ -434,7 +434,7 @@ class NameRenderer(ListViewRenderer):
 
     def make_button(self, layout_manager):
         layout_manager.set_font(self.button_font_size)
-        if self.info.device:
+        if self.info.device or self.info.remote:
             text = DOWNLOAD_TO_MY_MIRO_TEXT
         else:
             text = DOWNLOAD_TEXT
