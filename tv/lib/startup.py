@@ -69,6 +69,7 @@ from miro import feed
 from miro import folder
 from miro import messages
 from miro import messagehandler
+from miro import metadataprogress
 from miro import models
 from miro import moviedata
 from miro import playlist
@@ -307,6 +308,8 @@ def finish_startup(obj, thread):
     install_message_handler()
     itemsource.setup_handlers()
     downloader.init_controller()
+
+    app.metadata_progress_updater = metadataprogress.MetadataProgressUpdater()
 
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()

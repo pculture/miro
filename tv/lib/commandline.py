@@ -93,6 +93,8 @@ def add_video(path, manual_feed=None):
 
 @eventloop.idle_iterator
 def add_videos(paths):
+    for path in paths:
+        app.metadata_progress_updater.will_process_path(path)
     path_iter = iter(paths)
     finished = False
     yield # yield after doing prep work

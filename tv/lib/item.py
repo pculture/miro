@@ -1751,7 +1751,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 self.metadata_version = filetags.METADATA_VERSION
                 self.has_drm = metadata.get('drm', False)
                 self.media_type_checked = True
-            moviedata.movie_data_updater.request_update(self)
+        moviedata.movie_data_updater.request_update(self)
         if signal_change:
             self.signal_change()
 

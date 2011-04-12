@@ -222,6 +222,13 @@ class LogFilter(logging.Filter):
     def reset_records(self):
         self.records = []
 
+    def check_record_count(self, count):
+        assert len(self.records) == count
+
+    def check_record_level(self, level):
+        for rec in self.records:
+            assert rec.levelno == level
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.setup_log_filter()
@@ -437,6 +444,11 @@ class EventLoopTest(MiroTestCase):
                 timeout_handle.cancel()
         finally:
             eventloop.thread_pool_quit()
+
+    def run_pending_timeouts(self):
+        scheduler = eventloop._eventloop.scheduler
+        while scheduler.has_pending_timeout():
+            scheduler.process_next_timeout()
 
     def add_timeout(self,delay, function, name, args=None, kwargs=None):
         eventloop.add_timeout(delay, function, name, args, kwargs)

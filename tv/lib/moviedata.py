@@ -173,6 +173,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                     break
                 signals.system.failed_exn(
                     "When running external movie data program")
+            app.metadata_progress_updater.path_processed(
+                    mdi.item.get_filename())
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
@@ -247,6 +249,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                 item.file_type == u'video'):
             self.in_progress.add(item.id)
             self.queue.put(MovieDataInfo(item))
+        else:
+            app.metadata_progress_updater.path_processed(item.get_filename())
 
     def shutdown(self):
         self.in_shutdown = True

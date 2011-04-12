@@ -2059,12 +2059,8 @@ class DirectoryScannerImplBase(FeedImpl):
                 to_remove.append(item)
         # find added paths don't have an item
         known_files = self.calc_known_files()
-        to_add = []
-        for path in self._watcher_paths_added:
-            ufile = filename_to_unicode(path)
-            if (path not in known_files and
-                    filetypes.is_media_filename(ufile)):
-                to_add.append(path)
+        to_add = self._filter_non_media_filenames(self._watcher_paths_added,
+                known_files)
         # commit changes
         app.bulk_sql_manager.start()
         try:
@@ -2121,35 +2117,48 @@ class DirectoryScannerImplBase(FeedImpl):
 
         # adds any files we don't know about
         # files on the filesystem
-        to_add = []
         scan_dir = self._scan_dir()
-        def add_children():
-            app.bulk_sql_manager.start()
-            try:
-                for file_ in to_add:
-                    self._make_child(file_)
-            finally:
-                app.bulk_sql_manager.finish()
-
         if fileutil.isdir(scan_dir) and not is_file_bundle(scan_dir):
-            start = time.time()
             all_files = fileutil.miro_allfiles(scan_dir)
-            for file_ in all_files:
-                file_ = os.path.normcase(file_)
-                ufile = filename_to_unicode(file_)
-                if (file_ not in known_files and
-                        filetypes.is_media_filename(ufile)):
-                    to_add.append(file_)
-                if time.time() - start > 0.4:
-                    add_children()
-                    to_add = []
-                    self.signal_change()
-                    yield # let other events run
-                    start = time.time()
-        if to_add:
-            add_children()
+            to_add = self._filter_non_media_filenames(all_files, known_files)
+            for path in to_add:
+                app.metadata_progress_updater.will_process_path(path)
+            path_iter = iter(to_add)
+            finished = False
+            yield # yield after doing prep work
+            while not finished:
+                finished = self._add_batch_of_videos(path_iter, 0.5)
+                yield # yield after each batch
         self._after_update()
         self.schedule_update_events(-1)
+
+    def _add_batch_of_videos(self, path_iter, max_time):
+        """Make a bunch of filenames, but don't take too long.
+
+        We consume paths from path_iter until it's finished, or max_time
+        elapses.
+
+        :returns: if path_iter is finished
+        """
+        start = time.time()
+        app.bulk_sql_manager.start()
+        try:
+            for path in path_iter:
+                self._make_child(path)
+                if time.time() - start > max_time:
+                    return False
+            return True
+        finally:
+            app.bulk_sql_manager.finish()
+
+    def _filter_non_media_filenames(self, paths, known_files):
+        rv = []
+        for path in paths:
+            ufile = filename_to_unicode(path)
+            if (path not in known_files and
+                    filetypes.is_media_filename(ufile)):
+                rv.append(path)
+        return rv
 
 class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def setup_new(self, ufeed, directory):
