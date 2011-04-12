@@ -254,6 +254,8 @@ class CustomControlBase(Drawable, Widget):
                         self.on_enter_notify),
                     self.wrapped_widget_connect('leave-notify-event',
                         self.on_leave_notify),
+                    self.wrapped_widget_connect('button-release-event',
+                        self.on_click)
             ]
 
     def _disconnect_enter_notify_handlers(self):
@@ -278,6 +280,10 @@ class CustomControlBase(Drawable, Widget):
     def on_leave_notify(self, widget, event):
         if self._widget.window:
             self._widget.window.set_cursor(None)
+
+    def on_click(self, widget, event):
+        self.emit('clicked', event)
+        return True
 
 class CustomButton(CustomControlBase):
     def __init__(self):
