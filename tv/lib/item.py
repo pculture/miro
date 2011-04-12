@@ -53,7 +53,6 @@ from miro import iconcache
 from miro import databaselog
 from miro import downloader
 from miro import eventloop
-from miro import filetags
 from miro import prefs
 from miro.plat import resources
 from miro import util
@@ -1734,22 +1733,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.file_type = u'other'
             self.media_type_checked = True
         else:
-            rv = filetags.read_metadata(self.filename)
-            (mediatype, duration, metadata, cover_art) = rv
-            if mediatype is not None:
-                self.file_type = mediatype
-                self.duration = duration
-                self.cover_art = cover_art
-                self.album = metadata.get('album', None)
-                self.album_artist = metadata.get('album_artist', None)
-                self.artist = metadata.get('artist', None)
-                self.title_tag = metadata.get('title', None)
-                self.track = metadata.get('track', None)
-                self.year = metadata.get('year', None)
-                self.genre = metadata.get('genre', None)
-                self.has_drm = metadata.get('drm', False)
-                self.metadata_version = filetags.METADATA_VERSION
-                self.has_drm = metadata.get('drm', False)
+            self.read_metadata(self.filename)
+            if self.file_type is not None:
                 self.media_type_checked = True
         moviedata.movie_data_updater.request_update(self)
         if signal_change:

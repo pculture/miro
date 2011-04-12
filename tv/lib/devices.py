@@ -749,8 +749,9 @@ class DeviceItem(metadata.Store):
                 self.creation_time = ctime
         # make sure ID is unicode
         self.id = filename_to_unicode(self.video_path)
-        if self.duration is None: # -1 is unknown
-            moviedata.movie_data_updater.request_update(self)
+        # setup metadata
+        self.read_metadata(self.get_filename())
+        moviedata.movie_data_updater.request_update(self)
 
     @staticmethod
     def id_exists():
@@ -1014,11 +1015,10 @@ def clean_database(device):
 @eventloop.idle_iterator
 def scan_device_for_files(device):
     # XXX is this as_idle() safe?
-    known_files = clean_database(device)
 
-    device.database.set_bulk_mode(True)
-    device.database.setdefault('sync', {})
-    start = time.time()
+    # prepare paths to add
+    known_files = clean_database(device)
+    item_data = []
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
         ufilename = filename_to_unicode(short_filename)
@@ -1030,11 +1030,23 @@ def scan_device_for_files(device):
         elif filetypes.is_audio_filename(ufilename):
             item_type = 'audio'
         if item_type is not None:
-            device.database[item_type][ufilename] = {}
-            device.database.emit('item-added',
-                                 DeviceItem(video_path=ufilename,
-                                            file_type=item_type,
-                                            device=device))
+            item_data.append((ufilename, item_type))
+            # FIXME: could we just use filename here?  I'm not sure, so I
+            # copied the logic of item.get_filename() -- BDK
+            item_filename = os.path.join(device.mount, ufilename)
+            app.metadata_progress_updater.will_process_path(item_filename)
+    yield # yield after prep work
+
+    device.database.setdefault('sync', {})
+
+    device.database.set_bulk_mode(True)
+    start = time.time()
+    for ufilename, item_type in item_data:
+        device.database[item_type][ufilename] = {}
+        device.database.emit('item-added',
+                             DeviceItem(video_path=ufilename,
+                                        file_type=item_type,
+                                        device=device))
         if time.time() - start > 0.4:
             device.database.set_bulk_mode(False) # save the database
             yield # let other idle functions run

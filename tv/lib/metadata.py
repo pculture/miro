@@ -36,6 +36,7 @@ import fileutil
 
 from miro.util import returns_unicode
 from miro import coverart
+from miro import filetags
 
 class Source(object):
     """Object with readable metadata properties."""
@@ -94,6 +95,31 @@ class Source(object):
     @returns_unicode
     def get_description(self):
         return self.description
+
+    def read_metadata(self, path):
+        rv = filetags.read_metadata(path)
+        (mediatype, duration, metadata, cover_art) = rv
+        if mediatype is not None:
+            self.file_type = mediatype
+            # FIXME: duration isn't actually a attribute of metadata.Source.
+            # This currently works because Item and Device item are the only
+            # classes that call read_metadata(), and they both define duration
+            # the same way.
+            #
+            # But this is pretty fragile.  We should probably refactor
+            # duration to be an attribute of metadata.Source.
+            self.duration = duration
+            self.cover_art = cover_art
+            self.album = metadata.get('album', None)
+            self.album_artist = metadata.get('album_artist', None)
+            self.artist = metadata.get('artist', None)
+            self.title_tag = metadata.get('title', None)
+            self.track = metadata.get('track', None)
+            self.year = metadata.get('year', None)
+            self.genre = metadata.get('genre', None)
+            self.has_drm = metadata.get('drm', False)
+            self.metadata_version = filetags.METADATA_VERSION
+            self.has_drm = metadata.get('drm', False)
 
 def metadata_setter(attribute, type_=None):
     def set_metadata(self, value, _bulk=False):
