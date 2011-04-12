@@ -1,4 +1,5 @@
 import os
+import logging
 import unittest
 import tempfile
 import threading
@@ -200,8 +201,30 @@ def decorate_all_tests(class_dict, bases, decorator):
             if name.startswith("test"):
                 class_dict[name] = decorator(getattr(cls, name))
 
+class LogFilter(logging.Filter):
+    """Log filter that turns logging messages into exceptions."""
+
+    def __init__(self):
+        self.exception_level = logging.CRITICAL
+        self.records = []
+
+    def set_exception_level(self, level):
+        """Set the min logging level where we should throw an exception"""
+        self.exception_level = level
+
+    def filter(self, record):
+        if record.levelno >= self.exception_level:
+            raise AssertionError("Unexpected logging: %s" % record)
+        else:
+            self.records.append(record)
+            return False
+
+    def reset_records(self):
+        self.records = []
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
+        self.setup_log_filter()
         self.tempdir = tempfile.mkdtemp()
         if not os.path.exists(self.tempdir):
             os.makedirs(self.tempdir)
@@ -228,11 +251,14 @@ class MiroTestCase(unittest.TestCase):
         app.controller = DummyController()
         self.httpserver = None
         httpauth.init()
+        # reset any logging records from our setUp call()
+        self.log_filter.reset_records()
 
     def on_windows(self):
         return self.platform == "windows"
 
     def tearDown(self):
+        self.reset_log_filter()
         signals.system.disconnect_all()
         util.chatter = True
         self.stop_http_server()
@@ -247,6 +273,23 @@ class MiroTestCase(unittest.TestCase):
 
         # Remove tempdir
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
+
+    def setup_log_filter(self):
+        """Make a LogFilter that will turn loggings into exceptions."""
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+        for old_filter in logger.filters:
+            logger.removeFilter(old_filter)
+        self.log_filter = LogFilter()
+        logger.addFilter(self.log_filter)
+
+    def reset_log_filter(self):
+        logger = logging.getLogger()
+        for old_filter in logger.filters:
+            logger.removeFilter(old_filter)
+        # reset the level so we don't get debugging printouts during the
+        # tearDown call.
+        logger.setLevel(logging.ERROR)
 
     def _on_rmtree_error(self, func, path, excinfo):
         global FILES_TO_CLEAN_UP
