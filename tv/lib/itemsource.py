@@ -531,7 +531,8 @@ class DeviceItemSource(ItemSource):
             permalink = item.permalink,
             commentslink = item.comments_link,
             payment_link = item.payment_link,
-            has_shareable_url = bool(item.url),
+            has_shareable_url = (item.url and
+                                 not item.url.startswith('file://')),
             can_be_saved = False,
             pending_manual_dl = False,
             pending_auto_dl = False,
