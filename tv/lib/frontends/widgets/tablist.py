@@ -417,9 +417,10 @@ class LibraryTabList(TabBlinkerMixin, TabList):
         return self.auto_tab_order[pos+1:]
 
     def remove_auto_tab_if_not_selected(self, name):
-        if name in app.tabs.selected_ids:
-            return
-        self.remove(name)
+        # can't query app.tabs.selection here without changing it (#16914#c4)
+        if name not in (self.view.model[iter_][0].id
+                for iter_ in self.view.get_selection()):
+            self.remove(name)
 
     def on_deselected(self, view):
         """deselected is a more specific signal that selection-changed, to
