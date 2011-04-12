@@ -45,21 +45,6 @@ import Foundation
 
 # =============================================================================
 
-def activate_psyco():
-    # Get cpu type
-    info = os.uname()
-    cpu = info[-1]
-
-    # Activate only if we are on an Intel Mac.
-    if cpu == 'i386':
-        try:
-            import psyco
-            psyco.profile()
-        except:
-            pass
-
-# =============================================================================
-
 def launch_unit_tests():
     sys.argv.remove('--unittest')
 
@@ -186,10 +171,6 @@ def launch_downloader_daemon():
 # cross the PyObjC bridge...
 #import objc
 #objc.setStrBridgeEnabled(False)
-
-# Activate psyco, if we are running on an Intel Mac
-
-activate_psyco()
 
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
