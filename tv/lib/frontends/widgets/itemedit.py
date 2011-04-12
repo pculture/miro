@@ -346,7 +346,10 @@ class ThumbnailField(DialogOwnerMixin, Field):
         # overreaction to Canceling the file chooser. Probably should have a "No
         # image" button in the dialog?
         if new_path:
-            self.thumb_widget.set_path(new_path)
+            try:
+                self.thumb_widget.set_path(new_path)
+            except ValueError:
+                pass
 
 class PathField(DialogOwnerMixin, Field):
     """A field for choosing the location for a file. Becomes a
