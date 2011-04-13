@@ -249,16 +249,30 @@ class LinuxApplication(Application):
         else:
             self.trayicon.set_visible(False)
 
-        # if the user specified override dimensions on the command line,
-        # set them here.
         if options.override_dimensions:
+            # if the user specified override dimensions on the command
+            # line, set them here.
             self.window.set_frame(
                 width=options.override_dimensions[0],
                 height=options.override_dimensions[1])
 
-        # check x, y to make sure the window is visible and fix it
-        # if not
-        self.window.check_position_and_fix()
+        elif not get_int("width") and not get_int("height"):
+            # if this is the first time Miro has been started, we want
+            # to set a default size that makes sense in the context of
+            # their monitor resolution.  the check here is against
+            # whether there are width/height values in gconf already
+            # which isn't true in a first-run situation.
+            geom = self.window.get_monitor_geometry()
+            width = min(1024, geom.width)
+            height = min(600, geom.height)
+            self.window.set_frame(width=width, height=height)
+
+        else:
+            # the user isn't overriding dimensions and this is not the
+            # first time Miro has been launched on this computer, so
+            # we double-check that the position works on this monitor
+            # and if it puts Miro in a bad place, then fix it.
+            self.window.check_position_and_fix()
 
         # handle media keys
         self.mediakeyhandler = mediakeys.get_media_key_handler(self.window)
@@ -326,6 +340,12 @@ class LinuxApplication(Application):
 
     def get_main_window_dimensions(self):
         """Gets x, y, width, height from config.
+
+        .. Note::
+
+           If this is the first time that Miro has been started on
+           this computer, then build_window will re-figure the width
+           and height of the main window and change it.
 
         Returns Rect.
         """

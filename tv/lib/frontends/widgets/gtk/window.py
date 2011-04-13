@@ -495,6 +495,19 @@ class Window(WindowBase):
             height = height if height is not None else size[1]
             self._window.resize(width, height)
 
+    def get_monitor_geometry(self):
+        """Returns a Rect of the geometry of the monitor that this
+        window is currently on.
+
+        :returns: Rect
+        """
+        gtkwindow = self._window
+        gdkwindow = gtkwindow.window
+        screen = gtkwindow.get_screen()
+
+        monitor = screen.get_monitor_at_window(gdkwindow)
+        return screen.get_monitor_geometry(monitor)
+
     def check_position_and_fix(self):
         """This pulls the geometry of the monitor of the screen this
         window is on as well as the position of the window.
@@ -505,10 +518,8 @@ class Window(WindowBase):
         """
         gtkwindow = self._window
         gdkwindow = gtkwindow.window
-        screen = gtkwindow.get_screen()
+        monitor_geom = self.get_monitor_geometry()
 
-        monitor = screen.get_monitor_at_window(gdkwindow)
-        monitor_geom = screen.get_monitor_geometry(monitor)
         frame_extents = gdkwindow.get_frame_extents()
         position = gtkwindow.get_position()
 
