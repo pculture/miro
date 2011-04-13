@@ -218,9 +218,11 @@ class OSXApplication(Application, signals.SignalEmitter):
             logging.warn("movie %s could not be externally opened" % fn)
     
     def get_main_window_dimensions(self):
+        # returns the preference if there is one, or in the case of the
+        # first time the user has used Miro, returns 0, 0, 1024, 600.
         windowFrame = app.config.get(prefs.MAIN_WINDOW_FRAME)
         if windowFrame is None:
-            windowFrame = (0,0,800,600)
+            windowFrame = (0, 0, 1024, 600)
         else:
             rect = NSRectFromString(windowFrame)
             windowFrame = (rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)
