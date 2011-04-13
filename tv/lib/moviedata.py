@@ -174,7 +174,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 signals.system.failed_exn(
                     "When running external movie data program")
             app.metadata_progress_updater.path_processed(
-                    mdi.item.get_filename())
+                    mdi.video_path)
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
