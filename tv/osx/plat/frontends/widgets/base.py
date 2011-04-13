@@ -211,7 +211,7 @@ class Container(Widget):
         self.callback_handles = {}
 
     def on_child_size_request_changed(self, child, old_size):
-        self.children_changed()
+        self.invalidate_size_request()
 
     def connect_child_signals(self, child):
         handle = child.connect_weak('size-request-changed',
@@ -251,6 +251,7 @@ class Container(Widget):
         self.children_changed()
 
     def children_changed(self):
+        """Invoked when the set of children for this widget changes."""
         self.do_invalidate_size_request()
 
     def do_invalidate_size_request(self):
