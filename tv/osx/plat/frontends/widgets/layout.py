@@ -265,7 +265,7 @@ class Alignment(Bin):
         self.bottom_pad = bottom_pad
         self.left_pad = left_pad
         self.right_pad = right_pad
-        if self.child is not None:
+        if self.child is not None and self.viewport is not None:
             self.place_children()
 
     def vertical_pad(self):
