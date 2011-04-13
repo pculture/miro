@@ -89,16 +89,7 @@ class TabListManager(dict):
         iters = view.get_selection()
         if real_tabs:
             self._previous_selection = self._selected_tablist.type
-        try:
-            typ = self._selected_tablist.type
-            if not iters:
-                typ = None
-            return typ, [view.model[i][0] for i in iters]
-        except AttributeError:
-            app.widgetapp.handle_soft_failure('selection', "iter is none",
-                                              with_exception=True)
-            return self._selected_tablist.type, [
-                    view.model[view.model.first_iter()][0]] 
+        return self._selected_tablist.type, [view.model[i][0] for i in iters]
 
     @property
     def selection_and_children(self):
