@@ -49,9 +49,7 @@ class SelectionOwnerMixin(object):
     :signal deselected: all items have been deselected
     """
     def __init__(self):
-        self._real_selection = None
         self._ignore_selection_changed = 0
-        self._restoring_selection = None
         self._allow_multiple_select = None
         self.create_signal('selection-changed')
         self.create_signal('selection-invalid')
@@ -103,8 +101,6 @@ class SelectionOwnerMixin(object):
 
     def unselect(self, iter_):
         """Unselect an Iter. Fails silently if the Iter is not selected.
-
-        :raises WidgetActionError: the Iter is not selectable
         """
         self._validate_iter(iter_)
         with self._ignoring_changes():
@@ -116,7 +112,6 @@ class SelectionOwnerMixin(object):
             self._unselect_all()
             if signal:
                 self.emit('deselected')
-        self.forget_restore()
 
     def on_selection_changed(self, _widget_or_notification):
         """When we receive a selection-changed signal, we forward it if we're
@@ -127,14 +122,11 @@ class SelectionOwnerMixin(object):
         # don't bother sending out a second selection-changed signal if
         # the handler changes the selection (#15767)
         if not self._ignore_selection_changed:
-            self._save_selection()
             with self._ignoring_changes():
                 self.emit('selection-changed')
 
     def get_selection_as_strings(self):
         """Returns the current selection as a list of strings.
-        
-        :raises WidgetActionError: selection is temporary and strict is set
         """
         return [self._iter_to_string(iter_) for iter_ in self.get_selection()]
 
@@ -144,89 +136,30 @@ class SelectionOwnerMixin(object):
         selection given cannot be restored yet and has been postponed. Emits no
         signals.
         """
-        self._restoring_selection = None
         try:
             # iter may not be destringable (yet) - bounds error
             # destringed iter not selectable if parent isn't open (yet)
             self.set_selection(self._iter_from_string(sel) for sel in selected)
         except WidgetActionError, error:
-            logging.debug("cannot restore yet: %s", error.reason)
-            self._restoring_selection = selected
+            logging.debug("cannot set selection: %s", error.reason)
+            return False
         else:
             return True
 
-    def get_selection(self, strict=True):
+    def get_selection(self):
         """Returns a list of GTK Iters. Works regardless of whether multiple
         selection is enabled.
-        
-        :raises WidgetNotReadyError: selection is temporary and strict is set
         """
-        # FIXME: non-strict mode is transitional. when everything is fixed not
-        # to need it, remove it
-        if self._restoring_selection:
-            self.set_selection_as_strings(self._restoring_selection)
-        if strict and self._restoring_selection:
-            raise WidgetNotReadyError(waiting_for="saved selection to restore")
         return self._get_selected_iters()
 
-    def get_selected(self, strict=False):
+    def get_selected(self):
         """Return the single selected item.
         
-        :raises WidgetNotReadyError: selection is temporary and strict is set
         :raises WidgetUsageError: multiple selection is enabled
         """
-        if self._restoring_selection:
-            self.set_selection_as_strings(self._restoring_selection)
         if self.allow_multiple_select:
             raise WidgetUsageError("table allows multiple selection")
-        if strict and self._restoring_selection:
-            raise WidgetNotReadyError(waiting_for="saved selection to restore")
         return self._get_selected_iter()
-
-    def select_path(self, path):
-        """Select an item by path (rather than by iter).
-        
-        NOTE: not currently implemented on OS X.
-        """
-        raise NotImplementedError
-
-    def forget_restore(self):
-        """This method is to be used when a selection has been given in
-        set_selection_as_strings, but that selection is not likely to be
-        restorable.
-        """
-        self._restoring_selection = None
-
-    def _save_selection(self):
-        """Save the current selection to restore with _restore_selection.
-
-        Selection needs to be saved/restored whenever the model is set to None
-        (bulk edits).
-        """
-        try:
-            self._real_selection = self._get_selected_iters()
-        except WidgetActionError, error:
-            logging.debug("not saving selection: %s", error.reason)
-
-    def _restore_selection(self):
-        """Restore the selection after making changes that would unset it. If
-        there is a selection from set_selection_as_strings, restore that if
-        possible; otherwise, use what was set in _save_selection.
-        """
-        if self._restoring_selection is not None:
-            if self.set_selection_as_strings(self._restoring_selection):
-                return
-        if self._ignore_selection_changed:
-            return
-        if self._real_selection is None:
-            return
-        try:
-            self.set_selection(self._real_selection)
-        # Hack for #16835
-        except ValueError:
-            self._real_selection = None
-            logging.warning("can't restore selection - deleted?", exc_info=True)
-            self.emit('selection-invalid')
 
     def _validate_iter(self, iter_):
         """Check whether an iter is valid.
@@ -254,5 +187,4 @@ class SelectionOwnerMixin(object):
         self.unselect_all(signal=False)
         for iter_ in iters:
             self.select(iter_, signal=False)
-        self._save_selection()
         if signal: self.emit('selection-changed')

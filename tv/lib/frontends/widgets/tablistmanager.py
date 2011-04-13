@@ -86,7 +86,7 @@ class TabListManager(dict):
         if not real_tabs:
             self._handle_no_tabs_selected(self._selected_tablist)
         view = self._selected_tablist.view
-        iters = view.get_selection(strict=False)
+        iters = view.get_selection()
         if real_tabs:
             self._previous_selection = self._selected_tablist.type
         try:
@@ -110,7 +110,7 @@ class TabListManager(dict):
             return None, []
         selected_tabs = set()
         view = self._selected_tablist.view
-        for path in view.get_selection(strict=False):
+        for path in view.get_selection():
             row = view.model[path]
             # sort children before parents
             selected_tabs.add((1, row[0]))
@@ -148,7 +148,7 @@ class TabListManager(dict):
         else:
             return None
 
-    def _handle_no_tabs_selected(self, _selected_tablist, force=False):
+    def _handle_no_tabs_selected(self, _selected_tablist):
         """No tab is selected; select a fallback.
         
         [XXX:historical note:'This may be about to be overwritten by
@@ -157,17 +157,10 @@ class TabListManager(dict):
         delete this note.]
 
         After _handle_no_tabs_selected, something is guaranteed to be selected.
-        Selection may still fail in strict mode if the selected tab is in a list
-        that is trying to restore a different remembered selection.
-        
-        Setting force avoids this: any the remembered selection in the choosen
-        tablist is dropped, and the new selection is guaranteed to be valid.
         """
         self._restored = False
         self._before_no_tabs = self._previous_selection
-        logging.warn('_handle_no_tabs_selected; force=%s', repr(force))
-        if force:
-            self._selected_tablist.view.forget_restore()
+        logging.warn('_handle_no_tabs_selected')
         if hasattr(_selected_tablist, 'info'):
             root = _selected_tablist.iter_map[_selected_tablist.info.id]
         elif hasattr(_selected_tablist, 'default_info'):
@@ -206,8 +199,6 @@ class TabListManager(dict):
             if tab_list.type != list_type:
                 # unselect other tabs
                 tab_list.view.unselect_all()
-            # keep the current selections
-            tab_list.view._save_selection() 
         self._selected_tablist = self[list_type]
         try:
             iters = view.get_selection()
@@ -215,14 +206,14 @@ class TabListManager(dict):
             if or_bust:
                 logging.debug("saved tab may be permanently unavailable: %s",
                               error.reason)
-                self._handle_no_tabs_selected(self._selected_tablist, force=True)
+                self._handle_no_tabs_selected(self._selected_tablist)
                 iters = view.get_selection() # must not fail now
             else:
                 logging.debug("tab not selected: %s", error.reason)
                 iters = []
         if or_bust and not iters:
             logging.debug('no tabs selected, but really need a selection')
-            self._handle_no_tabs_selected(self._selected_tablist, force=True)
+            self._handle_no_tabs_selected(self._selected_tablist)
             iters = view.get_selection()
         tabs = [view.model[i][0] for i in iters]
         # prevent selecting base and non-base at the same time
@@ -274,7 +265,6 @@ class TabListManager(dict):
             else: # unselect everything but base if base is newly selected
                 view.unselect_all(signal=False)
                 view.select(root)
-            view._save_selection()
         iters = view.get_selection()
         tabs = [view.model[i][0] for i in iters]
         self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
@@ -289,7 +279,6 @@ class TabListManager(dict):
         view = self[list_type].view
         # select the paths to find out what the strings translate to
         view.set_selection_as_strings(sel)
-        view._save_selection()
         return list_type
 
     def on_shown(self):

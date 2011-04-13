@@ -3245,3 +3245,7 @@ def upgrade154(cursor):
         # no site taborder (#11985).  We will create the TabOrder
         # object on startup, so no need to do anything here
         pass
+
+def upgrade155(cursor):
+    """Reset display_state.selection, since the format changed."""
+    cursor.execute("UPDATE display_state SET selection=NULL")

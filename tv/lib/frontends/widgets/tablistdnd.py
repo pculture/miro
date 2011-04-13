@@ -205,7 +205,6 @@ class NestedTabListDropHandler(object):
             except LookupError:
                 logging.error('lookup error in accept_drop')
                 view.select(view.model.first_iter())
-        view._save_selection()
         view.emit('selection-changed')
         message = messages.TabsReordered()
 

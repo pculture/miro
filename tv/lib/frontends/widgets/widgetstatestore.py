@@ -255,18 +255,11 @@ class WidgetStateStore(object):
         selection has been saved.
         """
         display = self._get_display(display_type, display_id)
-        if display.selection is not None:
-            selection = [str(path) for path in display.selection]
-        else:
-            selection = None
-        return selection
+        return display.selection
 
     def set_selection(self, display_type, display_id, selection):
         display = self._get_display(display_type, display_id)
-        if selection is not None:
-            display.selection = [unicode(path) for path in selection]
-        else:
-            display.selection = None
+        display.selection = selection
         self._save_display_state(display_type, display_id)
 
     def get_sort_state(self, display_type, display_id):

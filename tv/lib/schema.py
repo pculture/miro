@@ -168,6 +168,12 @@ class SchemaTimeDelta(SchemaSimpleItem):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, datetime.timedelta)
 
+class SchemaMultiValue(SchemaSimpleItem):
+    """Stores integer, boolean, string, or unicode data"""
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateTypes(data, [int, long, bool, str, unicode])
+
 class SchemaReprContainer(SchemaItem):
     """SchemaItem saved using repr() to save nested lists, dicts and
     tuples that store simple types.  The look is similar to JSON, but
@@ -719,7 +725,7 @@ class DisplayStateSchema(DDBObjectSchema):
         ('list_view_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
         ('shuffle', SchemaBool(noneOk=True)),
         ('repeat', SchemaInt(noneOk=True)),
-        ('selection', SchemaList(SchemaString(), noneOk=True)),
+        ('selection', SchemaList(SchemaMultiValue(), noneOk=True)),
         ('sort_state', SchemaString(noneOk=True)),
         ('last_played_item_id', SchemaInt(noneOk=True)),
     ]
@@ -774,7 +780,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 154
+VERSION = 155
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

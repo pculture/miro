@@ -1166,7 +1166,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
 
     def start_bulk_change(self):
         self._widget.freeze_child_notify()
-        self._save_selection()
         self._widget.set_model(None)
         self._disconnect_hotspot_signals()
         self.in_bulk_change = True
@@ -1180,7 +1179,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 self.hotspot_tracker.redraw_cell()
                 self.hotspot_tracker.update_hit()
             self.in_bulk_change = False
-        self._restore_selection()
 
     def get_left_offset(self):
         return self._widget.get_left_offset()

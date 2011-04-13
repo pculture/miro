@@ -404,6 +404,10 @@ class ItemList(object):
     def get_item(self, id):
         return self.model.get_info(id)
 
+    def get_iter(self, id_):
+        """Get a TableView iter object for an id."""
+        return self.model.iter_for_id(id_)
+
     def get_items(self, start_id=None):
         """Get a list of ItemInfo objects in this list"""
         rv = self.model.info_list()

@@ -1166,7 +1166,6 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         # adding/removing/changing a bunch of rows.  Instead, just reload the
         # model afterwards.
         self.reload_needed = True
-        self._save_selection()
         self.cancel_hotspot_track()
         self.model.freeze_signals()
 
@@ -1214,7 +1213,6 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
             self.invalidate_size_request()
         self.height_changed = self.reload_needed = False
         self.iters_to_update = []
-        self._restore_selection()
         self.set_scroll_position()
 
     def width_for_columns(self, width):

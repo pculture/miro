@@ -775,7 +775,7 @@ class SearchListTitlebar(SearchTitlebar):
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
-    def __init__(self, item_list, scroll_pos, selection):
+    def __init__(self, item_list, scroll_pos):
         widgetset.TableView.__init__(self, item_list.model)
 
         self.item_list = item_list
@@ -785,9 +785,6 @@ class ItemView(widgetset.TableView):
         self.create_signal('scroll-position-changed')
         self.scroll_pos = scroll_pos
         self.set_scroll_position(scroll_pos)
-
-        if selection is not None:
-            self.set_selection_as_strings(selection)
 
     def on_undisplay(self):
         self.scroll_pos = self.get_scroll_position()
@@ -866,8 +863,8 @@ class StandardView(ItemView):
 
     draws_selection = False
 
-    def __init__(self, item_list, scroll_pos, selection, item_renderer):
-        ItemView.__init__(self, item_list, scroll_pos, selection)
+    def __init__(self, item_list, scroll_pos, item_renderer):
+        ItemView.__init__(self, item_list, scroll_pos)
         self.renderer = item_renderer
         self.column = widgetset.TableColumn('item', self.renderer)
         self.set_column_spacing(0)
@@ -881,8 +878,8 @@ class ListView(ItemView, SorterWidgetOwner):
     """TableView that displays a list of items using the list view."""
     COLUMN_PADDING = 12
     def __init__(self, item_list, renderer_set,
-            columns_enabled, column_widths, scroll_pos, selection):
-        ItemView.__init__(self, item_list, scroll_pos, selection)
+            columns_enabled, column_widths, scroll_pos):
+        ItemView.__init__(self, item_list, scroll_pos)
         SorterWidgetOwner.__init__(self)
         self.column_widths = {}
         self.create_signal('columns-enabled-changed')

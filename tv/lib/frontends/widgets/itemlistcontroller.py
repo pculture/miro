@@ -88,6 +88,7 @@ class FilteredListMixin(object):
 
     def update_filters(self, filters):
         """Update the display and toolbar filter switch state."""
+        self.item_list_will_change()
         self.titlebar.toggle_filter(filters)
         self.widget.toggle_filter(filters)
         self.item_list.toggle_filter(filters)
@@ -206,10 +207,12 @@ class ItemListController(object):
         self._got_initial_list = False
         self._needs_scroll = None
         self._playing_items = False
+        self._selection_to_restore = None
         self.config_change_handle = None
         self.show_resume_playing_button = False
         self.item_tracker = self.build_item_tracker()
         self._init_widget()
+        self._check_for_initial_items()
 
         self._init_sort()
         self._init_item_views()
@@ -344,9 +347,8 @@ class ItemListController(object):
         standard_view = WidgetStateStore.get_standard_view_type()
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, standard_view)
-        selection = app.widget_state.get_selection(self.type, self.id)
         standard_view_widget = itemlistwidgets.StandardView(self.item_list,
-                scroll_pos, selection, self.build_renderer())
+                scroll_pos, self.build_renderer())
         self.views[standard_view] = standard_view_widget
         standard_view_background = widgetset.SolidBackground(
                 standard_view_widget.BACKGROUND_COLOR)
@@ -437,10 +439,9 @@ class ItemListController(object):
                 self.type, self.id, list_view_type)
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, list_view_type)
-        selection = app.widget_state.get_selection(self.type, self.id)
         column_renderers = self.build_column_renderers()
         list_view = itemlistwidgets.ListView(self.item_list, column_renderers,
-                list_view_columns, list_view_widths, scroll_pos, selection)
+                list_view_columns, list_view_widths, scroll_pos)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
@@ -453,11 +454,18 @@ class ItemListController(object):
         return itemlistwidgets.HeaderToolbar()
 
     def build_item_tracker(self):
-        tracker = itemtrack.ItemListTracker.create(self.type, self.id)
+        return itemtrack.ItemListTracker.create(self.type, self.id)
+
+    def _check_for_initial_items(self):
+        """Check if our the ItemList from our itemtrack already has items
+
+        If so, simulate the getting the initial-list signal.
+        """
         # call on_items_will_change with the initial items in our list
-        initial_items = tracker.item_list.get_items()
-        self.on_items_will_change(initial_items, [], [])
-        return tracker
+        initial_items = self.item_list.get_items()
+        if len(initial_items) > 0:
+            self.on_items_will_change(initial_items, [], [])
+            self.handle_item_list(self.item_tracker, initial_items)
 
     def expand_or_contract_item_details(self):
         expanded = app.widget_state.get_item_details_expanded(
@@ -499,7 +507,7 @@ class ItemListController(object):
         """
         item_view = self.current_item_view
         return [item_view.model[i][0] for i in
-                item_view.get_selection(strict=False)]
+                item_view.get_selection()]
 
     def resume_play_selection(self, presentation_mode='fit-to-bounds'):
         self.play_selection(presentation_mode, force_resume=True)
@@ -583,6 +591,7 @@ class ItemListController(object):
             self._trigger_item(item_view, info)
 
     def on_sort_changed(self, object, sort_key, ascending, view):
+        self.item_list_will_change()
         sorter = self.make_sorter(sort_key, ascending)
         self.item_list.set_sort(sorter)
         self.send_model_changed()
@@ -744,13 +753,27 @@ class ItemListController(object):
             else:
                 self.widget.item_details.clear()
 
+    def get_selected_ids(self):
+        return [info.id for info in self.get_selection()]
+
+    def restore_selected_ids(self, selected_ids):
+        iters = []
+        for id_ in selected_ids:
+            try:
+                iters.append(self.item_list.get_iter(id_))
+            except KeyError:
+                # item was removed since we saved the selection, no big deal
+                pass
+        self.current_item_view.set_selection(iters)
+
     def save_selection(self):
-        try:
-            selection = self.current_item_view.get_selection_as_strings()
-        except ActionUnavailableError, error:
-            logging.debug("not saving selection: %s", error.reason)
-        else:
-            app.widget_state.set_selection(self.type, self.id, selection)
+        app.widget_state.set_selection(self.type, self.id,
+                self.get_selected_ids())
+
+    def restore_selection(self):
+        selection = app.widget_state.get_selection(self.type, self.id)
+        if selection:
+            self.restore_selected_ids(selection)
 
     def start_tracking(self):
         """Send the message to start tracking items."""
@@ -816,6 +839,15 @@ class ItemListController(object):
                     item.id)
             self.update_resume_button()
 
+    def item_list_will_change(self):
+        """Call this before making any changes to the item list.  """
+        # Remember our current selection.  If we are adding/removing items
+        # from the list, we may lose it.
+        self._selection_to_restore = self.get_selected_ids()
+        # forget the selection for now.  GTK has code that tries to preserve
+        # the selection.  That's wasted effort since we do the same thing.
+        self.current_item_view.unselect_all()
+
     def start_bulk_change(self):
         for item_view in self.all_item_views():
             item_view.start_bulk_change()
@@ -823,8 +855,15 @@ class ItemListController(object):
     def send_model_changed(self):
         for item_view in self.all_item_views():
             item_view.model_changed()
+        if self._selection_to_restore is not None:
+            self.restore_selected_ids(self._selection_to_restore)
+            self._selection_to_restore = None
+        else:
+            app.widgetapp.handle_soft_failure('send_model_changed()',
+                    "_selection_to_restore was not set", with_exception=False)
 
     def handle_items_will_change(self, obj, added, changed, removed):
+        self.item_list_will_change()
         if len(added) + len(removed) > 100:
             # Lots of changes are happening, so call start_bulk_change() to
             # speed things up.  The reason we don't call this always is that
@@ -840,6 +879,7 @@ class ItemListController(object):
         if self._needs_scroll:
             self.scroll_to_item(self._needs_scroll)
             self._needs_scroll = None
+        self.restore_selection()
         self.on_initial_list()
 
     def handle_items_changed(self, obj, added, changed, removed):
@@ -910,7 +950,10 @@ class ItemListController(object):
         return ItemListDragHandler()
 
     def no_longer_displayed(self):
-        self.save_selection()
+        if self._got_initial_list:
+            # rember our selection, but only if we had a chance to call
+            # restore_selection() on the initial item list.
+            self.save_selection()
         for view in self.views:
             self.views[view].on_undisplay()
         if self.shuffle_handle:
