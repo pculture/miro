@@ -44,14 +44,14 @@ class TabListDragHandler(object):
         return (self.item_type, self.folder_type)
 
     def begin_drag(self, _tableview, rows):
-        """Returns {(tablist.type as a str): (repr of a set of ids)}"""
+        """Returns {(tablist.type as a str): set of ids}"""
         if rows[0][0].type == 'tab': # first is a tab if and only if all are
-            return None
+            return {}
         if any(row[0].is_folder for row in rows):
             typ = self.folder_type
         else:
             typ = self.item_type
-        return { str(typ): repr(set(row[0].id for row in rows)) }
+        return { str(typ): set(row[0].id for row in rows) }
 
 class TabDnDReorder(object):
     """Handles re-ordering tabs for doing drag and drop reordering."""

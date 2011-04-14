@@ -441,7 +441,7 @@ class DataSourceBase(NSObject):
             return NO
         pasteboard.declareTypes_owner_(drag_data.keys(), self)
         for typ, value in drag_data.items():
-            pasteboard.setString_forType_(value, typ)
+            pasteboard.setString_forType_(repr(value), typ)
         return YES
 
     def calcType_(self, drag_info):

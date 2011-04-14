@@ -525,6 +525,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self.gtk_column_to_wrapper = {}
         self.background_color = None
         self.drag_button_down = False
+        self.drag_data = {}
         self._renderer_xpad = self._renderer_ypad = 0
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
@@ -847,8 +848,15 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             # In particular, our DnD code messes up resizing table columns.
             self.handled_last_button_press = False
             return
-        if event.button == 1:
-            self.drag_button_down = True
+        if event.button == 1 and self.drag_source:
+            model, row_paths = treeview.get_selection().get_selected_rows()
+            rows = self.model.get_rows(row_paths)
+            self.drag_data = rows and self.drag_source.begin_drag(self, rows)
+            self.drag_button_down = bool(self.drag_data)
+            if not self.drag_button_down:
+                self.handled_last_button_press = False
+                return
+
             self.drag_start_x = int(event.x)
             self.drag_start_y = int(event.y)
 
@@ -996,8 +1004,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if self.delaying_press:
                 # if dragging did not happen, unselect other rows and
                 # select current row
-                path_info = treeview.get_path_at_pos(int(event.x),
-                                                     int(event.y))
+                path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
                 if path_info is not None:
                     path, column, x, y = path_info
                     self.unselect_all(signal=False)
@@ -1041,27 +1048,19 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.hotspot_tracker.update_hit()
             return True
 
-        if (self.drag_button_down and
-                self.drag_source and
+        if (self.drag_data and self.drag_button_down and
                 treeview.drag_check_threshold(self.drag_start_x,
                     self.drag_start_y, int(event.x), int(event.y))):
-            model, row_paths = treeview.get_selection().get_selected_rows()
-            rows = self.model.get_rows(row_paths)
-            drag_data = self.drag_source.begin_drag(self, rows)
-            if drag_data is None:
-                return True
-            self.drag_data = drag_data
             self.delaying_press = False
             treeview.drag_begin(gtk_target_list(self.drag_data.keys()),
                     self.drag_source.allowed_actions(), 1, event)
 
     def on_drag_data_get(self, treeview, context, selection, info, timestamp):
-        if self.drag_data:
-            for typ, data in self.drag_data.items():
-                selection.set(typ, 8, data)
+        for typ, data in self.drag_data.items():
+            selection.set(typ, 8, repr(data))
 
     def on_drag_end(self, treeview, context):
-        self.drag_data = None
+        self.drag_data = {}
 
     def find_type(self, drag_context):
         return self._widget.drag_dest_find_target(drag_context,

@@ -70,9 +70,9 @@ class ItemListDragHandler(object):
     def begin_drag(self, tableview, rows):
         videos = set(row[0].id for row in rows if row[0].downloaded)
         if videos:
-            return {'downloaded-item': repr(videos)}
+            return {'downloaded-item': videos}
         else:
-            return None
+            return {}
 
 class FilteredListMixin(object):
     """Track a filter switch attached to an ItemListController
