@@ -166,9 +166,16 @@ class DummyController:
     def __init__(self):
         self.frame = DummyMainFrame()
         self.videoDisplay = DummyVideoDisplay()
+        self.failed_soft_okay = False
 
     def get_global_feed(self, url):
         return DummyGlobalFeed()
+
+    def failed_soft(self, when, details, with_exception=False):
+        # FIXME: should have some way to make this turn into an exception
+        if not self.failed_soft_okay:
+            raise AssertionError("failed_soft called in DummyController")
+
 
 FILES_TO_CLEAN_UP = []
 def clean_up_temp_files():
@@ -320,6 +327,9 @@ class MiroTestCase(unittest.TestCase):
         os.close(handle)
         return filename
 
+    def make_temp_dir_path(self):
+        return tempfile.mkdtemp(dir=self.tempdir)
+
     def start_http_server(self):
         self.stop_http_server()
         self.httpserver = testhttpserver.HTTPServer()
@@ -419,6 +429,8 @@ class EventLoopTest(MiroTestCase):
                 urgent_queue.process_idles()
             if idle_queue.has_pending_idle():
                 idle_queue.process_next_idle()
+            # make sure that idles scheduled for the next loop run as well.
+            eventloop._eventloop._add_idles_for_next_loop()
 
     def runUrgentCalls(self):
         urgent_queue = eventloop._eventloop.urgent_queue

@@ -81,6 +81,7 @@ from miro.test.widgetstateconstantstest import *
 from miro.test.metadatatest import *
 from miro.test.tableselectiontest import *
 from miro.test.filetagstest import *
+from miro.test.watchedfoldertest import *
 
 # platform specific tests
 

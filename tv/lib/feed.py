@@ -1977,6 +1977,10 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
 class DirectoryScannerImplBase(FeedImpl):
     """Base class for FeedImpls that scan directories for items."""
 
+    # how long to wait to update the feed after our directory watcher informs
+    # us of new items
+    DIRECTORY_WATCH_UPDATE_TIMEOUT = 1.0
+
     def expire_items(self):
         """Directory Items shouldn't automatically expire
         """
@@ -2047,7 +2051,8 @@ class DirectoryScannerImplBase(FeedImpl):
                FileItem for it.
         """
         if self._watcher_update_timeout is None:
-            self._watcher_update_timeout = eventloop.add_timeout(1,
+            self._watcher_update_timeout = eventloop.add_timeout(
+                    self.DIRECTORY_WATCH_UPDATE_TIMEOUT,
                     self.handle_watcher_updates,
                     "handle directory watcher updates")
 
@@ -2059,7 +2064,9 @@ class DirectoryScannerImplBase(FeedImpl):
                 to_remove.append(item)
         # find added paths don't have an item
         known_files = self.calc_known_files()
-        to_add = self._filter_non_media_filenames(self._watcher_paths_added,
+        for x in self.items:
+            known_files.add(os.path.normcase(x.get_filename()))
+        to_add = self._filter_paths(self._watcher_paths_added,
                 known_files)
         # commit changes
         app.bulk_sql_manager.start()
@@ -2086,13 +2093,19 @@ class DirectoryScannerImplBase(FeedImpl):
         self._add_known_files(known_files)
         return known_files
 
-    @eventloop.idle_iterator
     def update(self):
+        if not self.updating:
+            self.updating = True
+            self.do_update()
+
+    @eventloop.idle_iterator
+    def do_update(self):
         self.ufeed.confirm_db_thread()
 
         self._before_update()
 
         known_files = self.calc_known_files()
+        my_files = set()
 
         # Remove items with deleted files or that that are in feeds
         to_remove = []
@@ -2101,6 +2114,13 @@ class DirectoryScannerImplBase(FeedImpl):
             if (filename is None or
                 not fileutil.isfile(filename) or
                 os.path.normcase(filename) in known_files):
+                to_remove.append(item)
+            if filename not in my_files:
+                my_files.add(filename)
+            else:
+                app.controller.failed_soft("scanning directory",
+                    "duplicate path in directory watcher: %s (impl: %s" %
+                    (filename, self))
                 to_remove.append(item)
         app.bulk_sql_manager.start()
         try:
@@ -2112,15 +2132,14 @@ class DirectoryScannerImplBase(FeedImpl):
         # now that we've checked for items that need to be removed, we
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
-        for x in self.items:
-            known_files.add(os.path.normcase(x.get_filename()))
+        known_files.update(my_files)
 
         # adds any files we don't know about
         # files on the filesystem
         scan_dir = self._scan_dir()
         if fileutil.isdir(scan_dir) and not is_file_bundle(scan_dir):
             all_files = fileutil.miro_allfiles(scan_dir)
-            to_add = self._filter_non_media_filenames(all_files, known_files)
+            to_add = self._filter_paths(all_files, known_files)
             for path in to_add:
                 app.metadata_progress_updater.will_process_path(path)
             path_iter = iter(to_add)
@@ -2130,6 +2149,7 @@ class DirectoryScannerImplBase(FeedImpl):
                 finished = self._add_batch_of_videos(path_iter, 0.5)
                 yield # yield after each batch
         self._after_update()
+        self.updating = False
         self.schedule_update_events(-1)
 
     def _add_batch_of_videos(self, path_iter, max_time):
@@ -2151,7 +2171,12 @@ class DirectoryScannerImplBase(FeedImpl):
         finally:
             app.bulk_sql_manager.finish()
 
-    def _filter_non_media_filenames(self, paths, known_files):
+    def _filter_paths(self, paths, known_files):
+        """Filter out filenames that we shouldn't add.
+
+        This method removes items from paths if they are in known_files or
+        they are not media files
+        """
         rv = []
         for path in paths:
             ufile = filename_to_unicode(path)

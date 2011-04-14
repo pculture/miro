@@ -328,6 +328,9 @@ class EventLoop(SimpleEventLoop):
 
     def do_begin_loop(self):
         self.clear_removed_callbacks()
+        self._add_idles_for_next_loop()
+
+    def _add_idles_for_next_loop(self):
         for func, name, args, kwargs in self.idles_for_next_loop:
             self.idle_queue.add_idle(func, name, args, kwargs)
         self.idles_for_next_loop = []
