@@ -70,12 +70,15 @@ class Controller:
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)
         try:
-            logging.info("Shutting down device manager")
-            app.device_manager.shutdown()
-            logging.info("Shutting down Sharing Manager")
-            app.sharing_manager.shutdown()
-            logging.info("Shutting down Sharing Tracker")
-            app.sharing_tracker.stop_tracking()
+            if app.device_manager is not None:
+                logging.info("Shutting down device manager")
+                app.device_manager.shutdown()
+            if app.sharing_manager is not None:
+                logging.info("Shutting down Sharing Manager")
+                app.sharing_manager.shutdown()
+            if app.sharing_tracker is not None:
+                logging.info("Shutting down Sharing Tracker")
+                app.sharing_tracker.stop_tracking()
         except StandardError:
             signals.system.failed_exn("while shutting down")
             # don't abort - it's not "fatal" and we can still shutdown

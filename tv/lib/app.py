@@ -57,6 +57,12 @@ configfile = None
 # manages the known devices
 device_manager = None
 
+# SharingManager instance
+sharing_manager = None
+
+# SharingTracker instance
+sharing_tracker = None
+
 # platform-specific device tracker
 device_tracker = None
 
