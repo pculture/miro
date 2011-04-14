@@ -65,6 +65,9 @@ def _build_title(text):
     lab.set_wrap(True)
     return widgetutil.align_left(lab, bottom_pad=10)
 
+WIDTH = 475
+HEIGHT = 500
+
 class FirstTimeDialog(widgetset.DialogWindow):
     def __init__(self, done_firsttime_callback, title=None):
         if title == None:
@@ -72,7 +75,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                       {"appname": app.config.get(prefs.SHORT_APP_NAME)})
 
         widgetset.DialogWindow.__init__(
-            self, title, widgetset.Rect(100, 100, 475, 500))
+            self, title, widgetset.Rect(100, 100, WIDTH, HEIGHT))
 
         # the directory panel 3 searches for files in
         self.search_directory = None
@@ -89,16 +92,18 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self._pages = self.build_pages()
         self._page_index = -1
 
-        self.set_content_widget(widgetutil.align_center(self._page_box,
-                top_pad=20, bottom_pad=20, left_pad=20, right_pad=20))
+        self.set_content_widget(widgetutil.pad(self._page_box, 20, 20, 20, 20))
 
         self.on_close_handler = self.connect('will-close', self.on_close)
 
     def build_pages(self):
-        return [self.build_language_page(),
-                self.build_startup_page(),
-                self.build_import_page(),
-                self.build_search_page()]
+        pages = [widgetutil.pad(self.build_language_page()),
+                 widgetutil.pad(self.build_startup_page()),
+                 widgetutil.pad(self.build_import_page()),
+                 widgetutil.pad(self.build_search_page())]
+        for page in pages:
+            page.set_size_request(WIDTH - 40, HEIGHT - 40)
+        return pages
 
     def run(self):
         self._switch_page(0)
@@ -131,6 +136,11 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def prev_page(self):
         self._switch_page(self._page_index - 1)
 
+    def _force_space_label(self):
+        lab = widgetset.Label(" ")
+        lab.set_size_request(WIDTH - 40, -1)
+        return lab
+
     def build_language_page(self):
         vbox = widgetset.VBox(spacing=5)
 
@@ -145,7 +155,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             "What language would you like Miro to be in?",
             {'name': app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_wrap(True)
-        lab.set_size_request(400, -1)
+        lab.set_size_request(WIDTH - 40, -1)
         vbox.pack_start(widgetutil.align_left(lab))
 
         lang_options = gtcache.get_languages()
@@ -180,14 +190,18 @@ class FirstTimeDialog(widgetset.DialogWindow):
         hbox.pack_start(lang_option_menu, padding=5)
         hbox.pack_start(update_button, padding=5)
 
-        vbox.pack_start(hbox)
+        vbox.pack_start(widgetutil.align_center(hbox))
 
-        vbox.pack_start(widgetset.Label(" "), expand=True)
+        vbox.pack_start(self._force_space_label())
 
         next_button = widgetset.Button(_("Next >"))
         next_button.connect('clicked', next_clicked)
 
-        vbox.pack_start(widgetutil.align_right(next_button))
+        vbox.pack_start(
+            widgetutil.align_bottom(widgetutil.align_right(
+                    widgetutil.build_hbox((next_button,)))),
+            expand=True)
+
         return vbox
 
     def build_startup_page(self):
@@ -204,7 +218,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             "background, ready when you want to watch.",
             {'name': app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_wrap(True)
-        lab.set_size_request(400, -1)
+        lab.set_size_request(WIDTH - 40, -1)
         vbox.pack_start(widgetutil.align_left(lab))
 
         lab = widgetset.Label(_("Would you like to run %(name)s on startup?",
@@ -221,16 +235,18 @@ class FirstTimeDialog(widgetset.DialogWindow):
         vbox.pack_start(widgetutil.align_left(yes_rb))
         vbox.pack_start(widgetutil.align_left(no_rb))
 
-        vbox.pack_start(widgetset.Label(" "), expand=True)
-
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
 
         next_button = widgetset.Button(_("Next >"))
         next_button.connect('clicked', lambda x: self.next_page())
 
-        hbox = widgetutil.build_hbox((prev_button, next_button))
-        vbox.pack_start(widgetutil.align_right(hbox))
+        vbox.pack_start(self._force_space_label())
+
+        vbox.pack_start(
+            widgetutil.align_bottom(widgetutil.align_right(
+                    widgetutil.build_hbox((prev_button, next_button)))),
+            expand=True)
 
         return vbox
 
@@ -250,7 +266,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             "Would you like %(name)s to look for media files on your "
             "computer?",
             {'name': app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_size_request(400, -1)
+        lab.set_size_request(WIDTH - 40, -1)
         lab.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(lab))
 
@@ -308,13 +324,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         vbox.pack_start(group_box)
 
-        vbox.pack_start(widgetset.Label(" "), expand=True)
-
-        hbox = widgetset.HBox()
-
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
-        hbox.pack_start(prev_button)
 
         def handle_search_finish_clicked(widget):
             if widget.mode == "search":
@@ -338,8 +349,12 @@ class FirstTimeDialog(widgetset.DialogWindow):
             search_button.set_text(search_button.text_faces[mode])
             search_button.mode = mode
 
-        hbox.pack_start(search_button)
-        vbox.pack_start(widgetutil.align_right(hbox))
+        vbox.pack_start(self._force_space_label())
+
+        vbox.pack_start(
+            widgetutil.align_bottom(widgetutil.align_right(
+                    widgetutil.build_hbox((prev_button, search_button)))),
+            expand=True)
 
         def handle_radio_button_clicked(widget):
             # Uggh  this is a bit messy.
@@ -402,7 +417,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         vbox.pack_start(progress_bar)
 
         progress_label = widgetset.Label("")
-        progress_label.set_size_request(400, -1)
+        progress_label.set_size_request(WIDTH - 40, -1)
         vbox.pack_start(widgetutil.align_left(progress_label))
 
         search_button = widgetset.Button(_("Search"))
@@ -411,7 +426,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         hbox = widgetutil.build_hbox((search_button, cancel_button))
         vbox.pack_start(widgetutil.align_left(hbox))
 
-        vbox.pack_start(widgetset.Label(" "), expand=True)
+        vbox.pack_start(self._force_space_label())
 
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
@@ -419,8 +434,10 @@ class FirstTimeDialog(widgetset.DialogWindow):
         finish_button = widgetset.Button(_("Finish"))
         finish_button.connect('clicked', lambda x: self.destroy())
 
-        hbox = widgetutil.build_hbox((prev_button, finish_button))
-        vbox.pack_start(widgetutil.align_right(hbox))
+        vbox.pack_start(
+            widgetutil.align_bottom(widgetutil.align_right(
+                    widgetutil.build_hbox((prev_button, finish_button)))),
+            expand=True)
 
         def handle_cancel_clicked(widget):
             progress_bar.stop_pulsing()
