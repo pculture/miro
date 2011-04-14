@@ -242,6 +242,9 @@ class Application:
         call_on_ui_thread(lambda: self._handle_first_time(continue_callback))
 
     def _handle_first_time(self, continue_callback):
+        # handle very weird condition where the user upgraded their DB and was
+        # shown the first time dialog.  #16383, comment #9.
+        self.message_handler.close_upgrade_dialog()
         startup.mark_first_time()
         firsttimedialog.FirstTimeDialog(continue_callback).run()
 
