@@ -37,9 +37,12 @@ SHOW_TRAYICON = Pref(
     default=True,
     platformSpecific=False)
 
+# empty string means it hasn't been set yet.  there's code in
+# get_main_window_dimensions that figures this out and sets the
+# default.
 WINDOW_DIMENSIONS = Pref(
     key="windowdimensions",
-    default="100,100,800,600",
+    default="",
     platformSpecific=False)
 
 WINDOW_MAXIMIZED = Pref(

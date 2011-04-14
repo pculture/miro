@@ -162,9 +162,18 @@ class WindowsApplication(Application):
         else:
             self.trayicon.set_visible(False)
 
-        # check x, y to make sure the window is visible and fix it if
-        # not
-        self.window.check_position_and_fix()
+        if app.config.get(options.WINDOW_DIMENSIONS) == "":
+            # Miro is being started for the first time on this computer
+            # so we do some figuring to make sure the default width/height
+            # fit on this monitor.
+            geom = self.window.get_monitor_geometry()
+            width = min(1024, geom.width)
+            height = min(600, geom.height)
+            self.window.set_frame(width=width, height=height)
+        else:
+            # check x, y to make sure the window is visible and fix it
+            # if not
+            self.window.check_position_and_fix()
 
 
     def on_close(self):
@@ -267,7 +276,10 @@ class WindowsApplication(Application):
         """
         max_width = gtk.gdk.screen_width()
         max_height = gtk.gdk.screen_height()
-        rect = widgets.Rect.from_string(app.config.get(options.WINDOW_DIMENSIONS))
+        rect = app.config.get(options.WINDOW_DIMENSIONS)
+        if rect == "":
+            rect = "100,100,1024,600"
+        rect = widgets.Rect.from_string(rect)
         rect.width = max(min(rect.width, max_width), 800)
         rect.height = max(min(rect.height, max_height - 20), 480)
         return rect
