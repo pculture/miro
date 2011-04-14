@@ -1940,7 +1940,7 @@ class ItemDetailsWidget(widgetset.VBox):
     This usually shows the thumbnail, full description, etc. for the
     selected item.
     """
-    PADDING_MIDDLE = 25
+    PADDING_CONTENT_LEFT = 25
     PADDING_RIGHT = 30
     PADDING_ABOVE_TORRENT_INFO = 25
     PADDING_ABOVE_TITLE = 20
@@ -1961,7 +1961,7 @@ class ItemDetailsWidget(widgetset.VBox):
                 resources.path('images/item-details-empty-thumb.png'),
                 self.IMAGE_SIZE)
         # content_hbox holds our contents
-        self.content_hbox = widgetset.HBox(spacing=self.PADDING_MIDDLE)
+        self.content_hbox = widgetset.HBox()
         # pack left side
         self.image_widget = widgetset.ImageDisplay()
         image_background = ItemDetailsImageBackground()
@@ -2024,7 +2024,7 @@ class ItemDetailsWidget(widgetset.VBox):
         vbox.pack_start(widgetutil.align_left(self.description_label))
         vbox.pack_start(widgetutil.align_left(self.extra_info_label,
             top_pad=self.PADDING_ABOVE_EXTRA_INFO))
-        return vbox
+        return widgetutil.pad(vbox, left=self.PADDING_CONTENT_LEFT)
 
     def build_right_empty(self):
         hbox = widgetset.HBox(spacing=16)
@@ -2140,7 +2140,7 @@ class ItemDetailsWidget(widgetset.VBox):
         # for it or not.
         image_width = self.IMAGE_SIZE[0]
         label_width = (self.allocated_width - image_width -
-                self.PADDING_MIDDLE - self.PADDING_RIGHT)
+                self.PADDING_CONTENT_LEFT - self.PADDING_RIGHT)
         if label_width < 1:
             logging.warn("bad label width: %s", label_width)
             label_width = 0
