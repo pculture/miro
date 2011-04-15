@@ -1517,7 +1517,7 @@ class SortBarButton(widgetset.CustomButton):
                 x = 12
                 left = text_size[0] + 18
         else:
-            x = 9
+            x = 8
             left = text_size[0] + 15
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
         textbox.draw(context, x, y, text_size[0], text_size[1])
