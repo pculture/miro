@@ -461,10 +461,11 @@ class ItemListController(object):
 
         If so, simulate the getting the initial-list signal.
         """
-        # call on_items_will_change with the initial items in our list
         initial_items = self.item_list.get_items()
         if len(initial_items) > 0:
-            self.on_items_will_change(initial_items, [], [])
+            # simulate getting the initial-list signal
+            self.handle_items_will_change(self.item_tracker, initial_items,
+                    [], [])
             self.handle_item_list(self.item_tracker, initial_items)
 
     def expand_or_contract_item_details(self):
