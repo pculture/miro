@@ -251,8 +251,9 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
         if typ == 'downloaded-item':
             playlist_id = model[parent][0].id
             messages.AddVideosToPlaylist(playlist_id, ids).send_to_backend()
-        NestedTabListDropHandler.accept_drop(self,
-                table_view, model, typ, source_actions, parent, position, ids)
+        else:
+            NestedTabListDropHandler.accept_drop(self,
+                    table_view, model, typ, source_actions, parent, position, ids)
 
 class PlaylistListDragHandler(TabListDragHandler):
     item_type = u'playlist'
