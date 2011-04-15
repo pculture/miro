@@ -1267,7 +1267,6 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
             self.invalidate_size_request()
         self.height_changed = self.reload_needed = False
         self.iters_to_update = []
-        self.set_scroll_position()
 
     def width_for_columns(self, width):
         """If the table is width pixels big, how much width is available for
