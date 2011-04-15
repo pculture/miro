@@ -962,7 +962,7 @@ class ListView(ItemView, SorterWidgetOwner):
     def _make_column(self, header, renderer, column_name, resizable=True,
             pad=True):
         column = widgetset.TableColumn(header, renderer,
-            SortBarButton(header, column=True))
+            SortBarButton(header, column=True, renderer=renderer))
         column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)
@@ -1438,10 +1438,11 @@ class PlaylistHeaderToolbar(HeaderToolbar):
         self._make_button(_('Time'), 'length')
 
 class SortBarButton(widgetset.CustomButton):
-    def __init__(self, text, column=False):
+    def __init__(self, text, column=False, renderer=None):
         widgetset.CustomButton.__init__(self)
         self.set_can_focus(False)
         self._text = text
+        self._renderer = renderer
         self._column = column
         self._enabled = False
         self._ascending = False
@@ -1517,8 +1518,15 @@ class SortBarButton(widgetset.CustomButton):
                 x = 12
                 left = text_size[0] + 18
         else:
-            x = 8
-            left = text_size[0] + 15
+            right_aligned = (hasattr(self._renderer, 'right_aligned') and
+                self._renderer.right_aligned)
+            if right_aligned:
+                x = context.width - text_size[0] - 8
+                left = context.width - text_size[0] - 8 - 15
+            if not right_aligned or x < 0 or left < 0:
+                # Fallback or left aligned
+                x = 8
+                left = text_size[0] + 15
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
         textbox.draw(context, x, y, text_size[0], text_size[1])
         context.set_color((arrow, arrow, arrow))
