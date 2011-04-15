@@ -86,8 +86,15 @@ def get_nice_stack():
             stack = stack[:i+1]
             break
 
+    # remove after the call to crashreport.format_crash_report
+    for i in xrange(len(stack)):
+        if ((os.path.basename(stack[i][0]) == 'crashreport.py'
+            and stack[i][2] == 'format_crash_report')):
+            stack = stack[:i+1]
+            break
+
     # remove trap_call calls
-    stack = [i for i in stack if 'trap_call' in i]
+    stack = [i for i in stack if 'trap_call' not in i]
     return stack
 
 
