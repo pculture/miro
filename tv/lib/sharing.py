@@ -851,7 +851,8 @@ class SharingManagerBackend(object):
                 for x in changed:
                     if self.daap_playlists.has_key(x.id):
                         del self.daap_playlists[x.id]
-                self.make_daap_playlists(changed)
+                playlist = [x for x in changed if not x.is_folder]
+                self.make_daap_playlists(playlist)
 
         eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
                                   "SharingManagerBackend: playlist changed")
