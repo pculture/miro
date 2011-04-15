@@ -682,6 +682,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
         items = self.client.items(playlist_id=self.base_playlist,
                                   meta=DAAP_META)
+        if items is None:
+            raise ValueError('Cannot find items')
+
         itemdict = dict()
         returned_playlist_items = dict()
         returned_items = []
