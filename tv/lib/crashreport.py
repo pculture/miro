@@ -59,19 +59,21 @@ def format_crash_report(when, exc_info, details, log_report=True):
     header += "When:       %s\n" % when
     header += "\n"
 
+    header += "Exception\n---------\n"
     if exc_info:
-        header += "Exception\n---------\n"
         header += ''.join(traceback.format_exception(*exc_info))
+        header += "\n"
+    else:
+        # fake an exception with our call stack
+        try:
+            stack = util.get_nice_stack()
+        except StandardError:
+            stack = traceback.extract_stack()
+        header += ''.join(traceback.format_list(stack))
+        header += 'UnknownError: %s\n' % details
         header += "\n"
     if details:
         header += "Details: %s\n" % (details, )
-    header += "Call stack\n----------\n"
-    try:
-        stack = util.get_nice_stack()
-    except StandardError:
-        stack = traceback.extract_stack()
-    header += ''.join(traceback.format_list(stack))
-    header += "\n"
 
     header += "Threads\n-------\n"
     header += "Current: %s\n" % threading.currentThread().getName()

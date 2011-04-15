@@ -88,9 +88,16 @@ def get_nice_stack():
 
     # remove after the call to crashreport.format_crash_report
     for i in xrange(len(stack)):
-        if ((os.path.basename(stack[i][0]) == 'crashreport.py'
-            and stack[i][2] == 'format_crash_report')):
-            stack = stack[:i+1]
+        if ((os.path.basename(stack[i][0]) == 'application.py'
+            and stack[i][2] == 'handle_soft_failure')):
+            stack = stack[:i]
+            break
+
+    # remove after the call to controller.failed_soft
+    for i in xrange(len(stack)):
+        if ((os.path.basename(stack[i][0]) == 'controller.py'
+            and stack[i][2] == 'failed_soft')):
+            stack = stack[:i]
             break
 
     # remove trap_call calls
