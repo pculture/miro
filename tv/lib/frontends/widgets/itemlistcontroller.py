@@ -42,11 +42,11 @@ import logging
 from urlparse import urljoin
 
 from miro import app
-from miro.errors import WidgetActionError, WidgetRangeError
+from miro.errors import (WidgetActionError, WidgetRangeError,
+    ActionUnavailableError)
 from miro import messages
 from miro import prefs
 from miro import subscription
-from miro.errors import ActionUnavailableError
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
@@ -761,8 +761,10 @@ class ItemListController(object):
     def save_scroll_positions(self):
         """Save the current scroll positions of all item views"""
         for view_type, view in self.views.iteritems():
-            app.widget_state.set_scroll_position(self.type, self.id, view_type,
-                    view.get_scroll_position())
+            position = view.get_scroll_position()
+            if position:
+                app.widget_state.set_scroll_position(
+                        self.type, self.id, view_type, position)
 
     def restore_scroll_positions(self):
         """Restore both item views to a saved scroll position; this must not be

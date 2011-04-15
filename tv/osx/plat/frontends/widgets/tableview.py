@@ -981,13 +981,8 @@ class ScrollbarOwnerMixin(object):
     def get_scroll_position(self):
         scroller = self.tableview.enclosingScrollView()
         if not scroller:
-            # no scroller yet
-            return 0, 0
-        # NOTE: getDoubleValue * contentSize is different from
-        # documentVisibleRect.origin.
+            return None
         point = scroller.contentView().documentVisibleRect().origin
-        # NOTE: scroller.enclosingScrollView().contentView() gets this view's
-        # NSClipView
         return int(point.x), int(point.y)
     
     def on_scroll_changed(self, notification):

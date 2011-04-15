@@ -110,7 +110,7 @@ class ScrollbarOwnerMixin(object):
 
     def get_scroll_position(self):
         """Get the current position of both scrollbars, to restore later."""
-        return tuple(int(bar.get_value()) for bar in self.scrollbars) or (0, 0)
+        return tuple(int(bar.get_value()) for bar in self.scrollbars)
 
     def _update_scrollbar_position(self, bar):
         """Move the specified scrollbar to its saved position, if it has one.
