@@ -344,10 +344,10 @@ class PlaybackManager (signals.SignalEmitter):
         item_info = self.playlist.currently_playing
         if resume_time == -1:
             resume_time = self.player.get_elapsed_playback_time()
+            duration = self.player.get_total_playback_time()
             # if we are 95% of the way into the movie and less than 30
             # seconds before the end, don't save resume time (#11956)
-            if resume_time > min(item_info.duration * 0.95,
-                    item_info.duration - 30):
+            if resume_time > min(duration * 0.95, duration - 30):
                 resume_time = 0
         if resume_time < 3:
             # if we're in the first three seconds, don't save the
