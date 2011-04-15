@@ -943,7 +943,60 @@ class CocoaSelectionOwnerMixin(SelectionOwnerMixin):
     def _iter_from_string(self, row):
         return self.model.iter_for_row(self.tableview, int(row))
 
-class TableView(CocoaSelectionOwnerMixin, Widget):
+class ScrollbarOwnerMixin(object):
+    """Manages a TableView's scroll position."""
+    def __init__(self):
+        self.scroll_position = (0, 0)
+        self.clipview_notifications = None
+
+    def scroll_to_iter(self, iter):
+        self.tableview.scrollRowToVisible_(self.row_of_iter(iter))
+
+    def set_scroll_position(self, scroll_to=None):
+        """Restore a saved scroll position."""
+        if scroll_to: # widgetstate restoring a saved position
+            self.scroll_position = scroll_to
+        else: # fixing position if it has changed
+            scroll_to = self.scroll_position
+        if self.get_scroll_position() == scroll_to: # position already correct
+            return
+        scroller = self.tableview.enclosingScrollView()
+        if not scroller: # scroller not set yet
+            return
+        content = scroller.contentView() # NSClipView
+        if not self.clipview_notifications:
+            self.clipview_notifications = NotificationForwarder.create(content)
+            # NOTE: intentional changes are BoundsChanged; bad changes are
+            # FrameChanged
+            content.setPostsFrameChangedNotifications_(YES)
+            self.clipview_notifications.connect(self.on_scroll_changed,
+                'NSViewFrameDidChangeNotification')
+        # NOTE: scrollPoint_ just scrolls the point into view; we want to
+        # scroll the view so that the point becomes the origin
+        size = scroller.contentView().documentVisibleRect().size
+        size = (size.width, size.height)
+        rect = NSMakeRect(scroll_to[0], scroll_to[1], size[0], size[1])
+        self.tableview.scrollRectToVisible_(rect)
+
+    def get_scroll_position(self):
+        scroller = self.tableview.enclosingScrollView()
+        if not scroller:
+            # no scroller yet
+            return 0, 0
+        # NOTE: getDoubleValue * contentSize is different from
+        # documentVisibleRect.origin.
+        point = scroller.contentView().documentVisibleRect().origin
+        # NOTE: scroller.enclosingScrollView().contentView() gets this view's
+        # NSClipView
+        return int(point.x), int(point.y)
+    
+    def on_scroll_changed(self, notification):
+        self.set_scroll_position()
+
+    def set_scroller(self, scroller):
+        """For GTK; Cocoa tableview knows its enclosingScrollView"""
+
+class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
     widget fairly closely.
     """
@@ -957,6 +1010,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
     def __init__(self, model):
         Widget.__init__(self)
         SelectionOwnerMixin.__init__(self)
+        ScrollbarOwnerMixin.__init__(self)
         self.create_signal('hotspot-clicked')
         self.create_signal('row-double-clicked')
         self.create_signal('row-clicked')
@@ -999,8 +1053,6 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
                 self.on_model_structure_change)
         self.iters_to_update = []
         self.height_changed = self.reload_needed = False
-        self.scroll_position = (0, 0)
-        self.clipview_notifications = None
         self._resizing = False
 
     def focus(self):
@@ -1372,50 +1424,3 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
             types = drag_dest.allowed_types()
             self.tableview.registerForDraggedTypes_(types)
             self.data_source.setDragDest_(drag_dest)
-
-    def scroll_to_iter(self, iter):
-        self.tableview.scrollRowToVisible_(self.row_of_iter(iter))
-
-    def set_scroll_position(self, scroll_to=None):
-        """Restore a saved scroll position."""
-        if scroll_to: # widgetstate restoring a saved position
-            self.scroll_position = scroll_to
-        else: # fixing position if it has changed
-            scroll_to = self.scroll_position
-        if self.get_scroll_position() == scroll_to: # position already correct
-            return
-        scroller = self.tableview.enclosingScrollView()
-        if not scroller: # scroller not set yet
-            return
-        content = scroller.contentView() # NSClipView
-        if not self.clipview_notifications:
-            self.clipview_notifications = NotificationForwarder.create(content)
-            # NOTE: intentional changes are BoundsChanged; bad changes are
-            # FrameChanged
-            content.setPostsFrameChangedNotifications_(YES)
-            self.clipview_notifications.connect(self.on_scroll_changed,
-                'NSViewFrameDidChangeNotification')
-        # NOTE: scrollPoint_ just scrolls the point into view; we want to
-        # scroll the view so that the point becomes the origin
-        size = scroller.contentView().documentVisibleRect().size
-        size = (size.width, size.height)
-        rect = NSMakeRect(scroll_to[0], scroll_to[1], size[0], size[1])
-        self.tableview.scrollRectToVisible_(rect)
-
-    def get_scroll_position(self):
-        scroller = self.tableview.enclosingScrollView()
-        if not scroller:
-            # no scroller yet
-            return 0, 0
-        # NOTE: getDoubleValue * contentSize is different from
-        # documentVisibleRect.origin.
-        point = scroller.contentView().documentVisibleRect().origin
-        # NOTE: scroller.enclosingScrollView().contentView() gets this view's
-        # NSClipView
-        return int(point.x), int(point.y)
-    
-    def on_scroll_changed(self, notification):
-        self.set_scroll_position()
-
-    def set_scroller(self, scroller):
-        """For GTK; Cocoa tableview knows its enclosingScrollView"""
