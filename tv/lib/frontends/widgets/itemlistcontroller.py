@@ -42,7 +42,7 @@ import logging
 from urlparse import urljoin
 
 from miro import app
-from miro.errors import WidgetActionError
+from miro.errors import WidgetActionError, WidgetRangeError
 from miro import messages
 from miro import prefs
 from miro import subscription
@@ -344,10 +344,8 @@ class ItemListController(object):
         self.expand_or_contract_item_details()
 
         standard_view = WidgetStateStore.get_standard_view_type()
-        scroll_pos = app.widget_state.get_scroll_position(
-            self.type, self.id, standard_view)
-        standard_view_widget = itemlistwidgets.StandardView(self.item_list,
-                scroll_pos, self.build_renderer())
+        standard_view_widget = itemlistwidgets.StandardView(
+            self.item_list, self.build_renderer())
         self.views[standard_view] = standard_view_widget
         standard_view_background = widgetset.SolidBackground(
                 standard_view_widget.BACKGROUND_COLOR)
@@ -376,14 +374,6 @@ class ItemListController(object):
         self.titlebar.connect_weak('normal-view-clicked',
             self.set_view, standard_view)
         self.titlebar.connect_weak('resume-playing', self.on_resume_playing)
-        self.list_item_view.connect_weak('columns-enabled-changed',
-            self.on_columns_enabled_changed, list_view)
-        self.list_item_view.connect_weak('column-widths-changed',
-            self.on_column_widths_changed, list_view)
-        self.list_item_view.connect_weak('scroll-position-changed',
-            self.on_scroll_position_changed, list_view)
-        self.standard_item_view.connect_weak('scroll-position-changed',
-            self.on_scroll_position_changed, standard_view)
         self.standard_item_view.renderer.signals.connect_weak(
                 'throbber-drawn', self.on_throbber_drawn)
 
@@ -435,11 +425,9 @@ class ItemListController(object):
         columns = app.widget_state.get_sorts_enabled(self.type, self.id)
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view_type)
-        scroll_pos = app.widget_state.get_scroll_position(
-            self.type, self.id, list_view_type)
         column_renderers = self.build_column_renderers()
         list_view = itemlistwidgets.ListView(self.item_list, column_renderers,
-                columns, list_view_widths, scroll_pos)
+                columns, list_view_widths)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
@@ -618,17 +606,6 @@ class ItemListController(object):
         self.widget.item_details.set_expanded(expand)
         app.widget_state.set_item_details_expanded(self.selected_view, expand)
 
-    def on_columns_enabled_changed(self, object, sorts, view_type):
-        app.widget_state.set_sorts_enabled(self.type, self.id, sorts)
-
-    def on_column_widths_changed(self, object, widths, view_type):
-        app.widget_state.update_column_widths(
-                self.type, self.id, view_type, widths)
-
-    def on_scroll_position_changed(self, object, scroll_pos, view_type):
-        app.widget_state.set_scroll_position(
-                self.type, self.id, view_type, scroll_pos)
-
     def on_throbber_drawn(self, signaler, item_info):
         self.throbber_manager.start(item_info)
 
@@ -773,6 +750,31 @@ class ItemListController(object):
         if selection:
             self.restore_selected_ids(selection)
 
+    def save_columns(self):
+        """Save enabled columns, column order, and column widths"""
+        columns, widths = self.list_item_view.get_column_state()
+        app.widget_state.set_sorts_enabled(self.type, self.id, columns)
+        list_view_type = WidgetStateStore.get_list_view_type()
+        app.widget_state.update_column_widths(
+                self.type, self.id, list_view_type, widths)
+
+    def save_scroll_positions(self):
+        """Save the current scroll positions of all item views"""
+        for view_type, view in self.views.iteritems():
+            app.widget_state.set_scroll_position(self.type, self.id, view_type,
+                    view.get_scroll_position())
+
+    def restore_scroll_positions(self):
+        """Restore both item views to a saved scroll position; this must not be
+        done until after the initial list has arrived.
+        """
+        for view_type, view in self.views.iteritems():
+            position = app.widget_state.get_scroll_position(
+                    self.type, self.id, view_type)
+            # might not actually set immediately; the size of the view does not
+            # change until some time after the model is updated
+            view.set_scroll_position(position)
+
     def start_tracking(self):
         """Send the message to start tracking items."""
         self.track_item_lists()
@@ -875,8 +877,12 @@ class ItemListController(object):
         self.handle_item_list_changes()
         self._got_initial_list = True
         if self._needs_scroll:
+            # already waiting to scroll to an iter
             self.scroll_to_item(self._needs_scroll)
             self._needs_scroll = None
+        else:
+            # normal position restore
+            self.restore_scroll_positions()
         self.restore_selection()
         self.on_initial_list()
 
@@ -952,8 +958,8 @@ class ItemListController(object):
             # rember our selection, but only if we had a chance to call
             # restore_selection() on the initial item list.
             self.save_selection()
-        for view in self.views:
-            self.views[view].on_undisplay()
+        self.save_columns()
+        self.save_scroll_positions()
         if self.shuffle_handle:
             app.playback_manager.disconnect(self.shuffle_handle)
         if self.repeat_handle:

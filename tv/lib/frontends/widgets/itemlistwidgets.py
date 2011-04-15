@@ -775,7 +775,7 @@ class SearchListTitlebar(SearchTitlebar):
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
-    def __init__(self, item_list, scroll_pos):
+    def __init__(self, item_list):
         widgetset.TableView.__init__(self, item_list.model)
 
         self.item_list = item_list
@@ -783,13 +783,6 @@ class ItemView(widgetset.TableView):
         self.allow_multiple_select = True
 
         self.create_signal('scroll-position-changed')
-        self.scroll_pos = scroll_pos
-        self.set_scroll_position(scroll_pos)
-
-    def on_undisplay(self):
-        self.scroll_pos = self.get_scroll_position()
-        if self.scroll_pos is not None:
-            self.emit('scroll-position-changed', self.scroll_pos)
 
 class SorterOwner(object):
     """Mixin for objects that need to handle a set of sort indicators."""
@@ -877,8 +870,8 @@ class StandardView(ItemView):
 
     draws_selection = False
 
-    def __init__(self, item_list, scroll_pos, item_renderer):
-        ItemView.__init__(self, item_list, scroll_pos)
+    def __init__(self, item_list, item_renderer):
+        ItemView.__init__(self, item_list)
         self.renderer = item_renderer
         self.column = widgetset.TableColumn('item', self.renderer)
         self.set_column_spacing(0)
@@ -891,11 +884,9 @@ class StandardView(ItemView):
 class ListView(ItemView, SorterOwner):
     """TableView that displays a list of items using the list view."""
     COLUMN_PADDING = 12
-    def __init__(self, item_list, renderer_set, sorts, column_widths, scroll_pos):
-        ItemView.__init__(self, item_list, scroll_pos)
+    def __init__(self, item_list, renderer_set, sorts, column_widths):
+        ItemView.__init__(self, item_list)
         self.column_widths = column_widths
-        self.create_signal('columns-enabled-changed')
-        self.create_signal('column-widths-changed')
         self._column_by_label = {}
         self.set_show_headers(True)
         self.set_columns_draggable(True)
@@ -911,16 +902,12 @@ class ListView(ItemView, SorterOwner):
         # ensure that we request the same size as standard view
         self.set_size_request(600, -1)
 
-    def on_undisplay(self):
-        ItemView.on_undisplay(self)
-        if not self._width_allocated:
-            return # don't save if view isn't set up
+    def get_column_state(self):
         # FIXME: though identifying columns by their labels should always work,
         # it's really gross
         columns = [self._column_by_label[l] for l in self.get_columns()]
         widths = dict((name, int(self.sorters[name].get_width())) for name in columns)
-        self.emit('columns-enabled-changed', columns)
-        self.emit('column-widths-changed', widths)
+        return columns, widths
 
     def get_tooltip(self, iter_, column):
         if self.sorters.get('name', None) == column:
