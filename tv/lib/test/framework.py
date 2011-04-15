@@ -167,6 +167,7 @@ class DummyController:
         self.frame = DummyMainFrame()
         self.videoDisplay = DummyVideoDisplay()
         self.failed_soft_okay = False
+        self.failed_soft_count = 0
 
     def get_global_feed(self, url):
         return DummyGlobalFeed()
@@ -175,7 +176,7 @@ class DummyController:
         # FIXME: should have some way to make this turn into an exception
         if not self.failed_soft_okay:
             raise AssertionError("failed_soft called in DummyController")
-
+        self.failed_soft_count += 1
 
 FILES_TO_CLEAN_UP = []
 def clean_up_temp_files():
@@ -356,6 +357,12 @@ class MiroTestCase(unittest.TestCase):
     def setup_new_item_info_cache(self):
         app.item_info_cache = iteminfocache.ItemInfoCache()
         app.item_info_cache.load()
+
+    def reset_failed_soft_count(self):
+        app.controller.failed_soft_count = 0
+
+    def check_failed_soft_count(self, count):
+        self.assertEquals(app.controller.failed_soft_count, count)
 
     def reload_database(self, path=':memory:', schema_version=None,
                         object_schemas=None, upgrade=True):

@@ -144,3 +144,11 @@ class WatchedFolderTest(EventLoopTest):
         self.check_items('a.mp3', 'b.mp3')
         # check that we don't delete the file
         self.assert_(os.path.exists(os.path.join(self.dir, 'a.mp3')))
+        # check that if there's a bunch of files missing, we only send 1
+        # message
+        self.reset_failed_soft_count()
+        self.feed.actualFeed._make_child(os.path.join(self.dir, 'a.mp3'))
+        self.feed.actualFeed._make_child(os.path.join(self.dir, 'a.mp3'))
+        self.feed.actualFeed._make_child(os.path.join(self.dir, 'a.mp3'))
+        self.run_feed_update()
+        self.check_failed_soft_count(1)

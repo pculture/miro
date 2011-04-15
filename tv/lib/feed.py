@@ -2109,6 +2109,7 @@ class DirectoryScannerImplBase(FeedImpl):
 
         # Remove items with deleted files or that that are in feeds
         to_remove = []
+        duplicate_paths = []
         for item in self.items:
             filename = item.get_filename()
             if (filename is None or
@@ -2118,10 +2119,12 @@ class DirectoryScannerImplBase(FeedImpl):
             if filename not in my_files:
                 my_files.add(filename)
             else:
-                app.controller.failed_soft("scanning directory",
-                    "duplicate path in directory watcher: %s (impl: %s" %
-                    (filename, self))
+                duplicate_paths.append(filename)
                 to_remove.append(item)
+        if duplicate_paths:
+            app.controller.failed_soft("scanning directory",
+                "duplicate paths in directory watcher: %s (impl: %s" %
+                (duplicate_paths, self))
         app.bulk_sql_manager.start()
         try:
             for item in to_remove:
