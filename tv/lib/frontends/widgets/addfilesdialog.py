@@ -128,41 +128,20 @@ class AddFilesDialog(widgetset.DialogWindow):
     def build_choice_page(self):
         vbox = widgetset.VBox(spacing=5)
 
-        choice_table = widgetset.Table(columns=2, rows=3)
-        choice_table.set_column_spacing(10)
-        choice_table.set_row_spacing(10)
+        choose_files_link = widgetutil.LinkButton(
+            _("Choose files to add"))
+        choose_files_link.connect('clicked', self.on_choose_files)
+        vbox.pack_start(widgetutil.align_center(choose_files_link))
 
-        # FIXME - the label text should line up with the button text
-        # vertically, but it doesn't and looks icky.  should we use
-        # images instead of Go text?
+        search_files_link = widgetutil.LinkButton(
+            _("Search all my files for music and video"))
+        search_files_link.connect('clicked', self.on_search_my_files)
+        vbox.pack_start(widgetutil.align_center(search_files_link))
 
-        choice_table.pack(
-            self._centered_label(_("Choose files to add")),
-            0, 0)
-
-        choose_files_button = widgetset.Button(_("Go"))
-        choose_files_button.connect('clicked', self.on_choose_files)
-        choice_table.pack(choose_files_button, 1, 0)
-
-        choice_table.pack(
-            self._centered_label(_("Search all my files for music and video")),
-            0, 1)
-
-        search_files_button = widgetset.Button(_("Go"))
-        search_files_button.connect('clicked', self.on_search_my_files)
-        choice_table.pack(search_files_button, 1, 1)
-
-        choice_table.pack(
-            self._centered_label(_("Select a specific folder for search")),
-            0, 2)
-
-        select_folder_button = widgetset.Button(_("Go"))
+        select_folder_button = widgetutil.LinkButton(
+            _("Select a specific folder for search"))
         select_folder_button.connect('clicked', self.on_select_folder)
-        choice_table.pack(select_folder_button, 1, 2)
-
-        hbox = widgetset.HBox()
-        hbox.pack_start(widgetutil.align_center(choice_table), expand=True)
-        vbox.pack_start(hbox)
+        vbox.pack_start(widgetutil.align_center(select_folder_button))
 
         vbox.pack_start(self._force_space_label(), expand=True)
 
@@ -172,7 +151,7 @@ class AddFilesDialog(widgetset.DialogWindow):
         vbox.pack_start(widgetutil.align_right(cancel_button))
         return vbox
 
-    def on_choose_files(self, widget):
+    def on_choose_files(self, widget, event):
         # opens dialog allowing you to choose files and folders
         audio_extensions = [mem.replace(".", "")
                             for mem in filetypes.AUDIO_EXTENSIONS]
@@ -190,13 +169,13 @@ class AddFilesDialog(widgetset.DialogWindow):
         self.gathered_media_files = files_
         self.destroy_dialog()
 
-    def on_search_my_files(self, widget):
+    def on_search_my_files(self, widget, event):
         """Searches the user's media directory.
         """
         self.next_page()
         self.start_file_search(resources.get_default_search_dir())
 
-    def on_select_folder(self, widget):
+    def on_select_folder(self, widget, event):
         """Opens a dialog allowing you to choose the folder to
         search for files in.
         """
