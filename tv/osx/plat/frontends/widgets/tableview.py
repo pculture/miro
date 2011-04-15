@@ -1004,7 +1004,7 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
 
     def __init__(self, model):
         Widget.__init__(self)
-        SelectionOwnerMixin.__init__(self)
+        CocoaSelectionOwnerMixin.__init__(self)
         ScrollbarOwnerMixin.__init__(self)
         self.create_signal('hotspot-clicked')
         self.create_signal('row-double-clicked')
