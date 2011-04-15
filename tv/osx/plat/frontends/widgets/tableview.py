@@ -1191,20 +1191,14 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
             else:
                 # our rows can change height inform Cocoa that their heights
                 # might have changed (this will redraw them)
-                try:
-                    rows_to_change = [self.row_of_iter(iter) for iter in
-                        self.iters_to_update]
-                except LookupError:
-                    # this shouldn't be happening; it became apparent when I
-                    # changed the model's lookup failure mode from silently
-                    # ignore to LookupError. it's probably not a big deal though.
-                    logging.debug('lookup error in iters_to_update')
                 index_set = NSMutableIndexSet.alloc().init()
                 for iter in self.iters_to_update:
                     try:
                         index_set.addIndex_(self.row_of_iter(iter))
                     except LookupError:
-                        logging.debug('lookup error in iters_to_update')
+                        # This happens when the iter's parent is unexpanded,
+                        # just ignore.
+                        pass
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
             size_changed = True
         else:
