@@ -683,7 +683,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         items = self.client.items(playlist_id=self.base_playlist,
                                   meta=DAAP_META)
         if items is None:
-            raise ValueError('Cannot find items')
+            raise ValueError('Cannot find items in base playlist')
 
         itemdict = dict()
         returned_playlist_items = dict()
@@ -717,6 +717,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             returned_items = []
             returned_items_meth = returned_items.append
             items = self.client.items(playlist_id=k, meta=DAAP_META)
+            if items is None:
+                raise ValueError('Cannot find items for playlist %d' % k)
             for itemkey in items.keys():
                 item = itemdict[itemkey]
                 returned_items_meth(item)
