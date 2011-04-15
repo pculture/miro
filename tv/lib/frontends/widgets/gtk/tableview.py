@@ -31,6 +31,8 @@
 list and the item list (AKA almost all of the miro).
 """
 
+import logging
+
 import itertools
 import gobject
 import gtk
@@ -65,17 +67,8 @@ def rect_contains_point(rect, x, y):
     return ((rect.x <= x < rect.x + rect.width) and
             (rect.y <= y < rect.y + rect.height))
 
-class MiroTreeView(gtk.TreeView):
-    """Extends the GTK TreeView widget to help implement TableView
-    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-    # Add a tiny bit of padding so that the user can drag feeds below
-    # the table, i.e. to the bottom row, as a top-level
-    PAD_BOTTOM = 3
+class ScrollbarOwnerMixin(object):
     def __init__(self):
-        gtk.TreeView.__init__(self)
-        self.drag_dest_at_bottom = False
-        self.height_without_pad_bottom = -1
-        self.set_enable_search(False)
         self.scrollbars = []
         self.scroll_positions = [None, None]
         self.scroll_positions_set = False
@@ -89,12 +82,11 @@ class MiroTreeView(gtk.TreeView):
         """Take control of the scrollbars of window."""
         if not isinstance(window, gtk.ScrolledWindow):
             return
-        scrollbars = (window.get_hscrollbar(), window.get_vscrollbar())
+        scrollbars = tuple(bar.get_adjustment()
+            for bar in (window.get_hscrollbar(), window.get_vscrollbar()))
         self.scrollbars = scrollbars
-        for i, scrollbar in enumerate(scrollbars):
-            adjustment = scrollbar.get_adjustment()
-            weak_connect(adjustment, 'changed',
-                    self.on_scroll_range_changed, i)
+        for i, bar in enumerate(scrollbars):
+            weak_connect(bar, 'changed', self.on_scroll_range_changed, i)
         self.set_scroll_position(self.scroll_positions)
 
     def on_scroll_range_changed(self, adjustment, bar):
@@ -110,28 +102,24 @@ class MiroTreeView(gtk.TreeView):
         try:
             for i, scrollbar in enumerate(self.scrollbars):
                 self._update_scrollbar_position(i)
-        except WidgetActionError:
+        except WidgetActionError, error:
+            logging.debug("can't scroll yet: %s", error.reason)
             # try again later
-            pass
         else:
             self.scroll_positions_set = True
 
     def get_scroll_position(self):
         """Get the current position of both scrollbars, to restore later."""
-        scroll_positions = [0, 0]
-        for i, bar in enumerate(self.scrollbars):
-            adj = bar.get_adjustment()
-            scroll_positions[i] = int(adj.get_value())
-        return tuple(scroll_positions)
+        return tuple(int(bar.get_value()) for bar in self.scrollbars) or (0, 0)
 
     def _update_scrollbar_position(self, bar):
         """Move the specified scrollbar to its saved position, if it has one.
         Succeeds or raises WidgetActionError.
         """
-        if self.scroll_positions[bar] is None:
+        if not self.scroll_positions[bar]:
             # nothing to restore it to yet
             return
-        adj = self.scrollbars[bar].get_adjustment()
+        adj = self.scrollbars[bar]
         pos = self.scroll_positions[bar]
         lower = adj.get_lower()
         upper = adj.get_upper() - adj.get_page_size()
@@ -143,6 +131,50 @@ class MiroTreeView(gtk.TreeView):
         # have to clip it ourselves
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
+
+    def scroll_ancestor(self, newly_selected, down):
+        # Try to figure out what just became selected.  If multiple things
+        # somehow became selected, select the outermost one
+        if len(newly_selected) == 0:
+            raise WidgetActionError("need at an item to scroll to")
+        if down:
+            path_to_show = max(newly_selected)
+        else:
+            path_to_show = min(newly_selected)
+
+        # Try to find a Viewport in the widget tree
+        ancestor = self.get_parent()
+        while not isinstance(ancestor, gtk.Viewport):
+            if ancestor is None:
+                raise WidgetActionError("no scrollable ancestor")
+            ancestor = ancestor.get_parent()
+
+        vadjustment = ancestor.get_vadjustment()
+        column = self.get_columns()[0]
+        rect = self.get_background_area(path_to_show, column)
+        _, top = self.translate_coordinates(ancestor, 0, rect.y)
+        top += vadjustment.value
+        bottom = top + rect.height
+        if down:
+            if bottom > vadjustment.value + vadjustment.page_size:
+                bottom_value = min(bottom, vadjustment.upper)
+                vadjustment.set_value(bottom_value - vadjustment.page_size)
+        else:
+            if top < vadjustment.value:
+                vadjustment.set_value(max(vadjustment.lower, top))
+
+class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
+    """Extends the GTK TreeView widget to help implement TableView
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
+    # Add a tiny bit of padding so that the user can drag feeds below
+    # the table, i.e. to the bottom row, as a top-level
+    PAD_BOTTOM = 3
+    def __init__(self):
+        gtk.TreeView.__init__(self)
+        ScrollbarOwnerMixin.__init__(self)
+        self.drag_dest_at_bottom = False
+        self.height_without_pad_bottom = -1
+        self.set_enable_search(False)
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -183,37 +215,6 @@ class MiroTreeView(gtk.TreeView):
                 # not possible
                 return False
             return True
-
-    def scroll_ancestor(self, newly_selected, down):
-        # Try to figure out what just became selected.  If multiple things
-        # somehow became selected, select the outermost one
-        if len(newly_selected) == 0:
-            raise WidgetActionError("need at an item to scroll to")
-        if down:
-            path_to_show = max(newly_selected)
-        else:
-            path_to_show = min(newly_selected)
-
-        # Try to find a Viewport in the widget tree
-        ancestor = self.get_parent()
-        while not isinstance(ancestor, gtk.Viewport):
-            if ancestor is None:
-                raise WidgetActionError("no scrollable ancestor")
-            ancestor = ancestor.get_parent()
-
-        vadjustment = ancestor.get_vadjustment()
-        column = self.get_columns()[0]
-        rect = self.get_background_area(path_to_show, column)
-        _, top = self.translate_coordinates(ancestor, 0, rect.y)
-        top += vadjustment.value
-        bottom = top + rect.height
-        if down:
-            if bottom > vadjustment.value + vadjustment.page_size:
-                bottom_value = min(bottom, vadjustment.upper)
-                vadjustment.set_value(bottom_value - vadjustment.page_size)
-        else:
-            if top < vadjustment.value:
-                vadjustment.set_value(max(vadjustment.lower, top))
 
     def set_drag_dest_row(self, row, position):
         """Works like set_drag_dest_row, except row can be None which will
