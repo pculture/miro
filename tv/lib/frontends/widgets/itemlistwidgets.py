@@ -1389,6 +1389,12 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         button = SortBarButton(text)
         button.connect('clicked', self.on_sorter_clicked, sort_key)
         self._button_map[sort_key] = button
+        try:
+            left = [b for b in self._button_hbox.children][-1]
+            left.set_right(button)
+            button.set_left(left)
+        except IndexError:
+            pass
         self._button_hbox.pack_start(button)
 
     def make_filter_switch(self, *args, **kwargs):
@@ -1447,6 +1453,7 @@ class SortBarButton(widgetset.CustomButton):
         self._enabled = False
         self._ascending = False
         self.state = 'normal'
+        self.left = self.right = None
         self.set_squish_width(True)
         self.set_squish_height(True)
         self.surface = imagepool.get_surface(
@@ -1455,6 +1462,12 @@ class SortBarButton(widgetset.CustomButton):
             resources.path('images/headertoolbar_active.png'))
         self.current_surface = self.surface
         self.current_edge = 72.0 / 255
+
+    def set_left(self, left):
+        self.left = left
+
+    def set_right(self, right):
+        self.right = right
 
     def get_sort_indicator_visible(self):
         return self._enabled
@@ -1483,7 +1496,7 @@ class SortBarButton(widgetset.CustomButton):
         text = 1    # white text
         arrow = 1   # white arrow
         if self.state == 'pressed' or self._enabled:
-            edge = 92.0 / 255
+            edge = 63.0 / 255
             surface = self.active_surface
         elif self.state == 'hover':
             surface = self.current_surface
@@ -1492,8 +1505,24 @@ class SortBarButton(widgetset.CustomButton):
             surface = self.surface
             edge = 72.0 / 255
 
+        # Save the colors that we would normally use.  Only redraw if the color
+        # is enabled (since we we rely on the right side to redraw the color
+        # for us.)
+        if self.right and edge == (63.0 / 255):
+            self.right.queue_redraw()
+
         self.current_surface = surface
         self.current_edge = edge
+
+        # This is a bit sucky to work out which border we need to draw as
+        # the borders are shared between the cells, so you need to know
+        # the state of your neighbors.  We want the edges to match color
+        # when they are in pushed state.
+        if self.left:
+            if self.left._enabled or self.left.state == 'pressed':
+                edge = 63.0 / 255
+            if self.left.state == 'hover':
+                edge = self.left.current_edge
 
         # background
         surface.draw(context, 0, 0, context.width, context.height)
