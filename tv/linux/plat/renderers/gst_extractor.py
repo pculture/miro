@@ -72,6 +72,7 @@ class Extractor:
 
         self.grabit = False
         self.first_pause = True
+        self.doing_thumbnailing = False
         self.success = False
         self.duration = -1
         self.buffer_probes = {}
@@ -93,6 +94,7 @@ class Extractor:
         self.pipeline.set_property("uri", "file://%s" % urllib.quote(filename))
         self.pipeline.set_state(gst.STATE_PAUSED)
 
+
     def on_bus_message(self, bus, message):
         if message.type == gst.MESSAGE_ERROR:
             gobject.idle_add(self.error_occurred)
@@ -103,7 +105,10 @@ class Extractor:
                 if message.src == self.pipeline:
                     gobject.idle_add(self.paused_reached)
 
-                elif message.src == self.thumbnail_pipeline:
+                elif (message.src == self.thumbnail_pipeline and
+                      not self.doing_thumbnailing):
+
+                    self.doing_thumbnailing = True
                     for sink in self.thumbnail_pipeline.sinks():
                         name = sink.get_name()
                         factoryname = sink.get_factory().get_name()
