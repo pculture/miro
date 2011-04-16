@@ -111,6 +111,7 @@ class Extractor:
                             pad = sink.get_pad("sink")
                             self.buffer_probes[name] = pad.add_buffer_probe(
                                 self.buffer_probe_handler, name)
+                            break
 
                     seek_amount = min(self.duration / 2, 20 * gst.SECOND)
                     seek_result = self.thumbnail_pipeline.seek(
@@ -122,6 +123,22 @@ class Extractor:
                     if not seek_result:
                         self.disconnect()
                         self.done()
+                        return
+
+                    # sometimes we get a seek_result of True, but the
+                    # buffer probe never kicks off.  never triggers
+                    # the buffer_probe.  i'm not sure why that
+                    # happens.  regardless, if that occurs, then the
+                    # buffer_probe_handler_real never happens and then
+                    # the process hangs in limbo.
+                    # 
+                    # thus, if we haven't seen something happen in the
+                    # next 2 seconds, end and return a status.
+                    gobject.timeout_add(2000, self.taking_too_long)
+
+    def taking_too_long(self):
+        self.disconnect()
+        self.done()
 
     def done(self):
         if self.saw_video_tag:
