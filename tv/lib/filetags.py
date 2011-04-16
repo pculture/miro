@@ -140,7 +140,7 @@ def _str_or_object_to_unicode(thing):
         # thing is a str, or thing cannot be converted to unicode or str cleanly
         # if this fails, it is caught higher up
         thing = unicode(thing, errors='replace')
-    return thing
+    return thing.replace(u'\u0000', u'')
 
 def _sanitize_key(key):
     """Strip useless components and strange characters from tag names"""
