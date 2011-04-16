@@ -44,6 +44,15 @@ from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, PlatformFilenameType
 
 
+DESC_BASE = _("Miro can watch a folder on your computer and show "
+              "those media files in your library.")
+NOT_FOUND = _("That directory could not be found. "
+              "Please check the path and try again.")
+NO_ACCESS = _("That directory could not be accessed. "
+              "Please check the permissions and try again.")
+
+TITLE = _("Add Watched Folder")
+
 class NewWatchedFolderDialog(MainDialog):
     def __init__(self, title, desc, path):
         MainDialog.__init__(self, title, desc)
@@ -87,7 +96,7 @@ class NewWatchedFolderDialog(MainDialog):
 
             ret = self.run()
             if ret == 0:
-                return (self.folder_entry.get_text(),
+                return (PlatformFilenameType(self.folder_entry.get_text()),
                         self.visible_checkbox.get_checked())
 
             return None
@@ -100,25 +109,20 @@ class NewWatchedFolderDialog(MainDialog):
         if not os.path.exists(path):
             path = resources.get_default_search_dir()
 
-        newpath = ask_for_directory(
-            _("Choose Watched Folder Directory"), path)
+        newpath = ask_for_directory(TITLE, path)
 
         if newpath:
             self.folder_entry.set_text(newpath)
 
-
 def run_dialog():
     """Returns (path, showinsidebar) or None.
     """
-    title = _("Add Watched Folder")
-    desc = _(
-        "Miro can watch a folder on your computer and show "
-        "those media files in your library.")
+    desc = DESC_BASE
+    title = TITLE
     path = resources.get_default_search_dir()
 
     while 1:
         ret = None
-        nwfd = None
         try:
             nwfd = NewWatchedFolderDialog(title, desc, path)
             ret = nwfd.run_dialog()
@@ -126,15 +130,15 @@ def run_dialog():
             if nwfd:
                 nwfd.destroy()
 
-        if ret == None:
+        if ret is None:
             return None
 
         path, showinsidebar = ret
         if not os.path.exists(path):
-            desc = _(
-                "Miro can watch a folder on your computer and show "
-                "those media files in your library.\n\n"
-                "That path does not exist.")
+            desc = '\n\n'.join((DESC_BASE, NOT_FOUND))
+            continue
+        elif not os.access(path, os.R_OK):
+            desc = '\n\n'.join((DESC_BASE, NO_ACCESS))
             continue
 
         return (path, showinsidebar)
