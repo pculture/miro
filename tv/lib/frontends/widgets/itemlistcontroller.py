@@ -394,10 +394,9 @@ class ItemListController(object):
         current_view = self.current_item_view
         try:
             current_selection = current_view.get_selection_as_strings()
+            self.views[view].set_selection_as_strings(current_selection)
         except WidgetActionError:
             pass # don't bother setting the selection if we can't get it
-        else:
-            self.views[view].set_selection_as_strings(current_selection)
         # do the switch
         self.selected_view = view
         self.widget.switch_to_view(view)

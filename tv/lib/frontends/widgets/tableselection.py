@@ -132,19 +132,13 @@ class SelectionOwnerMixin(object):
 
     def set_selection_as_strings(self, selected):
         """Given a list of selection strings, selects each Iter represented by
-        the strings. Returns True if immediately successful, or False if the
-        selection given cannot be restored yet and has been postponed. Emits no
-        signals.
+        the strings.
+
+        Raises WidgetActionError upon failure.
         """
-        try:
-            # iter may not be destringable (yet) - bounds error
-            # destringed iter not selectable if parent isn't open (yet)
-            self.set_selection(self._iter_from_string(sel) for sel in selected)
-        except WidgetActionError, error:
-            logging.debug("cannot set selection: %s", error.reason)
-            return False
-        else:
-            return True
+        # iter may not be destringable (yet) - bounds error
+        # destringed iter not selectable if parent isn't open (yet)
+        self.set_selection(self._iter_from_string(sel) for sel in selected)
 
     def get_selection(self):
         """Returns a list of GTK Iters. Works regardless of whether multiple

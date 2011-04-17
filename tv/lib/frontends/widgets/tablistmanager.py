@@ -41,7 +41,6 @@ import logging
 class TabListManager(dict):
     """TabListManager is a map of list_type:TabList which manages a selection."""
     ORDER = ('library', 'static', 'connect', 'site', 'store', 'feed', 'playlist')
-    DEFAULT_TAB = ('library', '0') # guide
     # NOTE: when an OrderedDict collection is available, replace ORDER
     def __init__(self):
         dict.__init__(self)
@@ -57,10 +56,18 @@ class TabListManager(dict):
         self._selected_tablist = None
         self._previous_selection = None
         self._before_no_tabs = self._previous_selection
-        self._restored = False
         self._path_broken = None
         self._is_base_selected = False
         self._shown = False
+        self._restoring = None
+
+    def _get_restore_tab(self):
+        restoring = None
+        if app.config.get(prefs.REMEMBER_LAST_DISPLAY):
+            restoring = app.widget_state.get_selection(self.type, self.id)
+        if not restoring:
+            restoring = ['library', '0'] # guide
+        return restoring
 
     @property
     def tab_list_widgets(self):
@@ -149,7 +156,6 @@ class TabListManager(dict):
 
         After _handle_no_tabs_selected, something is guaranteed to be selected.
         """
-        self._restored = False
         self._before_no_tabs = self._previous_selection
         logging.warn('_handle_no_tabs_selected')
         if hasattr(_selected_tablist, 'info'):
@@ -165,11 +171,6 @@ class TabListManager(dict):
         """Select a tab by it's type and an iter. If iter_ is None, no new
         selection will be set but the tab list will be activated.
 
-        If restore is set, ignores other parameters and restores the last saved
-        selection.
-
-        If restore is not set, list_type must specify the tab list to select.
-
         or_bust should be set when all tab messages have arrived, so if the
         selection continues to fail we need to _handle_no_tabs because it's not
         going to work.
@@ -177,11 +178,6 @@ class TabListManager(dict):
         if not self._shown:
             return
         was_base_selected = self._is_base_selected
-        if restore:
-            if self._restored:
-                logging.debug("already restored")
-                return
-            list_type = self._restore()
         view = self[list_type].view
         if iter_:
             # select the tab
@@ -224,15 +220,12 @@ class TabListManager(dict):
             # no valid selection now; don't update display until the real
             # selection is set
             self._before_no_tabs = self._previous_selection
-        if tabs and not restore and self._restored:
-            try:
-                selected = view.get_selection_as_strings()
-            except WidgetActionError, error:
-                logging.debug("not saving current tab: %s", error.reason)
-            else:
-                selected.insert(0, list_type)
-                app.widget_state.set_selection(self.type, self.id, selected)
-        self._restored = tabs
+        if tabs and not self._restoring:
+            selected = view.get_selection_as_strings()
+            selected.insert(0, list_type)
+            app.widget_state.set_selection(self.type, self.id, selected)
+        if tabs:
+            self._restoring = None
         if or_bust and not tabs:
             raise UnexpectedWidgetError("should have selected something")
         if tabs and iter_:
@@ -261,16 +254,15 @@ class TabListManager(dict):
         self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
         return iters, tabs
 
-    def _restore(self):
-        """Restore a saved selection."""
-        sel = app.widget_state.get_selection(self.type, self.id)
-        if sel is None or not app.config.get(prefs.REMEMBER_LAST_DISPLAY):
-            sel = list(self.DEFAULT_TAB)
-        list_type = sel.pop(0)
-        view = self[list_type].view
-        # select the paths to find out what the strings translate to
-        view.set_selection_as_strings(sel)
-        return list_type
+    def _restore(self, or_bust=False):
+        """Restore the saved selection."""
+        list_type = self._restoring[0]
+        try:
+            self[list_type].view.set_selection_as_strings(self._restoring[1:])
+        except WidgetActionError, error:
+            logging.debug("not restoring yet: %s", error.reason)
+        else:
+            self._select_from_tab_list(list_type, or_bust=or_bust)
 
     def on_shown(self):
         """The window has been shown. This method is run once when the window
@@ -279,6 +271,9 @@ class TabListManager(dict):
         """
         if self._shown:
             return
+        # waiting until on_shown to _get_restore_tab because WSS hasn't received
+        # its displays yet during our __init__
+        self._restoring = self._get_restore_tab()
         # build_tabs cannot be called until now because the guide needs the
         # window already to exist
         for tab_list in self.itervalues():
@@ -286,7 +281,8 @@ class TabListManager(dict):
         self._shown = True
         # the default selection should have set itself by now, so now we can
         # overwrite it
-        self._select_from_tab_list(restore=True)
+        if self._restoring:
+            self._restore()
 
     def on_selection_changed(self, _table_view, tab_list):
         """When the user has changed the selection, we set the selected tablist
@@ -305,10 +301,9 @@ class TabListManager(dict):
         relies on the fact that TabList's message batching causes all initial
         tabs to arrive in the first message.
         """
-        selection = app.widget_state.get_selection(self.type, self.id)
-        if not self._restored and selection and selection[0] == tab_list.type:
+        if self._restoring and self._restoring[0] == tab_list.type:
             # we may be waiting for this tab to switch to it
-            self._select_from_tab_list(restore=True, or_bust=True)
+            list_type = self._restore(or_bust=True)
 
     def on_moved_tabs_to_list(self, _tab_list, destination):
         """Handle tabs being moved between tab lists."""
