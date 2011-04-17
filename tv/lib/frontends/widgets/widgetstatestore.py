@@ -143,8 +143,10 @@ class WidgetStateStore(object):
                                         u'kind'])
     AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music'].copy()
     AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos'].copy()
-    AVAILABLE_COLUMNS[u'feed'] = set(DEFAULT_COLUMN_WIDTHS.keys()) # all of
-                                                                   # them
+    AVAILABLE_COLUMNS[u'feed'] = ((AVAILABLE_COLUMNS['music'] |
+        AVAILABLE_COLUMNS['videos'] | AVAILABLE_COLUMNS['downloading']) -
+        set([u'feed-name']))
+
     ALL_COLUMNS = set(DEFAULT_COLUMN_WIDTHS)
 
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
