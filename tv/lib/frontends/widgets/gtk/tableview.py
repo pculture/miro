@@ -134,13 +134,19 @@ class ScrollbarOwnerMixin(object):
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
 
-    def scroll_to_path(self, path):
-        """Center the view vertically on the given path."""
+    def set_vertical_scroll(self, position):
+        self.set_scroll_position((self.scroll_positions[0], position))
+
+    def get_item_height(self, path):
+        return self.get_background_area(path, self.get_columns()[0]).height
+
+    def get_path_scroll_position(self, path):
+        """Get the position we'd scroll to to scroll to the path given"""
         if not self.scrollbars:
             return
         vadjustment = self.scrollbars[1]
         rect = self.get_background_area(path, self.get_columns()[0])
-        vadjustment.set_value(rect.y + (rect.height - vadjustment.page_size) / 2)
+        return rect.y + (rect.height - vadjustment.page_size) / 2
 
     def scroll_ancestor(self, newly_selected, down):
         # Try to figure out what just became selected.  If multiple things
@@ -1189,9 +1195,18 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def get_left_offset(self):
         return self._widget.get_left_offset()
 
-    def scroll_to_iter(self, iter_):
+    def scroll_to_iter(self, iter_, auto=False):
+        """If auto is not set, always centers the given iter.
+        
+        With auto set, scrolls to the given iter if we're auto-scrolling, or if
+        the iter is recapturing the scroll by passing the current position.
+        """
         path = self._model.get_path(iter_)
-        self._widget.scroll_to_path(path)
+        item_position = self._widget.get_path_scroll_position(path)
+        closeness = abs(self.get_scroll_position()[1] - item_position)
+        if (not auto or abs(self.get_scroll_position()[1] - item_position) <=
+                self._widget.get_item_height(path)):
+            self._widget.set_vertical_scroll(item_position)
 
     def set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)

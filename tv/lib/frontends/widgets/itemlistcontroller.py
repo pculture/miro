@@ -513,6 +513,8 @@ class ItemListController(object):
             start_id = selected_ids[0]
         self._play_item_list(start_id, presentation_mode,
                 force_resume=force_resume)
+        if selection:
+            self.scroll_to_item(selection[0], auto=False)
 
     def play_items(self, presentation_mode='fit-to-bounds',
                    force_resume=False):
@@ -558,6 +560,7 @@ class ItemListController(object):
     def _trigger_item(self, item_view, info):
         if info.downloaded:
             self._play_item_list(info.id)
+            self.scroll_to_item(info, auto=False)
         elif info.state == 'downloading':
             messages.PauseDownload(info.id).send_to_backend()
         elif info.state == 'paused':
@@ -594,12 +597,13 @@ class ItemListController(object):
             return
         if last_played_id:
             try:
-                self.item_list.model.get_info(last_played_id)
+                info = self.item_list.model.get_info(last_played_id)
             except KeyError:
                 logging.warn("Resume playing clicked, but last_played_info "
                         "not found")
                 return
         self._play_item_list(last_played_id, force_resume=True)
+        self.scroll_to_item(info, auto=False)
 
     def on_item_details_expander_clicked(self, button):
         expand = button.click_should_expand()
@@ -698,6 +702,7 @@ class ItemListController(object):
                 app.widgetapp.open_url(url)
         elif name in ('play', 'thumbnail-play'):
             self._play_item_list(item_info.id)
+            self.scroll_to_item(item_info, auto=False)
         elif name == 'play_pause':
             app.playback_manager.play_pause()
         elif name.startswith('rate:'):
@@ -840,6 +845,7 @@ class ItemListController(object):
             app.widget_state.set_last_played_item_id(self.type, self.id,
                     item.id)
             self.update_resume_button()
+            self.scroll_to_item(item, auto=True)
 
     def item_list_will_change(self):
         """Call this before making any changes to the item list.  """
@@ -972,11 +978,11 @@ class ItemListController(object):
             app.frontend_config_watcher.disconnect(self.config_change_handle)
             self.config_change_handle = None
 
-    def scroll_to_item(self, item):
+    def scroll_to_item(self, item, auto=False):
         if self._got_initial_list:
             iter = self.current_item_view.model.iter_for_id(item.id)
             try:
-                self.current_item_view.scroll_to_iter(iter)
+                self.current_item_view.scroll_to_iter(iter, auto)
             except KeyError:
                 # item no longer in the list, so we'll ignore it
                 pass
