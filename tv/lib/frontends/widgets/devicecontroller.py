@@ -897,7 +897,8 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.titlebar.connect('normal-view-clicked',
                                     self.save_view, 'normal')
     def build_header_toolbar(self):
-        return itemlistwidgets.HeaderToolbar()
+        sorts_enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
+        return itemlistwidgets.HeaderToolbar(sorts_enabled)
 
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create('device', self.device)

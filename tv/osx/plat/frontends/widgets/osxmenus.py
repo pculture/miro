@@ -126,13 +126,8 @@ def update_view_menu_state():
     except AttributeError:
         view_menu.setHidden_(True)
         return
-    view_type = app.widget_state.get_selected_view(display.type, display.id)
-    if view_type != WidgetStateStore.get_list_view_type():
-        view_menu.setHidden_(True)
-        return
     view_menu.setHidden_(False)
-    enabled = app.widget_state.get_columns_enabled(
-              display.type, display.id, view_type)
+    enabled = app.widget_state.get_sorts_enabled(display.type, display.id)
 
     for column in WidgetStateStore.get_columns():
         menu_item = VIEW_ITEM_MAP[column]

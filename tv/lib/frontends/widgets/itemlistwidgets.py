@@ -791,12 +791,12 @@ class ItemView(widgetset.TableView):
         if self.scroll_pos is not None:
             self.emit('scroll-position-changed', self.scroll_pos)
 
-class SorterWidgetOwner(object):
-    """Mixin for objects that need to handle a set of
-    ascending/descending sort indicators.
-    """
-    def __init__(self):
+class SorterOwner(object):
+    """Mixin for objects that need to handle a set of sort indicators."""
+    def __init__(self, sorts_enabled):
         self.create_signal('sort-changed')
+        self.sorters = dict()
+        self.update_sorts(sorts_enabled)
 
     def on_sorter_clicked(self, widget, sort_key):
         ascending = not (widget.get_sort_indicator_visible() and
@@ -804,12 +804,20 @@ class SorterWidgetOwner(object):
         self.emit('sort-changed', sort_key, ascending)
 
     def change_sort_indicator(self, sort_key, ascending):
-        for widget_sort_key, widget in self.sorter_widget_map.iteritems():
-            if widget_sort_key == sort_key:
-                widget.set_sort_order(ascending)
-                widget.set_sort_indicator_visible(True)
+        for name, sorter in self.sorters.iteritems():
+            if name == sort_key:
+                sorter.set_sort_order(ascending)
+                sorter.set_sort_indicator_visible(True)
             else:
-                widget.set_sort_indicator_visible(False)
+                sorter.set_sort_indicator_visible(False)
+
+    def update_sorts(self, sorts_enabled):
+        old = set(self.sorters)
+        new = set(sorts_enabled)
+        for name in old - new:
+            self.remove_sorter(self.sorters.pop(name))
+        for name in sorted(new - old, key=sorts_enabled.index):
+            self.sorters[name] = self.make_sorter(name)
 
 class ColumnRendererSet(object):
     """A set of potential columns for an ItemView"""
@@ -874,20 +882,15 @@ class StandardView(ItemView):
         self.set_auto_resizes(True)
         self.set_background_color(self.BACKGROUND_COLOR)
 
-class ListView(ItemView, SorterWidgetOwner):
+class ListView(ItemView, SorterOwner):
     """TableView that displays a list of items using the list view."""
     COLUMN_PADDING = 12
-    def __init__(self, item_list, renderer_set,
-            columns_enabled, column_widths, scroll_pos):
+    def __init__(self, item_list, renderer_set, sorts, column_widths, scroll_pos):
         ItemView.__init__(self, item_list, scroll_pos)
-        SorterWidgetOwner.__init__(self)
-        self.column_widths = {}
+        self.column_widths = column_widths
         self.create_signal('columns-enabled-changed')
         self.create_signal('column-widths-changed')
-        self._columns = {}
-        self.sorter_widget_map = self._columns
         self._column_by_label = {}
-        self.columns_enabled = []
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(self.COLUMN_PADDING)
@@ -896,7 +899,7 @@ class ListView(ItemView, SorterWidgetOwner):
         self.set_alternate_row_backgrounds(True)
         self.html_stripper = util.HTMLStripper()
         self.renderer_set = renderer_set
-        self.update_columns(columns_enabled, column_widths)
+        SorterOwner.__init__(self, sorts)
         # ensure that we request the same size as standard view
         self.set_size_request(600, -1)
 
@@ -907,22 +910,19 @@ class ListView(ItemView, SorterWidgetOwner):
         # FIXME: though identifying columns by their labels should always work,
         # it's really gross
         columns = [self._column_by_label[l] for l in self.get_columns()]
-        widths = dict((name, int(self._columns[name].get_width())) for name in columns)
+        widths = dict((name, int(self.sorters[name].get_width())) for name in columns)
         self.emit('columns-enabled-changed', columns)
         self.emit('column-widths-changed', widths)
 
     def get_tooltip(self, iter_, column):
-        if ('name' in self._columns and
-                self._columns['name'] == column):
+        if self.sorters.get('name', None) == column:
             info = self.item_list.model[iter_][0]
             text, links = self.html_stripper.strip(info.description)
             if text:
                 if len(text) > 1000:
                     text = text[:994] + ' [...]'
                 return text
-
-        elif ('state' in self._columns and
-                self._columns['state'] is column):
+        elif self.sorters.get('state', None) is column:
             info = self.item_list.model[iter_][0]
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
@@ -936,51 +936,33 @@ class ListView(ItemView, SorterWidgetOwner):
                 return _("Newly Available")
         return None
 
-    def update_columns(self, new_columns, new_widths):
-        assert set(new_columns).issubset(new_widths)
-        old_columns = set(self.columns_enabled)
-        self.columns_enabled = new_columns
-        self.column_widths = new_widths
-        for name in sorted(set(new_columns) - old_columns,
-                key=new_columns.index):
-            resizable = not name in widgetconst.NO_RESIZE_COLUMNS
-            pad = not name in widgetconst.NO_PAD_COLUMNS
-            if name == 'state':
-                header = u''
-            else:
-                header = widgetconst.COLUMN_LABELS[name]
-            renderer = self.renderer_set.get(name)
-            self._make_column(header, renderer, name, resizable, pad)
-            self._column_by_label[header] = name
-        for name in old_columns - set(new_columns):
-            column = self._columns[name]
-            index = self.columns.index(column)
-            self.remove_column(index)
-            del self._columns[name]
-        self._width_allocated = None
+    def remove_sorter(self, column):
+        self.remove_column(self.columns.index(column))
 
-    def _make_column(self, header, renderer, column_name, resizable=True,
-            pad=True):
+    def make_sorter(self, name):
+        if name == 'state':
+            header = u''
+        else:
+            header = widgetconst.COLUMN_LABELS[name]
+        renderer = self.renderer_set.get(name)
         column = widgetset.TableColumn(header, renderer,
             SortBarButton(header, column=True, renderer=renderer))
         column.set_min_width(renderer.min_width)
-        if resizable:
-            column.set_resizable(True)
-        if not pad:
-            column.set_do_horizontal_padding(pad)
+        column.set_resizable(not name in widgetconst.NO_RESIZE_COLUMNS)
+        pad = not name in widgetconst.NO_PAD_COLUMNS
+        column.set_do_horizontal_padding(pad)
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
-        if column_name in widgetconst.NO_RESIZE_COLUMNS:
-            self.column_widths[column_name] = renderer.min_width
+        if name in widgetconst.NO_RESIZE_COLUMNS:
+            self.column_widths[name] = renderer.min_width
             if pad:
-                self.column_widths[column_name] += self.COLUMN_PADDING
+                self.column_widths[name] += self.COLUMN_PADDING
             column.set_width(renderer.min_width)
-        column.connect_weak('clicked', self.on_sorter_clicked, column_name)
-        self._columns[column_name] = column
+        column.connect_weak('clicked', self.on_sorter_clicked, name)
         self.add_column(column)
-
-    def get_renderer(self, column_name):
-        return self._columns[column_name].renderer
+        self._width_allocated = None
+        self._column_by_label[header] = name
+        return column
 
     def do_size_allocated(self, total_width, height):
         # OS X gets multiple size-allocateds; the first are fake
@@ -989,18 +971,17 @@ class ListView(ItemView, SorterWidgetOwner):
         self._width_allocated = total_width
 
         weights = widgetconst.COLUMN_WIDTH_WEIGHTS
-        total_weight = math.fsum(weights[name] for name in self.columns_enabled)
+        total_weight = math.fsum(weights[name] for name in self.sorters)
         if not total_weight:
-            weights, total_weight = defaultdict(lambda: 1), len(self.columns_enabled)
+            weights, total_weight = defaultdict(lambda: 1), len(self.sorters)
         extra_width = (self.width_for_columns(total_width) -
-            sum(self.column_widths[name] for name in self.columns_enabled))
+            sum(self.column_widths[name] for name in self.sorters))
         extra_width /= total_weight
 
-        columns = self._columns
         rounded = 0 # carry forward rounded-off part of each value
-        for name in self.columns_enabled:
+        for name, sorter in self.sorters.iteritems():
             extra, rounded = divmod(extra_width * weights[name] + rounded, 1)
-            columns[name].set_width(self.column_widths[name] + int(extra))
+            sorter.set_width(self.column_widths[name] + int(extra))
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to
@@ -1326,16 +1307,15 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed_timeout(self, value):
         self.emit('auto-download-changed', value)
 
-class HeaderToolbar(Toolbar, SorterWidgetOwner):
+class HeaderToolbar(Toolbar, SorterOwner):
     """Toolbar used to sort items and switch views.
 
     Signals:
 
     :signal sort-changed: (widget, sort_key, ascending) User changed the sort.
     """
-    def __init__(self):
+    def __init__(self, sorts_enabled):
         Toolbar.__init__(self)
-        SorterWidgetOwner.__init__(self)
 
         self.background_image = imagepool.get_surface(
             resources.path('images/headertoolbar.png'))
@@ -1344,14 +1324,14 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         self._button_hbox_container = widgetutil.WidgetHolder()
         self._button_hbox_container.set(self._button_hbox)
 
+        SorterOwner.__init__(self, sorts_enabled)
+
         self._hbox = widgetset.HBox()
         self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
         self.add(self._hbox)
 
-        self._button_map = {}
-        self.sorter_widget_map = self._button_map
-        self._make_buttons()
-        self._button_map['date'].set_sort_order(ascending=False)
+    def remove_sorter(self, sorter):
+        self._button_hbox.remove(sorter)
 
     def switch_to_view(self, view):
         standard_view = WidgetStateStore.get_standard_view_type()
@@ -1360,19 +1340,12 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         if view == standard_view:
             self._button_hbox_container.set(self._button_hbox)
 
-    def _make_buttons(self):
-        self._make_button(_('Name'), 'name')
-        self._make_button(_('Date'), 'date')
-        self._make_button(_('Size'), 'size')
-        self._make_button(_('Time'), 'length')
-
     def draw(self, context, layout):
         self.background_image.draw(context, 0, 0, context.width, context.height)
 
-    def _make_button(self, text, sort_key):
-        button = SortBarButton(text)
+    def make_sorter(self, sort_key):
+        button = SortBarButton(widgetconst.COLUMN_LABELS[sort_key])
         button.connect('clicked', self.on_sorter_clicked, sort_key)
-        self._button_map[sort_key] = button
         try:
             left = [b for b in self._button_hbox.children][-1]
             left.set_right(button)
@@ -1380,24 +1353,12 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         except IndexError:
             pass
         self._button_hbox.pack_start(button)
+        return button
 
     def size_request(self, layout):
         width = self._hbox.get_size_request()[0]
         height = self._button_hbox.get_size_request()[1]
         return width, height
-
-class VideosHeaderToolbar(HeaderToolbar):
-    def _make_buttons(self):
-        HeaderToolbar._make_buttons(self)
-        self._make_button(_('Watched'), 'status')
-
-class PlaylistHeaderToolbar(HeaderToolbar):
-    def _make_buttons(self):
-        self._make_button(_('Order'), 'playlist')
-        self._make_button(_('Name'), 'name')
-        self._make_button(_('Date'), 'date')
-        self._make_button(_('Size'), 'size')
-        self._make_button(_('Time'), 'length')
 
 class SortBarButton(widgetset.CustomButton):
     def __init__(self, text, column=False, renderer=None):

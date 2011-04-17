@@ -161,8 +161,5 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListDescription(text))
 
-    def build_header_toolbar(self):
-        return itemlistwidgets.PlaylistHeaderToolbar()
-
     def _on_new_order(self, drop_handler, order):
         messages.PlaylistReordered(self.id, order).send_to_backend()

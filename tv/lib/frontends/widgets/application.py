@@ -373,9 +373,8 @@ class Application:
 
     def toggle_column(self, name):
         current_display = app.display_manager.get_current_display()
-        list_view = WidgetStateStore.get_list_view_type()
-        app.widget_state.toggle_column(current_display.type,
-            current_display.id, list_view, unicode(name))
+        app.widget_state.toggle_sort(current_display.type, current_display.id,
+            unicode(name))
         current_display.update_columns_enabled()
 
     def share_item(self, item):

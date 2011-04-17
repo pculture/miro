@@ -357,6 +357,7 @@ class ItemListController(object):
         # set up member attrs to easily get our list/standard view widgets
         self.list_item_view = self.views[list_view]
         self.standard_item_view = self.views[standard_view]
+        self.standard_view_toolbar = toolbar
         
         standard_view_scroller = widgetset.Scroller(False, True)
         standard_view_scroller.add(standard_view_background)
@@ -432,15 +433,14 @@ class ItemListController(object):
     def build_list_view(self):
         """Build the list view widget for this controller."""
         list_view_type = WidgetStateStore.get_list_view_type()
-        list_view_columns = app.widget_state.get_columns_enabled(
-                self.type, self.id, list_view_type)
+        columns = app.widget_state.get_sorts_enabled(self.type, self.id)
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view_type)
         scroll_pos = app.widget_state.get_scroll_position(
             self.type, self.id, list_view_type)
         column_renderers = self.build_column_renderers()
         list_view = itemlistwidgets.ListView(self.item_list, column_renderers,
-                list_view_columns, list_view_widths, scroll_pos)
+                columns, list_view_widths, scroll_pos)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
@@ -450,7 +450,8 @@ class ItemListController(object):
         return itemlistwidgets.ListViewColumnRendererSet()
 
     def build_header_toolbar(self):
-        return itemlistwidgets.HeaderToolbar()
+        sorts_enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
+        return itemlistwidgets.HeaderToolbar(sorts_enabled)
 
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create(self.type, self.id)
@@ -473,13 +474,12 @@ class ItemListController(object):
         self.widget.item_details.set_expanded(expanded)
 
     def update_columns_enabled(self):
-        list_view = WidgetStateStore.get_list_view_type()
-        list_view_columns = app.widget_state.get_columns_enabled(
-                self.type, self.id, list_view)
-        list_view_widths = app.widget_state.get_column_widths(
-                self.type, self.id, list_view)
-        self.list_item_view.update_columns(list_view_columns,
-            list_view_widths)
+        sorts = app.widget_state.get_sorts_enabled(self.type, self.id)
+        widths = app.widget_state.get_column_widths(self.type, self.id,
+            WidgetStateStore.get_list_view_type())
+        self.list_item_view.column_widths.update(widths)
+        self.list_item_view.update_sorts(sorts)
+        self.standard_view_toolbar.update_sorts(sorts)
 
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
@@ -619,9 +619,8 @@ class ItemListController(object):
         self.widget.item_details.set_expanded(expand)
         app.widget_state.set_item_details_expanded(self.selected_view, expand)
 
-    def on_columns_enabled_changed(self, object, columns, view_type):
-        app.widget_state.set_columns_enabled(
-                self.type, self.id, view_type, columns)
+    def on_columns_enabled_changed(self, object, sorts, view_type):
+        app.widget_state.set_sorts_enabled(self.type, self.id, sorts)
 
     def on_column_widths_changed(self, object, widths, view_type):
         app.widget_state.update_column_widths(
@@ -1120,9 +1119,6 @@ class VideoItemsController(AudioVideoItemsController):
 
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True, wide_image=True)
-
-    def build_header_toolbar(self):
-        return itemlistwidgets.VideosHeaderToolbar()
 
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'

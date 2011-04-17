@@ -286,46 +286,33 @@ class WidgetStateStore(object):
         display.last_played_item_id = id_
         self._save_display_state(display_type, display_id)
 
+    def get_sorts_enabled(self, display_type, display_id):
+        display = self._get_display(display_type, display_id)
+        columns = display.list_view_columns
+        if columns is None:
+            columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
+        return columns[:]
+
+    def set_sorts_enabled(self, display_type, display_id, enabled):
+        display = self._get_display(display_type, display_id)
+        display.list_view_columns = enabled
+        self._save_display_state(display_type, display_id)
+
+    def toggle_sort(self, display_type, display_id, column):
+        columns = self.get_sorts_enabled(display_type, display_id)
+        if column in columns:
+            columns.remove(column)
+        else:
+            columns.append(column)
+        self.set_sorts_enabled(display_type, display_id, columns)
+
 # ViewState properties that are only valid for specific view_types:
-
-    def get_columns_enabled(self, display_type, display_id, view_type):
-        if WidgetStateStore.is_list_view(view_type):
-            display = self._get_display(display_type, display_id)
-            columns = display.list_view_columns
-            if columns is None:
-                columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
-            return columns[:]
-        else:
-            raise ValueError()
-
-    def set_columns_enabled(self, display_type, display_id, view_type,
-                            enabled):
-        if WidgetStateStore.is_list_view(view_type):
-            display = self._get_display(display_type, display_id)
-            display.list_view_columns = enabled
-            self._save_display_state(display_type, display_id)
-        else:
-            raise ValueError()
-
-    def toggle_column(self, display_type, display_id, view_type, column):
-        if WidgetStateStore.is_list_view(view_type):
-            columns = self.get_columns_enabled(display_type, display_id,
-                                               view_type)
-            if column in columns:
-                columns.remove(column)
-            else:
-                columns.append(column)
-            self.set_columns_enabled(display_type, display_id, view_type,
-                                     columns)
-        else:
-            raise ValueError()
 
     def get_column_widths(self, display_type, display_id, view_type):
         if WidgetStateStore.is_list_view(view_type):
             display = self._get_display(display_type, display_id)
             column_widths = display.list_view_widths or {}
-            columns = self.get_columns_enabled(display_type, display_id,
-                                               view_type)
+            columns = self.get_sorts_enabled(display_type, display_id)
             for name in columns:
                 default = WidgetStateStore.DEFAULT_COLUMN_WIDTHS[name]
                 column_widths.setdefault(name, default)

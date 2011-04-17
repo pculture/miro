@@ -345,8 +345,7 @@ def get_menu():
                             ]),
                     ]),
 
-            Menu(_("_View"), "ViewMenu", _get_view_menu(),
-                groups=["ListView"]),
+            Menu(_("Sorts"), "ViewMenu", _get_view_menu()),
 
             Menu(_("_Convert"), "ConvertMenu", _get_convert_menu()),
 
@@ -650,7 +649,7 @@ def on_subtitle_encoding(converter):
     else:
         app.playback_manager.select_subtitle_encoding(converter)
 
-# View menu
+# Sorts menu
 @group_action_handler("ToggleColumn")
 def on_toggle_column(name):
     app.widgetapp.toggle_column(name)
@@ -938,17 +937,12 @@ class MenuStateManager(signals.SignalEmitter):
         # TODO: refactor the display type / id system
         if not (hasattr(display, 'type') and hasattr(display, 'id')):
             return
-        view_type = app.widget_state.get_selected_view(display.type, display.id)
-        if not WidgetStateStore.is_list_view(view_type):
-            return
-        enabled = app.widget_state.get_columns_enabled(
-                  display.type, display.id, view_type)
 
+        enabled = set(app.widget_state.get_sorts_enabled(display.type, display.id))
         checks = dict(('ToggleColumn-' + column, column in enabled)
             for column in WidgetStateStore.get_columns())
         self.emit('checked-changed', 'ListView', checks)
 
-        self.enabled_groups.add('ListView')
         for column in WidgetStateStore.get_columns_available(display.type):
             self.enabled_groups.add('column-%s' % column)
 
