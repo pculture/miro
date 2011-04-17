@@ -73,6 +73,7 @@ class ScrollbarOwnerMixin(object):
         self.scroll_positions = [None, None]
         self.scroll_positions_set = False
         self.connect('parent-set', self.on_parent_set)
+        self.scroller = None
 
     def on_parent_set(self, widget, old_parent):
         """We have parent window now; we need to control its scrollbars."""
@@ -82,6 +83,7 @@ class ScrollbarOwnerMixin(object):
         """Take control of the scrollbars of window."""
         if not isinstance(window, gtk.ScrolledWindow):
             return
+        self.scroller = window
         scrollbars = tuple(bar.get_adjustment()
             for bar in (window.get_hscrollbar(), window.get_vscrollbar()))
         self.scrollbars = scrollbars
@@ -132,6 +134,14 @@ class ScrollbarOwnerMixin(object):
         pos = min(max(pos, lower), upper)
         adj.set_value(pos)
 
+    def scroll_to_path(self, path):
+        """Center the view vertically on the given path."""
+        if not self.scrollbars:
+            return
+        vadjustment = self.scrollbars[1]
+        rect = self.get_background_area(path, self.get_columns()[0])
+        vadjustment.set_value(rect.y + (rect.height - vadjustment.page_size) / 2)
+
     def scroll_ancestor(self, newly_selected, down):
         # Try to figure out what just became selected.  If multiple things
         # somehow became selected, select the outermost one
@@ -142,17 +152,12 @@ class ScrollbarOwnerMixin(object):
         else:
             path_to_show = min(newly_selected)
 
-        # Try to find a Viewport in the widget tree
-        ancestor = self.get_parent()
-        while not isinstance(ancestor, gtk.Viewport):
-            if ancestor is None:
-                raise WidgetActionError("no scrollable ancestor")
-            ancestor = ancestor.get_parent()
+        if not self.scrollbars:
+            return
+        vadjustment = self.scrollbars[1]
 
-        vadjustment = ancestor.get_vadjustment()
-        column = self.get_columns()[0]
-        rect = self.get_background_area(path_to_show, column)
-        _, top = self.translate_coordinates(ancestor, 0, rect.y)
+        rect = self.get_background_area(path_to_show, self.get_columns()[0])
+        _, top = self.translate_coordinates(self.scroller, 0, rect.y)
         top += vadjustment.value
         bottom = top + rect.height
         if down:
@@ -1186,7 +1191,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
 
     def scroll_to_iter(self, iter_):
         path = self._model.get_path(iter_)
-        self._widget.scroll_to_cell(path)
+        self._widget.scroll_to_path(path)
 
     def set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)
