@@ -543,6 +543,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self._connect_signals()
 
     def _connect_signals(self):
+        self.create_signal('reallocate-columns') # not emitted on GTK
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
         self.create_signal('hotspot-clicked')

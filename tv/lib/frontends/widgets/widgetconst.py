@@ -81,12 +81,11 @@ COLUMN_LABELS = {
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set()
-COLUMN_WIDTH_WEIGHTS = defaultdict(lambda: 0)
-COLUMN_WIDTH_WEIGHTS.update({
+COLUMN_WIDTH_WEIGHTS = {
     u'description': 1.2,
     u'name': 1.0,
     u'artist': 0.7,
     u'album': 0.7,
     u'feed-name': 0.5,
     u'status': 0.2,
-})
+}

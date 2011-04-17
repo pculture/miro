@@ -961,6 +961,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.create_signal('row-double-clicked')
         self.create_signal('row-clicked')
         self.create_signal('row-activated')
+        self.create_signal('reallocate-columns')
         self.model = model
         self.columns = []
         self.drag_source = None
@@ -980,7 +981,6 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.data_source.initWithModel_(self.model)
         self.tableview.setDataSource_(self.data_source)
         self.tableview.setVerticalMotionCanBeginDrag_(YES)
-        self.tableview.setColumnAutoresizingStyle_(NSTableViewLastColumnOnlyAutoresizingStyle)
         self.set_columns_draggable(False)
         self.set_auto_resizes(False)
         self.row_height_set = False
@@ -1001,6 +1001,7 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.height_changed = self.reload_needed = False
         self.scroll_position = (0, 0)
         self.clipview_notifications = None
+        self._resizing = False
 
     def focus(self):
         if self.tableview.window() is not None:
@@ -1047,8 +1048,15 @@ class TableView(CocoaSelectionOwnerMixin, Widget):
         self.emit('row-collapsed', iter_, self.model.get_path(iter_))
 
     def on_column_resize(self, notification):
-        if not self.auto_resizing:
-            self.invalidate_size_request()
+        if self.auto_resizing or self._resizing:
+            return
+        self._resizing = True
+        try:
+            column = notification.userInfo()['NSTableColumn']
+            label = column.headerCell().stringValue()
+            self.emit('reallocate-columns', {label: column.width()})
+        finally:
+            self._resizing = False
 
     def is_tree(self):
         return isinstance(self.model, tablemodel.TreeTableModel)

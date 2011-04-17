@@ -818,6 +818,12 @@ class SorterOwner(object):
             self.remove_sorter(self.sorters.pop(name))
         for name in sorted(new - old, key=sorts_enabled.index):
             self.sorters[name] = self.make_sorter(name)
+        self.allocate_widths()
+
+    def allocate_widths(self):
+        """Option method for subclasses that need to allocate widths when their
+        sorters change.
+        """
 
 class ColumnRendererSet(object):
     """A set of potential columns for an ItemView"""
@@ -899,7 +905,9 @@ class ListView(ItemView, SorterOwner):
         self.set_alternate_row_backgrounds(True)
         self.html_stripper = util.HTMLStripper()
         self.renderer_set = renderer_set
+        self._width_allocated = None
         SorterOwner.__init__(self, sorts)
+        self.connect('reallocate-columns', lambda w, c: self.allocate_widths(c))
         # ensure that we request the same size as standard view
         self.set_size_request(600, -1)
 
@@ -960,28 +968,45 @@ class ListView(ItemView, SorterOwner):
             column.set_width(renderer.min_width)
         column.connect_weak('clicked', self.on_sorter_clicked, name)
         self.add_column(column)
-        self._width_allocated = None
         self._column_by_label[header] = name
         return column
 
     def do_size_allocated(self, total_width, height):
         # OS X gets multiple size-allocateds; the first are fake
-        if self._width_allocated == total_width:
-            return
-        self._width_allocated = total_width
+        if self._width_allocated != total_width:
+            self._width_allocated = total_width
+            self.allocate_widths()
 
-        weights = widgetconst.COLUMN_WIDTH_WEIGHTS
-        total_weight = math.fsum(weights[name] for name in self.sorters)
-        if not total_weight:
-            weights, total_weight = defaultdict(lambda: 1), len(self.sorters)
-        extra_width = (self.width_for_columns(total_width) -
+    def allocate_widths(self, preserving={}):
+        """Allocate the width of all columns to fit the space given. preserving
+        can be set to avoid adjusting a column the user has just manually
+        resized.
+        """
+        if not self._width_allocated:
+            return
+        preserving = dict((self._column_by_label[label], width)
+            for label, width in preserving.items())
+        if preserving and all(int(self.column_widths[k]) == int(v)
+                for k, v in preserving.iteritems()):
+            return # triggered by set_width below
+        self.column_widths.update(preserving)
+        weights = dict((k, k not in preserving and
+            widgetconst.COLUMN_WIDTH_WEIGHTS.get(k, 0))
+            for k in self.sorters)
+        if not any(weights.itervalues()):
+            weights = dict((name, name not in preserving) for name in self.sorters)
+
+        extra_width = (self.width_for_columns(self._width_allocated) -
             sum(self.column_widths[name] for name in self.sorters))
-        extra_width /= total_weight
+        extra_width /= sum(weights.itervalues())
 
         rounded = 0 # carry forward rounded-off part of each value
-        for name, sorter in self.sorters.iteritems():
+        for name in self.sorters:
             extra, rounded = divmod(extra_width * weights[name] + rounded, 1)
-            sorter.set_width(self.column_widths[name] + int(extra))
+            self.column_widths[name] += int(extra)
+
+        for name, sorter in self.sorters.iteritems():
+            sorter.set_width(self.column_widths[name])
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to
