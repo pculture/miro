@@ -118,7 +118,6 @@ class Source(object):
             self.year = metadata.get('year', None)
             self.genre = metadata.get('genre', None)
             self.has_drm = metadata.get('drm', False)
-            self.has_drm = metadata.get('drm', False)
         # set metadata_version even if mutagen failed.  We don't want to keep
         # re-invoking it.
         self.metadata_version = filetags.METADATA_VERSION

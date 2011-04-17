@@ -133,7 +133,7 @@ class MovieDataTest(EventLoopTest):
         item, mdp = self.mdu_read_file('drm.m4v')
         self.assertEqual(item.duration, 2668832)
         self.assertEqual(item.file_type, 'video')
-        self.assertEqual(item.cover_art, None)
+        self.assertTrue(item.cover_art)
 # FIXME
 #        self.assertTrue(item.screenshot,
 #            "drm.m4v test case expected to have a screenshot")

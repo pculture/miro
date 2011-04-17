@@ -27,10 +27,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""``miro.filetags`` -- Read and write metadata stored in files.
-
-This module is stateless; it is used by MovieDataUpdater and Item.
-"""
+"""``miro.filetags`` -- Read and write metadata stored in files."""
 
 import os.path
 import logging
@@ -294,8 +291,6 @@ def read_metadata(filename, test=False):
         guessed_track = _track_from_filename(filename)
         if guessed_track:
             data['track'] = guessed_track
-    if 'cover_art' in data:
-        del data['cover_art']
 
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures

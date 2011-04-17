@@ -79,4 +79,4 @@ class FileTagsTest(MiroTestCase):
             track=10,
             year=2000,
         )
-        self.assert_file_data('drm.m4v', 'video', 2668832, m4v, None)
+        self.assert_file_data('drm.m4v', 'video', 2668832, m4v, True)
