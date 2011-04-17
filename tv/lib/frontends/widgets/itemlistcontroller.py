@@ -90,7 +90,6 @@ class FilteredListMixin(object):
         """Update the display and toolbar filter switch state."""
         self.item_list_will_change()
         self.titlebar.toggle_filter(filters)
-        self.widget.toggle_filter(filters)
         self.item_list.toggle_filter(filters)
         self.send_model_changed()
         self.check_for_empty_list()

@@ -1331,14 +1331,7 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
 
     Signals:
 
-    :signal sort-changed: (widget, sort_key, ascending) User changed
-        the sort.  sort_key will be one of 'name', 'date', 'size' or
-        'length'
-    :signal view-all-clicked: User requested to view all items
-    :signal toggle-unwatched-clicked: User toggled the
-        unwatched/unplayed items only view
-    :signal toggle-non-feed-clicked: User toggled the non feed items
-        only view
+    :signal sort-changed: (widget, sort_key, ascending) User changed the sort.
     """
     def __init__(self):
         Toolbar.__init__(self)
@@ -1352,19 +1345,13 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         self._button_hbox_container.set(self._button_hbox)
 
         self._hbox = widgetset.HBox()
-
-        self._hbox.pack_end(widgetutil.align_middle(
-            self._button_hbox_container))
-        self.pack_hbox_extra()
-
+        self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
         self.add(self._hbox)
 
         self._button_map = {}
         self.sorter_widget_map = self._button_map
         self._make_buttons()
         self._button_map['date'].set_sort_order(ascending=False)
-
-        self.filter = WidgetStateStore.get_view_all_filter()
 
     def switch_to_view(self, view):
         standard_view = WidgetStateStore.get_standard_view_type()
@@ -1378,9 +1365,6 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
         self._make_button(_('Date'), 'date')
         self._make_button(_('Size'), 'size')
         self._make_button(_('Time'), 'length')
-
-    def pack_hbox_extra(self):
-        pass
 
     def draw(self, context, layout):
         self.background_image.draw(context, 0, 0, context.width, context.height)
@@ -1397,38 +1381,10 @@ class HeaderToolbar(Toolbar, SorterWidgetOwner):
             pass
         self._button_hbox.pack_start(button)
 
-    def make_filter_switch(self, *args, **kwargs):
-        """Helper method to make a SegmentedButtonsRow that switches
-        between filters.
-        """
-        self.filter_switch = segmented.SegmentedButtonsRow(*args, **kwargs)
-
-    def add_filter(self, button_name, signal_name, signal_param, label):
-        """Helper method to add a button to the SegmentedButtonsRow
-        made in make_filter_switch()
-
-        :param button_name: name of the button
-        :param signal_name: signal to emit
-        :param label: human readable label for the button
-        """
-
-        self.create_signal(signal_name)
-        def callback(button):
-            self.emit(signal_name, signal_param)
-        self.filter_switch.add_text_button(button_name, label, callback)
-
-    def add_filter_switch(self):
-        self._hbox.pack_start(widgetutil.align_middle(
-            self.filter_switch.make_widget(), left_pad=12))
-
     def size_request(self, layout):
         width = self._hbox.get_size_request()[0]
         height = self._button_hbox.get_size_request()[1]
         return width, height
-
-    def toggle_filter(self, filter_):
-        # implemented by subclasses
-        pass
 
 class VideosHeaderToolbar(HeaderToolbar):
     def _make_buttons(self):
@@ -2221,9 +2177,6 @@ class ItemContainerWidget(widgetset.VBox):
         self.vbox[standard_view].pack_start(self.toolbar)
         self.vbox[standard_view].pack_start(separator.HThinSeparator(color2))
         self.background.add(self.vbox[view])
-
-    def toggle_filter(self, filter_):
-        self.toolbar.toggle_filter(filter_)
 
     def switch_to_view(self, view, toolbar=None):
         if self.selected_view != view:
