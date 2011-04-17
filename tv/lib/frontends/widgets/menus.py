@@ -944,30 +944,17 @@ class MenuStateManager(signals.SignalEmitter):
         enabled = app.widget_state.get_columns_enabled(
                   display.type, display.id, view_type)
 
-        columns = _get_all_columns()
-
-        checks = {}
-        for column in columns:
-            handler_name = 'ToggleColumn-' + column
-            checks[handler_name] = column in enabled
-
+        checks = dict(('ToggleColumn-' + column, column in enabled)
+            for column in WidgetStateStore.get_columns())
         self.emit('checked-changed', 'ListView', checks)
+
         self.enabled_groups.add('ListView')
         for column in WidgetStateStore.get_columns_available(display.type):
             self.enabled_groups.add('column-%s' % column)
 
-def _get_all_columns():
-    columns = set()
-    for display_type in WidgetStateStore.get_display_types():
-        columns.update(WidgetStateStore.get_columns_available(display_type))
-    return columns
-
 def _get_view_menu():
-    columns = _get_all_columns()
-    columns = sorted(columns, key=lambda name: COLUMN_LABELS[name])
-
     menu = list()
-    for name in columns:
+    for name in sorted(WidgetStateStore.get_columns(), key=COLUMN_LABELS.get):
         groups = ['column-%s' % name]
         label = COLUMN_LABELS[name]
         handler_name = make_column_toggle_handler(name)

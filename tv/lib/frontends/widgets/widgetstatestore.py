@@ -125,27 +125,27 @@ class WidgetStateStore(object):
             [u'playlist', u'name', u'artist', u'album', u'track', u'length',
                 u'genre', u'year', u'rating'],
     }
-    DEFAULT_COLUMNS[u'device-audio'] = DEFAULT_COLUMNS[u'music']
-    DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos']
-    DEFAULT_COLUMNS[u'folder-contents'] = DEFAULT_COLUMNS[u'music']
-    DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'music']
+    DEFAULT_COLUMNS[u'device-audio'] = DEFAULT_COLUMNS[u'music'][:]
+    DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos'][:]
+    DEFAULT_COLUMNS[u'folder-contents'] = DEFAULT_COLUMNS[u'music'][:]
+    DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'music'][:]
 
-    AVAILABLE_COLUMNS = {}
-    for display_type, columns in DEFAULT_COLUMNS.items():
-        AVAILABLE_COLUMNS[display_type] = DEFAULT_COLUMNS[display_type][:]
+    AVAILABLE_COLUMNS = dict((display, set(columns))
+        for display, columns in DEFAULT_COLUMNS.iteritems()
+    )
     # add available but non-default columns here:
-    AVAILABLE_COLUMNS['music'].extend(
+    AVAILABLE_COLUMNS['music'] |= set(
         [u'state', u'date-added', u'feed-name', u'size', u'file-type']
     )
-    AVAILABLE_COLUMNS['others'].extend(
-        [u'date-added', u'drm', u'rating'])
-    AVAILABLE_COLUMNS['search'].extend([u'rating'])
-    AVAILABLE_COLUMNS['videos'].extend([u'rating', u'file-type', u'show',
+    AVAILABLE_COLUMNS['others'] |= set([u'date-added', u'drm', u'rating'])
+    AVAILABLE_COLUMNS['search'] |= set([u'rating'])
+    AVAILABLE_COLUMNS['videos'] |= set([u'rating', u'file-type', u'show',
                                         u'kind'])
-    AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music']
-    AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos']
-    AVAILABLE_COLUMNS[u'feed'] = list(DEFAULT_COLUMN_WIDTHS.keys()) # all of
-                                                                    # them
+    AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music'].copy()
+    AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos'].copy()
+    AVAILABLE_COLUMNS[u'feed'] = set(DEFAULT_COLUMN_WIDTHS.keys()) # all of
+                                                                   # them
+    ALL_COLUMNS = set(DEFAULT_COLUMN_WIDTHS)
 
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
@@ -371,7 +371,7 @@ class WidgetStateStore(object):
 
     @staticmethod
     def get_columns_available(display_type):
-        return WidgetStateStore.AVAILABLE_COLUMNS[display_type][:]
+        return WidgetStateStore.AVAILABLE_COLUMNS[display_type]
 
 # static properties of a view_type:
 
@@ -458,6 +458,10 @@ class WidgetStateStore(object):
         return bool(filters & WidgetStateStore.FILTER_DOWNLOADED)
 
 # static properties:
+
+    @staticmethod
+    def get_columns():
+        return WidgetStateStore.ALL_COLUMNS
 
     # displays:
 

@@ -134,11 +134,7 @@ def update_view_menu_state():
     enabled = app.widget_state.get_columns_enabled(
               display.type, display.id, view_type)
 
-    columns = set()
-    for display_type in WidgetStateStore.get_display_types():
-        columns.update(WidgetStateStore.get_columns_available(display_type))
-
-    for column in columns:
+    for column in WidgetStateStore.get_columns():
         menu_item = VIEW_ITEM_MAP[column]
         hidden = not column in WidgetStateStore.get_columns_available(display.type)
         menu_item.setHidden_(hidden)
