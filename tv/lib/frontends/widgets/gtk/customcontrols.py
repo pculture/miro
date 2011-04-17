@@ -282,7 +282,7 @@ class CustomControlBase(Drawable, Widget):
             self._widget.window.set_cursor(None)
 
     def on_click(self, widget, event):
-        self.emit('clicked', event)
+        self.emit('clicked')
         return True
 
 class CustomButton(CustomControlBase):

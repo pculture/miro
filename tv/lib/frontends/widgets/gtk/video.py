@@ -58,6 +58,10 @@ video_widget = None
 class ClickableLabel(Widget):
     """This is like a label and reimplements many of the Label things,
     but it's an EventBox with a Label child widget.
+
+    NOTE: this class includes a GTK-specific event object with clicked signals;
+    any platform-independent code connecting to clicked must accept an optional
+    event parameter.
     """
     def __init__(self, text, size=0.77, color=WHITE):
         Widget.__init__(self)

@@ -151,7 +151,7 @@ class AddFilesDialog(widgetset.DialogWindow):
         vbox.pack_start(widgetutil.align_right(cancel_button))
         return vbox
 
-    def on_choose_files(self, widget, event):
+    def on_choose_files(self, widget):
         # opens dialog allowing you to choose files and folders
         audio_extensions = [mem.replace(".", "")
                             for mem in filetypes.AUDIO_EXTENSIONS]
@@ -169,13 +169,13 @@ class AddFilesDialog(widgetset.DialogWindow):
         self.gathered_media_files = files_
         self.destroy_dialog()
 
-    def on_search_my_files(self, widget, event):
+    def on_search_my_files(self, widget):
         """Searches the user's media directory.
         """
         self.next_page()
         self.start_file_search(resources.get_default_search_dir())
 
-    def on_select_folder(self, widget, event):
+    def on_select_folder(self, widget):
         """Opens a dialog allowing you to choose the folder to
         search for files in.
         """
