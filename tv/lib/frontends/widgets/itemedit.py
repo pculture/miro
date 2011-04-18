@@ -412,17 +412,17 @@ class MultifieldRow(object):
     def get_box(self):
         """Return a widget containing all child widgets."""
         box = widgetset.HBox()
-        for field in self.fields[1:-1]:
+        for field in self.fields[1:]:
             field.set_inside()
         for field in self.fields[:-1]:
             box.pack_start(field.get_box(partial=True))
-        # XXX: not quite right when you enable this - the layout API needs
-        # to improve.  Needs to be able to set left/middle/right and also
-        # deal with things packed into different hbox and vboxes.  But
-        # at least with this disabled things look right.
-        #self.fields[-1].set_right()
         box.pack_end(self.fields[-1].get_box())
         return box
+
+    # XXX: MultifieldRows in the right column not currently supported
+    # (dialog does not use them). As is, label would be aligned wrong.
+    # Solution would probably be to implement set_right that enables
+    # self.fields[0].set_right() in get_box
 
     def get_results(self):
         """Returns a changes map containing all child fields' changes."""
@@ -432,16 +432,16 @@ class MultifieldRow(object):
         return results
 
     def set_label_width(self, width):
-        """Applies the width to each child."""
-        for field in self.fields:
-            field.set_label_width(width)
+        """Sets the label width of the leftmost child; this is the child with a
+        label that has other labels to align with.
+        """
+        self.fields[0].set_label_width(width)
 
 class DialogPanel(object):
     """A panel that is shown when it is the selected tab."""
     def __init__(self, items):
         self.items = items
         self.vbox = widgetset.VBox()
-        self.widget = widgetutil.HideableWidget(self.vbox)
         self.fields = []
 
     def get_results(self):
@@ -450,14 +450,6 @@ class DialogPanel(object):
         for field in self.fields:
             results.update(field.get_results())
         return results
-
-    def hide(self):
-        """Hide this panel; it is not the selected panel."""
-        self.widget.hide()
-
-    def show(self):
-        """This panel has been selected; show it."""
-        self.widget.show()
 
 class GeneralPanel(DialogPanel):
     """The (default) 'General' tab."""
@@ -530,28 +522,33 @@ class VideoPanel(DialogPanel):
     """The 'Video' tab."""
     def __init__(self, items):
         DialogPanel.__init__(self, items)
-        self._pack()
-
-    def _pack(self):
-        self.fields.append(TextField('show', self.items, _("Show")))
-        self.fields.append(TextField('episode_id', self.items, _("Episode ID")))
-        self.fields.append(MultifieldRow(
-            NumberField('season_number', self.items, _("Season Number"),
-                width=15),
-            NumberField('episode_number', self.items, _("Episode Number"),
-                width=15),
-        ))
-        # FIXME: changes here need also be applied in messages
-        self.fields.append(OptionsField('kind', self.items, _("Video Kind"), [
-            (None, u""),
-            (u'movie', _("Movie")),
-            (u'show', _("Show")),
-            (u'clip', _("Clip")),
-            (u'podcast', _("Podcast")),
-        ]))
+        self.fields = [
+            TextField('show', self.items, _("Show")),
+            TextField('episode_id', self.items, _("Episode ID")),
+            MultifieldRow(
+                NumberField('season_number', self.items, _("Season Number"),
+                    width=15),
+                NumberField('episode_number', self.items, _("Episode Number"),
+                    width=15),
+            ),
+            OptionsField('kind', self.items, _("Video Kind"), [
+                # FIXME: changes here need also be applied in messages
+                (None, u""),
+                (u'movie', _("Movie")),
+                (u'show', _("Show")),
+                (u'clip', _("Clip")),
+                (u'podcast', _("Podcast")),
+            ]),
+        ]
+        content = widgetset.VBox()
         for field in self.fields:
             field.set_label_width(120)
-            self.vbox.pack_start(field.get_box(), padding=5)
+            content.pack_start(field.get_box(), padding=5)
+        # XXX - hack: OS X is cutting off the right side of the box in single
+        # selection mode; this seems like a bug in layout. padding the right
+        # side causes only padding to be cut off.
+        # XXX - this padding fixes 17065. 17065 is the same layout issue?
+        self.vbox = widgetutil.pad(content, right=15)
 
 class ToggleButtonBackground(widgetset.Background):
     """Gradiated background for an individual ToggleButton."""
@@ -665,7 +662,7 @@ class ItemEditDialog(widgetset.Dialog):
         self.results = {}
         self.vbox = widgetset.VBox()
         self.panels = {}
-        self.current_panel = None
+        self.content_panel = widgetutil.WidgetHolder()
         self.toggler = Toggler()
         self.toggler.connect('choose', self.on_choose_panel)
 
@@ -732,27 +729,19 @@ class ItemEditDialog(widgetset.Dialog):
     def _add_panel(self, label, name, content):
         """Add a potentially visible panel"""
         self.panels[name] = content
-        self.vbox.pack_start(content.widget)
         self.toggler.add_option(name, label)
 
-    def on_choose_panel(self, _toggler, panel):
-        self.set_panel(panel)
-
-    def set_panel(self, name, update_toggler=False):
-        """Set the current panel to display"""
-        if self.current_panel:
-            self.panels[self.current_panel].hide()
-        self.current_panel = name
-        self.panels[self.current_panel].show()
-        if update_toggler:
-            self.toggler.choose(name)
+    def on_choose_panel(self, _toggler, name):
+        self.content_panel.set(self.panels[name].vbox)
 
     def build_content(self):
         """Called by parent in run(); returns a VBox"""
         self.items = frozenset(self.items)
         self._pack_top()
+        self.vbox.pack_start(self.content_panel)
         self._add_panel(_("General"), 'general', GeneralPanel(self.items))
         self._add_panel(_("Video"), 'video', VideoPanel(self.items))
         self._pack_bottom()
-        self.set_panel('general', update_toggler=True)
+        self.toggler.choose('general')
+        self.content_panel.set(self.panels['general'].vbox)
         return self.vbox
