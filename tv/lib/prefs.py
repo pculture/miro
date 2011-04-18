@@ -140,11 +140,11 @@ def get_from_environ(key, default):
     return default
 
 default_guide = get_from_environ('DTV_CHANNELGUIDE_URL',
-                                 u'https://www.miroguide.com/')
+                                 u'http://www.miroguide.com/')
 default_guide_first_time = get_from_environ('DTV_CHANNELGUIDE_FIRST_TIME_URL',
-                                            u'https://www.miroguide.com/firsttime')
+                                            u'http://www.miroguide.com/firsttime')
 default_share = get_from_environ('DTV_SHARE_URL',
-                                 u'https://www.miroguide.com/share')
+                                 u'http://www.miroguide.com/share')
 default_autoupdate = get_from_environ('DTV_AUTOUPDATE_URL',
                                       u'http://www.participatoryculture.org/democracy-appcast.xml')
 

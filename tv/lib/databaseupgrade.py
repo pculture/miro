@@ -1065,7 +1065,7 @@ def upgrade59(objectList):
     changed = set()
     for o in objectList:
         if o.classString == 'channel-guide' and o.savedData['url'] is None:
-            o.savedData['url'] = u'https://www.miroguide.com/'
+            o.savedData['url'] = u'http://www.miroguide.com/'
             changed.add(o)
         elif o.classString == 'theme-history':
             if None not in o.savedData['pastThemes']:
@@ -2441,8 +2441,8 @@ def upgrade100(cursor):
     if not app.config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
         return
 
-    audio_guide_url = u'https://www.miroguide.com/audio/'
-    favicon_url = u'https://www.miroguide.com/favicon.ico'
+    audio_guide_url = u'http://www.miroguide.com/audio/'
+    favicon_url = u'http://www.miroguide.com/favicon.ico'
     cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
                    (audio_guide_url,))
     count = cursor.fetchone()[0]
