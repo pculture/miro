@@ -58,10 +58,6 @@ video_widget = None
 class ClickableLabel(Widget):
     """This is like a label and reimplements many of the Label things,
     but it's an EventBox with a Label child widget.
-
-    NOTE: this class includes a GTK-specific event object with clicked signals;
-    any platform-independent code connecting to clicked must accept an optional
-    event parameter.
     """
     def __init__(self, text, size=0.77, color=WHITE):
         Widget.__init__(self)
@@ -84,7 +80,7 @@ class ClickableLabel(Widget):
         self.create_signal('clicked')
 
     def on_click(self, widget, event):
-        self.emit('clicked', event)
+        self.emit('clicked')
         return True
 
     def on_enter_notify(self, widget, event):
@@ -365,25 +361,25 @@ class VideoDetailsWidget(Background):
     def show(self):
         self._widget.show()
 
-    def handle_fullscreen(self, widget, event=None):
+    def handle_fullscreen(self, widget):
         app.playback_manager.toggle_fullscreen()
 
-    def handle_popin_popout(self, widget, event=None):
+    def handle_popin_popout(self, widget):
         if app.playback_manager.is_fullscreen:
             app.playback_manager.exit_fullscreen()
         app.playback_manager.toggle_detached_mode()
 
-    def handle_keep(self, widget, event):
+    def handle_keep(self, widget):
         messages.KeepVideo(self.item_info.id).send_to_backend()
         self._widget.window.set_cursor(None)
 
-    def handle_delete(self, widget, event):
+    def handle_delete(self, widget):
         item_info = self.item_info
         app.playback_manager.on_movie_finished()
         app.widgetapp.remove_items([item_info])
         self.reset()
 
-    def handle_subtitles(self, widget, event):
+    def handle_subtitles(self, widget):
         tracks = []
         menu = gtk.Menu()
 
@@ -429,7 +425,7 @@ class VideoDetailsWidget(Background):
         child.show()
         menu.append(child)
 
-        menu.popup(None, None, None, event.button, event.time)
+        menu.popup(None, None, None, 1, gtk.get_current_event_time())
 
     def handle_disable_subtitles(self, widget):
         if widget.active:
