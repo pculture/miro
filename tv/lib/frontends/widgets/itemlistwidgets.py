@@ -1471,41 +1471,41 @@ class SortBarButton(widgetset.CustomButton):
             triangle_padding = 6 + 6
         if not self._column:
             x = (context.width - text_size[0] - triangle_padding) / 2
-            left = text_size[0] + x + 6
             if x < 0:
                 x = 12
-                left = text_size[0] + 18
+            arrow_start = text_size[0] + x + 6
         else:
-            right_aligned = (hasattr(self._renderer, 'right_aligned') and
-                self._renderer.right_aligned)
+            right_aligned = getattr(self._renderer, 'right_aligned', False)
             if right_aligned:
                 x = context.width - text_size[0] - 8
-                left = context.width - text_size[0] - 8 - 15
-            if not right_aligned or x < 0 or left < 0:
+                if x < 0:
+                    x = 8
+                arrow_start = x - 15
+            if not right_aligned or arrow_start < 0:
                 # Fallback or left aligned
                 x = 8
-                left = text_size[0] + 15
+                arrow_start = text_size[0] + 15
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
         textbox.draw(context, x, y, text_size[0], text_size[1])
-        context.set_color((arrow, arrow, arrow))
-        self._draw_triangle(context, left)
+        if self._enabled:
+            context.set_color((arrow, arrow, arrow))
+            self._draw_triangle(context, arrow_start)
 
     def _draw_triangle(self, context, left):
-        if self._enabled:
-            top = int((context.height - 4) / 2)
-            ascending = self._ascending
-            if use_upside_down_sort:
-                ascending = not ascending
-            if ascending:
-                context.move_to(left, top + 4)
-                direction = -1
-            else:
-                context.move_to(left, top)
-                direction = 1
-            context.rel_line_to(6, 0)
-            context.rel_line_to(-3, 4 * direction)
-            context.rel_line_to(-3, -4 * direction)
-            context.fill()
+        top = int((context.height - 4) / 2)
+        ascending = self._ascending
+        if use_upside_down_sort:
+            ascending = not ascending
+        if ascending:
+            context.move_to(left, top + 4)
+            direction = -1
+        else:
+            context.move_to(left, top)
+            direction = 1
+        context.rel_line_to(6, 0)
+        context.rel_line_to(-3, 4 * direction)
+        context.rel_line_to(-3, -4 * direction)
+        context.fill()
 
 class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.
