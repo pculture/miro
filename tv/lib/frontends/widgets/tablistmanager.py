@@ -177,7 +177,6 @@ class TabListManager(dict):
         """
         if not self._shown:
             return
-        was_base_selected = self._is_base_selected
         view = self[list_type].view
         if iter_:
             # select the tab
@@ -204,9 +203,18 @@ class TabListManager(dict):
             iters = view.get_selection()
         tabs = [view.model[i][0] for i in iters]
         # prevent selecting base and non-base at the same time
-        if tabs and hasattr(self[list_type], 'info'): # hideable
-            iters, tabs = self._disallow_base_with_child(
-                    view, tabs, was_base_selected)
+        if len(tabs) > 1 and any(tab.type == 'tab' for tab in tabs):
+            bases = (i for i in iters if view.model[i][0].type == 'tab')
+            not_bases = (i for i in iters if view.model[i][0].type != 'tab')
+            if self._is_base_selected: # base was previous selection
+                view.unselect_iters(bases)
+                iters = list(not_bases)
+            else: # base newly selected
+                view.unselect_iters(not_bases)
+                iters = [bases.next()] # keep 1 base
+                view.unselect_iters(bases)
+            tabs = [view.model[i][0] for i in iters]
+        self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
         # open the ancestors
         if hasattr(view.model, 'parent_iter'): # not all models have parents
             for selected in iters:
@@ -228,31 +236,8 @@ class TabListManager(dict):
             self._restoring = None
         if or_bust and not tabs:
             raise UnexpectedWidgetError("should have selected something")
-        if tabs and iter_:
-            for sel in tabs:
-                if sel == view.model[iter_][0]:
-                    break
-            else:
-                raise UnexpectedWidgetError("wrong iter selected")
-
-    def _disallow_base_with_child(self, view, tabs, was_base):
-        """Called when a base tab was selected and a child has been added to
-        the selection or visa versa; keeps whichever is newer.
-        """
-        self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
-        if self._is_base_selected and len(tabs) > 1:
-            root = self._selected_tablist.iter_map[self._selected_tablist.info.id]
-            if was_base: # unselect base if it was already selected
-                if (self._selected_tablist.type ==
-                        self._previous_selection):
-                    view.unselect(root)
-            else: # unselect everything but base if base is newly selected
-                view.unselect_all(signal=False)
-                view.select(root)
-        iters = view.get_selection()
-        tabs = [view.model[i][0] for i in iters]
-        self._is_base_selected = any(tab.type == 'tab' for tab in tabs)
-        return iters, tabs
+        if iter_ and len(tabs) > 1 and view.model[iter_][0] != tabs[0]:
+            raise UnexpectedWidgetError("wrong iter selected")
 
     def _restore(self, or_bust=False):
         """Restore the saved selection."""

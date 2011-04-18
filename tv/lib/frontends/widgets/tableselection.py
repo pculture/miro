@@ -86,13 +86,17 @@ class SelectionOwnerMixin(object):
 
         :raises WidgetActionError: iter does not exist or is not selectable
         """
-        self._validate_iter(iter_)
-        if signal:
-            self._select(iter_)
-        else:
-            with self._ignoring_changes():
+        self.select_iters((iter_,), signal)
+
+    def select_iters(self, iters, signal=False):
+        """Try to select multiple iters (signaling at most once).
+
+        :raises WidgetActionError: iter does not exist or is not selectable
+        """
+        with self._ignoring_changes(not signal):
+            for iter_ in iters:
                 self._select(iter_)
-        if not self._is_selected(iter_):
+        if not all(self._is_selected(iter_) for iter_ in iters):
             raise WidgetActionError("the specified iter cannot be selected")
 
     def is_selected(self, iter_):
@@ -105,6 +109,12 @@ class SelectionOwnerMixin(object):
         self._validate_iter(iter_)
         with self._ignoring_changes():
             self._unselect(iter_)
+
+    def unselect_iters(self, iters):
+        """Unselect iters. Fails silently if the iters are not selected."""
+        with self._ignoring_changes():
+            for iter_ in iters:
+                self.unselect(iter_)
 
     def unselect_all(self, signal=True):
         """Unselect all. emits only the 'deselected' signal."""
@@ -163,16 +173,18 @@ class SelectionOwnerMixin(object):
         """
 
     @contextmanager
-    def _ignoring_changes(self):
+    def _ignoring_changes(self, ignoring=True):
         """Use this with with to prevent sending signals when we're changing
         our own selection; that way, when we get a signal, we know it's
         something important.
         """
-        self._ignore_selection_changed += 1
+        if ignoring:
+            self._ignore_selection_changed += 1
         try:
             yield
         finally:
-            self._ignore_selection_changed -= 1
+            if ignoring:
+                self._ignore_selection_changed -= 1
 
     def set_selection(self, iters, signal=False):
         """Set the selection to the given iters, replacing any previous
