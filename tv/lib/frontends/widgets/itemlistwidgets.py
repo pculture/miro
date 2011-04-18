@@ -941,7 +941,7 @@ class ListView(ItemView, SorterOwner):
             header = widgetconst.COLUMN_LABELS[name]
         renderer = self.renderer_set.get(name)
         column = widgetset.TableColumn(header, renderer,
-            SortBarButton(header, column=True, renderer=renderer))
+            ListViewSorter(header, renderer))
         column.set_min_width(renderer.min_width)
         column.set_resizable(not name in widgetconst.NO_RESIZE_COLUMNS)
         pad = not name in widgetconst.NO_PAD_COLUMNS
@@ -1356,7 +1356,7 @@ class HeaderToolbar(Toolbar, SorterOwner):
         self.background_image.draw(context, 0, 0, context.width, context.height)
 
     def make_sorter(self, sort_key):
-        button = SortBarButton(widgetconst.COLUMN_LABELS[sort_key])
+        button = StandardViewSorter(widgetconst.COLUMN_LABELS[sort_key])
         button.connect('clicked', self.on_sorter_clicked, sort_key)
         try:
             left = [b for b in self._button_hbox.children][-1]
@@ -1372,13 +1372,12 @@ class HeaderToolbar(Toolbar, SorterOwner):
         height = self._button_hbox.get_size_request()[1]
         return width, height
 
-class SortBarButton(widgetset.CustomButton):
-    def __init__(self, text, column=False, renderer=None):
+class SorterWidget(widgetset.CustomButton):
+    """Widget that displays and sets the sort state."""
+    def __init__(self, text):
         widgetset.CustomButton.__init__(self)
         self.set_can_focus(False)
         self._text = text
-        self._renderer = renderer
-        self._column = column
         self._enabled = False
         self._ascending = False
         self.state = 'normal'
@@ -1466,25 +1465,7 @@ class SortBarButton(widgetset.CustomButton):
         layout.set_text_color((text, text, text))
         textbox = layout.textbox(self._text)
         text_size = textbox.get_size()
-        triangle_padding = 0
-        if self._enabled:
-            triangle_padding = 6 + 6
-        if not self._column:
-            x = (context.width - text_size[0] - triangle_padding) / 2
-            if x < 0:
-                x = 12
-            arrow_start = text_size[0] + x + 6
-        else:
-            right_aligned = getattr(self._renderer, 'right_aligned', False)
-            if right_aligned:
-                x = context.width - text_size[0] - 8
-                if x < 0:
-                    x = 8
-                arrow_start = x - 15
-            if not right_aligned or arrow_start < 0:
-                # Fallback or left aligned
-                x = 8
-                arrow_start = text_size[0] + 15
+        x, arrow_start = self.get_offsets(context, text_size)
         y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
         textbox.draw(context, x, y, text_size[0], text_size[1])
         if self._enabled:
@@ -1506,6 +1487,47 @@ class SortBarButton(widgetset.CustomButton):
         context.rel_line_to(-3, 4 * direction)
         context.rel_line_to(-3, -4 * direction)
         context.fill()
+
+    def get_offsets(self, context, text_size):
+        """Return the left offsets for the text and the sort indicator."""
+        raise NotImplementedError
+
+class StandardViewSorter(SorterWidget):
+    """StandardView sort button."""
+    def get_offsets(self, context, text_size):
+        """Alignment is simple is StandardView: show text with an arrow to the
+        right; our total width is just enough for the text and the arrow.
+        """
+        triangle_padding = 0
+        if self._enabled:
+            triangle_padding = 6 + 6
+        x = (context.width - text_size[0] - triangle_padding) / 2
+        if x < 0:
+            x = 12
+        arrow_start = text_size[0] + x + 6
+        return x, arrow_start
+
+class ListViewSorter(SorterWidget):
+    """ListView column header.
+    
+    Currently only used on OS X (16579).
+    """
+    def __init__(self, text, renderer):
+        SorterWidget.__init__(self, text)
+        self._renderer = renderer
+
+    def get_offsets(self, context, text_size):
+        right_aligned = getattr(self._renderer, 'right_aligned', False)
+        if right_aligned:
+            x = context.width - text_size[0] - 8
+            if x < 0:
+                x = 8
+            arrow_start = x - 15
+        if not right_aligned or arrow_start < 0:
+            # Fallback or left aligned
+            x = 8
+            arrow_start = text_size[0] + 15
+        return x, arrow_start
 
 class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.
