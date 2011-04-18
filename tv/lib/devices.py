@@ -66,17 +66,25 @@ class BaseDeviceInfo(object):
     """
     Base class for device information.
     """
-
+    # NB: We don't really need to be using __slots__ here; it's not using that
+    # much memory.  But, since we need a list of the attributes anyways, we
+    # might as well save a bit of memory anyways.
+    __slots__ = ['name', 'device_name', 'vendor_id', 'product_id',
+                 'video_conversion', 'video_path',
+                 'audio_conversion', 'audio_path', 'audio_types',
+                 'mount_instructions']
     def update(self, kwargs):
-        self.__dict__.update(kwargs)
-        if 'audio_path' in kwargs:
-            self.audio_path = unicode_to_path(self.audio_path)
-        if 'video_path' in kwargs:
-            self.video_path = unicode_to_path(self.video_path)
+        for key, value in kwargs.items():
+            if key == 'audio_path':
+                self.audio_path = unicode_to_path(value)
+            elif key == 'video_path':
+                self.video_path = unicode_to_path(value)
+            else:
+                setattr(self, key, value)
 
     def __getattr__(self, key):
         try:
-            return self.__dict__[key]
+            return super(BaseDeviceInfo, self).__getattr_(key)
         except (AttributeError, KeyError):
             if key == 'parent' or not hasattr(self, 'parent'):
                 raise AttributeError(key)
@@ -84,11 +92,7 @@ class BaseDeviceInfo(object):
                 return getattr(self.parent, key)
 
     def validate(self):
-        required = ['name', 'device_name', 'vendor_id', 'product_id',
-                    'video_conversion', 'video_path',
-                    'audio_conversion', 'audio_path', 'audio_types',
-                    'mount_instructions']
-        for key in required:
+        for key in BaseDeviceInfo.__slots__:
             getattr(self, key)
 
 class DeviceInfo(BaseDeviceInfo):
@@ -110,6 +114,7 @@ class DeviceInfo(BaseDeviceInfo):
                        info
     """
     has_multiple_devices = False
+    __slots__ = BaseDeviceInfo.__slots__ + ['parent']
 
     def __init__(self, name, **kwargs):
         self.name = name
@@ -128,7 +133,7 @@ class MultipleDeviceInfo(BaseDeviceInfo):
     USB information.
     """
     has_multiple_devices = True
-
+    __slots__ = BaseDeviceInfo.__slots__ + ['devices']
     def __init__(self, device_name, children, **kwargs):
         self.device_name = self.name = device_name
         self.update(kwargs)
@@ -139,6 +144,11 @@ class MultipleDeviceInfo(BaseDeviceInfo):
     def add_device(self, info):
         self.devices[info.name] = info
         info.parent = self
+        for key in BaseDeviceInfo.__slots__:
+            try:
+                getattr(self, key)
+            except (AttributeError, KeyError):
+                setattr(self, key, getattr(info, key))
 
     def get_device(self, name):
         """
@@ -390,16 +400,15 @@ class DeviceManager(object):
 
         info = self.connected[id_]
 
-        if self._is_hidden(info):
-            # don't bother with change message on devices we're not showing
-            return
-
         if info.mount:
             # turn off the autosaving on the old database
             info.database.disconnect_all()
 
         info = self._set_connected(id_, kwargs)
 
+        if self._is_hidden(info):
+            # don't bother with change message on devices we're not showing
+            return
 
         if info.mount:
             self.info_cache.setdefault(info.mount, {})

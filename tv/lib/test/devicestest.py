@@ -149,6 +149,35 @@ devices = [target1]
         device = dm.get_device_by_id(0x1234, 0x4567)
         self.assertEqual(device.name, "Target1")
 
+    def test_multiple_device_gets_data_from_first_child(self):
+        """
+        If a MultipleDeviceInfo object is created without all the appropriate
+        data, it will grab it from its first child.
+        """
+        self.build_config_file(
+            "foo.py",
+            """from miro.devices import DeviceInfo, MultipleDeviceInfo
+defaults = {
+    "audio_conversion": "mp3",
+    "audio_types": ".mp3 .aac".split(),
+    "mount_instructions": "Mount Instructions\\nOver multiple lines",
+    "video_path": u"Video",
+    "audio_path": u"Audio",
+    }
+target1 = DeviceInfo("Target1",
+                     vendor_id=0x890a,
+                     product_id=0xbcde,
+                     video_conversion="mp4",
+                     **defaults)
+multiple = MultipleDeviceInfo('Foo', [target1])
+devices = [multiple]
+""")
+        dm = devices.DeviceManager()
+        dm.load_devices(os.path.join(self.tempdir, '*.py'))
+        device = dm.get_device('Foo')
+        self.assertTrue(device.has_multiple_devices)
+        self.assertEqual(device.video_conversion, "mp4")
+
 class DeviceHelperTest(MiroTestCase):
 
     def test_load_database(self):
