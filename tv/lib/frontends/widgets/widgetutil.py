@@ -564,6 +564,19 @@ class MultiStateTitlebarButton(widgetset.CustomButton):
         text_y = (context.height - text_height) / 2
         textbox.draw(context, 28, text_y, text_width, text_height)
 
+class RoundedSolidBackground(widgetset.Background):
+    SIZE = 10
+
+    def __init__(self, color):
+        self.color = color
+        widgetset.Background.__init__(self)
+
+    def draw(self, context, layout):
+        round_rect(context, 0, 0, context.width, context.height,
+                   self.SIZE)
+        context.set_color(self.color)
+        context.fill()
+
 class Shadow(object):
     """Encapsulates all parameters required to draw shadows.
     """

@@ -49,6 +49,7 @@ from miro.frontends.widgets import guidecontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
 from miro.frontends.widgets import sharingcontroller
+from miro.frontends.widgets import searchcontroller
 from miro.frontends.widgets import tabcontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
@@ -450,7 +451,7 @@ class SearchDisplay(ItemListDisplay):
         return tab_type == 'search' and selected_tabs[0].id == 'search'
 
     def make_controller(self, tab):
-        return itemlistcontroller.SearchController()
+        return searchcontroller.SearchController()
 
 class AudioVideoItemsDisplay(ItemListDisplay):
     def __init__(self):
