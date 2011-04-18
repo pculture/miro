@@ -558,6 +558,7 @@ class ToggleButtonBackground(widgetset.Background):
         self.left_edge = left_edge
         self.right_edge = right_edge
         self.surface = widgetutil.ThreeImageSurface()
+        self.set_can_focus(False)
 
     def draw(self, context, _layout):
         active = self.active and 'active' or 'inactive'
@@ -588,6 +589,7 @@ class ToggleButton(widgetset.CustomButton):
         self._width = None
         self._height = 24
         self.selected = False
+        self.set_can_focus(False)
 
     def set_selected(self, selected):
         """Set whether this button is the selected button."""
