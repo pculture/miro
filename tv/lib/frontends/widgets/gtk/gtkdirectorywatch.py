@@ -34,6 +34,7 @@ import os
 import gio
 import glib
 import gtk
+import gobject
 
 from miro import directorywatch
 from miro import eventloop
@@ -58,7 +59,7 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
     def _add_subdirectories(self, f):
         try:
             dir_list = f.enumerate_children('standard::*')
-        except gio.Error, e:
+        except (gio.Error, gobject.GError), e:
             logging.warn("Error calling enumerate_children on %s: %s",
                     f.get_path(), e)
             return
@@ -81,7 +82,7 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
     def _on_file_added(self, f):
         try:
             info = f.query_info('standard::*')
-        except gio.Error, e:
+        except (gio.Error, gobject.GError), e:
             logging.warn("Error calling query_info on %s: %s",
                     f.get_path(), e)
             return
