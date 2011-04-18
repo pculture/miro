@@ -133,8 +133,11 @@ class Field(object):
     def set_label_width(self, width):
         self.label_width = width
 
-    def get_box(self, parts=False):
-        """Return the displayable widget for this field."""
+    def get_box(self, partial=False):
+        """Return the displayable widget for this field.
+        
+        :param partial: set if this is not the last field in its row
+        """
         box = widgetset.HBox()
         if self.inside:
             # not aligned with anything, close to its widget, on the right
@@ -154,7 +157,7 @@ class Field(object):
         packables.extend(self.extra)
         for packable in packables[:-1]:
             box.pack_start(packable, expand=True)
-        if parts:
+        if partial:
             parts_right_pad = 4
         else:
             parts_right_pad = 20
@@ -412,7 +415,7 @@ class MultifieldRow(object):
         for field in self.fields[1:-1]:
             field.set_inside()
         for field in self.fields[:-1]:
-            box.pack_start(field.get_box(parts=True))
+            box.pack_start(field.get_box(partial=True))
         # XXX: not quite right when you enable this - the layout API needs
         # to improve.  Needs to be able to set left/middle/right and also
         # deal with things packed into different hbox and vboxes.  But
