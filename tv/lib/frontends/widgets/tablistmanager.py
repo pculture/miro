@@ -245,7 +245,10 @@ class TabListManager(dict):
         try:
             self[list_type].view.set_selection_as_strings(self._restoring[1:])
         except WidgetActionError, error:
-            logging.debug("not restoring yet: %s", error.reason)
+            if or_bust:
+                self.on_selection_invalid(None, self[list_type])
+            else:
+                logging.debug("not restoring yet: %s", error.reason)
         else:
             self._select_from_tab_list(list_type, or_bust=or_bust)
 
@@ -288,7 +291,7 @@ class TabListManager(dict):
         """
         if self._restoring and self._restoring[0] == tab_list.type:
             # we may be waiting for this tab to switch to it
-            list_type = self._restore(or_bust=True)
+            self._restore(or_bust=True)
 
     def on_moved_tabs_to_list(self, _tab_list, destination):
         """Handle tabs being moved between tab lists."""
