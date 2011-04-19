@@ -749,26 +749,6 @@ class DaapClient(object):
         self.port = port
         self.session = None
 
-    # Caveat emptor when using it.
-    # if (test) { do_something(); } is NOT SAFE generally!
-    def alive(self):
-        # XXX dodgy: pokes into the sock of HTTPConnection but we have no
-        # choice.
-        if not self.conn or not self.conn.sock:
-            return False
-        sock = self.conn.sock
-        buf = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVLOWAT)
-        while True:
-            try:
-                data = sock.recv(buf, socket.MSG_PEEK)
-            except socket.error, (err, errstring):
-                if err == errno.EAGAIN:
-                    return True
-                # Anything else we treat as a connection failure.
-                if err in (errno.EINTR, errno.ENOBUFS):
-                    continue
-                return False
-
     def heartbeat_callback(self):
         try:
             # NB: This is a third connection in addition to the control
@@ -953,6 +933,8 @@ class DaapClient(object):
                 httplib.BadStatusLine, AttributeError, IOError):
             pass
         finally:
+            # self.conn may be invalid at this point but that's okay, finally
+            # block doesn't raise exception but just prints it out.
             self.session = None
             self.conn.close()
             self.conn = None

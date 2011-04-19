@@ -246,18 +246,8 @@ class SharingTracker(object):
         self.event = threading.Event()
 
     def mdns_callback(self, added, fullname, host, port):
-        # alive is used to determine whether the client is still alive or not
-        # when the share goes away so we may be able to keep it.  Done here
-        # because we don't want to block the backend thread.
-        alive = False
-        try:
-            share_id = self.name_to_id_map[fullname]
-            tracker = self.trackers[share_id]
-            alive = tracker.client.alive()
-        except KeyError:
-            pass
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
-                                  args=[added, fullname, host, port, alive])
+                                  args=[added, fullname, host, port])
 
     def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
@@ -292,7 +282,7 @@ class SharingTracker(object):
                                  testconnect,
                                  'DAAP test connect')
 
-    def mdns_callback_backend(self, added, fullname, host, port, alive):
+    def mdns_callback_backend(self, added, fullname, host, port):
         if fullname == app.sharing_manager.name:
             return
         # Need to come up with a unique ID for the share.  We want to use the 
@@ -345,8 +335,10 @@ class SharingTracker(object):
                     has_key = True
                     break
             if has_key:
+                if info.stale_callback:
+                    info.stale_callback.cancel()
+                    info.stale_callback = None
                 info.name = fullname
-                info.stale = False
                 message = messages.TabsChanged('connect', [], [info], [])
                 message.send_to_frontend()
             else:
@@ -356,10 +348,12 @@ class SharingTracker(object):
                 if share_id in self.available_shares.keys():
                     info = self.available_shares[share_id]
                     info.name = fullname
-                    info.stale = False
                     if info.share_available:
                         logging.debug('Share already registered and '
                                       'available, sending TabsChanged only')
+                        if info.stale_callback:
+                            info.stale_callback.cancel()
+                            info.stale_callback = None
                         message = messages.TabsChanged('connect', [],
                                                        [info], [])
                         message.send_to_frontend()
@@ -382,25 +376,24 @@ class SharingTracker(object):
                 if victim.connect_uuid is None:
                     messages.SharingDisappeared(victim).send_to_frontend()
             else:
-                # If we are connected see if it's still alive.
-                # Note that this isn't 100% correct, because depending on the
-                # ordering of things happening there is a minute chance that
-                # the share may still be alive at this point.  There is
-                # a proposed solution in libdaap that's not implemented that
-                # details how we can do it better using only HTTP/1.1.
-                #
-                # We don't remove ourselves from the list of available
-                # shares though unless we are removing the tab, just mark
-                # it as stale and we'll reap it later.
+                # We don't know if the share's alive or not... what to do
+                # here?  Let's add a timeout of 2 secs, if no added message
+                # comes in, assume it's gone bye...
                 share_info = self.available_shares[share_id]
                 share = self.trackers[share_id]
                 if share.share != share_info:
                     logging.error('Share disconn error: share info != share')
-                if not alive:
-                    del self.available_shares[share_id]
-                    messages.SharingDisappeared(share_info).send_to_frontend()
-                else:
-                    share_info.stale = True
+                dc = eventloop.add_timeout(2, self.remove_timeout_callback,
+                                      "share tab removal timeout callback",
+                                      args=(share_id, share_info))
+                # Cancel pending callback is there is one.
+                if share.share.stale_callback:
+                    share.share.stale_callback.cancel()
+                share.share.stale_callback = dc
+
+    def remove_timeout_callback(self, share_id, share_info):
+        del self.available_shares[share_id]
+        messages.SharingDisappeared(share_info).send_to_frontend()
 
     def server_thread(self):
         # Wait for the resume message from the sharing manager as 
@@ -472,14 +465,6 @@ class SharingTracker(object):
 
     def eject(self, share_id):
         tracker = self.trackers[share_id]
-        # Do we need to remove a available_shares that was delayed?
-        try:
-            info = self.available_shares[share_id]
-            # If the info is stale, remove it.
-            if info.stale:
-                del self.available_shares[share_id]
-        except KeyError:
-            pass
         del self.trackers[share_id]
         tracker.client_disconnect()
 

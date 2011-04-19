@@ -1657,6 +1657,7 @@ class SharingInfo(object):
         self.host = host
         self.port = port
         self.share_available = False
+        self.stale_callback = None
         self.mount = False
         self.stale = False
         self.is_updating = False
