@@ -222,7 +222,7 @@ def get_menu():
                     MenuItem(_("Check Version"), "CheckVersion"),
                     Separator(),
                     MenuItem(_("Remove Item"), "RemoveItems",
-                             groups=["LocalPlayablesSelected_PlayPause"],
+                             groups=["LocalItemsSelected"],
                              plural=_("Remove Items")),
                     MenuItem(_("Edit _Item"), "EditItems", Shortcut("i", MOD),
                              groups=["LocalItemsSelected"],
@@ -913,16 +913,15 @@ class MenuStateManager(signals.SignalEmitter):
             else:
                 self.states["plural"].append("RemoveItems")
 
-        if app.item_list_controller_manager.can_play_items():
+        can_play = app.item_list_controller_manager.can_play_items()
+        if can_play:
             self.enabled_groups.add('PlayPause')
             if not is_remote:
                 self.enabled_groups.add('LocalPlayableSelected_PlayPause')
                 self.enabled_groups.add('LocalPlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayableSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
-            app.widgetapp.window.videobox.handle_new_selection(True)
-        else:
-            app.widgetapp.window.videobox.handle_new_selection(False)
+        app.widgetapp.window.videobox.handle_new_selection(can_play)
 
     def update_menus(self):
         self.reset()

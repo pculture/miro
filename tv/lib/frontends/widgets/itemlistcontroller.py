@@ -521,10 +521,7 @@ class ItemListController(object):
         self._play_item_list(None, presentation_mode, force_resume)
 
     def can_play_items(self):
-        for info in self.item_list.model.info_list():
-            if info.is_playable:
-                return True
-        return False
+        return any(i.is_playable for i in self.item_list.model.info_list())
 
     def _play_item_list(self, start_id, presentation_mode='fit-to-bounds',
             force_resume=False):
