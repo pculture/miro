@@ -250,27 +250,33 @@ class ConnectTab(widgetset.VBox):
 
         vbox = widgetset.VBox()
         hbox = widgetset.HBox(spacing=30)
-        self.share_audio_cbx = widgetset.Checkbox(_("Music"))
-        self.share_video_cbx = widgetset.Checkbox(_("Videos"))
+        self.share_audio_cbx = widgetset.Checkbox(_("Share Music"))
+        self.share_video_cbx = widgetset.Checkbox(_("Share Videos"))
         self.share_warnonquit_cbx = widgetset.Checkbox(
             _('Warn on quit when others are connected to my media library.'))
-        hbox.pack_start(widgetutil.align_top(self.share_video_cbx))
-        hbox.pack_start(widgetutil.align_top(self.share_audio_cbx))
         self.share_button = PrettyToggleButton()
         self.share_button.connect('clicked', self.daap_changed)
         self.share_button.connect('dragged-left', self.daap_changed)
         self.share_button.connect('dragged-right', self.daap_changed)
         self.share_button.set_value(app.config.get(prefs.SHARE_MEDIA))
+        hbox2 = widgetset.HBox()
+        hbox2.pack_start(widgetutil.align_top((widgetutil.pad(
+                         widgetutil.align_top(self.share_button),
+                         left=20, right=0, top=15, bottom=10))))
+        hbox = widgetset.HBox()
         prefpanel.attach_boolean(self.share_audio_cbx, prefs.SHARE_AUDIO)
         prefpanel.attach_boolean(self.share_video_cbx, prefs.SHARE_VIDEO)
-        hbox.pack_end(widgetutil.align_top(self.share_button))
+        hbox.pack_start(self.share_video_cbx)
+        hbox.pack_start(widgetutil.pad(self.share_audio_cbx, left=15))
         vbox.pack_start(hbox)
 
         hbox = widgetset.HBox()
-        hbox.pack_start(widgetset.Label(
-            _("My %(shortappname)s Share Name", self.trans_data)))
+        label = widgetset.Label(_("My %(shortappname)s Share Name",
+                                self.trans_data))
+        label.set_bold(True)
+        hbox.pack_start(widgetutil.pad(label, left=3, top=15))
         self.share_entry = widgetset.TextEntry()
-        self.share_entry.set_size_request(230, -1)
+        self.share_entry.set_size_request(400, -1)
         share_error = prefpanel.build_error_image()
         prefpanel.attach_text(self.share_entry,
                               prefs.SHARE_NAME,
@@ -283,15 +289,19 @@ class ConnectTab(widgetset.VBox):
             self.share_audio_cbx.disable()
             self.share_warnonquit_cbx.disable()
 
-        hbox.pack_start(widgetutil.pad(self.share_entry, left=5))
+        vbox.pack_start(hbox)
+        hbox = widgetset.HBox()
+        hbox.pack_start(widgetutil.pad(self.share_entry, left=2, top=15))
         hbox.pack_start(share_error)
         vbox.pack_start(hbox)
-        vbox.pack_start(widgetutil.pad(self.share_warnonquit_cbx, top=20))
+        vbox.pack_start(widgetutil.pad(self.share_warnonquit_cbx, left=0, top=15))
 
         bg = widgetutil.RoundedSolidBackground(
             widgetutil.css_to_color('#e4e4e4'))
         bg.set_size_request(550, -1)
-        bg.add(widgetutil.pad(vbox, 20, 20, 20, 20))
+        hbox2.pack_start(widgetutil.pad(vbox, 20, 20, 20, 20))
+        bg.add(hbox2)
+
         bottom.pack_start(widgetutil.align_left(bg, left_pad=20,
                                                 bottom_pad=50))
 
