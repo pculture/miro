@@ -558,7 +558,6 @@ class ToggleButtonBackground(widgetset.Background):
         self.left_edge = left_edge
         self.right_edge = right_edge
         self.surface = widgetutil.ThreeImageSurface()
-        self.set_can_focus(False)
 
     def draw(self, context, _layout):
         active = self.active and 'active' or 'inactive'
