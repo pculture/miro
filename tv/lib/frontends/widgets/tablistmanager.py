@@ -147,15 +147,7 @@ class TabListManager(dict):
             return None
 
     def _handle_no_tabs_selected(self, _selected_tablist):
-        """No tab is selected; select a fallback.
-        
-        [XXX:historical note:'This may be about to be overwritten by
-        on_row_collapsed, but there's no way to tell.' This is no longer true -
-        we should check whether that means this method can be simplified, then
-        delete this note.]
-
-        After _handle_no_tabs_selected, something is guaranteed to be selected.
-        """
+        """No tab is selected; select a fallback."""
         self._before_no_tabs = self._previous_selection
         logging.warn('_handle_no_tabs_selected')
         if hasattr(_selected_tablist, 'info'):
@@ -246,7 +238,7 @@ class TabListManager(dict):
             self[list_type].view.set_selection_as_strings(self._restoring[1:])
         except WidgetActionError, error:
             if or_bust:
-                self.on_selection_invalid(None, self[list_type])
+                self._handle_no_tabs_selected(self[list_type])
             else:
                 logging.debug("not restoring yet: %s", error.reason)
         else:
@@ -302,5 +294,4 @@ class TabListManager(dict):
         the root node.
         """
         logging.debug("deleted selected node?")
-        root = tab_list.iter_map[tab_list.info.id]
-        self._select_from_tab_list(tab_list.type, root)
+        self._handle_no_tabs_selected(tab_list)
