@@ -1516,7 +1516,7 @@ class EmptyListHeader(widgetset.Alignment):
         self.label = widgetset.Label(text)
         self.label.set_bold(True)
         self.label.set_color((0.8, 0.8, 0.8))
-        self.label.set_size(2)
+        self.label.set_size(widgetutil.font_scale_from_osx_points(30))
         self.add(self.label)
 
 class EmptyListDescription(widgetset.Alignment):

@@ -199,7 +199,7 @@ class ConnectTab(widgetset.VBox):
             resources.path('images/icon-connect_large.png')))
         title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Connect"))
-        label.set_size(2)
+        label.set_size(widgetutil.font_scale_from_osx_points(30))
         label.set_bold(True)
         title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(title, top_pad=30,
@@ -429,7 +429,7 @@ class SourcesTab(widgetset.VBox):
                 resources.path('images/icon-source_large.png')))
         title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Sources"))
-        label.set_size(2)
+        label.set_size(widgetutil.font_scale_from_osx_points(30))
         label.set_bold(True)
         title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(
@@ -493,7 +493,7 @@ class PlaylistsTab(widgetset.VBox):
                 resources.path('images/icon-playlist_large.png')))
         title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Playlists"))
-        label.set_size(2)
+        label.set_size(widgetutil.font_scale_from_osx_points(30))
         label.set_bold(True)
         title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(
@@ -543,7 +543,7 @@ class StoresTab(widgetset.VBox):
                 resources.path('images/icon-store_large.png')))
         title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(_("Stores"))
-        label.set_size(2)
+        label.set_size(widgetutil.font_scale_from_osx_points(30))
         label.set_bold(True)
         title.pack_start(widgetutil.align_middle(label, left_pad=5))
         self.pack_start(widgetutil.align_center(

@@ -682,7 +682,8 @@ class MultipleSelectionDisplay(TabDisplay):
                 self.child_count += 1
         vbox = widgetset.VBox(spacing=20)
         label = self._make_label(tab_type, selected_tabs)
-        label.set_size(2)
+        label.set_size(widgetutil.font_scale_from_osx_points(30))
+        label.set_bold(True)
         label.set_color((0.3, 0.3, 0.3))
         vbox.pack_start(widgetutil.align_center(label))
         vbox.pack_start(widgetutil.align_center(

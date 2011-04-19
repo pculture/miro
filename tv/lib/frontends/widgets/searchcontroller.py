@@ -85,7 +85,7 @@ class EmptySearchList(widgetset.SolidBackground):
         title.pack_start(widgetutil.align_middle(logo))
         label = widgetset.Label(self.TITLE)
         label.set_bold(True)
-        label.set_size(2)
+        label.set_size(widgetutil.font_scale_from_osx_points(30))
         title.pack_start(widgetutil.align_middle(label, left_pad=5))
         vbox.pack_start(widgetutil.align_center(title, bottom_pad=20))
         desc = widgetset.Label(self.DESC)
