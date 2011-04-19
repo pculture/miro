@@ -995,44 +995,6 @@ class ListView(ItemView, SorterOwner):
         for name, sorter in self.sorters.iteritems():
             sorter.set_width(self.column_widths[name])
 
-class HideableSection(widgetutil.HideableWidget):
-    """Widget that contains an ItemView, along with an expander to
-    show/hide it.
-
-    The label for a HideableSection expander is made up of 2 parts.
-    The header is displayed first using a bold text, then the info is
-    displayed using normal font.
-    """
-
-    def __init__(self, header_text, item_view):
-        self.expander = widgetset.Expander(item_view)
-        self.expander.set_expanded(False)
-        widget = widgetutil.pad(self.expander, top=3, bottom=3, left=5)
-        self._make_label(header_text)
-        widgetutil.HideableWidget.__init__(self, widget)
-
-    def set_info(self, text):
-        self.info_label.set_text(text)
-
-    def set_header(self, text):
-        self.header_label.set_text(text)
-
-    def expand(self):
-        self.expander.set_expanded(True)
-
-    def _make_label(self, header_text):
-        hbox = widgetset.HBox()
-        self.header_label = widgetset.Label(header_text)
-        self.header_label.set_size(0.85)
-        self.header_label.set_bold(True)
-        self.header_label.set_color((0.27, 0.27, 0.27))
-        hbox.pack_start(self.header_label)
-        self.info_label = widgetset.Label("")
-        self.info_label.set_size(0.85)
-        self.info_label.set_color((0.72, 0.72, 0.72))
-        hbox.pack_start(widgetutil.pad(self.info_label, left=7))
-        self.expander.set_label(hbox)
-
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed
     status.
