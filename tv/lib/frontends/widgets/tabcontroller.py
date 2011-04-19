@@ -274,7 +274,7 @@ class ConnectTab(widgetset.VBox):
         share_error = prefpanel.build_error_image()
         prefpanel.attach_text(self.share_entry,
                               prefs.SHARE_NAME,
-                              error_widget=share_error,
+                              share_error,
                               check_function=prefpanel.text_is_not_blank)
 
         if not self.share_button.get_value():

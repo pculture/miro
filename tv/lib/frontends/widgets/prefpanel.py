@@ -177,7 +177,7 @@ def attach_radio(widget_values, descriptor):
     for w, v in widget_values:
         w.connect('clicked', radio_changed)
 
-def attach_integer(widget, descriptor, error_widget=None, check_function=None):
+def attach_integer(widget, descriptor, error_widget, check_function=None):
     """This is for preferences implemented as a text entry where the
     value is an integer.
 
@@ -197,14 +197,22 @@ def attach_integer(widget, descriptor, error_widget=None, check_function=None):
         except ValueError:
             error_widget.show()
 
+    def restore(widget, error_widget):
+        widget.freeze_signals()
+        widget.set_text(str(app.config.get(descriptor)))
+        widget.thaw_signals()
+        error_widget.hide()
+
     def save_value(widget):
         try:
             v = int(widget.get_text().strip())
             if ((check_function != None and
-                 not check_function(error_widget, v))):
+              not check_function(error_widget, v))):
+                restore(widget, error_widget)
                 return
             app.config.set(descriptor, v)
         except ValueError:
+            restore(widget, error_widget)
             pass
 
     def on_config_changed(obj, key, value):
@@ -233,7 +241,7 @@ def float_value_to_text(value):
         text = "0"
     return text
 
-def attach_float(widget, descriptor, error_widget=None, check_function=None):
+def attach_float(widget, descriptor, error_widget, check_function=None):
     """This is for preferences implemented as a text entry where the
     value is a float.
 
@@ -254,14 +262,22 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
         except ValueError:
             error_widget.show()
 
+    def restore(widget, error_widget):
+        widget.freeze_signals()
+        widget.set_text(float_value_to_text(app.config.get(descriptor)))
+        widget.thaw_signals()
+        error_widget.hide()
+
     def save_value(widget):
         try:
             v = float(widget.get_text().strip())
             if ((check_function != None and
-                 not check_function(error_widget, v))):
+              not check_function(error_widget, v))):
+                restore(widget, error_widget)
                 return
             app.config.set(descriptor, v)
         except ValueError:
+            restore(widget, error_widget)
             pass
 
     def on_config_changed(obj, key, value):
@@ -276,7 +292,7 @@ def attach_float(widget, descriptor, error_widget=None, check_function=None):
         widget.connect('changed', check_value)
     widget.connect('focus-out', save_value)
 
-def attach_text(widget, descriptor, error_widget=None, check_function=None):
+def attach_text(widget, descriptor, error_widget, check_function=None):
     """This is for text entry preferences.
 
     It allows for a check_function which takes a widget and a value
@@ -296,14 +312,22 @@ def attach_text(widget, descriptor, error_widget=None, check_function=None):
         except ValueError:
             error_widget.show()
 
+    def restore(widget, error_widget):
+        widget.freeze_signals()
+        widget.set_text(str(app.config.get(descriptor)))
+        widget.thaw_signals()
+        error_widget.hide()
+
     def save_value(widget):
         try:
             v = widget.get_text().strip().encode('utf-8')
             if check_function is not None:
                 if not check_function(error_widget, v):
+                    restore(widget, error_widget)
                     return
             app.config.set(descriptor, v)
         except ValueError:
+            restore(widget, error_widget)
             pass
 
     def on_config_changed(obj, key, value):
@@ -886,7 +910,7 @@ class SharingPanel(PanelBuilder):
         attach_boolean(share_video_cbx, prefs.SHARE_VIDEO)
         share_error = build_error_image()
         attach_text(share_txt, prefs.SHARE_NAME,
-                    error_widget=share_error,
+                    share_error,
                     check_function=text_is_not_blank)
 
         # Do this after the attach so we can override the preference
