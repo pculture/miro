@@ -292,7 +292,7 @@ def attach_float(widget, descriptor, error_widget, check_function=None):
         widget.connect('changed', check_value)
     widget.connect('focus-out', save_value)
 
-def attach_text(widget, descriptor, error_widget, check_function=None):
+def attach_text(widget, descriptor, error_widget=None, check_function=None):
     """This is for text entry preferences.
 
     It allows for a check_function which takes a widget and a value
