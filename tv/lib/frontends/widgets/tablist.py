@@ -568,6 +568,9 @@ class HideableTabList(TabList):
             return True
         return TabList.on_key_press(self, view, key, mods)
 
+    def on_delete_key_pressed(self):
+        app.widgetapp.remove_something()
+
     def on_row_clicked(self, view, iter_):
         if view.model[iter_][0] is self.info:
             if not view.is_row_expanded(iter_):
@@ -652,10 +655,6 @@ class HideableTabList(TabList):
             count += 1
             child_iter = self.view.model.next_iter(child_iter)
         return count
-
-    def on_delete_key_pressed(self):
-        """For subclasses to override."""
-        pass
 
 class DeviceTabListHandler(object):
     def __init__(self, tablist):
@@ -874,9 +873,6 @@ class SiteList(HideableTabList):
         HideableTabList.__init__(self)
         self.default_info = None
 
-    def on_delete_key_pressed(self):
-        app.widgetapp.remove_current_site()
-
     def init_info(self, info):
         if info is self.info:
             return
@@ -908,10 +904,10 @@ class SiteList(HideableTabList):
                 return []
             return [(_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
                     (_('Rename Source'), app.widgetapp.rename_something),
-                    (_('Remove Source'), app.widgetapp.remove_current_site)]
+                    (_('Remove Source'), app.widgetapp.remove_something)]
         else:
             return [
-                (_('Remove Sources'), app.widgetapp.remove_current_site),
+                (_('Remove Sources'), app.widgetapp.remove_something),
                 ]
 
     def get_default(self):
@@ -965,9 +961,6 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
         self.view.set_drag_source(FeedListDragHandler())
         self.view.set_drag_dest(FeedListDropHandler(self))
 
-    def on_delete_key_pressed(self):
-        app.widgetapp.remove_current_feed()
-
     def init_info(self, info):
         if info is self.info:
             return
@@ -1010,7 +1003,7 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
             (_('Update Podcasts In Folder'),
              app.widgetapp.update_selected_feeds),
             (_('Rename Podcast Folder'), app.widgetapp.rename_something),
-            (_('Remove'), app.widgetapp.remove_current_feed)
+            (_('Remove'), app.widgetapp.remove_something)
         ]
 
     def make_single_context_menu(self, obj):
@@ -1024,13 +1017,13 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
                          app.widgetapp.revert_feed_name))
         menu.append((_('Settings'), app.widgetapp.feed_settings))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_feed_url))
-        menu.append((_('Remove'), app.widgetapp.remove_current_feed))
+        menu.append((_('Remove'), app.widgetapp.remove_something))
         return menu
 
     def make_multiple_context_menu(self):
         return [
             (_('Update Podcasts Now'), app.widgetapp.update_selected_feeds),
-            (_('Remove'), app.widgetapp.remove_current_feed)
+            (_('Remove'), app.widgetapp.remove_something)
         ]
 
 class PlaylistList(NestedTabListMixin, HideableTabList):
@@ -1042,9 +1035,6 @@ class PlaylistList(NestedTabListMixin, HideableTabList):
         HideableTabList.__init__(self)
         self.view.set_drag_source(PlaylistListDragHandler())
         self.view.set_drag_dest(PlaylistListDropHandler(self))
-
-    def on_delete_key_pressed(self):
-        app.widgetapp.remove_current_playlist()
 
     def init_info(self, info):
         if info is self.info:
@@ -1076,18 +1066,18 @@ class PlaylistList(NestedTabListMixin, HideableTabList):
     def make_folder_context_menu(self, obj):
         return [
             (_('Rename Playlist Folder'), app.widgetapp.rename_something),
-            (_('Remove'), app.widgetapp.remove_current_playlist)
+            (_('Remove'), app.widgetapp.remove_something)
         ]
 
     def make_single_context_menu(self, obj):
         return [
             (_('Rename Playlist'), app.widgetapp.rename_something),
-            (_('Remove'), app.widgetapp.remove_current_playlist)
+            (_('Remove'), app.widgetapp.remove_something)
         ]
 
     def make_multiple_context_menu(self):
         return [
-            (_('Remove'), app.widgetapp.remove_current_playlist)
+            (_('Remove'), app.widgetapp.remove_something)
         ]
 
 class TabListBox(widgetset.Scroller):

@@ -694,15 +694,14 @@ class Application:
 
     def remove_something(self):
         t, infos = app.tabs.selection_and_children
+        if any(info.type == 'tab' for info in infos):
+            return
         if t == 'feed':
             self.remove_feeds(infos)
-        elif t in('site'):
+        elif t == 'site':
             self.remove_sites(infos)
-
-    def remove_current_feed(self):
-        t, channel_infos = app.tabs.selection_and_children
-        if t == 'feed':
-            self.remove_feeds(channel_infos)
+        elif t == 'playlist':
+            self.remove_playlists(infos)
 
     def remove_feeds(self, channel_infos):
         has_watched_feeds = False
@@ -869,11 +868,6 @@ class Application:
         info = channel_infos[0]
         messages.RevertFeedTitle(info.id).send_to_backend()
 
-    def remove_current_playlist(self):
-        t, infos = app.tabs.selection
-        if t == 'playlist':
-            self.remove_playlists(infos)
-
     def remove_playlists(self, playlist_infos):
         title = ngettext('Remove playlist', 'Remove playlists', len(playlist_infos))
         description = ngettext(
@@ -890,11 +884,6 @@ class Application:
         if ret == dialogs.BUTTON_REMOVE:
             for pi in playlist_infos:
                 messages.DeletePlaylist(pi.id, pi.is_folder).send_to_backend()
-
-    def remove_current_site(self):
-        t, infos = app.tabs.selection
-        if t == 'site':
-            self.remove_sites(infos)
 
     def remove_sites(self, infos):
         title = ngettext('Remove source', 'Remove sources', len(infos))
