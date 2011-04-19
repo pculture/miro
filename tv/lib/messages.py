@@ -1659,7 +1659,6 @@ class SharingInfo(object):
         self.share_available = False
         self.stale_callback = None
         self.mount = False
-        self.stale = False
         self.is_updating = False
         self.playlist_id = playlist_id
         if parent_id is not None:
