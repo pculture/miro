@@ -514,6 +514,7 @@ class HideableTabList(TabList):
     def _make_view(self):
         view = TabListView(self.render_class())
         view.allow_multiple_select = self.ALLOW_MULTIPLE
+        view.connect('row-clicked', self.on_row_clicked)
         view.connect('row-expanded', self.on_row_expanded_change, True)
         view.connect('row-collapsed', self.on_row_expanded_change, False)
         view.set_context_menu_callback(self.on_context_menu)
@@ -566,6 +567,12 @@ class HideableTabList(TabList):
             self.on_delete_key_pressed()
             return True
         return TabList.on_key_press(self, view, key, mods)
+
+    def on_row_clicked(self, view, iter_):
+        if view.model[iter_][0] is self.info:
+            if not view.is_row_expanded(iter_):
+                self.expand(self.info.id)
+                self.view.model_changed()
 
     def on_row_expanded_change(self, view, iter_, path, expanded):
         info = self.view.model[iter_][0]
