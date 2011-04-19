@@ -823,8 +823,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if path_info is not None:
                 send_clicked = True
                 if (treeview.get_show_expanders() and
-                    path_info[1] is treeview.get_expander_column()):
-                    if event.x < treeview.style_get_property('expander-size'):
+                        path_info[1] is treeview.get_expander_column()):
+                    if event.x < treeview.get_left_offset():
                         send_clicked = False
                 if send_clicked:
                     iter_ = treeview.get_model().get_iter(path_info[0])
@@ -838,8 +838,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if path_info is not None:
                 send_clicked = True
                 if (treeview.get_show_expanders() and
-                    path_info[1] is treeview.get_expander_column()):
-                    if event.x < treeview.style_get_property('expander-size'):
+                        path_info[1] is treeview.get_expander_column()):
+                    if event.x < treeview.get_left_offset():
                         send_clicked = False
                 if send_clicked:
                     iter_ = treeview.get_model().get_iter(path_info[0])
