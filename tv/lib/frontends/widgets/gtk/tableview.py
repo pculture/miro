@@ -186,6 +186,8 @@ class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
         self.drag_dest_at_bottom = False
         self.height_without_pad_bottom = -1
         self.set_enable_search(False)
+        self.horizontal_separator = self.style_get_property("horizontal-separator")
+        self.expander_size = self.style_get_property("expander-size")
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -274,9 +276,9 @@ class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
         return model.get_path(last)
 
     def get_left_offset(self):
-        offset = self.style_get_property("horizontal-separator") / 2
+        offset = self.horizontal_separator / 2
         if 1 or isinstance(self.get_model(), TreeTableModel):
-            offset += self.style_get_property("expander-size")
+            offset += self.expander_size
             offset += 4
             # This seems to be hardcoded in GTK see:
             # http://svn.gnome.org/viewvc/gtk%2B/trunk/gtk/gtktreeview.c
@@ -820,30 +822,18 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if self.handled_last_button_press:
                 return
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-            if path_info is not None:
-                send_clicked = True
-                if (treeview.get_show_expanders() and
-                        path_info[1] is treeview.get_expander_column()):
-                    if event.x < treeview.get_left_offset():
-                        send_clicked = False
-                if send_clicked:
-                    iter_ = treeview.get_model().get_iter(path_info[0])
-                    self.emit('row-double-clicked', iter_)
+            if path_info and not self._x_coord_in_expander(treeview, path_info):
+                iter_ = treeview.get_model().get_iter(path_info[0])
+                self.emit('row-double-clicked', iter_)
             return
 
         # Check for single click.  Emit the event but keep on running
         # so we can handle stuff like drag and drop.
         if event.type == gtk.gdk.BUTTON_PRESS:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-            if path_info is not None:
-                send_clicked = True
-                if (treeview.get_show_expanders() and
-                        path_info[1] is treeview.get_expander_column()):
-                    if event.x < treeview.get_left_offset():
-                        send_clicked = False
-                if send_clicked:
-                    iter_ = treeview.get_model().get_iter(path_info[0])
-                    self.emit('row-clicked', iter_)
+            if path_info and not self._x_coord_in_expander(treeview, path_info):
+                iter_ = treeview.get_model().get_iter(path_info[0])
+                self.emit('row-clicked', iter_)
 
         if self.hotspot_tracker is None:
             hotspot_tracker = HotspotTracker(treeview, event)
@@ -890,7 +880,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 # This makes it more natural for the user to drag a block of
                 # selected items.
                 renderer = column.get_cell_renderers()[0]
-                if (not self._x_coord_in_expander(treeview, x, column, path)
+                if (not self._x_coord_in_expander(treeview, path_info)
                         and not isinstance(renderer, GTKCheckboxCellRenderer)):
                     self.delaying_press = True
                     # grab keyboard focus since we handled the event
@@ -934,31 +924,32 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
 
-    def _x_coord_in_expander(self, treeview, x, column, path):
+    def _x_coord_in_expander(self, treeview, path_info):
         """Calculate if an x coordinate is over the expander triangle
 
         :param treeview: Gtk.TreeView
-        :param column: Gtk.TreeColumn
-        :param x: x coordinate, relative to column's cell area
-        :param path: tree path for the cell
+        :param path_info: (
+            Gtk.TreeColumn,
+            x coordinate relative to column's cell area,
+            y coordinate relative to column's cell area (ignored),
+            tree path for the cell,
+        )
         """
-        # NOTE: this seems slightly off; when the get_left_offset logic above
-        # (d1141c8) is replaced with this, #17055 becomes reproducible for an
-        # area a couple of pixels wide. Maybe we should be using get_left_offset
-        # here, which takes into account horizontal-separator ?
+        path, column, x, y = path_info
         if column != treeview.get_expander_column():
             return False
         model = treeview.get_model()
         if not model.iter_has_child(model.get_iter(path)):
             return False
-        expander_size = treeview.style_get_property(
-                "expander_size")
         # GTK allocateds an extra 4px to the right of the expanders.  This
         # seems to be hardcoded as EXPANDER_EXTRA_PADDING in the source code.
-        total_exander_size = expander_size + 4
+        total_exander_size = treeview.expander_size + 4
+        # include horizontal_separator
+        # XXX: should this value be included in total_exander_size ?
+        offset = treeview.horizontal_separator / 2
         # allocate space for expanders for parent nodes
-        expander_start = total_exander_size * (len(path) - 1)
-        expander_end = expander_start + total_exander_size
+        expander_start = total_exander_size * (len(path) - 1) + offset
+        expander_end = expander_start + total_exander_size + offset
         return expander_start <= x < expander_end
 
     def on_row_activated(self, treeview, path, view_column):
