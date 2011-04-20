@@ -489,7 +489,8 @@ class ItemRenderer(ItemRendererBase):
         return (self.info.is_playable
               and self.info.item_viewed
               and self.info.resume_time > 0
-              and app.config.get(resume_pref))
+              and app.config.get(resume_pref)
+              and app.config.get(prefs.PLAY_IN_MIRO))
 
     def remove_button_info(self):
         """Get the image/hotspot to use for the remove button

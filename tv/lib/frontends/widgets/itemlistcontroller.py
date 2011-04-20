@@ -250,7 +250,8 @@ class ItemListController(object):
     def on_config_change(self, obj, key, value):
         if (key == prefs.RESUME_VIDEOS_MODE.key or
                 key == prefs.RESUME_MUSIC_MODE.key or
-                key == prefs.RESUME_PODCASTS_MODE.key):
+                key == prefs.RESUME_PODCASTS_MODE.key or
+                key == prefs.PLAY_IN_MIRO.key):
             for view in self.all_item_views():
                 view.queue_redraw()
 
