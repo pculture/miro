@@ -40,6 +40,7 @@ import gobject
 
 from miro.gtcache import gettext as _
 from miro.plat import resources
+from miro.plat.renderers import vlchack
 from miro import app
 from miro import prefs
 from miro.frontends.widgets import menus
@@ -313,6 +314,7 @@ class VLCRenderer(object):
         self._callback_ref = VLC_EVENT_CALLBACK(self.event_callback)
         self.play_from_time = None
         self.play_state = STOPPED
+        self.hwnd = None
         self._duration = None
         self._filename = None
         self._rate = 1.0
@@ -421,8 +423,8 @@ class VLCRenderer(object):
             self.exc.check()
 
     def set_widget(self, widget):
-        hwnd = widget.persistent_window.handle
-        libvlc.libvlc_media_player_set_hwnd(self.media_player, hwnd,
+        self.hwnd = widget.persistent_window.handle
+        libvlc.libvlc_media_player_set_hwnd(self.media_player, self.hwnd,
                                                 self.exc.ref())
         self.exc.check()
 
@@ -430,6 +432,7 @@ class VLCRenderer(object):
         widget.connect('expose-event', self._on_expose)
 
     def unset_widget(self):
+        self.hwnd = None
         libvlc.libvlc_media_player_set_hwnd(
             self.media_player, self._hidden_window.handle, self.exc.ref())
         self.exc.check()
@@ -496,12 +499,18 @@ class VLCRenderer(object):
     def play(self):
         if self.play_state == PLAYING:
             return
+        gobject.timeout_add(500, self._vlc_hack)
         libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
         self.exc.check()
         self.play_state = PLAYING
         if self.play_from_time is not None:
             self.set_current_time(self.play_from_time)
             self.play_from_time = None
+
+    def _vlc_hack(self, attempt):
+        if self.play_state == PLAYING:
+            vlchack.hack_window(self.hwnd)
+        return False
 
     def pause(self):
         if self.play_state == PAUSED:
@@ -524,6 +533,7 @@ class VLCRenderer(object):
         self.stop()
         self.play_from_time = None
         self.play_state = STOPPED
+
 
     def get_current_time(self):
         t = libvlc.libvlc_media_player_get_time(
