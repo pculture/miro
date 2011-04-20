@@ -507,7 +507,7 @@ class VLCRenderer(object):
             self.set_current_time(self.play_from_time)
             self.play_from_time = None
 
-    def _vlc_hack(self, attempt):
+    def _vlc_hack(self):
         if self.play_state == PLAYING:
             vlchack.hack_window(self.hwnd)
         return False
