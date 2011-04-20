@@ -488,7 +488,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
                 'NOT item.media_type_checked)',
-                (moviedata.METADATA_VERSION,),
+                (),
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=10)
 
