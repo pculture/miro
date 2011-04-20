@@ -198,10 +198,13 @@ class WindowsApplication(Application):
 
     def quit_ui(self):
         app.video_renderer.shutdown()
+        logging.debug('Destroying persistent window widgets')
         for widget in persistentwindow.get_widgets():
             widget.destroy()
         if hasattr(self, "trayicon"):
+            logging.debug('Hiding tray icon')
             self.trayicon.set_visible(False)
+        logging.debug('Running gtk.main_quit() ...')
         gtk.main_quit()
 
     def get_clipboard_text(self):
