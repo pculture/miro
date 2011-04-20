@@ -130,9 +130,6 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist.set_shuffle(self.shuffle)
         self.playlist.set_repeat(self.repeat)
         self._play_current()
-        if self.playlist is None:
-            # _play_current found that PLAY_IN_MIRO was set to False
-            return
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
 
