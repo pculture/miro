@@ -11,7 +11,8 @@ mediatype: video
 only_on: osx
 executable: ffmpeg
 extension: webm
-parameters: -i {input} -f webm -vcodec libvpx_vp8 -acodec libvorbis -ab 160000 -sameq {output}
+parameters: -i {input} -f webm -vcodec libvpx -acodec libvorbis -ab 160000 -sameq {output}
+mediatype: video
 
 [MP4]
 extension: mp4
