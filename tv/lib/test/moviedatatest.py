@@ -13,6 +13,8 @@ from miro.feed import Feed
 from miro.plat import resources
 from miro.plat import renderers
 
+# FIXME: tests are very broken for checking MDP; may not be extracting at all!
+
 class _FakeProgressUpdater(object):
     def path_processed(self, path):
         pass
@@ -60,6 +62,7 @@ class MovieDataTest(EventLoopTest):
         item.check_media_file()
         if self.mdu.queue.empty():
             return item, False
+        self.assertTrue(False, "not expected to reach this")
 
         # MDI disables itself when it detects that it's in a unittest; this
         # workaround pops off the MDI, re-enables it, and puts it back in the
@@ -138,3 +141,11 @@ class MovieDataTest(EventLoopTest):
 #        self.assertTrue(item.screenshot,
 #            "drm.m4v test case expected to have a screenshot")
         self.assert_metadata(item, m4v)
+
+    def test_webm(self):
+        item, mdp = self.mdu_read_file('webm-0.webm')
+# FIXME
+#        self.assertEqual(item.duration, 2668832)
+        self.assertEqual(item.file_type, 'video')
+        self.assertFalse(item.cover_art)
+        self.assertFalse(item.screenshot)
