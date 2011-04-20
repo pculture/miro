@@ -257,13 +257,17 @@ class SystemSignals(SignalEmitter):
         Arguments:
         - view -- A database view than contains the videos.
 
+    "download-complete" -- A download was completed.
+        Arguments:
+        - item -- an Item of class Item.
 
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
                 'startup-failure', 'shutdown',
                 'update-available', 'new-dialog',
-                'theme-first-run', 'videos-added')
+                'theme-first-run', 'videos-added',
+                'download-complete')
 
     def shutdown(self):
         self.emit('shutdown')
@@ -279,6 +283,9 @@ class SystemSignals(SignalEmitter):
 
     def videos_added(self, view):
         self.emit('videos-added', view)
+
+    def download_complete(self, item):
+        self.emit('download-complete', item)
 
     def failed_exn(self, when, details=None):
         self.failed(when, with_exception=True, details=details)

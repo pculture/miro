@@ -48,6 +48,8 @@ class EventHandler:
         signals.system.connect('update-available', self.handle_update_available)
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
+        signals.system.connect('download-complete', 
+                               self.handle_download_complete)
 
     def handle_update_available(self, obj, item):
         print "There is a Miro Update available!"
@@ -65,7 +67,7 @@ class EventHandler:
         self.startup_event.set()
 
     def handle_download_complete(self, obj, item):
-        print_box('Download Complete: %s' % item)
+        print_box('Download Complete: %s' % item.get_title())
 
     def handle_error(self, obj, report):
         print_box('ERROR')

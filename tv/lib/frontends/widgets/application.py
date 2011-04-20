@@ -1074,9 +1074,15 @@ class Application:
         signals.system.connect('update-available', self.handle_update_available)
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
+        signals.system.connect('download-complete',
+                               self.handle_download_complete)
         app.frontend_config_watcher.connect("changed", self.on_config_changed)
 
     def handle_unwatched_count_changed(self):
+        pass
+
+    def handle_download_complete(self, obj, item):
+        # Frontend subclasses may override this.
         pass
 
     def handle_dialog(self, obj, dialog):

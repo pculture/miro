@@ -60,6 +60,7 @@ from miro import moviedata
 from miro import filetypes
 from miro import searchengines
 from miro import fileutil
+from miro import signals
 from miro import search
 from miro import models
 from miro import metadata
@@ -1722,6 +1723,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.signal_change()
         self._replace_file_items()
         self.check_media_file(signal_change=False)
+        signals.system.download_complete(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
                 (self.url,)):
