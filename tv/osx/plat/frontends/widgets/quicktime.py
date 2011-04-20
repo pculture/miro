@@ -61,16 +61,20 @@ def register_components():
     components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
     for component in components:
         cmpName = os.path.basename(component)
-        stdloc1 = os.path.join("/", "Library", "Quicktime", cmpName)
-        stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins", "Components", cmpName)
+        stdloc1 = os.path.join(os.path.sep, "Library", "Quicktime", cmpName)
+        stdloc2 = os.path.join(os.path.sep, "Library", "Audio", "Plug-Ins",
+                               "Components", cmpName)
         if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
             ok = qtcomp.register(component.encode('utf-8'))
             if ok:
-                logging.debug('Successfully registered embedded component: %s', cmpName)
+                logging.debug('Successfully registered embedded component: %s',
+                              cmpName)
             else:
-                logging.warn('Error while registering embedded component: %s', cmpName)
+                logging.warn('Error while registering embedded component: %s',
+                             cmpName)
         else:
-            logging.debug('Skipping embedded %s registration, already installed.', cmpName)
+            logging.debug('Skipping embedded %s registration, '
+                          'already installed.', cmpName)
 
 ###############################################################################
 
@@ -112,7 +116,8 @@ def warm_up():
     rsrcPath = bundle.getBundleResourcePath()
 
     attributes = NSMutableDictionary.dictionary()
-    attributes['QTMovieFileNameAttribute'] = os.path.join(rsrcPath, 'warmup.mov')
+    attributes['QTMovieFileNameAttribute'] = os.path.join(rsrcPath,
+                                                          'warmup.mov')
     attributes['QTMovieOpenAsyncRequiredAttribute'] = True
     attributes['QTMovieDelegateAttribute'] = None
 
