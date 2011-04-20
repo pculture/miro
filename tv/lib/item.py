@@ -487,10 +487,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 "'uploading', 'uploading-paused'))) AND "
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
-                '(metadata_version < ? AND '
-                '(album IS NULL OR album_artist is NULL OR artist IS NULL OR '
-                'title_tag IS NULL OR track IS NULL OR year IS NULL OR '
-                'genre IS NULL OR cover_art IS NULL)) OR '
                 'NOT item.media_type_checked)',
                 (moviedata.METADATA_VERSION,),
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
