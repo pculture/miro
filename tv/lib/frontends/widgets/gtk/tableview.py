@@ -862,39 +862,40 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.handled_last_button_press = False
             return
         if event.button == 1 and self.drag_source:
+            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+            if not path_info or (event.state &
+                    (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)):
+                self.handled_last_button_press = False
+                return
+            path, column, x, y = path_info
             model, row_paths = treeview.get_selection().get_selected_rows()
+
+            if path not in row_paths:
+                # something outside the selection is being dragged.
+                # make it the new selection.
+                self.unselect_all(signal=False)
+                self.select_path(path)
+                row_paths = [path]
             rows = self.model.get_rows(row_paths)
             self.drag_data = rows and self.drag_source.begin_drag(self, rows)
             self.drag_button_down = bool(self.drag_data)
-            if not self.drag_button_down:
-                self.handled_last_button_press = False
-                return
+            if self.drag_button_down:
+                self.drag_start_x = int(event.x)
+                self.drag_start_y = int(event.y)
 
-            self.drag_start_x = int(event.x)
-            self.drag_start_y = int(event.y)
-
-            # handle multiple selection.  If the current row is already
-            # selected and neither the control nor shift key is pressed,
-            # stop propagating the signal.  We will only change the selection
-            # if the user doesn't start a DnD operation.  This makes it more
-            # natural for the user to drag a block of selected items.
-            if not (event.state & (gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)):
-                path_info = treeview.get_path_at_pos(int(event.x),
-                        int(event.y))
-                if path_info is not None:
-                    path, column, x, y = path_info
-                    selection = self._widget.get_selection()
-                    renderer = column.get_cell_renderers()[0]
-                    click_in_expander = self._x_coord_in_expander(treeview,
-                            x, column, path)
-                    if (selection.path_is_selected(path) and
-                            not click_in_expander and
-                            not isinstance(renderer, GTKCheckboxCellRenderer)):
-                        self.delaying_press = True
-                        # grab keyboard focus since we handled the event
-                        self.focus()
-                        return True
-
+            if len(row_paths) > 1 and path in row_paths:
+                # handle multiple selection.  If the current row is already
+                # selected, stop propagating the signal.  We will only change
+                # the selection if the user doesn't start a DnD operation.
+                # This makes it more natural for the user to drag a block of
+                # selected items.
+                renderer = column.get_cell_renderers()[0]
+                if (not self._x_coord_in_expander(treeview, x, column, path)
+                        and not isinstance(renderer, GTKCheckboxCellRenderer)):
+                    self.delaying_press = True
+                    # grab keyboard focus since we handled the event
+                    self.focus()
+                    return True
         elif event.button == 3 and self.context_menu_callback:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
@@ -941,6 +942,10 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         :param x: x coordinate, relative to column's cell area
         :param path: tree path for the cell
         """
+        # NOTE: this seems slightly off; when the get_left_offset logic above
+        # (d1141c8) is replaced with this, #17055 becomes reproducible for an
+        # area a couple of pixels wide. Maybe we should be using get_left_offset
+        # here, which takes into account horizontal-separator ?
         if column != treeview.get_expander_column():
             return False
         model = treeview.get_model()
