@@ -9,6 +9,12 @@ from os import path
 from miro.plat import resources
 from miro.filetags import read_metadata
 
+
+# NOTE: moviedatatest has expanded to make this redundant, but there's some data
+# here that's not there yet. TODO: merge useful parts of this into moviedatatest
+# and scrap this module.
+
+
 # FIXME: cover art detection is currently tested, but content is not
 
 class FileTagsTest(MiroTestCase):
