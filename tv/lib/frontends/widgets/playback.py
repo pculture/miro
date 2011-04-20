@@ -120,29 +120,16 @@ class PlaybackManager (signals.SignalEmitter):
         if self.is_playing:
             self.stop()
         self.emit('will-start')
-        play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
-        # Only setup a playlist if we are playing in Miro - otherwise we
-        # farm off to an external player for an individual item and the
-        # concept of a playlist doesn't really make sense.
-        start_item = None
-        if play_in_miro:
-            self.playlist = PlaybackPlaylist(item_tracker, start_id)
-            self.playlist.connect("position-changed",
-                self._on_position_changed)
-            self.playlist.connect("playing-info-changed",
-                self._on_playing_changed)
-            self.playlist.set_shuffle(self.shuffle)
-            self.playlist.set_repeat(self.repeat)
-        else:
-            model = item_tracker.item_list.model
-            if start_id:
-                start_item = model.get_info(start_id)
-            else:
-                start_item = model.get_first_info()
+        self.playlist = PlaybackPlaylist(item_tracker, start_id)
         self.should_mark_watched = []
+        self.playlist.connect("position-changed", self._on_position_changed)
+        self.playlist.connect("playing-info-changed",
+                self._on_playing_changed)
         self.presentation_mode = presentation_mode
         self.force_resume = force_resume
-        self._play_current(item=start_item)
+        self.playlist.set_shuffle(self.shuffle)
+        self.playlist.set_repeat(self.repeat)
+        self._play_current()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
 
@@ -520,16 +507,12 @@ class PlaybackManager (signals.SignalEmitter):
         self.player.connect('ready-to-play', self._on_ready_to_play)
         self.is_playing_audio = True
 
-    def _play_current(self, item=None):
-        # XXX item is a hint in the case of external playback - where a
-        # playlist does not make sense and don't want to rely on it being
-        # there.
+    def _play_current(self):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         self._not_skipped_by_user = False
 
-
-        info_to_play = item if item else self.get_playing_item()
+        info_to_play = self.get_playing_item()
         if info_to_play is None: # end of the playlist
             self.stop()
             return
