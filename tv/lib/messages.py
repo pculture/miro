@@ -709,19 +709,20 @@ class SaveItemAs(BackendMessage):
         self.id = id_
         self.filename = filename
 
-class RemoveVideoEntry(BackendMessage):
-    """Remove the entry for an external video.
+class RemoveVideoEntries(BackendMessage):
+    """Remove the entry for list of external items.
     """
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info_list):
+        self.info_list = info_list
 
-class DeleteVideo(BackendMessage):
-    """Delete the video for an item's video.
+class DeleteVideos(BackendMessage):
+    """Delete files for a list of items
     """
-    def __init__(self, info):
-        self.info = info
+    def __init__(self, info_list):
+        self.info_list = info_list
+
     def __repr__(self):
-        return BackendMessage.__repr__(self) + (", info: %s" % self.info)
+        return BackendMessage.__repr__(self) + (", infos: %s" % self.info_list)
 
 class EditItems(BackendMessage):
     """Set properties for one or more items to user-defined values."""

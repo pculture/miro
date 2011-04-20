@@ -519,11 +519,8 @@ class Application:
         folder_count = len([s for s in selection if s.is_container_item])
         total_count = len(selection)
 
-        def _delete_video(item):
-            messages.DeleteVideo(item).send_to_backend()
-
         if total_count == 1 and external_count == folder_count == 0:
-            _delete_video(selection[0])
+            messages.DeleteVideos([selection[0]]).send_to_backend()
             return
 
         if failed_count == total_count:
@@ -581,18 +578,25 @@ class Application:
             ret = dialogs.show_choice_dialog(title, description,
                                              [dialogs.BUTTON_DELETE,
                                               dialogs.BUTTON_CANCEL])
+        to_delete = []
+        to_remove = []
 
         if ret in (dialogs.BUTTON_OK, dialogs.BUTTON_DELETE_FILE,
                 dialogs.BUTTON_DELETE):
             for mem in selection:
-                _delete_video(mem)
+                to_delete.append(mem)
 
         elif ret == dialogs.BUTTON_REMOVE_ENTRY:
             for mem in selection:
                 if mem.is_external:
-                    messages.RemoveVideoEntry(mem.id).send_to_backend()
+                    to_remove.append(mem)
                 else:
-                    _delete_video(mem)
+                    to_delete.append(mem)
+
+        if to_remove:
+            messages.RemoveVideoEntries(to_remove).send_to_backend()
+        if to_delete:
+            messages.DeleteVideos(to_delete).send_to_backend()
 
     def edit_items(self):
         selection = app.item_list_controller_manager.get_selection()

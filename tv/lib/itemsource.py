@@ -127,6 +127,12 @@ class ItemHandler(object):
         """
         logging.warn("%s: not handling delete", self)
 
+    def bulk_delete(self, info_list):
+        """
+        Delete a list of infos.  Should also send 'removed' messages.
+        """
+        logging.warn("%s: not handling delete", self)
+
 class DatabaseItemSource(ItemSource):
     """
     An ItemSource which pulls its data from the database, along with
@@ -363,6 +369,14 @@ class DatabaseItemHandler(ItemHandler):
         else:
             item_.delete_files()
             item_.expire()
+
+    def bulk_delete(self, info_list):
+        app.bulk_sql_manager.start()
+        try:
+            for info in info_list:
+                self.delete(info)
+        finally:
+            app.bulk_sql_manager.finish()
 
 class SharingItemSource(ItemSource):
     """
@@ -622,6 +636,19 @@ class DeviceItemHandler(ItemHandler):
             os.path.exists(info.cover_art)):
             os.unlink(info.cover_art)
         device.database.emit('item-removed', info)
+
+    def bulk_delete(self, info_list):
+        # calculate all the devices involved
+        all_devices = set(info.device for info in info_list)
+        # set bulk mode, delete, then unset bulk mode
+        for device in all_devices:
+            device.database.set_bulk_mode(True)
+        try:
+            for info in info_list:
+                self.delete(info)
+        finally:
+            for device in all_devices:
+                device.database.set_bulk_mode(False)
 
     def set_is_playing(self, info, is_playing):
         """

@@ -1443,16 +1443,30 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             # FIXME - we should pass the error back to the frontend
             pass
 
-    def handle_remove_video_entry(self, message):
+    def handle_remove_video_entries(self, message):
+        items = []
+        for info in message.info_list:
+            try:
+                items.append(item.Item.get_by_id(info.id))
+            except database.ObjectNotFoundError:
+                logging.warn("RemoveVideoEntries: Item not found -- %s",
+                        info.id)
+        app.bulk_sql_manager.start()
         try:
-            item_ = item.Item.get_by_id(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("RemoveVideoEntry: Item not found -- %s", message.id)
-        else:
-            item_.expire()
+            for item_ in items:
+                item_.expire()
+        finally:
+            app.bulk_sql_manager.finish()
 
-    def handle_delete_video(self, message):
-        itemsource.get_handler(message.info).delete(message.info)
+    def handle_delete_videos(self, message):
+        # group the ItemInfos by their handler
+        infos_per_handler = {}
+        for info in message.info_list:
+            handler = itemsource.get_handler(info)
+            infos_per_handler.setdefault(handler, []).append(info)
+        # for each handler, call bulk_delete()
+        for handler, info_list in infos_per_handler.iteritems():
+            handler.bulk_delete(info_list)
 
     def handle_rename_video(self, message):
         try:
