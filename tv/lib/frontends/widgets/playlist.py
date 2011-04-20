@@ -72,7 +72,7 @@ class DropHandler(signals.SignalEmitter):
                 position += 1
                 # If we iterate to the end of the playlist
                 # we cancel the iteration
-                if position > len(model):
+                if position >= len(model):
                     insert_id = None
                     break
                 insert_id = model.nth_row(position)[0].id
