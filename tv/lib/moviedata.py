@@ -235,6 +235,7 @@ class MovieDataUpdater(signals.SignalEmitter):
     def request_update(self, item):
         if self.in_shutdown:
             return
+        # FIXME: are all of these checks necessary?
         filename = item.get_filename()
         if not filename or not fileutil.isfile(filename):
             return
@@ -243,14 +244,24 @@ class MovieDataUpdater(signals.SignalEmitter):
         if item.id in self.in_progress:
             return
 
-        # Only run the movie data program for video items, or audio items that
-        # we don't know the duration for.
-        if (item.duration is None or item.duration < 0 or
-                item.file_type == u'video'):
+        if self._should_process_item(item):
             self.in_progress.add(item.id)
             self.queue.put(MovieDataInfo(item))
         else:
             app.metadata_progress_updater.path_processed(item.get_filename())
+
+    def _duration_unknown(self, item):
+        # FIXME: we should just be using 1 value for unknown.  I think that
+        # should be None
+        return item.duration is None or item.duration < 0
+
+    def _should_process_item(self, item):
+        # don't process non-video/audio files
+        if filetypes.is_other_filename(item.get_filename()):
+            return False
+        # Only run the movie data program for video items, or audio items that
+        # we don't know the duration for.
+        return self._duration_unknown(item) or item.file_type == u'video'
 
     def shutdown(self):
         self.in_shutdown = True
