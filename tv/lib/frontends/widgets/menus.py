@@ -632,7 +632,7 @@ def on_down_volume():
 
 @action_handler("Fullscreen")
 def on_fullscreen():
-    app.playback_manager.enter_fullscreen()
+    app.playback_manager.toggle_fullscreen()
 
 @action_handler("ToggleDetach")
 def on_toggle_detach():

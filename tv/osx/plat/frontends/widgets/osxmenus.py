@@ -264,6 +264,8 @@ def populate_menu():
     presentMenu = menus.Menu(_("Present Video"), "Present", presentMenuItems)
     playback_menu.append(presentMenu)
     playback_menu.append(subtitlesMenu)
+    fullscreen_menu_item = playback_menu.get("Fullscreen")
+    fullscreen_menu_item.shortcuts = [ menus.Shortcut("f", MOD)]
 
     # Window menu
     windowMenuItems = [
