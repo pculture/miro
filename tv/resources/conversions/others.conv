@@ -7,6 +7,12 @@ extension: mp4
 parameters: -i {input} -s 320x240 -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 {output}
 mediatype: video
 
+[WebM (VP8)]
+only_on: osx
+executable: ffmpeg
+extension: webm
+parameters: -i {input} -f webm -vcodec libvpx_vp8 -acodec libvorbis -ab 160000 -sameq {output}
+
 [MP4]
 extension: mp4
 executable: ffmpeg
