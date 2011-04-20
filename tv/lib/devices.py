@@ -759,7 +759,7 @@ class DeviceItem(metadata.Store):
         # make sure ID is unicode
         self.id = filename_to_unicode(self.video_path)
         # setup metadata
-        self.read_metadata(self.get_filename())
+        self.read_metadata()
         moviedata.movie_data_updater.request_update(self)
 
     @staticmethod

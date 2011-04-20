@@ -2,7 +2,7 @@
 miro.filetags and the moviedataprogram.
 """
 
-from miro.test.framework import EventLoopTest, skipping
+from miro.test.framework import EventLoopTest, MiroTestCase
 
 import json
 from os import path
@@ -10,7 +10,7 @@ from os import path
 from miro import moviedata
 from miro import metadata
 from miro import app
-from miro.item import FileItem
+from miro import models
 from miro.feed import Feed
 from miro.plat import resources
 from miro.plat import renderers
@@ -79,6 +79,96 @@ class MovieDataTest(EventLoopTest):
             expected = dict((str(k), v) for k, v in expected.iteritems())
             actual.screenshot = actual.screenshot and bool(actual.screenshot)
             self.assertEqual(dict(actual), expected)
+
+class FakeMetadataProgressUpdater(object):
+    def __init__(self):
+        self.paths_processed = set()
+
+    def path_processed(self, path):
+        self.paths_processed.add(path)
+
+class MovieDataRequestTest(MiroTestCase):
+    """Test when we choose to invoke our moviedata programs."""
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.metadata_progress_updater = FakeMetadataProgressUpdater()
+        app.metadata_progress_updater = self.metadata_progress_updater
+        self.feed = models.Feed(u'dtv:manualFeed')
+        mp3_path = resources.path("testdata/metadata/mp3-0.mp3")
+        webm_path = resources.path("testdata/metadata/webm-0.webm")
+        jpg_path = resources.path("testdata/dean.jpg")
+
+        self.audio_item = models.FileItem(mp3_path, self.feed.id)
+        self.video_item = models.FileItem(webm_path, self.feed.id)
+        self.other_item = models.FileItem(jpg_path, self.feed.id)
+
+    def tearDown(self):
+        del app.metadata_progress_updater
+        MiroTestCase.tearDown(self)
+
+    def signal_changes(self):
+        self.audio_item.signal_change()
+        self.video_item.signal_change()
+        self.other_item.signal_change()
+
+    def check_will_run_moviedata(self, item, should_run):
+        # check MovieDataUpdater._should_process_item()
+        mdu = moviedata.movie_data_updater
+        self.assertEquals(mdu._should_process_item(item), should_run)
+        # check next_10_incomplete_movie_data_view
+        incomplete_view = set(
+                models.Item.next_10_incomplete_movie_data_view())
+        self.assertEquals(item in incomplete_view, should_run)
+
+    def check_path_processed(self, item, should_run):
+        # Check if path_processed was called.
+
+        if should_run:
+            # If we will call movie data, then path_processed shouldn't be
+            # called until that happens, which is never in the unit tests.
+            self.assert_(item.filename not in
+                    self.metadata_progress_updater.paths_processed)
+        else:
+            # if not, then path_processed should be called.
+            self.assert_(item.filename in
+                    self.metadata_progress_updater.paths_processed)
+
+    def test_initial_mutagan_worked_audio(self):
+        # shouldn't run moviedata for audio that mutagen can process
+        self.check_will_run_moviedata(self.audio_item, False)
+        self.check_path_processed(self.audio_item, False)
+
+    def test_initial_mutagan_worked_video(self):
+        # should run moviedata for video that mutagen can process
+        self.check_will_run_moviedata(self.video_item, True)
+        self.check_path_processed(self.video_item, True)
+
+    def test_initial_mutagan_failed_other(self):
+        # shouldn't run moviedata for other filenames
+        self.check_will_run_moviedata(self.other_item, False)
+        self.check_path_processed(self.other_item, False)
+
+    def test_run_moviedata_no_duration(self):
+        # we should always run moviedata if mutagen can't determine the
+        # duration
+        self.audio_item.duration = self.video_item.duration = None
+        self.signal_changes()
+        self.check_will_run_moviedata(self.video_item, True)
+        self.check_will_run_moviedata(self.audio_item, True)
+
+    def test_run_moviedata_no_screenshot(self):
+        # we should run moviedata if it's a video item and we haven't captured
+        # a screenshot
+        self.audio_item.screenshot = self.video_item.screenshot = None
+        self.signal_changes()
+        self.check_will_run_moviedata(self.video_item, True)
+        self.check_will_run_moviedata(self.audio_item, False)
+
+    def test_should_run_mutagen(self):
+        # we should run mutagen for audio and video items, but not others
+        self.assertEquals(self.video_item._should_run_mutagen(), True)
+        self.assertEquals(self.audio_item._should_run_mutagen(), True)
+        self.assertEquals(self.other_item._should_run_mutagen(), False)
 
 # FIXME
 # theora_with_ogg_extension test case expected to have a screenshot")

@@ -486,8 +486,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         return cls.make_view("(is_file_item OR (rd.state in ('finished', "
                 "'uploading', 'uploading-paused'))) AND "
                 '(duration IS NULL OR '
-                'screenshot IS NULL OR '
-                'NOT item.media_type_checked)',
+                '(screenshot IS NULL AND file_type == "video") OR '
+                'NOT item.media_type_checked) AND '
+                'file_type != "other"',
                 (),
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=10)
@@ -1727,13 +1728,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.recalc_feed_counts()
 
     def check_media_file(self, signal_change=True):
-        if filetypes.is_other_filename(self.filename):
-            self.file_type = u'other'
+        self.read_metadata()
+        if self.file_type is not None:
             self.media_type_checked = True
-        else:
-            self.read_metadata(self.filename)
-            if self.file_type is not None:
-                self.media_type_checked = True
         moviedata.movie_data_updater.request_update(self)
         if signal_change:
             self.signal_change()

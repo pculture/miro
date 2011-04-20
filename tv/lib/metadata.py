@@ -37,6 +37,7 @@ import fileutil
 from miro.util import returns_unicode
 from miro import coverart
 from miro import filetags
+from miro import filetypes
 
 class Source(object):
     """Object with readable metadata properties."""
@@ -96,8 +97,13 @@ class Source(object):
     def get_description(self):
         return self.description
 
-    def read_metadata(self, path):
-        rv = filetags.read_metadata(path)
+    def read_metadata(self):
+        if not self._should_run_mutagen():
+            self.file_type = u'other'
+            self.media_type_checked = True
+            return
+
+        rv = filetags.read_metadata(self.get_filename())
         (mediatype, duration, metadata, cover_art) = rv
         if mediatype is not None:
             self.file_type = mediatype
@@ -121,6 +127,9 @@ class Source(object):
         # set metadata_version even if mutagen failed.  We don't want to keep
         # re-invoking it.
         self.metadata_version = filetags.METADATA_VERSION
+
+    def _should_run_mutagen(self):
+        return not filetypes.is_other_filename(self.get_filename())
 
 def metadata_setter(attribute, type_=None):
     def set_metadata(self, value, _bulk=False):
