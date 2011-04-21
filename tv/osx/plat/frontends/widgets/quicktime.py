@@ -173,6 +173,8 @@ class Player(player.Player):
         self.supported_media_types = supported_media_types
         self.movie_notifications = None
         self.movie = None
+        self.callback = self.errback = None
+        self.force_subtitles = False
         self.item_info = None
 
     def reset(self):
@@ -181,20 +183,35 @@ class Player(player.Player):
             self.movie_notifications.disconnect()
         self.movie_notifications = None
         self.movie = None
+        self.callback = self.errback = None
+        self.force_subtitles = False
 
     def set_item(self, item_info, callback, errback, force_subtitles=False):
         threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
         self.reset()
         qtmovie = self.get_movie_from_file(item_info.video_path)
+        self.callback = callback
+        self.errback = errback
+        self.force_subtitles = force_subtitles
         if qtmovie is not None:
             self.item_info = item_info
             self.movie = qtmovie
             self.movie_notifications = NotificationForwarder.create(self.movie)
-            self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
-            self.setup_subtitles(force_subtitles)
-            # call the callback in an idle call, the rest of the Player code
-            # expects it
-            threads.call_on_ui_thread(callback)
+            self.movie_notifications.connect(self.handle_movie_notification,
+                QTMovieDidEndNotification)
+            load_state = qtmovie.attributeForKey_(
+                QTMovieLoadStateAttribute).longValue()
+            # Only setup a deferred notification if we are unsure of status
+            # anything else in movie_load_state_changed().
+            if load_state in (QTMovieLoadStateLoading,
+                                QTMovieLoadStateLoaded):
+                self.movie_notifications.connect(
+                    self.handle_movie_notification,
+                    QTMovieLoadStateDidChangeNotification)
+            else:
+                # Playable right away or error - just call and don't disconnect
+                # notification because it wasn't connected in the first place.
+                self.movie_load_state_changed(disconnect=False)
         else:
             threads.call_on_ui_thread(errback)
 
@@ -205,40 +222,18 @@ class Player(player.Player):
         except AttributeError:
             url = NSURL.fileURLWithPath_(osfilename)
         attributes = NSMutableDictionary.dictionary()
-        # XXX bz:15481.  This shouldn't be synchronous.
         no = NSNumber.alloc().initWithBool_(NO)
         yes = NSNumber.alloc().initWithBool_(YES)
         attributes['QTMovieURLAttribute'] = url
-        attributes['QTMovieOpenAsyncOKAttribute'] = no
-        # FIXME: Can't use yet or can_open_file() fails.
+        attributes['QTMovieOpenAsyncOKAttribute'] = yes
+        # FIXME: Can't use yet qtmovie.tracks() not accessible.
         #attributes['QTMovieOpenForPlaybackAttribute'] = yes
         qtmovie, error = QTMovie.movieWithAttributes_error_(attributes, None)
         if error is not None:
             logging.debug(unicode(error).encode('utf-8'))
         if qtmovie is None or error is not None:
             return None
-        if not self.can_open_file(qtmovie):
-            return None
         return qtmovie
-
-    def can_open_file(self, qtmovie):
-        threads.warn_if_not_on_main_thread('quicktime.Player.can_open_file')
-        can_open = False
-        duration = utils.qttimevalue(qtmovie.duration())
-        
-        if qtmovie is not None and duration > 0:
-            allTracks = qtmovie.tracks()
-            if len(qtmovie.tracks()) > 0:
-                # Make sure we have at least one track with a non zero length
-                allMedia = [track.media() for track in allTracks]
-                for media in allMedia:
-                    mediaType = media.attributeForKey_(QTMediaTypeAttribute)
-                    mediaDuration = utils.qttimevalue(media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue())
-                    if mediaType in self.supported_media_types and mediaDuration > 0:
-                        can_open = True
-                        break
-
-        return can_open
 
     def setup_subtitles(self, force_subtitles):
         if app.config.get(prefs.ENABLE_SUBTITLES) or force_subtitles:
@@ -379,8 +374,48 @@ class Player(player.Player):
     def set_playback_rate(self, rate):
         self.movie.setRate_(rate)
 
+    def movie_load_state_changed(self, disconnect=True):
+        callback = self.callback
+        errback = self.errback
+        force_subtitles = self.force_subtitles
+        if not self.movie:
+            logging.error('self.movie is not set')
+            # We can only get here via the callback notification so no need
+            # to check disconnect.
+            self.movie_notifications.disconnect(
+                QTMovieLoadStateDidChangeNotification)
+            return
+        load_state = self.movie.attributeForKey_(
+            QTMovieLoadStateAttribute).longValue()
+        if load_state == QTMovieLoadStateError:
+            threads.call_on_ui_thread(errback)
+        elif load_state == QTMovieLoadStateLoading:
+            # Huh?  Shouldn't we start of as loading?  If so then what's
+            # changed?
+            pass
+        elif load_state == QTMovieLoadStateLoaded:
+            # We really want to be able to play it not just query properties.
+            pass
+        elif load_state in (QTMovieLoadStatePlayable,
+                            QTMovieLoadStatePlaythroughOK,
+                            QTMovieLoadStateComplete):
+            # call the callback in an idle call, the rest of the Player code
+            # expects it
+            if disconnect:
+                self.movie_notifications.disconnect(
+                    QTMovieLoadStateDidChangeNotification)
+            self.setup_subtitles(force_subtitles)
+            threads.call_on_ui_thread(callback)
+        else:
+            raise ValueError('Unknown QTMovieLoadStateAttribute value')
+
     def handle_movie_notification(self, notification):
         if notification.name() == QTMovieDidEndNotification and not app.playback_manager.is_suspended:
             app.playback_manager.on_movie_finished()
+        if notification.name() == QTMovieLoadStateDidChangeNotification:
+            if notification.object() != self.movie:
+                logging.error('Stale notification received for '
+                              'QTMovieLoadStateDidChangeNotification')
+            self.movie_load_state_changed()
 
 ###############################################################################
