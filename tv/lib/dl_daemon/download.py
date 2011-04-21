@@ -60,6 +60,7 @@ from miro.util import (
 from miro.plat.utils import (
     get_available_bytes_for_movies, utf8_to_filename, PlatformFilenameType)
 
+# Don't remove - it is used for unit tests.
 chatter = True
 
 # a hash of download ids to downloaders
