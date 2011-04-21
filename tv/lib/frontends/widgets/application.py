@@ -219,24 +219,14 @@ class Application:
             "not have write permission to, or there is something that is "
             "not a directory at that path.\n"
             "\n"
-            "If you continue, the primary video directory will be reset "
-            "to a location on this drive.  If you had videos downloaded "
-            "this will cause %(shortappname)s to lose details about those "
-            "videos.\n"
-            "\n"
-            "If you quit, then you can connect the drive or otherwise "
+            "Miro will now exit. You can connect the drive or otherwise "
             "fix the problem and relaunch %(shortappname)s.",
             {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
              "moviedirectory": app.config.get(prefs.MOVIES_DIRECTORY)}
         )
-        ret = dialogs.show_choice_dialog(title, description,
-                [dialogs.BUTTON_CONTINUE, dialogs.BUTTON_QUIT])
-
-        if ret == dialogs.BUTTON_QUIT:
-            self.do_quit()
-            return
-
-        continue_callback()
+        dialogs.show_message(title, description,
+                                   alert_type=CRITICAL_MESSAGE)
+        self.do_quit()
 
     def handle_first_time(self, continue_callback):
         call_on_ui_thread(lambda: self._handle_first_time(continue_callback))
