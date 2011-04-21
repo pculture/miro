@@ -75,9 +75,11 @@ class OverlayPalette (NSWindowController):
     keepButton          = IBOutlet('keepButton')
     deleteButton        = IBOutlet('deleteButton')
     fsButton            = IBOutlet('fsButton')
+    fsLabel             = IBOutlet('fsLabel')
     popInOutButton      = IBOutlet('popInOutButton')
     popInOutLabel       = IBOutlet('popInOutLabel')
     subtitlesButton     = IBOutlet('subtitlesButton')
+    subtitlesLabel      = IBOutlet('subtitlesLabel')
     
     playbackControls    = IBOutlet('playbackControls')
     playPauseButton     = IBOutlet('playPauseButton')
@@ -119,6 +121,8 @@ class OverlayPalette (NSWindowController):
     def awakeFromNib(self):
         image_path = resources.path('images/subtitles_down.png')
         self.subtitlesButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
+        self.subtitlesLabel.setTitleWithMnemonic_(_("Subtitles"))
+        self.fsLabel.setTitleWithMnemonic_(_("Fullscreen"))
         self.shareButton.setImage_(getOverlayButtonImage(self.shareButton.bounds().size))
         self.shareButton.setAlternateImage_(getOverlayButtonAlternateImage(self.shareButton.bounds().size))
         self.shareButton.setTitle_(_("Share"))
