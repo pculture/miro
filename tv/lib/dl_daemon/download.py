@@ -60,8 +60,6 @@ from miro.util import (
 from miro.plat.utils import (
     get_available_bytes_for_movies, utf8_to_filename, PlatformFilenameType)
 
-chatter = True
-
 # a hash of download ids to downloaders
 _downloads = {}
 
@@ -536,9 +534,8 @@ class BGDownloader(object):
         """Move our downloaded file from the Incomplete Downloads
         directory to the movies directory.
         """
-        if chatter:
-            logging.debug("move_to_movies_directory: filename is %s",
-                          self.filename)
+        logging.debug("move_to_movies_directory: filename is %s",
+                      self.filename)
         self.move_to_directory(app.config.get(prefs.MOVIES_DIRECTORY))
 
     def move_to_directory(self, directory):
