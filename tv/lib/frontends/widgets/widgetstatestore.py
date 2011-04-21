@@ -65,10 +65,9 @@ class WidgetStateStore(object):
     DEFAULT_COLUMN_WIDTHS = {
         u'album': 100,
         u'artist': 110,
-        u'date': 70,
+        u'date': 150,
         u'description': 160,
-        u'date': 70,
-        u'date-added': 70,
+        u'date-added': 150,
         u'eta': 60,
         u'feed-name': 70,
         u'file-type': 70,
