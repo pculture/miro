@@ -121,7 +121,9 @@ class MovieDataRequestTest(MiroTestCase):
         self.assertEquals(item in incomplete_view, should_run)
 
     def check_path_processed(self, item, should_run):
-        # Check if path_processed was called.
+        # Check if path_processed was called.  Note: this can only test based
+        # on the initial state of the item.  If we fiddle with it's
+        # attributes, then we shouldn't call this.
 
         if should_run:
             # If we will call movie data, then path_processed shouldn't be
