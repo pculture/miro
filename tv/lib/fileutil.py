@@ -40,20 +40,9 @@ from miro import u3info
 
 from miro.plat.filebundle import is_file_bundle
 
-# XXX sucky: we don't really want to be catching WindowsError generally in
-# portable code.  Thanks Python!
-try:
-    WindowsError
-except NameError:
-    WindowsError = OSError
-
 def makedirs(path):
-    try:
-        path = expand_filename(path)
-        return os.makedirs(path)
-    except (OSError, WindowsError), e:
-        raise OSError(e)
-        
+    path = expand_filename(path)
+    return os.makedirs(path)
 
 def isfile(path):
     if not path:

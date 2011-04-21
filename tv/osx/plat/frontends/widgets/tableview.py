@@ -1308,6 +1308,8 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
     def add_column(self, column):
         if column.custom_header:
             self.header_view.custom_header = True
+            if not self.custom_header:
+                self.tableview.setCornerView_(self.sorter_padding.view)
             self.custom_header += 1
             self.header_height = CUSTOM_HEADER_HEIGHT
         self.columns.append(column)
@@ -1329,6 +1331,7 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
         if column.custom_header:
             self.custom_header -= 1
         if self.custom_header == 0:
+            self.tableview.setCornerView_(None)
             self.header_view.custom_header = False
             self.header_height = HEADER_HEIGHT
         self.tableview.removeTableColumn_(column._column)
