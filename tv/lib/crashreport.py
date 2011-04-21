@@ -145,7 +145,7 @@ def save_crash_report(report):
         crash_dir = app.config.get(prefs.CRASH_PATHNAME)
 
         if not os.path.exists(crash_dir):
-            os.makedirs(crash_dir)
+            fileutil.makedirs(crash_dir)
 
         # we use a timestamp so that crash reports are easy to identify
         # for users.
