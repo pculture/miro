@@ -51,7 +51,8 @@ from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
 from miro.plat.frontends.widgets.base import Widget
-from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle, Gradient
+from miro.plat.frontends.widgets.simple import Image
+from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle, Gradient, ImageSurface
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 from miro.plat.frontends.widgets.widgetset import CustomButton
@@ -999,6 +1000,24 @@ class ScrollbarOwnerMixin(object):
     def set_scroller(self, scroller):
         """For GTK; Cocoa tableview knows its enclosingScrollView"""
 
+class SorterPadding(NSView):
+    # Why is this a Mac only widget?  Because the wrappermap mechanism requires
+    # us to layout the widgets (so that we may call back to the portable API
+    # hooks of the widget.  Since we only set the view component, this fake
+    # widget is never placed so the wrappermap mechanism fails to work.
+    #
+    # So far, this is okay because only the Mac uses custom headers.
+    def init(self):
+        self = super(NSView, self).init()
+        image = Image(resources.path('images/headertoolbar.png'))
+        self.image = ImageSurface(image)
+        return self
+
+    def drawRect_(self, rect):
+        context = DrawingContext(self, self.bounds(), rect)
+        context.style = DrawingStyle()
+        self.image.draw(context, 0, 0, context.width, context.height)
+        
 class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
     widget fairly closely.
@@ -1309,7 +1328,7 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
         if column.custom_header:
             self.header_view.custom_header = True
             if not self.custom_header:
-                self.tableview.setCornerView_(self.sorter_padding.view)
+                self.tableview.setCornerView_(SorterPadding.alloc().init())
             self.custom_header += 1
             self.header_height = CUSTOM_HEADER_HEIGHT
         self.columns.append(column)

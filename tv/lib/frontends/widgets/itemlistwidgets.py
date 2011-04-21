@@ -886,7 +886,6 @@ class ListView(ItemView, SorterOwner):
     COLUMN_PADDING = 12
     def __init__(self, item_list, renderer_set, sorts, column_widths):
         ItemView.__init__(self, item_list)
-        self.sorter_padding = SorterPadding()
         self.column_widths = column_widths
         self._column_by_label = {}
         self.set_show_headers(True)
@@ -1469,21 +1468,6 @@ class StandardViewSorter(SorterWidget):
             x = 12
         arrow_start = text_size[0] + x + 6
         return x, arrow_start
-
-class SorterPadding(widgetset.Background):
-    def __init__(self):
-        widgetset.Background.__init__(self)
-        self.surface = imagepool.get_surface(
-            resources.path('images/headertoolbar.png'))
-
-    def size_request(self, layout):
-        h = self.surface.height
-        # XXX fake a really large width and hope that the drawing routines
-        # gets clipped.
-        return (64, h)
-
-    def draw(self, context, layout):
-        self.surface.draw(context, 0, 0, context.width, context.height)
 
 class ListViewSorter(SorterWidget):
     """ListView column header.
