@@ -1651,6 +1651,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if self.looks_like_torrent():
             return u'.torrent'
 
+        if self.enclosure_format is not None:
+            return self.enclosure_format
+
         if self.downloader:
             if ((self.downloader.contentType
                  and "/" in self.downloader.contentType)):
@@ -1664,9 +1667,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                         format_ = format_[2:]
                     return (u'.%s' %
                             MIME_SUBSITUTIONS.get(format_, format_).lower())
-
-        if self.enclosure_format is not None:
-            return self.enclosure_format
 
         if empty_for_unknown:
             return u""
