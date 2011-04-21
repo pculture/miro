@@ -640,7 +640,8 @@ class DeviceSyncManager(object):
             feed_url=item_info.feed_url,
             description=item_info.description,
             release_date=time.mktime(item_info.release_date.timetuple()),
-            duration=item_info.duration * 1000,
+            duration=(item_info.duration and item_info.duration * 1000 or
+                      None),
             permalink=item_info.permalink,
             commentslink=item_info.commentslink,
             payment_link=item_info.payment_link,
