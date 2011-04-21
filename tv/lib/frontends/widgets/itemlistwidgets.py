@@ -985,7 +985,10 @@ class ListView(ItemView, SorterOwner):
 
         extra_width = (self.width_for_columns(self._width_allocated) -
             sum(self.column_widths[name] for name in self.sorters))
-        extra_width /= sum(weights.itervalues())
+        total_weight = sum(weights.itervalues())
+        if not total_weight: # 0 or 1 columns
+            return
+        extra_width /= total_weight
 
         rounded = 0 # carry forward rounded-off part of each value
         for name in self.sorters:
