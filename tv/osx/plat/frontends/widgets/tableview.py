@@ -1013,6 +1013,9 @@ class SorterPadding(NSView):
         self.image = ImageSurface(image)
         return self
 
+    def isFlipped(self):
+        return YES
+
     def drawRect_(self, rect):
         context = DrawingContext(self, self.bounds(), rect)
         context.style = DrawingStyle()
@@ -1022,7 +1025,7 @@ class SorterPadding(NSView):
         edge = 72.0 / 255
         context.set_color((edge, edge, edge))
         context.set_line_width(1)
-        context.move_to(0, 0)
+        context.move_to(0.5, 0)
         context.rel_line_to(0, context.height)
         context.stroke()
         
