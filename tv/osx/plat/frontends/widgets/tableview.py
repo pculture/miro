@@ -1153,8 +1153,9 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
         else:
             self.tableview.collapseItem_(item)
         if self.tableview.isItemExpanded_(item) != expanded:
-            raise errors.WidgetActionError("cannot expand iter. expandable: %s",
-                    repr(self.tableview.isExpandable_(item)))
+            raise errors.WidgetActionError(
+                "cannot expand iter. expandable: %r" % (
+                    self.tableview.isExpandable_(item),))
         self.invalidate_size_request()
 
     def is_row_expanded(self, iter):
