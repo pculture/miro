@@ -121,11 +121,11 @@ class DeviceInfo(BaseDeviceInfo):
         self.update(kwargs)
 
     def __repr__(self):
-        return "<DeviceInfo %r %r %r %r>" % (
-            self.__dict__.get("name", None),
-            self.__dict__.get("device_name", None),
-            self.__dict__.get("vendor_id", None),
-            self.__dict__.get("product_id", None))
+        return "<DeviceInfo %r %r %x %x>" % (
+            getattr(self, "name", None),
+            getattr(self, "device_name", None),
+            getattr(self, "vendor_id", 0),
+            getattr(self, "product_id", 0))
 
 class MultipleDeviceInfo(BaseDeviceInfo):
     """

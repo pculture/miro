@@ -83,6 +83,8 @@ devices = [target1, multiple]
 
         # a single device
         device = dm.get_device("Bar")
+        self.assertEqual(repr(device),
+                         "<DeviceInfo 'Target1' 'Bar' 890a bcde>")
         # this comes from the section name
         self.assertEqual(device.name, "Target1")
         # this comes from the default
