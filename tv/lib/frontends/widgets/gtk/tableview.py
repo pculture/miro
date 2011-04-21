@@ -1096,6 +1096,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 gtk.TREE_VIEW_DROP_INTO_OR_AFTER):
             yield (iter_, -1, gtk_path, gtk_position)
 
+        if hasattr(model, 'iter_is_valid'):
+            # tablist has this; item list does not
+            assert model.iter_is_valid(iter_)
         parent_iter = model.iter_parent(iter_)
         position = gtk_path[-1]
         if gtk_position in (gtk.TREE_VIEW_DROP_BEFORE,
@@ -1301,6 +1304,7 @@ class TableModel(object):
         return self._model.iter_next(iter_)
 
     def nth_iter(self, index):
+        assert index >= 0
         return self._model.iter_nth_child(None, index)
 
     def __iter__(self):
@@ -1327,7 +1331,7 @@ class TreeTableModel(TableModel):
             column_values))
 
     def insert_before(self, iter_, *column_values):
-        parent = self._model.iter_parent(iter_)
+        parent = self.parent_iter(iter_)
         row = self.convert_row_for_gtk(column_values)
         return self._model.insert_before(parent, iter_, row)
 
@@ -1339,6 +1343,7 @@ class TreeTableModel(TableModel):
         return self._model.iter_children(iter_)
 
     def nth_child_iter(self, iter_, index):
+        assert index >= 0
         return self._model.iter_nth_child(iter_, index)
 
     def has_child(self, iter_):
@@ -1348,6 +1353,7 @@ class TreeTableModel(TableModel):
         return self._model.iter_n_children(iter_)
 
     def parent_iter(self, iter_):
+        assert self._model.iter_is_valid(iter_)
         return self._model.iter_parent(iter_)
 
 class InfoListModel(infolist.InfoList):
