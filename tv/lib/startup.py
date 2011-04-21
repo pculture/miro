@@ -354,7 +354,7 @@ def check_movies_gone():
     # if the directory doesn't exist, create it.
     if not os.path.exists(movies_dir):
         try:
-            os.makedirs(movies_dir)
+            fileutil.makedirs(movies_dir)
         except OSError:
             logging.info(
                 "Movies directory can't be created -- calling handler")

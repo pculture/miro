@@ -989,7 +989,7 @@ def write_database(database, mount):
         # device disappeared, so we can't write to it
         return
     try:
-        os.makedirs(os.path.join(mount, '.miro'))
+        fileutil.makedirs(os.path.join(mount, '.miro'))
     except OSError:
         pass
     try:

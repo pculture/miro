@@ -827,7 +827,7 @@ class HTTPDownloader(BGDownloader):
                 self.totalSize = self.currentSize
             try:
                 self.move_to_movies_directory()
-            except IOError, e:
+            except (OSError, IOError), e:
                 self.handle_write_error(e)
         self.update_client()
 
@@ -923,7 +923,7 @@ def save_fast_resume_data(info_hash, fast_resume_data):
 
     if not os.path.exists(fast_resume_dir):
         try:
-            os.makedirs(fast_resume_dir)
+            fileutil.makedirs(fast_resume_dir)
         except OSError:
             logging.exception("can't save fast_resume_data")
             return
