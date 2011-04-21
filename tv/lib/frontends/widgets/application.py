@@ -535,10 +535,10 @@ class Application:
             )
             if folder_count > 0:
                 description += '\n\n' + ngettext(
-                    'One of these items is a folder.  Delete/Removeing a '
+                    'One of these items is a folder.  Deleting/Removing a '
                     "folder will delete/remove it's contents",
 
-                    'Some of these items are folders.  Delete/Removeing a '
+                    'Some of these items are folders.  Deleting/Removing a '
                     "folder will delete/remove it's contents",
 
                     folder_count
