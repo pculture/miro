@@ -237,6 +237,17 @@ class LogFilter(logging.Filter):
         for rec in self.records:
             assert rec.levelno == level
 
+class FakeMetadataProgressUpdater(object):
+    def __init__(self):
+        self.paths_processed = set()
+
+    def path_processed(self, path):
+        self.paths_processed.add(path)
+
+    def will_process_path(self, path):
+        # we should test this, but for now it's just a stub
+        pass
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.setup_log_filter()
@@ -246,6 +257,9 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
+        # setup MetadataProgressUpdater
+        self.metadata_progress_updater = FakeMetadataProgressUpdater()
+        app.metadata_progress_updater = self.metadata_progress_updater
         # reload config and initialize it to temprary
         config.load_temporary()
         self.platform = app.config.get(prefs.APP_PLATFORM)
@@ -277,6 +291,7 @@ class MiroTestCase(unittest.TestCase):
         signals.system.disconnect_all()
         util.chatter = True
         self.stop_http_server()
+        del app.metadata_progress_updater
 
         # Remove any leftover database
         app.db.close()

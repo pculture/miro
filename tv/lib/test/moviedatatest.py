@@ -80,19 +80,10 @@ class MovieDataTest(EventLoopTest):
             actual.screenshot = actual.screenshot and bool(actual.screenshot)
             self.assertEqual(dict(actual), expected)
 
-class FakeMetadataProgressUpdater(object):
-    def __init__(self):
-        self.paths_processed = set()
-
-    def path_processed(self, path):
-        self.paths_processed.add(path)
-
 class MovieDataRequestTest(MiroTestCase):
     """Test when we choose to invoke our moviedata programs."""
     def setUp(self):
         MiroTestCase.setUp(self)
-        self.metadata_progress_updater = FakeMetadataProgressUpdater()
-        app.metadata_progress_updater = self.metadata_progress_updater
         self.feed = models.Feed(u'dtv:manualFeed')
         mp3_path = resources.path("testdata/metadata/mp3-0.mp3")
         webm_path = resources.path("testdata/metadata/webm-0.webm")
@@ -101,10 +92,6 @@ class MovieDataRequestTest(MiroTestCase):
         self.audio_item = models.FileItem(mp3_path, self.feed.id)
         self.video_item = models.FileItem(webm_path, self.feed.id)
         self.other_item = models.FileItem(jpg_path, self.feed.id)
-
-    def tearDown(self):
-        del app.metadata_progress_updater
-        MiroTestCase.tearDown(self)
 
     def signal_changes(self):
         self.audio_item.signal_change()

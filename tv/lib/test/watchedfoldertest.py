@@ -16,7 +16,6 @@ class FakeDirectoryWatcher(signals.SignalEmitter):
 class WatchedFolderTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        app.metadata_progress_updater = mock.Mock()
         app.directory_watcher = FakeDirectoryWatcher
         self.dir = self.make_temp_dir_path()
         self.url = u'dtv:directoryfeed:%s' % make_url_safe(self.dir)
@@ -27,7 +26,6 @@ class WatchedFolderTest(EventLoopTest):
         self.feed.actualFeed.DIRECTORY_WATCH_UPDATE_TIMEOUT = 0.0
 
     def tearDown(self):
-        app.metadata_progress_updater = None
         app.directory_watcher = None
         EventLoopTest.tearDown(self)
 
