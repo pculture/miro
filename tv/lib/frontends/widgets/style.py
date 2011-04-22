@@ -736,6 +736,7 @@ class ProgressBarDrawer(cellpack.Packer):
     """Helper object to draw the progress bar (which is actually quite
     complicated.
     """
+    HEIGHT_PROPORTION = 0.6
 
     def __init__(self, progress_ratio, color_set):
         self.progress_ratio = progress_ratio
@@ -743,9 +744,11 @@ class ProgressBarDrawer(cellpack.Packer):
 
     def _layout(self, context, x, y, width, height):
         self.x, self.y, self.width, self.height = x, y, width, height
+        self.height *= self.HEIGHT_PROPORTION
+        self.y += (height - self.height) / 2
         context.set_line_width(1)
         self.progress_width = int(width * self.progress_ratio)
-        self.half_height = height / 2
+        self.half_height = self.height / 2
         if self.progress_width < self.half_height:
             self.progress_end = 'left'
         elif width - self.progress_width < self.half_height:
