@@ -409,16 +409,6 @@ class NameRenderer(ListViewRenderer):
     def layout_all(self, layout_manager, width, height, selected):
         # make a Layout Object
         layout = cellpack.Layout()
-        # add the button, if needed
-        if self.should_show_download_button():
-            button = self.make_button(layout_manager)
-            button_x = width - button.get_size()[0]
-            layout.add_image(button, button_x, 0, hotspot='download')
-            # text should end at the start of the button
-            text_width = button_x
-        else:
-            # text can take up the whole space
-            text_width = width
         # add the text
         layout_manager.set_font(self.font_size)
         if selected:
@@ -427,10 +417,44 @@ class NameRenderer(ListViewRenderer):
             layout_manager.set_text_color(self.default_text_color)
         textbox = layout_manager.textbox(self.info.name)
         textbox.set_wrap_style('truncated-char')
-        layout.add_text_line(textbox, 0, 0, text_width)
+        layout.add_text_line(textbox, 0, 0, width)
         # middle-align everything
         layout.center_y(top=0, bottom=height)
         return layout
+
+class StatusRenderer(ListViewRenderer):
+    BUTTONS = ('pause', 'resume', 'cancel', 'keep')
+    min_width = 100
+    min_height = 20
+    min_width = 120 # GTK isn't returning enough size, so add some extra
+    button_font_size = 0.77
+
+    def __init__(self):
+        ListViewRenderer.__init__(self)
+        self.button = {}
+        for button in self.BUTTONS:
+            path = resources.path('images/%s-button.png' % button)
+            self.button[button] = imagepool.get_surface(path)
+        path = resources.path('images/download-arrow.png')
+        self.download_icon = imagepool.get_surface(path)
+
+    def layout_all(self, layout_manager, width, height, selected):
+        # add the button, if needed
+        if self.should_show_download_button():
+            layout = cellpack.Layout()
+
+            button = self.make_button(layout_manager)
+            button_x = width - button.get_size()[0]
+            layout.add_image(button, button_x, 0, hotspot='download')
+            # text should end at the start of the button
+            text_width = button_x
+            return layout
+
+        if (self.info.state in ('downloading', 'paused') and
+            self.info.download_info.state != 'pending'):
+            return self.layout_progress(layout_manager, width, height)
+        else:
+            return self.layout_text(layout_manager, width, height)
 
     def make_button(self, layout_manager):
         layout_manager.set_font(self.button_font_size)
@@ -446,25 +470,6 @@ class NameRenderer(ListViewRenderer):
         nonlocal = self.info.device or self.info.remote
         return ((not self.info.downloaded and
                 self.info.state not in ('downloading', 'paused')) or nonlocal)
-
-class StatusRenderer(ListViewRenderer):
-    BUTTONS = ('pause', 'resume', 'cancel', 'keep')
-    min_width = 100
-    min_height = 20
-
-    def __init__(self):
-        ListViewRenderer.__init__(self)
-        self.button = {}
-        for button in self.BUTTONS:
-            path = resources.path('images/%s-button.png' % button)
-            self.button[button] = imagepool.get_surface(path)
-
-    def layout_all(self, layout_manager, width, height, selected):
-        if (self.info.state in ('downloading', 'paused') and
-            self.info.download_info.state != 'pending'):
-            return self.layout_progress(layout_manager, width, height)
-        else:
-            return self.layout_text(layout_manager, width, height)
 
     def layout_progress(self, layout_manager, width, height):
         """Handle layout when we should display a progress bar """
