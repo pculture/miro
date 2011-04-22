@@ -52,7 +52,7 @@ class MovieDataTest(EventLoopTest):
         return mdi
 
     def mutagen_read_item(self, item):
-        item.read_metadata(item.get_filename())
+        item.read_metadata()
 
     def mdu_read_item(self, item):
         self.mdu.in_progress.add(item.id)
@@ -78,6 +78,11 @@ class MovieDataTest(EventLoopTest):
                 actual.cover_art = bool(actual.cover_art)
             expected = dict((str(k), v) for k, v in expected.iteritems())
             actual.screenshot = actual.screenshot and bool(actual.screenshot)
+            actual = dict(actual)
+            if actual != expected:
+                raise AssertionError("metadata wrong for %s "
+                        "actual: %s expected: %s" %
+                        (filename, actual, expected))
             self.assertEqual(dict(actual), expected)
 
 class MovieDataRequestTest(MiroTestCase):
@@ -112,15 +117,19 @@ class MovieDataRequestTest(MiroTestCase):
         # on the initial state of the item.  If we fiddle with it's
         # attributes, then we shouldn't call this.
 
+        paths_processed = self.metadata_progress_updater.paths_processed
         if should_run:
             # If we will call movie data, then path_processed shouldn't be
             # called until that happens, which is never in the unit tests.
-            self.assert_(item.filename not in
-                    self.metadata_progress_updater.paths_processed)
+            if item.filename in paths_processed:
+                raise AssertionError("path_processed() called for %s when "
+                        "it shouldn't have been (path_processed: %s)" %
+                        (item.filename, paths_processed))
         else:
-            # if not, then path_processed should be called.
-            self.assert_(item.filename in
-                    self.metadata_progress_updater.paths_processed)
+            if item.filename not in paths_processed:
+                raise AssertionError("path_processed() not called for %s when "
+                        "it shouldn't have been (paths_processed: %s)" % 
+                        (item.filename, paths_processed))
 
     def test_initial_mutagan_worked_audio(self):
         # shouldn't run moviedata for audio that mutagen can process
