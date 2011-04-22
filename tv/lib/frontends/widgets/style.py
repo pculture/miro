@@ -399,13 +399,6 @@ class ListViewRenderer(widgetset.InfoListRenderer):
 
 class NameRenderer(ListViewRenderer):
     min_width = 120 # GTK isn't returning enough size, so add some extra
-    button_font_size = 0.77
-
-    def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
-        path = resources.path('images/download-arrow.png')
-        self.download_icon = imagepool.get_surface(path)
-
     def layout_all(self, layout_manager, width, height, selected):
         # make a Layout Object
         layout = cellpack.Layout()
