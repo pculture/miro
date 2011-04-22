@@ -31,6 +31,7 @@ from miro.eventloop import as_idle
 import os.path
 import re
 import subprocess
+import tempfile
 import time
 import traceback
 import threading
@@ -179,9 +180,16 @@ class MovieDataUpdater(signals.SignalEmitter):
 
     def run_movie_data_program(self, command_line, env):
         start_time = time.time()
-        pipe = subprocess.Popen(command_line, stdout=subprocess.PIPE,
-                stdin=subprocess.PIPE, stderr=subprocess.PIPE, env=env,
+        # create tempfiles to catch output for the movie data program.  Using
+        # a pipe fails if the movie data program outputs enough to fill up the
+        # buffers (see #17059)
+        movie_data_stdout = tempfile.TemporaryFile()
+        movie_data_stderr = tempfile.TemporaryFile()
+        pipe = subprocess.Popen(command_line, stdout=movie_data_stdout,
+                stdin=subprocess.PIPE, stderr=movie_data_stderr, env=env,
                 startupinfo=util.no_console_startupinfo())
+        # close stdin since we won't write to it.
+        pipe.stdin.close()
         while pipe.poll() is None and not self.in_shutdown:
             time.sleep(SLEEP_DELAY)
             if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
@@ -195,7 +203,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                                 "killing it")
                 self.kill_process(pipe.pid)
             return ''
-        return pipe.stdout.read()
+        # FIXME: should we do anything with stderr?
+        movie_data_stdout.seek(0)
+        return movie_data_stdout.read()
 
     def kill_process(self, pid):
         try:
