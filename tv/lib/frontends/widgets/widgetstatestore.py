@@ -111,13 +111,13 @@ class WidgetStateStore(object):
         u'others':
             [u'name', u'feed-name', u'size', u'file-type'],
         u'downloading':
-            [u'name', u'feed-name', u'status', u'eta', u'rate',
-            u'torrent-details', u'size'],
+            [u'name', u'feed-name', u'eta', u'rate',
+            u'torrent-details', u'size', u'status'],
         u'tab': # all-feeds
             [u'state', u'name', u'feed-name', u'length',
-            u'status', u'size', u'date'],
+            u'size', u'date', u'status'],
         u'feed':
-            [u'state', u'name', u'length', u'status', u'size', u'date'],
+            [u'state', u'name', u'length', u'size', u'date', u'status'],
         u'search':
             [u'state', u'name', u'description'],
         u'playlist':
