@@ -160,11 +160,13 @@ pyobjc_version = objc.__version__
 pyobjc_version = pyobjc_version.split('.')
 pyobjc_version = int(pyobjc_version[0])
 
-# XXX bz:15481.  movieWithFile_error_ may be asynchronous, but at least when
+# XXX movieWithFile_error_ may be asynchronous, but at least when
 # it is done locally it seems to return in such a way that makes it possible
 # to extract stuff.  The QTMovieLoadState attribute never seems to update,
-# maybe because we are missing some Cocoa runloop stuff or something.
-
+# maybe because we are missing some Cocoa runloop stuff or something.  One
+# issue arises for streamed movie files (such as some mov), it returns
+# loading state and then we hit failure and Miro puts it into the Misc
+# category despite it actually being playable.
 qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path, None)
 load_state = QTKit.QTMovieLoadStateError
 if qtmovie:
