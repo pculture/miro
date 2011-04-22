@@ -40,6 +40,7 @@ import random
 from miro import app
 from miro import prefs
 from miro import util
+from miro import fileutil
 
 END_HEADERS = "ENDHEADERS\n"
 
