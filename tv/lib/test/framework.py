@@ -14,6 +14,7 @@ from miro import downloader
 from miro import httpauth
 from miro import httpclient
 from miro import iteminfocache
+from miro import moviedata
 from miro import util
 from miro import prefs
 from miro import searchengines
@@ -257,9 +258,10 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
-        # setup MetadataProgressUpdater
+        # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
+        moviedata.movie_data_updater = moviedata.MovieDataUpdater()
         # reload config and initialize it to temprary
         config.load_temporary()
         self.platform = app.config.get(prefs.APP_PLATFORM)
