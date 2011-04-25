@@ -304,7 +304,6 @@ class PlaybackManager (signals.SignalEmitter):
             self.video_display = None
         self.is_fullscreen = False
         self.previous_left_widget = None
-        self.playlist = None
         self.emit('did-stop')
 
     def toggle_shuffle(self):
