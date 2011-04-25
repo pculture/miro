@@ -546,7 +546,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self.hover_info = None
         self.hover_pos = None
         self.in_bulk_change = False
-        self.handled_last_button_press = False
         self.delaying_press = False
         self.set_columns_draggable(False)
         self.layout_manager = LayoutManager(self._widget)
@@ -562,7 +561,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self.create_signal('row-collapsed')
         self.create_signal('hotspot-clicked')
         self.create_signal('row-clicked')
-        self.create_signal('row-double-clicked')
         self.create_signal('row-activated')
         self.wrapped_widget_connect('row-activated', self.on_row_activated)
         self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
@@ -819,12 +817,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
 
     def on_button_press(self, treeview, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
-            if self.handled_last_button_press:
-                return
-            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-            if path_info and not self._x_coord_in_expander(treeview, path_info):
-                iter_ = treeview.get_model().get_iter(path_info[0])
-                self.emit('row-double-clicked', iter_)
+            # already handled as row-activated
             return
 
         # Check for single click.  Emit the event but keep on running
@@ -840,7 +833,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if hotspot_tracker.hit:
                 self.hotspot_tracker = hotspot_tracker
                 hotspot_tracker.redraw_cell()
-                self.handled_last_button_press = True
                 if hotspot_tracker.is_for_context_menu():
                     self._popup_hotspot_context_menu(event)
                 # grab keyboard focus since we handled the event
@@ -849,13 +841,11 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         if event.window != treeview.get_bin_window():
             # click is outside the content area, don't try to handle this.
             # In particular, our DnD code messes up resizing table columns.
-            self.handled_last_button_press = False
             return
         if event.button == 1 and self.drag_source:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if not path_info or (event.state &
                     (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)):
-                self.handled_last_button_press = False
                 return
             path, column, x, y = path_info
             model, row_paths = treeview.get_selection().get_selected_rows()
@@ -894,11 +884,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
                 if path_info is not None:
                     path, column, x, y = path_info
                     self._popup_context_menu(path, event)
-            self.handled_last_button_press = True
             # grab keyboard focus since we handled the event
             self.focus()
             return True
-        self.handled_last_button_press = False
 
     def _popup_context_menu(self, path, event):
         if not self.selection.path_is_selected(path):

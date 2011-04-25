@@ -479,8 +479,6 @@ class ItemListController(object):
                     self.on_selection_changed, view_type)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('key-press', self.on_key_press)
-            item_view.connect_weak('row-double-clicked',
-                    self.on_row_double_clicked)
             item_view.connect_weak('row-activated', self.on_row_activated)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
@@ -516,8 +514,8 @@ class ItemListController(object):
             start_id = selected_ids[0]
         self._play_item_list(start_id, presentation_mode,
                 force_resume=force_resume)
-#        if selection:
-#            self.scroll_to_item(selection[0], auto=False)
+        if selection:
+            self.scroll_to_item(selection[0], auto=False)
 
     def play_items(self, presentation_mode='fit-to-bounds',
                    force_resume=False):
@@ -557,28 +555,19 @@ class ItemListController(object):
             self.item_tracker.set_search(search_text)
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
-    def _trigger_item(self, item_view, info):
-        if info.downloaded:
+    def on_row_activated(self, item_view, iter_):
+        info = item_view.model[iter_][0]
+        if info.id == app.widget_state.get_last_played_item_id(self.type, self.id):
+            app.playback_manager.play_pause()
+        elif info.downloaded:
             self._play_item_list(info.id)
-#            self.scroll_to_item(info, auto=False)
+            self.scroll_to_item(info, auto=False)
         elif info.state == 'downloading':
             messages.PauseDownload(info.id).send_to_backend()
         elif info.state == 'paused':
             messages.ResumeDownload(info.id).send_to_backend()
         elif info.download_info is None:
             messages.StartDownload(info.id).send_to_backend()
-
-
-    def on_row_double_clicked(self, item_view, iter_):
-        info = item_view.model[iter_][0]
-        self._trigger_item(item_view, info)
-
-    def on_row_activated(self, item_view, iter_):
-        info = item_view.model[iter_][0]
-        if app.playback_manager.is_playing:
-            app.playback_manager.play_pause()
-        else:
-            self._trigger_item(item_view, info)
 
     def on_sort_changed(self, object, sort_key, ascending, view):
         self.item_list_will_change()
@@ -702,7 +691,7 @@ class ItemListController(object):
                 app.widgetapp.open_url(url)
         elif name in ('play', 'thumbnail-play'):
             self._play_item_list(item_info.id)
-#            self.scroll_to_item(item_info, auto=False)
+            self.scroll_to_item(item_info, auto=False)
         elif name == 'play_pause':
             app.playback_manager.play_pause()
         elif name.startswith('rate:'):
@@ -845,7 +834,7 @@ class ItemListController(object):
             app.widget_state.set_last_played_item_id(self.type, self.id,
                     item.id)
             self.update_resume_button()
-#            self.scroll_to_item(item, auto=True)
+            self.scroll_to_item(item, auto=True)
 
     def item_list_will_change(self):
         """Call this before making any changes to the item list.  """

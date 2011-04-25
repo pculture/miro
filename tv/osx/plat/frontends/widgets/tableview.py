@@ -661,7 +661,7 @@ class TableViewCommon(object):
             row = self.rowAtPoint_(point)
             if (row != -1 and self.point_should_click(point, row)):
                 iter = wrapper.model.iter_for_row(self, row)
-                wrapper.emit('row-double-clicked', iter)
+                wrapper.emit('row-activated', iter)
             return
 
         # Like clickCount() == 2 but keep running so we can get to run the 
@@ -1045,7 +1045,6 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
         CocoaSelectionOwnerMixin.__init__(self)
         ScrollbarOwnerMixin.__init__(self)
         self.create_signal('hotspot-clicked')
-        self.create_signal('row-double-clicked')
         self.create_signal('row-clicked')
         self.create_signal('row-activated')
         self.create_signal('reallocate-columns')
