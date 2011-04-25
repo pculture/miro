@@ -140,8 +140,8 @@ class ScrollbarOwnerMixin(object):
     def get_item_height(self, path):
         return self.get_background_area(path, self.get_columns()[0]).height
 
-    def get_path_scroll_position(self, path):
-        """Get the position we'd scroll to to scroll to the path given"""
+    def get_path_scroll_distance(self, path):
+        """Get the distance we'd scroll to scroll to the path given"""
         if not self.scrollbars:
             return
         vadjustment = self.scrollbars[1]
@@ -1201,11 +1201,10 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         the iter is recapturing the scroll by passing the current position.
         """
         path = self._model.get_path(iter_)
-        item_position = self._widget.get_path_scroll_position(path)
-        closeness = abs(self.get_scroll_position()[1] - item_position)
-        if (not auto or abs(self.get_scroll_position()[1] - item_position) <=
-                self._widget.get_item_height(path)):
-            self._widget.set_vertical_scroll(item_position)
+        distance = self._widget.get_path_scroll_distance(path)
+        if (not auto or abs(distance) <= self._widget.get_item_height(path)):
+            current = self.get_scroll_position()[1]
+            self._widget.set_vertical_scroll(current + distance)
 
     def set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)
