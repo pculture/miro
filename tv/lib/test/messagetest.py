@@ -728,23 +728,32 @@ class MetadataProgressUpdaterTest(EventLoopTest):
         self.assertEquals(message.remaining, remaining)
         self.assertEquals(message.total, total)
 
+    def run_timeouts_and_idles(self):
+        """Run the timeouts/idles necessary to make our updater calls go
+        thorugh.
+        """
+        # make will_process_path()/path_processed() run
+        self.runPendingIdles()
+        # make _send_updates() run
+        self.run_pending_timeouts()
+
     def test_simple(self):
         p1 = 'foo.mp3'
         p2 = 'foo2.mp3'
         self.updater.will_process_path(p1, None)
         self.updater.will_process_path(p2, None)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         self.assertEquals(len(self.test_handler.messages), 1)
         self._check_message(0, ('library', 'audio'), 2, 2)
         # finish one video
         self.updater.path_processed(p2)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         self.assertEquals(len(self.test_handler.messages), 2)
         self._check_message(1, ('library', 'audio'), 1, 2)
         # finish last video, the total should go to 0 since we are done with
         # our work
         self.updater.path_processed(p1)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         self.assertEquals(len(self.test_handler.messages), 3)
         self._check_message(2, ('library', 'audio'), 0, 0)
 
@@ -753,13 +762,13 @@ class MetadataProgressUpdaterTest(EventLoopTest):
         p2 = 'foo2.mp3'
         # add p1, then finish it, and don't worry about the messages
         self.updater.will_process_path(p1, None)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         self.updater.path_processed(p1)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         self.test_handler.messages = []
         # add p2
         self.updater.will_process_path(p2, None)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         # The total should have been reset to 0, when we finished with p1.
         # Check that it now only includes p2
         self._check_message(0, ('library', 'audio'), 1, 1)
@@ -769,15 +778,17 @@ class MetadataProgressUpdaterTest(EventLoopTest):
         p2 = 'foo2.mp3'
         self.updater.will_process_path(p1, self.device)
         self.updater.will_process_path(p2, self.device)
-        self.run_pending_timeouts()
+        self.run_timeouts_and_idles()
         self._check_message(0, ('device', '123-audio'), 2, 2)
 
     def test_duplicate_will_add(self):
         # test that calling will_add for a path twice results in a warning
         p1 = 'foo.mp3'
         self.updater.will_process_path(p1, None)
+        self.run_timeouts_and_idles()
         self.log_filter.set_exception_level(logging.CRITICAL)
         self.updater.will_process_path(p1, None)
+        self.run_timeouts_and_idles()
         self.log_filter.check_record_count(1)
         self.log_filter.check_record_level(logging.WARNING)
         # test that finishing the path, then adding again doesn't result in a
@@ -785,9 +796,11 @@ class MetadataProgressUpdaterTest(EventLoopTest):
         self.log_filter.set_exception_level(logging.WARNING)
         self.updater.path_processed(p1)
         self.updater.will_process_path(p1, None)
+        self.run_timeouts_and_idles()
 
     def test_unexpected_path_added(self):
         # test that calling path_processed() for a path that wasn't set
         # with will_process_path() is a noop
         p1 = 'foo.mp3'
         self.updater.path_processed(p1)
+        self.run_timeouts_and_idles()
