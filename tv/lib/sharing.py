@@ -1077,7 +1077,7 @@ class SharingManagerBackend(object):
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
-            itemprop['cover_art'] = item.cover_art
+            itemprop['cover_art'] = item.thumbnail
             self.daapitems[item.id] = itemprop
 
     def finished_callback(self, session):
