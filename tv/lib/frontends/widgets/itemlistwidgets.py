@@ -1560,7 +1560,7 @@ class ProgressToolbar(Toolbar):
 
     def _display(self):
         if not self.set_up:
-            padding = 380 - self.label.get_width()
+            padding = max(0, 380 - self.label.get_width())
             self.hbox.pack_start(
                 widgetutil.align(
                     self.label_widget, 1, 0.5, 1, 0, 0, 0, padding, 10),
