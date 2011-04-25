@@ -820,73 +820,87 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             # already handled as row-activated
             return
 
-        # Check for single click.  Emit the event but keep on running
-        # so we can handle stuff like drag and drop.
         if event.type == gtk.gdk.BUTTON_PRESS:
+            # single click; emit the event but keep on running so we can handle
+            # stuff like drag and drop.
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info and not self._x_coord_in_expander(treeview, path_info):
                 iter_ = treeview.get_model().get_iter(path_info[0])
                 self.emit('row-clicked', iter_)
 
-        if self.hotspot_tracker is None:
-            hotspot_tracker = HotspotTracker(treeview, event)
-            if hotspot_tracker.hit:
-                self.hotspot_tracker = hotspot_tracker
-                hotspot_tracker.redraw_cell()
-                if hotspot_tracker.is_for_context_menu():
-                    self._popup_hotspot_context_menu(event)
-                # grab keyboard focus since we handled the event
-                self.focus()
-                return True
+        if self.handle_hotspot_hit(treeview, event):
+            return True
         if event.window != treeview.get_bin_window():
             # click is outside the content area, don't try to handle this.
             # In particular, our DnD code messes up resizing table columns.
             return
         if event.button == 1 and self.drag_source:
-            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-            if not path_info or (event.state &
-                    (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)):
-                return
-            path, column, x, y = path_info
-            model, row_paths = treeview.get_selection().get_selected_rows()
-
-            if path not in row_paths:
-                # something outside the selection is being dragged.
-                # make it the new selection.
-                self.unselect_all(signal=False)
-                self.select_path(path)
-                row_paths = [path]
-            rows = self.model.get_rows(row_paths)
-            self.drag_data = rows and self.drag_source.begin_drag(self, rows)
-            self.drag_button_down = bool(self.drag_data)
-            if self.drag_button_down:
-                self.drag_start_x = int(event.x)
-                self.drag_start_y = int(event.y)
-
-            if len(row_paths) > 1 and path in row_paths:
-                # handle multiple selection.  If the current row is already
-                # selected, stop propagating the signal.  We will only change
-                # the selection if the user doesn't start a DnD operation.
-                # This makes it more natural for the user to drag a block of
-                # selected items.
-                renderer = column.get_cell_renderers()[0]
-                if (not self._x_coord_in_expander(treeview, path_info)
-                        and not isinstance(renderer, GTKCheckboxCellRenderer)):
-                    self.delaying_press = True
-                    # grab keyboard focus since we handled the event
-                    self.focus()
-                    return True
+            return self.start_drag(treeview, event)
         elif event.button == 3 and self.context_menu_callback:
-            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-            if path_info is not None:
-                path_info = treeview.get_path_at_pos(int(event.x),
-                                                     int(event.y))
-                if path_info is not None:
-                    path, column, x, y = path_info
-                    self._popup_context_menu(path, event)
+            return self.show_context_menu(treeview, event)
+
+    def handle_hotspot_hit(self, treeview, event):
+        if self.hotspot_tracker:
+            return
+        hotspot_tracker = HotspotTracker(treeview, event)
+        if hotspot_tracker.hit:
+            self.hotspot_tracker = hotspot_tracker
+            hotspot_tracker.redraw_cell()
+            if hotspot_tracker.is_for_context_menu():
+                menu = self._popup_context_menu(self.hotspot_tracker.path, event)
+                if menu:
+                    menu.connect('selection-done',
+                            self._on_hotspot_context_menu_selection_done)
             # grab keyboard focus since we handled the event
             self.focus()
             return True
+
+    def start_drag(self, treeview, event):
+        path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+        if not path_info or (event.state &
+                (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)):
+            return False
+        path, column, x, y = path_info
+        model, row_paths = treeview.get_selection().get_selected_rows()
+
+        if path not in row_paths:
+            # something outside the selection is being dragged.
+            # make it the new selection.
+            self.unselect_all(signal=False)
+            self.select_path(path)
+            row_paths = [path]
+        rows = self.model.get_rows(row_paths)
+        self.drag_data = rows and self.drag_source.begin_drag(self, rows)
+        self.drag_button_down = bool(self.drag_data)
+        if self.drag_button_down:
+            self.drag_start_x = int(event.x)
+            self.drag_start_y = int(event.y)
+
+        if len(row_paths) > 1 and path in row_paths:
+            # handle multiple selection.  If the current row is already
+            # selected, stop propagating the signal.  We will only change
+            # the selection if the user doesn't start a DnD operation.
+            # This makes it more natural for the user to drag a block of
+            # selected items.
+            renderer = column.get_cell_renderers()[0]
+            if (not self._x_coord_in_expander(treeview, path_info)
+                    and not isinstance(renderer, GTKCheckboxCellRenderer)):
+                self.delaying_press = True
+                # grab keyboard focus since we handled the event
+                self.focus()
+                return True
+
+    def show_context_menu(self, treeview, event):
+        path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+        if path_info is not None:
+            path_info = treeview.get_path_at_pos(int(event.x),
+                                                 int(event.y))
+            if path_info is not None:
+                path, column, x, y = path_info
+                self._popup_context_menu(path, event)
+        # grab keyboard focus since we handled the event
+        self.focus()
+        return True
 
     def _popup_context_menu(self, path, event):
         if not self.selection.path_is_selected(path):
@@ -898,12 +912,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             return menu
         else:
             return None
-
-    def _popup_hotspot_context_menu(self, event):
-        menu = self._popup_context_menu(self.hotspot_tracker.path, event)
-        if menu:
-            menu.connect('selection-done',
-                    self._on_hotspot_context_menu_selection_done)
 
     def _on_hotspot_context_menu_selection_done(self, menu):
         # context menu is closed, we won't get the button-release-event in
