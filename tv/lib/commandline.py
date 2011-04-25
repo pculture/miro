@@ -76,6 +76,10 @@ def _item_exists_for_path(path):
     return False
 
 def add_video(path, manual_feed=None):
+    """Add a new video
+
+    :returns: True if we create a new Item object.
+    """
     path = os.path.abspath(path)
     item_for_path = _item_exists_for_path(path)
     if item_for_path:
@@ -83,13 +87,14 @@ def add_video(path, manual_feed=None):
                      path.decode('ascii', 'ignore'))
         if _command_line_videos is not None:
             _command_line_videos.add(item_for_path)
-        return
+        return False
     if manual_feed is None:
         manual_feed = feed.Feed.get_manual_feed()
     file_item = item.FileItem(
         path, feed_id=manual_feed.get_id(), mark_seen=True)
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
+    return True
 
 @eventloop.idle_iterator
 def add_videos(paths):
@@ -115,7 +120,9 @@ def _add_batch_of_videos(path_iter, max_time):
     app.bulk_sql_manager.start()
     try:
         for path in path_iter:
-            add_video(path, manual_feed=manual_feed)
+            if not add_video(path, manual_feed=manual_feed):
+                # video was a duplicate, undo the will_process_path() call
+                app.metadata_progress_updater.path_processed(path)
             if time.time() - start_time > max_time:
                 return False
         return True
