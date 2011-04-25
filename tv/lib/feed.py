@@ -2135,7 +2135,8 @@ class DirectoryScannerImplBase(FeedImpl):
         # now that we've checked for items that need to be removed, we
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
-        known_files.update(my_files)
+        for path in my_files:
+            known_files.add(os.path.normcase(path))
 
         # adds any files we don't know about
         # files on the filesystem
@@ -2183,7 +2184,7 @@ class DirectoryScannerImplBase(FeedImpl):
         rv = []
         for path in paths:
             ufile = filename_to_unicode(path)
-            if (path not in known_files and
+            if (os.path.normcase(path) not in known_files and
                     filetypes.is_media_filename(ufile)):
                 rv.append(path)
         return rv
