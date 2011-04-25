@@ -245,13 +245,8 @@ class MovieDataUpdater(signals.SignalEmitter):
     def request_update(self, item):
         if self.in_shutdown:
             return
-        # FIXME: are all of these checks necessary?
-        filename = item.get_filename()
-        if not filename or not fileutil.isfile(filename):
-            return
-        if item.downloader and not item.downloader.is_finished():
-            return
         if item.id in self.in_progress:
+            logging.warn("Not adding in-progess item (%s)", item.id)
             return
 
         if self._should_process_item(item):
