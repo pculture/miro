@@ -268,7 +268,7 @@ class ListViewRendererText(widgetset.InfoListRendererText):
 
     bold = False
     color = (0.17, 0.17, 0.17)
-    font_size = 0.82
+    font_size = widgetutil.font_scale_from_osx_points(12)
     min_width = 50
     right_aligned = False
 
@@ -359,7 +359,7 @@ class ListViewRenderer(widgetset.InfoListRenderer):
 
     This class is useful for renderers that use the cellpack.Layout class.
     """
-    font_size = 0.82
+    font_size = widgetutil.font_scale_from_osx_points(12)
     default_text_color = (0.17, 0.17, 0.17)
     selected_text_color = widgetutil.WHITE
     min_width = 5
