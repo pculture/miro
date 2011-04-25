@@ -749,19 +749,27 @@ class DeviceItem(metadata.Store):
                 os.path.splitext(self.video_path)[1])
             if self.file_type == 'audio':
                 self.file_format = self.file_format + ' audio'
-        if self.size is None:
-            self.size = os.path.getsize(self.get_filename())
-        if self.release_date is None or self.creation_time is None:
-            ctime = fileutil.getctime(self.get_filename())
-            if self.release_date is None:
-                self.release_date = ctime
-            if self.creation_time is None:
-                self.creation_time = ctime
+
         # make sure ID is unicode
         self.id = filename_to_unicode(self.video_path)
-        # setup metadata
-        self.read_metadata()
-        moviedata.movie_data_updater.request_update(self)
+
+        try: # filesystem operations
+            if self.size is None:
+                self.size = os.path.getsize(self.get_filename())
+            if self.release_date is None or self.creation_time is None:
+                ctime = fileutil.getctime(self.get_filename())
+                if self.release_date is None:
+                    self.release_date = ctime
+                if self.creation_time is None:
+                    self.creation_time = ctime
+            # setup metadata
+            self.read_metadata()
+        except (OSError, IOError):
+            # if there was an error reading the data from the filesystem, don't
+            # bother continuing with other FS operations or starting moviedata
+            logging.debug('error reading %s', self.id, exc_info=True)
+        else:
+            moviedata.movie_data_updater.request_update(self)
 
     @staticmethod
     def id_exists():
