@@ -342,6 +342,8 @@ class PlaylistSort(ItemSort):
 
     def items_will_change(self, added, changed, removed):
         self.add_items(added)
+
+    def items_removed_from_source(self, removed):
         self.forget_items(removed)
 
 DEFAULT_SORT = ArtistSort(False)

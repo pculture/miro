@@ -218,6 +218,9 @@ class PlaylistItemListTracker(ItemListTracker):
     def do_items_will_change(self, added, changed, removed):
         self.playlist_sort.items_will_change(added, changed, removed)
 
+    def do_items_removed_from_source(self, removed):
+        self.playlist_sort.items_removed_from_source(removed)
+
 class ManualItemListTracker(ItemListTracker):
     id_counter = itertools.count()
 
