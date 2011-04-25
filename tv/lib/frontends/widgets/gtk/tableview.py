@@ -953,7 +953,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         return expander_start <= x < expander_end
 
     def on_row_activated(self, treeview, path, view_column):
-        iter_ = treeview.get_model().get_iter(path[0])
+        iter_ = treeview.get_model().get_iter(path)
         self.emit('row-activated', iter_)
 
     def make_context_menu(self):
