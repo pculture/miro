@@ -431,6 +431,8 @@ class ItemListController(object):
                 columns, list_view_widths)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
+        # make the min-width for list view match standard view
+        scroller.set_size_request(600, -1)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
         return list_view
 

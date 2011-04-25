@@ -366,7 +366,7 @@ class SplitterDelegate(NSObject):
 class MiroSplitSubview(RBSplitSubview):
     def isFlipped(self):
         return YES
-    
+
 class Splitter(Container):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
@@ -417,9 +417,22 @@ class Splitter(Container):
         if self.left is not None:
             self.left.place(self.left_view.bounds(), self.left_view)
 
+        self._set_subview_min_width(self.left, self.left_view)
+
     def place_right_children(self):
         if self.right is not None:
             self.right.place(self.right_view.bounds(), self.right_view)
+
+        self._set_subview_min_width(self.right, self.right_view)
+
+    def _set_subview_min_width(self, widget, subview):
+        if widget is not None:
+            # constrain the splitter so we honor the size request
+            width, height = widget.get_size_request()
+            min_width = max(width, 1) # handle get_size_request returning -1
+        else:
+            min_width = 1.0
+        subview.setMinDimension_andMaxDimension_(min_width, 0.0)
 
     def place_children(self):
         self.place_left_children()
