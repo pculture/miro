@@ -36,6 +36,7 @@ import logging
 import itertools
 import gobject
 import gtk
+from collections import namedtuple
 
 # These are probably wrong, and are placeholders for now, until custom headers
 # are also implemented for GTK.
@@ -55,6 +56,8 @@ from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 from miro.frontends.widgets.gtk.tableviewcells import (GTKCustomCellRenderer,
      GTKCheckboxCellRenderer, InfoListRenderer, InfoListRendererText)
+
+PathInfo = namedtuple('PathInfo', 'path column x y') 
 
 def rect_contains_rect(outside, inside):
     # currently unused
@@ -285,6 +288,14 @@ class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
             # (look for "#define EXPANDER_EXTRA_PADDING")
         return offset
 
+    def get_position_info(self, x, y):
+        """Wrapper for get_path_at_pos that converts the path_info to a named
+        tuple and handles rounding the coordinates.
+        """
+        path_info = self.get_path_at_pos(int(round(x)), int(round(y)))
+        if path_info:
+            return PathInfo(*path_info)
+
 gobject.type_register(MiroTreeView)
 
 def gtk_target_list(types):
@@ -300,7 +311,7 @@ class HotspotTracker(object):
         self.treeview_wrapper = wrappermap.wrapper(treeview)
         self.hit = False
         self.button = event.button
-        path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+        path_info = treeview.get_position_info(event.x, event.y)
         if path_info is None:
             return
         self.path, self.column, background_x, background_y = path_info
@@ -605,7 +616,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         bin_origin = treeview.get_bin_window().get_origin()
         x += origin[0] - bin_origin[0]
         y += origin[1] - bin_origin[1]
-        path_info = treeview.get_path_at_pos(x, y)
+        path_info = treeview.get_position_info(x, y)
         if path_info is None:
             self._last_tooltip_place = None
             return False
@@ -617,8 +628,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self._last_tooltip_place = None
             return False
         self._last_tooltip_place = path_info[:2]
-        iter_ = treeview.get_model().get_iter(path_info[0])
-        column = self.gtk_column_to_wrapper[path_info[1]]
+        iter_ = treeview.get_model().get_iter(path_info.path)
+        column = self.gtk_column_to_wrapper[path_info.column]
         text = self.get_tooltip(iter_, column)
         if text is None:
             return False
@@ -821,7 +832,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             # already handled as row-activated
             return False
 
-        path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+        path_info = treeview.get_position_info(event.x, event.y)
         if not path_info:
             # no item was clicked, so it's not going to be a hotspot, drag, or
             # context menu
@@ -830,7 +841,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             # single click; emit the event but keep on running so we can handle
             # stuff like drag and drop.
             if not self._x_coord_in_expander(treeview, path_info):
-                iter_ = treeview.get_model().get_iter(path_info[0])
+                iter_ = treeview.get_model().get_iter(path_info.path)
                 self.emit('row-clicked', iter_)
 
         if self.handle_hotspot_hit(treeview, event):
@@ -870,15 +881,14 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         """
         if event.state & (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK):
             return False
-        path, column, x, y = path_info
         model, row_paths = treeview.get_selection().get_selected_rows()
 
-        if path not in row_paths:
+        if path_info.path not in row_paths:
             # something outside the selection is being dragged.
             # make it the new selection.
             self.unselect_all(signal=False)
-            self.select_path(path)
-            row_paths = [path]
+            self.select_path(path_info.path)
+            row_paths = [path_info.path]
         rows = self.model.get_rows(row_paths)
         self.drag_data = rows and self.drag_source.begin_drag(self, rows)
         self.drag_button_down = bool(self.drag_data)
@@ -886,13 +896,13 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.drag_start_x = int(event.x)
             self.drag_start_y = int(event.y)
 
-        if len(row_paths) > 1 and path in row_paths:
+        if len(row_paths) > 1 and path_info.path in row_paths:
             # handle multiple selection.  If the current row is already
             # selected, stop propagating the signal.  We will only change
             # the selection if the user doesn't start a DnD operation.
             # This makes it more natural for the user to drag a block of
             # selected items.
-            renderer = column.get_cell_renderers()[0]
+            renderer = path_info.column.get_cell_renderers()[0]
             if (not self._x_coord_in_expander(treeview, path_info)
                     and not isinstance(renderer, GTKCheckboxCellRenderer)):
                 self.delaying_press = True
@@ -904,8 +914,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         """Pop up a context menu for the given click event (which is a
         right-click on a row).
         """
-        path, column, x, y = path_info
-        self._popup_context_menu(path, event)
+        self._popup_context_menu(path_info.path, event)
         # grab keyboard focus since we handled the event
         self.focus()
 
@@ -931,18 +940,17 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         """Calculate if an x coordinate is over the expander triangle
 
         :param treeview: Gtk.TreeView
-        :param path_info: (
+        :param path_info: PathInfo(
+            tree path for the cell,
             Gtk.TreeColumn,
             x coordinate relative to column's cell area,
             y coordinate relative to column's cell area (ignored),
-            tree path for the cell,
         )
         """
-        path, column, x, y = path_info
-        if column != treeview.get_expander_column():
+        if path_info.column != treeview.get_expander_column():
             return False
         model = treeview.get_model()
-        if not model.iter_has_child(model.get_iter(path)):
+        if not model.iter_has_child(model.get_iter(path_info.path)):
             return False
         # GTK allocateds an extra 4px to the right of the expanders.  This
         # seems to be hardcoded as EXPANDER_EXTRA_PADDING in the source code.
@@ -951,9 +959,9 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         # XXX: should this value be included in total_exander_size ?
         offset = treeview.horizontal_separator / 2
         # allocate space for expanders for parent nodes
-        expander_start = total_exander_size * (len(path) - 1) + offset
+        expander_start = total_exander_size * (len(path_info.path) - 1) + offset
         expander_end = expander_start + total_exander_size + offset
-        return expander_start <= x < expander_end
+        return expander_start <= path_info.x < expander_end
 
     def on_row_activated(self, treeview, path, view_column):
         iter_ = treeview.get_model().get_iter(path)
@@ -1016,11 +1024,10 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             if self.delaying_press:
                 # if dragging did not happen, unselect other rows and
                 # select current row
-                path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+                path_info = treeview.get_position_info(event.x, event.y)
                 if path_info is not None:
-                    path, column, x, y = path_info
                     self.unselect_all(signal=False)
-                    self.select_path(path)
+                    self.select_path(path_info.path)
         self.delaying_press = False
 
     def on_unrealize(self, treeview):
@@ -1035,12 +1042,11 @@ class TableView(Widget, GTKSelectionOwnerMixin):
 
     def _update_hover(self, treeview, event):
         old_hover_info, old_hover_pos = self.hover_info, self.hover_pos
-        path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+        path_info = treeview.get_position_info(event.x, event.y)
         if (path_info and
-                self.gtk_column_to_wrapper[path_info[1]].renderer.want_hover):
-            path, column = path_info[:2]
-            self.hover_info = path, column
-            self.hover_pos = path_info[2:]
+                self.gtk_column_to_wrapper[path_info.column].renderer.want_hover):
+            self.hover_info = path_info.path, path_info.column
+            self.hover_pos = path_info.x, path_info.y
         else:
             self.hover_info = None
             self.hover_pos = None
