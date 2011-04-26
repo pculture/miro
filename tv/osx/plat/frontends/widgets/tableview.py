@@ -1008,7 +1008,7 @@ class SorterPadding(NSView):
     #
     # So far, this is okay because only the Mac uses custom headers.
     def init(self):
-        self = super(NSView, self).init()
+        self = super(SorterPadding, self).init()
         image = Image(resources.path('images/headertoolbar.png'))
         self.image = ImageSurface(image)
         return self
