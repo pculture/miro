@@ -1043,7 +1043,14 @@ class BTDownloader(BGDownloader):
             params["save_path"] = fileutil.expand_filename(self.filename)
             if not os.path.isdir(params["save_path"]):
                 params["save_path"] = os.path.dirname(params["save_path"])
-            params["save_path"] = params["save_path"].encode('utf-8')
+
+            # FIXME - this is a check to make sure we're not encoding
+            # something already encoded.  but what should really happen
+            # is someone track down the life-cycle of save_path and
+            # make sure it's correct.
+            # bug 17120
+            if isinstance(params["save_path"], unicode):
+                params["save_path"] = params["save_path"].encode('utf-8')
 
             params["auto_managed"] = False
             params["paused"] = False
