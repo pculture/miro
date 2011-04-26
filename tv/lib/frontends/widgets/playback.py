@@ -155,8 +155,15 @@ class PlaybackManager (signals.SignalEmitter):
         if self.detached_window:
             if self.detached_window.get_title() != new_info.name:
                 self.detached_window.set_title(new_info.name)
-        if app.config.get(prefs.PLAY_IN_MIRO):
+        if app.config.get(prefs.PLAY_IN_MIRO) and new_info:
+            # if playlist is None, new_info will be none as well.
+            # Since emitting playing-info-changed with a "None"
+            # argument will cause a crash, we only emit it if
+            # new_info has a value
             self.emit('playing-info-changed', new_info)
+        else:
+            logging.warning("trying to update playback info "
+                            "even though playback has stopped")
 
     def prepare_attached_playback(self):
         self.emit('will-play-attached')
