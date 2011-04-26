@@ -234,8 +234,7 @@ class TextField(Field):
         self.widget.set_text(self.common_value or "")
 
     def get_value(self):
-        value = self.widget.get_text()
-        return value
+        return self.widget.get_text()
 
 class LongTextField(Field):
     """A multi-line field for editing a text property."""
@@ -353,6 +352,13 @@ class ThumbnailField(DialogOwnerMixin, Field):
                 self.thumb_widget.set_path(new_path)
             except ValueError:
                 pass
+
+    def get_results(self):
+        new_value = self.get_value()
+        if new_value is None: # dialog not run, or canceled
+            return {}
+        else:
+            return {self.field: new_value}
 
 class PathField(DialogOwnerMixin, Field):
     """A field for choosing the location for a file. Becomes a
