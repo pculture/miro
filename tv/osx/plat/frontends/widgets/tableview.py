@@ -683,7 +683,7 @@ class TableViewCommon(object):
                 self.popup_context_menu(self.hotspot_tracker.row, event)
                 # once we're out of that call, we know the context menu is
                 # gone
-                self.hotspot_tracker.redraw_cell()
+                hotspot_tracker.redraw_cell()
                 self.hotspot_tracker = None
         else:
             self.handled_last_mouse_down = False
