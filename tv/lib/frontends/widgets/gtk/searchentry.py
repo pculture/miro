@@ -35,6 +35,7 @@ import gtk
 from miro import searchengines
 from miro.frontends.widgets.gtk import controls
 from miro.frontends.widgets.gtk import pygtkhacks
+from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 from miro.plat import resources
 
@@ -116,11 +117,8 @@ class GtkSearchTextEntry(gtk.EventBox):
     def do_button_press_event(self, event):
         if self._event_inside_clear_icon(event):
             self.set_text("")
-            # this forces a validate of "", which should clear the
-            # search
-            event = gtk.gdk.Event(gtk.gdk.KEY_RELEASE)
-            event.keyval = int(gtk.gdk.keyval_from_name("Return"))
-            self.emit("key-release-event", event)
+            # force wrapper to emit validate, which should clear the search
+            wrappermap.wrapper(self).emit('validate')
 
     # Forward a bunch of method calls to our gtk.Entry widget
     def get_text(self):
