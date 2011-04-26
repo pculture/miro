@@ -582,13 +582,18 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
         # Fix this up.
         file_type = u'audio'    # fallback
-        if kwargs['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
-            file_type = u'audio'
-        if kwargs['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
-                                    libdaap.DAAP_MEDIAKIND_MOVIE,
-                                    libdaap.DAAP_MEDIAKIND_VIDEO
-                                   ]:
-            file_type = u'video'
+        try:
+            if kwargs['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
+                file_type = u'audio'
+            if kwargs['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
+                                       libdaap.DAAP_MEDIAKIND_MOVIE,
+                                       libdaap.DAAP_MEDIAKIND_VIDEO
+                                      ]:
+                file_type = u'video'
+        except KeyError:
+           # Whoups.  Server didn't send one over?  Assume default.
+           pass
+
         kwargs['file_type'] = file_type
         kwargs['video_path'] = self.client.daap_get_file_request(
                                    kwargs['id'],
