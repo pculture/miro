@@ -68,6 +68,7 @@ DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
              'daap.songtime,daap.songsize,daap.songformat,' +
              'daap.songartist,daap.songalbum,daap.songgenre,' +
              'daap.songyear,daap.songtracknumber,daap.songuserrating,' +
+             'org.participatoryculture.miro.itemkind,' +
              'com.apple.itunes.mediakind')
 
 supported_filetypes = filetypes.VIDEO_EXTENSIONS + filetypes.AUDIO_EXTENSIONS
@@ -75,6 +76,25 @@ supported_filetypes = filetypes.VIDEO_EXTENSIONS + filetypes.AUDIO_EXTENSIONS
 # Conversion factor between our local duration (10th of a second)
 # vs daap which is millisecond.
 DURATION_SCALE = 1000
+
+MIRO_ITEMKIND_MOVIE = 1
+MIRO_ITEMKIND_PODCAST = 2
+MIRO_ITEMKIND_SHOW = 3
+MIRO_ITEMKIND_CLIP = 4
+
+miro_itemkind_mapping = {
+    'movie': MIRO_ITEMKIND_MOVIE,
+    'show': MIRO_ITEMKIND_SHOW,
+    'clip': MIRO_ITEMKIND_CLIP,
+    'podcast': MIRO_ITEMKIND_PODCAST
+}
+
+miro_itemkind_rmapping = {
+    MIRO_ITEMKIND_MOVIE: 'movie',
+    MIRO_ITEMKIND_SHOW: 'show',
+    MIRO_ITEMKIND_CLIP: 'clip',
+    MIRO_ITEMKIND_PODCAST: 'podcast'
+}
 
 # XXX The daap mapping from the daap to the attribute is different from the
 # reverse mapping, because we use daap_mapping to import items from remote
@@ -93,7 +113,8 @@ daap_mapping = {
     'daap.songalbum': 'album',
     'daap.songyear': 'year',
     'daap.songgenre': 'genre',
-    'daap.songtracknumber': 'track'
+    'daap.songtracknumber': 'track',
+    'org.participatoryculture.miro.itemkind': 'kind'
 }
 
 daap_rmapping = {
@@ -108,7 +129,8 @@ daap_rmapping = {
     'album': 'daap.songalbum',
     'year': 'daap.songyear',
     'genre': 'daap.songgenre',
-    'track': 'daap.songtracknumber'
+    'track': 'daap.songtracknumber',
+    'kind': 'org.participatoryculture.miro.itemkind'
 }
 
 # Windows Python does not have inet_ntop().  Sigh.  Fallback to this one,
@@ -147,6 +169,7 @@ class SharingItem(metadata.Source):
         self.metadata_version = 0
         self.file_type = None
         self.creation_time = None
+
         metadata.Source.setup_new(self)
 
         self.__dict__.update(kwargs)
@@ -244,6 +267,8 @@ class SharingTracker(object):
         self.r, self.w = util.make_dummy_socket_pair()
         self.paused = True
         self.event = threading.Event()
+        libdaap.register_meta('org.participatoryculture.miro.itemkind', 'miKD',
+                              libdaap.DMAP_TYPE_UBYTE)
 
     def mdns_callback(self, added, fullname, host, port):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
@@ -549,6 +574,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             kwargs[key] = rawitem[k]
             if isinstance(rawitem[k], str):
                 kwargs[key] = kwargs[key].decode('utf-8')
+
+        try:
+            kwargs['kind'] = miro_itemkind_rmapping[kwargs['kind']]
+        except KeyError:
+            pass
 
         # Fix this up.
         file_type = u'audio'    # fallback
@@ -1048,6 +1078,13 @@ class SharingManagerBackend(object):
                 nam, ext = os.path.splitext(item.video_path)
                 if ext in supported_filetypes:
                     enclosure = ext
+
+            try:
+                key = itemprop['org.participatoryculture.miro.itemkind']
+                itemprop['org.participatoryculture.miro.itemkind'] = (
+                    miro_itemkind_mapping[key])
+            except KeyError:
+                pass
 
             if itemprop['com.apple.itunes.mediakind'] == u'video':
                 itemprop['com.apple.itunes.mediakind'] = (

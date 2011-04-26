@@ -85,7 +85,8 @@ DEFAULT_CONTENT_TYPE = 'application/x-dmap-tagged'
 DEFAULT_DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' + 
                      'dmap.containeritemid,dmap.parentcontainerid,' +
                      'daap.songtime,daap.songsize,daap.songformat,' +
-                     'daap.songalbumartist,com.apple.itunes.mediakind')
+                     'daap.songalbumartist,com.apple.itunes.mediakind,' +
+                     'org.participatoryculture.miro.itemkind')
 DEFAULT_DAAP_PLAYLIST_META = ('dmap.itemid,dmap.itemname,dmap.persistentid,' +
                               'daap.baseplaylist,dmap.itemcount,' +
                               'dmap.parentcontainerid,dmap.persistentid')
@@ -955,3 +956,7 @@ class DaapClient(object):
 
 def make_daap_client(host, port=DEFAULT_PORT):
     return DaapClient(host, port)
+
+def register_meta(meta, code, typ):
+    dmap_consts[code] = (meta, typ)
+    dmap_consts_rmap[meta] = code
