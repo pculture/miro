@@ -610,6 +610,9 @@ class ItemListController(object):
         elif key == menus.ENTER:
             self.play_selection()
             return True
+        elif key == menus.SPACE and app.playback_manager.is_playing:
+            app.playback_manager.play_pause()
+            return True
         elif isinstance(key, basestring) and len(key) == 1 and key.isalnum():
             self.titlebar.start_editing_search(key)
             return True
