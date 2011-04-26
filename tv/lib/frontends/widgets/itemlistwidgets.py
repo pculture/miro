@@ -692,6 +692,12 @@ class VideosTitlebar(MediaTitlebar):
         self.filters['view-clips'].set_enabled(view_clips)
         self.filters['view-podcasts'].set_enabled(view_podcasts)
 
+# This is the same as the videos titlebar (with all the filters etc) except
+# we don't let saving as a playlist (because everything here is transient).
+class SharingTitlebar(VideosTitlebar):
+   def _on_search_changed(self, searchbox):
+       self.emit('search-changed', searchbox.get_text())
+
 class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
    def __init__(self):
         FilteredTitlebar.__init__(self)
