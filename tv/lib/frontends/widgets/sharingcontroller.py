@@ -76,10 +76,3 @@ class SharingView(itemlistcontroller.SimpleItemListController,
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
-
-        # if the search has no results, we show the empty_mode
-        # which says "no results"
-        if self.item_list.get_count() == 0 and search_text:
-            self.widget.set_list_empty_mode(True)
-        else:
-            self.widget.set_list_empty_mode(False)

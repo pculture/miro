@@ -900,9 +900,11 @@ class ItemListController(object):
         self.check_for_empty_list()
 
     def check_for_empty_list(self):
-        list_empty = (self.item_list.get_count() == 0 and
+        self.widget.set_list_empty_mode(self.calc_list_empty_mode())
+
+    def calc_list_empty_mode(self):
+        return (self.item_list.get_count() == 0 and
                 self.item_tracker.is_filtering())
-        self.widget.set_list_empty_mode(list_empty)
 
     def update_resume_button(self):
         if not self.show_resume_playing_button:
@@ -1035,13 +1037,6 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 
-        # if the search has no results, we show the empty_mode
-        # which says "no results"
-        if self.item_list.get_count() == 0 and search_text:
-            self.widget.set_list_empty_mode(True)
-        else:
-            self.widget.set_list_empty_mode(False)
-
 class VideoItemsController(AudioVideoItemsController):
     type = u'videos'
     id = u'videos'
@@ -1078,13 +1073,6 @@ class OtherItemsController(SimpleItemListController):
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
-
-        # if the search has no results, we show the empty_mode
-        # which says "no results"
-        if self.item_list.get_count() == 0 and search_text:
-            self.widget.set_list_empty_mode(True)
-        else:
-            self.widget.set_list_empty_mode(False)
 
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""

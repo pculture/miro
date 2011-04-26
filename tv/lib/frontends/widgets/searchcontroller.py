@@ -144,10 +144,11 @@ class SearchController(itemlistcontroller.SimpleItemListController):
             self.titlebar.set_search_text(app.search_manager.text)
         self.titlebar.set_search_engine(app.search_manager.engine)
 
-    def on_initial_list(self):
-        if ((not app.search_manager.searching
-             and self.item_list.get_count() == 0)):
-            self.widget.set_list_empty_mode(True)
+    def calc_list_empty_mode(self):
+        # "empty list mode" is used differently for search engines.  We want
+        # to show the page for empty searches, not for when a search returns
+        # no results see (#16970)
+        return app.search_manager.text == ''
 
     def on_items_changed(self):
         # Don't check for an empty list here.  Since items don't get
@@ -188,9 +189,7 @@ class SearchController(itemlistcontroller.SimpleItemListController):
     def _on_search_started(self, search_manager):
         self.titlebar.set_search_text(search_manager.text)
         self.titlebar.set_search_engine(search_manager.engine)
-        self.widget.set_list_empty_mode(False)
+        self.check_for_empty_list()
 
     def _on_search_complete(self, search_manager, result_count):
-        if result_count == 0:
-            self.widget.set_list_empty_mode(True)
-
+        self.check_for_empty_list()
