@@ -417,8 +417,8 @@ def get_transcode_video_options():
 def get_transcode_audio_options():
     # XXX: should we use libmp3lame?
     has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
-                      '-ab', '160k', '-ac', '2']
-    #has_audio_args = ['-acodec', 'libmp3lame', '-ac', '2', '-ab', '160k']
+                      '-ab', '160k']
+    #has_audio_args = ['-acodec', 'libmp3lame', '-ab', '160k']
     return has_audio_args
 
 def setup_ffmpeg_presets():
