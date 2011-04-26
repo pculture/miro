@@ -1035,8 +1035,23 @@ def scan_device_for_files(device):
     # XXX is this as_idle() safe?
 
     # prepare paths to add
+    logging.debug('starting scan on %s', device.mount)
     known_files = clean_database(device)
     item_data = []
+    start = time.time()
+
+    def _continue():
+        if not app.device_manager.running: # user quit, so we will too
+            logging.debug('stopping scan on %s: user quit', device.mount)
+            return False
+        if not os.path.exists(device.mount): # device disappeared
+            logging.debug('stopping scan on %s: disappeared', device.mount)
+            return False
+        if app.device_manager._is_hidden(device): # device no longer being
+                                                  # shown
+            logging.debug('stopping scan on %s: hidden', device.mount)
+            return False
+
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
         ufilename = filename_to_unicode(short_filename)
@@ -1053,25 +1068,35 @@ def scan_device_for_files(device):
             # copied the logic of item.get_filename() -- BDK
             item_filename = os.path.join(device.mount, ufilename)
             app.metadata_progress_updater.will_process_path(item_filename)
-    yield # yield after prep work
-
-    device.database.setdefault('sync', {})
-
-    device.database.set_bulk_mode(True)
-    start = time.time()
-    for ufilename, item_type in item_data:
-        device.database[item_type][ufilename] = {}
-        device.database.emit('item-added',
-                             DeviceItem(video_path=ufilename,
-                                        file_type=item_type,
-                                        device=device))
         if time.time() - start > 0.4:
-            device.database.set_bulk_mode(False) # save the database
-            yield # let other idle functions run
-            if not app.device_manager.running:
-                # user quit, so stop scanning
+            yield # let other stuff run
+            if not _continue():
                 break
-            device.database.set_bulk_mode(True)
             start = time.time()
 
-    device.database.set_bulk_mode(False)
+    if app.device_manager.running and os.path.exists(device.mount):
+        # we don't re-check if the device is hidden because we still want to
+        # save the items we found in that case
+        yield # yield after prep work
+
+        device.database.setdefault('sync', {})
+        logging.debug('scanned %s, found %i files',
+                      device.mount, len(item_data))
+
+        device.database.set_bulk_mode(True)
+        start = time.time()
+        for ufilename, item_type in item_data:
+            device.database[item_type][ufilename] = {}
+            device.database.emit('item-added',
+                                 DeviceItem(video_path=ufilename,
+                                            file_type=item_type,
+                                            device=device))
+            if time.time() - start > 0.4:
+                device.database.set_bulk_mode(False) # save the database
+                yield # let other idle functions run
+                if not _continue():
+                    break
+                device.database.set_bulk_mode(True)
+                start = time.time()
+
+        device.database.set_bulk_mode(False)
