@@ -1051,6 +1051,7 @@ def scan_device_for_files(device):
                                                   # shown
             logging.debug('stopping scan on %s: hidden', device.mount)
             return False
+        return True
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
