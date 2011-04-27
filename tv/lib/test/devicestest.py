@@ -171,7 +171,8 @@ target1 = DeviceInfo("Target1",
                      product_id=0xbcde,
                      video_conversion="mp4",
                      **defaults)
-multiple = MultipleDeviceInfo('Foo', [target1])
+target2 = DeviceInfo("Target2")
+multiple = MultipleDeviceInfo('Foo', [target1, target2])
 devices = [multiple]
 """)
         dm = devices.DeviceManager()
@@ -179,6 +180,36 @@ devices = [multiple]
         device = dm.get_device('Foo')
         self.assertTrue(device.has_multiple_devices)
         self.assertEqual(device.video_conversion, "mp4")
+
+    def test_multiple_device_info_single(self):
+        """
+        If a MultipleDeviceInfo has only one child, get_device() should just
+        return the single child.
+        """
+        self.build_config_file(
+            "foo.py",
+            """from miro.devices import DeviceInfo, MultipleDeviceInfo
+defaults = {
+    "audio_conversion": "mp3",
+    "audio_types": ".mp3 .aac".split(),
+    "mount_instructions": "Mount Instructions\\nOver multiple lines",
+    "video_path": u"Video",
+    "audio_path": u"Audio",
+    }
+target1 = DeviceInfo("Target1",
+                     vendor_id=0x890a,
+                     product_id=0xbcde,
+                     video_conversion="mp4",
+                     **defaults)
+multiple = MultipleDeviceInfo('Foo', [target1])
+devices = [multiple]
+""")
+        dm = devices.DeviceManager()
+        dm.load_devices(os.path.join(self.tempdir, '*.py'))
+        device = dm.get_device('Foo')
+        self.assertFalse(device.has_multiple_devices)
+        self.assertEqual(device.name, "Target1")
+        self.assertEqual(device.device_name, "Foo")
 
 class DeviceHelperTest(MiroTestCase):
 

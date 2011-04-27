@@ -269,6 +269,8 @@ class DeviceManager(object):
             return info
         if device_type is not None and device_type in info.devices:
             return info.devices[device_type]
+        if len(info.devices) == 1: # only one device
+            return info.devices.values()[0]
         return info
 
     def get_device(self, device_name, device_type=None):
