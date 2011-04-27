@@ -1068,7 +1068,8 @@ def scan_device_for_files(device):
             # FIXME: could we just use filename here?  I'm not sure, so I
             # copied the logic of item.get_filename() -- BDK
             item_filename = os.path.join(device.mount, ufilename)
-            app.metadata_progress_updater.will_process_path(item_filename)
+            app.metadata_progress_updater.will_process_path(item_filename,
+                                                            device)
         if time.time() - start > 0.4:
             yield # let other stuff run
             if not _continue():
@@ -1081,17 +1082,18 @@ def scan_device_for_files(device):
         yield # yield after prep work
 
         device.database.setdefault('sync', {})
-        logging.debug('scanned %s, found %i files',
-                      device.mount, len(item_data))
+        logging.debug('scanned %s, found %i files (%i total)',
+                      device.mount, len(item_data),
+                      len(known_files) + len(item_data))
 
         device.database.set_bulk_mode(True)
         start = time.time()
         for ufilename, item_type in item_data:
-            device.database[item_type][ufilename] = {}
-            device.database.emit('item-added',
-                                 DeviceItem(video_path=ufilename,
-                                            file_type=item_type,
-                                            device=device))
+            i = DeviceItem(video_path=ufilename,
+                           file_type=item_type,
+                           device=device)
+            device.database[item_type][ufilename] = i.to_dict()
+            device.database.emit('item-added', i)
             if time.time() - start > 0.4:
                 device.database.set_bulk_mode(False) # save the database
                 yield # let other idle functions run
