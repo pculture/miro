@@ -166,7 +166,7 @@ class SecureTextEntry(BaseTextEntry):
 
 class MiroSearchTextField(NSSearchField):
     def init(self):
-        self = super(NSSearchField, self).init()
+        self = super(MiroSearchTextField, self).init()
         image = NSImage.alloc().initByReferencingFile_(resources.path('images/search_icon_all.png'))
         self.cell().searchButtonCell().setImage_(image)
         self.cell().searchButtonCell().setAlternateImage_(image)
