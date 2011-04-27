@@ -509,8 +509,34 @@ class NSVideoSearchField (MiroSearchTextField):
         self.cell().setSendsWholeSearchString_(YES)
         self.cell().setSendsSearchStringImmediately_(NO)
         self.cell().setScrollable_(YES)
+        # handle the user clicking cancel ourselves
+        self.cell().cancelButtonCell().setTarget_(self)
+        self.cell().cancelButtonCell().setAction_("handleCancel:")
         self.setStringValue_("")
         return self
+
+    # FIXME: ticket #17143 has several improvements for this code
+
+    def handleCancel_(self, sender):
+        self.setStringValue_('')
+        # emit 'validate' here to clear the search
+        wrappermap.wrapper(self).emit('validate')
+
+    def textDidChange_(self, notification):
+        # NOTE: we purposely avoid doing anything here.  The Cocoa class calls
+        # our action method when the textbox is empty, but this causes issues
+        # (#17129, comment 5).
+        pass
+
+    def textDidEndEditing_(self, notification):
+        # Handle the user stopping typing.
+        text_movement = notification.userInfo().get('NSTextMovement')
+        if text_movement == NSReturnTextMovement:
+            # user hit return, emit 'validate'
+            wrappermap.wrapper(self).emit('validate')
+
+        # Don't call superclass method.  The cocoa class hides the cancel
+        # button if the text is blank, but we want to override that behavior.
 
     def makeSearchMenuTemplate(self):
         menu = NSMenu.alloc().initWithTitle_("Search Menu")
