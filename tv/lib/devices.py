@@ -722,8 +722,8 @@ class DeviceItem(metadata.Store):
                                 % required)
         self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
-        self.keep = self.media_type_checked = True
-        self.isContainerItem = False
+        self.keep = True
+        self.media_type_checked = self.isContainerItem = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
@@ -764,6 +764,8 @@ class DeviceItem(metadata.Store):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
+            if self.media_type_checked:
+                return # all done, no need to check metadata
             # setup metadata
             self.read_metadata()
         except (OSError, IOError):
