@@ -266,11 +266,53 @@ class WindowsApplication(Application):
         os.startfile(fn)
 
     def open_file(self, fn):
+        extension = fn.split('.')[-1]
+        extension = extension.lower()
+        # FIXME:
+        # This a way of reproducing the registry entry of Miro
+        # by using the same string manipulation that is used in
+        # setup.py to create CONFIG_PROG_ID which is then written
+        # to the registry in the NSI installer.
+        reg_value = app.config.get(prefs.LONG_APP_NAME)
+        reg_value = reg_value.replace(" ", ".") + ".1"
+        if self._is_associated_with(extension, reg_value):
+            # The file we want to run externally is associated
+            # with Miro. So open it with Windows Explorer instead.
+            subprocess.Popen(r'explorer /select,' + fn + '\"')
+            return
         try:
             os.startfile(fn, 'play')
         except WindowsError, e:
             if e.winerror == 1155:
                 subprocess.Popen(r'explorer /select,"' + fn + r'"')
+
+    # FIXME: this is very similar to the associate.is_associated() method.
+    def _is_associated_with(self, extension, value=None):
+        """ Checks whether an extension currently is
+            associated with the given value, or,
+            if none is given, whether the extension
+            is associated with anything at all.
+        """
+
+        sub_key = "." + str(extension)
+        try:
+            handle = _winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, sub_key,
+                                     0, _winreg.KEY_QUERY_VALUE)
+        except WindowsError, e:
+            if e.errno == 2:
+                # Key does not exist
+                return False
+            else:
+                raise
+        try:
+            reg_value = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
+            if value:
+                is_associated = reg_value.lower() == value.lower()
+            else:
+                is_associated = len(reg_value) > 0
+        except ValueError:
+            is_associated = False
+        return is_associated
 
     def get_main_window_dimensions(self):
         """Gets x, y, width, height from config.
