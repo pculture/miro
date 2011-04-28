@@ -363,7 +363,7 @@ class ListViewRenderer(widgetset.InfoListRenderer):
     default_text_color = (0.17, 0.17, 0.17)
     selected_text_color = widgetutil.WHITE
     min_width = 5
-    min_height = 0
+    min_height = 22
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         layout = self.layout_all(layout_manager, width, height, False)
@@ -418,7 +418,6 @@ class NameRenderer(ListViewRenderer):
 class StatusRenderer(ListViewRenderer):
     BUTTONS = ('pause', 'resume', 'cancel', 'keep')
     min_width = 100
-    min_height = 20
     min_width = 120 # GTK isn't returning enough size, so add some extra
     button_font_size = 0.77
 
