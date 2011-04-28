@@ -951,7 +951,6 @@ class ScrollbarOwnerMixin(object):
         self.clipview_notifications = None
 
     def scroll_to_iter(self, iter_, auto=False):
-        return
         """If auto is not set, always centers the given iter.
         
         With auto set, scrolls to the given iter if we're auto-scrolling, or if
