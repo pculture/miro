@@ -404,16 +404,16 @@ class TranscodeObject(object):
                     str(self.time_offset)]
             video_needs_trancode = False
             if self.has_video:
-                print 'VIDEO CODEC ', self.video_codec
-                print 'VIDEO SIZE', self.video_size
+                logging.debug('Video codec: %s', self.video_codec)
+                logging.debug('Video size: %s', self.video_size)
                 if video_can_copy(self.video_codec, self.video_size):
                     args += get_transcode_video_copy_options()
                 else:
                     args += get_transcode_video_options()
                     video_needs_transcode = True
             if self.has_audio:
-                print 'AUDIO CODEC ', self.audio_codec
-                print 'AUDIO SAMPLE RATE', self.audio_sample_rate
+                logging.debug('Audio codec: %s', self.audio_codec)
+                logging.debug('Audio sample rate: %s', self.audio_sample_rate)
                 if (valid_av_combo(self.video_codec, self.audio_codec) and
                   audio_can_copy(self.audio_codec, self.audio_sample_rate)):
                     args += get_transcode_audio_copy_options()
