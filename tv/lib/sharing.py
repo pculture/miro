@@ -77,10 +77,10 @@ supported_filetypes = filetypes.VIDEO_EXTENSIONS + filetypes.AUDIO_EXTENSIONS
 # vs daap which is millisecond.
 DURATION_SCALE = 1000
 
-MIRO_ITEMKIND_MOVIE = 1
-MIRO_ITEMKIND_PODCAST = 2
-MIRO_ITEMKIND_SHOW = 3
-MIRO_ITEMKIND_CLIP = 4
+MIRO_ITEMKIND_MOVIE = (1 << 0)
+MIRO_ITEMKIND_PODCAST = (1 << 1)
+MIRO_ITEMKIND_SHOW = (1 << 2)
+MIRO_ITEMKIND_CLIP = (1 << 3)
 
 miro_itemkind_mapping = {
     'movie': MIRO_ITEMKIND_MOVIE,
