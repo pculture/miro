@@ -207,6 +207,17 @@ class OSXApplication(Application, signals.SignalEmitter):
     def open_file(self, fn):
         filename = filename_type_to_os_filename(fn)
         ws = NSWorkspace.sharedWorkspace()
+        # Let's only open files that are of content type - we don't want to
+        # automatically launch executables here.
+        typ, error = ws.typeOfFile_error_(filename, None)
+        if not typ or error:
+            logging.warn('Cannot determine UTI of file %s' % fn)
+            return
+
+        if ws.type_conformsToType_(typ, 'public.executable'):
+            logging.warn('Not opening executable file %s' % fn)
+            return
+
         ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename, None, None)
         if ok:
             if externalApp == bundle.getBundlePath():
