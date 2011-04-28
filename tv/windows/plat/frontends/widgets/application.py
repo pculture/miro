@@ -270,7 +270,7 @@ class WindowsApplication(Application):
             os.startfile(fn, 'play')
         except WindowsError, e:
             if e.winerror == 1155:
-                subprocess.Popen(r'explorer /select,' + fn + '\"')
+                subprocess.Popen(r'explorer /select,"' + fn + r'"')
 
     def get_main_window_dimensions(self):
         """Gets x, y, width, height from config.
