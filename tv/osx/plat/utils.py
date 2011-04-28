@@ -445,14 +445,14 @@ def get_segmenter_executable_path():
     return path.encode('utf-8')
 
 def get_transcode_video_options():
-    has_video_args = ['-vcodec', 'libx264', '-s', '640x480', '-vpre',
-                      'ipod640', '-b', '1200k', '-vpre', 'slow']
+    has_video_args = ['-vcodec', 'libx264', '-vpre', 'ipod320',
+                      '-vpre', 'superfast', '-threads', '0', '-s', '480x360']
     return has_video_args
 
 def get_transcode_audio_options():
     # XXX: should we use libmp3lame?
-    has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
-                      '-ab', '160k']
+    has_audio_args = ['-acodec', 'aac', '-strict', 'experimental', 
+                      '-threads', '0', '-ab', '96k']
     #has_audio_args = ['-acodec', 'libmp3lame', '-ab', '160k']
     return has_audio_args
 

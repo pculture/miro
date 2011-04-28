@@ -63,9 +63,8 @@ from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
 
 container_regex = re.compile('mov,mp4,m4a,3gp,3g2,mj2,')
 duration_regex = re.compile('Duration: ')
-has_video_regex = re.compile('Stream.*: Video')
-has_audio_regex = re.compile('Stream.*: Audio')
-
+has_video_regex = re.compile('Video: \w+( \(hq\))*(, \w+)*(, \d+x\d+)*')
+has_audio_regex = re.compile('Audio: \w+(, \d+ Hz)*')
 
 class TranscodeManager(object):
     MAX_TRANSCODE_PIPELINES = 5
@@ -79,6 +78,71 @@ class TranscodeManager(object):
 
     def release(self):
         self.ffmpeg_event.set()
+
+def get_transcode_video_copy_options():
+    return ['-vcodec', 'copy']
+
+def get_transcode_audio_copy_options():
+    return ['-acodec', 'copy']
+
+def get_audio_parameters(has_audio):
+    s = has_audio.group()[len('Audio: '):]
+    codec = sample_rate = None
+    bits = s.split(',')
+    try:
+        codec = bits[0]
+        if bits[1].endswith(' Hz'):
+            sample_rate = int(bits[1][:-3])
+    except IndexError:
+        pass
+    return codec, sample_rate
+
+# Check to see if we can save a transcode of the video stream in the file
+# by simply copying the video stream.
+# XXX this is iPod/iPad specific.
+def video_can_copy(codec, size):
+    valid_codecs = ['h264']
+    max_width = 720
+    max_height = 1280
+    if size:
+        try:
+            w, h = [int(d) for d in size.split('x')]
+        except ValueError:
+            size = None    # Cannot determine size.
+    if (not size or not codec in valid_codecs or
+      w > max_width or h > max_height):
+        return False
+    return True
+
+# Check to see if we can save a transcode of the audio stream in the file
+# by simply copying the audio stream.
+# XXX this is iPod/iPad specific.
+def audio_can_copy(codec, sample_rate):
+    valid_codecs = ['mp3', 'aac']
+    max_samplerate = 48000
+    if sample_rate is None or sample_rate > 48000:
+        return False
+    return True
+
+def get_video_parameters(has_video):
+    s = has_video.group()[len('Video: '):]
+    codec = size = None
+    bits = s.split(',')
+    try:
+        # Codec is always there.  So read that.  If that's all we have, pixfmt
+        # and size will be None.  Second parameter is either pixfmt or size.
+        # So read it.  If that's all we have bits[2] is not valid so we have
+        # got what we read.  Otherwise size gets bits[2].
+        codec = bits[0]
+        size = bits[1]
+        size = bits[2]
+    except IndexError:
+        pass
+    return (codec, size)
+
+# XXX Apple specific.
+def valid_av_combo(video_codec, audio_codec):
+    return video_codec == 'h264' and audio_codec == 'aac'
 
 def needs_transcode(media_file):
     """needs_transcode()
@@ -108,6 +172,8 @@ def needs_transcode(media_file):
     # note that we need to read from stderr, since that's what ffmpeg spits 
     # out.
     text = handle.stderr.read()
+    # Initial determination based on the file type - need to drill down
+    # to see if the resolution, etc are within parameters.
     if container_regex.search(text):
         transcode = False
     else:
@@ -127,8 +193,20 @@ def needs_transcode(media_file):
     seconds += int(hours) * 3600
     has_audio = has_audio_regex.search(text)
     has_video = has_video_regex.search(text)
-
-    return (transcode, (seconds, has_audio, has_video))
+    vcodec = acodec = size = sample_rate = None
+    vcopy = acopy = False
+    if has_video:
+        vcodec, size = get_video_parameters(has_video)
+        vcopy = video_can_copy(vcodec, size)
+        if not vcopy:
+            transcode = False
+    if has_audio:
+        acodec, sample_rate = get_audio_parameters(has_audio)
+        acopy = audio_can_copy(acodec, sample_rate)
+        if not acopy:
+            transcode = False
+    return (transcode, (seconds, has_audio, acodec, sample_rate,
+                        has_video, vcodec, size))
 
 class TranscodeSinkServer(SocketServer.TCPServer):
     pass
@@ -219,12 +297,16 @@ class TranscodeObject(object):
             self.time_offset = chunk * TranscodeObject.segment_duration
         else:
             self.time_offset = 0
-        duration, has_audio, has_video = media_info
+        d, a, acodec, rate, v, vcodec, siz = media_info
         self.generation = generation
-        self.duration = duration
+        self.duration = d
         self.itemid = itemid
-        self.has_audio = has_audio
-        self.has_video = has_video
+        self.has_audio = a
+        self.audio_codec = acodec
+        self.audio_sample_rate = rate
+        self.has_video = v
+        self.video_codec = vcodec
+        self.video_size = siz
         # This setting makes the environment global to the app instead of
         # the subtask.  But I guess that's okay.
         setup_ffmpeg_presets()
@@ -318,10 +400,23 @@ class TranscodeObject(object):
                 logging.debug('transcode: start job @ %d' % self.time_offset)
                 args += TranscodeObject.time_offset_args + [
                     str(self.time_offset)]
+            video_needs_trancode = False
             if self.has_video:
-                args += get_transcode_video_options()
+                print 'VIDEO CODEC ', self.video_codec
+                print 'VIDEO SIZE', self.video_size
+                if video_can_copy(self.video_codec, self.video_size):
+                    args += get_transcode_video_copy_options()
+                else:
+                    args += get_transcode_video_options()
+                    video_needs_transcode = True
             if self.has_audio:
-                args += get_transcode_audio_options()
+                print 'AUDIO CODEC ', self.audio_codec
+                print 'AUDIO SAMPLE RATE', self.audio_sample_rate
+                if (valid_av_combo(self.video_codec, self.audio_codec) and
+                  audio_can_copy(self.audio_codec, self.audio_sample_rate)):
+                    args += get_transcode_audio_copy_options()
+                else:
+                    args += get_transcode_audio_options()
             else:
                raise ValueError('no video or audio stream present')
 

@@ -410,14 +410,14 @@ def get_segmenter_executable_path():
     return os.path.join(resources.app_root(), "miro-segmenter.exe")
 
 def get_transcode_video_options():   
-    has_video_args = ['-vcodec', 'libx264', '-sameq', '-vpre', 'ipod640',
-                      '-vpre', 'slow']
+    has_video_args = ['-vcodec', 'libx264', '-vpre', 'ipod320',
+                      '-vpre', 'ultrafast', '-threads', '0', '-s', '480x360']
     return has_video_args
 
 def get_transcode_audio_options():
     # XXX: should we use libmp3lame?
     has_audio_args = ['-acodec', 'aac', '-strict', 'experimental',
-                      '-ab', '160k']
+                      '-threads', '0', '-ab', '96k']
     #has_audio_args = ['-acodec', 'libmp3lame', '-ab', '160k']
     return has_audio_args
 
