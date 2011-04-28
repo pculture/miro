@@ -267,7 +267,7 @@ class WindowsApplication(Application):
 
     def open_file(self, fn):
         try:
-            os.startfile(fn)
+            os.startfile(fn, 'play')
         except WindowsError, e:
             if e.winerror == 1155:
                 subprocess.Popen(r'explorer /select,' + fn + '\"')
