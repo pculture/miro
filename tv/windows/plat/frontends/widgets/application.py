@@ -266,7 +266,7 @@ class WindowsApplication(Application):
         os.startfile(fn)
 
     def open_file(self, fn):
-        extension = fn.split('.')[-1]
+        _, extension = os.path.splitext(fn)
         extension = extension.lower()
         # FIXME:
         # This a way of reproducing the registry entry of Miro
@@ -278,7 +278,7 @@ class WindowsApplication(Application):
         if self._is_associated_with(extension, reg_value):
             # The file we want to run externally is associated
             # with Miro. So open it with Windows Explorer instead.
-            subprocess.Popen(r'explorer /select,' + fn + '\"')
+            subprocess.Popen(r'explorer /select,"' + fn + r'"')
             return
         try:
             os.startfile(fn, 'play')
