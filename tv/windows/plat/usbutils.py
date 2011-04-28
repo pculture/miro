@@ -29,6 +29,9 @@
 
 import logging
 import ctypes, ctypes.wintypes
+import _winreg
+
+LOTS_OF_DEBUGGING = False
 
 def warn(what, code, message):
     logging.warn('error doing %s (%d): %s', what, code, message)
@@ -179,23 +182,53 @@ def connected_devices():
             break
         interface_index += 1 # loop through the interfaces
         path, device = get_device_interface_detail(interface)
-        deviceParent = get_parent(device.DevInst)
-        if not get_device_id(deviceParent).startswith('USBSTOR'):
-            # not a USB storage device
-            continue
+        device_id = get_device_id(device.DevInst)
+        if LOTS_OF_DEBUGGING:
+            logging.debug('connected_devices(): %i %r %r',
+                          interface_index, path, device_id)
+        if '_??_USBSTOR' in device_id:
+            """Looks like:
+STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
+001372982D6AEAC18576014E&0#{53F56307-B6BF-11D0-94F2-00A0C91EFB8B}"""
+            reg_key = '\\'.join(device_id.split('_??_')[1].split('#')[:3])
+        else:
+            deviceParent = get_parent(device.DevInst)
+            reg_key = get_device_id(deviceParent)
+            if LOTS_OF_DEBUGGING:
+                logging.debug('parent id: %r', reg_key)
+            if not reg_key.startswith('USBSTOR'):
+                # not a USB storage device
+                continue
         volume_name = get_volume_name(path + '\\')
         drive_name = get_path_name(volume_name)
-        # parent's parent device ID looks like
-        # USB\VID_0BB4&PID_0FF9\HT09NR210732
-        _, ids, serial = get_device_id(
-            get_parent(deviceParent)).split('\\', 2)
-        vendor_id, product_id = [int(id[-4:], 16) for id in ids.split('&')]
+        if LOTS_OF_DEBUGGING:
+            logging.debug('volume/drive name: %r/%r',
+                          volume_name, drive_name)
+        with _winreg.OpenKey(
+            _winreg.HKEY_LOCAL_MACHINE,
+            'SYSTEM\\CurrentControlSet\\Enum\\%s' % reg_key) as k:
+            # pull the USB Name out of the registry
+            index = 0
+            friendly_name = None
+            while True:
+                try:
+                    name, value, type_ = _winreg.EnumValue(k, index)
+                except WindowsError:
+                    break
+                if name == 'FriendlyName':
+                    # blah blah USB Device
+                    friendly_name = value[:-len(' USB Device')]
+                    break
+                else:
+                    index += 1
+            if not friendly_name:
+                continue
         yield {
             'volume': volume_name,
             'mount': drive_name,
-            'vendor_id': vendor_id,
-            'product_id': product_id,
-            'serial': serial,
-            'devInst': get_parent(deviceParent)
+            'name': friendly_name,
             }
 
+if __name__ == '__main__':
+    for d in connected_devices():
+        print d
