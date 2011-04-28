@@ -951,6 +951,7 @@ class ScrollbarOwnerMixin(object):
         self.clipview_notifications = None
 
     def scroll_to_iter(self, iter_, auto=False):
+        return
         """If auto is not set, always centers the given iter.
         
         With auto set, scrolls to the given iter if we're auto-scrolling, or if
@@ -982,7 +983,7 @@ class ScrollbarOwnerMixin(object):
                 'NSViewFrameDidChangeNotification')
         # NOTE: scrollPoint_ just scrolls the point into view; we want to
         # scroll the view so that the point becomes the origin
-        size = clipview.documentVisibleRect().size
+        size = self.tableview.visibleRect().size
         size = (size.width, size.height)
         rect = NSMakeRect(scroll_to[0], scroll_to[1], size[0], size[1])
         self.tableview.scrollRectToVisible_(rect)
