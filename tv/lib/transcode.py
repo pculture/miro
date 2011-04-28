@@ -79,8 +79,10 @@ class TranscodeManager(object):
     def release(self):
         self.ffmpeg_event.set()
 
+# What is -vbsf?  See:
+# http://www.shortword.net/blog/2009/12/18/converting-h-264-mpeg4-to-ts-with-ffmpeg/
 def get_transcode_video_copy_options():
-    return ['-vcodec', 'copy']
+    return ['-vcodec', 'copy', '-vbsf', 'h264_mp4toannexb']
 
 def get_transcode_audio_copy_options():
     return ['-acodec', 'copy']

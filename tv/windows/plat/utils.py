@@ -411,7 +411,8 @@ def get_segmenter_executable_path():
 
 def get_transcode_video_options():   
     has_video_args = ['-vcodec', 'libx264', '-vpre', 'ipod320',
-                      '-vpre', 'ultrafast', '-threads', '0', '-s', '480x360']
+                      '-vpre', 'ultrafast', '-threads', '0', '-s', '480x360',
+                      '-vbsf', 'h264_mp4toannexb']
     return has_video_args
 
 def get_transcode_audio_options():
