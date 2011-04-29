@@ -152,8 +152,8 @@ class MovieDataUpdater(signals.SignalEmitter):
              fileutil.exists(mdi.thumbnail_path))):
             screenshot = mdi.thumbnail_path
 
-        logging.debug("moviedata: mdp %s %s %s", duration, screenshot,
-                mediatype)
+        logging.debug("moviedata: mdp %s %s %s %s", duration, screenshot,
+                mediatype, mdi.video_path)
         self.update_finished(mdi.item, duration, screenshot, mediatype)
 
     def thread_loop(self):
