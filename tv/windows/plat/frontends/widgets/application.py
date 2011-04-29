@@ -281,7 +281,7 @@ class WindowsApplication(Application):
             subprocess.Popen(r'explorer /select,"' + fn + r'"')
             return
         try:
-            os.startfile(fn, 'play')
+            os.startfile(fn)
         except WindowsError, e:
             if e.winerror == 1155:
                 subprocess.Popen(r'explorer /select,"' + fn + r'"')
