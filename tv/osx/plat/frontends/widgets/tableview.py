@@ -972,6 +972,7 @@ class CocoaScrollbarOwnerMixin(ScrollbarOwnerMixin):
     """Manages a TableView's scroll position."""
     def __init__(self):
         ScrollbarOwnerMixin.__init__(self)
+        self.connect('place-in-scroller', self.on_place_in_scroller)
         self.scroll_position = (0, 0)
         self.clipview_notifications = None
         self._position_set = False
@@ -998,6 +999,11 @@ class CocoaScrollbarOwnerMixin(ScrollbarOwnerMixin):
         size = (size.width, size.height)
         rect = NSMakeRect(scroll_to[0], scroll_to[1], size[0], size[1])
         self.tableview.scrollRectToVisible_(rect)
+
+    def on_place_in_scroller(self, scroller):
+        # workaround for 17153.1
+        if not self._position_set:
+            self._set_scroll_position(self.scroll_position)
 
     @property
     def _manually_scrolled(self):
@@ -1230,6 +1236,8 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
                     'NSTableViewSelectionDidChangeNotification')
             self.notifications.connect(self.on_column_resize,
                     'NSTableViewColumnDidResizeNotification')
+        # scroll has been unset
+        self._position_set = False
 
     def remove_viewport(self):
         if self.viewport is not None:

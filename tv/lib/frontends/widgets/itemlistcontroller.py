@@ -243,6 +243,11 @@ class ItemListController(object):
                     self._handle_repeat_update)
         self.stop_handle = app.playback_manager.connect('did-stop',
                     self._handle_playback_did_stop)
+        # workaround for #17153.1 for changing permanent displays
+        position = app.widget_state.get_scroll_position(
+                    self.type, self.id, self.selected_view)
+        if position:
+            self.current_item_view.set_scroll_position(position)
 
     def on_config_change(self, obj, key, value):
         if (key == prefs.RESUME_VIDEOS_MODE.key or
