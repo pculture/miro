@@ -595,7 +595,7 @@ def on_rename_playlist():
 
 @action_handler("RemovePlaylists")
 def on_remove_playlists():
-    app.widgetapp.remove_current_playlist()
+    app.widgetapp.remove_something()
 
 # Playback menu
 @action_handler("PlayPauseItem")

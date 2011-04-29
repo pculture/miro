@@ -754,12 +754,7 @@ class MultipleSelectionDisplay(TabDisplay):
         return hbox
 
     def _on_delete_clicked(self, button):
-        if self.type == 'feed':
-            app.widgetapp.remove_current_feed()
-        elif self.type == 'site':
-            app.widgetapp.remove_current_site()
-        else:
-            app.widgetapp.remove_current_playlist()
+        app.widgetapp.remove_something()
         iter_ = app.tabs[self.type].view.model.first_iter()
         row = app.tabs[self.type].view.model[iter_]
         root = app.tabs[self.type].get_tab(row[0].id)
