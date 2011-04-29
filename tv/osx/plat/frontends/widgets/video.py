@@ -91,6 +91,11 @@ class MiroMovieView (QTMovieView):
 
 ###############################################################################
 
+class VideoBackgroundView(NSView):
+    def drawRect_(self, dirty_rect):
+        NSColor.blackColor().setFill()
+        NSRectFill(dirty_rect)
+
 class VideoPlayer (Widget, quicktime.Player):
 
     def __init__(self):
@@ -99,7 +104,7 @@ class VideoPlayer (Widget, quicktime.Player):
 
         frame = ((0,0),(200,200))
 
-        self.view = NSView.alloc().initWithFrame_(frame)
+        self.view = VideoBackgroundView.alloc().initWithFrame_(frame)
 
         self.video_view = MiroMovieView.alloc().initWithFrame_(frame)
         self.video_view.setFillColor_(NSColor.blackColor())
