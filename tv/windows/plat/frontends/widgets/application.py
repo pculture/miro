@@ -217,11 +217,11 @@ class WindowsApplication(Application):
         app_dir = os.path.dirname(sys.executable)
         xul_dir = os.path.join(app_dir, 'xulrunner')
         xulrunnerbrowser.initialize(xul_dir, app_dir)
+        xulrunnerbrowser.set_profile_dir(
+            os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), 'profile'))
         xulrunnerbrowser.setup_user_agent(app.config.get(prefs.LONG_APP_NAME),
                 app.config.get(prefs.APP_VERSION),
                 app.config.get(prefs.PROJECT_URL))
-        xulrunnerbrowser.set_profile_dir(
-            os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), 'profile'))
         xulrunnerbrowser.install_window_creator(self)
         xulrunnerbrowser.add_cookie('dmusic_download_manager_enabled',
                                     '1.0.3',
