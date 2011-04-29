@@ -203,6 +203,9 @@ class ThemeHistory(DDBObject):
             default_guides.append(
                 (u"http://develop.participatoryculture.org/index.php/Miro-Current-Release-Testing",
                  u"Miro Testing", False))
+            default_guides.append(
+                (u"http://develop.participatoryculture.org/index.php/DeviceSupport/AddingSupport",
+                 u"Adding a Device", False))
 
         for default in default_guides:
             try:
