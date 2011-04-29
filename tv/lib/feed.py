@@ -2017,11 +2017,18 @@ class DirectoryScannerImplBase(FeedImpl):
             self._watcher_paths_added = set()
             self._watcher_paths_deleted = set()
             self._watcher_update_timeout = None
-            self.watcher = app.directory_watcher(scan_dir)
+            self.watcher = app.directory_watcher(scan_dir,
+                    self.dirs_to_skip_watching())
             self.watcher.connect("added", self._on_file_added)
             self.watcher.connect("deleted", self._on_file_deleted)
         else:
             logging.info("No directory watcher available")
+
+    def dirs_to_skip_watching(self):
+        """Get directories that the directory watcher should ignore."""
+        movies_dir = app.config.get(prefs.MOVIES_DIRECTORY)
+        incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
+        return [incomplete_dir]
 
     def _on_file_added(self, watcher, path):
         if path in self._watcher_paths_deleted:
