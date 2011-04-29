@@ -10,7 +10,7 @@ from miro.plat import resources
 from miro.plat.utils import make_url_safe
 
 class FakeDirectoryWatcher(signals.SignalEmitter):
-    def __init__(self, directory):
+    def __init__(self, directory, skip_dirs=None):
         signals.SignalEmitter.__init__(self, 'added', 'deleted')
 
 class WatchedFolderTest(EventLoopTest):
