@@ -294,9 +294,8 @@ class WindowsApplication(Application):
             is associated with anything at all.
         """
 
-        sub_key = "." + str(extension)
         try:
-            handle = _winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, sub_key,
+            handle = _winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, extension,
                                      0, _winreg.KEY_QUERY_VALUE)
         except WindowsError, e:
             if e.errno == 2:
@@ -305,7 +304,7 @@ class WindowsApplication(Application):
             else:
                 raise
         try:
-            reg_value = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, sub_key)
+            reg_value = _winreg.QueryValue(_winreg.HKEY_CLASSES_ROOT, extension)
             if value:
                 is_associated = reg_value.lower() == value.lower()
             else:
