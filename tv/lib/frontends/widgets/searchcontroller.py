@@ -136,8 +136,10 @@ class SearchController(itemlistcontroller.SimpleItemListController):
 
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)
-        self.widget.list_empty_mode_vbox.pack_start(EmptySearchList(),
-                                                    expand=True)
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(EmptySearchList())
+        self.widget.list_empty_mode_vbox.pack_start(
+            scroller, expand=True)
 
     def initialize_search(self):
         if app.search_manager.text != '':
