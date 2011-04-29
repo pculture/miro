@@ -400,15 +400,17 @@ class VLCRenderer(object):
             vlc_logger.warning("_open_success: callback_info is None")
             return
         self.setup_subtitles()
-        self.callback_info[0]()
+        callback = self.callback_info[0]
         self.callback_info = None
+        callback()
 
     def _open_failure(self):
         vlc_logger.warning(
             "_open_failure\n%s", "".join(traceback.format_stack()))
-        self.callback_info[1]()
-        self.callback_info = None
+        errback = self.callback_info[1]
         self.media_playing = None
+        self.callback_info = None
+        errback()
 
     def _disable_video(self):
         desc = libvlc.libvlc_video_get_track_description(
@@ -490,11 +492,13 @@ class VLCRenderer(object):
         self.exc.check()
         # For unknown reasons, sometimes we don't see the state
         # changed event if they happen quickly enough.  To work around
-        # that, check the initial state of the media player.
+        # that, check the initial state of the media player.  However, do that
+        # in an idle callback, so that we don't call the errback before
+        # returning from setup()
         state = libvlc.libvlc_media_player_get_state(self.media_player,
                 self.exc.ref())
         self.exc.check()
-        self._handle_state_change(self.media_playing, state)
+        gobject.idle_add(self._handle_state_change, self.media_playing, state)
 
     def play(self):
         if self.play_state == PLAYING:
