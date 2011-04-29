@@ -381,6 +381,11 @@ class ItemListController(object):
     def set_view(self, _widget, view):
         if view == self.selected_view:
             return
+        # save old position (shouldn't be necessary - #17153.1)
+        position = self.current_item_view.get_scroll_position()
+        if position:
+            app.widget_state.set_scroll_position(
+                    self.type, self.id, self.selected_view, position)
         # set selection for the view we will switch to
         current_view = self.current_item_view
         next_view = self.views[view]
@@ -398,6 +403,11 @@ class ItemListController(object):
         self.selected_view = view
         self.widget.switch_to_view(view)
         self.current_item_view.focus()
+        # restore view's position (shouldn't be necessary - #17153.1)
+        position = app.widget_state.get_scroll_position(
+                    self.type, self.id, self.selected_view)
+        if position:
+            self.current_item_view.set_scroll_position(position)
         # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id,
                                            self.selected_view)
