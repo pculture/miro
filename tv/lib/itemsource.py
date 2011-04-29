@@ -626,16 +626,26 @@ class DeviceItemSource(ItemSource):
 class DeviceItemHandler(ItemHandler):
     def delete(self, info):
         device = info.device
-        del device.database[info.file_type][info.id]
-        if os.path.exists(info.video_path):
-            os.unlink(info.video_path)
-        if (info.thumbnail and info.thumbnail.startswith(device.mount) and
-            os.path.exists(info.thumbnail)):
-            os.unlink(info.thumbnail)
-        if (info.cover_art and info.cover_art.startswith(device.mount) and
-            os.path.exists(info.cover_art)):
-            os.unlink(info.cover_art)
-        device.database.emit('item-removed', info)
+        try:
+            if os.path.exists(info.video_path):
+                os.unlink(info.video_path)
+        except (OSError, IOError):
+            # we can still fail to delete an item, log the error
+            logging.warn('failed to delete %r', info.video_path,
+                         exc_info=True)
+        else:
+            del device.database[info.file_type][info.id]
+            if info.thumbnail and info.thumbnail.startswith(device.mount):
+                try:
+                    os.unlink(info.thumbnail)
+                except (OSError, IOError):
+                    pass # ignore errors
+            if info.cover_art and info.cover_art.startswith(device.mount):
+                try:
+                    os.unlink(info.cover_art)
+                except (OSError, IOError):
+                    pass # ignore errors
+            device.database.emit('item-removed', info)
 
     def bulk_delete(self, info_list):
         # calculate all the devices involved
