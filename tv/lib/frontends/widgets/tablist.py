@@ -111,25 +111,37 @@ class TabListView(widgetset.TableView):
         """Add a new tab with a parent."""
         return self.model.append_child(parent_iter, tab_info, False, -1)
 
+    # XXX: saving height_changed during update_value is an ugly hack for 17178
+
     def update_tab(self, iter_, tab_info):
         """A TabInfo has changed."""
+        height_changed = self.height_changed #17178
         self.model.update_value(iter_, 0, tab_info)
+        self.height_changed = height_changed
 
     def blink_tab(self, iter_):
         """Draw attention to a tab, specified by its Iter."""
+        height_changed = self.height_changed #17178
         self.model.update_value(iter_, 1, True)
+        self.height_changed = height_changed
 
     def unblink_tab(self, iter_):
         """Stop drawing attention to tab specified by Iter."""
+        height_changed = self.height_changed #17178
         self.model.update_value(iter_, 1, False)
+        self.height_changed = height_changed
 
     def pulse_updating_image(self, iter_):
         frame = self.model[iter_][2]
+        height_changed = self.height_changed #17178
         self.model.update_value(iter_, 2, (frame + 1) % 12)
+        self.height_changed = height_changed
         self.model_changed()
 
     def stop_updating_image(self, iter_):
+        height_changed = self.height_changed #17178
         self.model.update_value(iter_, 2, -1)
+        self.height_changed = height_changed
         self.model_changed()
 
 class TabUpdaterMixin(object):

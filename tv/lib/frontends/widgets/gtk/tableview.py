@@ -560,6 +560,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self.delaying_press = False
         self.set_columns_draggable(False)
         self.layout_manager = LayoutManager(self._widget)
+        self.height_changed = None # 17178 hack
         if hasattr(self, 'get_tooltip'):
             self._widget.set_property('has-tooltip', True)
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
