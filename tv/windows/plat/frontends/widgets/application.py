@@ -61,6 +61,15 @@ from miro.plat.frontends.widgets import flash
 from miro.plat.frontends.widgets import update
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
+BLACKLISTED_FILE_EXTENSIONS = ('.ade', '.adp', '.asx', '.bas', '.bat', '.chm',
+                               '.cmd', '.com', '.cpl', '.crt', '.exe', '.hlp',
+                               '.hta', '.inf', '.ins', '.isp', '.js', '.jse',
+                               '.lnk', '.mda', '.mdb', '.mde', '.mdt', '.mdw',
+                               '.mdz', '.msc', '.msi', '.msp', '.mst', '.ops',
+                               '.pcd', '.pif', '.prf', '.reg', '.scf', '.scr',
+                               '.sct', '.shb', '.shs', '.url', '.vb', '.vbe',
+                               '.vbs', '.wsc', '.wsf', '.wsh')
+
 class WindowsApplication(Application):
     def run(self):
         associate.associate_extensions(self._get_exe_location(),
@@ -279,12 +288,15 @@ class WindowsApplication(Application):
             # The file we want to run externally is associated
             # with Miro. So open it with Windows Explorer instead.
             subprocess.Popen(r'explorer /select,"' + fn + r'"')
-            return
-        try:
-            os.startfile(fn)
-        except WindowsError, e:
-            if e.winerror == 1155:
-                subprocess.Popen(r'explorer /select,"' + fn + r'"')
+        elif extension in BLACKLISTED_FILE_EXTENSIONS:
+            logging.warning("Extension " + str(extension) + " is blacklisted "
+                            "and will not be executed")
+        else:
+            try:
+                os.startfile(fn)
+            except WindowsError, e:
+                if e.winerror == 1155:
+                    subprocess.Popen(r'explorer /select,"' + fn + r'"')
 
     # FIXME: this is very similar to the associate.is_associated() method.
     def _is_associated_with(self, extension, value=None):
