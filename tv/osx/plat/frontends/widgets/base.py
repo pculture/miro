@@ -231,6 +231,7 @@ class Container(Widget):
         """
         if old_child is not None:
             self.disconnect_child_signals(old_child)
+            old_child.remove_viewport()
         self.connect_child_signals(new_child)
         self.children_changed()
 

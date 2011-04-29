@@ -67,8 +67,6 @@ class BrowserLoadingIcon(widgetset.Alignment):
         if width != self._width:
             self._width = width
             if self.child:
-                self.hide() # #17063: OS X freaks out if we change the child
-                            # #inside this method
                 self.show()
 
     def hide(self):
