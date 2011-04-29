@@ -204,7 +204,12 @@ def initialize(themeName):
     """
     # set debugmode if it hasn't already been set
     if app.debugmode == None:
-        app.debugmode = app.config.get(prefs.APP_VERSION).endswith("-git")
+        if app.config.get(prefs.APP_FINAL_RELEASE) == u"0":
+            # if it's not a final release, then we're in debugmode
+            app.debugmode = True
+        else:
+            # if it is a final release, then we're not in debugmode
+            app.debugmode = False
 
     # this is platform specific
     setup_logging()

@@ -145,8 +145,14 @@ default_guide_first_time = get_from_environ('DTV_CHANNELGUIDE_FIRST_TIME_URL',
                                             u'http://www.miroguide.com/firsttime')
 default_share = get_from_environ('DTV_SHARE_URL',
                                  u'http://www.miroguide.com/share')
-default_autoupdate = get_from_environ('DTV_AUTOUPDATE_URL',
-                                      u'http://www.participatoryculture.org/democracy-appcast.xml')
+default_autoupdate = get_from_environ(
+    'DTV_AUTOUPDATE_URL',
+    u'http://www.participatoryculture.org/democracy-appcast.xml')
+
+default_autoupdate_beta = get_from_environ(
+    'DTV_AUTOUPDATE_BETA_URL',
+    u'http://www.participatoryculture.org/democracy-appcast-beta.xml')
+
 
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=default_guide,
                          platformSpecific=False)
@@ -161,8 +167,13 @@ ADDITIONAL_CHANNEL_GUIDES = Pref(key='additionalChannelGuides', default='',
                                   platformSpecific=False)
 SHARE_URL         = Pref(key='ShareURL',        default=default_share,
                          platformSpecific=False)
+# this is for final releases
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=default_autoupdate,
                          platformSpecific=False)
+# this is for beta and release candidate releases
+AUTOUPDATE_BETA_URL = Pref(
+    key='AutoupdateBetaURL', default=default_autoupdate_beta,
+    platformSpecific=False)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
 TROUBLESHOOT_URL  = Pref(key='TroubleshootURL', default=u"http://manual.getmiro.com/troubleshooting.html",
@@ -258,6 +269,8 @@ APP_PLATFORM = \
     Pref(key='appPlatform',       default=None, platformSpecific=False)
 APP_SERIAL = \
     Pref(key='appSerial-unknown', default=u"0",  platformSpecific=False)
+APP_FINAL_RELEASE = \
+    Pref(key='appFinalRelease',   default=u"0", platformSpecific=False)
 MOZILLA_LIB_PATH = \
     Pref(key='mozillaLibPath',    default=None, platformSpecific=False)
 BUILD_MACHINE = \

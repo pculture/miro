@@ -60,7 +60,14 @@ def check_for_updates(up_to_date_callback=None):
     if not check_in_progress:
         check_in_progress = True
         logging.info("Checking for updates...")
-        url = app.config.get(prefs.AUTOUPDATE_URL)
+        if app.config.get(prefs.APP_FINAL_RELEASE) == u"0":
+            # if this is not a final release, look at the beta
+            # channel
+            url = app.config.get(prefs.AUTOUPDATE_BETA_URL)
+        else:
+            # if this is a final release, look at the final
+            # channel
+            url = app.config.get(prefs.AUTOUPDATE_URL)
         update_handler = lambda data: _handle_app_cast(data,
                                                        up_to_date_callback)
         error_handler = _handle_error

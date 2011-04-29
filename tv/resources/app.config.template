@@ -17,5 +17,6 @@ appPlatform = $APP_PLATFORM
 appSerial-linux   = 20101206000
 appSerial-osx     = 20101206000
 appSerial-windows = 20101206000
+appFinalRelease   = 0
 mozillaLibPath = $MOZILLA_LIB_PATH
 maximizeOnFirstRun = False
