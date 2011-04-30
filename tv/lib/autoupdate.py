@@ -64,13 +64,13 @@ def check_for_updates(up_to_date_callback=None):
             # if this is not a final release, look at the beta
             # channel
             url = app.config.get(prefs.AUTOUPDATE_BETA_URL)
-            logging.debug("using the beta channel")
+            logging.info("Using the beta channel")
         else:
             # if this is a final release, look at the final
             # channel
             url = app.config.get(prefs.AUTOUPDATE_URL)
-            logging.debug("using the final channel")
-        logging.debug("check_for_updates: checking %s", url)
+            logging.info("Using the final channel")
+        logging.info("check_for_updates: checking %s", url)
         update_handler = lambda data: _handle_app_cast(
             data, up_to_date_callback)
         error_handler = _handle_error
