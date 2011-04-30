@@ -106,8 +106,8 @@ class WidgetStateStore(object):
             [u'state', u'name', u'length', u'date-added', u'feed-name',
              u'size'],
         u'music':
-            [u'name', u'artist', u'album', u'track', u'length', u'genre',
-             u'year', u'rating'],
+            [u'state', u'name', u'artist', u'album', u'track', u'length',
+            u'genre', u'year', u'rating'],
         u'others':
             [u'name', u'feed-name', u'size', u'file-type'],
         u'downloading':
@@ -119,7 +119,7 @@ class WidgetStateStore(object):
         u'feed':
             [u'state', u'name', u'length', u'size', u'date', u'status'],
         u'search':
-            [u'state', u'name', u'description'],
+            [u'state', u'name', u'description', u'status'],
         u'playlist':
             [u'playlist', u'name', u'artist', u'album', u'track', u'length',
                 u'genre', u'year', u'rating'],
@@ -134,7 +134,7 @@ class WidgetStateStore(object):
     )
     # add available but non-default columns here:
     AVAILABLE_COLUMNS['music'] |= set(
-        [u'state', u'date-added', u'feed-name', u'size', u'file-type']
+        [u'date-added', u'feed-name', u'size', u'file-type']
     )
     AVAILABLE_COLUMNS['others'] |= set([u'date-added', u'drm', u'rating'])
     AVAILABLE_COLUMNS['search'] |= set([u'rating'])
