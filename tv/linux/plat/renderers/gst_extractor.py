@@ -128,18 +128,6 @@ class Extractor:
                     if not seek_result:
                         self.disconnect()
                         self.done()
-                        return
-
-                    # sometimes we get a seek_result of True, but the
-                    # buffer probe never kicks off.  never triggers
-                    # the buffer_probe.  i'm not sure why that
-                    # happens.  regardless, if that occurs, then the
-                    # buffer_probe_handler_real never happens and then
-                    # the process hangs in limbo.
-                    # 
-                    # thus, if we haven't seen something happen in the
-                    # next 2 seconds, end and return a status.
-                    gobject.timeout_add(2000, self.taking_too_long)
 
     def taking_too_long(self):
         self.disconnect()
@@ -209,6 +197,16 @@ class Extractor:
             "message", self.on_bus_message)
 
         self.thumbnail_pipeline.set_state(gst.STATE_PAUSED)
+
+        # sometimes it seems the pipeline0 never reaches a PAUSED
+        # state.  because of that, it never triggers a finished
+        # condition and the extractor hangs.
+        #
+        # so we cap that at 3 seconds and if we hit that point, we
+        # just quit out with whatever we have.
+
+        gobject.timeout_add(3000, self.taking_too_long)
+
         return False
 
     def error_occurred(self):
