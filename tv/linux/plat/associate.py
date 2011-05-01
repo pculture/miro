@@ -85,11 +85,14 @@ def _is_associated(protocol, command=None):
     try:
         gconf_client = gconf.client_get_default()
         key = gconf_client.get(url_handlers_key + "command")
-        enabled = gconf_client.get(url_handlers_key + "enabled")
-        if command:
-            associated = key.get_string() == command and enabled.get_bool()
+        if key is None:
+            associated = False
         else:
-            associated = key.get_string() != "" and enabled.get_bool()
+            enabled = gconf_client.get(url_handlers_key + "enabled")
+            if command:
+                associated = key.get_string() == command and enabled.get_bool()
+            else:
+                associated = key.get_string() != "" and enabled.get_bool()
     finally:
         gconf_lock.release()
     return associated
