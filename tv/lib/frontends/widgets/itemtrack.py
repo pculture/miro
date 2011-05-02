@@ -341,12 +341,28 @@ class SearchFilter(object):
     def _update_items(self, items):
         for item in items:
             self.all_items[item.id] = item
-            self.searcher.update_item(item)
+            try:
+                self.searcher.update_item(item)
+            except KeyError:
+                # This happens when the item is not in the index
+                # As a precaution, try out best to recover, log the error,
+                # then just add the item.  (see #17152 for details).
+                app.widgetapp.handle_soft_failure("Item Track update",
+                        "Tried to update item not in index: %s" % item.id,
+                        with_exception=True)
+                self.searcher.add_item(item)
 
     def _remove_ids(self, id_list):
         for id_ in id_list:
             del self.all_items[id_]
-            self.searcher.remove_item(id_)
+            try:
+                self.searcher.remove_item(id_)
+            except KeyError:
+                # This happens when the item is not in the index.  As a
+                # precaution, try to recover.  log the error, then keep going.
+                app.widgetapp.handle_soft_failure("Item Track update",
+                        "Tried to update item not in index: %s" % item.id,
+                        with_exception=True)
 
     def _ensure_index_ready(self):
         if (self._pending_adds or self._pending_changes

@@ -190,12 +190,18 @@ class ItemSearcher(object):
         self._add_item(item_info)
 
     def update_item(self, item_info):
-        """Update the index based on an item info changing."""
+        """Update the index based on an item info changing.
+
+        Raises a KeyError if item_info is not currently in the index
+        """
         self._remove_item(item_info.id)
         self._add_item(item_info)
 
     def remove_item(self, item_id):
-        """Remove an item from the index."""
+        """Remove an item from the index.
+
+        Raises a KeyError if item_info is not currently in the index
+        """
         self._remove_item(item_id)
 
     def _add_item(self, item_info):
