@@ -25,18 +25,6 @@ class NGramTest(MiroTestCase):
                 'ba', 'ar', 'bar',
                 'az', 'zb', 'baz', 'azb', 'zba'])
 
-    def test_memory(self):
-        # make sure we aren't leaking memory in our C module
-        gc.collect()
-        start_count = len(gc.get_objects())
-        results = ngrams.breakup_list(['foo', 'bar', 'bazbaz'], 1, 3)
-        results2 = ngrams.breakup_word('miroiscool', 1, 3)
-        del results
-        del results2
-        gc.collect()
-        end_count = len(gc.get_objects())
-        self.assertEquals(start_count, end_count)
-
 class SearchTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
