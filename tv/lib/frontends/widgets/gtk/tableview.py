@@ -929,56 +929,18 @@ class ColumnOwnerMixin(object):
         # column.
         pass
 
-class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
-        HotspotTrackingMixin, ColumnOwnerMixin):
-    """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-
-    draws_selection = True
-
-    def __init__(self, model):
-        Widget.__init__(self)
-        self.set_widget(MiroTreeView())
-        self.model = model
-        self.model.add_to_tableview(self._widget)
-        self._model = self._widget.get_model()
-        wrappermap.add(self._model, model)
-        self._setup_colors()
-        self.background_color = None
-        self.context_menu_callback = None
+class HoverTrackingMixin(object):
+    """Handle mouse hover events - tooltips for some cells and hover events for
+    renderers which support them.
+    """
+    def __init__(self):
         self.hover_info = None
         self.hover_pos = None
-        self.in_bulk_change = False
-        self.delaying_press = False
-        self.layout_manager = LayoutManager(self._widget)
-        self.height_changed = None # 17178 hack
         if hasattr(self, 'get_tooltip'):
+            # this should probably be something like self.set_tooltip_source
             self._widget.set_property('has-tooltip', True)
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
             self._last_tooltip_place = None
-        self._connect_signals()
-        # setting up mixins after general TableView init
-        GTKSelectionOwnerMixin.__init__(self)
-        DNDHandlerMixin.__init__(self)
-        HotspotTrackingMixin.__init__(self)
-        ColumnOwnerMixin.__init__(self)
-
-    def _connect_signals(self):
-        self.create_signal('row-expanded')
-        self.create_signal('row-collapsed')
-        self.create_signal('row-clicked')
-        self.create_signal('row-activated')
-        self.wrapped_widget_connect('row-activated', self.on_row_activated)
-        self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
-        self.wrapped_widget_connect('row-collapsed', self.on_row_collapsed)
-        self.wrapped_widget_connect('button-press-event', self.on_button_press)
-        self.wrapped_widget_connect('button-release-event',
-            self.on_button_release)
-        self.wrapped_widget_connect('motion-notify-event',
-            self.on_motion_notify)
-
-    def set_gradient_highlight(self, gradient):
-        # This is just an OS X thing.
-        pass
 
     def on_tooltip(self, treeview, x, y, keyboard_mode, tooltip):
         # x, y are relative to the entire widget, but we want them to be
@@ -1007,6 +969,70 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
             return False
         pygtkhacks.set_tooltip_text(tooltip, text)
         return True
+
+    def _update_hover(self, treeview, event):
+        old_hover_info, old_hover_pos = self.hover_info, self.hover_pos
+        path_info = treeview.get_position_info(event.x, event.y)
+        if (path_info and
+                self.gtk_column_to_wrapper[path_info.column].renderer.want_hover):
+            self.hover_info = path_info.path, path_info.column
+            self.hover_pos = path_info.x, path_info.y
+        else:
+            self.hover_info = None
+            self.hover_pos = None
+        if (old_hover_info != self.hover_info or
+            old_hover_pos != self.hover_pos):
+            if (old_hover_info != self.hover_info and
+                old_hover_info is not None):
+                self._redraw_cell(treeview, *old_hover_info)
+            if self.hover_info is not None:
+                self._redraw_cell(treeview, *self.hover_info)
+
+class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
+        HotspotTrackingMixin, ColumnOwnerMixin, HoverTrackingMixin):
+    """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
+
+    draws_selection = True
+
+    def __init__(self, model):
+        Widget.__init__(self)
+        self.set_widget(MiroTreeView())
+        self.model = model
+        self.model.add_to_tableview(self._widget)
+        self._model = self._widget.get_model()
+        wrappermap.add(self._model, model)
+        self._setup_colors()
+        self.background_color = None
+        self.context_menu_callback = None
+        self.in_bulk_change = False
+        self.delaying_press = False
+        self.layout_manager = LayoutManager(self._widget)
+        self.height_changed = None # 17178 hack
+        self._connect_signals()
+        # setting up mixins after general TableView init
+        GTKSelectionOwnerMixin.__init__(self)
+        DNDHandlerMixin.__init__(self)
+        HotspotTrackingMixin.__init__(self)
+        ColumnOwnerMixin.__init__(self)
+        HoverTrackingMixin.__init__(self)
+
+    def _connect_signals(self):
+        self.create_signal('row-expanded')
+        self.create_signal('row-collapsed')
+        self.create_signal('row-clicked')
+        self.create_signal('row-activated')
+        self.wrapped_widget_connect('row-activated', self.on_row_activated)
+        self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
+        self.wrapped_widget_connect('row-collapsed', self.on_row_collapsed)
+        self.wrapped_widget_connect('button-press-event', self.on_button_press)
+        self.wrapped_widget_connect('button-release-event',
+            self.on_button_release)
+        self.wrapped_widget_connect('motion-notify-event',
+            self.on_motion_notify)
+
+    def set_gradient_highlight(self, gradient):
+        # This is just an OS X thing.
+        pass
 
     def set_background_color(self, color):
         self.background_color = self.make_color(color)
@@ -1241,24 +1267,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         x, y = treeview.convert_bin_window_to_widget_coords(cell_area.x,
                                                             cell_area.y)
         treeview.queue_draw_area(x, y, cell_area.width, cell_area.height)
-
-    def _update_hover(self, treeview, event):
-        old_hover_info, old_hover_pos = self.hover_info, self.hover_pos
-        path_info = treeview.get_position_info(event.x, event.y)
-        if (path_info and
-                self.gtk_column_to_wrapper[path_info.column].renderer.want_hover):
-            self.hover_info = path_info.path, path_info.column
-            self.hover_pos = path_info.x, path_info.y
-        else:
-            self.hover_info = None
-            self.hover_pos = None
-        if (old_hover_info != self.hover_info or
-            old_hover_pos != self.hover_pos):
-            if (old_hover_info != self.hover_info and
-                old_hover_info is not None):
-                self._redraw_cell(treeview, *old_hover_info)
-            if self.hover_info is not None:
-                self._redraw_cell(treeview, *self.hover_info)
 
     def on_motion_notify(self, treeview, event):
         self._update_hover(treeview, event)
