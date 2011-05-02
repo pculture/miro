@@ -184,6 +184,9 @@ class PlaybackInfo(widgetset.CustomButton):
                 layout.set_text_color((0.7, 0.7, 0.7))
             else:
                 layout.set_text_color((0.9, 0.9, 0.9))
+            # XXX bz:17136 override the color: Windows things we are inactive
+            # embedded web browser is displayed.
+            layout.set_text_color((0.7, 0.7, 0.7))
             text = layout.textbox(" - %s" % self.feed_name)
             width2, height2 = text.get_size()
             width2 = min(width2, context.width - self.TOTAL_MARGIN - width1 - x)
@@ -347,6 +350,11 @@ class ProgressSlider(widgetset.CustomSlider):
                                             self.progress_surface_inactive,
                                             self.progress_cursor_inactive)
 
+        # XXX bz:17136 override the color: Windows things we are inactive
+        # embedded web browser is displayed.
+        background, progress, cursor = (self.background_surface,
+                                        self.progress_surface,
+                                        self.progress_cursor)
         min, max = self.get_range()
         scale = (self.get_value() - min) / (max - min)
         cursor_pos = int(scale * (context.width - 18))
@@ -414,6 +422,9 @@ class ProgressTimeline(widgetset.Background):
             surface = self.active
         else:
             surface = self.inactive
+        # XXX bz:17136 override the color: Windows things we are inactive
+        # embedded web browser is displayed.
+        surface = self.active
 
         surface.draw(context, 0, 0, context.width, 46)
 
