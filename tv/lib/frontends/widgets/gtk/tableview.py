@@ -835,8 +835,102 @@ class HotspotTrackingMixin(object):
             self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker.update_hit()
 
+class ColumnOwnerMixin(object):
+    """Keeps track of the table's columns - including the list of columns, and
+    properties that we set for a table but need to apply to each column.
+
+    This manages:
+        columns
+        attr_map_for_column
+        gtk_column_to_wrapper
+    for use throughout tableview.
+    """
+    def __init__(self):
+        self._columns_draggable = False
+        self._renderer_xpad = self._renderer_ypad = 0
+        self.columns = []
+        self.attr_map_for_column = {}
+        self.gtk_column_to_wrapper = {}
+        self.create_signal('reallocate-columns') # not emitted on GTK
+
+    def remove_column(self, index):
+        """Remove a column from the display and forget it from the column lists.
+        """
+        column = self.columns.pop(index)
+        del self.attr_map_for_column[column._column]
+        del self.gtk_column_to_wrapper[column._column]
+        self._widget.remove_column(column._column)
+
+    def get_columns(self):
+        """Returns the current columns, in order, by title."""
+        # FIXME: this should probably return column objects, and really should
+        # not be keeping track of columns by title at all
+        titles = [column.get_title().decode('utf-8')
+                for column in self._widget.get_columns()]
+        return titles
+
+    def add_column(self, column):
+        """Append a column to this table; setup all necessary mappings, and
+        setup the new column's properties to match the table's settings.
+        """
+        self.model.check_new_column(column)
+        self._widget.append_column(column._column)
+        self.columns.append(column)
+        self.attr_map_for_column[column._column] = column.attrs
+        self.gtk_column_to_wrapper[column._column] = column
+        self.setup_new_column(column)
+
+    def setup_new_column(self, column):
+        """Apply properties that we keep track of at the table level to a
+        newly-created column.
+        """
+        if self.background_color:
+            column.renderer._renderer.set_property('cell-background-gdk',
+                    self.background_color)
+        column._column.set_reorderable(self._columns_draggable)
+        column.renderer._renderer.set_property('xpad', self._renderer_xpad)
+        column.renderer._renderer.set_property('ypad', self._renderer_ypad)
+
+    def set_column_spacing(self, space):
+        """Set the amount of space between columns."""
+        self._renderer_xpad = space / 2
+        for column in self.columns:
+            if column.do_horizontal_padding:
+                column.renderer._renderer.set_property('xpad',
+                                                       self._renderer_xpad)
+
+    def set_row_spacing(self, space):
+        """Set the amount of space between columns."""
+        self._renderer_ypad = space / 2
+        for column in self.columns:
+            column.renderer._renderer.set_property('ypad', self._renderer_ypad)
+
+    def set_columns_draggable(self, setting):
+        """Set the draggability of existing and future columns."""
+        self._columns_draggable = setting
+        for column in self.columns:
+            column._column.set_reorderable(setting)
+
+    def set_column_background_color(self):
+        """Set the background color of existing columns to the table's
+        background_color.
+        """
+        for column in self.columns:
+            column.renderer._renderer.set_property('cell-background-gdk',
+                    self.background_color)
+
+    def set_auto_resizes(self, setting):
+        # FIXME: to be implemented.
+        # At this point, GTK somehow does the right thing anyway in terms of
+        # auto-resizing.  I'm not sure exactly what's happening, but I believe
+        # that if the column widths don't add up to the total width,
+        # gtk.TreeView allocates extra width for the last column.  This works
+        # well enough for the tab list and item list, since there's only one
+        # column.
+        pass
+
 class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
-        HotspotTrackingMixin):
+        HotspotTrackingMixin, ColumnOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -849,17 +943,12 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         self._model = self._widget.get_model()
         wrappermap.add(self._model, model)
         self._setup_colors()
-        self.columns = []
-        self.attr_map_for_column = {}
-        self.gtk_column_to_wrapper = {}
         self.background_color = None
-        self._renderer_xpad = self._renderer_ypad = 0
         self.context_menu_callback = None
         self.hover_info = None
         self.hover_pos = None
         self.in_bulk_change = False
         self.delaying_press = False
-        self.set_columns_draggable(False)
         self.layout_manager = LayoutManager(self._widget)
         self.height_changed = None # 17178 hack
         if hasattr(self, 'get_tooltip'):
@@ -871,9 +960,9 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         GTKSelectionOwnerMixin.__init__(self)
         DNDHandlerMixin.__init__(self)
         HotspotTrackingMixin.__init__(self)
+        ColumnOwnerMixin.__init__(self)
 
     def _connect_signals(self):
-        self.create_signal('reallocate-columns') # not emitted on GTK
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
         self.create_signal('row-clicked')
@@ -927,34 +1016,16 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
                               self.background_color)
             self.modify_style('base', gtk.STATE_ACTIVE, self.background_color)
         if self.use_custom_style:
-            for column in self.columns:
-                column.renderer._renderer.set_property('cell-background-gdk',
-                        self.background_color)
+            self.set_column_background_color()
 
     def handle_custom_style_change(self):
         if self.background_color is not None:
             if self.use_custom_style:
-                for column in self.columns:
-                    column.renderer._renderer.set_property(
-                            'cell-background-gdk', self.background_color)
+                self.set_column_background_color()
             else:
                 for column in self.columns:
                     column.renderer._renderer.set_property(
                             'cell-background-set', False)
-
-    def set_column_spacing(self, space):
-        """Set the amount of space between columns."""
-        self._renderer_xpad = space / 2
-        for column in self.columns:
-            if column.do_horizontal_padding:
-                column.renderer._renderer.set_property('xpad',
-                                                       self._renderer_xpad)
-
-    def set_row_spacing(self, space):
-        """Set the amount of space between columns."""
-        self._renderer_ypad = space / 2
-        for column in self.columns:
-            column.renderer._renderer.set_property('ypad', self._renderer_ypad)
 
     def set_alternate_row_backgrounds(self, setting):
         self._widget.set_rules_hint(setting)
@@ -970,58 +1041,11 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
             setting = gtk.TREE_VIEW_GRID_LINES_NONE
         self._widget.set_grid_lines(setting)
 
-    def add_column(self, column):
-        self.model.check_new_column(column)
-        self._widget.append_column(column._column)
-        self.columns.append(column)
-        self.attr_map_for_column[column._column] = column.attrs
-        self.gtk_column_to_wrapper[column._column] = column
-        self.setup_new_column(column)
-
-    def remove_column(self, index):
-        column = self.columns.pop(index)
-        del self.attr_map_for_column[column._column]
-        del self.gtk_column_to_wrapper[column._column]
-        self._widget.remove_column(column._column)
-
     def width_for_columns(self, total_width):
         # as far as I can tell, GTK includes the column spacing in the column
         # widths
         scrollbar = 30 # TODO: query the actual width
         return total_width - scrollbar
-
-    def set_auto_resizes(self, setting):
-        # FIXME: to be implemented.
-        # At this point, GTK somehow does the right thing anyway in terms of
-        # auto-resizing.  I'm not sure exactly what's happening, but I believe
-        # that if the column widths don't add up to the total width,
-        # gtk.TreeView allocates extra width for the last column.  This works
-        # well enough for the tab list and item list, since there's only one
-        # column.
-        pass
-
-    def set_columns_draggable(self, setting):
-        self._columns_draggable = setting
-        for column in self.columns:
-            column._column.set_reorderable(setting)
-
-    def setup_new_column(self, column):
-        if self.background_color:
-            column.renderer._renderer.set_property('cell-background-gdk',
-                    self.background_color)
-        column._column.set_reorderable(self._columns_draggable)
-        column.renderer._renderer.set_property('xpad', self._renderer_xpad)
-        column.renderer._renderer.set_property('ypad', self._renderer_ypad)
-
-    def get_columns(self):
-        titles = []
-        columns = self._widget.get_columns()
-        for column in columns:
-            titles.append(column.get_title().decode('utf-8'))
-        return titles
-
-    def column_count(self):
-        return len(self._widget.get_columns())
 
     def focus(self):
         self._widget.grab_focus()
