@@ -298,10 +298,6 @@ class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
 
 gobject.type_register(MiroTreeView)
 
-def gtk_target_list(types):
-    count = itertools.count()
-    return [(type, gtk.TARGET_SAME_APP, count.next()) for type in types]
-
 class HotspotTracker(object):
     """Handles tracking hotspots.
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
@@ -545,7 +541,213 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         with self.preserving_selection(): # set_cursor() messes up the selection
             self._widget.set_cursor(path_as_string)
 
-class TableView(Widget, GTKSelectionOwnerMixin):
+class DNDHandlerMixin(object):
+    """TableView row DnD.
+    
+    Depends on arbitrary TableView methods; otherwise self-contained except:
+        on_button_press: may call start_drag
+        on_button_release: may unset drag_button_down
+        on_motion_notify: may call potential_drag_motion
+    """
+    def __init__(self):
+        self.drag_button_down = False
+        self.drag_data = {}
+        self.drag_source = self.drag_dest = None
+        self.drag_start_x, self.drag_start_y = None, None
+        self.wrapped_widget_connect('drag-data-get', self.on_drag_data_get)
+        self.wrapped_widget_connect('drag-end', self.on_drag_end)
+        self.wrapped_widget_connect('drag-motion', self.on_drag_motion)
+        self.wrapped_widget_connect('drag-leave', self.on_drag_leave)
+        self.wrapped_widget_connect('drag-drop', self.on_drag_drop)
+        self.wrapped_widget_connect('drag-data-received',
+                self.on_drag_data_received)
+        self.wrapped_widget_connect('unrealize', self.on_drag_unrealize)
+
+    def set_drag_source(self, drag_source):
+        self.drag_source = drag_source
+        # XXX: the following note no longer seems accurate:
+        # No need to call enable_model_drag_source() here, we handle it
+        # ourselves in on_motion_notify()
+
+    def set_drag_dest(self, drag_dest):
+        """Set the drop handler."""
+        self.drag_dest = drag_dest
+        if drag_dest is not None:
+            targets = self._gtk_target_list(drag_dest.allowed_types())
+            self._widget.enable_model_drag_dest(targets,
+                    drag_dest.allowed_actions())
+            self._widget.drag_dest_set(0, targets,
+                    drag_dest.allowed_actions())
+        else:
+            self._widget.unset_rows_drag_dest()
+            self._widget.drag_dest_unset()
+
+    def start_drag(self, treeview, event, path_info):
+        """Check whether the event is a drag event; return whether handled
+        here.
+        """
+        if event.state & (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK):
+            return False
+        model, row_paths = treeview.get_selection().get_selected_rows()
+
+        if path_info.path not in row_paths:
+            # something outside the selection is being dragged.
+            # make it the new selection.
+            self.unselect_all(signal=False)
+            self.select_path(path_info.path)
+            row_paths = [path_info.path]
+        rows = self.model.get_rows(row_paths)
+        self.drag_data = rows and self.drag_source.begin_drag(self, rows)
+        self.drag_button_down = bool(self.drag_data)
+        if self.drag_button_down:
+            self.drag_start_x = int(event.x)
+            self.drag_start_y = int(event.y)
+
+        if len(row_paths) > 1 and path_info.path in row_paths:
+            # handle multiple selection.  If the current row is already
+            # selected, stop propagating the signal.  We will only change
+            # the selection if the user doesn't start a DnD operation.
+            # This makes it more natural for the user to drag a block of
+            # selected items.
+            renderer = path_info.column.get_cell_renderers()[0]
+            if (not self._x_coord_in_expander(treeview, path_info)
+                    and not isinstance(renderer, GTKCheckboxCellRenderer)):
+                self.delaying_press = True
+                # grab keyboard focus since we handled the event
+                self.focus()
+                return True
+
+    def on_drag_data_get(self, treeview, context, selection, info, timestamp):
+        for typ, data in self.drag_data.items():
+            selection.set(typ, 8, repr(data))
+
+    def on_drag_end(self, treeview, context):
+        self.drag_data = {}
+
+    def find_type(self, drag_context):
+        return self._widget.drag_dest_find_target(drag_context,
+            self._widget.drag_dest_get_target_list())
+
+    def calc_positions(self, x, y):
+        """Given x and y coordinates, generate a list of drop positions to
+        try.  The values are tuples in the form of (parent_path, position,
+        gtk_path, gtk_position), where parent_path and position is the
+        position to send to the Miro code, and gtk_path and gtk_position is an
+        equivalent position to send to the GTK code if the drag_dest validates
+        the drop.
+        """
+        model = self._model
+        try:
+            gtk_path, gtk_position = self._widget.get_dest_row_at_pos(x, y)
+        except TypeError:
+            # Below the last row
+            yield (None, len(model), None, None)
+            return
+
+        iter_ = model.get_iter(gtk_path)
+        if gtk_position in (gtk.TREE_VIEW_DROP_INTO_OR_BEFORE,
+                gtk.TREE_VIEW_DROP_INTO_OR_AFTER):
+            yield (iter_, -1, gtk_path, gtk_position)
+
+        if hasattr(model, 'iter_is_valid'):
+            # tablist has this; item list does not
+            assert model.iter_is_valid(iter_)
+        parent_iter = model.iter_parent(iter_)
+        position = gtk_path[-1]
+        if gtk_position in (gtk.TREE_VIEW_DROP_BEFORE,
+                gtk.TREE_VIEW_DROP_INTO_OR_BEFORE):
+            # gtk gave us a "before" position, no need to change it
+            yield (parent_iter, position, gtk_path, gtk.TREE_VIEW_DROP_BEFORE)
+        else:
+            # gtk gave us an "after" position, translate that to before the
+            # next row for miro.
+            if (self._widget.row_expanded(gtk_path) and
+                    model.iter_has_child(iter_)):
+                child_path = gtk_path + (0,)
+                yield (iter_, 0, child_path, gtk.TREE_VIEW_DROP_BEFORE)
+            else:
+                yield (parent_iter, position+1, gtk_path,
+                        gtk.TREE_VIEW_DROP_AFTER)
+
+    def on_drag_motion(self, treeview, drag_context, x, y, timestamp):
+        if not self.drag_dest:
+            return True
+        type = self.find_type(drag_context)
+        if type == "NONE":
+            drag_context.drag_status(0, timestamp)
+            return True
+        drop_action = 0
+        for pos_info in self.calc_positions(x, y):
+            drop_action = self.drag_dest.validate_drop(self, self.model, type,
+                    drag_context.actions, pos_info[0], pos_info[1])
+            if drop_action:
+                self.set_drag_dest_row(pos_info[2], pos_info[3])
+                break
+        else:
+            self.unset_drag_dest_row()
+        drag_context.drag_status(drop_action, timestamp)
+        return True
+
+    def set_drag_dest_row(self, path, position):
+        self._widget.set_drag_dest_row(path, position)
+
+    def unset_drag_dest_row(self):
+        self._widget.unset_drag_dest_row()
+
+    def on_drag_leave(self, treeview, drag_context, timestamp):
+        treeview.unset_drag_dest_row()
+
+    def on_drag_drop(self, treeview, drag_context, x, y, timestamp):
+        # prevent the default handler
+        treeview.emit_stop_by_name('drag-drop')
+        target = self.find_type(drag_context)
+        if target == "NONE":
+            return False
+        treeview.drag_get_data(drag_context, target, timestamp)
+        treeview.unset_drag_dest_row()
+
+    def on_drag_data_received(self,
+            treeview, drag_context, x, y, selection, info, timestamp):
+        # prevent the default handler
+        treeview.emit_stop_by_name('drag-data-received')
+        if not self.drag_dest:
+            return
+        type = self.find_type(drag_context)
+        if type == "NONE":
+            return
+        if selection.data is None:
+            return
+        drop_action = 0
+        for pos_info in self.calc_positions(x, y):
+            drop_action = self.drag_dest.validate_drop(self, self.model, type,
+                    drag_context.actions, pos_info[0], pos_info[1])
+            if drop_action:
+                self.drag_dest.accept_drop(self, self.model, type,
+                        drag_context.actions, pos_info[0], pos_info[1],
+                        eval(selection.data))
+                return True
+        return False
+
+    def on_drag_unrealize(self, treeview):
+        self.drag_button_down = False
+
+    def potential_drag_motion(self, treeview, event):
+        """A motion event has occurred and did not hit a hotspot; start a drag
+        if applicable.
+        """
+        if (self.drag_data and self.drag_button_down and
+                treeview.drag_check_threshold(self.drag_start_x,
+                    self.drag_start_y, int(event.x), int(event.y))):
+            self.delaying_press = False
+            treeview.drag_begin(self._gtk_target_list(self.drag_data.keys()),
+                    self.drag_source.allowed_actions(), 1, event)
+
+    @staticmethod
+    def _gtk_target_list(types):
+        count = itertools.count()
+        return [(type, gtk.TARGET_SAME_APP, count.next()) for type in types]
+
+class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -554,6 +756,7 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
         GTKSelectionOwnerMixin.__init__(self)
+        DNDHandlerMixin.__init__(self)
         self.model = model
         self.model.add_to_tableview(self._widget)
         self._model = self._widget.get_model()
@@ -563,10 +766,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
         self.attr_map_for_column = {}
         self.gtk_column_to_wrapper = {}
         self.background_color = None
-        self.drag_button_down = False
-        self.drag_data = {}
         self._renderer_xpad = self._renderer_ypad = 0
-        self.context_menu_callback = self.drag_source = self.drag_dest = None
+        self.context_menu_callback = None
         self.hotspot_tracker = None
         self.hover_info = None
         self.hover_pos = None
@@ -596,13 +797,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.on_button_release)
         self.wrapped_widget_connect('motion-notify-event',
             self.on_motion_notify)
-        self.wrapped_widget_connect('drag-data-get', self.on_drag_data_get)
-        self.wrapped_widget_connect('drag-end', self.on_drag_end)
-        self.wrapped_widget_connect('drag-motion', self.on_drag_motion)
-        self.wrapped_widget_connect('drag-leave', self.on_drag_leave)
-        self.wrapped_widget_connect('drag-drop', self.on_drag_drop)
-        self.wrapped_widget_connect('drag-data-received',
-                self.on_drag_data_received)
         self.wrapped_widget_connect('unrealize', self.on_unrealize)
         self._connect_hotspot_signals()
 
@@ -804,23 +998,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
     def set_volatile(self, volatile):
         return
 
-    def set_drag_source(self, drag_source):
-        self.drag_source = drag_source
-        # No need to call enable_model_drag_source() here, we handle it
-        # ourselves in on_motion_notify()
-
-    def set_drag_dest(self, drag_dest):
-        self.drag_dest = drag_dest
-        if drag_dest is not None:
-            targets = gtk_target_list(drag_dest.allowed_types())
-            self._widget.enable_model_drag_dest(targets,
-                    drag_dest.allowed_actions())
-            self._widget.drag_dest_set(0, targets,
-                    drag_dest.allowed_actions())
-        else:
-            self._widget.unset_rows_drag_dest()
-            self._widget.drag_dest_unset()
-
     def on_row_expanded(self, _widget, iter_, path):
         self.emit('row-expanded', iter_, path)
 
@@ -889,41 +1066,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             # grab keyboard focus since we handled the event
             self.focus()
             return True
-
-    def start_drag(self, treeview, event, path_info):
-        """Check whether the event is a drag event; return whether handled
-        here.
-        """
-        if event.state & (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK):
-            return False
-        model, row_paths = treeview.get_selection().get_selected_rows()
-
-        if path_info.path not in row_paths:
-            # something outside the selection is being dragged.
-            # make it the new selection.
-            self.unselect_all(signal=False)
-            self.select_path(path_info.path)
-            row_paths = [path_info.path]
-        rows = self.model.get_rows(row_paths)
-        self.drag_data = rows and self.drag_source.begin_drag(self, rows)
-        self.drag_button_down = bool(self.drag_data)
-        if self.drag_button_down:
-            self.drag_start_x = int(event.x)
-            self.drag_start_y = int(event.y)
-
-        if len(row_paths) > 1 and path_info.path in row_paths:
-            # handle multiple selection.  If the current row is already
-            # selected, stop propagating the signal.  We will only change
-            # the selection if the user doesn't start a DnD operation.
-            # This makes it more natural for the user to drag a block of
-            # selected items.
-            renderer = path_info.column.get_cell_renderers()[0]
-            if (not self._x_coord_in_expander(treeview, path_info)
-                    and not isinstance(renderer, GTKCheckboxCellRenderer)):
-                self.delaying_press = True
-                # grab keyboard focus since we handled the event
-                self.focus()
-                return True
 
     def show_context_menu(self, treeview, event, path_info):
         """Pop up a context menu for the given click event (which is a
@@ -1047,7 +1189,6 @@ class TableView(Widget, GTKSelectionOwnerMixin):
 
     def on_unrealize(self, treeview):
         self.hotspot_tracker = None
-        self.drag_button_down = False
 
     def _redraw_cell(self, treeview, path, column):
         cell_area = treeview.get_cell_area(path, column)
@@ -1081,123 +1222,8 @@ class TableView(Widget, GTKSelectionOwnerMixin):
             self.hotspot_tracker.update_hit()
             return True
 
-        if (self.drag_data and self.drag_button_down and
-                treeview.drag_check_threshold(self.drag_start_x,
-                    self.drag_start_y, int(event.x), int(event.y))):
-            self.delaying_press = False
-            treeview.drag_begin(gtk_target_list(self.drag_data.keys()),
-                    self.drag_source.allowed_actions(), 1, event)
-
-    def on_drag_data_get(self, treeview, context, selection, info, timestamp):
-        for typ, data in self.drag_data.items():
-            selection.set(typ, 8, repr(data))
-
-    def on_drag_end(self, treeview, context):
-        self.drag_data = {}
-
-    def find_type(self, drag_context):
-        return self._widget.drag_dest_find_target(drag_context,
-            self._widget.drag_dest_get_target_list())
-
-    def calc_positions(self, x, y):
-        """Given x and y coordinates, generate a list of drop positions to
-        try.  The values are tuples in the form of (parent_path, position,
-        gtk_path, gtk_position), where parent_path and position is the
-        position to send to the Miro code, and gtk_path and gtk_position is an
-        equivalent position to send to the GTK code if the drag_dest validates
-        the drop.
-        """
-        model = self._model
-        try:
-            gtk_path, gtk_position = self._widget.get_dest_row_at_pos(x, y)
-        except TypeError:
-            # Below the last row
-            yield (None, len(model), None, None)
-            return
-
-        iter_ = model.get_iter(gtk_path)
-        if gtk_position in (gtk.TREE_VIEW_DROP_INTO_OR_BEFORE,
-                gtk.TREE_VIEW_DROP_INTO_OR_AFTER):
-            yield (iter_, -1, gtk_path, gtk_position)
-
-        if hasattr(model, 'iter_is_valid'):
-            # tablist has this; item list does not
-            assert model.iter_is_valid(iter_)
-        parent_iter = model.iter_parent(iter_)
-        position = gtk_path[-1]
-        if gtk_position in (gtk.TREE_VIEW_DROP_BEFORE,
-                gtk.TREE_VIEW_DROP_INTO_OR_BEFORE):
-            # gtk gave us a "before" position, no need to change it
-            yield (parent_iter, position, gtk_path, gtk.TREE_VIEW_DROP_BEFORE)
-        else:
-            # gtk gave us an "after" position, translate that to before the
-            # next row for miro.
-            if (self._widget.row_expanded(gtk_path) and
-                    model.iter_has_child(iter_)):
-                child_path = gtk_path + (0,)
-                yield (iter_, 0, child_path, gtk.TREE_VIEW_DROP_BEFORE)
-            else:
-                yield (parent_iter, position+1, gtk_path,
-                        gtk.TREE_VIEW_DROP_AFTER)
-
-    def on_drag_motion(self, treeview, drag_context, x, y, timestamp):
-        if not self.drag_dest:
-            return True
-        type = self.find_type(drag_context)
-        if type == "NONE":
-            drag_context.drag_status(0, timestamp)
-            return True
-        drop_action = 0
-        for pos_info in self.calc_positions(x, y):
-            drop_action = self.drag_dest.validate_drop(self, self.model, type,
-                    drag_context.actions, pos_info[0], pos_info[1])
-            if drop_action:
-                self.set_drag_dest_row(pos_info[2], pos_info[3])
-                break
-        else:
-            self.unset_drag_dest_row()
-        drag_context.drag_status(drop_action, timestamp)
-        return True
-
-    def set_drag_dest_row(self, path, position):
-        self._widget.set_drag_dest_row(path, position)
-
-    def unset_drag_dest_row(self):
-        self._widget.unset_drag_dest_row()
-
-    def on_drag_leave(self, treeview, drag_context, timestamp):
-        treeview.unset_drag_dest_row()
-
-    def on_drag_drop(self, treeview, drag_context, x, y, timestamp):
-        # prevent the default handler
-        treeview.emit_stop_by_name('drag-drop')
-        target = self.find_type(drag_context)
-        if target == "NONE":
-            return False
-        treeview.drag_get_data(drag_context, target, timestamp)
-        treeview.unset_drag_dest_row()
-
-    def on_drag_data_received(self, treeview, drag_context, x, y, selection,
-            info, timestamp):
-        # prevent the default handler
-        treeview.emit_stop_by_name('drag-data-received')
-        if not self.drag_dest:
-            return
-        type = self.find_type(drag_context)
-        if type == "NONE":
-            return
-        if selection.data is None:
-            return
-        drop_action = 0
-        for pos_info in self.calc_positions(x, y):
-            drop_action = self.drag_dest.validate_drop(self, self.model, type,
-                    drag_context.actions, pos_info[0], pos_info[1])
-            if drop_action:
-                self.drag_dest.accept_drop(self, self.model, type,
-                        drag_context.actions, pos_info[0], pos_info[1],
-                        eval(selection.data))
-                return True
-        return False
+        self.potential_drag_motion(treeview, event)
+        return None # XXX: used to fall through; not sure what retval does here
 
     def start_bulk_change(self):
         self._widget.freeze_child_notify()
