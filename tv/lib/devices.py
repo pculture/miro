@@ -941,8 +941,8 @@ class DeviceDatabase(dict, signals.SignalEmitter):
                 existing.get('url') == item_info.file_url):
                 return True
             elif ((item_info.name, item_info.description, item_info.size,
-                   item_info.duration) ==
-                  (existing.get('name'), existing.get('description'),
+                   item_info.duration * 1000) ==
+                  (existing.get('title'), existing.get('description'),
                    existing.get('size'), existing.get('duration'))):
                 # if a bunch of qualities are the same, we'll call it close
                 # enough
