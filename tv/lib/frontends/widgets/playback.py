@@ -555,8 +555,10 @@ class PlaybackManager (signals.SignalEmitter):
         self._setup_player(info_to_play, volume)
 
     def _on_ready_to_play(self, obj):
-        self.open_successful = self.open_finished = True
         playing_item = self.get_playing_item()
+        if playing_item is None:
+            return
+        self.open_successful = self.open_finished = True
         if not playing_item.video_watched:
             self.schedule_mark_as_watched(playing_item)
         if isinstance(self.player, widgetset.VideoPlayer):
@@ -564,6 +566,9 @@ class PlaybackManager (signals.SignalEmitter):
         self.play()
 
     def _on_cant_play(self, obj):
+        playing_item = self.get_playing_item()
+        if playing_item is None:
+            return
         self.open_finished = True
         self._not_skipped_by_user = True
         self.emit('cant-play-file')
