@@ -747,7 +747,96 @@ class DNDHandlerMixin(object):
         count = itertools.count()
         return [(type, gtk.TARGET_SAME_APP, count.next()) for type in types]
 
-class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
+class HotspotTrackingMixin(object):
+    def __init__(self):
+        self.hotspot_tracker = None
+        self.create_signal('hotspot-clicked')
+        self._hotspot_callback_handles = []
+        self._connect_hotspot_signals()
+        self.wrapped_widget_connect('unrealize', self.on_hotspot_unrealize)
+
+    def _connect_hotspot_signals(self):
+        SIGNALS = {
+            'row-inserted': self.on_row_inserted,
+            'row-deleted': self.on_row_deleted,
+            'row-changed': self.on_row_changed,
+        }
+        self._hotspot_callback_handles.extend(
+                weak_connect(self._model, signal, handler)
+                for signal, handler in SIGNALS.iteritems())
+
+    def _disconnect_hotspot_signals(self):
+        for handle in self._hotspot_callback_handles:
+            self._model.disconnect(handle)
+
+    def on_row_inserted(self, model, path, iter_):
+        if self.hotspot_tracker:
+            self.hotspot_tracker.redraw_cell()
+            self.hotspot_tracker = None
+
+    def on_row_deleted(self, model, path):
+        if self.hotspot_tracker:
+            self.hotspot_tracker.redraw_cell()
+            self.hotspot_tracker = None
+
+    def on_row_changed(self, model, path, iter_):
+        if self.hotspot_tracker:
+            self.hotspot_tracker.update_hit()
+
+    def handle_hotspot_hit(self, treeview, event):
+        """Check whether the event is a hotspot event; return whether handled
+        here.
+        """
+        if self.hotspot_tracker:
+            return
+        hotspot_tracker = HotspotTracker(treeview, event)
+        if hotspot_tracker.hit:
+            self.hotspot_tracker = hotspot_tracker
+            hotspot_tracker.redraw_cell()
+            if hotspot_tracker.is_for_context_menu():
+                menu = self._popup_context_menu(self.hotspot_tracker.path, event)
+                if menu:
+                    menu.connect('selection-done',
+                            self._on_hotspot_context_menu_selection_done)
+            # grab keyboard focus since we handled the event
+            self.focus()
+            return True
+
+    def _on_hotspot_context_menu_selection_done(self, menu):
+        # context menu is closed, we won't get the button-release-event in
+        # this case, but we can unset hotspot tracker here.
+        if self.hotspot_tracker:
+            self.hotspot_tracker.redraw_cell()
+            self.hotspot_tracker = None
+
+    def on_hotspot_unrealize(self, treeview):
+        self.hotspot_tracker = None
+
+    def release_on_hotspot(self, event):
+        """A button_release occurred; return whether it has been handled as a
+        hotspot hit.
+        """
+        hotspot_tracker = self.hotspot_tracker
+        if hotspot_tracker and event.button == hotspot_tracker.button:
+            hotspot_tracker.update_position(event)
+            hotspot_tracker.update_hit()
+            if (hotspot_tracker.hit and
+                    not hotspot_tracker.is_for_context_menu()):
+                self.emit('hotspot-clicked', hotspot_tracker.name,
+                        hotspot_tracker.iter)
+            hotspot_tracker.redraw_cell()
+            self.hotspot_tracker = None
+            return True
+
+    def hotspot_model_changed(self):
+        """A bulk change has ended; reconnect signals and update hotspots."""
+        self._connect_hotspot_signals()
+        if self.hotspot_tracker:
+            self.hotspot_tracker.redraw_cell()
+            self.hotspot_tracker.update_hit()
+
+class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
+        HotspotTrackingMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -755,8 +844,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
     def __init__(self, model):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
-        GTKSelectionOwnerMixin.__init__(self)
-        DNDHandlerMixin.__init__(self)
         self.model = model
         self.model.add_to_tableview(self._widget)
         self._model = self._widget.get_model()
@@ -768,7 +855,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
         self.background_color = None
         self._renderer_xpad = self._renderer_ypad = 0
         self.context_menu_callback = None
-        self.hotspot_tracker = None
         self.hover_info = None
         self.hover_pos = None
         self.in_bulk_change = False
@@ -781,12 +867,15 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
             self._last_tooltip_place = None
         self._connect_signals()
+        # setting up mixins after general TableView init
+        GTKSelectionOwnerMixin.__init__(self)
+        DNDHandlerMixin.__init__(self)
+        HotspotTrackingMixin.__init__(self)
 
     def _connect_signals(self):
         self.create_signal('reallocate-columns') # not emitted on GTK
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
-        self.create_signal('hotspot-clicked')
         self.create_signal('row-clicked')
         self.create_signal('row-activated')
         self.wrapped_widget_connect('row-activated', self.on_row_activated)
@@ -797,21 +886,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
             self.on_button_release)
         self.wrapped_widget_connect('motion-notify-event',
             self.on_motion_notify)
-        self.wrapped_widget_connect('unrealize', self.on_unrealize)
-        self._connect_hotspot_signals()
-
-    def _connect_hotspot_signals(self):
-        self._hotspot_callback_handles = []
-        self._hotspot_callback_handles.append(weak_connect(self._model,
-            'row-inserted', self.on_row_inserted))
-        self._hotspot_callback_handles.append(weak_connect(self._model,
-            'row-deleted', self.on_row_deleted))
-        self._hotspot_callback_handles.append(weak_connect(self._model,
-            'row-changed', self.on_row_changed))
-
-    def _disconnect_hotspot_signals(self):
-        for handle in self._hotspot_callback_handles:
-            self._model.disconnect(handle)
 
     def set_gradient_highlight(self, gradient):
         # This is just an OS X thing.
@@ -1004,20 +1078,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
     def on_row_collapsed(self, _widget, iter_, path):
         self.emit('row-collapsed', iter_, path)
 
-    def on_row_inserted(self, model, path, iter_):
-        if self.hotspot_tracker:
-            self.hotspot_tracker.redraw_cell()
-            self.hotspot_tracker = None
-
-    def on_row_deleted(self, model, path):
-        if self.hotspot_tracker:
-            self.hotspot_tracker.redraw_cell()
-            self.hotspot_tracker = None
-
-    def on_row_changed(self, model, path, iter_):
-        if self.hotspot_tracker:
-            self.hotspot_tracker.update_hit()
-
     def on_button_press(self, treeview, event):
         """Handle a mouse button press"""
         if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -1048,25 +1108,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
             self.show_context_menu(treeview, event, path_info)
             return True
 
-    def handle_hotspot_hit(self, treeview, event):
-        """Check whether the event is a hotspot event; return whether handled
-        here.
-        """
-        if self.hotspot_tracker:
-            return
-        hotspot_tracker = HotspotTracker(treeview, event)
-        if hotspot_tracker.hit:
-            self.hotspot_tracker = hotspot_tracker
-            hotspot_tracker.redraw_cell()
-            if hotspot_tracker.is_for_context_menu():
-                menu = self._popup_context_menu(self.hotspot_tracker.path, event)
-                if menu:
-                    menu.connect('selection-done',
-                            self._on_hotspot_context_menu_selection_done)
-            # grab keyboard focus since we handled the event
-            self.focus()
-            return True
-
     def show_context_menu(self, treeview, event, path_info):
         """Pop up a context menu for the given click event (which is a
         right-click on a row).
@@ -1085,13 +1126,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
             return menu
         else:
             return None
-
-    def _on_hotspot_context_menu_selection_done(self, menu):
-        # context menu is closed, we won't get the button-release-event in
-        # this case, but we can unset hotspot tracker here.
-        if self.hotspot_tracker:
-            self.hotspot_tracker.redraw_cell()
-            self.hotspot_tracker = None
 
     def _x_coord_in_expander(self, treeview, path_info):
         """Calculate if an x coordinate is over the expander triangle
@@ -1164,16 +1198,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
         callback()
 
     def on_button_release(self, treeview, event):
-        hotspot_tracker = self.hotspot_tracker
-        if hotspot_tracker and event.button == hotspot_tracker.button:
-            hotspot_tracker.update_position(event)
-            hotspot_tracker.update_hit()
-            if (hotspot_tracker.hit and
-                    not hotspot_tracker.is_for_context_menu()):
-                self.emit('hotspot-clicked', hotspot_tracker.name,
-                        hotspot_tracker.iter)
-            hotspot_tracker.redraw_cell()
-            self.hotspot_tracker = None
+        if self.release_on_hotspot(event):
             return True
         if event.button == 1:
             self.drag_button_down = False
@@ -1186,9 +1211,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
                     self.unselect_all(signal=False)
                     self.select_path(path_info.path)
         self.delaying_press = False
-
-    def on_unrealize(self, treeview):
-        self.hotspot_tracker = None
 
     def _redraw_cell(self, treeview, path, column):
         cell_area = treeview.get_cell_area(path, column)
@@ -1235,10 +1257,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin):
         if self.in_bulk_change:
             self._widget.set_model(self._model)
             self._widget.thaw_child_notify()
-            self._connect_hotspot_signals()
-            if self.hotspot_tracker:
-                self.hotspot_tracker.redraw_cell()
-                self.hotspot_tracker.update_hit()
+            self.hotspot_model_changed()
             self.in_bulk_change = False
 
     def get_left_offset(self):
