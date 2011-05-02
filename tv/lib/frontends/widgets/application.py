@@ -778,7 +778,8 @@ class Application:
 
     def add_new_playlist(self):
         selection = app.item_list_controller_manager.get_selection()
-        ids = [s.id for s in selection if s.downloaded]
+        ids = [s.id for s in selection if s.downloaded and
+               not getattr(s, 'host', False) and not s.device]
 
         title = _('Create Playlist')
         description = _('Enter a name for the new playlist')
