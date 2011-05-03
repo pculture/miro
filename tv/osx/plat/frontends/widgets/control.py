@@ -535,6 +535,10 @@ class NSVideoSearchField (MiroSearchTextField):
             # user hit return, emit 'validate'
             wrappermap.wrapper(self).emit('validate')
 
+        # HACK: not sure exactly why this line has an effect, but it prevents
+        # 17195
+        self.stringValue()
+
         # Don't call superclass method.  The cocoa class hides the cancel
         # button if the text is blank, but we want to override that behavior.
 
