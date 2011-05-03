@@ -630,6 +630,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if not include_podcasts:
             query = query + (" AND (feed_id IS NULL OR "
                              "feed.origURL == 'dtv:manualFeed' OR "
+                             "feed.origURL == 'dtv:searchDownloads' OR "
                              "is_file_item)")
         return cls.make_view(query,
             joins={'feed': 'item.feed_id=feed.id',
@@ -654,6 +655,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if not include_podcasts:
             query = query + (" AND (feed_id IS NULL OR "
                              "feed.origURL == 'dtv:manualFeed' OR "
+                             "feed.origURL == 'dtv:searchDownloads' OR "
                              "is_file_item)")
         return cls.make_view(query,
             joins={'feed': 'item.feed_id=feed.id',
