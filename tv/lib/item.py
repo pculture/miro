@@ -1719,7 +1719,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.split_item()
         self.signal_change()
         self._replace_file_items()
-        self.check_media_file(signal_change=False)
+        self.check_media_file(signal_change=True)
         signals.system.download_complete(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
