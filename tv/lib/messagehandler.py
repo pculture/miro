@@ -927,7 +927,7 @@ class BackendMessageHandler(messages.MessageHandler):
             obj.set_title(message.new_name)
 
     def handle_play_all_unwatched(self, message):
-        item_infos = itemsource.DatabaseSource(
+        item_infos = itemsource.DatabaseItemSource(
             item.Item.newly_downloaded_view()).fetch_all()
         messages.PlayMovie(item_infos).send_to_frontend()
 
