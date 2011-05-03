@@ -612,14 +612,15 @@ class VideoPlayer(player.Player, VBox):
         self.overlay.show()
 
     def _destroy_overlay(self):
-        main_window = app.widgetapp.window
-        self.overlay.vbox.remove(self._video_details)
-        self.overlay.vbox.remove(main_window.controls_hbox)
-        self.pack_start(self._video_details)
-        main_window.main_vbox.pack_start(main_window.controls_hbox)
+        if self.overlay:
+            main_window = app.widgetapp.window
+            self.overlay.vbox.remove(self._video_details)
+            self.overlay.vbox.remove(main_window.controls_hbox)
+            self.pack_start(self._video_details)
+            main_window.main_vbox.pack_start(main_window.controls_hbox)
 
-        self.overlay.destroy()
-        self.overlay = None
+            self.overlay.destroy()
+            self.overlay = None
 
     def rebuild_video_details(self):
         self._video_details.rebuild_video_details()
