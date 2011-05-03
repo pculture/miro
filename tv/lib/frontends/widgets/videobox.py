@@ -231,6 +231,8 @@ class ProgressTime(widgetset.DrawingArea):
             text.draw(context, context.width-width, 0, width, height)
 
 class ProgressTimeRemaining(widgetset.CustomButton):
+    PADDING_LEFT = 10
+
     def __init__(self):
         widgetset.CustomButton.__init__(self)
         self.set_can_focus(False)
@@ -244,7 +246,8 @@ class ProgressTimeRemaining(widgetset.CustomButton):
     def size_request(self, layout):
         layout.set_font(0.75)
         sizer_text = layout.textbox('-9999:99')
-        return sizer_text.get_size()
+        width, height = sizer_text.get_size()
+        return width + self.PADDING_LEFT, height
 
     def handle_play(self, obj, duration):
         self.set_duration(duration)
@@ -286,7 +289,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         layout.set_text_color(widgetutil.WHITE)
         text = layout.textbox(text)
         width, height = text.get_size()
-        text.draw(context, 10, 0, width, height)
+        text.draw(context, self.PADDING_LEFT, 0, width, height)
 
 class ProgressSlider(widgetset.CustomSlider):
     def __init__(self):
