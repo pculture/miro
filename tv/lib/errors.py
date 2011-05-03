@@ -30,6 +30,9 @@
 """``miro.errors`` -- Miro exceptions.
 """
 
+class Shutdown(Exception):
+    """Action aborted because we're shutting down"""
+
 class ActionUnavailableError(ValueError):
     """The action attempted can not be done in the current state."""
     def __init__(self, reason):

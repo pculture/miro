@@ -723,7 +723,7 @@ class DeviceItem(metadata.Store):
         self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = True
-        self.media_type_checked = self.isContainerItem = False
+        self.isContainerItem = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
@@ -764,16 +764,15 @@ class DeviceItem(metadata.Store):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
-            if self.media_type_checked:
-                return # all done, no need to check metadata
-            # setup metadata
-            self.read_metadata()
+            if not self.metadata_version: # haven't run read_metadata yet
+                self.read_metadata()
         except (OSError, IOError):
             # if there was an error reading the data from the filesystem, don't
             # bother continuing with other FS operations or starting moviedata
             logging.debug('error reading %s', self.id, exc_info=True)
         else:
-            moviedata.movie_data_updater.request_update(self)
+            if self.mdp_state is None: # haven't run MDP yet
+                moviedata.movie_data_updater.request_update(self)
 
     @staticmethod
     def id_exists():

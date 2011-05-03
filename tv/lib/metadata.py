@@ -86,6 +86,13 @@ class Source(object):
         self.kind = None
         self.metadata_version = 0
 
+    @property
+    def media_type_checked(self):
+        """This was previously tracked as a real property; it's used by
+        ItemInfo. Provided for compatibility with the previous API.
+        """
+        return self.file_type is not None
+
     @returns_unicode
     def get_title(self):
         if self.title:
@@ -101,9 +108,7 @@ class Source(object):
         # always mark the file as seen
         self.metadata_version = filetags.METADATA_VERSION
 
-        if not self._should_run_mutagen():
-            self.file_type = u'other'
-            self.media_type_checked = True
+        if self.file_type == u'other':
             return
 
         rv = filetags.read_metadata(self.get_filename())
@@ -129,9 +134,6 @@ class Source(object):
         self.year = metadata.get('year', None)
         self.genre = metadata.get('genre', None)
         self.has_drm = metadata.get('drm', False)
-
-    def _should_run_mutagen(self):
-        return not filetypes.is_other_filename(self.get_filename())
 
 def metadata_setter(attribute, type_=None):
     def set_metadata(self, value, _bulk=False):
@@ -195,6 +197,7 @@ class Store(Source):
     def setup_new(self):
         Source.setup_new(self)
         self._deferred_update = {}
+        self.mdp_state = None # moviedata.State.UNSEEN
 
     def set_metadata_from_iteminfo(self, changes, _deferrable=True):
         self.confirm_db_thread()

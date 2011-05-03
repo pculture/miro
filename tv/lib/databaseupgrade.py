@@ -3249,3 +3249,30 @@ def upgrade154(cursor):
 def upgrade155(cursor):
     """Reset display_state.selection, since the format changed."""
     cursor.execute("UPDATE display_state SET selection=NULL")
+
+def upgrade156(cursor):
+    """drop media_type_checked; add mdp_state; change duration==-1 to None.
+
+    Set mdp_state where we can tell it's been run or _should_process_item would
+    definitely return False; there may be less clear cases that will be
+    reexamined.
+    """
+    # media_type_checked is not useful now that we track more specifically
+    remove_column(cursor, 'item', ['media_type_checked'])
+
+    # the difference between where it's currently -1 and None does not seem to
+    # provide useful information, so just dropping it
+    cursor.execute("UPDATE item SET duration=NULL WHERE duration == -1")
+
+    # the new system
+    cursor.execute("ALTER TABLE item ADD COLUMN mdp_state integer")
+
+    # setting mdp_state==State.RAN where we can be sure it's already been run:
+    cursor.execute("UPDATE item SET mdp_state=1 WHERE "
+            "(screenshot IS NOT NULL)")
+
+    # and marking State.SKIPPED where it can clearly be (has been) skipped:
+    cursor.execute("UPDATE item SET mdp_state=0 WHERE "
+            "file_type == 'other'")
+    cursor.execute("UPDATE item SET mdp_state=0 WHERE "
+            "(duration IS NOT NULL) AND file_type != 'video'")

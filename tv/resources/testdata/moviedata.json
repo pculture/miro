@@ -15,8 +15,7 @@
     },
     "mp3-0.mp3": {
         "file_type": "audio",
-        "duration": 1044,
-        "screenshot": null,
+        "duration": 1055,
         "album": "Increase The Dosage",
         "album_artist": null,
         "artist": "Revolution Void",
@@ -30,7 +29,7 @@
     "mp4-0.mp4": {
         "file_type": "video",
         "duration": 312379,
-        "screenshot": null,
+        "screenshot": false,
         "album": null,
         "album_artist": null,
         "artist": null,
@@ -43,8 +42,8 @@
     },
     "drm.m4v": {
         "file_type": "other",
-        "duration": -1,
-        "screenshot": null,
+        "duration": 2668832,
+        "screenshot": false,
         "album": "The Most Extreme, Season 1",
         "album_artist": "The Most Extreme",
         "artist": "The Most Extreme",

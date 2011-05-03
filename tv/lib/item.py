@@ -367,7 +367,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
         self.screenshot = None
-        self.media_type_checked = False
         self.resumeTime = 0
         self.channelTitle = None
         self.downloader_id = None
@@ -482,16 +481,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def next_10_incomplete_movie_data_view(cls):
+    def incomplete_mdp_view(cls, limit=10):
+        """Return up to limit local items that have not yet been examined with
+        MDP; a file is considered examined even if we have decided to skip it.
+        """
         return cls.make_view("(is_file_item OR (rd.state in ('finished', "
                 "'uploading', 'uploading-paused'))) AND "
-                '(duration IS NULL OR '
-                '(screenshot IS NULL AND file_type == "video") OR '
-                'NOT item.media_type_checked) AND '
-                'file_type != "other"',
-                (),
+                "mdp_state IS NULL", # State.UNSEEN
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                limit=10)
+                limit=limit)
 
     @classmethod
     def unique_others_view(cls):
@@ -828,8 +826,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     def set_filename(self, filename):
         self.filename = filename
-        if not self.media_type_checked:
-            self.file_type = filetypes.item_file_type_for_filename(filename)
 
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
@@ -1631,7 +1627,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """Returns the length of the video in seconds.
         """
         secs = None
-        if self.duration not in (-1, None):
+        if self.duration is not None:
             secs = self.duration / 1000
         return secs
 
@@ -1710,7 +1706,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.split_item()
         self.signal_change()
         self._replace_file_items()
-        self.check_media_file(signal_change=True)
+        self.check_media_file()
         signals.system.download_complete(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
@@ -1718,17 +1714,22 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             other.set_downloader(self.downloader)
         self.recalc_feed_counts()
 
-    def check_media_file(self, signal_change=True):
+    def check_media_file(self):
+        """Begin metadata extraction for this item; runs mutagen synchonously,
+        if applicable, and then adds the item to mdp's queue.
+        """
+        filename = self.get_filename()
+        self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
             self.read_metadata()
         except IOError:
             self.expire()
             return # OK to skip request_update only after expire()
-        if self.file_type is not None:
-            self.media_type_checked = True
         moviedata.movie_data_updater.request_update(self)
-        if signal_change:
-            self.signal_change()
+        if self.file_type is None:
+            # neither mutagen nor MDP could identify it
+            self.file_type = u'other'
+        self.signal_change()
 
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
@@ -1914,7 +1915,7 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        self.check_media_file(signal_change=False)
+        self.check_media_file()
         self.split_item()
 
     # FileItem downloaders are always None
@@ -2115,19 +2116,26 @@ def update_incomplete_movie_data():
     # signal.  Once it disconnects from the signal, we clean it up
 
 class IncompleteMovieDataUpdator(object):
+    """Finds local Items that have not been examined by MDP, and queues them.
+    """
+    BATCH_SIZE = 10
     def __init__(self):
-        self.do_some_updates()
         self.done = False
         self.handle = moviedata.movie_data_updater.connect('queue-empty',
                 self.on_queue_empty)
+        self.do_some_updates()
 
     def do_some_updates(self):
-        chunk = list(Item.next_10_incomplete_movie_data_view())
-        if chunk:
-            for item in chunk:
-                item.check_media_file()
-        else:
-            self.done = True
+        """Update some incomplete files, or set done=True if there are none.
+
+        Mutagen runs as part of the item creation process, so we need only check
+        whether MDP has examined a file here.
+        """
+        items_queued = 0
+        for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
+            item.check_media_file()
+            items_queued += 1
+        self.done = items_queued < self.BATCH_SIZE
 
     def on_queue_empty(self, movie_data_updator):
         if self.done:
@@ -2172,4 +2180,3 @@ def move_orphaned_items():
     if parentless_items:
         databaselog.info("Moved items to manual feed because their parent was "
                 "gone: %s", ', '.join(parentless_items))
-

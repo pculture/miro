@@ -11,10 +11,13 @@ from miro import moviedata
 from miro import metadata
 from miro import app
 from miro import models
+from miro import filetypes
 from miro.feed import Feed
 from miro.plat import resources
 from miro.plat import renderers
 from miro.fileobject import FilenameType
+
+import time
 
 moviedata.MOVIE_DATA_UTIL_TIMEOUT = 10 # shouldn't break any other tests
 renderers.init_renderer() # won't break other tests since nothing else touches
@@ -22,7 +25,11 @@ renderers.init_renderer() # won't break other tests since nothing else touches
 
 class Namespace(dict):
     __getattr__ = dict.__getitem__
-    __setattr__ = dict.__setitem__
+    def __setattr__(self, a, v):
+        if a in self.__dict__:
+            dict.__setattr__(self, a, v)
+        else:
+            dict.__setitem__(self, a, v)
     __delattr__ = dict.__delitem__
     __hasattr__ = dict.__contains__
 
@@ -36,6 +43,8 @@ class FakeItem(Namespace, metadata.Source):
         filename = resources.path(path.join('testdata', 'metadata', filename))
         self.__dict__['_filename'] = filename
         self.__dict__['id'] = 9999
+        self.mdp_state = None
+        self.file_type = None
 
     def get_filename(self): return self._filename
     def id_exists(self): return True
@@ -43,27 +52,34 @@ class FakeItem(Namespace, metadata.Source):
 
 class MovieDataTest(EventLoopTest):
     def setUp(self):
+        app.testing_mdp = True # hack to override moviedata's in_unit_tests hack
         EventLoopTest.setUp(self)
         self.mdu = moviedata.MovieDataUpdater()
 
-    def _make_mdi(self, item):
-        mdi = moviedata.MovieDataInfo(item)
-        del mdi._program_info # foil anti-testing measures
-        return mdi
+    def tearDown(self):
+        del app.testing_mdp
+        EventLoopTest.tearDown(self)
 
-    def mutagen_read_item(self, item):
+    def check_media_file(self, item):
+        # this is much like Item.check_media_file, be we don't want to catch any
+        # exceptions here
+        item.file_type = filetypes.item_file_type_for_filename(item._filename)
         item.read_metadata()
+        item.signal_change()
 
-    def mdu_read_item(self, item):
-        self.mdu.in_progress.add(item.id)
-        mdi = self._make_mdi(item)
-        self.mdu.process_with_movie_data_program(mdi)
+        self.assertTrue(self.mdu.queue.empty())
+        self.mdu.request_update(item)
+        if not self.mdu.queue.empty():
+            self.mdu.process_item()
         self.process_idles()
+        self.assertTrue(self.mdu.queue.empty())
+        if item.file_type is None:
+            item.file_type = u'other'
+        item.signal_change()
 
     def process_file(self, test):
         item = FakeItem(test)
-        self.mutagen_read_item(item)
-        self.mdu_read_item(item)
+        self.check_media_file(item)
         return item
 
     def test_media_with_mdp(self):
@@ -71,23 +87,24 @@ class MovieDataTest(EventLoopTest):
         expected_results = json.load(open(results_path))
         for filename, expected in expected_results.iteritems():
             actual = self.process_file(FilenameType(filename))
-            expected['media_type_checked'] = True
+            self.assertNotEqual(actual.mdp_state, None, filename)
+            del actual['mdp_state']
             expected['metadata_version'] = moviedata.METADATA_VERSION
             expected['test'], actual.test = filename, filename
             if hasattr(actual, 'cover_art'):
                 actual.cover_art = bool(actual.cover_art)
+            if hasattr(actual, 'screenshot'):
+                actual.screenshot = bool(actual.screenshot)
             expected = dict((str(k), v) for k, v in expected.iteritems())
-            actual.screenshot = actual.screenshot and bool(actual.screenshot)
             actual = dict(actual)
-            if actual != expected:
-                raise AssertionError("metadata wrong for %s "
-                        "actual: %s expected: %s" %
-                        (filename, actual, expected))
-            self.assertEqual(dict(actual), expected)
+            self.assertEqual(actual, expected)
+            assert actual == expected, ("metadata wrong for %s "
+                    "actual: %r expected: %r" % (filename, actual, expected))
 
 class MovieDataRequestTest(MiroTestCase):
     """Test when we choose to invoke our moviedata programs."""
     def setUp(self):
+        app.testing_mdp = True # hack to override moviedata's in_unit_tests hack
         MiroTestCase.setUp(self)
         self.feed = models.Feed(u'dtv:manualFeed')
         mp3_path = resources.path("testdata/metadata/mp3-0.mp3")
@@ -98,6 +115,10 @@ class MovieDataRequestTest(MiroTestCase):
         self.video_item = models.FileItem(webm_path, self.feed.id)
         self.other_item = models.FileItem(jpg_path, self.feed.id)
 
+    def tearDown(self):
+        del app.testing_mdp
+        MiroTestCase.tearDown(self)
+
     def signal_changes(self):
         self.audio_item.signal_change()
         self.video_item.signal_change()
@@ -107,10 +128,11 @@ class MovieDataRequestTest(MiroTestCase):
         # check MovieDataUpdater._should_process_item()
         mdu = moviedata.movie_data_updater
         self.assertEquals(mdu._should_process_item(item), should_run)
-        # check next_10_incomplete_movie_data_view
+        # check incomplete_mdp_view; this should be True for all items, since
+        # each needs to be marked as seen
         incomplete_view = set(
-                models.Item.next_10_incomplete_movie_data_view())
-        self.assertEquals(item in incomplete_view, should_run)
+                models.Item.incomplete_mdp_view())
+        self.assertEquals(item in incomplete_view, True)
 
     def check_path_processed(self, item, should_run):
         # Check if path_processed was called.  Note: this can only test based
@@ -161,12 +183,6 @@ class MovieDataRequestTest(MiroTestCase):
         self.signal_changes()
         self.check_will_run_moviedata(self.video_item, True)
         self.check_will_run_moviedata(self.audio_item, False)
-
-    def test_should_run_mutagen(self):
-        # we should run mutagen for audio and video items, but not others
-        self.assertEquals(self.video_item._should_run_mutagen(), True)
-        self.assertEquals(self.audio_item._should_run_mutagen(), True)
-        self.assertEquals(self.other_item._should_run_mutagen(), False)
 
 # FIXME
 # theora_with_ogg_extension test case expected to have a screenshot")

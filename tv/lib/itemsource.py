@@ -405,8 +405,7 @@ class SharingItemSource(ItemSource):
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
-            duration = (item.duration not in (-1, None) and
-                        item.duration or None),
+            duration = item.duration or None,
             resume_time = 0,
             permalink = item.permalink,
             commentslink = item.comments_link,
@@ -539,8 +538,7 @@ class DeviceItemSource(ItemSource):
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
-            duration = (item.duration not in (-1, None) and
-                        item.duration / 1000 or None),
+            duration = item.duration and item.duration / 1000,
             resume_time = 0,
             permalink = item.permalink,
             commentslink = item.comments_link,

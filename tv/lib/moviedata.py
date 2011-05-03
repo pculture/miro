@@ -37,6 +37,7 @@ import traceback
 import threading
 import Queue
 import logging
+from contextlib import contextmanager
 
 from miro import app
 from miro import prefs
@@ -50,6 +51,7 @@ from miro.filetags import METADATA_VERSION
 from miro.fileobject import FilenameType
 from miro.plat.utils import (movie_data_program_info,
                              thread_body)
+from miro.errors import Shutdown
 
 # Time in seconds that we wait for the utility to execute.  If it goes
 # longer than this, we assume it's hung and kill it.
@@ -62,6 +64,17 @@ DURATION_RE = re.compile("Miro-Movie-Data-Length: (\d+)")
 TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
+
+class State(object):
+    """Enum for tracking what we've looked at.
+    
+    None indicates that we haven't looked at the file at all;
+    non-true values indicate that we haven't run MDP.
+    """
+    UNSEEN = None
+    SKIPPED = 0
+    RAN = 1
+    FAILED = 2
 
 class MovieDataInfo(object):
     """Little utility class to keep track of data associated with each
@@ -85,10 +98,11 @@ class MovieDataInfo(object):
                                             util.random_string(5))
         self.thumbnail_path = os.path.join(self.image_directory('extracted'),
                                            thumbnail_filename)
-        if hasattr(app, 'in_unit_tests'):
+        if hasattr(app, 'in_unit_tests') and not hasattr(app, 'testing_mdp'):
             self._program_info = None
 
-    def _get_program_info(self):
+    @property
+    def program_info(self):
         try:
             return self._program_info
         except AttributeError:
@@ -101,8 +115,6 @@ class MovieDataInfo(object):
         command_line, env = movie_data_program_info(videopath, thumbnailpath)
         self._program_info = (command_line, env)
 
-    program_info = property(_get_program_info)
-
     @classmethod
     def image_directory(cls, subdir):
         dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
@@ -112,18 +124,16 @@ class MovieDataInfo(object):
             pass
         return dir_
 
+class ProcessHung(StandardError): pass
+
 class MovieDataUpdater(signals.SignalEmitter):
     def __init__ (self):
         signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop',
                 'queue-empty')
         self.in_shutdown = False
         self.in_progress = set()
-        self.queue = Queue.PriorityQueue()
+        self.queue = Queue.Queue()
         self.thread = None
-        self.media_order = ['audio', 'video', 'other']
-        self.total = {}
-        self.remaining = {}
-        self.retrying = set()
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
@@ -133,50 +143,82 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.thread.start()
 
     def process_with_movie_data_program(self, mdi):
-        screenshot_worked = False
-        screenshot = None
-
         command_line, env = mdi.program_info
-        stdout = self.run_movie_data_program(command_line, env)
+        try:
+            stdout = self.run_movie_data_program(command_line, env)
+        except StandardError:
+            # check whether it's actually a Shutdown error, then raise
+            if self.in_shutdown:
+                raise Shutdown
+            raise
 
         if TRY_AGAIN_RE.search(stdout):
             # FIXME: we should try again at some point, but right now we just
             # ignore this
-            return
+            pass
 
         duration = self.parse_duration(stdout)
-        mediatype = self.parse_type(stdout) or 'other'
-        if THUMBNAIL_SUCCESS_RE.search(stdout):
-            screenshot_worked = True
-        if ((screenshot_worked and
-             fileutil.exists(mdi.thumbnail_path))):
-            screenshot = mdi.thumbnail_path
+        if os.path.splitext(mdi.video_path)[1] == '.flv':
+            # bug #17266.  if the extension is .flv, we ignore the mediatype
+            # we just got from the movie data program.  this is
+            # specifically for .flv files which the movie data
+            # extractors have a hard time with.
+            mediatype = u'video'
+        else:
+            mediatype = self.parse_type(stdout)
+        screenshot = self.parse_screenshot(stdout, mdi)
 
         logging.debug("moviedata: mdp %s %s %s %s", duration, screenshot,
                 mediatype, mdi.video_path)
-        self.update_finished(mdi.item, duration, screenshot, mediatype)
+        return duration, screenshot, mediatype
+
+    @contextmanager
+    def looping(self):
+        """Simple contextmanager to ensure that whatever happens in a
+        thread_loop, we signal begin/end properly.
+        """
+        self.emit('begin-loop')
+        try:
+            yield
+        finally:
+            self.emit('end-loop')
 
     def thread_loop(self):
-        while not self.in_shutdown:
-            self.emit('begin-loop')
-            if self.queue.empty():
-                self.emit('queue-empty')
+        try:
+            while not self.in_shutdown:
+                with self.looping():
+                    self.process_item()
+        except Shutdown:
+            pass
+
+    def process_item(self):
+        try:
+            mdi = self.queue.get(block=False)
+        except Queue.Empty:
+            self.emit('queue-empty')
             mdi = self.queue.get(block=True)
-            if mdi is None or mdi.program_info is None:
-                # shutdown() was called or there's no moviedata
-                # implemented.
-                self.emit('end-loop')
-                break
-            try:
-                self.process_with_movie_data_program(mdi)
-            except StandardError:
-                if self.in_shutdown:
-                    break
-                signals.system.failed_exn(
-                    "When running external movie data program")
-            app.metadata_progress_updater.path_processed(
-                    mdi.video_path)
-            self.emit('end-loop')
+        # IMPORTANT: once we have popped an MDI off the queue, its mdp_state
+        # *must* be set (by update_finished or update_failed) unless we shut
+        # down before we could process it
+        if mdi is None:
+            raise Shutdown
+        if mdi.program_info is None:
+            # we should probably prevent this from ever happening, but right
+            # now it means we're in unit tests or the file has no path (when
+            # does that happen??)
+            self.update_failed(mdi.item)
+            # no point in calling path_processed() if path is None!
+            return
+        try:
+            results = self.process_with_movie_data_program(mdi)
+        except StandardError:
+            self.update_failed(mdi.item)
+            signals.system.failed_exn(
+                "When running external movie data program")
+        else:
+            self.update_finished(mdi.item, *results)
+        if hasattr(app, 'metadata_progress_updater'): # hack for unittests
+            app.metadata_progress_updater.path_processed(mdi.video_path)
 
     def run_movie_data_program(self, command_line, env):
         start_time = time.time()
@@ -195,14 +237,14 @@ class MovieDataUpdater(signals.SignalEmitter):
             if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
                 logging.warning("Movie data process hung, killing it")
                 self.kill_process(pipe)
-                return ''
+                raise ProcessHung
 
         if self.in_shutdown:
             if pipe.poll() is None:
                 logging.warning("Movie data process running after shutdown, "
                                 "killing it")
                 self.kill_process(pipe)
-            return ''
+            raise Shutdown
         # FIXME: should we do anything with stderr?
         movie_data_stdout.seek(0)
         return movie_data_stdout.read()
@@ -222,32 +264,45 @@ class MovieDataUpdater(signals.SignalEmitter):
         if duration_match:
             return int(duration_match.group(1))
         else:
-            return -1
+            return None
 
     def parse_type(self, stdout):
         type_match = TYPE_RE.search(stdout)
         if type_match:
-            return type_match.group(1)
+            return unicode(type_match.group(1))
         else:
             return None
+
+    def parse_screenshot(self, stdout, mdi):
+        if (THUMBNAIL_SUCCESS_RE.search(stdout) and
+                fileutil.exists(mdi.thumbnail_path)):
+            return mdi.thumbnail_path
+        else:
+            return None
+
+    @as_idle
+    def update_failed(self, item):
+        self.in_progress.remove(item.id)
+        if item.id_exists():
+            item.mdp_state = State.FAILED
+            item.signal_change()
 
     @as_idle
     def update_finished(self, item, duration, screenshot, mediatype):
         self.in_progress.remove(item.id)
         if item.id_exists():
+            item.mdp_state = State.RAN
             item.screenshot = screenshot
             if duration is not None:
                 item.duration = duration
             if mediatype is not None:
-                # bug #17266.  if the mediatype comes back as other,
-                # but the extension is .flv, we ignore the mediatype
-                # we just got from the movie data program.  this is
-                # specifically for .flv files which the movie data
-                # extractors have a hard time with.
-                if not (mediatype == u'other' and
-                        os.path.splitext(item.get_filename())[1] == '.flv'):
-                    item.file_type = unicode(mediatype)
-                item.media_type_checked = True
+                item.file_type = mediatype
+            item.signal_change()
+
+    @as_idle
+    def update_skipped(self, item):
+        if item.id_exists():
+            item.mdp_state = State.SKIPPED
             item.signal_change()
 
     def request_update(self, item):
@@ -261,20 +316,16 @@ class MovieDataUpdater(signals.SignalEmitter):
             self.in_progress.add(item.id)
             self.queue.put(MovieDataInfo(item))
         else:
+            self.update_skipped(item)
             app.metadata_progress_updater.path_processed(item.get_filename())
 
-    def _duration_unknown(self, item):
-        # FIXME: we should just be using 1 value for unknown.  I think that
-        # should be None
-        return item.duration is None or item.duration < 0
-
     def _should_process_item(self, item):
-        # don't process non-video/audio files
-        if filetypes.is_other_filename(item.get_filename()):
-            return False
-        # Only run the movie data program for video items, or audio items that
-        # we don't know the duration for.
-        return self._duration_unknown(item) or item.file_type == u'video'
+        # Only run the movie data program for video items, audio items that we
+        # don't know the duration for, or items that do not have "other"
+        # filenames that mutagen could not determine type for.
+        return (item.file_type == u'video' or
+                (item.file_type == u'audio' and item.duration is None) or
+                item.file_type is None)
 
     def shutdown(self):
         self.in_shutdown = True

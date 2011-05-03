@@ -29,7 +29,6 @@ class ContainerItemTest(MiroTestCase):
                 child.file_type = u'video'
             else:
                 child.file_type = u'other'
-            child.media_type_checked = True
             child.signal_change()
 
     def tearDown(self):

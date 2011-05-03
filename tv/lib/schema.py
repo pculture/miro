@@ -427,7 +427,6 @@ class ItemSchema(MultiClassObjectSchema):
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
         ('screenshot', SchemaFilename(noneOk=True)),
-        ('media_type_checked', SchemaBool()),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
         ('license', SchemaString(noneOk=True)),
@@ -450,6 +449,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
         ('cover_art', SchemaFilename(noneOk=True)),
+        ('mdp_state', SchemaInt(noneOk=True)),
         # metadata:
         ('metadata_version', SchemaInt()),
         ('title', SchemaString(noneOk=True)),
@@ -780,7 +780,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 155
+VERSION = 156
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

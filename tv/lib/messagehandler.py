@@ -1865,7 +1865,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             fi.license = item_info.license
             if item_info.file_url:
                 fi.url = item_info.file_url
-            fi.media_type_checked = item_info.media_type_checked
             fi.mime_type = item_info.mime_type
             fi.creationTime = item_info.date_added
             fi.title_tag = item_info.title_tag

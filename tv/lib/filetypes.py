@@ -256,11 +256,12 @@ def guess_mime_type(filename):
 def item_file_type_for_filename(filename):
     """Returns an item file_type derived from the filename extension.
 
-    :returns: u'video', u'audio', or u'other'
+    :returns: u'video', u'audio', u'other', or None
     """
     name, ext = os.path.splitext(filename)
     if ext in VIDEO_EXTENSIONS:
         return u'video'
     if ext in AUDIO_EXTENSIONS:
         return u'audio'
-    return u'other'
+    if ext in OTHER_EXTENSIONS:
+        return u'other'

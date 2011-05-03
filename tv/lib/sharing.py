@@ -157,7 +157,7 @@ class SharingItem(metadata.Source):
                                 % required)
         self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
-        self.keep = self.media_type_checked = True
+        self.keep = True
         self.isContainerItem = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
