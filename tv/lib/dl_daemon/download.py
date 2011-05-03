@@ -1241,17 +1241,18 @@ class BTDownloader(BGDownloader):
         self.update_fast_resume_data()
 
     def update_fast_resume_data(self, force=False):
+        if ((self.torrent is None or
+             not self.torrent.has_metadata() or
+             not self.info_hash)):
+            return
+
         if BTDownloader.FRD_PROBLEMS >= 5:
             # if we've hit 5 problems, we don't keep trying
             return
 
-        if not self.info_hash:
-            return
-
         time_now = time.time()
-        if(not self.torrent.has_metadata() or
-          (not force and time_now < (
-               self._last_frd_update + FRD_UPDATE_LIMIT))):
+        if ((not force and
+             time_now < (self._last_frd_update + FRD_UPDATE_LIMIT))):
             return
         self._last_frd_update = time_now
 
