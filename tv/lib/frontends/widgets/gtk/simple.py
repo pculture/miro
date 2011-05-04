@@ -86,6 +86,8 @@ class Image(object):
 
 class TransformedImage(Image):
     def __init__(self, pixbuf):
+        # XXX intentionally not calling direct super's __init__; we should do
+        # this differently
         self._set_pixbuf(pixbuf)
 
 class ImageDisplay(Widget):

@@ -190,7 +190,7 @@ gobject.type_register(GtkVideoSearchTextEntry)
 class VideoSearchTextEntry(SearchTextEntry):
     entry_class = GtkVideoSearchTextEntry
     def __init__(self):
-        controls.TextEntry.__init__(self)
+        SearchTextEntry.__init__(self)
         self.wrapped_widget_connect('key-release-event', self.on_key_release)
 
     def on_key_release(self, widget, event):

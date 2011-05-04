@@ -185,6 +185,7 @@ class CustomDrawingMixin(object):
 class MiroDrawingArea(CustomDrawingMixin, gtk.Widget):
     def __init__(self):
         gtk.Widget.__init__(self)
+        CustomDrawingMixin.__init__(self)
         self.set_flags(gtk.NO_WINDOW)
 
 class BackgroundWidget(CustomDrawingMixin, gtk.Bin):

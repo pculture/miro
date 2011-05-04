@@ -111,6 +111,7 @@ class DragableCustomButtonWidget(CustomButtonWidget):
 
 class CustomScaleMixin(CustomControlMixin):
     def __init__(self):
+        CustomControlMixin.__init__(self)
         self.in_drag = False
         self.drag_inbounds = False
         self.drag_button = None

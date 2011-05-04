@@ -151,6 +151,7 @@ class Checkbox(Widget, BinBaselineCalculator):
 
     def __init__(self, label=None):
         Widget.__init__(self)
+        BinBaselineCalculator.__init__(self)
         self.set_widget(gtk.CheckButton(label))
         self.create_signal('toggled')
         self.forward_signal('toggled')
@@ -185,6 +186,7 @@ class RadioButtonGroup(Widget, BinBaselineCalculator):
     """
     def __init__(self):
         Widget.__init__(self)
+        BinBaselineCalculator.__init__(self)
         self.set_widget(gtk.RadioButton(label=""))
         self._widget.set_active(False)
         self._buttons = []
@@ -211,6 +213,7 @@ class RadioButton(Widget, BinBaselineCalculator):
     """RadioButton."""
     def __init__(self, label, group=None):
         Widget.__init__(self)
+        BinBaselineCalculator.__init__(self)
         if group:
             self.group = group
         else:
@@ -234,6 +237,7 @@ class RadioButton(Widget, BinBaselineCalculator):
 class Button(Widget, BinBaselineCalculator):
     def __init__(self, text, style='normal', width=None):
         Widget.__init__(self)
+        BinBaselineCalculator.__init__(self)
         # We just ignore style here, GTK users expect their own buttons.
         self.set_widget(gtk.Button())
         self.create_signal('clicked')
