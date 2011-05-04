@@ -1868,8 +1868,7 @@ class TorrentInfoWidget(widgetset.Background):
         context.gradient_fill(gradient)
 
     def set_info(self, info):
-        self.should_show = (info.download_info and info.download_info.torrent
-                and info.state in ('downloading', 'uploading'))
+        self.should_show = self._calc_should_show(info)
         if not self.should_show:
             return
 
@@ -1889,6 +1888,13 @@ class TorrentInfoWidget(widgetset.Background):
                 info.download_info.eta))
         self.down_total.set_text(displaytext.size_string(info.down_total))
         self.up_total.set_text(displaytext.size_string(info.up_total))
+
+    def _calc_should_show(self, info):
+        """Decide if we should show ourselves for an ItemInfo."""
+        if info.download_info is None:
+            return False
+        return (info.download_info.torrent and 
+                info.download_info.state in ('downloading', 'uploading'))
 
 class ItemDetailsWidget(widgetset.VBox):
     """Widget to display detailed information about an item.
