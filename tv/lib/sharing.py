@@ -1160,6 +1160,7 @@ class SharingManager(object):
         self.discoverable = False
         self.name = ''
         self.mdns_present = libdaap.mdns_init()
+        self.reload_done_event = threading.Event()
         self.mdns_callback = None
         self.callback_handle = app.backend_config_watcher.connect('changed',
                                self.on_config_changed)
@@ -1193,6 +1194,7 @@ class SharingManager(object):
                        prefs.SHARE_NAME.key]
         if not key in listen_keys:
             return
+        logging.debug('twiddle_sharing: invoked due to configuration change.')
         self.twiddle_sharing()
 
     def twiddle_sharing(self):
@@ -1264,16 +1266,25 @@ class SharingManager(object):
         # being advertised, then the server loop is already running in
         # the select() loop and won't know that we need to process the
         # registration.
+        logging.debug('enabling discover ...')
         self.w.send(SharingManager.CMD_NOP)
+        # Wait for the reload to finish.
+        self.reload_done_event.wait()
+        self.reload_done_event.clear()
+        logging.debug('discover enabled.')
 
     def disable_discover(self):
         self.discoverable = False
-        if self.mdns_callback:
-            old_callback = self.mdns_callback
-            self.mdns_callback = None
-            libdaap.mdns_unregister_service(old_callback)
+        # Wait for the mdns unregistration to finish.
+        logging.debug('disabling discover ...')
+        self.w.send(SharingManager.CMD_NOP)
+        self.reload_done_event.wait()
+        self.reload_done_event.clear()
+        logging.debug('discover disabled.')
 
     def server_thread(self):
+        # Let caller know that we have started.
+        self.reload_done_event.set()
         server_fileno = self.server.fileno()
         while True:
             try:
@@ -1301,9 +1312,15 @@ class SharingManager(object):
                         if cmd == SharingManager.CMD_QUIT:
                             del self.thread
                             del self.server
+                            self.reload_done_event.set()
                             return
                         elif cmd == SharingManager.CMD_NOP:
                             logging.debug('sharing: reload')
+                            if not self.discoverable and self.mdns_callback:
+                                old_callback = self.mdns_callback
+                                self.mdns_callback = None
+                                libdaap.mdns_unregister_service(old_callback)
+                            self.reload_done_event.set()
                             continue
                         else:
                             raise 
@@ -1355,6 +1372,10 @@ class SharingManager(object):
                                        name='DAAP Server Thread')
         self.thread.daemon = True
         self.thread.start()
+        logging.debug('waiting for server to start ...')
+        self.reload_done_event.wait()
+        self.reload_done_event.clear()
+        logging.debug('server startd.')
         self.sharing = True
 
         return self.sharing
@@ -1362,9 +1383,17 @@ class SharingManager(object):
     def disable_sharing(self):
         self.sharing = False
         # What to do in case of socket error here?
+        logging.debug('waiting for server to stop ...')
         self.w.send(SharingManager.CMD_QUIT)
+        self.reload_done_event.wait()
+        self.reload_done_event.clear()
+        logging.debug('server stopped.')
 
     def shutdown(self):
+        eventloop.add_urgent_call(self.shutdown_callback,
+                                  'sharing shutdown backend call')
+
+    def shutdown_callback(self):
         if self.sharing:
             if self.discoverable:
                 self.disable_discover()
