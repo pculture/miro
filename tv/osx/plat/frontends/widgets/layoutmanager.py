@@ -429,7 +429,8 @@ class StyledButton(object):
         x = x + self.PAD_HORIZONTAL
         y = y + (c_height - t_height) / 2
         if self.image is not None:
-            self.image.drawAtPoint_fromRect_operation_fraction_(NSPoint(x, y+3), NSZeroRect, NSCompositeSourceOver, 1.0)
+            self.image.drawAtPoint_fromRect_operation_fraction_(
+                NSPoint(x, y+3), NSZeroRect, NSCompositeSourceOver, 1.0)
             x += self.image.size().width + self.ICON_PAD
         else:
             y += 0.5
