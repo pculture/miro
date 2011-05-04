@@ -130,9 +130,16 @@ class ItemContextMenuHandler(object):
                 section = []
 
             # Play
-            section.append((_('Play'), app.widgetapp.play_selection))
+            play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
+            playing_item = app.playback_manager.get_playing_item()
+            is_paused = app.playback_manager.is_paused
+
+            if item != playing_item or (item == playing_item and is_paused):
+                section.append((_('Play'), app.widgetapp.play_selection))
+            else:
+                section.append((_('Pause'), app.playback_manager.play_pause))
             # Resume
-            if item.resume_time > 0:
+            if play_in_miro and item != playing_item and item.resume_time > 0:
                 resumetime = displaytext.short_time_string(item.resume_time)
                 text = _("Resume at %(resumetime)s",
                          {"resumetime": resumetime})
@@ -146,12 +153,12 @@ class ItemContextMenuHandler(object):
                     section.append((_('Mark as Played'),
                         messages.MarkItemWatched(item).send_to_backend))
 
-            if not item.remote:
-                if app.config.get(prefs.PLAY_IN_MIRO):
-                    section.append((
-                            _('Play Just This Item'),
-                            lambda: app.playback_manager.start_with_items(
-                                [item])))
+            if item != playing_item and play_in_miro:
+                section.append((
+                        _('Play Just This Item'),
+                        lambda: app.playback_manager.start_with_items(
+                            [item])))
+                if not item.remote:
                     section.append((_('Play Externally'), play_externally))
 
             if section:

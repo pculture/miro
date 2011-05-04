@@ -1195,9 +1195,13 @@ class ItemListControllerManager(object):
         key = self._key_for_controller(item_list_controller)
         del self.controllers[key]
 
-    def play_selection(self, presentation_mode='fit-to-bounds'):
+    def resume_play_selection(self, presentation_mode='fit-to-bounds'):
+        self.play_selection(presentation_mode, force_resume=True)
+
+    def play_selection(self, presentation_mode='fit-to-bounds',
+                       force_resume=False):
         if self.displayed is not None:
-            self.displayed.play_selection(presentation_mode)
+            self.displayed.play_selection(presentation_mode, force_resume)
 
     def get_selection(self):
         if self.displayed is None:
