@@ -467,6 +467,9 @@ class build(distutils.command.build.build):
         cc.add_library('avutil')
         cc.add_library('avformat')
         cc.add_library('avcodec')
+        # Fedora places ffmpeg include into this directory rather than
+        # root /usr/include.
+        cc.add_include_dir('/usr/include/ffmpeg')
         output_dir = os.path.join(self.build_base, 'miro-segmenter')
         segmenter_objs = cc.compile([segmenter_src],
                                     output_dir=output_dir)
