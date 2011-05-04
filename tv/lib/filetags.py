@@ -221,6 +221,16 @@ def _make_cover_art_file(track_path, objects):
     path = cover_image.write_to_file(track_path)
     return path
 
+MUTAGEN_ERRORS = None
+def _setup_mutagen_errors():
+    from mutagen import (apev2, asf, flac, id3, m4a, mp3, mp4, oggflac, ogg,
+            oggspeex, oggtheora, oggvorbis, trueaudio, _vorbis)
+    global MUTAGEN_ERRORS
+    MUTAGEN_ERRORS = (apev2.error, asf.error, flac.error, id3.error, m4a.error,
+            mp3.error, mp4.error, oggflac.error, ogg.error, oggspeex.error,
+            oggtheora.error, oggvorbis.error, trueaudio.error, _vorbis.error)
+_setup_mutagen_errors()
+
 def read_metadata(filename, test=False):
     """This is the external interface of the filetags module. Given a filename,
     this function returns a tuple of (mediatype [a string], duration [integer
@@ -235,37 +245,62 @@ def read_metadata(filename, test=False):
     mutagen object in a different wrapper subclass, with all the wrappers
     sharing a common interface. --KCW
     """
-    mediatype = None
-    duration = -1
-    cover_art = None
-    tags = {}
-    info = {}
-    data = {}
-
     try:
         muta = mutagen.File(filename)
-        meta = muta.__dict__
-    except (ArithmeticError, MemoryError):
-        # mutagen doesn't catch these errors internally
-        logging.warn("malformed file: %s", filename)
-        return (mediatype, duration, data, cover_art)
-    except (AttributeError, IOError):
-        return (mediatype, duration, data, cover_art)
+    except MUTAGEN_ERRORS:
+        # most likely just unsupported format or file with no metadata
+        pass
+    except IOError:
+        # important to catch MUTAGEN_ERRORS before this - mutagen has IOError
+        # subclasses that have nothing to do with I/O, but they also subclass
+        # MUTAGEN_ERRORS types.
+        logging.error("mutagen: IOError for file: %s", filename, exc_info=True)
+    except MemoryError:
+        # apparently mutagen raises this for
+        # mozilla/content/media/test/bug504644.ogv in the XULRunner source;
+        # I find that extremely disconcerting
+        logging.error("mutagen: MemoryError - may be bad file?: %s", filename,
+                exc_info=True)
+    except EOFError:
+        # probably incomplete, so this should be rare!
+        logging.warn("mutagen: incomplete file?: %s", filename, exc_info=True)
     except struct.error:
-        logging.warn("read_metadata on incomplete file: %s", filename)
-        return (mediatype, duration, data, cover_art)
+        # probably incomplete, so this should be rare!
+        logging.warn("mutagen: incomplete file?: %s", filename, exc_info=True)
+    except ArithmeticError:
+        # likely malformed, though possibly incomplete
+        logging.warn("mutagen: malformed file?: %s", filename)
+    except AttributeError:
+        # definitely a mutagen bug, likely poor handling of bad file
+        logging.debug("mutagen bug; possible malformed file: %s", filename,
+                exc_info=True)
+    except UnicodeDecodeError: #17257
+        # probably bad encoding in file or mutagen bug
+        logging.debug("mutagen: bad encoding: %s", filename)
+    except StandardError:
+        # unknown error; soft fail because I think we should identify the error
+        # types mutagen can raise - some of them hint as to what went wrong
+        app.widgetapp.handle_soft_failure("mutagen",
+                "unexpected Exception type in mutagen.File", with_exception=True)
+    else:
+        if muta:
+            return _parse_mutagen(filename, muta, test)
 
+def _parse_mutagen(filename, muta, test):    
+    meta = muta.__dict__
     tags = meta['tags']
     if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
         tags = tags.__dict__['_DictProxy__dict']
     tags = tags or {}
 
+    info = {}
     if hasattr(muta, 'info'):
         info = muta.info.__dict__
 
     duration = _get_duration(muta, info)
     mediatype = _get_mediatype(muta, filename, info, tags)
 
+    data = {}
     for file_tag, value in tags.iteritems():
         try:
             file_tag = _sanitize_key(file_tag)
@@ -292,6 +327,7 @@ def read_metadata(filename, test=False):
         if guessed_track:
             data['track'] = guessed_track
 
+    cover_art = None
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures
         if test:
@@ -305,4 +341,4 @@ def read_metadata(filename, test=False):
         else:
             cover_art = _make_cover_art_file(filename, image_data)
         del data['cover_art']
-    return (mediatype, duration, data, cover_art)
+    return mediatype, duration, data, cover_art

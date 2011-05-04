@@ -98,35 +98,37 @@ class Source(object):
         return self.description
 
     def read_metadata(self):
+        # always mark the file as seen
+        self.metadata_version = filetags.METADATA_VERSION
+
         if not self._should_run_mutagen():
             self.file_type = u'other'
             self.media_type_checked = True
             return
 
         rv = filetags.read_metadata(self.get_filename())
-        (mediatype, duration, metadata, cover_art) = rv
-        if mediatype is not None:
-            self.file_type = mediatype
-            # FIXME: duration isn't actually a attribute of metadata.Source.
-            # This currently works because Item and Device item are the only
-            # classes that call read_metadata(), and they both define duration
-            # the same way.
-            #
-            # But this is pretty fragile.  We should probably refactor
-            # duration to be an attribute of metadata.Source.
-            self.duration = duration
-            self.cover_art = cover_art
-            self.album = metadata.get('album', None)
-            self.album_artist = metadata.get('album_artist', None)
-            self.artist = metadata.get('artist', None)
-            self.title_tag = metadata.get('title', None)
-            self.track = metadata.get('track', None)
-            self.year = metadata.get('year', None)
-            self.genre = metadata.get('genre', None)
-            self.has_drm = metadata.get('drm', False)
-        # set metadata_version even if mutagen failed.  We don't want to keep
-        # re-invoking it.
-        self.metadata_version = filetags.METADATA_VERSION
+        if not rv:
+            return
+
+        mediatype, duration, metadata, cover_art = rv
+        self.file_type = mediatype
+        # FIXME: duration isn't actually a attribute of metadata.Source.
+        # This currently works because Item and Device item are the only
+        # classes that call read_metadata(), and they both define duration
+        # the same way.
+        #
+        # But this is pretty fragile.  We should probably refactor
+        # duration to be an attribute of metadata.Source.
+        self.duration = duration
+        self.cover_art = cover_art
+        self.album = metadata.get('album', None)
+        self.album_artist = metadata.get('album_artist', None)
+        self.artist = metadata.get('artist', None)
+        self.title_tag = metadata.get('title', None)
+        self.track = metadata.get('track', None)
+        self.year = metadata.get('year', None)
+        self.genre = metadata.get('genre', None)
+        self.has_drm = metadata.get('drm', False)
 
     def _should_run_mutagen(self):
         return not filetypes.is_other_filename(self.get_filename())

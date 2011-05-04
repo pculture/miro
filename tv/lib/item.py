@@ -1719,7 +1719,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.recalc_feed_counts()
 
     def check_media_file(self, signal_change=True):
-        self.read_metadata()
+        try:
+            self.read_metadata()
+        except IOError:
+            self.expire()
+            return # OK to skip request_update only after expire()
         if self.file_type is not None:
             self.media_type_checked = True
         moviedata.movie_data_updater.request_update(self)
