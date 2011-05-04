@@ -214,3 +214,5 @@ class Trayicon(gtk.StatusIcon):
             self._hide_window()
         else:
             self._show_window()
+
+gobject.type_register(Trayicon)
