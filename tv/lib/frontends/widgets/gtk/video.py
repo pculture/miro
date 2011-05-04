@@ -648,17 +648,21 @@ class VideoPlayer(player.Player, VBox):
             else:
                 # figures out the monitor that miro is fullscreened on and
                 # gets the monitor geometry for that.
-                if app.playback_manager.detached_window is not None:
-                    gtkwindow = app.playback_manager.detached_window._window
-                else:
-                    gtkwindow = app.widgetapp.window._window
-                gdkwindow = gtkwindow.window
-                screen = gtkwindow.get_screen()
+                # if app.playback_manager.detached_window is not None:
+                    # gtkwindow = app.playback_manager.detached_window._window
+                # else:
+                    # gtkwindow = app.widgetapp.window._window
+                # gdkwindow = gtkwindow.window
+                # screen = gtkwindow.get_screen()
 
-                monitor = screen.get_monitor_at_window(gdkwindow)
-                monitor_geom = screen.get_monitor_geometry(monitor)
-                if event.y > monitor_geom.height - 200:
-                    show_it_all = True
+                # monitor = screen.get_monitor_at_window(gdkwindow)
+                # monitor_geom = screen.get_monitor_geometry(monitor)
+                # if event.y > monitor_geom.height - 200:
+                    # show_it_all = True
+
+                # Hack to fix #17213.  Eventually we should remove this and
+                # uncomment the code above to implement #8655
+                show_it_all = True
 
             if show_it_all:
                 self.show_controls()
