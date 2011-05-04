@@ -111,8 +111,10 @@ class Widget(signals.SignalEmitter):
         self.emit('size-allocated', allocation.width, allocation.height)
 
     def on_key_press(self, widget, event):
-        key, modifiers = keymap.translate_gtk_event(event)
-        return self.emit('key-press', key, modifiers)
+        key_modifiers = keymap.translate_gtk_event(event)
+        if key_modifiers:
+            key, modifiers = key_modifiers
+            return self.emit('key-press', key, modifiers)
 
     def on_focus_out(self, widget, event):
         self.emit('focus-out')
