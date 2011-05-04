@@ -96,6 +96,7 @@ class FilenameType(PlatformFilenameType):
         # remove handler and args which cause FilenameType to be
         # un-pickle-able.
         d = dict(self.__dict__)
-        del d["handler"]
-        del d["args"]
+        for mem in ("handler", "args"):
+            if mem in d:
+                del d[mem]
         return d
