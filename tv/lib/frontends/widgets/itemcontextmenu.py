@@ -153,13 +153,14 @@ class ItemContextMenuHandler(object):
                     section.append((_('Mark as Played'),
                         messages.MarkItemWatched(item).send_to_backend))
 
-            if item != playing_item and play_in_miro:
+            # XXX "Play Just This Item" does not work for shared items
+            # and not quite sure why at this moment.
+            if not item.remote and item != playing_item and play_in_miro:
                 section.append((
                         _('Play Just This Item'),
                         lambda: app.playback_manager.start_with_items(
                             [item])))
-                if not item.remote:
-                    section.append((_('Play Externally'), play_externally))
+                section.append((_('Play Externally'), play_externally))
 
             if section:
                 menu_sections.append(section)
