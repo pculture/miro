@@ -182,9 +182,9 @@ class ThemeHistory(DDBObject):
 
         default_guides = [
             (u"http://www.youtube.com", u"YouTube", False),
-            (u"http://www.youtorrent.com/", u"YouTorrent", False),
             (u"http://www.hulu.com/", u"Hulu", False),
             (u"http://video.pbs.org/", u"PBS", False),
+            (u"http://www.youtorrent.com/", u"YouTorrent", False),
             (u"http://www.clearbits.net/", u"ClearBits", False),
             (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
              'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
