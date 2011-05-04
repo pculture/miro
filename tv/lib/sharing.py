@@ -1280,6 +1280,9 @@ class SharingManager(object):
         self.w.send(SharingManager.CMD_NOP)
         self.reload_done_event.wait()
         self.reload_done_event.clear()
+        # If we were trying to register a name change but disabled mdns
+        # discovery in between make sure we do not wedge the sharing tracker.
+        app.sharing_tracker.resume()
         logging.debug('discover disabled.')
 
     def server_thread(self):
@@ -1375,7 +1378,7 @@ class SharingManager(object):
         logging.debug('waiting for server to start ...')
         self.reload_done_event.wait()
         self.reload_done_event.clear()
-        logging.debug('server startd.')
+        logging.debug('server started.')
         self.sharing = True
 
         return self.sharing
