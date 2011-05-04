@@ -1679,7 +1679,10 @@ class SavedSearchFeedImpl(RSSMultiFeedBase):
 
     def default_thumbnail_path(self):
         info = searchengines.get_engine_for_name(self.engine)
-        return searchengines.icon_path_for_engine(info)
+        if info:
+            return searchengines.icon_path_for_engine(info)
+        else:
+            return resources.path('images/icon-podcast-small.png')
 
     def setup_restored(self):
         self.parse_url(self.url)
