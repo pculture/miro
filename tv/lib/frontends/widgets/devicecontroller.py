@@ -753,9 +753,12 @@ class UnknownDeviceView(widgetset.VBox):
             buttons_to_device_name[button] = device_name
 
         def _clicked(*args):
+            selected_button = rbg.get_selected()
+            if selected_button is None:
+                return # user didn't actually select a device
             messages.SetDeviceType(
                 self.device,
-                buttons_to_device_name[rbg.get_selected()]).send_to_backend()
+                buttons_to_device_name[selected_button]).send_to_backend()
 
         select = widgetset.Button(_('This is my device'))
         select.connect('clicked', _clicked)
