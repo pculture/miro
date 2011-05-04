@@ -114,7 +114,7 @@ class DeviceTracker(object):
         if device['volume'] not in self._connected:
             # device was removed
             return
-        if os.path.exists(device['future_mount']):
+        if 'future_mount' in device and os.path.exists(device['future_mount']):
             device['mount'] = device['future_mount']
             del device['future_mount']
             self._device_changed(device)
