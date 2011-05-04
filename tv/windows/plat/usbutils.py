@@ -31,6 +31,8 @@ import logging
 import ctypes, ctypes.wintypes
 import _winreg
 
+import os
+
 LOTS_OF_DEBUGGING = False
 
 def warn(what, code, message):
@@ -169,11 +171,29 @@ def get_path_name(volume):
                                               255, ctypes.byref(length))
     return buffer.value
 
+def read_write_drive(mount):
+    """
+    Checks if the given mount path is read write.
+    """
+    if not os.path.exists(mount):
+        return False
+    path_to_check = os.path.join(mount, '.miro')
+    if os.path.exists(path_to_check) and os.access(path_to_check, os.W_OK):
+        return True
+    try:
+        os.mkdir(path_to_check)
+    except OSError:
+        return False
+    return True
+
+        
+
 def connected_devices():
     """
     Returns a generator which returns small dictionaries of data
     representing the connected USB storage devices.
     """
+    drive_names = set()
     get_class_devs() # reset the device class to pick up all devices
     interface_index = 0
     while True:
@@ -236,6 +256,16 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
             'mount': drive_name,
             'name': friendly_name,
             }
+        if drive_name:
+            drive_names.add(drive_name[0])
+    for letter in sorted(set('DEFGHIJKLMNOPQRSTUVWXYZ') - drive_names):
+        mount = u'%s:\\' % letter
+        if read_write_drive(mount):
+            yield {
+                'volume': u'fake-volume-%s' % letter,
+                'mount': mount,
+                'name': 'Drive %s:' % letter
+                }
 
 if __name__ == '__main__':
     for d in connected_devices():
