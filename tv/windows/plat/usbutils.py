@@ -204,25 +204,33 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
         if LOTS_OF_DEBUGGING:
             logging.debug('volume/drive name: %r/%r',
                           volume_name, drive_name)
-        with _winreg.OpenKey(
-            _winreg.HKEY_LOCAL_MACHINE,
-            'SYSTEM\\CurrentControlSet\\Enum\\%s' % reg_key) as k:
-            # pull the USB Name out of the registry
-            index = 0
-            friendly_name = None
-            while True:
-                try:
-                    name, value, type_ = _winreg.EnumValue(k, index)
-                except WindowsError:
-                    break
-                if name == 'FriendlyName':
-                    # blah blah USB Device
-                    friendly_name = value[:-len(' USB Device')]
-                    break
-                else:
-                    index += 1
-            if not friendly_name:
-                continue
+        friendly_name = None
+        try:
+            with _winreg.OpenKey(
+                _winreg.HKEY_LOCAL_MACHINE,
+                'SYSTEM\\CurrentControlSet\\Enum\\%s' % reg_key) as k:
+                # pull the USB Name out of the registry
+                index = 0
+                while True:
+                    try:
+                        name, value, type_ = _winreg.EnumValue(k, index)
+                    except WindowsError:
+                        break
+                    if name == 'FriendlyName':
+                        # blah blah USB Device
+                        friendly_name = value[:-len(' USB Device')]
+                        break
+                    else:
+                        index += 1
+        except WindowsError:
+            from miro import app
+            app.controller.failed_soft(
+                'scanning connected devices',
+                'could not open registry key %r (from %r/%r)' % (
+                    reg_key, path, device_id),
+                with_exception=True)
+        if not friendly_name:
+            continue
         yield {
             'volume': volume_name,
             'mount': drive_name,
