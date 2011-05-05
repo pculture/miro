@@ -601,7 +601,7 @@ class DeviceMountedView(widgetset.VBox):
 
         self.button_row.set_active('main')
         self.pack_start(widgetutil.align_center(
-                        self.button_row.make_widget()))
+                        self.button_row.make_widget(), top_pad=50))
 
         self.tabs = {}
         self.tab_container = widgetset.Background()

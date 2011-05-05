@@ -742,10 +742,14 @@ class DeviceTabListHandler(object):
         info.type = u'device'
         info.unwatched = info.available = 0
         if not getattr(info, 'fake', False):
-            info.icon = imagepool.get_surface(
-                resources.path('images/icon-device.png'))
-            info.active_icon = imagepool.get_surface(
-                resources.path('images/icon-device_active.png'))
+            if getattr(info, 'generic', True):
+                info.icon = imagepool.get_surface(resources.path(
+                    'images/hard-drive.png'))
+            else:
+                info.icon = imagepool.get_surface(
+                    resources.path('images/icon-device.png'))
+                info.active_icon = imagepool.get_surface(
+                    resources.path('images/icon-device_active.png'))
             if getattr(info, 'is_updating', False):
                 self.tablist.start_updating(info.id)
             else:
