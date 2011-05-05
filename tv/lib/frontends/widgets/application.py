@@ -57,6 +57,7 @@ from miro import signals
 from miro import messages
 from miro import eventloop
 from miro import conversions
+from miro import filetypes
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
@@ -66,7 +67,7 @@ from miro.frontends.widgets import newfolder
 from miro.frontends.widgets import newwatchedfolder
 from miro.frontends.widgets import itemedit
 from miro.frontends.widgets import addtoplaylistdialog
-from miro.frontends.widgets import addfilesdialog
+from miro.frontends.widgets import searchfilesdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
@@ -87,6 +88,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.utils import get_plat_media_player_name_path
+from miro.plat import resources
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
 from miro import fileutil
@@ -645,6 +647,38 @@ class Application:
         url = newfeed.run_dialog()
         if url is not None:
             messages.NewFeed(url).send_to_backend()
+
+    def import_search_all_my_files(self):
+        # opens search files dialog with the default search dir
+        dir_ = resources.get_default_search_dir()
+        searchfilesdialog.SearchFilesDialog(dir_).run()
+
+    def import_search_in_folder(self):
+        # opens a dialog asking the user to select a folder
+        # and then it opens the search files dialog and
+        # searches that folder.
+        dir_ = dialogs.ask_for_directory(
+            _("Choose directory to search for media files"),
+            initial_directory=resources.get_default_search_dir())
+
+        if dir_:
+            searchfilesdialog.SearchFilesDialog(dir_).run()
+
+    def import_choose_files(self):
+        # opens dialog allowing you to choose files and folders
+        audio_extensions = [mem.replace(".", "")
+                            for mem in filetypes.AUDIO_EXTENSIONS]
+        video_extensions = [mem.replace(".", "")
+                            for mem in filetypes.VIDEO_EXTENSIONS]
+        files_ = dialogs.ask_for_open_pathname(
+            _("Choose files to import"),
+            filters=[
+                (_("Video Files"), video_extensions),
+                (_("Audio Files"), audio_extensions)
+                ],
+            select_multiple=True)
+
+        messages.AddFiles(files_).send_to_backend()
 
     def add_new_watched_folder(self):
         ret = newwatchedfolder.run_dialog()

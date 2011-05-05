@@ -215,8 +215,20 @@ def get_menu():
             Menu(_("_File"), "FileMenu", [
                     MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
                              groups=["NonPlaying"]),
-                    MenuItem(_("Add files or folders..."), "AddFiles",
-                             groups=["NonPlaying"]),
+                    Menu(_("Import"), "Import", [
+                            MenuItem(_("Search all my Files..."),
+                                     "SearchAllMyFiles",
+                                     groups=["NonPlaying"]),
+                            MenuItem(_("Search in a Folder..."),
+                                     "SearchInAFolder",
+                                     groups=["NonPlaying"]),
+                            MenuItem(_("Watch a Folder..."),
+                                     "WatchAFolder",
+                                     groups=["NonPlaying"]),
+                            MenuItem(_("Choose Files...."),
+                                     "ChooseFiles",
+                                     groups=["NonPlaying"]),
+                            ]),
                     Separator(),
                     MenuItem(_("Download from a URL"), "NewDownload",
                              groups=["NonPlaying"]),
@@ -250,8 +262,6 @@ def get_menu():
                              groups=["NonPlaying"]),
                     MenuItem(_("_New Folder"), "NewPodcastFolder",
                              Shortcut("n", MOD, SHIFT),
-                             groups=["NonPlaying"]),
-                    MenuItem(_("New Watched Folder"), "NewWatchedFolder",
                              groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("Rename"), "RenameSomething",
@@ -545,9 +555,21 @@ def on_new_search_podcast():
 def on_new_podcast_folder():
     app.widgetapp.add_new_feed_folder()
 
-@action_handler("NewWatchedFolder")
-def on_new_watched_folder():
+@action_handler("WatchAFolder")
+def on_watch_a_folder():
     app.widgetapp.add_new_watched_folder()
+
+@action_handler("SearchAllMyFiles")
+def on_search_all_my_files():
+    app.widgetapp.import_search_all_my_files()
+
+@action_handler("SearchInAFolder")
+def on_search_in_a_folder():
+    app.widgetapp.import_search_in_folder()
+
+@action_handler("ChooseFiles")
+def on_choose_files():
+    app.widgetapp.import_choose_files()
 
 @action_handler("RenameSomething")
 def on_rename_podcast():
