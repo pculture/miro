@@ -1094,7 +1094,9 @@ class StoreHelper(object):
 
     def _on_visible_clicked(self, renderer, iter_):
         row = app.store_manager.model[iter_]
-        app.store_manager.change_visible(row[0], not row[2])
+        new_value = not row[2]
+        self._table.model.update_value(iter_, 2, new_value)
+        app.store_manager.change_visible(row[0], new_value)
 
 
 class StoresPanel(PanelBuilder):
