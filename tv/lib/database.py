@@ -391,6 +391,13 @@ class BulkSQLManager(object):
             # face of any exception thrown from commit() method.
             self.active = False
 
+        # Force a commit of our current transaction.
+        #
+        # Normally if we throw an exception, we want to rollback.  However, if
+        # we are in the middle of bulk inserting/removing, then we should try
+        # to commit the objects that didn't throw anything see (#16341)
+        app.db.finish_transaction()
+
     def commit(self):
         for x in range(100):
             to_insert = self.to_insert
