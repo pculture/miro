@@ -473,8 +473,13 @@ class LiveStorage:
             self._execute(sql, values, is_update=True)
             if (self.cursor.rowcount != 1 and not
                     self._quitting_from_operational_error):
-                raise AssertionError("update_obj changed %s rows" %
-                        self.cursor.rowcount)
+                if self.cursor.rowcount == 0:
+                    raise KeyError("Updating non-existent row (id: %s)" %
+                            obj.id)
+                else:
+                    raise ValueError("Update changed multiple rows "
+                            "(id: %s, count: %s)" %
+                            (obj.id, self.cursor.rowcount))
 
     def remove_obj(self, obj):
         """Remove a DDBObject from disk."""
