@@ -183,7 +183,6 @@ class ItemContextMenuHandler(object):
                             _('Resume Seeding'),
                             messages.StartUpload(item.id).send_to_backend))
 
-            if not item.device:
                 section.append((
                         _('Add to Playlist'),
                         app.widgetapp.add_to_playlist))
