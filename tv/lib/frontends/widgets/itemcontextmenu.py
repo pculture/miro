@@ -105,6 +105,7 @@ class ItemContextMenuHandler(object):
         if item.has_drm:
             section.append((_('Play Externally'), play_externally))
             section.append((_("Edit Item Details"), app.widgetapp.edit_items))
+
         elif item.is_playable:
             # Show File in Finder
             if not item.remote:
@@ -181,6 +182,11 @@ class ItemContextMenuHandler(object):
                     section.append((
                             _('Resume Seeding'),
                             messages.StartUpload(item.id).send_to_backend))
+
+            if not item.device:
+                section.append((
+                        _('Add to Playlist'),
+                        app.widgetapp.add_to_playlist))
 
         elif ((item.download_info is not None and
                item.download_info.state != 'failed')):
