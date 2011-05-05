@@ -389,11 +389,14 @@ class ItemListTitlebar(Titlebar):
         hbox = widgetset.HBox()
         self.add(hbox)
         # Pack stuff to the right
-        start = self._build_titlebar_start()
-        if start:
-            hbox.pack_start(start)
+        before_filters = self._build_before_filters()
+        if before_filters:
+            hbox.pack_start(before_filters)
         self.filter_box = widgetset.HBox(spacing=10)
         hbox.pack_start(widgetutil.align_middle(self.filter_box, left_pad=15))
+        after_filters = self._build_after_filters()
+        if after_filters:
+            hbox.pack_start(after_filters)
         extra = self._build_titlebar_extra()
         if extra:
             if isinstance(extra, list):
@@ -424,8 +427,8 @@ class ItemListTitlebar(Titlebar):
             self.resume_button.update(text, resume_time)
             self.resume_button_holder.show()
 
-    def _build_titlebar_start(self):
-        """Builds the widgets to place at the start of the titlebar.
+    def _build_before_filters(self):
+        """Builds the widgets to place to the left of the filters
         """
         return None
 
@@ -499,7 +502,7 @@ class ItemListTitlebar(Titlebar):
         return button
 
 class FolderContentsTitlebar(ItemListTitlebar):
-    def _build_titlebar_start(self):
+    def _build_before_filters(self):
         self.create_signal('podcast-clicked')
         self.podcast_button = widgetutil.TitlebarButton(_('Back to podcast'))
         self.podcast_button.connect('clicked', self._on_podcast_clicked)
@@ -516,7 +519,7 @@ class ConvertingTitlebar(ItemListTitlebar):
     :signal reveal: (self) The reveal button was clicked.
     :signal clear-finished: (self) The clear finished button was clicked.
     """
-    def _build_titlebar_start(self):
+    def _build_before_filters(self):
         self.create_signal('stop-all')
         self.create_signal('reveal')
         self.create_signal('clear-finished')
@@ -580,7 +583,7 @@ class SearchTitlebar(ItemListTitlebar):
     :signal save-search: (self, search_text) The current search
         should be saved as a search channel.
     """
-    def _build_titlebar_start(self):
+    def _build_after_filters(self):
         self.create_signal('save-search')
         button = widgetutil.TitlebarButton(self.save_search_title())
         button.connect('clicked', self._on_save_search)
@@ -1161,7 +1164,7 @@ class DownloadTitlebar(ItemListTitlebar):
         self.create_signal('cancel-all')
         self.create_signal('settings')
 
-    def _build_titlebar_start(self):
+    def _build_before_filters(self):
         h = widgetset.HBox(spacing=5)
 
         pause_button = widgetutil.TitlebarButton(_('Pause All'),
