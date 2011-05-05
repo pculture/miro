@@ -1069,10 +1069,7 @@ def scan_device_for_files(device):
             item_type = 'audio'
         if item_type is not None:
             item_data.append((ufilename, item_type))
-            # FIXME: could we just use filename here?  I'm not sure, so I
-            # copied the logic of item.get_filename() -- BDK
-            item_filename = os.path.join(device.mount, ufilename)
-            app.metadata_progress_updater.will_process_path(item_filename,
+            app.metadata_progress_updater.will_process_path(filename,
                                                             device)
         if time.time() - start > 0.4:
             yield # let other stuff run
