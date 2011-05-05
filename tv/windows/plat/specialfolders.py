@@ -38,7 +38,7 @@ import os
 GetShortPathName = ctypes.windll.kernel32.GetShortPathNameW
 
 _special_folder_CSIDLs = {
-    "Fonts": 20,
+    "Fonts": 0x0014,
     "AppData": 0x001a,
     "My Music": 0x000d,
     "My Pictures": 0x0027,
