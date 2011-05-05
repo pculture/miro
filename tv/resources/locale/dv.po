@@ -1,163 +1,69 @@
-# Hebrew translation for democracy
-# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# Divehi translation for democracy
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-04-29 09:46-0400\n"
-"PO-Revision-Date: 2011-04-16 10:45+0000\n"
-"Last-Translator: Amir E. Aharoni <amir.aharoni@mail.huji.ac.il>\n"
-"Language-Team: Hebrew <he@li.org>\n"
+"PO-Revision-Date: 2011-04-30 20:51+0000\n"
+"Last-Translator: dave nave <Unknown>\n"
+"Language-Team: Divehi <dv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-04 17:50+0000\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2011-05-04 17:48+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:278
-msgid "Bring All to Front"
-msgstr "הבא הכול קדימה"
-
-#: ../../lib/net.py:93 ../../lib/net.py:99
-msgid "Can't connect"
-msgstr "לא יכל להתחבר"
-
-#: ../../lib/net.py:104
-msgid "Timeout"
-msgstr "זמן מוקצב"
-
-#: ../../lib/frontends/widgets/menus.py:239
-msgid "_Quit"
-msgstr "_סיים"
-
-#: ../../lib/frontends/widgets/menus.py:290
-msgid "_Playlists"
-msgstr "_רשימות השמעה"
-
-#: ../../lib/frontends/widgets/feedsettingspanel.py:183
-msgid "Old items have been removed."
-msgstr "פריטים ישנים הוסרו"
-
-#: ../../lib/frontends/widgets/application.py:842
-#: ../../lib/frontends/widgets/tablist.py:1068
-msgid "Rename Playlist Folder"
-msgstr "שנה את שם תיקיית רשימת ההשמעה"
-
-#: ../../lib/frontends/widgets/application.py:1002
-#: ../../lib/frontends/widgets/application.py:1021
-#: ../../lib/frontends/widgets/application.py:1040
-msgid "Are you sure you want to quit?"
-msgstr "האם לסיים?"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:185
-#: ../../lib/frontends/widgets/itemcontextmenu.py:206
-#: ../../lib/frontends/widgets/itemcontextmenu.py:386
-#: ../../lib/frontends/widgets/itemcontextmenu.py:398
-msgid "Cancel Download"
-msgstr "בטל הורדה"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:189
-#: ../../lib/frontends/widgets/itemcontextmenu.py:387
-msgid "Pause Download"
-msgstr "השהה הורדה"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:193
-#: ../../lib/frontends/widgets/itemcontextmenu.py:397
-msgid "Resume Download"
-msgstr "המשך הורדה"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:433
-msgid "Remove From Playlist"
-msgstr "הסר מרשימת ההשמעה"
-
-#: ../../lib/dl_daemon/download.py:786 ../../lib/dl_daemon/download.py:1035
-msgid "Not enough disk space"
-msgstr "אין מספיק מקום בדיסק"
-
-#: ../../lib/dialogs.py:106
-msgid "Migrate"
-msgstr "נדוד"
-
-#: ../../lib/dialogs.py:107
-msgid "Don't Migrate"
-msgstr "אל תנדוד"
-
-#: ../../lib/httpclient.py:141
-msgid "Got 404 status code"
-msgstr "נתקבל קוד מצב 404"
-
-#~ msgid "Re_name Playlist"
-#~ msgstr "_שנה שם רשימת השמעה"
-
-#~ msgid "_Remove Playlist"
-#~ msgstr "_הסר רשימת השמעה"
-
-#~ msgid "Ok"
-#~ msgstr "אוקי"
-
-#, python-format
-#~ msgid "Bad Status Line: %(msg)s"
-#~ msgstr "שורת מצב לא תקינה: %(msg)s"
-
-#~ msgid "Internal Error"
-#~ msgstr "שגיאה פנימית"
-
-#~ msgid "Internal Error: Not ready to send"
-#~ msgstr "בעיה פנימית: לא מוכן לשליחה"
-
-#~ msgid "License"
-#~ msgstr "רישיון"
 
 #: ../../windows/plat/utils.py:502 ../../osx/plat/utils.py:591
 msgid "iTunes"
-msgstr "iTunes"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:150
 msgid "Update Available"
-msgstr "יש עדכון זמין"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:154
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "גרסה חדשה של %(appname)s זמינה להורדה."
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:158
 msgid "Do you want to download it now?"
-msgstr "להוריד כעת?"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:42
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:52
 msgid "Enable tray icon"
-msgstr "הפעל סמל מגש"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:46
 msgid "When I click the red close button:"
-msgstr "כאשר אני מקיש על כפתור הסגירה האדום"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 msgid "Close to tray so that downloads can continue."
-msgstr "סגירה למגש מערכת כך שההורדות יוכלו להמשיך."
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:50
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "צא מ%(appname)s לחלוטין."
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:60
 msgid "System Default"
-msgstr "ברירת המחדל של המערכת"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:66
 msgid "Subtitle font:"
-msgstr "גופן לכתוביות"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"
-msgstr "להתקין את נגן הפלאש (Adobe Flash)?"
+msgstr "އެޑޯބް ފްލެޝް އަޅާނަންތަ؟"
 
 #: ../../windows/plat/frontends/widgets/flash.py:58
 #, python-format
@@ -165,12 +71,10 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-"לחוויית %(appname)s הטובה ביותר, אנו ממליצים לך על התקנת Adobe Flash. האם "
-"אתה רוצה לעשות זאת כעת?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:71
 msgid "Install Adobe Flash"
-msgstr "התקן Flash של Adobe"
+msgstr "އެޑޯބް ފްލެޝް އަޅަންވީ"
 
 #: ../../windows/plat/frontends/widgets/flash.py:73
 #, python-format
@@ -181,13 +85,10 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"הדפדפן שלך יטען את האתר שבו תוכל להוריד ולהתקין את Adobe Flash.\n"
-"\n"
-"עליך לצאת מ%(appname)s עכשיו ולהפעילה מחדש אחרי ש־Adobe Flash יותקן."
 
 #: ../../windows/plat/frontends/widgets/application.py:182
 msgid "Close to tray?"
-msgstr "לסגור לשורת המשימות כסמל מגש?"
+msgstr "ނިޝާންގޮޅިއަށް ގެންދަންވީތަ؟"
 
 #: ../../windows/plat/frontends/widgets/application.py:183
 #, python-format
@@ -195,26 +96,24 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"כאשר אתה לוחץ על כפתור הסגירה האדום, האם תרצה ש%(appname)s יוקטן לסרגל או "
-"ייסגר? באפשרותך לשנות את אפשרויות אלו בעתיד."
 
 #: ../../windows/plat/frontends/widgets/application.py:248
 msgid "Error Bombing Item"
-msgstr "טעות בזמן הפצצת חפץ"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/application.py:250
 msgid "Error Recommending Item"
-msgstr "שגיאה בהמלצה על הפריט"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/application.py:252
 msgid "Error Opening Website"
-msgstr "שגיאה בפתיחת האתר"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/application.py:257
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr "הייתה שגיאה בפתיחת %(url)s. אנא נסה שוב בעוד מספר שניות"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
 #: ../../windows/plat/frontends/widgets/bonjour.py:73
@@ -222,7 +121,7 @@ msgstr "הייתה שגיאה בפתיחת %(url)s. אנא נסה שוב בעו�
 #: ../../linux/plat/frontends/widgets/bonjour.py:45
 #: ../../lib/frontends/widgets/prefpanel.py:945
 msgid "Install Bonjour"
-msgstr "להתקין את בונז׳ור"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:48
 #, python-format
@@ -238,15 +137,6 @@ msgid ""
 "\n"
 "Would you like to do this now?"
 msgstr ""
-"כדי ליהנות מחוויית השימוש הטובה ביותר ב־%(appname)s, אנו ממליצים להתקין את "
-"תכנת בונז׳ור, שמופצת כחלק משירותי הדפסה.\n"
-"\n"
-"התקנת בונז׳ור תאפשר לך לשתף את ספריית המדיה שלך עם משתמשי %(appname)s אחרים "
-"ברשת שלך ולהאזין למדיה שוטפת ממשתמשי %(appname)s ברשת שלך.\n"
-"\n"
-"אחרי התקנת שירותי הדפה תצטרף לאתחל את מירו.\n"
-"\n"
-"האם לעשות זאת עכשיו?"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:75
 msgid ""
@@ -256,16 +146,13 @@ msgid ""
 "When the installation is finished, simply restart Miro for the changes to "
 "take effect."
 msgstr ""
-"הדפדפן שלך יטען את האתר שממנו אפשר להוריד את בונז׳ור.\n"
-"\n"
-"כאש ההתקנה מסתיימת, יש לאתחל את מירו כדי להחיל את השינויים."
 
 #: ../../windows/plat/renderers/vlc.py:728
 #: ../../windows/plat/renderers/vlc.py:731
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:603
 msgid "Eastern European"
-msgstr "מזרח אירופי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../windows/plat/renderers/vlc.py:730
@@ -273,34 +160,34 @@ msgstr "מזרח אירופי"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 msgid "Baltic"
-msgstr "בלטי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:733
 msgid "Russian"
-msgstr "רוסי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:734
 msgid "South-Eastern European"
-msgstr "דרום-מזרח אירופי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:735
 msgid "Ukrainian"
-msgstr "אוקראיני"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Western European"
-msgstr "מערב אירופי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:739
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Celtic"
-msgstr "קלטי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:741
 msgid "Esperanto"
-msgstr "אספרנטו"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:742
 #: ../../windows/plat/renderers/vlc.py:743
@@ -308,24 +195,24 @@ msgstr "אספרנטו"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
 msgid "Greek"
-msgstr "יווני"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 msgid "East Asian"
-msgstr "מזרח אסיאתי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:747
 msgid "Universal Chinese"
-msgstr "סינית כללית"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Simplified Chinese"
-msgstr "סינית מופשטת"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:749
 msgid "Simplified Chinese Unix"
-msgstr "סינית מופשטת יוניקס"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:750
 #: ../../windows/plat/renderers/vlc.py:752
@@ -333,11 +220,11 @@ msgstr "סינית מופשטת יוניקס"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
 msgid "Japanese"
-msgstr "יפני"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:751
 msgid "Japanese Unix"
-msgstr "יפנית יוניקס"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:753
 #: ../../windows/plat/renderers/vlc.py:754
@@ -346,24 +233,24 @@ msgstr "יפנית יוניקס"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Korean"
-msgstr "קוראני"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:755
 msgid "Traditional Chinese"
-msgstr "סיני מסורתי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:756
 msgid "Traditional Chinese Unix"
-msgstr "סינית מסורתית יוניקס"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:757
 msgid "Hong-Kong Supplementary"
-msgstr "הונג-קונג השלמה"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:760
 #: ../../linux/plat/renderers/gstreamerrenderer.py:654
 msgid "SE and SW Asian"
-msgstr "אסיאתי דרום-מזרחי ודרום-מערבי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:761
 #: ../../windows/plat/renderers/vlc.py:762
@@ -372,12 +259,12 @@ msgstr "אסיאתי דרום-מזרחי ודרום-מערבי"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:663
 #: ../../linux/plat/renderers/gstreamerrenderer.py:664
 msgid "Turkish"
-msgstr "טורקי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:763
 #: ../../linux/plat/renderers/gstreamerrenderer.py:660
 msgid "Thai"
-msgstr "תאילנדי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:764
 #: ../../windows/plat/renderers/vlc.py:765
@@ -385,12 +272,12 @@ msgstr "תאילנדי"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:666
 #: ../../linux/plat/renderers/gstreamerrenderer.py:667
 msgid "Vietnamese"
-msgstr "וייטנאמי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:768
 #: ../../linux/plat/renderers/gstreamerrenderer.py:669
 msgid "Middle Eastern"
-msgstr "מזרח תיכוני"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:769
 #: ../../windows/plat/renderers/vlc.py:770
@@ -399,7 +286,7 @@ msgstr "מזרח תיכוני"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:672
 #: ../../linux/plat/renderers/gstreamerrenderer.py:673
 msgid "Arabic"
-msgstr "ערבי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:771
 #: ../../windows/plat/renderers/vlc.py:772
@@ -408,7 +295,7 @@ msgstr "ערבי"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:676
 #: ../../linux/plat/renderers/gstreamerrenderer.py:677
 msgid "Hebrew"
-msgstr "עברי"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:775
 #: ../../linux/plat/renderers/gstreamerrenderer.py:681
@@ -418,49 +305,49 @@ msgstr "עברי"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:685
 #: ../../linux/plat/renderers/gstreamerrenderer.py:686
 msgid "Unicode"
-msgstr "יוניקוד"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:776
 #: ../../windows/plat/renderers/vlc.py:777
 #: ../../windows/plat/renderers/vlc.py:778
 #: ../../windows/plat/renderers/vlc.py:779
 msgid "Universal"
-msgstr "כללי"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 #: ../../osx/plat/frontends/widgets/osxmenus.py:293
 msgid "Services"
-msgstr "שירותים"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:218
 #, python-format
 msgid "Hide %(appname)s"
-msgstr "הסתר %(appname)s"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
-msgstr "הסתר אחרים"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Show All"
-msgstr "הצג הכול"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:227
 msgid "Preferences..."
-msgstr "העדפות..."
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:229
 #, python-format
 msgid "Quit %(appname)s"
-msgstr "צא מ%(appname)s"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:233
 msgid "Close Window"
-msgstr "סגור חלון"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:239
 msgid "Cut"
-msgstr "גזור"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:240
 #: ../../lib/frontends/widgets/devicecontroller.py:469
@@ -468,117 +355,121 @@ msgstr "גזור"
 #: ../../lib/frontends/widgets/devicecontroller.py:480
 #: ../../lib/conversions.py:943
 msgid "Copy"
-msgstr "העתק"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:241
 msgid "Paste"
-msgstr "הדבק"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:242
 #: ../../osx/plat/frontends/widgets/overlay.py:136
 #: ../../lib/frontends/widgets/gtk/video.py:313 ../../lib/dialogs.py:121
 msgid "Delete"
-msgstr "מחיקה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:244
 msgid "Select All"
-msgstr "בחר הכול"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:246
 msgid "Edit"
-msgstr "עריכה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:251
 msgid "Present Half Size"
-msgstr "הצג במחצית הגודל"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:254
 msgid "Present Actual Size"
-msgstr "הצג בגודל אמיתי"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:257
 msgid "Present Double Size"
-msgstr "הצג בגודל כפול"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:264
 msgid "Present Video"
-msgstr "וידאו נוכחי"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:272
 msgid "Zoom"
-msgstr "הגדל"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:273
 msgid "Minimize"
-msgstr "מזער"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:275
 msgid "Main Window"
-msgstr "חלון ראשי"
+msgstr ""
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:278
+msgid "Bring All to Front"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:280
 msgid "Window"
-msgstr "חלון"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:285
 #, python-format
 msgid "%(appname)s Help"
-msgstr "%(appname)s עזרה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:439
 #: ../../lib/frontends/widgets/gtk/video.py:411
 #: ../../lib/frontends/widgets/gtk/window.py:352
 msgid "Disable Subtitles"
-msgstr "הסתרת כתוביות"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:450
 #: ../../lib/frontends/widgets/gtk/video.py:389
 #: ../../lib/frontends/widgets/menus.py:339
 msgid "None Available"
-msgstr "לא זמין"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:457
 #: ../../lib/frontends/widgets/gtk/video.py:422
 msgid "Select a Subtitles file..."
-msgstr "בחר קובץ כתוביות..."
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:124
 #: ../../lib/frontends/widgets/gtk/video.py:344
 #: ../../lib/frontends/widgets/menus.py:338
 msgid "Subtitles"
-msgstr "כתוביות"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125
 #: ../../lib/frontends/widgets/gtk/video.py:276
 msgid "Fullscreen"
-msgstr "מסך מלא"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:128
 #: ../../lib/frontends/widgets/itemcontextmenu.py:249
 msgid "Share"
-msgstr "שתף"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:132
 #: ../../lib/frontends/widgets/itemcontextmenu.py:361 ../../lib/dialogs.py:120
 msgid "Keep"
-msgstr "השאיר"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:219
 msgid "Pop Out"
-msgstr "הקפץ החוצה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:222
 msgid "Pop In"
-msgstr "הקפץ פנימה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/application.py:247
 msgid "Download Completed"
-msgstr "ההורדה הושלמה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/application.py:248
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "הורדת הסרט '%s' הושלמה"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/bonjour.py:40
 msgid ""
@@ -594,49 +485,48 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemcontextmenu.py:215
 #: ../../lib/frontends/widgets/itemcontextmenu.py:351
 msgid "Play"
-msgstr "נגן"
+msgstr ""
 
 #: ../../linux/extensions/miroappindicator/main.py:56
 msgid "Pause all downloads"
-msgstr "לעצור זמנית את כל ההורדות"
+msgstr ""
 
 #: ../../linux/extensions/miroappindicator/main.py:57
 msgid "Resume all downloads"
-msgstr "להמשיך את כל ההורדות"
+msgstr ""
 
 #: ../../linux/extensions/miroappindicator/main.py:59
 msgid "Show Miro"
-msgstr "להציג את מירו"
+msgstr ""
 
 #: ../../linux/extensions/miroappindicator/main.py:60 ../../lib/dialogs.py:101
 msgid "Quit"
-msgstr "יציאה"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:61
 msgid "Renderer options:"
-msgstr "אפשרויות נגן"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:68
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
-"יש להפעיל מחדש את %(appname)s כדי שהשינויים במנוע התצוגה ייכנסו לתוקף."
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:83
 msgid "Video renderer:"
-msgstr "נגן וידאו:"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:96
 msgid "Binaries to use:"
-msgstr "באילו קבצים בינריים להשתמש"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:102
 msgid "ffmpeg binary path:"
-msgstr "שם הקובץ הבינרי של ffmpeg:"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:109
 msgid "ffmpeg2theora binary path:"
-msgstr "שם הקובץ הבינרי של ffmpeg2theora:"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/bonjour.py:47
 #, python-format
@@ -669,16 +559,16 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:513
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr "רצועה %(tracknumber)d"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:523
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr "קובץ כתוביות %(tracknumber)d"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 msgid "Croatian"
-msgstr "קרואטית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
@@ -687,39 +577,39 @@ msgstr "קרואטית"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:612
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 msgid "Cyrillic"
-msgstr "קירילית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Cyrillic/Russian"
-msgstr "קירילית/רוסית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:615
 #: ../../linux/plat/renderers/gstreamerrenderer.py:616
 msgid "Cyrillic/Ukrainian"
-msgstr "קירילית/אוקראינית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 #: ../../linux/plat/renderers/gstreamerrenderer.py:619
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "Central European"
-msgstr "מרכז אירופי"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Romanian"
-msgstr "רומנית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 msgid "Icelandic"
-msgstr "איסלנדית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Nordic"
-msgstr "נורדית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:631
 msgid "South European"
-msgstr "דרום אירופאית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
@@ -727,82 +617,82 @@ msgstr "דרום אירופאית"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 #: ../../linux/plat/renderers/gstreamerrenderer.py:636
 msgid "Western"
-msgstr "מערבית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 #: ../../linux/plat/renderers/gstreamerrenderer.py:640
 #: ../../linux/plat/renderers/gstreamerrenderer.py:641
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 msgid "Chinese Simplified"
-msgstr "סינית מופשטת"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Chinese Traditional"
-msgstr "סינית מסורתית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:655
 msgid "Armenian"
-msgstr "ארמנית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:656
 msgid "Georgian"
-msgstr "גאורגית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:657
 msgid "Gujarati"
-msgstr "גוג׳ראטית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:658
 msgid "Gurmukhi"
-msgstr "גורמוחי"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:659
 msgid "Hindi"
-msgstr "הינדי"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:678
 msgid "Hebrew Visual"
-msgstr "עברית ויזואלית"
+msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:679
 msgid "Persian"
-msgstr "פרסית"
+msgstr ""
 
 #: ../../lib/item.py:1265 ../../lib/messages.py:1343
 msgid "queued for download"
-msgstr "מחכה בתור להורדה"
+msgstr ""
 
 #: ../../lib/item.py:1360
 msgid "no title"
-msgstr "ללא כותרת"
+msgstr ""
 
 #: ../../lib/item.py:1626
 msgid "starting up..."
-msgstr "מתחיל ..."
+msgstr ""
 
 #: ../../lib/feed.py:861
 msgid "Error loading podcast"
-msgstr "שגיאה בטעינת פודקאסט"
+msgstr ""
 
 #: ../../lib/feed.py:863
 #, python-format
 msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-msgstr "נכשלה טעינת פודקאסט בכתובת %(url)s‏ (%(errordescription)s)."
+msgstr ""
 
 #: ../../lib/feed.py:866
 msgid "Would you like to keep the podcast?"
-msgstr "האם להשאיר את הפודקאסט הזה?"
+msgstr ""
 
 #: ../../lib/feed.py:988
 msgid "Bad content-type"
-msgstr "סוג תוכן לא טוב"
+msgstr ""
 
 #: ../../lib/feed.py:1001
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
-msgstr "הפודקאסט אינו תואם %(appname)s"
+msgstr ""
 
 #: ../../lib/feed.py:1004
 #, python-format
@@ -820,26 +710,26 @@ msgstr ""
 #: ../../lib/feed.py:1676 ../../lib/databaseupgrade.py:2738
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr "%(engine)s עבור '%(query)s'"
+msgstr ""
 
 #: ../../lib/feed.py:2267 ../../lib/feed.py:2403
 msgid "Local Files"
-msgstr "קבצים מקומיים"
+msgstr ""
 
 #: ../../lib/feed.py:2276 ../../lib/feed.py:2378 ../../lib/feed.py:2388
 #: ../../lib/frontends/widgets/firsttimedialog.py:342
 #: ../../lib/frontends/widgets/firsttimedialog.py:344
 #: ../../lib/frontends/widgets/firsttimedialog.py:423
 msgid "Search"
-msgstr "חיפוש"
+msgstr ""
 
 #: ../../lib/messages.py:1261 ../../lib/sharing.py:242
 msgid "Locked"
-msgstr "נעול"
+msgstr ""
 
 #: ../../lib/messages.py:1264 ../../lib/frontends/widgets/itemedit.py:543
 msgid "Movie"
-msgstr "סרט"
+msgstr ""
 
 #: ../../lib/messages.py:1266 ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/diagnostics.py:80
@@ -847,15 +737,15 @@ msgstr "סרט"
 #: ../../lib/frontends/widgets/itemedit.py:544
 #: ../../lib/frontends/widgets/widgetconst.py:78
 msgid "Show"
-msgstr "הצג"
+msgstr ""
 
 #: ../../lib/messages.py:1268 ../../lib/frontends/widgets/itemedit.py:545
 msgid "Clip"
-msgstr "קטע"
+msgstr ""
 
 #: ../../lib/messages.py:1270 ../../lib/frontends/widgets/itemedit.py:546
 msgid "Podcast"
-msgstr "פודקאסט"
+msgstr ""
 
 #: ../../lib/messages.py:1289
 #, python-format
@@ -867,21 +757,29 @@ msgstr ""
 #: ../../lib/net.py:76
 #, python-format
 msgid "Error: %(msg)s"
-msgstr "שגיאה: %(msg)s"
+msgstr ""
+
+#: ../../lib/net.py:93 ../../lib/net.py:99
+msgid "Can't connect"
+msgstr ""
 
 #: ../../lib/net.py:94
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr "שגיאת התחברות: %(msg)s"
+msgstr ""
 
 #: ../../lib/net.py:100
 msgid "SSL connection error"
-msgstr "שגיאת חיבור SSL"
+msgstr ""
+
+#: ../../lib/net.py:104
+msgid "Timeout"
+msgstr ""
 
 #: ../../lib/net.py:105
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr "אזל זמן חיבור ל-%(host)s (timed out)"
+msgstr ""
 
 #: ../../lib/net.py:289
 msgid "Couldn't find address family to use"
@@ -889,22 +787,22 @@ msgstr ""
 
 #: ../../lib/net.py:318
 msgid "Unknown Error code"
-msgstr "קוד שגיאה לא ידוע"
+msgstr ""
 
 #: ../../lib/net.py:364
 msgid "Connection closed"
-msgstr "החיבור נסגר"
+msgstr ""
 
 #: ../../lib/sharing.py:179 ../../lib/downloader.py:568
 #: ../../lib/downloader.py:576 ../../lib/httpclient.py:218
 #: ../../lib/httpclient.py:750
 msgid "Unknown"
-msgstr "לא ידוע"
+msgstr ""
 
 #: ../../lib/frontends/widgets/searchcontroller.py:74
 #: ../../lib/frontends/widgets/statictabs.py:108
 msgid "Video Search"
-msgstr "חיפוש וידאו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/searchcontroller.py:75
 msgid "Use the search box above to search for videos on these sites"
@@ -913,7 +811,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/devicecontroller.py:139
 #: ../../lib/frontends/widgets/devicecontroller.py:191
 msgid "Sync Now"
-msgstr "לסנכרן עכשיו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:158
 #, python-format
@@ -924,54 +822,54 @@ msgstr ""
 #, python-format
 msgid "1 file selected to sync"
 msgid_plural "%(count)i files selected to sync"
-msgstr[0] "נבחר קובץ אחד לסנכרון"
-msgstr[1] "נבחרו %(count)i קבצים לסנכרון"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:181
 msgid "Up to date"
-msgstr "מעודכן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:188
 msgid "In Progress"
-msgstr "בעבודה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:258
 #, python-format
 msgid "%(eta)s left"
-msgstr "נותר: %(eta)s"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:261
 #, python-format
 msgid "%(percent)i%% percent complete"
-msgstr "הושלמו %(percent)i%%"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:277
 msgid "Sync These Podcasts"
-msgstr "לסנכרן את הפודקאסטים האלה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:311
 msgid "Select none"
-msgstr "לא לבחור כלום"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:314
 msgid "Select all"
-msgstr "בחר הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:415
 msgid "Sync Podcasts"
-msgstr "סנכרון פודקאסטים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:418
 msgid "Only sync unplayed items"
-msgstr "לסנכרן רק פריטים שלא נוגנו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:447
 msgid "Sync These Playlists"
-msgstr "לסנכרן את רשימות ההשמעה האלו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:448
 msgid "Sync Playlists"
-msgstr "לסנכרן את רשימות ההשמעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:476
 #, python-format
@@ -1009,7 +907,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:594
 msgid "Main"
-msgstr "ראשי"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:595
 #: ../../lib/frontends/widgets/displays.py:377
@@ -1017,20 +915,20 @@ msgstr "ראשי"
 #: ../../lib/frontends/widgets/prefpanel.py:1255
 #: ../../lib/frontends/widgets/tablist.py:952 ../../lib/messagehandler.py:563
 msgid "Podcasts"
-msgstr "פודקאסטים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:596
 #: ../../lib/frontends/widgets/displays.py:806
 #: ../../lib/frontends/widgets/tabcontroller.py:495
 #: ../../lib/frontends/widgets/tablist.py:1031
 msgid "Playlists"
-msgstr "רשימות השמעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:597
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1221
 #: ../../lib/frontends/widgets/tablist.py:1018
 msgid "Settings"
-msgstr "הגדרות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:611
 msgid ""
@@ -1067,12 +965,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemrenderer.py:98
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr "חשוף ב־%(progname)s"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:100
 #: ../../lib/frontends/widgets/displays.py:541
 msgid "Reveal File"
-msgstr "חשוף קובץ"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:101
 msgid "display contents"
@@ -1083,7 +981,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemcontextmenu.py:201
 #: ../../lib/frontends/widgets/itemcontextmenu.py:376 ../../lib/dialogs.py:108
 msgid "Download"
-msgstr "הורד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:103
 #, python-format
@@ -1092,17 +990,17 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:105
 msgid "Download Torrent"
-msgstr "הורד טורנט"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:106
 #: ../../lib/dl_daemon/download.py:655
 msgid "Error"
-msgstr "שגיאה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:107
 #: ../../lib/frontends/widgets/firsttimedialog.py:424 ../../lib/dialogs.py:97
 msgid "Cancel"
-msgstr "ביטול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:108
 msgid "Queued for Auto-download"
@@ -1115,17 +1013,17 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:740
 #: ../../lib/frontends/widgets/itemlistwidgets.py:934
 msgid "Unplayed"
-msgstr "לא נצפו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:110
 msgid "Currently Playing"
-msgstr "מנגן כעת"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:111
 #: ../../lib/frontends/widgets/style.py:531
 #: ../../lib/frontends/widgets/itemlistwidgets.py:937
 msgid "Newly Available"
-msgstr "זמינים חדשים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:112
 msgid "Saved"
@@ -1133,7 +1031,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:113
 msgid "Stop seeding"
-msgstr "הפסק זריעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:388
 msgid "PEERS"
@@ -1159,7 +1057,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemcontextmenu.py:137
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr "המשך ב־%(resumetime)s"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1348
 #, python-format
@@ -1174,7 +1072,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemrenderer.py:1358
 #: ../../lib/frontends/widgets/itemrenderer.py:1365
 msgid "Clear"
-msgstr "ניקוי"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1360
 msgid "Failed"
@@ -1182,7 +1080,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1361
 msgid "Troubleshoot"
-msgstr "פתרון בעיות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1362
 msgid "Open Log"
@@ -1190,7 +1088,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1367
 msgid "Completed"
-msgstr "הושלם"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1376
 #, python-format
@@ -1207,30 +1105,30 @@ msgstr ""
 msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
-msgstr "%(appname)s אינו יודע לנגן קובץ זה. אולי תצליח לנגנו בתוכנה אחרת."
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:533
 msgid "Filename:"
-msgstr "שם הקובץ:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:536
 msgid "File type:"
-msgstr "סוג קובץ:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:542
 #: ../../lib/frontends/widgets/displays.py:580
 #: ../../lib/frontends/widgets/itemcontextmenu.py:106
 #: ../../lib/frontends/widgets/itemcontextmenu.py:155
 msgid "Play Externally"
-msgstr "נגן חיצונית"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:545
 msgid "Skip"
-msgstr "דלג"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:582
 msgid "Open Externally"
-msgstr "פתח חיצונית"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:700
 #, python-format
@@ -1250,8 +1148,8 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "תיקיית רשימת צפייה %(count)d נבחרה"
-msgstr[1] "%(count)d תיקיות רשימות צפייה נבחרו"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/displays.py:716
 #, python-format
@@ -1278,16 +1176,16 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "רשימת צפייה %(count)d נבחרה"
-msgstr[1] "%(count)d רשימות צפייה נבחרו"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/displays.py:745
 msgid "Delete All"
-msgstr "מחק הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:749
 msgid "Put Into a New Folder"
-msgstr "שים בתיקיה חדשה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:778
 #: ../../lib/frontends/widgets/tabcontroller.py:201
@@ -1311,34 +1209,34 @@ msgstr ""
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "נגן את הבלתי נצפה הבא (%(unplayed)d)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:99
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "נגן את כל הבלתי נצפים (%(unplayed)d)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:102
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr "השהה את כל ההורדות (%(downloading)d)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:105
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr "המשך את כל ההורדות (%(paused)d)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:113
 msgid "Hide"
-msgstr "הסתר"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/video.py:285
 msgid "Pop-in"
-msgstr "הכנס-לחלון"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/video.py:291
 msgid "Pop-out"
-msgstr "הוצא-מחלון"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/video.py:334
 msgid "Subtitles On"
@@ -1350,20 +1248,20 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/window.py:837
 msgid "All files"
-msgstr "כל הקבצים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/window.py:891
 msgid "Choose"
-msgstr "בחר"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/window.py:917
 #, python-format
 msgid "About %(appname)s"
-msgstr "מידע על %(appname)s"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/window.py:919 ../../lib/dialogs.py:96
 msgid "Close"
-msgstr "סגור"
+msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/window.py:940
 #, python-format
@@ -1371,8 +1269,6 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
-"%(copyright)s. עיין בקובץ license.txt לפרטים נוספים.\n"
-"%(trademark)s"
 
 #: ../../lib/frontends/widgets/gtk/window.py:954
 #, python-format
@@ -1385,16 +1281,16 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/playlist.py:156
 msgid "This Playlist is Empty"
-msgstr "רשימת הצפייה הזו ריקה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/playlist.py:159
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr "להוספת פריט, גרור אותו לשם רשימת הצפייה בסרגל הצד."
+msgstr ""
 
 #: ../../lib/frontends/widgets/newfolder.py:56
 msgid "Folder name:"
-msgstr "שם תיקייה:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newfolder.py:87
 msgid "Create Podcast Folder"
@@ -1402,7 +1298,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/newfolder.py:88
 msgid "Enter the name of the folder to add"
-msgstr "הזן את שם התיקייה להוספה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:248
@@ -1415,11 +1311,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:92
 msgid "Search for:"
-msgstr "חפש אחר:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:100
 msgid "In this:"
-msgstr "בזה:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:107
 msgid "Podcast:"
@@ -1427,17 +1323,17 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:114
 msgid "Search engine:"
-msgstr "מנוע חיפוש:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:121
 #: ../../lib/frontends/widgets/newfeed.py:59
 msgid "URL:"
-msgstr "כתובת אינטרנט (URL):"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:48
 #: ../../lib/frontends/widgets/prefpanel.py:811
 msgid "Add Watched Folder"
-msgstr "הוסף תיקייה נצפיית"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:49
 msgid ""
@@ -1474,7 +1370,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:521
 msgid "paused"
-msgstr "מושהה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:523
 msgid "queued"
@@ -1485,38 +1381,38 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1067
 #: ../../lib/frontends/widgets/feedcontroller.py:73
 msgid "No Results"
-msgstr "אין תוצאות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:61
 #: ../../lib/frontends/widgets/diagnostics.py:138
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr "%(databasecount)s: למחוק"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:91
 #: ../../lib/frontends/widgets/menus.py:366
 msgid "Diagnostics"
-msgstr "אבחון"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:94
 msgid "Movies location:"
-msgstr "מיקיום סרטים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:99
 msgid "Icon cache location:"
-msgstr "מיקום המטמון של הסמלים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:104
 msgid "Log file location:"
-msgstr "מיקום קובץ יומן:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:108
 msgid "Downloader log file location:"
-msgstr "מיקום קובץ יומן הורדות:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:113
 msgid "Database file location:"
-msgstr "מיקום קובץ מסד הנתונים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:118
 msgid "Crash reports location:"
@@ -1524,19 +1420,19 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:125
 msgid "Space free on disk:"
-msgstr "נפח פנוי בכונן:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:128
 msgid "Database size:"
-msgstr "גודל מסד הנתונים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:131
 msgid "Total db objects in memory:"
-msgstr "כל פריטי מסד הנתונים בזיכרון:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/diagnostics.py:136
 msgid "Total db backups:"
-msgstr "סה״כ גיבויי מסד נתונים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:928
 #, python-format
@@ -1546,16 +1442,16 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1029
 #: ../../lib/frontends/widgets/application.py:783
 msgid "Create Playlist"
-msgstr "צור רשימת צפייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1030
 #: ../../lib/frontends/widgets/application.py:784
 msgid "Enter a name for the new playlist"
-msgstr "הזן שם עבור רשימת הצפייה החדשה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1043
 msgid "Unwatched"
-msgstr "לא נצפו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/statictabs.py:51
 msgid "Miro"
@@ -1582,7 +1478,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/statictabs.py:135
 #: ../../lib/frontends/widgets/itemlistwidgets.py:931
 msgid "Downloading"
-msgstr "מוריד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/guidecontroller.py:173
 msgid "Recently Watched"
@@ -1603,7 +1499,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:147
 msgid "Choose Language"
-msgstr "בחר שפה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:150
 #, python-format
@@ -1615,35 +1511,30 @@ msgid ""
 "\n"
 "What language would you like Miro to be in?"
 msgstr ""
-"ברוך בואך לאשף ההגדרה הראשונית של %(name)s!\n"
-"\n"
-"סדרת המסכים הבאים תסייע לך בהגדרת %(name)s להתאמה מרבית לצרכיך.\n"
-"\n"
-"באיזו שפה ברצונך להשתמש ב־Miro?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:162
 #: ../../lib/frontends/widgets/prefpanel.py:470
 msgid "System default"
-msgstr "בררת המחדל של המערכת"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:185
 msgid "Update"
-msgstr "עדכן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:189
 #: ../../lib/frontends/widgets/prefpanel.py:477
 msgid "Language:"
-msgstr "שפה:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:197
 #: ../../lib/frontends/widgets/firsttimedialog.py:241
 msgid "Next >"
-msgstr "הבא >"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:211
 #, python-format
 msgid "%(name)s Startup"
-msgstr "הפעלת %(name)s"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:215
 #, python-format
@@ -1652,33 +1543,31 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
-"אנו ממליצים שתפעיל/י %(name)s עם הפעלת המחשב. במצב זה, הורדות פעילות יוכלו "
-"להסתיים וקבצי מדיה חדשים יורדו ברקע, ויהיו מוכנים כשתרצה/י לצפות בהם"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:224
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr "האם תרצה להפעיל את %(name)s בעת עליית המחשב?"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:230
 #: ../../lib/frontends/widgets/firsttimedialog.py:275 ../../lib/dialogs.py:99
 msgid "Yes"
-msgstr "כן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:231
 #: ../../lib/frontends/widgets/firsttimedialog.py:274 ../../lib/dialogs.py:100
 msgid "No"
-msgstr "לא"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:238
 #: ../../lib/frontends/widgets/firsttimedialog.py:327
 #: ../../lib/frontends/widgets/firsttimedialog.py:431
 msgid "< Previous"
-msgstr "< הקודם"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:260
 msgid "Finding Files"
-msgstr "מציאת קבצים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:263
 #, python-format
@@ -1688,18 +1577,14 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
-"%(name)s יכול לאתר את כל קובצי המדיה על המחשב שלך ולעזור לך לארגן את האוסף "
-"שלך.\n"
-"\n"
-"האם תרצה ש־%(name)s יחפש את קובצי המדיה על המחשב שלך?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:284
 msgid "Restrict to all my personal files."
-msgstr "הגבל לכל הקבצים האישיים שלי."
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:285
 msgid "Search custom folders:"
-msgstr "חפש תיקיות מותאמות:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:296
 #, python-format
@@ -1709,44 +1594,44 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:306
 #: ../../lib/frontends/widgets/prefpanel.py:702
 msgid "Change"
-msgstr "שנה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:314
 #: ../../lib/frontends/widgets/addfilesdialog.py:183
 msgid "Choose directory to search for media files"
-msgstr "בחר תיקייה לחיפוש קבצי מדיה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:345
 #: ../../lib/frontends/widgets/firsttimedialog.py:434
 msgid "Finish"
-msgstr "סיום"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:414
 msgid "Searching for media files"
-msgstr "חיפוש קבצי מדיה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:464
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] "נותח קובץ %(count)s"
-msgstr[1] "נותחו %(count)s קבצים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:469
 #: ../../lib/frontends/widgets/addfilesdialog.py:299
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] "נמצא קובץ מדיה %(count)s"
-msgstr[1] "נמצאו %(count)s קבצי מדיה"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/menus.py:215
 msgid "_File"
-msgstr "_קובץ"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:216
 msgid "_Open"
-msgstr "_פתיחה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:218
 msgid "Add files or folders..."
@@ -1786,16 +1671,20 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:234
 msgid "Copy Item _URL"
-msgstr "העתק _כתובת פריט"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:238
 #: ../../lib/frontends/widgets/prefpanel.py:1272
 msgid "Preferences"
-msgstr "העדפות"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:239
+msgid "_Quit"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "_Sidebar"
-msgstr "_סרגל צד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:243
 #: ../../lib/frontends/widgets/newfeed.py:96
@@ -1819,7 +1708,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/menus.py:256
 #: ../../lib/frontends/widgets/tablist.py:1014
 msgid "Rename"
-msgstr "שנה שם"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:259
 #: ../../lib/frontends/widgets/application.py:832
@@ -1841,7 +1730,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:1075
 #: ../../lib/frontends/widgets/tablist.py:1080 ../../lib/dialogs.py:122
 msgid "Remove"
-msgstr "הסר"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:264
 #: ../../lib/frontends/widgets/removefeeds.py:50
@@ -1898,11 +1787,15 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "Copy URL"
-msgstr "העתק כתובת"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:290
+msgid "_Playlists"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:291
 msgid "New _Playlist"
-msgstr "רשימת צפייה חדשה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:294
 msgid "New Playlist Folder"
@@ -1912,7 +1805,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:837
 #: ../../lib/frontends/widgets/tablist.py:1074 ../../lib/playlist.py:203
 msgid "Rename Playlist"
-msgstr "שנה שם רשימת צפייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:300
 msgid "Remove Playlist"
@@ -1932,7 +1825,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:307
 msgid "P_layback"
-msgstr "רשימת השמעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Pause"
@@ -1968,15 +1861,15 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "_Fullscreen"
-msgstr "_מסך מלא"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:335
 msgid "_Toggle Detached/Attached"
-msgstr "_שנה מצב מחובר\\תלוש"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:342
 msgid "Select a Subtitles File..."
-msgstr "בחר קובץ כתוביות..."
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:348
 msgid "Sorts"
@@ -1988,7 +1881,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:352
 msgid "_Help"
-msgstr "_עזרה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:353
 #, python-format
@@ -2039,11 +1932,11 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:529
 #: ../../lib/frontends/widgets/itemcontextmenu.py:419
 msgid "Show Conversion Folder"
-msgstr "הצגת תיקיית ההמרה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:418
 msgid "_Encoding"
-msgstr "_קידוד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:421
 msgid "Default (UTF-8)"
@@ -2070,31 +1963,31 @@ msgstr ""
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] "%(count)d יורד"
-msgstr[1] "%(count)d יורדים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/feedcontroller.py:174
 #: ../../lib/frontends/widgets/feedcontroller.py:186
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] "פריט %(count)d"
-msgstr[1] "%(count)d פריטים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/feedcontroller.py:195
 #, python-format
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
-msgstr[0] "%(count)d נוסף לתור ההורדות עקב פריטים שלא נוגנו (ראה הגדרות)"
-msgstr[1] "%(count)d נוספו תור ההורדות עקב פריטים שלא נוגנו (ראה הגדרות)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/feedcontroller.py:208
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] "פריט %(count)d מתאים לחיפוש"
-msgstr[1] "%(count)d פריטים מתאימים לחיפוש"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/crashdialog.py:53
 #, python-format
@@ -2158,7 +2051,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:524
 msgid "Stop All Conversions"
-msgstr "עצירת כל ההמרות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:534
 msgid "Clear Finished Conversions"
@@ -2174,19 +2067,19 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemedit.py:502
 #: ../../lib/frontends/widgets/itemedit.py:750
 msgid "Video"
-msgstr "וידאו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:614
 msgid "Audio"
-msgstr "שמע"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:636
 msgid "Downloaded"
-msgstr "הוּרד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
 msgid "View|All"
-msgstr "צפה|הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:661
 msgid "Save as playlist"
@@ -2214,33 +2107,33 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1105
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr "%(available)s מתחת למגבלת נפח ההורדות (%(amount)s פנוי בכונן)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1112
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr "%(available)s פנויים להורדות (%(amount)s פנויים בכונן)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1118
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr "%(amount)s פנויים בכונן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1167
 msgid "Pause All"
-msgstr "הפסק הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1173
 msgid "Resume All"
-msgstr "המשך הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1179
 msgid "Cancel All"
-msgstr "בטל הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1185
 msgid "Download Settings"
-msgstr "הגדרות הורדה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1226
 msgid "Auto-Download All"
@@ -2289,11 +2182,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1795
 msgid "Seeders"
-msgstr "זורעים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1796
 msgid "Leechers"
-msgstr "יונקים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1797
 msgid "Share Ratio"
@@ -2309,11 +2202,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:133
 msgid "Open in browser"
-msgstr "פתח בדפדפן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:140
 msgid "Download this video"
-msgstr "הורד סרטון זה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
@@ -2323,7 +2216,7 @@ msgstr[1] ""
 
 #: ../../lib/frontends/widgets/removefeeds.py:87
 msgid "Keep items that have been downloaded in my library."
-msgstr "שמור פריטים שהורדו לספרייה שלי."
+msgstr ""
 
 #: ../../lib/frontends/widgets/removefeeds.py:93
 #, python-format
@@ -2332,8 +2225,6 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
-"תיקיות שנצפו תוסרנה מסרגל הצד אך תוכנם עדיין יופיע בספרייה. באפשרותך להפסיק "
-"את הצפייה בתיקיות שנצפו לחלוטין דרך  %(appname)s בתפריט האפשרויות"
 
 #: ../../lib/frontends/widgets/removefeeds.py:105
 msgid ""
@@ -2348,7 +2239,7 @@ msgstr[1] ""
 #: ../../lib/frontends/widgets/prefpanel.py:443
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr "הרץ את %(appname)s אטומטית כאשר אני נכנס למערכת."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:449
 #, python-format
@@ -2358,15 +2249,15 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:456
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr "הזהר אותי אם אני מנסה לצאת עם הורדות פעילות."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:462
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr "הזהר אותי אם אני מנסה לצאת כאשר מתבצעות המרות."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:481
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr "(שינוי השפה דורש ממך לסגור ולהתחיל את התוכנה מחדש.)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:492
 msgid "Show videos from podcasts in the Videos section."
@@ -2378,52 +2269,52 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:504
 msgid "Every day"
-msgstr "כל יום"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:505
 msgid "Every hour"
-msgstr "כל שעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:506
 msgid "Every 30 minutes"
-msgstr "כל 30 דקות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:507
 msgid "Manually"
-msgstr "ידנית"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:512
 msgid "New"
-msgstr "חדש"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:513
 msgid "All"
-msgstr "הכול"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:514
 #: ../../lib/frontends/widgets/tabcontroller.py:122
 msgid "Off"
-msgstr "כבוי"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:520
 msgid "0"
-msgstr "0"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:521
 msgid "20"
-msgstr "20"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:522
 msgid "50"
-msgstr "50"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:523
 msgid "100"
-msgstr "100"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:524
 msgid "1000"
-msgstr "1000"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:530
 msgid "Default settings for new podcasts:"
@@ -2435,7 +2326,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:539
 msgid "Check for new content:"
-msgstr "בדוק תוכן חדש:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:544
 msgid "Auto-download setting:"
@@ -2443,52 +2334,52 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:550
 msgid "Remember this many old items:"
-msgstr "זכור מספר זה של פריטים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:551
 msgid "(in addition to the current contents)"
-msgstr "(בנוסף לתכנים הנוכחיים)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:564
 msgid "Maximum number of manual downloads at a time:"
-msgstr "מספר ההורדות הידניות המרבי בו זמנית:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:576
 msgid "Maximum number of auto-downloads at a time:"
-msgstr "מספר מרבי של הורדות אוטומטיות בו-זמנית:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:590
 msgid "Bittorrent:"
-msgstr "ביטורנט:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:594
 msgid "Limit upstream bandwidth to:"
-msgstr "הגבל רוחב פס עולה ל:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:608
 #: ../../lib/frontends/widgets/prefpanel.py:623
 msgid "KB/s"
-msgstr "ק\"ב/ש"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:612
 msgid "Limit downstream bandwidth to:"
-msgstr "הגבל רוחב פס יורד ל:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:627
 msgid "Limit torrent connections to:"
-msgstr "הגבל חיבורי טורנט ל:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:654
 msgid "Starting port:"
-msgstr "פורט התחלתי:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:660
 msgid "Ending port:"
-msgstr "פורט סופי:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Automatically forward ports.  (UPNP)"
-msgstr "קדם פורטים אוטומטית. (UPNP)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:672
 msgid "Use DHT to find more peers"
@@ -2496,19 +2387,19 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:676
 msgid "Ignore unencrypted connections."
-msgstr "התעלם מחיבורים לא מוצפנים."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:681
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "עצור העלאת טורנט זה כשיחס שיתוף זה מתקיים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:708
 msgid "Choose Movies Directory"
-msgstr "בחר תיקיית סרטים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:719
 msgid "Directory not valid"
-msgstr "תיקייה לא מתאימה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:720
 #, python-format
@@ -2519,7 +2410,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:734
 msgid "Migrate existing movies?"
-msgstr "להעביר סרטים קיימים?"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:736
 #, python-format
@@ -2531,63 +2422,63 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:754
 msgid "folder"
-msgstr "תיקייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:760
 msgid "visible"
-msgstr "גלוי"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:767 ../../lib/dialogs.py:118
 msgid "Add"
-msgstr "הוספה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:830
 msgid "Store downloads in this folder:"
-msgstr "אחסן את ההורדות בתיקייה זו:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:836
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
-msgstr "צפה בתיקיות אלו לקיום קובצי וידאו וקול חדשים והוסף אותם לספרייה:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:857
 msgid "Keep at least this much free space on my drive:"
-msgstr "שמור לפחות כמות כזאת של מקום פנוי בכונן הקשיח שלי:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:871
 msgid "GB"
-msgstr "ג'יגה בייט"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:875
 msgid "1 day"
-msgstr "יום אחד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:876
 msgid "3 days"
-msgstr "3 ימים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:877
 msgid "6 days"
-msgstr "6 ימים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:878
 msgid "10 days"
-msgstr "10 ימים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:879
 msgid "1 month"
-msgstr "חודש אחד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:880
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:103
 msgid "never"
-msgstr "לעולם לא"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:885
 msgid "By default, video and audio items expire after:"
-msgstr "כבררת מחדל, קובצי וידאו ושמע מתיישנים אחרי:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:897
 msgid "Share my media library."
@@ -2617,15 +2508,15 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:960
 msgid "Play media in Miro."
-msgstr "נגן מדיה במירו."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:962
 msgid "Always play videos in a separate window."
-msgstr "תמיד הצג וידאו בחלון נפרד."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:965
 msgid "Automatically enable movie subtitles when available."
-msgstr "להפעיל אוטומטית כתוביות לסרט כאשר הן קיימות."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:967
 msgid "Continuous Playback"
@@ -2633,11 +2524,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:971
 msgid "Play video and audio items one after another"
-msgstr "נגן קובצי וידאו ושמע אחד אחרי השני."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:973
 msgid "Stop after each video or audio item"
-msgstr "עצור לאחר ניגון כל קובץ."
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:975
 msgid "Resume Playback"
@@ -2661,7 +2552,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1044
 msgid "(changing this will not apply to currently running conversions)"
-msgstr "(שינוי הנתון הזה לא יחול על ההמרות שמתבצעות עכשיו)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1061
 msgid "Store"
@@ -2695,7 +2586,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1178
 msgid "Description:"
-msgstr "תיאור:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1196
 #, python-format
@@ -2732,23 +2623,23 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:1254
 #: ../../lib/frontends/widgets/itemedit.py:749
 msgid "General"
-msgstr "כללי"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1256
 msgid "Downloads"
-msgstr "הורדות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1258
 msgid "Folders"
-msgstr "תיקיות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1259
 msgid "Disk space"
-msgstr "נפח כונן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1261
 msgid "Playback"
-msgstr "השמעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1263
 msgid "Sharing"
@@ -2756,7 +2647,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1264
 msgid "Conversions"
-msgstr "המרות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1267
 msgid "Extensions"
@@ -2766,51 +2657,51 @@ msgstr ""
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] "לפני שעה %(count)d"
-msgstr[1] "לפני %(count)d שעות"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] "לפני יום %(count)d"
-msgstr[1] "לפני %(count)d ימים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] "לפני חודש %(count)d"
-msgstr[1] "לפני %(count)d חודשים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:93
 msgid "Auto-Expire Items:"
-msgstr "פריטים שפגים אוטומטית:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:96
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr "נצפה %(expiration)s (Default)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 1 day ago"
-msgstr "נצפה לפני יום אחד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 3 days ago"
-msgstr "נצפה לפני 3 ימים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 6 days ago"
-msgstr "נצפה לפני 6 ימים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 10 days ago"
-msgstr "נצפה לפני 10 ימים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:102
 msgid "Watched 1 month ago"
-msgstr "נצפה לפני חודש אחד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:138
 msgid "Outdated Podcast Items:"
@@ -2819,31 +2710,35 @@ msgstr ""
 #: ../../lib/frontends/widgets/feedsettingspanel.py:140
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr "שמור %(number)s (בררת מחדל)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 0"
-msgstr "שמור 0"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 20"
-msgstr "שמור 20"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 50"
-msgstr "שמור 50"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 100"
-msgstr "שמור 100"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:146
 msgid "Keep 1000"
-msgstr "שמור 1000"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:170
 msgid "Remove All"
-msgstr "הסר הכול"
+msgstr ""
+
+#: ../../lib/frontends/widgets/feedsettingspanel.py:183
+msgid "Old items have been removed."
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:194
 msgid "Pause auto-downloading when this many items are unplayed:"
@@ -2851,23 +2746,23 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "1 unplayed item"
-msgstr "פריט אחד לא נצפה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:199
 msgid "3 unplayed items"
-msgstr "3 פריטים לא נצפו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:200
 msgid "5 unplayed items"
-msgstr "5 פריטים לא נצפו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:201
 msgid "10 unplayed items"
-msgstr "10 פריטים לא נצפו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:202
 msgid "15 unplayed items"
-msgstr "15 פריטים לא נצפו"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:242
 msgid "Podcast Settings"
@@ -2980,7 +2875,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemedit.py:480
 #: ../../lib/frontends/widgets/widgetconst.py:58
 msgid "Name"
-msgstr "שם"
+msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:519
 msgid "Add Playlist"
@@ -2997,7 +2892,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:210
 msgid "Movies directory gone"
-msgstr "תיקיית הסרטים נעלמה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:212
 #, python-format
@@ -3016,43 +2911,43 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:403
 msgid "Error Revealing File"
-msgstr "שגיאה בחשיפת קובץ"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:404
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr "הקובץ %(filename)s נימחק מחוץ ל%(appname)s."
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:415
 msgid "Open Files..."
-msgstr "פתח קבצים..."
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:426
 #: ../../lib/frontends/widgets/application.py:431
 msgid "Open Files - Error"
-msgstr "פתח קבצים - שגיאה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:427
 #: ../../lib/frontends/widgets/application.py:749
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr "הקובץ %(filename)s לא קיים."
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:432
 msgid "The following files do not exist:"
-msgstr "הקבצים הבאים לא קיימים:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:466
 msgid "New Download"
-msgstr "הורדה חדשה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:467
 msgid "Enter the URL of the item to download"
-msgstr "הזן את כתובת הפריט להורדה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:468
 msgid "New Download - Invalid URL"
-msgstr "הורדה חדשה - כתובת לא תקינה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:469
 msgid ""
@@ -3061,26 +2956,22 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
-"הכתובת שהזנת אינה חוקית.\n"
-"בדוק את הכתובת ונסה שוב.\n"
-"\n"
-"הזן את כתובת הפריט להורדה"
 
 #: ../../lib/frontends/widgets/application.py:480
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr "%(appname)s מעודכן לגרסתו החדשה ביותר"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:482
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr "%(appname)s מעודכן לגרסתו החדשה ביותר!"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:522
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] "הסר פריט"
-msgstr[1] "הסר פריטים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:526
 msgid ""
@@ -3106,20 +2997,20 @@ msgstr[1] ""
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "האם אתה בטוח שאתה רוצה למחוק את הפריט?"
-msgstr[1] "האם אתה בטוח שאתה רוצה למחוק את כל %(count)d הפריטים?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:560
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
-msgstr[0] "אחד מהפריטים האלה הוא תיקייה. מחיקה של תיקייה תמחק את תוכנה."
-msgstr[1] "כמה מהפריטים האלה הם תיקיות. מחיקה של תיקייה תמחק את תוכנה."
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:616
 msgid "Save Item As..."
-msgstr "שמור פריט כ..."
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:680
 msgid "Enter the URL of the source to add"
@@ -3139,27 +3030,27 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:739
 msgid "Import OPML File"
-msgstr "יבא קובץ OPML"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:741
 msgid "OPML Files"
-msgstr "קבצי OPML"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:748
 msgid "Import OPML File - Error"
-msgstr "יבוא קובץ OPML - שגיאה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:754
 msgid "Export OPML File"
-msgstr "יצא קובץ OPML"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:805
 msgid "Create Playlist Folder"
-msgstr "צור תיקיית רשימת צפייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:806
 msgid "Enter a name for the new playlist folder"
-msgstr "הזן שם עבור תיקיית רשימת הצפייה החדשה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:827
 #: ../../lib/frontends/widgets/tablist.py:1005
@@ -3179,12 +3070,17 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:838
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr "הזן שם חדש לרשימת הצפייה %(name)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:842
+#: ../../lib/frontends/widgets/tablist.py:1068
+msgid "Rename Playlist Folder"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:843
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "הזן שם חדש לתיקיית רשימת הצפייה %(name)s"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:847
 #, python-format
@@ -3194,15 +3090,15 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:866
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] "הסר רשימת צפייה"
-msgstr[1] "הסר רשימות צפייה"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:868
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] "האם אתה בטוח שאתה רוצה להסיר את רשימת הצפייה?"
-msgstr[1] "האם אתה בטוח שאתה רוצה להסיר את %(count)s רשימות הצפייה האלה?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:883
 msgid "Remove source"
@@ -3234,6 +3130,12 @@ msgstr ""
 msgid "Select File to write Profile to"
 msgstr ""
 
+#: ../../lib/frontends/widgets/application.py:1002
+#: ../../lib/frontends/widgets/application.py:1021
+#: ../../lib/frontends/widgets/application.py:1040
+msgid "Are you sure you want to quit?"
+msgstr ""
+
 #: ../../lib/frontends/widgets/application.py:1011
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
@@ -3243,24 +3145,24 @@ msgstr ""
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "מתבצעת הורדה %(count)d עכשיו. לצאת בכל זאת?"
-msgstr[1] "מתבצעת %(count)d הורדות עכשיו. לצאת בכל זאת?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:1028
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "הזהר אותי כשאני מנסה לצאת מהתכנה כאשר מתבצעות הורדות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1042
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] "מתבצעת המרה %(count)d. לצאת בכל זאת?"
-msgstr[1] "מתבצעות %(count)d המרות. לצאת בכל זאת?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:1047
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr "להזהיר אותי כאשר אני מנסה לצאת בזמן ביצוע המרות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1300
 msgid "Connect failed"
@@ -3288,11 +3190,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1321
 msgid "Upgrading database"
-msgstr "משדרג את מסד הנתונים"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1552
 msgid "Message"
-msgstr "הודעה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/linkhandler.py:55
 msgid "Subscribe to Podcast"
@@ -3312,7 +3214,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:1019
 #: ../../lib/frontends/widgets/itemcontextmenu.py:240
 msgid "Copy URL to clipboard"
-msgstr "העתק את הכתובת ללוח גזירות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/tablist.py:1003
 msgid "Update Podcasts In Folder"
@@ -3371,7 +3273,7 @@ msgstr[1] ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:69
 msgid "Remove From the Library"
-msgstr "הסרה מהספרייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:71
 msgid "Delete from Drive"
@@ -3391,29 +3293,46 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:365
 msgid "Convert to..."
-msgstr "המרה אל..."
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/itemcontextmenu.py:357
 msgid "Mark as Unplayed"
-msgstr "סמן כלא-נצפה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:146
 #: ../../lib/frontends/widgets/itemcontextmenu.py:359
 msgid "Mark as Played"
-msgstr "סמן כנצפה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:152
 msgid "Play Just This Item"
-msgstr "נגן פריט זה בלבד"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:170
 msgid "Stop Seeding"
-msgstr "עצור שיתוף"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:174
 msgid "Resume Seeding"
-msgstr "המשך שיתוף"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:185
+#: ../../lib/frontends/widgets/itemcontextmenu.py:206
+#: ../../lib/frontends/widgets/itemcontextmenu.py:386
+#: ../../lib/frontends/widgets/itemcontextmenu.py:398
+msgid "Cancel Download"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:189
+#: ../../lib/frontends/widgets/itemcontextmenu.py:387
+msgid "Pause Download"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:193
+#: ../../lib/frontends/widgets/itemcontextmenu.py:397
+msgid "Resume Download"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:219
 #, python-format
@@ -3422,7 +3341,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:222
 msgid "File on Disk"
-msgstr "קובץ בכונן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:244
 msgid "View Web Page"
@@ -3439,49 +3358,53 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "הורד פריט %(count)d"
-msgstr[1] "%(count)d פריטים הורדו"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:353
 msgid "Add to Playlist"
-msgstr "הוסף לרשימת צפייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:371
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] "פריט זמין %(count)d"
-msgstr[1] "%(count)d פריטים זמינים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:381
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "פריט מורד %(count)d"
-msgstr[1] "%(count)d פריטים מורדים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:392
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] "פריט מושהה %(count)d"
-msgstr[1] "%(count)d פריטים מושהים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:401
 msgid "Restart Upload"
-msgstr "העלאה מחדש"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:404
 msgid "Edit Items"
 msgstr ""
 
+#: ../../lib/frontends/widgets/itemcontextmenu.py:433
+msgid "Remove From Playlist"
+msgstr ""
+
 #: ../../lib/frontends/widgets/playback.py:674
 msgid "Open Subtitles File..."
-msgstr "פתח קובץ כתוביות..."
+msgstr ""
 
 #: ../../lib/frontends/widgets/playback.py:675
 msgid "Subtitle files"
-msgstr "קבצי כתוביות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:223
 #: ../../lib/frontends/widgets/itemedit.py:281
@@ -3490,7 +3413,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:298
 msgid "None"
-msgstr "ללא"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:299
 #: ../../lib/frontends/widgets/widgetconst.py:64
@@ -3553,7 +3476,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemedit.py:505
 #: ../../lib/frontends/widgets/widgetconst.py:68
 msgid "Size"
-msgstr "גודל"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:507
 msgid "Art"
@@ -3582,7 +3505,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:667
 msgid "Edit Item"
-msgstr "ערוך פריט"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:689
 #, python-format
@@ -3603,15 +3526,15 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
-msgstr "תאריך"
+msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:66
 msgid "Time"
-msgstr "זמן"
+msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:67
 msgid "Status"
-msgstr "מצב"
+msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
@@ -3619,7 +3542,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
-msgstr "זמן סיום משוער"
+msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:71
 msgid "Torrent details"
@@ -3627,7 +3550,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:72
 msgid "Speed"
-msgstr "מהירות"
+msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
@@ -3647,7 +3570,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:77
 msgid "File Type"
-msgstr "סוג קובץ"
+msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Order"
@@ -3655,27 +3578,27 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:56
 msgid "Add a Playlist"
-msgstr "הוסף רשימת צפייה"
+msgstr ""
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add items to an existing playlist or a new one."
-msgstr "הוסף פריט לרשימת צפייה קיימת או חדשה."
+msgstr ""
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr "רשימת צפייה קיימת:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr "רשימת צפייה חדשה:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/rundialog.py:83
 msgid "Username:"
-msgstr "שם משתמש:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/rundialog.py:87
 msgid "Password:"
-msgstr "ססמה:"
+msgstr ""
 
 #: ../../lib/messagehandler.py:1575
 msgid "Subscribed to new podcast:"
@@ -3687,24 +3610,24 @@ msgstr ""
 
 #: ../../lib/messagehandler.py:1599
 msgid "Migrating Files"
-msgstr "העבר קבצים"
+msgstr ""
 
 #: ../../lib/theme.py:181
 msgid "Example Playlist"
-msgstr "רשימת צפייה לדוגמה"
+msgstr ""
 
 #: ../../lib/opml.py:219
 msgid "OPML Import failed"
-msgstr "יבוא OPML נכשל"
+msgstr ""
 
 #: ../../lib/opml.py:221
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr "נראה שקובץ OPML הנבחר לא תקין. היבוא הופסק."
+msgstr ""
 
 #: ../../lib/opml.py:229
 msgid "OPML Import summary"
-msgstr "סיכום יבוא OPML"
+msgstr ""
 
 #: ../../lib/opml.py:230
 #, python-format
@@ -3723,33 +3646,37 @@ msgstr[1] ""
 #: ../../lib/playlist.py:204
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "הכניסו שם חדש עבור רשימת הצפייה %s"
+msgstr ""
 
 #: ../../lib/searchengines.py:179
 msgid "Search All"
-msgstr "חפש הכול"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:778 ../../lib/httpclient.py:185
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr "לא יכול לכתוב ל %(filename)s"
+msgstr ""
+
+#: ../../lib/dl_daemon/download.py:786 ../../lib/dl_daemon/download.py:1035
+msgid "Not enough disk space"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:787 ../../lib/dl_daemon/download.py:1036
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr "%(amount)s מ\"ב דרושים לשמירת הוידאו"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:827
 msgid "no content"
-msgstr "אין תכנים"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1080
 msgid "BitTorrent failure"
-msgstr "ביטורנט נכשל"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1081
 msgid "BitTorrent failed to startup"
-msgstr "כישלון בהעלאת ביטורנט"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1207
 msgid "waiting to check existing files"
@@ -3765,33 +3692,33 @@ msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1450
 msgid "Corrupt Torrent"
-msgstr "טורנט פגום"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1451
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr "קובץ הטורנט ב %(url)s אינו תקין"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1495
 msgid "Torrent file deleted"
-msgstr "קובץ הטורנט נמחק"
+msgstr ""
 
 #: ../../lib/dl_daemon/download.py:1496
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr "קובץ הטורנט של פריט זה נימחק מחוץ ל%(appname)s"
+msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:62
 msgid "Upgrading Old Database"
-msgstr "משדרג מסד נתונים ישן"
+msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:68
 msgid "Converting Old Database"
-msgstr "ממיר מסד נתונים ישן"
+msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:80
 msgid "Upgrading Database"
-msgstr "משדרג מסד נתונים"
+msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:87
 msgid "Preparing Items"
@@ -3800,17 +3727,17 @@ msgstr ""
 #: ../../lib/displaytext.py:62
 #, python-format
 msgid "%(size)s GB/s"
-msgstr "%(size)s GB/s"
+msgstr ""
 
 #: ../../lib/displaytext.py:65
 #, python-format
 msgid "%(size)s MB/s"
-msgstr "%(size)s MB/s"
+msgstr ""
 
 #: ../../lib/displaytext.py:68
 #, python-format
 msgid "%(size)s kB/s"
-msgstr "%(size)s kB/s"
+msgstr ""
 
 #: ../../lib/displaytext.py:71
 #, python-format
@@ -3842,8 +3769,8 @@ msgstr[1] ""
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] "%(num)d שנייה"
-msgstr[1] "%(num)d שניות"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:129
 #, python-format
@@ -3869,52 +3796,52 @@ msgstr ""
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] "יפוג תוך יום %(count)d"
-msgstr[1] "יפוג תוך %(count)d ימים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:148
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] "יפוג תוך שעה %(count)d"
-msgstr[1] "יפוג תוך %(count)d שעות"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:154
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "יפוג תוך דקה %(count)d"
-msgstr[1] "יפוג תוך %(count)d דקות"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:162
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] "תפוגה: יום %(count)d"
-msgstr[1] "תפוגה: %(count)d ימים"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:168
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] "תפוגה: שעה %(count)d"
-msgstr[1] "תפוגה: %(count)d שעות"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:174
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "תפוגה: דקה %(count)d"
-msgstr[1] "תפוגה: %(count)d דקות"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../lib/displaytext.py:193
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr "%(month)s %(dayofmonth)s, %(year)s"
+msgstr ""
 
 #: ../../lib/controller.py:173
 msgid "Sending Crash Report"
-msgstr "שולח דו״ח קריסה"
+msgstr ""
 
 #: ../../lib/controller.py:194
 #, python-format
@@ -3924,15 +3851,15 @@ msgstr ""
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
 msgid "File not found"
-msgstr "הקובץ לא נמצא"
+msgstr ""
 
 #: ../../lib/downloader.py:336
 msgid "Flash URL Scraping Error"
-msgstr "שגיאת גירוד כתובת פלאש"
+msgstr ""
 
 #: ../../lib/downloader.py:535
 msgid "starting up"
-msgstr "מתחיל"
+msgstr ""
 
 #: ../../lib/downloader.py:542
 #, python-format
@@ -3967,7 +3894,7 @@ msgstr ""
 
 #: ../../lib/startup.py:156
 msgid "Unknown Error"
-msgstr "שגיאה לא ידועה"
+msgstr ""
 
 #: ../../lib/startup.py:157
 #, python-format
@@ -3975,11 +3902,10 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
-"תקלה לא מזוהה מנעה מ- %(appname)s להתחיל. בבקשה דווח על באג בקישור %(url)s."
 
 #: ../../lib/startup.py:267
 msgid "Database too new"
-msgstr "מסד נתונים חדש מדי"
+msgstr ""
 
 #: ../../lib/startup.py:269
 #, python-format
@@ -3987,12 +3913,10 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"ברשותך מסד נתונים שנשמר עם גרסה חדשה יותר של %(appname)s. יש להוריד את "
-"הגירסה האחרונה של %(appname)s ולהריץ אותה."
 
 #: ../../lib/startup.py:542
 msgid "Submitting Crash Report"
-msgstr "שולח דו\"ח שגיאות"
+msgstr ""
 
 #: ../../lib/startup.py:544
 #, python-format
@@ -4009,19 +3933,19 @@ msgstr ""
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
-msgstr "החל"
+msgstr ""
 
 #: ../../lib/dialogs.py:98
 msgid "Done"
-msgstr "בוצע"
+msgstr ""
 
 #: ../../lib/dialogs.py:102
 msgid "Continue"
-msgstr "המשך"
+msgstr ""
 
 #: ../../lib/dialogs.py:103
 msgid "Ignore"
-msgstr "התעלם"
+msgstr ""
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
@@ -4029,31 +3953,39 @@ msgstr ""
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
-msgstr "מסור דו״ח קריסה"
+msgstr ""
+
+#: ../../lib/dialogs.py:106
+msgid "Migrate"
+msgstr ""
+
+#: ../../lib/dialogs.py:107
+msgid "Don't Migrate"
+msgstr ""
 
 #: ../../lib/dialogs.py:109
 msgid "Remove Entry"
-msgstr "הסר רשומה"
+msgstr ""
 
 #: ../../lib/dialogs.py:110
 msgid "Delete File"
-msgstr "מחקית קובץ"
+msgstr ""
 
 #: ../../lib/dialogs.py:111
 msgid "Delete Files"
-msgstr "מחיקת קבצים"
+msgstr ""
 
 #: ../../lib/dialogs.py:112
 msgid "Keep Videos"
-msgstr "לשמור על קטעי הווידאו"
+msgstr ""
 
 #: ../../lib/dialogs.py:113
 msgid "Delete Videos"
-msgstr "מחיקת קטעי הווידאו"
+msgstr ""
 
 #: ../../lib/dialogs.py:114
 msgid "Create"
-msgstr "צור"
+msgstr ""
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
@@ -4061,7 +3993,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:116
 msgid "Create Folder"
-msgstr "צור תיקייה"
+msgstr ""
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
@@ -4069,61 +4001,61 @@ msgstr ""
 
 #: ../../lib/dialogs.py:119
 msgid "Add Into New Folder"
-msgstr "הוסף לתקייה חדשה"
+msgstr ""
 
 #: ../../lib/dialogs.py:123
 msgid "Not Now"
-msgstr "לא עכשיו"
+msgstr ""
 
 #: ../../lib/dialogs.py:124
 msgid "Close to Tray"
-msgstr "סגירה למגש מערכת"
+msgstr ""
 
 #: ../../lib/dialogs.py:125
 msgid "Launch Miro"
-msgstr "הפעל את מירו"
+msgstr ""
 
 #: ../../lib/dialogs.py:126
 msgid "Download Anyway"
-msgstr "הורד בכל אופן"
+msgstr ""
 
 #: ../../lib/dialogs.py:127
 msgid "Open in External Browser"
-msgstr "פתח בדפדפן חיצוני"
+msgstr ""
 
 #: ../../lib/dialogs.py:128
 msgid "Don't Install"
-msgstr "אל תתקין"
+msgstr ""
 
 #: ../../lib/dialogs.py:129
 msgid "Subscribe"
-msgstr "הירשם"
+msgstr ""
 
 #: ../../lib/dialogs.py:130
 msgid "Stop Watching"
-msgstr "הפסק צפייה"
+msgstr ""
 
 #: ../../lib/dialogs.py:131
 msgid "Retry"
-msgstr "נסה שוב"
+msgstr ""
 
 #: ../../lib/dialogs.py:132
 msgid "Start Fresh"
-msgstr "התחל מחדש"
+msgstr ""
 
 #: ../../lib/dialogs.py:133
 msgid "Include Database"
-msgstr "הכללת מסד הנתונים"
+msgstr ""
 
 #: ../../lib/dialogs.py:134
 msgid "Don't Include Database"
-msgstr "הפרדת מסד הנתונים"
+msgstr ""
 
 #: ../../lib/dialogs.py:215
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
-msgstr "%(authtype)s %(url)s דורש שם משתמש וססמה עבור \"%(realm)s\"."
+msgstr ""
 
 #: ../../lib/dialogs.py:218
 msgid "Login Required"
@@ -4131,12 +4063,12 @@ msgstr ""
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
-msgstr "שגיאת HTTP"
+msgstr ""
 
 #: ../../lib/httpclient.py:106
 #, python-format
 msgid "%(host)s closed connection"
-msgstr "%(host)s סגר חיבור"
+msgstr ""
 
 #: ../../lib/httpclient.py:111
 #, python-format
@@ -4167,6 +4099,10 @@ msgstr ""
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
+#: ../../lib/httpclient.py:141
+msgid "Got 404 status code"
+msgstr ""
+
 #: ../../lib/httpclient.py:143
 #, python-format
 msgid "Host returned bad status code: %(code)s"
@@ -4174,7 +4110,7 @@ msgstr ""
 
 #: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
 msgid "Authorization failed"
-msgstr "אימות נכשל"
+msgstr ""
 
 #: ../../lib/httpclient.py:154
 msgid "Authorization canceled"
@@ -4186,12 +4122,12 @@ msgstr ""
 
 #: ../../lib/httpclient.py:159
 msgid "Invalid URL"
-msgstr "כתובת אינטרנט לא תקינה"
+msgstr ""
 
 #: ../../lib/httpclient.py:160
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" אינה כתובת חוקית"
+msgstr ""
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
@@ -4205,53 +4141,53 @@ msgstr ""
 #: ../../lib/httpclient.py:172
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr "הקובץ \"%(path)s\" אינו קיים"
+msgstr ""
 
 #: ../../lib/httpclient.py:176
 msgid "Read error"
-msgstr "שגיאת קריאה"
+msgstr ""
 
 #: ../../lib/httpclient.py:177
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr "שגיאה בזמן קריאה מ-\"%(path)s\""
+msgstr ""
 
 #: ../../lib/httpclient.py:187
 msgid "Write error"
-msgstr "שגיאת כתיבה"
+msgstr ""
 
 #: ../../lib/httpclient.py:384
 msgid "Website"
-msgstr "אתר"
+msgstr ""
 
 #: ../../lib/httpclient.py:389
 msgid "Proxy"
-msgstr "פרוקסי"
+msgstr ""
 
 #: ../../lib/util.py:455 ../../lib/util.py:457
 #, python-format
 msgid "%(size)sGB"
-msgstr "%(size)sGB"
+msgstr ""
 
 #: ../../lib/util.py:461 ../../lib/util.py:463
 #, python-format
 msgid "%(size)sMB"
-msgstr "%(size)sMB"
+msgstr ""
 
 #: ../../lib/util.py:467 ../../lib/util.py:469
 #, python-format
 msgid "%(size)sKB"
-msgstr "%(size)sKB"
+msgstr ""
 
 #: ../../lib/util.py:473 ../../lib/util.py:475
 #, python-format
 msgid "%(size)sB"
-msgstr "%(size)sB"
+msgstr ""
 
 #: ../../lib/storedatabase.py:250
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr "שדרוג מסד הנתונים של %(appname)s נכשל"
+msgstr ""
 
 #: ../../lib/storedatabase.py:253
 #, python-format
@@ -4270,23 +4206,23 @@ msgstr ""
 
 #: ../../lib/storedatabase.py:326
 msgid "Database was created by a newer version of Miro "
-msgstr "מסד הנתונים נוצר על־ידי גרסה חדשה יותר של מירו "
+msgstr ""
 
 #: ../../lib/storedatabase.py:732
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr "מסד הנתונים %(appname)s נשמר בהצלחה"
+msgstr ""
 
 #: ../../lib/storedatabase.py:734
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
-msgstr "מסד הנתונים נשמר בהצלחה, עכשיו אפשר לצאת בביטחון בלי לאבד שום מידע"
+msgstr ""
 
 #: ../../lib/storedatabase.py:795
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr "שמירת מסד הנתונים %(appname)s נכשלה"
+msgstr ""
 
 #: ../../lib/storedatabase.py:798
 #, python-format
@@ -4305,44 +4241,31 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
-"%(appname)s נכשלה בשמירת מסד הנתונים.\n"
-"\n"
-"אם הכונן שלכם מלא, אנו ממליצים לפנות מקום ולנסות שוב. אם יש מקום פנוי בכונן, "
-"כדאי לנסות לשמור שוב.\n"
-"\n"
-"אם השגיאה חוזרת על עצמה, אנא צאו מ-%(appname)s והפעילו שוב. ייתכן שהשינויים "
-"האחרונים לא יישמרו.\n"
-"\n"
-"אם שגיאה זו מופיעה לעתים קרובות במהלך הורדה של קבצים, אנו ממליצים להפחית את "
-"כמות ההורדות בו־זמנית בתיבת ההגדרות שבלשונית ההורדות.\n"
-"\n"
-"שגיאה: %(error_text)s\n"
-"\n"
 
 #: ../../lib/singleclick.py:71
 msgid "Download already exists"
-msgstr "ההורדה כבר קיימת"
+msgstr ""
 
 #: ../../lib/singleclick.py:72
 msgid "That URL is already an external download."
-msgstr "כתובת הרשת היא כבר הורדה חיצונית"
+msgstr ""
 
 #: ../../lib/singleclick.py:78
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr "%(appname)s יתחיל בהורדה עכשיו."
+msgstr ""
 
 #: ../../lib/singleclick.py:81
 msgid "It is downloading now."
-msgstr "זה יורד עכשיו."
+msgstr ""
 
 #: ../../lib/singleclick.py:83
 msgid "It has already been downloaded."
-msgstr "זה כבר ירד בעבר."
+msgstr ""
 
 #: ../../lib/singleclick.py:122
 msgid "File Download"
-msgstr "הורדת קובץ"
+msgstr ""
 
 #: ../../lib/singleclick.py:124
 #, python-format
@@ -4352,7 +4275,7 @@ msgstr ""
 
 #: ../../lib/singleclick.py:171
 msgid "Download Error"
-msgstr "שגיאת הורדה"
+msgstr ""
 
 #: ../../lib/singleclick.py:173
 #, python-format
@@ -4393,7 +4316,7 @@ msgstr ""
 
 #: ../../lib/commandline.py:147
 msgid "Subscription error"
-msgstr "שגיאה בהצטרפות"
+msgstr ""
 
 #: ../../lib/commandline.py:157
 #, python-format
@@ -4416,13 +4339,13 @@ msgstr ""
 
 #: ../../lib/commandline.py:232
 msgid "Invalid Torrent"
-msgstr "טורנט לא תקין"
+msgstr ""
 
 #: ../../lib/commandline.py:234
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
-msgstr "ייתכן שקובץ הטורנט %(filename)s פגום ולא ניתן לפתיחה."
+msgstr ""
 
 #: ../../lib/commandline.py:241
 msgid "File Error"
@@ -4461,1054 +4384,3 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "כברירת מחדל, קבצי וידאו יפוגו לאחר:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "ערוצים מותאמים אישית"
-
-#~ msgid "Miro Guide"
-#~ msgstr "מדריך מירו"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "ניגון הסרטים אחד אחרי השני"
-
-#~ msgid "Stop after each video"
-#~ msgstr "עצור אחרי כל וידאו"
-
-#~ msgid "Comments"
-#~ msgstr "הערות"
-
-#~ msgid "Web Page"
-#~ msgstr "עמוד אינטרנט"
-
-#~ msgid "Add to library"
-#~ msgstr "הוסף ספרייה"
-
-#~ msgid "Add to Library"
-#~ msgstr "הוסף לספרייה"
-
-#~ msgid "Feed Settings"
-#~ msgstr "הגדרות ערוץ"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "חפש סרטים חדשים בתיקיות אלו וכלול אותם בספרייה:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "המשך את צפיית הסרט מהמקום בו הופסקה."
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "הסר %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "האם אתה בטוח שאתה רוצה להסיר את %(name)s?"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "נרשם למספר ערוצים"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "הזן שם לתיקיית הערוץ החדש"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "שים לב: אתה כבר רשום לאחד מערוצים אלה. ערוצים אלה ישארו במקומם הנוכחי."
-#~ msgstr[1] ""
-#~ "שים לב: אתה כבר רשום ל-%(count)d מערוצים אלה. ערוצים אלה ישארו במקומם הנוכחי."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "צור ערוץ?"
-#~ msgstr[1] "צור %(count)d ערוצים?"
-
-#, python-format
-#~ msgid "Bad Chunk size: %(msg)s"
-#~ msgstr "גודל נתח לא תקין: %(msg)s"
-
-#, python-format
-#~ msgid "Bad Header Line: %(msg)s"
-#~ msgstr "שורת כותרת לא תקינה: %(msg)s"
-
-#, python-format
-#~ msgid "Bad Status Code: %(code)s"
-#~ msgstr "קוד סטטוס לא תקין: %(code)s"
-
-#, python-format
-#~ msgid "Expected CRLF got: %(character)r"
-#~ msgstr "ציפיתי ל-CRLF התקבל: %(character)r"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "אתה מריץ גירסת %(appname)s עם סט מותאם של אפיקים."
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "אתה חייב לאתחל מחדש את הצפייה כדי ששינויי הצפייה יחולו."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "השתמש בזה לוידאו כשמנגן שמע:"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%(appname)s לא יכולה לשמור את מסד הנתונים שלה: כונן מלא.\n"
-#~ "אנו ממליצים למחוק קבצים מהכונן המלא או פשוט למחוק כמה קבצים מהאוסף שלך.\n"
-#~ "שינויים אחרונים עלולים לאבד."
-
-#~ msgid "Start Seeding"
-#~ msgstr "התחל זריעה"
-
-#~ msgid "Other"
-#~ msgstr "אחר"
-
-#, python-format
-#~ msgid "%(name)s First Time Setup"
-#~ msgstr "התקנה ראשונית של %(name)s"
-
-#, python-format
-#~ msgid "Welcome to the %(name)s First Time Setup"
-#~ msgstr "ברוכים הבאים להתקנה הראשונית של %(name)s"
-
-#~ msgid "Rename Item"
-#~ msgstr "שנה שם פריט"
-
-#~ msgid "Revert Item Name"
-#~ msgstr "החזר שם פריט זה לקדמותו"
-
-#~ msgid "File in Browser"
-#~ msgstr "קובץ בדפדפן"
-
-#, python-format
-#~ msgid "File in %(progname)s"
-#~ msgstr "קובץ ב-%(progname)s"
-
-#~ msgid "View"
-#~ msgstr "הצג"
-
-#~ msgid "Auto-Expire Videos:"
-#~ msgstr "תפוגה אוטומטית של סרטים:"
-
-#~ msgid "Outdated Feed Items:"
-#~ msgstr "פריטי ערוץ ישנים:"
-
-#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
-#~ msgstr "השהה הורדה אוטומטית כשמספר זה של פריטים עדיין לא נצפו"
-
-#~ msgid "Describe what you were doing when you got this error:"
-#~ msgstr "תאר מה עשית כשקיבלת את השגיאה:"
-
-#~ msgid "From"
-#~ msgstr "מ־"
-
-#~ msgid "File name:"
-#~ msgstr "שם קובץ:"
-
-#~ msgid "Show More"
-#~ msgstr "הראה יותר"
-
-#~ msgid "Show Less"
-#~ msgstr "הראה פחות"
-
-#~ msgid "File URL"
-#~ msgstr "כתובת קובץ"
-
-#~ msgid "License Page"
-#~ msgstr "עמוד רישיון"
-
-#~ msgid "Upload Rate"
-#~ msgstr "קצב העלאה"
-
-#~ msgid "Down Rate"
-#~ msgstr "קצב הורדה"
-
-#~ msgid "Down Total"
-#~ msgstr "סה\"כ ירד"
-
-#~ msgid "queued for autodownload"
-#~ msgstr "הוסף לתור להורדה אוטומטית"
-
-#~ msgid "Remove from playlist"
-#~ msgstr "הסר מרשימת צפייה"
-
-#, python-format
-#~ msgid "%(count)d Feed Folder Selected"
-#~ msgid_plural "%(count)d Feed Folders Selected"
-#~ msgstr[0] "תיקיית ערוץ %(count)d נבחרה"
-#~ msgstr[1] "%(count)d תיקיות ערוצים נבחרו"
-
-#, python-format
-#~ msgid "(contains %(count)d feed)"
-#~ msgid_plural "(contains %(count)d feeds)"
-#~ msgstr[0] "(מכיל ערוץ %(count)d)"
-#~ msgstr[1] "(מכיל %(count)d ערוצים)"
-
-#, python-format
-#~ msgid "%(count)d Feed Selected"
-#~ msgid_plural "%(count)d Feeds Selected"
-#~ msgstr[0] "ערוץ %(count)d נבחר"
-#~ msgstr[1] "%(count)d ערוצים נבחרו"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't find the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s לא יכול למצוא את ספריית הוידאו הראשית שנמצאת ב:\n"
-#~ "%(moviedirectory)s\n"
-#~ "יכול ליהיות שזה בגלל שהיא נמצאת על כונן חיצוני שאינו מחובר.\n"
-#~ "אם אתה ממשיך, ספריית הוידאו הראשיתתתאפס למיקום על כונן זה. אם יש לך סרטים "
-#~ "שהורדו זה יגרום ל-%(shortappname)s לאבד פרטים אודות סרטים אלה.\n"
-#~ "אם אתה יוצא, תוכל לחבר את הכונן או לתקן את הבעיה ולהריץ מחדש את "
-#~ "%(shortappname)s."
-
-#~ msgid "Enter the new name for the item"
-#~ msgstr "הזן שם חדש לפריט"
-
-#~ msgid "Add Site"
-#~ msgstr "הוסף אתר"
-
-#~ msgid "Enter the URL of the site to add"
-#~ msgstr "הזן את כתובת האתר להוספה"
-
-#~ msgid "Add Site - Invalid URL"
-#~ msgstr "הוספת אתר - כתובת לא תקינה"
-
-#~ msgid "Rename Feed Folder"
-#~ msgstr "שנה שם תיקיית הערוץ"
-
-#, python-format
-#~ msgid "Enter a new name for the feed folder %(name)s"
-#~ msgstr "הזן שם חדש לתיקיית הערוץ %(name)s"
-
-#~ msgid "Rename Feed"
-#~ msgstr "שנה שם הערוץ"
-
-#, python-format
-#~ msgid "Enter a new name for the feed %(name)s"
-#~ msgstr "הזן שם חדש לערוץ %(name)s"
-
-#~ msgid "Rename Site"
-#~ msgstr "שנה שם אתר"
-
-#, python-format
-#~ msgid "Enter a new name for the site %(name)s"
-#~ msgstr "הזן שם חדש לאתר %(name)s"
-
-#~ msgid "Migrating files"
-#~ msgstr "העבר קבצים"
-
-#~ msgid "Single and external downloads"
-#~ msgstr "הורדות בודדות וחיצוניות"
-
-#~ msgid "Feed downloads"
-#~ msgstr "הורדות ערוצים"
-
-#~ msgid "Seeding"
-#~ msgstr "זורע"
-
-#~ msgid "Default settings for new feeds:"
-#~ msgstr "הגדרות מחדל לערוצים חדשים:"
-
-#~ msgid "(These can be changed using the feed's settings button)"
-#~ msgstr "(ניתן לשנות זאת בעזרת כפתור ההגדרות של הערוץ)"
-
-#~ msgid "Auto download setting:"
-#~ msgstr "הגדרות הורדה אוטומטית:"
-
-#~ msgid "Feeds"
-#~ msgstr "ערוצים"
-
-#~ msgid "New Search Feed"
-#~ msgstr "ערוץ חיפוש חדש"
-
-#~ msgid "A search feed contains items that match a search term."
-#~ msgstr "ערוץ חיפוש מכיל פריטים שמתאימים לביטוי חיפוש"
-
-#~ msgid "Feed:"
-#~ msgstr "ערוץ:"
-
-#~ msgid "Add new feed to this section:"
-#~ msgstr "הוסף ערוץ חדש לקטע זה"
-
-#~ msgid "video"
-#~ msgstr "וידאו"
-
-#~ msgid "audio"
-#~ msgstr "שמע"
-
-#~ msgid "Subscribe to Feed"
-#~ msgstr "הירשם לערוץ"
-
-#, python-format
-#~ msgid ""
-#~ "This link appears to be a feed.  Do you want to add it to your "
-#~ "subscriptions?\n"
-#~ "\n"
-#~ "%(url)s"
-#~ msgstr ""
-#~ "הקישור הזה נראה כערוץ. האם אתה רוצה להירשם אליו?\n"
-#~ "\n"
-#~ "%(url)s"
-
-#~ msgid "Folder should go in this section:"
-#~ msgstr "תיקייה אמורה ללכת לקטע זה:"
-
-#~ msgid "Create Feed Folder"
-#~ msgstr "צור תיקיית ערוץ"
-
-#~ msgid "Remove Feed"
-#~ msgid_plural "Remove Feeds"
-#~ msgstr[0] "הסר ערוץ"
-#~ msgstr[1] "הסר ערוצים"
-
-#~ msgid "Are you sure you want to remove this feed:"
-#~ msgid_plural "Are you sure you want to remove these feeds:"
-#~ msgstr[0] "האם אתה בטוח שאתה רוצה להסיר את הערוץ הזה:"
-#~ msgstr[1] "האם אתה בטוח שאתה רוצה להסיר את הערוצים האלה:"
-
-#~ msgid ""
-#~ "Are you sure you want to remove this feed?  The downloads currently in "
-#~ "progress will be canceled."
-#~ msgid_plural ""
-#~ "Are you sure you want to remove these feeds?  The downloads currently in "
-#~ "progress will be canceled."
-#~ msgstr[0] ""
-#~ "האם אתה בטוח שאתה רוצה להסיר את הערוץ הזה? ההורדות שמתבצעות כרגע יבוטלו."
-#~ msgstr[1] ""
-#~ "האם אתה בטוח שאתה רוצה להסיר את הערוצים האלה? ההורדות שמתבצעות כרגע יבוטלו."
-
-#~ msgid "Permalink"
-#~ msgstr "קישור קבוע"
-
-#~ msgid "Full Feed"
-#~ msgstr "ערוץ מלא"
-
-#, python-format
-#~ msgid "Show %(count)d More Item"
-#~ msgid_plural "Show %(count)d More Items"
-#~ msgstr[0] "הצג עוד פריט %(count)d"
-#~ msgstr[1] "הצג עוד %(count)d פריטים"
-
-#~ msgid "Feed should go in this section:"
-#~ msgstr "ערוץ אמור ללכת לקטע הזה:"
-
-#~ msgid "Add Feed"
-#~ msgstr "הוסף ערוץ"
-
-#~ msgid "Enter the URL of the feed to add"
-#~ msgstr "הזן את כתובת הערוץ להוספה"
-
-#~ msgid "Add Feed - Invalid URL"
-#~ msgstr "הוספת ערוץ - כתובת לא תקינה"
-
-#~ msgid "Remove Site"
-#~ msgstr "הסר אתר"
-
-#~ msgid "Update Feeds In Folder"
-#~ msgstr "עדכן ערוצים בתיקייה"
-
-#~ msgid "Update Feed Now"
-#~ msgstr "עדכן ערוץ עכשיו"
-
-#~ msgid "Revert Feed Name"
-#~ msgstr "החזר שם הערוץ לקדמותו"
-
-#~ msgid "Update Feeds Now"
-#~ msgstr "עדכן ערוצים עכשיו"
-
-#~ msgid "SITES"
-#~ msgstr "אתרים"
-
-#~ msgid "FEEDS"
-#~ msgstr "ערוצים"
-
-#~ msgid "AUDIO FEEDS"
-#~ msgstr "ערוצי שמע"
-
-#~ msgid "PLAYLISTS"
-#~ msgstr "רשימות צפייה"
-
-#~ msgid "No Results Found"
-#~ msgstr "לא נמצאו תוצאות"
-
-#~ msgid "Title"
-#~ msgstr "כותרת"
-
-#~ msgid "Feed"
-#~ msgstr "ערוץ"
-
-#~ msgid "Length"
-#~ msgstr "אורך"
-
-#~ msgid "Save as a Feed"
-#~ msgstr "שמור כערוץ"
-
-#, python-format
-#~ msgid "%(rate)s uploading"
-#~ msgstr "%(rate)s העלאה"
-
-#, python-format
-#~ msgid "%(rate)s downloading"
-#~ msgstr "%(rate)s הורדה"
-
-#~ msgid "Auto Download"
-#~ msgstr "הורדה אוטומאטית"
-
-#~ msgid "Share feed"
-#~ msgstr "שתף ערוץ"
-
-#~ msgid "Remove feed"
-#~ msgstr "הסר ערוץ"
-
-#~ msgid "Subscribed to new feed:"
-#~ msgstr "הירשם לערוץ חדש:"
-
-#~ msgid "Subscribed to new feeds:"
-#~ msgstr "הירשם לערוצים חדשים:"
-
-#, python-format
-#~ msgid ""
-#~ "This %(appname)s feed file has the wrong content type: %(url)s. Please "
-#~ "notify the publisher of this file."
-#~ msgstr ""
-#~ "לקובץ הערוץ %(appname)s יש סוג תוכן שגוי: %(url)s. אנא דווח למפרסם קובץ זה."
-
-#, python-format
-#~ msgid "Could not download the %(appname)s feed file: %(url)s"
-#~ msgstr "לא יכול להוריד את קובץ הערוץ %(appname)s: %(url)s"
-
-#, python-format
-#~ msgid ""
-#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-#~ "[OK]"
-#~ msgstr "נראה שקובץ הטורנט %(filename)s מושחת ואינו יכול להיפתח. [אישור]"
-
-#~ msgid "activity"
-#~ msgstr "פעילות"
-
-#~ msgid "Error loading feed"
-#~ msgstr "שגיאה בטעינת הערוץ"
-
-#, python-format
-#~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-#~ msgstr "לא יכול לטעון את הערוץ ב-%(url)s (%(errordescription)s)."
-
-#, python-format
-#~ msgid "Channel is not compatible with %(appname)s"
-#~ msgstr "אפיק לא תואם ל-%(appname)s"
-
-#, python-format
-#~ msgid "Search All: %(text)s"
-#~ msgstr "חפש כל: %(text)s"
-
-#~ msgid "Playing File"
-#~ msgstr "מנגן קובץ"
-
-#~ msgid "Create Feed"
-#~ msgstr "צור ערוץ"
-
-#, python-format
-#~ msgid "Couldn't open %(filename)s for writing"
-#~ msgstr "לא יכול לפתוח את %(filename)s לכתיבה"
-
-#~ msgid "_Download Item"
-#~ msgstr "_הורד פריט"
-
-#~ msgid "Check _Version"
-#~ msgstr "בדיקת גרסה"
-
-#~ msgid "_Remove Item"
-#~ msgstr "_הסר פריט"
-
-#~ msgid "_Remove Items"
-#~ msgstr "_הסר פריטים"
-
-#~ msgid "Re_name Item"
-#~ msgstr "ש_נה שם פריט"
-
-#~ msgid "Save Item _As"
-#~ msgstr "_שמור פריט כ"
-
-#~ msgid "Save Items _As"
-#~ msgstr "_שמור פריטים כ"
-
-#~ msgid "_Options"
-#~ msgstr "_אפשרויות"
-
-#~ msgid "Cu_t"
-#~ msgstr "ג_זור"
-
-#~ msgid "_Copy"
-#~ msgstr "_העתקה"
-
-#~ msgid "_Paste"
-#~ msgstr "_הדבק"
-
-#~ msgid "Select _All"
-#~ msgstr "בחירת _הכל"
-
-#~ msgid "Add _Feed"
-#~ msgstr "הוסף _ערוץ"
-
-#~ msgid "New Searc_h Feed"
-#~ msgstr "_חיפוש ערוץ חדש"
-
-#~ msgid "New _Folder"
-#~ msgstr "_תיקייה חדשה"
-
-#~ msgid "Re_name"
-#~ msgstr "_שנה שם"
-
-#~ msgid "_Remove"
-#~ msgstr "_הסר"
-
-#~ msgid "_Remove Folder"
-#~ msgstr "_הסר תיקייה"
-
-#~ msgid "_Update Feed"
-#~ msgstr "_עדכן תיקייה"
-
-#~ msgid "_Update Feeds"
-#~ msgstr "_עדכן ערוצים"
-
-#~ msgid "Update _All Feeds"
-#~ msgstr "עדכן את _כל הערוצים"
-
-#~ msgid "_Import Feeds (OPML)"
-#~ msgstr "י_בא ערוצים (OPML)"
-
-#~ msgid "E_xport Feeds (OPML)"
-#~ msgstr "י_צא ערוצים (OPML)"
-
-#~ msgid "_Share with a Friend"
-#~ msgstr "ש_תף עם חבר"
-
-#~ msgid "New Playlist Fol_der"
-#~ msgstr "תיקיית רשימת צפייה חדשה"
-
-#~ msgid "_Remove Playlists"
-#~ msgstr "_הסר רשימות צפייה"
-
-#~ msgid "_Remove Playlist Folders"
-#~ msgstr "_הסרת תיקיות רשימות צפייה"
-
-#~ msgid "_Remove Playlist Folder"
-#~ msgstr "_הסרת תיקיית רשימת צפייה"
-
-#~ msgid "_Play"
-#~ msgstr "_הצג"
-
-#~ msgid "_Pause"
-#~ msgstr "_השהה"
-
-#~ msgid "_Stop"
-#~ msgstr "_עצור"
-
-#~ msgid "_Next Video"
-#~ msgstr "_הווידאו הבא"
-
-#~ msgid "_Previous Video"
-#~ msgstr "_וידאו קודם"
-
-#~ msgid "Skip _Forward"
-#~ msgstr "דילוג _קדימה"
-
-#~ msgid "Skip _Back"
-#~ msgstr "דילוג _אחורה"
-
-#~ msgid "Volume _Up"
-#~ msgstr "הגבר עוצמה"
-
-#~ msgid "Volume _Down"
-#~ msgstr "ה_קטן עוצמה"
-
-#~ msgid "_Donate"
-#~ msgstr "_תרום"
-
-#~ msgid "Report a _Bug"
-#~ msgstr "דיווח על _באג"
-
-#~ msgid "_Translate"
-#~ msgstr "_תרגם"
-
-#~ msgid "_Video"
-#~ msgstr "_וידאו"
-
-#, python-format
-#~ msgid "%(count)d day"
-#~ msgid_plural "%(count)d days"
-#~ msgstr[0] "יום %(count)d"
-#~ msgstr[1] "%(count)d ימים"
-
-#, python-format
-#~ msgid "%(count)d hour"
-#~ msgid_plural "%(count)d hours"
-#~ msgstr[0] "שעה %(count)d"
-#~ msgstr[1] "%(count)d שעות"
-
-#, python-format
-#~ msgid "%(count)d minute"
-#~ msgid_plural "%(count)d minutes"
-#~ msgstr[0] "דקה %(count)d"
-#~ msgstr[1] "%(count)d דקות"
-
-#, python-format
-#~ msgid "Successfully imported %(count)d feed."
-#~ msgid_plural "Successfully imported %(count)d feeds."
-#~ msgstr[0] "יובא בהצלחה ערוץ %(count)d."
-#~ msgstr[1] "יובאו בהצלחה %(count)d ערוצים."
-
-#, python-format
-#~ msgid "Skipped %(count)d feed already present."
-#~ msgid_plural "Skipped %(count)d feeds already present."
-#~ msgstr[0] "דולג ערוץ %(count)d שכבר נמצא."
-#~ msgstr[1] "דולגו %(count)d ערוצים שכבר נמצאים."
-
-#, python-format
-#~ msgid "%(size)s gb/s"
-#~ msgstr "%(size)s gb/s"
-
-#, python-format
-#~ msgid "%(size)s mb/s"
-#~ msgstr "%(size)s mb/s"
-
-#, python-format
-#~ msgid "%(size)s kb/s"
-#~ msgstr "%(size)s kb/s"
-
-#, python-format
-#~ msgid "%(size)s b/s"
-#~ msgstr "%(size)s b/s"
-
-#, python-format
-#~ msgid "%(size)s gb"
-#~ msgstr "%(size)s gb"
-
-#, python-format
-#~ msgid "%(size)s mb"
-#~ msgstr "%(size)s mb"
-
-#, python-format
-#~ msgid "%(size)s kb"
-#~ msgstr "%(size)s kb"
-
-#, python-format
-#~ msgid "%(size)s b"
-#~ msgstr "%(size)s b"
-
-#~ msgid "Display Contents"
-#~ msgstr "הצג תוכן"
-
-#~ msgid "Remove site"
-#~ msgid_plural "Remove sites"
-#~ msgstr[0] "הסר אתר"
-#~ msgstr[1] "הסר אתרים"
-
-#, python-format
-#~ msgid "%(count)d Site Selected"
-#~ msgid_plural "%(count)d Sites Selected"
-#~ msgstr[0] "האתר הניבחר %(count)d"
-#~ msgstr[1] "האתרים הניבחרים %(count)d"
-
-#, python-format
-#~ msgid ""
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "המסכים הבאים יעזרו לך להגדיר %(name)s כך שהם יעבדו בצורה הטובה ביותר "
-#~ "בשבילך.\n"
-#~ "\n"
-#~ "אנו ממליצים שתפעיל את %(name)s בעת עליית המחשב. בצורה זו, הורדות לא גמורות "
-#~ "יוכלו להיסתיים וקיבצי מדיה חדשים יוכלו לרדת ברקע, ולהיות מוכנים ברגע שתרצה "
-#~ "לצפות בהם."
-
-#, python-format
-#~ msgid "Completing the %(name)s First Time Setup"
-#~ msgstr "משלים את ההגדרות הראשוניות של %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the site to add"
-#~ msgstr ""
-#~ "הכתובת שהזנת אינה url חוקי.\n"
-#~ "אנא בדוק את ה- url ונסה שוב.\n"
-#~ "\n"
-#~ "הכנס את הכתובת של האתר להוספה."
-
-#, python-format
-#~ msgid "Are you sure you want to remove this site?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
-#~ msgstr[0] "האם אתה בטוח שברצונך להסיר את האתר?"
-#~ msgstr[1] "האם אתה בטוח שברצונך להסיר את אתרים אלו %(count)s?"
-
-#~ msgid "Remove Sites"
-#~ msgstr "הסר אתרים"
-
-#~ msgid "Insufficient disk space"
-#~ msgstr "מקום לא מספיק בדיסק"
-
-#~ msgid "Non Feed"
-#~ msgstr "לא ערוץ"
-
-#~ msgid "_Planet Miro"
-#~ msgstr "_Planet Miro"
-
-#, python-format
-#~ msgid ""
-#~ "Not enough disk space to upgrade your database from the previous version of "
-#~ "%(appname)s.  Please delete some files and try again."
-#~ msgstr ""
-#~ "איןמספיק מקום פנוי בדיסק על מנת לשדרג את מסד הנתונים מהגירסה הקודמת "
-#~ "%(appname)s. בבקשה פנה מקום בדיסק ונסה שנית."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s is not able to download a file at this URL:\n"
-#~ "\n"
-#~ "URL: %(url)s"
-#~ msgstr ""
-#~ "%(appname)s אינו מסוגל להוריד את הקובץ מהקישור URL:\n"
-#~ "URL: %(url)s"
-
-#~ msgid "Contents:"
-#~ msgstr "תוכן:"
-
-#~ msgid "Back to feed"
-#~ msgstr "חזרה לערוץ"
-
-#, python-format
-#~ msgid "_About %(name)s"
-#~ msgstr "על _אודות %(name)s"
-
-#~ msgid "Remove Website"
-#~ msgstr "מחק אתר"
-
-#~ msgid "Rename Website"
-#~ msgstr "שנה שם אתר"
-
-#~ msgid "Remove Websites"
-#~ msgstr "מחק אתרים"
-
-#~ msgid "Title:"
-#~ msgstr "כותרת:"
-
-#~ msgid "Media type:"
-#~ msgstr "סוג מדיה:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "אתרים"
-
-#~ msgid "Add Website"
-#~ msgstr "הוסף אתר"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "הזן את כתובת האתר שברצונך להוסיף"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "צא ממסך מלא"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "הוספת אתר - כתובת שגויה"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "הזן שם חדש לאתר %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "הכתובת שהזנת שגויה.\n"
-#~ "אנא בדוק את הכתובת ונסה שנית.\n"
-#~ "\n"
-#~ "הזן את כתובת האתר שברצונך להוסיף"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "הסר אתר"
-#~ msgstr[1] "הסר אתרים"
-
-#~ msgid "Re_name Website"
-#~ msgstr "שנה שם אתר"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "הסר תיקיות"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_ערוך פריט"
-
-#~ msgid "_Preferences"
-#~ msgstr "_העדפות"
-
-#~ msgid "_Remove Website"
-#~ msgstr "הסר אתר"
-
-#~ msgid "_Previous Item"
-#~ msgstr "פריט קודם"
-
-#~ msgid "_Next Item"
-#~ msgstr "פריט הבא"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_כתוביות"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "איו חיבור - מנסה שנית בעוד %s"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "הסר אתרים"
-
-#~ msgid "Path:"
-#~ msgstr "נתיב:"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "יחס העלאה/הורדה"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "האם להסיר אתר זה?"
-#~ msgstr[1] "האם להסיר את %(count)s האתרים האלו?"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "לא ניתן ליצור את התיקייה '%s'.  "
-
-#~ msgid "(Pending)"
-#~ msgstr "(בהמתנה)"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "נבחר אתר אחד"
-#~ msgstr[1] "נבחרו %(count)d אתרים"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "שינוי _שם הערוץ"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "הסרת _ערוצים"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "ה_סרת הערוץ"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "ערוצי וידאו"
-
-#~ msgid "Pipeline request never started"
-#~ msgstr "בקשת פייפליין מעולם לא התחילה"
-
-#~ msgid "All Items Match Search"
-#~ msgstr "כל הפריטים מתאימים לחיפוש"
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "אוניברסלי, סינית"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "התכנה %(appname)s תשלח כעת את פרטי קריסת התכנה למאגר המרכזי.\n"
-#~ "\n"
-#~ "האם ברצונך לשלב בדיווח את כל הפרטים על ספריית הווידאו והפודקאסטים שלך? דיווח "
-#~ "מקיף שכזה יסייע לנו לאתר את התקלה."
-
-#~ msgid "Would you like to keep the feed?"
-#~ msgstr "תרצו לשמור את הערוץ?"
-
-#, python-format
-#~ msgid ""
-#~ "This channel is not compatible with %(appname)s but we'll try our best to "
-#~ "grab the files.  It may take extra time to list the videos, and descriptions "
-#~ "may look funny.\n"
-#~ "\n"
-#~ "Please contact the publishers of %(url)s and ask if they can supply a feed "
-#~ "in a format that will work with %(appname)s.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "אפיק זה אינו תואם ל-%(appname)s אבל נעשה את המיטב להשיג את הקבצים. זה עלול "
-#~ "לקחת יותר זמן למנות את הסרטים, והתיאורים עלולים להיראות מוזר.\n"
-#~ "\n"
-#~ "אנא צור קשר עם המפרסמים של %(url)s ושאל אם הם יכולים לספק ערוץ בפורמט שיעבוד "
-#~ "עם %(appname)s.\n"
-#~ "\n"
-#~ "האם אתה רוצה לנסות לטעון את האפיק בכל זאת?"
-
-#, python-format
-#~ msgid ""
-#~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
-#~ msgstr "נראה שהקובץ ב-%(url)s אינו מסוג שמע, וידאו או הזנת RSS."
-
-#, python-format
-#~ msgid ""
-#~ "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "לקובץ הערוץ %(appname)s יש פורמט לא תקין: %(url)s. אנא דווח למפרסם קובץ זה."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "אנח מצטערים, התכנית %(appname)s כשלה בעת שדרוג מסד הנתונים שלך עקב שגיאות.\n"
-#~ "\n"
-#~ "נא לבדוק האם הכונן שלך מלא. אם הוא מלא עליך לצאת מ־%(appname)s,לפנות קצת "
-#~ "מקום, ולהפעיל את %(appname)s מחדש.\n"
-#~ "\n"
-#~ "אם הכונן שלך אינו מלא, באפשרותך לסייע לנו להבין את הבעיה על ידי דיווח על באג "
-#~ "למסד נתוני הקריסות שלנו.\n"
-#~ "\n"
-#~ "לבסוף, ניתן להתחיל מחדש ומסד הנתונים הפגום שלך יוסר, אך יהיה עליך להוסיף "
-#~ "מחדש את ההזנות ואת קובצי המדיה שלך."
-
-#~ msgid "Contents appear in the library"
-#~ msgstr "תוכן מופיע בספרייה"
-
-#, python-format
-#~ msgid "%(num).0f hr"
-#~ msgid_plural "%(num).0f hrs"
-#~ msgstr[0] "שעה %(num).0f"
-#~ msgstr[1] "%(num).0f שעות"
-
-#, python-format
-#~ msgid "%(num).0f min"
-#~ msgid_plural "%(num).0f mins"
-#~ msgstr[0] "דקה %(num).0f"
-#~ msgstr[1] "%(num).0f דקות"
-
-#, python-format
-#~ msgid "%(num).0f day"
-#~ msgid_plural "%(num).0f days"
-#~ msgstr[0] "יום %(num).0f"
-#~ msgstr[1] "%(num).0f ימים"
-
-#~ msgid "Upload Total"
-#~ msgstr "סה\"כ העלאה"
-
-#~ msgid "Convert"
-#~ msgstr "המרה"
-
-#~ msgid "Save Search"
-#~ msgstr "שמור חיפוש"
-
-#~ msgid ""
-#~ "One of these items is a folder.  Delete/Removeing a folder will "
-#~ "delete/remove it's contents"
-#~ msgid_plural ""
-#~ "Some of these items are folders.  Delete/Removeing a folder will "
-#~ "delete/remove it's contents"
-#~ msgstr[0] ""
-#~ "אחד מהפריטים האלה הוא תיקייה. מחיקה או הסרה של תיקייה תמחק את תוכנה."
-#~ msgstr[1] ""
-#~ "כמה מהפריטים האלו הם תיקיות. מחיקה או הסרה של תיקייה תמחק את תוכנה."
-
-#~ msgid ""
-#~ "One of these items was not downloaded from a feed. Would you like to delete "
-#~ "it or just remove it from the Library?"
-#~ msgid_plural ""
-#~ "Some of these items were not downloaded from a feed. Would you like to "
-#~ "delete them or just remove them from the Library?"
-#~ msgstr[0] ""
-#~ "אחד מהפריטים האלה לא הורד מערוץ. האם אתה רוצה למחוק אותו או רק להסיר אותו "
-#~ "מהספרייה?"
-#~ msgstr[1] ""
-#~ "כמה מהפריטים האלה לא הורדו מערוץ. האם אתה רוצה למחוק אותם או רק להסיר אותם "
-#~ "מהספרייה?"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the feed to add"
-#~ msgstr ""
-#~ "הכתובת שהזנת אינה תקינה.\n"
-#~ "בדוק את הכתובת ונסה שוב.\n"
-#~ "\n"
-#~ "הזן את כתובת הערוץ להוספה"
-
-#~ msgid "Open log"
-#~ msgstr "פתיחת יומן"
-
-#~ msgid ""
-#~ "Include entire program database including all video and feed metadata with "
-#~ "crash report"
-#~ msgstr ""
-#~ "כלול את כל מסד הנתונים של התכנית, כולל כל הסרטים והערוצים, עם דו\"ח הקריסה"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s has encountered an internal error.  You can help us track down "
-#~ "this problem and fix it by submitting an error report."
-#~ msgstr ""
-#~ "%(appname)s נתקל בשגיאה פנימית. באפשרותך לעזור לנו לאתר את הבעיה ולתקנה "
-#~ "על־ידי דיווח על התקלה."
-
-#~ msgid "LIBRARY"
-#~ msgstr "ספרייה"
-
-#~ msgid ""
-#~ "Miro is upgrading your database of feeds and files.  This one-time process "
-#~ "can take a long time if you have a large number of items in Miro (it can "
-#~ "even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Miro משדרג את מסד הנתונים שלך. תהליך חד פעמי זה יכול לקחת זמן רב אם Miro "
-#~ "מכיל מספר גדול של קבצים (התהליך עלול לקחת יותר מ־30 דקות)."
-
-#, python-format
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should %(appname)s "
-#~ "migrate your existing downloads there? (Currently downloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "בחרת בתיקייה חדשה כיעד להורדת סרטים. האם תרצה ש־%(appname)s יעביר אליה את "
-#~ "הקבצים הקיימים? (קבצים שמורדים עכשיו לא יועברו עד לסיום ההורדה.)"
-
-#~ msgid ""
-#~ "Resume playing a video or audio item from the point it was last stopped."
-#~ msgstr "המשך לנגן קובצי וידאו או שמע מהמקום שבו הם הופסקו בפעם האחרונה."
