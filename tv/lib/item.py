@@ -1860,36 +1860,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return dler
     downloader = property(_get_downloader)
 
-    def fix_incorrect_torrent_subdir(self):
-        """Up to revision 6257, torrent downloads were incorrectly
-        being created in an extra subdirectory.  This method migrates
-        those torrent downloads to the correct layout.
-
-        from: /path/to/movies/foobar.mp4/foobar.mp4
-        to:   /path/to/movies/foobar.mp4
-        """
-        filename_path = self.get_filename()
-        if filename_path is None:
-            return
-        if fileutil.isdir(filename_path):
-            enclosed_file = os.path.join(filename_path,
-                                        os.path.basename(filename_path))
-            if fileutil.exists(enclosed_file):
-                logging.info("Migrating incorrect torrent download: %s",
-                             enclosed_file)
-                try:
-                    temp = filename_path + ".tmp"
-                    fileutil.move(enclosed_file, temp)
-                    for turd in os.listdir(fileutil.expand_filename(
-                            filename_path)):
-                        os.remove(turd)
-                    fileutil.rmdir(filename_path)
-                    fileutil.rename(temp, filename_path)
-                except OSError:
-                    logging.warn("fix_incorrect_torrent_subdir error:\n%s",
-                                 traceback.format_exc())
-                self.set_filename(filename_path)
-
     def get_auto_rating(self):
         """Guess at a rating based on the number of times the files has been
         played vs. skipped and the item's age.
