@@ -272,7 +272,12 @@ class WindowsApplication(Application):
     def reveal_file(self, fn):
         if not os.path.isdir(fn):
             fn = os.path.dirname(fn)
-        os.startfile(fn)
+        try:
+            os.startfile(fn)
+        except WindowsError, e:
+            # bz:17264
+            # Do we want to be more specific and return a message to user?
+            pass
 
     def open_file(self, fn):
         _, extension = os.path.splitext(fn)
