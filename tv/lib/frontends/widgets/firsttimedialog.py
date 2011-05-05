@@ -88,6 +88,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         self._done_firsttime_callback = done_firsttime_callback
 
+        self.mp_name, self.mp_path = get_plat_media_player_name_path()
+
         self._page_box = widgetset.VBox()
         self._pages = self.build_pages()
         self._page_index = -1
@@ -97,10 +99,13 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self.on_close_handler = self.connect('will-close', self.on_close)
 
     def build_pages(self):
-        pages = [widgetutil.pad(self.build_language_page()),
-                 widgetutil.pad(self.build_startup_page()),
-                 widgetutil.pad(self.build_import_page()),
-                 widgetutil.pad(self.build_search_page())]
+        pages = [self.build_language_page(),
+                 self.build_startup_page(),
+                 self.build_import_page(),
+                 self.build_search_page(),
+                 self.build_media_player_import_page()]
+
+        pages = [widgetutil.pad(page) for page in pages]
         for page in pages:
             page.set_size_request(WIDTH - 40, HEIGHT - 40)
         return pages
@@ -130,11 +135,11 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def this_page(self, rebuild=False):
         self._switch_page(self._page_index, rebuild)
 
-    def next_page(self, rebuild=False):
-        self._switch_page(self._page_index + 1, rebuild)
+    def next_page(self, rebuild=False, skip=0):
+        self._switch_page(self._page_index + 1 + skip, rebuild)
 
-    def prev_page(self):
-        self._switch_page(self._page_index - 1)
+    def prev_page(self, skip=0):
+        self._switch_page(self._page_index - 1 - skip)
 
     def _force_space_label(self):
         lab = widgetset.Label(" ")
@@ -287,20 +292,6 @@ class FirstTimeDialog(widgetset.DialogWindow):
         group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
-        # XXX: we can think about providing a list of media players installed
-        # and search through those, but righ tnow the code doesn't handle
-        # a list of search directories to search.
-        (name, path) = get_plat_media_player_name_path()
-        if path:
-            import_rb = widgetset.RadioButton(
-                _("Import from %(player)s as watched folder",
-                  {"player": name}), rbg2)
-            self.search_directory = path
-            group_box.pack_start(widgetutil.align_left(import_rb, left_pad=30))
-        else:
-            # can't import - import_rb doesn't exist.
-            import_rb = None
-
         search_entry = widgetset.TextEntry()
         search_entry.set_width(20)
         change_button = widgetset.Button(_("Change"))
@@ -333,16 +324,19 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     self.search_directory = _get_user_media_directory()
 
                 self.next_page()
+            elif self.mp_name is not None and self.mp_path is not None:
+                self.next_page(skip=1)
             else:
-                if rbg2.get_selected() == import_rb:
-                    # add watched folder
-                    app.watched_folder_manager.add(self.search_directory)
                 self.destroy()
 
         search_button = widgetset.Button(_("Search"))
         search_button.connect('clicked', handle_search_finish_clicked)
-        search_button.text_faces = {"search": _("Search"),
-                                    "finish": _("Finish")}
+        search_button.text_faces = {"search": _("Search")}
+        if self.mp_name is None or self.mp_path is None:
+            search_button.text_faces["next"] = _("Finish")
+        else:
+            search_button.text_faces["next"] = _("Next >")
+
         search_button.mode = "search"
 
         def switch_mode(mode):
@@ -362,24 +356,20 @@ class FirstTimeDialog(widgetset.DialogWindow):
                 group_box.disable()
                 search_entry.disable()
                 change_button.disable()
-                switch_mode("finish")
+                switch_mode("next")
 
             elif widget is yes_rb:
                 group_box.enable()
-                if (rbg2.get_selected() is restrict_rb or
-                  rbg2.get_selected() is import_rb):
+                if rbg2.get_selected() is restrict_rb:
                     search_entry.disable()
                     change_button.disable()
                 else:
                     search_entry.enable()
                     change_button.enable()
 
-                if rbg2.get_selected() is import_rb:
-                    switch_mode("finish")
-                else:
-                    switch_mode("search")
+                switch_mode("search")
 
-            elif widget is restrict_rb or widget is import_rb:
+            elif widget is restrict_rb:
                 search_entry.disable()
                 change_button.disable()
 
@@ -389,15 +379,11 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
             if widget is restrict_rb or widget is search_rb:
                 switch_mode("search")
-            if widget is import_rb:
-                switch_mode("finish")
 
         no_rb.connect('clicked', handle_radio_button_clicked)
         yes_rb.connect('clicked', handle_radio_button_clicked)
         restrict_rb.connect('clicked', handle_radio_button_clicked)
         search_rb.connect('clicked', handle_radio_button_clicked)
-        if import_rb:
-            import_rb.connect('clicked', handle_radio_button_clicked)
 
         handle_radio_button_clicked(restrict_rb)
         handle_radio_button_clicked(no_rb)
@@ -431,12 +417,12 @@ class FirstTimeDialog(widgetset.DialogWindow):
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
 
-        finish_button = widgetset.Button(_("Finish"))
-        finish_button.connect('clicked', lambda x: self.destroy())
+        next_button = widgetset.Button(_("Next >"))
+        next_button.connect('clicked', lambda x: self.next_page())
 
         vbox.pack_start(
             widgetutil.align_bottom(widgetutil.align_right(
-                    widgetutil.build_hbox((prev_button, finish_button)))),
+                    widgetutil.build_hbox((prev_button, next_button)))),
             expand=True)
 
         def handle_cancel_clicked(widget):
@@ -446,7 +432,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             cancel_button.disable()
 
             prev_button.enable()
-            finish_button.enable()
+            next_button.enable()
             self.cancelled = True
 
         def make_progress():
@@ -485,7 +471,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             cancel_button.enable()
 
             prev_button.disable()
-            finish_button.disable()
+            next_button.disable()
 
             search_directory = FilenameType(self.search_directory)
             self.finder = util.gather_media_files(search_directory)
@@ -496,4 +482,53 @@ class FirstTimeDialog(widgetset.DialogWindow):
         cancel_button.connect('clicked', handle_cancel_clicked)
 
         cancel_button.disable()
+        return vbox
+
+    def build_media_player_import_page(self):
+        vbox = widgetset.VBox(spacing=5)
+        vbox.pack_start(_build_title(
+                _("Display %(player)s Library",
+                  {"player": self.mp_name})))
+
+        lab = widgetset.Label(_(
+                "Would you like to display your %(player)s music and "
+                "video in %(appname)s?",
+                {"player": self.mp_name,
+                 "appname": app.config.get(prefs.SHORT_APP_NAME)}))
+        lab.set_size_request(WIDTH - 40, -1)
+        lab.set_wrap(True)
+        vbox.pack_start(widgetutil.align_left(lab))
+
+        rbg = widgetset.RadioButtonGroup()
+        yes_rb = widgetset.RadioButton(_("Yes"), rbg)
+        no_rb = widgetset.RadioButton(_("No"), rbg)
+        yes_rb.set_selected()
+
+        vbox.pack_start(widgetutil.align_left(yes_rb))
+        vbox.pack_start(widgetutil.align_left(no_rb))
+
+        lab = widgetset.Label(_(
+                "Note: Miro won't move or copy any files on your disk.  "
+                "It will just add them to your %(appname)s library.",
+                {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
+        lab.set_size_request(WIDTH - 40, -1)
+        lab.set_wrap(True)
+        vbox.pack_start(widgetutil.align_left(lab))
+
+        def handle_finish(widget):
+            if rbg.get_selected() == yes_rb:
+                app.watched_folder_manager.add(self.mp_path)
+            self.destroy()
+
+        prev_button = widgetset.Button(_("< Previous"))
+        prev_button.connect('clicked', lambda x: self.prev_page(skip=1))
+
+        finish_button = widgetset.Button(_("Finish"))
+        finish_button.connect('clicked', handle_finish)
+
+        vbox.pack_start(
+            widgetutil.align_bottom(widgetutil.align_right(
+                    widgetutil.build_hbox((prev_button, finish_button)))),
+            expand=True)
+
         return vbox
