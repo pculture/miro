@@ -246,7 +246,11 @@ class OSXApplication(Application, signals.SignalEmitter):
     def handle_download_complete(self, obj, item):
         title = _('Download Completed')
         body = _('Download of video \'%s\' is finished.') % item.get_title()
-        icon = _growlImage.Image.imageFromPath(item.get_thumbnail())
+        icon = None
+        try:
+            icon = _growlImage.Image.imageFromPath(item.get_thumbnail())
+        except TypeError:
+            pass
         self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, icon=icon)
 
     def handle_unwatched_count_changed(self):
