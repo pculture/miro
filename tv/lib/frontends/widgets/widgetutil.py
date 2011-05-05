@@ -438,9 +438,11 @@ class TitlebarButton(widgetset.CustomButton):
         self.icon = icon
         self.surface = ThreeImageSurface()
         self.surface_active = ThreeImageSurface()
+        self.label_hidden = False
 
         if icon is not None:
-            self.width_offset = 40
+            self.text_pad_left = 2
+            self.text_pad_right = 8
             self.surface.set_images(
                 make_surface(icon),
                 make_surface('titlebar-middle'),
@@ -450,7 +452,8 @@ class TitlebarButton(widgetset.CustomButton):
                 make_surface('titlebar-middle_active'),
                 make_surface('titlebar-right_active'))
         else:
-            self.width_offset = 26
+            self.text_pad_left = 7
+            self.text_pad_right = 7
             self.surface.set_images(
                 make_surface('titlebar-left'),
                 make_surface('titlebar-middle'),
@@ -464,9 +467,18 @@ class TitlebarButton(widgetset.CustomButton):
         layout.set_font(0.8)
         return layout.textbox(self.title)
 
+    def set_label_hidden(self, hidden):
+        self.label_hidden = hidden
+        self.invalidate_size_request()
+
     def size_request(self, layout):
-        width, height = self._get_textbox(layout).get_size()
-        return width + self.width_offset, self.surface.height
+        # Start with the width needed to draw our images
+        width = self.surface.left.width + self.surface.right.width
+        if not self.label_hidden:
+            # Add width for the text
+            text_width, _ = self._get_textbox(layout).get_size()
+            width += text_width + self.text_pad_left + self.text_pad_right
+        return width, self.surface.height
 
     def draw(self, context, layout):
         if self.state == 'pressed':
@@ -476,6 +488,10 @@ class TitlebarButton(widgetset.CustomButton):
         else:
             self.surface.draw(context, 0, 0, context.width,
                               context.height)
+        if not self.label_hidden:
+            self.draw_label(context, layout)
+
+    def draw_label(self, context, layout):
         if self.get_disabled():
             layout.set_text_color(TitlebarButton.DISABLED_TEXT_COLOR)
         else:
@@ -483,9 +499,8 @@ class TitlebarButton(widgetset.CustomButton):
         textbox = self._get_textbox(layout)
         text_width, text_height = textbox.get_size()
         text_y = (context.height - text_height) / 2
-        textbox.draw(context, self.width_offset - 12,
-                     text_y, text_width, text_height)
-
+        text_x = self.surface.left.width + self.text_pad_left
+        textbox.draw(context, text_x, text_y, text_width, text_height)
 
 class MultiStateTitlebarButton(widgetset.CustomButton):
     """

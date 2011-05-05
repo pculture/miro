@@ -287,3 +287,5 @@ OPEN_FOLDER_ON_STARTUP = \
     Pref(key='openFolderOnStartup',default=None, platformSpecific=False)
 OPEN_CHANNEL_ON_STARTUP = \
     Pref(key='openChannelOnStartup',default=None, platformSpecific=False)
+SMALL_MONITOR_MODE = \
+    Pref(key='smallMonitorMode',default=False, platformSpecific=False)

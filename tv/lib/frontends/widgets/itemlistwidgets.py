@@ -414,6 +414,21 @@ class ItemListTitlebar(Titlebar):
                 expand=True)
 
         self.filters = {}
+        app.frontend_config_watcher.connect_weak('changed',
+                self.on_config_change)
+
+        self.set_small_monitor_mode(app.config.get(prefs.SMALL_MONITOR_MODE))
+
+    def on_config_change(self, obj, key, value):
+        if key == prefs.SMALL_MONITOR_MODE.key:
+            self.set_small_monitor_mode(value)
+
+    def set_small_monitor_mode(self, enabled):
+        """Called when we should change into/out of small monitor mode
+
+        Subclasses should override this if they need to change in response.
+        """
+        pass
 
     def update_resume_button(self, text, resume_time):
         """Update the resume button text.
@@ -1169,6 +1184,10 @@ class DownloadTitlebar(ItemListTitlebar):
         self.create_signal('cancel-all')
         self.create_signal('settings')
 
+    def set_small_monitor_mode(self, enabled):
+        for button in self.buttons:
+            button.set_label_hidden(enabled)
+
     def _build_before_filters(self):
         h = widgetset.HBox(spacing=5)
 
@@ -1195,6 +1214,9 @@ class DownloadTitlebar(ItemListTitlebar):
         settings_button.connect('clicked', self._on_settings_button_clicked)
         h.pack_start(widgetutil.align_middle(settings_button, top_pad=5,
             bottom_pad=5, right_pad=16))
+
+        self.buttons = [pause_button, resume_button, cancel_button,
+                settings_button]
         return h
 
     def _on_pause_button_clicked(self, widget):

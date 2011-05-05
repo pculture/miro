@@ -175,8 +175,7 @@ class Widget(signals.SignalEmitter):
         return self._widget.size_request()
 
     def invalidate_size_request(self):
-        # FIXME - do we need to do anything here?
-        pass
+        self._widget.queue_resize()
 
     def set_size_request(self, width, height):
         if not width >= -1 and height >= -1:
