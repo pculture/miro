@@ -432,6 +432,11 @@ class ItemListTitlebar(Titlebar):
         """
         return None
 
+    def _build_after_filters(self):
+        """Builds the widgets to place to the right of the filters
+        """
+        return None
+
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
 
