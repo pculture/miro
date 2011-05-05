@@ -92,4 +92,4 @@ def get_osname():
     return osname
 
 def get_default_search_dir():
-    return specialfolders.get_special_folder("My Videos")
+    return specialfolders.base_movies_directory
