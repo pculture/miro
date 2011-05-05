@@ -540,6 +540,10 @@ class VLCRenderer(object):
 
 
     def get_current_time(self):
+        if self.play_state != PLAYING and self.play_from_time is not None:
+            # We're paused and waiting for the next play() call before we
+            # seek.  Return the time we will seek to
+            return self.play_from_time
         t = libvlc.libvlc_media_player_get_time(
             self.media_player, self.exc.ref())
         try:
