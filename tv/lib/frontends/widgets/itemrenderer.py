@@ -347,7 +347,7 @@ class ItemRenderer(ItemRendererBase):
         if dl_info.downloaded_size == 0:
             # show empty bar before we start up
             self.canvas.add_progress_bar(0.0, pause_button_mode)
-        elif dl_info.total_size < 0:
+        elif dl_info.total_size <= 0:
             # show throbber once we've started, but still don't know the
             # total_size
             throbber_index = self.attrs.get('throbber-value', 0) % 10
