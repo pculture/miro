@@ -211,10 +211,12 @@ class PlaybackManager (signals.SignalEmitter):
         def notify_and_reschedule():
             if self.update_timeout is not None:
                 self.update_timeout = None
-                if self.is_playing and not self.is_paused:
+                if self.is_playing:
                     if not self.is_suspended:
                         self.notify_update()
                     self.schedule_update()
+        if self.update_timeout:
+            self.cancel_update_timer()
         self.update_timeout = timer.add(0.5, notify_and_reschedule)
 
     def cancel_update_timer(self):
