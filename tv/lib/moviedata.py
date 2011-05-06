@@ -239,7 +239,14 @@ class MovieDataUpdater(signals.SignalEmitter):
             if duration is not None:
                 item.duration = duration
             if mediatype is not None:
-                item.file_type = unicode(mediatype)
+                # bug #17266.  if the mediatype comes back as other,
+                # but the extension is .flv, we ignore the mediatype
+                # we just got from the movie data program.  this is
+                # specifically for .flv files which the movie data
+                # extractors have a hard time with.
+                if not (mediatype == u'other' and
+                        os.path.splitext(item.get_filename())[1] == '.flv'):
+                    item.file_type = unicode(mediatype)
                 item.media_type_checked = True
             item.signal_change()
 
