@@ -367,7 +367,7 @@ class HideableWidget(widgetset.VBox):
         """Shows the child widget.
         """
         if not self.shown:
-            self.pack_start(self._child)
+            self.pack_start(self._child, expand=True)
             self.shown = True
 
     def hide(self):

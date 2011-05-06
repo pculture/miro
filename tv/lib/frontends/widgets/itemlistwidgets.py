@@ -393,7 +393,10 @@ class ItemListTitlebar(Titlebar):
         if before_filters:
             hbox.pack_start(before_filters)
         self.filter_box = widgetset.HBox(spacing=10)
-        hbox.pack_start(widgetutil.align_middle(self.filter_box, left_pad=15))
+        self.filter_box_holder = widgetutil.HideableWidget(
+            widgetutil.align_middle(self.filter_box, left_pad=15))
+        self.filter_box_holder.show()
+        hbox.pack_start(self.filter_box_holder)
         after_filters = self._build_after_filters()
         if after_filters:
             hbox.pack_start(after_filters)
@@ -714,6 +717,12 @@ class VideosTitlebar(MediaTitlebar):
         self.filters['view-shows'].set_enabled(view_shows)
         self.filters['view-clips'].set_enabled(view_clips)
         self.filters['view-podcasts'].set_enabled(view_podcasts)
+
+    def set_small_monitor_mode(self, enabled):
+        if enabled:
+            self.filter_box_holder.hide()
+        else:
+            self.filter_box_holder.show()
 
 # This is the same as the videos titlebar (with all the filters etc) except
 # we don't let saving as a playlist (because everything here is transient).
