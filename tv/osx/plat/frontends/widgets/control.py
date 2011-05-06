@@ -264,12 +264,14 @@ class MiroButton(NSButton):
 
 class Checkbox(SizedControl):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
-    def __init__(self, text=""):
+    def __init__(self, text="", bold=False):
         SizedControl.__init__(self)
         self.create_signal('toggled')
         self.view = MiroButton.alloc().initWithSignal_('toggled')
         self.view.setButtonType_(NSSwitchButton)
         self.view.setTitle_(text)
+        if bold:
+            self.view.setFont_(NSFont.boldSystemFontOfSize_(0))
 
     def calc_size_request(self):
         size = self.view.cell().cellSize()

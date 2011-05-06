@@ -258,8 +258,8 @@ class ConnectTab(widgetset.VBox):
 
         vbox = widgetset.VBox()
         hbox = widgetset.HBox(spacing=30)
-        self.share_audio_cbx = widgetset.Checkbox(_("Share Music"))
-        self.share_video_cbx = widgetset.Checkbox(_("Share Videos"))
+        self.share_audio_cbx = widgetset.Checkbox(_("Share Music"), bold=True)
+        self.share_video_cbx = widgetset.Checkbox(_("Share Videos"), bold=True)
         self.share_warnonquit_cbx = widgetset.Checkbox(
             _('Warn on quit when others are connected to my media library.'))
         hbox.pack_start(widgetutil.align_top(self.share_video_cbx))
