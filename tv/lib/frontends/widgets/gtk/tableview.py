@@ -539,7 +539,13 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
             return ':'.join(str(component) for component in path)
 
     def set_cursor(self, location):
+        # save the selection before we call set_cursor
+        model, paths = self.selection.get_selected_rows()
+        # call set_cursor(), this messes up the selection
         self._widget.set_cursor(location)
+        # restore selection
+        for path in paths:
+            self.selection.select_path(path)
 
 class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
