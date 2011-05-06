@@ -1352,8 +1352,18 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_database_upgrade_start(self, message):
         if self.dbupgrade_progress_dialog is None:
+            if message.doing_db_upgrade:
+                title = _('Upgrading database')
+                text = _("Miro is upgrading your database of podcasts and "
+                "files.  This one-time process can take a long time if you  "
+                "have a large number of items in Miro (it can even take more "
+                "than 30 minutes).")
+            else:
+                title = _('Preparing Items')
+                text = _("Miro shutdown improperly and needs to prepare "
+                        "your items for display.")
             self.dbupgrade_progress_dialog = dialogs.DBUpgradeProgressDialog(
-                    _('Upgrading database'))
+                    title, text)
             self.dbupgrade_progress_dialog.run()
             # run() will return when we destroy the dialog because of a future
             # message.

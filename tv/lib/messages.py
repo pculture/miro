@@ -982,7 +982,8 @@ class FrontendQuit(FrontendMessage):
 class DatabaseUpgradeStart(FrontendMessage):
     """We're about to do a database upgrade.
     """
-    pass
+    def __init__(self, doing_db_upgrade):
+        self.doing_db_upgrade = doing_db_upgrade
 
 class DatabaseUpgradeProgress(FrontendMessage):
     """We're about to do a database upgrade.

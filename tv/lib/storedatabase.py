@@ -332,6 +332,7 @@ class LiveStorage:
             self._upgrade_20_database()
             # need to pull the variable again here because
             # _upgrade_20_database will have done an upgrade
+            dbupgradeprogress.doing_new_style_upgrade()
             current_version = self._get_version()
             self._change_database_file(current_version)
             databaseupgrade.new_style_upgrade(self.cursor,

@@ -35,6 +35,7 @@ from miro.gtcache import gettext as _
 from miro import messages
 
 _doing_20_upgrade = False
+_doing_new_style_upgrade = False
 _sent_upgrade_start = False
 
 def doing_20_upgrade():
@@ -47,9 +48,20 @@ def doing_20_upgrade():
     global _doing_20_upgrade
     _doing_20_upgrade = True
 
+def doing_new_style_upgrade():
+    """Call this if we are upgrading a new-style database.
+
+    This will calibrate the progress bar to take into account the fact
+    that running db updates.  This is the normal mode of operation for users
+    upgradding miro, but not for when the icon cache gets corrupted.
+    """
+    global _doing_new_style_upgrade
+    _doing_new_style_upgrade = True
+
 def upgrade_start():
     """Call at the begining of the database upgrades."""
-    messages.DatabaseUpgradeStart().send_to_frontend()
+    doing_db_upgrade = _doing_new_style_upgrade or _doing_20_upgrade
+    messages.DatabaseUpgradeStart(doing_db_upgrade).send_to_frontend()
 
 def upgrade_end():
     """Call at the end of the database upgrades."""
@@ -82,8 +94,13 @@ def new_style_progress(start_version, current_version, end_version):
 def infocache_progress(current_item, total_items):
     """Call while stepping through new-style upgrades"""
     progress = _calc_progress(0, current_item, total_items)
-    # item info cache takes us from %75 to %100
-    total = 0.75 + 0.25 * progress
+    if _doing_new_style_upgrade:
+        # item info cache takes us from %75 to %100
+        total = 0.75 + 0.25 * progress
+    else:
+        # we are only fixing icon cache, make the progress bar going from 0%
+        # to 100%
+        total = progress
     _send_message(_('Preparing Items'), progress, total)
 
 def _send_message(stage, stage_progress, total_progress):
