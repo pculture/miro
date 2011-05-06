@@ -48,7 +48,7 @@ from miro import models
 from miro import filetags
 from miro.filetags import METADATA_VERSION
 from miro.fileobject import FilenameType
-from miro.plat.utils import (kill_process, movie_data_program_info,
+from miro.plat.utils import (movie_data_program_info,
                              thread_body)
 
 # Time in seconds that we wait for the utility to execute.  If it goes
@@ -194,22 +194,23 @@ class MovieDataUpdater(signals.SignalEmitter):
             time.sleep(SLEEP_DELAY)
             if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
                 logging.warning("Movie data process hung, killing it")
-                self.kill_process(pipe.pid)
+                self.kill_process(pipe)
                 return ''
 
         if self.in_shutdown:
             if pipe.poll() is None:
                 logging.warning("Movie data process running after shutdown, "
                                 "killing it")
-                self.kill_process(pipe.pid)
+                self.kill_process(pipe)
             return ''
         # FIXME: should we do anything with stderr?
         movie_data_stdout.seek(0)
         return movie_data_stdout.read()
 
-    def kill_process(self, pid):
+    def kill_process(self, pipe):
         try:
-            kill_process(pid)
+            pipe.kill()
+            pipe.wait()
         except OSError:
             logging.warning("Error trying to kill the movie data process:\n%s",
                             traceback.format_exc())

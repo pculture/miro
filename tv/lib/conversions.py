@@ -828,6 +828,7 @@ class ConversionTask(object):
         try:
             self.process_handle = subprocess.Popen(args, **kwargs)
             self.process_output(line_reader(self.process_handle.stdout))
+            self.process_handle.wait()
 
         except OSError, ose:
             if ose.errno == errno.ENOENT:
@@ -900,14 +901,16 @@ class ConversionTask(object):
         conversion_manager._notify_task_changed(self)
 
     def interrupt(self):
-        if hasattr(self.process_handle, "pid"):
-            logging.warning("killing conversion task %d",
-                            self.process_handle.pid)
-            utils.kill_process(self.process_handle.pid)
-            if not self.temp_output_path.endswith('.tmp'):  # temp file
-                if (os.path.exists(self.temp_output_path) and
-                    self.progress < 1.0):
-                    clean_up(self.temp_output_path, file_and_directory=True)
+        if not self.process_handle:
+            return
+        logging.warning("killing conversion task %d",
+                        self.process_handle.pid)
+        self.process_handle.kill()
+        self.process_handle.wait()
+        if not self.temp_output_path.endswith('.tmp'):  # temp file
+            if (os.path.exists(self.temp_output_path) and
+                self.progress < 1.0):
+                clean_up(self.temp_output_path, file_and_directory=True)
 
 
 def line_reader(handle):
