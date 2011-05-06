@@ -46,9 +46,9 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         self._contents = {} # map path -> set of children
         # Note: we are in the event loop thread here use idle_add to move into
         # the frontend thread
-        glib.idle_add(self._add_directory, gio.File(directory))
+        glib.idle_add(self._add_directory, gio.File(directory), False)
 
-    def _add_directory(self, f):
+    def _add_directory(self, f, send_contents):
         if f.get_path() in self.skip_dirs:
             logging.info("Not watching directory: %s", f.get_path())
             return
@@ -57,9 +57,10 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         self._monitors[f.get_path()] = monitor
         self._contents[f.get_path()] = set()
         f.monitor_directory()
-        glib.idle_add(self._add_subdirectories, f, priority=glib.PRIORITY_LOW)
+        glib.idle_add(self._add_subdirectories, f, send_contents,
+                priority=glib.PRIORITY_LOW)
 
-    def _add_subdirectories(self, f):
+    def _add_subdirectories(self, f, send_contents):
         try:
             dir_list = f.enumerate_children('standard::*')
         except (gio.Error, gobject.GError), e:
@@ -69,11 +70,13 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
 
         for child_info in dir_list:
             file_type = child_info.get_attribute_uint32('standard::type')
+            child = f.get_child(child_info.get_name())
             if file_type == gio.FILE_TYPE_DIRECTORY:
-                child = f.get_child(child_info.get_name())
-                glib.idle_add(self._add_directory, child,
+                glib.idle_add(self._add_directory, child, True,
                         priority=glib.PRIORITY_LOW)
             elif file_type == gio.FILE_TYPE_REGULAR:
+                if send_contents:
+                    self._send_added(child.get_path())
                 self._contents[f.get_path()].add(child_info.get_name())
 
     def _on_directory_changed(self, monitor, file_, other, event):
@@ -99,7 +102,7 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
             else:
                 content_set.add(f.get_basename())
         elif file_type == gio.FILE_TYPE_DIRECTORY:
-            self._add_directory(f)
+            self._add_directory(f, True)
 
     def _on_file_deleted(self, f):
         path = f.get_path()
