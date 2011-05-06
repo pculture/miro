@@ -245,7 +245,7 @@ def read_metadata(filename, test=False):
     try:
         muta = mutagen.File(filename)
         meta = muta.__dict__
-    except (ArithmeticError):
+    except (ArithmeticError, MemoryError):
         # mutagen doesn't catch these errors internally
         logging.warn("malformed file: %s", filename)
         return (mediatype, duration, data, cover_art)
