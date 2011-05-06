@@ -829,17 +829,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def set_filename(self, filename):
         self.filename = filename
         if not self.media_type_checked:
-            self.file_type = self._file_type_for_filename(filename)
-
-    def _file_type_for_filename(self, filename):
-        filename = filename.lower()
-        for ext in filetypes.VIDEO_EXTENSIONS:
-            if filename.endswith(ext):
-                return u'video'
-        for ext in filetypes.AUDIO_EXTENSIONS:
-            if filename.endswith(ext):
-                return u'audio'
-        return u'other'
+            self.file_type = filetypes.item_file_type_for_filename(filename)
 
     def matches_search(self, search_string):
         if search_string is None or search_string == '':

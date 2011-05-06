@@ -52,3 +52,11 @@ class FiletypesTestCase(MiroTestCase):
                      "/foo/bar.ass",
                      ]:
             self.assertEquals(filetypes.is_subtitle_filename(test), True)
+
+    def test_item_file_type_for_filename(self):
+        for test in (("foo", u'other'),
+                     ("foo.flv", u'video'),
+                     ("", u'other'),
+                     ("foo.ogg", u'audio'),
+                     ("foo.foo.mp3", u'audio')):
+            self.assertEquals(filetypes.item_file_type_for_filename(test[0]), test[1])
