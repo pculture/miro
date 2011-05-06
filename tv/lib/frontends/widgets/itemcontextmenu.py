@@ -61,6 +61,8 @@ class ItemContextMenuHandler(object):
         """
         remove_external = False
         for info in selection:
+            if info.remote:
+                return
             if info.is_external:
                 remove_external = True
                 break
@@ -282,7 +284,9 @@ class ItemContextMenuHandler(object):
 
     def _make_context_menu_multiple(self, selection):
         """Make the context menu for multiple items."""
+        # XXX why are these lists rather than boolean?
         device = []
+        remote = []
         watched = []
         unwatched = []
         downloaded = []
@@ -328,6 +332,8 @@ class ItemContextMenuHandler(object):
                     playable.append(info)
                     if info.device:
                         device.append(info)
+                    if info.remote:
+                        remote.append(info)
                     elif info.video_watched:
                         watched.append(info)
                         if info.expiration_date:
@@ -362,7 +368,7 @@ class ItemContextMenuHandler(object):
                              None))
             if playable:
                 menu.append((_('Play'), app.widgetapp.play_selection)),
-                if not device:
+                if not (device or remote):
                     menu.append((_('Add to Playlist'),
                                  app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
@@ -372,7 +378,7 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Mark as Played'), mark_watched))
             if expiring:
                 menu.append((_('Keep'), keep_videos))
-            if playable and not device:
+            if playable and not (device or remote):
                 menu.append(None)
                 convert_menu = self._make_convert_menu()
                 menu.append((_('Convert to...'), convert_menu))
