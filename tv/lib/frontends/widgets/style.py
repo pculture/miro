@@ -399,15 +399,16 @@ class ListViewRenderer(widgetset.InfoListRenderer):
 
 class NameRenderer(ListViewRenderer):
     min_width = 120 # GTK isn't returning enough size, so add some extra
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        layout_manager.set_font(self.font_size)
+        layout_manager.set_text_color(context.style.text_color)
+        ListViewRenderer.render(self, context, layout_manager, selected,
+                                hotspot, hover)
+
     def layout_all(self, layout_manager, width, height, selected):
         # make a Layout Object
         layout = cellpack.Layout()
         # add the text
-        layout_manager.set_font(self.font_size)
-        if selected:
-            layout_manager.set_text_color(self.selected_text_color)
-        else:
-            layout_manager.set_text_color(self.default_text_color)
         textbox = layout_manager.textbox(self.info.name)
         textbox.set_wrap_style('truncated-char')
         layout.add_text_line(textbox, 0, 0, width)

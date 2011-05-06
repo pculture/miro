@@ -165,7 +165,9 @@ class MiroTableInfoListTextCell(MiroTableCell):
         return self
 
     def drawWithFrame_inView_(self, frame, view):
-        if self.isHighlighted():
+        if (self.isHighlighted() and frame is not None and
+            (view.isDescendantOf_(view.window().firstResponder()) or
+             view.gradientHighlight) and view.window().isMainWindow()):
             self.setTextColor_(NSColor.whiteColor())
         else:
             self.setTextColor_(self._textColor)
@@ -332,7 +334,7 @@ class CustomTableCell(NSCell):
         text_color = None
         if (self.isHighlighted() and frame is not None and
                 (view.isDescendantOf_(view.window().firstResponder()) or
-                    view.gradientHighlight)):
+                    view.gradientHighlight) and view.window().isMainWindow()):
             text_color = NSColor.whiteColor()
         return DrawingStyle(text_color=text_color)
 
