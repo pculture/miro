@@ -150,6 +150,21 @@ class SelectionOwnerMixin(object):
         # destringed iter not selectable if parent isn't open (yet)
         self.set_selection(self._iter_from_string(sel) for sel in selected)
 
+    def get_cursor(self):
+        """Get the location of the keyboard cursor for the tableview.
+
+        Returns a string that represents the row that the keyboard cursor is
+        on.
+        """
+
+    def set_cursor(self, location):
+        """Set the location of the keyboard cursor for the tableview.
+
+        :param location: return value from a call to get_cursor()
+
+        Raises WidgetActionError upon failure.
+        """
+
     def get_selection(self):
         """Returns a list of GTK Iters. Works regardless of whether multiple
         selection is enabled.

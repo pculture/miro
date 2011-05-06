@@ -531,6 +531,16 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         elif real_model != self._model:
             raise WidgetActionError("wrong model?")
 
+    def get_cursor(self):
+        path, column = self._widget.get_cursor()
+        if path is None:
+            return None
+        else:
+            return ':'.join(str(component) for component in path)
+
+    def set_cursor(self, location):
+        self._widget.set_cursor(location)
+
 class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 

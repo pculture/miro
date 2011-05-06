@@ -383,11 +383,17 @@ class ItemListController(object):
             return
         # set selection for the view we will switch to
         current_view = self.current_item_view
+        next_view = self.views[view]
         try:
             current_selection = current_view.get_selection_as_strings()
-            self.views[view].set_selection_as_strings(current_selection)
+            next_view.set_selection_as_strings(current_selection)
         except WidgetActionError:
-            pass # don't bother setting the selection if we can't get it
+            pass # don't bother following up if this fails
+        # set keyboard cursor for the view we will switch to
+        try:
+            next_view.set_cursor(current_view.get_cursor())
+        except WidgetActionError:
+            pass # don't bother following up if this fails
         # do the switch
         self.selected_view = view
         self.widget.switch_to_view(view)
