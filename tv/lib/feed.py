@@ -2075,9 +2075,8 @@ class DirectoryScannerImplBase(FeedImpl):
         # find added paths don't have an item
         known_files = self.calc_known_files()
         for x in self.items:
-            known_files.add(os.path.normcase(x.get_filename()))
-        to_add = self._filter_paths(self._watcher_paths_added,
-                known_files)
+            known_files.add_path(x.get_filename())
+        to_add = self._filter_paths(self._watcher_paths_added, known_files)
         # commit changes
         app.bulk_sql_manager.start()
         try:
@@ -2096,7 +2095,7 @@ class DirectoryScannerImplBase(FeedImpl):
         # Calculate files known about by feeds other than the directory feed
         # Using a select statement is good here because we don't want to
         # construct all the Item objects if we don't need to.
-        known_files = set(os.path.normcase(row[0]) for row in
+        known_files = fileutil.FileSet(row[0] for row in
                 models.Item.select(['filename'],
                     'filename IS NOT NULL AND '
                     '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
@@ -2124,7 +2123,7 @@ class DirectoryScannerImplBase(FeedImpl):
             filename = item.get_filename()
             if (filename is None or
                 not fileutil.isfile(filename) or
-                os.path.normcase(filename) in known_files):
+                known_files.contains_path(filename)):
                 to_remove.append(item)
             if filename not in my_files:
                 my_files.add(filename)
@@ -2146,7 +2145,7 @@ class DirectoryScannerImplBase(FeedImpl):
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for path in my_files:
-            known_files.add(os.path.normcase(path))
+            known_files.add_path(path)
 
         # adds any files we don't know about
         # files on the filesystem
@@ -2194,7 +2193,7 @@ class DirectoryScannerImplBase(FeedImpl):
         rv = []
         for path in paths:
             ufile = filename_to_unicode(path)
-            if (os.path.normcase(path) not in known_files and
+            if (not known_files.contains_path(path) and
                     filetypes.is_media_filename(ufile)):
                 rv.append(path)
         return rv
@@ -2264,10 +2263,10 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
         movies_dir = app.config.get(prefs.MOVIES_DIRECTORY)
 
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
-        known_files.add(os.path.normcase(incomplete_dir))
+        known_files.add_path(incomplete_dir)
 
         conversions_dir = os.path.join(movies_dir, "Conversions")
-        known_files.add(os.path.normcase(conversions_dir))
+        known_files.add_path(conversions_dir)
 
     def _scan_dir(self):
         return app.config.get(prefs.MOVIES_DIRECTORY)

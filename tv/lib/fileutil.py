@@ -354,3 +354,23 @@ def collapse_filename(filename):
                 return u3info.DEVICE_DOCUMENT_PREFIX
             return u3info.DEVICE_DOCUMENT_PREFIX + '\\' + filename
     return filename
+
+class FileSet(object):
+    """Store a set of files and check if a path is contained.
+
+    The reason this is hard is because of filesystem case issues.  Right now
+    we handle it by always comparing files using lowercase.  Eventually we
+    should have a better system, see #17108 for discussion
+    """
+
+    def __init__(self, initial_files=None):
+        self.pathset = set()
+        if initial_files:
+            for path in initial_files:
+                self.add_path(path)
+
+    def add_path(self, path):
+        self.pathset.add(path.lower())
+
+    def contains_path(self, path):
+        return path.lower() in self.pathset
