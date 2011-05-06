@@ -31,6 +31,7 @@
 # from os import access, F_OK
 from urlparse import urlparse
 from urllib import unquote
+import errno
 import os.path
 import re
 import logging
@@ -188,6 +189,29 @@ def next_free_filename(name):
                 newname = '.'.join(parts)
                 continue
     return (expand_filename(newname), fp)
+
+def _next_free_directory_candidates(name):
+    """Generates candidate names for next_free_directory."""
+    yield name
+    count = 1
+    while True:
+        yield "%s.%s" % (name, count)
+        count += 1
+
+@returns_filename
+def next_free_directory(name):
+    """Finds a unused directory name using name as a base.
+    """
+    candidates = _next_free_directory_candidates(name)
+    while True:
+        candidate = candidates.next()
+        try:
+            os.mkdir(candidate)
+        except OSError, e:
+            if e.errno == errno.EEXIST:
+                continue # try again
+            raise
+        return candidate
 
 @returns_filename
 def filename_from_url(url, clean=False):

@@ -43,8 +43,9 @@ from miro.gtcache import gettext as _
 import libtorrent as lt
 from miro.clock import clock
 from miro.download_utils import (
-    clean_filename, next_free_filename, check_filename_extension,
-    filter_directory_name, filename_from_url, get_file_url_path)
+    clean_filename, next_free_filename, next_free_directory,
+    check_filename_extension, filter_directory_name, filename_from_url,
+    get_file_url_path)
 from miro import eventloop
 from miro import httpclient
 from miro import fileutil
@@ -522,14 +523,14 @@ class BGDownloader(object):
             # this is an ascii filename and needs to be fixed
             filename = clean_filename(filename)
 
+        full_path = os.path.join(download_dir, filename)
         if is_directory:
             # if this is a torrent and it's a directory of files, then
             # we create a temp directory to put the directory of files
             # in.
-            new_filename = tempfile.mkdtemp(prefix=filename, dir=download_dir)
+            new_filename = next_free_directory(full_path)
         else:
-            new_filename, fp = next_free_filename(
-                os.path.join(download_dir, filename))
+            new_filename, fp = next_free_filename(full_path)
             fp.close()
         self.filename = new_filename
 
@@ -565,7 +566,7 @@ class BGDownloader(object):
             # directory in the destination.
             if os.path.isdir(os.path.join(src, self.shortFilename)):
                 src = os.path.join(src, self.shortFilename)
-            dest = tempfile.mkdtemp(prefix=self.shortFilename, dir=directory)
+            dest = next_free_directory(dest)
         else:
             dest, fp = next_free_filename(dest)
             fp.close()
