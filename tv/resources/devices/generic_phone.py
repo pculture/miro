@@ -6,7 +6,7 @@ from miro.gtcache import gettext as _
 # USB IDs come from http://developer.android.com/guide/developing/device.html
 devices = []
 
-for name, vendor_id in (
+for data in (
     ('Acer', 0x0502),
     ('Dell', 0x413c),
     ('Foxconn', 0x0489),
@@ -16,13 +16,20 @@ for name, vendor_id in (
     ('Kyocera', 0x0482),
     ('LG', 0x1004),
     ('Motorola', 0x22b8),
+    ('Nokia', 0x0421),
     ('Nvidia', 0x0955),
     ('Pantech', 0x10A9),
     ('Samsung', 0x04e8),
     ('Sharp', 0x04dd),
     ('Sony Ericsson', 0x0fce),
+    ('SEMC', 0xfce, 'Sony Ericsson'), # also SE
     ('ZTE', 0x19D2)):
-    info = DeviceInfo(_('Generic %(name)s Device', {'name': name}),
+    if len(data) == 2:
+        name, vendor_id = data
+        visible_name = name
+    else:
+        name, vendor_id, visible_name = data
+    info = DeviceInfo(_('Generic %(name)s Device', {'name': visible_name}),
                       device_name='%s*' % name,
                       vendor_id=vendor_id,
                       product_id=None,
