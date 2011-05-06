@@ -684,7 +684,7 @@ class FilteredTitlebar(ItemListTitlebar):
 
 class MediaTitlebar(SearchTitlebar, FilteredTitlebar):
     def save_search_title(self):
-        return _('Save as playlist')
+        return _('Save as Playlist')
 
 # Note that this is not related to VideoAudioFilterMixin.
 # VideoAudioFilterMixin adds video and audio filtering, 
