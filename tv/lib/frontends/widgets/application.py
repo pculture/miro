@@ -227,7 +227,7 @@ class Application:
              "moviedirectory": app.config.get(prefs.MOVIES_DIRECTORY)}
         )
         dialogs.show_message(title, description,
-                                   alert_type=CRITICAL_MESSAGE)
+                                   alert_type=dialogs.CRITICAL_MESSAGE)
         self.do_quit()
 
     def handle_first_time(self, continue_callback):
