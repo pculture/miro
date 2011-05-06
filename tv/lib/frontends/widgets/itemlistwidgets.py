@@ -608,11 +608,11 @@ class SearchTitlebar(ItemListTitlebar):
     """
     def _build_after_filters(self):
         self.create_signal('save-search')
-        button = widgetutil.TitlebarButton(self.save_search_title())
-        button.connect('clicked', self._on_save_search)
-        self.save_button = widgetutil.HideableWidget(
-                widgetutil.pad(button, left=20, right=20))
-        return widgetutil.align_middle(self.save_button)
+        self.save_button = widgetutil.TitlebarButton(self.save_search_title())
+        self.save_button.connect('clicked', self._on_save_search)
+        self.save_button_holder = widgetutil.HideableWidget(
+                widgetutil.pad(self.save_button, left=20, right=20))
+        return widgetutil.align_middle(self.save_button_holder)
 
     def save_search_title(self):
         return _('Save as Podcast')
@@ -625,9 +625,9 @@ class SearchTitlebar(ItemListTitlebar):
 
     def _on_search_changed(self, searchbox):
         if searchbox.get_text() == '':
-            self.save_button.hide()
+            self.save_button_holder.hide()
         else:
-            self.save_button.show()
+            self.save_button_holder.show()
         self.emit('search-changed', searchbox.get_text())
 
 class VideoAudioFilterMixin(object):
@@ -763,6 +763,12 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
     def toggle_filter(self, filter_):
         FilteredTitlebar.toggle_filter(self, filter_)
         DownloadedUnplayedFilterMixin.toggle_filter(self)
+
+    def set_small_monitor_mode(self, enabled):
+        if enabled:
+            self.save_button.set_title(_("Save"))
+        else:
+            self.save_button.set_title(_("Save as Podcast"))
 
 class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
     def __init__(self):

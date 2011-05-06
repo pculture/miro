@@ -471,6 +471,10 @@ class TitlebarButton(widgetset.CustomButton):
         self.label_hidden = hidden
         self.invalidate_size_request()
 
+    def set_title(self, title):
+        self.title = title
+        self.invalidate_size_request()
+
     def size_request(self, layout):
         # Start with the width needed to draw our images
         width = self.surface.left.width + self.surface.right.width
