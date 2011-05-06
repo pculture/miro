@@ -544,8 +544,14 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         # call set_cursor(), this messes up the selection
         self._widget.set_cursor(location)
         # restore selection
-        for path in paths:
-            self.selection.select_path(path)
+        self._set_selected_paths(paths)
+
+    def _set_selected_paths(self, paths):
+        """Set the selected paths; send no signals"""
+        with self._ignoring_changes():
+            self.selection.unselect_all()
+            for path in paths:
+                self.selection.select_path(path)
 
 class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
