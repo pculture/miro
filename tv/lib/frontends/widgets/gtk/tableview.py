@@ -532,26 +532,18 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
             raise WidgetActionError("wrong model?")
 
     def get_cursor(self):
+        """Return the path of the 'focused' item."""
         path, column = self._widget.get_cursor()
+        return path
+
+    def set_cursor(self, path):
+        """Set the path of the 'focused' item."""
         if path is None:
-            return None
-        else:
-            return ':'.join(str(component) for component in path)
-
-    def set_cursor(self, location):
-        # save the selection before we call set_cursor
-        model, paths = self.selection.get_selected_rows()
-        # call set_cursor(), this messes up the selection
-        self._widget.set_cursor(location)
-        # restore selection
-        self._set_selected_paths(paths)
-
-    def _set_selected_paths(self, paths):
-        """Set the selected paths; send no signals"""
-        with self._ignoring_changes():
-            self.selection.unselect_all()
-            for path in paths:
-                self.selection.select_path(path)
+            # XXX: is there a way to clear the cursor?
+            return
+        path_as_string = ':'.join(str(component) for component in path)
+        with self.preserving_selection(): # set_cursor() messes up the selection
+            self._widget.set_cursor(path_as_string)
 
 class TableView(Widget, GTKSelectionOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""

@@ -201,6 +201,19 @@ class SelectionOwnerMixin(object):
             if ignoring:
                 self._ignore_selection_changed -= 1
 
+    @contextmanager
+    def preserving_selection(self):
+        """Prevent selection changes in a block from having any effect or
+        sticking - no signals will be sent, and the selection will be restored
+        to its original value when the block exits.
+        """
+        iters = self._get_selected_iters()
+        with self._ignoring_changes():
+            try:
+                yield
+            finally:
+                self.set_selection(iters)
+
     def set_selection(self, iters, signal=False):
         """Set the selection to the given iters, replacing any previous
         selection and signaling at most once.
