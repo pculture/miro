@@ -88,32 +88,28 @@ class MovieDataInfo(object):
     def __init__(self, item):
         self.item = item
         self.video_path = item.get_filename()
-        if self.video_path is None:
-            self._program_info = None
-            return
+        self.thumbnail_path = self._make_thumbnail_path()
+        self._program_info = None
+    
+    def _make_thumbnail_path(self):
         # add a random string to the filename to ensure it's unique.
         # Two videos can have the same basename if they're in
         # different directories.
-        thumbnail_filename = '%s.%s.png' % (os.path.basename(self.video_path),
-                                            util.random_string(5))
-        self.thumbnail_path = os.path.join(self.image_directory('extracted'),
-                                           thumbnail_filename)
-        if hasattr(app, 'in_unit_tests') and not hasattr(app, 'testing_mdp'):
-            self._program_info = None
+        video_base = os.path.basename(self.video_path)
+        filename = '%s.%s.png' % (video_base, util.random_string(5))
+        return os.path.join(self.image_directory('extracted'), filename)
 
     @property
     def program_info(self):
-        try:
-            return self._program_info
-        except AttributeError:
-            self._calc_program_info()
-            return self._program_info
+        if not self._program_info:  
+            self._program_info = self._calc_program_info() 
+        return self._program_info
 
     def _calc_program_info(self):
         videopath = fileutil.expand_filename(self.video_path)
         thumbnailpath = fileutil.expand_filename(self.thumbnail_path)
         command_line, env = movie_data_program_info(videopath, thumbnailpath)
-        self._program_info = (command_line, env)
+        return command_line, env
 
     @classmethod
     def image_directory(cls, subdir):
@@ -202,13 +198,6 @@ class MovieDataUpdater(signals.SignalEmitter):
         # down before we could process it
         if mdi is None:
             raise Shutdown
-        if mdi.program_info is None:
-            # we should probably prevent this from ever happening, but right
-            # now it means we're in unit tests or the file has no path (when
-            # does that happen??)
-            self.update_failed(mdi.item)
-            # no point in calling path_processed() if path is None!
-            return
         try:
             results = self.process_with_movie_data_program(mdi)
         except StandardError:
@@ -306,6 +295,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             item.signal_change()
 
     def request_update(self, item):
+        if (hasattr(app, 'in_unit_tests') and
+                not hasattr(app, 'testing_mdp')):
+            # kludge for skipping MDP in non-MDP unittests
+            return
         if self.in_shutdown:
             return
         if item.id in self.in_progress:

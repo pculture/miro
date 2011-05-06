@@ -1719,6 +1719,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if applicable, and then adds the item to mdp's queue.
         """
         filename = self.get_filename()
+        if not filename:
+            # XXX previously this was handled in MovieDataInfo.__init__;
+            # this catches it a little sooner. I don't know if there are cases
+            # where this is reachable, but if it happens something is wrong.
+            app.widgetapp.handle_soft_failure("check_media_file",
+                    "item has no filename in check_media_file!", False)
+            # if we reach this we're release mode
+            self.expire() # get rid of the invalid item
+            return # OK to skip request_update only after expire()
         self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
             self.read_metadata()
