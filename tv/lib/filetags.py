@@ -277,6 +277,8 @@ def read_metadata(filename, test=False):
     except UnicodeDecodeError: #17257
         # probably bad encoding in file or mutagen bug
         logging.debug("mutagen: bad encoding: %s", filename)
+    except ValueError: #17285
+        logging.debug("mutagen: malformed file: %s", filename)
     except StandardError:
         # unknown error; soft fail because I think we should identify the error
         # types mutagen can raise - some of them hint as to what went wrong
