@@ -200,7 +200,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         if self.icon_cache and self.icon_cache.get_filename():
             return fileutil.expand_filename(self.icon_cache.get_filename())
-        return resources.path("images/icon-source.png")
+        return None
 
     def icon_changed(self):
         self.confirm_db_thread()
