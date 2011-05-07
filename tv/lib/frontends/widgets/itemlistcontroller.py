@@ -586,6 +586,7 @@ class ItemListController(object):
             messages.StartDownload(info.id).send_to_backend()
 
     def on_sort_changed(self, object, sort_key, ascending, view):
+        self.views[view].reset_scroll()
         self.item_list_will_change()
         sorter = self.make_sorter(sort_key, ascending)
         self.item_list.set_sort(sorter)

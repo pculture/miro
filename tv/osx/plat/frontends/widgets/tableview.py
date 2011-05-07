@@ -952,6 +952,10 @@ class ScrollbarOwnerMixin(object):
         self.scroll_position = (0, 0)
         self.clipview_notifications = None
 
+    def reset_scroll(self):
+        """Lose the current scroll position (going back to the origin)"""
+        self.set_scroll_position((0, 0))
+
     def scroll_to_iter(self, iter_, auto=False):
         """If auto is not set, always centers the given iter.
         

@@ -73,7 +73,7 @@ def rect_contains_point(rect, x, y):
 class ScrollbarOwnerMixin(object):
     def __init__(self):
         self.scrollbars = []
-        self.scroll_positions = [None, None]
+        self.scroll_positions = None, None
         self.scroll_positions_set = False
         self.connect('parent-set', self.on_parent_set)
         self.scroller = None
@@ -103,7 +103,7 @@ class ScrollbarOwnerMixin(object):
 
     def set_scroll_position(self, scroll_position):
         """Restore the scrollbars to a remembered state."""
-        self.scroll_positions = list(scroll_position)
+        self.scroll_positions = scroll_position
         try:
             for i, scrollbar in enumerate(self.scrollbars):
                 self._update_scrollbar_position(i)
@@ -1012,6 +1012,11 @@ class GTKScrollOwnerMixin(object):
         not a direct ancestor of the object. Standard View needs this.
         """
         self._widget.set_scroller(scroller._widget)
+
+    def reset_scroll(self):
+        """Lose the current scroll position (going back to the origin)"""
+        # (0, 1) is a temporary workaround for a stupid bug
+        self.set_scroll_position((0, 1))
 
 class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         HotspotTrackingMixin, ColumnOwnerMixin, HoverTrackingMixin,
