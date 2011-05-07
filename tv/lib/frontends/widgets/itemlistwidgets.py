@@ -1249,8 +1249,14 @@ class DownloadTitlebar(ItemListTitlebar):
         self.create_signal('settings')
 
     def set_small_width_mode(self, enabled):
-        for button in self.buttons:
-            button.set_label_hidden(enabled)
+        if enabled:
+            labels = [ _('All'), _('All'), _('All'), _('Settings')]
+        else:
+            labels = [ _('Pause All'), _('Resume All'), _('Cancel All'),
+                    _('Download Settings')]
+
+        for button, label in zip(self.buttons, labels):
+            button.set_title(label)
         ItemListTitlebar.set_small_width_mode(self, enabled)
 
     def _build_before_filters(self):
