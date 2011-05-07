@@ -33,6 +33,7 @@ video controls).
 
 from miro import app
 from miro import displaytext
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
@@ -123,6 +124,9 @@ class PlaybackInfo(widgetset.CustomButton):
     def on_info_change(self, obj, item_info):
         self.item_name = item_info.name
         self.feed_name = item_info.feed_name
+        self.is_feed = not item_info.is_external
+        self.album = item_info.album
+        self.artist = item_info.artist
         # XXX Possibly dodgy?  What about other if we choose to allow playback
         # in future?
         self.is_audio = (item_info.file_type == 'audio')
@@ -138,13 +142,27 @@ class PlaybackInfo(widgetset.CustomButton):
     
     def reset(self):
         self.item_name = ""
-        self.feed_name = ""
-        self.is_audio = self.is_video = False
-    
+        self.feed_name = self.album = self.artist = None
+        self.is_audio = self.is_video = self.is_feed = None
+
+    def get_details(self):
+        if self.feed_name and self.is_feed:
+            details = self.feed_name
+        elif self.is_audio:
+            # non-feed audio ~= music
+            album = self.album or _("Unknown Album")
+            artist = self.artist or _("Unknown Artist")
+            details = '%s - %s' % (album, artist)
+        else:
+            details = None
+        return details
+
     def get_full_text(self):
-        if self.feed_name is None:
+        details = self.get_details()
+        if details:
+            return '%s - %s' % (self.item_name, details)
+        else:
             return self.item_name
-        return "%s - %s" % (self.item_name, self.feed_name)
     
     def size_request(self, layout):
         layout.set_font(0.8)
@@ -179,7 +197,8 @@ class PlaybackInfo(widgetset.CustomButton):
         text.set_width(width1)
         text.draw(context, x, 0, width1, height1)
 
-        if self.feed_name is not None:
+        details = self.get_details()
+        if details:
             if self.get_window().is_active():
                 layout.set_text_color((0.7, 0.7, 0.7))
             else:
@@ -187,7 +206,7 @@ class PlaybackInfo(widgetset.CustomButton):
             # XXX bz:17136 override the color: Windows things we are inactive
             # embedded web browser is displayed.
             layout.set_text_color((0.7, 0.7, 0.7))
-            text = layout.textbox(" - %s" % self.feed_name)
+            text = layout.textbox(" - %s" % details)
             width2, height2 = text.get_size()
             width2 = min(width2, context.width - self.TOTAL_MARGIN - width1 - x)
             text.set_wrap_style('truncated-char')
