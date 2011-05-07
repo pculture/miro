@@ -72,7 +72,7 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
             file_type = child_info.get_attribute_uint32('standard::type')
             child = f.get_child(child_info.get_name())
             if file_type == gio.FILE_TYPE_DIRECTORY:
-                glib.idle_add(self._add_directory, child, True,
+                glib.idle_add(self._add_directory, child, send_contents,
                         priority=glib.PRIORITY_LOW)
             elif file_type == gio.FILE_TYPE_REGULAR:
                 if send_contents:
