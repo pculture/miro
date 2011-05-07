@@ -608,7 +608,8 @@ class SearchTitlebar(ItemListTitlebar):
     """
     def _build_after_filters(self):
         self.create_signal('save-search')
-        self.save_button = widgetutil.TitlebarButton(self.save_search_title())
+        self.save_button = widgetutil.TitlebarButton(self.save_search_title(),
+                self.save_search_icon())
         self.save_button.connect('clicked', self._on_save_search)
         self.save_button_holder = widgetutil.HideableWidget(
                 widgetutil.pad(self.save_button, left=20, right=20))
@@ -616,6 +617,9 @@ class SearchTitlebar(ItemListTitlebar):
 
     def save_search_title(self):
         return _('Save as Podcast')
+
+    def save_search_icon(self):
+        return 'save-as-podcast'
 
     def get_search_text(self):
         return self.searchbox.get_text()
@@ -685,6 +689,9 @@ class FilteredTitlebar(ItemListTitlebar):
 class MediaTitlebar(SearchTitlebar, FilteredTitlebar):
     def save_search_title(self):
         return _('Save as Playlist')
+
+    def save_search_icon(self):
+        return 'save-as-playlist'
 
 # Note that this is not related to VideoAudioFilterMixin.
 # VideoAudioFilterMixin adds video and audio filtering, 
