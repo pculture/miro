@@ -1984,6 +1984,14 @@ class DirectoryScannerImplBase(FeedImpl):
     # us of new items
     DIRECTORY_WATCH_UPDATE_TIMEOUT = 1.0
 
+    def setup_new(self, *args, **kwargs):
+        FeedImpl.setup_new(self, *args, **kwargs)
+        self.pending_paths_to_add = []
+
+    def setup_restored(self):
+        FeedImpl.setup_restored(self)
+        self.pending_paths_to_add = []
+
     def expire_items(self):
         """Directory Items shouldn't automatically expire
         """
@@ -2102,6 +2110,8 @@ class DirectoryScannerImplBase(FeedImpl):
                 models.Item.select(['filename'],
                     'filename IS NOT NULL AND '
                     '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
+        for path in self.pending_paths_to_add:
+            known_files.add_path(path)
         self._add_known_files(known_files)
         return known_files
 
@@ -2158,6 +2168,11 @@ class DirectoryScannerImplBase(FeedImpl):
             to_add = self._filter_paths(all_files, known_files)
             for path in to_add:
                 app.metadata_progress_updater.will_process_path(path)
+            # Keep track of the paths we will add in case we get directory
+            # watcher updates.  In that case, we want these paths to be in
+            # known_files.  It's very important that the next line come before
+            # the first yield statement to avoid a race condition.
+            self.pending_paths_to_add = to_add
             path_iter = iter(to_add)
             finished = False
             yield # yield after doing prep work
@@ -2166,6 +2181,7 @@ class DirectoryScannerImplBase(FeedImpl):
                 yield # yield after each batch
         self._after_update()
         self.updating = False
+        self.pending_paths_to_add = []
         self.schedule_update_events(-1)
 
     def _add_batch_of_videos(self, path_iter, max_time):
@@ -2213,7 +2229,8 @@ class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
             title = title[:-1]
         title = filename_to_unicode(os.path.basename(title)) + "/"
 
-        FeedImpl.setup_new(self, url=url, ufeed=ufeed, title=title)
+        DirectoryScannerImplBase.setup_new(self, url=url, ufeed=ufeed,
+                title=title)
         self.dir = directory
         self.firstUpdate = True
         self.set_update_frequency(5)
@@ -2243,7 +2260,8 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
     will continue to remember movies in the old folder.
     """
     def setup_new(self, ufeed):
-        FeedImpl.setup_new(self, url=u"dtv:directoryfeed", ufeed=ufeed, title=None)
+        DirectoryScannerImplBase.setup_new(self, url=u"dtv:directoryfeed",
+                ufeed=ufeed, title=None)
         self.set_update_frequency(5)
         self.schedule_update_events(0)
         self.start_watching_directory()
