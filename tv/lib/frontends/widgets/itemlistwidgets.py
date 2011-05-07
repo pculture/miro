@@ -80,7 +80,7 @@ class Titlebar(Toolbar):
 
     def __init__(self):
         Toolbar.__init__(self)
-        self.set_size_request(-1, self.height)
+        self.set_size_request(-1, self.HEIGHT)
 
 class TogglerButton(widgetset.CustomButton):
     LEFT = 0
