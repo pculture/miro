@@ -76,9 +76,11 @@ class Toolbar(widgetset.Background):
         context.gradient_fill(gradient)
 
 class Titlebar(Toolbar):
+    HEIGHT = 45
+
     def __init__(self):
         Toolbar.__init__(self)
-        self.set_size_request(-1, 45)
+        self.set_size_request(-1, self.height)
 
 class TogglerButton(widgetset.CustomButton):
     LEFT = 0
@@ -282,7 +284,6 @@ class ResumePlaybackButton(widgetset.CustomButton):
         self.title_right = imagepool.get_surface(resources.path(
             'images/resume-playback-title-right.png'))
         self.title = self.resume_time = None
-        self.min_usable_width = 0
 
     def update(self, title, resume_time):
         self.title = title
@@ -319,15 +320,10 @@ class ResumePlaybackButton(widgetset.CustomButton):
         text = self._make_text("A" * self.MIN_TITLE_CHARS, 123)
         text_size = layout_manager.textbox(text).get_size()
         button = self.make_button(layout_manager, False)
-        self.min_usable_width = text_size[0] + self.non_text_width(button)
-        return (0, self.button_height)
-
-    def do_size_allocated(self, width, height):
-        self.set_disabled(width < self.min_usable_width)
+        width = text_size[0] + self.non_text_width(button)
+        return (width, self.button_height)
 
     def draw(self, context, layout_manager):
-        if self.get_disabled():
-            return
         if self.title is None:
             return
         # make button on the left
@@ -383,6 +379,8 @@ class ItemListTitlebar(Titlebar):
     :signal search-changed: (self, search_text) -- The value in the
         search box changed and the items listed should be filtered
     """
+    uses_resume_button = False
+
     def __init__(self):
         Titlebar.__init__(self)
         self.create_signal('resume-playing')
@@ -409,20 +407,22 @@ class ItemListTitlebar(Titlebar):
         toggle = self._build_view_toggle()
         if toggle:
             hbox.pack_end(widgetutil.align_middle(toggle))
-        self.resume_button = ResumePlaybackButton()
-        self.resume_button.connect('clicked', self._on_resume_button_clicked)
-        self.resume_button_holder = widgetutil.HideableWidget(
-                widgetutil.pad(self.resume_button, left=10))
-        hbox.pack_end(widgetutil.align_middle(self.resume_button_holder),
-                expand=True)
+        if self.uses_resume_button:
+            self.resume_button = ResumePlaybackButton()
+            self.resume_button.connect('clicked', self._on_resume_button_clicked)
+            self.resume_button_holder = widgetutil.HideableWidget(
+                    widgetutil.pad(self.resume_button, left=10))
+            hbox.pack_start(widgetutil.align_middle(self.resume_button_holder))
 
         self.filters = {}
         self.setup_filters()
 
-        app.frontend_config_watcher.connect_weak('changed',
-                self.on_config_change)
-
-        self.set_small_monitor_mode(app.config.get(prefs.SMALL_MONITOR_MODE))
+        self.calculate_width_requests()
+        # force our size request to be the smaller of the two.  If we get
+        # allocated less than normal_width_needed, we will go into small width
+        # mode.
+        self.set_size_request(self.small_width_needed, self.HEIGHT)
+        self.in_small_width_mode = False
 
     def setup_filters(self):
         """Add filters that we want to show.
@@ -431,16 +431,37 @@ class ItemListTitlebar(Titlebar):
         """
         pass
 
-    def on_config_change(self, obj, key, value):
-        if key == prefs.SMALL_MONITOR_MODE.key:
-            self.set_small_monitor_mode(value)
+    def calculate_width_requests(self):
+        """Calculate the width required for normal mode and small-width
+        mode.
+        """
+        self.set_small_width_mode(True)
+        self.small_width_needed = self.get_size_request()[0]
+        self.set_small_width_mode(False)
+        if self.uses_resume_button:
+            # force the resume button to be included in the size request, if
+            # we will show it
+            self.resume_button_holder.show()
+        self.normal_width_needed = self.get_size_request()[0]
+        if self.uses_resume_button:
+            self.resume_button_holder.hide()
 
-    def set_small_monitor_mode(self, enabled):
-        """Called when we should change into/out of small monitor mode
+    def do_size_allocated(self, width, height):
+        should_use_small_width = (width < self.normal_width_needed)
+        if should_use_small_width != self.in_small_width_mode:
+            self.set_small_width_mode(should_use_small_width)
+            self.in_small_width_mode = should_use_small_width
+
+    def set_small_width_mode(self, enabled):
+        """Called when we should change into/out of small width mode
 
         Subclasses should override this if they need to change in response.
         """
-        pass
+        if self.uses_resume_button:
+            if enabled:
+                self.resume_button_holder.hide()
+            elif not enabled and self.resume_button.title is not None:
+                self.resume_button_holder.show()
 
     def update_resume_button(self, text, resume_time):
         """Update the resume button text.
@@ -448,10 +469,10 @@ class ItemListTitlebar(Titlebar):
         If text is None, we will hide the resume button.  Otherwise we
         will show the button and have it display text.
         """
+        self.resume_button.update(text, resume_time)
         if text is None:
             self.resume_button_holder.hide()
-        else:
-            self.resume_button.update(text, resume_time)
+        elif not self.in_small_width_mode:
             self.resume_button_holder.show()
 
     def _build_before_filters(self):
@@ -624,6 +645,12 @@ class SearchTitlebar(ItemListTitlebar):
                 widgetutil.pad(self.save_button, left=20, right=20))
         return widgetutil.align_middle(self.save_button_holder)
 
+    def calculate_width_requests(self):
+        # show the save button to make our size requests include it
+        self.save_button_holder.show()
+        ItemListTitlebar.calculate_width_requests(self)
+        self.save_button_holder.hide()
+
     def save_search_title(self):
         return _('Save as Podcast')
 
@@ -733,11 +760,12 @@ class VideosTitlebar(MediaTitlebar):
         self.filters['view-clips'].set_enabled(view_clips)
         self.filters['view-podcasts'].set_enabled(view_podcasts)
 
-    def set_small_monitor_mode(self, enabled):
+    def set_small_width_mode(self, enabled):
         if enabled:
             self.filter_box_holder.hide()
         else:
             self.filter_box_holder.show()
+        MediaTitlebar.set_small_width_mode(self, enabled)
 
 # This is the same as the videos titlebar (with all the filters etc) except
 # we don't let saving as a playlist (because everything here is transient).
@@ -754,9 +782,10 @@ class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
        FilteredTitlebar.toggle_filter(self, filter_)
        UnplayedFilterMixin.toggle_filter(self)
 
-
 class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
                        VideoAudioFilterMixin):
+    uses_resume_button = True
+
     def setup_filters(self):
         FilteredTitlebar.setup_filters(self)
         DownloadedUnplayedFilterMixin.setup_filters(self)
@@ -771,6 +800,8 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
                       DownloadedUnplayedFilterMixin):
     """Titlebar for a channel
     """
+    uses_resume_button = True
+
     def setup_filters(self):
         FilteredTitlebar.setup_filters(self)
         DownloadedUnplayedFilterMixin.setup_filters(self)
@@ -779,13 +810,16 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
         FilteredTitlebar.toggle_filter(self, filter_)
         DownloadedUnplayedFilterMixin.toggle_filter(self)
 
-    def set_small_monitor_mode(self, enabled):
+    def set_small_width_mode(self, enabled):
         if enabled:
             self.save_button.set_title(_("Save"))
         else:
             self.save_button.set_title(_("Save as Podcast"))
+        SearchTitlebar.set_small_width_mode(self, enabled)
 
 class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
+    uses_resume_button = True
+
     def setup_filters(self):
         FilteredTitlebar.setup_filters(self)
         unwatched = WidgetStateStore.get_unwatched_filter()
@@ -1214,9 +1248,10 @@ class DownloadTitlebar(ItemListTitlebar):
         self.create_signal('cancel-all')
         self.create_signal('settings')
 
-    def set_small_monitor_mode(self, enabled):
+    def set_small_width_mode(self, enabled):
         for button in self.buttons:
             button.set_label_hidden(enabled)
+        ItemListTitlebar.set_small_width_mode(self, enabled)
 
     def _build_before_filters(self):
         h = widgetset.HBox(spacing=5)

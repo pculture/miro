@@ -464,11 +464,6 @@ class GeneralPanel(PanelBuilder):
                        prefs.WARN_IF_CONVERTING_ON_QUIT)
         v.pack_start(warn_if_converting_cbx)
 
-        small_monitor_cbx = widgetset.Checkbox(_("Small Monitor Mode"))
-        attach_boolean(small_monitor_cbx,
-                       prefs.SMALL_MONITOR_MODE)
-        v.pack_start(small_monitor_cbx)
-
         # FIXME - need to automatically generate list of available
         # languages in correct language
         lang_options = gtcache.get_languages()
