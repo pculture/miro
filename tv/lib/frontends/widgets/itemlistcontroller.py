@@ -576,7 +576,11 @@ class ItemListController(object):
     def on_row_activated(self, item_view, iter_):
         info = item_view.model[iter_][0]
         if info.id == app.widget_state.get_last_played_item_id(self.type, self.id):
-            app.playback_manager.play_pause()
+            # XXX: workaround for 17192 (play_pause cannot play after stop)
+            if app.playback_manager.is_playing:
+                app.playback_manager.play_pause()
+            else:
+                self._play_item_list(info.id)
         elif info.downloaded:
             self._play_item_list(info.id)
         elif info.state == 'downloading':
@@ -712,7 +716,11 @@ class ItemListController(object):
         elif name in ('play', 'thumbnail-play'):
             self._play_item_list(item_info.id)
         elif name == 'play_pause':
-            app.playback_manager.play_pause()
+            # XXX: workaround for 17192 (play_pause cannot play after stop)
+            if app.playback_manager.is_playing:
+                app.playback_manager.play_pause()
+            else:
+                self._play_item_list(item_info.id)
         elif name.startswith('rate:'):
             rating = int(name.split(':', 1)[1])
             messages.RateItem(item_info, rating).send_to_backend()
