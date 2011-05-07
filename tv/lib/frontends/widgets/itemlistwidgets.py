@@ -417,10 +417,19 @@ class ItemListTitlebar(Titlebar):
                 expand=True)
 
         self.filters = {}
+        self.setup_filters()
+
         app.frontend_config_watcher.connect_weak('changed',
                 self.on_config_change)
 
         self.set_small_monitor_mode(app.config.get(prefs.SMALL_MONITOR_MODE))
+
+    def setup_filters(self):
+        """Add filters that we want to show.
+
+        Subclasses can define this to add filters to the titlebar.
+        """
+        pass
 
     def on_config_change(self, obj, key, value):
         if key == prefs.SMALL_MONITOR_MODE.key:
@@ -635,7 +644,7 @@ class SearchTitlebar(ItemListTitlebar):
         self.emit('search-changed', searchbox.get_text())
 
 class VideoAudioFilterMixin(object):
-    def __init__(self):
+    def setup_filters(self):
         view_video = WidgetStateStore.get_view_video_filter()
         view_audio = WidgetStateStore.get_view_audio_filter()
         self.add_filter('view-video', 'toggle-filter', view_video,
@@ -650,7 +659,7 @@ class VideoAudioFilterMixin(object):
         self.filters['view-audio'].set_enabled(view_audio)
 
 class UnplayedFilterMixin(object):
-    def __init__(self):
+    def setup_filters(self):
         unwatched = WidgetStateStore.get_unwatched_filter()
         self.add_filter('only-unplayed', 'toggle-filter', unwatched,
                         _('Unplayed'))
@@ -660,11 +669,11 @@ class UnplayedFilterMixin(object):
         self.filters['only-unplayed'].set_enabled(unwatched)
 
 class DownloadedUnplayedFilterMixin(UnplayedFilterMixin):
-    def __init__(self):
+    def setup_filters(self):
         downloaded = WidgetStateStore.get_downloaded_filter()
         self.add_filter('only-downloaded', 'toggle-filter', downloaded,
                         _('Downloaded'))
-        UnplayedFilterMixin.__init__(self)
+        UnplayedFilterMixin.setup_filters(self)
 
     def toggle_filter(self):
         downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
@@ -672,8 +681,7 @@ class DownloadedUnplayedFilterMixin(UnplayedFilterMixin):
         UnplayedFilterMixin.toggle_filter(self)
 
 class FilteredTitlebar(ItemListTitlebar):
-    def __init__(self):
-        ItemListTitlebar.__init__(self)
+    def setup_filters(self):
         # this "All" is different than other "All"s in the codebase, so it
         # needs to be clarified
         view_all = WidgetStateStore.get_view_all_filter()
@@ -697,8 +705,8 @@ class MediaTitlebar(SearchTitlebar, FilteredTitlebar):
 # VideoAudioFilterMixin adds video and audio filtering, 
 # while VideosTitlebar is the static video tab.
 class VideosTitlebar(MediaTitlebar):
-    def __init__(self):
-        FilteredTitlebar.__init__(self)
+    def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
         view_all = WidgetStateStore.get_view_all_filter()
         view_movies = WidgetStateStore.get_view_movies_filter()
         view_shows = WidgetStateStore.get_view_shows_filter()
@@ -738,9 +746,9 @@ class SharingTitlebar(VideosTitlebar):
        self.emit('search-changed', searchbox.get_text())
 
 class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
-   def __init__(self):
-        FilteredTitlebar.__init__(self)
-        UnplayedFilterMixin.__init__(self)
+   def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
+        UnplayedFilterMixin.setup_filters(self)
 
    def toggle_filter(self, filter_):
        FilteredTitlebar.toggle_filter(self, filter_)
@@ -749,10 +757,10 @@ class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
 
 class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
                        VideoAudioFilterMixin):
-    def __init__(self):
-        FilteredTitlebar.__init__(self)
-        DownloadedUnplayedFilterMixin.__init__(self)
-        VideoAudioFilterMixin.__init__(self)
+    def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
+        DownloadedUnplayedFilterMixin.setup_filters(self)
+        VideoAudioFilterMixin.setup_filters(self)
 
     def toggle_filter(self, filter_):
         FilteredTitlebar.toggle_filter(self, filter_)
@@ -763,9 +771,9 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
                       DownloadedUnplayedFilterMixin):
     """Titlebar for a channel
     """
-    def __init__(self):
-        FilteredTitlebar.__init__(self)
-        DownloadedUnplayedFilterMixin.__init__(self)
+    def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
+        DownloadedUnplayedFilterMixin.setup_filters(self)
 
     def toggle_filter(self, filter_):
         FilteredTitlebar.toggle_filter(self, filter_)
@@ -778,12 +786,12 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
             self.save_button.set_title(_("Save as Podcast"))
 
 class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
-    def __init__(self):
-        FilteredTitlebar.__init__(self)
+    def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
         unwatched = WidgetStateStore.get_unwatched_filter()
         self.add_filter('only-unplayed', 'toggle-filter', unwatched,
                         _('Unplayed'))
-        VideoAudioFilterMixin.__init__(self)
+        VideoAudioFilterMixin.setup_filters(self)
 
     def toggle_filter(self, filter_):
         FilteredTitlebar.toggle_filter(self, filter_)
