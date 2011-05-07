@@ -2012,6 +2012,9 @@ class DirectoryScannerImplBase(FeedImpl):
     def _make_child(self, file_):
         models.FileItem(file_, feed_id=self.ufeed.id)
 
+    def default_thumbnail_path(self):
+        return resources.path('images/icon-watched-folder.png')
+
     def start_watching_directory(self):
         if app.directory_watcher is not None:
             scan_dir = self._scan_dir()
