@@ -171,6 +171,10 @@ class Widget(signals.SignalEmitter):
         gtk_window = self._widget.get_toplevel()
         return wrappermap.wrapper(gtk_window)
 
+    def clear_size_request_cache(self):
+        # This is just an OS X hack
+        pass
+
     def get_size_request(self):
         return self._widget.size_request()
 

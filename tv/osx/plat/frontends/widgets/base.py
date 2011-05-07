@@ -69,6 +69,10 @@ class Widget(signals.SignalEmitter):
         self.manual_size_request = (width, height)
         self.invalidate_size_request()
 
+    def clear_size_request_cache(self):
+        while app.size_request_manager.widgets_to_request:
+            app.size_request_manager._run_requests()
+
     def get_size_request(self):
         if self.manual_size_request:
             width, height = self.manual_size_request
