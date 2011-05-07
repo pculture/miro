@@ -988,8 +988,34 @@ class HoverTrackingMixin(object):
             if self.hover_info is not None:
                 self._redraw_cell(treeview, *self.hover_info)
 
+class GTKScrollOwnerMixin(object):
+    def scroll_to_iter(self, iter_, auto=False):
+        """If auto is not set, always centers the given iter.
+        
+        With auto set, scrolls to the given iter if we're auto-scrolling, or if
+        the iter is recapturing the scroll by passing the current position.
+        """
+        path = self._model.get_path(iter_)
+        distance = self._widget.get_path_scroll_distance(path)
+        if (not auto or abs(distance) <= self._widget.get_item_height(path)):
+            current = self.get_scroll_position()[1]
+            self._widget.set_vertical_scroll(current + distance)
+
+    def set_scroll_position(self, scroll_pos):
+        self._widget.set_scroll_position(scroll_pos)
+    
+    def get_scroll_position(self):
+        return self._widget.get_scroll_position()
+
+    def set_scroller(self, scroller):
+        """Set the Scroller object for this widget, if its ScrolledWindow is
+        not a direct ancestor of the object. Standard View needs this.
+        """
+        self._widget.set_scroller(scroller._widget)
+
 class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
-        HotspotTrackingMixin, ColumnOwnerMixin, HoverTrackingMixin):
+        HotspotTrackingMixin, ColumnOwnerMixin, HoverTrackingMixin,
+        GTKScrollOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -1015,6 +1041,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         HotspotTrackingMixin.__init__(self)
         ColumnOwnerMixin.__init__(self)
         HoverTrackingMixin.__init__(self)
+        GTKScrollOwnerMixin.__init__(self)
 
     def _connect_signals(self):
         self.create_signal('row-expanded')
@@ -1294,30 +1321,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
 
     def get_left_offset(self):
         return self._widget.get_left_offset()
-
-    def scroll_to_iter(self, iter_, auto=False):
-        """If auto is not set, always centers the given iter.
-        
-        With auto set, scrolls to the given iter if we're auto-scrolling, or if
-        the iter is recapturing the scroll by passing the current position.
-        """
-        path = self._model.get_path(iter_)
-        distance = self._widget.get_path_scroll_distance(path)
-        if (not auto or abs(distance) <= self._widget.get_item_height(path)):
-            current = self.get_scroll_position()[1]
-            self._widget.set_vertical_scroll(current + distance)
-
-    def set_scroll_position(self, scroll_pos):
-        self._widget.set_scroll_position(scroll_pos)
-    
-    def get_scroll_position(self):
-        return self._widget.get_scroll_position()
-
-    def set_scroller(self, scroller):
-        """Set the Scroller object for this widget, if its ScrolledWindow is
-        not a direct ancestor of the object. Standard View needs this.
-        """
-        self._widget.set_scroller(scroller._widget)
 
 class TableModel(object):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
