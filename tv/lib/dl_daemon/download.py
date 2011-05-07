@@ -1426,9 +1426,16 @@ class BTDownloader(BGDownloader):
             return
         self.shortFilename =  utf8_to_filename(
             self.torrent.get_torrent_info().name())
-        # if torrent_info has more than one file, then this is a
-        # torrent of a bunch of files in a directory
-        is_directory = len(self.torrent.get_torrent_info().files()) > 1
+
+        # FIXME: we should determine whether it is a directory
+        # in the same way in got_metainfo and got_delayed_metainfo
+        is_directory = False
+        for file_ in self.torrent.get_torrent_info().files():
+            if os.sep in file_.path:
+                is_directory = True
+
+        is_directory = (is_directory or 
+                       len(self.torrent.get_torrent_info().files()) > 1)
         try:
             self.pick_initial_filename(
                 suffix="", torrent=True, is_directory=is_directory)
