@@ -889,16 +889,20 @@ class SiteList(HideableTabList):
         HideableTabList.__init__(self)
         self.default_info = None
 
+    def default_icon_path(self):
+        icon = resources.path('images/icon-source-small.png')
+        icon_active = resources.path('images/icon-source-small_active.png')
+        return (icon, icon_active)
+
     def init_info(self, info):
         if info is self.info:
             return
-        fallback_icon_path = resources.path('images/icon-source.png')
+        fallback, fallback_active = self.default_icon_path()
         if info.favicon:
             thumb_path = info.favicon
         else:
-            thumb_path = fallback_icon_path
-            info.active_icon = imagepool.get_surface(
-                resources.path('image/icon-source_active.png'))
+            thumb_path = fallback
+            info.active_icon = fallback_active
         # we don't use the ImagePool because 'favicon.ico' is a name with too
         # many hits (#16573).
         try:
@@ -906,7 +910,8 @@ class SiteList(HideableTabList):
         except ValueError:
             # 16842 - if we ever get sent an invalid icon - don't crash with
             # ValueError.
-            image = widgetset.Image(fallback_icon_path)
+            image = widgetset.Image(fallback)
+            info.active_icon = fallback_active
         if image.width > 16 or image.height > 16:
             image = imagepool.resize_image(image, 16, 16)
         info.icon = widgetset.ImageSurface(image)
@@ -939,6 +944,11 @@ class StoreList(SiteList):
 
     def on_delete_key_pressed(self):
         pass # XXX: can't delete stores(?)
+
+    def default_icon_path(self):
+        icon = resources.path('images/icon-store-small.png')
+        icon_active = resources.path('images/icon-store-small_active.png')
+        return (icon, icon_active)
 
     def on_context_menu(self, table_view):
         tablist_type, selected_rows = app.tabs.selection
