@@ -58,6 +58,7 @@ from miro.frontends.widgets.gtk.tableviewcells import (GTKCustomCellRenderer,
      GTKCheckboxCellRenderer, InfoListRenderer, InfoListRendererText)
 
 PathInfo = namedtuple('PathInfo', 'path column x y') 
+Rect = namedtuple('Rect', 'x y width height') 
 
 def rect_contains_rect(outside, inside):
     # currently unused
@@ -74,9 +75,18 @@ class ScrollbarOwnerMixin(object):
     def __init__(self):
         self.scrollbars = []
         self.scroll_positions = None, None
-        self.scroll_positions_set = False
+        self.restoring_scroll = None
         self.connect('parent-set', self.on_parent_set)
         self.scroller = None
+
+    @property
+    def manually_scrolled(self):
+        """Return whether the view has been scrolled explicitly by the user
+        since the last time it was set automatically.
+        """
+        auto_pos = self.scroll_positions[1]
+        real_pos = self.scrollbars[1].get_value()
+        return abs(auto_pos - real_pos) > 5 # allowing some fuzziness
 
     def on_parent_set(self, widget, old_parent):
         """We have parent window now; we need to control its scrollbars."""
@@ -92,64 +102,59 @@ class ScrollbarOwnerMixin(object):
         self.scrollbars = scrollbars
         for i, bar in enumerate(scrollbars):
             weak_connect(bar, 'changed', self.on_scroll_range_changed, i)
-        self.set_scroll_position(self.scroll_positions)
+        if self.restoring_scroll:
+            self.set_scroll_position(self.restoring_scroll)
 
     def on_scroll_range_changed(self, adjustment, bar):
         """The scrollbar might have a range now. Set its initial position if
         we haven't already.
         """
-        if not self.scroll_positions_set:
-            self.set_scroll_position(self.scroll_positions)
+        if self.restoring_scroll:
+            self.set_scroll_position(self.restoring_scroll)
 
     def set_scroll_position(self, scroll_position):
         """Restore the scrollbars to a remembered state."""
-        self.scroll_positions = scroll_position
         try:
-            for i, scrollbar in enumerate(self.scrollbars):
-                self._update_scrollbar_position(i)
+            self.scroll_positions = tuple(self._clip_pos(adj, x)
+                    for adj, x in zip(self.scrollbars, scroll_position))
         except WidgetActionError, error:
             logging.debug("can't scroll yet: %s", error.reason)
             # try again later
+            self.restoring_scroll = scroll_position
         else:
-            self.scroll_positions_set = True
+            for adj, pos in zip(self.scrollbars, self.scroll_positions):
+                adj.set_value(pos)
+            self.restoring_scroll = None
+
+    def _clip_pos(self, adj, pos):
+        lower = adj.get_lower()
+        upper = adj.get_upper() - adj.get_page_size()
+        # currently, StandardView gets an upper of 2.0 when it's not ready
+        # FIXME: don't count on that
+        if pos > upper and upper < 5:
+            raise WidgetRangeError("scrollable area", pos, lower, upper)
+        return min(max(pos, lower), upper)
 
     def get_scroll_position(self):
         """Get the current position of both scrollbars, to restore later."""
         return tuple(int(bar.get_value()) for bar in self.scrollbars)
 
-    def _update_scrollbar_position(self, bar):
-        """Move the specified scrollbar to its saved position, if it has one.
-        Succeeds or raises WidgetActionError.
-        """
-        if not self.scroll_positions[bar]:
-            # nothing to restore it to yet
+    def get_visible_area(self):
+        if not self.scrollbars:
             return
-        adj = self.scrollbars[bar]
-        pos = self.scroll_positions[bar]
-        lower = adj.get_lower()
-        upper = adj.get_upper() - adj.get_page_size()
-        # currently, StandardView gets an upper of 2.0 when it's not ready
-        # FIXME: don't count on that
-        if upper < 5:
-            self.scroll_positions_set = False
-            raise WidgetRangeError("scrollable area", pos, lower, upper)
-        # have to clip it ourselves
-        pos = min(max(pos, lower), upper)
-        adj.set_value(pos)
+        x, y = (int(adj.get_value()) for adj in self.scrollbars)
+        x, y = self.tree_to_widget_coords(x, y)
+        width, height = (int(adj.get_page_size()) for adj in self.scrollbars)
+        return Rect(x, y, width, height)
 
     def set_vertical_scroll(self, position):
         self.set_scroll_position((self.scroll_positions[0], position))
 
-    def get_item_height(self, path):
-        return self.get_background_area(path, self.get_columns()[0]).height
-
-    def get_path_scroll_distance(self, path):
-        """Get the distance we'd scroll to scroll to the path given"""
-        if not self.scrollbars:
-            return
-        vadjustment = self.scrollbars[1]
+    def get_path_rect(self, path):
+        """Return the Rect for the given item, in widget coords."""
         rect = self.get_background_area(path, self.get_columns()[0])
-        return rect.y + (rect.height - vadjustment.page_size) / 2
+        x, y = self.tree_to_widget_coords(rect.x, rect.y)
+        return Rect(x, y, rect.width, rect.height)
 
     def scroll_ancestor(self, newly_selected, down):
         # Try to figure out what just became selected.  If multiple things
@@ -995,11 +1000,15 @@ class GTKScrollOwnerMixin(object):
         With auto set, scrolls to the given iter if we're auto-scrolling, or if
         the iter is recapturing the scroll by passing the current position.
         """
-        path = self._model.get_path(iter_)
-        distance = self._widget.get_path_scroll_distance(path)
-        if (not auto or abs(distance) <= self._widget.get_item_height(path)):
-            current = self.get_scroll_position()[1]
-            self._widget.set_vertical_scroll(current + distance)
+        item = self._widget.get_path_rect(self._model.get_path(iter_))
+        visible = self._widget.get_visible_area()
+        dest = item.y + (item.height - visible.height) // 2
+        bottom_visible = visible.y + visible.height
+        middle_visible = visible.y + bottom_visible // 2
+        grab_scroll = (dest >= middle_visible - item.height // 2 and
+                dest <= bottom_visible)
+        if not auto or not self._widget.manually_scrolled or grab_scroll:
+            self._widget.set_vertical_scroll(dest)
 
     def set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)
