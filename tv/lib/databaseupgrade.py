@@ -3276,3 +3276,9 @@ def upgrade156(cursor):
             "file_type == 'other'")
     cursor.execute("UPDATE item SET mdp_state=0 WHERE "
             "(duration IS NOT NULL) AND file_type != 'video'")
+
+def upgrade157(cursor):
+    """Delete Items without filenames (#17306) - these invalid items are
+    probably coming from Miro <= 3.5.1
+    """
+    cursor.execute("DELETE FROM item WHERE filename IS NULL OR filename = ''")
