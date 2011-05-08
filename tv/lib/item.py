@@ -397,6 +397,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.expiring = None
         self.showMoreInfo = False
         self.playing = False
+        self._file_checked = False
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
@@ -1718,20 +1719,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """Begin metadata extraction for this item; runs mutagen synchonously,
         if applicable, and then adds the item to mdp's queue.
         """
+        if self.check_deleted():
+            # check_deleted just expire()d the file or not id_exists()
+            return
         filename = self.get_filename()
-        if not filename:
-            # XXX previously this was handled in MovieDataInfo.__init__;
-            # this catches it a little sooner. I don't know if there are cases
-            # where this is reachable, but if it happens something is wrong.
-            app.widgetapp.handle_soft_failure("check_media_file",
-                    "item has no filename in check_media_file!", False)
-            # if we reach this we're release mode
-            self.expire() # get rid of the invalid item
-            return # OK to skip request_update only after expire()
         self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
             self.read_metadata()
         except IOError:
+            # if this happens the file probably exists but is not readable; it's
+            # also technically possible that the item disappeared between
+            # check_deleted and now.
             self.expire()
             return # OK to skip request_update only after expire()
         moviedata.movie_data_updater.request_update(self)
@@ -1845,12 +1843,21 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.signal_change()
 
     def check_deleted(self):
+        """Check whether the item's file has been deleted; expire() the item if
+        it has. Returns whether the item no longer exists (True for items that
+        have just been expire()d, and also for items without id_exists).
+        """
+        if self._file_checked:
+            return False
+        self._file_checked = True
         if not self.id_exists():
-            return
+            return True
         if (self.isContainerItem is not None and
                 not fileutil.exists(self.get_filename()) and
                 not hasattr(app, 'in_unit_tests')):
             self.expire()
+            return True
+        return False
 
     def _get_downloader(self):
         try:
