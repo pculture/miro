@@ -742,9 +742,11 @@ class DeviceTabListHandler(object):
         info.type = u'device'
         info.unwatched = info.available = 0
         if not getattr(info, 'fake', False):
-            if getattr(info, 'generic', True):
+            if getattr(info.info, 'generic', False):
                 info.icon = imagepool.get_surface(resources.path(
-                    'images/hard-drive.png'))
+                    'images/icon-device-hd.png'))
+                info.active_icon = imagepool.get_surface(
+                    resources.path('images/icon-device-hd_active.png'))
             else:
                 info.icon = imagepool.get_surface(
                     resources.path('images/icon-device.png'))
