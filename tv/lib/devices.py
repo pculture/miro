@@ -744,6 +744,8 @@ class DeviceItem(metadata.Store):
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         if isinstance(self.screenshot, unicode):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
+        if isinstance(self.cover_art, unicode):
+            self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
         if not self.title:
             self.title = filename_to_unicode(os.path.basename(self.video_path))
         if self.file_format is None:
@@ -804,7 +806,10 @@ class DeviceItem(metadata.Store):
 
     @returns_filename
     def get_thumbnail(self):
-        if self.screenshot:
+        if self.cover_art:
+            return os.path.join(self.device.mount,
+                                self.cover_art)
+        elif self.screenshot:
             return os.path.join(self.device.mount,
                                 self.screenshot)
         elif self.file_type == 'audio':
@@ -812,34 +817,40 @@ class DeviceItem(metadata.Store):
         else:
             return resources.path("images/thumb-default-video.png")
 
-    def _migrate_thumbnail(self):
-        screenshot = self.screenshot
+    def _migrate_image_field(self, field_name):
+        value = getattr(self, field_name)
         icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
-        if screenshot is not None:
-            if (screenshot.startswith(icon_cache_directory) or
-                screenshot.startswith(cover_art_directory)):
+        if value is not None:
+            if (value.startswith(icon_cache_directory) or
+                value.startswith(cover_art_directory)):
                 # migrate the screenshot onto the device
-                basename = os.path.basename(screenshot)
+                basename = os.path.basename(value)
                 try:
                     new_path = os.path.join(self.device.mount, '.miro',
                                             basename)
-                    shutil.copyfile(screenshot, new_path)
+                    shutil.copyfile(value, new_path)
                 except (IOError, OSError):
                     # error copying the thumbnail, just erase it
-                    self.screenshot = None
+                    setattr(self, field_name, None)
                 else:
                     extracted = os.path.join(icon_cache_directory, 'extracted')
-                    if (screenshot.startswith(extracted) or
-                        screenshot.startswith(cover_art_directory)):
+                    if (value.startswith(extracted) or
+                        value.startswith(cover_art_directory)):
                         # moviedata extracted this for us, so we can remove it
                         try:
-                            os.unlink(screenshot)
+                            os.unlink(value)
                         except OSError:
                             pass
-                    self.screenshot = os.path.join('.miro', basename)
-            elif screenshot.startswith(resources.root()):
-                self.screenshot = None # don't save a default thumbnail
+                    setattr(self, field_name,
+                            os.path.join('.miro', basename))
+            elif value.startswith(resources.root()):
+                setattr(self, field_name, None) # don't save a default
+                                                # thumbnail
+
+    def _migrate_thumbnail(self):
+        self._migrate_image_field('screenshot')
+        self._migrate_image_field('cover_art')
 
     def remove(self, save=True):
         file_types = [self.file_type]
@@ -878,7 +889,7 @@ class DeviceItem(metadata.Store):
         for k, v in self.__dict__.items():
             if v is not None and k not in ('device', 'file_type', 'id',
                                            'video_path', '_deferred_update'):
-                if k == 'screenshot' or k == 'thumbnail' or k == 'cover_art':
+                if ((k == 'screenshot' or k == 'cover_art')):
                     v = filename_to_unicode(v)
                 data[k] = v
         return data
