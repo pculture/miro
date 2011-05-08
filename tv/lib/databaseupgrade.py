@@ -3281,4 +3281,8 @@ def upgrade157(cursor):
     """Delete Items without filenames (#17306) - these invalid items are
     probably coming from Miro <= 3.5.1
     """
-    cursor.execute("DELETE FROM item WHERE filename IS NULL OR filename = ''")
+    # this was:
+    # cursor.execute("DELETE FROM item WHERE filename IS NULL OR filename = ''")
+    # but that's insane because it whacks all podcast history of what
+    # miro has seen!
+    pass
