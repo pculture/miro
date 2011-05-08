@@ -212,10 +212,10 @@ def get_device_number(handle_or_path):
         opened_handle = True
         handle = kernel32.CreateFileA(
             unicode(handle_or_path).encode('utf8'),
-            GENERIC_READ | GENERIC_WRITE
+            GENERIC_READ | GENERIC_WRITE,
             FILE_SHARE_READ | FILE_SHARE_WRITE,
             None,
-            OPEN_EXISTING
+            OPEN_EXISTING,
             0, None)
         if handle == INVALID_HANDLE_VALUE:
             return handle
