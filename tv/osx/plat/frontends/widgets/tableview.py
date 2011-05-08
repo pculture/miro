@@ -36,6 +36,7 @@ from __future__ import with_statement # for python2.5
 import math
 import logging
 from contextlib import contextmanager
+from collections import namedtuple
 
 from AppKit import *
 from Foundation import *
@@ -45,6 +46,7 @@ from miro import signals
 from miro import errors
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.tableselection import SelectionOwnerMixin
+from miro.frontends.widgets.tablescroll import ScrollbarOwnerMixin
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import osxmenus
@@ -68,6 +70,15 @@ _disclosure_button_width = _disclosure_button.frame().size.width
 EXPANDER_PADDING = 6
 HEADER_HEIGHT = 17
 CUSTOM_HEADER_HEIGHT = 25
+
+Rect = namedtuple('Rect', 'x y width height') 
+def NSRectToRect(nsrect):
+    origin, size = nsrect.origin, nsrect.size
+    return Rect(origin.x, origin.y, size.width, size.height)
+
+Point = namedtuple('Point', 'x y')
+def NSPointToPoint(nspoint):
+    return Point(int(nspoint.x), int(nspoint.y))
 
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
@@ -946,37 +957,19 @@ class CocoaSelectionOwnerMixin(SelectionOwnerMixin):
     def _iter_from_string(self, row):
         return self.model.iter_for_row(self.tableview, int(row))
 
-class ScrollbarOwnerMixin(object):
+class CocoaScrollbarOwnerMixin(ScrollbarOwnerMixin):
     """Manages a TableView's scroll position."""
     def __init__(self):
+        ScrollbarOwnerMixin.__init__(self)
         self.scroll_position = (0, 0)
         self.clipview_notifications = None
-
-    def reset_scroll(self):
-        """Lose the current scroll position (going back to the origin)"""
-        self.set_scroll_position((0, 0))
-
-    def scroll_to_iter(self, iter_, auto=False):
-        """If auto is not set, always centers the given iter.
-        
-        With auto set, scrolls to the given iter if we're auto-scrolling, or if
-        the iter is recapturing the scroll by passing the current position.
-        """
-        scroller = self.tableview.enclosingScrollView()
-        if not scroller: # not ready yet
-            return
-        rect = self.tableview.rectOfRow_(self.row_of_iter(iter_))
-        height = rect.size.height
-        visible = scroller.contentView().documentVisibleRect().size.height
-        pos = rect.origin.y + (height - visible) / 2
-        if (not auto or abs(pos - self.get_scroll_position()[1]) <= height):
-            self.set_scroll_position((0, pos))
 
     def set_scroll_position(self, scroll_to):
         """Restore a saved scroll position."""
         self.scroll_position = scroll_to
-        scroller = self.tableview.enclosingScrollView()
-        if not scroller: # not ready yet
+        try:
+            scroller = self._scroller
+        except errors.WidgetNotReadyError:
             return
         clipview = scroller.contentView()
         if not self.clipview_notifications:
@@ -993,18 +986,39 @@ class ScrollbarOwnerMixin(object):
         rect = NSMakeRect(scroll_to[0], scroll_to[1], size[0], size[1])
         self.tableview.scrollRectToVisible_(rect)
 
-    def get_scroll_position(self):
-        scroller = self.tableview.enclosingScrollView()
-        if not scroller:
-            return None
-        point = scroller.contentView().documentVisibleRect().origin
-        return int(point.x), int(point.y)
+    @property
+    def _manually_scrolled(self):
+        """Return whether the view has been scrolled explicitly by the user
+        since the last time it was set automatically. Ignores X coords.
+        """
+        auto_y = self.scroll_position[1]
+        real_y = self.get_scroll_position()[1]
+        return abs(auto_y - real_y) > 5
+
+    def _get_item_area(self, iter_):
+        rect = self.tableview.rectOfRow_(self.row_of_iter(iter_))
+        return NSRectToRect(rect)
+
+    def _get_visible_area(self):
+        return NSRectToRect(self._scroller.contentView().documentVisibleRect())
+
+    def _get_scroll_position(self):
+        point = self._scroller.contentView().documentVisibleRect().origin
+        return NSPointToPoint(point)
 
     def on_scroll_changed(self, notification):
         self.set_scroll_position(self.scroll_position)
 
     def set_scroller(self, scroller):
         """For GTK; Cocoa tableview knows its enclosingScrollView"""
+
+    @property
+    def _scroller(self):
+        """Return an NSScrollView or raise WidgetNotReadyError"""
+        scroller = self.tableview.enclosingScrollView()
+        if not scroller:
+            raise errors.WidgetNotReadyError('enclosingScrollView')
+        return scroller
 
 class SorterPadding(NSView):
     # Why is this a Mac only widget?  Because the wrappermap mechanism requires
@@ -1035,7 +1049,7 @@ class SorterPadding(NSView):
         context.rel_line_to(0, context.height)
         context.stroke()
         
-class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
+class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
     widget fairly closely.
     """
@@ -1049,7 +1063,7 @@ class TableView(CocoaSelectionOwnerMixin, ScrollbarOwnerMixin, Widget):
     def __init__(self, model):
         Widget.__init__(self)
         CocoaSelectionOwnerMixin.__init__(self)
-        ScrollbarOwnerMixin.__init__(self)
+        CocoaScrollbarOwnerMixin.__init__(self)
         self.create_signal('hotspot-clicked')
         self.create_signal('row-clicked')
         self.create_signal('row-activated')

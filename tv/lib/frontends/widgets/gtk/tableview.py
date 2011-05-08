@@ -45,8 +45,10 @@ HEADER_HEIGHT = 25
 
 from miro import signals
 from miro import infolist
-from miro.errors import WidgetActionError, WidgetDomainError, WidgetRangeError
+from miro.errors import (WidgetActionError, WidgetDomainError, WidgetRangeError,
+        WidgetNotReadyError)
 from miro.frontends.widgets.tableselection import SelectionOwnerMixin
+from miro.frontends.widgets.tablescroll import ScrollbarOwnerMixin
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
@@ -71,7 +73,7 @@ def rect_contains_point(rect, x, y):
     return ((rect.x <= x < rect.x + rect.width) and
             (rect.y <= y < rect.y + rect.height))
 
-class ScrollbarOwnerMixin(object):
+class TreeViewScrolling(object):
     def __init__(self):
         self.scrollbars = []
         self.scroll_positions = None, None
@@ -135,31 +137,17 @@ class ScrollbarOwnerMixin(object):
             raise WidgetRangeError("scrollable area", pos, lower, upper)
         return min(max(pos, lower), upper)
 
-    def get_scroll_position(self):
-        """Get the current position of both scrollbars, to restore later."""
-        return tuple(int(bar.get_value()) for bar in self.scrollbars)
-
-    def get_visible_area(self):
-        """Return the Rect of the visible area, in tree coords.
-
-        get_visible_rect gets this wrong for StandardView, always returning an
-        origin of (0, 0) - this is because our ScrolledWindow is not our direct
-        parent.
-        """
-        if not self.scrollbars:
-            return
-        x, y = (int(adj.get_value()) for adj in self.scrollbars)
-        width, height = (int(adj.get_page_size()) for adj in self.scrollbars)
-        return Rect(x, y, width, height)
-
     def get_path_rect(self, path):
         """Return the Rect for the given item, in tree coords."""
         rect = self.get_background_area(path, self.get_columns()[0])
         x, y = self.widget_to_tree_coords(rect.x, rect.y)
         return Rect(x, y, rect.width, rect.height)
 
-    def set_vertical_scroll(self, position):
-        self.set_scroll_position((self.scroll_positions[0], position))
+    @property
+    def _scrollbars(self):
+        if not self.scrollbars:
+            raise WidgetNotReadyError
+        return self.scrollbars
 
     def scroll_ancestor(self, newly_selected, down):
         # Try to figure out what just became selected.  If multiple things
@@ -187,7 +175,7 @@ class ScrollbarOwnerMixin(object):
             if top < vadjustment.value:
                 vadjustment.set_value(max(vadjustment.lower, top))
 
-class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
+class MiroTreeView(gtk.TreeView, TreeViewScrolling):
     """Extends the GTK TreeView widget to help implement TableView
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     # Add a tiny bit of padding so that the user can drag feeds below
@@ -195,7 +183,7 @@ class MiroTreeView(gtk.TreeView, ScrollbarOwnerMixin):
     PAD_BOTTOM = 3
     def __init__(self):
         gtk.TreeView.__init__(self)
-        ScrollbarOwnerMixin.__init__(self)
+        TreeViewScrolling.__init__(self)
         self.drag_dest_at_bottom = False
         self.height_without_pad_bottom = -1
         self.set_enable_search(False)
@@ -998,31 +986,9 @@ class HoverTrackingMixin(object):
             if self.hover_info is not None:
                 self._redraw_cell(treeview, *self.hover_info)
 
-class GTKScrollOwnerMixin(object):
-    def scroll_to_iter(self, iter_, auto=False):
-        """If auto is not set, always centers the given iter.
-        
-        With auto set, scrolls to the given iter if we're auto-scrolling, or if
-        the iter is recapturing the scroll by passing the current position.
-        """
-        item = self._widget.get_path_rect(self._model.get_path(iter_))
-        visible = self._widget.get_visible_area()
-        visible_bottom = visible.y + visible.height
-        visible_middle = visible.y + visible.height // 2
-        item_bottom = item.y + item.height
-        item_middle = item.y + item.height // 2
-        in_top = item_bottom >= visible.y and item.y <= visible_middle
-        in_bottom = item_bottom >= visible_middle and item.y <= visible_bottom
-        if (not auto or in_bottom or 
-                (not self._widget.manually_scrolled and not in_top)):
-            destination = item_middle - visible.height // 2
-            self._widget.set_vertical_scroll(destination)
-
-    def set_scroll_position(self, scroll_pos):
-        self._widget.set_scroll_position(scroll_pos)
-    
-    def get_scroll_position(self):
-        return self._widget.get_scroll_position()
+class GTKScrollbarOwnerMixin(ScrollbarOwnerMixin):
+    def __init__(self):
+        ScrollbarOwnerMixin.__init__(self)
 
     def set_scroller(self, scroller):
         """Set the Scroller object for this widget, if its ScrolledWindow is
@@ -1030,14 +996,38 @@ class GTKScrollOwnerMixin(object):
         """
         self._widget.set_scroller(scroller._widget)
 
-    def reset_scroll(self):
-        """Lose the current scroll position (going back to the origin)"""
-        # (0, 1) is a temporary workaround for a stupid bug
-        self.set_scroll_position((0, 1))
+    def set_scroll_position(self, scroll_pos):
+        self._widget.set_scroll_position(scroll_pos)
+
+    def _get_item_area(self, iter_):
+        return self._widget.get_path_rect(self._model.get_path(iter_))
+
+    @property
+    def _manually_scrolled(self):
+        return self._widget.manually_scrolled
+
+    def _get_visible_area(self):
+        """Return the Rect of the visible area, in tree coords.
+
+        get_visible_rect gets this wrong for StandardView, always returning an
+        origin of (0, 0) - this is because our ScrolledWindow is not our direct
+        parent.
+        """
+        bars = self._widget._scrollbars
+        x, y = (int(adj.get_value()) for adj in bars)
+        width, height = (int(adj.get_page_size()) for adj in bars)
+        return Rect(x, y, width, height)
+    
+    def _get_scroll_position(self):
+        """Get the current position of both scrollbars, to restore later."""
+        try:
+            return tuple(int(bar.get_value()) for bar in self._widget._scrollbars)
+        except WidgetNotReadyError:
+            return None
 
 class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         HotspotTrackingMixin, ColumnOwnerMixin, HoverTrackingMixin,
-        GTKScrollOwnerMixin):
+        GTKScrollbarOwnerMixin):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = True
@@ -1063,7 +1053,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         HotspotTrackingMixin.__init__(self)
         ColumnOwnerMixin.__init__(self)
         HoverTrackingMixin.__init__(self)
-        GTKScrollOwnerMixin.__init__(self)
+        GTKScrollbarOwnerMixin.__init__(self)
 
     def _connect_signals(self):
         self.create_signal('row-expanded')
