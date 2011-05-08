@@ -190,9 +190,14 @@ class Importer(object):
 
     @eventloop.as_idle
     def import_subscriptions(self, pathname, show_summary=True):
-        f = open(pathname, "r")
-        content = f.read()
-        f.close()
+        try:
+            f = open(pathname, "r")
+            content = f.read()
+            f.close()
+        except IOError, e:
+            logging.warn("IOError in import_subscriptions: %s", e)
+            self.show_file_error()
+            return
 
         try:
             subscriptions = self.import_content(content)
@@ -219,6 +224,14 @@ class Importer(object):
         title = _("OPML Import failed")
         message = _(
             "The selected OPML file appears to be invalid.  "
+            "Import was interrupted.")
+        dialog = dialogs.MessageBoxDialog(title, message)
+        dialog.run()
+
+    def show_file_error(self):
+        title = _("OPML Import failed")
+        message = _(
+            "The selected OPML file could not be read.  "
             "Import was interrupted.")
         dialog = dialogs.MessageBoxDialog(title, message)
         dialog.run()
