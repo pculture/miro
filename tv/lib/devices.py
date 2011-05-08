@@ -783,7 +783,7 @@ class DeviceItem(metadata.Store):
     def get_release_date(self):
         try:
             return datetime.fromtimestamp(self.release_date)
-        except ValueError:
+        except (ValueError, TypeError):
             logging.warn('DeviceItem: release date %s invalid',
                           self.release_date)
             return datetime.now()
