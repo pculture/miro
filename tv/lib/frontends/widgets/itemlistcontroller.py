@@ -577,7 +577,6 @@ class ItemListController(object):
             app.playback_manager.play_pause()
         elif info.downloaded:
             self._play_item_list(info.id)
-            self.scroll_to_item(info, auto=False)
         elif info.state == 'downloading':
             messages.PauseDownload(info.id).send_to_backend()
         elif info.state == 'paused':
@@ -711,7 +710,6 @@ class ItemListController(object):
                 app.widgetapp.open_url(url)
         elif name in ('play', 'thumbnail-play'):
             self._play_item_list(item_info.id)
-            self.scroll_to_item(item_info, auto=False)
         elif name == 'play_pause':
             app.playback_manager.play_pause()
         elif name.startswith('rate:'):

@@ -140,21 +140,26 @@ class ScrollbarOwnerMixin(object):
         return tuple(int(bar.get_value()) for bar in self.scrollbars)
 
     def get_visible_area(self):
+        """Return the Rect of the visible area, in tree coords.
+
+        get_visible_rect gets this wrong for StandardView, always returning an
+        origin of (0, 0) - this is because our ScrolledWindow is not our direct
+        parent.
+        """
         if not self.scrollbars:
             return
         x, y = (int(adj.get_value()) for adj in self.scrollbars)
-        x, y = self.tree_to_widget_coords(x, y)
         width, height = (int(adj.get_page_size()) for adj in self.scrollbars)
         return Rect(x, y, width, height)
 
+    def get_path_rect(self, path):
+        """Return the Rect for the given item, in tree coords."""
+        rect = self.get_background_area(path, self.get_columns()[0])
+        x, y = self.widget_to_tree_coords(rect.x, rect.y)
+        return Rect(x, y, rect.width, rect.height)
+
     def set_vertical_scroll(self, position):
         self.set_scroll_position((self.scroll_positions[0], position))
-
-    def get_path_rect(self, path):
-        """Return the Rect for the given item, in widget coords."""
-        rect = self.get_background_area(path, self.get_columns()[0])
-        x, y = self.tree_to_widget_coords(rect.x, rect.y)
-        return Rect(x, y, rect.width, rect.height)
 
     def scroll_ancestor(self, newly_selected, down):
         # Try to figure out what just became selected.  If multiple things
@@ -1002,13 +1007,16 @@ class GTKScrollOwnerMixin(object):
         """
         item = self._widget.get_path_rect(self._model.get_path(iter_))
         visible = self._widget.get_visible_area()
-        dest = item.y + (item.height - visible.height) // 2
-        bottom_visible = visible.y + visible.height
-        middle_visible = visible.y + bottom_visible // 2
-        grab_scroll = (dest >= middle_visible - item.height // 2 and
-                dest <= bottom_visible)
-        if not auto or not self._widget.manually_scrolled or grab_scroll:
-            self._widget.set_vertical_scroll(dest)
+        visible_bottom = visible.y + visible.height
+        visible_middle = visible.y + visible.height // 2
+        item_bottom = item.y + item.height
+        item_middle = item.y + item.height // 2
+        in_top = item_bottom >= visible.y and item.y <= visible_middle
+        in_bottom = item_bottom >= visible_middle and item.y <= visible_bottom
+        if (not auto or in_bottom or 
+                (not self._widget.manually_scrolled and not in_top)):
+            destination = item_middle - visible.height // 2
+            self._widget.set_vertical_scroll(destination)
 
     def set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)
@@ -1218,6 +1226,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         else:
             return None
 
+    # XXX treeview.get_cell_area handles what we're trying to use this for
     def _x_coord_in_expander(self, treeview, path_info):
         """Calculate if an x coordinate is over the expander triangle
 
