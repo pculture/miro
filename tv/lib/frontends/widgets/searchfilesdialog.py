@@ -65,6 +65,7 @@ class SearchFilesDialog(widgetset.DialogWindow):
 
         self.gathered_media_files = []
         self.searching = False
+        self.parsed_files = 0
 
         self._page_box = widgetset.VBox()
         self._pages = self.build_pages()
