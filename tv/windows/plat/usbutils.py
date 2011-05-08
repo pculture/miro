@@ -45,6 +45,18 @@ ERROR_INSUFFICIENT_BUFFER = 122
 ERROR_NO_MORE_ITEMS = 259
 MAXIMUM_USB_STRING_LENGTH = 255
 
+GENERIC_READ = 0x80000000L
+GENERIC_WRITE = 0x40000000L
+FILE_SHARE_READ = 0x1
+FILE_SHARE_WRITE = 0x2
+OPEN_EXISTING = 0x3
+
+FSCTL_LOCK_VOLUME = 0x90018 # XXX use these to do eject another way?
+FSCTL_DISMOUNT_VOLUME = 0x90020
+IOCTL_STORAGE_MEDIA_REMOVAL = 0x2D4804
+IOCTL_STORAGE_EJECT_MEDIA = 0x2D4808
+IOCTL_STORAGE_GET_DEVICE_NUMBER = 0x2D1080
+
 kernel32 = ctypes.windll.kernel32
 
 setupapi = ctypes.windll.setupapi
@@ -91,6 +103,14 @@ class SP_DEVICE_INTERFACE_DETAIL_DATA(ctypes.Structure):
     _fields_ = [("cbSize", ctypes.wintypes.DWORD),
             ("DevicePath", ctypes.c_wchar*255)]
 
+class PREVENT_MEDIA_REMOVAL(ctypes.Structure):
+    _fields_ = [('PreventMediaRemoval', ctypes.wintypes.BOOLEAN)]
+
+class STORAGE_DEVICE_NUMBER(ctypes.Structure):
+    _fields_ = [('DeviceType', ctypes.wintypes.DWORD),
+                ('DeviceNumber', ctypes.wintypes.ULONG),
+                ('PartitionNumber', ctypes.wintypes.ULONG)]
+
 GUID_DEVINTERFACE_VOLUME = GUID(0x53F5630D, 0xB6BF, 0x11D0,
         (ctypes.c_ubyte*8)(0x94, 0xF2, 0x00, 0xA0, 0xC9, 0x1E, 0xFB, 0x8B))
 
@@ -103,8 +123,8 @@ def get_class_devs():
                                    0,
                                    DIGCF_PRESENT | DIGCF_DEVICEINTERFACE)
     if hDevInfo == INVALID_HANDLE_VALUE:
-        warn('get_class_devs', ctypes.windll.GetLastError(),
-             ctypes.windll.FormatError())
+        warn('get_class_devs', ctypes.GetLastError(),
+             ctypes.FormatError())
 
 def get_device_interface(i, device=None):
     interfaceData = SP_DEVICE_INTERFACE_DATA()
@@ -120,7 +140,7 @@ def get_device_interface(i, device=None):
         return
     else:
         warn('get_device_interface', ctypes.GetLastError(),
-             ctypes.windll.FormatError())
+             ctypes.FormatError())
 
 def get_device_interface_detail(interface):
     detail = None
@@ -140,8 +160,8 @@ def get_device_interface_detail(interface):
             detail = SP_DEVICE_INTERFACE_DETAIL_DATA(
                 cbSize=6)
         else:
-            warn('get_device_interface_detail', ctypes.windll.GetLastError(),
-                 ctypes.windll.FormatError())
+            warn('get_device_interface_detail', ctypes.GetLastError(),
+                 ctypes.FormatError())
             return
     return detail.DevicePath, device
 
@@ -186,7 +206,59 @@ def read_write_drive(mount):
         return False
     return True
 
-        
+def get_device_number(handle_or_path):
+    opened_handle = False
+    if isinstance(handle_or_path, basestring):
+        opened_handle = True
+        handle = kernel32.CreateFileA(
+            unicode(handle_or_path).encode('utf8'),
+            GENERIC_READ | GENERIC_WRITE
+            FILE_SHARE_READ | FILE_SHARE_WRITE,
+            None,
+            OPEN_EXISTING
+            0, None)
+        if handle == INVALID_HANDLE_VALUE:
+            return handle
+    else:
+        handle = handle_or_path
+    length = ctypes.wintypes.DWORD(0)
+    sdn = STORAGE_DEVICE_NUMBER()
+    try:
+        if not kernel32.DeviceIoControl(
+            handle, IOCTL_STORAGE_GET_DEVICE_NUMBER, None, 0,
+            ctypes.byref(sdn), ctypes.sizeof(sdn),
+            ctypes.byref(length), None):
+            warn('get_device_number',
+                 ctypes.GetLastError(),
+                 ctypes.FormatError())
+            return INVALID_HANDLE_VALUE
+        else:
+            return sdn.DeviceNumber
+    finally:
+        if opened_handle:
+            kernel32.CloseHandle(handle)            
+
+def eject_mount(mount_point):
+    """
+    Given a mount point ('G:\\'), ejects the drive.
+    """
+    get_class_devs()
+    if mount_point.endswith('\\'):
+        # strip trailing slash
+        mount_point = mount_point[:-1]
+    device_number = get_device_number('\\\\.\\%s' % mount_point)
+    if device_number == INVALID_HANDLE_VALUE:
+        return False
+    index = 0
+    while True:
+        interface = get_device_interface(index)
+        if interface is None:
+            return False
+        index += 1
+        path, device = get_device_interface_detail(interface)
+        if get_device_number(path) == device_number:
+            device_eject(get_parent(get_parent(device.DevInst)))
+            return True      
 
 def connected_devices():
     """

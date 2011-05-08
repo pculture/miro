@@ -141,4 +141,4 @@ class DeviceTracker(object):
         if info.id not in self._connected:
             return
         usb_info = self._connected[info.id]
-        usbutils.device_eject(usb_info['devInst'])
+        usbutils.eject_mount(usb_info['mount'])
