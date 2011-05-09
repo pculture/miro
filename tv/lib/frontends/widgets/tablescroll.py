@@ -54,11 +54,11 @@ class ScrollbarOwnerMixin(object):
     def __init__(self):
         pass
 
-    def scroll_to_iter(self, iter_, auto=False):
-        """If auto is not set, always centers the given iter.
+    def scroll_to_iter(self, iter_, manual=True, recenter=False):
+        """Scroll the given item into view.
         
-        With auto set, scrolls to the given iter if we're auto-scrolling, or if
-        the iter is recapturing the scroll by passing the current position.
+        manual: scroll even if we were not following the playing item
+        recenter: scroll even if item is in top half of view
         """
         try:
             item = self._get_item_area(iter_)
@@ -72,12 +72,40 @@ class ScrollbarOwnerMixin(object):
         item_middle = item.y + item.height // 2
         in_top = item_bottom >= visible.y and item.y <= visible_middle
         in_bottom = item_bottom >= visible_middle and item.y <= visible_bottom
-        if not auto or in_bottom or (not manually_scrolled and not in_top):
+        if self._should_scroll(
+                manual, in_top, in_bottom, recenter, manually_scrolled):
             destination = item_middle - visible.height // 2
             try:
                 self._set_vertical_scroll(destination)
             except WidgetActionError:
                 return
+
+    @classmethod
+    def _should_scroll(cls,
+            manual, in_top, in_bottom, recenter, manually_scrolled):
+        if not manual and manually_scrolled:
+            # The user has moved the scrollbars since we last autoscrolled, and
+            # we're deciding whether we should resume autoscrolling.
+            # We want to do that when the currently-playing item catches up to
+            # the center of the screen i.e. is part above the center, part below
+            return in_top and in_bottom
+        # This is a manual scroll, or we're already autoscrolling - so we no
+        # longer need to worry about either manual or manually_scrolled
+        if in_top:
+            # The item is in the top half; let playback catch up with the
+            # current scroll position, unless recentering has been requested
+            return recenter
+        if in_bottom:
+            # We land here when:
+            # - playback has begun with an item in the bottom half of the screen
+            # - scroll is following sequential playback
+            # Either way we want to jump down to the item.
+            return True
+        # We're scrolling to an item that's not in view because:
+        # - playback has begun with an item that is out of sight
+        # - we're autoscrolling on shuffle
+        # Either way we want to show the item.
+        return True
 
     def reset_scroll(self):
         """To scroll back to the origin; platform code might want to do

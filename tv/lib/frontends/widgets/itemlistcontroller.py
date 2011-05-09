@@ -204,7 +204,7 @@ class ItemListController(object):
         self.views = {}
         self._search_text = ''
         self._got_initial_list = False
-        self._needs_scroll = None
+        self._scroll_waiting = None
         self._playing_items = False
         self._selection_to_restore = None
         self.config_change_handle = None
@@ -530,8 +530,6 @@ class ItemListController(object):
             start_id = selected_ids[0]
         self._play_item_list(start_id, presentation_mode,
                 force_resume=force_resume)
-        if selection:
-            self.scroll_to_item(selection[0], auto=False)
 
     def play_items(self, presentation_mode='fit-to-bounds',
                    force_resume=False):
@@ -562,6 +560,10 @@ class ItemListController(object):
         app.playback_manager.set_shuffle(shuffle)
         repeat = app.widget_state.get_repeat(self.type, self.id)
         app.playback_manager.set_repeat(repeat)
+        # _playback_will_play will also scroll_to_item; doing it here too
+        # because we want manual=True in this case (always begin autoscrolling)
+        if start_info is not None:
+            self.scroll_to_item(start_info, manual=True, recenter=False)
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.
@@ -608,7 +610,6 @@ class ItemListController(object):
                         "not found")
                 return
         self._play_item_list(last_played_id, force_resume=True)
-        self.scroll_to_item(info, auto=False)
 
     def on_item_details_expander_clicked(self, button):
         expand = button.click_should_expand()
@@ -852,7 +853,7 @@ class ItemListController(object):
             app.widget_state.set_last_played_item_id(self.type, self.id,
                     item.id)
             self.update_resume_button()
-            self.scroll_to_item(item, auto=True)
+            self.scroll_to_item(item, manual=False, recenter=False)
 
     def item_list_will_change(self):
         """Call this before making any changes to the item list.  """
@@ -891,10 +892,11 @@ class ItemListController(object):
         """Handle an ItemList message meant for this ItemContainer."""
         self.handle_item_list_changes()
         self._got_initial_list = True
-        if self._needs_scroll:
+        if self._scroll_waiting:
             # already waiting to scroll to an iter
-            self.scroll_to_item(self._needs_scroll)
-            self._needs_scroll = None
+            info, conditions = self._scroll_waiting
+            self._scroll_waiting = None
+            self.scroll_to_item(info, **conditions)
         else:
             # normal position restore
             self.restore_scroll_positions()
@@ -987,16 +989,19 @@ class ItemListController(object):
             app.frontend_config_watcher.disconnect(self.config_change_handle)
             self.config_change_handle = None
 
-    def scroll_to_item(self, item, auto=False):
+    def scroll_to_item(self, item, **conditions):
+        """Scroll to a specific item, specified by an ItemInfo. Keyword args are
+        passed to scroll_to_iter, and modify behavior.
+        """
         if self._got_initial_list:
-            iter = self.current_item_view.model.iter_for_id(item.id)
             try:
-                self.current_item_view.scroll_to_iter(iter, auto)
+                iter_ = self.current_item_view.model.iter_for_id(item.id)
+                self.current_item_view.scroll_to_iter(iter_, **conditions)
             except KeyError:
                 # item no longer in the list, so we'll ignore it
                 pass
         else:
-            self._needs_scroll = item
+            self._scroll_waiting = item, conditions
 
 class SimpleItemListController(ItemListController):
     def __init__(self):

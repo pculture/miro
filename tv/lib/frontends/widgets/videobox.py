@@ -558,10 +558,7 @@ class VideoBox(style.LowerBox):
         tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
         app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
         controller = app.display_manager.current_display.controller
-        try:
-            controller.scroll_to_item(self.selected_file)
-        except KeyError:
-            pass
+        controller.scroll_to_item(self.selected_file, manual=True, recenter=True)
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)
