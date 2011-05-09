@@ -405,7 +405,7 @@ class SharingItemSource(ItemSource):
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
-            duration = item.duration or None,
+            duration = item.duration,
             resume_time = 0,
             permalink = item.permalink,
             commentslink = item.comments_link,
@@ -548,6 +548,10 @@ class DeviceItemSource(ItemSource):
             self.info_cache.pop(item.video_path, None)
 
     def _item_info_for(self, item):
+        if item.duration is None:
+            duration = None
+        else:
+            duration = item.duration / 1000,
         info = dict(
             source_type='device',
             feed_id = item.feed_id,
@@ -557,7 +561,7 @@ class DeviceItemSource(ItemSource):
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
-            duration = item.duration and item.duration / 1000,
+            duration = duration,
             resume_time = 0,
             permalink = item.permalink,
             commentslink = item.comments_link,
