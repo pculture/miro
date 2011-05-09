@@ -500,6 +500,7 @@ class VideoPlayer(player.Player, VBox):
             self.renderer = NullRenderer()
 
         self.overlay = None
+        self.screensaver_manager = None
 
         if video_widget is None:
             video_widget = VideoWidget(self.renderer)
