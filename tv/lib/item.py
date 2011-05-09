@@ -484,12 +484,33 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def incomplete_mdp_view(cls, limit=10):
         """Return up to limit local items that have not yet been examined with
         MDP; a file is considered examined even if we have decided to skip it.
+
+        NB. don't change this without also changing in_incomplete_mdp_view!
         """
         return cls.make_view("((is_file_item AND NOT deleted) OR "
                 "(rd.state in ('finished', 'uploading', 'uploading-paused'))) "
                 "AND mdp_state IS NULL", # State.UNSEEN
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=limit)
+
+    @property
+    def in_incomplete_mdp_view(self):
+        """This is the python version of the SQL query in incomplete_mdp_view,
+        to be used in situations where e.g. we need to assert that an item is no
+        longer eligible for the view - where actually querying the entire view
+        would be unreasonable.
+
+        NB. don't change this without also changing incomplete_mdp_view!
+        """
+        if not self.id_exists():
+            return False
+        # FIXME: if possible we should use the actual incomplete_mdp_view with
+        # an id=self.id constraint, but I don't see a straightforward way to do
+        # that
+        valid_file_item = self.is_file_item and not self.deleted
+        downloaded = self.downloader_state in (
+                'finished', 'uploading', 'uploading-paused')
+        return self.mdp_state is None and (valid_file_item or downloaded)
 
     @classmethod
     def unique_others_view(cls):
@@ -1718,15 +1739,24 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """Begin metadata extraction for this item; runs mutagen synchonously,
         if applicable, and then adds the item to mdp's queue.
         """
+        # NOTE: it is very important (#7993) that there is no way to leave this
+        # method without either:
+        # - calling moviedata.movie_data_updater.request_update(self)
+        # - changing this item so that not self.in_incomplete_mdp_view
         if self.check_deleted():
             # check_deleted just expire()d the file or not id_exists()
+            if self.in_incomplete_mdp_view:
+                app.controller.failed_soft("check_media_file",
+                        "item in incomplete_mdp_view after check_deleted()")
             return
         filename = self.get_filename()
         if not filename:
             # double check that we have a valid filename (see #17306)
             app.controller.failed_soft("check_media_file",
                     "item has no filename in check_media_file!", False)
-            self.expire() # get rid of the invalid item
+            self.expire()
+            # no point in soft-asserting self.in_incomplete_mdp_view here, since
+            # we just soft-failed anyway
             return
         self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
@@ -1736,7 +1766,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # also technically possible that the item disappeared between
             # check_deleted and now.
             self.expire()
-            return # OK to skip request_update only after expire()
+            if self.in_incomplete_mdp_view:
+                app.controller.failed_soft("check_media_file",
+                        "item in incomplete_mdp_view after expire()")
+            return
         moviedata.movie_data_updater.request_update(self)
         if self.file_type is None:
             # if this is not overridden by movie_data_updater,
