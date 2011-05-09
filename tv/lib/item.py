@@ -485,9 +485,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """Return up to limit local items that have not yet been examined with
         MDP; a file is considered examined even if we have decided to skip it.
         """
-        return cls.make_view("(is_file_item OR (rd.state in ('finished', "
-                "'uploading', 'uploading-paused'))) AND "
-                "mdp_state IS NULL", # State.UNSEEN
+        return cls.make_view("((is_file_item AND NOT deleted) OR "
+                "(rd.state in ('finished', 'uploading', 'uploading-paused'))) "
+                "AND mdp_state IS NULL", # State.UNSEEN
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=limit)
 
