@@ -1023,9 +1023,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.confirm_db_thread()
         self._remove_from_playlists()
         self.resumeTime = 0
-        if not self.is_external():
-            self.delete_files()
-            self.delete_external_metadata()
         if self.is_external():
             if self.is_downloaded():
                 if self.isContainerItem:
@@ -1038,9 +1035,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                     self.downloader.set_delete_files(False)
             self.remove()
         else:
+            self.delete_files()
+            self.delete_external_metadata()
             self.expired = True
             self.seen = self.keep = self.pendingManualDL = False
             self.filename = None
+            self.mdp_state = State.UNSEEN
             self.file_type = self.watchedTime = self.lastWatched = None
             self.duration = None
             self.isContainerItem = None
@@ -2063,6 +2063,7 @@ class FileItem(Item):
         self.parent_id = None
         self.feed_id = models.Feed.get_manual_feed().id
         self.deleted = True
+        self.mdp_state = State.UNSEEN
         self.signal_change()
 
     def delete_files(self):
