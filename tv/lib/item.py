@@ -1739,6 +1739,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return # OK to skip request_update only after expire()
         moviedata.movie_data_updater.request_update(self)
         if self.file_type is None:
+            # if this is not overridden by movie_data_updater,
             # neither mutagen nor MDP could identify it
             self.file_type = u'other'
         self.signal_change()
