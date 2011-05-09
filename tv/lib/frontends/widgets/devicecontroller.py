@@ -607,15 +607,17 @@ class DeviceMountedView(widgetset.VBox):
         self.tab_container = widgetset.Background()
         self.pack_start(self.tab_container, expand=True)
 
+
+        label_size = widgetutil.font_scale_from_osx_points(16)
         vbox = widgetset.VBox()
         label = widgetset.Label(_("Drag individual video and audio files "
                                   "onto the device in the sidebar to copy "
                                   "them."))
-        label.set_size(1.5)
+        label.set_size(label_size)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
         label = widgetset.Label(_("Use these options and the tabs above for "
                                   "automatic syncing."))
-        label.set_size(1.5)
+        label.set_size(label_size)
         vbox.pack_start(widgetutil.align_center(label, top_pad=10))
 
         self.device_size = SizeWidget()
