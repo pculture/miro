@@ -397,7 +397,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.expiring = None
         self.showMoreInfo = False
         self.playing = False
-        self._file_checked = False
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
@@ -1723,6 +1722,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # check_deleted just expire()d the file or not id_exists()
             return
         filename = self.get_filename()
+        if not filename:
+            # double check that we have a valid filename (see #17306)
+            app.controller.failed_soft("check_media_file",
+                    "item has no filename in check_media_file!", False)
+            self.expire() # get rid of the invalid item
+            return
         self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
             self.read_metadata()
@@ -1843,13 +1848,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.signal_change()
 
     def check_deleted(self):
-        """Check whether the item's file has been deleted; expire() the item if
-        it has. Returns whether the item no longer exists (True for items that
-        have just been expire()d, and also for items without id_exists).
+        """Check whether the item's file has been deleted outside of miro.
+
+        We expire() the item if it has.
+
+        :returns: True if expire() was called or our id doesn't exist
         """
-        if self._file_checked:
-            return False
-        self._file_checked = True
         if not self.id_exists():
             return True
         if (self.isContainerItem is not None and
