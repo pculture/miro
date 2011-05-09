@@ -54,7 +54,12 @@ from miro.frontends.widgets.application import Application
 # from miro.plat.frontends.widgets import threads
 from miro.plat import renderers, options
 from miro.plat.config import gconf_lock, gconf_key
-from miro.frontends.widgets.gtk import trayicon
+try:
+    from miro.plat.frontends.widgets import miroappindicator
+    APP_INDICATOR_SUPPORT = True
+except ImportError:
+    from miro.frontends.widgets.gtk import trayicon
+    APP_INDICATOR_SUPPORT = False
 from miro.plat import resources
 from miro.plat.utils import get_cookie_path
 from miro.plat.frontends.widgets import mediakeys
@@ -243,7 +248,11 @@ class LinuxApplication(Application):
                 self.window._window.unmaximize()
 
         # handle the trayicon
-        self.trayicon = trayicon.Trayicon('miro')
+        if APP_INDICATOR_SUPPORT:
+            self.trayicon = miroappindicator.MiroAppIndicator('miro')
+        else:
+            self.trayicon = trayicon.Trayicon('miro')
+
         if app.config.get(options.SHOW_TRAYICON):
             self.trayicon.set_visible(True)
         else:
@@ -372,7 +381,7 @@ class LinuxApplication(Application):
 
     def send_notification(self, title, body,
                           timeout=5000, attach_trayicon=True):
-        if not PYNOTIFY_SUPPORT:
+        if not PYNOTIFY_SUPPORT or APP_INDICATOR_SUPPORT:
             return
 
         notification = pynotify.Notification(title, body)

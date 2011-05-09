@@ -40,5 +40,6 @@ apt-get install \
     gstreamer0.10-plugins-ugly \
     ffmpeg \
     ffmpeg2theora \
-    libfaac0
+    libfaac0 \
+    python-appindicator
     # libwebkit-1.0-2 \
