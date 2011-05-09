@@ -341,7 +341,6 @@ class DeviceManager(object):
     def _set_connected(self, id_, kwargs):
         if kwargs.get('mount'):
             database = load_database(kwargs['mount'])
-            database.connect_weak('item-changed', self._clear_info_cache)
             device_name = database.get('device_name')
         else:
             device_name = None
@@ -458,16 +457,6 @@ class DeviceManager(object):
             dsm = self.syncs_in_progress[device.id]
             dsm.set_device(device)
             return dsm
-
-    def _clear_info_cache(self, database, info):
-        """
-        Remove an updated item from the per-device InfoCache.
-        """
-        try:
-            del self.info_cache[info.device.mount][info.video_path]
-        except KeyError:
-            # didn't actually get cached
-            pass
 
 class DeviceSyncManager(object):
     """
@@ -862,12 +851,7 @@ class DeviceItem(metadata.Store):
         self._migrate_image_field('cover_art')
 
     def remove(self, save=True):
-        file_types = [self.file_type]
-        if '-' in self.device.id:
-            ignored, current_file_type = self.device.id.rsplit('-', 1)
-            if current_file_type in ('video', 'audio'):
-                file_types.append(current_file_type)
-        for file_type in file_types:
+        for file_type in ['video', 'audio', 'other']:
             if self.video_path in self.device.database[file_type]:
                 del self.device.database[file_type][self.video_path]
         if save:
@@ -880,17 +864,18 @@ class DeviceItem(metadata.Store):
             self.remove()
             return
 
-        if '-' in self.device.id:
-            ignored, current_file_type = self.device.id.rsplit('-', 1)
-
-            if self.file_type != current_file_type:
-                # remove the old item from the database
+        was_removed = False
+        for type_ in set(('video', 'audio', 'other')) - set((self.file_type,)):
+            if self.video_path in self.device.database[type_]:
+                # clean up old types, if necessary
                 self.remove(save=False)
+                was_removed = True
+                break
 
         self._migrate_thumbnail()
         self.device.database[self.file_type][self.video_path] = self.to_dict()
 
-        if self.file_type != 'other':
+        if self.file_type != 'other' or was_removed:
             self.device.database.emit('item-changed', self)
 
     def to_dict(self):
@@ -1080,7 +1065,7 @@ def scan_device_for_files(device):
         short_filename = filename[len(device.mount):]
         ufilename = filename_to_unicode(short_filename)
         item_type = None
-        if os.path.normcase(ufilename) in known_files:
+        if os.path.normcase(short_filename) in known_files:
             continue
         if filetypes.is_video_filename(ufilename):
             item_type = 'video'

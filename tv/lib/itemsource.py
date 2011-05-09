@@ -509,7 +509,8 @@ class DeviceItemSource(ItemSource):
 
     def _ensure_info(self, item):
         if not isinstance(item, messages.ItemInfo):
-            return self._item_info_for(item)
+            info = self.info_cache[item.id] = self._item_info_for(item)
+            return info
         else:
             return item
 
@@ -519,14 +520,32 @@ class DeviceItemSource(ItemSource):
         self.emit("added", self._ensure_info(item))
 
     def _on_device_changed(self, database, item):
-        if item.file_type != self.type:
-            return # don't care about other types of items
-        self.emit("changed", self._ensure_info(item))
+        existed = was_type = False
+        if item.id in self.info_cache:
+            existed = True
+            was_type = (
+                self.info_cache[item.id].file_type == self.type)
+        is_type = (item.file_type == self.type)
+        if existed:
+            if was_type and not is_type:
+                # type changed alway from this source
+                self.emit('removed', item.id)
+                return
+            elif is_type and not was_type:
+                # added to this source
+                self.emit('added', self._ensure_info(item))
+                return
+        if is_type:
+            self.emit("changed", self._ensure_info(item))
 
     def _on_device_removed(self, database, item):
-        if item.file_type != self.type:
-            return # don't care about other types of items
-        self.emit("removed", item.id)
+        was_type = False
+        if item.id in self.info_cache:
+            was_type = (
+                self.info_cache[item.video_path].file_type == self.type)
+        if item.file_type == self.type or was_type:
+            self.emit("removed", item.id)
+            self.info_cache.pop(item.video_path, None)
 
     def _item_info_for(self, item):
         info = dict(
