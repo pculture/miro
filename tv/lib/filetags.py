@@ -282,8 +282,9 @@ def read_metadata(filename, test=False):
     except StandardError:
         # unknown error; soft fail because I think we should identify the error
         # types mutagen can raise - some of them hint as to what went wrong
-        app.widgetapp.handle_soft_failure("mutagen",
-                "unexpected Exception type in mutagen.File", with_exception=True)
+        app.controller.failed_soft("mutagen",
+                "unexpected Exception type in mutagen.File",
+                with_exception=True)
     else:
         if muta:
             return _parse_mutagen(filename, muta, test)

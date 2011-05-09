@@ -110,9 +110,9 @@ def _amz_callback(data):
                 elif key == 'duration':
                     additional['length'] = int(value) / 1000
         if url is None:
-            app.widgetapp.handle_soft_failure("_amz_callback",
-                                              "could not find URL for track",
-                                              with_exception=False)
+            app.controller.failed_soft("_amz_callback",
+                                       "could not find URL for track",
+                                       with_exception=False)
         else:
             entry = _build_entry(url, 'audio/mp3', additional)
             download_video(entry)
