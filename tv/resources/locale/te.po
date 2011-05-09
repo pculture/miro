@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-04-29 09:46-0400\n"
+"POT-Creation-Date: 2011-05-05 09:17-0400\n"
 "PO-Revision-Date: 2011-03-23 02:59+0000\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <te@li.org>\n"
@@ -15,674 +15,474 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-04 17:49+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2011-05-09 18:17+0000\n"
+"X-Generator: Launchpad (build 12981)\n"
 
-#: ../../windows/plat/utils.py:502 ../../osx/plat/utils.py:591
-msgid "iTunes"
+#: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
+#: ../../lib/httpclient.py:171
+msgid "File not found"
+msgstr "దస్త్రము కనబడలేదు"
+
+#: ../../lib/downloader.py:336
+msgid "Flash URL Scraping Error"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/update.py:150
-msgid "Update Available"
-msgstr "నవీకరణలు లభ్యం"
+#: ../../lib/downloader.py:535
+msgid "starting up"
+msgstr "మొదలుపెడుతున్నాం"
 
-#: ../../windows/plat/frontends/widgets/update.py:154
+#: ../../lib/downloader.py:542
 #, python-format
-msgid "A new version of %(appname)s is available for download."
-msgstr "%(appname)s యొక్క కొత్త కూర్పు దించుకోడానికి అందుబాటులో ఉంది."
+msgid "no connection - retrying in %(time)s"
+msgstr ""
 
-#: ../../windows/plat/frontends/widgets/update.py:158
-msgid "Do you want to download it now?"
-msgstr "మీరిప్పుడే దిగుమతి చేసుకోవాలనుకుంటున్నారా?"
+#: ../../lib/downloader.py:544
+msgid "no connection - retrying soon"
+msgstr ""
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:42
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:52
-msgid "Enable tray icon"
-msgstr "ట్రే ఐకన్ను సశక్తం చెయ్యి"
+#: ../../lib/downloader.py:568 ../../lib/downloader.py:576
+#: ../../lib/httpclient.py:218 ../../lib/httpclient.py:750
+#: ../../lib/sharing.py:179
+msgid "Unknown"
+msgstr "అపరిచితం"
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:46
-msgid "When I click the red close button:"
-msgstr "నేనా ఎర్రటి మూసెయ్యి బొత్తాన్ని నొక్కినపుడు:"
+#: ../../lib/dbupgradeprogress.py:62
+msgid "Upgrading Old Database"
+msgstr "పాత డేటాబేసును ఉన్నతీకరిస్తున్నాం"
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:49
-msgid "Close to tray so that downloads can continue."
-msgstr "మూసి ట్రేలో చూపించు. దింపుకోళ్ళు మాత్రం కొనసాగాలి."
+#: ../../lib/dbupgradeprogress.py:68
+msgid "Converting Old Database"
+msgstr "పాత డేటాబేసును అంతరీకరిస్తున్నాం"
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:50
+#: ../../lib/dbupgradeprogress.py:80
+msgid "Upgrading Database"
+msgstr "డేటాబేసును ఉన్నతీకరిస్తున్నాం"
+
+#: ../../lib/dbupgradeprogress.py:87
+msgid "Preparing Items"
+msgstr ""
+
+#: ../../lib/httpclient.py:102
+msgid "HTTP error"
+msgstr "HTTP పొరపాటు"
+
+#: ../../lib/httpclient.py:106
 #, python-format
-msgid "Quit %(appname)s completely."
-msgstr "%(appname)s ను పూర్తిగా మూసెయ్యి"
+msgid "%(host)s closed connection"
+msgstr "%(host)s కనెక్షన్ను మూసేసింది"
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:60
-msgid "System Default"
-msgstr "వ్యవస్థ అప్రమేయం"
-
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:66
-msgid "Subtitle font:"
-msgstr "ఉపశీర్షిక ఫాంటు:"
-
-#: ../../windows/plat/frontends/widgets/flash.py:56
-msgid "Install Adobe Flash?"
-msgstr "Adobe Flash స్థాపించాలా?"
-
-#: ../../windows/plat/frontends/widgets/flash.py:58
+#: ../../lib/httpclient.py:111
 #, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
+msgid "%(host)s gave us an empty response"
 msgstr ""
-"చక్కటి %(appname)s అనుభూతి కోసం, Adobe Flash ను స్థాపించుకొమ్మని మా సలహా. "
-"స్థాపించుకుంటారా?"
 
-#: ../../windows/plat/frontends/widgets/flash.py:71
-msgid "Install Adobe Flash"
-msgstr "Adobe Flash ను స్థాపించు"
-
-#: ../../windows/plat/frontends/widgets/flash.py:73
+#: ../../lib/httpclient.py:116
 #, python-format
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit %(appname)s now and start it up again after Adobe Flash has "
-"been installed."
+msgid "Host returned %(status)s"
 msgstr ""
-"Adobe Flash ను దించుకుని స్థాపించుకునే వెబ్‍సైటును మీ బ్రౌజరు లోడు "
-"చేస్తుంది.\n"
-"\n"
-"ఇప్పుడు మీరు %(appname)s నుండి నిష్క్రమించి Adobe Flash ను స్థాపించుకున్నాక, "
-"మళ్ళీ తెరవండి."
 
-#: ../../windows/plat/frontends/widgets/application.py:182
-msgid "Close to tray?"
-msgstr "మూసేసి ట్రేలో చూపెట్టాలా?"
+#: ../../lib/httpclient.py:118
+msgid "Please retry later"
+msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:183
+#: ../../lib/httpclient.py:122
 #, python-format
-msgid ""
-"When you click the red close button, would you like %(appname)s to close to "
-"the system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"ఎర్రటి మూసేసే బొత్తాన్ని నొక్కినపుడు, %(appname)s ను మూసేసి సిస్టమ్య్ ట్రేలో "
-"చూపెట్టాలా లేక పూర్తిగా మూసెయ్యాలా? ఈ సెట్టింగును మీరు తరవాతైనా "
-"వికల్పాల్లోకి వెళ్ళి మార్చుకోవచ్చు."
-
-#: ../../windows/plat/frontends/widgets/application.py:248
-msgid "Error Bombing Item"
-msgstr "బాంబింగు టీము లోపం"
-
-#: ../../windows/plat/frontends/widgets/application.py:250
-msgid "Error Recommending Item"
+msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:252
-msgid "Error Opening Website"
-msgstr "వెబ్ సైటు తెరవడంలో పొరపాటు"
-
-#: ../../windows/plat/frontends/widgets/application.py:257
+#: ../../lib/httpclient.py:127
 #, python-format
-msgid ""
-"There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
-"%(url)s ను తెరవడంలో లోపం ఎదురైంది. కొద్ది సెకనుల తరవాత మళ్ళీ ప్రయత్నించండి."
-
-#: ../../windows/plat/frontends/widgets/bonjour.py:46
-#: ../../windows/plat/frontends/widgets/bonjour.py:73
-#: ../../osx/plat/frontends/widgets/bonjour.py:38
-#: ../../linux/plat/frontends/widgets/bonjour.py:45
-#: ../../lib/frontends/widgets/prefpanel.py:945
-msgid "Install Bonjour"
+msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/bonjour.py:48
+#: ../../lib/httpclient.py:133
 #, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Bonjour, which "
-"is distributed as a part of Print Services.\n"
-"\n"
-"Installing Bonjour will allow you share your media library with other "
-"%(appname)s users on your network, as well as stream media from other "
-"%(appname)s users on your network.\n"
-"\n"
-"After installing Print Services, you will have to restart Miro.\n"
-"\n"
-"Would you like to do this now?"
+msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/bonjour.py:75
-msgid ""
-"Your browser will load the web-site where you can download and install "
-"Bonjour.\n"
-"\n"
-"When the installation is finished, simply restart Miro for the changes to "
-"take effect."
-msgstr ""
+#: ../../lib/httpclient.py:141
+msgid "Got 404 status code"
+msgstr "404 స్టేటస్ కోడు వచ్చింది"
 
-#: ../../windows/plat/renderers/vlc.py:728
-#: ../../windows/plat/renderers/vlc.py:731
-#: ../../windows/plat/renderers/vlc.py:732
-#: ../../linux/plat/renderers/gstreamerrenderer.py:603
-msgid "Eastern European"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:729
-#: ../../windows/plat/renderers/vlc.py:730
-#: ../../linux/plat/renderers/gstreamerrenderer.py:604
-#: ../../linux/plat/renderers/gstreamerrenderer.py:605
-#: ../../linux/plat/renderers/gstreamerrenderer.py:606
-msgid "Baltic"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:733
-msgid "Russian"
-msgstr "రష్యన్"
-
-#: ../../windows/plat/renderers/vlc.py:734
-msgid "South-Eastern European"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:735
-msgid "Ukrainian"
-msgstr "ఉక్రైనియన్"
-
-#: ../../windows/plat/renderers/vlc.py:738
-#: ../../windows/plat/renderers/vlc.py:740
-#: ../../linux/plat/renderers/gstreamerrenderer.py:624
-msgid "Western European"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:739
-#: ../../linux/plat/renderers/gstreamerrenderer.py:625
-msgid "Celtic"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:741
-msgid "Esperanto"
-msgstr "ఎస్పెరాంటో"
-
-#: ../../windows/plat/renderers/vlc.py:742
-#: ../../windows/plat/renderers/vlc.py:743
-#: ../../linux/plat/renderers/gstreamerrenderer.py:626
-#: ../../linux/plat/renderers/gstreamerrenderer.py:627
-#: ../../linux/plat/renderers/gstreamerrenderer.py:628
-msgid "Greek"
-msgstr "గ్రీక్"
-
-#: ../../windows/plat/renderers/vlc.py:746
-#: ../../linux/plat/renderers/gstreamerrenderer.py:638
-msgid "East Asian"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:747
-msgid "Universal Chinese"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:748
-msgid "Simplified Chinese"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:749
-msgid "Simplified Chinese Unix"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:750
-#: ../../windows/plat/renderers/vlc.py:752
-#: ../../linux/plat/renderers/gstreamerrenderer.py:646
-#: ../../linux/plat/renderers/gstreamerrenderer.py:647
-#: ../../linux/plat/renderers/gstreamerrenderer.py:648
-msgid "Japanese"
-msgstr "జపనీస్"
-
-#: ../../windows/plat/renderers/vlc.py:751
-msgid "Japanese Unix"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:753
-#: ../../windows/plat/renderers/vlc.py:754
-#: ../../linux/plat/renderers/gstreamerrenderer.py:649
-#: ../../linux/plat/renderers/gstreamerrenderer.py:650
-#: ../../linux/plat/renderers/gstreamerrenderer.py:651
-#: ../../linux/plat/renderers/gstreamerrenderer.py:652
-msgid "Korean"
-msgstr "కొరియన్"
-
-#: ../../windows/plat/renderers/vlc.py:755
-msgid "Traditional Chinese"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:756
-msgid "Traditional Chinese Unix"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:757
-msgid "Hong-Kong Supplementary"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:760
-#: ../../linux/plat/renderers/gstreamerrenderer.py:654
-msgid "SE and SW Asian"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:761
-#: ../../windows/plat/renderers/vlc.py:762
-#: ../../linux/plat/renderers/gstreamerrenderer.py:661
-#: ../../linux/plat/renderers/gstreamerrenderer.py:662
-#: ../../linux/plat/renderers/gstreamerrenderer.py:663
-#: ../../linux/plat/renderers/gstreamerrenderer.py:664
-msgid "Turkish"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:763
-#: ../../linux/plat/renderers/gstreamerrenderer.py:660
-msgid "Thai"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:764
-#: ../../windows/plat/renderers/vlc.py:765
-#: ../../linux/plat/renderers/gstreamerrenderer.py:665
-#: ../../linux/plat/renderers/gstreamerrenderer.py:666
-#: ../../linux/plat/renderers/gstreamerrenderer.py:667
-msgid "Vietnamese"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:768
-#: ../../linux/plat/renderers/gstreamerrenderer.py:669
-msgid "Middle Eastern"
-msgstr ""
-
-#: ../../windows/plat/renderers/vlc.py:769
-#: ../../windows/plat/renderers/vlc.py:770
-#: ../../linux/plat/renderers/gstreamerrenderer.py:670
-#: ../../linux/plat/renderers/gstreamerrenderer.py:671
-#: ../../linux/plat/renderers/gstreamerrenderer.py:672
-#: ../../linux/plat/renderers/gstreamerrenderer.py:673
-msgid "Arabic"
-msgstr "అరబిక్"
-
-#: ../../windows/plat/renderers/vlc.py:771
-#: ../../windows/plat/renderers/vlc.py:772
-#: ../../linux/plat/renderers/gstreamerrenderer.py:674
-#: ../../linux/plat/renderers/gstreamerrenderer.py:675
-#: ../../linux/plat/renderers/gstreamerrenderer.py:676
-#: ../../linux/plat/renderers/gstreamerrenderer.py:677
-msgid "Hebrew"
-msgstr "హిబ్రూ"
-
-#: ../../windows/plat/renderers/vlc.py:775
-#: ../../linux/plat/renderers/gstreamerrenderer.py:681
-#: ../../linux/plat/renderers/gstreamerrenderer.py:682
-#: ../../linux/plat/renderers/gstreamerrenderer.py:683
-#: ../../linux/plat/renderers/gstreamerrenderer.py:684
-#: ../../linux/plat/renderers/gstreamerrenderer.py:685
-#: ../../linux/plat/renderers/gstreamerrenderer.py:686
-msgid "Unicode"
-msgstr "యూనికోడ్"
-
-#: ../../windows/plat/renderers/vlc.py:776
-#: ../../windows/plat/renderers/vlc.py:777
-#: ../../windows/plat/renderers/vlc.py:778
-#: ../../windows/plat/renderers/vlc.py:779
-msgid "Universal"
-msgstr ""
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:216
-#: ../../osx/plat/frontends/widgets/osxmenus.py:293
-msgid "Services"
-msgstr "సేవలు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:218
+#: ../../lib/httpclient.py:143
 #, python-format
-msgid "Hide %(appname)s"
-msgstr "%(appname)s ను దాచు"
+msgid "Host returned bad status code: %(code)s"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:220
-msgid "Hide Others"
-msgstr "మిగతావాటిని దాచు"
+#: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
+msgid "Authorization failed"
+msgstr "అధీకరణ విఫలమైంది"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:222
-msgid "Show All"
-msgstr "అన్నీ చూపించు"
+#: ../../lib/httpclient.py:154
+msgid "Authorization canceled"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:227
-msgid "Preferences..."
-msgstr "ప్రాధాన్యతలు..."
+#: ../../lib/httpclient.py:155
+msgid "Authorization canceled by user"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:229
+#: ../../lib/httpclient.py:159
+msgid "Invalid URL"
+msgstr "తప్పుడు URL"
+
+#: ../../lib/httpclient.py:160
 #, python-format
-msgid "Quit %(appname)s"
-msgstr "%(appname)s నుండి నిష్క్రమించు"
+msgid "\"%(url)s\" is not a valid URL"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:233
-msgid "Close Window"
-msgstr "కిటికీ మూసేయి"
+#: ../../lib/httpclient.py:165
+msgid "Unknown Host"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:239
-msgid "Cut"
-msgstr "కత్తిరించు"
+#: ../../lib/httpclient.py:166
+#, python-format
+msgid "The domainname \"%(host)s\" couldn't be found"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:240
+#: ../../lib/httpclient.py:172
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "\"%(path)s\" ఫైలు అసలు లేదు"
+
+#: ../../lib/httpclient.py:176
+msgid "Read error"
+msgstr "రీడ్ చేయడంలో పొరపాటు"
+
+#: ../../lib/httpclient.py:177
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr "\"%(path)s\" వద్ద చదవడంలో లోపం దొర్లింది"
+
+#: ../../lib/httpclient.py:185 ../../lib/dl_daemon/download.py:778
+#, python-format
+msgid "Could not write to %(filename)s"
+msgstr "%(filename)s లో రాయలేకపోయాం"
+
+#: ../../lib/httpclient.py:187
+msgid "Write error"
+msgstr ""
+
+#: ../../lib/httpclient.py:384
+msgid "Website"
+msgstr ""
+
+#: ../../lib/httpclient.py:389
+msgid "Proxy"
+msgstr ""
+
+#: ../../lib/conversions.py:224
+#, python-format
+msgid "%(name)s (%(mediatype)s)"
+msgstr ""
+
+#: ../../lib/conversions.py:510
+msgid "Reason unknown--check log"
+msgstr ""
+
+#: ../../lib/conversions.py:834
+#, python-format
+msgid "%(program)s does not exist."
+msgstr ""
+
+#: ../../lib/conversions.py:943
 #: ../../lib/frontends/widgets/devicecontroller.py:469
 #: ../../lib/frontends/widgets/devicecontroller.py:477
 #: ../../lib/frontends/widgets/devicecontroller.py:480
-#: ../../lib/conversions.py:943
+#: ../../osx/plat/frontends/widgets/osxmenus.py:240
 msgid "Copy"
 msgstr "కాపీచేయి"
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:241
-msgid "Paste"
-msgstr "అతికించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:242
-#: ../../osx/plat/frontends/widgets/overlay.py:136
-#: ../../lib/frontends/widgets/gtk/video.py:313 ../../lib/dialogs.py:121
-msgid "Delete"
-msgstr "తొలగించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:244
-msgid "Select All"
-msgstr "అన్నిటినీ ఎన్నుకో"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:246
-msgid "Edit"
-msgstr "సరిదిద్దు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:251
-msgid "Present Half Size"
-msgstr "సగం సైజులో చూపించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:254
-msgid "Present Actual Size"
-msgstr "అసలు సైజులో చూపించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:257
-msgid "Present Double Size"
-msgstr "రెట్టింపు సైజులో చూపించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:264
-msgid "Present Video"
-msgstr "వీడియో చూపించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:272
-msgid "Zoom"
-msgstr "జూమ్"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:273
-msgid "Minimize"
-msgstr "చిన్నగించు"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:275
-msgid "Main Window"
-msgstr "ప్రధాన విండో"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:278
-msgid "Bring All to Front"
-msgstr "అన్నింటినీ ముందుకి తీసుకురా"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:280
-msgid "Window"
-msgstr "విండో"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:285
+#: ../../lib/conversions.py:1086
 #, python-format
-msgid "%(appname)s Help"
-msgstr "%(appname)s సహాయం"
+msgid "%(original_name)s (Converted to %(format)s)"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:439
-#: ../../lib/frontends/widgets/gtk/video.py:411
-#: ../../lib/frontends/widgets/gtk/window.py:352
-msgid "Disable Subtitles"
-msgstr "ఉపటైటిళ్ళను అశక్తం చెయ్యి"
+#: ../../lib/devices.py:173
+msgid "Your drive must be mounted."
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:450
-#: ../../lib/frontends/widgets/gtk/video.py:389
-#: ../../lib/frontends/widgets/menus.py:339
-msgid "None Available"
-msgstr "ఏమీ అందుబాటులో లేవు"
+#: ../../lib/devices.py:362
+msgid "USB Device"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/osxmenus.py:457
-#: ../../lib/frontends/widgets/gtk/video.py:422
-msgid "Select a Subtitles file..."
-msgstr "ఉపటైటిళ్ళ ఫైలును ఎంచుకో.."
+#: ../../lib/startup.py:134
+msgid "Database Error"
+msgstr ""
 
-#: ../../osx/plat/frontends/widgets/overlay.py:124
-#: ../../lib/frontends/widgets/gtk/video.py:344
-#: ../../lib/frontends/widgets/menus.py:338
-msgid "Subtitles"
-msgstr "ఉపశీర్షికలు"
-
-#: ../../osx/plat/frontends/widgets/overlay.py:125
-#: ../../lib/frontends/widgets/gtk/video.py:276
-msgid "Fullscreen"
-msgstr "నిండుతెర"
-
-#: ../../osx/plat/frontends/widgets/overlay.py:128
-#: ../../lib/frontends/widgets/itemcontextmenu.py:249
-msgid "Share"
-msgstr "పంచుము"
-
-#: ../../osx/plat/frontends/widgets/overlay.py:132
-#: ../../lib/frontends/widgets/itemcontextmenu.py:361 ../../lib/dialogs.py:120
-msgid "Keep"
-msgstr "ఉంచు"
-
-#: ../../osx/plat/frontends/widgets/overlay.py:219
-msgid "Pop Out"
-msgstr "ఉబికివచ్చు"
-
-#: ../../osx/plat/frontends/widgets/overlay.py:222
-msgid "Pop In"
-msgstr "చొచ్చుకుపోవు"
-
-#: ../../osx/plat/frontends/widgets/application.py:247
-msgid "Download Completed"
-msgstr "దిగుమతి పూర్తయ్యింది"
-
-#: ../../osx/plat/frontends/widgets/application.py:248
+#: ../../lib/startup.py:135
 #, python-format
-msgid "Download of video '%s' is finished."
-msgstr "'%s' వీడియో యొక్క దిగుమతి పూర్తయ్యింది."
-
-#: ../../osx/plat/frontends/widgets/bonjour.py:40
 msgid ""
-"Miro has determined that your system may be missing the Bonjour components, "
-"a standard part of Mac OS X installations.  Please review your Mac OS X "
-"installation."
+"We're sorry, %(appname)s was unable to start up due to a problem with the "
+"database:\n"
+"\n"
+"Error: %(error)s\n"
+"\n"
+"It's possible that your database file is corrupted and cannot be used.\n"
+"\n"
+"You can start fresh and your damaged database will be removed, but you will "
+"have to re-add your podcasts and media files.  If you want to do this, press "
+"the Start Fresh button and restart %(appname)s.\n"
+"\n"
+"To help us fix problems like this in the future, please file a bug report at "
+"%(url)s."
 msgstr ""
 
-#: ../../linux/extensions/miroappindicator/main.py:55
-#: ../../lib/frontends/widgets/menus.py:308
-#: ../../lib/frontends/widgets/menus.py:310
-#: ../../lib/frontends/widgets/itemcontextmenu.py:133
-#: ../../lib/frontends/widgets/itemcontextmenu.py:215
-#: ../../lib/frontends/widgets/itemcontextmenu.py:351
-msgid "Play"
-msgstr "నడుపు"
+#: ../../lib/startup.py:156
+msgid "Unknown Error"
+msgstr "తెలియని పొరపాటు"
 
-#: ../../linux/extensions/miroappindicator/main.py:56
-msgid "Pause all downloads"
+#: ../../lib/startup.py:157
+#, python-format
+msgid ""
+"An unknown error prevented %(appname)s from startup.  Please file a bug "
+"report at %(url)s."
 msgstr ""
 
-#: ../../linux/extensions/miroappindicator/main.py:57
-msgid "Resume all downloads"
+#: ../../lib/startup.py:272
+msgid "Database too new"
+msgstr "డేటాబేసు మరీ కొత్తది"
+
+#: ../../lib/startup.py:274
+#, python-format
+msgid ""
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
+msgstr ""
+"మీ డేటాబేసు %(appname)s యొక్క కొత్త కూర్పుతో భద్రపరచినది. దానితో పని "
+"చెయ్యాలంటే %(appname)s యొక్క సరికొత్త కూర్పును దించుకొని దాన్నే వాడాలి."
+
+#: ../../lib/startup.py:547
+msgid "Submitting Crash Report"
+msgstr "క్రాష్ నివేదికను సమర్పిస్తున్నాం"
+
+#: ../../lib/startup.py:549
+#, python-format
+msgid ""
+"%(appname)s will now submit a crash report to our crash database\n"
+"\n"
+"Do you want to include entire program database including all video and "
+"podcast metadata with crash report? This will help us diagnose the issue."
 msgstr ""
 
-#: ../../linux/extensions/miroappindicator/main.py:59
-msgid "Show Miro"
+#: ../../lib/opml.py:219
+msgid "OPML Import failed"
+msgstr "OPML దిగుమతి విఫలమైంది"
+
+#: ../../lib/opml.py:221
+msgid ""
+"The selected OPML file appears to be invalid.  Import was interrupted."
+msgstr ""
+"ఎంచుకున్న OPML ఫైలు సరైనదిగా అగుపించడం లేదు. దిగుమతిని మధ్యలో ఆపేసాం."
+
+#: ../../lib/opml.py:229
+msgid "OPML Import summary"
+msgstr "OPML దిగుమతి సారాంశం"
+
+#: ../../lib/opml.py:230
+#, python-format
+msgid "Successfully imported %(count)d podcast."
+msgid_plural "Successfully imported %(count)d podcasts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/opml.py:236
+#, python-format
+msgid "Skipped %(count)d podcast already present."
+msgid_plural "Skipped %(count)d podcasts already present."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/dialogs.py:94
+msgid "OK"
 msgstr ""
 
-#: ../../linux/extensions/miroappindicator/main.py:60 ../../lib/dialogs.py:101
+#: ../../lib/dialogs.py:95
+msgid "Apply"
+msgstr "ఆపాదించు"
+
+#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/gtk/window.py:919
+msgid "Close"
+msgstr "మూసివేయి"
+
+#: ../../lib/dialogs.py:97 ../../lib/frontends/widgets/itemrenderer.py:107
+#: ../../lib/frontends/widgets/firsttimedialog.py:410
+msgid "Cancel"
+msgstr "వద్దు"
+
+#: ../../lib/dialogs.py:98
+msgid "Done"
+msgstr "పూర్తయ్యింది"
+
+#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:235
+#: ../../lib/frontends/widgets/firsttimedialog.py:280
+#: ../../lib/frontends/widgets/firsttimedialog.py:503
+msgid "Yes"
+msgstr "అవును"
+
+#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/firsttimedialog.py:236
+#: ../../lib/frontends/widgets/firsttimedialog.py:279
+#: ../../lib/frontends/widgets/firsttimedialog.py:504
+msgid "No"
+msgstr "కాదు"
+
+#: ../../lib/dialogs.py:101 ../../linux/extensions/miroappindicator/main.py:60
 msgid "Quit"
 msgstr "నిష్క్రమించు"
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:61
-msgid "Renderer options:"
-msgstr "రెండరర్ ఐచ్ఛికాలు:"
+#: ../../lib/dialogs.py:102
+msgid "Continue"
+msgstr "కొనసాగించు"
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:68
-#, python-format
-msgid "You must restart %(appname)s for renderer changes to take effect."
-msgstr ""
-"రెండరర్ మార్పులు అమల్లోకి రావాలంటే %(appname)s ను మూసేసి మళ్ళీ తెరవాలి."
+#: ../../lib/dialogs.py:103
+msgid "Ignore"
+msgstr "ఉపేక్షించు"
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:83
-msgid "Video renderer:"
-msgstr "వీడియో రెండరర్"
-
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:96
-msgid "Binaries to use:"
+#: ../../lib/dialogs.py:104
+msgid "Import Files"
 msgstr ""
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:102
-msgid "ffmpeg binary path:"
+#: ../../lib/dialogs.py:105
+msgid "Submit Crash Report"
+msgstr "క్రాష్ నివేదికను పంపించండి"
+
+#: ../../lib/dialogs.py:106
+msgid "Migrate"
+msgstr "వలసపంపు"
+
+#: ../../lib/dialogs.py:107
+msgid "Don't Migrate"
+msgstr "వలసపంపవద్దు"
+
+#: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:209
+#: ../../lib/frontends/widgets/itemcontextmenu.py:384
+#: ../../lib/frontends/widgets/itemrenderer.py:102
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1747
+msgid "Download"
+msgstr "దిగుమతిచేయి"
+
+#: ../../lib/dialogs.py:109
+msgid "Remove Entry"
+msgstr "పద్దును తొలగించు"
+
+#: ../../lib/dialogs.py:110
+msgid "Delete File"
+msgstr "ఫైలును తొలగించు"
+
+#: ../../lib/dialogs.py:111
+msgid "Delete Files"
+msgstr "ఫైళ్ళను తొలగించు"
+
+#: ../../lib/dialogs.py:112
+msgid "Keep Videos"
+msgstr "వీడియోలను ఉంచు"
+
+#: ../../lib/dialogs.py:113
+msgid "Delete Videos"
+msgstr "వీడియోలను తొలగించు"
+
+#: ../../lib/dialogs.py:114
+msgid "Create"
+msgstr "సృష్టించు"
+
+#: ../../lib/dialogs.py:115
+msgid "Create Podcast"
 msgstr ""
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:109
-msgid "ffmpeg2theora binary path:"
+#: ../../lib/dialogs.py:116
+msgid "Create Folder"
+msgstr "ఫోల్డరు సృష్టించు"
+
+#: ../../lib/dialogs.py:117
+msgid "Add Folder"
 msgstr ""
 
-#: ../../linux/plat/frontends/widgets/bonjour.py:47
+#: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:767
+msgid "Add"
+msgstr "చేర్చు"
+
+#: ../../lib/dialogs.py:119
+msgid "Add Into New Folder"
+msgstr "కొత్త సంచీలో చేర్చు"
+
+#: ../../lib/dialogs.py:120 ../../lib/frontends/widgets/itemcontextmenu.py:369
+#: ../../osx/plat/frontends/widgets/overlay.py:132
+msgid "Keep"
+msgstr "ఉంచు"
+
+#: ../../lib/dialogs.py:121 ../../lib/frontends/widgets/gtk/video.py:313
+#: ../../osx/plat/frontends/widgets/osxmenus.py:242
+#: ../../osx/plat/frontends/widgets/overlay.py:136
+msgid "Delete"
+msgstr "తొలగించు"
+
+#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/tablist.py:1018
+#: ../../lib/frontends/widgets/tablist.py:1032
+#: ../../lib/frontends/widgets/tablist.py:1038
+#: ../../lib/frontends/widgets/tablist.py:1081
+#: ../../lib/frontends/widgets/tablist.py:1087
+#: ../../lib/frontends/widgets/tablist.py:1092
+#: ../../lib/frontends/widgets/prefpanel.py:770
+#: ../../lib/frontends/widgets/menus.py:261
+msgid "Remove"
+msgstr "తొలగించు"
+
+#: ../../lib/dialogs.py:123
+msgid "Not Now"
+msgstr "ఇప్పుడు కాదు"
+
+#: ../../lib/dialogs.py:124
+msgid "Close to Tray"
+msgstr "మూసేసి ట్రేకు పంపించు"
+
+#: ../../lib/dialogs.py:125
+msgid "Launch Miro"
+msgstr "Miro ను మొదలుపెట్టు"
+
+#: ../../lib/dialogs.py:126
+msgid "Download Anyway"
+msgstr "ఏదేమైనా దించు"
+
+#: ../../lib/dialogs.py:127
+msgid "Open in External Browser"
+msgstr "బయటి బ్రౌజరులో తెరువు"
+
+#: ../../lib/dialogs.py:128
+msgid "Don't Install"
+msgstr "స్థాపించకు"
+
+#: ../../lib/dialogs.py:129
+msgid "Subscribe"
+msgstr "చందాచేరు"
+
+#: ../../lib/dialogs.py:130
+msgid "Stop Watching"
+msgstr "చూడటం ఆపు"
+
+#: ../../lib/dialogs.py:131
+msgid "Retry"
+msgstr "మళ్ళీ ప్రయత్నించు"
+
+#: ../../lib/dialogs.py:132
+msgid "Start Fresh"
+msgstr "తాజాగా మొదలుపెట్టు"
+
+#: ../../lib/dialogs.py:133
+msgid "Include Database"
+msgstr "డేటాబేసును కూడా కలుపు"
+
+#: ../../lib/dialogs.py:134
+msgid "Don't Include Database"
+msgstr "డేటాబేసును కలపవద్దు"
+
+#: ../../lib/dialogs.py:215
 #, python-format
 msgid ""
-"For the best %(appname)s experience, we suggest you install Bonjour.  "
-"Installing Bonjour will allow you share your media library with other "
-"%(appname)s users on your network, as well as stream media from other "
-"%(appname)s users on your network.\n"
-"\n"
-"%(appname)s has determined that your system is most likely missing the Avahi "
-"mDNSResponder compatibility library.  Please refer to your operating system "
-"documentation on how you can install this library."
+"%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
 
-#: ../../linux/plat/frontends/widgets/bonjour.py:60
-#, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Bonjour.  "
-"Installing Bonjour will allow you share your media library with other "
-"%(appname)s users on your network, as well as stream media from other "
-"%(appname)s users on your network.\n"
-"\n"
-"%(appname)s has determined that your system is most likely missing the Avahi "
-"mDNSResponder compatibility library.  Please refer to your operating system "
-"documentation on how you can install this library.\n"
-"\n"
-"Would you like %(appname)s to warn you on next startup?"
+#: ../../lib/dialogs.py:218
+msgid "Login Required"
 msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:513
-#, python-format
-msgid "Track %(tracknumber)d"
-msgstr "ట్రాకు %(tracknumber)d"
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:523
-#, python-format
-msgid "Subtitle file %(tracknumber)d"
-msgstr "ఉపటైటిలు ఫైలు %(tracknumber)d"
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:607
-msgid "Croatian"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:608
-#: ../../linux/plat/renderers/gstreamerrenderer.py:609
-#: ../../linux/plat/renderers/gstreamerrenderer.py:610
-#: ../../linux/plat/renderers/gstreamerrenderer.py:611
-#: ../../linux/plat/renderers/gstreamerrenderer.py:612
-#: ../../linux/plat/renderers/gstreamerrenderer.py:613
-msgid "Cyrillic"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:614
-msgid "Cyrillic/Russian"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:615
-#: ../../linux/plat/renderers/gstreamerrenderer.py:616
-msgid "Cyrillic/Ukrainian"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:618
-#: ../../linux/plat/renderers/gstreamerrenderer.py:619
-#: ../../linux/plat/renderers/gstreamerrenderer.py:620
-msgid "Central European"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:621
-#: ../../linux/plat/renderers/gstreamerrenderer.py:622
-msgid "Romanian"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:629
-msgid "Icelandic"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:630
-msgid "Nordic"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:631
-msgid "South European"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:632
-#: ../../linux/plat/renderers/gstreamerrenderer.py:633
-#: ../../linux/plat/renderers/gstreamerrenderer.py:634
-#: ../../linux/plat/renderers/gstreamerrenderer.py:635
-#: ../../linux/plat/renderers/gstreamerrenderer.py:636
-msgid "Western"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:639
-#: ../../linux/plat/renderers/gstreamerrenderer.py:640
-#: ../../linux/plat/renderers/gstreamerrenderer.py:641
-#: ../../linux/plat/renderers/gstreamerrenderer.py:642
-msgid "Chinese Simplified"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:643
-#: ../../linux/plat/renderers/gstreamerrenderer.py:644
-#: ../../linux/plat/renderers/gstreamerrenderer.py:645
-msgid "Chinese Traditional"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:655
-msgid "Armenian"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:656
-msgid "Georgian"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:657
-msgid "Gujarati"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:658
-msgid "Gurmukhi"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:659
-msgid "Hindi"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:678
-msgid "Hebrew Visual"
-msgstr ""
-
-#: ../../linux/plat/renderers/gstreamerrenderer.py:679
-msgid "Persian"
-msgstr ""
-
-#: ../../lib/item.py:1265 ../../lib/messages.py:1343
-msgid "queued for download"
-msgstr "దింపుకోలు క్యూలో ఉంది"
-
-#: ../../lib/item.py:1360
-msgid "no title"
-msgstr "శీర్షిక లేదు"
-
-#: ../../lib/item.py:1626
-msgid "starting up..."
-msgstr "మొదలవుతోంది..."
 
 #: ../../lib/feed.py:861
 msgid "Error loading podcast"
@@ -724,47 +524,198 @@ msgstr ""
 msgid "%(engine)s for '%(query)s'"
 msgstr "'%(query)s' కొరకు %(engine)s"
 
-#: ../../lib/feed.py:2267 ../../lib/feed.py:2403
+#: ../../lib/feed.py:2277 ../../lib/feed.py:2413
 msgid "Local Files"
 msgstr "స్థానిక ఫైళ్ళు"
 
-#: ../../lib/feed.py:2276 ../../lib/feed.py:2378 ../../lib/feed.py:2388
-#: ../../lib/frontends/widgets/firsttimedialog.py:342
-#: ../../lib/frontends/widgets/firsttimedialog.py:344
-#: ../../lib/frontends/widgets/firsttimedialog.py:423
+#: ../../lib/feed.py:2286 ../../lib/feed.py:2388 ../../lib/feed.py:2398
+#: ../../lib/frontends/widgets/firsttimedialog.py:332
+#: ../../lib/frontends/widgets/firsttimedialog.py:334
+#: ../../lib/frontends/widgets/firsttimedialog.py:409
 msgid "Search"
 msgstr "వెతుకు"
 
-#: ../../lib/messages.py:1261 ../../lib/sharing.py:242
-msgid "Locked"
-msgstr ""
+#: ../../lib/playlist.py:203 ../../lib/frontends/widgets/tablist.py:1086
+#: ../../lib/frontends/widgets/application.py:838
+#: ../../lib/frontends/widgets/menus.py:298
+msgid "Rename Playlist"
+msgstr "ప్లేలిస్టు పేరుమార్చు"
 
-#: ../../lib/messages.py:1264 ../../lib/frontends/widgets/itemedit.py:543
-msgid "Movie"
-msgstr ""
-
-#: ../../lib/messages.py:1266 ../../lib/frontends/widgets/gtk/trayicon.py:115
-#: ../../lib/frontends/widgets/diagnostics.py:80
-#: ../../lib/frontends/widgets/itemedit.py:532
-#: ../../lib/frontends/widgets/itemedit.py:544
-#: ../../lib/frontends/widgets/widgetconst.py:78
-msgid "Show"
-msgstr "చూపించు"
-
-#: ../../lib/messages.py:1268 ../../lib/frontends/widgets/itemedit.py:545
-msgid "Clip"
-msgstr ""
-
-#: ../../lib/messages.py:1270 ../../lib/frontends/widgets/itemedit.py:546
-msgid "Podcast"
-msgstr ""
-
-#: ../../lib/messages.py:1289
+#: ../../lib/playlist.py:204
 #, python-format
-msgid ""
-"S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
-"|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
+msgid "Enter a new name for the playlist %s"
+msgstr "ప్లేలిస్టు %s కు కొత్త పేరు ఇవ్వండి"
+
+#: ../../lib/dl_daemon/download.py:655
+#: ../../lib/frontends/widgets/itemrenderer.py:106
+msgid "Error"
+msgstr "పొరపాటు"
+
+#: ../../lib/dl_daemon/download.py:786 ../../lib/dl_daemon/download.py:1035
+msgid "Not enough disk space"
+msgstr "చాలినంత డిస్కు జాగా లేదు"
+
+#: ../../lib/dl_daemon/download.py:787 ../../lib/dl_daemon/download.py:1036
+#, python-format
+msgid "%(amount)s MB required to store this video"
+msgstr "ఈ వీడియోను దాచాలంటే %(amount)s MB కావాలి"
+
+#: ../../lib/dl_daemon/download.py:827
+msgid "no content"
 msgstr ""
+
+#: ../../lib/dl_daemon/download.py:1080
+msgid "BitTorrent failure"
+msgstr "BitTorrent వైఫల్యం"
+
+#: ../../lib/dl_daemon/download.py:1081
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent మొదలవడం విఫలమైమ్ది"
+
+#: ../../lib/dl_daemon/download.py:1207
+msgid "waiting to check existing files"
+msgstr ""
+
+#: ../../lib/dl_daemon/download.py:1209
+msgid "checking existing files"
+msgstr ""
+
+#: ../../lib/dl_daemon/download.py:1211
+msgid "allocating disk space"
+msgstr ""
+
+#: ../../lib/dl_daemon/download.py:1451
+msgid "Corrupt Torrent"
+msgstr "చెడిపోయిన టోరెంటు"
+
+#: ../../lib/dl_daemon/download.py:1452
+#, python-format
+msgid "The torrent file at %(url)s was not valid"
+msgstr "%(url)s వద్ద ఉన్న టోరెంటు ఫైలు సరైనది కాదు"
+
+#: ../../lib/dl_daemon/download.py:1496
+msgid "Torrent file deleted"
+msgstr "టోరెంటు ఫైలు తొలగించబడింది"
+
+#: ../../lib/dl_daemon/download.py:1497
+#, python-format
+msgid "The torrent file for this item was deleted outside of %(appname)s."
+msgstr "ఈ ఐటము యొక్క టోరెంటు ఫైలు %(appname)s కు బయట తొలగించబడింది."
+
+#: ../../lib/displaytext.py:62
+#, python-format
+msgid "%(size)s GB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:65
+#, python-format
+msgid "%(size)s MB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:68
+#, python-format
+msgid "%(size)s kB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:71
+#, python-format
+msgid "%(size)s B/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:95
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/displaytext.py:100
+#, python-format
+msgid "%(num)d hr"
+msgid_plural "%(num)d hrs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/displaytext.py:105
+#, python-format
+msgid "%(num)d min"
+msgid_plural "%(num)d mins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/displaytext.py:109
+#, python-format
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] "%(num)d క్షణం"
+msgstr[1] "%(num)d క్షణాలు"
+
+#: ../../lib/displaytext.py:129
+#, python-format
+msgid "%(size)s GB"
+msgstr ""
+
+#: ../../lib/displaytext.py:132
+#, python-format
+msgid "%(size)s MB"
+msgstr ""
+
+#: ../../lib/displaytext.py:135
+#, python-format
+msgid "%(size)s KB"
+msgstr ""
+
+#: ../../lib/displaytext.py:137
+#, python-format
+msgid "%(size)s B"
+msgstr ""
+
+#: ../../lib/displaytext.py:142
+#, python-format
+msgid "Expires in %(count)d day"
+msgid_plural "Expires in %(count)d days"
+msgstr[0] "%(count)d రోజులో మురిగిపోతుంది"
+msgstr[1] "%(count)d రోజులో మురిగిపోతాయి"
+
+#: ../../lib/displaytext.py:148
+#, python-format
+msgid "Expires in %(count)d hour"
+msgid_plural "Expires in %(count)d hours"
+msgstr[0] "%(count)d గంటలో మురిగిపోతుంది"
+msgstr[1] "%(count)d గంటల్లో మురిగిపోతుంది"
+
+#: ../../lib/displaytext.py:154
+#, python-format
+msgid "Expires in %(count)d minute"
+msgid_plural "Expires in %(count)d minutes"
+msgstr[0] "%(count)d నిమిషంలో మురిగిపోతుంది"
+msgstr[1] "%(count)d నిమిషాల్లో మురిగిపోతుంది"
+
+#: ../../lib/displaytext.py:162
+#, python-format
+msgid "Expires: %(count)d day"
+msgid_plural "Expires: %(count)d days"
+msgstr[0] "మురిగిపోతుంది: %(count)d రోజు"
+msgstr[1] "మురిగిపోతుంది: %(count)d రోజులు"
+
+#: ../../lib/displaytext.py:168
+#, python-format
+msgid "Expires: %(count)d hour"
+msgid_plural "Expires: %(count)d hours"
+msgstr[0] "మురిగిపోతుంది: %(count)d గంట"
+msgstr[1] "మురిగిపోతుంది: %(count)d గంటలు"
+
+#: ../../lib/displaytext.py:174
+#, python-format
+msgid "Expires: %(count)d minute"
+msgid_plural "Expires: %(count)d minutes"
+msgstr[0] "మురిగిపోతుంది: %(count)d నిమిషం"
+msgstr[1] "మురిగిపోతుంది: %(count)d నిమిషాలు"
+
+#: ../../lib/displaytext.py:193
+#, python-format
+msgid "%(month)s %(dayofmonth)s, %(year)s"
+msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
 #: ../../lib/net.py:76
 #, python-format
@@ -805,311 +756,809 @@ msgstr "తెలియని లోపపు కోడు"
 msgid "Connection closed"
 msgstr "కనెక్షన్ మూసివేయబడినది"
 
-#: ../../lib/sharing.py:179 ../../lib/downloader.py:568
-#: ../../lib/downloader.py:576 ../../lib/httpclient.py:218
-#: ../../lib/httpclient.py:750
-msgid "Unknown"
-msgstr "అపరిచితం"
+#: ../../lib/frontends/widgets/newfolder.py:56
+msgid "Folder name:"
+msgstr "సంచయపు పేరు:"
 
-#: ../../lib/frontends/widgets/searchcontroller.py:74
-#: ../../lib/frontends/widgets/statictabs.py:108
-msgid "Video Search"
-msgstr "వీడియో వెతుకులాట"
-
-#: ../../lib/frontends/widgets/searchcontroller.py:75
-msgid "Use the search box above to search for videos on these sites"
+#: ../../lib/frontends/widgets/newfolder.py:87
+msgid "Create Podcast Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:139
-#: ../../lib/frontends/widgets/devicecontroller.py:191
-msgid "Sync Now"
+#: ../../lib/frontends/widgets/newfolder.py:88
+msgid "Enter the name of the folder to add"
+msgstr "చేర్చాల్సిన ఫోల్డరు పేరును ఇవ్వండి"
+
+#: ../../lib/frontends/widgets/widgetconst.py:57
+msgid "State"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:158
-#, python-format
-msgid "%(used)s used / %(total)s total - %(percent)i%% full"
+#: ../../lib/frontends/widgets/widgetconst.py:58
+#: ../../lib/frontends/widgets/tabcontroller.py:510
+#: ../../lib/frontends/widgets/itemedit.py:480
+msgid "Name"
+msgstr "పేరు"
+
+#: ../../lib/frontends/widgets/widgetconst.py:59
+#: ../../lib/frontends/widgets/itemedit.py:481
+msgid "Artist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:175
-#, python-format
-msgid "1 file selected to sync"
-msgid_plural "%(count)i files selected to sync"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:181
-msgid "Up to date"
+#: ../../lib/frontends/widgets/widgetconst.py:60
+#: ../../lib/frontends/widgets/itemedit.py:482
+msgid "Album"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:188
-msgid "In Progress"
+#: ../../lib/frontends/widgets/widgetconst.py:61
+#: ../../lib/frontends/widgets/itemedit.py:485
+msgid "Track"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:258
-#, python-format
-msgid "%(eta)s left"
+#: ../../lib/frontends/widgets/widgetconst.py:62
+#: ../../lib/frontends/widgets/itemedit.py:487
+msgid "Year"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:261
-#, python-format
-msgid "%(percent)i%% percent complete"
+#: ../../lib/frontends/widgets/widgetconst.py:63
+#: ../../lib/frontends/widgets/itemedit.py:483
+msgid "Genre"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:277
-msgid "Sync These Podcasts"
+#: ../../lib/frontends/widgets/widgetconst.py:64
+#: ../../lib/frontends/widgets/itemedit.py:299
+msgid "Rating"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:311
-msgid "Select none"
+#: ../../lib/frontends/widgets/widgetconst.py:65
+msgid "Date"
+msgstr "తేదీ"
+
+#: ../../lib/frontends/widgets/widgetconst.py:66
+msgid "Time"
+msgstr "సమయం"
+
+#: ../../lib/frontends/widgets/widgetconst.py:67
+msgid "Status"
+msgstr "స్థితి"
+
+#: ../../lib/frontends/widgets/widgetconst.py:68
+#: ../../lib/frontends/widgets/itemedit.py:505
+msgid "Size"
+msgstr "పరిమాణం"
+
+#: ../../lib/frontends/widgets/widgetconst.py:69
+msgid "Source"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:314
-msgid "Select all"
+#: ../../lib/frontends/widgets/widgetconst.py:70
+msgid "ETA"
+msgstr "ETA"
+
+#: ../../lib/frontends/widgets/widgetconst.py:71
+msgid "Torrent details"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:415
-msgid "Sync Podcasts"
+#: ../../lib/frontends/widgets/widgetconst.py:72
+msgid "Speed"
+msgstr "వేగం"
+
+#: ../../lib/frontends/widgets/widgetconst.py:73
+msgid "Date Added"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:418
-msgid "Only sync unplayed items"
+#: ../../lib/frontends/widgets/widgetconst.py:74
+msgid "Last Played"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:447
-msgid "Sync These Playlists"
+#: ../../lib/frontends/widgets/widgetconst.py:75
+msgid "Description"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:448
-msgid "Sync Playlists"
+#: ../../lib/frontends/widgets/widgetconst.py:76
+msgid "DRM"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:476
-#, python-format
-msgid "Device Default (%(audio)s)"
+#: ../../lib/frontends/widgets/widgetconst.py:77
+msgid "File Type"
+msgstr "ఫైలు రకం"
+
+#: ../../lib/frontends/widgets/widgetconst.py:78
+#: ../../lib/frontends/widgets/gtk/trayicon.py:115
+#: ../../lib/frontends/widgets/diagnostics.py:80
+#: ../../lib/frontends/widgets/itemedit.py:532
+#: ../../lib/frontends/widgets/itemedit.py:544 ../../lib/messages.py:1266
+msgid "Show"
+msgstr "చూపించు"
+
+#: ../../lib/frontends/widgets/widgetconst.py:79
+#: ../../lib/frontends/widgets/itemedit.py:540
+msgid "Video Kind"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:479
-#, python-format
-msgid "Device Default (%(video)s)"
+#: ../../lib/frontends/widgets/widgetconst.py:80
+msgid "Order"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:492
-msgid "Name of Device"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:493
-msgid "Video Conversion"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:494
-msgid "Audio Conversion"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:495
-msgid "Store video in this directory"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:496
-msgid "Store audio in this directory"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:497
-msgid "Always show this device, even if 'show all devices' is turned off"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:594
-msgid "Main"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:595
-#: ../../lib/frontends/widgets/displays.py:377
-#: ../../lib/frontends/widgets/itemlistwidgets.py:682
-#: ../../lib/frontends/widgets/prefpanel.py:1255
-#: ../../lib/frontends/widgets/tablist.py:952 ../../lib/messagehandler.py:563
-msgid "Podcasts"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:596
-#: ../../lib/frontends/widgets/displays.py:806
-#: ../../lib/frontends/widgets/tabcontroller.py:495
-#: ../../lib/frontends/widgets/tablist.py:1031
-msgid "Playlists"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:597
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1221
-#: ../../lib/frontends/widgets/tablist.py:1018
-msgid "Settings"
-msgstr "అమరికలు"
-
-#: ../../lib/frontends/widgets/devicecontroller.py:611
-msgid ""
-"Drag individual video and audio files onto the device in the sidebar to copy "
-"them."
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:616
-msgid "Use these options and the tabs above for automatic syncing."
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:713
-msgid "Your device isn't telling us its exact model number."
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:718
-msgid "For optimal video conversion, select the device model."
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:734
-msgid ""
-"If you don't know the model or it doesn't appear in the list, it's fine to "
-"choose the 'Generic' device option."
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:760
-msgid "This is my device"
-msgstr ""
-
-#: ../../lib/frontends/widgets/devicecontroller.py:768
-msgid "This device is not yet mounted."
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:98
-#, python-format
-msgid "Reveal in %(progname)s"
-msgstr "%(progname)s లో వెల్లడించు"
-
-#: ../../lib/frontends/widgets/itemrenderer.py:100
-#: ../../lib/frontends/widgets/displays.py:541
-msgid "Reveal File"
-msgstr "ఫైలును వెల్లడించు"
-
-#: ../../lib/frontends/widgets/itemrenderer.py:101
-msgid "display contents"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:102
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1747
-#: ../../lib/frontends/widgets/itemcontextmenu.py:201
-#: ../../lib/frontends/widgets/itemcontextmenu.py:376 ../../lib/dialogs.py:108
-msgid "Download"
-msgstr "దిగుమతిచేయి"
-
-#: ../../lib/frontends/widgets/itemrenderer.py:103
-#, python-format
-msgid "Copy to %(appname)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:105
-msgid "Download Torrent"
-msgstr "టోరెంటును దించు"
-
-#: ../../lib/frontends/widgets/itemrenderer.py:106
-#: ../../lib/dl_daemon/download.py:655
-msgid "Error"
-msgstr "పొరపాటు"
-
-#: ../../lib/frontends/widgets/itemrenderer.py:107
-#: ../../lib/frontends/widgets/firsttimedialog.py:424 ../../lib/dialogs.py:97
-msgid "Cancel"
-msgstr "వద్దు"
-
-#: ../../lib/frontends/widgets/itemrenderer.py:108
-msgid "Queued for Auto-download"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:109
 #: ../../lib/frontends/widgets/style.py:513
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1052
+#: ../../lib/frontends/widgets/itemrenderer.py:109
 #: ../../lib/frontends/widgets/itemlistwidgets.py:626
 #: ../../lib/frontends/widgets/itemlistwidgets.py:740
 #: ../../lib/frontends/widgets/itemlistwidgets.py:934
 msgid "Unplayed"
 msgstr "ప్లేచెయ్యనివి"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:110
-msgid "Currently Playing"
-msgstr "ప్రస్తుతం ప్లే అవుతున్నవి"
+#: ../../lib/frontends/widgets/style.py:521
+msgid "paused"
+msgstr "ఆపి ఉంచినవి"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:111
+#: ../../lib/frontends/widgets/style.py:523
+msgid "queued"
+msgstr ""
+
 #: ../../lib/frontends/widgets/style.py:531
+#: ../../lib/frontends/widgets/itemrenderer.py:111
 #: ../../lib/frontends/widgets/itemlistwidgets.py:937
 msgid "Newly Available"
 msgstr "కొత్తవి"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:112
-msgid "Saved"
+#: ../../lib/frontends/widgets/itemlistcontroller.py:928
+#, python-format
+msgid "%(count)s items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:113
-msgid "Stop seeding"
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1015
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1067
+#: ../../lib/frontends/widgets/feedcontroller.py:73
+#: ../../lib/frontends/widgets/sharingcontroller.py:73
+msgid "No Results"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:388
-msgid "PEERS"
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1029
+#: ../../lib/frontends/widgets/application.py:784
+msgid "Create Playlist"
+msgstr "ప్లేలిస్టు సృష్టించు"
+
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1030
+#: ../../lib/frontends/widgets/application.py:785
+msgid "Enter a name for the new playlist"
+msgstr "కొత్త ప్లేలిస్టుకు పేరు ఇవ్వండి"
+
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1043
+msgid "Unwatched"
+msgstr "వీక్షణలో లేనివి"
+
+#: ../../lib/frontends/widgets/browser.py:131
+msgid "Open in browser"
+msgstr "విహారిణిలో తెరువు"
+
+#: ../../lib/frontends/widgets/browser.py:138
+msgid "Download this video"
+msgstr "ఈ వీడియోను దింపు"
+
+#: ../../lib/frontends/widgets/removefeeds.py:50
+#: ../../lib/frontends/widgets/menus.py:264
+msgid "Remove Podcast"
+msgid_plural "Remove Podcasts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/frontends/widgets/removefeeds.py:58
+msgid "Are you sure you want to remove this podcast:"
+msgid_plural "Are you sure you want to remove these podcasts:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/frontends/widgets/removefeeds.py:87
+msgid "Keep items that have been downloaded in my library."
+msgstr "నా లైబ్రరీఓ లోకి దించుకున్న ఐటములను ఉంచెయ్యి"
+
+#: ../../lib/frontends/widgets/removefeeds.py:93
+#, python-format
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the %(appname)s preference panel."
+msgstr ""
+"చూసేసిన ఫోల్డర్లను సైడుబారు నుండి తీసేస్తాం, కానీ వాటిలోని అంశాలు మాత్రం మీ "
+"లైబ్రరీలో కనిపిస్తూనే ఉంటాయి. అసలు చూసేసిన ఫోల్డర్లను పూర్తిగా చూడకుండా "
+"ఉండాలంటే %(appname)s అభిరుచుల పానెలుకు వెళ్ళి చేసుకోవచ్చు."
+
+#: ../../lib/frontends/widgets/removefeeds.py:105
+msgid ""
+"Are you sure you want to remove this podcast?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these podcasts?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:56
+msgid "Sharing Disabled"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:389
-msgid "SEEDS"
+#: ../../lib/frontends/widgets/tabcontroller.py:61
+msgid ""
+"You need to install the Bonjour libraries to be able to share files from "
+"Miro-to-Miro or to the Miro iPad app.\n"
+"\n"
+"Once you install the Bonjour libraries, you will have to restart Miro."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:390
-msgid "LEECH"
+#: ../../lib/frontends/widgets/tabcontroller.py:69
+msgid "Click here to install"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:391
-msgid "SHARE"
+#: ../../lib/frontends/widgets/tabcontroller.py:116
+msgid "On"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:450
-msgid "DRM locked"
+#: ../../lib/frontends/widgets/tabcontroller.py:122
+#: ../../lib/frontends/widgets/prefpanel.py:514
+msgid "Off"
+msgstr "ఆపు"
+
+#: ../../lib/frontends/widgets/tabcontroller.py:148
+msgid "Get Help"
 msgstr ""
 
+#: ../../lib/frontends/widgets/tabcontroller.py:201
+#: ../../lib/frontends/widgets/displays.py:773
+#: ../../lib/frontends/widgets/tablist.py:818
+msgid "Connect"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:229
+#, python-format
+msgid "%(shortappname)s Sharing"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:234
+#, python-format
+msgid ""
+"%(shortappname)s can stream and download files to and from other "
+"%(shortappname)ss on your local network and to the Miro iPad app.  It's "
+"awesome!"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:245
+msgid "Disabled: Needs Bonjour"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:253
+#: ../../lib/frontends/widgets/statictabs.py:121
+#: ../../lib/frontends/widgets/tablist.py:696
+#: ../../lib/frontends/widgets/tablist.py:812
+#: ../../lib/frontends/widgets/itemedit.py:501
+msgid "Music"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:254
+#: ../../lib/frontends/widgets/statictabs.py:114
+msgid "Videos"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:256
+#: ../../lib/frontends/widgets/prefpanel.py:899
+msgid "Warn on quit when others are connected to my media library."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:271
+#, python-format
+msgid "My %(shortappname)s Share Name"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:302
+msgid "Sync a Phone, Tablet, or Digital Camera"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:311
+#, python-format
+msgid ""
+"Connect the USB cable to sync your Android device with %(shortappname)s.  Be "
+"sure to set your device to 'USB Mass Storage' mode in your device settings.  "
+"Attach your digital camera, and convert your video files to be instantly web-"
+"ready."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:325
+msgid "Show all attached devices and drives"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:332
+#, python-format
+msgid ""
+"Use this if your phone doesn't appear in %(shortappname)s when you connect "
+"it to the computer, or if you want to sync with an external drive."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:354
+msgid "Miro on your iPad"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:358
+#, python-format
+msgid ""
+"The gorgeous Miro iPad app lets you wirelessly stream music and videos from "
+"%(shortappname)s on your desktop to your iPad. You can also download songs "
+"and videos to your iPad and take them with you."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:378
+msgid "Miro on Android"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:382
+msgid ""
+"We don't yet have a Miro app for Android, but you can stream to your device "
+"using other DAAP apps."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:431
+#: ../../lib/frontends/widgets/displays.py:787
+#: ../../lib/frontends/widgets/tablist.py:879
+msgid "Sources"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:447
+#, python-format
+msgid ""
+"Sources are any websites that offer audio, video, or torrents for download "
+"that you would like to use within %(shortappname)s."
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:459
+msgid "URL"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:468
+#: ../../lib/frontends/widgets/application.py:679
+#: ../../lib/frontends/widgets/menus.py:246
+msgid "Add Source"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:495
+#: ../../lib/frontends/widgets/displays.py:801
+#: ../../lib/frontends/widgets/tablist.py:1043
+#: ../../lib/frontends/widgets/devicecontroller.py:596
+msgid "Playlists"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:519
+msgid "Add Playlist"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:545
+#: ../../lib/frontends/widgets/displays.py:815
+#: ../../lib/frontends/widgets/tablist.py:931
+#: ../../lib/frontends/widgets/prefpanel.py:1266
+msgid "Stores"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tabcontroller.py:561
+#, python-format
+msgid ""
+"Select the music and video stores you'd like to have appear in "
+"%(shortappname)s.  Note: some other store websites may work well with Miro "
+"if you add them as Sources, but these are Stores that we've integrated and "
+"tested."
+msgstr ""
+
+#: ../../lib/frontends/widgets/statictabs.py:51
+msgid "Miro"
+msgstr ""
+
+#: ../../lib/frontends/widgets/statictabs.py:108
+#: ../../lib/frontends/widgets/searchcontroller.py:74
+msgid "Video Search"
+msgstr "వీడియో వెతుకులాట"
+
+#: ../../lib/frontends/widgets/statictabs.py:128
+#: ../../lib/frontends/widgets/itemedit.py:503
+msgid "Misc"
+msgstr ""
+
+#: ../../lib/frontends/widgets/statictabs.py:135
+#: ../../lib/frontends/widgets/itemlistwidgets.py:931
+msgid "Downloading"
+msgstr "దిగుమతవుతూంది"
+
+#: ../../lib/frontends/widgets/statictabs.py:141
+#: ../../lib/frontends/widgets/itemrenderer.py:1383
+msgid "Converting"
+msgstr ""
+
+#: ../../lib/frontends/widgets/searchcontroller.py:75
+msgid "Use the search box above to search for videos on these sites"
+msgstr ""
+
+#: ../../lib/frontends/widgets/gtk/trayicon.py:95
+#, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr "ప్లే చెయ్యని వాటిలో తరువాతిదాన్ని ప్లే చెయ్యి (%(unplayed)d)"
+
+#: ../../lib/frontends/widgets/gtk/trayicon.py:99
+#, python-format
+msgid "Play All Unplayed (%(unplayed)d)"
+msgstr "ప్లే చెయ్యని వాటన్నిటినీ ప్లే చెయ్యి (%(unplayed)d)"
+
+#: ../../lib/frontends/widgets/gtk/trayicon.py:102
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr "దింపుకోళ్ళన్నిటినీ పట్టి ఉంచు (%(downloading)d)"
+
+#: ../../lib/frontends/widgets/gtk/trayicon.py:105
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr "దింపుకోళ్ళన్నిటినీ కొనసాగించు (%(paused)d)"
+
+#: ../../lib/frontends/widgets/gtk/trayicon.py:113
+msgid "Hide"
+msgstr "దాచు"
+
+#: ../../lib/frontends/widgets/gtk/video.py:276
+#: ../../osx/plat/frontends/widgets/overlay.py:125
+msgid "Fullscreen"
+msgstr "నిండుతెర"
+
+#: ../../lib/frontends/widgets/gtk/video.py:285
+msgid "Pop-in"
+msgstr "చొచ్చుకువచ్చు"
+
+#: ../../lib/frontends/widgets/gtk/video.py:291
+msgid "Pop-out"
+msgstr "ఉబికివచ్చు"
+
+#: ../../lib/frontends/widgets/gtk/video.py:334
+msgid "Subtitles On"
+msgstr ""
+
+#: ../../lib/frontends/widgets/gtk/video.py:340
+msgid "Subtitles Found"
+msgstr ""
+
+#: ../../lib/frontends/widgets/gtk/video.py:344
+#: ../../lib/frontends/widgets/menus.py:338
+#: ../../osx/plat/frontends/widgets/overlay.py:124
+msgid "Subtitles"
+msgstr "ఉపశీర్షికలు"
+
+#: ../../lib/frontends/widgets/gtk/video.py:389
+#: ../../lib/frontends/widgets/menus.py:339
+#: ../../osx/plat/frontends/widgets/osxmenus.py:450
+msgid "None Available"
+msgstr "ఏమీ అందుబాటులో లేవు"
+
+#: ../../lib/frontends/widgets/gtk/video.py:411
+#: ../../lib/frontends/widgets/gtk/window.py:352
+#: ../../osx/plat/frontends/widgets/osxmenus.py:439
+msgid "Disable Subtitles"
+msgstr "ఉపటైటిళ్ళను అశక్తం చెయ్యి"
+
+#: ../../lib/frontends/widgets/gtk/video.py:422
+#: ../../osx/plat/frontends/widgets/osxmenus.py:457
+msgid "Select a Subtitles file..."
+msgstr "ఉపటైటిళ్ళ ఫైలును ఎంచుకో.."
+
+#: ../../lib/frontends/widgets/gtk/window.py:837
+msgid "All files"
+msgstr "అన్ని ఫైళ్ళు"
+
+#: ../../lib/frontends/widgets/gtk/window.py:891
+msgid "Choose"
+msgstr "ఎంచుకో"
+
+#: ../../lib/frontends/widgets/gtk/window.py:917
+#, python-format
+msgid "About %(appname)s"
+msgstr "%(appname)s గురించి"
+
+#: ../../lib/frontends/widgets/gtk/window.py:940
+#, python-format
+msgid ""
+"%(copyright)s.  See license.txt file for details.\n"
+"%(trademark)s"
+msgstr ""
+"%(copyright)s. వివరాలకు license.txt ఫైలు చూడండి\n"
+"%(trademark)s"
+
+#: ../../lib/frontends/widgets/gtk/window.py:954
+#, python-format
+msgid "Thank you to all the people who contributed to Miro %(version)s:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/gtk/window.py:982
+msgid "To help fund continued Miro development, visit the donation page at:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/feedcontroller.py:163
+#: ../../lib/frontends/widgets/feedcontroller.py:190
+#, python-format
+msgid "%(count)d Downloading"
+msgid_plural "%(count)d Downloading"
+msgstr[0] "%(count)d ను దించుతున్నాం"
+msgstr[1] "%(count)d లను దించుతున్నాం"
+
+#: ../../lib/frontends/widgets/feedcontroller.py:174
+#: ../../lib/frontends/widgets/feedcontroller.py:186
+#, python-format
+msgid "%(count)d Item"
+msgid_plural "%(count)d Items"
+msgstr[0] "%(count)d అంశం"
+msgstr[1] "%(count)d అంశాలు"
+
+#: ../../lib/frontends/widgets/feedcontroller.py:195
+#, python-format
+msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
+msgid_plural ""
+"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
+msgstr[0] ""
+"ప్లే కాని ఐటముల వలన %(count)d దిగుమతిని క్యూలో పెట్టాం (సెట్టింగులు చూడండి)"
+msgstr[1] ""
+"ప్లే కాని ఐటముల వలన %(count)d దిగుమతులను క్యూలో పెట్టాం (సెట్టింగులు చూడండి)"
+
+#: ../../lib/frontends/widgets/feedcontroller.py:208
+#, python-format
+msgid "%(count)d Item Matches Search"
+msgid_plural "%(count)d Items Match Search"
+msgstr[0] "%(count)d ఐటము అన్వేషకానికి సరిపోయింది"
+msgstr[1] "%(count)d ఐటములు అన్వేషకానికి సరిపోయాయి"
+
+#: ../../lib/frontends/widgets/dialogs.py:105
+msgid ""
+"Miro is upgrading your database of podcasts and files.  This one-time "
+"process can take a long time if you have a large number of items in Miro (it "
+"can even take more than 30 minutes)."
+msgstr ""
+
+#: ../../lib/frontends/widgets/diagnostics.py:61
+#: ../../lib/frontends/widgets/diagnostics.py:138
+#, python-format
+msgid "%(databasecount)s: Delete"
+msgstr ""
+
+#: ../../lib/frontends/widgets/diagnostics.py:91
+#: ../../lib/frontends/widgets/menus.py:366
+msgid "Diagnostics"
+msgstr ""
+
+#: ../../lib/frontends/widgets/diagnostics.py:94
+msgid "Movies location:"
+msgstr "మోవీల స్థానం:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:99
+msgid "Icon cache location:"
+msgstr "ఐకను కాషె స్థానం:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:104
+msgid "Log file location:"
+msgstr "లాగ్ ఫైలు స్థానం:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:108
+msgid "Downloader log file location:"
+msgstr "దింపుకోలుదారు లాగ్ ఫైలు స్థానం:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:113
+msgid "Database file location:"
+msgstr "డేటాబేసు ఫైలు స్థానం:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:118
+msgid "Crash reports location:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/diagnostics.py:125
+msgid "Space free on disk:"
+msgstr "డిస్కుపై ఖాళీగా ఉన్న జాగా:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:128
+msgid "Database size:"
+msgstr "డాటాబేసు పరిమాణం:"
+
+#: ../../lib/frontends/widgets/diagnostics.py:131
+msgid "Total db objects in memory:"
+msgstr "మెమొరీలో ఉన్న మొత్తం db ఆబ్జెక్టులు"
+
+#: ../../lib/frontends/widgets/diagnostics.py:136
+msgid "Total db backups:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:69
+msgid "Remove From the Library"
+msgstr "లైబ్రరీ నుండి తీసివెయ్యి"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:71
+msgid "Delete from Drive"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:106
+#: ../../lib/frontends/widgets/itemcontextmenu.py:163
+#: ../../lib/frontends/widgets/displays.py:542
+#: ../../lib/frontends/widgets/displays.py:580
+msgid "Play Externally"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:107
+#: ../../lib/frontends/widgets/itemcontextmenu.py:173
+#: ../../lib/frontends/widgets/itemcontextmenu.py:219
+msgid "Edit Item Details"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:120
+#, python-format
+msgid "Convert to %(conversion)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:126
+#: ../../lib/frontends/widgets/itemcontextmenu.py:373
+msgid "Convert to..."
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:138
+#: ../../lib/frontends/widgets/itemcontextmenu.py:223
+#: ../../lib/frontends/widgets/itemcontextmenu.py:359
+#: ../../lib/frontends/widgets/menus.py:308
+#: ../../lib/frontends/widgets/menus.py:310
+#: ../../linux/extensions/miroappindicator/main.py:55
+msgid "Play"
+msgstr "నడుపు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:140
+#: ../../lib/frontends/widgets/menus.py:311
+msgid "Pause"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:144
 #: ../../lib/frontends/widgets/itemrenderer.py:472
-#: ../../lib/frontends/widgets/itemcontextmenu.py:137
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr "%(resumetime)s కు తిరిగి కొనసాగించు"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1348
+#: ../../lib/frontends/widgets/itemcontextmenu.py:150
+#: ../../lib/frontends/widgets/itemcontextmenu.py:365
+msgid "Mark as Unplayed"
+msgstr "ప్లే చెయ్యనట్టుగా గుర్తించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:153
+#: ../../lib/frontends/widgets/itemcontextmenu.py:367
+msgid "Mark as Played"
+msgstr "ప్లే చేసినట్టుగా గుర్తించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:160
+msgid "Play Just This Item"
+msgstr "ఈ అంశమును మాత్రమే ఆడించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:178
+msgid "Stop Seeding"
+msgstr "సీడింగును ఆపు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:182
+msgid "Resume Seeding"
+msgstr "సీడింగును తిరిగి కొనసాగించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:193
+#: ../../lib/frontends/widgets/itemcontextmenu.py:214
+#: ../../lib/frontends/widgets/itemcontextmenu.py:394
+#: ../../lib/frontends/widgets/itemcontextmenu.py:406
+msgid "Cancel Download"
+msgstr "దిగుమతి రద్దుచెయ్యి"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:197
+#: ../../lib/frontends/widgets/itemcontextmenu.py:395
+msgid "Pause Download"
+msgstr "దిగుమతిని విరమించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:201
+#: ../../lib/frontends/widgets/itemcontextmenu.py:405
+msgid "Resume Download"
+msgstr "దింపుకోలును తిరిగి కొనసాగించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:227
 #, python-format
-msgid "Conversion to %(format)s"
+msgid "Show File in %(progname)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1351
+#: ../../lib/frontends/widgets/itemcontextmenu.py:230
+msgid "File on Disk"
+msgstr "డిస్కులో ఫైలు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:248
+#: ../../lib/frontends/widgets/tablist.py:917
+#: ../../lib/frontends/widgets/tablist.py:943
+#: ../../lib/frontends/widgets/tablist.py:1031
+msgid "Copy URL to clipboard"
+msgstr "URL క్లిప్‌బోర్డులోకి కాపీ చెయ్యి"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:252
+msgid "View Web Page"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:257
+#: ../../osx/plat/frontends/widgets/overlay.py:128
+msgid "Share"
+msgstr "పంచుము"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:347
 #, python-format
-msgid "Conversion to %(format)s failed: %(error)s"
-msgstr ""
+msgid "%(count)d Device Item"
+msgid_plural "%(count)d Device Items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1358
-#: ../../lib/frontends/widgets/itemrenderer.py:1365
-msgid "Clear"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:1360
-msgid "Failed"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:1361
-msgid "Troubleshoot"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:1362
-msgid "Open Log"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:1367
-msgid "Completed"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemrenderer.py:1376
+#: ../../lib/frontends/widgets/itemcontextmenu.py:353
 #, python-format
-msgid "%(percent)i%% done"
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] "%(count)d దిగుమతయిన అంశము"
+msgstr[1] "%(count)d దిగుమతయిన అంశములు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:361
+msgid "Add to Playlist"
+msgstr "ప్లేలిస్టుకు చేర్చు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:379
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] "%(count)d అందుబాటులోవున్న అంశం"
+msgstr[1] "%(count)d అందుబాటులోవున్న అంశాలు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:389
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] "%(count)d దిగుమతి కాబడుతున్న అంశము"
+msgstr[1] "%(count)d దిగుమతి కాబడుతున్న అంశములు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:400
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d నిలిపివేసిన అంశం"
+msgstr[1] "%(count)d నిలిపివేసిన అంశాలు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:409
+msgid "Restart Upload"
+msgstr "ఎగుమతి ని మళ్లీ ప్రారంభించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:412
+msgid "Edit Items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1383
-#: ../../lib/frontends/widgets/statictabs.py:141
-msgid "Converting"
+#: ../../lib/frontends/widgets/itemcontextmenu.py:427
+#: ../../lib/frontends/widgets/itemlistwidgets.py:529
+#: ../../lib/frontends/widgets/menus.py:398
+msgid "Show Conversion Folder"
+msgstr "అంతరీకరణాల ఫోల్డరును చూపించు"
+
+#: ../../lib/frontends/widgets/itemcontextmenu.py:441
+msgid "Remove From Playlist"
+msgstr "ప్లేలిస్టు నుంచి తొలగించు"
+
+#: ../../lib/frontends/widgets/playback.py:679
+msgid "Open Subtitles File..."
+msgstr "ఉపశీర్షికల ఫైలు తెరువు.."
+
+#: ../../lib/frontends/widgets/playback.py:680
+msgid "Subtitle files"
+msgstr "ఉపశీర్షిక దస్త్రాలు"
+
+#: ../../lib/frontends/widgets/playlist.py:156
+msgid "This Playlist is Empty"
+msgstr "ప్లేజాబితా ఖాళీగా ఉంది"
+
+#: ../../lib/frontends/widgets/playlist.py:159
+msgid ""
+"To add an item, drag it onto the name of this playlist in the sidebar."
+msgstr ""
+"ఐటమును చేర్చేందుకు, సైడుబారులోని ప్లేజాబితా పేరు మీదకు దాన్ని లాగండి."
+
+#: ../../lib/frontends/widgets/displays.py:377
+#: ../../lib/frontends/widgets/tablist.py:964
+#: ../../lib/frontends/widgets/prefpanel.py:1255
+#: ../../lib/frontends/widgets/devicecontroller.py:595
+#: ../../lib/frontends/widgets/itemlistwidgets.py:682
+#: ../../lib/messagehandler.py:563
+msgid "Podcasts"
 msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:523
@@ -1128,12 +1577,10 @@ msgstr "ఫైల్ పేరు:"
 msgid "File type:"
 msgstr "ఫైలు రకం:"
 
-#: ../../lib/frontends/widgets/displays.py:542
-#: ../../lib/frontends/widgets/displays.py:580
-#: ../../lib/frontends/widgets/itemcontextmenu.py:106
-#: ../../lib/frontends/widgets/itemcontextmenu.py:155
-msgid "Play Externally"
-msgstr ""
+#: ../../lib/frontends/widgets/displays.py:541
+#: ../../lib/frontends/widgets/itemrenderer.py:100
+msgid "Reveal File"
+msgstr "ఫైలును వెల్లడించు"
 
 #: ../../lib/frontends/widgets/displays.py:545
 msgid "Skip"
@@ -1200,775 +1647,14 @@ msgstr "అన్నీ తొలగించు"
 msgid "Put Into a New Folder"
 msgstr "ఓ కొత్త ఫోల్డరులో పెట్టు"
 
-#: ../../lib/frontends/widgets/displays.py:778
-#: ../../lib/frontends/widgets/tabcontroller.py:201
-#: ../../lib/frontends/widgets/tablist.py:806
-msgid "Connect"
-msgstr ""
-
-#: ../../lib/frontends/widgets/displays.py:792
-#: ../../lib/frontends/widgets/tabcontroller.py:431
-#: ../../lib/frontends/widgets/tablist.py:867
-msgid "Sources"
-msgstr ""
-
-#: ../../lib/frontends/widgets/displays.py:820
-#: ../../lib/frontends/widgets/prefpanel.py:1266
-#: ../../lib/frontends/widgets/tabcontroller.py:545
-#: ../../lib/frontends/widgets/tablist.py:919
-msgid "Stores"
-msgstr ""
-
-#: ../../lib/frontends/widgets/gtk/trayicon.py:95
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "ప్లే చెయ్యని వాటిలో తరువాతిదాన్ని ప్లే చెయ్యి (%(unplayed)d)"
-
-#: ../../lib/frontends/widgets/gtk/trayicon.py:99
-#, python-format
-msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "ప్లే చెయ్యని వాటన్నిటినీ ప్లే చెయ్యి (%(unplayed)d)"
-
-#: ../../lib/frontends/widgets/gtk/trayicon.py:102
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr "దింపుకోళ్ళన్నిటినీ పట్టి ఉంచు (%(downloading)d)"
-
-#: ../../lib/frontends/widgets/gtk/trayicon.py:105
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr "దింపుకోళ్ళన్నిటినీ కొనసాగించు (%(paused)d)"
-
-#: ../../lib/frontends/widgets/gtk/trayicon.py:113
-msgid "Hide"
-msgstr "దాచు"
-
-#: ../../lib/frontends/widgets/gtk/video.py:285
-msgid "Pop-in"
-msgstr "చొచ్చుకువచ్చు"
-
-#: ../../lib/frontends/widgets/gtk/video.py:291
-msgid "Pop-out"
-msgstr "ఉబికివచ్చు"
-
-#: ../../lib/frontends/widgets/gtk/video.py:334
-msgid "Subtitles On"
-msgstr ""
-
-#: ../../lib/frontends/widgets/gtk/video.py:340
-msgid "Subtitles Found"
-msgstr ""
-
-#: ../../lib/frontends/widgets/gtk/window.py:837
-msgid "All files"
-msgstr "అన్ని ఫైళ్ళు"
-
-#: ../../lib/frontends/widgets/gtk/window.py:891
-msgid "Choose"
-msgstr "ఎంచుకో"
-
-#: ../../lib/frontends/widgets/gtk/window.py:917
-#, python-format
-msgid "About %(appname)s"
-msgstr "%(appname)s గురించి"
-
-#: ../../lib/frontends/widgets/gtk/window.py:919 ../../lib/dialogs.py:96
-msgid "Close"
-msgstr "మూసివేయి"
-
-#: ../../lib/frontends/widgets/gtk/window.py:940
-#, python-format
-msgid ""
-"%(copyright)s.  See license.txt file for details.\n"
-"%(trademark)s"
-msgstr ""
-"%(copyright)s. వివరాలకు license.txt ఫైలు చూడండి\n"
-"%(trademark)s"
-
-#: ../../lib/frontends/widgets/gtk/window.py:954
-#, python-format
-msgid "Thank you to all the people who contributed to Miro %(version)s:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/gtk/window.py:982
-msgid "To help fund continued Miro development, visit the donation page at:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/playlist.py:156
-msgid "This Playlist is Empty"
-msgstr "ప్లేజాబితా ఖాళీగా ఉంది"
-
-#: ../../lib/frontends/widgets/playlist.py:159
-msgid ""
-"To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
-"ఐటమును చేర్చేందుకు, సైడుబారులోని ప్లేజాబితా పేరు మీదకు దాన్ని లాగండి."
-
-#: ../../lib/frontends/widgets/newfolder.py:56
-msgid "Folder name:"
-msgstr "సంచయపు పేరు:"
-
-#: ../../lib/frontends/widgets/newfolder.py:87
-msgid "Create Podcast Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newfolder.py:88
-msgid "Enter the name of the folder to add"
-msgstr "చేర్చాల్సిన ఫోల్డరు పేరును ఇవ్వండి"
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:59
-#: ../../lib/frontends/widgets/menus.py:248
-msgid "New Search Podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:60
-msgid "A search podcast contains items that match a search term."
-msgstr ""
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:92
-msgid "Search for:"
-msgstr "దీని కోసం వెతుకు:"
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:100
-msgid "In this:"
-msgstr "దీనిలో:"
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:107
-msgid "Podcast:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:114
-msgid "Search engine:"
-msgstr "సెర్చింజను:"
-
-#: ../../lib/frontends/widgets/newsearchfeed.py:121
 #: ../../lib/frontends/widgets/newfeed.py:59
+#: ../../lib/frontends/widgets/newsearchfeed.py:121
 msgid "URL:"
 msgstr "URL:"
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:48
-#: ../../lib/frontends/widgets/prefpanel.py:811
-msgid "Add Watched Folder"
-msgstr "చూసిన ఫోల్డరును చేర్చు"
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:49
-msgid ""
-"Miro can watch a folder on your computer and show those media files in your "
-"library."
-msgstr ""
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:71
-msgid "Choose..."
-msgstr ""
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:76
-msgid "Directory:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:83
-msgid "Show in my sidebar as a podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:108
-msgid "Choose Watched Folder Directory"
-msgstr ""
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:116
-msgid ""
-"That directory could not be found. Please check the path and try again."
-msgstr ""
-
-#: ../../lib/frontends/widgets/newwatchedfolder.py:118
-msgid ""
-"That directory could not be accessed. Please check the permissions and try "
-"again."
-msgstr ""
-
-#: ../../lib/frontends/widgets/style.py:521
-msgid "paused"
-msgstr "ఆపి ఉంచినవి"
-
-#: ../../lib/frontends/widgets/style.py:523
-msgid "queued"
-msgstr ""
-
-#: ../../lib/frontends/widgets/sharingcontroller.py:73
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1015
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1067
-#: ../../lib/frontends/widgets/feedcontroller.py:73
-msgid "No Results"
-msgstr ""
-
-#: ../../lib/frontends/widgets/diagnostics.py:61
-#: ../../lib/frontends/widgets/diagnostics.py:138
-#, python-format
-msgid "%(databasecount)s: Delete"
-msgstr ""
-
-#: ../../lib/frontends/widgets/diagnostics.py:91
-#: ../../lib/frontends/widgets/menus.py:366
-msgid "Diagnostics"
-msgstr ""
-
-#: ../../lib/frontends/widgets/diagnostics.py:94
-msgid "Movies location:"
-msgstr "మోవీల స్థానం:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:99
-msgid "Icon cache location:"
-msgstr "ఐకను కాషె స్థానం:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:104
-msgid "Log file location:"
-msgstr "లాగ్ ఫైలు స్థానం:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:108
-msgid "Downloader log file location:"
-msgstr "దింపుకోలుదారు లాగ్ ఫైలు స్థానం:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:113
-msgid "Database file location:"
-msgstr "డేటాబేసు ఫైలు స్థానం:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:118
-msgid "Crash reports location:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/diagnostics.py:125
-msgid "Space free on disk:"
-msgstr "డిస్కుపై ఖాళీగా ఉన్న జాగా:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:128
-msgid "Database size:"
-msgstr "డాటాబేసు పరిమాణం:"
-
-#: ../../lib/frontends/widgets/diagnostics.py:131
-msgid "Total db objects in memory:"
-msgstr "మెమొరీలో ఉన్న మొత్తం db ఆబ్జెక్టులు"
-
-#: ../../lib/frontends/widgets/diagnostics.py:136
-msgid "Total db backups:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:928
-#, python-format
-msgid "%(count)s items"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1029
-#: ../../lib/frontends/widgets/application.py:783
-msgid "Create Playlist"
-msgstr "ప్లేలిస్టు సృష్టించు"
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1030
-#: ../../lib/frontends/widgets/application.py:784
-msgid "Enter a name for the new playlist"
-msgstr "కొత్త ప్లేలిస్టుకు పేరు ఇవ్వండి"
-
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1043
-msgid "Unwatched"
-msgstr "వీక్షణలో లేనివి"
-
-#: ../../lib/frontends/widgets/statictabs.py:51
-msgid "Miro"
-msgstr ""
-
-#: ../../lib/frontends/widgets/statictabs.py:114
-#: ../../lib/frontends/widgets/tabcontroller.py:254
-msgid "Videos"
-msgstr ""
-
-#: ../../lib/frontends/widgets/statictabs.py:121
-#: ../../lib/frontends/widgets/tabcontroller.py:253
-#: ../../lib/frontends/widgets/tablist.py:684
-#: ../../lib/frontends/widgets/tablist.py:800
-#: ../../lib/frontends/widgets/itemedit.py:501
-msgid "Music"
-msgstr ""
-
-#: ../../lib/frontends/widgets/statictabs.py:128
-#: ../../lib/frontends/widgets/itemedit.py:503
-msgid "Misc"
-msgstr ""
-
-#: ../../lib/frontends/widgets/statictabs.py:135
-#: ../../lib/frontends/widgets/itemlistwidgets.py:931
-msgid "Downloading"
-msgstr "దిగుమతవుతూంది"
-
-#: ../../lib/frontends/widgets/guidecontroller.py:173
-msgid "Recently Watched"
-msgstr ""
-
-#: ../../lib/frontends/widgets/guidecontroller.py:175
-msgid "Recently Listened To"
-msgstr ""
-
-#: ../../lib/frontends/widgets/guidecontroller.py:177
-msgid "Recent Downloads"
-msgstr ""
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:74
-#, python-format
-msgid "%(appname)s First Time Setup"
-msgstr ""
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:147
-msgid "Choose Language"
-msgstr "భాషను ఎంచుకోండి"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:150
-#, python-format
-msgid ""
-"Welcome to the %(name)s first time setup!\n"
-"\n"
-"The next few screens will help you set up %(name)s so that it works best for "
-"you.\n"
-"\n"
-"What language would you like Miro to be in?"
-msgstr ""
-"%(name)s తొలి సెటప్ కు స్వాగతం!\n"
-"\n"
-"రాబోయే తెరల్లో %(name)s చక్కగా పనిచేసేలా ఎలా సెటప్ చేసుకోవాలో వివరిస్తాయి.\n"
-"\n"
-"Miro మీకు ఏ భాషలో కావాలి?"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:162
-#: ../../lib/frontends/widgets/prefpanel.py:470
-msgid "System default"
-msgstr "సిస్టమ్ డిఫాల్టు"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:185
-msgid "Update"
-msgstr "తాజాకరించు"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:189
-#: ../../lib/frontends/widgets/prefpanel.py:477
-msgid "Language:"
-msgstr "భాష:"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:197
-#: ../../lib/frontends/widgets/firsttimedialog.py:241
-msgid "Next >"
-msgstr "తదుపరి >"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:211
-#, python-format
-msgid "%(name)s Startup"
-msgstr "%(name)s ప్రారంభం"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:215
-#, python-format
-msgid ""
-"We recommend that you have %(name)s launch when your computer starts up.  "
-"This way, downloads in progress can finish downloading and new media files "
-"can be downloaded in the background, ready when you want to watch."
-msgstr ""
-"కంప్యూటరు మొదలయ్యేటపుడే %(name)s ను కూడా మొదలుపెట్టాలని మేము సూచిస్తున్నాం. "
-"అలా అయితే, జరుగుతూ ఉన్న దింపుకోళ్ళు పూర్తవడం, కొత్త మీడియా ఫైళ్ళను "
-"దించుకోవడం నేపథ్యంలోనే జరుగుతుంది. ఎప్పుడు చూడాలనుకుంటే అప్పుడు సిద్ధంగా "
-"ఉంటాయి."
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:224
-#, python-format
-msgid "Would you like to run %(name)s on startup?"
-msgstr "%(name)s ను కంప్యూటరు ప్రారంభంలోనే మొదలుపెడతారా?"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:230
-#: ../../lib/frontends/widgets/firsttimedialog.py:275 ../../lib/dialogs.py:99
-msgid "Yes"
-msgstr "అవును"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:231
-#: ../../lib/frontends/widgets/firsttimedialog.py:274 ../../lib/dialogs.py:100
-msgid "No"
-msgstr "కాదు"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:238
-#: ../../lib/frontends/widgets/firsttimedialog.py:327
-#: ../../lib/frontends/widgets/firsttimedialog.py:431
-msgid "< Previous"
-msgstr "< గత"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:260
-msgid "Finding Files"
-msgstr "ఫైళ్ళను వెతకడం"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:263
-#, python-format
-msgid ""
-"%(name)s can find all the media files on your computer to help you organize "
-"your collection.\n"
-"\n"
-"Would you like %(name)s to look for media files on your computer?"
-msgstr ""
-"%(name)s మీ కంప్యూటరులోని మీడియా ఫైళ్ళన్నిటినీ వెతికిపట్టి, ఒక వరిఉసలో "
-"పెట్టుకోడానికి మీకు సహకరిస్తుంది.\n"
-"\n"
-"%(name)s ను మీ కంప్యూటరులోని మీడియా ఫైళ్ళ కోసం వెతకమంటారా?"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:284
-msgid "Restrict to all my personal files."
-msgstr "నా వ్యక్తిగత ఫైళ్ళకు మాత్రమే పరిమితం చెయ్యి"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:285
-msgid "Search custom folders:"
-msgstr "కస్టమ్ ఫోల్డర్లలో వెతుకు:"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:296
-#, python-format
-msgid "Import from %(player)s as watched folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:306
-#: ../../lib/frontends/widgets/prefpanel.py:702
-msgid "Change"
-msgstr "మార్చు"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:314
-#: ../../lib/frontends/widgets/addfilesdialog.py:183
-msgid "Choose directory to search for media files"
-msgstr "మీడియా ఫైళ్ళను వెతకడం కోసం డైరెక్టరీ ఎంచుకోండి"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:345
-#: ../../lib/frontends/widgets/firsttimedialog.py:434
-msgid "Finish"
-msgstr "ముగించు"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:414
-msgid "Searching for media files"
-msgstr "మీడియా ఫైళ్ళ కోసం వెతుకుతున్నాం"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:464
-#, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] "%(count)s ఫైలును పరిశీలించాం"
-msgstr[1] "%(count)s ఫైళ్ళను పరిశీలించాం"
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:469
-#: ../../lib/frontends/widgets/addfilesdialog.py:299
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] "%(count)s మీడియా ఫైలు దొరికింది"
-msgstr[1] "%(count)s మీడియా ఫైళ్లు దొరికాయి"
-
-#: ../../lib/frontends/widgets/menus.py:215
-msgid "_File"
-msgstr "ఫైలు (_F)"
-
-#: ../../lib/frontends/widgets/menus.py:216
-msgid "_Open"
-msgstr "తెరువు"
-
-#: ../../lib/frontends/widgets/menus.py:218
-msgid "Add files or folders..."
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:220
-msgid "Download Item"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:222
-msgid "Check Version"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:224
-msgid "Remove Item"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:226
-msgid "Remove Items"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:227
-msgid "Edit _Item"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:229
-msgid "Edit _Items"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:230
-msgid "_Save Item As"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:233
-msgid "_Save Items As"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:234
-msgid "Copy Item _URL"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:238
-#: ../../lib/frontends/widgets/prefpanel.py:1272
-msgid "Preferences"
-msgstr "అభిరుచులు"
-
-#: ../../lib/frontends/widgets/menus.py:239
-msgid "_Quit"
-msgstr "నిష్క్రమించు (_Q)"
-
-#: ../../lib/frontends/widgets/menus.py:242
-msgid "_Sidebar"
-msgstr "_పక్క పట్టీ"
-
-#: ../../lib/frontends/widgets/menus.py:243
 #: ../../lib/frontends/widgets/newfeed.py:96
+#: ../../lib/frontends/widgets/menus.py:243
 msgid "Add Podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:246
-#: ../../lib/frontends/widgets/tabcontroller.py:468
-#: ../../lib/frontends/widgets/application.py:679
-msgid "Add Source"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:250
-msgid "_New Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:253
-msgid "New Watched Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:256
-#: ../../lib/frontends/widgets/tablist.py:1014
-msgid "Rename"
-msgstr "పేరుమార్చు"
-
-#: ../../lib/frontends/widgets/menus.py:259
-#: ../../lib/frontends/widgets/application.py:832
-msgid "Rename Podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:260
-#: ../../lib/frontends/widgets/application.py:846
-#: ../../lib/frontends/widgets/tablist.py:906
-msgid "Rename Source"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:261
-#: ../../lib/frontends/widgets/prefpanel.py:770
-#: ../../lib/frontends/widgets/tablist.py:1006
-#: ../../lib/frontends/widgets/tablist.py:1020
-#: ../../lib/frontends/widgets/tablist.py:1026
-#: ../../lib/frontends/widgets/tablist.py:1069
-#: ../../lib/frontends/widgets/tablist.py:1075
-#: ../../lib/frontends/widgets/tablist.py:1080 ../../lib/dialogs.py:122
-msgid "Remove"
-msgstr "తొలగించు"
-
-#: ../../lib/frontends/widgets/menus.py:264
-#: ../../lib/frontends/widgets/removefeeds.py:50
-msgid "Remove Podcast"
-msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/frontends/widgets/menus.py:265
-msgid "Remove Podcasts"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:266
-msgid "Remove Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:267
-msgid "Remove Folders"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:268
-#: ../../lib/frontends/widgets/tablist.py:907
-msgid "Remove Source"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:269
-#: ../../lib/frontends/widgets/tablist.py:910
-msgid "Remove Sources"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:270
-msgid "Update Podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:273
-msgid "Update Podcasts"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:274
-msgid "Update All Podcasts and Library"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:279
-msgid "Import Podcasts (OPML)"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:281
-msgid "Export Podcasts (OPML)"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:284
-msgid "Share with a Friend"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:286
-msgid "Copy URL"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:290
-msgid "_Playlists"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:291
-msgid "New _Playlist"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:294
-msgid "New Playlist Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:298
-#: ../../lib/frontends/widgets/application.py:837
-#: ../../lib/frontends/widgets/tablist.py:1074 ../../lib/playlist.py:203
-msgid "Rename Playlist"
-msgstr "ప్లేలిస్టు పేరుమార్చు"
-
-#: ../../lib/frontends/widgets/menus.py:300
-msgid "Remove Playlist"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:302
-msgid "Remove Playlists"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:303
-msgid "Remove Playlist Folders"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:304
-msgid "Remove Playlist Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:307
-msgid "P_layback"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:311
-msgid "Pause"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:312
-msgid "Stop"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:315
-msgid "Next Item"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:318
-msgid "Previous Item"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:322
-msgid "Skip Forward"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:324
-msgid "Skip Back"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:327
-msgid "Volume Up"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:329
-msgid "Volume Down"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:332
-msgid "_Fullscreen"
-msgstr "_నిండుతెర"
-
-#: ../../lib/frontends/widgets/menus.py:335
-msgid "_Toggle Detached/Attached"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:342
-msgid "Select a Subtitles File..."
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:348
-msgid "Sorts"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:350
-msgid "_Convert"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:352
-msgid "_Help"
-msgstr "సహాయం (_H)"
-
-#: ../../lib/frontends/widgets/menus.py:353
-#, python-format
-msgid "About %(name)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:361
-msgid "Donate"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:364
-msgid "Help"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:368
-msgid "Report a Bug"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:370
-msgid "Translate"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:372
-msgid "Planet Miro"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:375
-msgid "Dev"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:376
-msgid "Profile Message"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:377
-msgid "Profile Redraw"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:378
-msgid "Test Crash Reporter"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:379
-msgid "Test Soft Crash Reporter"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:398
-#: ../../lib/frontends/widgets/itemlistwidgets.py:529
-#: ../../lib/frontends/widgets/itemcontextmenu.py:419
-msgid "Show Conversion Folder"
-msgstr "అంతరీకరణాల ఫోల్డరును చూపించు"
-
-#: ../../lib/frontends/widgets/menus.py:418
-msgid "_Encoding"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:421
-msgid "Default (UTF-8)"
 msgstr ""
 
 #: ../../lib/frontends/widgets/newfeed.py:97
@@ -1987,291 +1673,66 @@ msgid ""
 "Enter the URL of the podcast to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/feedcontroller.py:163
-#: ../../lib/frontends/widgets/feedcontroller.py:190
-#, python-format
-msgid "%(count)d Downloading"
-msgid_plural "%(count)d Downloading"
-msgstr[0] "%(count)d ను దించుతున్నాం"
-msgstr[1] "%(count)d లను దించుతున్నాం"
-
-#: ../../lib/frontends/widgets/feedcontroller.py:174
-#: ../../lib/frontends/widgets/feedcontroller.py:186
-#, python-format
-msgid "%(count)d Item"
-msgid_plural "%(count)d Items"
-msgstr[0] "%(count)d అంశం"
-msgstr[1] "%(count)d అంశాలు"
-
-#: ../../lib/frontends/widgets/feedcontroller.py:195
-#, python-format
-msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
-msgid_plural ""
-"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
-msgstr[0] ""
-"ప్లే కాని ఐటముల వలన %(count)d దిగుమతిని క్యూలో పెట్టాం (సెట్టింగులు చూడండి)"
-msgstr[1] ""
-"ప్లే కాని ఐటముల వలన %(count)d దిగుమతులను క్యూలో పెట్టాం (సెట్టింగులు చూడండి)"
-
-#: ../../lib/frontends/widgets/feedcontroller.py:208
-#, python-format
-msgid "%(count)d Item Matches Search"
-msgid_plural "%(count)d Items Match Search"
-msgstr[0] "%(count)d ఐటము అన్వేషకానికి సరిపోయింది"
-msgstr[1] "%(count)d ఐటములు అన్వేషకానికి సరిపోయాయి"
-
-#: ../../lib/frontends/widgets/crashdialog.py:53
-#, python-format
-msgid "Oops!  %(appname)s has encountered an internal error"
-msgstr ""
-
-#: ../../lib/frontends/widgets/crashdialog.py:68
-msgid "You can help us fix this problem by submitting an error report."
-msgstr ""
-
-#: ../../lib/frontends/widgets/crashdialog.py:75
-msgid ""
-"Note: This error report will not be posted publicly, but may include "
-"uniquely identifable information including file names, website URLs, podcast "
-"URLs, and disk paths."
-msgstr ""
-
-#: ../../lib/frontends/widgets/crashdialog.py:83
-msgid "See crash report"
-msgstr ""
-
-#: ../../lib/frontends/widgets/crashdialog.py:89
-msgid ""
-"Include entire program database including all filenames, websites, and "
-"podcasts with the error report."
-msgstr ""
-
-#: ../../lib/frontends/widgets/crashdialog.py:95
-msgid ""
-"What were you doing when you got this message?  (Helpful, but not required.)"
-msgstr ""
-
-#: ../../lib/frontends/widgets/crashdialog.py:108
-msgid "Crash Report:"
-msgstr ""
-
-#: ../../lib/frontends/widgets/dialogs.py:105
-msgid ""
-"Miro is upgrading your database of podcasts and files.  This one-time "
-"process can take a long time if you have a large number of items in Miro (it "
-"can even take more than 30 minutes)."
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:295
-#, python-format
-msgid "%(item)s at %(resumetime)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:298
-#, python-format
-msgid "%(item)s"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:302
-msgid "Resume"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:504
-msgid "Back to podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:524
-msgid "Stop All Conversions"
-msgstr "అంతరీకరణాలన్నిటినీ ఆపు"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:534
-msgid "Clear Finished Conversions"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:592
-msgid "Save as Podcast"
-msgstr ""
-
+#: ../../lib/frontends/widgets/tablist.py:695
+#: ../../lib/frontends/widgets/tablist.py:809
 #: ../../lib/frontends/widgets/itemlistwidgets.py:612
-#: ../../lib/frontends/widgets/tablist.py:683
-#: ../../lib/frontends/widgets/tablist.py:797
 #: ../../lib/frontends/widgets/itemedit.py:502
 #: ../../lib/frontends/widgets/itemedit.py:750
 msgid "Video"
 msgstr "వీడియో"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:614
-msgid "Audio"
-msgstr "ఆడియో"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:636
-msgid "Downloaded"
-msgstr "దిగుమతయ్యింది"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:651
-msgid "View|All"
-msgstr "చూపించు|అన్నీ"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:661
-msgid "Save as playlist"
+#: ../../lib/frontends/widgets/tablist.py:918
+#: ../../lib/frontends/widgets/application.py:847
+#: ../../lib/frontends/widgets/menus.py:260
+msgid "Rename Source"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:676
-msgid "Movies"
+#: ../../lib/frontends/widgets/tablist.py:919
+#: ../../lib/frontends/widgets/menus.py:268
+msgid "Remove Source"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:678
-msgid "Shows"
+#: ../../lib/frontends/widgets/tablist.py:922
+#: ../../lib/frontends/widgets/menus.py:269
+msgid "Remove Sources"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:680
-msgid "Clips"
+#: ../../lib/frontends/widgets/tablist.py:1015
+msgid "Update Podcasts In Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1040
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1125
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1128
-#, python-format
-msgid "%(rate)s"
+#: ../../lib/frontends/widgets/tablist.py:1017
+#: ../../lib/frontends/widgets/application.py:828
+msgid "Rename Podcast Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1105
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-"దింపుకోళ్ళ జాగా పరిమితి కంటే %(available)s తక్కువ ఉంది (డిస్కులో %(amount)s "
-"ఖాళీ ఉంది)"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1112
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
-"దింపుకోళ్ళ కోసం %(available)s జాగా ఉంది (డిస్కులో %(amount)s ఖాళీ ఉంది)"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1118
-#, python-format
-msgid "%(amount)s free on disk"
-msgstr "(డిస్కులో %(amount)s ఖాళీ ఉంది)"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1167
-msgid "Pause All"
-msgstr "అన్నింటినీ నిలుపు"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1173
-msgid "Resume All"
-msgstr "అన్నింటినీ కొనసాగించు"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1179
-msgid "Cancel All"
-msgstr "అన్నింటినీ రద్దుచేయి"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1185
-msgid "Download Settings"
-msgstr "దిగుమతి అమరికలు"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1226
-msgid "Auto-Download All"
+#: ../../lib/frontends/widgets/tablist.py:1023
+msgid "Update Podcast Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1227
-msgid "Auto-Download New"
+#: ../../lib/frontends/widgets/tablist.py:1026
+#: ../../lib/frontends/widgets/menus.py:256
+msgid "Rename"
+msgstr "పేరుమార్చు"
+
+#: ../../lib/frontends/widgets/tablist.py:1028
+msgid "Revert Podcast Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1228
-msgid "Auto-Download Off"
+#: ../../lib/frontends/widgets/tablist.py:1030
+#: ../../lib/frontends/widgets/devicecontroller.py:597
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1221
+msgid "Settings"
+msgstr "అమరికలు"
+
+#: ../../lib/frontends/widgets/tablist.py:1037
+msgid "Update Podcasts Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1236
-msgid "Remove podcast"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1586
-msgid "Importing audio details and artwork: {0} of {1}"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1589
-msgid "Importing video details and creating thumbnails: {0} of {1}"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1592
-msgid "Importing file details: {0} of {1}"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1746
-msgid "Remaining"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1748
-msgid "Upload"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1749
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1750
-msgid "Total"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1794
-msgid "Connected Peers"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1795
-msgid "Seeders"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1796
-msgid "Leechers"
-msgstr "జలగలు"
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1797
-msgid "Share Ratio"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1975
-msgid "View License"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1992
-msgid "Select an item to view more of its details"
-msgstr ""
-
-#: ../../lib/frontends/widgets/browser.py:133
-msgid "Open in browser"
-msgstr "విహారిణిలో తెరువు"
-
-#: ../../lib/frontends/widgets/browser.py:140
-msgid "Download this video"
-msgstr "ఈ వీడియోను దింపు"
-
-#: ../../lib/frontends/widgets/removefeeds.py:58
-msgid "Are you sure you want to remove this podcast:"
-msgid_plural "Are you sure you want to remove these podcasts:"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/frontends/widgets/removefeeds.py:87
-msgid "Keep items that have been downloaded in my library."
-msgstr "నా లైబ్రరీఓ లోకి దించుకున్న ఐటములను ఉంచెయ్యి"
-
-#: ../../lib/frontends/widgets/removefeeds.py:93
-#, python-format
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the %(appname)s preference panel."
-msgstr ""
-"చూసేసిన ఫోల్డర్లను సైడుబారు నుండి తీసేస్తాం, కానీ వాటిలోని అంశాలు మాత్రం మీ "
-"లైబ్రరీలో కనిపిస్తూనే ఉంటాయి. అసలు చూసేసిన ఫోల్డర్లను పూర్తిగా చూడకుండా "
-"ఉండాలంటే %(appname)s అభిరుచుల పానెలుకు వెళ్ళి చేసుకోవచ్చు."
-
-#: ../../lib/frontends/widgets/removefeeds.py:105
-msgid ""
-"Are you sure you want to remove this podcast?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these podcasts?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-msgstr[1] ""
+#: ../../lib/frontends/widgets/tablist.py:1080
+#: ../../lib/frontends/widgets/application.py:843
+msgid "Rename Playlist Folder"
+msgstr "ప్లేలిస్టు ఫోల్డరు పేరుమార్చు"
 
 #: ../../lib/frontends/widgets/prefpanel.py:443
 #, python-format
@@ -2291,6 +1752,16 @@ msgstr "దింపుకోళ్ళు జరుగుతూండగా న�
 #: ../../lib/frontends/widgets/prefpanel.py:462
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:470
+#: ../../lib/frontends/widgets/firsttimedialog.py:167
+msgid "System default"
+msgstr "సిస్టమ్ డిఫాల్టు"
+
+#: ../../lib/frontends/widgets/prefpanel.py:477
+#: ../../lib/frontends/widgets/firsttimedialog.py:194
+msgid "Language:"
+msgstr "భాష:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:481
 msgid "(Changing the language requires you to restart Miro.)"
@@ -2327,11 +1798,6 @@ msgstr "కొత్త"
 #: ../../lib/frontends/widgets/prefpanel.py:513
 msgid "All"
 msgstr "అన్నీ"
-
-#: ../../lib/frontends/widgets/prefpanel.py:514
-#: ../../lib/frontends/widgets/tabcontroller.py:122
-msgid "Off"
-msgstr "ఆపు"
 
 #: ../../lib/frontends/widgets/prefpanel.py:520
 msgid "0"
@@ -2430,6 +1896,11 @@ msgstr "కోడీకరించని కనెక్షన్లను ప�
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "ఈ నిష్పత్తికి చేరగానే టోరెంటు ఎక్కింపులను మొదలుపెట్టు:"
 
+#: ../../lib/frontends/widgets/prefpanel.py:702
+#: ../../lib/frontends/widgets/firsttimedialog.py:297
+msgid "Change"
+msgstr "మార్చు"
+
 #: ../../lib/frontends/widgets/prefpanel.py:708
 msgid "Choose Movies Directory"
 msgstr "మూవీల డైరెక్టరీని ఎంచుకోండి"
@@ -2465,9 +1936,10 @@ msgstr "ఫోల్డరు"
 msgid "visible"
 msgstr "గోచరం"
 
-#: ../../lib/frontends/widgets/prefpanel.py:767 ../../lib/dialogs.py:118
-msgid "Add"
-msgstr "చేర్చు"
+#: ../../lib/frontends/widgets/prefpanel.py:811
+#: ../../lib/frontends/widgets/newwatchedfolder.py:48
+msgid "Add Watched Folder"
+msgstr "చూసిన ఫోల్డరును చేర్చు"
 
 #: ../../lib/frontends/widgets/prefpanel.py:830
 msgid "Store downloads in this folder:"
@@ -2522,11 +1994,6 @@ msgstr "డిఫాల్టుగా వీడియో, ఆడియో ఐ�
 msgid "Share my media library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:899
-#: ../../lib/frontends/widgets/tabcontroller.py:256
-msgid "Warn on quit when others are connected to my media library."
-msgstr ""
-
 #: ../../lib/frontends/widgets/prefpanel.py:902
 msgid "Share my music library."
 msgstr ""
@@ -2542,6 +2009,14 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:939
 msgid ""
 "Bonjour is required for sharing. Click on 'Install Bonjour' to install."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:945
+#: ../../linux/plat/frontends/widgets/bonjour.py:45
+#: ../../windows/plat/frontends/widgets/bonjour.py:46
+#: ../../windows/plat/frontends/widgets/bonjour.py:73
+#: ../../osx/plat/frontends/widgets/bonjour.py:38
+msgid "Install Bonjour"
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:960
@@ -2691,6 +2166,153 @@ msgstr "అంతరీకరణాలు"
 msgid "Extensions"
 msgstr ""
 
+#: ../../lib/frontends/widgets/prefpanel.py:1272
+#: ../../lib/frontends/widgets/menus.py:238
+msgid "Preferences"
+msgstr "అభిరుచులు"
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:63
+msgid "Add Files and Folders"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:132
+msgid "Choose files to add"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:137
+msgid "Search all my files for music and video"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:142
+msgid "Select a specific folder for search"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:161
+msgid "Choose files to import"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:163
+msgid "Video Files"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:164
+msgid "Audio Files"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:183
+#: ../../lib/frontends/widgets/firsttimedialog.py:305
+msgid "Choose directory to search for media files"
+msgstr "మీడియా ఫైళ్ళను వెతకడం కోసం డైరెక్టరీ ఎంచుకోండి"
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:207
+msgid "Cancel Search"
+msgstr ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:293
+#, python-format
+msgid "Searched %(count)s file"
+msgid_plural "Searched %(count)s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/frontends/widgets/addfilesdialog.py:299
+#: ../../lib/frontends/widgets/firsttimedialog.py:455
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] "%(count)s మీడియా ఫైలు దొరికింది"
+msgstr[1] "%(count)s మీడియా ఫైళ్లు దొరికాయి"
+
+#: ../../lib/frontends/widgets/itemrenderer.py:98
+#, python-format
+msgid "Reveal in %(progname)s"
+msgstr "%(progname)s లో వెల్లడించు"
+
+#: ../../lib/frontends/widgets/itemrenderer.py:101
+msgid "display contents"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:103
+#, python-format
+msgid "Copy to %(appname)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:105
+msgid "Download Torrent"
+msgstr "టోరెంటును దించు"
+
+#: ../../lib/frontends/widgets/itemrenderer.py:108
+msgid "Queued for Auto-download"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:110
+msgid "Currently Playing"
+msgstr "ప్రస్తుతం ప్లే అవుతున్నవి"
+
+#: ../../lib/frontends/widgets/itemrenderer.py:112
+msgid "Saved"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:113
+msgid "Stop seeding"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:388
+msgid "PEERS"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:389
+msgid "SEEDS"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:390
+msgid "LEECH"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:391
+msgid "SHARE"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:450
+msgid "DRM locked"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1348
+#, python-format
+msgid "Conversion to %(format)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1351
+#, python-format
+msgid "Conversion to %(format)s failed: %(error)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1358
+#: ../../lib/frontends/widgets/itemrenderer.py:1365
+msgid "Clear"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1360
+msgid "Failed"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1361
+msgid "Troubleshoot"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1362
+msgid "Open Log"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1367
+msgid "Completed"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemrenderer.py:1376
+#, python-format
+msgid "%(percent)i%% done"
+msgstr ""
+
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
@@ -2806,127 +2428,260 @@ msgstr "15 ప్లే చెయ్యని ఐటములు"
 msgid "Podcast Settings"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:56
-msgid "Sharing Disabled"
+#: ../../lib/frontends/widgets/newwatchedfolder.py:49
+msgid ""
+"Miro can watch a folder on your computer and show those media files in your "
+"library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:61
+#: ../../lib/frontends/widgets/newwatchedfolder.py:71
+msgid "Choose..."
+msgstr ""
+
+#: ../../lib/frontends/widgets/newwatchedfolder.py:76
+msgid "Directory:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/newwatchedfolder.py:83
+msgid "Show in my sidebar as a podcast"
+msgstr ""
+
+#: ../../lib/frontends/widgets/newwatchedfolder.py:108
+msgid "Choose Watched Folder Directory"
+msgstr ""
+
+#: ../../lib/frontends/widgets/newwatchedfolder.py:116
 msgid ""
-"You need to install the Bonjour libraries to be able to share files from "
-"Miro-to-Miro or to the Miro iPad app.\n"
+"That directory could not be found. Please check the path and try again."
+msgstr ""
+
+#: ../../lib/frontends/widgets/newwatchedfolder.py:118
+msgid ""
+"That directory could not be accessed. Please check the permissions and try "
+"again."
+msgstr ""
+
+#: ../../lib/frontends/widgets/addtoplaylistdialog.py:56
+msgid "Add a Playlist"
+msgstr "ఒక ప్లేలిస్టును  జోడించు"
+
+#: ../../lib/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add items to an existing playlist or a new one."
+msgstr "ఇప్పటికే ఉన్న ప్లేలిస్టుకు కాని, కొత్తదానికి గానీ ఐటములను చేర్చు."
+
+#: ../../lib/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr "ఉన్న ప్లేలిస్టు"
+
+#: ../../lib/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr "కొత్త ప్లేలిస్టు"
+
+#: ../../lib/frontends/widgets/crashdialog.py:53
+#, python-format
+msgid "Oops!  %(appname)s has encountered an internal error"
+msgstr ""
+
+#: ../../lib/frontends/widgets/crashdialog.py:68
+msgid "You can help us fix this problem by submitting an error report."
+msgstr ""
+
+#: ../../lib/frontends/widgets/crashdialog.py:75
+msgid ""
+"Note: This error report will not be posted publicly, but may include "
+"uniquely identifable information including file names, website URLs, podcast "
+"URLs, and disk paths."
+msgstr ""
+
+#: ../../lib/frontends/widgets/crashdialog.py:83
+msgid "See crash report"
+msgstr ""
+
+#: ../../lib/frontends/widgets/crashdialog.py:89
+msgid ""
+"Include entire program database including all filenames, websites, and "
+"podcasts with the error report."
+msgstr ""
+
+#: ../../lib/frontends/widgets/crashdialog.py:95
+msgid ""
+"What were you doing when you got this message?  (Helpful, but not required.)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/crashdialog.py:108
+msgid "Crash Report:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/linkhandler.py:55
+msgid "Subscribe to Podcast"
+msgstr ""
+
+#: ../../lib/frontends/widgets/linkhandler.py:57
+#, python-format
+msgid ""
+"This link appears to be a podcast.  Do you want to add it to your "
+"subscriptions?\n"
 "\n"
-"Once you install the Bonjour libraries, you will have to restart Miro."
+"%(url)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:69
-msgid "Click here to install"
+#: ../../lib/frontends/widgets/devicecontroller.py:139
+#: ../../lib/frontends/widgets/devicecontroller.py:191
+msgid "Sync Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:116
-msgid "On"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:148
-msgid "Get Help"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:229
+#: ../../lib/frontends/widgets/devicecontroller.py:158
 #, python-format
-msgid "%(shortappname)s Sharing"
+msgid "%(used)s used / %(total)s total - %(percent)i%% full"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:234
+#: ../../lib/frontends/widgets/devicecontroller.py:175
 #, python-format
+msgid "1 file selected to sync"
+msgid_plural "%(count)i files selected to sync"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:181
+msgid "Up to date"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:188
+msgid "In Progress"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:258
+#, python-format
+msgid "%(eta)s left"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:261
+#, python-format
+msgid "%(percent)i%% percent complete"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:277
+msgid "Sync These Podcasts"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:311
+msgid "Select none"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:314
+msgid "Select all"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:415
+msgid "Sync Podcasts"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:418
+msgid "Only sync unplayed items"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:447
+msgid "Sync These Playlists"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:448
+msgid "Sync Playlists"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:476
+#, python-format
+msgid "Device Default (%(audio)s)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:479
+#, python-format
+msgid "Device Default (%(video)s)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:492
+msgid "Name of Device"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:493
+msgid "Video Conversion"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:494
+msgid "Audio Conversion"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:495
+msgid "Store video in this directory"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:496
+msgid "Store audio in this directory"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:497
+msgid "Always show this device, even if 'show all devices' is turned off"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:594
+msgid "Main"
+msgstr ""
+
+#: ../../lib/frontends/widgets/devicecontroller.py:611
 msgid ""
-"%(shortappname)s can stream and download files to and from other "
-"%(shortappname)ss on your local network and to the Miro iPad app.  It's "
-"awesome!"
+"Drag individual video and audio files onto the device in the sidebar to copy "
+"them."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:245
-msgid "Disabled: Needs Bonjour"
+#: ../../lib/frontends/widgets/devicecontroller.py:616
+msgid "Use these options and the tabs above for automatic syncing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:271
-#, python-format
-msgid "My %(shortappname)s Share Name"
+#: ../../lib/frontends/widgets/devicecontroller.py:713
+msgid "Your device isn't telling us its exact model number."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:302
-msgid "Sync a Phone, Tablet, or Digital Camera"
+#: ../../lib/frontends/widgets/devicecontroller.py:718
+msgid "For optimal video conversion, select the device model."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:311
-#, python-format
+#: ../../lib/frontends/widgets/devicecontroller.py:734
 msgid ""
-"Connect the USB cable to sync your Android device with %(shortappname)s.  Be "
-"sure to set your device to 'USB Mass Storage' mode in your device settings.  "
-"Attach your digital camera, and convert your video files to be instantly web-"
-"ready."
+"If you don't know the model or it doesn't appear in the list, it's fine to "
+"choose the 'Generic' device option."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:325
-msgid "Show all attached devices and drives"
+#: ../../lib/frontends/widgets/devicecontroller.py:763
+msgid "This is my device"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:332
-#, python-format
-msgid ""
-"Use this if your phone doesn't appear in %(shortappname)s when you connect "
-"it to the computer, or if you want to sync with an external drive."
+#: ../../lib/frontends/widgets/devicecontroller.py:771
+msgid "This device is not yet mounted."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:354
-msgid "Miro on your iPad"
+#: ../../lib/frontends/widgets/newsearchfeed.py:59
+#: ../../lib/frontends/widgets/menus.py:248
+msgid "New Search Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:358
-#, python-format
-msgid ""
-"The gorgeous Miro iPad app lets you wirelessly stream music and videos from "
-"%(shortappname)s on your desktop to your iPad. You can also download songs "
-"and videos to your iPad and take them with you."
+#: ../../lib/frontends/widgets/newsearchfeed.py:60
+msgid "A search podcast contains items that match a search term."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:378
-msgid "Miro on Android"
+#: ../../lib/frontends/widgets/newsearchfeed.py:92
+msgid "Search for:"
+msgstr "దీని కోసం వెతుకు:"
+
+#: ../../lib/frontends/widgets/newsearchfeed.py:100
+msgid "In this:"
+msgstr "దీనిలో:"
+
+#: ../../lib/frontends/widgets/newsearchfeed.py:107
+msgid "Podcast:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tabcontroller.py:382
-msgid ""
-"We don't yet have a Miro app for Android, but you can stream to your device "
-"using other DAAP apps."
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:447
-#, python-format
-msgid ""
-"Sources are any websites that offer audio, video, or torrents for download "
-"that you would like to use within %(shortappname)s."
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:459
-msgid "URL"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:510
-#: ../../lib/frontends/widgets/itemedit.py:480
-#: ../../lib/frontends/widgets/widgetconst.py:58
-msgid "Name"
-msgstr "పేరు"
-
-#: ../../lib/frontends/widgets/tabcontroller.py:519
-msgid "Add Playlist"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:561
-#, python-format
-msgid ""
-"Select the music and video stores you'd like to have appear in "
-"%(shortappname)s.  Note: some other store websites may work well with Miro "
-"if you add them as Sources, but these are Stores that we've integrated and "
-"tested."
-msgstr ""
+#: ../../lib/frontends/widgets/newsearchfeed.py:114
+msgid "Search engine:"
+msgstr "సెర్చింజను:"
 
 #: ../../lib/frontends/widgets/application.py:210
 msgid "Movies directory gone"
@@ -3090,115 +2845,110 @@ msgstr "OPML ఫైలు దిగుమతి - లోపం"
 msgid "Export OPML File"
 msgstr "OPML ఫైలు ఎగుమతి"
 
-#: ../../lib/frontends/widgets/application.py:805
+#: ../../lib/frontends/widgets/application.py:806
 msgid "Create Playlist Folder"
 msgstr "ప్లేలిస్టు ఫోల్డరు సృష్టించు"
 
-#: ../../lib/frontends/widgets/application.py:806
+#: ../../lib/frontends/widgets/application.py:807
 msgid "Enter a name for the new playlist folder"
 msgstr "కొత్త ప్లేలిస్టు ఫోల్డరుకు పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:827
-#: ../../lib/frontends/widgets/tablist.py:1005
-msgid "Rename Podcast Folder"
-msgstr ""
-
-#: ../../lib/frontends/widgets/application.py:828
+#: ../../lib/frontends/widgets/application.py:829
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:833
+#: ../../lib/frontends/widgets/menus.py:259
+msgid "Rename Podcast"
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:834
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:838
+#: ../../lib/frontends/widgets/application.py:839
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "%(name)s ప్లేలిస్టుకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:842
-#: ../../lib/frontends/widgets/tablist.py:1068
-msgid "Rename Playlist Folder"
-msgstr "ప్లేలిస్టు ఫోల్డరు పేరుమార్చు"
-
-#: ../../lib/frontends/widgets/application.py:843
+#: ../../lib/frontends/widgets/application.py:844
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "%(name)s ప్లేలిస్టు ఫోల్డరుకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:847
+#: ../../lib/frontends/widgets/application.py:848
 #, python-format
 msgid "Enter a new name for the source %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:866
+#: ../../lib/frontends/widgets/application.py:867
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "ప్లేలిస్టును తీసెయ్యి"
 msgstr[1] "ప్లేలిస్టులను తీసెయ్యి"
 
-#: ../../lib/frontends/widgets/application.py:868
+#: ../../lib/frontends/widgets/application.py:869
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "ఈ ప్లేలిస్టును తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 msgstr[1] "ఈ %(count)s ప్లేలిస్టులనూ తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 
-#: ../../lib/frontends/widgets/application.py:883
+#: ../../lib/frontends/widgets/application.py:884
 msgid "Remove source"
 msgid_plural "Remove sources"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:885
+#: ../../lib/frontends/widgets/application.py:886
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:909
+#: ../../lib/frontends/widgets/application.py:910
 #, python-format
 msgid "Import Music from %(media_player)s?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:910
+#: ../../lib/frontends/widgets/application.py:911
 #, python-format
 msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:952
-#: ../../lib/frontends/widgets/application.py:976
+#: ../../lib/frontends/widgets/application.py:953
+#: ../../lib/frontends/widgets/application.py:977
 msgid "Select File to write Profile to"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1002
-#: ../../lib/frontends/widgets/application.py:1021
-#: ../../lib/frontends/widgets/application.py:1040
+#: ../../lib/frontends/widgets/application.py:1003
+#: ../../lib/frontends/widgets/application.py:1022
+#: ../../lib/frontends/widgets/application.py:1041
 msgid "Are you sure you want to quit?"
 msgstr "మీరు నిజంగా త్యజించదల్చుకున్నారా?"
 
-#: ../../lib/frontends/widgets/application.py:1011
+#: ../../lib/frontends/widgets/application.py:1012
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1023
+#: ../../lib/frontends/widgets/application.py:1024
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "%(count)d దింపుకోలు జరుగుతూ ఉన్నది. అయినా సరే వెళ్ళిపోతారా?"
 msgstr[1] "%(count)d దింపుకోళ్ళు జరుగుతూ ఉన్నాయి. అయినా సరే వెళ్ళిపోతారా?"
 
-#: ../../lib/frontends/widgets/application.py:1028
+#: ../../lib/frontends/widgets/application.py:1029
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "దింపుకోళ్ళు జరుగుతూ ఉండగా నేను వెళ్ళిపోవాలని ప్రయత్నిస్తే హెచ్చరించు"
 
-#: ../../lib/frontends/widgets/application.py:1042
+#: ../../lib/frontends/widgets/application.py:1043
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -3206,15 +2956,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:1047
+#: ../../lib/frontends/widgets/application.py:1048
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1300
+#: ../../lib/frontends/widgets/application.py:1301
 msgid "Connect failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1302
+#: ../../lib/frontends/widgets/application.py:1303
 #, python-format
 msgid ""
 "Connection to share %(name)s failed.\n"
@@ -3222,11 +2972,11 @@ msgid ""
 "The share is either unreachable or incompatible with Miro sharing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1310
+#: ../../lib/frontends/widgets/application.py:1311
 msgid "Eject failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1311
+#: ../../lib/frontends/widgets/application.py:1312
 #, python-format
 msgid ""
 "Ejecting device '%(name)s' failed.\n"
@@ -3234,223 +2984,562 @@ msgid ""
 "The device is in use."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1321
+#: ../../lib/frontends/widgets/application.py:1322
 msgid "Upgrading database"
 msgstr "డేటాబేసును ఉన్నతీకరిస్తున్నాం"
 
-#: ../../lib/frontends/widgets/application.py:1552
+#: ../../lib/frontends/widgets/application.py:1553
 msgid "Message"
 msgstr "సందేశం"
 
-#: ../../lib/frontends/widgets/linkhandler.py:55
-msgid "Subscribe to Podcast"
+#: ../../lib/frontends/widgets/guidecontroller.py:173
+msgid "Recently Watched"
 msgstr ""
 
-#: ../../lib/frontends/widgets/linkhandler.py:57
+#: ../../lib/frontends/widgets/guidecontroller.py:175
+msgid "Recently Listened To"
+msgstr ""
+
+#: ../../lib/frontends/widgets/guidecontroller.py:177
+msgid "Recent Downloads"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:74
+#, python-format
+msgid "%(appname)s First Time Setup"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:152
+msgid "Choose Language"
+msgstr "భాషను ఎంచుకోండి"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:155
 #, python-format
 msgid ""
-"This link appears to be a podcast.  Do you want to add it to your "
-"subscriptions?\n"
+"Welcome to the %(name)s first time setup!\n"
 "\n"
-"%(url)s"
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
+"\n"
+"What language would you like Miro to be in?"
 msgstr ""
+"%(name)s తొలి సెటప్ కు స్వాగతం!\n"
+"\n"
+"రాబోయే తెరల్లో %(name)s చక్కగా పనిచేసేలా ఎలా సెటప్ చేసుకోవాలో వివరిస్తాయి.\n"
+"\n"
+"Miro మీకు ఏ భాషలో కావాలి?"
 
-#: ../../lib/frontends/widgets/tablist.py:905
-#: ../../lib/frontends/widgets/tablist.py:931
-#: ../../lib/frontends/widgets/tablist.py:1019
-#: ../../lib/frontends/widgets/itemcontextmenu.py:240
-msgid "Copy URL to clipboard"
-msgstr "URL క్లిప్‌బోర్డులోకి కాపీ చెయ్యి"
+#: ../../lib/frontends/widgets/firsttimedialog.py:190
+msgid "Update"
+msgstr "తాజాకరించు"
 
-#: ../../lib/frontends/widgets/tablist.py:1003
-msgid "Update Podcasts In Folder"
-msgstr ""
+#: ../../lib/frontends/widgets/firsttimedialog.py:202
+#: ../../lib/frontends/widgets/firsttimedialog.py:246
+#: ../../lib/frontends/widgets/firsttimedialog.py:338
+#: ../../lib/frontends/widgets/firsttimedialog.py:420
+msgid "Next >"
+msgstr "తదుపరి >"
 
-#: ../../lib/frontends/widgets/tablist.py:1011
-msgid "Update Podcast Now"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tablist.py:1016
-msgid "Revert Podcast Name"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tablist.py:1025
-msgid "Update Podcasts Now"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:63
-msgid "Add Files and Folders"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:132
-msgid "Choose files to add"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:137
-msgid "Search all my files for music and video"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:142
-msgid "Select a specific folder for search"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:161
-msgid "Choose files to import"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:163
-msgid "Video Files"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:164
-msgid "Audio Files"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:207
-msgid "Cancel Search"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addfilesdialog.py:293
+#: ../../lib/frontends/widgets/firsttimedialog.py:216
 #, python-format
-msgid "Searched %(count)s file"
-msgid_plural "Searched %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgid "%(name)s Startup"
+msgstr "%(name)s ప్రారంభం"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:69
-msgid "Remove From the Library"
-msgstr "లైబ్రరీ నుండి తీసివెయ్యి"
+#: ../../lib/frontends/widgets/firsttimedialog.py:220
+#, python-format
+msgid ""
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
+msgstr ""
+"కంప్యూటరు మొదలయ్యేటపుడే %(name)s ను కూడా మొదలుపెట్టాలని మేము సూచిస్తున్నాం. "
+"అలా అయితే, జరుగుతూ ఉన్న దింపుకోళ్ళు పూర్తవడం, కొత్త మీడియా ఫైళ్ళను "
+"దించుకోవడం నేపథ్యంలోనే జరుగుతుంది. ఎప్పుడు చూడాలనుకుంటే అప్పుడు సిద్ధంగా "
+"ఉంటాయి."
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:71
-msgid "Delete from Drive"
+#: ../../lib/frontends/widgets/firsttimedialog.py:229
+#, python-format
+msgid "Would you like to run %(name)s on startup?"
+msgstr "%(name)s ను కంప్యూటరు ప్రారంభంలోనే మొదలుపెడతారా?"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:243
+#: ../../lib/frontends/widgets/firsttimedialog.py:318
+#: ../../lib/frontends/widgets/firsttimedialog.py:417
+#: ../../lib/frontends/widgets/firsttimedialog.py:523
+msgid "< Previous"
+msgstr "< గత"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:265
+msgid "Finding Files"
+msgstr "ఫైళ్ళను వెతకడం"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:268
+#, python-format
+msgid ""
+"%(name)s can find all the media files on your computer to help you organize "
+"your collection.\n"
+"\n"
+"Would you like %(name)s to look for media files on your computer?"
+msgstr ""
+"%(name)s మీ కంప్యూటరులోని మీడియా ఫైళ్ళన్నిటినీ వెతికిపట్టి, ఒక వరిఉసలో "
+"పెట్టుకోడానికి మీకు సహకరిస్తుంది.\n"
+"\n"
+"%(name)s ను మీ కంప్యూటరులోని మీడియా ఫైళ్ళ కోసం వెతకమంటారా?"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:289
+msgid "Restrict to all my personal files."
+msgstr "నా వ్యక్తిగత ఫైళ్ళకు మాత్రమే పరిమితం చెయ్యి"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:290
+msgid "Search custom folders:"
+msgstr "కస్టమ్ ఫోల్డర్లలో వెతుకు:"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:336
+#: ../../lib/frontends/widgets/firsttimedialog.py:526
+msgid "Finish"
+msgstr "ముగించు"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:400
+msgid "Searching for media files"
+msgstr "మీడియా ఫైళ్ళ కోసం వెతుకుతున్నాం"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:450
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] "%(count)s ఫైలును పరిశీలించాం"
+msgstr[1] "%(count)s ఫైళ్ళను పరిశీలించాం"
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:490
+#, python-format
+msgid "Display %(player)s Library"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:107
-#: ../../lib/frontends/widgets/itemcontextmenu.py:165
-#: ../../lib/frontends/widgets/itemcontextmenu.py:211
-msgid "Edit Item Details"
+#: ../../lib/frontends/widgets/firsttimedialog.py:494
+#, python-format
+msgid ""
+"Would you like to display your %(player)s music and video in %(appname)s?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:120
+#: ../../lib/frontends/widgets/firsttimedialog.py:511
 #, python-format
-msgid "Convert to %(conversion)s"
+msgid ""
+"Note: Miro won't move or copy any files on your disk.  It will just add them "
+"to your %(appname)s library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:126
-#: ../../lib/frontends/widgets/itemcontextmenu.py:365
-msgid "Convert to..."
+#: ../../lib/frontends/widgets/itemlistwidgets.py:295
+#, python-format
+msgid "%(item)s at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:143
-#: ../../lib/frontends/widgets/itemcontextmenu.py:357
-msgid "Mark as Unplayed"
-msgstr "ప్లే చెయ్యనట్టుగా గుర్తించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:146
-#: ../../lib/frontends/widgets/itemcontextmenu.py:359
-msgid "Mark as Played"
-msgstr "ప్లే చేసినట్టుగా గుర్తించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:152
-msgid "Play Just This Item"
-msgstr "ఈ అంశమును మాత్రమే ఆడించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:170
-msgid "Stop Seeding"
-msgstr "సీడింగును ఆపు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:174
-msgid "Resume Seeding"
-msgstr "సీడింగును తిరిగి కొనసాగించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:185
-#: ../../lib/frontends/widgets/itemcontextmenu.py:206
-#: ../../lib/frontends/widgets/itemcontextmenu.py:386
-#: ../../lib/frontends/widgets/itemcontextmenu.py:398
-msgid "Cancel Download"
-msgstr "దిగుమతి రద్దుచెయ్యి"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:189
-#: ../../lib/frontends/widgets/itemcontextmenu.py:387
-msgid "Pause Download"
-msgstr "దిగుమతిని విరమించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:193
-#: ../../lib/frontends/widgets/itemcontextmenu.py:397
-msgid "Resume Download"
-msgstr "దింపుకోలును తిరిగి కొనసాగించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:219
+#: ../../lib/frontends/widgets/itemlistwidgets.py:298
 #, python-format
-msgid "Show File in %(progname)s"
+msgid "%(item)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:222
-msgid "File on Disk"
-msgstr "డిస్కులో ఫైలు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:244
-msgid "View Web Page"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:302
+msgid "Resume"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:339
-#, python-format
-msgid "%(count)d Device Item"
-msgid_plural "%(count)d Device Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:345
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d దిగుమతయిన అంశము"
-msgstr[1] "%(count)d దిగుమతయిన అంశములు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:353
-msgid "Add to Playlist"
-msgstr "ప్లేలిస్టుకు చేర్చు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:371
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d అందుబాటులోవున్న అంశం"
-msgstr[1] "%(count)d అందుబాటులోవున్న అంశాలు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:381
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d దిగుమతి కాబడుతున్న అంశము"
-msgstr[1] "%(count)d దిగుమతి కాబడుతున్న అంశములు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:392
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d నిలిపివేసిన అంశం"
-msgstr[1] "%(count)d నిలిపివేసిన అంశాలు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:401
-msgid "Restart Upload"
-msgstr "ఎగుమతి ని మళ్లీ ప్రారంభించు"
-
-#: ../../lib/frontends/widgets/itemcontextmenu.py:404
-msgid "Edit Items"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:504
+msgid "Back to podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:433
-msgid "Remove From Playlist"
-msgstr "ప్లేలిస్టు నుంచి తొలగించు"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:524
+msgid "Stop All Conversions"
+msgstr "అంతరీకరణాలన్నిటినీ ఆపు"
 
-#: ../../lib/frontends/widgets/playback.py:674
-msgid "Open Subtitles File..."
-msgstr "ఉపశీర్షికల ఫైలు తెరువు.."
+#: ../../lib/frontends/widgets/itemlistwidgets.py:534
+msgid "Clear Finished Conversions"
+msgstr ""
 
-#: ../../lib/frontends/widgets/playback.py:675
-msgid "Subtitle files"
-msgstr "ఉపశీర్షిక దస్త్రాలు"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:592
+msgid "Save as Podcast"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:614
+msgid "Audio"
+msgstr "ఆడియో"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:636
+msgid "Downloaded"
+msgstr "దిగుమతయ్యింది"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:651
+msgid "View|All"
+msgstr "చూపించు|అన్నీ"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:661
+msgid "Save as playlist"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:676
+msgid "Movies"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:678
+msgid "Shows"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:680
+msgid "Clips"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1040
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1125
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1128
+#, python-format
+msgid "%(rate)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1105
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
+msgstr ""
+"దింపుకోళ్ళ జాగా పరిమితి కంటే %(available)s తక్కువ ఉంది (డిస్కులో %(amount)s "
+"ఖాళీ ఉంది)"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1112
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr ""
+"దింపుకోళ్ళ కోసం %(available)s జాగా ఉంది (డిస్కులో %(amount)s ఖాళీ ఉంది)"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1118
+#, python-format
+msgid "%(amount)s free on disk"
+msgstr "(డిస్కులో %(amount)s ఖాళీ ఉంది)"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1167
+msgid "Pause All"
+msgstr "అన్నింటినీ నిలుపు"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1173
+msgid "Resume All"
+msgstr "అన్నింటినీ కొనసాగించు"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1179
+msgid "Cancel All"
+msgstr "అన్నింటినీ రద్దుచేయి"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1185
+msgid "Download Settings"
+msgstr "దిగుమతి అమరికలు"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1226
+msgid "Auto-Download All"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1227
+msgid "Auto-Download New"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1228
+msgid "Auto-Download Off"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1236
+msgid "Remove podcast"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1586
+msgid "Importing audio details and artwork: {0} of {1}"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1589
+msgid "Importing video details and creating thumbnails: {0} of {1}"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1592
+msgid "Importing file details: {0} of {1}"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1746
+msgid "Remaining"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1748
+msgid "Upload"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1749
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1750
+msgid "Total"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1794
+msgid "Connected Peers"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1795
+msgid "Seeders"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1796
+msgid "Leechers"
+msgstr "జలగలు"
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1797
+msgid "Share Ratio"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1981
+msgid "View License"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1998
+msgid "Select an item to view more of its details"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:215
+msgid "_File"
+msgstr "ఫైలు (_F)"
+
+#: ../../lib/frontends/widgets/menus.py:216
+msgid "_Open"
+msgstr "తెరువు"
+
+#: ../../lib/frontends/widgets/menus.py:218
+msgid "Add files or folders..."
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:220
+msgid "Download Item"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:222
+msgid "Check Version"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:224
+msgid "Remove Item"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:226
+msgid "Remove Items"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:227
+msgid "Edit _Item"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:229
+msgid "Edit _Items"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:230
+msgid "_Save Item As"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:233
+msgid "_Save Items As"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:234
+msgid "Copy Item _URL"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:239
+msgid "_Quit"
+msgstr "నిష్క్రమించు (_Q)"
+
+#: ../../lib/frontends/widgets/menus.py:242
+msgid "_Sidebar"
+msgstr "_పక్క పట్టీ"
+
+#: ../../lib/frontends/widgets/menus.py:250
+msgid "_New Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:253
+msgid "New Watched Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:265
+msgid "Remove Podcasts"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:266
+msgid "Remove Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:267
+msgid "Remove Folders"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:270
+msgid "Update Podcast"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:273
+msgid "Update Podcasts"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:274
+msgid "Update All Podcasts and Library"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:279
+msgid "Import Podcasts (OPML)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:281
+msgid "Export Podcasts (OPML)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:284
+msgid "Share with a Friend"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:286
+msgid "Copy URL"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:290
+msgid "_Playlists"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:291
+msgid "New _Playlist"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:294
+msgid "New Playlist Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:300
+msgid "Remove Playlist"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:302
+msgid "Remove Playlists"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:303
+msgid "Remove Playlist Folders"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:304
+msgid "Remove Playlist Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:307
+msgid "P_layback"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:312
+msgid "Stop"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:315
+msgid "Next Item"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:318
+msgid "Previous Item"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:322
+msgid "Skip Forward"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:324
+msgid "Skip Back"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:327
+msgid "Volume Up"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:329
+msgid "Volume Down"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:332
+msgid "_Fullscreen"
+msgstr "_నిండుతెర"
+
+#: ../../lib/frontends/widgets/menus.py:335
+msgid "_Toggle Detached/Attached"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:342
+msgid "Select a Subtitles File..."
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:348
+msgid "Sorts"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:350
+msgid "_Convert"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:352
+msgid "_Help"
+msgstr "సహాయం (_H)"
+
+#: ../../lib/frontends/widgets/menus.py:353
+#, python-format
+msgid "About %(name)s"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:361
+msgid "Donate"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:364
+msgid "Help"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:368
+msgid "Report a Bug"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:370
+msgid "Translate"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:372
+msgid "Planet Miro"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:375
+msgid "Dev"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:376
+msgid "Profile Message"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:377
+msgid "Profile Redraw"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:378
+msgid "Test Crash Reporter"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:379
+msgid "Test Soft Crash Reporter"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:418
+msgid "_Encoding"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:421
+msgid "Default (UTF-8)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/rundialog.py:83
+msgid "Username:"
+msgstr "సభ్యనామం:"
+
+#: ../../lib/frontends/widgets/rundialog.py:87
+msgid "Password:"
+msgstr "సంకేతపదం:"
 
 #: ../../lib/frontends/widgets/itemedit.py:223
 #: ../../lib/frontends/widgets/itemedit.py:281
@@ -3460,11 +3549,6 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemedit.py:298
 msgid "None"
 msgstr "ఏదీకాదు"
-
-#: ../../lib/frontends/widgets/itemedit.py:299
-#: ../../lib/frontends/widgets/widgetconst.py:64
-msgid "Rating"
-msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:306
 msgid "Choose a thumbnail file"
@@ -3482,33 +3566,8 @@ msgstr ""
 msgid "Choose location for file"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:481
-#: ../../lib/frontends/widgets/widgetconst.py:59
-msgid "Artist"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemedit.py:482
-#: ../../lib/frontends/widgets/widgetconst.py:60
-msgid "Album"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemedit.py:483
-#: ../../lib/frontends/widgets/widgetconst.py:63
-msgid "Genre"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemedit.py:485
-#: ../../lib/frontends/widgets/widgetconst.py:61
-msgid "Track"
-msgstr ""
-
 #: ../../lib/frontends/widgets/itemedit.py:486
 msgid "/"
-msgstr ""
-
-#: ../../lib/frontends/widgets/itemedit.py:487
-#: ../../lib/frontends/widgets/widgetconst.py:62
-msgid "Year"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:489
@@ -3518,11 +3577,6 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemedit.py:500
 msgid "Type"
 msgstr ""
-
-#: ../../lib/frontends/widgets/itemedit.py:505
-#: ../../lib/frontends/widgets/widgetconst.py:68
-msgid "Size"
-msgstr "పరిమాణం"
 
 #: ../../lib/frontends/widgets/itemedit.py:507
 msgid "Art"
@@ -3544,9 +3598,16 @@ msgstr ""
 msgid "Episode Number"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:540
-#: ../../lib/frontends/widgets/widgetconst.py:79
-msgid "Video Kind"
+#: ../../lib/frontends/widgets/itemedit.py:543 ../../lib/messages.py:1264
+msgid "Movie"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemedit.py:545 ../../lib/messages.py:1268
+msgid "Clip"
+msgstr ""
+
+#: ../../lib/frontends/widgets/itemedit.py:546 ../../lib/messages.py:1270
+msgid "Podcast"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:667
@@ -3566,85 +3627,20 @@ msgid ""
 "field you'd like to change."
 msgstr ""
 
-#: ../../lib/frontends/widgets/widgetconst.py:57
-msgid "State"
+#: ../../lib/messages.py:1261 ../../lib/sharing.py:242
+msgid "Locked"
 msgstr ""
 
-#: ../../lib/frontends/widgets/widgetconst.py:65
-msgid "Date"
-msgstr "తేదీ"
-
-#: ../../lib/frontends/widgets/widgetconst.py:66
-msgid "Time"
-msgstr "సమయం"
-
-#: ../../lib/frontends/widgets/widgetconst.py:67
-msgid "Status"
-msgstr "స్థితి"
-
-#: ../../lib/frontends/widgets/widgetconst.py:69
-msgid "Source"
+#: ../../lib/messages.py:1289
+#, python-format
+msgid ""
+"S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
+"|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
 
-#: ../../lib/frontends/widgets/widgetconst.py:70
-msgid "ETA"
-msgstr "ETA"
-
-#: ../../lib/frontends/widgets/widgetconst.py:71
-msgid "Torrent details"
-msgstr ""
-
-#: ../../lib/frontends/widgets/widgetconst.py:72
-msgid "Speed"
-msgstr "వేగం"
-
-#: ../../lib/frontends/widgets/widgetconst.py:73
-msgid "Date Added"
-msgstr ""
-
-#: ../../lib/frontends/widgets/widgetconst.py:74
-msgid "Last Played"
-msgstr ""
-
-#: ../../lib/frontends/widgets/widgetconst.py:75
-msgid "Description"
-msgstr ""
-
-#: ../../lib/frontends/widgets/widgetconst.py:76
-msgid "DRM"
-msgstr ""
-
-#: ../../lib/frontends/widgets/widgetconst.py:77
-msgid "File Type"
-msgstr "ఫైలు రకం"
-
-#: ../../lib/frontends/widgets/widgetconst.py:80
-msgid "Order"
-msgstr ""
-
-#: ../../lib/frontends/widgets/addtoplaylistdialog.py:56
-msgid "Add a Playlist"
-msgstr "ఒక ప్లేలిస్టును  జోడించు"
-
-#: ../../lib/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add items to an existing playlist or a new one."
-msgstr "ఇప్పటికే ఉన్న ప్లేలిస్టుకు కాని, కొత్తదానికి గానీ ఐటములను చేర్చు."
-
-#: ../../lib/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr "ఉన్న ప్లేలిస్టు"
-
-#: ../../lib/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr "కొత్త ప్లేలిస్టు"
-
-#: ../../lib/frontends/widgets/rundialog.py:83
-msgid "Username:"
-msgstr "సభ్యనామం:"
-
-#: ../../lib/frontends/widgets/rundialog.py:87
-msgid "Password:"
-msgstr "సంకేతపదం:"
+#: ../../lib/messages.py:1343 ../../lib/item.py:1267
+msgid "queued for download"
+msgstr "దింపుకోలు క్యూలో ఉంది"
 
 #: ../../lib/messagehandler.py:1575
 msgid "Subscribed to new podcast:"
@@ -3658,580 +3654,21 @@ msgstr ""
 msgid "Migrating Files"
 msgstr "ఫైళ్ళను వలస పంపుతున్నాం"
 
-#: ../../lib/theme.py:181
-msgid "Example Playlist"
-msgstr "నమూనా ప్లేలిస్టు"
-
-#: ../../lib/opml.py:219
-msgid "OPML Import failed"
-msgstr "OPML దిగుమతి విఫలమైంది"
-
-#: ../../lib/opml.py:221
-msgid ""
-"The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr ""
-"ఎంచుకున్న OPML ఫైలు సరైనదిగా అగుపించడం లేదు. దిగుమతిని మధ్యలో ఆపేసాం."
-
-#: ../../lib/opml.py:229
-msgid "OPML Import summary"
-msgstr "OPML దిగుమతి సారాంశం"
-
-#: ../../lib/opml.py:230
-#, python-format
-msgid "Successfully imported %(count)d podcast."
-msgid_plural "Successfully imported %(count)d podcasts."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/opml.py:236
-#, python-format
-msgid "Skipped %(count)d podcast already present."
-msgid_plural "Skipped %(count)d podcasts already present."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/playlist.py:204
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "ప్లేలిస్టు %s కు కొత్త పేరు ఇవ్వండి"
-
 #: ../../lib/searchengines.py:179
 msgid "Search All"
 msgstr "అన్నీ వెతకండి"
 
-#: ../../lib/dl_daemon/download.py:778 ../../lib/httpclient.py:185
-#, python-format
-msgid "Could not write to %(filename)s"
-msgstr "%(filename)s లో రాయలేకపోయాం"
-
-#: ../../lib/dl_daemon/download.py:786 ../../lib/dl_daemon/download.py:1035
-msgid "Not enough disk space"
-msgstr "చాలినంత డిస్కు జాగా లేదు"
-
-#: ../../lib/dl_daemon/download.py:787 ../../lib/dl_daemon/download.py:1036
-#, python-format
-msgid "%(amount)s MB required to store this video"
-msgstr "ఈ వీడియోను దాచాలంటే %(amount)s MB కావాలి"
-
-#: ../../lib/dl_daemon/download.py:827
-msgid "no content"
-msgstr ""
-
-#: ../../lib/dl_daemon/download.py:1080
-msgid "BitTorrent failure"
-msgstr "BitTorrent వైఫల్యం"
-
-#: ../../lib/dl_daemon/download.py:1081
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent మొదలవడం విఫలమైమ్ది"
-
-#: ../../lib/dl_daemon/download.py:1207
-msgid "waiting to check existing files"
-msgstr ""
-
-#: ../../lib/dl_daemon/download.py:1209
-msgid "checking existing files"
-msgstr ""
-
-#: ../../lib/dl_daemon/download.py:1211
-msgid "allocating disk space"
-msgstr ""
-
-#: ../../lib/dl_daemon/download.py:1450
-msgid "Corrupt Torrent"
-msgstr "చెడిపోయిన టోరెంటు"
-
-#: ../../lib/dl_daemon/download.py:1451
-#, python-format
-msgid "The torrent file at %(url)s was not valid"
-msgstr "%(url)s వద్ద ఉన్న టోరెంటు ఫైలు సరైనది కాదు"
-
-#: ../../lib/dl_daemon/download.py:1495
-msgid "Torrent file deleted"
-msgstr "టోరెంటు ఫైలు తొలగించబడింది"
-
-#: ../../lib/dl_daemon/download.py:1496
-#, python-format
-msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr "ఈ ఐటము యొక్క టోరెంటు ఫైలు %(appname)s కు బయట తొలగించబడింది."
-
-#: ../../lib/dbupgradeprogress.py:62
-msgid "Upgrading Old Database"
-msgstr "పాత డేటాబేసును ఉన్నతీకరిస్తున్నాం"
-
-#: ../../lib/dbupgradeprogress.py:68
-msgid "Converting Old Database"
-msgstr "పాత డేటాబేసును అంతరీకరిస్తున్నాం"
-
-#: ../../lib/dbupgradeprogress.py:80
-msgid "Upgrading Database"
-msgstr "డేటాబేసును ఉన్నతీకరిస్తున్నాం"
-
-#: ../../lib/dbupgradeprogress.py:87
-msgid "Preparing Items"
-msgstr ""
-
-#: ../../lib/displaytext.py:62
-#, python-format
-msgid "%(size)s GB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:65
-#, python-format
-msgid "%(size)s MB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:68
-#, python-format
-msgid "%(size)s kB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:71
-#, python-format
-msgid "%(size)s B/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:95
-#, python-format
-msgid "%(num)d day"
-msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/displaytext.py:100
-#, python-format
-msgid "%(num)d hr"
-msgid_plural "%(num)d hrs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/displaytext.py:105
-#, python-format
-msgid "%(num)d min"
-msgid_plural "%(num)d mins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../lib/displaytext.py:109
-#, python-format
-msgid "%(num)d sec"
-msgid_plural "%(num)d secs"
-msgstr[0] "%(num)d క్షణం"
-msgstr[1] "%(num)d క్షణాలు"
-
-#: ../../lib/displaytext.py:129
-#, python-format
-msgid "%(size)s GB"
-msgstr ""
-
-#: ../../lib/displaytext.py:132
-#, python-format
-msgid "%(size)s MB"
-msgstr ""
-
-#: ../../lib/displaytext.py:135
-#, python-format
-msgid "%(size)s KB"
-msgstr ""
-
-#: ../../lib/displaytext.py:137
-#, python-format
-msgid "%(size)s B"
-msgstr ""
-
-#: ../../lib/displaytext.py:142
-#, python-format
-msgid "Expires in %(count)d day"
-msgid_plural "Expires in %(count)d days"
-msgstr[0] "%(count)d రోజులో మురిగిపోతుంది"
-msgstr[1] "%(count)d రోజులో మురిగిపోతాయి"
-
-#: ../../lib/displaytext.py:148
-#, python-format
-msgid "Expires in %(count)d hour"
-msgid_plural "Expires in %(count)d hours"
-msgstr[0] "%(count)d గంటలో మురిగిపోతుంది"
-msgstr[1] "%(count)d గంటల్లో మురిగిపోతుంది"
-
-#: ../../lib/displaytext.py:154
-#, python-format
-msgid "Expires in %(count)d minute"
-msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "%(count)d నిమిషంలో మురిగిపోతుంది"
-msgstr[1] "%(count)d నిమిషాల్లో మురిగిపోతుంది"
-
-#: ../../lib/displaytext.py:162
-#, python-format
-msgid "Expires: %(count)d day"
-msgid_plural "Expires: %(count)d days"
-msgstr[0] "మురిగిపోతుంది: %(count)d రోజు"
-msgstr[1] "మురిగిపోతుంది: %(count)d రోజులు"
-
-#: ../../lib/displaytext.py:168
-#, python-format
-msgid "Expires: %(count)d hour"
-msgid_plural "Expires: %(count)d hours"
-msgstr[0] "మురిగిపోతుంది: %(count)d గంట"
-msgstr[1] "మురిగిపోతుంది: %(count)d గంటలు"
-
-#: ../../lib/displaytext.py:174
-#, python-format
-msgid "Expires: %(count)d minute"
-msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "మురిగిపోతుంది: %(count)d నిమిషం"
-msgstr[1] "మురిగిపోతుంది: %(count)d నిమిషాలు"
-
-#: ../../lib/displaytext.py:193
-#, python-format
-msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr "%(month)s %(dayofmonth)s, %(year)s"
-
-#: ../../lib/controller.py:173
-msgid "Sending Crash Report"
-msgstr "క్రాష్ నివేదికను పంపిస్తున్నాం"
-
-#: ../../lib/controller.py:194
-#, python-format
-msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
-
-#: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
-#: ../../lib/httpclient.py:171
-msgid "File not found"
-msgstr "దస్త్రము కనబడలేదు"
-
-#: ../../lib/downloader.py:336
-msgid "Flash URL Scraping Error"
-msgstr ""
-
-#: ../../lib/downloader.py:535
-msgid "starting up"
-msgstr "మొదలుపెడుతున్నాం"
-
-#: ../../lib/downloader.py:542
-#, python-format
-msgid "no connection - retrying in %(time)s"
-msgstr ""
-
-#: ../../lib/downloader.py:544
-msgid "no connection - retrying soon"
-msgstr ""
-
-#: ../../lib/startup.py:134
-msgid "Database Error"
-msgstr ""
-
-#: ../../lib/startup.py:135
-#, python-format
-msgid ""
-"We're sorry, %(appname)s was unable to start up due to a problem with the "
-"database:\n"
-"\n"
-"Error: %(error)s\n"
-"\n"
-"It's possible that your database file is corrupted and cannot be used.\n"
-"\n"
-"You can start fresh and your damaged database will be removed, but you will "
-"have to re-add your podcasts and media files.  If you want to do this, press "
-"the Start Fresh button and restart %(appname)s.\n"
-"\n"
-"To help us fix problems like this in the future, please file a bug report at "
-"%(url)s."
-msgstr ""
-
-#: ../../lib/startup.py:156
-msgid "Unknown Error"
-msgstr "తెలియని పొరపాటు"
-
-#: ../../lib/startup.py:157
-#, python-format
-msgid ""
-"An unknown error prevented %(appname)s from startup.  Please file a bug "
-"report at %(url)s."
-msgstr ""
-
-#: ../../lib/startup.py:267
-msgid "Database too new"
-msgstr "డేటాబేసు మరీ కొత్తది"
-
-#: ../../lib/startup.py:269
-#, python-format
-msgid ""
-"You have a database that was saved with a newer version of %(appname)s. You "
-"must download the latest version of %(appname)s and run that."
-msgstr ""
-"మీ డేటాబేసు %(appname)s యొక్క కొత్త కూర్పుతో భద్రపరచినది. దానితో పని "
-"చెయ్యాలంటే %(appname)s యొక్క సరికొత్త కూర్పును దించుకొని దాన్నే వాడాలి."
-
-#: ../../lib/startup.py:542
-msgid "Submitting Crash Report"
-msgstr "క్రాష్ నివేదికను సమర్పిస్తున్నాం"
-
-#: ../../lib/startup.py:544
-#, python-format
-msgid ""
-"%(appname)s will now submit a crash report to our crash database\n"
-"\n"
-"Do you want to include entire program database including all video and "
-"podcast metadata with crash report? This will help us diagnose the issue."
-msgstr ""
-
-#: ../../lib/dialogs.py:94
-msgid "OK"
-msgstr ""
-
-#: ../../lib/dialogs.py:95
-msgid "Apply"
-msgstr "ఆపాదించు"
-
-#: ../../lib/dialogs.py:98
-msgid "Done"
-msgstr "పూర్తయ్యింది"
-
-#: ../../lib/dialogs.py:102
-msgid "Continue"
-msgstr "కొనసాగించు"
-
-#: ../../lib/dialogs.py:103
-msgid "Ignore"
-msgstr "ఉపేక్షించు"
-
-#: ../../lib/dialogs.py:104
-msgid "Import Files"
-msgstr ""
-
-#: ../../lib/dialogs.py:105
-msgid "Submit Crash Report"
-msgstr "క్రాష్ నివేదికను పంపించండి"
-
-#: ../../lib/dialogs.py:106
-msgid "Migrate"
-msgstr "వలసపంపు"
-
-#: ../../lib/dialogs.py:107
-msgid "Don't Migrate"
-msgstr "వలసపంపవద్దు"
-
-#: ../../lib/dialogs.py:109
-msgid "Remove Entry"
-msgstr "పద్దును తొలగించు"
-
-#: ../../lib/dialogs.py:110
-msgid "Delete File"
-msgstr "ఫైలును తొలగించు"
-
-#: ../../lib/dialogs.py:111
-msgid "Delete Files"
-msgstr "ఫైళ్ళను తొలగించు"
-
-#: ../../lib/dialogs.py:112
-msgid "Keep Videos"
-msgstr "వీడియోలను ఉంచు"
-
-#: ../../lib/dialogs.py:113
-msgid "Delete Videos"
-msgstr "వీడియోలను తొలగించు"
-
-#: ../../lib/dialogs.py:114
-msgid "Create"
-msgstr "సృష్టించు"
-
-#: ../../lib/dialogs.py:115
-msgid "Create Podcast"
-msgstr ""
-
-#: ../../lib/dialogs.py:116
-msgid "Create Folder"
-msgstr "ఫోల్డరు సృష్టించు"
-
-#: ../../lib/dialogs.py:117
-msgid "Add Folder"
-msgstr ""
-
-#: ../../lib/dialogs.py:119
-msgid "Add Into New Folder"
-msgstr "కొత్త సంచీలో చేర్చు"
-
-#: ../../lib/dialogs.py:123
-msgid "Not Now"
-msgstr "ఇప్పుడు కాదు"
-
-#: ../../lib/dialogs.py:124
-msgid "Close to Tray"
-msgstr "మూసేసి ట్రేకు పంపించు"
-
-#: ../../lib/dialogs.py:125
-msgid "Launch Miro"
-msgstr "Miro ను మొదలుపెట్టు"
-
-#: ../../lib/dialogs.py:126
-msgid "Download Anyway"
-msgstr "ఏదేమైనా దించు"
-
-#: ../../lib/dialogs.py:127
-msgid "Open in External Browser"
-msgstr "బయటి బ్రౌజరులో తెరువు"
-
-#: ../../lib/dialogs.py:128
-msgid "Don't Install"
-msgstr "స్థాపించకు"
-
-#: ../../lib/dialogs.py:129
-msgid "Subscribe"
-msgstr "చందాచేరు"
-
-#: ../../lib/dialogs.py:130
-msgid "Stop Watching"
-msgstr "చూడటం ఆపు"
-
-#: ../../lib/dialogs.py:131
-msgid "Retry"
-msgstr "మళ్ళీ ప్రయత్నించు"
-
-#: ../../lib/dialogs.py:132
-msgid "Start Fresh"
-msgstr "తాజాగా మొదలుపెట్టు"
-
-#: ../../lib/dialogs.py:133
-msgid "Include Database"
-msgstr "డేటాబేసును కూడా కలుపు"
-
-#: ../../lib/dialogs.py:134
-msgid "Don't Include Database"
-msgstr "డేటాబేసును కలపవద్దు"
-
-#: ../../lib/dialogs.py:215
-#, python-format
-msgid ""
-"%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
-msgstr ""
-
-#: ../../lib/dialogs.py:218
-msgid "Login Required"
-msgstr ""
-
-#: ../../lib/httpclient.py:102
-msgid "HTTP error"
-msgstr "HTTP పొరపాటు"
-
-#: ../../lib/httpclient.py:106
-#, python-format
-msgid "%(host)s closed connection"
-msgstr "%(host)s కనెక్షన్ను మూసేసింది"
-
-#: ../../lib/httpclient.py:111
-#, python-format
-msgid "%(host)s gave us an empty response"
-msgstr ""
-
-#: ../../lib/httpclient.py:116
-#, python-format
-msgid "Host returned %(status)s"
-msgstr ""
-
-#: ../../lib/httpclient.py:118
-msgid "Please retry later"
-msgstr ""
-
-#: ../../lib/httpclient.py:122
-#, python-format
-msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
-
-#: ../../lib/httpclient.py:127
-#, python-format
-msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
-
-#: ../../lib/httpclient.py:133
-#, python-format
-msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
-
-#: ../../lib/httpclient.py:141
-msgid "Got 404 status code"
-msgstr "404 స్టేటస్ కోడు వచ్చింది"
-
-#: ../../lib/httpclient.py:143
-#, python-format
-msgid "Host returned bad status code: %(code)s"
-msgstr ""
-
-#: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
-msgid "Authorization failed"
-msgstr "అధీకరణ విఫలమైంది"
-
-#: ../../lib/httpclient.py:154
-msgid "Authorization canceled"
-msgstr ""
-
-#: ../../lib/httpclient.py:155
-msgid "Authorization canceled by user"
-msgstr ""
-
-#: ../../lib/httpclient.py:159
-msgid "Invalid URL"
-msgstr "తప్పుడు URL"
-
-#: ../../lib/httpclient.py:160
-#, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
-
-#: ../../lib/httpclient.py:165
-msgid "Unknown Host"
-msgstr ""
-
-#: ../../lib/httpclient.py:166
-#, python-format
-msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
-
-#: ../../lib/httpclient.py:172
-#, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr "\"%(path)s\" ఫైలు అసలు లేదు"
-
-#: ../../lib/httpclient.py:176
-msgid "Read error"
-msgstr "రీడ్ చేయడంలో పొరపాటు"
-
-#: ../../lib/httpclient.py:177
-#, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr "\"%(path)s\" వద్ద చదవడంలో లోపం దొర్లింది"
-
-#: ../../lib/httpclient.py:187
-msgid "Write error"
-msgstr ""
-
-#: ../../lib/httpclient.py:384
-msgid "Website"
-msgstr ""
-
-#: ../../lib/httpclient.py:389
-msgid "Proxy"
-msgstr ""
-
-#: ../../lib/util.py:455 ../../lib/util.py:457
-#, python-format
-msgid "%(size)sGB"
-msgstr "%(size)sగిబై"
-
-#: ../../lib/util.py:461 ../../lib/util.py:463
-#, python-format
-msgid "%(size)sMB"
-msgstr "%(size)sమెబై"
-
-#: ../../lib/util.py:467 ../../lib/util.py:469
-#, python-format
-msgid "%(size)sKB"
-msgstr "%(size)sకిబై"
-
-#: ../../lib/util.py:473 ../../lib/util.py:475
-#, python-format
-msgid "%(size)sB"
-msgstr "%(size)sబై"
+#: ../../lib/theme.py:181
+msgid "Example Playlist"
+msgstr "నమూనా ప్లేలిస్టు"
+
+#: ../../lib/item.py:1362
+msgid "no title"
+msgstr "శీర్షిక లేదు"
+
+#: ../../lib/item.py:1628
+msgid "starting up..."
+msgstr "మొదలవుతోంది..."
 
 #: ../../lib/storedatabase.py:250
 #, python-format
@@ -4350,32 +3787,34 @@ msgid ""
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
 
-#: ../../lib/conversions.py:224
+#: ../../lib/controller.py:173
+msgid "Sending Crash Report"
+msgstr "క్రాష్ నివేదికను పంపిస్తున్నాం"
+
+#: ../../lib/controller.py:194
 #, python-format
-msgid "%(name)s (%(mediatype)s)"
+msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
 
-#: ../../lib/conversions.py:510
-msgid "Reason unknown--check log"
-msgstr ""
-
-#: ../../lib/conversions.py:834
+#: ../../lib/util.py:455 ../../lib/util.py:457
 #, python-format
-msgid "%(program)s does not exist."
-msgstr ""
+msgid "%(size)sGB"
+msgstr "%(size)sగిబై"
 
-#: ../../lib/conversions.py:1086
+#: ../../lib/util.py:461 ../../lib/util.py:463
 #, python-format
-msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgid "%(size)sMB"
+msgstr "%(size)sమెబై"
 
-#: ../../lib/devices.py:173
-msgid "Your drive must be mounted."
-msgstr ""
+#: ../../lib/util.py:467 ../../lib/util.py:469
+#, python-format
+msgid "%(size)sKB"
+msgstr "%(size)sకిబై"
 
-#: ../../lib/devices.py:362
-msgid "USB Device"
-msgstr ""
+#: ../../lib/util.py:473 ../../lib/util.py:475
+#, python-format
+msgid "%(size)sB"
+msgstr "%(size)sబై"
 
 #: ../../lib/commandline.py:147
 msgid "Subscription error"
@@ -4421,24 +3860,10 @@ msgid ""
 "and you have permission to access this file."
 msgstr ""
 
-#: ../../resources/devices/android.py:9
-#, python-format
-msgid ""
-"Your phone must be in 'USB storage mode' in order for %(shortappname)s to "
-"sync files to it.\n"
-"To mount your phone, select 'Turn on USB storage' from the notifications."
-msgstr ""
-
-#: ../../resources/devices/android.py:40
 #: ../../resources/devices/generic_phone.py:25
+#: ../../resources/devices/android.py:40
 #, python-format
 msgid "Generic %(name)s Device"
-msgstr ""
-
-#: ../../resources/devices/android.py:119
-msgid ""
-"Your Nook Color must be connected to your computer and in USB Mode to sync "
-"files to it.\n"
 msgstr ""
 
 #: ../../resources/devices/generic_phone.py:33
@@ -4447,6 +3872,601 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
+
+#: ../../resources/devices/android.py:9
+#, python-format
+msgid ""
+"Your phone must be in 'USB storage mode' in order for %(shortappname)s to "
+"sync files to it.\n"
+"To mount your phone, select 'Turn on USB storage' from the notifications."
+msgstr ""
+
+#: ../../resources/devices/android.py:119
+msgid ""
+"Your Nook Color must be connected to your computer and in USB Mode to sync "
+"files to it.\n"
+msgstr ""
+
+#: ../../linux/extensions/miroappindicator/main.py:56
+msgid "Pause all downloads"
+msgstr ""
+
+#: ../../linux/extensions/miroappindicator/main.py:57
+msgid "Resume all downloads"
+msgstr ""
+
+#: ../../linux/extensions/miroappindicator/main.py:59
+msgid "Show Miro"
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:52
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:42
+msgid "Enable tray icon"
+msgstr "ట్రే ఐకన్ను సశక్తం చెయ్యి"
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:61
+msgid "Renderer options:"
+msgstr "రెండరర్ ఐచ్ఛికాలు:"
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:68
+#, python-format
+msgid "You must restart %(appname)s for renderer changes to take effect."
+msgstr ""
+"రెండరర్ మార్పులు అమల్లోకి రావాలంటే %(appname)s ను మూసేసి మళ్ళీ తెరవాలి."
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:83
+msgid "Video renderer:"
+msgstr "వీడియో రెండరర్"
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:96
+msgid "Binaries to use:"
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:102
+msgid "ffmpeg binary path:"
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:109
+msgid "ffmpeg2theora binary path:"
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/bonjour.py:47
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Bonjour.  "
+"Installing Bonjour will allow you share your media library with other "
+"%(appname)s users on your network, as well as stream media from other "
+"%(appname)s users on your network.\n"
+"\n"
+"%(appname)s has determined that your system is most likely missing the Avahi "
+"mDNSResponder compatibility library.  Please refer to your operating system "
+"documentation on how you can install this library."
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/bonjour.py:60
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Bonjour.  "
+"Installing Bonjour will allow you share your media library with other "
+"%(appname)s users on your network, as well as stream media from other "
+"%(appname)s users on your network.\n"
+"\n"
+"%(appname)s has determined that your system is most likely missing the Avahi "
+"mDNSResponder compatibility library.  Please refer to your operating system "
+"documentation on how you can install this library.\n"
+"\n"
+"Would you like %(appname)s to warn you on next startup?"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:513
+#, python-format
+msgid "Track %(tracknumber)d"
+msgstr "ట్రాకు %(tracknumber)d"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:523
+#, python-format
+msgid "Subtitle file %(tracknumber)d"
+msgstr "ఉపటైటిలు ఫైలు %(tracknumber)d"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:603
+#: ../../windows/plat/renderers/vlc.py:732
+#: ../../windows/plat/renderers/vlc.py:735
+#: ../../windows/plat/renderers/vlc.py:736
+msgid "Eastern European"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:604
+#: ../../linux/plat/renderers/gstreamerrenderer.py:605
+#: ../../linux/plat/renderers/gstreamerrenderer.py:606
+#: ../../windows/plat/renderers/vlc.py:733
+#: ../../windows/plat/renderers/vlc.py:734
+msgid "Baltic"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:607
+msgid "Croatian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:608
+#: ../../linux/plat/renderers/gstreamerrenderer.py:609
+#: ../../linux/plat/renderers/gstreamerrenderer.py:610
+#: ../../linux/plat/renderers/gstreamerrenderer.py:611
+#: ../../linux/plat/renderers/gstreamerrenderer.py:612
+#: ../../linux/plat/renderers/gstreamerrenderer.py:613
+msgid "Cyrillic"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:614
+msgid "Cyrillic/Russian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:615
+#: ../../linux/plat/renderers/gstreamerrenderer.py:616
+msgid "Cyrillic/Ukrainian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:618
+#: ../../linux/plat/renderers/gstreamerrenderer.py:619
+#: ../../linux/plat/renderers/gstreamerrenderer.py:620
+msgid "Central European"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:621
+#: ../../linux/plat/renderers/gstreamerrenderer.py:622
+msgid "Romanian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:624
+#: ../../windows/plat/renderers/vlc.py:742
+#: ../../windows/plat/renderers/vlc.py:744
+msgid "Western European"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:625
+#: ../../windows/plat/renderers/vlc.py:743
+msgid "Celtic"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:626
+#: ../../linux/plat/renderers/gstreamerrenderer.py:627
+#: ../../linux/plat/renderers/gstreamerrenderer.py:628
+#: ../../windows/plat/renderers/vlc.py:746
+#: ../../windows/plat/renderers/vlc.py:747
+msgid "Greek"
+msgstr "గ్రీక్"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:629
+msgid "Icelandic"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:630
+msgid "Nordic"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:631
+msgid "South European"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:632
+#: ../../linux/plat/renderers/gstreamerrenderer.py:633
+#: ../../linux/plat/renderers/gstreamerrenderer.py:634
+#: ../../linux/plat/renderers/gstreamerrenderer.py:635
+#: ../../linux/plat/renderers/gstreamerrenderer.py:636
+msgid "Western"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:638
+#: ../../windows/plat/renderers/vlc.py:750
+msgid "East Asian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:639
+#: ../../linux/plat/renderers/gstreamerrenderer.py:640
+#: ../../linux/plat/renderers/gstreamerrenderer.py:641
+#: ../../linux/plat/renderers/gstreamerrenderer.py:642
+msgid "Chinese Simplified"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:643
+#: ../../linux/plat/renderers/gstreamerrenderer.py:644
+#: ../../linux/plat/renderers/gstreamerrenderer.py:645
+msgid "Chinese Traditional"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:646
+#: ../../linux/plat/renderers/gstreamerrenderer.py:647
+#: ../../linux/plat/renderers/gstreamerrenderer.py:648
+#: ../../windows/plat/renderers/vlc.py:754
+#: ../../windows/plat/renderers/vlc.py:756
+msgid "Japanese"
+msgstr "జపనీస్"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:649
+#: ../../linux/plat/renderers/gstreamerrenderer.py:650
+#: ../../linux/plat/renderers/gstreamerrenderer.py:651
+#: ../../linux/plat/renderers/gstreamerrenderer.py:652
+#: ../../windows/plat/renderers/vlc.py:757
+#: ../../windows/plat/renderers/vlc.py:758
+msgid "Korean"
+msgstr "కొరియన్"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:654
+#: ../../windows/plat/renderers/vlc.py:764
+msgid "SE and SW Asian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:655
+msgid "Armenian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:656
+msgid "Georgian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:657
+msgid "Gujarati"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:658
+msgid "Gurmukhi"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:659
+msgid "Hindi"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:660
+#: ../../windows/plat/renderers/vlc.py:767
+msgid "Thai"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:661
+#: ../../linux/plat/renderers/gstreamerrenderer.py:662
+#: ../../linux/plat/renderers/gstreamerrenderer.py:663
+#: ../../linux/plat/renderers/gstreamerrenderer.py:664
+#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:766
+msgid "Turkish"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:665
+#: ../../linux/plat/renderers/gstreamerrenderer.py:666
+#: ../../linux/plat/renderers/gstreamerrenderer.py:667
+#: ../../windows/plat/renderers/vlc.py:768
+#: ../../windows/plat/renderers/vlc.py:769
+msgid "Vietnamese"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:669
+#: ../../windows/plat/renderers/vlc.py:772
+msgid "Middle Eastern"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:670
+#: ../../linux/plat/renderers/gstreamerrenderer.py:671
+#: ../../linux/plat/renderers/gstreamerrenderer.py:672
+#: ../../linux/plat/renderers/gstreamerrenderer.py:673
+#: ../../windows/plat/renderers/vlc.py:773
+#: ../../windows/plat/renderers/vlc.py:774
+msgid "Arabic"
+msgstr "అరబిక్"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:674
+#: ../../linux/plat/renderers/gstreamerrenderer.py:675
+#: ../../linux/plat/renderers/gstreamerrenderer.py:676
+#: ../../linux/plat/renderers/gstreamerrenderer.py:677
+#: ../../windows/plat/renderers/vlc.py:775
+#: ../../windows/plat/renderers/vlc.py:776
+msgid "Hebrew"
+msgstr "హిబ్రూ"
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:678
+msgid "Hebrew Visual"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:679
+msgid "Persian"
+msgstr ""
+
+#: ../../linux/plat/renderers/gstreamerrenderer.py:681
+#: ../../linux/plat/renderers/gstreamerrenderer.py:682
+#: ../../linux/plat/renderers/gstreamerrenderer.py:683
+#: ../../linux/plat/renderers/gstreamerrenderer.py:684
+#: ../../linux/plat/renderers/gstreamerrenderer.py:685
+#: ../../linux/plat/renderers/gstreamerrenderer.py:686
+#: ../../windows/plat/renderers/vlc.py:779
+msgid "Unicode"
+msgstr "యూనికోడ్"
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:46
+msgid "When I click the red close button:"
+msgstr "నేనా ఎర్రటి మూసెయ్యి బొత్తాన్ని నొక్కినపుడు:"
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:49
+msgid "Close to tray so that downloads can continue."
+msgstr "మూసి ట్రేలో చూపించు. దింపుకోళ్ళు మాత్రం కొనసాగాలి."
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:50
+#, python-format
+msgid "Quit %(appname)s completely."
+msgstr "%(appname)s ను పూర్తిగా మూసెయ్యి"
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:60
+msgid "System Default"
+msgstr "వ్యవస్థ అప్రమేయం"
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:66
+msgid "Subtitle font:"
+msgstr "ఉపశీర్షిక ఫాంటు:"
+
+#: ../../windows/plat/frontends/widgets/bonjour.py:48
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Bonjour, which "
+"is distributed as a part of Print Services.\n"
+"\n"
+"Installing Bonjour will allow you share your media library with other "
+"%(appname)s users on your network, as well as stream media from other "
+"%(appname)s users on your network.\n"
+"\n"
+"After installing Print Services, you will have to restart Miro.\n"
+"\n"
+"Would you like to do this now?"
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/bonjour.py:75
+msgid ""
+"Your browser will load the web-site where you can download and install "
+"Bonjour.\n"
+"\n"
+"When the installation is finished, simply restart Miro for the changes to "
+"take effect."
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/update.py:150
+msgid "Update Available"
+msgstr "నవీకరణలు లభ్యం"
+
+#: ../../windows/plat/frontends/widgets/update.py:154
+#, python-format
+msgid "A new version of %(appname)s is available for download."
+msgstr "%(appname)s యొక్క కొత్త కూర్పు దించుకోడానికి అందుబాటులో ఉంది."
+
+#: ../../windows/plat/frontends/widgets/update.py:158
+msgid "Do you want to download it now?"
+msgstr "మీరిప్పుడే దిగుమతి చేసుకోవాలనుకుంటున్నారా?"
+
+#: ../../windows/plat/frontends/widgets/flash.py:56
+msgid "Install Adobe Flash?"
+msgstr "Adobe Flash స్థాపించాలా?"
+
+#: ../../windows/plat/frontends/widgets/flash.py:58
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+"చక్కటి %(appname)s అనుభూతి కోసం, Adobe Flash ను స్థాపించుకొమ్మని మా సలహా. "
+"స్థాపించుకుంటారా?"
+
+#: ../../windows/plat/frontends/widgets/flash.py:71
+msgid "Install Adobe Flash"
+msgstr "Adobe Flash ను స్థాపించు"
+
+#: ../../windows/plat/frontends/widgets/flash.py:73
+#, python-format
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
+msgstr ""
+"Adobe Flash ను దించుకుని స్థాపించుకునే వెబ్‍సైటును మీ బ్రౌజరు లోడు "
+"చేస్తుంది.\n"
+"\n"
+"ఇప్పుడు మీరు %(appname)s నుండి నిష్క్రమించి Adobe Flash ను స్థాపించుకున్నాక, "
+"మళ్ళీ తెరవండి."
+
+#: ../../windows/plat/frontends/widgets/application.py:191
+msgid "Close to tray?"
+msgstr "మూసేసి ట్రేలో చూపెట్టాలా?"
+
+#: ../../windows/plat/frontends/widgets/application.py:192
+#, python-format
+msgid ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"ఎర్రటి మూసేసే బొత్తాన్ని నొక్కినపుడు, %(appname)s ను మూసేసి సిస్టమ్య్ ట్రేలో "
+"చూపెట్టాలా లేక పూర్తిగా మూసెయ్యాలా? ఈ సెట్టింగును మీరు తరవాతైనా "
+"వికల్పాల్లోకి వెళ్ళి మార్చుకోవచ్చు."
+
+#: ../../windows/plat/frontends/widgets/application.py:257
+msgid "Error Bombing Item"
+msgstr "బాంబింగు టీము లోపం"
+
+#: ../../windows/plat/frontends/widgets/application.py:259
+msgid "Error Recommending Item"
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/application.py:261
+msgid "Error Opening Website"
+msgstr "వెబ్ సైటు తెరవడంలో పొరపాటు"
+
+#: ../../windows/plat/frontends/widgets/application.py:266
+#, python-format
+msgid ""
+"There was an error opening %(url)s.  Please try again in a few seconds"
+msgstr ""
+"%(url)s ను తెరవడంలో లోపం ఎదురైంది. కొద్ది సెకనుల తరవాత మళ్ళీ ప్రయత్నించండి."
+
+#: ../../windows/plat/utils.py:502 ../../osx/plat/utils.py:591
+msgid "iTunes"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:737
+msgid "Russian"
+msgstr "రష్యన్"
+
+#: ../../windows/plat/renderers/vlc.py:738
+msgid "South-Eastern European"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:739
+msgid "Ukrainian"
+msgstr "ఉక్రైనియన్"
+
+#: ../../windows/plat/renderers/vlc.py:745
+msgid "Esperanto"
+msgstr "ఎస్పెరాంటో"
+
+#: ../../windows/plat/renderers/vlc.py:751
+msgid "Universal Chinese"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:752
+msgid "Simplified Chinese"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:753
+msgid "Simplified Chinese Unix"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:755
+msgid "Japanese Unix"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:759
+msgid "Traditional Chinese"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:760
+msgid "Traditional Chinese Unix"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:761
+msgid "Hong-Kong Supplementary"
+msgstr ""
+
+#: ../../windows/plat/renderers/vlc.py:780
+#: ../../windows/plat/renderers/vlc.py:781
+#: ../../windows/plat/renderers/vlc.py:782
+#: ../../windows/plat/renderers/vlc.py:783
+msgid "Universal"
+msgstr ""
+
+#: ../../osx/plat/frontends/widgets/bonjour.py:40
+msgid ""
+"Miro has determined that your system may be missing the Bonjour components, "
+"a standard part of Mac OS X installations.  Please review your Mac OS X "
+"installation."
+msgstr ""
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:216
+#: ../../osx/plat/frontends/widgets/osxmenus.py:293
+msgid "Services"
+msgstr "సేవలు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:218
+#, python-format
+msgid "Hide %(appname)s"
+msgstr "%(appname)s ను దాచు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:220
+msgid "Hide Others"
+msgstr "మిగతావాటిని దాచు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:222
+msgid "Show All"
+msgstr "అన్నీ చూపించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:227
+msgid "Preferences..."
+msgstr "ప్రాధాన్యతలు..."
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:229
+#, python-format
+msgid "Quit %(appname)s"
+msgstr "%(appname)s నుండి నిష్క్రమించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:233
+msgid "Close Window"
+msgstr "కిటికీ మూసేయి"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:239
+msgid "Cut"
+msgstr "కత్తిరించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:241
+msgid "Paste"
+msgstr "అతికించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:244
+msgid "Select All"
+msgstr "అన్నిటినీ ఎన్నుకో"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:246
+msgid "Edit"
+msgstr "సరిదిద్దు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:251
+msgid "Present Half Size"
+msgstr "సగం సైజులో చూపించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:254
+msgid "Present Actual Size"
+msgstr "అసలు సైజులో చూపించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:257
+msgid "Present Double Size"
+msgstr "రెట్టింపు సైజులో చూపించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:264
+msgid "Present Video"
+msgstr "వీడియో చూపించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:272
+msgid "Zoom"
+msgstr "జూమ్"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:273
+msgid "Minimize"
+msgstr "చిన్నగించు"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:275
+msgid "Main Window"
+msgstr "ప్రధాన విండో"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:278
+msgid "Bring All to Front"
+msgstr "అన్నింటినీ ముందుకి తీసుకురా"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:280
+msgid "Window"
+msgstr "విండో"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:285
+#, python-format
+msgid "%(appname)s Help"
+msgstr "%(appname)s సహాయం"
+
+#: ../../osx/plat/frontends/widgets/application.py:247
+msgid "Download Completed"
+msgstr "దిగుమతి పూర్తయ్యింది"
+
+#: ../../osx/plat/frontends/widgets/application.py:248
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "'%s' వీడియో యొక్క దిగుమతి పూర్తయ్యింది."
+
+#: ../../osx/plat/frontends/widgets/overlay.py:219
+msgid "Pop Out"
+msgstr "ఉబికివచ్చు"
+
+#: ../../osx/plat/frontends/widgets/overlay.py:222
+msgid "Pop In"
+msgstr "చొచ్చుకుపోవు"
 
 #~ msgid "Add to Library"
 #~ msgstr "గ్రంధాలయానికి చేర్చు"
