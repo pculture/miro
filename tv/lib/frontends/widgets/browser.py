@@ -41,6 +41,7 @@ from miro import messages
 from miro import subscription
 from miro import util
 from miro.plat import resources
+from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import itemlistwidgets
@@ -142,6 +143,15 @@ class BrowserToolbar(itemlistwidgets.Titlebar):
         hbox.pack_end(widgetutil.align_middle(self.download_button,
                                               right_pad=4))
 
+        download_image = imagepool.get_image_display(
+            resources.path('images/download-started.png'))
+        self.download_started = widgetutil.HideableWidget(
+            widgetutil.align_middle(download_image,
+                                    left_pad=20,
+                                    right_pad
+                                    =20))
+        hbox.pack_start(self.download_started)
+
         self.loading_icon = BrowserLoadingIcon()
         hbox.pack_start(self.loading_icon, expand=True)
 
@@ -170,9 +180,10 @@ class BrowserToolbar(itemlistwidgets.Titlebar):
 class Browser(widgetset.Browser):
     def __init__(self, guide_info):
         widgetset.Browser.__init__(self)
+        self.create_signal('download-started')
         self.guide_info = guide_info
         self.seen_cache = {}
-    
+
     def handle_unknown_url(self, url):
         self.seen_cache[url] = 1
         self.navigate(url)
@@ -198,12 +209,14 @@ class Browser(widgetset.Browser):
 
         url = util.to_uni(url)
         if subscription.is_subscribe_link(url):
+            self.emit('download-started')
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
 
 
         if filetypes.is_maybe_rss_url(url):
             logging.debug("miro wants to handle %s", url)
+            self.emit('download-started')
             messages.DownloadURL(url, self.unknown_callback).send_to_backend()
             return False
 
@@ -213,11 +226,13 @@ class Browser(widgetset.Browser):
         ret = urlparse(url)
         if filetypes.is_allowed_filename(ret[2]):
             logging.debug("miro wants to handle %s", url)
+            self.emit('download-started')
             messages.DownloadURL(url, self.unknown_callback).send_to_backend()
             return False
 
         if util.is_magnet_uri(url):
             logging.debug("miro wants to handle %s", url)
+            self.emit('download-started')
             messages.DownloadURL(url, self.unknown_callback).send_to_backend()
             return False
 
@@ -231,6 +246,7 @@ class Browser(widgetset.Browser):
         if filetypes.is_allowed_mimetype(mimetype):
             logging.debug("miro wants to handle %s", url)
             metadata = {'mime_type': mimetype}
+            self.emit('download-started')
             messages.DownloadURL(url, self.unknown_callback,
                                  metadata).send_to_backend()
             return False
@@ -261,6 +277,8 @@ class BrowserNav(widgetset.VBox):
 
         self.browser.connect_weak('net-start', self._on_net_start)
         self.browser.connect_weak('net-stop', self._on_net_stop)
+        self.browser.connect_weak('download-started',
+                                  self._on_download_started)
 
         self.browser.navigate(self.guide_info.url)
 
@@ -312,3 +330,11 @@ class BrowserNav(widgetset.VBox):
 
     def _on_browser_open(self, widget):
         app.widgetapp.open_url(self.browser.get_current_url())
+
+    def _on_download_started(self, widget):
+        """
+        Shows the download started icon for 5 seconds, then hide it.
+        """
+        self.toolbar.download_started.show()
+        timer.add(5, lambda: self.toolbar.download_started.hide())
+
