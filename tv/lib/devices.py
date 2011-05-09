@@ -579,7 +579,7 @@ class DeviceSyncManager(object):
 
     def _copy_in_thread(self, info, final_path):
         if self.stopping:
-            raise RuntimeError('got sync stop message')
+            return None, info
         try:
             shutil.copy(info.video_path, final_path)
         except IOError:
@@ -672,20 +672,27 @@ class DeviceSyncManager(object):
     def _check_finished(self):
         if not self.waiting and not self.copying:
             # finished!
-            for handle in self.signal_handles:
-                conversions.conversion_manager.disconnect(handle)
-            self.signal_handles = None
-            self.device.is_updating = False # stop the spinner
-            messages.TabsChanged('connect', [], [self.device],
-                                 []).send_to_frontend()
-            del app.device_manager.syncs_in_progress[self.device.id]
+            if not self.stopping:
+                self._send_sync_finished()
         self._send_sync_changed()
 
     def _send_sync_changed(self):
         message = messages.DeviceSyncChanged(self)
         message.send_to_frontend()
 
+    def _send_sync_finished(self):
+        for handle in self.signal_handles:
+            conversions.conversion_manager.disconnect(handle)
+        self.signal_handles = None
+        self.device.is_updating = False # stop the spinner
+        messages.TabsChanged('connect', [], [self.device],
+                             []).send_to_frontend()
+        del app.device_manager.syncs_in_progress[self.device.id]
+
+
     def is_finished(self):
+        if self.stopping:
+            return True
         if self.waiting or self.copying:
             return False
         return self.device.id not in app.device_manager.syncs_in_progress
@@ -709,6 +716,8 @@ class DeviceSyncManager(object):
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
         self.stopping = True # kill in-progress copies
+        self._send_sync_changed()
+        self._send_sync_finished()
 
 class DeviceItem(metadata.Store):
     """
