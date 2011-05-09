@@ -833,11 +833,7 @@ class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
 
     def toggle_filter(self, filter_):
         FilteredTitlebar.toggle_filter(self, filter_)
-        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
         unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        if downloaded:
-            # make sure 'All' is on
-            self.filters['view-all'].set_enabled(downloaded)
         self.filters['only-unplayed'].set_enabled(unwatched)
         VideoAudioFilterMixin.toggle_filter(self)
 
