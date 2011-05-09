@@ -1423,10 +1423,8 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def call_feedparser(self, html):
         self.ufeed.confirm_db_thread()
-        eventloop.call_in_thread(self.feedparser_callback,
-                               self.feedparser_errback,
-                               feedparserutil.parse,
-                               "Feedparser callback - %s" % self.url, html)
+        feedparserutil.queue_parse(html, self.feedparser_callback,
+                self.feedparser_errback)
 
     def update(self):
         """Updates a feed
@@ -1583,10 +1581,9 @@ class RSSMultiFeedBase(RSSFeedImplBase):
 
     def call_feedparser(self, html, url):
         self.ufeed.confirm_db_thread()
-        eventloop.call_in_thread(
+        feedparserutil.queue_parse(html,
             lambda parsed, url=url: self.feedparser_callback(parsed, url),
-            lambda e, url=url: self.feedparser_errback(e, url),
-            feedparserutil.parse, "Feedparser callback - %s" % url, html)
+            lambda e, url=url: self.feedparser_errback(e, url))
 
     def update(self):
         self.ufeed.confirm_db_thread()

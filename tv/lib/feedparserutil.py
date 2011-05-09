@@ -33,7 +33,10 @@
 from datetime import datetime
 from time import struct_time
 from types import NoneType
+import threading
+import time
 
+from miro import eventloop
 from miro import feedparser
 
 # values from feedparser dicts that don't have to convert in
@@ -81,6 +84,38 @@ USER_AGENT = (feedparser.USER_AGENT + " %s/%s (%s)" %
 
 def parse(url_file_stream_or_string):
     return feedparser.parse(url_file_stream_or_string, USER_AGENT)
+
+def queue_parse(url_file_stream_or_string, callback, errback):
+    """Call parse in a separet thread.
+
+    This method tries to ensure that feedparser doesn't hog the whole CPU
+    using a few methods:
+      - only one queue_parse() call runs at any given time.
+      - if queue_parse() notices another call running at the same time, it
+        waits a bit to before starting its work.
+    """
+    eventloop.call_in_thread(callback, errback, _queue_parse,
+            "Feedparser callback", url_file_stream_or_string)
+
+_queue_parse_lock = threading.Lock()
+def _queue_parse(url_file_stream_or_string):
+    """Does the work for queue_parse()
+
+    This method runs in a one of our worker threads.
+    """
+
+    if not _queue_parse_lock.acquire(False):
+        # we failed to get the lock on our first try.  Block until the lock is
+        # available.
+        _queue_parse_lock.acquire()
+        # sleep a bit, this ensures that we have some idle time in-between
+        # feedparsers calls
+        time.sleep(0.2)
+    # We have the lock and are ready to run
+    try:
+        return parse(url_file_stream_or_string)
+    finally:
+        _queue_parse_lock.release()
 
 def sanitizeHTML(htmlSource, encoding):
     return feedparser.sanitizeHTML(htmlSource, encoding)
