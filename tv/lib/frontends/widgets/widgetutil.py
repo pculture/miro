@@ -423,11 +423,57 @@ class LinkButton(widgetset.CustomButton):
         textbox = self._make_textbox(layout)
         textbox.draw(context, 0, 0, context.width, context.height)
 
+class ThreeImageButton(widgetset.CustomButton):
+
+    DISABLED_TEXT_COLOR = (0.43, 0.43, 0.43)
+    TEXT_COLOR = (0.19, 0.19, 0.19)
+    TEXT_SIZE = 1.23 # 16pt
+
+    def __init__(self, basename, title):
+        widgetset.CustomButton.__init__(self)
+        self.set_can_focus(False)
+        self.set_cursor(widgetconst.CURSOR_POINTING_HAND)
+        self.title = title
+        self.surface = ThreeImageSurface(basename)
+        self.surface_active = ThreeImageSurface(basename + '_active')
+        self.surface_inactive = ThreeImageSurface(basename + '_inactive')
+
+    def set_text(self, text):
+        self.title = text
+        self.invalidate_size_request()
+
+    def _get_textbox(self, layout):
+        if self.get_disabled():
+            layout.set_text_color(self.DISABLED_TEXT_COLOR)
+        else:
+            layout.set_text_color(self.TEXT_COLOR)
+        layout.set_font(self.TEXT_SIZE)
+        return layout.textbox(self.title)
+
+    def size_request(self, layout):
+        width, height = self._get_textbox(layout).get_size()
+        return width + 20, max(height, self.surface.height)
+
+    def draw(self, context, layout):
+        if self.get_disabled():
+            surface = self.surface_inactive
+        elif self.state == 'pressed':
+            surface = self.surface_active
+        else:
+            surface = self.surface
+
+        surface.draw(context, 0, 0, context.width)
+        textbox = self._get_textbox(layout)
+        width, height = textbox.get_size()
+        textbox.draw(context, int((context.width - width) / 2),
+                     int((context.height - height) /2), width, height)
+
 class TitlebarButton(widgetset.CustomButton):
     """
     Draws the titlebar buttoms; based on ThreeImageSurface.
     """
 
+    # XXX can probably share code with ThreeImageButton
     DISABLED_TEXT_COLOR = (0.43, 0.43, 0.43)
     TEXT_COLOR = (0.19, 0.19, 0.19)
 

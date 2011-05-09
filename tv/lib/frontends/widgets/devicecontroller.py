@@ -88,35 +88,18 @@ class SizeProgressBar(widgetset.Background):
     def __init__(self):
         widgetset.Background.__init__(self)
         self.size_ratio = 0.0
+        self.bg_surface = widgetutil.ThreeImageSurface('device-size-bg')
+        self.fg_surface = widgetutil.ThreeImageSurface('device-size-fg')
 
     def set_progress(self, progress):
         self.size_ratio = progress
         self.queue_redraw()
 
     def draw(self, context, layout):
-        context.save()
-        widgetutil.round_rect(context, 0, 0, context.width, context.height, 5)
-        context.clip() # now we can just draw rectangles
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color(self.GRADIENT_COLOR_TOP)
-        gradient.set_end_color(self.GRADIENT_COLOR_BOTTOM)
-        context.rectangle(0, 0, context.width, context.height)
-        context.gradient_fill(gradient)
-        progress_width = context.width * self.size_ratio
-        context.rectangle(0, 0, progress_width, context.height)
-        context.set_color(self.SIZE_BORDER)
-        context.fill()
-        if progress_width > 2:
-            gradient = widgetset.Gradient(1, 1, 1, context.height - 2)
-            gradient.set_start_color(self.SIZE_COLOR_TOP)
-            gradient.set_end_color(self.SIZE_COLOR_BOTTOM)
-            widgetutil.round_rect_reverse(context, 1, 1, progress_width - 2,
-                                          context.height - 2, 4)
-            context.gradient_fill(gradient)
-            if progress_width > 13:
-                context.rectangle(6, 1, progress_width - 7, context.height - 2)
-                context.gradient_fill(gradient)
-        context.restore()
+        self.bg_surface.draw(context, 0, 0, context.width)
+        if self.size_ratio:
+            self.fg_surface.draw(context, 0, 0,
+                                 int(context.width * self.size_ratio))
 
 class SizeWidget(widgetset.Background):
     def __init__(self):
@@ -135,9 +118,10 @@ class SizeWidget(widgetset.Background):
         # second line: bigger; size status on left, sync button on right
         line = widgetset.HBox()
         self.progress = SizeProgressBar()
-        self.progress.set_size_request(425, 35)
-        self.sync_button = widgetset.Button(_("Sync Now"))
-        self.sync_button.set_size_request(100, 35)
+        self.progress.set_size_request(425, 36)
+        self.sync_button = widgetutil.ThreeImageButton(
+            'device-sync', _("Sync Now"))
+        self.sync_button.set_size_request(100, 39)
         line.pack_start(self.progress)
         line.pack_end(widgetutil.pad(self.sync_button, left=50))
         vbox.pack_start(line)
