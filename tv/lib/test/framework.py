@@ -10,6 +10,7 @@ from miro import app
 from miro import config
 from miro import database
 from miro import eventloop
+from miro import feedparserutil
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
@@ -262,6 +263,8 @@ class MiroTestCase(unittest.TestCase):
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
         moviedata.movie_data_updater = moviedata.MovieDataUpdater()
+        # make feed parser updates happen immediately
+        feedparserutil._queue_parse_proccessor.WAIT_TIME = 0.0
         # reload config and initialize it to temprary
         config.load_temporary()
         self.platform = app.config.get(prefs.APP_PLATFORM)
