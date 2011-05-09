@@ -124,7 +124,8 @@ class WidgetStateStore(object):
             [u'playlist', u'name', u'artist', u'album', u'track', u'length',
                 u'genre', u'year', u'rating'],
     }
-    DEFAULT_COLUMNS[u'device-audio'] = DEFAULT_COLUMNS[u'music'][:]
+    DEFAULT_COLUMNS[u'device-audio'] = (DEFAULT_COLUMNS[u'music'][:] +
+                                        [u'status'])
     DEFAULT_COLUMNS[u'device-video'] = DEFAULT_COLUMNS[u'videos'][:]
     DEFAULT_COLUMNS[u'folder-contents'] = DEFAULT_COLUMNS[u'music'][:]
     DEFAULT_COLUMNS[u'sharing'] = DEFAULT_COLUMNS[u'music'][:] + [u'status']
@@ -134,12 +135,12 @@ class WidgetStateStore(object):
     )
     # add available but non-default columns here:
     AVAILABLE_COLUMNS['music'] |= set(
-        [u'date-added', u'feed-name', u'size', u'file-type']
+        [u'date-added', u'feed-name', u'size', u'file-type', u'status']
     )
     AVAILABLE_COLUMNS['others'] |= set([u'date-added', u'drm', u'rating'])
     AVAILABLE_COLUMNS['search'] |= set([u'rating'])
     AVAILABLE_COLUMNS['videos'] |= set([u'rating', u'file-type', u'show',
-                                        u'kind'])
+                                        u'kind', u'status'])
     AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music'].copy()
     AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos'].copy()
     AVAILABLE_COLUMNS[u'feed'] = ((AVAILABLE_COLUMNS['music'] |
