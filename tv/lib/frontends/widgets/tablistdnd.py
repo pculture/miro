@@ -142,15 +142,13 @@ class MediaTypeDropHandler(object):
         return widgetset.DRAG_ACTION_COPY
 
     def validate_drop(self,
-            _table_view, model, typ, _source_actions, parent, position):
-        if parent is None or position != -1:
+            _table_view, model, typ, _source_actions, parent_iter, position):
+        if parent_iter is None or position != -1:
             return widgetset.DRAG_ACTION_NONE
-        if typ == 'downloaded-item':
-            if model[parent][0].id in ('videos', 'music', 'others'):
-                return widgetset.DRAG_ACTION_COPY
-            else:
-                return widgetset.DRAG_ACTION_NONE
-        elif typ == 'device-%s-item' % model[parent][0].media_type:
+        parent = model[parent_iter][0].id
+        if typ == 'downloaded-item' and parent in ('videos', 'music', 'others'):
+            return widgetset.DRAG_ACTION_COPY
+        elif typ == 'device-%s-item' % getattr(parent, 'media_type', None):
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
