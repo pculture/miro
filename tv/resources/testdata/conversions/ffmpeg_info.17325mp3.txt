@@ -1,0 +1,17 @@
+FFmpeg version SVN-r0.5.1-4:0.5.1-1ubuntu1.1, Copyright (c) 2000-2009 Fabrice
+Bellard, et al.
+  configuration: --extra-version=4:0.5.1-1ubuntu1.1 --prefix=/usr --enable-avfilter --enable-avfilter-lavf --enable-vdpau --enable-bzlib --enable-libgsm --enable-libschroedinger --enable-libspeex --enable-libtheora --enable-libvorbis --enable-pthreads --enable-zlib --disable-stripping --disable-vhook --enable-runtime-cpudetect --enable-gpl --enable-postproc --enable-swscale --enable-x11grab --enable-libdc1394 --enable-shared --disable-static
+  libavutil     49.15. 0 / 49.15. 0
+  libavcodec    52.20. 1 / 52.20. 1
+  libavformat   52.31. 0 / 52.31. 0
+  libavdevice   52. 1. 0 / 52. 1. 0
+  libavfilter    0. 4. 0 /  0. 4. 0 
+  libswscale     0. 7. 1 /  0. 7. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Mar 31 2011 18:53:20, gcc: 4.4.3
+[mp3 @ 0x80b9d00]mdb:174, lastbuf:0 skipping granule 0
+    Last message repeated 1 times
+Input #0, mp3, from '/home/ben/miro-dev-home/Videos/Miro/a/b/c/d/e/f/g/h/h.mp3':
+  Duration: 00:20:13.18, start: 0.000000, bitrate: 64 kb/s
+    Stream #0.0: Audio: mp3, 24000 Hz, stereo, s16, 64 kb/s
+At least one output file must be specified

@@ -169,7 +169,11 @@ class ConversionInfoTest(MiroTestCase):
     def test_parse_ffmpeg_output(self):
         for mem in glob.glob(os.path.join(DATA, "ffmpeg_info*")):
             lines = open(mem, "r").read().splitlines()
-            ast = conversions.parse_ffmpeg_output(lines)
+            try:
+                ast = conversions.parse_ffmpeg_output(lines)
+            except Exception, e:
+                print "test_parse_ffmpeg_output failed: on %s" % mem
+                raise
             try:
                 info = conversions.extract_info(ast)
             except ValueError, ve:

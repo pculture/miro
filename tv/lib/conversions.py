@@ -103,6 +103,8 @@ class Node(object):
                 return ret
         return None
 
+    def __repr__(self):
+        return "<Node %s: %s>" % (self.key, self.value)
 
 def get_indent(line):
     length = len(line)
@@ -143,6 +145,10 @@ def parse_ffmpeg_output(output):
             node_stack[-1].add_node(node)
         else:
             for dedent in range(indent, indent_level, 2):
+                # make sure we never pop everything off the stack.
+                # the root should always be on the stack.
+                if len(node_stack) <= 1:
+                    break
                 node_stack.pop()
             indent_level = indent
             node_stack[-1].add_node(node)
