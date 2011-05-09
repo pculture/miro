@@ -678,7 +678,8 @@ class Application:
                 ],
             select_multiple=True)
 
-        messages.AddFiles(files_).send_to_backend()
+        if files_:
+            messages.AddFiles(files_).send_to_backend()
 
     def add_new_watched_folder(self):
         ret = newwatchedfolder.run_dialog()
