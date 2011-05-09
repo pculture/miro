@@ -1583,19 +1583,10 @@ class RSSMultiFeedBase(RSSFeedImplBase):
 
     def call_feedparser(self, html, url):
         self.ufeed.confirm_db_thread()
-        in_thread = False
-        if in_thread:
-            try:
-                parsed = feedparserutil.parse(html)
-                self.feedparser_callback(parsed, url)
-            except StandardError:
-                self.feedparser_errback(self, None, url)
-                raise
-        else:
-            eventloop.call_in_thread(
-                lambda parsed, url=url: self.feedparser_callback(parsed, url),
-                lambda e, url=url: self.feedparser_errback(e, url),
-                feedparserutil.parse, "Feedparser callback - %s" % url, html)
+        eventloop.call_in_thread(
+            lambda parsed, url=url: self.feedparser_callback(parsed, url),
+            lambda e, url=url: self.feedparser_errback(e, url),
+            feedparserutil.parse, "Feedparser callback - %s" % url, html)
 
     def update(self):
         self.ufeed.confirm_db_thread()
