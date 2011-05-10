@@ -1040,7 +1040,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.expired = True
             self.seen = self.keep = self.pendingManualDL = False
             self.filename = None
-            self.mdp_state = State.UNSEEN
+            self.mdp_state = moviedata.State.UNSEEN
             self.file_type = self.watchedTime = self.lastWatched = None
             self.duration = None
             self.isContainerItem = None
@@ -2063,7 +2063,7 @@ class FileItem(Item):
         self.parent_id = None
         self.feed_id = models.Feed.get_manual_feed().id
         self.deleted = True
-        self.mdp_state = State.UNSEEN
+        self.mdp_state = moviedata.State.UNSEEN
         self.signal_change()
 
     def delete_files(self):
