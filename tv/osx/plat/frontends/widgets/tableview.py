@@ -184,6 +184,16 @@ class MiroTableInfoListTextCell(MiroTableCell):
             self.setTextColor_(self._textColor)
         return MiroTableCell.drawWithFrame_inView_(self, frame, view)
 
+    def titleRectForBounds_(self, rect):
+        frame = MiroTableCell.titleRectForBounds_(self, rect)
+        text_size = self.attributedStringValue().size()
+        frame.origin.y = rect.origin.y + (rect.size.height - text_size.height) / 2.0
+        return frame
+
+    def drawInteriorWithFrame_inView_(self, frame, view):
+        rect = self.titleRectForBounds_(frame)
+        self.attributedStringValue().drawInRect_(rect)
+
     def setObjectValue_(self, value):
         if isinstance(value, tuple):
             info, attrs = value

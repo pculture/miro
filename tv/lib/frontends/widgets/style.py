@@ -363,7 +363,7 @@ class ListViewRenderer(widgetset.InfoListRenderer):
     default_text_color = (0.17, 0.17, 0.17)
     selected_text_color = widgetutil.WHITE
     min_width = 5
-    min_height = 22
+    min_height = 23
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         layout = self.layout_all(layout_manager, width, height, False)
@@ -440,7 +440,7 @@ class StatusRenderer(ListViewRenderer):
             button_x = width - button.get_size()[0]
             layout.add_image(button, button_x, 0, hotspot='download')
             # text should end at the start of the button
-            text_width = button_x
+            layout.center_y(top=0, bottom=height)
             return layout
 
         if (self.info.state in ('downloading', 'paused') and
