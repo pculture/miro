@@ -267,8 +267,8 @@ class ListViewRendererText(widgetset.InfoListRendererText):
     """Renderer for list view columns that are just plain text"""
 
     bold = False
-    color = (0.17, 0.17, 0.17)
-    font_size = widgetutil.font_scale_from_osx_points(12)
+    color = widgetutil.BLACK
+    font_size = widgetutil.font_scale_from_osx_points(11)
     min_width = 50
     right_aligned = False
 
@@ -359,11 +359,11 @@ class ListViewRenderer(widgetset.InfoListRenderer):
 
     This class is useful for renderers that use the cellpack.Layout class.
     """
-    font_size = widgetutil.font_scale_from_osx_points(12)
-    default_text_color = (0.17, 0.17, 0.17)
+    font_size = widgetutil.font_scale_from_osx_points(11)
+    default_text_color = widgetutil.BLACK
     selected_text_color = widgetutil.WHITE
     min_width = 5
-    min_height = 23
+    min_height = 16 # 21px total - 5px spacing
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         layout = self.layout_all(layout_manager, width, height, False)
