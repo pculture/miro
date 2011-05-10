@@ -91,8 +91,11 @@ def add_video(path, manual_feed=None):
     if manual_feed is None:
         manual_feed = feed.Feed.get_manual_feed()
     file_item = item.FileItem(
-        path, feed_id=manual_feed.get_id(), mark_seen=True)
-    if _command_line_videos is not None:
+        path, feed_id=manual_feed.get_id(), mark_seen=True,
+        run_check_media_file=False)
+    # force us to call check_media_file right now
+    file_item.check_media_file()
+    if _command_line_videos is not None and file_item.id_exists():
         _command_line_videos.add(file_item)
     return True
 

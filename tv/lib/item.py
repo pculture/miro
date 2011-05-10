@@ -1950,7 +1950,7 @@ class FileItem(Item):
     """
     def setup_new(self, filename, feed_id=None, parent_id=None,
             offsetPath=None, deleted=False, fp_values=None,
-            channel_title=None, mark_seen=False):
+            channel_title=None, mark_seen=False, run_check_media_file=True):
         if fp_values is None:
             fp_values = fp_values_for_file(filename)
         Item.setup_new(self, fp_values, feed_id=feed_id, parent_id=parent_id,
@@ -1972,7 +1972,7 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        if not self.deleted:
+        if run_check_media_file and not self.deleted:
             eventloop.add_idle(self.check_media_file,
                     'check media file for FileItem')
         self.split_item()
