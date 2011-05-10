@@ -105,7 +105,11 @@ class PlaybackManager (signals.SignalEmitter):
     
     def toggle_paused(self):
         """Pause a playing item, play a paused item, and soft_fail otherwise."""
-        if not self.is_playing or self.is_paused:
+        if not self.is_playing:
+            app.widgetapp.handle_soft_failure('toggle_paused',
+                "item not playing or paused in toggle_paused",
+                with_exception=False)
+        if self.is_paused:
             self.play()
         else:
             self.pause()
