@@ -268,24 +268,8 @@ class PlaybackManager (signals.SignalEmitter):
            self.repeat != WidgetStateStore.get_repeat_off()):
            return False
 
-        # FIXME: we should have a better way of deciding
-        # which tab something is listed in.  In addition, assume all items
-        # from a remote share is either audio or video (no podcast).
-        # Figure out if its from a library or feed
         currently_playing = self.playlist.currently_playing
-        if (currently_playing.remote or 
-          (currently_playing.feed_url and 
-          (currently_playing.feed_url.startswith('dtv:manualFeed') or
-           currently_playing.feed_url.startswith('dtv:directoryfeed') or
-           currently_playing.feed_url.startswith('dtv:search') or
-           currently_playing.feed_url.startswith('dtv:searchDownloads')))):
-            if(self.playlist.currently_playing.file_type == u'video'):
-                resume = app.config.get(prefs.RESUME_VIDEOS_MODE)
-            else:
-                resume = app.config.get(prefs.RESUME_MUSIC_MODE)
-        else:
-            resume =  app.config.get(prefs.RESUME_PODCASTS_MODE)
-        return resume
+        return self.item_resume_policy(currently_playing)
 
     def pause(self):
         if self.is_playing:
@@ -701,6 +685,38 @@ class PlaybackManager (signals.SignalEmitter):
             self.player.select_subtitle_encoding(encoding)
             messages.SetItemSubtitleEncoding(self.get_playing_item(),
                     encoding).send_to_backend()
+
+    def item_resume_policy(self, item_info):
+        """
+        There are two kinds of resume results we need. 
+        ItemRenderer.should_resume_item() calculates whether an item should 
+        display a resume button and PlaybackManager.should_resume() calculates
+        whether an item should resume when clicked. This method calculates 
+        the general resume policy for an item which these other methods then
+        use to calculate their final result.
+        """
+        # FIXME: we should have a better way of deciding
+        # which tab something is listed in.  In addition, assume all items
+        # from a remote share is either audio or video (no podcast).
+        # Figure out if its from a library or feed
+        if (item_info.remote or 
+          (item_info.feed_url and 
+          (item_info.feed_url.startswith('dtv:manualFeed') or
+           item_info.feed_url.startswith('dtv:directoryfeed') or
+           item_info.feed_url.startswith('dtv:search') or
+           item_info.feed_url.startswith('dtv:searchDownloads')))):
+            if(item_info.file_type == u'video'):
+                resume = app.config.get(prefs.RESUME_VIDEOS_MODE)
+            else:
+                resume = app.config.get(prefs.RESUME_MUSIC_MODE)
+        else:
+            resume =  app.config.get(prefs.RESUME_PODCASTS_MODE)
+        
+        result = (item_info.is_playable
+               and item_info.resume_time > 0
+               and resume
+               and app.config.get(prefs.PLAY_IN_MIRO))
+        return result
 
 class PlaybackPlaylist(signals.SignalEmitter):
     def __init__(self, item_tracker, start_id):

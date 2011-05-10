@@ -480,17 +480,8 @@ class ItemRenderer(ItemRendererBase):
         return text, image, visuals
 
     def should_resume_item(self):
-        if self.is_podcast:
-            resume_pref = prefs.RESUME_PODCASTS_MODE
-        elif self.info.file_type == u'video':
-            resume_pref = prefs.RESUME_VIDEOS_MODE
-        else:
-            resume_pref = prefs.RESUME_MUSIC_MODE
-        return (self.info.is_playable
-              and self.info.item_viewed
-              and self.info.resume_time > 0
-              and app.config.get(resume_pref)
-              and app.config.get(prefs.PLAY_IN_MIRO))
+        return (app.playback_manager.item_resume_policy(self.info)
+                and self.info.item_viewed)
 
     def remove_button_info(self):
         """Get the image/hotspot to use for the remove button
