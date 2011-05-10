@@ -822,7 +822,10 @@ class SharingManagerBackend(object):
         # If items are changed, just redelete and recreate the entry.
         with self.item_lock:
             for itemid in message.removed:
-                del self.daapitems[itemid]
+                try:
+                    del self.daapitems[itemid]
+                except KeyError:
+                    pass
             self.make_item_dict(message.added)
             self.make_item_dict(message.changed)
 
