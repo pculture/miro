@@ -557,7 +557,7 @@ class DeviceItemSource(ItemSource):
         if item.duration is None:
             duration = None
         else:
-            duration = item.duration / 1000,
+            duration = item.duration / 1000
         info = dict(
             source_type='device',
             feed_id = item.feed_id,
