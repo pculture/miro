@@ -109,6 +109,7 @@ class PlaybackManager (signals.SignalEmitter):
             app.widgetapp.handle_soft_failure('toggle_paused',
                 "item not playing or paused in toggle_paused",
                 with_exception=False)
+            return # in release mode, recover by doing nothing
         if self.is_paused:
             self.play()
         else:
