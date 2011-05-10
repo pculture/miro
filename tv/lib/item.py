@@ -346,6 +346,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     ICON_CACHE_VITAL = False
 
+    # tweaked by the unittests to make things easier
+    _expire_nonexisting_paths = True
+
     def setup_new(self, fp_values, linkNumber=0, feed_id=None, parent_id=None,
             eligibleForAutoDownload=True, channel_title=None):
         metadata.Store.setup_new(self)
@@ -1892,7 +1895,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return True
         if (self.isContainerItem is not None and
                 not fileutil.exists(self.get_filename()) and
-                not hasattr(app, 'in_unit_tests')):
+                self._expire_nonexisting_paths):
             self.expire()
             return True
         return False
@@ -1969,7 +1972,9 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        self.check_media_file()
+        if not self.deleted:
+            eventloop.add_idle(self.check_media_file,
+                    'check media file for FileItem')
         self.split_item()
 
     # FileItem downloaders are always None

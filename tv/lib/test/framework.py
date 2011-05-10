@@ -259,6 +259,8 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
+        # Tweak Item to allow us to make up fake paths for FileItems
+        models.Item._expire_nonexisting_paths = False
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater

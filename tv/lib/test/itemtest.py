@@ -245,3 +245,11 @@ class ItemSearchTest(MiroTestCase):
         self.assertEquals(self.item1.matches_search('miros'), False)
         self.assertEquals(self.item1.matches_search('iscool'), False)
         self.assertEquals(self.item1.matches_search('cool -miro'), False)
+
+class DeletedItemTest(MiroTestCase):
+    def test_make_item_for_nonexistent_path(self):
+        feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
+        # test that creating a file item for a path that doesn't exist doesn't
+        # cause a crash
+        Item._expire_nonexisting_paths = True
+        FileItem("/non/existent/path/", feed.id)
