@@ -965,7 +965,7 @@ class SorterOwner(object):
             self.sorters[name] = self.make_sorter(name)
         self.allocate_widths()
 
-    def allocate_widths(self):
+    def allocate_widths(self, preserving_by_label=None):
         """Option method for subclasses that need to allocate widths when their
         sorters change.
         """
@@ -1116,36 +1116,62 @@ class ListView(ItemView, SorterOwner):
             self._width_allocated = total_width
             self.allocate_widths()
 
-    def allocate_widths(self, preserving={}):
-        """Allocate the width of all columns to fit the space given. preserving
-        can be set to avoid adjusting a column the user has just manually
-        resized.
+    def allocate_widths(self, preserving_by_label=None):
+        """Allocate the width of all columns to fit the space given.
+        
+        preserving_by_label can be set to to a dict of column label => width to
+        avoid adjusting a column the user has just manually resized.
         """
         if not self._width_allocated:
             return
-        preserving = dict((self._column_by_label[label], width)
-            for label, width in preserving.items())
-        if preserving and all(int(self.column_widths[k]) == int(v)
-                for k, v in preserving.iteritems()):
-            return # triggered by set_width below
-        self.column_widths.update(preserving)
-        weights = dict((k, k not in preserving and
-            widgetconst.COLUMN_WIDTH_WEIGHTS.get(k, 0))
-            for k in self.sorters)
-        if not any(weights.itervalues()):
-            weights = dict((name, name not in preserving) for name in self.sorters)
+        if not preserving_by_label:
+            preserving = {}
+        else:
+            # keys are labels because that's what it's currently easiest for the
+            # widgetset to use, so here's where we convert that to something
+            # sane (column name => width map)
+            preserving = dict((self._column_by_label[label], width)
+                for label, width in preserving_by_label.items())
 
-        extra_width = (self.width_for_columns(self._width_allocated) -
-            sum(self.column_widths[name] for name in self.sorters))
-        total_weight = sum(weights.itervalues())
-        if not total_weight: # 0 or 1 columns
-            return
-        extra_width /= total_weight
+            self.column_widths.update(preserving)
 
-        rounded = 0 # carry forward rounded-off part of each value
-        for name in self.sorters:
-            extra, rounded = divmod(extra_width * weights[name] + rounded, 1)
-            self.column_widths[name] += int(extra)
+        available = self.width_for_columns(self._width_allocated)
+
+        frozen = widgetconst.NO_RESIZE_COLUMNS | set(preserving)
+        # map of name => resize weight for each resizable column
+        resizing = dict((name, widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0))
+            for name in self.sorters if name not in frozen)
+
+        # We need to account for columns reaching their minimum widths (#17270)
+        # This loop does that in at most len(sorters) iterations by removing
+        # each column that is no longer resizable from the weight map as we go.
+        # If we are not currently shrinking enough to hit any min_widths, this
+        # loop will break out after the first run.
+        while resizing:
+            allocated = sum(self.column_widths[name] for name in self.sorters)
+            total_weight = sum(resizing.values())
+            if not total_weight:
+                # if nothing with remaining has weight, weight everything
+                # equally
+                resizing = dict((name, 1) for name in resizing)
+                total_weight = len(resizing)
+            # extra per 1.0 weight units
+            extra_each = (available - allocated) / total_weight
+
+            clipped = set()
+            rounded = 0 # carry forward rounded-off part of each value
+            for name in resizing:
+                column = self.sorters[name]
+                extra, rounded = divmod(extra_each * resizing[name] + rounded, 1)
+                ideal_width = self.column_widths[name] + int(extra)
+                clipped_width = max(ideal_width, int(column.renderer.min_width))
+                self.column_widths[name] = clipped_width
+                if clipped_width != ideal_width:
+                    clipped.add(name)
+            if not clipped:
+                break # every column accepted the width we gave it
+            for name in clipped:
+                del resizing[name]
 
         for name, sorter in self.sorters.iteritems():
             sorter.set_width(self.column_widths[name])
