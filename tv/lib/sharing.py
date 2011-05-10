@@ -550,6 +550,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.client = None
         self.share = share
         self.items = dict()
+        self.info_cache = dict()
         self.playlists = []
         self.base_playlist = None    # Temporary
         self.share.is_updating = True

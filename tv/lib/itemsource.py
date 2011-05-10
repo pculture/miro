@@ -394,6 +394,7 @@ class SharingItemSource(ItemSource):
             self.tracker.connect('changed', self._on_tracker_changed),
             self.tracker.connect('removed', self._on_tracker_removed),
         ]
+        self.info_cache = tracker.info_cache
 
     def _item_info_for(self, item):
         info = dict(
@@ -457,7 +458,8 @@ class SharingItemSource(ItemSource):
 
     def _ensure_info(self, obj):
         if not isinstance(obj, messages.ItemInfo):
-            return self._item_info_for(obj)
+            self.info_cache[obj.id] = info = self._item_info_for(obj)
+            return info
         else:
             return obj
 
@@ -468,10 +470,14 @@ class SharingItemSource(ItemSource):
         self.emit("changed", self._ensure_info(item))
 
     def _on_tracker_removed(self, tracker, item):
+        del self.info_cache[item.id]
         self.emit("removed", item.id)
 
     def fetch_all(self):
-        return [self._item_info_for(item) for item in 
+        # Always get from cache.  This is okay because shares are transient
+        # and so we always start off with an empty db.  So either we have
+        # nothing, or the cache is populated with items.
+        return [self.info_cache[item.id] for item in 
                 self.tracker.get_items(playlist_id=self.playlist_id)]
 
     def unlink(self):
