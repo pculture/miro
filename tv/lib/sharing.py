@@ -754,15 +754,17 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         returned_items, returned_playlists = args
         self.items = returned_items
         self.playlists = returned_playlists
+        # Send a list of all the items to the main sharing tab.  Only add
+        # those that are part of the base playlist.
+        for item in self.items[self.base_playlist]:
+            self.emit('added', item)
+        # Once all the items are added then send display mounted and remove
+        # the progress indicator.
         self.share.mount = True
         self.share.is_updating = False
         message = messages.TabsChanged('connect', self.playlists,
                                        [self.share], [])
         message.send_to_frontend()
-        # Send a list of all the items to the main sharing tab.  Only add
-        # those that are part of the base playlist.
-        for item in self.items[self.base_playlist]:
-            self.emit('added', item)
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
