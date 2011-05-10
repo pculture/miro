@@ -103,7 +103,8 @@ class PlaybackManager (signals.SignalEmitter):
                 self.fullscreen()
             self.video_display.renderer.update_for_presentation_mode(mode)
     
-    def play_pause(self):
+    def toggle_paused(self):
+        """Pause a playing item, play a paused item, and soft_fail otherwise."""
         if not self.is_playing or self.is_paused:
             self.play()
         else:
@@ -1039,7 +1040,7 @@ def handle_key_press(key, mods):
                 return True
 
         if set([menus.CTRL]) == mods and key == menus.SPACE:
-            app.playback_manager.play_pause()
+            app.playback_manager.toggle_paused()
             return True
         return False
 
@@ -1080,5 +1081,5 @@ def handle_key_press(key, mods):
         return True
 
     if key == menus.SPACE:
-        app.playback_manager.play_pause()
+        app.playback_manager.toggle_paused()
         return True

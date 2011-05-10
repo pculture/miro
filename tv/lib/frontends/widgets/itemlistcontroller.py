@@ -575,13 +575,9 @@ class ItemListController(object):
 
     def on_row_activated(self, item_view, iter_):
         info = item_view.model[iter_][0]
-        if info.id == app.widget_state.get_last_played_item_id(self.type, self.id):
-            # XXX: workaround for 17192 (play_pause cannot play after stop)
-            if app.playback_manager.is_playing:
-                app.playback_manager.play_pause()
-            else:
-                self._play_item_list(info.id)
-        elif info.downloaded:
+        if app.playback_manager.is_playing_item(info):
+            app.playback_manager.toggle_paused()
+        elif info.is_playable:
             self._play_item_list(info.id)
         elif info.state == 'downloading':
             messages.PauseDownload(info.id).send_to_backend()
@@ -632,7 +628,7 @@ class ItemListController(object):
             self.play_selection()
             return True
         elif key == menus.SPACE and app.playback_manager.is_playing:
-            app.playback_manager.play_pause()
+            app.playback_manager.toggle_paused()
             return True
         elif isinstance(key, basestring) and len(key) == 1 and key.isalnum():
             self.titlebar.start_editing_search(key)
@@ -716,9 +712,8 @@ class ItemListController(object):
         elif name in ('play', 'thumbnail-play'):
             self._play_item_list(item_info.id)
         elif name == 'play_pause':
-            # XXX: workaround for 17192 (play_pause cannot play after stop)
-            if app.playback_manager.is_playing:
-                app.playback_manager.play_pause()
+            if app.playback_manager.is_playing_item(item_info):
+                app.playback_manager.toggle_paused()
             else:
                 self._play_item_list(item_info.id)
         elif name.startswith('rate:'):

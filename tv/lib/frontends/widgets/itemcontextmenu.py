@@ -140,7 +140,7 @@ class ItemContextMenuHandler(object):
             if item != playing_item or (item == playing_item and is_paused):
                 section.append((_('Play'), app.widgetapp.play_selection))
             else:
-                section.append((_('Pause'), app.playback_manager.play_pause))
+                section.append((_('Pause'), app.playback_manager.pause))
             # Resume
             if play_in_miro and item != playing_item and item.resume_time > 0:
                 resumetime = displaytext.short_time_string(item.resume_time)

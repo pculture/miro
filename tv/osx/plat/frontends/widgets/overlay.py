@@ -377,7 +377,7 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.stop()
 
     def playPause_(self, sender):
-        app.playback_manager.play_pause()
+        app.playback_manager.toggle_paused()
 
     def update_(self, timer):
         if self.renderer is None or self.renderer.movie is None:

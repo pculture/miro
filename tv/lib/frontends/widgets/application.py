@@ -306,7 +306,7 @@ class Application:
 
     def on_play_clicked(self, button=None):
         if app.playback_manager.is_playing:
-            app.playback_manager.play_pause()
+            app.playback_manager.toggle_paused()
         else:
             self.play_selection()
 
