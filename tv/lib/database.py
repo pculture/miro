@@ -524,8 +524,10 @@ class DDBObject(signals.SignalEmitter):
             app.db.remember_object(self)
             self.setup_new(*args, **kwargs)
             self.after_setup_new()
-            # handle setup_new() calling remove()
             if not self.id_exists():
+                # DeprecationWarning
+                logging.warn("deprecated special case: "
+                        "object removed in setup_new")
                 return
 
         self.in_db_init = False
