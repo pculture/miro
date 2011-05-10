@@ -857,20 +857,26 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.errorState = True
         self.loading = False
         self.signal_change()
-        if self.informOnError:
-            title = _('Error loading podcast')
-            description = _(
-                "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-            ) % { "url": self.url, "errordescription": errorDescription }
-            description += "\n\n"
-            description += _("Would you like to keep the podcast?")
-            d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
-                    dialogs.BUTTON_DELETE)
-            def callback(dialog):
-                if dialog.choice == dialogs.BUTTON_DELETE and self.id_exists():
-                    self.remove()
-            d.run(callback)
-            self.informOnError = False
+
+        # 17295. Disabling the "can't load podcast" dialog which pops
+        # up for all podcasts if the computer isn't connected to the
+        # network.  At some point in the future, we should implement
+        # an offline mode and at that point, we can re-enable this
+        # dialog.
+        # if self.informOnError:
+        #     title = _('Error loading podcast')
+        #     description = _(
+        #         "Couldn't load the podcast at %(url)s (%(errordescription)s)."
+        #     ) % { "url": self.url, "errordescription": errorDescription }
+        #     description += "\n\n"
+        #     description += _("Would you like to keep the podcast?")
+        #     d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
+        #             dialogs.BUTTON_DELETE)
+        #     def callback(dialog):
+        #         if dialog.choice == dialogs.BUTTON_DELETE and self.id_exists():
+        #             self.remove()
+        #     d.run(callback)
+        #     self.informOnError = False
         delay = app.config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
         if delay == -1:
             return
