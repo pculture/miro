@@ -276,7 +276,9 @@ class PlaybackManager (signals.SignalEmitter):
         if (currently_playing.remote or 
           (currently_playing.feed_url and 
           (currently_playing.feed_url.startswith('dtv:manualFeed') or
-           currently_playing.feed_url.startswith('dtv:directoryfeed')))):
+           currently_playing.feed_url.startswith('dtv:directoryfeed') or
+           currently_playing.feed_url.startswith('dtv:search') or
+           currently_playing.feed_url.startswith('dtv:searchDownloads')))):
             if(self.playlist.currently_playing.file_type == u'video'):
                 resume = app.config.get(prefs.RESUME_VIDEOS_MODE)
             else:
