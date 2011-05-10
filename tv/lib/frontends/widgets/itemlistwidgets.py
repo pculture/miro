@@ -262,6 +262,7 @@ class ResumePlaybackButton(widgetset.CustomButton):
     TEXT_PADDING_LEFT = 5
     TEXT_PADDING_RIGHT = 5
     MIN_TITLE_CHARS = 5
+    MIN_WIDTH = 160
 
     def __init__(self):
         widgetset.CustomButton.__init__(self)
@@ -284,10 +285,12 @@ class ResumePlaybackButton(widgetset.CustomButton):
         self.title_right = imagepool.get_surface(resources.path(
             'images/resume-playback-title-right.png'))
         self.title = self.resume_time = None
+        self._width_available = 0
 
     def update(self, title, resume_time):
         self.title = title
         self.resume_time = resume_time
+        self.invalidate_size_request()
         self.queue_redraw()
 
     def _make_text(self, title, resume_time):
@@ -311,16 +314,30 @@ class ResumePlaybackButton(widgetset.CustomButton):
         return (button.width + self.TEXT_PADDING_LEFT +
                 self.TEXT_PADDING_RIGHT)
 
-    def size_request(self, layout_manager):
-        # we want the button to dissapear when we get smaller than our min
-        # size.  To do that, we calculate our min size, store it, but then
-        # just return a 0 width
+    def set_width_available(self, width):
+        if width != self._width_available:
+            self._width_available = width
+            self.invalidate_size_request()
+
+    def _calc_text_width(self, layout_manager):
+        if self.title is None:
+            return 0
         layout_manager.set_font(self.FONT_SIZE)
         # request enough space to show at least a little text
-        text = self._make_text("A" * self.MIN_TITLE_CHARS, 123)
+        text = self._make_text(self.title, self.resume_time)
         text_size = layout_manager.textbox(text).get_size()
+        return text_size[0]
+
+    def size_request(self, layout_manager):
+        text_width = self._calc_text_width(layout_manager)
         button = self.make_button(layout_manager, False)
-        width = text_size[0] + self.non_text_width(button)
+        max_width = text_width + self.non_text_width(button)
+        # try to fill up our available space, but don't go past the max width
+        # needed to display the button.
+        width = min(max_width, self._width_available)
+        # double-check that we are requesting at least MIN_WIDTH, this covers
+        # the case where size_request() is called before set_width_available()
+        width = max(self.MIN_WIDTH, width)
         return (width, self.button_height)
 
     def draw(self, context, layout_manager):
@@ -333,6 +350,8 @@ class ResumePlaybackButton(widgetset.CustomButton):
         # make textbox
         textbox = self.make_textbox(layout_manager, context.width -
             non_text_width)
+        if textbox is None:
+            return
         # size and layout things
         text_width, text_height = textbox.get_size()
         total_width = text_width + non_text_width
@@ -367,6 +386,47 @@ class ResumePlaybackButton(widgetset.CustomButton):
                 return textbox
         # we can't fit the textbox in the space we have
         return None
+
+class ResumeButtonHolder(widgetset.Alignment):
+    """Container to hold the resume button
+
+    The resume button takes a bit of work to get right.  This class has the
+    following features:
+      - Hide/Show the button
+      - Informs the button how much width the holder has available, this lets
+        the button expand correctly.
+    """
+    LEFT_PAD = 10
+    RIGHT_PAD = 10
+
+    def __init__(self, resume_button):
+        widgetset.Alignment.__init__(self, left_pad=self.LEFT_PAD,
+                right_pad = self.RIGHT_PAD,
+                xscale=0.0, yscale=0.0, yalign=0.5)
+        self.resume_button = resume_button
+        self.button_shown = False
+        # set our width request to the min-width of the button.  This way our
+        # parent only reserves that amount of space for us.
+        self.set_size_request(self.resume_button.MIN_WIDTH + self.LEFT_PAD +
+                self.RIGHT_PAD, -1)
+
+    def show(self):
+        if self.button_shown:
+            return
+        self.add(self.resume_button)
+        self.button_shown = True
+
+    def hide(self):
+        if not self.button_shown:
+            return
+        self.remove()
+        self.button_shown = False
+
+    def do_size_allocated(self, width, height):
+        # Tell the resume button how much width is available, that will allow
+        # it to request know how much width to request.
+        width_available = width - self.LEFT_PAD - self.RIGHT_PAD
+        self.resume_button.set_width_available(width_available)
 
 class ItemListTitlebar(Titlebar):
     """Titlebar for feeds, playlists and static tabs that display
@@ -410,9 +470,8 @@ class ItemListTitlebar(Titlebar):
         if self.uses_resume_button:
             self.resume_button = ResumePlaybackButton()
             self.resume_button.connect('clicked', self._on_resume_button_clicked)
-            self.resume_button_holder = widgetutil.HideableWidget(
-                    widgetutil.pad(self.resume_button, left=10))
-            hbox.pack_start(widgetutil.align_middle(self.resume_button_holder))
+            self.resume_button_holder = ResumeButtonHolder(self.resume_button)
+            hbox.pack_start(self.resume_button_holder, expand=True)
 
         self.filters = {}
         self.setup_filters()
@@ -646,7 +705,7 @@ class SearchTitlebar(ItemListTitlebar):
                 self.save_search_icon())
         self.save_button.connect('clicked', self._on_save_search)
         self.save_button_holder = widgetutil.HideableWidget(
-                widgetutil.pad(self.save_button, left=20, right=20))
+                widgetutil.pad(self.save_button, left=10, right=10))
         return widgetutil.align_middle(self.save_button_holder)
 
     def calculate_width_requests(self):
