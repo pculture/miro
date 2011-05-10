@@ -237,6 +237,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def play(self, start_at=0):
         if not self.player:
+            logging.warn("no self.player in play(). race condition?")
             return
         duration = self.player.get_total_playback_time()
         self.emit('will-play', duration)
