@@ -399,9 +399,13 @@ class ListViewRenderer(widgetset.InfoListRenderer):
 
 class NameRenderer(ListViewRenderer):
     min_width = 120 # GTK isn't returning enough size, so add some extra
+
     def render(self, context, layout_manager, selected, hotspot, hover):
         layout_manager.set_font(self.font_size)
-        layout_manager.set_text_color(context.style.text_color)
+        if context.style.text_color != widgetutil.BLACK:
+            layout_manager.set_text_color(context.style.text_color)
+        else:
+            layout_manager.set_text_color(self.default_text_color)
         ListViewRenderer.render(self, context, layout_manager, selected,
                                 hotspot, hover)
 
