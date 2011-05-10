@@ -1001,6 +1001,11 @@ class ItemListController(object):
                 # item no longer in the list, so we'll ignore it
                 pass
         else:
+            # XXX technically we should check whether _scroll_waiting already
+            # exists here, and if so OR the two conditions dicts against each
+            # other - but I don't think it's currently possible for situations
+            # in which that would many any difference to occur, so I'm not
+            # implementing that now
             self._scroll_waiting = item, conditions
 
 class SimpleItemListController(ItemListController):
