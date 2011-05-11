@@ -1022,8 +1022,11 @@ class Application:
 
     def memory_stats(self):
         """Printout statistics of objects in memory."""
-        # run collection before testing
+        self._printout_memory_stats('MEMORY STATS BEFORE GARBAGE COLLECTION')
         gc.collect()
+        self._printout_memory_stats('MEMORY STATS AFTER GARBAGE COLLECTION')
+
+    def _printout_memory_stats(self, title):
         # base_classes is a list of base classes that we care about.  If you
         # want to check memory usage for a different class, add it to the
         # list.
@@ -1043,7 +1046,7 @@ class Application:
                     counts[key] = counts.get(key, 0) + 1
                     continue
         lines = [
-                'MEMORY STATS:',
+                '%s:' % title,
                 '-' * 40,
         ]
         data = counts.items()
