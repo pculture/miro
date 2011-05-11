@@ -789,7 +789,7 @@ class DeviceItem(metadata.Store):
     def get_creation_time(self):
         try:
             return datetime.fromtimestamp(self.creation_time)
-        except ValueError:
+        except (ValueError, TypeError):
             logging.warn('DeviceItem: creation time %s invalid',
                           self.creation_time)
             return datetime.now()
