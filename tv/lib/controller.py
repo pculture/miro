@@ -109,7 +109,7 @@ class Controller:
         warning.  For dev builds, this will kick up the crash report.
         """
         if app.debugmode:
-            signals.system.failed(when, details, with_exception)
+            signals.system.failed(when, with_exception, details)
         else:
             crashreport.issue_failure_warning(when, details, with_exception)
 

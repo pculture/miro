@@ -64,6 +64,15 @@ def format_crash_report(when, exc_info, details, log_report=True):
     if exc_info:
         header += ''.join(traceback.format_exception(*exc_info))
         header += "\n"
+        # Print out a stack trace too.  The exception stack only contains
+        # calls between the try and the exception.
+        try:
+            stack = util.get_nice_stack()
+        except StandardError:
+            stack = traceback.extract_stack()
+        header += "Call Stack\n---------\n"
+        header += ''.join(traceback.format_list(stack))
+        header += "\n"
     else:
         # fake an exception with our call stack
         try:
