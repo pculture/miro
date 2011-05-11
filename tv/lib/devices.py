@@ -734,9 +734,6 @@ class DeviceItem(metadata.Store):
         metadata.Store.setup_new(self)
         self.__dict__.update(kwargs)
 
-        if 'name' in kwargs: # used to be called 'name'
-            self.title = self.name
-
         if isinstance(self.video_path, unicode):
             # make sure video path is a filename
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
@@ -744,8 +741,6 @@ class DeviceItem(metadata.Store):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
         if isinstance(self.cover_art, unicode):
             self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
-        if not self.title:
-            self.title = filename_to_unicode(os.path.basename(self.video_path))
         if self.file_format is None:
             self.file_format = filename_to_unicode(
                 os.path.splitext(self.video_path)[1])
@@ -766,6 +761,10 @@ class DeviceItem(metadata.Store):
                     self.creation_time = ctime
             if not self.metadata_version: # haven't run read_metadata yet
                 self.read_metadata()
+                if not self.get_title():
+                    self.title = filename_to_unicode(
+                        os.path.basename(self.video_path))
+
         except (OSError, IOError):
             # if there was an error reading the data from the filesystem, don't
             # bother continuing with other FS operations or starting moviedata
