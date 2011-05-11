@@ -251,5 +251,5 @@ class DeletedItemTest(MiroTestCase):
         feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
         # test that creating a file item for a path that doesn't exist doesn't
         # cause a crash
-        Item._expire_nonexisting_paths = True
+        Item._allow_nonexistent_paths = False
         FileItem("/non/existent/path/", feed.id)

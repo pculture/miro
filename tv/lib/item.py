@@ -339,6 +339,10 @@ class FileFeedParserValues(FeedParserValues):
             'releaseDateObj': datetime.min,
         }
 
+class CheckMediaError(StandardError):
+    """Error when trying to call read_metadata on an item."""
+    pass
+
 class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -347,7 +351,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     ICON_CACHE_VITAL = False
 
     # tweaked by the unittests to make things easier
-    _expire_nonexisting_paths = True
+    _allow_nonexistent_paths = False
 
     def setup_new(self, fp_values, linkNumber=0, feed_id=None, parent_id=None,
             eligibleForAutoDownload=True, channel_title=None):
@@ -1746,34 +1750,45 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         # method without either:
         # - calling moviedata.movie_data_updater.request_update(self)
         # - changing this item so that not self.in_incomplete_mdp_view
-        if self.check_deleted():
-            # check_deleted just expire()d the file or not id_exists()
-            if self.in_incomplete_mdp_view:
-                app.controller.failed_soft("check_media_file",
-                        "item in incomplete_mdp_view after check_deleted()")
-            return
+        try:
+            self._check_media_file()
+        except CheckMediaError, e:
+            app.controller.failed_soft("check_media_file", str(e), True)
+            # call path_processed since the movie data program won't run on us
+            path = self.get_filename()
+            if path is not None:
+                app.metadata_progress_updater.path_processed(path)
+            # Set our state to SKIPPED so we don't request another update.
+            self.mdp_state = moviedata.State.SKIPPED
+            self.signal_change()
+            # The file may no longer be around.  Call check_delete() in an
+            # idle callback to handle this.  We don't want to call
+            # check_delete() now because it's not safe if we're called inside
+            # setup_new().  See #17344
+            eventloop.add_idle(self.check_deleted, 'checking item deleted')
+        else:
+            moviedata.movie_data_updater.request_update(self)
+
+    def _check_media_file(self):
+        """Does the work for check_media_file()
+
+        :raises: CheckMediaError if we aren't able to check it
+        """
+        # NOTE: it is very important (#7993) that there is no way to leave this
+        # method without either:
+        # - calling moviedata.movie_data_updater.request_update(self)
+        # - changing this item so that not self.in_incomplete_mdp_view
         filename = self.get_filename()
-        if not filename:
-            # double check that we have a valid filename (see #17306)
-            app.controller.failed_soft("check_media_file",
-                    "item has no filename in check_media_file!", False)
-            self.expire()
-            # no point in soft-asserting self.in_incomplete_mdp_view here, since
-            # we just soft-failed anyway
-            return
+        if filename is None:
+            raise CheckMediaError("item has no filename")
+        if (not fileutil.exists(filename) and not
+                self._allow_nonexistent_paths):
+            raise CheckMediaError("filename doesn't exist")
         self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
             self.read_metadata()
         except IOError:
-            # if this happens the file probably exists but is not readable; it's
-            # also technically possible that the item disappeared between
-            # check_deleted and now.
-            self.expire()
-            if self.in_incomplete_mdp_view:
-                app.controller.failed_soft("check_media_file",
-                        "item in incomplete_mdp_view after expire()")
-            return
-        moviedata.movie_data_updater.request_update(self)
+            raise CheckMediaError("IOError in read_metadata()")
         if self.file_type is None:
             # if this is not overridden by movie_data_updater,
             # neither mutagen nor MDP could identify it
@@ -1895,7 +1910,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return True
         if (self.isContainerItem is not None and
                 not fileutil.exists(self.get_filename()) and
-                self._expire_nonexisting_paths):
+                not self._allow_nonexistent_paths):
             self.expire()
             return True
         return False
@@ -1950,7 +1965,7 @@ class FileItem(Item):
     """
     def setup_new(self, filename, feed_id=None, parent_id=None,
             offsetPath=None, deleted=False, fp_values=None,
-            channel_title=None, mark_seen=False, run_check_media_file=True):
+            channel_title=None, mark_seen=False):
         if fp_values is None:
             fp_values = fp_values_for_file(filename)
         Item.setup_new(self, fp_values, feed_id=feed_id, parent_id=parent_id,
@@ -1972,9 +1987,8 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        if run_check_media_file and not self.deleted:
-            eventloop.add_idle(self.check_media_file,
-                    'check media file for FileItem')
+        if not self.deleted:
+            self.check_media_file()
         self.split_item()
 
     # FileItem downloaders are always None

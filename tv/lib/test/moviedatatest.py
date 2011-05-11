@@ -114,10 +114,6 @@ class MovieDataRequestTest(MiroTestCase):
         self.audio_item = models.FileItem(mp3_path, self.feed.id)
         self.video_item = models.FileItem(webm_path, self.feed.id)
         self.other_item = models.FileItem(jpg_path, self.feed.id)
-        # force check_media_file to run now
-        self.audio_item.check_media_file()
-        self.video_item.check_media_file()
-        self.other_item.check_media_file()
 
     def tearDown(self):
         del app.testing_mdp
