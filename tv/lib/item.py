@@ -1042,6 +1042,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                     self.downloader.set_delete_files(False)
             self.remove()
         else:
+            if self.isContainerItem:
+                # remove our children, since we're about to set
+                # isContainerItem to None
+                for item in self.get_children():
+                    item.make_deleted()
+                    item.remove()
             self.delete_files()
             self.delete_external_metadata()
             self.expired = True
