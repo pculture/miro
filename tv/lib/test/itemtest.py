@@ -250,6 +250,7 @@ class DeletedItemTest(MiroTestCase):
     def test_make_item_for_nonexistent_path(self):
         feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
         # test that creating a file item for a path that doesn't exist doesn't
-        # cause a crash
+        # cause a crash.  A soft failure is okay though.
+        app.controller.failed_soft_okay = True
         Item._allow_nonexistent_paths = False
         FileItem("/non/existent/path/", feed.id)
