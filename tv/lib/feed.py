@@ -1194,6 +1194,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     channel_title=channel_title)
             if not item.matches_search(self.ufeed.searchTerm):
                 item.remove()
+            else:
+                item.check_media_file()
 
     def remember_old_items(self):
         self.old_items = set(self.items)
