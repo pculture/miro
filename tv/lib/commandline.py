@@ -84,6 +84,8 @@ def add_video(path, manual_feed=None):
     path = os.path.abspath(path)
     item_for_path = _item_exists_for_path(path)
     if item_for_path:
+        if item_for_path.deleted:
+            item_for_path.make_undeleted()
         logging.warn("Not adding duplicate video: %s",
                      path.decode('ascii', 'ignore'))
         if _command_line_videos is not None:

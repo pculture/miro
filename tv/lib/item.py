@@ -2079,10 +2079,18 @@ class FileItem(Item):
         self.delete_external_metadata()
         self._remove_from_playlists()
         self.downloadedTime = None
+        # Move to the manual feed, since from Miro's point of view the file is
+        # no longer part of a feed, or torrent container.
         self.parent_id = None
         self.feed_id = models.Feed.get_manual_feed().id
         self.deleted = True
         self.mdp_state = moviedata.State.UNSEEN
+        self.signal_change()
+
+    def make_undeleted(self):
+        self.deleted = False
+        self.mdp_state = moviedata.State.UNSEEN
+        self.check_media_file()
         self.signal_change()
 
     def delete_files(self):
