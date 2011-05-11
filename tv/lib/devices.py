@@ -49,7 +49,7 @@ from miro import signals
 from miro import conversions
 from miro import moviedata
 from miro import metadata
-from miro.util import returns_filename
+from miro.util import returns_filename, check_u
 
 from miro.plat import resources
 from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
@@ -737,7 +737,10 @@ class DeviceItem(metadata.Store):
 
         if isinstance(self.video_path, unicode):
             # make sure video path is a filename
+            self.video_path_unicode = self.video_path
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
+        else:
+            self.video_path_unicode = filename_to_unicode(self.video_path)
         if isinstance(self.screenshot, unicode):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
         if isinstance(self.cover_art, unicode):
@@ -866,17 +869,18 @@ class DeviceItem(metadata.Store):
 
         was_removed = False
         for type_ in set(('video', 'audio', 'other')) - set((self.file_type,)):
-            if self.video_path in self.device.database[type_]:
+            if self.video_path_unicode in self.device.database[type_]:
                 # clean up old types, if necessary
                 self.remove(save=False)
                 was_removed = True
                 break
 
         self._migrate_thumbnail()
-        self.device.database[self.file_type][self.video_path] = self.to_dict()
+        db = self.device.database
+        db[self.file_type][self.video_path_unicode] =  self.to_dict()
 
         if self.file_type != 'other' or was_removed:
-            self.device.database.emit('item-changed', self)
+            db.emit('item-changed', self)
 
     def to_dict(self):
         data = {}
@@ -910,6 +914,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         return value
 
     def __setitem__(self, key, value):
+        #check_u(key) commented out for the RC
         super(DeviceDatabase, self).__setitem__(key, value)
         if self.parent:
             self.parent.notify_changed()
