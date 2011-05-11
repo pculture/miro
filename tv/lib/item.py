@@ -764,6 +764,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
         if self.has_downloader() and self.downloader.is_finished():
             self.set_filename(self.downloader.get_filename())
+            self.check_media_file()
 
     getSelected, setSelected = make_simple_get_set(
         u'selected', change_needs_save=False)
