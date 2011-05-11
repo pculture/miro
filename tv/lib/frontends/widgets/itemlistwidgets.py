@@ -1253,13 +1253,6 @@ class DownloadStatusToolbar(Toolbar):
         v.pack_start(h)
         self.add(v)
 
-        app.frontend_config_watcher.connect('changed', self.on_config_change)
-
-    def on_config_change(self, obj, key, value):
-        if ((key == prefs.PRESERVE_X_GB_FREE.key
-             or key == prefs.PRESERVE_DISK_SPACE.key)):
-            self.update_free_space()
-
     def update_free_space(self):
         """Updates the free space text on the downloads tab.
 

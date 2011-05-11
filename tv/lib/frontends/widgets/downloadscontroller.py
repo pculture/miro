@@ -38,6 +38,7 @@ from miro.frontends.widgets import prefpanel
 
 from miro import messages
 from miro import downloader
+from miro import prefs
 
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
@@ -54,6 +55,13 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.widget.statusbar_vbox.pack_start(self.status_toolbar)
 
         self._update_free_space()
+
+    def on_config_change(self, obj, key, value):
+        itemlistcontroller.ItemListController.on_config_change(self, obj, key,
+                value)
+        if ((key == prefs.PRESERVE_X_GB_FREE.key
+             or key == prefs.PRESERVE_DISK_SPACE.key)):
+            self.status_toolbar.update_free_space()
 
     def make_titlebar(self):
         titlebar = DownloadTitlebar()

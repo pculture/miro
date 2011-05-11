@@ -244,8 +244,6 @@ class ItemListController(object):
                     self._handle_repeat_update)
         self.stop_handle = app.playback_manager.connect('did-stop',
                     self._handle_playback_did_stop)
-        self.config_change_handle = app.frontend_config_watcher.connect(
-                'changed', self.on_config_change)
 
     def on_config_change(self, obj, key, value):
         if (key == prefs.RESUME_VIDEOS_MODE.key or
@@ -797,11 +795,13 @@ class ItemListController(object):
         """Send the message to start tracking items."""
         self.track_item_lists()
         self.track_playback()
+        self.track_config_changes()
 
     def stop_tracking(self):
         """Send the message to stop tracking items."""
         self.cancel_track_item_lists()
         self.cancel_track_playback()
+        self.cancel_track_config_changes()
 
     def track_item_lists(self):
         if self._item_tracker_callbacks:
@@ -837,6 +837,15 @@ class ItemListController(object):
         for handle in self._playback_callbacks:
             app.playback_manager.disconnect(handle)
         self._playback_callbacks = []
+
+    def track_config_changes(self):
+        self.config_change_handle = app.frontend_config_watcher.connect(
+                'changed', self.on_config_change)
+
+    def cancel_track_config_changes(self):
+        if self.config_change_handle:
+            app.frontend_config_watcher.disconnect(self.config_change_handle)
+            self.config_change_handle = None
 
     def _on_playback_change(self, playback_manager, *args):
         # The currently playing item has changed, redraw the view to
@@ -988,9 +997,6 @@ class ItemListController(object):
             app.playback_manager.disconnect(self.repeat_handle)
         if self.stop_handle:
             app.playback_manager.disconnect(self.stop_handle)
-        if self.config_change_handle:
-            app.frontend_config_watcher.disconnect(self.config_change_handle)
-            self.config_change_handle = None
 
     def scroll_to_item(self, item, **conditions):
         """Scroll to a specific item, specified by an ItemInfo. Keyword args are
