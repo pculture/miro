@@ -31,6 +31,7 @@ from datetime import datetime
 from glob import glob
 from fnmatch import fnmatch
 import json
+import codecs
 import logging
 import os, os.path
 import shutil
@@ -978,7 +979,8 @@ def load_database(mount, countdown=0):
         db = {}
     else:
         try:
-            db = json.load(file(file_name, 'rb'))
+            fp = codecs.open(file_name, 'rb', 'utf8')
+            db = json.load(fp)
         except ValueError:
             logging.exception('JSON decode error on %s', mount)
             db = {}
