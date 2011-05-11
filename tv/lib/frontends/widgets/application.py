@@ -42,6 +42,7 @@ It also holds:
 """
 
 import cProfile
+import gc
 import os
 import logging
 import sys
@@ -90,7 +91,7 @@ from miro.frontends.widgets.window import MiroWindow
 from miro.plat.utils import get_plat_media_player_name_path
 from miro.plat import resources
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
-from miro.plat.frontends.widgets.widgetset import Rect
+from miro.plat.frontends.widgets import widgetset
 from miro import fileutil
 
 class Application:
@@ -275,7 +276,7 @@ class Application:
 
         Must return a Rect.
         """
-        return Rect(100, 300, 800, 600)
+        return widgetset.Rect(100, 300, 800, 600)
 
     def get_right_width(self):
         """Returns the width of the right side of the splitter.
@@ -1018,6 +1019,38 @@ class Application:
                         widget.redraw_now()
                 cProfile.runctx('profile_code()', globals(), locals(),
                         path)
+
+    def memory_stats(self):
+        """Printout statistics of objects in memory."""
+        # run collection before testing
+        gc.collect()
+        # base_classes is a list of base classes that we care about.  If you
+        # want to check memory usage for a different class, add it to the
+        # list.
+        base_classes = [
+                widgetset.Widget,
+                itemlistcontroller.ItemListController,
+        ]
+        # gc.get_objects() returns all objects tracked by the garbage
+        # collector.  I'm pretty sure this should all of our python objects.
+        objects = gc.get_objects()
+        counts = {}
+        for obj in objects:
+            for base_class in base_classes:
+                if isinstance(obj, base_class):
+                    key = '%s: %s' % (base_class.__name__,
+                            obj.__class__.__name__)
+                    counts[key] = counts.get(key, 0) + 1
+                    continue
+        lines = [
+                'MEMORY STATS:',
+                '-' * 40,
+        ]
+        data = counts.items()
+        data.sort()
+        for label, count in data:
+            lines.append('%-30s: %s' % (label, count))
+        logging.debug('\n'.join(lines))
 
     def on_close(self):
         """This is called when the close button is pressed."""

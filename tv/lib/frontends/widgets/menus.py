@@ -389,6 +389,7 @@ def get_menu():
                 MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
                 MenuItem(_("Test Soft Crash Reporter"),
                     "TestSoftCrashReporter"),
+                MenuItem(_("Memory Stats"), "MemoryStats")
                 ])
 
         mbar.menuitems.append(dev_menu)
@@ -725,6 +726,10 @@ def on_test_crash_reporter():
 def on_test_soft_crash_reporter():
     app.widgetapp.handle_soft_failure("testing soft crash reporter",
             'intentional error', with_exception=False)
+
+@action_handler("MemoryStats")
+def on_memory_stats():
+    app.widgetapp.memory_stats()
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to
