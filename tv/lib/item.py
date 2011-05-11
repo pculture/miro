@@ -1783,7 +1783,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             raise CheckMediaError("item has no filename")
         if (not fileutil.exists(filename) and not
                 self._allow_nonexistent_paths):
-            raise CheckMediaError("filename doesn't exist")
+            raise CheckMediaError("%s doesn't exist" % filename)
         self.file_type = filetypes.item_file_type_for_filename(filename)
         try:
             self.read_metadata()

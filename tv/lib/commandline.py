@@ -52,6 +52,7 @@ from miro import dialogs
 from miro import autodiscover
 from miro import subscription
 from miro import feed
+from miro import fileutil
 from miro import item
 from miro import itemsource
 from miro import httpclient
@@ -98,6 +99,8 @@ def add_video(path, manual_feed=None):
 
 @eventloop.idle_iterator
 def add_videos(paths):
+    # filter out non-existent paths
+    paths = [p for p in paths if fileutil.exists(p)]
     for path in paths:
         app.metadata_progress_updater.will_process_path(path)
     path_iter = iter(paths)
