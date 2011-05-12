@@ -375,7 +375,6 @@ class VideoDetailsWidget(Background):
 
     def handle_delete(self, widget):
         item_info = self.item_info
-        app.playback_manager.on_movie_finished()
         app.widgetapp.remove_items([item_info])
         self.reset()
 

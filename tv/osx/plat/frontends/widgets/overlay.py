@@ -335,7 +335,6 @@ class OverlayPalette (NSWindowController):
     
     def expireNow_(self, sender):
         item_info = self.item_info
-        app.playback_manager.on_movie_finished()
         app.widgetapp.remove_items([item_info])
         
     def share_(self, sender):

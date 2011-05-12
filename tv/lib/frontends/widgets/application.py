@@ -500,11 +500,15 @@ class Application:
         # item currently playing
         if not selection and app.playback_manager.is_playing:
             selection = [app.playback_manager.get_playing_item()]
-            if selection[0]:
-                app.playback_manager.on_movie_finished()
 
         if not selection:
             return
+
+        def playback_finished_if_playing_selection():
+            if app.playback_manager.is_playing:
+                item = app.playback_manager.get_playing_item()
+                if item in selection:
+                    app.playback_manager.on_movie_finished()
 
         external_count = len([s for s in selection if s.is_external])
         failed_count = len([s for s in selection if s.download_info and
@@ -513,6 +517,7 @@ class Application:
         total_count = len(selection)
 
         if total_count == 1 and external_count == folder_count == 0:
+            playback_finished_if_playing_selection()
             messages.DeleteVideos([selection[0]]).send_to_backend()
             return
 
@@ -576,10 +581,12 @@ class Application:
 
         if ret in (dialogs.BUTTON_OK, dialogs.BUTTON_DELETE_FILE,
                 dialogs.BUTTON_DELETE):
+            playback_finished_if_playing_selection()
             for mem in selection:
                 to_delete.append(mem)
 
         elif ret == dialogs.BUTTON_REMOVE_ENTRY:
+            playback_finished_if_playing_selection()
             for mem in selection:
                 if mem.is_external:
                     to_remove.append(mem)
