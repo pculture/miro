@@ -51,6 +51,60 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.gtcache import gettext as _
 
+class BrowserLoadingImage(widgetset.HBox):
+
+    THROBBER_WIDTH = 55
+    DOWNLOAD_WIDTH = 62
+
+    def __init__(self):
+        widgetset.HBox.__init__(self)
+        self.download = imagepool.get_image_display(
+            resources.path('images/download-started.png'))
+        self.throbber_shown = False
+        self.download_shown = False
+        self._width = None
+        self.set_size_request(62, 37)
+
+    @staticmethod
+    def get_throbber():
+        # XXX this is a hack; having one throbber attribute doesn't seem to
+        # correctly re-pack it a second time
+        return widgetset.AnimatedImageDisplay(
+            resources.path('images/throbber.gif'))
+
+    def do_size_allocated(self, width, height):
+        if self._width != width:
+            self._width = width
+            self.redraw()
+
+    def clear(self):
+        for widget in list(self.children):
+            self.remove(widget)
+
+    def redraw(self):
+        self.clear()
+        available = self._width
+        right_padding = 0
+        if self.download_shown:
+            self.pack_start(self.download)
+            available -= self.DOWNLOAD_WIDTH
+            right_padding = self.DOWNLOAD_WIDTH
+        if (self.throbber_shown and
+            available >= (self.THROBBER_WIDTH + right_padding)):
+            self.pack_start(widgetutil.align_center(self.get_throbber(),
+                                                    right_pad=right_padding),
+                            expand=True)
+
+    def set_throbber(self, value):
+        if value != self.throbber_shown:
+            self.throbber_shown = value
+            self.redraw()
+
+    def set_download(self, value):
+        if value != self.download_shown:
+            self.download_shown = value
+            self.redraw()
+
 class BrowserToolbar(itemlistwidgets.Titlebar):
     """
     Forward/back/home & "display in browser" buttons
@@ -114,21 +168,9 @@ class BrowserToolbar(itemlistwidgets.Titlebar):
         hbox.pack_end(widgetutil.align_middle(self.download_button,
                                               right_pad=4))
 
-        download_image = imagepool.get_image_display(
-            resources.path('images/download-started.png'))
-        self.download_started = widgetutil.HideableWidget(
-            widgetutil.align_middle(download_image,
-                                    left_pad=20,
-                                    right_pad
-                                    =20))
-        hbox.pack_start(self.download_started)
-
-        throbber = widgetset.AnimatedImageDisplay(
-            resources.path('images/throbber.gif'))
-        self.loading_icon = widgetutil.HideableWidget(
-            widgetutil.align(throbber, 0.5, 0, 1, 0,
-                             top_pad=8))
-        hbox.pack_start(self.loading_icon, expand=True)
+        self.loading_icon = BrowserLoadingImage()
+        hbox.pack_start(widgetutil.align_middle(self.loading_icon),
+                        expand=True)
 
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
@@ -271,13 +313,13 @@ class BrowserNav(widgetset.VBox):
     def _on_net_start(self, widget):
         self.toolbar.stop_button.enable()
         self.enable_disable_navigation()
-        self.toolbar.loading_icon.show()
+        self.toolbar.loading_icon.set_throbber(True)
         self.toolbar.download_button.hide()
 
     def _on_net_stop(self, widget):
         self.toolbar.stop_button.disable()
         self.enable_disable_navigation()
-        self.toolbar.loading_icon.hide()
+        self.toolbar.loading_icon.set_throbber(False)
         logging.debug("checking %s", self.browser.get_current_url())
         if flashscraper.is_maybe_flashscrapable(
             unicode(self.browser.get_current_url())):
@@ -310,6 +352,6 @@ class BrowserNav(widgetset.VBox):
         """
         Shows the download started icon for 5 seconds, then hide it.
         """
-        self.toolbar.download_started.show()
-        timer.add(5, lambda: self.toolbar.download_started.hide())
+        self.toolbar.loading_icon.set_download(True)
+        timer.add(5, lambda: self.toolbar.loading_icon.set_download(False))
 
