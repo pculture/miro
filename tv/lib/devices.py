@@ -851,9 +851,9 @@ class DeviceItem(metadata.Store):
         self._migrate_image_field('cover_art')
 
     def remove(self, save=True):
-        for file_type in ['video', 'audio', 'other']:
+        for file_type in [u'video', u'audio', u'other']:
             if self.video_path in self.device.database[file_type]:
-                del self.device.database[file_type][self.video_path]
+                del self.device.database[file_type][self.id]
         if save:
             self.device.database.emit('item-removed', self)
 
