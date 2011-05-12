@@ -936,8 +936,9 @@ class DaapClient(object):
             # self.conn may be invalid at this point but that's okay, finally
             # block doesn't raise exception but just prints it out.
             self.session = None
-            self.conn.close()
-            self.conn = None
+            if self.conn:
+                self.conn.close()
+                self.conn = None
 
     def daap_get_file_request(self, file_id, enclosure=None):
         """daap_file_get_url(file_id) -> url
