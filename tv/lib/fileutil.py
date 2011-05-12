@@ -75,10 +75,6 @@ def getmtime(path):
     return time
 
 def exists(path):
-    if not path:
-        # DeprecationWarning
-        logging.debug("special case used in fileutil.exists(): path=%r", path)
-        return False
     path = expand_filename(path)
     return os.path.exists(path)
 

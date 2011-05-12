@@ -1896,11 +1896,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # deleted, so we were removed as well.  (#11979)
             return
         eventloop.add_idle(self.check_deleted, 'checking item deleted')
-        if self.screenshot and not fileutil.exists(self.screenshot):
+        if self.screenshot is not None and not fileutil.exists(self.screenshot):
             logging.warn("file disappeared: %s", self.screenshot)
             self.screenshot = None
             self.signal_change()
-        if self.cover_art and not fileutil.exists(self.cover_art):
+        if self.cover_art is not None and not fileutil.exists(self.cover_art):
             logging.warn("file disappeared: %s", self.cover_art)
             self.cover_art = None
             self.signal_change()
@@ -1914,8 +1914,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         if not self.id_exists():
             return True
+        filename = self.get_filename()
         if (self.isContainerItem is not None and
-                not fileutil.exists(self.get_filename()) and
+                not (filename is not None and fileutil.exists(filename)) and
                 not self._allow_nonexistent_paths):
             self.expire()
             return True
@@ -2066,7 +2067,7 @@ class FileItem(Item):
                 old_parent = None
         else:
             old_parent = None
-        if not fileutil.exists(self.filename):
+        if self.filename is not None and not fileutil.exists(self.filename):
             # item whose file has been deleted outside of Miro
             self.remove()
         elif self.has_parent():
@@ -2153,7 +2154,7 @@ filename was %s""", stringify(self.filename))
         new_filename = os.path.join(newdir, self.shortFilename)
         if self.filename == new_filename:
             return
-        if fileutil.exists(self.filename):
+        if self.filename is not None and fileutil.exists(self.filename):
             new_filename, fp = next_free_filename(new_filename)
             def callback():
                 self.filename = new_filename
