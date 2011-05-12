@@ -695,7 +695,7 @@ class DeviceItemHandler(ItemHandler):
         if info.is_playing != is_playing:
             database = info.device.database
             info.is_playing = is_playing
-            database[info.file_type][info.id]['is_playing'] = is_playing
+            database[info.file_type][info.id][u'is_playing'] = is_playing
             info.device.database.emit('item-changed', info)
 
 def setup_handlers():
