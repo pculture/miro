@@ -236,7 +236,7 @@ class DatabaseItemSource(ItemSource):
             info['up_total'] = status.get('uploaded', 0)
             info['down_total'] = status.get('currentSize', 0)
             if info['down_total'] > 0:
-                info['up_down_ratio'] = float(info['up_total'] /
+                info['up_down_ratio'] = (float(info['up_total']) /
                                               info['down_total'])
 
         return messages.ItemInfo(item.id, **info)
