@@ -2117,8 +2117,7 @@ class FileItem(Item):
             logging.warn("delete_files error:\n%s", traceback.format_exc())
 
     def download(self, autodl=False):
-        self.deleted = False
-        self.signal_change()
+        self.make_undeleted()
 
     def set_filename(self, filename):
         Item.set_filename(self, filename)
