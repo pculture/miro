@@ -1678,6 +1678,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         info = message.info
         state = GlobalState.get_singleton()
         state.item_details_expanded = info.item_details_expanded
+        state.guide_sidebar_expanded = info.guide_sidebar_expanded
         state.signal_change()
 
     def _get_display_states(self):

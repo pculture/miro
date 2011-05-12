@@ -340,6 +340,13 @@ class WidgetStateStore(object):
         self.global_info.item_details_expanded[view_type] = expanded
         self._save_global_state()
 
+    def get_guide_sidebar_expanded(self):
+        return self.global_info.guide_sidebar_expanded
+
+    def set_guide_sidebar_expanded(self, expanded):
+        self.global_info.guide_sidebar_expanded = expanded
+        self._save_global_state()
+
 # Real ViewState properties:
 
     def get_scroll_position(self, display_type, display_id, view_type):

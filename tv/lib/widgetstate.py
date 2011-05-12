@@ -79,3 +79,4 @@ class GlobalState(DDBObject):
                 LIST_VIEW: True,
                 STANDARD_VIEW: False,
         }
+        self.guide_sidebar_expanded = True

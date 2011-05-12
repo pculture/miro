@@ -1802,6 +1802,7 @@ class GlobalInfo(object):
     """
     def __init__(self, global_info):
         self.item_details_expanded = global_info.item_details_expanded
+        self.guide_sidebar_expanded = global_info.guide_sidebar_expanded
 
 class ViewInfo(object):
     """Contains the properties that are unique to each View

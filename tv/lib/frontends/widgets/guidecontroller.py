@@ -33,6 +33,7 @@ import operator
 
 from miro.gtcache import gettext as _
 
+from miro import app
 from miro import messages
 
 from miro.frontends.widgets import imagebutton
@@ -257,13 +258,17 @@ class GuideSidebar(widgetset.HBox):
         self.pack_start(expander)
 
         self.details = GuideSidebarDetails()
-        self.pack_start(self.details)
+        if app.widget_state.get_guide_sidebar_expanded():
+            self.pack_start(self.details)
+        else:
+            expander.set_expanded(False)
 
     def on_expander_clicked(self, expander):
         if expander.expanded: # we're open, let's close
             self.remove(self.details)
         else:
             self.pack_start(self.details)
+        app.widget_state.set_guide_sidebar_expanded(not expander.expanded)
         expander.set_expanded(not expander.expanded)
 
 class GuideTab(widgetset.HBox):

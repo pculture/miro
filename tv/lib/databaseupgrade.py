@@ -3286,3 +3286,8 @@ def upgrade157(cursor):
     # but that's insane because it whacks all podcast history of what
     # miro has seen!
     pass
+
+def upgrade158(cursor):
+    cursor.execute("ALTER TABLE global_state ADD COLUMN guide_sidebar_expanded integer")
+    cursor.execute("UPDATE global_state SET guide_sidebar_expanded=1")
+
