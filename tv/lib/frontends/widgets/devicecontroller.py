@@ -305,7 +305,7 @@ class SyncWidget(widgetset.VBox):
 
     def set_device(self, device):
         self.device = device
-        sync = self.device.database.setdefault('sync', {})
+        sync = self.device.database.setdefault(u'sync', {})
         if self.file_type not in sync:
             this_sync = {}
         else:
@@ -315,18 +315,18 @@ class SyncWidget(widgetset.VBox):
         # OS X doesn't send the callback when we toggle it manually (#15392)
         self.sync_library_toggled(self.sync_library)
 
-        if self.file_type != 'playlists':
-            all_feeds = this_sync.get('all', True)
+        if self.file_type != u'playlists':
+            all_feeds = this_sync.get(u'all', True)
             self.sync_unwatched.set_checked(not all_feeds)
 
-        for item in this_sync.get('items', []):
+        for item in this_sync.get(u'items', []):
             if item in self.info_map:
                 self.info_map[item].set_checked(True)
 
     def select_clicked(self, obj, value):
         self.bulk_change = True
-        this_sync = self.device.database['sync'][self.file_type]
-        items = set(this_sync.get('items', ()))
+        this_sync = self.device.database[u'sync'][self.file_type]
+        items = set(this_sync.get(u'items', ()))
         for key, box in self.info_map.items():
             box.set_checked(value)
             if value:
@@ -336,7 +336,7 @@ class SyncWidget(widgetset.VBox):
         self.bulk_change = False
         message = messages.ChangeDeviceSyncSetting(self.device,
                                                    self.file_type,
-                                                   'items', list(items))
+                                                   u'items', list(items))
         message.send_to_backend()
         self.emit('changed')
 
@@ -354,20 +354,20 @@ class SyncWidget(widgetset.VBox):
             self.feed_list.enable()
         else:
             self.feed_list.disable()
-        this_sync = self.device.database['sync'].get(self.file_type, {})
-        value = this_sync.get('enabled', None)
+        this_sync = self.device.database[u'sync'].get(self.file_type, {})
+        value = this_sync.get(u'enabled', None)
         if not self.bulk_change and checked != value:
             message = messages.ChangeDeviceSyncSetting(self.device,
                                                        self.file_type,
-                                                       'enabled', checked)
+                                                       u'enabled', checked)
             message.send_to_backend()
             self.emit('changed')
         return checked # make it easy for subclass
 
     def feed_toggled(self, obj, info):
-        this_sync = self.device.database['sync'][self.file_type]
+        this_sync = self.device.database[u'sync'][self.file_type]
         key = self.info_key(info)
-        items = set(this_sync.get('items', []))
+        items = set(this_sync.get(u'items', []))
         changed = False
         if obj.get_checked():
             if key not in items:
@@ -379,7 +379,7 @@ class SyncWidget(widgetset.VBox):
         if not self.bulk_change and changed:
             message = messages.ChangeDeviceSyncSetting(self.device,
                                                        self.file_type,
-                                                       'items', list(items))
+                                                       u'items', list(items))
             message.send_to_backend()
             self.emit('changed')
 
@@ -387,7 +387,7 @@ class SyncWidget(widgetset.VBox):
         if not self.sync_library.get_checked():
             return []
         feeds = []
-        items = self.device.database['sync'][self.file_type].get('items', ())
+        items = self.device.database[u'sync'][self.file_type].get(u'items', ())
         for key in items:
             feed = self.find_info_by_key(key)
             if feed is not None:
@@ -395,7 +395,7 @@ class SyncWidget(widgetset.VBox):
         return feeds
 
 class PodcastSyncWidget(SyncWidget):
-    file_type = 'podcasts'
+    file_type = u'podcasts'
     title = _("Sync Podcasts")
 
     def _pack_extra_buttons(self):
@@ -405,11 +405,11 @@ class PodcastSyncWidget(SyncWidget):
 
     def unwatched_toggled(self, obj):
         all_items = (not obj.get_checked())
-        current = self.device.database['sync'][self.file_type].get('all')
+        current = self.device.database[u'sync'][self.file_type].get(u'all')
         if current != all_items:
             message = messages.ChangeDeviceSyncSetting(self.device,
                                                        self.file_type,
-                                                       'all', all_items)
+                                                       u'all', all_items)
             message.send_to_backend()
             self.emit('changed')
 
@@ -427,7 +427,7 @@ class PodcastSyncWidget(SyncWidget):
         return app.tabs['feed'].find_feed_with_url(key)
 
 class PlaylistSyncWidget(SyncWidget):
-    file_type = 'playlists'
+    file_type = u'playlists'
     list_label = _("Sync These Playlists")
     title = _("Sync Playlists")
 
@@ -473,13 +473,13 @@ class DeviceSettingsWidget(widgetset.Background):
                     self.audio_conversion_values.append(converter.identifier)
         widgets = []
         for text, setting, type_ in (
-            (_("Name of Device"), 'name', 'text'),
-            (_("Video Conversion"), 'video_conversion', 'video_conversion'),
-            (_("Audio Conversion"), 'audio_conversion', 'audio_conversion'),
-            (_("Store video in this directory"), 'video_path', 'text'),
-            (_("Store audio in this directory"), 'audio_path', 'text'),
+            (_("Name of Device"), u'name', 'text'),
+            (_("Video Conversion"), u'video_conversion', 'video_conversion'),
+            (_("Audio Conversion"), u'audio_conversion', 'audio_conversion'),
+            (_("Store video in this directory"), u'video_path', 'text'),
+            (_("Store audio in this directory"), u'audio_path', 'text'),
             (_("Always show this device, even if "
-               "'show all devices' is turned off"), 'always_show', 'bool')
+               "'show all devices' is turned off"), u'always_show', 'bool')
             ):
             if type_ == 'text':
                 widget = widgetset.TextEntry()
@@ -522,23 +522,23 @@ class DeviceSettingsWidget(widgetset.Background):
             self.create_table()
         else:
             self.device = device
-        device_settings = device.database.get('settings', {})
+        device_settings = device.database.get(u'settings', {})
         self.bulk_change = True
-        for setting in 'name', 'video_path', 'audio_path':
+        for setting in u'name', u'video_path', u'audio_path':
             self.boxes[setting].set_text(device_settings.get(
                     setting,
                     getattr(device.info, setting)))
-        for conversion in 'video', 'audio':
-            value = device_settings.get('%s_conversion' % conversion)
-            if conversion == 'video':
+        for conversion in u'video', u'audio':
+            value = device_settings.get(u'%s_conversion' % conversion)
+            if conversion == u'video':
                 index = self.video_conversion_values.index(value)
             else:
                 index = self.audio_conversion_values.index(value)
-            self.boxes['%s_conversion' % conversion].set_selected(index)
+            self.boxes[u'%s_conversion' % conversion].set_selected(index)
         if getattr(device.info, 'generic', False):
             self.boxes['always_show'].enable()
             self.boxes['always_show'].set_checked(
-                device_settings.get('always_show', False))
+                device_settings.get(u'always_show', False))
         else:
             self.boxes['always_show'].disable()
             self.boxes['always_show'].set_checked(True)
@@ -562,8 +562,8 @@ class DeviceSettingsWidget(widgetset.Background):
             value = widget.get_text()
         elif setting == 'always_show':
             value = widget.get_checked()
-        if value != self.device.database.get('settings', {}).get(setting,
-                                                                 not value):
+        if value != self.device.database.get(u'settings', {}).get(setting,
+                                                                  not value):
             message = messages.ChangeDeviceSetting(self.device, setting, value)
             message.send_to_backend()
 
@@ -648,15 +648,15 @@ class DeviceMountedView(widgetset.VBox):
     def _get_sync_state(self):
         sync_type = {}
         sync_ids = {}
-        for file_type in 'podcasts', 'playlists':
-            this_sync = self.device.database['sync'].get(file_type, {})
+        for file_type in u'podcasts', u'playlists':
+            this_sync = self.device.database[u'sync'].get(file_type, {})
             widget = self.tabs[file_type].child
-            sync_type[file_type] = (this_sync.get('all', True) and 'all' or
-                                    'unwatched')
+            sync_type[file_type] = (this_sync.get(u'all', True) and u'all' or
+                                    u'unwatched')
             sync_ids[file_type] = widget.checked_feeds()
-        return (sync_type['podcasts'],
-                sync_ids['podcasts'],
-                sync_ids['playlists'])
+        return (sync_type[u'podcasts'],
+                sync_ids[u'podcasts'],
+                sync_ids[u'playlists'])
 
     def sync_settings_changed(self, obj):
         message = messages.QuerySyncInformation(self.device)
@@ -865,12 +865,12 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
             self.titlebar_class = itemlistwidgets.VideosTitlebar
 
         itemlistcontroller.AudioVideoItemsController.__init__(self)
-        if ('%s_sort_state' % tab_type) in device.database:
-            sort_key, ascending = device.database['%s_sort_state' % tab_type]
+        if (u'%s_sort_state' % tab_type) in device.database:
+            sort_key, ascending = device.database[u'%s_sort_state' % tab_type]
             for view in self.views.keys():
                 self.on_sort_changed(self, sort_key, ascending, view)
-        if ('%s_view' % tab_type) in device.database:
-            view_name = device.database['%s_view' % tab_type]
+        if (u'%s_view' % tab_type) in device.database:
+            view_name = device.database[u'%s_view' % tab_type]
             if view_name  == u'list':
                 view_type = WidgetStateStore.get_list_view_type()
             else:

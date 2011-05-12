@@ -491,7 +491,7 @@ class DeviceSyncManager(object):
             os.makedirs(self.video_target_folder)
 
     def _get_path_from_setting(self, setting):
-        device_settings = self.device.database.setdefault('settings', {})
+        device_settings = self.device.database.setdefault(u'settings', {})
         device_path = device_settings.get(setting)
         if device_path is None:
             return getattr(self.device.info, setting)
@@ -502,11 +502,11 @@ class DeviceSyncManager(object):
         self.device = device
 
     def add_items(self, item_infos):
-        device_settings = self.device.database['settings']
+        device_settings = self.device.database[u'settings']
         device_info = self.device.info
-        audio_conversion = (device_settings.get('audio_conversion') or
+        audio_conversion = (device_settings.get(u'audio_conversion') or
                             device_info.audio_conversion)
-        video_conversion = (device_settings.get('video_conversion') or
+        video_conversion = (device_settings.get(u'video_conversion') or
                             device_info.video_conversion)
         self.total += len(item_infos)
         self._send_sync_changed()
@@ -655,7 +655,7 @@ class DeviceSyncManager(object):
         device_item._migrate_thumbnail()
         database = self.device.database
         database.setdefault(device_item.file_type, [])
-        database[device_item.file_type][device_item.video_path] = \
+        database[device_item.file_type][device_item.id] = \
             device_item.to_dict()
         database.emit('item-added', device_item)
 
@@ -736,11 +736,11 @@ class DeviceItem(metadata.Store):
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
-            # make sure video path is a filename
-            self.video_path_unicode = self.video_path
+            # make sure video path is a filename and ID is Unicode
+            self.id = self.video_path
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         else:
-            self.video_path_unicode = filename_to_unicode(self.video_path)
+            self.id = filename_to_unicode(self.video_path)
         if isinstance(self.screenshot, unicode):
             self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
         if isinstance(self.cover_art, unicode):
@@ -750,9 +750,6 @@ class DeviceItem(metadata.Store):
                 os.path.splitext(self.video_path)[1])
             if self.file_type == 'audio':
                 self.file_format = self.file_format + ' audio'
-
-        # make sure ID is unicode
-        self.id = filename_to_unicode(self.video_path)
 
         try: # filesystem operations
             if self.size is None:
@@ -867,9 +864,13 @@ class DeviceItem(metadata.Store):
             self.remove()
             return
 
+        if not isinstance(self.file_type, unicode):
+            self.file_type = unicode(self.file_type)
+
         was_removed = False
-        for type_ in set(('video', 'audio', 'other')) - set((self.file_type,)):
-            if self.video_path_unicode in self.device.database[type_]:
+        for type_ in set((u'video', u'audio', u'other')) - set(
+            (self.file_type,)):
+            if self.id in self.device.database[type_]:
                 # clean up old types, if necessary
                 self.remove(save=False)
                 was_removed = True
@@ -877,7 +878,7 @@ class DeviceItem(metadata.Store):
 
         self._migrate_thumbnail()
         db = self.device.database
-        db[self.file_type][self.video_path_unicode] =  self.to_dict()
+        db[self.file_type][self.id] =  self.to_dict()
 
         if self.file_type != 'other' or was_removed:
             db.emit('item-changed', self)
@@ -885,9 +886,9 @@ class DeviceItem(metadata.Store):
     def to_dict(self):
         data = {}
         for k, v in self.__dict__.items():
-            if v is not None and k not in ('device', 'file_type', 'id',
-                                           'video_path', '_deferred_update'):
-                if ((k == 'screenshot' or k == 'cover_art')):
+            if v is not None and k not in (u'device', u'file_type', u'id',
+                                           u'video_path', u'_deferred_update'):
+                if ((k == u'screenshot' or k == u'cover_art')):
                     v = filename_to_unicode(v)
                 data[k] = v
         return data
@@ -906,6 +907,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         self.did_change = False
 
     def __getitem__(self, key):
+        check_u(key)
         value = super(DeviceDatabase, self).__getitem__(key)
         if isinstance(value, dict) and not isinstance(value, DeviceDatabase):
             value = DeviceDatabase(value, self.parent or self)
@@ -914,7 +916,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         return value
 
     def __setitem__(self, key, value):
-        #check_u(key) commented out for the RC
+        check_u(key)
         super(DeviceDatabase, self).__setitem__(key, value)
         if self.parent:
             self.parent.notify_changed()
@@ -1028,13 +1030,14 @@ def clean_database(device):
                                            item_path))
     known_files = set()
     to_remove = []
-    for item_type in ('video', 'audio', 'other'):
+    for item_type in (u'video', u'audio', u'other'):
         device.database.setdefault(item_type, {})
-        for item_path in device.database[item_type]:
+        for item_path_unicode in device.database[item_type]:
+            item_path = utf8_to_filename(item_path_unicode.encode('utf8'))
             if _exists(item_path):
                 known_files.add(os.path.normcase(item_path))
             else:
-                to_remove.append((item_type, item_path))
+                to_remove.append((item_type, item_path_unicode))
 
     if to_remove:
         device.database.set_bulk_mode(True)
@@ -1053,7 +1056,6 @@ def scan_device_for_files(device):
     known_files = clean_database(device)
     item_data = []
     start = time.time()
-
     def _continue():
         if not app.device_manager.running: # user quit, so we will too
             logging.debug('stopping scan on %s: user quit', device.mount)
@@ -1074,9 +1076,9 @@ def scan_device_for_files(device):
         if os.path.normcase(short_filename) in known_files:
             continue
         if filetypes.is_video_filename(ufilename):
-            item_type = 'video'
+            item_type = u'video'
         elif filetypes.is_audio_filename(ufilename):
-            item_type = 'audio'
+            item_type = u'audio'
         if item_type is not None:
             item_data.append((ufilename, item_type))
             app.metadata_progress_updater.will_process_path(filename,
@@ -1092,7 +1094,7 @@ def scan_device_for_files(device):
         # save the items we found in that case
         yield # yield after prep work
 
-        device.database.setdefault('sync', {})
+        device.database.setdefault(u'sync', {})
         logging.debug('scanned %s, found %i files (%i total)',
                       device.mount, len(item_data),
                       len(known_files) + len(item_data))

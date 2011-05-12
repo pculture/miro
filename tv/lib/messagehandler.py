@@ -1712,7 +1712,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):
-        message.device.database['device_name'] = message.name
+        message.device.database[u'device_name'] = message.name
         app.device_manager.device_changed(message.device.id,
                                           name=message.name,
                                           mount=message.device.mount,
@@ -1720,21 +1720,21 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                           remaining=message.device.remaining)
 
     def handle_save_device_sort(self, message):
-        db_entry = '%s_sort_state' % message.tab_type
+        db_entry = u'%s_sort_state' % message.tab_type
         message.device.database[db_entry] = (message.key, message.ascending)
 
     def handle_save_device_view(self, message):
-        message.device.database['%s_view' % message.tab_type] = message.view
+        message.device.database[u'%s_view' % message.tab_type] = message.view
 
     def handle_change_device_sync_setting(self, message):
         db = message.device.database
-        this_sync = db['sync'].setdefault(message.file_type, {})
+        this_sync = db[u'sync'].setdefault(message.file_type, {})
         this_sync[message.setting] = message.value
 
     def handle_change_device_setting(self, message):
         device = message.device
-        device.database.setdefault('settings', {})
-        device.database['settings'][message.setting] = message.value
+        device.database.setdefault(u'settings', {})
+        device.database[u'settings'][message.setting] = message.value
         if message.setting == 'name':
             device.name = message.value
             # need to send a changed message
@@ -1758,21 +1758,21 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     @staticmethod
     def _get_sync_items_for_message(message):
-        sync = message.device.database['sync']
+        sync = message.device.database[u'sync']
         views = []
         infos = set()
-        if sync.setdefault('podcasts', {}).get('enabled', False):
-            for url in sync['podcasts'].setdefault('items', []):
+        if sync.setdefault(u'podcasts', {}).get(u'enabled', False):
+            for url in sync[u'podcasts'].setdefault(u'items', []):
                 feed_ = lookup_feed(url)
                 if feed_ is not None:
-                    if sync['podcasts'].get('all', True):
+                    if sync[u'podcasts'].get(u'all', True):
                         view = feed_.downloaded_items
                     else:
                         view = feed_.unwatched_items
                     views.append(view)
 
-        if sync.setdefault('playlists', {}).get('enabled', False):
-            for name in sync['playlists'].setdefault('items', []):
+        if sync.setdefault(u'playlists', {}).get(u'enabled', False):
+            for name in sync[u'playlists'].setdefault(u'items', []):
                 try:
                     playlist_ = SavedPlaylist.get_by_title(name)
                 except database.ObjectNotFoundError:

@@ -548,7 +548,7 @@ class DeviceItemSource(ItemSource):
         was_type = False
         if item.id in self.info_cache:
             was_type = (
-                self.info_cache[item.video_path].file_type == self.type)
+                self.info_cache[item.id].file_type == self.type)
         if item.file_type == self.type or was_type:
             self.emit("removed", item.id)
             self.info_cache.pop(item.video_path, None)
@@ -624,22 +624,22 @@ class DeviceItemSource(ItemSource):
         _item_info_for = self._item_info_for
         data = self.device.database[type_]
 
-        def _cache(video_path):
-            if video_path in info_cache:
-                return info_cache[video_path]
+        def _cache(id_):
+            if id_ in info_cache:
+                return info_cache[id_]
             else:
-                info = info_cache[video_path] = _item_info_for(
+                info = info_cache[id_] = _item_info_for(
                     DeviceItem(
-                        video_path=video_path,
+                        video_path=id_,
                         file_type=type_,
                         device=device,
-                        **data[video_path]))
+                        **data[id_]))
                 return info
 
         def _all_videos():
-            for video_path in list(data.keys()):
+            for id_ in list(data.keys()):
                 try:
-                    yield _cache(video_path)
+                    yield _cache(id_)
                 except (OSError, IOError): # couldn't find the file
                     pass
 
