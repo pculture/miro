@@ -538,6 +538,14 @@ class SharingItemTracker(SourceTrackerBase):
 
         SourceTrackerBase.__init__(self)
 
+    def _make_changed_list(self, changed):
+        retval = []
+        for obj in changed:
+            info = self.info_factory(obj)
+            retval.append(info)
+            self._last_sent_info[obj.id] = info
+        return retval
+
 class DeviceItemTracker(SourceTrackerBase):
     type = u'device'
     def __init__(self, device):
