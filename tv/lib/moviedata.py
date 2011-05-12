@@ -200,10 +200,16 @@ class MovieDataUpdater(signals.SignalEmitter):
             raise Shutdown
         try:
             results = self.process_with_movie_data_program(mdi)
+        except ProcessHung:
+            self.update_failed(mdi.item)
+            # this kind of error is expected; just a warning
+            logging.warning("Movie data process hung, killing it. File was: %r",
+                    mdi.video_path)
         except StandardError:
             self.update_failed(mdi.item)
             signals.system.failed_exn(
-                "When running external movie data program")
+                "When running external movie data program for %r" %
+                mdi.video_path)
         else:
             self.update_finished(mdi.item, *results)
         if hasattr(app, 'metadata_progress_updater'): # hack for unittests
