@@ -44,11 +44,6 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro import filetypes
-from miro import models
-from miro import filetags
-from miro.filetags import METADATA_VERSION
-from miro.fileobject import FilenameType
 from miro.plat.utils import (movie_data_program_info,
                              thread_body)
 from miro.errors import Shutdown

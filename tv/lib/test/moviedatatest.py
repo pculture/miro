@@ -8,6 +8,7 @@ import json
 from os import path
 
 from miro import moviedata
+from miro import filetags
 from miro import metadata
 from miro import app
 from miro import models
@@ -89,7 +90,7 @@ class MovieDataTest(EventLoopTest):
             actual = self.process_file(FilenameType(filename))
             self.assertNotEqual(actual.mdp_state, None, filename)
             del actual['mdp_state']
-            expected['metadata_version'] = moviedata.METADATA_VERSION
+            expected['metadata_version'] = filetags.METADATA_VERSION
             expected['test'], actual.test = filename, filename
             if hasattr(actual, 'cover_art'):
                 actual.cover_art = bool(actual.cover_art)

@@ -43,7 +43,6 @@ from miro.util import (check_u, returns_unicode, check_f, returns_filename,
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
 
 from miro.download_utils import clean_filename, next_free_filename
-from miro.feedparser import FeedParserDict
 
 from miro.database import (DDBObject, ObjectNotFoundError,
                            DatabaseConstraintError)
