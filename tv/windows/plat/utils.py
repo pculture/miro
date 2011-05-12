@@ -409,7 +409,7 @@ def get_logical_cpu_count():
 def get_segmenter_executable_path():
     return os.path.join(resources.app_root(), "miro-segmenter.exe")
 
-def get_transcode_video_options():   
+def get_transcode_video_options():
     has_video_args = ['-vcodec', 'libx264', '-vpre', 'ipod320',
                       '-vpre', 'ultrafast', '-threads', '0', '-s', '480x360',
                       '-vbsf', 'h264_mp4toannexb']
@@ -497,8 +497,16 @@ def get_cookie_path():
 
 
 def get_plat_media_player_name_path():
-    itunes_path = os.path.join(specialfolders.get_special_folder('My Music'),
-                               'iTunes')
+    music_path = specialfolders.get_special_folder("My Music")
+    if music_path == None:
+        # if specialfolders returns None, then My Music doesn't exist
+        # so we return (None, None) indicating there's no media
+        # player.
+
+        # FIXME - can the iTunes folder be in another place?
+        return (None, None)
+
+    itunes_path = os.path.join(music_path, 'iTunes')
     return (_('iTunes'), import_itunes_path(itunes_path))
 
 def thread_body(func, *args, **kwargs):

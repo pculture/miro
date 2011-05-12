@@ -68,7 +68,12 @@ def get_special_folder(name):
     The path to the folder will be returned, or None if the lookup
     fails
     """
-    csidl = _special_folder_CSIDLs[name]
+    try:
+        csidl = _special_folder_CSIDLs[name]
+    except KeyError:
+        # FIXME - this will silently fail if the dev did a typo
+        # for the path name.  e.g. My Musc
+        return None
 
     buf = ctypes.create_unicode_buffer(260)
     buf2 = ctypes.create_unicode_buffer(1024)
