@@ -495,7 +495,6 @@ def get_cookie_path():
     return final_path
 
 
-
 def get_plat_media_player_name_path():
     music_path = specialfolders.get_special_folder("My Music")
     if music_path == None:
@@ -508,6 +507,7 @@ def get_plat_media_player_name_path():
 
     itunes_path = os.path.join(music_path, 'iTunes')
     return (_('iTunes'), import_itunes_path(itunes_path))
+
 
 def thread_body(func, *args, **kwargs):
     func(*args, **kwargs)
