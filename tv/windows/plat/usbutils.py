@@ -195,16 +195,19 @@ def read_write_drive(mount):
     """
     Checks if the given mount path is read write.
     """
-    if not os.path.exists(mount):
-        return False
-    path_to_check = os.path.join(mount, '.miro')
-    if os.path.exists(path_to_check) and os.access(path_to_check, os.W_OK):
-        return True
+    old_val = kernel32.SetErrorMode(1)
     try:
+        if not os.path.exists(mount):
+            return False
+        path_to_check = os.path.join(mount, '.miro')
+        if os.path.exists(path_to_check) and os.access(path_to_check, os.W_OK):
+            return True
         os.mkdir(path_to_check)
+        return True
     except OSError:
         return False
-    return True
+    finally:
+        kernel32.SetErrorMode(0)
 
 def get_device_number(handle_or_path):
     opened_handle = False
@@ -330,14 +333,14 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
             }
         if drive_name:
             drive_names.add(drive_name[0])
-    # for letter in sorted(set('DEFGHIJKLMNOPQRSTUVWXYZ') - drive_names):
-    #     mount = u'%s:\\' % letter
-    #     if read_write_drive(mount):
-    #         yield {
-    #             'volume': u'fake-volume-%s' % letter,
-    #             'mount': mount,
-    #             'name': 'Drive %s:' % letter
-    #             }
+    for letter in sorted(set('DEFGHIJKLMNOPQRSTUVWXYZ') - drive_names):
+        mount = u'%s:\\' % letter
+        if read_write_drive(mount):
+            yield {
+                'volume': u'fake-volume-%s' % letter,
+                'mount': mount,
+                'name': 'Drive %s:' % letter
+                }
 
 if __name__ == '__main__':
     for d in connected_devices():
