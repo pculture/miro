@@ -294,6 +294,7 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
             if not reg_key.startswith('USBSTOR'):
                 # not a USB storage device
                 continue
+        reg_key = reg_key.replace('-', '_')
         volume_name = get_volume_name(path + '\\')
         drive_name = get_path_name(volume_name)
         if LOTS_OF_DEBUGGING:
@@ -318,12 +319,9 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
                     else:
                         index += 1
         except WindowsError:
-            from miro import app
-            app.controller.failed_soft(
-                'scanning connected devices',
-                'could not open registry key %r (from %r/%r)' % (
-                    reg_key, path, device_id),
-                with_exception=True)
+            logging.debug('could not open registry key %r (from %r/%r)',
+                          reg_key, path, device_id,
+                          exc_info=True)
         if not friendly_name:
             continue
         yield {
