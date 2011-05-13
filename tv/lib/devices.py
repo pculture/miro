@@ -42,6 +42,7 @@ from miro.database import confirm_db_thread
 from miro import eventloop
 from miro import fileutil
 from miro import filetypes
+from miro import filetags
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro import messages
@@ -650,7 +651,9 @@ class DeviceSyncManager(object):
             album=item_info.album,
             track=item_info.track,
             year=item_info.year,
-            genre=item_info.genre
+            genre=item_info.genre,
+            metadata_version=item_info.metadata_version,
+            mdp_state=item_info.mdp_state,
             )
         device_item._migrate_thumbnail()
         database = self.device.database
@@ -760,7 +763,9 @@ class DeviceItem(metadata.Store):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
-            if not self.metadata_version: # haven't run read_metadata yet
+            if (not self.metadata_version or
+                self.metadata_version != filetags.METADATA_VERSION):
+                # haven't run read_metadata yet
                 self.read_metadata()
                 if not self.get_title():
                     self.title = filename_to_unicode(
@@ -951,8 +956,9 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             if (item_info.file_url and
                 existing.get('url') == item_info.file_url):
                 return True
-            elif ((item_info.name, item_info.description, item_info.size,
-                   item_info.duration * 1000) ==
+            if ((item_info.name, item_info.description, item_info.size,
+                 item_info.duration * 1000 if item_info.duration
+                 else None) ==
                   (existing.get('title'), existing.get('description'),
                    existing.get('size'), existing.get('duration'))):
                 # if a bunch of qualities are the same, we'll call it close

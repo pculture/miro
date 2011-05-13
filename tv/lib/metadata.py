@@ -62,6 +62,8 @@ class Source(object):
             episode_number = self.episode_number,
             season_number = self.season_number,
             kind = self.kind,
+            metadata_version = self.metadata_version,
+            mdp_state = self.mdp_state
         )
 
     def setup_new(self):
