@@ -763,9 +763,9 @@ class DeviceItem(metadata.Store):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
-            if (not self.metadata_version or
-                self.metadata_version != filetags.METADATA_VERSION):
-                # haven't run read_metadata yet
+            if not self.metadata_version:
+                # haven't run read_metadata yet.  We don't check the actual
+                # version because upgrading metadata isn't supported.
                 self.read_metadata()
                 if not self.get_title():
                     self.title = filename_to_unicode(
