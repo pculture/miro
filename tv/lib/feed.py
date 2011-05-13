@@ -2397,6 +2397,10 @@ class SearchFeedImpl(RSSMultiFeedBase):
         else:
             self.ufeed.emit('update-finished')
 
+    def schedule_update_events(self, firstTriggerDelay):
+        # the dtv:search feed should never automatically update.
+        return
+
     @returns_unicode
     def get_title(self):
         return _('Search')
