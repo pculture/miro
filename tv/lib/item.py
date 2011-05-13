@@ -495,6 +495,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         return cls.make_view("((is_file_item AND NOT deleted) OR "
                 "(rd.state in ('finished', 'uploading', 'uploading-paused'))) "
+                "AND NOT isContainerItem " # match CMF short-circuit, just in case
                 "AND mdp_state IS NULL", # State.UNSEEN
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=limit)
@@ -509,6 +510,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         NB. don't change this without also changing incomplete_mdp_view!
         """
         if not self.id_exists():
+            return False
+        if self.isContainerItem:
             return False
         # FIXME: if possible we should use the actual incomplete_mdp_view with
         # an id=self.id constraint, but I don't see a straightforward way to do
@@ -1755,7 +1758,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if applicable, and then adds the item to mdp's queue.
         """
         if self.isContainerItem:
-            return
+            return # this is OK because incomplete_mdp_view knows about it
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
         # - calling moviedata.movie_data_updater.request_update(self)
