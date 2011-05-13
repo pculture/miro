@@ -89,6 +89,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self._done_firsttime_callback = done_firsttime_callback
 
         self.mp_name, self.mp_path = get_plat_media_player_name_path()
+        self._has_media_player = (
+            self.mp_name is not None and self.mp_path is not None)
 
         self._page_box = widgetset.VBox()
         self._pages = self.build_pages()
@@ -102,8 +104,10 @@ class FirstTimeDialog(widgetset.DialogWindow):
         pages = [self.build_language_page(),
                  self.build_startup_page(),
                  self.build_import_page(),
-                 self.build_search_page(),
-                 self.build_media_player_import_page()]
+                 self.build_search_page()]
+
+        if self._has_media_player:
+            pages.append(self.build_media_player_import_page())
 
         pages = [widgetutil.pad(page) for page in pages]
         for page in pages:
@@ -324,7 +328,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     self.search_directory = _get_user_media_directory()
 
                 self.next_page()
-            elif self.mp_name is not None and self.mp_path is not None:
+            elif self._has_media_player:
                 self.next_page(skip=1)
             else:
                 self.destroy()
@@ -332,7 +336,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         search_button = widgetset.Button(_("Search"))
         search_button.connect('clicked', handle_search_finish_clicked)
         search_button.text_faces = {"search": _("Search")}
-        if self.mp_name is None or self.mp_path is None:
+        if not self._has_media_player:
             search_button.text_faces["next"] = _("Finish")
         else:
             search_button.text_faces["next"] = _("Next >")
@@ -417,8 +421,12 @@ class FirstTimeDialog(widgetset.DialogWindow):
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
 
-        next_button = widgetset.Button(_("Next >"))
-        next_button.connect('clicked', lambda x: self.next_page())
+        if self._has_media_player:
+            next_button = widgetset.Button(_("Next >"))
+            next_button.connect('clicked', lambda x: self.next_page())
+        else:
+            next_button = widgetset.Button(_("Finish"))
+            next_button.connect('clicked', lambda x: self.destroy())
 
         vbox.pack_start(
             widgetutil.align_bottom(widgetutil.align_right(
