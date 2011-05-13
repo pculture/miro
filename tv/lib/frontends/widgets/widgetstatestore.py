@@ -112,14 +112,15 @@ class WidgetStateStore(object):
             [u'name', u'feed-name', u'size', u'file-type'],
         u'downloading':
             [u'name', u'feed-name', u'eta', u'rate',
-            u'torrent-details', u'size', u'status'],
+            u'size', u'status'],
         u'tab': # all-feeds
             [u'state', u'name', u'feed-name', u'length',
             u'size', u'date', u'status'],
         u'feed':
             [u'state', u'name', u'length', u'size', u'date', u'status'],
         u'search':
-            [u'state', u'name', u'description', u'status'],
+            [u'state', u'name', u'description', u'status', u'file-type',
+            u'feed-name', u'date'],
         u'playlist':
             [u'playlist', u'name', u'artist', u'album', u'track', u'length',
                 u'genre', u'year', u'rating'],
@@ -134,13 +135,15 @@ class WidgetStateStore(object):
         for display, columns in DEFAULT_COLUMNS.iteritems()
     )
     # add available but non-default columns here:
-    AVAILABLE_COLUMNS['music'] |= set(
-        [u'date-added', u'feed-name', u'size', u'file-type', u'status']
-    )
-    AVAILABLE_COLUMNS['others'] |= set([u'date-added', u'drm', u'rating'])
-    AVAILABLE_COLUMNS['search'] |= set([u'rating'])
-    AVAILABLE_COLUMNS['videos'] |= set([u'rating', u'file-type', u'show',
-                                        u'kind', u'status'])
+    AVAILABLE_COLUMNS['music'] |= set([u'date', u'date-added', u'feed-name',
+        u'size', u'file-type', u'status'])
+    AVAILABLE_COLUMNS['others'] |= set([u'date', u'date-added', u'drm',
+        u'rating'])
+    AVAILABLE_COLUMNS['downloading'] |= set([u'torrent-details', u'date',
+        u'file-type'])
+    AVAILABLE_COLUMNS['search'] |= set([u'size', u'rating'])
+    AVAILABLE_COLUMNS['videos'] |= set([u'description', u'date', u'rating',
+        u'file-type', u'show', u'kind', u'status'])
     AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music'].copy()
     AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos'].copy()
     AVAILABLE_COLUMNS[u'feed'] = ((AVAILABLE_COLUMNS['music'] |
