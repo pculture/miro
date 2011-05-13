@@ -330,14 +330,14 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
             }
         if drive_name:
             drive_names.add(drive_name[0])
-    for letter in sorted(set('DEFGHIJKLMNOPQRSTUVWXYZ') - drive_names):
-        mount = u'%s:\\' % letter
-        if read_write_drive(mount):
-            yield {
-                'volume': u'fake-volume-%s' % letter,
-                'mount': mount,
-                'name': 'Drive %s:' % letter
-                }
+    # for letter in sorted(set('DEFGHIJKLMNOPQRSTUVWXYZ') - drive_names):
+    #     mount = u'%s:\\' % letter
+    #     if read_write_drive(mount):
+    #         yield {
+    #             'volume': u'fake-volume-%s' % letter,
+    #             'mount': mount,
+    #             'name': 'Drive %s:' % letter
+    #             }
 
 if __name__ == '__main__':
     for d in connected_devices():
