@@ -1754,6 +1754,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """Begin metadata extraction for this item; runs mutagen synchonously,
         if applicable, and then adds the item to mdp's queue.
         """
+        if self.isContainerItem:
+            return
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
         # - calling moviedata.movie_data_updater.request_update(self)
