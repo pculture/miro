@@ -974,12 +974,19 @@ class DatabaseWriteManager(object):
 
     def __init__(self, mount):
         self.mount = mount
-        self.last_write = time.time()
+        self.scheduled_write = None
+        self.database = None
 
     def __call__(self, database):
-        if time.time() - self.last_write > self.SAVE_INTERVAL:
-            write_database(database, self.mount)
-            self.last_write = time.time()
+        self.database = database
+        if self.scheduled_write:
+            return
+        self.scheduled_write = eventloop.add_timeout(self.SAVE_INTERVAL,
+                                                     self.write,
+                                                     'writing device database')
+    def write(self):
+        write_database(self.database, self.mount)
+        self.database = self.scheduled_write = None
 
 def load_database(mount, countdown=0):
     """
