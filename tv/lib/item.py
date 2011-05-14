@@ -331,7 +331,7 @@ class FileFeedParserValues(FeedParserValues):
             'link': u'',
             'payment_link': u'',
             'comments_link': u'',
-            'url': u'',
+            'url': resources.url(filename),
             'enclosure_size': None,
             'enclosure_type': None,
             'enclosure_format': self._calc_enclosure_format(),
