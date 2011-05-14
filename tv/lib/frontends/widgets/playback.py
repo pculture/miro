@@ -896,7 +896,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         item_info = self.model.get_first_info()
         items = []
         while item_info is not None:
-            if self._info_is_playable(item_info):
+            if item_info.is_playable:
                 items.append(item_info.id)
             item_info = self.model.get_next_info(item_info.id)
         return items
@@ -994,16 +994,13 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 self.emit("playing-info-changed")
                 break
 
-    def _info_is_playable(self, item_info):
-        return not item_info.is_container_item and item_info.downloaded
-
     def _find_playable(self, item_info, backwards=False):
         if backwards:
             iter_func = self.model.get_prev_info
         else:
             iter_func = self.model.get_next_info
 
-        while item_info is not None and not self._info_is_playable(item_info):
+        while item_info is not None and not item_info.is_playable:
             item_info = iter_func(item_info.id)
         return item_info
 
