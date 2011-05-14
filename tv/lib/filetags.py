@@ -36,6 +36,7 @@ import mutagen
 
 from miro import coverart
 from miro import filetypes
+from miro import app
 
 # increment this after adding to TAGS_FOR_ATTRIBUTE or changing read_metadata() in a way
 # that will increase data identified (will not change values already extracted)
