@@ -35,6 +35,7 @@ import locale
 import os.path
 import traceback
 import logging
+import re
 
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
@@ -144,7 +145,10 @@ class FeedParserValues(object):
         if hasattr(self.entry, "title"):
             # The title attribute shouldn't use entities, but some in
             # the wild do (#11413).  In that case, try to fix them.
-            return entity_replace(self.entry.title)
+            title = entity_replace(self.entry.title)
+            # Strip tags from the title.
+            p = re.compile('<.*?>')
+            return p.sub('', title)
 
         if ((self.first_video_enclosure
              and 'url' in self.first_video_enclosure)):

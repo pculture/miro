@@ -12,8 +12,8 @@ from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase
 from miro.singleclick import _build_entry
 
-def fp_values_for_url(url):
-    return FeedParserValues(_build_entry(url, 'video/x-unknown'))
+def fp_values_for_url(url, additional=None):
+    return FeedParserValues(_build_entry(url, 'video/x-unknown', additional))
 
 class ContainerItemTest(MiroTestCase):
     def setUp(self):
@@ -245,6 +245,16 @@ class ItemSearchTest(MiroTestCase):
         self.assertEquals(self.item1.matches_search('miros'), False)
         self.assertEquals(self.item1.matches_search('iscool'), False)
         self.assertEquals(self.item1.matches_search('cool -miro'), False)
+
+    def test_strips_tags(self):
+        # Only feeds created with a title get the tags stripped in the title.
+        # When using item.set_title() no tags are stripped.
+        f1 = Feed(u'http://example.com/1')
+        item = Item(fp_values_for_url(u'http://example.com/1/item1', {'title':u"<em>miro</em>"}), feed_id=f1.id)
+        self.assertEquals(item.matches_search('miro'), True)
+        self.assertEquals(item.matches_search('<'), False)
+        self.assertEquals(item.matches_search('em'), False)
+        self.assertEquals(item.matches_search('<em>miro</miro'), False)
 
 class DeletedItemTest(MiroTestCase):
     def test_make_item_for_nonexistent_path(self):
