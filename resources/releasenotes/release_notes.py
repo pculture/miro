@@ -32,18 +32,77 @@
 http://bugzilla.pculture.org/buglist.cgi?query_format=simple&order=relevance+desc&product=Miro&bug_status=RESOLVED&resolution=FIXED&target_milestone=2.5.3&keywords_type=allwords&keywords=
 """
 
-import optparse
+import logging
 import sys
 import bugzillalib
+import re
+import socket
+import csv
 
 BZ_HOST = "bugzilla.pculture.org"
+
+PARENS_RE = re.compile("\s*\\(.*\\)\s*")
+BRACKETS_RE = re.compile("\s*\\[.*\\]\s*")
+
+def clean_up_name(name):
+    name = name.strip()
+    name = PARENS_RE.sub("", name)
+    name = BRACKETS_RE.sub("", name)
+    return name
+
+def get_name(item):
+    name = ""
+    if "name" in item.attrib:
+        name = item.attrib["name"].strip()
+    if not name:
+        name = item.text.strip()
+    if not name:
+        name = "unknown"
+    return name
+
+def get_bugfixes(rows):
+
+    bugs = dict((row["bug_id"], row) for row in rows)
+    nixing = []
+
+    for bug_id in bugs.keys():
+        logging.info("... working on bug %s", bug_id)
+        try:
+            etree = bugzillalib.bz_query_bug_id("bugzilla.pculture.org", bug_id)
+        except socket.error, se:
+            logging.error("... error %s -- skipping", se)
+        bug = etree.find("bug")
+        version = bug.find("version")
+        if version is None:
+            logging.info("version is None")
+            continue
+
+        version = get_name(version)
+        version = clean_up_name(version)
+        if version in ("git-master", "unknown", "nightly build"):
+            logging.info("... nixing %s", bug_id)
+            nixing.append((bug_id, bugs[bug_id]["short_desc"]))
+            del bugs[bug_id]
+            continue
+
+    logging.info("Writing nixing.csv....")
+    with open("nixing.csv", "wb") as fp:
+        writer = csv.writer(fp)
+        writer.writerows(nixing)
+
+    return bugs.values()
+
 
 def main(args):
     if len(args) < 1:
         print "Syntax: release_notes.py <milestone>"
         return 0
 
+    logging.basicConfig(level=logging.INFO)
+
     milestone = args[0]
+
+    logging.info("Querying bugzilla....")
     
     rows = bugzillalib.bz_query(BZ_HOST, [
         ("query_format", "advanced"),
@@ -55,21 +114,38 @@ def main(args):
         ("ctype", "csv")
         ])
 
-    print "== Changes and bug fixes in Miro %s (pending) ==" % milestone
-    print ""
-    rows.sort(lambda x, y: cmp((x["op_sys"].lower(), int(x["bug_id"])), (y["op_sys"].lower(), int(y["bug_id"]))))
+    rows.sort(key=lambda x: (x["op_sys"], int(x["bug_id"])))
 
+    logging.info("Calculating enhancements....")
     enhancements = [r for r in rows if r["bug_severity"] == "enhancement"]
-    bugfixes = [r for r in rows if r["bug_severity"] != "enhancement"]
 
-    print "* New features"
+    logging.info("Calculating bugfixes....")
+    bugfixes = get_bugfixes([r for r in rows
+                             if r["bug_severity"] != "enhancement"])
+
+    logging.info("Creating output....")
+
+    output = []
+
+    output.append("== Changes and bug fixes in Miro %s (pending) ==" % (
+            milestone))
+    output.append("")
+
+    output.append("* New features")
     for row in enhancements:
-        print "** [[bz:%s]] (%s) %s" % (row["bug_id"], row["op_sys"], row["short_desc"])
-    print ""
+        output.append("** [[bz:%s]] (%s) %s" % (
+                row["bug_id"], row["op_sys"], row["short_desc"]))
+    output.append("")
 
-    print "* Bug fixes"
+    output.append("* Bug fixes")
     for row in bugfixes:
-        print "** [[bz:%s]] (%s) %s" % (row["bug_id"], row["op_sys"], row["short_desc"])
+        output.append("** [[bz:%s]] (%s) %s" % (
+                row["bug_id"], row["op_sys"], row["short_desc"]))
+
+    logging.info("Writing releasenotes.txt....")
+    with open("releasenotes.txt", "w") as fp:
+        fp.write("\n".join(output))
+
     return 0
 
 if __name__ == "__main__":
