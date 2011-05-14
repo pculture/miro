@@ -646,7 +646,8 @@ class DownloadCountTracker(CountTracker):
                 non_downloading_count)
 
     def stop_tracking(self):
-        CountTracker.stop_tracking()
+        # XXX this had a TypeError for a while, so it seems unused
+        CountTracker.stop_tracking(self)
         self.other_tracker.unlink()
 
 class PausedCountTracker(CountTracker):
