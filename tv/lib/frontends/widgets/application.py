@@ -473,14 +473,6 @@ class Application:
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
-    def add_files(self):
-        # this was:
-        #addfilesdialog.AddFilesDialog().run()
-        # that module no longer exists so presumably this is unreachable
-        app.widgetapp.handle_soft_failure('Application.add_files',
-            "Application.add_files is no longer used",
-            with_exception=False)
-
     def check_version(self):
         # this gets called by the backend, so it has to send a message to
         # the frontend to open a dialog

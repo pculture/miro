@@ -499,10 +499,6 @@ def on_open():
 def on_new_download():
     app.widgetapp.new_download()
 
-@action_handler("AddFiles")
-def on_add_files():
-    app.widgetapp.add_files()
-
 @action_handler("CheckVersion")
 def on_check_version():
     app.widgetapp.check_version()
