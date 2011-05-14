@@ -133,7 +133,7 @@ class _QueueParseProcessor(threading.Thread):
         self._finish_call(callback, *args, **kwargs)
 
     def _errback(self, *args, **kwargs):
-        callback = self.current_call_info[2]
+        errback = self.current_call_info[2]
         self._finish_call(errback, *args, **kwargs)
 
 _queue_parse_proccessor = _QueueParseProcessor()
