@@ -50,7 +50,7 @@ from miro.errors import Shutdown
 
 # Time in seconds that we wait for the utility to execute.  If it goes
 # longer than this, we assume it's hung and kill it.
-MOVIE_DATA_UTIL_TIMEOUT = 120
+MOVIE_DATA_UTIL_TIMEOUT = 30
 
 # Time to sleep while we're polling the external movie command
 SLEEP_DELAY = 0.1
