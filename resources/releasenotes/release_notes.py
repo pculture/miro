@@ -118,10 +118,12 @@ def main(args):
 
     logging.info("Calculating enhancements....")
     enhancements = [r for r in rows if r["bug_severity"] == "enhancement"]
+    enhancements.sort(key=lambda x: int(x["bug_id"]))
 
     logging.info("Calculating bugfixes....")
     bugfixes = get_bugfixes([r for r in rows
                              if r["bug_severity"] != "enhancement"])
+    bugfixes.sort(key=lambda x: int(x["bug_id"]))
 
     logging.info("Creating output....")
 
