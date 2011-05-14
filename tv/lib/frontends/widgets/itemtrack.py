@@ -361,7 +361,7 @@ class SearchFilter(object):
                 # This happens when the item is not in the index.  As a
                 # precaution, try to recover.  log the error, then keep going.
                 app.widgetapp.handle_soft_failure("Item Track update",
-                        "Tried to update item not in index: %s" % item.id,
+                        "Tried to update item not in index: %s" % id_,
                         with_exception=True)
 
     def _ensure_index_ready(self):
