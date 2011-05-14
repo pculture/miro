@@ -754,8 +754,9 @@ class TableViewCommon(object):
             self.hotspot_tracker.update_hit()
             if self.hotspot_tracker.hit:
                 wrappermap.wrapper(self).send_hotspot_clicked()
-            self.hotspot_tracker.redraw_cell()
-            self.hotspot_tracker = None
+            if self.hotspot_tracker:
+                self.hotspot_tracker.redraw_cell()
+                self.hotspot_tracker = None
         else:
             self.SuperClass.mouseUp_(self, event)
 
