@@ -183,7 +183,7 @@ class WriteError(NetworkError):
 
     def __init__(self, path):
         msg = _("Could not write to %(filename)s",
-            {"filename": util.stringify(self.filename)})
+            {"filename": util.stringify(path)})
         NetworkError.__init__(self, _('Write error'), msg)
 
 class TransferOptions(object):
@@ -540,7 +540,7 @@ class CurlTransfer(object):
         try:
             self._filehandle = fileutil.open_file(self.options.write_file, mode)
         except IOError:
-            raise WriteError(self.filename)
+            raise WriteError(self.options.write_file)
 
     def should_debug_request(self):
         # return True here to debug HTTP requests in the log file
