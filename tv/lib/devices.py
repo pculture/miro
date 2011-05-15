@@ -407,7 +407,7 @@ class DeviceManager(object):
         if info.mount:
             # turn off the autosaving on the old database
             info.database.disconnect_all()
-            write_database(info.database, info.mount)
+            eventloop.add_idle(write_database, info.database, info.mount)
 
         info = self._set_connected(id_, kwargs)
 
