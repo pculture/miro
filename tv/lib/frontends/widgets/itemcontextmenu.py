@@ -335,7 +335,7 @@ class ItemContextMenuHandler(object):
                         device.append(info)
                     if info.remote:
                         remote.append(info)
-                    elif info.video_watched:
+                    if info.video_watched:
                         watched.append(info)
                         if info.expiration_date:
                             expiring.append(info)
