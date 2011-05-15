@@ -184,10 +184,10 @@ class ItemContextMenuHandler(object):
                     section.append((
                             _('Resume Seeding'),
                             messages.StartUpload(item.id).send_to_backend))
-
-                section.append((
-                        _('Add to Playlist'),
-                        app.widgetapp.add_to_playlist))
+                if not item.is_container_item:
+                    section.append((
+                            _('Add to Playlist'),
+                            app.widgetapp.add_to_playlist))
 
         elif ((item.download_info is not None and
                item.download_info.state != 'failed')):
@@ -371,7 +371,7 @@ class ItemContextMenuHandler(object):
                              None))
             if playable:
                 menu.append((_('Play'), app.widgetapp.play_selection)),
-                if not (device or remote):
+                if not (device or remote or container):
                     menu.append((_('Add to Playlist'),
                                  app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
