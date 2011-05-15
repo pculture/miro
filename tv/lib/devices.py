@@ -343,7 +343,8 @@ class DeviceManager(object):
     def _set_connected(self, id_, kwargs):
         if kwargs.get('mount'):
             database = load_database(kwargs['mount'])
-            device_name = database.get('device_name')
+            device_name = database.get(u'device_name',
+                                       kwargs.get('device_name'))
         else:
             device_name = None
             database = DeviceDatabase()
@@ -406,6 +407,7 @@ class DeviceManager(object):
         if info.mount:
             # turn off the autosaving on the old database
             info.database.disconnect_all()
+            write_database(info.database, info.mount)
 
         info = self._set_connected(id_, kwargs)
 

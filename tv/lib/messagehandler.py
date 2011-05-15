@@ -1715,7 +1715,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_set_device_type(self, message):
         message.device.database[u'device_name'] = message.name
         app.device_manager.device_changed(message.device.id,
-                                          name=message.name,
+                                          name=message.device.name,
+                                          device_name=message.name,
                                           mount=message.device.mount,
                                           size=message.device.size,
                                           remaining=message.device.remaining)
