@@ -505,7 +505,7 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         self.selection.select_path(path)
 
     def _validate_iter(self, iter_):
-        if self._model.get_path(iter_) is None:
+        if self.get_path(iter_) is None:
             raise WidgetDomainError(
                   "model iters", iter_, "%s other iters" % len(self.model))
         real_model = self._widget.get_model()
@@ -989,7 +989,7 @@ class GTKScrollbarOwnerMixin(ScrollbarOwnerMixin):
         self._widget.set_scroll_position(scroll_pos)
 
     def _get_item_area(self, iter_):
-        return self._widget.get_path_rect(self._model.get_path(iter_))
+        return self._widget.get_path_rect(self.get_path(iter_))
 
     @property
     def _manually_scrolled(self):
@@ -1129,7 +1129,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         WidgetActionError. Causes row-expanded or row-collapsed to be emitted
         when successful.
         """
-        path = self._model.get_path(iter_)
+        path = self.get_path(iter_)
         if expanded:
             self._widget.expand_row(path, False)
         else:
@@ -1139,7 +1139,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
                     "probably has no children.")
 
     def is_row_expanded(self, iter_):
-        path = self._model.get_path(iter_)
+        path = self.get_path(iter_)
         return self._widget.row_expanded(path)
 
     def set_context_menu_callback(self, callback):
@@ -1324,6 +1324,15 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
     def get_left_offset(self):
         return self._widget.get_left_offset()
 
+    def get_path(self, iter_):
+        """Always use this rather than the model's get_path directly -
+        if the iter isn't valid, a GTK assertion causes us to exit
+        without warning; this wrapper changes that to a much more useful
+        AssertionError. Example related bug: #17362.
+        """
+        assert self.model.iter_is_valid(iter_)
+        return self._model.get_path(iter_)
+
 class TableModel(object):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     MODEL_CLASS = gtk.ListStore
@@ -1427,6 +1436,9 @@ class TableModel(object):
     def get_path(self, iter_):
         return self._model.get_path(iter_)
 
+    def iter_is_valid(self, iter_):
+        return self._model.iter_is_valid(iter_)
+
 class TreeTableModel(TableModel):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     MODEL_CLASS = gtk.TreeStore
@@ -1473,3 +1485,8 @@ class InfoListModel(infolist.InfoList):
 
     def get_rows(self, row_paths):
         return [self.nth_row(path[0]) for path in row_paths]
+
+    def iter_is_valid(self, iter_):
+        # it may be useful to do something here, but invalid iters are more of a
+        # problem for GTK's models.
+        return True
