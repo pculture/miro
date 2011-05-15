@@ -110,7 +110,7 @@ class ItemContextMenuHandler(object):
 
         elif item.is_playable:
             # Show File in Finder
-            if not item.remote:
+            if not item.remote and not item.is_container_item:
                 # most recent conversion
                 last_converter = conversion_manager.get_last_conversion()
                 if last_converter is not None:
@@ -292,6 +292,7 @@ class ItemContextMenuHandler(object):
         downloaded = []
         playable = []
         downloading = []
+        container = []
         available = []
         paused = []
         uploadable = []
@@ -340,6 +341,8 @@ class ItemContextMenuHandler(object):
                             expiring.append(info)
                     else:
                         unwatched.append(info)
+                    if info.is_container_item:
+                        container.append(info)
                 if not (info.device or info.remote):
                     editable = True
             elif info.state == 'paused':
@@ -378,7 +381,7 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Mark as Played'), mark_watched))
             if expiring:
                 menu.append((_('Keep'), keep_videos))
-            if playable and not (device or remote):
+            if playable and not (device or remote) and not container:
                 menu.append(None)
                 convert_menu = self._make_convert_menu()
                 menu.append((_('Convert to...'), convert_menu))
