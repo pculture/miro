@@ -1396,6 +1396,7 @@ class TableModel(object):
         return self._model.append(self.convert_row_for_gtk(column_values))
 
     def update_value(self, iter_, index, value):
+        assert self._model.iter_is_valid(iter_)
         self._model.set(iter_, index, self.convert_value_for_gtk(value))
 
     def update(self, iter_, *column_values):
