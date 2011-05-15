@@ -172,7 +172,7 @@ class TabListManager(dict):
         view = self[list_type].view
         if iter_:
             # select the tab
-            view.select(iter_)
+            view.set_selection([iter_])
         for tab_list in self.itervalues():
             if tab_list.type != list_type:
                 # unselect other tabs

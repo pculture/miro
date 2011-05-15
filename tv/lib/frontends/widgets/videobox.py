@@ -543,18 +543,6 @@ class VideoBox(style.LowerBox):
             app.playback_manager.detached_window):
             # playing a video in the app, so don't bother
             return
-        # If we are in a multiple selection screen, don't cancel it and
-        # scroll to the item.
-        selected_ids = [x for x in app.tabs.selected_ids]
-        if len(selected_ids) > 1:
-            return
-        # bz:16830 - the item has disappeared from view because the search
-        # was invoked and caused item to disappear.
-        # bz:17169 - don't select if we are not in the current playlist.
-        # Selecting causes multiple panes to be selected leading to error.
-        if not (selected_ids and
-          selected_ids[0] == self.selected_tabs[0].id):
-            return
         tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
         app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
         controller = app.display_manager.current_display.controller
