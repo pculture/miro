@@ -265,17 +265,6 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
         x2, y = self.tree_to_widget_coords(x2, y)
         return x1, x2, y
 
-    def last_path(self):
-        model = self.get_model()
-        if model.iter_n_children(None) == 0:
-            return None
-        last = model.iter_nth_child(None, model.iter_n_children(None) - 1)
-        if last is None:
-            return None
-        while self.row_expanded(model.get_path(last)):
-            last = model.iter_nth_child(last, model.iter_n_children(last) - 1)
-        return model.get_path(last)
-
     def get_left_offset(self):
         offset = self.horizontal_separator / 2
         if 1 or isinstance(self.get_model(), TreeTableModel):
