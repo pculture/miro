@@ -52,7 +52,8 @@ class ScrollbarOwnerMixin(object):
     - also use "tree" coordinates
     """
     def __init__(self):
-        pass
+        self._scroll_to_iter_callback = None
+        self.create_signal('scroll-range-changed')
 
     def scroll_to_iter(self, iter_, manual=True, recenter=False):
         """Scroll the given item into view.
@@ -65,7 +66,21 @@ class ScrollbarOwnerMixin(object):
             visible = self._get_visible_area()
             manually_scrolled = self._manually_scrolled
         except WidgetActionError:
+            if self._scroll_to_iter_callback:
+                # We just retried and failed. Do nothing; we will retry again
+                # next time scrollable range changes.
+                return
+            # We just tried and failed; schedule a retry when the scrollable
+            # range changes.
+            self._scroll_to_iter_callback = self.connect('scroll-range-changed',
+                    lambda *a: self.scroll_to_iter(iter_, manual, recenter))
             return
+        # If the above succeeded, we know the iter's position; this means we can
+        # set_scroll_position to that position. That may work now or be
+        # postponed until later, but either way we're done with scroll_to_iter.
+        if self._scroll_to_iter_callback:
+            self.disconnect(self._scroll_to_iter_callback)
+            self._scroll_to_iter_callback = None
         visible_bottom = visible.y + visible.height
         visible_middle = visible.y + visible.height // 2
         item_bottom = item.y + item.height
@@ -75,10 +90,18 @@ class ScrollbarOwnerMixin(object):
         if self._should_scroll(
                 manual, in_top, in_bottom, recenter, manually_scrolled):
             destination = item_middle - visible.height // 2
-            try:
-                self._set_vertical_scroll(destination)
-            except WidgetActionError:
-                return
+            self._set_vertical_scroll(destination)
+            # set_scroll_position will take care of scroll to the position when
+            # possible; this may or may not be now, but our work here is done.
+
+    def set_scroll_position(self, position, restore_only=False):
+        """Scroll the top left corner to the given (x, y) offset from the origin
+        of the view.
+
+        restore_only: set the value only if no other value has been set yet
+        """
+        if not restore_only or not self._position_set:
+            self._set_scroll_position(position)
 
     @classmethod
     def _should_scroll(cls,

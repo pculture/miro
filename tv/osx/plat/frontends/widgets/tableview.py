@@ -974,14 +974,16 @@ class CocoaScrollbarOwnerMixin(ScrollbarOwnerMixin):
         ScrollbarOwnerMixin.__init__(self)
         self.scroll_position = (0, 0)
         self.clipview_notifications = None
+        self._position_set = False
 
-    def set_scroll_position(self, scroll_to):
+    def _set_scroll_position(self, scroll_to):
         """Restore a saved scroll position."""
         self.scroll_position = scroll_to
         try:
             scroller = self._scroller
         except errors.WidgetNotReadyError:
             return
+        self._position_set = True
         clipview = scroller.contentView()
         if not self.clipview_notifications:
             self.clipview_notifications = NotificationForwarder.create(clipview)
@@ -1018,7 +1020,13 @@ class CocoaScrollbarOwnerMixin(ScrollbarOwnerMixin):
         return NSPointToPoint(point)
 
     def on_scroll_changed(self, notification):
+        # we get this notification when the scroll position has been reset (when
+        # it should not have been); put it back
         self.set_scroll_position(self.scroll_position)
+        # this notification also serves as the Cocoa equivalent to
+        # on_scroll_range_changed, which tells super when we may be ready to
+        # scroll to an iter
+        self.emit('scroll-range-changed')
 
     def set_scroller(self, scroller):
         """For GTK; Cocoa tableview knows its enclosingScrollView"""

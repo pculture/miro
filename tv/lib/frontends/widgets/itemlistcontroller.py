@@ -204,7 +204,6 @@ class ItemListController(object):
         self.views = {}
         self._search_text = ''
         self._got_initial_list = False
-        self._scroll_waiting = None
         self._playing_items = False
         self._selection_to_restore = None
         self.config_change_handle = None
@@ -789,7 +788,8 @@ class ItemListController(object):
                     self.type, self.id, view_type)
             # might not actually set immediately; the size of the view does not
             # change until some time after the model is updated
-            view.set_scroll_position(position)
+            # restore_only so it can't overwrite an early scroll_to_item
+            view.set_scroll_position(position, restore_only=True)
 
     def start_tracking(self):
         """Send the message to start tracking items."""
@@ -904,14 +904,7 @@ class ItemListController(object):
         """Handle an ItemList message meant for this ItemContainer."""
         self.handle_item_list_changes()
         self._got_initial_list = True
-        if self._scroll_waiting:
-            # already waiting to scroll to an iter
-            info, conditions = self._scroll_waiting
-            self._scroll_waiting = None
-            self.scroll_to_item(info, **conditions)
-        else:
-            # normal position restore
-            self.restore_scroll_positions()
+        self.restore_scroll_positions()
         self.restore_selection()
         self.on_initial_list()
 
@@ -1002,20 +995,13 @@ class ItemListController(object):
         """Scroll to a specific item, specified by an ItemInfo. Keyword args are
         passed to scroll_to_iter, and modify behavior.
         """
-        if self._got_initial_list:
-            try:
-                iter_ = self.current_item_view.model.iter_for_id(item.id)
-                self.current_item_view.scroll_to_iter(iter_, **conditions)
-            except KeyError:
-                # item no longer in the list, so we'll ignore it
-                pass
+        try:
+            iter_ = self.current_item_view.model.iter_for_id(item.id)
+        except KeyError:
+            # item no longer in the list, so we'll ignore it
+            pass
         else:
-            # XXX technically we should check whether _scroll_waiting already
-            # exists here, and if so OR the two conditions dicts against each
-            # other - but I don't think it's currently possible for situations
-            # in which that would many any difference to occur, so I'm not
-            # implementing that now
-            self._scroll_waiting = item, conditions
+            self.current_item_view.scroll_to_iter(iter_, **conditions)
 
 class SimpleItemListController(ItemListController):
     def __init__(self):

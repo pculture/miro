@@ -80,6 +80,15 @@ class TreeViewScrolling(object):
         self.restoring_scroll = None
         self.connect('parent-set', self.on_parent_set)
         self.scroller = None
+        # hack necessary because of our weird widget hierarchy (GTK doesn't deal
+        # well with the Scroller's widget not being the direct parent of the
+        # TableView's widget.)
+        self._coords_working = False
+
+    def scroll_range_changed(self):
+        """Faux-signal; this should all be integrated into
+        GTKScrollbarOwnerMixin, making this unnecessary.
+        """
 
     @property
     def manually_scrolled(self):
@@ -87,8 +96,17 @@ class TreeViewScrolling(object):
         since the last time it was set automatically.
         """
         auto_pos = self.scroll_positions[1]
+        if auto_pos is None:
+            # if we don't have any position yet, user can't have manually
+            # scrolled
+            return False
         real_pos = self.scrollbars[1].get_value()
         return abs(auto_pos - real_pos) > 5 # allowing some fuzziness
+
+    @property
+    def position_set(self):
+        """Return whether the scroll position has been set in any way."""
+        return any(x is not None for x in self.scroll_positions)
 
     def on_parent_set(self, widget, old_parent):
         """We have parent window now; we need to control its scrollbars."""
@@ -111,8 +129,11 @@ class TreeViewScrolling(object):
         """The scrollbar might have a range now. Set its initial position if
         we haven't already.
         """
+        self._coords_working = True
         if self.restoring_scroll:
             self.set_scroll_position(self.restoring_scroll)
+        # our wrapper handles the same thing for iters
+        self.scroll_range_changed()
 
     def set_scroll_position(self, scroll_position):
         """Restore the scrollbars to a remembered state."""
@@ -139,6 +160,10 @@ class TreeViewScrolling(object):
 
     def get_path_rect(self, path):
         """Return the Rect for the given item, in tree coords."""
+        if not self._coords_working:
+            # part of solution to #17405; widget_to_tree_coords tends to return
+            # y=8 before the first scroll-range-changed signal. ugh.
+            raise WidgetNotReadyError('_coords_working')
         rect = self.get_background_area(path, self.get_columns()[0])
         x, y = self.widget_to_tree_coords(rect.x, rect.y)
         return Rect(x, y, rect.width, rect.height)
@@ -976,8 +1001,15 @@ class HoverTrackingMixin(object):
                 self._redraw_cell(treeview, *self.hover_info)
 
 class GTKScrollbarOwnerMixin(ScrollbarOwnerMixin):
+    # XXX this is half a wrapper for TreeViewScrolling. A lot of things will
+    # become much simpler when we integrate TVS into this
     def __init__(self):
         ScrollbarOwnerMixin.__init__(self)
+        # super uses this for postponed scroll_to_iter
+        # it's a faux-signal from our _widget; this hack is only necessary until
+        # we integrate TVS
+        self._widget.scroll_range_changed = (lambda *a:
+                self.emit('scroll-range-changed'))
 
     def set_scroller(self, scroller):
         """Set the Scroller object for this widget, if its ScrolledWindow is
@@ -985,7 +1017,7 @@ class GTKScrollbarOwnerMixin(ScrollbarOwnerMixin):
         """
         self._widget.set_scroller(scroller._widget)
 
-    def set_scroll_position(self, scroll_pos):
+    def _set_scroll_position(self, scroll_pos):
         self._widget.set_scroll_position(scroll_pos)
 
     def _get_item_area(self, iter_):
@@ -994,6 +1026,10 @@ class GTKScrollbarOwnerMixin(ScrollbarOwnerMixin):
     @property
     def _manually_scrolled(self):
         return self._widget.manually_scrolled
+
+    @property
+    def _position_set(self):
+        return self._widget.position_set
 
     def _get_visible_area(self):
         """Return the Rect of the visible area, in tree coords.
@@ -1005,6 +1041,9 @@ class GTKScrollbarOwnerMixin(ScrollbarOwnerMixin):
         bars = self._widget._scrollbars
         x, y = (int(adj.get_value()) for adj in bars)
         width, height = (int(adj.get_page_size()) for adj in bars)
+        if height == 0:
+            # this happens even after _widget._coords_working
+            raise WidgetNotReadyError('visible height')
         return Rect(x, y, width, height)
     
     def _get_scroll_position(self):
