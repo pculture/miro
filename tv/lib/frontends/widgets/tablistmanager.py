@@ -302,8 +302,7 @@ class TabListManager(dict):
         elif target == ('library', 'audio'):
             tab_id = 'music'
         else:
-            logging.warn("Don't know how to handle metadata progress for %s",
-                    target)
+            # we don't care about metadata progress for devices
             return
         if remaining > 0:
             self['library'].start_updating(tab_id)
