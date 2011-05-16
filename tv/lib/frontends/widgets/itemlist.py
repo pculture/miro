@@ -164,10 +164,9 @@ class ArtistSort(ItemSort):
 class AlbumSort(ItemSort):
     KEY = 'album'
     def sort_key(self, info):
-        # this is a design decision, not a typo. see #17355
-        return (info.album_artist_sort_key,
-                info.album_sort_key,
-                info.track)
+        return (info.album_sort_key,
+                info.track,
+                info.artist_sort_key)
 
 class TrackSort(ItemSort):
     KEY = 'track'
