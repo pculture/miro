@@ -289,11 +289,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                 item.file_type = mediatype
             item.signal_change()
 
-    @as_idle
     def update_skipped(self, item):
-        if item.id_exists():
-            item.mdp_state = State.SKIPPED
-            item.signal_change()
+        item.mdp_state = State.SKIPPED
+        item.signal_change()
 
     def request_update(self, item):
         if (hasattr(app, 'in_unit_tests') and
