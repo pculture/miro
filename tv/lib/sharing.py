@@ -826,15 +826,17 @@ class SharingManagerBackend(object):
         with self.item_lock:
             for itemid in message.removed:
                 try:
-                    self.playlist_item_map[message.id].remove(itemid)
+                    if message.id is not None:
+                        self.playlist_item_map[message.id].remove(itemid)
                 except KeyError:
                     pass
                 try:
                     del self.daapitems[itemid]
                 except KeyError:
                     pass
-            item_ids = [item.id for item in message.added]
-            self.playlist_item_map[message.id] += item_ids
+            if message.id is not None:
+                item_ids = [item.id for item in message.added]
+                self.playlist_item_map[message.id] += item_ids
             self.make_item_dict(message.added)
             self.make_item_dict(message.changed)
 
