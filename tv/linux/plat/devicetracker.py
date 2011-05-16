@@ -31,6 +31,7 @@ import logging
 import os
 
 import gio
+from glib import GError
 
 from miro import app
 from miro import messages
@@ -160,7 +161,7 @@ class DeviceTracker(object):
     def _eject_callback(self, drive, result, device):
         try:
             result = drive.eject_finish(result)
-        except gio.Error:
+        except (gio.Error, GError):
             # XXX notify the user in some way?
             logging.exception('eject failed for %r' % drive)
             result = False
