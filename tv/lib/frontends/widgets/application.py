@@ -1684,7 +1684,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list.blink_tab("downloading")
 
     def handle_metadata_progress_update(self, message):
-        if not app.item_list_controller_manager:
+        if not app.item_list_controller_manager or not app.tabs:
             return # got a metadata update before the UI opens
         app.item_list_controller_manager.update_metadata_progress(
+            message.target, message.remaining, message.eta, message.total)
+        app.tabs.update_metadata_progress(
             message.target, message.remaining, message.eta, message.total)

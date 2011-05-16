@@ -382,10 +382,12 @@ class StaticTabList(TabUpdaterMixin, TabList):
     def _on_search_complete(self, manager, count):
         self.stop_updating(self.iter_map.keys()[0])
 
-class LibraryTabList(TabBlinkerMixin, TabList):
+class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
     """Handles all Library related tabs - Video, Audio, Downloading..."""
     def __init__(self):
         TabList.__init__(self)
+        TabBlinkerMixin.__init__(self)
+        TabUpdaterMixin.__init__(self)
         self.type = u'library'
         self.auto_tabs = {}
         self.auto_tabs_to_show = set()

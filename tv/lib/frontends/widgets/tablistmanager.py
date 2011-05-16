@@ -295,3 +295,17 @@ class TabListManager(dict):
         """
         logging.debug("deleted selected node?")
         self._handle_no_tabs_selected(tab_list)
+
+    def update_metadata_progress(self, target, remaining, eta, total):
+        if target == ('library', 'video'):
+            tab_id = 'videos'
+        elif target == ('library', 'audio'):
+            tab_id = 'music'
+        else:
+            logging.warn("Don't know how to handle metadata progress for %s",
+                    target)
+            return
+        if remaining > 0:
+            self['library'].start_updating(tab_id)
+        else:
+            self['library'].stop_updating(tab_id)
