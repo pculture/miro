@@ -36,7 +36,7 @@ from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
 from miro.download_utils import (next_free_filename, get_file_url_path,
-                                 filter_directory_name)
+        next_free_directory, filter_directory_name)
 from miro.util import (get_torrent_info_hash, returns_unicode, check_u,
                        returns_filename, unicodify, check_f, to_uni, is_magnet_uri)
 from miro import app
@@ -447,13 +447,21 @@ class RemoteDownloader(DDBObject):
                 newfilename = os.path.join(directory, short_filename)
                 if newfilename == filename:
                     return
-                newfilename, fp = next_free_filename(newfilename)
+                # create a file or directory to serve as a placeholder before
+                # we start to migrate.  This helps ensure that the destination
+                # we're migrating too is not already taken.
+                if not fileutil.isdir(filename):
+                    newfilename, fp = next_free_filename(newfilename)
+                else:
+                    newfilename = next_free_directory(newfilename)
+                    fp = None
                 def callback():
                     self.status['filename'] = newfilename
                     self.signal_change(needs_signal_item=False)
                     self._file_migrated(filename)
                 fileutil.migrate_file(filename, newfilename, callback)
-                fp.close()
+                if fp is not None:
+                    fp.close() # clean up if we called next_free_filename()
         for i in self.item_list:
             i.migrate_children(directory)
 

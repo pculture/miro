@@ -43,7 +43,8 @@ from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        entity_replace)
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
 
-from miro.download_utils import clean_filename, next_free_filename
+from miro.download_utils import (clean_filename, next_free_filename,
+        next_free_directory)
 
 from miro.database import (DDBObject, ObjectNotFoundError,
                            DatabaseConstraintError)
@@ -2165,12 +2166,20 @@ filename was %s""", stringify(self.filename))
         if self.filename == new_filename:
             return
         if fileutil.exists(self.filename):
-            new_filename, fp = next_free_filename(new_filename)
+            # create a file or directory to serve as a placeholder before we
+            # start to migrate.  This helps ensure that the destination we're
+            # migrating too is not already taken.
+            if not fileutil.isdir(self.filename):
+                new_filename, fp = next_free_filename(new_filename)
+            else:
+                new_filename = next_free_directory(new_filename)
+                fp = None
             def callback():
                 self.filename = new_filename
                 self.signal_change()
             fileutil.migrate_file(self.filename, new_filename, callback)
-            fp.close()
+            if fp is not None:
+                fp.close() # clean up if we called next_free_filename()
         elif fileutil.exists(new_filename):
             self.filename = new_filename
             self.signal_change()
