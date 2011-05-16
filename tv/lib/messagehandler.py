@@ -460,9 +460,14 @@ class DownloadingItemsTracker(DatabaseSourceTrackerBase):
 
 class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
     type = u'sharing-backend'
-    id = u'sharing-backend'
-    def __init__(self):
-        self.view = item.Item.watchable_view()
+    def __init__(self, id_):
+        self.id = id_
+        if self.id is None:
+            # All items
+            self.view = item.Item.watchable_view()
+        else:
+            # This playlist id only.
+            self.view = item.Item.playlist_view(self.id)
         DatabaseSourceTrackerBase.__init__(self)
 
 class PreferencedItemsTracker(DatabaseSourceTrackerBase):
@@ -590,7 +595,7 @@ def make_item_tracker(message):
     elif message.type == 'sharing':
         return SharingItemTracker(message.id)
     elif message.type == 'sharing-backend':
-        return SharingBackendItemsTracker()
+        return SharingBackendItemsTracker(message.id)
     elif message.type == 'guide-sidebar':
         return GuideSidebarTracker()
     else:

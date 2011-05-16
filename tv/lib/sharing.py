@@ -819,13 +819,22 @@ class SharingManagerBackend(object):
         self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
-        # If items are changed, just redelete and recreate the entry.
+        # If items are changed, overwrite with a recreated entry.  This
+        # might not be necessary, as currently this change can be due to an 
+        # item being moved out of, and then into, a playlist.  Also, based on 
+        # message.id, change the playlists accordingly.
         with self.item_lock:
             for itemid in message.removed:
+                try:
+                    self.playlist_item_map[message.id].remove(itemid)
+                except KeyError:
+                    pass
                 try:
                     del self.daapitems[itemid]
                 except KeyError:
                     pass
+            item_ids = [item.id for item in message.added]
+            self.playlist_item_map[message.id] += item_ids
             self.make_item_dict(message.added)
             self.make_item_dict(message.changed)
 
@@ -908,13 +917,20 @@ class SharingManagerBackend(object):
                   for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
 
     def start_tracking(self):
-        app.info_updater.item_list_callbacks.add(self.type, self.id,
-                                                 self.handle_item_list)
-        app.info_updater.item_changed_callbacks.add(self.type, self.id,
-                                                    self.handle_items_changed)
-        messages.TrackItems(self.type, self.id).send_to_backend()
-
         self.populate_playlists()
+        for playlist_id in self.daap_playlists:
+            app.info_updater.item_list_callbacks.add(self.type, playlist_id,
+                                                 self.handle_item_list)
+            app.info_updater.item_changed_callbacks.add(self.type, playlist_id,
+                                                 self.handle_items_changed)
+            messages.TrackItems(self.type, playlist_id).send_to_backend()
+        # Track items that do not belong in any playlist.
+        app.info_updater.item_list_callbacks.add(self.type, None,
+                                                 self.handle_item_list)
+        app.info_updater.item_changed_callbacks.add(self.type, None,
+                                                 self.handle_items_changed)
+
+        messages.TrackItems(self.type, None).send_to_backend()
 
         app.info_updater.connect('playlists-added',
                                  self.handle_playlist_added)
@@ -924,10 +940,18 @@ class SharingManagerBackend(object):
                                  self.handle_playlist_removed)
 
     def stop_tracking(self):
-        messages.StopTrackingItems(self.type, self.id).send_to_backend()
-        app.info_updater.item_list_callbacks.remove(self.type, self.id,
+        for playlist_id in self.daap_playlists:
+            messages.StopTrackingItems(self.type,
+                                       playlist_id).send_to_backend()
+            app.info_updater.item_list_callbacks.remove(self.type, playlist_id,
                                                     self.handle_item_list)
-        app.info_updater.item_changed_callbacks.remove(self.type, self.id,
+            app.info_updater.item_changed_callbacks.remove(self.type,
+                                                    playlist_id,
+                                                    self.handle_items_changed)
+        messages.StopTrackingItems(self.type, self.id).send_to_backend()
+        app.info_updater.item_list_callbacks.remove(self.type, None,
+                                                    self.handle_item_list)
+        app.info_updater.item_changed_callbacks.remove(self.type, None,
                                                     self.handle_items_changed)
 
         app.info_updater.disconnect(self.handle_playlist_added)
