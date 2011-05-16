@@ -717,8 +717,9 @@ class _MovieDirectoryHelper(object):
             except (OSError, IOError):
                 dialogs.show_message(
                     _("Directory not valid"),
-                    _("Directory '%s' could not be created.  Please "
-                      "choose a directory you have write access to."),
+                    _("Directory '%(dir)s' could not be created.  Please "
+                      "choose a directory you have write access to.",
+                      {"dir": d}),
                     dialogs.WARNING_MESSAGE)
                 return
             logging.debug("Created directory.  It's valid.")
