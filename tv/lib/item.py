@@ -2171,9 +2171,9 @@ filename was %s""", stringify(self.filename))
             # migrating too is not already taken.
             if fileutil.isdir(self.filename):
                 new_filename = next_free_directory(new_filename)
+                fp = None
             else:
                 new_filename, fp = next_free_filename(new_filename)
-                fp = None
             def callback():
                 self.filename = new_filename
                 self.signal_change()

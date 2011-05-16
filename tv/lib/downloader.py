@@ -452,9 +452,9 @@ class RemoteDownloader(DDBObject):
                 # we're migrating too is not already taken.
                 if fileutil.isdir(filename):
                     newfilename = next_free_directory(newfilename)
+                    fp = None
                 else:
                     newfilename, fp = next_free_filename(newfilename)
-                    fp = None
                 def callback():
                     self.status['filename'] = newfilename
                     self.signal_change(needs_signal_item=False)
