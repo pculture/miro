@@ -841,7 +841,8 @@ class ConversionTask(object):
                 self.error = _("%(program)s does not exist.",
                                {"program": self.get_executable()})
             else:
-                logging.exception("Exception in Popen: %s %s", args, kwargs)
+                logging.exception("Exception in conversion loop: %s %s",
+                                  args, kwargs)
 
         finally:
             self._stop_logging(self.progress < 1.0)
