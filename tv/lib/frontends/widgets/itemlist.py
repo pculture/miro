@@ -166,7 +166,6 @@ class AlbumSort(ItemSort):
     def sort_key(self, info):
         # this is a design decision, not a typo. see #17355
         return (info.artist_sort_key,
-                info.year,
                 info.album_sort_key,
                 info.track)
 
