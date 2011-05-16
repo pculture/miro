@@ -355,11 +355,14 @@ class TabList(signals.SignalEmitter):
         prev_view.focus()
         return True
 
-class StaticTabList(TabList):
+class StaticTabList(TabUpdaterMixin, TabList):
     """Handles the static tabs (the tabs on top that are always the same)."""
     def __init__(self):
+        TabUpdaterMixin.__init__(self)
         TabList.__init__(self)
         self.type = u'static'
+        app.search_manager.connect('search-started', self._on_search_started)
+        app.search_manager.connect('search-complete', self._on_search_complete)
 
     def _make_view(self):
         view = TabListView(style.StaticTabRenderer())
@@ -372,6 +375,12 @@ class StaticTabList(TabList):
     def get_default(self):
         """Returns an iter pointing to Video Search."""
         return self.view.model.first_iter()
+
+    def _on_search_started(self, manager):
+        self.start_updating(self.iter_map.keys()[0])
+
+    def _on_search_complete(self, manager, count):
+        self.stop_updating(self.iter_map.keys()[0])
 
 class LibraryTabList(TabBlinkerMixin, TabList):
     """Handles all Library related tabs - Video, Audio, Downloading..."""

@@ -230,7 +230,14 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
 class StaticTabRenderer(TabRenderer):
     def pack_bubbles(self, hbox, layout_manager, selected=False):
-        if self.data.unwatched > 0:
+        if self.updating_frame > -1:
+            image_name = 'icon-updating-%s' % self.updating_frame
+            updating_image = widgetutil.make_surface(image_name)
+            alignment = cellpack.Alignment(
+                updating_image, yalign=0.5,yscale=0.0,
+                xalign=0.0, xscale=0.0, min_width=20)
+            hbox.pack(alignment)
+        elif self.data.unwatched > 0:
             self.pack_bubble(hbox, layout_manager, self.data.unwatched,
                     UNPLAYED_COLOR, selected=selected)
         if self.data.downloading > 0:
