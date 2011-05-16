@@ -702,7 +702,7 @@ class TestCopySubtitleFile(unittest.TestCase):
 
 class TestNameSortKey(unittest.TestCase):
     def test_simple(self):
-        for testcase in ((None, None),
+        for testcase in ((None, 'ZZZZZZZZZZZZZ'),
                          (u'', [u'']),
                          (u'a', [u'a']),
                          (u'a1a', [u'a', 1.0, u'a']),

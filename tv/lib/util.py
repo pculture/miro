@@ -1112,7 +1112,8 @@ def name_sort_key(text):
     >>> listofnames.sort(key=lambda x: name_sort_key(x.name))
     """
     if text is None:
-        return text
+        # put blank entries on the bottom (#17357)
+        return "ZZZZZZZZZZZZZ"
     text = text.lower()
     if text.startswith("a "):
         text = text[2:]
