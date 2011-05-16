@@ -388,10 +388,12 @@ class FirstTimeDialog(widgetset.DialogWindow):
             elif widget is restrict_rb:
                 search_entry.disable()
                 change_button.disable()
+                self.gathered_media_files = None
 
             elif widget is search_rb:
                 search_entry.enable()
                 change_button.enable()
+                self.gathered_media_files = None
 
             if widget is restrict_rb or widget is search_rb:
                 switch_mode("search")
