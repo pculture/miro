@@ -450,10 +450,10 @@ class RemoteDownloader(DDBObject):
                 # create a file or directory to serve as a placeholder before
                 # we start to migrate.  This helps ensure that the destination
                 # we're migrating too is not already taken.
-                if not fileutil.isdir(filename):
-                    newfilename, fp = next_free_filename(newfilename)
-                else:
+                if fileutil.isdir(filename):
                     newfilename = next_free_directory(newfilename)
+                else:
+                    newfilename, fp = next_free_filename(newfilename)
                     fp = None
                 def callback():
                     self.status['filename'] = newfilename

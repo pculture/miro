@@ -2169,10 +2169,10 @@ filename was %s""", stringify(self.filename))
             # create a file or directory to serve as a placeholder before we
             # start to migrate.  This helps ensure that the destination we're
             # migrating too is not already taken.
-            if not fileutil.isdir(self.filename):
-                new_filename, fp = next_free_filename(new_filename)
-            else:
+            if fileutil.isdir(self.filename):
                 new_filename = next_free_directory(new_filename)
+            else:
+                new_filename, fp = next_free_filename(new_filename)
                 fp = None
             def callback():
                 self.filename = new_filename
