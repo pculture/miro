@@ -38,6 +38,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.itemrenderer import (DOWNLOAD_TEXT,
                                                  DOWNLOAD_TO_MY_MIRO_TEXT)
+from miro.plat import PLATFORMNAME
 from miro.plat import resources
 from miro.plat.frontends.widgets import use_custom_tablist_font
 from miro.plat.frontends.widgets import widgetset
@@ -174,11 +175,27 @@ class TabRenderer(widgetset.CustomCellRenderer):
             layout_manager.set_text_color(widgetutil.WHITE)
             layout_manager.set_text_shadow(widgetutil.Shadow(
                 self.SELECTED_FONT_SHADOW, 0.5, (0, 1), 0))
-
-        if self.is_tall():
-            margin = (0, radius, 2, radius)
+        if PLATFORMNAME == 'windows':
+            # XXX FIXME HACK For 17305, the bubble text needs to move
+            # up 2px on Windows.  I can't figure out what the
+            # difference is between Linux and Windows; it's not
+            # miro.plat.frontends.widgets.use_custom_tablist_font.
+            # Either way, there are better things to be spending time
+            # on right now.
+            bottom_extra = 2
         else:
-            margin = (1, radius, 1, radius)
+            bottom_extra = 0
+        if PLATFORMNAME == 'osx':
+            # XXX FIXME HACK 17305, text on OSX needs to move 1px to the left
+            left_extra = 0.5
+        else:
+            left_extra = 0
+        if self.is_tall():
+            margin = (0, radius + left_extra,
+                      2 + bottom_extra, radius - left_extra)
+        else:
+            margin = (1, radius + left_extra,
+                      1 + bottom_extra, radius - left_extra)
         background = cellpack.Background(layout_manager.textbox(str(count)),
                 margin=margin)
         background.set_callback(self.draw_bubble, color)
