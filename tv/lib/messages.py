@@ -1246,6 +1246,10 @@ class ItemInfo(object):
         self.name_sort_key = util.name_sort_key(self.name)
         self.album_sort_key = util.name_sort_key(self.album)
         self.artist_sort_key = util.name_sort_key(self.artist)
+        if self.album_artist:
+            self.album_artist_sort_key = util.name_sort_key(self.album_artist)
+        else:
+            self.album_artist_sort_key = self.artist_sort_key
         # pre-calculate things that get displayed in list view
         self.description_oneline = (
                 self.description_stripped[0].replace('\n', '$'))
