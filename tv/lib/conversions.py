@@ -912,7 +912,10 @@ class ConversionTask(object):
         logging.warning("killing conversion task %d",
                         self.process_handle.pid)
         self.process_handle.kill()
-        self.process_handle.wait()
+        try:
+            self.process_handle.wait()
+        except OSError:
+            logging.exception('exception while interupting process')
         if not self.temp_output_path.endswith('.tmp'):  # temp file
             if (os.path.exists(self.temp_output_path) and
                 self.progress < 1.0):
