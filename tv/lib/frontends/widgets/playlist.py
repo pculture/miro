@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import style
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 class DropHandler(signals.SignalEmitter):
     def __init__(self, playlist_id, item_list, item_views, sorter):
@@ -102,6 +103,10 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
 
     def _init_widget(self):
         itemlistcontroller.SimpleItemListController._init_widget(self)
+        standard_view = WidgetStateStore.get_standard_view_type()
+        # 17408: the hotspot handler in the standard view need access to the
+        # playlist id to be able to ditch an item.
+        self.views[standard_view].playlist_id = self.id
         self.make_drop_handler()
 
     def make_sorter(self, column, ascending):
