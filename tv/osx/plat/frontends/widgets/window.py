@@ -777,3 +777,16 @@ class PreferencesWindow(Window):
 
     def on_app_quit(self, notification):
         self.close()
+
+def get_first_time_dialog_coordinates(width, height):
+    """Returns the coordinates for the first time dialog.
+    """
+    # windowFrame is None on first run.  in that case, we want
+    # to put Miro in the middle.
+    mainscreen = NSScreen.mainScreen()
+    rect = mainscreen.frame()
+
+    x = (rect.size.width - width) / 2
+    y = (rect.size.height - height) / 2
+
+    return x, y

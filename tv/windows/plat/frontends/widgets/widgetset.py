@@ -30,3 +30,8 @@
 # Most of our widgets come straight from the portable GTK code.
 from miro.frontends.widgets.gtk.widgetset import *
 from miro.plat.frontends.widgets.browser import Browser
+
+def get_first_time_dialog_coordinates(width, height):
+    """Returns the coordinates for the first time dialog.
+    """
+    return (100, 100)

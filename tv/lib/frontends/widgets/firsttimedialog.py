@@ -75,8 +75,10 @@ class FirstTimeDialog(widgetset.DialogWindow):
             title = _("%(appname)s First Time Setup",
                       {"appname": app.config.get(prefs.SHORT_APP_NAME)})
 
+        x, y = widgetset.get_first_time_dialog_coordinates(WIDTH, HEIGHT)
+
         widgetset.DialogWindow.__init__(
-            self, title, widgetset.Rect(100, 100, WIDTH, HEIGHT))
+            self, title, widgetset.Rect(x, y, WIDTH, HEIGHT))
 
         # the directory panel 3 searches for files in
         self.search_directory = None
