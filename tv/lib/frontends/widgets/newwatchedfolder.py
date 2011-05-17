@@ -43,7 +43,6 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, PlatformFilenameType
 
-
 class NewWatchedFolderDialog(MainDialog):
     TITLE = _("Add Watched Folder")
     DESCRIPTION = _("Miro can watch a folder on your computer and show "
@@ -92,8 +91,12 @@ class NewWatchedFolderDialog(MainDialog):
 
             ret = self.run()
             if ret == 0:
-                return (PlatformFilenameType(self.folder_entry.get_text()),
-                        self.visible_checkbox.get_checked())
+                # 17407 band-aid - don't init with PlatformFilenameType since
+                # str use ascii codec
+                dir = self.folder_entry.get_text()
+                if PlatformFilenameType == str:
+                    dir = dir.encode('utf-8')
+                return (dir, self.visible_checkbox.get_checked())
 
             return None
 
@@ -101,7 +104,11 @@ class NewWatchedFolderDialog(MainDialog):
             logging.exception("newwatchedfolder threw exception.")
 
     def handle_choose(self, widget):
-        path = PlatformFilenameType(self.folder_entry.get_text())
+        # 17407 band-aid - don't init with PlatformFilenameType since
+        # str use ascii codec
+        path = self.folder_entry.get_text()
+        if PlatformFilenameType == str:
+            path = path.encode('utf-8')
         if not os.path.exists(path):
             path = resources.get_default_search_dir()
 
