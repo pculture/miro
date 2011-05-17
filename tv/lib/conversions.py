@@ -695,7 +695,8 @@ def build_parameters(input_path, output_path, converter_info, media_info):
         else:
             # neither source dimension is larger than the target
             # dimensions, so we leave it as is
-            target_size = "%dx%d" % source_size
+            target_size = "%dx%d" % (round_even(source_size[0]),
+                                     round_even(source_size[1]))
     else:
         # FIXME - this is a little weird.  screen_size can be None.
         # so while this currently does the right thing because of the
