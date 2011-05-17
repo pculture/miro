@@ -693,10 +693,15 @@ class DeviceItemHandler(ItemHandler):
         Should also send a 'changed' message, if the is_playing state changed.
         """
         if info.is_playing != is_playing:
+            # modifying the ItemInfo in-place messes up the Tracker's
+            # object-changed logic, so make a copy
+            info_cache = app.device_manager.info_cache[info.device.mount]
+            info = info_cache[info.id] = messages.ItemInfo(
+                info.id, **info.__dict__)
             database = info.device.database
             info.is_playing = is_playing
             database[info.file_type][info.id][u'is_playing'] = is_playing
-            info.device.database.emit('item-changed', info)
+            database.emit('item-changed', info)
 
 def setup_handlers():
     app.source_handlers = {
