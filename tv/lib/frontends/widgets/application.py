@@ -1401,6 +1401,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         dialogs.show_message(title, description, dialogs.WARNING_MESSAGE)
 
     def handle_frontend_quit(self, message):
+        if self.dbupgrade_progress_dialog:
+            self.dbupgrade_progress_dialog.destroy()
+            self.dbupgrade_progress_dialog = None
         app.widgetapp.do_quit()
 
     def handle_database_upgrade_start(self, message):
