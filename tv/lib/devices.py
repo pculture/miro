@@ -626,44 +626,50 @@ class DeviceSyncManager(object):
                                                      self.device.mount),
                                  extension)
         new_path = os.path.join(dirname, new_basename)
-        os.rename(final_path, new_path)
-        device_item = DeviceItem(
-            device=self.device,
-            file_type=item_info.file_type,
-            video_path=new_path[len(self.device.mount):],
-            title=item_info.name,
-            feed_name=item_info.feed_name,
-            feed_url=item_info.feed_url,
-            description=item_info.description,
-            release_date=time.mktime(item_info.release_date.timetuple()),
-            duration=(item_info.duration and item_info.duration * 1000 or
-                      None),
-            permalink=item_info.permalink,
-            commentslink=item_info.commentslink,
-            payment_link=item_info.payment_link,
-            screenshot=item_info.thumbnail,
-            thumbnail_url=item_info.thumbnail_url,
-            file_format=item_info.file_format,
-            license=item_info.license,
-            url=item_info.file_url,
-            media_type_checked=item_info.media_type_checked,
-            mime_type=item_info.mime_type,
-            creation_time=time.mktime(item_info.date_added.timetuple()),
-            title_tag=item_info.title_tag,
-            artist=item_info.artist,
-            album=item_info.album,
-            track=item_info.track,
-            year=item_info.year,
-            genre=item_info.genre,
-            metadata_version=item_info.metadata_version,
-            mdp_state=item_info.mdp_state,
-            )
-        device_item._migrate_thumbnail()
-        database = self.device.database
-        database.setdefault(device_item.file_type, [])
-        database[device_item.file_type][device_item.id] = \
-            device_item.to_dict()
-        database.emit('item-added', device_item)
+
+        def callback():
+            if not os.path.exists(new_path):
+                return # copy failed, just give up
+
+            device_item = DeviceItem(
+                device=self.device,
+                file_type=item_info.file_type,
+                video_path=new_path[len(self.device.mount):],
+                title=item_info.name,
+                feed_name=item_info.feed_name,
+                feed_url=item_info.feed_url,
+                description=item_info.description,
+                release_date=time.mktime(item_info.release_date.timetuple()),
+                duration=(item_info.duration and item_info.duration * 1000 or
+                          None),
+                permalink=item_info.permalink,
+                commentslink=item_info.commentslink,
+                payment_link=item_info.payment_link,
+                screenshot=item_info.thumbnail,
+                thumbnail_url=item_info.thumbnail_url,
+                file_format=item_info.file_format,
+                license=item_info.license,
+                url=item_info.file_url,
+                media_type_checked=item_info.media_type_checked,
+                mime_type=item_info.mime_type,
+                creation_time=time.mktime(item_info.date_added.timetuple()),
+                title_tag=item_info.title_tag,
+                artist=item_info.artist,
+                album=item_info.album,
+                track=item_info.track,
+                year=item_info.year,
+                genre=item_info.genre,
+                metadata_version=item_info.metadata_version,
+                mdp_state=item_info.mdp_state,
+                )
+            device_item._migrate_thumbnail()
+            database = self.device.database
+            database.setdefault(device_item.file_type, [])
+            database[device_item.file_type][device_item.id] = \
+                device_item.to_dict()
+            database.emit('item-added', device_item)
+
+        fileutil.migrate_file(final_path, new_path, callback)
 
     def _check_finished(self):
         if not self.waiting and not self.copying:
