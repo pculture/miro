@@ -32,6 +32,9 @@ pygtk.require("2.0")
 import gtk
 import gobject
 import appindicator
+if not hasattr(appindicator.Indicator, 'set_icon_theme_path'):
+    raise ImportError
+
 from miro.gtcache import gettext as _
 
 from miro import app
