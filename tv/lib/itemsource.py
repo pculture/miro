@@ -495,6 +495,9 @@ class SharingItemHandler(ItemHandler):
         a back pointer to the item source and emit a 'changed' message.
         """
         if info.is_playing != is_playing:
+            # modifying the ItemInfo in-place messes up the Tracker's
+            # object-changed logic, so make a copy
+            info = messages.ItemInfo(info.id, **info.__dict__)
             info.is_playing = is_playing
             info.item_source.emit("changed", info)
 
