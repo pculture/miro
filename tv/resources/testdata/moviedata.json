@@ -1,4 +1,18 @@
 {
+    "theora_with_ogg_extension.ogg": {
+        "file_type": "video",
+        "duration": 66,
+        "screenshot": true,
+        "album": null,
+        "album_artist": null,
+        "artist": null,
+        "cover_art": false,
+        "genre": null,
+        "has_drm": false,
+        "title_tag": null,
+        "track": null,
+        "year": null
+    },
     "mp3-0.mp3": {
         "file_type": "audio",
         "duration": 1055,
