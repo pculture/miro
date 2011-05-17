@@ -1778,6 +1778,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 app.metadata_progress_updater.path_processed(path)
             # Set our state to SKIPPED so we don't request another update.
             self.mdp_state = moviedata.State.SKIPPED
+            self.file_type = u'other'
             self.signal_change()
             # The file may no longer be around.  Call check_delete() in an
             # idle callback to handle this.  We don't want to call
@@ -1786,6 +1787,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             eventloop.add_idle(self.check_deleted, 'checking item deleted')
         else:
             moviedata.movie_data_updater.request_update(self)
+            if self.file_type is None:
+                # if this is not overridden by movie_data_updater,
+                # neither mutagen nor MDP could identify it
+                self.file_type = u'other'
+            self.signal_change()
 
     def _check_media_file(self):
         """Does the work for check_media_file()
@@ -1807,11 +1813,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.read_metadata()
         except IOError:
             raise CheckMediaError("IOError in read_metadata()")
-        if self.file_type is None:
-            # if this is not overridden by movie_data_updater,
-            # neither mutagen nor MDP could identify it
-            self.file_type = u'other'
-        self.signal_change()
 
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
