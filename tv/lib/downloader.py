@@ -451,6 +451,11 @@ class RemoteDownloader(DDBObject):
                 # we start to migrate.  This helps ensure that the destination
                 # we're migrating too is not already taken.
                 if fileutil.isdir(filename):
+                    # if self.filename is a directory, then we want to take
+                    # the subdirectory of the src and put it in a unique
+                    # directory in the destination.
+                    if os.path.isdir(os.path.join(filename, short_filename)):
+                        filename = os.path.join(filename, short_filename)
                     newfilename = next_free_directory(newfilename)
                     fp = None
                 else:

@@ -2170,7 +2170,13 @@ filename was %s""", stringify(self.filename))
             # create a file or directory to serve as a placeholder before we
             # start to migrate.  This helps ensure that the destination we're
             # migrating too is not already taken.
-            if fileutil.isdir(self.filename):
+            src = self.filename
+            if fileutil.isdir(src):
+                # if self.filename is a directory, then we want to take
+                # the subdirectory of the src and put it in a unique
+                # directory in the destination.
+                if os.path.isdir(os.path.join(src, self.shortFilename)):
+                    src = os.path.join(src, self.shortFilename)
                 new_filename = next_free_directory(new_filename)
                 fp = None
             else:
@@ -2178,7 +2184,7 @@ filename was %s""", stringify(self.filename))
             def callback():
                 self.filename = new_filename
                 self.signal_change()
-            fileutil.migrate_file(self.filename, new_filename, callback)
+            fileutil.migrate_file(src, new_filename, callback)
             if fp is not None:
                 fp.close() # clean up if we called next_free_filename()
         elif fileutil.exists(new_filename):
