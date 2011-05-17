@@ -69,7 +69,11 @@ class LayoutManager(object):
         self.text_shadow = None
 
     def on_style_set(self, widget, previous_style):
+        old_font_desc = self.style_font_desc
         self.update_style(widget.style)
+        if self.style_font_desc != old_font_desc:
+            # bug #17423 font changed, so the widget's width might have changed
+            widget.queue_resize()
 
     def on_direction_changed(self, widget, previous_direction):
         self.update_direction(widget.get_direction())
