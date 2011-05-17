@@ -48,6 +48,7 @@ from miro.plat.utils import (filename_to_unicode,
 from miro.plat.resources import get_default_search_dir
 
 import os
+import logging
 
 _SYSTEM_LANGUAGE = os.environ.get("LANGUAGE", "")
 
@@ -462,6 +463,21 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     num_found,
                     {"count": num_found}))
             self.finder = None
+
+        except Exception:
+            # this is here to get more data for bug #17422
+            logging.exception("exception thrown in make_search_progress")
+
+            # we want to clean up after this exception, too.
+            num_found = len(self.gathered_media_files)
+            self.search_complete(
+                ngettext(
+                    "found %(count)s media file",
+                    "found %(count)s media files",
+                    num_found,
+                    {"count": num_found}))
+            self.finder = None
+
 
     def start_search(self):
         # only start a search if we haven't gathered anything, yet.
