@@ -2181,6 +2181,10 @@ class ItemDetailsWidget(widgetset.VBox):
         self.license_button.connect('clicked', self.on_license_clicked)
         self.license_holder = widgetutil.WidgetHolder()
         vbox.pack_start(widgetutil.align_left(self.license_holder))
+        self.drm_label = self.build_description_label()
+        self.drm_info_holder = widgetutil.HideableWidget(
+            widgetutil.align_left(self.drm_label))
+        vbox.pack_start(widgetutil.align_left(self.drm_info_holder))
         vbox.pack_start(widgetutil.align_left(self.description_label))
         vbox.pack_start(widgetutil.align_left(self.extra_info_label,
             top_pad=self.PADDING_ABOVE_EXTRA_INFO))
@@ -2245,6 +2249,11 @@ class ItemDetailsWidget(widgetset.VBox):
             self.torrent_info_holder.show()
         else:
             self.torrent_info_holder.hide()
+        if info.has_drm:
+            self.drm_label.set_text(_("DRM Locked"))
+            self.drm_info_holder.show()
+        else:
+            self.drm_info_holder.hide()
         self.description_label.set_text(info.description_stripped[0])
         self.set_extra_info_text(info)
         self.setup_license_button(info)
