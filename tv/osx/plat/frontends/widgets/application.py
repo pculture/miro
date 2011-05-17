@@ -229,11 +229,20 @@ class OSXApplication(Application, signals.SignalEmitter):
             logging.warn("movie %s could not be externally opened" % fn)
     
     def get_main_window_dimensions(self):
-        # returns the preference if there is one, or in the case of the
-        # first time the user has used Miro, returns 0, 0, 1024, 600.
         windowFrame = app.config.get(prefs.MAIN_WINDOW_FRAME)
         if windowFrame is None:
-            windowFrame = (0, 0, 1024, 600)
+            # windowFrame is None on first run.  in that case, we want
+            # to put Miro in the middle.
+            mainscreen = NSScreen.mainScreen()
+            rect = mainscreen.frame()
+
+            width = min(1200, rect.size.width)
+            height = min(800, rect.size.height)
+
+            x = (rect.size.width - width) / 2
+            y = (rect.size.height - height) / 2
+
+            windowFrame = (x, y, width, height)
         else:
             rect = NSRectFromString(windowFrame)
             windowFrame = (rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)
