@@ -455,7 +455,10 @@ def populate_subtitles_menu(nsmenu, tracks):
 
     load_item = NSMenuItem.alloc().init()
     load_item.setTitle_(_("Select a Subtitles file..."))
-    load_item.setEnabled_(app.playback_manager.is_playing and not app.playback_manager.is_playing_audio)
+    enabled = ('PlayingLocalVideo' in app.menu_manager.enabled_groups and
+               app.playback_manager.is_playing and
+               not app.playback_manager.is_playing_audio)
+    load_item.setEnabled_(enabled)
     load_item.setTarget_(subtitles_menu_handler)
     load_item.setAction_('openSubtitleFile:')
     nsmenu.addItem_(load_item)

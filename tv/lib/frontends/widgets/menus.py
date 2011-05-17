@@ -352,7 +352,7 @@ def get_menu():
                             Separator(),
                             MenuItem(_("Select a Subtitles File..."),
                                      "SubtitlesSelect",
-                                     groups=["PlayingVideo"])
+                                     groups=["PlayingLocalVideo"])
                             ]),
                     ]),
 
@@ -788,6 +788,8 @@ class MenuStateManager(signals.SignalEmitter):
                 # things just as if the window was detached
                 self.enabled_groups.add('NonPlaying')
             else:
+                if not item.remote:
+                    self.enabled_groups.add('PlayingLocalVideo')
                 self.enabled_groups.add('PlayingVideo')
             if app.playback_manager.detached_window is not None:
                 self.enabled_groups.add('NonPlaying')
