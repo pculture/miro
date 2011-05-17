@@ -120,20 +120,26 @@ class MovieDataRequestTest(MiroTestCase):
         del app.testing_mdp
         MiroTestCase.tearDown(self)
 
-    def signal_changes(self):
-        self.audio_item.signal_change()
-        self.video_item.signal_change()
-        self.other_item.signal_change()
+    def rerun_request_update(self):
+        """Rerun the request_update code().
+
+        Use this method if you want to change attributes on the items and see
+        the effects on the movie data request code.
+        """
+        for item in (self.audio_item, self.video_item, self.other_item):
+            # reset mdp_state to SKIPPED to simulate this being the first time
+            # we called request_update()
+            item.mdp_state = None
+            item.signal_change()
+            moviedata.movie_data_updater.request_update(item)
 
     def check_will_run_moviedata(self, item, should_run):
         # check MovieDataUpdater._should_process_item()
         mdu = moviedata.movie_data_updater
         self.assertEquals(mdu._should_process_item(item), should_run)
-        # check incomplete_mdp_view; this should be True for all items, since
-        # each needs to be marked as seen
-        incomplete_view = set(
-                models.Item.incomplete_mdp_view())
-        self.assertEquals(item in incomplete_view, True)
+        # check incomplete_mdp_view
+        incomplete_view = set(models.Item.incomplete_mdp_view())
+        self.assertEquals(item in incomplete_view, should_run)
 
     def check_path_processed(self, item, should_run):
         # Check if path_processed was called.  Note: this can only test based
@@ -173,7 +179,7 @@ class MovieDataRequestTest(MiroTestCase):
         # we should always run moviedata if mutagen can't determine the
         # duration
         self.audio_item.duration = self.video_item.duration = None
-        self.signal_changes()
+        self.rerun_request_update()
         self.check_will_run_moviedata(self.video_item, True)
         self.check_will_run_moviedata(self.audio_item, True)
 
@@ -181,7 +187,7 @@ class MovieDataRequestTest(MiroTestCase):
         # we should run moviedata if it's a video item and we haven't captured
         # a screenshot
         self.audio_item.screenshot = self.video_item.screenshot = None
-        self.signal_changes()
+        self.rerun_request_update()
         self.check_will_run_moviedata(self.video_item, True)
         self.check_will_run_moviedata(self.audio_item, False)
 
