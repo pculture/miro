@@ -959,8 +959,12 @@ class SorterOwner(object):
         self.update_sorts(sorts_enabled)
 
     def on_sorter_clicked(self, widget, sort_key):
-        ascending = not (widget.get_sort_indicator_visible() and
-                widget.get_sort_order_ascending())
+        if widget.get_sort_indicator_visible():
+            # toggling sorter direction
+            ascending = not widget.get_sort_order_ascending()
+        else:
+            # just switched to this sorter; use its default direction
+            ascending = True
         self.emit('sort-changed', sort_key, ascending)
 
     def change_sort_indicator(self, sort_key, ascending):
