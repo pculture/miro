@@ -860,9 +860,9 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         tab_type = device.tab_type
         self.type = u'device-%s' % tab_type
         if tab_type == 'audio':
-            self.titlebar_class = itemlistwidgets.MusicTitlebar
+            self.titlebar_class = itemlistwidgets.DeviceMusicTitlebar
         else:
-            self.titlebar_class = itemlistwidgets.VideosTitlebar
+            self.titlebar_class = itemlistwidgets.DeviceVideosTitlebar
 
         itemlistcontroller.AudioVideoItemsController.__init__(self)
         if (u'%s_sort_state' % tab_type) in device.database:
@@ -885,6 +885,13 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.titlebar.connect('list-view-clicked', self.save_view, 'list')
         self.titlebar.connect('normal-view-clicked',
                                     self.save_view, 'normal')
+
+    def make_titlebar(self):
+        titlebar = self.titlebar_class()
+        titlebar.connect('search-changed', self._on_search_changed)
+        titlebar.connect('toggle-filter', self.on_toggle_filter)
+        return titlebar
+
     def build_header_toolbar(self):
         sorts_enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
         return itemlistwidgets.HeaderToolbar(sorts_enabled)

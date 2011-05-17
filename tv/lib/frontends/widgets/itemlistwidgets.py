@@ -794,7 +794,7 @@ class MediaTitlebar(SearchTitlebar, FilteredTitlebar):
 # Note that this is not related to VideoAudioFilterMixin.
 # VideoAudioFilterMixin adds video and audio filtering, 
 # while VideosTitlebar is the static video tab.
-class VideosTitlebar(MediaTitlebar):
+class VideosTitlebarMixin(object):
     def setup_filters(self):
         FilteredTitlebar.setup_filters(self)
         view_all = WidgetStateStore.get_view_all_filter()
@@ -828,7 +828,13 @@ class VideosTitlebar(MediaTitlebar):
             self.filter_box_holder.hide()
         else:
             self.filter_box_holder.show()
-        MediaTitlebar.set_small_width_mode(self, enabled)
+        super(VideosTitlebarMixin, self).set_small_width_mode(enabled)
+
+class VideosTitlebar(VideosTitlebarMixin, MediaTitlebar):
+    pass
+
+class DeviceVideosTitlebar(VideosTitlebarMixin, FilteredTitlebar):
+    pass
 
 # This is the same as the videos titlebar (with all the filters etc) except
 # we don't let saving as a playlist (because everything here is transient).
@@ -837,6 +843,15 @@ class SharingTitlebar(VideosTitlebar):
        self.emit('search-changed', searchbox.get_text())
 
 class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
+   def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
+        UnplayedFilterMixin.setup_filters(self)
+
+   def toggle_filter(self, filter_):
+       FilteredTitlebar.toggle_filter(self, filter_)
+       UnplayedFilterMixin.toggle_filter(self)
+
+class DeviceMusicTitlebar(FilteredTitlebar, UnplayedFilterMixin):
    def setup_filters(self):
         FilteredTitlebar.setup_filters(self)
         UnplayedFilterMixin.setup_filters(self)
