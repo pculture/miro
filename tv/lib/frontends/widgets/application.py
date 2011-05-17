@@ -1358,16 +1358,25 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 "no tabs to jettison from sidebar model?",
                 with_exception=False)
             return
+        # XXX warning XXX: this code doesn't handle removing an iter's children
+        # from the iter map when we remove the iter; removing a parent without
+        # its children would cause #17362-like segfaults. Currently this is OK
+        # because we only ever jettison leaf nodes. If for some reason that were
+        # ever to change, it is crucial to implement proper orphan cleanup here.
         iter_ = view.model.child_iter(iter_)
         while iter_:
             row = view.model[iter_]
             if row[0].id in item_ids:
+                # no segfaulty iters in map (iter_map rule 0, see TabList)
+                del tablist.iter_map[row[0].id]
                 iter_ = view.model.remove(iter_)
             else:
                 child_iter = view.model.child_iter(iter_)
                 while child_iter:
                     row = view.model[child_iter]
                     if row[0].id in item_ids:
+                        # no segfaulty iters in map
+                        del tablist.iter_map[row[0].id]
                         child_iter = view.model.remove(child_iter)
                     else:
                         child_iter = view.model.next_iter(child_iter)

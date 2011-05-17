@@ -955,6 +955,9 @@ class JettisonTabs(FrontendMessage):
     """Tell the frontend to remove certain sidebar tabs from its model.  Done
     when selecting multiple items in the sidebar using the add to new folder
     button in the main display.  This is really a hack for bz:16780
+
+    WARNING - the frontend only implements this for leaf nodes. See
+    handle_jettison_tabs for details.
     """
     def __init__(self, typ, ids):
         self.type = typ

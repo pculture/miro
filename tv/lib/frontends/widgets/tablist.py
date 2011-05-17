@@ -206,6 +206,20 @@ class TabList(signals.SignalEmitter):
     Signals:
         tab-added: a tab has been added to this list; no parameters.
         moved-tabs-to-list(destination): tabs have been moved to destination
+
+    iter_map note - GTK handles invalid iters very badly, so we must avoid them
+    carefully (related: 17362). Iters can become invalid when you remove() them
+    from the model, or when you remove() their parent from the model. The
+    approach to avoiding bad iters is based on trusting the iter_map - if we
+    keep only valid iters in iter_map, and only use iters from the map, we will
+    only be using valid iters. Toward that end, some rules:
+
+    0. never make an iter invalid without removing it from the iter_map
+    1. never make the root invalid or remove it from the map
+    2. never assume an ID is a key in iter_map, because of (0)
+       - except the root is ok, because of (1)
+    3. never assume an ID that isn't in the iter_map is permanently deleted
+    4. never keep an iter: use it while you still know it's valid; keep IDs
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
