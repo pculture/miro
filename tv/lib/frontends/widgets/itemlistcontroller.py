@@ -580,7 +580,7 @@ class ItemListController(object):
             messages.PauseDownload(info.id).send_to_backend()
         elif info.state == 'paused':
             messages.ResumeDownload(info.id).send_to_backend()
-        elif info.download_info is None:
+        elif info.download_info is None and not info.has_drm:
             messages.StartDownload(info.id).send_to_backend()
 
     def on_sort_changed(self, object, sort_key, ascending, view):
