@@ -439,7 +439,8 @@ class NameRenderer(ListViewRenderer):
         # add the text
         textbox = layout_manager.textbox(self.info.name)
         textbox.set_wrap_style('truncated-char')
-        layout.add_text_line(textbox, 0, 0, width)
+        # 4px here is half of ListView.COLUMN_PADDING - 2px for luck
+        layout.add_text_line(textbox, 4, 0, width)
         # middle-align everything
         layout.center_y(top=0, bottom=height)
         return layout
