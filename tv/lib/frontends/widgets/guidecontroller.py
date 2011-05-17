@@ -134,9 +134,12 @@ class GuideSidebarCollection(widgetset.VBox):
             self.item_box.pack_start(self.get_hbox_for(info))
 
     def resort(self):
-        self.currently_packed = list(sorted(self.items.values(),
-                                            key=self.sorter,
-                                            reverse=True))[:self.current_limit]
+        # XXX how do we get data where self.sorter(item) is None!? #17431 is
+        # for tracking this issue
+        self.currently_packed = list(sorted(
+            (item for item in self.items.values() if self.sorter(item)),
+            key=self.sorter,
+            reverse=True))[:self.current_limit]
         self.repack()
 
     def set_items(self, items):
