@@ -559,6 +559,7 @@ class DeviceItemTracker(SourceTrackerBase):
 
         SourceTrackerBase.__init__(self)
 
+
 def make_item_tracker(message):
     if message.type == 'downloading':
         return DownloadingItemsTracker()
@@ -1754,11 +1755,11 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         currently_playing = app.playback_manager.get_playing_item()
         if currently_playing and getattr(currently_playing, 'device', None):
             if currently_playing.device.mount == message.device.mount:
-                app.playback_manager.stop()
+                messages.StopPlaying().send_to_frontend()
                 # give the stop a chance to close the files
-                eventloop.add_idle(self.handle_device_eject,
-                                          'ejecting device',
-                                          args=(message,))
+                eventloop.add_timeout(0.1, self.handle_device_eject,
+                                      'ejecting device',
+                                      args=(message,))
                 return
         devices.write_database(message.device.database, message.device.mount)
         app.device_tracker.eject(message.device)

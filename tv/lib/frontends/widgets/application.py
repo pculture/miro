@@ -1643,6 +1643,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 
+    def handle_stop_playing(self, message):
+        app.playback_manager.stop()
+
     def handle_open_in_external_browser(self, message):
         app.widgetapp.open_url(message.url)
 

@@ -1734,6 +1734,11 @@ class PlayMovie(FrontendMessage):
     def __init__(self, item_infos):
         self.item_infos = item_infos
 
+class StopPlaying(FrontendMessage):
+    """Stops playback.
+    """
+    pass
+
 class NotifyUser(FrontendMessage):
     """Sends a notification to the user.
 
