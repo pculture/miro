@@ -964,7 +964,7 @@ class SorterOwner(object):
             ascending = not widget.get_sort_order_ascending()
         else:
             # just switched to this sorter; use its default direction
-            ascending = True
+            ascending = not sort_key in widgetconst.DESCENDING_BY_DEFAULT
         self.emit('sort-changed', sort_key, ascending)
 
     def change_sort_indicator(self, sort_key, ascending):

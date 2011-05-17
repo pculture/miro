@@ -81,6 +81,7 @@ COLUMN_LABELS = {
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set(['state'])
+DESCENDING_BY_DEFAULT = frozenset(['date', 'date-added'])
 COLUMN_WIDTH_WEIGHTS = {
     u'description': 1.2,
     u'name': 1.0,
