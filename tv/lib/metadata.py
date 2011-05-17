@@ -33,6 +33,7 @@ frontend cares about these and the backend doesn't.
 
 import logging
 import fileutil
+import os.path
 
 from miro.util import returns_unicode
 from miro import coverart
@@ -114,7 +115,8 @@ class Source(object):
         if self.file_type == u'other':
             return
 
-        rv = filetags.read_metadata(self.get_filename())
+        path = self.get_filename()
+        rv = filetags.read_metadata(path)
         if not rv:
             return
 
@@ -137,6 +139,15 @@ class Source(object):
         self.year = metadata.get('year', None)
         self.genre = metadata.get('genre', None)
         self.has_drm = metadata.get('drm', False)
+
+        # 16346#c26 - run MDP for all OGG files in case they're videos
+        extension = os.path.splitext(path)[1].lower()
+        # oga is the only ogg-ish extension guaranteed to be audio
+        if extension.startswith('.og') and extension != '.oga':
+            # None because we need is_playable to be False until MDP has
+            # determined the real file type, or newly-downloaded videos will
+            # always play as audio; MDP always looks at file_type=None files
+            self.file_type = None
 
 def metadata_setter(attribute, type_=None):
     def set_metadata(self, value, _bulk=False):
