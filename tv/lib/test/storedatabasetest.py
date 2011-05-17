@@ -376,7 +376,6 @@ class DiskTest(FakeSchemaTest):
     def test_corrupt_database(self):
         app.db.close()
         open(self.save_path, 'wb').write("BOGUS DATA")
-        self.start_fresh_on_error_dialog()
         self.check_reload_error()
 
     def test_database_data_error(self):

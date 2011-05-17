@@ -185,7 +185,13 @@ class LiveStorage:
                 isolation_level=None,
                 detect_types=sqlite3.PARSE_DECLTYPES)
         self.cursor = self.connection.cursor()
-        self.cursor.execute("PRAGMA journal_mode=PERSIST");
+        try:
+            self.cursor.execute("PRAGMA journal_mode=PERSIST");
+        except sqlite3.DatabaseError:
+            msg = "Error running 'PRAGMA journal_mode=PERSIST'"
+            self._handle_load_error(msg)
+            # rerun the command with our fresh database
+            self.cursor.execute("PRAGMA journal_mode=PERSIST");
 
     def close(self):
         logging.info("closing database")
