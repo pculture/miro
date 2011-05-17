@@ -325,6 +325,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
                 self.search_directory = dir_
             else:
                 self.search_directory = _get_user_media_directory()
+            # reset the search results if they change the directory
+            self.gathered_media_files = None
 
         change_button.connect('clicked', handle_change_clicked)
 
