@@ -80,7 +80,7 @@ COLUMN_LABELS = {
     u'playlist': _('Order'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
-NO_PAD_COLUMNS = set()
+NO_PAD_COLUMNS = set(['state'])
 COLUMN_WIDTH_WEIGHTS = {
     u'description': 1.2,
     u'name': 1.0,

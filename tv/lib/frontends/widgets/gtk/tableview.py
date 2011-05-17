@@ -425,13 +425,15 @@ class TableColumn(signals.SignalEmitter):
             self._column.set_alignment(0.0)
 
     def set_min_width(self, width):
-        self._column.props.min_width = width
+        # GTK gives us 4px less to draw in, so request 4 more
+        self._column.props.min_width = width + 4
 
     def set_max_width(self, width):
         self._column.props.max_width = width
 
     def set_width(self, width):
-        self._column.set_fixed_width(width)
+        # GTK gives us 4px less to draw in, so request 4 more
+        self._column.set_fixed_width(width + 4)
 
     def get_width(self):
         return self._column.get_width()
@@ -900,7 +902,8 @@ class ColumnOwnerMixin(object):
             column.renderer._renderer.set_property('cell-background-gdk',
                     self.background_color)
         column._column.set_reorderable(self._columns_draggable)
-        column.renderer._renderer.set_property('xpad', self._renderer_xpad)
+        if column.do_horizontal_padding:
+            column.renderer._renderer.set_property('xpad', self._renderer_xpad)
         column.renderer._renderer.set_property('ypad', self._renderer_ypad)
 
     def set_column_spacing(self, space):
