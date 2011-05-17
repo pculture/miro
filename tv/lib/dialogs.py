@@ -178,10 +178,6 @@ class MessageBoxDialog(Dialog):
     def run(self, callback=None):
         Dialog.run(self, callback)
 
-    def run_callback(self, choice):
-        if self.callback is not None:
-            Dialog.run_callback(self, choice)
-
 class ChoiceDialog(Dialog):
     """Give the user a choice of 2 options (Yes/No, OK/Cancel,
     Migrate/Don't Migrate, etc.)

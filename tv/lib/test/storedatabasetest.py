@@ -364,22 +364,40 @@ class DiskTest(FakeSchemaTest):
         self.allow_db_load_errors(False)
         self.assert_(os.path.exists(corrupt_path))
 
-    def start_fresh_on_error_dialog(self):
+    def handle_corrupt_db_dialogs(self, upgrade, corruption):
+        """Handle the dialogs that we pop up when we notice database errors.
+
+        :param upgrade: handle upgrade dialogs by clicking "start fresh"
+        :param corruption: handle database corrupt message boxes
+        """
         def dialog_handler(obj, dialog):
-            dialog.run_callback(dialogs.BUTTON_START_FRESH)
+            if upgrade and (dialogs.BUTTON_START_FRESH in dialog.buttons):
+                # handle database upgrade dialog
+                dialog.run_callback(dialogs.BUTTON_START_FRESH)
+            elif corruption and isinstance(dialog, dialogs.MessageBoxDialog):
+                # handle the load error dialog
+                dialog.run_callback(dialogs.BUTTON_OK)
+            else:
+                raise AssertionError("Don't know how to handle dialog: %s",
+                        dialog)
         signals.system.connect('new-dialog', dialog_handler)
 
     def test_upgrade_error(self):
-        self.start_fresh_on_error_dialog()
+        self.handle_corrupt_db_dialogs(upgrade=True, corruption=False)
         self.check_reload_error(version=2)
 
     def test_corrupt_database(self):
         app.db.close()
         open(self.save_path, 'wb').write("BOGUS DATA")
+        # depending on the SQLite version, we will notice the error when we
+        # issup the PRAGMA journal_mode command, or when we do the upgrades.
+        # Handle the dialogs for both.
+        self.handle_corrupt_db_dialogs(upgrade=True, corruption=True)
         self.check_reload_error()
 
     def test_database_data_error(self):
         app.db.cursor.execute("DROP TABLE human")
+        self.handle_corrupt_db_dialogs(upgrade=False, corruption=True)
         self.check_reload_error()
 
     def test_bulk_insert(self):

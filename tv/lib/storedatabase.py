@@ -153,7 +153,6 @@ class LiveStorage:
         self._dc = None
         self._query_times = {}
         self.path = path
-        self.open_connection()
         self._quitting_from_operational_error = False
         self._object_schemas = object_schemas
         self._schema_version = schema_version
@@ -174,6 +173,8 @@ class LiveStorage:
                 self._schema_column_map[oschema, name] = schema_item
         self._converter = SQLiteConverter()
 
+        self.open_connection()
+
         if not db_existed:
             self._init_database()
 
@@ -189,6 +190,7 @@ class LiveStorage:
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
         except sqlite3.DatabaseError:
             msg = "Error running 'PRAGMA journal_mode=PERSIST'"
+            self._show_corrupt_db_dialog()
             self._handle_load_error(msg)
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
@@ -526,6 +528,7 @@ class LiveStorage:
         except databaseupgrade.DatabaseTooNewError:
             raise
         except StandardError:
+            self._show_corrupt_db_dialog()
             self._handle_load_error("Error calculating last id")
             return self._get_last_id()
 
@@ -898,6 +901,14 @@ class LiveStorage:
         self.save_invalid_db()
         self.open_connection()
         self._init_database()
+
+    def _show_corrupt_db_dialog(self):
+        title = _("%(appname)s database corrupt.",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _("Your Miro database is corrupt.  It will be "
+                "backed up in your Miro database directory and a new "
+                "database will be created now.")
+        dialogs.MessageBoxDialog(title, description).run_blocking()
 
     def _handle_load_error(self, message):
         """Handle errors happening when we try to load the database.  Our
