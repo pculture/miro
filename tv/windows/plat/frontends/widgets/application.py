@@ -106,7 +106,6 @@ class WindowsApplication(Application):
         app.get_item_type = get_item_type
         self.initXULRunner()
         gtk.gdk.threads_init()
-        gtkdirectorywatch.GTKDirectoryWatcher.install()
         self.startup()
         gtk.gdk.threads_enter()
         try:
