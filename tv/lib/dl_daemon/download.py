@@ -560,7 +560,9 @@ class BGDownloader(object):
                 return directory
             try:
                 fileutil.makedirs(directory)
-            except OSError:
+            except OSError, e:
+                if e.errno != 13:
+                    raise # only handle permission denied
                 # this weirdness happens on windows when the directory is
                 # scheduled for deletion, but has a file handle open for it.
                 # (#17456)
