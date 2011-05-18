@@ -543,6 +543,32 @@ class BGDownloader(object):
                           self.filename)
         self.move_to_directory(app.config.get(prefs.MOVIES_DIRECTORY))
 
+    def _ensure_directory_exists(self, directory):
+        """Make sure that a directory path exists.
+
+        Under certain weird conditions, this function may need to choose a
+        different directory name to make things work.  We return that
+        directory name.
+
+        :returns: path of a directory that we can put files in
+        """
+
+        directory_base = directory
+        i = 1
+        while True:
+            if os.path.exists(directory):
+                return directory
+            try:
+                fileutil.makedirs(directory)
+            except OSError:
+                # this weirdness happens on windows when the directory is
+                # scheduled for deletion, but has a file handle open for it.
+                # (#17456)
+                directory = "%s.%s" % (directory_base, i)
+                i += 1
+            else:
+                return directory
+
     def move_to_directory(self, directory):
         check_f(directory)
         if self.channelName:
@@ -552,8 +578,7 @@ class BGDownloader(object):
             if len(channel_name) > 80:
                 channel_name = channel_name[:80]
             directory = os.path.join(directory, channel_name)
-        if not os.path.exists(directory):
-            fileutil.makedirs(directory)
+        directory = self._ensure_directory_exists(directory)
 
         src = self.filename
         dest = os.path.join(directory, self.shortFilename)
