@@ -33,6 +33,11 @@ import gtk
 import gobject
 import appindicator
 if not hasattr(appindicator.Indicator, 'set_icon_theme_path'):
+    # looks like there's no versionining in appindicator, so we do this
+    # to make sure we have a version of appindicator that has the
+    # things we need.  amongst other things, this prevents the appindicator
+    # code from kicking off on Ubuntu Lucid where it doesn't work.
+    # bug #17445.
     raise ImportError
 
 from miro.gtcache import gettext as _
