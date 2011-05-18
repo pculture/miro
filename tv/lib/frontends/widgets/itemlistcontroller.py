@@ -224,7 +224,11 @@ class ItemListController(object):
         return self.item_tracker.item_list
     item_list = property(get_item_list)
 
-    def on_displayed(self):
+    def on_become_primary(self):
+        """This has become the primary item_list_controller; this is like
+        on_displayed, except it is unaffected by non-itemlist displays like
+        VideoDisplay.
+        """
         self.shuffle_handle = None
         self.repeat_handle = None
         #We only want to show the shuffle/repeat status of the 
@@ -243,6 +247,8 @@ class ItemListController(object):
                     self._handle_repeat_update)
         self.stop_handle = app.playback_manager.connect('did-stop',
                     self._handle_playback_did_stop)
+
+    def on_displayed(self):
         # workaround for #17153.1 for changing permanent displays
         position = app.widget_state.get_scroll_position(
                     self.type, self.id, self.selected_view)
@@ -258,23 +264,32 @@ class ItemListController(object):
                 view.queue_redraw()
 
     def _handle_shuffle_update(self, playback_manager, *args):
-        if app.item_list_controller_manager.displayed == self:
+        if app.item_list_controller_manager.primary is self:
             app.widget_state.set_shuffle(self.type, self.id, 
                     app.playback_manager.shuffle)
+        else:
+            app.widgetapp.handle_soft_failure('_handle_shuffle_update',
+                    "update-shuffle sent to wrong ILC", with_exception=False)
 
     def _handle_repeat_update(self, playback_manager, *args):
-        if app.item_list_controller_manager.displayed == self:
+        if app.item_list_controller_manager.primary is self:
             app.widget_state.set_repeat(self.type, self.id, 
                     app.playback_manager.repeat)
+        else:
+            app.widgetapp.handle_soft_failure('_handle_repeat_update',
+                    "update-repeat sent to wrong ILC", with_exception=False)
 
     def _handle_playback_did_stop(self, playback_manager):
-        if app.item_list_controller_manager.displayed == self:
+        if app.item_list_controller_manager.primary is self:
             #if playback stops we always want to load the shuffle/repeat 
             #of the current playlist
             shuffle = app.widget_state.get_shuffle(self.type, self.id)
             app.playback_manager.set_shuffle(shuffle)
             repeat = app.widget_state.get_repeat(self.type, self.id)
             app.playback_manager.set_repeat(repeat)
+        else:
+            app.widgetapp.handle_soft_failure('_handle_playback_did_stop',
+                    "did-repeat sent to wrong ILC", with_exception=False)
 
     def _init_sort(self):
         sorter = self.get_sorter()
@@ -989,6 +1004,12 @@ class ItemListController(object):
             self.save_selection()
         self.save_columns()
         self.save_scroll_positions()
+
+    def no_longer_primary(self):
+        """This is no longer the primary item_list_controller; another has been
+        displayed. Note that this does not run during shutdown - only when this
+        display is being superceded.
+        """
         if self.shuffle_handle:
             app.playback_manager.disconnect(self.shuffle_handle)
         if self.repeat_handle:
@@ -1138,6 +1159,7 @@ class ItemListControllerManager(object):
 
     def __init__(self):
         self.displayed = None
+        self.primary = None
         self.controllers = {}
 
     def focus_view(self):
@@ -1190,6 +1212,11 @@ class ItemListControllerManager(object):
     def controller_displayed(self, item_list_controller):
         self.displayed = item_list_controller
         self.displayed.on_displayed()
+        if item_list_controller is not self.primary:
+            if self.primary is not None:
+                self.primary.no_longer_primary()
+            self.primary = item_list_controller
+            self.primary.on_become_primary()
 
     def controller_no_longer_displayed(self, item_list_controller):
         if item_list_controller is not self.displayed:
