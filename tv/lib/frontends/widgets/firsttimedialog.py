@@ -89,6 +89,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         self.cancelled = False
         self.gathered_media_files = None
+        self.import_media_player_stuff = False
         self.progress_bar = None
         self.progress_label = None
         self.search_cancel_button = None
@@ -111,12 +112,13 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
     def build_pages(self):
         pages = [self.build_language_page(),
-                 self.build_startup_page(),
-                 self.build_import_page(),
-                 self.build_search_page()]
+                 self.build_startup_page()]
 
         if self._has_media_player:
             pages.append(self.build_media_player_import_page())
+
+        pages.extend([self.build_find_files_page(),
+                      self.build_search_page()])
 
         for page in pages:
             page.set_size_request(WIDTH - 40, HEIGHT - 40)
@@ -127,7 +129,12 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self.show()
 
     def on_close(self, widget=None):
+        if self.import_media_player_stuff:
+            logging.debug("firsttimedialog: adding mp_path")
+            app.watched_folder_manager.add(self.mp_path)
         if self.gathered_media_files:
+            logging.debug("firsttimedialog: adding %d files",
+                          len(self.gathered_media_files))
             messages.AddFiles(self.gathered_media_files).send_to_backend()
         self._done_firsttime_callback()
 
@@ -262,7 +269,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         return vbox
 
-    def build_import_page(self):
+    def build_find_files_page(self):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_paragraph_text(_(
@@ -330,18 +337,14 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     self.search_directory = get_default_search_dir()
 
                 self.next_page()
-            elif self._has_media_player:
-                self.next_page(skip=1)
             else:
                 self.destroy()
 
         search_button = widgetset.Button(_("Search"))
         search_button.connect('clicked', handle_search_finish_clicked)
-        search_button.text_faces = {"search": _("Next >")}
-        if not self._has_media_player:
-            search_button.text_faces["next"] = _("Finish")
-        else:
-            search_button.text_faces["next"] = _("Next >")
+        # FIXME - this is goofy naming
+        search_button.text_faces = {"search": _("Next >"),
+                                    "next": _("Finish")}
 
         search_button.mode = "search"
 
@@ -508,14 +511,9 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self.search_prev_button = widgetset.Button(_("< Previous"))
         self.search_prev_button.connect('clicked', lambda x: self.prev_page())
 
-        if self._has_media_player:
-            self.search_next_button = widgetset.Button(_("Next >"))
-            self.search_next_button.connect('clicked',
-                                            lambda x: self.next_page())
-        else:
-            self.search_next_button = widgetset.Button(_("Finish"))
-            self.search_next_button.connect('clicked',
-                                            lambda x: self.destroy())
+        self.search_next_button = widgetset.Button(_("Finish"))
+        self.search_next_button.connect('clicked',
+                                        lambda x: self.destroy())
 
         vbox.pack_start(
             widgetutil.align_bottom(widgetutil.align_right(
@@ -554,20 +552,22 @@ class FirstTimeDialog(widgetset.DialogWindow):
         lab.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(lab))
 
-        def handle_finish(widget):
+        def handle_next(widget):
             if rbg.get_selected() == yes_rb:
-                app.watched_folder_manager.add(self.mp_path)
-            self.destroy()
+                self.import_media_player_stuff = True
+            else:
+                self.import_media_player_stuff = False
+            self.next_page()
 
         prev_button = widgetset.Button(_("< Previous"))
-        prev_button.connect('clicked', lambda x: self.prev_page(skip=1))
+        prev_button.connect('clicked', lambda x: self.prev_page())
 
-        finish_button = widgetset.Button(_("Finish"))
-        finish_button.connect('clicked', handle_finish)
+        next_button = widgetset.Button(_("Next >"))
+        next_button.connect('clicked', handle_next)
 
         vbox.pack_start(
             widgetutil.align_bottom(widgetutil.align_right(
-                    widgetutil.build_hbox((prev_button, finish_button)))),
+                    widgetutil.build_hbox((prev_button, next_button)))),
             expand=True)
 
         vbox = widgetutil.pad(vbox)
