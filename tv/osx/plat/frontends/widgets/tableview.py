@@ -1089,7 +1089,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.create_signal('reallocate-columns')
         self.model = model
         self.columns = []
-        self.drag_source = None
+        self.drag_source = self.drag_dest = None
         self.context_menu_callback = None
         if isinstance(model, tablemodel.InfoListModel):
             self.tableview = MiroTableView.alloc().init()
