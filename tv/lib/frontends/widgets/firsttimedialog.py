@@ -132,7 +132,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self._done_firsttime_callback()
 
     def _switch_page(self, i, rebuild=False):
-        if i == self._page_index:
+        if i == self._page_index and not rebuild:
             return
         if i < 0 or i > len(self._pages)-1:
             return
@@ -180,6 +180,13 @@ class FirstTimeDialog(widgetset.DialogWindow):
         lang_options = gtcache.get_languages()
         lang_options.insert(0, ("system", _("System default")))
 
+        def update_language(widget, index):
+            os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
+            app.config.set(prefs.LANGUAGE,
+                       str(lang_options[index][0]))
+            gtcache.init()
+            self.this_page(rebuild=True)
+
         lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
         lang = app.config.get(prefs.LANGUAGE)
         try:
@@ -187,12 +194,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         except ValueError:
             lang_option_menu.set_selected(1)
 
-        def update_clicked(widget):
-            os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
-            app.config.set(prefs.LANGUAGE,
-                       str(lang_options[lang_option_menu.get_selected()][0]))
-            gtcache.init()
-            self.this_page(rebuild=True)
+        lang_option_menu.connect('changed', update_language)
 
         def next_clicked(widget):
             os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
@@ -201,13 +203,9 @@ class FirstTimeDialog(widgetset.DialogWindow):
             gtcache.init()
             self.next_page(rebuild=True)
 
-        update_button = widgetset.Button(_("Update"))
-        update_button.connect('clicked', update_clicked)
-
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.Label(_("Language:")), padding=0)
         hbox.pack_start(lang_option_menu, padding=5)
-        hbox.pack_start(update_button, padding=5)
 
         vbox.pack_start(widgetutil.align_center(hbox))
 
