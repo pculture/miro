@@ -782,6 +782,7 @@ class HotspotTrackingMixin(object):
     def _disconnect_hotspot_signals(self):
         for handle in self._hotspot_callback_handles:
             self._model.disconnect(handle)
+        self._hotspot_callback_handles = []
 
     def on_row_inserted(self, model, path, iter_):
         if self.hotspot_tracker:
