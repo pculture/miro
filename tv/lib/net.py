@@ -286,6 +286,9 @@ class AsyncSocket(object):
                 return
             entry = self._pick_address(addresses)
             if entry is None:
+                # FIXME - wtf kind of user message is this?  it's too
+                # technical and there's no way a user would know what
+                # to do about it.
                 msg = _("Couldn't find address family to use")
                 trap_call(self, errback, ConnectionError(msg))
                 return
