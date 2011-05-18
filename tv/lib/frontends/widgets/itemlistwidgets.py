@@ -405,22 +405,24 @@ class ResumeButtonHolder(widgetset.Alignment):
                 xscale=0.0, yscale=0.0, yalign=0.5)
         self.resume_button = resume_button
         self.button_shown = False
-        # set our width request to the min-width of the button.  This way our
-        # parent only reserves that amount of space for us.
-        self.set_size_request(self.resume_button.MIN_WIDTH + self.LEFT_PAD +
-                self.RIGHT_PAD, -1)
 
     def show(self):
         if self.button_shown:
             return
         self.add(self.resume_button)
         self.button_shown = True
+        # set our width request to the min-width of the button.  This way our
+        # parent only reserves that amount of space for us.
+        self.set_size_request(self.resume_button.MIN_WIDTH + self.LEFT_PAD +
+                self.RIGHT_PAD, -1)
 
     def hide(self):
         if not self.button_shown:
             return
         self.remove()
         self.button_shown = False
+        # Don't request any size
+        self.set_size_request(0, 0)
 
     def do_size_allocated(self, width, height):
         # Tell the resume button how much width is available, that will allow
