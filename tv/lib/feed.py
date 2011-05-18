@@ -238,7 +238,7 @@ class FeedImpl(DDBObject):
         """Get a URL to use in the <base> tag for this channel.  This is used
         for relative links in this channel's items.
         """
-        return escape(self.url)
+        return self.url
 
     def set_update_frequency(self, frequency):
         """Sets the update frequency (in minutes).
@@ -1377,7 +1377,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     @returns_unicode
     def get_base_href(self):
         try:
-            return escape(self.parsed.link)
+            return self.parsed.link
         except AttributeError:
             return FeedImpl.get_base_href(self)
 
