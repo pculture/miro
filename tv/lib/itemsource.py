@@ -474,10 +474,23 @@ class SharingItemSource(ItemSource):
         self.emit("removed", item.id)
 
     def fetch_all(self):
-        # Always get from cache.  This is okay because shares are transient
-        # and so we always start off with an empty db.  So either we have
-        # nothing, or the cache is populated with items.
-        return [self.info_cache[item.id] for item in 
+        # Always call _ensure_info() on the item when fetching.
+        #
+        # This is a problem for shared items because the database is not 
+        # ready until some amount of time after the share is first accessed.
+        # The sharing API is designed to always either returns 0 items or 
+        # a fully populated media listing.  In the former case the upper layer
+        # (i.e. this one) is notified via the 'added' signal.
+        #
+        # But this ItemSource object is a transient object that only exists
+        # for the lifetime a display is active.  If the 'added' signal was
+        # called and the tab has switched away and hence is no longer active,
+        # then it won't be in the ItemInfo cache.
+        #
+        # _ensure_info() ensures that we either fetch something from the
+        # cache or if it does not exist then create a new copy so this should
+        # be okay.
+        return [self._ensure_info(item) for item in 
                 self.tracker.get_items(playlist_id=self.playlist_id)]
 
     def unlink(self):
