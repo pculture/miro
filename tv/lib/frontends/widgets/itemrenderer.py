@@ -480,8 +480,7 @@ class ItemRenderer(ItemRendererBase):
         return text, image, visuals
 
     def should_resume_item(self):
-        return (app.playback_manager.item_resume_policy(self.info)
-                and self.info.item_viewed)
+        return app.playback_manager.item_resume_policy(self.info)
 
     def remove_button_info(self):
         """Get the image/hotspot to use for the remove button
