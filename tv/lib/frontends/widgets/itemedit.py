@@ -292,7 +292,7 @@ class OptionsField(Field):
         index = self.widget.get_selected()
         if index == 0 and self.mixed_values:
             #17450: never saved 'mixed' state
-            return
+            return {}
         new_value = self.options[index]
         if not self.mixed_values and new_value == self.common_value:
             # nothing has been changed
