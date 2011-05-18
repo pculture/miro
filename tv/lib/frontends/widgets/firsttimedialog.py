@@ -51,28 +51,30 @@ import os
 import logging
 
 _SYSTEM_LANGUAGE = os.environ.get("LANGUAGE", "")
+WIDTH = 475
+HEIGHT = 375
 
-def _get_user_media_directory():
-    """Returns the user's media directory.
-    """
-    return get_default_search_dir()
 
-def _build_title(text):
+def _build_title_question(text):
     """Builds and returns a title widget for the panes in the
     First Time Startup dialog.
     """
     lab = widgetset.Label(text)
     lab.set_bold(True)
     lab.set_wrap(True)
-    return widgetutil.align_left(lab, bottom_pad=10)
+    lab.set_size_request(WIDTH - 40, -1)
+    return widgetutil.align_left(lab, bottom_pad=15)
 
-WIDTH = 475
-HEIGHT = 500
+def _build_paragraph_text(text):
+    lab = widgetset.Label(text)
+    lab.set_wrap(True)
+    lab.set_size_request(WIDTH - 40, -1)
+    return widgetutil.align_left(lab, bottom_pad=15)
 
 class FirstTimeDialog(widgetset.DialogWindow):
     def __init__(self, done_firsttime_callback, title=None):
         if title == None:
-            title = _("%(appname)s First Time Setup",
+            title = _("%(appname)s Setup",
                       {"appname": app.config.get(prefs.SHORT_APP_NAME)})
 
         x, y = widgetset.get_first_time_dialog_coordinates(WIDTH, HEIGHT)
@@ -167,19 +169,13 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def build_language_page(self):
         vbox = widgetset.VBox(spacing=5)
 
-        vbox.pack_start(_build_title(_("Choose Language")))
+        vbox.pack_start(_build_paragraph_text(_(
+                    "Welcome to %(name)s!  We have a couple of questions "
+                    "to help you get started.",
+                    {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
-        lab = widgetset.Label(_(
-            "Welcome to the %(name)s first time setup!\n"
-            "\n"
-            "The next few screens will help you set up %(name)s so that "
-            "it works best for you.\n"
-            "\n"
-            "What language would you like Miro to be in?",
-            {'name': app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_wrap(True)
-        lab.set_size_request(WIDTH - 40, -1)
-        vbox.pack_start(widgetutil.align_left(lab))
+        vbox.pack_start(_build_title_question(_(
+                    "What language would you like Miro to be in ?")))
 
         lang_options = gtcache.get_languages()
         lang_options.insert(0, ("system", _("System default")))
@@ -232,24 +228,15 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def build_startup_page(self):
         vbox = widgetset.VBox(spacing=5)
 
-        vbox.pack_start(_build_title(
-            _("%(name)s Startup",
-              {'name': app.config.get(prefs.SHORT_APP_NAME)})))
+        vbox.pack_start(_build_paragraph_text(_(
+                    "%(name)s can automatically run when you start your "
+                    "computer so that it can resume your downloads "
+                    "and update your podcasts.",
+                    {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
-        lab = widgetset.Label(_(
-            "We recommend that you have %(name)s launch when your computer "
-            "starts up.  This way, downloads in progress can finish "
-            "downloading and new media files can be downloaded in the "
-            "background, ready when you want to watch.",
-            {'name': app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_wrap(True)
-        lab.set_size_request(WIDTH - 40, -1)
-        vbox.pack_start(widgetutil.align_left(lab))
-
-        lab = widgetset.Label(_("Would you like to run %(name)s on startup?",
-                              {'name': app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_bold(True)
-        vbox.pack_start(widgetutil.align_left(lab))
+        vbox.pack_start(_build_title_question(_(
+                    "Would you like to run %(name)s on startup?",
+                    {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
         rbg = widgetset.RadioButtonGroup()
         yes_rb = widgetset.RadioButton(_("Yes"), rbg)
@@ -257,8 +244,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         prefpanel.attach_radio([(yes_rb, True), (no_rb, False)],
                                prefs.RUN_AT_STARTUP)
-        vbox.pack_start(widgetutil.align_left(yes_rb))
-        vbox.pack_start(widgetutil.align_left(no_rb))
+        vbox.pack_start(widgetutil.align_left(yes_rb, left_pad=10))
+        vbox.pack_start(widgetutil.align_left(no_rb, left_pad=10))
 
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
@@ -280,39 +267,40 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def build_import_page(self):
         vbox = widgetset.VBox(spacing=5)
 
-        vbox.pack_start(_build_title(_("Finding Files")))
+        vbox.pack_start(_build_paragraph_text(_(
+                    "Miro can find music and video on your computer "
+                    "and show them in your %(name)s library.  No files "
+                    "will be copied or duplicated.",
+                    {"name": app.config.get(prefs.SHORT_APP_NAME)})))
 
-        lab = widgetset.Label(_(
-            "%(name)s can find all the media files on your computer to help "
-            "you organize your collection.\n"
-            "\n"
-            "Would you like %(name)s to look for media files on your "
-            "computer?",
-            {'name': app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_size_request(WIDTH - 40, -1)
-        lab.set_wrap(True)
-        vbox.pack_start(widgetutil.align_left(lab))
+        vbox.pack_start(_build_title_question(_(
+                    "Would you like %(name)s to search your computer "
+                    "for media files?",
+                    {"name": app.config.get(prefs.SHORT_APP_NAME)})))
 
         rbg = widgetset.RadioButtonGroup()
         no_rb = widgetset.RadioButton(_("No"), rbg)
         yes_rb = widgetset.RadioButton(_("Yes"), rbg)
         no_rb.set_selected()
-        vbox.pack_start(widgetutil.align_left(no_rb))
-        vbox.pack_start(widgetutil.align_left(yes_rb, bottom_pad=5))
+        vbox.pack_start(widgetutil.align_left(no_rb, left_pad=10))
+        vbox.pack_start(widgetutil.align_left(yes_rb,
+                                              left_pad=10, bottom_pad=5))
 
         group_box = widgetset.VBox(spacing=5)
 
         rbg2 = widgetset.RadioButtonGroup()
         restrict_rb = widgetset.RadioButton(
-            _("Restrict to all my personal files."), rbg2)
-        search_rb = widgetset.RadioButton(_("Search custom folders:"), rbg2)
+            _("Search everywhere."), rbg2)
+        search_rb = widgetset.RadioButton(
+            _("Just search in this folder:"), rbg2)
         restrict_rb.set_selected()
         group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
-        search_entry = widgetset.TextEntry()
+        search_entry = widgetset.TextEntry(
+            filename_to_unicode(get_default_search_dir()))
         search_entry.set_width(20)
-        change_button = widgetset.Button(_("Change"))
+        change_button = widgetset.Button(_("Choose..."))
         hbox = widgetutil.build_hbox((
             widgetutil.align_middle(search_entry),
             widgetutil.align_middle(change_button)))
@@ -321,13 +309,13 @@ class FirstTimeDialog(widgetset.DialogWindow):
         def handle_change_clicked(widget):
             dir_ = dialogs.ask_for_directory(
                 _("Choose directory to search for media files"),
-                initial_directory=_get_user_media_directory(),
+                initial_directory=get_default_search_dir(),
                 transient_for=self)
             if dir_:
                 search_entry.set_text(filename_to_unicode(dir_))
                 self.search_directory = dir_
             else:
-                self.search_directory = _get_user_media_directory()
+                self.search_directory = get_default_search_dir()
             # reset the search results if they change the directory
             self.gathered_media_files = None
 
@@ -341,7 +329,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         def handle_search_finish_clicked(widget):
             if widget.mode == "search":
                 if rbg2.get_selected() == restrict_rb:
-                    self.search_directory = _get_user_media_directory()
+                    self.search_directory = get_default_search_dir()
 
                 self.next_page()
             elif self._has_media_player:
@@ -500,8 +488,6 @@ class FirstTimeDialog(widgetset.DialogWindow):
     def build_search_page(self):
         vbox = widgetset.VBox(spacing=5)
 
-        vbox.pack_start(_build_title(_("Searching for media files")))
-
         self.progress_bar = widgetset.ProgressBar()
         self.progress_bar.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_center(
@@ -517,7 +503,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self.cancel_search_button.connect(
             'clicked', self.handle_search_cancel_clicked)
 
-        vbox.pack_start(widgetutil.align_right(self.cancel_search_button))
+        vbox.pack_start(widgetutil.align_right(self.cancel_search_button, right_pad=5))
 
         vbox.pack_start(self._force_space_label(), expand=True)
 
@@ -547,18 +533,12 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
     def build_media_player_import_page(self):
         vbox = widgetset.VBox(spacing=5)
-        vbox.pack_start(_build_title(
-                _("Display %(player)s Library",
-                  {"player": self.mp_name})))
 
-        lab = widgetset.Label(_(
+        vbox.pack_start(_build_title_question(_(
                 "Would you like to display your %(player)s music and "
                 "video in %(appname)s?",
                 {"player": self.mp_name,
-                 "appname": app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_size_request(WIDTH - 40, -1)
-        lab.set_wrap(True)
-        vbox.pack_start(widgetutil.align_left(lab))
+                 "appname": app.config.get(prefs.SHORT_APP_NAME)})))
 
         rbg = widgetset.RadioButtonGroup()
         yes_rb = widgetset.RadioButton(_("Yes"), rbg)
