@@ -3291,3 +3291,13 @@ def upgrade158(cursor):
     cursor.execute("ALTER TABLE global_state ADD COLUMN guide_sidebar_expanded integer")
     cursor.execute("UPDATE global_state SET guide_sidebar_expanded=1")
 
+def upgrade159(cursor):
+    """Get rid of bad dropdown field values created by revisions prior to
+    9113dbb (#17450).
+    """
+    # if file_type has been borked, we have to rerun MDP to fix it
+    cursor.execute("UPDATE item SET mdp_state=NULL, file_type=NULL "
+            "WHERE file_type='_mixed'")
+    # for video kind, just drop the bad data
+    cursor.execute("UPDATE item SET kind=NULL WHERE kind='_mixed'")
+    # rating is unaffected because it's an integer
