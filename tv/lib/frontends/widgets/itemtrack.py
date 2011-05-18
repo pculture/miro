@@ -254,6 +254,7 @@ class SearchFilter(object):
         self.all_items = {} # maps id to item info
         self.matching_ids = set()
         self._pending_changes = datastructures.Fifo()
+        self._index_pass_scheduled = False
 
     def is_filtering(self):
         return len(self.all_items) > len(self.matching_ids)
@@ -371,9 +372,12 @@ class SearchFilter(object):
             self.matching_ids = self.searcher.search(self.query)
 
     def _schedule_indexing(self):
-        call_on_ui_thread(self._do_index_pass)
+        if not self._index_pass_scheduled:
+            call_on_ui_thread(self._do_index_pass)
+            self._index_pass_scheduled = True
 
     def _do_index_pass(self):
+        self._index_pass_scheduled = False
         # find a chunk of items, process them, then schedule another call
         if len(self._pending_changes) == 0:
             return
