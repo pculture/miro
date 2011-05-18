@@ -44,6 +44,10 @@ class Source(object):
     """Object with readable metadata properties."""
 
     def get_iteminfo_metadata(self):
+        # until MDP has run, has_drm is very uncertain; by letting it be True in
+        # the backend but False in the frontend while waiting for MDP, we keep
+        # is_playable False but don't show "DRM Locked" until we're sure.
+        has_drm = self.has_drm and self.mdp_state is not None
         return dict(
             name = self.get_title(),
             title_tag = self.title_tag,
@@ -57,7 +61,7 @@ class Source(object):
             genre = self.genre,
             rating = self.rating,
             cover_art = self.cover_art,
-            has_drm = self.has_drm,
+            has_drm = has_drm,
             show = self.show,
             episode_id = self.episode_id,
             episode_number = self.episode_number,

@@ -285,6 +285,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             item.screenshot = screenshot
             if duration is not None:
                 item.duration = duration
+                if duration != -1:
+                    # if mutagen thought it might have DRM but we got a
+                    # duration, override mutagen's guess
+                    item.has_drm = False
             if mediatype is not None:
                 item.file_type = mediatype
             item.signal_change()
@@ -312,6 +316,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             app.metadata_progress_updater.path_processed(item.get_filename())
 
     def _should_process_item(self, item):
+        if item.has_drm:
+            # mutagen can only identify files that *might* have drm, so we
+            # always need to check that
+            return True
         # Only run the movie data program for video items, audio items that we
         # don't know the duration for, or items that do not have "other"
         # filenames that mutagen could not determine type for.

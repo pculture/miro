@@ -315,6 +315,11 @@ def _parse_mutagen(filename, muta, test):
             continue
         for attribute, attribute_tags in TAGS_FOR_ATTRIBUTE.iteritems():
             if file_tag in attribute_tags:
+                if attribute == 'drm':
+                    # '----:com.apple.iTunes:iTunMOVI' uses a silly dict-as-XML
+                    # format. The 'asset-info' key seems a sensitive but
+                    # non-specific indicator of DRM'd files
+                    value = '<key>asset-info</key>' in value
                 proper_type = ATTRIBUTE_TYPES[attribute]
                 if proper_type:
                     try:
