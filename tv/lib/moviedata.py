@@ -275,6 +275,11 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.in_progress.remove(item.id)
         if item.id_exists():
             item.mdp_state = State.FAILED
+            if item.has_drm:
+                #17442#c7, part2: if mutagen called it potentially DRM'd and we
+                # couldn't read it, we consider it DRM'd; files that we consider
+                # DRM'd initially go in "Other"
+                item.file_type = u'other'
             item.signal_change()
 
     @as_idle
@@ -289,7 +294,12 @@ class MovieDataUpdater(signals.SignalEmitter):
                     # if mutagen thought it might have DRM but we got a
                     # duration, override mutagen's guess
                     item.has_drm = False
-            if mediatype is not None:
+            if item.has_drm:
+                #17442#c7, part2: if mutagen called it potentially DRM'd and we
+                # couldn't read it, we consider it DRM'd; files that we consider
+                # DRM'd initially go in "Other"
+                item.file_type = u'other'
+            elif mediatype is not None:
                 item.file_type = mediatype
             item.signal_change()
 
