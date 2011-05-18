@@ -71,6 +71,10 @@ BLACKLISTED_FILE_EXTENSIONS = ('.ade', '.adp', '.asx', '.bas', '.bat', '.chm',
                                '.vbs', '.wsc', '.wsf', '.wsh')
 
 class WindowsApplication(Application):
+    def __init__(self):
+        Application.__init__(self)
+        self.showing_update_dialog = False
+
     def run(self):
         associate.associate_extensions(self._get_exe_location(),
                                         self._get_icon_location())
@@ -399,6 +403,9 @@ class WindowsApplication(Application):
         call_on_ui_thread(self.show_update_available, item)
 
     def show_update_available(self, item):
+        if self.showing_update_dialog:
+            return
+        self.showing_update_dialog = True
         releaseNotes = item.get('description', '')
         dialog = update.UpdateAvailableDialog(releaseNotes)
         try:
@@ -411,3 +418,4 @@ class WindowsApplication(Application):
                 self.open_url(downloadURL)
         finally:
             dialog.destroy()
+            self.showing_update_dialog = False
