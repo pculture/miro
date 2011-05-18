@@ -460,6 +460,7 @@ class BulkSQLManager(object):
         if self.will_insert(obj):
             self.to_insert[table_name].remove(obj)
             self.pending_inserts.remove(obj)
+            app.db.forget_object(obj)
             return
         try:
             removes_for_table = self.to_remove[table_name]

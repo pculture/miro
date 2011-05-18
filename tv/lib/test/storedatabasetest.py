@@ -456,6 +456,20 @@ class DiskTest(FakeSchemaTest):
         lee2 = self.reload_object(lee2)
         self.assertEqual(lee2.name, u'lee2-changed')
 
+    def test_bulk_insert_and_remove(self):
+        # test inserting, then removing an object while in bulk mode
+        app.bulk_sql_manager.start()
+        # nothing should be inserted yet
+        lee = Human(u'lee', 25, 1.4, [], {u'virtual bowling': 212})
+        lee.remove()
+        # lee was inserted, then removed while inside a bulk transaction,
+        # make sure things are cleaned up correctly (#17428)
+        app.bulk_sql_manager.finish()
+        self.assert_(not lee.id_exists())
+        self.assert_(lee.id not in app.db._object_map)
+        lee_view = Human.make_view("id=?", values=(lee.id,))
+        self.assertEquals(lee_view.count(), 0)
+
 class ObjectMemoryTest(FakeSchemaTest):
     def test_remove_remove_object_map(self):
         self.reload_test_database()
