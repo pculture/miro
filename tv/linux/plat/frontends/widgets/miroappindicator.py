@@ -104,15 +104,9 @@ class MiroAppIndicator:
             menu_items.append((gtk.STOCK_MEDIA_PREVIOUS, self.on_previous))
             menu_items.append((None, None))
         else:
-            # We need to see if there are playable items before we
-            # go forward with adding that menu option.
-            for item in app.item_list_controller_manager.get_selection():
-                if item.downloaded:
-                    # Yay!  We found a playable item.
-                    menu_items.append(
-                        (gtk.STOCK_MEDIA_PLAY, self.on_play_pause))
-                    menu_items.append((None, None))
-                    break
+            menu_items.append(
+                    (gtk.STOCK_MEDIA_PLAY, self.on_play_pause))
+            menu_items.append((None, None))
 
         if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             menu_items.append((_("Play Next Unplayed (%(unplayed)d)",
