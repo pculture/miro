@@ -288,8 +288,18 @@ class OptionsField(Field):
         if self.common_value is not None:
             self.widget.set_selected(self.options.index(self.common_value))
 
-    def get_value(self):
-        return self.options[self.widget.get_selected()]
+    def get_results(self):
+        index = self.widget.get_selected()
+        if index == 0 and self.mixed_values:
+            #17450: never saved 'mixed' state
+            return
+        new_value = self.options[index]
+        if not self.mixed_values and new_value == self.common_value:
+            # nothing has been changed
+            return {}
+        else:
+            # this field has is enabled and has been changed
+            return {self.field: new_value}
 
 class RatingField(OptionsField):
     """A field for setting or unsetting ratings."""
