@@ -2170,9 +2170,15 @@ class DirectoryScannerImplBase(FeedImpl):
             path_iter = iter(to_add)
             finished = False
             yield # yield after doing prep work
-            while not finished:
-                finished = self._add_batch_of_videos(path_iter, 0.5)
-                yield # yield after each batch
+            try:
+                while not finished:
+                    finished = self._add_batch_of_videos(path_iter, 0.5)
+                    yield # yield after each batch
+            except ObjectNotFoundError:
+                # whoops, we disappeared! clean up and quit
+                for path in path_iter:
+                    app.metadata_progress_updater.path_processed(path)
+                return
         self._after_update()
         self.updating = False
         self.pending_paths_to_add = []
