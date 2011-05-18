@@ -775,9 +775,12 @@ class HTTPDownloader(BGDownloader):
         self.cancel_request()
         BGDownloader.handle_temporary_error(self, short_reason, reason)
 
-    def handle_write_error(self, error):
-        text = _("Could not write to %(filename)s",
-                {"filename": stringify(self.filename)})
+    def handle_move_error(self, error):
+        logging.exception("Error moving to movies directory")
+        logging.warn("filename: %s, shortFilename: %s, movies directory: %s",
+                self.filename, self.shortFilename,
+            app.config.get(prefs.MOVIES_DIRECTORY))
+        text = _("Error moving to movies directory")
         self.handle_generic_error(text)
 
     def on_headers(self, info):
@@ -833,7 +836,7 @@ class HTTPDownloader(BGDownloader):
             try:
                 self.move_to_movies_directory()
             except (OSError, IOError), e:
-                self.handle_write_error(e)
+                self.handle_move_error(e)
         self.update_client()
 
     def get_status(self):
