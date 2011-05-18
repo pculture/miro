@@ -41,6 +41,7 @@ import itertools
 import logging
 
 from miro import app
+from miro import datastructures
 from miro import messages
 from miro import signals
 from miro import search
@@ -252,9 +253,7 @@ class SearchFilter(object):
         self.query = ''
         self.all_items = {} # maps id to item info
         self.matching_ids = set()
-        self._pending_adds = []
-        self._pending_changes = []
-        self._pending_removals = []
+        self._pending_changes = datastructures.Fifo()
 
     def is_filtering(self):
         return len(self.all_items) > len(self.matching_ids)
@@ -269,7 +268,7 @@ class SearchFilter(object):
         if not self.query:
             # special case, just send out the list and calculate the index
             # later
-            self._pending_adds.extend(items)
+            self._pending_changes.enqueue((items, [], []))
             self._schedule_indexing()
             return items
         self._ensure_index_ready()
@@ -289,9 +288,7 @@ class SearchFilter(object):
         if not self.query:
             # special case, just send out the list and calculate the index
             # later
-            self._pending_adds.extend(added)
-            self._pending_changes.extend(changed)
-            self._pending_removals.extend(removed)
+            self._pending_changes.enqueue((added, changed, removed))
             self._schedule_indexing()
             return added, changed, removed
         self._ensure_index_ready()
@@ -365,14 +362,12 @@ class SearchFilter(object):
                         with_exception=True)
 
     def _ensure_index_ready(self):
-        if (self._pending_adds or self._pending_changes
-                or self._pending_removals):
-            self._add_items(self._pending_adds)
-            self._update_items(self._pending_changes)
-            self._remove_ids(self._pending_removals)
-            self._pending_adds = []
-            self._pending_changes = []
-            self._pending_removals = []
+        if len(self._pending_changes) > 0:
+            while len(self._pending_changes) > 0:
+                (added, changed, removed) = self._pending_changes.dequeue()
+                self._add_items(added)
+                self._update_items(changed)
+                self._remove_ids(removed)
             self.matching_ids = self.searcher.search(self.query)
 
     def _schedule_indexing(self):
@@ -380,20 +375,13 @@ class SearchFilter(object):
 
     def _do_index_pass(self):
         # find a chunk of items, process them, then schedule another call
-        CHUNK_SIZE = 250
-        if self._pending_adds:
-            processor = self._add_items
-            pending_list = self._pending_adds
-        elif self._pending_changes:
-            processor = self._update_items
-            pending_list = self._pending_changes
-        elif self._pending_removals:
-            processor = self._remove_ids
-            pending_list = self._pending_removals
+        if len(self._pending_changes) == 0:
+            return
+        (added, changed, removed) = self._pending_changes.dequeue()
+        self._add_items(added)
+        self._update_items(changed)
+        self._remove_ids(removed)
+        if len(self._pending_changes) > 0:
+            self._schedule_indexing()
         else:
             self.matching_ids = self.searcher.search(self.query)
-            return # all done
-        # process the last CHUNK_SIZE elements of the list, then remove them
-        processor(pending_list[-CHUNK_SIZE:])
-        pending_list[-CHUNK_SIZE:] = []
-        self._schedule_indexing()
