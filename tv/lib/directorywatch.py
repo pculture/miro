@@ -44,28 +44,18 @@ class DirectoryWatcher(signals.SignalEmitter):
     The API is pretty simple, frontends only need to implement
     startup(), then emit signals whenever files get added/removed.
     """
-    def __init__(self, root_directory, skip_dirs=None, skip_subdirs=False):
+    def __init__(self, root_directory, skip_dirs=None):
         """Construct a new DirectoryWatcher
 
         :param root_directory: base directory to scan
         :param skip_dirs: list of directorys to ignore
-        :param skip_subdirs: skip all subdirectories
         """
         signals.SignalEmitter.__init__(self, 'added', 'deleted')
         if skip_dirs is not None:
             self.skip_dirs = set(skip_dirs)
         else:
             self.skip_dirs = set()
-        self.skip_subdirs = skip_subdirs
-        self.root_directory = root_directory
         self.startup(root_directory)
-
-    def should_skip_dir(self, path):
-        if path != self.root_directory and self.skip_subdirs:
-            return True
-        if path in self.skip_dirs:
-            return True
-        return False
 
     def startup(self, root_directory):
         raise NotImplementedError()

@@ -2026,7 +2026,7 @@ class DirectoryScannerImplBase(FeedImpl):
             self._watcher_paths_deleted = set()
             self._watcher_update_timeout = None
             self.watcher = app.directory_watcher(scan_dir,
-                    self.dirs_to_skip_watching(), self.skip_watching_subdirs())
+                    self.dirs_to_skip_watching())
             self.watcher.connect("added", self._on_file_added)
             self.watcher.connect("deleted", self._on_file_deleted)
         else:
@@ -2037,13 +2037,6 @@ class DirectoryScannerImplBase(FeedImpl):
         movies_dir = app.config.get(prefs.MOVIES_DIRECTORY)
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         return [incomplete_dir]
-
-    def skip_watching_subdirs(self):
-        """Should we not watch subdirectories?
-
-        By default this is False, but subclasses can override it.
-        """
-        return False
 
     def _on_file_added(self, watcher, path):
         if path in self._watcher_paths_deleted:
@@ -2298,11 +2291,6 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
 
     def _scan_dir(self):
         return app.config.get(prefs.MOVIES_DIRECTORY)
-
-    def skip_watching_subdirs(self):
-        # don't watch subdirs to avoid issues like #17456 and 17449.
-        # Eventually we should implement #17460
-        return True
 
     @returns_unicode
     def get_title(self):

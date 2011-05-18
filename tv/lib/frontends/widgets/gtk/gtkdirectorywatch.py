@@ -49,7 +49,7 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         glib.idle_add(self._add_directory, gio.File(directory), False)
 
     def _add_directory(self, f, send_contents):
-        if self.should_skip_dir(f.get_path()):
+        if f.get_path() in self.skip_dirs:
             logging.info("Not watching directory: %s", f.get_path())
             return
         monitor = f.monitor_directory()
