@@ -182,7 +182,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
         vbox.pack_start(_build_title_question(_(
-                    "What language would you like Miro to be in ?")))
+                    "What language would you like %(name)s to be in?",
+                    {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
         lang_options = gtcache.get_languages()
         lang_options.insert(0, ("system", _("System default")))
@@ -273,7 +274,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         vbox = widgetset.VBox(spacing=5)
 
         vbox.pack_start(_build_paragraph_text(_(
-                    "Miro can find music and video on your computer "
+                    "%(name)s can find music and video on your computer "
                     "and show them in your %(name)s library.  No files "
                     "will be copied or duplicated.",
                     {"name": app.config.get(prefs.SHORT_APP_NAME)})))
@@ -545,8 +546,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
         vbox.pack_start(widgetutil.align_left(no_rb))
 
         lab = widgetset.Label(_(
-                "Note: Miro won't move or copy any files on your disk.  "
-                "It will just add them to your %(appname)s library.",
+                "Note: %(appname)s won't move or copy any files on your "
+                "disk.  It will just add them to your %(appname)s library.",
                 {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_size_request(WIDTH - 40, -1)
         lab.set_wrap(True)
