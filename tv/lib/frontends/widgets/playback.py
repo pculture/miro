@@ -790,8 +790,13 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 self._is_playing_filtered_item = False
                 return self.model.get_first_info()
             else:
-                next_item = self.model.get_next_info(self.currently_playing.id)
-                return self._find_playable(next_item)
+                try:
+                    next_item = self.model.get_next_info(self.currently_playing.id)
+                except KeyError:
+                    # filtered by Video Kind; list has become empty (#17483)
+                    return None
+                else:
+                    return self._find_playable(next_item)
 
     def find_previous_item(self):
         if self.shuffle:
