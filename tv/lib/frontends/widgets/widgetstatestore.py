@@ -294,7 +294,8 @@ class WidgetStateStore(object):
         columns = display.list_view_columns
         if columns is None:
             columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
-        return columns[:]
+        available = WidgetStateStore.AVAILABLE_COLUMNS[display_type]
+        return [x for x in columns if x in available]
 
     def set_sorts_enabled(self, display_type, display_id, enabled):
         display = self._get_display(display_type, display_id)
