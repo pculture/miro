@@ -374,7 +374,8 @@ class DatabaseItemHandler(ItemHandler):
         app.bulk_sql_manager.start()
         try:
             for info in info_list:
-                self.delete(info)
+                if not app.bulk_sql_manager.will_remove(info.id):
+                    self.delete(info)
         finally:
             app.bulk_sql_manager.finish()
 

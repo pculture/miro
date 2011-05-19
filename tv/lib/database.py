@@ -370,6 +370,7 @@ class BulkSQLManager(object):
         self.to_insert = {}
         self.to_remove = {}
         self.pending_inserts = set()
+        self.pending_removes = set()
 
         self.last_call = None
 
@@ -417,6 +418,7 @@ class BulkSQLManager(object):
         self.to_insert = {}
         self.to_remove = {}
         self.pending_inserts = set()
+        self.pending_removes = set()
 
     def _commit_sql(self, to_insert, to_remove):
         for table_name, objects in to_insert.items():
@@ -450,16 +452,19 @@ class BulkSQLManager(object):
             inserts_for_table = []
             self.to_insert[table_name] = inserts_for_table
         inserts_for_table.append(obj)
-        self.pending_inserts.add(obj)
+        self.pending_inserts.add(obj.id)
 
-    def will_insert(self, obj):
-        return obj in self.pending_inserts
+    def will_insert(self, id_):
+        return id_ in self.pending_inserts
+
+    def will_remove(self, id_):
+        return id_ in self.pending_removes
 
     def add_remove(self, obj):
         table_name = app.db.table_name(obj.__class__)
-        if self.will_insert(obj):
+        if self.will_insert(obj.id):
             self.to_insert[table_name].remove(obj)
-            self.pending_inserts.remove(obj)
+            self.pending_inserts.remove(obj.id)
             app.db.forget_object(obj)
             return
         try:
@@ -467,6 +472,7 @@ class BulkSQLManager(object):
         except KeyError:
             removes_for_table = []
             self.to_remove[table_name] = removes_for_table
+        self.pending_removes.add(obj.id)
         removes_for_table.append(obj)
 
 class AttributeUpdateTracker(object):
@@ -676,7 +682,7 @@ class DDBObject(signals.SignalEmitter):
             raise DatabaseConstraintError, msg
         self.on_signal_change()
         self.check_constraints()
-        if app.bulk_sql_manager.will_insert(self):
+        if app.bulk_sql_manager.will_insert(self.id):
             # Don't need to send an UPDATE SQL command, or check the
             # view trackers in this case.  Both will be done when the
             # BulkSQLManager.finish() is called.
