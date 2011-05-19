@@ -929,8 +929,12 @@ class PlaybackPlaylist(signals.SignalEmitter):
             if self._is_playing_filtered_item:
                 self._index_before_change = -1
             else:
-                self._index_before_change = self.model.index_of_id(
-                        self.currently_playing.id)
+                try:
+                    self._index_before_change = self.model.index_of_id(
+                            self.currently_playing.id)
+                except KeyError:
+                    #17483, "search edition"
+                    self._index_before_change = -1
            
     def _on_items_removed_from_source(self, tracker, ids_removed):
         if self.currently_playing:
