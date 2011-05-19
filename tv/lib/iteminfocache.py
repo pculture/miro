@@ -228,12 +228,12 @@ class ItemInfoCache(signals.SignalEmitter):
             return info
 
     def item_created(self, item):
-        if not self.loaded:
-            # New item created in Item.setup_restored(), while we were doing a
-            # failsafe load
-            return
         info = itemsource.DatabaseItemSource._item_info_for(item)
         self.id_to_info[item.id] = info
+        if not self.loaded:
+            # bail out here if the item was created while we were doing a
+            # failsafe load
+            return
         self._infos_added[item.id] = info
         self.schedule_save_to_db()
         self.emit("added", info)
@@ -260,6 +260,7 @@ class ItemInfoCache(signals.SignalEmitter):
         if not self.loaded:
             # Item.remove() called in Item.setup_restored() while we were
             # doing a failsafe load
+            del self.id_to_info[item.id]
             return
         info = self.id_to_info.pop(item.id)
 
