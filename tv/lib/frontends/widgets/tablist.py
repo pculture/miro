@@ -645,7 +645,11 @@ class HideableTabList(TabList):
     def expand(self, id_):
         if self.get_child_count(id_):
             iter_ = self.iter_map[id_]
-            self.view.set_row_expanded(iter_, True)
+            try:
+                self.view.set_row_expanded(iter_, True)
+            except errors.WidgetActionError:
+                # root is not expanded
+                pass
         else:
             self.expand_after_add_child.add(id_)
 
