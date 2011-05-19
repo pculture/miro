@@ -200,8 +200,10 @@ class VLCSniffer(object):
                 self._open_success()
 
     def _open_success(self):
-        # FIXME - sometimes _open_success is called, but callback_info
-        # is None.  not sure why this happens.
+        # bz:17471 - sometimes _open_success is called, but callback_info
+        # is None.  The reason is due to multiple gobject.timeout_add()
+        # or gobject.idle_add() leading to callback_info being executed
+        # after which it is set to None.
         item_type = "failure"
         if self.callback_info:
             video_tracks = libvlc.libvlc_video_get_track_count(
@@ -228,7 +230,9 @@ class VLCSniffer(object):
             self.exc.check()
         except VLCError, vlce:
             vlc_logger.warning("sniffer reset failed: %s", vlce)
-        self.callback_info[0](item_type)
+        # bz:17471
+        if self.callback_info:
+            self.callback_info[0](item_type)
         self.callback_info = None
         self.media_playing = None
 
@@ -238,7 +242,9 @@ class VLCSniffer(object):
             self.exc.check()
         except VLCError, vlce:
             vlc_logger.warning("sniffer reset failed: %s", vlce)
-        self.callback_info[1]()
+        # bz:17471
+        if self.callback_info:
+            self.callback_info[1]()
         self.callback_info = None
         self.media_playing = None
 
@@ -394,8 +400,10 @@ class VLCRenderer(object):
             gobject.timeout_add(500, self._length_check, attempt+1)
 
     def _open_success(self):
-        # FIXME - sometimes _open_success is called, but callback_info
-        # is None.  not sure why this happens.
+        # bz:17471 - sometimes _open_success is called, but callback_info
+        # is None.  The reason is due to multiple gobject.timeout_add()
+        # or gobject.idle_add() leading to callback_info being executed
+        # after which it is set to None.
         if not self.callback_info:
             vlc_logger.warning("_open_success: callback_info is None")
             return
@@ -407,10 +415,12 @@ class VLCRenderer(object):
     def _open_failure(self):
         vlc_logger.warning(
             "_open_failure\n%s", "".join(traceback.format_stack()))
-        errback = self.callback_info[1]
         self.media_playing = None
-        self.callback_info = None
-        errback()
+        # bz:17471
+        if self.callback_info:
+            errback = self.callback_info[1]
+            self.callback_info = None
+            errback()
 
     def _disable_video(self):
         desc = libvlc.libvlc_video_get_track_description(
