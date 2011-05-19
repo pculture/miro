@@ -31,6 +31,7 @@
 
 import logging
 
+from miro import app
 from miro import messages
 from miro.plat.frontends.widgets import widgetset
 
