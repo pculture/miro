@@ -873,7 +873,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
         return random_items
 
     def select_previous_item(self):
-        previous_item = self.find_previous_item()
+        try:
+            previous_item = self.find_previous_item()
+        except KeyError:
+            # probably #17483 - filter by video kind, list now empty
+            previous_item = None
         self._change_currently_playing(previous_item)
 
     def select_next_item(self, not_skipped_by_user=True):
