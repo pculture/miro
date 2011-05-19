@@ -1763,6 +1763,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if applicable, and then adds the item to mdp's queue.
         """
         if self.isContainerItem:
+            self.file_type = u'other'
+            self.signal_change()
             return # this is OK because incomplete_mdp_view knows about it
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
