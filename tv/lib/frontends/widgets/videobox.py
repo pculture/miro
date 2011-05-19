@@ -549,7 +549,7 @@ class VideoBox(style.LowerBox):
         app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
         display = app.display_manager.current_display
         if hasattr(display, 'controller'):
-            controller = app.display_manager.current_display.controller
+            controller = display.controller
             controller.scroll_to_item(self.selected_file, manual=True, recenter=True)
         else:
             #17488 - GuideDisplay doesn't have a controller
