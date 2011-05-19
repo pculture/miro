@@ -201,17 +201,14 @@ def _next_free_directory_candidates(name):
 @returns_filename
 def next_free_directory(name):
     """Finds a unused directory name using name as a base.
+
+    This method doesn't create the directory, it just finds an an-used one.
     """
     candidates = _next_free_directory_candidates(name)
     while True:
         candidate = candidates.next()
-        try:
-            os.mkdir(candidate)
-        except OSError, e:
-            if e.errno == errno.EEXIST:
-                continue # try again
-            raise
-        return candidate
+        if not os.path.exists(candidate):
+            return candidate
 
 @returns_filename
 def filename_from_url(url, clean=False):

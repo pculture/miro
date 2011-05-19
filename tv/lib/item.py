@@ -2172,11 +2172,6 @@ filename was %s""", stringify(self.filename))
             # migrating too is not already taken.
             src = self.filename
             if fileutil.isdir(src):
-                # if self.filename is a directory, then we want to take
-                # the subdirectory of the src and put it in a unique
-                # directory in the destination.
-                if os.path.isdir(os.path.join(src, self.shortFilename)):
-                    src = os.path.join(src, self.shortFilename)
                 new_filename = next_free_directory(new_filename)
                 fp = None
             else:

@@ -588,11 +588,6 @@ class BGDownloader(object):
             return
 
         if os.path.isdir(src):
-            # if self.filename is a directory, then we want to take
-            # the subdirectory of the src and put it in a unique
-            # directory in the destination.
-            if os.path.isdir(os.path.join(src, self.shortFilename)):
-                src = os.path.join(src, self.shortFilename)
             dest = next_free_directory(dest)
         else:
             dest, fp = next_free_filename(dest)
@@ -1071,17 +1066,7 @@ class BTDownloader(BGDownloader):
 
             # the save_path needs to be a directory--that's where
             # libtorrent is going to save the torrent contents.
-            params["save_path"] = fileutil.expand_filename(self.filename)
-            if not os.path.isdir(params["save_path"]):
-                params["save_path"] = os.path.dirname(params["save_path"])
-
-            # FIXME - this is a check to make sure we're not encoding
-            # something already encoded.  but what should really happen
-            # is someone track down the life-cycle of save_path and
-            # make sure it's correct.
-            # bug 17120
-            if isinstance(params["save_path"], unicode):
-                params["save_path"] = params["save_path"].encode('utf-8')
+            params["save_path"] = self.calc_save_path()
 
             params["auto_managed"] = False
             params["paused"] = False
@@ -1113,6 +1098,22 @@ class BTDownloader(BGDownloader):
             logging.exception("Exception thrown in _start_torrent")
         else:
             TORRENT_SESSION.add_torrent(self)
+
+    def calc_save_path(self):
+        """Get save_path to pass to libtorrent."""
+
+        # The save_path is the directory of our filename, that's where
+        # libtorrent is going to save the torrent contents.
+        save_path = fileutil.expand_filename(os.path.dirname(self.filename))
+
+        # FIXME - this is a check to make sure we're not encoding
+        # something already encoded.  but what should really happen
+        # is someone track down the life-cycle of save_path and
+        # make sure it's correct.
+        # bug 17120
+        if isinstance(save_path, unicode):
+            save_path = save_path.encode('utf-8')
+        return save_path
 
     def scrape_tracker(self):
         logging.debug("%s: no metainfo--rescraping", self.item)
@@ -1476,11 +1477,7 @@ class BTDownloader(BGDownloader):
             # error like above it can't hurt anyone.
         except (OSError, IOError):
             raise RuntimeError
-        # the save_path needs to be a directory--that's where
-        # libtorrent is going to save the torrent contents.
-        save_path = fileutil.expand_filename(self.filename)
-        if not os.path.isdir(save_path):
-            save_path = os.path.dirname(save_path)
+        save_path = self.calc_save_path()
         self.torrent.move_storage(save_path)
 
 
