@@ -952,6 +952,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.currently_playing = new_info
 
     def _change_currently_playing_after_removed(self, removed_set):
+        if not len(self._items_before_change) > len(removed_set):
+            # 17486 - no items visible to switch to
+            return
         def position_removed(old_index):
             old_info = self._items_before_change[old_index]
             try:
