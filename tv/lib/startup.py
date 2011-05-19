@@ -293,6 +293,10 @@ def finish_startup(obj, thread):
     if DEBUG_DB_MEM_USAGE:
         util.db_mem_usage_test()
         mem_usage_test_event.set()
+
+    # MetadataProgressUpdater needs to be installed before ItemInfoCache,
+    # since ItemInfoCache may create items if it uses failsafe mode
+    app.metadata_progress_updater = metadataprogress.MetadataProgressUpdater()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
     dbupgradeprogress.upgrade_end()
@@ -313,8 +317,6 @@ def finish_startup(obj, thread):
     install_message_handler()
     itemsource.setup_handlers()
     downloader.init_controller()
-
-    app.metadata_progress_updater = metadataprogress.MetadataProgressUpdater()
 
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()
