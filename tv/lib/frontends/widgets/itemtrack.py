@@ -129,7 +129,7 @@ class ItemListTracker(signals.SignalEmitter):
             self._stop_tracking()
 
     def disconnect_all(self):
-        signals.Signals.disconnect_all(self)
+        signals.SignalEmitter.disconnect_all(self)
         self._stop_tracking()
 
     def _all_handlers_disconnected(self):
