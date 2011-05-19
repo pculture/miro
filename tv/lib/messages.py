@@ -419,11 +419,12 @@ class MarkItemUnwatched(BackendMessage):
     def __init__(self, info):
         self.info = info
 
-class MarkItemsWatched(BackendMessage):
-    """Mark an item as watched.
+class SetItemsWatched(BackendMessage):
+    """Set whether an iterable of items is watched.
     """
-    def __init__(self, info_list):
+    def __init__(self, info_list, watched):
         self.info_list = info_list
+        self.watched = watched
 
 class MarkItemCompleted(BackendMessage):
     def __init__(self, info):

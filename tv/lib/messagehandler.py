@@ -830,9 +830,12 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_mark_item_watched(self, message):
         itemsource.get_handler(message.info).mark_watched(message.info)
 
-    def handle_mark_items_watched(self, message):
+    def handle_set_items_watched(self, message):
         for info in message.info_list:
-            itemsource.get_handler(info).mark_watched(info)
+            if message.watched:
+                itemsource.get_handler(info).mark_watched(info)
+            else:
+                itemsource.get_handler(info).mark_unwatched(info)
 
     def handle_mark_item_unwatched(self, message):
         itemsource.get_handler(message.info).mark_unwatched(message.info)

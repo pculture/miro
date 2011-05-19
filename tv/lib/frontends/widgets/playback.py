@@ -440,7 +440,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.should_mark_watched.append(info)
 
     def send_mark_items_watched(self):
-        messages.MarkItemsWatched(self.should_mark_watched).send_to_backend()
+        messages.SetItemsWatched(self.should_mark_watched, True).send_to_backend()
         self.should_mark_watched = []
 
     def get_playing_item(self):

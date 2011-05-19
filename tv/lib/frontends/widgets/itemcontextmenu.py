@@ -301,11 +301,9 @@ class ItemContextMenuHandler(object):
 
         # local functions
         def mark_unwatched():
-            for item in watched:
-                messages.MarkItemUnwatched(item).send_to_backend()
+            messages.SetItemsWatched(watched, False).send_to_backend()
         def mark_watched():
-            for item in unwatched:
-                messages.MarkItemWatched(item).send_to_backend()
+            messages.SetItemsWatched(unwatched, True).send_to_backend()
         def keep_videos():
             for item in expiring:
                 if item.expiration_date:
