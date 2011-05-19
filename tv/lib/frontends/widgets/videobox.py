@@ -31,6 +31,8 @@
 video controls).
 """
 
+import logging
+
 from miro import app
 from miro import displaytext
 from miro.gtcache import gettext as _
@@ -545,8 +547,14 @@ class VideoBox(style.LowerBox):
             return
         tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
         app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
-        controller = app.display_manager.current_display.controller
-        controller.scroll_to_item(self.selected_file, manual=True, recenter=True)
+        display = app.display_manager.current_display
+        if hasattr(display, 'controller'):
+            controller = app.display_manager.current_display.controller
+            controller.scroll_to_item(self.selected_file, manual=True, recenter=True)
+        else:
+            #17488 - GuideDisplay doesn't have a controller
+            logging.debug("current display doesn't have a controller - "
+                    "can't switch to")
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)
