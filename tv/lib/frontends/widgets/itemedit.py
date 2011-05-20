@@ -145,10 +145,12 @@ class Field(object):
         elif self.right:
             # if it's in the right column, it's right-aligned
             pad = self.label_width - self.label.get_width()
+            pad = max(pad, 0)
             left, right = pad, 15
         else:
             # ordinary left-aligned left column field
             pad = self.label_width - self.label.get_width()
+            pad = max(pad, 0)
             left, right = 25, pad
         label_alignment = widgetutil.align_top(self.label,
                           right_pad=right, left_pad=left, top_pad=5)
