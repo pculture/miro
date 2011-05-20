@@ -736,7 +736,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.shuffle_history = []
         self.currently_playing = None
         self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
-        self._is_playing_filtered_item = False
         self._pick_initial_item(start_id)
 
     def _pick_initial_item(self, start_id):
@@ -789,8 +788,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             self.shuffle_history.append(next_item)
             return self.model.get_info(next_item)
         else:
-            if self._is_playing_filtered_item:
-                self._is_playing_filtered_item = False
+            if self._is_playing_filtered_item():
                 return self.model.get_first_info()
             else:
                 next_item = self.model.get_next_info(self.currently_playing.id)
@@ -812,8 +810,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             last_item = self._find_playable(self.model.get_last_info(), True)
             return last_item
         else:
-            if self._is_playing_filtered_item:
-                self._is_playing_filtered_item = False
+            if self._is_playing_filtered_item():
                 return None
             else:
                 prev_item = self.model.get_prev_info(self.currently_playing.id)
@@ -886,14 +883,31 @@ class PlaybackPlaylist(signals.SignalEmitter):
         next_item = self.find_next_item(not_skipped_by_user)
         self._change_currently_playing(next_item)
 
+    def _is_playing_filtered_item(self):
+        """Are we playing an item that is filtered out of our InfoList?
+
+        This method should only be called if currently_playing is not None
+        """
+
+        if self.currently_playing is None:
+            app.widgetapp.handle_soft_failure('_is_playing_filtered_item',
+                "currently_playing is None", with_exception=False)
+            return True # I guess this is most likely to make things work
+        try:
+            self.model.get_info(self.currently_playing.id)
+        except KeyError:
+            return True
+        else:
+            return False
+
     def is_playing_last_item(self):
-        if self._is_playing_filtered_item:
+        if self._is_playing_filtered_item():
             return False
         next_item = self.model.get_next_info(self.currently_playing.id)
         return self._find_playable(next_item) == None
 
     def is_playing_first_item(self):
-        if self._is_playing_filtered_item:
+        if self._is_playing_filtered_item():
             return False
         previous_item = self.model.get_prev_info(self.currently_playing.id)
         return self._find_playable(previous_item, True) == None
@@ -924,7 +938,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def _on_items_will_change(self, tracker, added, changed, removed):
         if self.currently_playing:
             self._items_before_change = self.model.info_list()
-            if self._is_playing_filtered_item:
+            if self._is_playing_filtered_item():
                 self._index_before_change = -1
             else:
                 self._index_before_change = self.model.index_of_id(
@@ -969,18 +983,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self._change_currently_playing(item)
 
     def _on_items_changed(self, tracker, added, changed, removed):
-        if self.currently_playing:
-            # check if our currently playing item is in our InfoList
-            # Note: added/changed/removed comes from our ItemTracker, but
-            # items can also be filtered from ItemList.  So we can't just test
-            # using removed, we have to check the actual InfoList with the
-            # ugly code below.  See #17483 and #17498.
-            try:
-                self.model.get_info(self.currently_playing.id)
-            except KeyError:
-                self._is_playing_filtered_item = True
-            else:
-                self._is_playing_filtered_item = False
         if self.shuffle:
             for id_ in removed:
                 try:
