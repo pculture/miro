@@ -171,7 +171,7 @@ def gettext(text, values=None):
             s = s % values
         return s
 
-    except ValueError:
+    except (KeyError, ValueError):
         import logging
         logging.warn("gtcache.gettext: translation has bad formatting "
             "characters.  returning english form.  '%s'", text)
