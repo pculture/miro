@@ -249,6 +249,8 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         callback(None, metadata['mime_type'])
     elif is_magnet_uri(url):
         callback(None, 'application/x-magnet')
+    elif amazon.is_amazon_url(url):
+        amazon.download_file(url, handle_unknown_callback)
     else:
         httpclient.grab_headers(url, callback, errback)
 

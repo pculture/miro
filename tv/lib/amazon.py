@@ -34,6 +34,7 @@
 # error.
 
 import base64
+import urlparse
 from xml.dom import minidom
 
 from miro import app
@@ -53,6 +54,13 @@ def decrypt_amz(data):
                         AMAZON_DES_IV)
     return decrypter.decrypt(data)
 
+def is_amazon_url(url):
+    parts = urlparse.urlparse(url)
+    return ((parts.netloc.startswith('amazon.') or
+             parts.netloc.startswith('www.amazon')) and
+            (parts.path.endswith('.amz') or
+             parts.path.endswith('.m3u')))
+
 def is_amazon_content_type(content_type):
     """
     Returns True if this is a content type from Amazon.
@@ -64,8 +72,10 @@ def download_file(url, handle_unknown_callback):
     """
     Deals with turning an .amz file into some real downloads.
     """
+    def unknown():
+        handle_unknown_callback(url)
     def callback(data):
-        _amazon_callback(data, handle_unknown_callback)
+        _amazon_callback(data, unknown)
 
     options = httpclient.TransferOptions(url)
     options.requires_cookies = True
@@ -73,13 +83,13 @@ def download_file(url, handle_unknown_callback):
                                        handle_unknown_callback)
     transfer.start()
 
-def _amazon_callback(data, handle_unknown_callback):
+def _amazon_callback(data, unknown):
     if data['status'] != 200:
-        handle_unknown_callback(data)
+        unknown()
         return
 
     if not is_amazon_content_type(data.get('content-type')):
-        handle_unknown_callback(data)
+        unknown()
         return
 
     if data['content-type'] == 'audio/x-amzxml': # .amz file:

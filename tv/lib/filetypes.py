@@ -98,7 +98,9 @@ def is_allowed_filename(filename):
     """
     return (is_video_filename(filename)
             or is_audio_filename(filename)
-            or is_torrent_filename(filename))
+            or is_torrent_filename(filename)
+            or filename.endswith('.amz')
+            or filename.endswith('.m3u'))
 
 def is_playable_filename(filename):
     """

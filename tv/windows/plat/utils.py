@@ -479,21 +479,21 @@ def get_cookie_path():
         conn = sqlite3.connect(sqlite_path)
         cursor = conn.cursor()
         cursor = cursor.execute(
-            'SELECT host, isHttpOnly, path, isSecure, expiry, name, value '
+            'SELECT host, path, isSecure, expiry, name, value '
             'FROM moz_cookies')
         with file(final_path, 'w') as output:
-            for (domain, http_only, path, is_secure,
+            for (domain, path, is_secure,
                  expiry, name, value) in cursor.fetchall():
                 output.write('%s\t%s\t%s\t%s\t%i\t%s\t%s\n' % (
-                        domain.encode('utf8'), http_only and 'TRUE' or 'FALSE',
+                        domain.encode('utf8'),
+                        domain[0] == '.' and 'TRUE' or 'FALSE',
                         path.encode('utf8'), is_secure and 'TRUE' or 'FALSE',
                         expiry, name.encode('utf8'), value.encode('utf8')))
         conn.close()
     except sqlite3.OperationalError:
-        pass
+        logging.exception('error creating cookies.txt')
 
-    return final_path
-
+    return final_path.encode('utf8') # has to be a string
 
 def get_plat_media_player_name_path():
     music_path = specialfolders.get_special_folder("My Music")
