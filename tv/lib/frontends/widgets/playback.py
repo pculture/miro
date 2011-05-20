@@ -996,10 +996,13 @@ class PlaybackPlaylist(signals.SignalEmitter):
             # we were playing an item that was filtered by the search and
             # it got removed.  Start with the top of the list
             new_position = 0
-        while position_removed(new_position):
+        while True:
             if new_position >= len(self._items_before_change):
+                # moved past the end of our old item list, stop playback
                 self._change_currently_playing(None)
                 return
+            if not position_removed(new_position):
+                break
             new_position += 1
         item = self.model.get_info(self._items_before_change[new_position].id)
         self._change_currently_playing(item)
