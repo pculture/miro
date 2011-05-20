@@ -867,6 +867,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
             except ValueError:
                 pass
 
+        if len(pool) < 2:
+            #17493: infinite loop when trying to shuffle 1 item
+            return pool
         for i in range(len(pool)):
             random_index = randrange(0, len(pool))
             while random_index == previous_index:
