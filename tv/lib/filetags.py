@@ -50,7 +50,7 @@ TAGS_FOR_ATTRIBUTE = dict(
     artist=frozenset(['artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
         'composer', u'\uFFFDart', 'album artist']),
     cover_art=frozenset(['\uFFFDart', 'apic', 'covr']),
-    drm=frozenset(['itunmovi']),
+    drm=frozenset(['itunmovi', 'apid']),
     genre=frozenset(['genre', 'tcon', 'providerstyle', u'\uFFFDgen']),
     title=frozenset(['tit2', 'title', u'\uFFFDnam']),
     track=frozenset(['trck', 'tracknumber', 'trkn']),
@@ -316,10 +316,13 @@ def _parse_mutagen(filename, muta, test):
         for attribute, attribute_tags in TAGS_FOR_ATTRIBUTE.iteritems():
             if file_tag in attribute_tags:
                 if attribute == 'drm':
-                    # '----:com.apple.iTunes:iTunMOVI' uses a silly dict-as-XML
-                    # format. The 'asset-info' key seems a sensitive but
-                    # non-specific indicator of DRM'd files
-                    value = '<key>asset-info</key>' in value
+                    if file_tag == 'itunmovi':
+                        # '----:com.apple.iTunes:iTunMOVI' uses a silly
+                        # dict-as-XML format. The 'asset-info' key seems a
+                        # sensitive but non-specific indicator of DRM'd files
+                        value = '<key>asset-info</key>' in value
+                    # else it's apID, which indicates possible DRM by its
+                    # presence; the contents don't matter
                 proper_type = ATTRIBUTE_TYPES[attribute]
                 if proper_type:
                     try:
