@@ -879,19 +879,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
         return random_items
 
     def select_previous_item(self):
-        try:
-            previous_item = self.find_previous_item()
-        except KeyError:
-            # probably #17483 - filter by video kind, list now empty
-            previous_item = None
+        previous_item = self.find_previous_item()
         self._change_currently_playing(previous_item)
 
     def select_next_item(self, not_skipped_by_user=True):
-        try:
-            next_item = self.find_next_item(not_skipped_by_user)
-        except KeyError:
-            # probably #17483 - filter by video kind, list now empty
-            next_item = None
+        next_item = self.find_next_item(not_skipped_by_user)
         self._change_currently_playing(next_item)
 
     def is_playing_last_item(self):
@@ -935,12 +927,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
             if self._is_playing_filtered_item:
                 self._index_before_change = -1
             else:
-                try:
-                    self._index_before_change = self.model.index_of_id(
-                            self.currently_playing.id)
-                except KeyError:
-                    #17483, "search edition"
-                    self._index_before_change = -1
+                self._index_before_change = self.model.index_of_id(
+                        self.currently_playing.id)
            
     def _on_items_removed_from_source(self, tracker, ids_removed):
         if self.currently_playing:
