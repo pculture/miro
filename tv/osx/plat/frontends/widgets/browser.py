@@ -52,8 +52,9 @@ class Browser(Widget):
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
         self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
         self.view.setMaintainsBackForwardList_(YES)
-        self.view.setApplicationNameForUserAgent_("%s/%s (%s)" % \
-                                      (app.config.get(prefs.SHORT_APP_NAME),
+        self.view.setApplicationNameForUserAgent_("%s %s/%s (%s)" % \
+                                      ('Safari/531.2+', # FIXME hack for #17370
+                                       app.config.get(prefs.SHORT_APP_NAME),
                                        app.config.get(prefs.APP_VERSION),
                                        app.config.get(prefs.PROJECT_URL),))
 

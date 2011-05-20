@@ -53,7 +53,7 @@ def fix_user_agent(agent):
     This function takes that string, drops the last bit, and adds Miro
     bits.
     """
-    agent = agent.split(" ")[:-1]
+    agent = agent.split(" ")
     agent.append("%s/%s (%s)" % (app.config.get(prefs.SHORT_APP_NAME),
                                  app.config.get(prefs.APP_VERSION),
                                  app.config.get(prefs.PROJECT_URL)))
