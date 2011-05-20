@@ -757,6 +757,30 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.model = None
         self.disconnect_all()
 
+    def prev_shuffle_item(self):
+        while len(self.shuffle_history) > 0:
+            try:
+                return self.model.get_info(self.shuffle_history[-1])
+            except KeyError:
+                # Item was removed from our InfoList by a ItemList filter
+                # (#17500).  Try the previous item in the list.
+                self.shuffle_history.pop()
+                continue
+        # no items in our history, return None
+        return
+
+    def next_shuffle_item(self):
+        while len(self.shuffle_upcoming) > 0:
+            next_id = self.shuffle_upcoming.pop()
+            try:
+                return self.model.get_info(next_id)
+            except KeyError:
+                # Item was removed from our InfoList by a ItemList filter
+                # (#17500).  Try the next item in the list.
+                continue
+        # no items left in shuffle_upcoming
+        return None
+
     def find_next_item(self, not_skipped_by_user=True):
         #if track repeat is on and the user doesn't skip, 
         #shuffle doesn't matter
@@ -769,24 +793,25 @@ class PlaybackPlaylist(signals.SignalEmitter):
             return self._find_playable(self.model.get_first_info())
         elif (self.shuffle and self.repeat == WidgetStateStore.get_repeat_off()
              or self.shuffle and self.repeat == WidgetStateStore.get_repeat_track()):
-            if not self.shuffle_upcoming:
+            next_item = self.next_shuffle_item()
+            if next_item is None:
                 self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
                 self.shuffle_history = []
                 return None #stop playback 
             else:
-                next_item = self.shuffle_upcoming.pop()
-                self.shuffle_history.append(next_item)
-                return self.model.get_info(next_item)
+                self.shuffle_history.append(next_item.id)
+                return next_item
         elif self.shuffle and WidgetStateStore.get_repeat_playlist():
-            if not self.shuffle_upcoming:
+            next_item = self.next_shuffle_item()
+            if next_item is None:
                 #populate with new items
                 self.shuffle_upcoming = self.generate_upcoming_shuffle_items() 
-                if not self.shuffle_upcoming:
+                next_item = self.next_shuffle_item()
+                if next_item is None:
                     #17492 - nothing playable in list
                     return None
-            next_item = self.shuffle_upcoming.pop()
-            self.shuffle_history.append(next_item)
-            return self.model.get_info(next_item)
+            self.shuffle_history.append(next_item.id)
+            return next_item
         else:
             if self._is_playing_filtered_item():
                 return self.model.get_first_info()
@@ -800,10 +825,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 return None
             current_item = self.shuffle_history.pop()
             self.shuffle_upcoming.append(current_item)
-            if not self.shuffle_history:
-                return None
-            previous_item = self.model.get_info(self.shuffle_history[-1])
-            return previous_item
+            return self.prev_shuffle_item()
         elif (not self.shuffle 
               and self.repeat == WidgetStateStore.get_repeat_playlist()
               and self.is_playing_first_item()):
