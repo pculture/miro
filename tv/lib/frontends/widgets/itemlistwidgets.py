@@ -897,6 +897,20 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
             self.save_button.set_title(_("Save as Podcast"))
         SearchTitlebar.set_small_width_mode(self, enabled)
 
+class ChannelFolderTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin):
+    """Titlebar for a channel folder; like the channel titlebar, but without the
+    save search button.
+    """
+    uses_resume_button = True
+
+    def setup_filters(self):
+        FilteredTitlebar.setup_filters(self)
+        DownloadedUnplayedFilterMixin.setup_filters(self)
+
+    def toggle_filter(self, filter_):
+        FilteredTitlebar.toggle_filter(self, filter_)
+        DownloadedUnplayedFilterMixin.toggle_filter(self)
+
 class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
     uses_resume_button = True
 
