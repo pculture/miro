@@ -173,6 +173,8 @@ class ItemListTracker(signals.SignalEmitter):
         return self.search_filter.is_filtering()
 
     def add_initial_items(self, items):
+        if self.type == 'music':
+            logging.warn("INITIAL: %s", [i.id for i in items])
         self.saw_initial_list = True
         items = self.search_filter.filter_initial_list(items)
         self.emit('items-will-change', items, [], [])
@@ -189,6 +191,11 @@ class ItemListTracker(signals.SignalEmitter):
             # way, we could get an ItemsChanged message for our old list,
             # before the ItemList message for our new one.
             return
+        if self.type == 'music':
+            logging.warn("UPDATE:\nadded: %s\nchanged: %s\nremoved: %s\n\n",
+                    [i.id for i in message.added],
+                    [i.id for i in message.changed],
+                    [i.id for i in message.removed])
         added, changed, removed = self.search_filter.filter_changes(
                 message.added, message.changed, message.removed)
         self.emit('items-will-change', added, changed, removed)
