@@ -545,7 +545,12 @@ class VideoBox(style.LowerBox):
             app.playback_manager.detached_window):
             # playing a video in the app, so don't bother
             return
-        tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
+        try:
+            tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
+        except KeyError:
+            #17495 - item may be from a tab that no longer exists
+            self.selected_tab_list = self.selected_tabs = None
+            return
         app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
         display = app.display_manager.current_display
         if hasattr(display, 'controller'):
