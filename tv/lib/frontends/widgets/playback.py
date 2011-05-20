@@ -970,9 +970,16 @@ class PlaybackPlaylist(signals.SignalEmitter):
 
     def _on_items_changed(self, tracker, added, changed, removed):
         if self.currently_playing:
-            if(self.currently_playing.id in set(removed)):
+            # check if our currently playing item is in our InfoList
+            # Note: added/changed/removed comes from our ItemTracker, but
+            # items can also be filtered from ItemList.  So we can't just test
+            # using removed, we have to check the actual InfoList with the
+            # ugly code below.  See #17483 and #17498.
+            try:
+                self.model.get_info(self.currently_playing.id)
+            except KeyError:
                 self._is_playing_filtered_item = True
-            elif(self.currently_playing in set(added)):
+            else:
                 self._is_playing_filtered_item = False
         if self.shuffle:
             for id_ in removed:
