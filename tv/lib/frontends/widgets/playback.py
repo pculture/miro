@@ -782,6 +782,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
             if not self.shuffle_upcoming:
                 #populate with new items
                 self.shuffle_upcoming = self.generate_upcoming_shuffle_items() 
+                if not self.shuffle_upcoming:
+                    #17492 - nothing playable in list
+                    return None
             next_item = self.shuffle_upcoming.pop()
             self.shuffle_history.append(next_item)
             return self.model.get_info(next_item)
