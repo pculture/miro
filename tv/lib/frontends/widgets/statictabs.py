@@ -48,7 +48,7 @@ class StaticTab(object):
 
 # this maps guide urls to titles we'd rather they use.
 _guide_url_to_title_map = {
-    prefs.CHANNEL_GUIDE_URL.default: _("Miro")
+    prefs.CHANNEL_GUIDE_URL.default: "Miro"
     }
 
 # this maps guide urls to icons we'd rather they use.
