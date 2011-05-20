@@ -1007,14 +1007,16 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def _on_items_changed(self, tracker, added, changed, removed):
         if self.shuffle:
             for id_ in removed:
-                try:
-                    self.shuffle_upcoming.remove(id_)
-                except ValueError:
-                    pass
-                try:
-                    self.shuffle_history.remove(id_)
-                except ValueError:
-                    pass
+                while True:
+                    try:
+                        self.shuffle_upcoming.remove(id_)
+                    except ValueError:
+                        break
+                while True:
+                    try:
+                        self.shuffle_history.remove(id_)
+                    except ValueError:
+                        break
             for item in added:
                 shuffle_upcoming_len = len(self.shuffle_upcoming)
                 if shuffle_upcoming_len:
