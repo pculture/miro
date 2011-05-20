@@ -727,6 +727,7 @@ class DeviceItem(metadata.Store):
     database, so this implements the necessary Item logic for those files.
     """
     def __init__(self, **kwargs):
+        self.__initialized = False
         for required in ('video_path', 'file_type', 'device'):
             if required not in kwargs:
                 raise TypeError('DeviceItem must be given a "%s" argument'
@@ -787,6 +788,7 @@ class DeviceItem(metadata.Store):
         else:
             if self.mdp_state is None: # haven't run MDP yet
                 moviedata.movie_data_updater.request_update(self)
+        self.__initialized = True
 
     @staticmethod
     def id_exists():
@@ -872,6 +874,9 @@ class DeviceItem(metadata.Store):
             self.device.database.emit('item-removed', self)
 
     def signal_change(self):
+        if not self.__initialized:
+            return
+
         if not os.path.exists(
             os.path.join(self.device.mount, self.video_path)):
             # file was removed from the filesystem

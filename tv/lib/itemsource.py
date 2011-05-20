@@ -559,7 +559,10 @@ class DeviceItemSource(ItemSource):
                 self.emit('added', self._ensure_info(item))
                 return
         if is_type:
-            self.emit("changed", self._ensure_info(item))
+            if existed:
+                self.emit("changed", self._ensure_info(item))
+            else:
+                self.emit('added', self._ensure_info(item))
 
     def _on_device_removed(self, database, item):
         was_type = False
@@ -639,6 +642,9 @@ class DeviceItemSource(ItemSource):
         type_ = self.type
         device = self.device
         _item_info_for = self._item_info_for
+        if type_ not in self.device.database:
+            # race: we can get here before clean_database() sets us up
+            return []
         data = self.device.database[type_]
 
         def _cache(id_):
