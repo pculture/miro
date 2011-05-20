@@ -958,9 +958,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.currently_playing = new_info
 
     def _change_currently_playing_after_removed(self, removed_set):
-        if not len(self._items_before_change) > len(removed_set):
-            # 17486 - no items visible to switch to
-            return
         def position_removed(old_index):
             old_info = self._items_before_change[old_index]
             try:
@@ -976,10 +973,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
             # it got removed.  Start with the top of the list
             new_position = 0
         while position_removed(new_position):
-            new_position += 1
             if new_position >= len(self._items_before_change):
                 self._change_currently_playing(None)
                 return
+            new_position += 1
         item = self.model.get_info(self._items_before_change[new_position].id)
         self._change_currently_playing(item)
 
