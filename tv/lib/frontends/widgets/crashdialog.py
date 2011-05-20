@@ -136,6 +136,6 @@ class CrashDialog(MainDialog):
 def run_dialog(report):
     try:
         diag = CrashDialog()
-        diag.run_dialog(report)
+        return diag.run_dialog(report)
     finally:
         diag.destroy()
