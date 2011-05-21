@@ -64,7 +64,7 @@ class FeedController(itemlistcontroller.ItemListController,
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
-        if not self.is_folder:
+        if not self.is_folder and not self.is_directory_feed:
             self.widget.statusbar_vbox.pack_start(
                 self._make_toolbar(feed_info))
 
@@ -111,15 +111,11 @@ class FeedController(itemlistcontroller.ItemListController,
 
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()
-        if self.is_directory_feed:
-            toolbar.autodownload_button.hide()
-            toolbar.settings_button.hide()
-        else:
-            toolbar.autodownload_button.show()
-            toolbar.settings_button.show()
-            toolbar.set_autodownload_mode(feed_info.autodownload_mode)
-            toolbar.connect('show-settings', self._on_show_settings)
-            toolbar.connect('remove-feed', self._on_remove_feed)
+        toolbar.autodownload_button.show()
+        toolbar.settings_button.show()
+        toolbar.set_autodownload_mode(feed_info.autodownload_mode)
+        toolbar.connect('show-settings', self._on_show_settings)
+        toolbar.connect('remove-feed', self._on_remove_feed)
         toolbar.connect('auto-download-changed',
                 self._on_auto_download_changed)
         return toolbar

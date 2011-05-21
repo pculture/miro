@@ -1424,6 +1424,7 @@ class FeedToolbar(widgetset.Background):
         setting was changed by the user
     """
 
+    # XXX probably no reason for the buttons to be in HideableWidgets anymore
     def __init__(self):
         widgetset.Background.__init__(self)
         self.create_signal('remove-feed')
