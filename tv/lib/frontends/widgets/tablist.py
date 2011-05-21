@@ -68,9 +68,12 @@ class TabInfo(object):
     autodownload_mode = u'off'
     is_directory_feed = False
 
-    def __init__(self, name, icon_name):
+    def __init__(self, tab_class, name, icon_name):
+        # "type" is overused, so tab_class refers to the type class
+        # attribute of the tab.  e.g. "connect", "feed", ...
+        self.tab_class = tab_class
         self.name = name
-        self.id = u'%s-base-tab' % name
+        self.id = u'%s-base-tab' % tab_class
         self.icon_name = icon_name
         self.thumbnail = resources.path('images/%s.png' % icon_name)
         self.icon = widgetutil.make_surface(self.icon_name)
@@ -526,7 +529,9 @@ class HideableTabList(TabList):
         TabList.__init__(self)
         self._set_up = False
         self.create_signal('tab-name-changed')
-        self.info = TabInfo(self.name, self.icon_name)
+        # the type here is the "tab_class" in TabInfo because "type"
+        # is overused.  "type" here is u'connect', u'feed', ...
+        self.info = TabInfo(self.type, self.name, self.icon_name)
         TabList.add(self, self.info)
         self.view.model_changed()
         self.expand_after_add_child = set()
@@ -917,6 +922,9 @@ class SiteList(HideableTabList):
     ALLOW_MULTIPLE = True
 
     def __init__(self):
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        SiteList.name = _("Sources")
         HideableTabList.__init__(self)
         self.default_info = None
 
@@ -976,6 +984,12 @@ class StoreList(SiteList):
 
     ALLOW_MULTIPLE = False
 
+    def __init__(self):
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        StoreList.name = _("Stores")
+        SiteList.__init__(self)
+
     def on_delete_key_pressed(self):
         pass # XXX: can't delete stores(?)
 
@@ -1013,6 +1027,9 @@ class FeedList(TabUpdaterMixin, NestedTabListMixin, HideableTabList):
     icon_name = 'icon-podcast'
 
     def __init__(self):
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        FeedList.name = _('Podcasts')
         HideableTabList.__init__(self)
         TabUpdaterMixin.__init__(self)
         self.setup_dnd()
@@ -1082,6 +1099,9 @@ class PlaylistList(NestedTabListMixin, HideableTabList):
     icon_name = 'icon-playlist'
 
     def __init__(self):
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        PlaylistList.name = _("Playlists")
         HideableTabList.__init__(self)
         self.view.set_drag_source(PlaylistListDragHandler())
         self.view.set_drag_dest(PlaylistListDropHandler(self))
