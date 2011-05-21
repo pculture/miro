@@ -883,7 +883,8 @@ class DeviceItem(metadata.Store):
             self.remove()
             return
 
-        if not isinstance(self.file_type, unicode):
+        if (not isinstance(self.file_type, unicode) and
+            self.file_type is not None):
             self.file_type = unicode(self.file_type)
 
         was_removed = False
@@ -896,11 +897,12 @@ class DeviceItem(metadata.Store):
                 break
 
         self._migrate_thumbnail()
-        db = self.device.database
-        db[self.file_type][self.id] =  self.to_dict()
+        if self.file_type:
+            db = self.device.database
+            db[self.file_type][self.id] =  self.to_dict()
 
-        if self.file_type != 'other' or was_removed:
-            db.emit('item-changed', self)
+            if self.file_type != u'other' or was_removed:
+                db.emit('item-changed', self)
 
     def to_dict(self):
         data = {}
