@@ -262,6 +262,10 @@ class StaticTabRenderer(TabRenderer):
                     DOWNLOADING_COLOR, selected=selected)
 
 class ConnectTabRenderer(TabRenderer):
+    def __init__(self):
+        TabRenderer.__init__(self)
+        self.hbox = None
+
     def pack_bubbles(self, hbox, layout_manager, selected=False):
         if getattr(self.data, 'fake', False):
             return
