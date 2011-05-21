@@ -166,7 +166,9 @@ def translate_string(s):
     hamm.feed(s)
     out = hamm.result()
 
-    if out.endswith("\n"):
+    if out.endswith(" >"):
+        return out[:-2] + " bork! >"
+    elif out.endswith("\n"):
         return out[:-2] + " bork bork bork!\n"
     return out + " bork!"
 
