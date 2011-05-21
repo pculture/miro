@@ -574,7 +574,7 @@ def make_item_tracker(message):
     elif message.type == 'folder-contents':
         return FolderItemsTracker(message.id)
     elif message.type == 'feed':
-        if message.id == u'%s-base-tab' % _('Podcasts'):
+        if message.id == u'%s-base-tab' % u'feed':
             return AllFeedsItemTracker(message.id)
         try:
             feed_ = feed.Feed.get_by_id(message.id)
