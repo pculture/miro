@@ -55,9 +55,8 @@ def diskutil(cmd, path_or_disk, use_plist=True):
     try:
         return plistlib.readPlistFromString(stdout)
     except:
-        logging.debug(
-            'error parsing plist for command: diskutil %s -plist %s\n%s' % (
-                cmd, path_or_disk, stdout))
+        logging.warn('error parsing plist for command: %s\n%s' % (
+            ' '.join(args), stdout))
 
 class DeviceTracker(object):
 
@@ -75,8 +74,13 @@ class DeviceTracker(object):
                                          kCFRunLoopDefaultMode)
         FSEventStreamStart(self.stream)
 
-        for volume in diskutil('list', '').VolumesFromDisks:
-            self._disk_mounted('/Volumes/%s' % volume.encode('utf8'))
+        disk_list = diskutil('list', '')
+        if disk_list:
+            for volume in disk_list.VolumesFromDisks:
+                self._disk_mounted('/Volumes/%s' % volume.encode('utf8'))
+        elif app.controller:
+            app.controller.failed_soft('initial device scan',
+                                       'returned None')
 
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
