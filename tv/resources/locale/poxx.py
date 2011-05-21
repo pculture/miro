@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """Munge a .po file so we English-bound can see what strings aren't marked 
 for translation yet.
 
@@ -25,15 +26,6 @@ except ImportError:
     sys.exit()
 import HTMLParser
 
-def munge_vowel(v):
-    v = v.group(0)
-    if v.isupper():
-        return v.lower()
-    else:
-        return v.upper()
-
-def transform(s):
-    return re.sub("[aeiouAEIOU]", munge_vowel, s)
 
 def wc(c):
     return c == "'" or c in string.letters
@@ -75,7 +67,7 @@ TRANSFORM = (
 
 
 def chef_transform(s):
-    old_s = s
+    # old_s = s
     out = []
 
     in_word = False  # in a word?
@@ -86,7 +78,6 @@ def chef_transform(s):
         if s.startswith((".", "!", "?")):
             in_word = False
             i_seen = 0
-            in_word = False
             out.append(s[0])
             s = s[1:]
             continue
@@ -112,15 +103,15 @@ def chef_transform(s):
 
             out.append(mem[5])
             s = s[len(mem[2]):]
+            in_word = True
             break
 
         else:
             out.append(s[0])
             s = s[1:]
 
-    out = "".join(out)
     # print old_s, "->", out
-    return out
+    return u"".join(out)
 
 class HtmlAwareMessageMunger(HTMLParser.HTMLParser):
     def __init__(self):
@@ -170,6 +161,16 @@ class HtmlAwareMessageMunger(HTMLParser.HTMLParser):
     def handle_entityref(self, name):
         self.s += "&" + name + ";"
 
+def translate_string(s):
+    hamm = HtmlAwareMessageMunger()
+    hamm.feed(s)
+    out = hamm.result()
+
+    if out.endswith("\n"):
+        return out[:-2] + " bork bork bork!\n"
+    return out + " bork!"
+
+
 def munge_one_file(fname):
     po = polib.pofile(fname)
     po.metadata["Language"] = "Swedish Chef"
@@ -177,9 +178,12 @@ def munge_one_file(fname):
     po.metadata["Content-Type"] = "text/plain; charset=UTF-8"
     count = 0
     for entry in po:
-        hamm = HtmlAwareMessageMunger()
-        hamm.feed(entry.msgid)
-        entry.msgstr = hamm.result()
+        if entry.msgid_plural:
+            entry.msgstr_plural["0"] = translate_string(entry.msgid_plural)
+            entry.msgstr_plural["1"] = translate_string(entry.msgid)
+        else:
+            entry.msgstr = translate_string(entry.msgid)
+
         if 'fuzzy' in entry.flags:
             entry.flags.remove('fuzzy') # clear the fuzzy flag
         count += 1
