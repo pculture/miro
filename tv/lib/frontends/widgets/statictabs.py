@@ -108,12 +108,22 @@ class SearchTab(StaticTab):
     name = _('Video Search')
     icon_name = 'icon-search'
 
+    def __init__(self):
+        StaticTab.__init__(self)
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        SearchTab.name = _("Video Search")
+
 class VideoLibraryTab(StaticTab):
     type = u'videos'
     id = u'videos'
     name = _('Videos')
     icon_name = 'icon-video'
     media_type = u'video'
+
+    def __init__(self):
+        StaticTab.__init__(self)
+        VideoLibraryTab.name = _("Videos")
 
 class AudioLibraryTab(StaticTab):
     type = u'music'
@@ -122,6 +132,12 @@ class AudioLibraryTab(StaticTab):
     icon_name = 'icon-audio'
     media_type = u'audio'
 
+    def __init__(self):
+        StaticTab.__init__(self)
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        AudioLibraryTab.name = _("Music")
+
 class OthersTab(StaticTab):
     type = u'others'
     id = u'others'
@@ -129,14 +145,30 @@ class OthersTab(StaticTab):
     icon_name = 'icon-other'
     media_type = u'other'
 
+    def __init__(self):
+        StaticTab.__init__(self)
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        OthersTab.name = _("Misc")
+
 class DownloadsTab(StaticTab):
     type = u'downloading'
     id = u'downloading'
     name = _('Downloading')
     icon_name = 'icon-downloading'
 
+    def __init__(self):
+        StaticTab.__init__(self)
+        DownloadsTab.name = _("Downloading")
+
 class ConvertingTab(StaticTab):
     type = u'converting'
     id = u'converting'
     name = _('Converting')
     icon_name = 'icon-converting'
+
+    def __init__(self):
+        StaticTab.__init__(self)
+        # FIXME - we redo the translation here so we're doing it at
+        # instantiation time and NOT at import time which is stupid.
+        ConvertingTab.name = _("Converting")

@@ -373,8 +373,8 @@ class FeedDisplay(ItemListDisplay):
 class AllFeedsDisplay(FeedDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == u'tab' and len(selected_tabs) == 1 and \
-               selected_tabs[0].name == _("Podcasts")
+        return (tab_type == u'tab' and len(selected_tabs) == 1 and
+               selected_tabs[0].tab_class == u'feed')
 
     def make_controller(self, tab):
         return feedcontroller.AllFeedsController(tab.id, True, True)
@@ -770,7 +770,7 @@ class ConnectDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return tab_type == u'tab' and len(selected_tabs) == 1 and \
-               selected_tabs[0].name == _('Connect')
+               selected_tabs[0].tab_class == u'connect'
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
@@ -784,7 +784,7 @@ class SourcesDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return (tab_type == u'tab' and len(selected_tabs) == 1 and
-                selected_tabs[0].name == _('Sources'))
+                selected_tabs[0].tab_class == u'site')
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
@@ -798,7 +798,7 @@ class PlaylistsDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return (tab_type == u'tab' and len(selected_tabs) == 1 and
-                selected_tabs[0].name == _('Playlists'))
+                selected_tabs[0].tab_class == u'playlist')
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
@@ -812,7 +812,7 @@ class StoresDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return (tab_type == u'tab' and len(selected_tabs) == 1 and
-                selected_tabs[0].name == _('Stores'))
+                selected_tabs[0].tab_class == u'store')
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
