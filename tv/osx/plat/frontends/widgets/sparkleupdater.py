@@ -45,10 +45,14 @@ objc.loadBundle('Sparkle', globals(), bundle_path=bundlePath)
 
 SUSkippedVersionPref = prefs.Pref(key="SUSkippedVersion", default='', platformSpecific=False)
 
+updater = None
+alerter = None
+
 class MiroUpdater (SUUpdater):
 
     def updateAlert_finishedWithChoice_(self, alert, choice):
-        alert.release()
+        global alerter # release our kept reference
+        alerter = None
 
         if choice == 0:    # SUInstallUpdateChoice
             app.config.set(SUSkippedVersionPref, '')
@@ -121,7 +125,7 @@ def handleNewUpdate(latest):
         global updater
         objc.setInstanceVariable(updater, 'updateItem', suItem, True)
 
-        global alerter
+        global alerter # keep a reference around
         alerter = SUUpdateAlert.alloc().initWithAppcastItem_(suItem)
         alerter.setDelegate_(updater)
         alerter.showWindow_(updater)
