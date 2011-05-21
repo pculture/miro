@@ -49,6 +49,7 @@ from miro.plat.resources import get_default_search_dir
 
 import os
 import logging
+import sys
 
 _SYSTEM_LANGUAGE = os.environ.get("LANGUAGE", "")
 WIDTH = 475
@@ -193,6 +194,14 @@ class FirstTimeDialog(widgetset.DialogWindow):
             app.config.set(prefs.LANGUAGE,
                        str(lang_options[index][0]))
             gtcache.init()
+
+            # FIXME - this is totally awful and may break at some
+            # point.  what happens is that widgetconst translates at
+            # import time, so if someone changes the language, then
+            # the translations have already happened.  we reload the
+            # module to force them to happen again.  bug 17515
+            if "miro.frontends.widgets.widgetconst" in sys.modules:
+                reload(sys.modules["miro.frontends.widgets.widgetconst"])
             self.this_page(rebuild=True)
 
         lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
