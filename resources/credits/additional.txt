@@ -13,6 +13,10 @@ Ben Dean-Kawamura (pcf)
 Janet Dragojevic (pcf)
 Matt Kivela (pcf)
 Rob Chekaluk (pcf)
+Morgan Knudsen (pcf)
+Anne Jonas (pcf)
+Serena Kim (pcf)
+Asheesh Laroia (pcf)
 
 Joel Cohen (board)
 Cory Doctorow (board)
@@ -23,7 +27,6 @@ John Lilly (board)
 Stefan Magdlinski (board)
 
 Matt Bret (designer)
-Morgan Knutson (designer)
 
 Rappaport Family Foundation (funder)
 Mitch Kapor Foundation (funder)
@@ -49,8 +52,14 @@ julalex (qa)
 valeryanka (qa)
 sveta.andriyenko (qa)
 ebaklan (qa)
+Katerina (qa)
+Bhavana (hitek qa)
+
+Aaron Gingrich (beta user)
 
 Nasser Al-Hilal (device submission)
 saidimu apale (device submission)
 Gregg Nicholas (device submission)
 Dan Winckler (device submission)
+
+Jani Uusitalo (translations)
