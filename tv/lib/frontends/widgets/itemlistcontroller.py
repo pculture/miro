@@ -253,7 +253,8 @@ class ItemListController(object):
         position = app.widget_state.get_scroll_position(
                     self.type, self.id, self.selected_view)
         if position:
-            self.current_item_view.set_scroll_position(position)
+            self.current_item_view.set_scroll_position(position,
+                    _hack_for_17153=True)
 
     def on_config_change(self, obj, key, value):
         if (key == prefs.RESUME_VIDEOS_MODE.key or

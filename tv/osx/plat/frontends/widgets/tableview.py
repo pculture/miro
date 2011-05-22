@@ -971,7 +971,7 @@ class CocoaSelectionOwnerMixin(SelectionOwnerMixin):
 class CocoaScrollbarOwnerMixin(ScrollbarOwnerMixin):
     """Manages a TableView's scroll position."""
     def __init__(self):
-        ScrollbarOwnerMixin.__init__(self)
+        ScrollbarOwnerMixin.__init__(self, _work_around_17153=True)
         self.connect('place-in-scroller', self.on_place_in_scroller)
         self.scroll_position = (0, 0)
         self.clipview_notifications = None

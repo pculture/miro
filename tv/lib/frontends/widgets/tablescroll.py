@@ -51,7 +51,8 @@ class ScrollbarOwnerMixin(object):
     - use Rect/Point structs
     - also use "tree" coordinates
     """
-    def __init__(self):
+    def __init__(self, _work_around_17153=False):
+        self.__work_around_17153 = _work_around_17153
         self._scroll_to_iter_callback = None
         self.create_signal('scroll-range-changed')
 
@@ -94,12 +95,15 @@ class ScrollbarOwnerMixin(object):
             # set_scroll_position will take care of scroll to the position when
             # possible; this may or may not be now, but our work here is done.
 
-    def set_scroll_position(self, position, restore_only=False):
+    def set_scroll_position(self, position, restore_only=False,
+            _hack_for_17153=False):
         """Scroll the top left corner to the given (x, y) offset from the origin
         of the view.
 
         restore_only: set the value only if no other value has been set yet
         """
+        if _hack_for_17153 and not self.__work_around_17153:
+            return
         if not restore_only or not self._position_set:
             self._set_scroll_position(position)
 
