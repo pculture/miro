@@ -230,7 +230,8 @@ class Store(Source):
         this method fails because the item is playing, it should add the changed
         fields to _deferred_update.
         """
-        logging.debug("%s can't write back changes", self.__class__.__name__)
+        # not implemented yet
+        #logging.debug("%s can't write back changes", self.__class__.__name__)
 
     def set_is_playing(self, playing):
         """Hook so that we can defer updating an item's data if we can't change
