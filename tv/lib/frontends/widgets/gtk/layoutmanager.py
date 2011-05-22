@@ -145,7 +145,8 @@ class Font(object):
 
     def line_height(self):
         metrics = self.get_font_metrics()
-        return pango.PIXELS(metrics.get_ascent() + metrics.get_descent())
+        # the +1: some glyphs can be slightly taller than ascent+descent (#17329)
+        return pango.PIXELS(metrics.get_ascent() + metrics.get_descent()) + 1
 
 class TextBox(object):
     def __init__(self, context, font, color, shadow):
