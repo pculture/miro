@@ -445,7 +445,7 @@ class VLCRenderer(object):
 
         widget.add_events(gtk.gdk.EXPOSURE_MASK)
         widget.connect('expose-event', self._on_expose)
-        EnableWindow(hwnd, 0)
+        EnableWindow(self.hwnd, 0)
 
     def unset_widget(self):
         self.hwnd = None
