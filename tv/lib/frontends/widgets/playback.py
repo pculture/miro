@@ -840,7 +840,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
 
     def generate_upcoming_shuffle_items(self):
         if not self.shuffle:
-            return None
+            return []
         elif (self.repeat == WidgetStateStore.get_repeat_off()
              or self.repeat == WidgetStateStore.get_repeat_track()):
             #random order
@@ -859,9 +859,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
             if items:
                 return self.random_sequence(items, self.currently_playing.id)
             else: 
-                return None
+                return []
         else:
-            return None
+            return []
 
     def random_sequence(self, pool, do_not_begin_with=None):
         """
