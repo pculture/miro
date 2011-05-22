@@ -404,6 +404,8 @@ class TableColumn(signals.SignalEmitter):
 
         clicked (table_column) -- The header for this column was clicked.
     """
+    # GTK hard-codes 4px of padding for each column
+    FIXED_PADDING = 4
     def __init__(self, title, renderer, header=None, **attrs):
         # header widget not used yet in GTK (#15800)
         signals.SignalEmitter.__init__(self)
@@ -425,15 +427,13 @@ class TableColumn(signals.SignalEmitter):
             self._column.set_alignment(0.0)
 
     def set_min_width(self, width):
-        # GTK gives us 4px less to draw in, so request 4 more
-        self._column.props.min_width = width + 4
+        self._column.props.min_width = width + TableColumn.FIXED_PADDING
 
     def set_max_width(self, width):
         self._column.props.max_width = width
 
     def set_width(self, width):
-        # GTK gives us 4px less to draw in, so request 4 more
-        self._column.set_fixed_width(width + 4)
+        self._column.set_fixed_width(width + TableColumn.FIXED_PADDING)
 
     def get_width(self):
         return self._column.get_width()
@@ -1139,10 +1139,12 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         self._widget.set_grid_lines(setting)
 
     def width_for_columns(self, total_width):
-        # as far as I can tell, GTK includes the column spacing in the column
-        # widths
-        scrollbar = 30 # TODO: query the actual width
-        return total_width - scrollbar
+        """Given the width allocated for the TableView, return how much of that
+        is available to column contents. Note that this depends on the number of
+        columns.
+        """
+        column_spacing = TableColumn.FIXED_PADDING * len(self.columns)
+        return total_width - column_spacing
 
     def focus(self):
         self._widget.grab_focus()
