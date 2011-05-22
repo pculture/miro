@@ -1147,6 +1147,11 @@ class SharingManagerBackend(object):
                     # make sure we strip away the .dot
                     enclosure = itemprop['daap.songformat'][1:]
                     itemprop['daap.songformat'] = enclosure
+            # Normally our strings are fixed up above, but then we re-pull
+            # this out of the input data structure, so have to re-convert.
+            if isinstance(itemprop['daap.songformat'], unicode):
+                tmp = itemprop['daap.songformat'].encode('utf-8')
+                itemprop['daap.songformat'] = tmp
 
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
