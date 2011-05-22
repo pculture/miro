@@ -209,7 +209,7 @@ def ngettext(text1, text2, count, values=None):
             s = s % values
         return s
 
-    except ValueError:
+    except (KeyError, ValueError):
         import logging
         logging.warn("gtcache.ngettext: translation has bad formatting "
             "characters.  returning english form.  '%s'", text1)
