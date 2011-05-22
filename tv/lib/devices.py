@@ -565,6 +565,9 @@ class DeviceSyncManager(object):
         self.waiting.add(task.key)
 
     def copy_file(self, info, final_path):
+        if info.id in self.copying:
+            logging.warn('tried to copy %r twice', info)
+            return
         self.copying.add(info.id)
         eventloop.call_in_thread(lambda x: self._copy_file_callback(x),
                                  lambda x: None,
@@ -582,6 +585,14 @@ class DeviceSyncManager(object):
             return final_path, info
 
     def _copy_file_callback(self, (final_path, info)):
+        if info.id not in self.copying:
+            app.controller.failed_soft(
+                '_copy_file_callback',
+                '%r not in self.copying (final path: %r)' % (
+                    info, final_path))
+            self.finished += 1
+            self._check_finished()
+            return
         if final_path:
             self._add_item(final_path, info)
         self.copying.remove(info.id)
