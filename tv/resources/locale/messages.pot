@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.pculture.org/\n"
-"POT-Creation-Date: 2011-05-21 15:44-0400\n"
+"POT-Creation-Date: 2011-05-22 11:41-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -869,7 +869,7 @@ msgid "Order"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:543
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1098
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1099
 #: ../../lib/frontends/widgets/itemrenderer.py:109
 #: ../../lib/frontends/widgets/itemlistwidgets.py:757
 #: ../../lib/frontends/widgets/itemlistwidgets.py:921
@@ -891,29 +891,29 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:970
+#: ../../lib/frontends/widgets/itemlistcontroller.py:971
 #, python-format
 msgid "%(count)s items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1061
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1113
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1062
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1114
 #: ../../lib/frontends/widgets/feedcontroller.py:73
 #: ../../lib/frontends/widgets/sharingcontroller.py:73
 msgid "No Results"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1075
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1076
 #: ../../lib/frontends/widgets/application.py:832
 msgid "Create Playlist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1076
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1077
 #: ../../lib/frontends/widgets/application.py:833
 msgid "Enter a name for the new playlist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1089
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1090
 msgid "Unwatched"
 msgstr ""
 
@@ -1678,7 +1678,6 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:1258
 #: ../../lib/frontends/widgets/devicecontroller.py:579
 #: ../../lib/frontends/widgets/itemlistwidgets.py:815
-#: ../../lib/messagehandler.py:577
 msgid "Podcasts"
 msgstr ""
 
@@ -3943,17 +3942,17 @@ msgid "Subtitle file %(tracknumber)d"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:603
-#: ../../windows/plat/renderers/vlc.py:746
-#: ../../windows/plat/renderers/vlc.py:749
 #: ../../windows/plat/renderers/vlc.py:750
+#: ../../windows/plat/renderers/vlc.py:753
+#: ../../windows/plat/renderers/vlc.py:754
 msgid "Eastern European"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
-#: ../../windows/plat/renderers/vlc.py:747
-#: ../../windows/plat/renderers/vlc.py:748
+#: ../../windows/plat/renderers/vlc.py:751
+#: ../../windows/plat/renderers/vlc.py:752
 msgid "Baltic"
 msgstr ""
 
@@ -3991,21 +3990,21 @@ msgid "Romanian"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
-#: ../../windows/plat/renderers/vlc.py:756
-#: ../../windows/plat/renderers/vlc.py:758
+#: ../../windows/plat/renderers/vlc.py:760
+#: ../../windows/plat/renderers/vlc.py:762
 msgid "Western European"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
-#: ../../windows/plat/renderers/vlc.py:757
+#: ../../windows/plat/renderers/vlc.py:761
 msgid "Celtic"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
-#: ../../windows/plat/renderers/vlc.py:760
-#: ../../windows/plat/renderers/vlc.py:761
+#: ../../windows/plat/renderers/vlc.py:764
+#: ../../windows/plat/renderers/vlc.py:765
 msgid "Greek"
 msgstr ""
 
@@ -4030,7 +4029,7 @@ msgid "Western"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
-#: ../../windows/plat/renderers/vlc.py:764
+#: ../../windows/plat/renderers/vlc.py:768
 msgid "East Asian"
 msgstr ""
 
@@ -4050,8 +4049,8 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:646
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
-#: ../../windows/plat/renderers/vlc.py:768
-#: ../../windows/plat/renderers/vlc.py:770
+#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:774
 msgid "Japanese"
 msgstr ""
 
@@ -4059,13 +4058,13 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:650
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
-#: ../../windows/plat/renderers/vlc.py:771
-#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:775
+#: ../../windows/plat/renderers/vlc.py:776
 msgid "Korean"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:654
-#: ../../windows/plat/renderers/vlc.py:778
+#: ../../windows/plat/renderers/vlc.py:782
 msgid "SE and SW Asian"
 msgstr ""
 
@@ -4090,7 +4089,7 @@ msgid "Hindi"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:660
-#: ../../windows/plat/renderers/vlc.py:781
+#: ../../windows/plat/renderers/vlc.py:785
 msgid "Thai"
 msgstr ""
 
@@ -4098,21 +4097,21 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:662
 #: ../../linux/plat/renderers/gstreamerrenderer.py:663
 #: ../../linux/plat/renderers/gstreamerrenderer.py:664
-#: ../../windows/plat/renderers/vlc.py:779
-#: ../../windows/plat/renderers/vlc.py:780
+#: ../../windows/plat/renderers/vlc.py:783
+#: ../../windows/plat/renderers/vlc.py:784
 msgid "Turkish"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:665
 #: ../../linux/plat/renderers/gstreamerrenderer.py:666
 #: ../../linux/plat/renderers/gstreamerrenderer.py:667
-#: ../../windows/plat/renderers/vlc.py:782
-#: ../../windows/plat/renderers/vlc.py:783
+#: ../../windows/plat/renderers/vlc.py:786
+#: ../../windows/plat/renderers/vlc.py:787
 msgid "Vietnamese"
 msgstr ""
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:669
-#: ../../windows/plat/renderers/vlc.py:786
+#: ../../windows/plat/renderers/vlc.py:790
 msgid "Middle Eastern"
 msgstr ""
 
@@ -4120,8 +4119,8 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:671
 #: ../../linux/plat/renderers/gstreamerrenderer.py:672
 #: ../../linux/plat/renderers/gstreamerrenderer.py:673
-#: ../../windows/plat/renderers/vlc.py:787
-#: ../../windows/plat/renderers/vlc.py:788
+#: ../../windows/plat/renderers/vlc.py:791
+#: ../../windows/plat/renderers/vlc.py:792
 msgid "Arabic"
 msgstr ""
 
@@ -4129,8 +4128,8 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:675
 #: ../../linux/plat/renderers/gstreamerrenderer.py:676
 #: ../../linux/plat/renderers/gstreamerrenderer.py:677
-#: ../../windows/plat/renderers/vlc.py:789
-#: ../../windows/plat/renderers/vlc.py:790
+#: ../../windows/plat/renderers/vlc.py:793
+#: ../../windows/plat/renderers/vlc.py:794
 msgid "Hebrew"
 msgstr ""
 
@@ -4148,7 +4147,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:684
 #: ../../linux/plat/renderers/gstreamerrenderer.py:685
 #: ../../linux/plat/renderers/gstreamerrenderer.py:686
-#: ../../windows/plat/renderers/vlc.py:793
+#: ../../windows/plat/renderers/vlc.py:797
 msgid "Unicode"
 msgstr ""
 
@@ -4267,54 +4266,54 @@ msgstr ""
 msgid "iTunes"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:751
+#: ../../windows/plat/renderers/vlc.py:755
 msgid "Russian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:752
+#: ../../windows/plat/renderers/vlc.py:756
 msgid "South-Eastern European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:753
+#: ../../windows/plat/renderers/vlc.py:757
 msgid "Ukrainian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:759
+#: ../../windows/plat/renderers/vlc.py:763
 msgid "Esperanto"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:769
 msgid "Universal Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:766
+#: ../../windows/plat/renderers/vlc.py:770
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:767
+#: ../../windows/plat/renderers/vlc.py:771
 msgid "Simplified Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:769
+#: ../../windows/plat/renderers/vlc.py:773
 msgid "Japanese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:773
+#: ../../windows/plat/renderers/vlc.py:777
 msgid "Traditional Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:774
+#: ../../windows/plat/renderers/vlc.py:778
 msgid "Traditional Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:775
+#: ../../windows/plat/renderers/vlc.py:779
 msgid "Hong-Kong Supplementary"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:794
-#: ../../windows/plat/renderers/vlc.py:795
-#: ../../windows/plat/renderers/vlc.py:796
-#: ../../windows/plat/renderers/vlc.py:797
+#: ../../windows/plat/renderers/vlc.py:798
+#: ../../windows/plat/renderers/vlc.py:799
+#: ../../windows/plat/renderers/vlc.py:800
+#: ../../windows/plat/renderers/vlc.py:801
 msgid "Universal"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-20 13:10-0400\n"
+"POT-Creation-Date: 2011-05-21 15:44-0400\n"
 "PO-Revision-Date: 2011-04-23 16:01+0000\n"
 "Last-Translator: Atheos <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-21 19:44+0000\n"
+"X-Launchpad-Export-Date: 2011-05-22 15:32+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -320,15 +320,15 @@ msgstr "Ακύρωση"
 msgid "Done"
 msgstr "Τέλος"
 
-#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:248
-#: ../../lib/frontends/widgets/firsttimedialog.py:289
-#: ../../lib/frontends/widgets/firsttimedialog.py:541
+#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:257
+#: ../../lib/frontends/widgets/firsttimedialog.py:298
+#: ../../lib/frontends/widgets/firsttimedialog.py:550
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/firsttimedialog.py:249
-#: ../../lib/frontends/widgets/firsttimedialog.py:288
-#: ../../lib/frontends/widgets/firsttimedialog.py:542
+#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/firsttimedialog.py:258
+#: ../../lib/frontends/widgets/firsttimedialog.py:297
+#: ../../lib/frontends/widgets/firsttimedialog.py:551
 msgid "No"
 msgstr "Όχι"
 
@@ -422,12 +422,12 @@ msgstr "Διατήρηση"
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/tablist.py:1056
-#: ../../lib/frontends/widgets/tablist.py:1070
-#: ../../lib/frontends/widgets/tablist.py:1076
-#: ../../lib/frontends/widgets/tablist.py:1119
-#: ../../lib/frontends/widgets/tablist.py:1125
-#: ../../lib/frontends/widgets/tablist.py:1130
+#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/tablist.py:1073
+#: ../../lib/frontends/widgets/tablist.py:1087
+#: ../../lib/frontends/widgets/tablist.py:1093
+#: ../../lib/frontends/widgets/tablist.py:1139
+#: ../../lib/frontends/widgets/tablist.py:1145
+#: ../../lib/frontends/widgets/tablist.py:1150
 #: ../../lib/frontends/widgets/prefpanel.py:771
 #: ../../lib/frontends/widgets/menus.py:272
 msgid "Remove"
@@ -525,11 +525,11 @@ msgid "Local Files"
 msgstr "Τοπικά αρχεία"
 
 #: ../../lib/feed.py:2306 ../../lib/feed.py:2412 ../../lib/feed.py:2422
-#: ../../lib/frontends/widgets/firsttimedialog.py:344
+#: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: ../../lib/playlist.py:203 ../../lib/frontends/widgets/tablist.py:1124
+#: ../../lib/playlist.py:203 ../../lib/frontends/widgets/tablist.py:1144
 #: ../../lib/frontends/widgets/application.py:886
 #: ../../lib/frontends/widgets/menus.py:309
 msgid "Rename Playlist"
@@ -773,37 +773,37 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:58
 #: ../../lib/frontends/widgets/tabcontroller.py:517
-#: ../../lib/frontends/widgets/itemedit.py:490
+#: ../../lib/frontends/widgets/itemedit.py:492
 msgid "Name"
 msgstr "Όνομα"
 
 #: ../../lib/frontends/widgets/widgetconst.py:59
-#: ../../lib/frontends/widgets/itemedit.py:491
+#: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
 msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
-#: ../../lib/frontends/widgets/itemedit.py:492
+#: ../../lib/frontends/widgets/itemedit.py:494
 msgid "Album"
 msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
-#: ../../lib/frontends/widgets/itemedit.py:495
+#: ../../lib/frontends/widgets/itemedit.py:497
 msgid "Track"
 msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:62
-#: ../../lib/frontends/widgets/itemedit.py:497
+#: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
 msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
-#: ../../lib/frontends/widgets/itemedit.py:493
+#: ../../lib/frontends/widgets/itemedit.py:495
 msgid "Genre"
 msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:64
-#: ../../lib/frontends/widgets/itemedit.py:309
+#: ../../lib/frontends/widgets/itemedit.py:311
 msgid "Rating"
 msgstr ""
 
@@ -820,7 +820,7 @@ msgid "Status"
 msgstr "Κατάσταση"
 
 #: ../../lib/frontends/widgets/widgetconst.py:68
-#: ../../lib/frontends/widgets/itemedit.py:515
+#: ../../lib/frontends/widgets/itemedit.py:517
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -863,14 +863,14 @@ msgstr "Τύπος αρχείου"
 #: ../../lib/frontends/widgets/widgetconst.py:78
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/diagnostics.py:80
-#: ../../lib/frontends/widgets/itemedit.py:542
-#: ../../lib/frontends/widgets/itemedit.py:554 ../../lib/messages.py:1274
+#: ../../lib/frontends/widgets/itemedit.py:544
+#: ../../lib/frontends/widgets/itemedit.py:556 ../../lib/messages.py:1274
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:138
 msgid "Show"
 msgstr "Προβολή"
 
 #: ../../lib/frontends/widgets/widgetconst.py:79
-#: ../../lib/frontends/widgets/itemedit.py:550
+#: ../../lib/frontends/widgets/itemedit.py:552
 msgid "Video Kind"
 msgstr ""
 
@@ -1004,8 +1004,7 @@ msgid "Get Help"
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:201
-#: ../../lib/frontends/widgets/displays.py:773
-#: ../../lib/frontends/widgets/tablist.py:853
+#: ../../lib/frontends/widgets/tablist.py:858
 msgid "Connect"
 msgstr "Σύνδεση"
 
@@ -1091,8 +1090,8 @@ msgid ""
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:438
-#: ../../lib/frontends/widgets/displays.py:787
-#: ../../lib/frontends/widgets/tablist.py:914
+#: ../../lib/frontends/widgets/tablist.py:919
+#: ../../lib/frontends/widgets/tablist.py:927
 msgid "Sources"
 msgstr ""
 
@@ -1114,8 +1113,8 @@ msgid "Add Source"
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:502
-#: ../../lib/frontends/widgets/displays.py:801
-#: ../../lib/frontends/widgets/tablist.py:1081
+#: ../../lib/frontends/widgets/tablist.py:1098
+#: ../../lib/frontends/widgets/tablist.py:1104
 #: ../../lib/frontends/widgets/devicecontroller.py:580
 msgid "Playlists"
 msgstr ""
@@ -1125,8 +1124,8 @@ msgid "Add Playlist"
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:552
-#: ../../lib/frontends/widgets/displays.py:815
-#: ../../lib/frontends/widgets/tablist.py:974
+#: ../../lib/frontends/widgets/tablist.py:982
+#: ../../lib/frontends/widgets/tablist.py:990
 #: ../../lib/frontends/widgets/prefpanel.py:1269
 msgid "Stores"
 msgstr ""
@@ -1140,37 +1139,39 @@ msgid ""
 "tested."
 msgstr ""
 
-#: ../../lib/frontends/widgets/statictabs.py:51
-msgid "Miro"
-msgstr ""
-
 #: ../../lib/frontends/widgets/statictabs.py:108
+#: ../../lib/frontends/widgets/statictabs.py:115
 #: ../../lib/frontends/widgets/searchcontroller.py:74
 msgid "Video Search"
 msgstr "Αναζήτηση βίντεο"
 
-#: ../../lib/frontends/widgets/statictabs.py:114
+#: ../../lib/frontends/widgets/statictabs.py:120
+#: ../../lib/frontends/widgets/statictabs.py:126
 msgid "Videos"
 msgstr "Βίντεο"
 
-#: ../../lib/frontends/widgets/statictabs.py:121
-#: ../../lib/frontends/widgets/tablist.py:725
-#: ../../lib/frontends/widgets/tablist.py:847
-#: ../../lib/frontends/widgets/itemedit.py:511
+#: ../../lib/frontends/widgets/statictabs.py:131
+#: ../../lib/frontends/widgets/statictabs.py:139
+#: ../../lib/frontends/widgets/tablist.py:730
+#: ../../lib/frontends/widgets/tablist.py:852
+#: ../../lib/frontends/widgets/itemedit.py:513
 msgid "Music"
 msgstr "Μουσική"
 
-#: ../../lib/frontends/widgets/statictabs.py:128
-#: ../../lib/frontends/widgets/itemedit.py:513
+#: ../../lib/frontends/widgets/statictabs.py:144
+#: ../../lib/frontends/widgets/statictabs.py:152
+#: ../../lib/frontends/widgets/itemedit.py:515
 msgid "Misc"
 msgstr "Διάφορα"
 
-#: ../../lib/frontends/widgets/statictabs.py:135
+#: ../../lib/frontends/widgets/statictabs.py:157
+#: ../../lib/frontends/widgets/statictabs.py:162
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1112
 msgid "Downloading"
 msgstr "Λήψεις"
 
-#: ../../lib/frontends/widgets/statictabs.py:141
+#: ../../lib/frontends/widgets/statictabs.py:167
+#: ../../lib/frontends/widgets/statictabs.py:174
 #: ../../lib/frontends/widgets/itemrenderer.py:1373
 msgid "Converting"
 msgstr ""
@@ -1474,9 +1475,9 @@ msgid "File on Disk"
 msgstr "Αρχείο στο δίσκο"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:255
-#: ../../lib/frontends/widgets/tablist.py:960
-#: ../../lib/frontends/widgets/tablist.py:991
-#: ../../lib/frontends/widgets/tablist.py:1069
+#: ../../lib/frontends/widgets/tablist.py:968
+#: ../../lib/frontends/widgets/tablist.py:1005
+#: ../../lib/frontends/widgets/tablist.py:1086
 msgid "Copy URL to clipboard"
 msgstr "Αντιγραφή της διεύθυνσης (URL) στο πρόχειρο"
 
@@ -1560,15 +1561,6 @@ msgid ""
 msgstr ""
 "Για να προσθέσεις ένα αντικείμενο, σύρε το πάνω στο όνομα αυτής της λίστα "
 "αναπαραγωγής στην πλευρική στήλη."
-
-#: ../../lib/frontends/widgets/displays.py:377
-#: ../../lib/frontends/widgets/tablist.py:1012
-#: ../../lib/frontends/widgets/prefpanel.py:1258
-#: ../../lib/frontends/widgets/devicecontroller.py:579
-#: ../../lib/frontends/widgets/itemlistwidgets.py:815
-#: ../../lib/messagehandler.py:577
-msgid "Podcasts"
-msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:523
 #, python-format
@@ -1683,64 +1675,73 @@ msgid ""
 "Enter the URL of the podcast to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:724
-#: ../../lib/frontends/widgets/tablist.py:844
+#: ../../lib/frontends/widgets/tablist.py:729
+#: ../../lib/frontends/widgets/tablist.py:849
 #: ../../lib/frontends/widgets/itemlistwidgets.py:743
-#: ../../lib/frontends/widgets/itemedit.py:512
-#: ../../lib/frontends/widgets/itemedit.py:760
+#: ../../lib/frontends/widgets/itemedit.py:514
+#: ../../lib/frontends/widgets/itemedit.py:762
 msgid "Video"
 msgstr "Βίντεο"
 
-#: ../../lib/frontends/widgets/tablist.py:961
+#: ../../lib/frontends/widgets/tablist.py:969
 #: ../../lib/frontends/widgets/application.py:895
 #: ../../lib/frontends/widgets/menus.py:271
 msgid "Rename Source"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:962
+#: ../../lib/frontends/widgets/tablist.py:970
 #: ../../lib/frontends/widgets/menus.py:279
 msgid "Remove Source"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:965
+#: ../../lib/frontends/widgets/tablist.py:973
 #: ../../lib/frontends/widgets/menus.py:280
 msgid "Remove Sources"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1053
+#: ../../lib/frontends/widgets/tablist.py:1026
+#: ../../lib/frontends/widgets/tablist.py:1032
+#: ../../lib/frontends/widgets/prefpanel.py:1258
+#: ../../lib/frontends/widgets/devicecontroller.py:579
+#: ../../lib/frontends/widgets/itemlistwidgets.py:815
+#: ../../lib/messagehandler.py:577
+msgid "Podcasts"
+msgstr ""
+
+#: ../../lib/frontends/widgets/tablist.py:1070
 msgid "Update Podcasts In Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1055
+#: ../../lib/frontends/widgets/tablist.py:1072
 #: ../../lib/frontends/widgets/application.py:876
 msgid "Rename Podcast Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1061
+#: ../../lib/frontends/widgets/tablist.py:1078
 msgid "Update Podcast Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1064
+#: ../../lib/frontends/widgets/tablist.py:1081
 #: ../../lib/frontends/widgets/menus.py:267
 msgid "Rename"
 msgstr "Μετονομασία"
 
-#: ../../lib/frontends/widgets/tablist.py:1066
+#: ../../lib/frontends/widgets/tablist.py:1083
 msgid "Revert Podcast Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1068
+#: ../../lib/frontends/widgets/tablist.py:1085
 #: ../../lib/frontends/widgets/devicecontroller.py:581
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1366
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1435
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: ../../lib/frontends/widgets/tablist.py:1075
+#: ../../lib/frontends/widgets/tablist.py:1092
 msgid "Update Podcasts Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1118
+#: ../../lib/frontends/widgets/tablist.py:1138
 #: ../../lib/frontends/widgets/application.py:891
 msgid "Rename Playlist Folder"
 msgstr "Μετονομασία φακέλου λίστας αναπαραγωγής"
@@ -1767,12 +1768,12 @@ msgstr ""
 "Ειδοποίησέ με αν προσπαθήσω να κλείσω την εφαρμογή με μετατροπές σε εξέλιξη."
 
 #: ../../lib/frontends/widgets/prefpanel.py:470
-#: ../../lib/frontends/widgets/firsttimedialog.py:189
+#: ../../lib/frontends/widgets/firsttimedialog.py:190
 msgid "System default"
 msgstr "Προεπιλογή συστήματος"
 
 #: ../../lib/frontends/widgets/prefpanel.py:477
-#: ../../lib/frontends/widgets/firsttimedialog.py:215
+#: ../../lib/frontends/widgets/firsttimedialog.py:224
 msgid "Language:"
 msgstr "Γλώσσα:"
 
@@ -2149,7 +2150,7 @@ msgid "Details:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1257
-#: ../../lib/frontends/widgets/itemedit.py:759
+#: ../../lib/frontends/widgets/itemedit.py:761
 msgid "General"
 msgstr "Γενικά"
 
@@ -2398,7 +2399,7 @@ msgid ""
 msgstr ""
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:70
-#: ../../lib/frontends/widgets/firsttimedialog.py:309
+#: ../../lib/frontends/widgets/firsttimedialog.py:318
 msgid "Choose..."
 msgstr ""
 
@@ -2430,7 +2431,7 @@ msgid "Searching for files"
 msgstr ""
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:145
-#: ../../lib/frontends/widgets/firsttimedialog.py:504
+#: ../../lib/frontends/widgets/firsttimedialog.py:513
 msgid "Cancel Search"
 msgstr ""
 
@@ -2442,9 +2443,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
-#: ../../lib/frontends/widgets/firsttimedialog.py:440
-#: ../../lib/frontends/widgets/firsttimedialog.py:453
-#: ../../lib/frontends/widgets/firsttimedialog.py:467
+#: ../../lib/frontends/widgets/firsttimedialog.py:449
+#: ../../lib/frontends/widgets/firsttimedialog.py:462
+#: ../../lib/frontends/widgets/firsttimedialog.py:476
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
@@ -2804,7 +2805,7 @@ msgid "Save Item As..."
 msgstr "Αποθήκευση αντικειμένου ως..."
 
 #: ../../lib/frontends/widgets/application.py:674
-#: ../../lib/frontends/widgets/firsttimedialog.py:317
+#: ../../lib/frontends/widgets/firsttimedialog.py:326
 msgid "Choose directory to search for media files"
 msgstr "Επιλογή καταλόγου για αναζήτηση αρχείων πολυμέσων"
 
@@ -3040,91 +3041,91 @@ msgstr ""
 msgid "Unknown Artist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:77
+#: ../../lib/frontends/widgets/firsttimedialog.py:78
 #, python-format
 msgid "%(appname)s Setup"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:180
+#: ../../lib/frontends/widgets/firsttimedialog.py:181
 #, python-format
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:185
+#: ../../lib/frontends/widgets/firsttimedialog.py:186
 #, python-format
 msgid "What language would you like %(name)s to be in?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:222
-#: ../../lib/frontends/widgets/firsttimedialog.py:259
-#: ../../lib/frontends/widgets/firsttimedialog.py:347
-#: ../../lib/frontends/widgets/firsttimedialog.py:566
+#: ../../lib/frontends/widgets/firsttimedialog.py:231
+#: ../../lib/frontends/widgets/firsttimedialog.py:268
+#: ../../lib/frontends/widgets/firsttimedialog.py:356
+#: ../../lib/frontends/widgets/firsttimedialog.py:575
 msgid "Next >"
 msgstr "Επόμενο >"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:238
+#: ../../lib/frontends/widgets/firsttimedialog.py:247
 #, python-format
 msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
 "resume your downloads and update your podcasts."
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:244
+#: ../../lib/frontends/widgets/firsttimedialog.py:253
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
 msgstr "Θα ήθελες να εκτελέσεις το %(name)s στην εκκίνηση;"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:256
-#: ../../lib/frontends/widgets/firsttimedialog.py:332
-#: ../../lib/frontends/widgets/firsttimedialog.py:512
-#: ../../lib/frontends/widgets/firsttimedialog.py:563
+#: ../../lib/frontends/widgets/firsttimedialog.py:265
+#: ../../lib/frontends/widgets/firsttimedialog.py:341
+#: ../../lib/frontends/widgets/firsttimedialog.py:521
+#: ../../lib/frontends/widgets/firsttimedialog.py:572
 msgid "< Previous"
 msgstr "< Προηγούμενο"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:277
+#: ../../lib/frontends/widgets/firsttimedialog.py:286
 #, python-format
 msgid ""
 "%(name)s can find music and video on your computer and show them in your "
 "%(name)s library.  No files will be copied or duplicated."
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:283
+#: ../../lib/frontends/widgets/firsttimedialog.py:292
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:299
+#: ../../lib/frontends/widgets/firsttimedialog.py:308
 msgid "Search everywhere."
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:301
+#: ../../lib/frontends/widgets/firsttimedialog.py:310
 msgid "Just search in this folder:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:348
-#: ../../lib/frontends/widgets/firsttimedialog.py:515
+#: ../../lib/frontends/widgets/firsttimedialog.py:357
+#: ../../lib/frontends/widgets/firsttimedialog.py:524
 msgid "Finish"
 msgstr "Τέλος"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:419
+#: ../../lib/frontends/widgets/firsttimedialog.py:428
 msgid "Cancelled"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:435
+#: ../../lib/frontends/widgets/firsttimedialog.py:444
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
 msgstr[0] "Έγινε ανάλυση %(count)s αρχείου"
 msgstr[1] "Έγινε ανάλυση %(count)s αρχείων"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:535
+#: ../../lib/frontends/widgets/firsttimedialog.py:544
 #, python-format
 msgid ""
 "Would you like to display your %(player)s music and video in %(appname)s?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:549
+#: ../../lib/frontends/widgets/firsttimedialog.py:558
 #, python-format
 msgid ""
 "Note: %(appname)s won't move or copy any files on your disk.  It will just "
@@ -3572,87 +3573,87 @@ msgstr "Όνομα χρήστη:"
 msgid "Password:"
 msgstr "Κωδικός πρόσβασης:"
 
-#: ../../lib/frontends/widgets/itemedit.py:223
-#: ../../lib/frontends/widgets/itemedit.py:281
+#: ../../lib/frontends/widgets/itemedit.py:225
+#: ../../lib/frontends/widgets/itemedit.py:283
 msgid "(mixed)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:308
+#: ../../lib/frontends/widgets/itemedit.py:310
 msgid "None"
 msgstr "Κανένα"
 
-#: ../../lib/frontends/widgets/itemedit.py:316
+#: ../../lib/frontends/widgets/itemedit.py:318
 msgid "Choose a thumbnail file"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:325
+#: ../../lib/frontends/widgets/itemedit.py:327
 msgid "Click to choose image."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:402
+#: ../../lib/frontends/widgets/itemedit.py:404
 msgid "Move"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:408
+#: ../../lib/frontends/widgets/itemedit.py:410
 msgid "Choose location for file"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:496
+#: ../../lib/frontends/widgets/itemedit.py:498
 msgid "/"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:499
+#: ../../lib/frontends/widgets/itemedit.py:501
 msgid "About"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:510
+#: ../../lib/frontends/widgets/itemedit.py:512
 msgid "Type"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:517
+#: ../../lib/frontends/widgets/itemedit.py:519
 msgid "Art"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:528
+#: ../../lib/frontends/widgets/itemedit.py:530
 msgid "Path"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:543
+#: ../../lib/frontends/widgets/itemedit.py:545
 msgid "Episode ID"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:545
+#: ../../lib/frontends/widgets/itemedit.py:547
 msgid "Season Number"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:547
+#: ../../lib/frontends/widgets/itemedit.py:549
 msgid "Episode Number"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:553 ../../lib/messages.py:1272
+#: ../../lib/frontends/widgets/itemedit.py:555 ../../lib/messages.py:1272
 msgid "Movie"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:555 ../../lib/messages.py:1276
+#: ../../lib/frontends/widgets/itemedit.py:557 ../../lib/messages.py:1276
 msgid "Clip"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:556 ../../lib/messages.py:1278
+#: ../../lib/frontends/widgets/itemedit.py:558 ../../lib/messages.py:1278
 msgid "Podcast"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemedit.py:677
+#: ../../lib/frontends/widgets/itemedit.py:679
 msgid "Edit Item"
 msgstr "Επεξεργασία αντικειμένου"
 
-#: ../../lib/frontends/widgets/itemedit.py:699
+#: ../../lib/frontends/widgets/itemedit.py:701
 #, python-format
 msgid "%(items)d"
 msgid_plural "%(items)d items selected to edit"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/itemedit.py:706
+#: ../../lib/frontends/widgets/itemedit.py:708
 msgid ""
 "To change a field for all the selected items, check the checkbox next to the "
 "field you'd like to change."
