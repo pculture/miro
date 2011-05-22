@@ -277,6 +277,9 @@ def encode_response(reply):
             if typ == DMAP_TYPE_STRING:
                 fmt = str(len(value)) + fmt
                 size = len(value)
+                # This ensures we always get a string type even if we are lame
+                # and passed a unicode in.
+                value = str(buffer(value))
             # code (4 bytes), length (4 bytes), data (variable), network byte
             # order
             fmt = '!4sI' + fmt
