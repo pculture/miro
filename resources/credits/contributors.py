@@ -113,6 +113,7 @@ def get_bugzilla_reporters(milestone):
         ("bug_status", "VERIFIED"),
         ("resolution", "FIXED"),
         ("target_milestone", milestone),
+        ("order", "Bug Number"),
         ("ctype", "csv")
         ])
 
