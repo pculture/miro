@@ -1769,24 +1769,18 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
         # - calling moviedata.movie_data_updater.request_update(self)
-        # - changing this item so that not self.in_incomplete_mdp_view
+        # - calling _handle_invalid_media_file
         try:
             self._check_media_file()
+        except IOError, e:
+            # shouldn't generally happen, but probably something we have no
+            # control over; likely another process has moved or deleted our file
+            logging.warn("check_media_file failed: %s", e)
+            self._handle_invalid_media_file()
         except CheckMediaError, e:
+            # filename is None - this should never happen
             app.controller.failed_soft("check_media_file", str(e), True)
-            # call path_processed since the movie data program won't run on us
-            path = self.get_filename()
-            if path is not None:
-                app.metadata_progress_updater.path_processed(path)
-            # Set our state to SKIPPED so we don't request another update.
-            self.mdp_state = moviedata.State.SKIPPED
-            self.file_type = u'other'
-            self.signal_change()
-            # The file may no longer be around.  Call check_delete() in an
-            # idle callback to handle this.  We don't want to call
-            # check_delete() now because it's not safe if we're called inside
-            # setup_new().  See #17344
-            eventloop.add_idle(self.check_deleted, 'checking item deleted')
+            self._handle_invalid_media_file()
         else:
             moviedata.movie_data_updater.request_update(self)
             if self.file_type is None:
@@ -1794,6 +1788,26 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 # neither mutagen nor MDP could identify it
                 self.file_type = u'other'
             self.signal_change()
+
+    def _handle_invalid_media_file(self):
+        """Failed to process a file in check_media_file; when this happens we:
+        - inform the metadata_progress_updater that we're done with the item
+        - make sure we don't try to process it again
+        - check whether the file no longer exists
+        """
+        # call path_processed since the movie data program won't run on us
+        path = self.get_filename()
+        if path is not None:
+            app.metadata_progress_updater.path_processed(path)
+        # Set our state to SKIPPED so we don't request another update.
+        self.mdp_state = moviedata.State.SKIPPED
+        self.file_type = u'other'
+        self.signal_change()
+        # The file may no longer be around.  Call check_delete() in an
+        # idle callback to handle this.  We don't want to call
+        # check_delete() now because it's not safe if we're called inside
+        # setup_new().  See #17344
+        eventloop.add_idle(self.check_deleted, 'checking item deleted')
 
     def _check_media_file(self):
         """Does the work for check_media_file()
@@ -1807,14 +1821,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         filename = self.get_filename()
         if filename is None:
             raise CheckMediaError("item has no filename")
-        if (not fileutil.exists(filename) and not
-                self._allow_nonexistent_paths):
-            raise CheckMediaError("%s doesn't exist" % filename)
         self.file_type = filetypes.item_file_type_for_filename(filename)
-        try:
-            self.read_metadata()
-        except IOError:
-            raise CheckMediaError("IOError in read_metadata()")
+        self.read_metadata()
 
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
