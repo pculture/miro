@@ -147,13 +147,29 @@ class TextEntry(BaseTextEntry):
         return MiroTextField.alloc().init()
 
 class NumberEntry(BaseTextEntry):
-    # TODO: disallow typing nondigits
     def make_view(self):
         return MiroTextField.alloc().init()
 
     def set_max_length(self, length):
         # TODO
         pass
+
+    def _filter_value(self):
+        """Discard any non-numeric characters"""
+        digits = ''.join(x for x in self.view.stringValue() if x.isdigit())
+        self.view.setStringValue_(digits)
+
+    def on_changed(self, notification):
+        # overriding on_changed rather than connecting to it ensures that we
+        # filter the value before anything else connected to the signal sees it
+        self._filter_value()
+        BaseTextEntry.on_changed(self, notification)
+
+    def get_text(self):
+        # handles get_text between when text is entered and when on_changed
+        # filters it, in case that's possible
+        self._filter_value()
+        return BaseTextEntry.get_text(self)
 
 class MiroSecureTextField(NSSecureTextField):
     def textDidEndEditing_(self, notification):
