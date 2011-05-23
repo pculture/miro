@@ -950,6 +950,11 @@ class RateItem(BackendMessage):
         self.info = info
         self.rating = rating
 
+class ForceFeedparserProcessing(BackendMessage):
+    """Force the backend to do a bunch of feedparser updates
+    """
+    pass
+
 # Frontend Messages
 
 class JettisonTabs(FrontendMessage):

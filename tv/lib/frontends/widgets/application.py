@@ -1034,6 +1034,9 @@ class Application:
         gc.collect()
         self._printout_memory_stats('MEMORY STATS AFTER GARBAGE COLLECTION')
 
+    def force_feedparser_processing(self):
+        messages.ForceFeedparserProcessing().send_to_backend()
+
     def _printout_memory_stats(self, title):
         # base_classes is a list of base classes that we care about.  If you
         # want to check memory usage for a different class, add it to the

@@ -1894,3 +1894,16 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             fi.year = item_info.year
             fi.genre = item_info.genre
             fi.signal_change()
+
+    def handle_force_feedparser_processing(self, message):
+        # For all our RSS feeds, force an update
+        for f in feed.Feed.make_view():
+            if isinstance(f.actualFeed, feed.RSSFeedImpl):
+                f.actualFeed.etag = f.actualFeed.modified = None
+                f.actualFeed.signal_change()
+                f.update()
+            elif isinstance(f.actualFeed, feed.RSSMultiFeedBase):
+                f.actualFeed.etag = {}
+                f.actualFeed.modified = {}
+                f.actualFeed.signal_change()
+                f.update()
