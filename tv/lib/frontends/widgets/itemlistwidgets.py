@@ -1704,6 +1704,12 @@ class ListViewSorter(SorterWidget):
 
     def get_offsets(self, context, text_size):
         right_aligned = getattr(self._renderer, 'right_aligned', False)
+        # Special case: if no text, center it
+        # XXX assumes triangle is 6px.
+        if not text_size[0]:
+            x = 0
+            arrow_start = (context.width - 6) / 2
+            return x, arrow_start
         if right_aligned:
             x = context.width - text_size[0] - 8
             if x < 0:
