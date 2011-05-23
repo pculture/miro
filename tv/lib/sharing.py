@@ -114,7 +114,11 @@ daap_mapping = {
     'daap.songyear': 'year',
     'daap.songgenre': 'genre',
     'daap.songtracknumber': 'track',
-    'org.participatoryculture.miro.itemkind': 'kind'
+    'org.participatoryculture.miro.itemkind': 'kind',
+    'com.apple.itunes.series-name': 'show',
+    'com.apple.itunes.season-num': 'season_number',
+    'com.apple.itunes.episode-num-str': 'episode_id',
+    'com.apple.itunes.episode-sort': 'episode_number'
 }
 
 daap_rmapping = {
@@ -130,7 +134,11 @@ daap_rmapping = {
     'year': 'daap.songyear',
     'genre': 'daap.songgenre',
     'track': 'daap.songtracknumber',
-    'kind': 'org.participatoryculture.miro.itemkind'
+    'kind': 'org.participatoryculture.miro.itemkind',
+    'show': 'com.apple.itunes.series-name',
+    'season_number': 'com.apple.itunes.season-num',
+    'episode_id': 'com.apple.itunes.episode-num-str',
+    'episode_number': 'com.apple.itunes.episode-sort'
 }
 
 # Windows Python does not have inet_ntop().  Sigh.  Fallback to this one,
