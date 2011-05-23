@@ -57,6 +57,17 @@ class UnknownImageObjectException(Exception):
         """The types that Image does know how to handle."""
         return self.known_types
 
+def _text_to_ascii(text):
+    """Given a unicode or str that may contain characters invalid in ascii and
+    possibly invalid in the input encoding, return a str containing only the
+    ascii characters from the input.
+    """
+    # make it a unicode if it's a str
+    if not isinstance(text, unicode):
+        text = text.decode('ascii', errors='ignore')
+    # now make an ascii str from the unicode
+    return text.encode('ascii', errors='ignore')
+
 class Image(object):
     """Class to represent an Image created from a mutagen image.
     Normalizes mutagen's various image objects into one class structure so that
@@ -158,6 +169,7 @@ class Image(object):
         """If a subclasss can determine its data's mime type, this function will
         set the extension appropriately.
         """
+        mime = _text_to_ascii(mime)
         mime = mime.lower()
         if not '/' in mime:
             # some files arbitrarily drop the 'image/' component
