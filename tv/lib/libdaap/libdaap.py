@@ -85,7 +85,11 @@ DEFAULT_CONTENT_TYPE = 'application/x-dmap-tagged'
 DEFAULT_DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' + 
                      'dmap.containeritemid,dmap.parentcontainerid,' +
                      'daap.songtime,daap.songsize,daap.songformat,' +
-                     'daap.songalbumartist,com.apple.itunes.mediakind')
+                     'daap.songalbumartist,com.apple.itunes.mediakind,' +
+                     'com.apple.itunes.episode-num-str,' +
+                     'com.apple.itunes.episode-sort,' +
+                     'com.apple.itunes.season-num,' +
+                     'com.apple.itunes.series-name')
 DEFAULT_DAAP_PLAYLIST_META = ('dmap.itemid,dmap.itemname,dmap.persistentid,' +
                               'daap.baseplaylist,dmap.itemcount,' +
                               'dmap.parentcontainerid,dmap.persistentid')
