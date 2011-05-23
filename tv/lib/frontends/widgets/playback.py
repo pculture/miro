@@ -318,6 +318,10 @@ class PlaybackManager (signals.SignalEmitter):
                 self.playlist.set_shuffle(self.shuffle)
             self.emit('update-shuffle')
 
+    def reshuffle(self):
+        if self.playlist:
+            self.playlist.reshuffle()
+
     def toggle_repeat(self):
         if self.repeat == WidgetStateStore.get_repeat_playlist():
             self.set_repeat(WidgetStateStore.get_repeat_track())
@@ -756,6 +760,25 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.item_tracker = None
         self.model = None
         self.disconnect_all()
+
+    # This recalculates the upcoming shuffle items.
+    # This needs to be done in case the playlist changes
+    # without any items-changed signal being emitted.
+    # Note that the new upcoming shuffle items do not take
+    # already played items into consideration.
+    def reshuffle(self):
+        # only reshuffle if we are currently using self.shuffle_upcoming
+        if self.shuffle:
+            self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
+            # Remove any items in the shuffle history which are not currently
+            # in the playlist. The last item isn't removed since that is the 
+            # currently playing item.
+            if self.shuffle_history:
+                playable_items = set(self.get_all_playable_items())
+                current_item = self.shuffle_history.pop()
+                self.shuffle_history = [item for item in self.shuffle_history 
+                                                    if item in playable_items]
+                self.shuffle_history.append(current_item)
 
     def prev_shuffle_item(self):
         while len(self.shuffle_history) > 0:

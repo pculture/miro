@@ -85,6 +85,12 @@ class FilteredListMixin(object):
         """Handle the filter switch changing state."""
         self.update_filters(filter_)
         app.widget_state.toggle_filters(self.type, self.id, filter_)
+        # Did we toggle a filter of the currently playing playlist
+        if ((self.current_item_view and 
+            app.playback_manager.is_playing and
+            self.current_item_view.model == 
+            app.playback_manager.playlist.model)):
+                app.playback_manager.reshuffle()
 
     def update_filters(self, filters):
         """Update the display and toolbar filter switch state."""
