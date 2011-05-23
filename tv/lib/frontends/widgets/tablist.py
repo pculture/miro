@@ -99,7 +99,7 @@ class TabListView(widgetset.TableView):
         self.set_show_headers(False)
         self.set_gradient_highlight(True)
         self.set_background_color(style.TAB_LIST_BACKGROUND_COLOR)
-        self.set_fixed_height(False)
+        self.set_fixed_height(True)
         self.set_auto_resizes(True)
 
     def append_tab(self, tab_info):
