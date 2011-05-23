@@ -232,7 +232,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header('Daap-Server', self.server_version)
             self.send_header('Content-length', str(len(blob)))
             # Note: we currently do not have the ability to replace or 
-            # Note: we currently do not have the ability to replace or 
             # override the default headers.
             for k, v in extra_headers:
                 self.send_header(k, v)
