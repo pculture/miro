@@ -1094,7 +1094,7 @@ class Application:
                 ),
                 _("Warn me when I attempt to quit when others are connected "
                   "to my media library"),
-                prefs.WARN_IF_DOWNLOADING_ON_QUIT
+                prefs.SHARE_WARN_ON_QUIT
             )
             return ret
         return True
