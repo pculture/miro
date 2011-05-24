@@ -34,6 +34,7 @@ MovieDataUpdater.
 import logging
 import os
 import shutil
+import string
 from mutagen import id3, mp4, flac
 
 from miro import app
@@ -57,16 +58,16 @@ class UnknownImageObjectException(Exception):
         """The types that Image does know how to handle."""
         return self.known_types
 
-def _text_to_ascii(text):
-    """Given a unicode or str that may contain characters invalid in ascii and
-    possibly invalid in the input encoding, return a str containing only the
-    ascii characters from the input.
+MIME_CHARS = frozenset(string.ascii_letters + '/-')
+def _text_to_mime_chars(text):
+    """Given a unicode or str containing arbitrary data, return an ascii str
+    containing only the characters valid in a mime type.
     """
     # make it a unicode if it's a str
     if not isinstance(text, unicode):
         text = text.decode('ascii', errors='ignore')
-    # now make an ascii str from the unicode
-    return text.encode('ascii', errors='ignore')
+    # drop non-mime chars, then convert to ascii str
+    return ''.join([x for x in text if x in MIME_CHARS]).encode('ascii')
 
 class Image(object):
     """Class to represent an Image created from a mutagen image.
@@ -169,7 +170,7 @@ class Image(object):
         """If a subclasss can determine its data's mime type, this function will
         set the extension appropriately.
         """
-        mime = _text_to_ascii(mime)
+        mime = _text_to_mime_chars(mime)
         mime = mime.lower()
         if not '/' in mime:
             # some files arbitrarily drop the 'image/' component
