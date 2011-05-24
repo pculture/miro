@@ -78,6 +78,7 @@ class Image(object):
     JPEG_EXTENSION = 'jpg'
     PNG_EXTENSION = 'png'
     UNKNOWN_EXTENSION = 'bin'
+    # XXX when adding a mime type below, be sure its chars are all in MIME_CHARS
     MIME_EXTENSION_MAP = {
         'image/jpeg': JPEG_EXTENSION,
         'image/jpg': JPEG_EXTENSION,
