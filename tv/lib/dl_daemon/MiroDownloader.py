@@ -78,7 +78,7 @@ def launch():
     daemon.DownloaderDaemon(addr, port, short_app_name)
     # setup config for the downloader
     from miro import eventloop
-    config.load(config.DownloaderConfig())
+    config.load(config.ManualConfig())
     app.downloader_config_watcher = config.ConfigWatcher(
             lambda foo, *args: eventloop.add_idle(foo, "config watcher",
                 args=args))

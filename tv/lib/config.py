@@ -131,8 +131,11 @@ class Configuration(ConfigurationBase):
     def save(self):
         platformcfg.save(self._data)
 
-class DownloaderConfig(ConfigurationBase):
-    """Configuration class for the downloader
+class ManualConfig(ConfigurationBase):
+    """Configuration class where we set the values manually.
+
+    This is used in the downloader process and child process from
+    subprocessmanager.
     """
 
     def __init__(self):

@@ -330,6 +330,16 @@ def movie_data_program_info(movie_path, thumbnail_path):
     from miro import app
     return app.movie_data_program_info(movie_path, thumbnail_path)
 
+def miro_helper_program_info():
+    """Get the command line to launch miro_helper.py """
+
+    miro_path = os.path.dirname(miro.__file__)
+    miro_helper_path = os.path.join(miro_path, 'miro_helper.py')
+
+    cmd_line = (sys.executable, miro_helper_path)
+    env = None
+
+    return (cmd_line, env)
 
 def get_logical_cpu_count():
     """Returns the logical number of cpus on this machine.
