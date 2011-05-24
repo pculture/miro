@@ -197,11 +197,10 @@ def start_downloader():
     global AUTO_DOWNLOADER
     MANUAL_DOWNLOADER = Downloader(False)
     AUTO_DOWNLOADER = Downloader(True)
+    app.backend_config_watcher.connect("changed", _on_config_change)
 
 def _on_config_change(obj, key, value):
     if key == prefs.DOWNLOADS_TARGET.key:
         AUTO_DOWNLOADER.update_max_downloads()
     elif key == prefs.MAX_MANUAL_DOWNLOADS.key:
         MANUAL_DOWNLOADER.update_max_downloads()
-
-app.backend_config_watcher.connect("changed", _on_config_change)

@@ -522,6 +522,8 @@ class bdist_nsis(Command):
                 template_vars['shortAppName']
         nsis_vars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
                 template_vars['shortAppName']
+        nsis_vars['CONFIG_HELPER_EXECUTABLE'] = "%s_Helper.exe" % \
+                template_vars['shortAppName']
         nsis_vars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
         nsis_vars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
         nsis_vars['MIRO_INSTALL_ICON'] = self.install_icon
@@ -581,6 +583,7 @@ class bdist_nsis(Command):
         self.add_file(nsis_vars['CONFIG_EXECUTABLE'])
         self.add_file(nsis_vars['CONFIG_ICON'])
         self.add_file(nsis_vars['CONFIG_MOVIE_DATA_EXECUTABLE'])
+        self.add_file(nsis_vars['CONFIG_HELPER_EXECUTABLE'])
         self.add_glob("*.dll")
 
         self.add_directory("defaults")
@@ -640,6 +643,11 @@ if __name__ == "__main__":
             {
                 'script': 'moviedata_util.py',
                 'dest_base': '%s_MovieData' % template_vars['shortAppName'],
+                'icon_resources': [(0, "Miro.ico")],
+                },
+            {
+                'script': os.path.join(portable_dir, 'miro_helper.py'),
+                'dest_base': '%s_Helper' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
                 },
             ],
