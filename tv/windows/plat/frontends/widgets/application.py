@@ -78,7 +78,8 @@ class WindowsApplication(Application):
 
     def run(self):
         # wraps the real _run() with some code which sets the error mode
-        old_error_mode = ctypes.windll.kernel32.SetErrorMode(1)
+        # 0x8001 is SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX
+        old_error_mode = ctypes.windll.kernel32.SetErrorMode(0x8001)
         try:
             self._run()
         finally:
