@@ -407,11 +407,17 @@ def exit_miro(return_code):
 
 ###############################################################################
 
-def movie_data_program_info(movie_path, thumbnail_path):
+def _get_cmd_line_and_env_for_script(script_name):
+    """Get command line and env variables for a script.
+
+    script_name must be located in the resources directory.
+
+    Returns the tuple (cmd_line, env)
+    """
     main_bundle = NSBundle.mainBundle()
     bundle_path = main_bundle.bundlePath()
     rsrc_path = main_bundle.resourcePath()
-    script_path = os.path.join(rsrc_path, 'qt_extractor.py')
+    script_path = os.path.join(rsrc_path, script_name)
     options = main_bundle.infoDictionary().get('PyOptions')
     env = None
     if options['alias'] == 1:
@@ -433,7 +439,14 @@ def movie_data_program_info(movie_path, thumbnail_path):
             check_b(env[k])
         except:
             env[k] = env[k].encode('utf-8')
-    return ((py_exe_path, script_path, movie_path, thumbnail_path), env)
+    return ((py_exe_path, script_path), env)
+
+def movie_data_program_info(movie_path, thumbnail_path):
+    cmd_line, env = _get_cmd_line_and_env_for_script('qt_extractor.py')
+    return (cmd_line + (movie_path, thumbnail_path), env)
+
+def miro_helper_program_info():
+    return _get_cmd_line_and_env_for_script('miro_helper.py')
 
 ###############################################################################
 

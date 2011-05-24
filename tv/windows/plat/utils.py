@@ -508,6 +508,10 @@ def get_plat_media_player_name_path():
     itunes_path = os.path.join(music_path, 'iTunes')
     return (_('iTunes'), import_itunes_path(itunes_path))
 
+def miro_helper_program_info():
+    cmd_line = (os.path.join(resources.app_root(), 'Miro_Helper.exe'))
+    env = None
+    return (cmd_line, env)
 
 def thread_body(func, *args, **kwargs):
     func(*args, **kwargs)

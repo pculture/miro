@@ -82,6 +82,7 @@ from miro.test.metadatatest import *
 from miro.test.tableselectiontest import *
 from miro.test.filetagstest import *
 from miro.test.watchedfoldertest import *
+from miro.test.subprocesstest import *
 
 # platform specific tests
 

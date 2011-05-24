@@ -304,7 +304,8 @@ class MiroBuild (py2app):
             os.path.join('Resources-Widgets', 'MainMenu.nib'),
             os.path.join('Resources-Widgets', 'OverlayPalette.nib'),
             os.path.join('Resources-Widgets', 'Credits.html'),
-            'qt_extractor.py'
+            'qt_extractor.py',
+            os.path.join(PORTABLE_DIR, 'miro_helper.py'),
         ]
 
         self.resources.extend(glob(os.path.join('Resources-Widgets', '*.png')))

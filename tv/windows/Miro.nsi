@@ -7,6 +7,7 @@
 ;  CONFIG_EXECUTABLE     eg, "Miro.exe
 ;  CONFIG_DOWNLOADER_EXECUTABLE     eg, "Miro_Downloader.exe
 ;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Miro_MovieData.exe
+;  CONFIG_HELPER_EXECUTABLE     eg, "Miro_Helper.exe
 ;  CONFIG_ICON           eg, "Miro.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Miro-1.2.3.exe"
 ;  CONFIG_PROG_ID        eg, "Miro.1"
@@ -452,6 +453,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_DOWNLOADER_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_HELPER_EXECUTABLE}"
   Delete   "${directory}\*.dll"
   Delete   "${directory}\*.pyd"
   Delete   "${directory}\w9xpopen.exe"
@@ -747,6 +749,7 @@ unzipok:
   File  "${CONFIG_ICON}"
   File  "${CONFIG_DOWNLOADER_EXECUTABLE}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  File  "${CONFIG_HELPER_EXECUTABLE}"
   File  "*.dll"
   File  "*.pyd"
   File  "w9xpopen.exe"
