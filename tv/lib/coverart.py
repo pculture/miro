@@ -79,6 +79,7 @@ class Image(object):
     PNG_EXTENSION = 'png'
     UNKNOWN_EXTENSION = 'bin'
     # XXX when adding a mime type below, be sure its chars are all in MIME_CHARS
+    # and use lowercase only
     MIME_EXTENSION_MAP = {
         'image/jpeg': JPEG_EXTENSION,
         'image/jpg': JPEG_EXTENSION,
@@ -167,15 +168,17 @@ class Image(object):
             return None
         return path
 
-    def _set_extension_by_mime(self, mime):
+    def _set_extension_by_mime(self, raw_mime):
         """If a subclasss can determine its data's mime type, this function will
         set the extension appropriately.
         """
-        mime = _text_to_mime_chars(mime)
-        mime = mime.lower()
+        mime = _text_to_mime_chars(raw_mime).lower()
+        dropped_chars = len(raw_mime) - len(mime)
         if not '/' in mime:
             # some files arbitrarily drop the 'image/' component
             mime = "image/{0}".format(mime)
+        if dropped_chars:
+            logging.debug("coverart: coerced mime %r to %r", raw_mime, mime)
         if mime in Image.MIME_EXTENSION_MAP:
             self.extension = Image.MIME_EXTENSION_MAP[mime]
         else:
