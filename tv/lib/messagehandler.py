@@ -1500,7 +1500,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             try:
                 item_ = item.Item.get_by_id(id_)
             except database.ObjectNotFoundError:
-                logging.warn("EditItems: Item not found -- %s", message.item_id)
+                logging.warn("EditItems: Item not found -- %s", id_)
                 continue
             item_.set_metadata_from_iteminfo(changes)
 
