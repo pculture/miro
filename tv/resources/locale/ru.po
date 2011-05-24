@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-08 18:34+0000\n"
-"Last-Translator: Misha Shnurapet <Unknown>\n"
+"PO-Revision-Date: 2011-05-24 12:32+0000\n"
+"Last-Translator: Igor Shalari <from.zeon@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:32+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -35,7 +35,7 @@ msgstr "запуск"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "Подключение отсутствует - повтор подключения через %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
@@ -62,7 +62,7 @@ msgstr "Обновление базы данных"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Подготовка элементов"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -76,7 +76,7 @@ msgstr "Соединение закрыто сервером %(host)s"
 #: ../../lib/httpclient.py:111
 #, python-format
 msgid "%(host)s gave us an empty response"
-msgstr ""
+msgstr "%(host)s дал нам пустой ответ"
 
 #: ../../lib/httpclient.py:116
 #, python-format
@@ -134,7 +134,7 @@ msgstr "Адрес \"%(url)s\" неправильный"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Неизвестный хост"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -201,7 +201,7 @@ msgstr "%(original_name)s (Преобразование в %(format)s)"
 
 #: ../../lib/devices.py:175
 msgid "Your drive must be mounted."
-msgstr ""
+msgstr "Ваш диск должен быть подключен."
 
 #: ../../lib/devices.py:364
 msgid "USB Device"
@@ -280,6 +280,7 @@ msgstr "Возможно, указанный OPML некорректен. Имп
 #: ../../lib/opml.py:234
 msgid "The selected OPML file could not be read.  Import was interrupted."
 msgstr ""
+"Невозможно прочитать выбранный OPML файл. Процесс импорта был прерван."
 
 #: ../../lib/opml.py:242
 msgid "OPML Import summary"
@@ -345,7 +346,7 @@ msgstr "Пропустить"
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "Импортировать файлы"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -400,7 +401,7 @@ msgstr "Создать папку"
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
-msgstr ""
+msgstr "Добавить папку"
 
 #: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:768
 msgid "Add"
@@ -773,7 +774,7 @@ msgstr "Введите имя добавляемой папки"
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr ""
+msgstr "Состояние"
 
 #: ../../lib/frontends/widgets/widgetconst.py:58
 #: ../../lib/frontends/widgets/tabcontroller.py:517
@@ -784,32 +785,32 @@ msgstr "Название"
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
-msgstr ""
+msgstr "Исполнитель"
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
 #: ../../lib/frontends/widgets/itemedit.py:494
 msgid "Album"
-msgstr ""
+msgstr "Альбом"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 #: ../../lib/frontends/widgets/itemedit.py:497
 msgid "Track"
-msgstr ""
+msgstr "Трек"
 
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "Год"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495
 msgid "Genre"
-msgstr ""
+msgstr "Жанр"
 
 #: ../../lib/frontends/widgets/widgetconst.py:64
 #: ../../lib/frontends/widgets/itemedit.py:311
 msgid "Rating"
-msgstr ""
+msgstr "Оценка"
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
@@ -830,7 +831,7 @@ msgstr "Размер"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
-msgstr ""
+msgstr "Источник"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
@@ -838,7 +839,7 @@ msgstr "Осталось"
 
 #: ../../lib/frontends/widgets/widgetconst.py:71
 msgid "Torrent details"
-msgstr ""
+msgstr "Информация о торренте"
 
 #: ../../lib/frontends/widgets/widgetconst.py:72
 msgid "Speed"
@@ -846,15 +847,15 @@ msgstr "Скорость"
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
-msgstr ""
+msgstr "Дата добавления"
 
 #: ../../lib/frontends/widgets/widgetconst.py:74
 msgid "Last Played"
-msgstr ""
+msgstr "Последнее воспроизведение"
 
 #: ../../lib/frontends/widgets/widgetconst.py:75
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"
@@ -876,11 +877,11 @@ msgstr "Показать"
 #: ../../lib/frontends/widgets/widgetconst.py:79
 #: ../../lib/frontends/widgets/itemedit.py:552
 msgid "Video Kind"
-msgstr ""
+msgstr "Тип видео"
 
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Order"
-msgstr ""
+msgstr "Порядок"
 
 #: ../../lib/frontends/widgets/style.py:543
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1098
@@ -897,7 +898,7 @@ msgstr "приостановлен"
 
 #: ../../lib/frontends/widgets/style.py:553
 msgid "queued"
-msgstr ""
+msgstr "в очереди"
 
 #: ../../lib/frontends/widgets/style.py:561
 #: ../../lib/frontends/widgets/itemrenderer.py:111
@@ -943,8 +944,8 @@ msgstr "Скачать это видео"
 #: ../../lib/frontends/widgets/menus.py:275
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Удалить подкаст"
+msgstr[1] "Удалить подкасты"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
@@ -995,7 +996,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:116
 msgid "On"
-msgstr ""
+msgstr "Вкл."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:122
 #: ../../lib/frontends/widgets/prefpanel.py:514
@@ -1004,12 +1005,12 @@ msgstr "Отключено"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:148
 msgid "Get Help"
-msgstr ""
+msgstr "Получить Помощь"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:201
 #: ../../lib/frontends/widgets/tablist.py:858
 msgid "Connect"
-msgstr ""
+msgstr "Подключиться"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:229
 #, python-format
@@ -1096,7 +1097,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:919
 #: ../../lib/frontends/widgets/tablist.py:927
 msgid "Sources"
-msgstr ""
+msgstr "Источники"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:454
 #, python-format
@@ -1107,31 +1108,31 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:466
 msgid "URL"
-msgstr ""
+msgstr "URL-адрес"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:475
 #: ../../lib/frontends/widgets/application.py:727
 #: ../../lib/frontends/widgets/menus.py:259
 msgid "Add Source"
-msgstr ""
+msgstr "Добавить источник"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:502
 #: ../../lib/frontends/widgets/tablist.py:1098
 #: ../../lib/frontends/widgets/tablist.py:1104
 #: ../../lib/frontends/widgets/devicecontroller.py:580
 msgid "Playlists"
-msgstr ""
+msgstr "Списки воспроизведения"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:526
 msgid "Add Playlist"
-msgstr ""
+msgstr "Добавить плейлист"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:552
 #: ../../lib/frontends/widgets/tablist.py:982
 #: ../../lib/frontends/widgets/tablist.py:990
 #: ../../lib/frontends/widgets/prefpanel.py:1269
 msgid "Stores"
-msgstr ""
+msgstr "Магазины"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:568
 #, python-format
@@ -1151,7 +1152,7 @@ msgstr "Поиск видео"
 #: ../../lib/frontends/widgets/statictabs.py:120
 #: ../../lib/frontends/widgets/statictabs.py:126
 msgid "Videos"
-msgstr ""
+msgstr "Видео"
 
 #: ../../lib/frontends/widgets/statictabs.py:131
 #: ../../lib/frontends/widgets/statictabs.py:139
@@ -1159,13 +1160,13 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:852
 #: ../../lib/frontends/widgets/itemedit.py:513
 msgid "Music"
-msgstr ""
+msgstr "Музыка"
 
 #: ../../lib/frontends/widgets/statictabs.py:144
 #: ../../lib/frontends/widgets/statictabs.py:152
 #: ../../lib/frontends/widgets/itemedit.py:515
 msgid "Misc"
-msgstr ""
+msgstr "Разное"
 
 #: ../../lib/frontends/widgets/statictabs.py:157
 #: ../../lib/frontends/widgets/statictabs.py:162
@@ -1177,7 +1178,7 @@ msgstr "Загружается"
 #: ../../lib/frontends/widgets/statictabs.py:174
 #: ../../lib/frontends/widgets/itemrenderer.py:1373
 msgid "Converting"
-msgstr ""
+msgstr "Конвертируется"
 
 #: ../../lib/frontends/widgets/searchcontroller.py:75
 msgid "Use the search box above to search for videos on these sites"
@@ -1419,7 +1420,7 @@ msgstr "Смотреть"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "Pause"
-msgstr ""
+msgstr "Пауза"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:147
 #: ../../lib/frontends/widgets/itemrenderer.py:472
@@ -1628,8 +1629,9 @@ msgstr[2] "Выбрано каталогов со списками воспро�
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlists)"
-msgstr[0] ""
+msgstr[0] "(содержит %(count)d список)"
 msgstr[1] ""
+msgstr[2] "(содержит %(count)d списков)"
 
 #: ../../lib/frontends/widgets/displays.py:726
 #, python-format
@@ -1669,11 +1671,11 @@ msgstr "Адрес:"
 #: ../../lib/frontends/widgets/newfeed.py:96
 #: ../../lib/frontends/widgets/menus.py:256
 msgid "Add Podcast"
-msgstr ""
+msgstr "Добавить подкаст"
 
 #: ../../lib/frontends/widgets/newfeed.py:97
 msgid "Enter the URL of the podcast to add"
-msgstr ""
+msgstr "Для добавления подкаста введите его URL"
 
 #: ../../lib/frontends/widgets/newfeed.py:108
 msgid "Add Podcast - Invalid URL"

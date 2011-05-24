@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-03-31 02:10+0000\n"
-"Last-Translator: Geoffrey Lee <Unknown>\n"
+"PO-Revision-Date: 2011-05-24 16:49+0000\n"
+"Last-Translator: Hiroaki Hirose <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:33+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
 msgid "File not found"
-msgstr "ファイルが見つかりません"
+msgstr "ファイルが見つかりませんでした"
 
 #: ../../lib/downloader.py:336
 msgid "Flash URL Scraping Error"
@@ -56,7 +56,7 @@ msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:92
 msgid "Upgrading Database"
-msgstr ""
+msgstr "データベースを更新しています。"
 
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
@@ -165,7 +165,7 @@ msgstr ""
 
 #: ../../lib/httpclient.py:384
 msgid "Website"
-msgstr ""
+msgstr "ウェブサイト"
 
 #: ../../lib/httpclient.py:389
 msgid "Proxy"
@@ -823,7 +823,7 @@ msgstr "ソース"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
-msgstr "ETA"
+msgstr "残り時間"
 
 #: ../../lib/frontends/widgets/widgetconst.py:71
 msgid "Torrent details"

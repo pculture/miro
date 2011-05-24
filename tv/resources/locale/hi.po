@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2010-10-25 16:43+0000\n"
-"Last-Translator: Lokesh M. Tiwari <Unknown>\n"
+"PO-Revision-Date: 2011-05-24 13:09+0000\n"
+"Last-Translator: bhavana <Unknown>\n"
 "Language-Team: Hindi <hi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:32+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/messagehandler.py:1614
@@ -774,12 +774,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/tabcontroller.py:517
 #: ../../lib/frontends/widgets/itemedit.py:492
 msgid "Name"
-msgstr ""
+msgstr "नाम"
 
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
-msgstr ""
+msgstr "कलाकार"
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
 #: ../../lib/frontends/widgets/itemedit.py:494
@@ -794,7 +794,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "वर्ष"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495
@@ -808,20 +808,20 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
-msgstr ""
+msgstr "दिनांक"
 
 #: ../../lib/frontends/widgets/widgetconst.py:66
 msgid "Time"
-msgstr ""
+msgstr "समय"
 
 #: ../../lib/frontends/widgets/widgetconst.py:67
 msgid "Status"
-msgstr ""
+msgstr "स्थिति"
 
 #: ../../lib/frontends/widgets/widgetconst.py:68
 #: ../../lib/frontends/widgets/itemedit.py:517
 msgid "Size"
-msgstr ""
+msgstr "आकार"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
@@ -849,7 +849,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:75
 msgid "Description"
-msgstr ""
+msgstr "वर्णन"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"

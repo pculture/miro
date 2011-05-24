@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-02-21 17:04+0000\n"
-"Last-Translator: ಸುಭಾಸ್ ಭಟ್(Subhas Bhat) <Unknown>\n"
+"PO-Revision-Date: 2011-05-24 12:10+0000\n"
+"Last-Translator: bhavana <Unknown>\n"
 "Language-Team: Kannada <kn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:32+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -340,7 +340,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "ಕಡತಗಳ ಆಮದು"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -363,7 +363,7 @@ msgstr "ಡೌನ್‌ಲೋಡ್"
 
 #: ../../lib/dialogs.py:109
 msgid "Remove Entry"
-msgstr ""
+msgstr "ದಾಖಲೆ ತೆಗೆದುಹಾಕು"
 
 #: ../../lib/dialogs.py:110
 msgid "Delete File"
@@ -383,7 +383,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:114
 msgid "Create"
-msgstr ""
+msgstr "ಸೃಷ್ಟಿಸು"
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
@@ -437,7 +437,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:125
 msgid "Launch Miro"
-msgstr ""
+msgstr "ಮಿರೋ ಆರಂಭಿಸು"
 
 #: ../../lib/dialogs.py:126
 msgid "Download Anyway"
@@ -465,7 +465,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:132
 msgid "Start Fresh"
-msgstr ""
+msgstr "ಹೊಸದಾಗಿ ಆರಂಭಿಸು"
 
 #: ../../lib/dialogs.py:133
 msgid "Include Database"
@@ -760,13 +760,13 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr ""
+msgstr "ರಾಜ್ಯ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:58
 #: ../../lib/frontends/widgets/tabcontroller.py:517
 #: ../../lib/frontends/widgets/itemedit.py:492
 msgid "Name"
-msgstr ""
+msgstr "ಹೆಸರು"
 
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
@@ -786,7 +786,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "ವರ್ಷ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495
@@ -800,7 +800,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
-msgstr ""
+msgstr "ದಿನಾಂಕ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:66
 msgid "Time"
@@ -808,16 +808,16 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:67
 msgid "Status"
-msgstr ""
+msgstr "ಸ್ಥಿತಿ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:68
 #: ../../lib/frontends/widgets/itemedit.py:517
 msgid "Size"
-msgstr ""
+msgstr "ಗಾತ್ರ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
-msgstr ""
+msgstr "ಮೂಲ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
@@ -829,7 +829,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:72
 msgid "Speed"
-msgstr ""
+msgstr "ವೇಗ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
@@ -902,7 +902,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/feedcontroller.py:73
 #: ../../lib/frontends/widgets/sharingcontroller.py:73
 msgid "No Results"
-msgstr ""
+msgstr "ಫಲಿತಾಂಶ ಇಲ್ಲ"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1075
 #: ../../lib/frontends/widgets/application.py:832

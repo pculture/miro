@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-19 21:11+0000\n"
+"PO-Revision-Date: 2011-05-23 21:27+0000\n"
 "Last-Translator: MINJUNG KIM <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:34+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -2238,24 +2238,24 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1350
 msgid "Failed"
-msgstr ""
+msgstr "실패"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1351
 msgid "Troubleshoot"
-msgstr ""
+msgstr "문제를 해결합니다."
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1352
 msgid "Open Log"
-msgstr ""
+msgstr "로그 열기"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1357
 msgid "Completed"
-msgstr ""
+msgstr "완료"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1366
 #, python-format
 msgid "%(percent)i%% done"
-msgstr ""
+msgstr "%(percent)i%% 완료"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -2277,12 +2277,12 @@ msgstr[0] "%(count)d달 전에"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:93
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "자동 만기 항목:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:96
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr "%(expiration)s 봄 (기본값)"
+msgstr "%(expiration)s 시청함 (기본값)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 1 day ago"
@@ -2306,7 +2306,7 @@ msgstr "1달 전에 봄"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:138
 msgid "Outdated Podcast Items:"
-msgstr ""
+msgstr "오래된 팟캐스트 항목:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:140
 #, python-format
@@ -2339,11 +2339,11 @@ msgstr "모두 제거"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:183
 msgid "Old items have been removed."
-msgstr "오래 된 항목을 지웠습니다."
+msgstr "오래된 항목을 지웠습니다."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:194
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "다음 개수의 항목이 재생되지 않으면 자동 다운로드를 중지합니다:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "1 unplayed item"
@@ -2367,57 +2367,56 @@ msgstr "재생하지 않은 항목 15개"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:242
 msgid "Podcast Settings"
-msgstr ""
+msgstr "팟캐스트 설정"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:48
 msgid ""
 "Miro can watch a folder on your computer and show those media files in your "
 "library."
-msgstr ""
+msgstr "Miro는 당신의 컴퓨터에 있는 폴더를 보고, 당신의 라이브러리에 그 미디어 파일들을 보여줄 수 있습니다."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:70
 #: ../../lib/frontends/widgets/firsttimedialog.py:318
 msgid "Choose..."
-msgstr ""
+msgstr "선택..."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:75
 msgid "Directory:"
-msgstr ""
+msgstr "디렉토리:"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:82
 msgid "Show in my sidebar as a podcast"
-msgstr ""
+msgstr "사이드바에서 팟캐스트 보기"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:115
 msgid "Choose Watched Folder Directory"
-msgstr ""
+msgstr "시청한 폴더 디렉토리 선택"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:123
 msgid ""
 "That directory could not be found. Please check the path and try again."
-msgstr ""
+msgstr "디렉토리를 찾을 수 없습니다. 확인하시고 다시 시도해 주세요."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:125
 msgid ""
 "That directory could not be accessed. Please check the permissions and try "
 "again."
-msgstr ""
+msgstr "디렉토리에 접근할 수 없습니다. 허가를 확인하고 다시 시도해 주세요."
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:63
 msgid "Searching for files"
-msgstr ""
+msgstr "파일 찾는 중"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:145
 #: ../../lib/frontends/widgets/firsttimedialog.py:513
 msgid "Cancel Search"
-msgstr ""
+msgstr "검색 취소"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:231
 #, python-format
 msgid "Searched %(count)s file"
 msgid_plural "Searched %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s개 파일 검색 완료"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
 #: ../../lib/frontends/widgets/firsttimedialog.py:449
@@ -2447,11 +2446,11 @@ msgstr "새 재생 목록:"
 #: ../../lib/frontends/widgets/crashdialog.py:53
 #, python-format
 msgid "Oops!  %(appname)s has encountered an internal error"
-msgstr ""
+msgstr "이런! %(appname)s 내부 오류입니다."
 
 #: ../../lib/frontends/widgets/crashdialog.py:68
 msgid "You can help us fix this problem by submitting an error report."
-msgstr ""
+msgstr "오류 보고서를 제출하시면 이 문제를 고치도록 도울 수 있습니다."
 
 #: ../../lib/frontends/widgets/crashdialog.py:75
 msgid ""
@@ -2459,29 +2458,31 @@ msgid ""
 "uniquely identifable information including file names, website URLs, podcast "
 "URLs, and disk paths."
 msgstr ""
+"노트: 이 오류 보고서는 공개적으로 게재되지 않습니다. 그러나 파일 이름, 웹사이트 URL, 팟캐스트 URL, 디스크와 같은 특별히 확인 "
+"가능한 정보는 포함될 수도 있습니다."
 
 #: ../../lib/frontends/widgets/crashdialog.py:83
 msgid "See crash report"
-msgstr ""
+msgstr "충돌 보고서 보기"
 
 #: ../../lib/frontends/widgets/crashdialog.py:89
 msgid ""
 "Include entire program database including all filenames, websites, and "
 "podcasts with the error report."
-msgstr ""
+msgstr "오류 보고서와 함께 모든 파일 이름, 웹사이트, 팟캐스트를 포함하여 전체 프로그램 데이터베이스를 포함합니다."
 
 #: ../../lib/frontends/widgets/crashdialog.py:95
 msgid ""
 "What were you doing when you got this message?  (Helpful, but not required.)"
-msgstr ""
+msgstr "이 메시지를 받으셨을 때 무엇을 하고 계셨습니까? (도움이 되지만, 꼭 하실 필요는 없습니다.)"
 
 #: ../../lib/frontends/widgets/crashdialog.py:108
 msgid "Crash Report:"
-msgstr ""
+msgstr "충돌 보고서:"
 
 #: ../../lib/frontends/widgets/linkhandler.py:55
 msgid "Subscribe to Podcast"
-msgstr ""
+msgstr "팟캐스트 구독하기"
 
 #: ../../lib/frontends/widgets/linkhandler.py:57
 #, python-format
@@ -2491,148 +2492,149 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"이 링크는 팟캐스트인 것 같습니다. 이것을 구독하고 싶으십니까?\n"
+"%(url)s"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:123
 #: ../../lib/frontends/widgets/devicecontroller.py:175
 msgid "Sync Now"
-msgstr ""
+msgstr "지금 동기화하기"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:142
 #, python-format
 msgid "%(used)s used / %(total)s total - %(percent)i%% full"
-msgstr ""
+msgstr "%(used)s 사용됨 / %(total)s 전체 - %(percent)i%% 가득 참"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:159
 #, python-format
 msgid "1 file selected to sync"
 msgid_plural "%(count)i files selected to sync"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)i개 파일이 동기화 하기 위해 선택됨"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:165
 msgid "Up to date"
-msgstr ""
+msgstr "최신의"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:172
 msgid "In Progress"
-msgstr ""
+msgstr "진행 중"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:242
 #, python-format
 msgid "%(eta)s left"
-msgstr ""
+msgstr "%(eta)s 남음"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:245
 #, python-format
 msgid "%(percent)i%% percent complete"
-msgstr ""
+msgstr "%(percent)i%% 퍼센트 완료"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:261
 msgid "Sync These Podcasts"
-msgstr ""
+msgstr "이 팟캐스트 동기화"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:295
 msgid "Select none"
-msgstr ""
+msgstr "아무것도 선택하지 않음"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:298
 msgid "Select all"
-msgstr ""
+msgstr "모두 선택"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:399
 msgid "Sync Podcasts"
-msgstr ""
+msgstr "팟캐스트 동기화"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:402
 msgid "Only sync unplayed items"
-msgstr ""
+msgstr "재생하지 않은 항목만 동기화"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:431
 msgid "Sync These Playlists"
-msgstr ""
+msgstr "이 재생목록 동기화"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:432
 msgid "Sync Playlists"
-msgstr ""
+msgstr "재생목록 동기화"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:460
 #, python-format
 msgid "Device Default (%(audio)s)"
-msgstr ""
+msgstr "장치 기본값 (%(audio)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:463
 #, python-format
 msgid "Device Default (%(video)s)"
-msgstr ""
+msgstr "장치 기본값 (%(video)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:476
 msgid "Name of Device"
-msgstr ""
+msgstr "장치 이름"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:477
 msgid "Video Conversion"
-msgstr ""
+msgstr "동영상 변환"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:478
 msgid "Audio Conversion"
-msgstr ""
+msgstr "오디오 변환"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:479
 msgid "Store video in this directory"
-msgstr ""
+msgstr "이 디렉토리에 동영상 저장"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:480
 msgid "Store audio in this directory"
-msgstr ""
+msgstr "이 디렉토리에 오디오 저장"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:481
 msgid "Always show this device, even if 'show all devices' is turned off"
-msgstr ""
+msgstr "'모든 장치 보기'가 꺼져있어도 이 장치는 항상 보기"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:578
 msgid "Main"
-msgstr ""
+msgstr "Main"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:597
 msgid ""
 "Drag individual video and audio files onto the device in the sidebar to copy "
 "them."
-msgstr ""
+msgstr "각각의 비디오 오디오 파일을 복사하시려면 사이드바에 있는 장치로 끌어오세요."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:602
 msgid "Use these options and the tabs above for automatic syncing."
-msgstr ""
+msgstr "자동 동기화를 위해 이 옵셥과 탭을 사용"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:699
 msgid "Your device isn't telling us its exact model number."
-msgstr ""
+msgstr "당신의 장치의 정확한 모델 넘버를 알 수 없습니다."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:704
 msgid "For optimal video conversion, select the device model."
-msgstr ""
+msgstr "최적의 동영상 변환을 위해서 장치 모델을 선택하세요."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:720
 msgid ""
 "If you don't know the model or it doesn't appear in the list, it's fine to "
 "choose the 'Generic' device option."
-msgstr ""
+msgstr "만약 모델을 모르시거나, 그것이 목록에 나타나지 않으면, '일반' 장치 옵션을 선택하셔도 좋습니다."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:749
 msgid "This is my device"
-msgstr ""
+msgstr "이것은 내 장치입니다."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:757
 msgid "This device is not yet mounted."
-msgstr ""
+msgstr "이 장치는 아직 장착되지 않았습니다."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:261
 msgid "New Search Podcast"
-msgstr ""
+msgstr "새로운 검색 팟캐스트"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:60
 msgid "A search podcast contains items that match a search term."
-msgstr ""
+msgstr "검색 팟캐스트는 검색 단어와 일치하는 항목들을 포함합니다."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:92
 msgid "Search for:"
@@ -2644,7 +2646,7 @@ msgstr "위치:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:107
 msgid "Podcast:"
-msgstr ""
+msgstr "팟캐스트:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:114
 msgid "Search engine:"
@@ -2652,7 +2654,7 @@ msgstr "검색 엔진:"
 
 #: ../../lib/frontends/widgets/application.py:213
 msgid "Movies directory gone"
-msgstr "동영상 디렉터리가 사라졌습니다."
+msgstr "동영상 디렉토리가 사라졌습니다."
 
 #: ../../lib/frontends/widgets/application.py:215
 #, python-format
@@ -2668,6 +2670,14 @@ msgid ""
 "Miro will now exit. You can connect the drive or otherwise fix the problem "
 "and relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s는 다음에 위치한 기본 동영상 디렉토리를 사용할 수 없습니다.:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"그것은 연결되지 않은 외장 드라이브에 있거나, %(shortappname)s가 쓰기 허가를 받지 못한 디렉토리이거나, 디렉토리가 아닌 "
+"무언가가 있기 때문일지 모릅니다.\n"
+"Miro는 지금 종료됩니다. 당신은 드라이브를 연결할 수 있습니다. 그렇지 않으면 %(shortappname)s을 새로 실행해 문제를 "
+"해결하세요."
 
 #: ../../lib/frontends/widgets/application.py:406
 msgid "Error Revealing File"
@@ -2676,7 +2686,7 @@ msgstr "파일 보이기 오류"
 #: ../../lib/frontends/widgets/application.py:407
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "파일 %(filename)s은 %(appname)s 외부에서 삭제되었습니다."
 
 #: ../../lib/frontends/widgets/application.py:418
 msgid "Open Files..."
@@ -2743,8 +2753,7 @@ msgid ""
 msgid_plural ""
 "Some of these items were not downloaded from a podcast. Would you like to "
 "delete them or just remove them from the Library?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "이 항목들 중 하나는 팟캐스트에서 다운로드 되지 못했습니다. 그것을 삭제하거나 라이브러리에서 제거 하시겠습니까?"
 
 #: ../../lib/frontends/widgets/application.py:551
 msgid ""
@@ -2753,8 +2762,7 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting/Removing a folder will "
 "delete/remove it's contents"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "이 항목들 중 하나는 폴더입니다. 폴더를 삭제하면 내용이 모두 지워집니다."
 
 #: ../../lib/frontends/widgets/application.py:566
 #, python-format
@@ -2767,8 +2775,7 @@ msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "이 항목들 중 하나는 폴더입니다. 폴더를 삭제하면 내용이 모두 지워집니다."
 
 #: ../../lib/frontends/widgets/application.py:631
 msgid "Save Item As..."
@@ -2777,27 +2784,27 @@ msgstr "다른 이름으로 저장..."
 #: ../../lib/frontends/widgets/application.py:674
 #: ../../lib/frontends/widgets/firsttimedialog.py:326
 msgid "Choose directory to search for media files"
-msgstr "미디어 파일을 찾을 폴더 지정"
+msgstr "미디어 파일을 검색할 디렉토리 선택"
 
 #: ../../lib/frontends/widgets/application.py:687
 msgid "Choose files to import"
-msgstr ""
+msgstr "불러올 파일 선택"
 
 #: ../../lib/frontends/widgets/application.py:689
 msgid "Video Files"
-msgstr ""
+msgstr "동영상 파일"
 
 #: ../../lib/frontends/widgets/application.py:690
 msgid "Audio Files"
-msgstr ""
+msgstr "오디오 파일"
 
 #: ../../lib/frontends/widgets/application.py:728
 msgid "Enter the URL of the source to add"
-msgstr ""
+msgstr "추가할 소스의 URL 입력"
 
 #: ../../lib/frontends/widgets/application.py:729
 msgid "Add Source - Invalid URL"
-msgstr ""
+msgstr "소스 추가 - 잘못된 URL"
 
 #: ../../lib/frontends/widgets/application.py:730
 msgid ""
@@ -2806,10 +2813,14 @@ msgid ""
 "\n"
 "Enter the URL of the source to add"
 msgstr ""
+"입력하신 주소는 잘못된 URL 입니다.\n"
+"URL을 확인하시고 다시 시도해 주십시오.\n"
+"\n"
+"추가할 소스의 URL을 입력하세요."
 
 #: ../../lib/frontends/widgets/application.py:787
 msgid "Import OPML File"
-msgstr "OPML 가져오기"
+msgstr "OPML 파일 불러오기"
 
 #: ../../lib/frontends/widgets/application.py:789
 msgid "OPML Files"
@@ -2817,11 +2828,11 @@ msgstr "OPML 파일"
 
 #: ../../lib/frontends/widgets/application.py:796
 msgid "Import OPML File - Error"
-msgstr "OPML 파일 가져오기 - 오류"
+msgstr "OPML 파일 불러오기 - 오류"
 
 #: ../../lib/frontends/widgets/application.py:802
 msgid "Export OPML File"
-msgstr "OPML 파일 내보내기"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:854
 msgid "Create Playlist Folder"
@@ -2834,17 +2845,17 @@ msgstr "새 재생 목록 폴더 이름 입력"
 #: ../../lib/frontends/widgets/application.py:877
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
-msgstr ""
+msgstr "%(name)s 팟캐스트 폴더에 새 이름을 입력하십시오"
 
 #: ../../lib/frontends/widgets/application.py:881
 #: ../../lib/frontends/widgets/menus.py:270
 msgid "Rename Podcast"
-msgstr ""
+msgstr "팟캐스트 이름 바꾸기"
 
 #: ../../lib/frontends/widgets/application.py:882
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
-msgstr ""
+msgstr "%(name)s 팟캐스트에 새 이름을 입력하십시오"
 
 #: ../../lib/frontends/widgets/application.py:887
 #, python-format
@@ -2859,7 +2870,7 @@ msgstr "%(name)s 재생 목록 폴더의 새 이름을 입력하십시오"
 #: ../../lib/frontends/widgets/application.py:896
 #, python-format
 msgid "Enter a new name for the source %(name)s"
-msgstr ""
+msgstr "%(name)s 소스의 새 이름을 입력하십시오"
 
 #: ../../lib/frontends/widgets/application.py:915
 msgid "Remove playlist"
@@ -2875,32 +2886,30 @@ msgstr[0] "정말로 %(count)s개의 재생 목록을 제거하시겠습니까?"
 #: ../../lib/frontends/widgets/application.py:932
 msgid "Remove source"
 msgid_plural "Remove sources"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "소스 삭제"
 
 #: ../../lib/frontends/widgets/application.py:934
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "정말 이 %(count)s 소스를 삭제하려고 하십니까?"
 
 #: ../../lib/frontends/widgets/application.py:958
 #, python-format
 msgid "Import Music from %(media_player)s?"
-msgstr ""
+msgstr "%(media_player)s?로부터 음악 불러오기"
 
 #: ../../lib/frontends/widgets/application.py:959
 #, python-format
 msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
-msgstr ""
+msgstr "%(media_player)s를 설치하셨습니다. %(short_app_name)s가 음악을 불러올까요?"
 
 #: ../../lib/frontends/widgets/application.py:1001
 #: ../../lib/frontends/widgets/application.py:1025
 msgid "Select File to write Profile to"
-msgstr ""
+msgstr "프로필에 쓸 파일 선택하기"
 
 #: ../../lib/frontends/widgets/application.py:1086
 #: ../../lib/frontends/widgets/application.py:1105
@@ -2911,7 +2920,7 @@ msgstr "프로그램을 종료하시겠습니까?"
 #: ../../lib/frontends/widgets/application.py:1095
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
-msgstr ""
+msgstr "다른 사람이 내 미디어 라이브러리에 접속해있을 때 내가 종료하려고 하면 경고하기"
 
 #: ../../lib/frontends/widgets/application.py:1107
 #, python-format

@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:34+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -5479,3 +5479,135 @@ msgstr "Pop In"
 #~ "\n"
 #~ "Do you want to include entire program database including all video and feed "
 #~ "metadata with crash report? This will help us diagnose the issue."
+
+#~ msgid "Rename Item"
+#~ msgstr "Rename Item"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Add Site - Invalid URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "The address you entered is not a valid URL.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s can't find the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected.\n"
+#~ "\n"
+#~ "If you continue, the primary video directory will be reset to a location on "
+#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
+#~ "to lose details about those videos.\n"
+#~ "\n"
+#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
+#~ "relaunch %(shortappname)s."
+
+#, python-format
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d Site Selected"
+#~ msgstr[1] "%(count)d Sites Selected"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Enter the URL of the site to add"
+
+#~ msgid "Enter the new name for the item"
+#~ msgstr "Enter the new name for the item"
+
+#~ msgid "Add Site"
+#~ msgstr "Add Site"
+
+#~ msgid "Rename Site"
+#~ msgstr "Rename Site"
+
+#~ msgid "Revert Item Name"
+#~ msgstr "Revert Item Name"
+
+#, python-format
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Are you sure you want to remove this site?"
+#~ msgstr[1] "Are you sure you want to remove these %(count)s sites?"
+
+#~ msgid "FEEDS"
+#~ msgstr "FEEDS"
+
+#~ msgid "SITES"
+#~ msgstr "SITES"
+
+#~ msgid "Remove Site"
+#~ msgstr "Remove Site"
+
+#, python-format
+#~ msgid ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+#~ msgstr ""
+#~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+#~ "[OK]"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+#~ msgstr ""
+#~ "Not enough disk space to upgrade your database from the previous version of "
+#~ "%(appname)s.  Please delete some files and try again."
+
+#~ msgid "Insufficient disk space"
+#~ msgstr "Insufficient disk space"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Enter a new name for the site %(name)s"
+
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Remove site"
+#~ msgstr[1] "Remove sites"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Remove Sites"
+
+#~ msgid "_Paste"
+#~ msgstr "_Paste"
+
+#~ msgid "_Copy"
+#~ msgstr "_Copy"
+
+#~ msgid "Select _All"
+#~ msgstr "Select _All"
+
+#~ msgid "Cu_t"
+#~ msgstr "Cu_t"
+
+#~ msgid "_Options"
+#~ msgstr "_Options"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Re_name Item"

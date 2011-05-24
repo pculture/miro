@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-22 02:35+0000\n"
+"PO-Revision-Date: 2011-05-23 12:11+0000\n"
 "Last-Translator: Rise-T <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:33+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -388,7 +388,7 @@ msgstr "Nicht übertragen"
 #: ../../lib/frontends/widgets/itemrenderer.py:102
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1961
 msgid "Download"
-msgstr "Download"
+msgstr "Herunterladen"
 
 #: ../../lib/dialogs.py:109
 msgid "Remove Entry"
@@ -992,7 +992,7 @@ msgid ""
 "completely in the %(appname)s preference panel."
 msgstr ""
 "Beobachtete Verzeichnisse werden aus der Seitenleiste entfernt, aber ihr "
-"Inhalt wird in der Bibliothek behalten. Sie können die Beobachtung dieser "
+"Inhalt wird in der Mediathek behalten. Sie können die Beobachtung dieser "
 "Verzeichnisse in den Einstellungen zu %(appname)s vollständig abschalten."
 
 #: ../../lib/frontends/widgets/removefeeds.py:105
@@ -1025,7 +1025,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:69
 msgid "Click here to install"
-msgstr "Hier klicken, um zu installieren"
+msgstr "Zur Installation bitte hier klicken"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:116
 msgid "On"
@@ -1086,7 +1086,7 @@ msgstr "Mein %(shortappname)s Freigabename"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:309
 msgid "Sync a Phone, Tablet, or Digital Camera"
-msgstr "Ein Handy, ein Tablet oder eine Digitalkamera synchronisieren."
+msgstr "Synchronisieren Sie Mobiltelefone, Tablets, oder Digitalkameras"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:318
 #, python-format
@@ -1175,7 +1175,7 @@ msgstr "Quelle hinzufügen"
 #: ../../lib/frontends/widgets/tablist.py:1104
 #: ../../lib/frontends/widgets/devicecontroller.py:580
 msgid "Playlists"
-msgstr "Abspiellisten"
+msgstr "Wiedergabelisten"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:526
 msgid "Add Playlist"
@@ -1345,7 +1345,7 @@ msgstr "Danke an alle, die bei der Miro %(version)s mitgeholfen haben:"
 #: ../../lib/frontends/widgets/gtk/window.py:982
 msgid "To help fund continued Miro development, visit the donation page at:"
 msgstr ""
-"Besuchen Sie folgende Adresse im Internet, um durch eine Spende bei der "
+"Besuchen Sie folgende Internetadresse, um durch eine Spende bei der "
 "Entwicklungsfinanzierung von Miro mitzuhelfen:"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:165
@@ -1471,7 +1471,7 @@ msgstr "Konvertieren zu..."
 #: ../../lib/frontends/widgets/menus.py:321
 #: ../../linux/extensions/miroappindicator/main.py:55
 msgid "Play"
-msgstr "Abspielen"
+msgstr "Wiedergabe"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/menus.py:322
@@ -1932,11 +1932,11 @@ msgstr "(zusätzlich zu den aktuellen Inhalten)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:564
 msgid "Maximum number of manual downloads at a time:"
-msgstr "Maximale Anzahl gleichzeitiger manueller Downloads:"
+msgstr "Maximale Anzahl paralleler manueller Downloads:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:576
 msgid "Maximum number of auto-downloads at a time:"
-msgstr "Maximale Anzahl gleichzeitiger automatischer Downloads:"
+msgstr "Maximale Anzahl paralleler automatischer Downloads:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:590
 msgid "Bittorrent:"
@@ -2685,11 +2685,11 @@ msgstr "Nur ungespielte Dateien synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:431
 msgid "Sync These Playlists"
-msgstr "Diese Abspiellisten synchronisieren"
+msgstr "Diese Wiedergabelisten synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:432
 msgid "Sync Playlists"
-msgstr "Abspiellisten synchronisieren"
+msgstr "Wiedergabelisten synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:460
 #, python-format
@@ -3211,7 +3211,7 @@ msgstr "%(appname)s Setup"
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
-"Willkommen zu %(name)s! Wir haben ein paar Fragen um Ihnen den Einstieg zu "
+"Willkommen bei %(name)s! Wir haben ein paar Fragen um Ihnen den Einstieg zu "
 "erleichtern."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
@@ -3538,7 +3538,7 @@ msgstr "Elemente _speichern als"
 
 #: ../../lib/frontends/widgets/menus.py:246
 msgid "Copy Item _URL"
-msgstr "Objekt _URL kopieren"
+msgstr "Element _URL kopieren"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "Check Version"

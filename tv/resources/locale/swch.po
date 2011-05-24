@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.pculture.org/\n"
-"POT-Creation-Date: 2011-05-22 11:41-0400\n"
+"POT-Creation-Date: 2011-05-24 15:18-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr "nu cunnecshun - retryeeng suun bork!"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/httpclient.py:218 ../../lib/httpclient.py:750
-#: ../../lib/sharing.py:179
+#: ../../lib/sharing.py:187
 msgid "Unknown"
 msgstr "Oonknoon bork!"
 
@@ -370,9 +370,9 @@ msgid "Don't Migrate"
 msgstr "Dun't Meegrate bork!"
 
 #: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:216
-#: ../../lib/frontends/widgets/itemcontextmenu.py:398
+#: ../../lib/frontends/widgets/itemcontextmenu.py:396
 #: ../../lib/frontends/widgets/itemrenderer.py:102
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1961
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1968
 msgid "Download"
 msgstr "Doonluad bork!"
 
@@ -420,7 +420,7 @@ msgstr "Edd bork!"
 msgid "Add Into New Folder"
 msgstr "Edd Intu Noo Fulder bork!"
 
-#: ../../lib/dialogs.py:120 ../../lib/frontends/widgets/itemcontextmenu.py:383
+#: ../../lib/dialogs.py:120 ../../lib/frontends/widgets/itemcontextmenu.py:381
 #: ../../osx/plat/frontends/widgets/overlay.py:132
 msgid "Keep"
 msgstr "Keep bork!"
@@ -875,7 +875,7 @@ msgstr "Feele-a Type bork!"
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/diagnostics.py:80
 #: ../../lib/frontends/widgets/itemedit.py:544
-#: ../../lib/frontends/widgets/itemedit.py:556 ../../lib/messages.py:1274
+#: ../../lib/frontends/widgets/itemedit.py:556 ../../lib/messages.py:1275
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:138
 msgid "Show"
 msgstr "Shoo bork!"
@@ -889,7 +889,7 @@ msgstr "Feedeu Keend bork!"
 msgid "Order"
 msgstr "Order bork!"
 
-#: ../../lib/frontends/widgets/style.py:543
+#: ../../lib/frontends/widgets/style.py:547
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1099
 #: ../../lib/frontends/widgets/itemrenderer.py:109
 #: ../../lib/frontends/widgets/itemlistwidgets.py:757
@@ -898,15 +898,15 @@ msgstr "Order bork!"
 msgid "Unplayed"
 msgstr "Oonplayed bork!"
 
-#: ../../lib/frontends/widgets/style.py:551
+#: ../../lib/frontends/widgets/style.py:555
 msgid "paused"
 msgstr "poosed bork!"
 
-#: ../../lib/frontends/widgets/style.py:553
+#: ../../lib/frontends/widgets/style.py:557
 msgid "queued"
 msgstr "qooeooed bork!"
 
-#: ../../lib/frontends/widgets/style.py:561
+#: ../../lib/frontends/widgets/style.py:565
 #: ../../lib/frontends/widgets/itemrenderer.py:111
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1118
 msgid "Newly Available"
@@ -1328,23 +1328,23 @@ msgstr ""
 "Tu help ffoond cunteenooed Muru develupment, veeseet the-a dunashun page-a "
 "at: bork!"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:165
-#: ../../lib/frontends/widgets/feedcontroller.py:192
+#: ../../lib/frontends/widgets/feedcontroller.py:161
+#: ../../lib/frontends/widgets/feedcontroller.py:188
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
 msgstr[0] "%(count)d Doonluadeeng bork!"
 msgstr[1] "%(count)d Doonluadeeng bork!"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:176
-#: ../../lib/frontends/widgets/feedcontroller.py:188
+#: ../../lib/frontends/widgets/feedcontroller.py:172
+#: ../../lib/frontends/widgets/feedcontroller.py:184
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
 msgstr[0] "%(count)d Items bork!"
 msgstr[1] "%(count)d Item bork!"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:197
+#: ../../lib/frontends/widgets/feedcontroller.py:193
 #, python-format
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
@@ -1355,7 +1355,7 @@ msgstr[1] ""
 "%(count)d Doonluad Qooeooed Dooe-a Tu Oonplayed Items (See-a Setteengs) "
 "bork!"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:210
+#: ../../lib/frontends/widgets/feedcontroller.py:206
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
@@ -1440,13 +1440,13 @@ msgid "Convert to %(conversion)s"
 msgstr "Cunvert tu %(conversion)s bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
-#: ../../lib/frontends/widgets/itemcontextmenu.py:387
+#: ../../lib/frontends/widgets/itemcontextmenu.py:385
 msgid "Convert to..."
 msgstr "Cunvert tu... bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:141
 #: ../../lib/frontends/widgets/itemcontextmenu.py:230
-#: ../../lib/frontends/widgets/itemcontextmenu.py:373
+#: ../../lib/frontends/widgets/itemcontextmenu.py:371
 #: ../../lib/frontends/widgets/menus.py:319
 #: ../../lib/frontends/widgets/menus.py:321
 #: ../../linux/extensions/miroappindicator/main.py:55
@@ -1465,12 +1465,12 @@ msgid "Resume at %(resumetime)s"
 msgstr "Resoome-a at %(resumetime)s bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:153
-#: ../../lib/frontends/widgets/itemcontextmenu.py:379
+#: ../../lib/frontends/widgets/itemcontextmenu.py:377
 msgid "Mark as Unplayed"
 msgstr "Merk as Oonplayed bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:156
-#: ../../lib/frontends/widgets/itemcontextmenu.py:381
+#: ../../lib/frontends/widgets/itemcontextmenu.py:379
 msgid "Mark as Played"
 msgstr "Merk as Played bork!"
 
@@ -1487,24 +1487,24 @@ msgid "Resume Seeding"
 msgstr "Resoome-a Seedeeng bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:189
-#: ../../lib/frontends/widgets/itemcontextmenu.py:375
+#: ../../lib/frontends/widgets/itemcontextmenu.py:373
 msgid "Add to Playlist"
 msgstr "Edd tu Playleest bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:200
 #: ../../lib/frontends/widgets/itemcontextmenu.py:221
-#: ../../lib/frontends/widgets/itemcontextmenu.py:408
-#: ../../lib/frontends/widgets/itemcontextmenu.py:420
+#: ../../lib/frontends/widgets/itemcontextmenu.py:406
+#: ../../lib/frontends/widgets/itemcontextmenu.py:418
 msgid "Cancel Download"
 msgstr "Cuncel Doonluad bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:204
-#: ../../lib/frontends/widgets/itemcontextmenu.py:409
+#: ../../lib/frontends/widgets/itemcontextmenu.py:407
 msgid "Pause Download"
 msgstr "Poose-a Doonluad bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:208
-#: ../../lib/frontends/widgets/itemcontextmenu.py:419
+#: ../../lib/frontends/widgets/itemcontextmenu.py:417
 msgid "Resume Download"
 msgstr "Resoome-a Doonluad bork!"
 
@@ -1533,56 +1533,56 @@ msgstr "Feeoo Web Page bork!"
 msgid "Share"
 msgstr "Shere bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:361
+#: ../../lib/frontends/widgets/itemcontextmenu.py:359
 #, python-format
 msgid "%(count)d Device Item"
 msgid_plural "%(count)d Device Items"
 msgstr[0] "%(count)d Defeece-a Items bork!"
 msgstr[1] "%(count)d Defeece-a Item bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:367
+#: ../../lib/frontends/widgets/itemcontextmenu.py:365
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
 msgstr[0] "%(count)d Doonluaded Items bork!"
 msgstr[1] "%(count)d Doonluaded Item bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:393
+#: ../../lib/frontends/widgets/itemcontextmenu.py:391
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
 msgstr[0] "%(count)d Evaeelable-a Items bork!"
 msgstr[1] "%(count)d Evaeelable-a Item bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:403
+#: ../../lib/frontends/widgets/itemcontextmenu.py:401
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
 msgstr[0] "%(count)d Doonluadeeng Items bork!"
 msgstr[1] "%(count)d Doonluadeeng Item bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:414
+#: ../../lib/frontends/widgets/itemcontextmenu.py:412
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
 msgstr[0] "%(count)d Poosed Items bork!"
 msgstr[1] "%(count)d Poosed Item bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:423
+#: ../../lib/frontends/widgets/itemcontextmenu.py:421
 msgid "Restart Upload"
 msgstr "Restert Oopluad bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:426
+#: ../../lib/frontends/widgets/itemcontextmenu.py:424
 msgid "Edit Items"
 msgstr "Edeet Items bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:441
-#: ../../lib/frontends/widgets/itemlistwidgets.py:650
+#: ../../lib/frontends/widgets/itemcontextmenu.py:439
+#: ../../lib/frontends/widgets/itemlistwidgets.py:653
 #: ../../lib/frontends/widgets/menus.py:410
 msgid "Show Conversion Folder"
 msgstr "Shoo Cunverseeun Fulder bork!"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:455
+#: ../../lib/frontends/widgets/itemcontextmenu.py:453
 msgid "Remove From Playlist"
 msgstr "Remuve-a Frum Playleest bork!"
 
@@ -1776,7 +1776,7 @@ msgstr "Refert Pudcast Name bork!"
 #: ../../lib/frontends/widgets/tablist.py:1085
 #: ../../lib/frontends/widgets/devicecontroller.py:581
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1366
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1435
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1436
 msgid "Settings"
 msgstr "Setteengs bork!"
 
@@ -3276,19 +3276,19 @@ msgstr "%(item)s bork!"
 msgid "Resume"
 msgstr "Resoome bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:625
+#: ../../lib/frontends/widgets/itemlistwidgets.py:628
 msgid "Back to podcast"
 msgstr "Beck tu pudcast bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:645
+#: ../../lib/frontends/widgets/itemlistwidgets.py:648
 msgid "Stop All Conversions"
 msgstr "Stup All Cunverseeuns bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:655
+#: ../../lib/frontends/widgets/itemlistwidgets.py:658
 msgid "Clear Finished Conversions"
 msgstr "Cleer Feeneeshed Cunverseeuns bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:720
+#: ../../lib/frontends/widgets/itemlistwidgets.py:723
 #: ../../lib/frontends/widgets/itemlistwidgets.py:897
 msgid "Save as Podcast"
 msgstr "Seve-a as Pudcast bork!"
@@ -3370,73 +3370,73 @@ msgstr "Cuncel All bork!"
 msgid "Download Settings"
 msgstr "Doonluad Setteengs bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1440
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1441
 msgid "Auto-Download All"
 msgstr "Ootu-Doonluad All bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1441
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1442
 msgid "Auto-Download New"
 msgstr "Ootu-Doonluad Noo bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1442
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1443
 msgid "Auto-Download Off"
 msgstr "Ootu-Doonluad Offff bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1450
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1451
 msgid "Remove podcast"
 msgstr "Remuve-a pudcast bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1800
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1807
 msgid "Importing audio details and artwork: {0} of {1}"
 msgstr "Impurteeng aoodeeu detaeels and artwurk: {0} uff {1} bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1803
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1810
 msgid "Importing video details and creating thumbnails: {0} of {1}"
 msgstr ""
 "Impurteeng veedeu detaeels and createeng thoombnaeels: {0} uff {1} bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1806
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1813
 msgid "Importing file details: {0} of {1}"
 msgstr "Impurteeng ffeele-a detaeels: {0} uff {1} bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1960
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1967
 msgid "Remaining"
 msgstr "Remeeeneeng bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1962
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1969
 msgid "Upload"
 msgstr "Oopluad bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1963
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1964
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1970
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1971
 msgid "Total"
 msgstr "Tutal bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2008
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2015
 msgid "Connected Peers"
 msgstr "Cunnected Peers bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2009
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2016
 msgid "Seeders"
 msgstr "Seeders bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2010
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2017
 msgid "Leechers"
 msgstr "Leechers bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2011
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2018
 msgid "Share Ratio"
 msgstr "Shere-a Rateeu bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2195
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2202
 msgid "View License"
 msgstr "Feeoo Leecense bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2216
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2223
 msgid "Select an item to view more of its details"
 msgstr "Select un eetem tu veeoo mure-a uff eets detaeels bork!"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2269
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2276
 msgid "DRM Locked"
 msgstr "DRM Lucked bork!"
 
@@ -3762,15 +3762,15 @@ msgstr "Seesun Noomber bork!"
 msgid "Episode Number"
 msgstr "Epeesude-a Noomber bork!"
 
-#: ../../lib/frontends/widgets/itemedit.py:555 ../../lib/messages.py:1272
+#: ../../lib/frontends/widgets/itemedit.py:555 ../../lib/messages.py:1273
 msgid "Movie"
 msgstr "Muveee bork!"
 
-#: ../../lib/frontends/widgets/itemedit.py:557 ../../lib/messages.py:1276
+#: ../../lib/frontends/widgets/itemedit.py:557 ../../lib/messages.py:1277
 msgid "Clip"
 msgstr "Cleep bork!"
 
-#: ../../lib/frontends/widgets/itemedit.py:558 ../../lib/messages.py:1278
+#: ../../lib/frontends/widgets/itemedit.py:558 ../../lib/messages.py:1279
 msgid "Podcast"
 msgstr "Pudcast bork!"
 
@@ -3793,11 +3793,11 @@ msgstr ""
 "Tu change-a a ffeeeld ffur all the-a selected eetems, check the-a checkbux "
 "next tu the-a ffeeeld yuoo'd leeke-a tu change-a. bork!"
 
-#: ../../lib/messages.py:1269 ../../lib/sharing.py:242
+#: ../../lib/messages.py:1270 ../../lib/sharing.py:250
 msgid "Locked"
 msgstr "Lucked bork!"
 
-#: ../../lib/messages.py:1297
+#: ../../lib/messages.py:1298
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s"
@@ -3807,19 +3807,19 @@ msgstr ""
 "%(up_total)s  |  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: "
 "%(reteeu).2ff bork!"
 
-#: ../../lib/messages.py:1351 ../../lib/item.py:1297
+#: ../../lib/messages.py:1352 ../../lib/item.py:1297
 msgid "queued for download"
 msgstr "qooeooed ffur doonluad bork!"
 
-#: ../../lib/messagehandler.py:1590
+#: ../../lib/messagehandler.py:1593
 msgid "Subscribed to new podcast:"
 msgstr "Soobscreebed tu noo pudcast: bork!"
 
-#: ../../lib/messagehandler.py:1593
+#: ../../lib/messagehandler.py:1596
 msgid "Subscribed to new podcasts:"
 msgstr "Soobscreebed tu noo pudcasts: bork!"
 
-#: ../../lib/messagehandler.py:1614
+#: ../../lib/messagehandler.py:1617
 msgid "Migrating Files"
 msgstr "Meegrateeng Feeles bork!"
 
@@ -4467,11 +4467,11 @@ msgstr ""
 "\n"
 "Yuoo shuoold qooeet %(appname)s noo and start eet oop agaeen affter Adube-a Flash has been eenstalled. bork!"
 
-#: ../../windows/plat/frontends/widgets/application.py:194
+#: ../../windows/plat/frontends/widgets/application.py:205
 msgid "Close to tray?"
 msgstr "Cluse-a tu tray? bork!"
 
-#: ../../windows/plat/frontends/widgets/application.py:195
+#: ../../windows/plat/frontends/widgets/application.py:206
 #, python-format
 msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
@@ -4481,19 +4481,19 @@ msgstr ""
 "tu cluse-a tu the-a system tray ur qooeet?  Yuoo can change-a thees setteeng"
 " later een the-a Opshuns. bork!"
 
-#: ../../windows/plat/frontends/widgets/application.py:260
+#: ../../windows/plat/frontends/widgets/application.py:271
 msgid "Error Bombing Item"
 msgstr "Errur Bumbeeng Item bork!"
 
-#: ../../windows/plat/frontends/widgets/application.py:262
+#: ../../windows/plat/frontends/widgets/application.py:273
 msgid "Error Recommending Item"
 msgstr "Errur Recummendeeng Item bork!"
 
-#: ../../windows/plat/frontends/widgets/application.py:264
+#: ../../windows/plat/frontends/widgets/application.py:275
 msgid "Error Opening Website"
 msgstr "Errur Openeeng Webseete bork!"
 
-#: ../../windows/plat/frontends/widgets/application.py:269
+#: ../../windows/plat/frontends/widgets/application.py:280
 #, python-format
 msgid "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""

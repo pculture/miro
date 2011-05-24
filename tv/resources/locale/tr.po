@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2010-11-08 02:42+0000\n"
-"Last-Translator: muratcevikgs@gmail.com <Unknown>\n"
+"PO-Revision-Date: 2011-05-23 19:38+0000\n"
+"Last-Translator: Said Tahsin Dane <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-05-22 15:33+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
 "X-Generator: Launchpad (build 13085)\n"
 
 #: ../../lib/frontends/widgets/menus.py:318
@@ -38,7 +38,7 @@ msgstr "başlatılıyor"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "bağlantı yok - %(time) saniıye sonra tekrar denenecek"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
@@ -65,7 +65,7 @@ msgstr "Veritabanını Yükselt"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Hazırlanıyor"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -79,12 +79,12 @@ msgstr "%(host)s Bağlantı kapatıldı"
 #: ../../lib/httpclient.py:111
 #, python-format
 msgid "%(host)s gave us an empty response"
-msgstr ""
+msgstr "%(host)s 'dan bos bir mesaj geldi."
 
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Sunucudan gelen: %(status)s"
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
@@ -124,7 +124,7 @@ msgstr "Yetkilendirme iptal"
 
 #: ../../lib/httpclient.py:155
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Kullanıcı tarafından iptal edildi"
 
 #: ../../lib/httpclient.py:159
 msgid "Invalid URL"
@@ -137,7 +137,7 @@ msgstr "\"%(url)s\" geçerli bir bağlantı adresi değil"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Bilinmeyen sunucu"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -208,7 +208,7 @@ msgstr ""
 
 #: ../../lib/devices.py:364
 msgid "USB Device"
-msgstr ""
+msgstr "USB Aygıtı"
 
 #: ../../lib/startup.py:134
 msgid "Database Error"
@@ -282,7 +282,7 @@ msgstr "Seçilen OPML dosyası geçersiz gözüküyor. İçeri aktarım kesildi.
 
 #: ../../lib/opml.py:234
 msgid "The selected OPML file could not be read.  Import was interrupted."
-msgstr ""
+msgstr "Seçilen OPML dosyası okunamıyor. İçe aktarım engellendi."
 
 #: ../../lib/opml.py:242
 msgid "OPML Import summary"
@@ -292,19 +292,17 @@ msgstr "OPML İçe Aktarım özeti"
 #, python-format
 msgid "Successfully imported %(count)d podcast."
 msgid_plural "Successfully imported %(count)d podcasts."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d tane podcast içe aktarıldı."
 
 #: ../../lib/opml.py:249
 #, python-format
 msgid "Skipped %(count)d podcast already present."
 msgid_plural "Skipped %(count)d podcasts already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d tane podcast zaten var."
 
 #: ../../lib/dialogs.py:94
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
@@ -348,7 +346,7 @@ msgstr "Önemseme"
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "Dosyaları İçeri Aktar"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -395,7 +393,7 @@ msgstr "Oluştur"
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
-msgstr ""
+msgstr "Podcast Oluştur"
 
 #: ../../lib/dialogs.py:116
 msgid "Create Folder"
@@ -403,7 +401,7 @@ msgstr "Klasör Oluştur"
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
-msgstr ""
+msgstr "Klasör Ekle"
 
 #: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:768
 msgid "Add"
@@ -500,7 +498,7 @@ msgstr "Geçersiz içerik-tür"
 #: ../../lib/feed.py:1007
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
-msgstr ""
+msgstr "Podcast %(appname)s ile uyumlu değil"
 
 #: ../../lib/feed.py:1010
 #, python-format
@@ -547,7 +545,7 @@ msgstr "Hata"
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Filmler klasörüne taşırken hata oluştu"
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
 msgid "Not enough disk space"
@@ -572,11 +570,11 @@ msgstr "BitTorrent başlarken hata verdi"
 
 #: ../../lib/dl_daemon/download.py:1239
 msgid "waiting to check existing files"
-msgstr ""
+msgstr "Varolan dosyaları kontrol etmek için bekleniyor"
 
 #: ../../lib/dl_daemon/download.py:1241
 msgid "checking existing files"
-msgstr ""
+msgstr "Varolan dosyalar kontrol ediliyor"
 
 #: ../../lib/dl_daemon/download.py:1243
 msgid "allocating disk space"
@@ -624,22 +622,19 @@ msgstr "%(size)s B/s"
 #, python-format
 msgid "%(num)d day"
 msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d gün"
 
 #: ../../lib/displaytext.py:100
 #, python-format
 msgid "%(num)d hr"
 msgid_plural "%(num)d hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d saat"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(num)d min"
 msgid_plural "%(num)d mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d dak"
 
 #: ../../lib/displaytext.py:109
 #, python-format
@@ -755,7 +750,7 @@ msgstr "Klasör Adı:"
 
 #: ../../lib/frontends/widgets/newfolder.py:87
 msgid "Create Podcast Folder"
-msgstr ""
+msgstr "Podcast Klasörü Oluştur"
 
 #: ../../lib/frontends/widgets/newfolder.py:88
 msgid "Enter the name of the folder to add"
@@ -763,7 +758,7 @@ msgstr "Eklenecek klasörün adını giriniz"
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr ""
+msgstr "Durum"
 
 #: ../../lib/frontends/widgets/widgetconst.py:58
 #: ../../lib/frontends/widgets/tabcontroller.py:517
@@ -774,32 +769,32 @@ msgstr "İsim"
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
-msgstr ""
+msgstr "Sanatçı"
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
 #: ../../lib/frontends/widgets/itemedit.py:494
 msgid "Album"
-msgstr ""
+msgstr "Albüm"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 #: ../../lib/frontends/widgets/itemedit.py:497
 msgid "Track"
-msgstr ""
+msgstr "Parça"
 
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "Yıl"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495
 msgid "Genre"
-msgstr ""
+msgstr "Tür"
 
 #: ../../lib/frontends/widgets/widgetconst.py:64
 #: ../../lib/frontends/widgets/itemedit.py:311
 msgid "Rating"
-msgstr ""
+msgstr "Derecelendirme"
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
@@ -820,7 +815,7 @@ msgstr "Boyut"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
-msgstr ""
+msgstr "Kaynak"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
@@ -828,7 +823,7 @@ msgstr "Kalan Süre"
 
 #: ../../lib/frontends/widgets/widgetconst.py:71
 msgid "Torrent details"
-msgstr ""
+msgstr "Torrent ayrıntıları"
 
 #: ../../lib/frontends/widgets/widgetconst.py:72
 msgid "Speed"
@@ -836,19 +831,19 @@ msgstr "Hız"
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
-msgstr ""
+msgstr "Eklendiği Tarih"
 
 #: ../../lib/frontends/widgets/widgetconst.py:74
 msgid "Last Played"
-msgstr ""
+msgstr "Son Çalınma"
 
 #: ../../lib/frontends/widgets/widgetconst.py:75
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"
-msgstr ""
+msgstr "DRM"
 
 #: ../../lib/frontends/widgets/widgetconst.py:77
 msgid "File Type"
@@ -866,11 +861,11 @@ msgstr "Göster"
 #: ../../lib/frontends/widgets/widgetconst.py:79
 #: ../../lib/frontends/widgets/itemedit.py:552
 msgid "Video Kind"
-msgstr ""
+msgstr "Video Türü"
 
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Order"
-msgstr ""
+msgstr "Sipariş"
 
 #: ../../lib/frontends/widgets/style.py:543
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1098
@@ -887,7 +882,7 @@ msgstr "Duraklatıldı"
 
 #: ../../lib/frontends/widgets/style.py:553
 msgid "queued"
-msgstr ""
+msgstr "kuyruğa eklendi"
 
 #: ../../lib/frontends/widgets/style.py:561
 #: ../../lib/frontends/widgets/itemrenderer.py:111
