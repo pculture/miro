@@ -467,8 +467,8 @@ class StatusRenderer(ListViewRenderer):
     def layout_all(self, layout_manager, width, height, selected):
         # add the button, if needed
         if self.should_show_download_button():
-            layout = cellpack.Layout()
-
+            layout = self.layout_text(layout_manager, width, height)
+            
             button = self.make_button(layout_manager)
             button_x = width - button.get_size()[0]
             layout.add_image(button, button_x, 0, hotspot='download')
@@ -557,7 +557,7 @@ class StatusRenderer(ListViewRenderer):
                 return (_('queued'), DOWNLOADING_COLOR)
             elif self.info.download_info.state == 'failed':
                 return (self.info.download_info.short_reason_failed,
-                        DOWNLOADING_COLOR)
+                        ERROR_COLOR)
             else:
                 return (self.info.download_info.startup_activity,
                         DOWNLOADING_COLOR)
