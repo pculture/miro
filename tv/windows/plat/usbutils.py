@@ -35,6 +35,9 @@ import os
 
 LOTS_OF_DEBUGGING = False
 
+if LOTS_OF_DEBUGGING:
+    logging.getLogger().setLevel(logging.DEBUG)
+
 def warn(what, code, message):
     logging.warn('error doing %s (%d): %s', what, code, message)
 
@@ -195,7 +198,6 @@ def read_write_drive(mount):
     """
     Checks if the given mount path is read write.
     """
-    old_val = kernel32.SetErrorMode(1)
     try:
         if not os.path.exists(mount):
             return False
@@ -204,10 +206,10 @@ def read_write_drive(mount):
             return True
         os.mkdir(path_to_check)
         return True
-    except OSError:
+    except EnvironmentError:
+        if LOTS_OF_DEBUGGING:
+            logging.exception('error in read_write_drive(%r)', mount)
         return False
-    finally:
-        kernel32.SetErrorMode(0)
 
 def get_device_number(handle_or_path):
     opened_handle = False
@@ -286,6 +288,7 @@ def connected_devices():
 STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
 001372982D6AEAC18576014E&0#{53F56307-B6BF-11D0-94F2-00A0C91EFB8B}"""
             reg_key = '\\'.join(device_id.split('_??_')[1].split('#')[:3])
+            logging.debug('reg key from device_id: %r', reg_key)
         else:
             deviceParent = get_parent(device.DevInst)
             reg_key = get_device_id(deviceParent)
@@ -296,10 +299,12 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
                 continue
         reg_key = reg_key.replace('-', '_')
         volume_name = get_volume_name(path + '\\')
+        if LOTS_OF_DEBUGGING:
+            logging.debug('volume name: %r', volume_name)
         drive_name = get_path_name(volume_name)
         if LOTS_OF_DEBUGGING:
-            logging.debug('volume/drive name: %r/%r',
-                          volume_name, drive_name)
+            logging.debug('drive name: %r (%s)', drive_name,
+                          read_write_drive(drive_name))
         friendly_name = None
         try:
             with _winreg.OpenKey(
@@ -312,6 +317,8 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
                         name, value, type_ = _winreg.EnumValue(k, index)
                     except WindowsError:
                         break
+                    if LOTS_OF_DEBUGGING:
+                        logging.debug('registry key %r: %r', name, value)
                     if name == 'FriendlyName':
                         # blah blah USB Device
                         friendly_name = value[:-len(' USB Device')]
@@ -334,11 +341,15 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
     for letter in sorted(set('DEFGHIJKLMNOPQRSTUVWXYZ') - drive_names):
         mount = u'%s:\\' % letter
         if read_write_drive(mount):
+            if LOTS_OF_DEBUGGING:
+                logging.debug('drive %s is mounted', letter)
             yield {
                 'volume': u'fake-volume-%s' % letter,
                 'mount': mount,
                 'name': 'Drive %s:' % letter
                 }
+        elif LOTS_OF_DEBUGGING:
+                logging.debug('drive %s is missing', letter)
 
 if __name__ == '__main__':
     for d in connected_devices():

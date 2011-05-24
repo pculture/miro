@@ -94,7 +94,7 @@ class DeviceTracker(object):
 
     def _get_device_info(self, device):
         mount = device['mount']
-        if mount and os.path.exists(mount):
+        if mount and usbutils.read_write_drive(mount):
             available = ctypes.wintypes.LARGE_INTEGER()
             total = ctypes.wintypes.LARGE_INTEGER()
             ctypes.windll.kernel32.GetDiskFreeSpaceExW(

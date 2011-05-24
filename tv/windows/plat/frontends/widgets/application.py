@@ -37,6 +37,7 @@ from urlparse import urlparse
 import _winreg
 import time
 import subprocess
+import ctypes
 
 import gtk
 
@@ -76,6 +77,15 @@ class WindowsApplication(Application):
         self.showing_update_dialog = False
 
     def run(self):
+        # wraps the real _run() with some code which sets the error mode
+        old_error_mode = ctypes.windll.kernel32.SetErrorMode(1)
+        try:
+            self._run()
+        finally:
+            ctypes.windll.kernel32.SetErrorMode(0)
+
+    def _run(self):
+
         associate.associate_extensions(self._get_exe_location(),
                                         self._get_icon_location())
         winrel = platform.release()
