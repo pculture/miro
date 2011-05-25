@@ -675,7 +675,7 @@ class DeviceSyncManager(object):
                 )
             device_item._migrate_thumbnail()
             database = self.device.database
-            database.setdefault(device_item.file_type, [])
+            database.setdefault(device_item.file_type, {})
             database[device_item.file_type][device_item.id] = \
                 device_item.to_dict()
             database.emit('item-added', device_item)
@@ -1072,6 +1072,9 @@ def clean_database(device):
     to_remove = []
     for item_type in (u'video', u'audio', u'other'):
         device.database.setdefault(item_type, {})
+        if isinstance(device.database[item_type], list):
+            # 17554: we could accidentally set this to a list
+            device.database[item_type] = {}
         for item_path_unicode in device.database[item_type]:
             item_path = utf8_to_filename(item_path_unicode.encode('utf8'))
             if _exists(item_path):
