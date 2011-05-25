@@ -799,6 +799,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 self.shuffle_history = []
                 return None #stop playback 
             else:
+                # Remove currently playing item from history if it
+                # was removed from the playlist.
+                if self._is_playing_filtered_item():
+                    self.shuffle_history.pop()
                 self.shuffle_history.append(next_item.id)
                 return next_item
         elif self.shuffle and WidgetStateStore.get_repeat_playlist():
@@ -810,6 +814,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
                 if next_item is None:
                     #17492 - nothing playable in list
                     return None
+            # Remove currently playing item from history if it
+            # was removed from the playlist.
+            if self._is_playing_filtered_item():
+                self.shuffle_history.pop()
             self.shuffle_history.append(next_item.id)
             return next_item
         else:
@@ -824,7 +832,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
             if not self.shuffle_history:
                 return None
             current_item = self.shuffle_history.pop()
-            self.shuffle_upcoming.append(current_item)
+            # Only add the currently playing item to upcoming shuffle items
+            # if it exists in the playlist
+            if not self._is_playing_filtered_item():
+                self.shuffle_upcoming.append(current_item)
             return self.prev_shuffle_item()
         elif (not self.shuffle 
               and self.repeat == WidgetStateStore.get_repeat_playlist()
