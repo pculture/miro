@@ -114,8 +114,10 @@ class TabListManager(dict):
             selected_tabs.add((1, row[0]))
             for children in row.iterchildren():
                 selected_tabs.add((0, children[0]))
-        return self._selected_tablist.type, [tab[1] for tab in
-               sorted(selected_tabs)]
+        ordered_tabs = [tab[1] for tab in sorted(selected_tabs)]
+        unique_tabs = set(ordered_tabs)
+        ordered_unique_tabs = sorted(unique_tabs, key=ordered_tabs.index)
+        return self._selected_tablist.type, ordered_unique_tabs
 
     def select_guide(self):
         """Select the default Source - usually, the Guide tab."""
