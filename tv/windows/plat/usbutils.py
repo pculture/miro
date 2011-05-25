@@ -265,6 +265,72 @@ def eject_mount(mount_point):
             device_eject(get_parent(get_parent(device.DevInst)))
             return True      
 
+def iter_reg_keys(key_or_handle, root=_winreg.HKEY_LOCAL_MACHINE):
+    if isinstance(key_or_handle, basestring):
+        handle = _winreg.OpenKey(root, key_or_handle)
+    else:
+        handle = key_or_handle
+    index = 0
+    while True:
+        try:
+            yield _winreg.EnumKey(handle, index)
+        except EnvironmentError:
+            break
+        index += 1
+
+def iter_reg_values(key_or_handle, root=_winreg.HKEY_LOCAL_MACHINE):
+    if isinstance(key_or_handle, basestring):
+        handle = _winreg.OpenKey(root, key_or_handle)
+    else:
+        handle = key_or_handle
+    index = 0
+    while True:
+        try:
+            name, value, type_ = _winreg.EnumValue(handle, index)
+            yield name, value
+        except EnvironmentError:
+            break
+        index += 1
+
+def get_real_reg_handle(reg_key, parent_handle=None):
+    # key parts is now something like: ['SYSTEM',
+    # 'CurrentControllerSet', 'Enum', USBSTOR',
+    # 'DISK&VEN_SAMSUNG&PROD_SGH_T849_CARD&REV_0000',
+    # '1000AD3789CA&1'], but that name has had '-' converted to '_',
+    # so if it doesn't work we'll need to massage it a bit
+    try:
+        return _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+                                 reg_key)
+    except OSError:
+        pass
+
+    key_parts = reg_key.upper().split('\\')
+    good_key = []
+    handle = None
+    while key_parts:
+        try:
+            handle = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+                                   '\\'.join(good_key + key_parts[:1]))
+        except OSError:
+            for key in iter_reg_keys('\\'.join(good_key)):
+                if key.replace('-', '_').upper() == key_parts[0]:
+                    good_key.append(key)
+                    break
+            else:
+                raise OSError('could not find %s underneath %s' % (
+                                   key_parts[0], '\\'.join(good_key)))
+        else:
+            if len(key_parts) != 1: # not the last round
+                handle.Close()
+            good_key.append(key_parts[0])
+        key_parts = key_parts[1:]
+    return handle
+
+def get_friendy_name(key):
+    for name, value in iter_reg_values(get_real_reg_handle(key)):
+        if name.lower() == 'friendlyname':
+            return value
+
 def connected_devices():
     """
     Returns a generator which returns small dictionaries of data
@@ -305,29 +371,13 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
         if LOTS_OF_DEBUGGING:
             logging.debug('drive name: %r (%s)', drive_name,
                           read_write_drive(drive_name))
-        friendly_name = None
+        full_key = 'SYSTEM\\CurrentControlSet\\Enum\\%s' % reg_key
         try:
-            with _winreg.OpenKey(
-                _winreg.HKEY_LOCAL_MACHINE,
-                'SYSTEM\\CurrentControlSet\\Enum\\%s' % reg_key) as k:
-                # pull the USB Name out of the registry
-                index = 0
-                while True:
-                    try:
-                        name, value, type_ = _winreg.EnumValue(k, index)
-                    except WindowsError:
-                        break
-                    if LOTS_OF_DEBUGGING:
-                        logging.debug('registry key %r: %r', name, value)
-                    if name == 'FriendlyName':
-                        # blah blah USB Device
-                        friendly_name = value[:-len(' USB Device')]
-                        break
-                    else:
-                        index += 1
+            friendly_name = get_friendy_name(full_key)
         except WindowsError:
+            friendly_name = None
             logging.debug('could not open registry key %r (from %r/%r)',
-                          reg_key, path, device_id,
+                          full_key, path, device_id,
                           exc_info=True)
         if not friendly_name:
             continue
