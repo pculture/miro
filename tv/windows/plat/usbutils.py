@@ -29,6 +29,7 @@
 
 import logging
 import ctypes, ctypes.wintypes
+import tempfile
 import _winreg
 
 import os
@@ -201,10 +202,12 @@ def read_write_drive(mount):
     try:
         if not os.path.exists(mount):
             return False
-        path_to_check = os.path.join(mount, '.miro')
-        if os.path.exists(path_to_check) and os.access(path_to_check, os.W_OK):
-            return True
-        os.mkdir(path_to_check)
+        try:
+            temp_dir = tempfile.mkdtemp(dir=mount)
+        except OSError:
+            return False
+        else:
+            os.rmdir(temp_dir)
         return True
     except EnvironmentError:
         if LOTS_OF_DEBUGGING:
