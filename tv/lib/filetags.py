@@ -185,9 +185,9 @@ def _track_from_filename(full_path):
         if not char.isdigit():
             break
         initial_int.append(char)
-    num = int(''.join(initial_int) or 0)
-    if num > 0:
-        return num % 100 # handle e.g. '204' meaning disc 2, track 04
+    if len(initial_int) > 0 and len(initial_int) < 4:
+        number = ''.join(initial_int[-2:]) # e.g. '204' is disc 2, track 04
+        return int(number)
 
 def _make_cover_art_file(track_path, objects):
     """Given an iterable of mutagen cover art objects, returns the path to a
