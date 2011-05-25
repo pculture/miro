@@ -141,7 +141,8 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
     def daap_timeout_callback(self, s):
         self.del_session(s)
-        self.finished_callback(s)
+        if self.finished_callback:
+            self.finished_callback(s)
 
     def session_count(self):
         return len(self.activeconn)
