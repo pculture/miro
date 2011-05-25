@@ -76,7 +76,7 @@ class NewSearchFeedDialogRunner(object):
 
     def get_channel_info(self):
         self.channels = [ci for ci in app.tabs['feed'].get_feeds()
-                if not ci.is_folder]
+                if not (ci.is_folder or ci.is_directory_feed)]
         self.channels.sort(key=lambda x: util.name_sort_key(x.name))
 
     def get_search_engine_info(self):
