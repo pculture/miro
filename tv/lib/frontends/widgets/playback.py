@@ -785,9 +785,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
             try:
                 return self.model.get_info(self.shuffle_history[-1])
             except KeyError:
-                # Item was removed from our InfoList by a ItemList filter
-                # (#17500).  Try the previous item in the list.
+                # Item was removed from our InfoList and the shuffle history
+                # was not updated. This should not happen.
                 self.shuffle_history.pop()
+                logging.warning("trying to play non-existent shuffle history "
+                                 "item, skipping to previous item.")
                 continue
         # no items in our history, return None
         return
@@ -798,8 +800,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
             try:
                 return self.model.get_info(next_id)
             except KeyError:
-                # Item was removed from our InfoList by a ItemList filter
-                # (#17500).  Try the next item in the list.
+                # Item was removed from our InfoList and the upcoming shuffle
+                # items were not updated. This should not happen.
+                logging.warning("trying to play non-existent upcoming shuffle "
+                                "item, skipping to next item.")
+
                 continue
         # no items left in shuffle_upcoming
         return None
