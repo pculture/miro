@@ -598,6 +598,9 @@ class ItemListTitlebar(Titlebar):
     def set_search_text(self, text):
         self.searchbox.set_text(text)
 
+    def get_search_text(self):
+        return self.searchbox.get_text()
+
     def start_editing_search(self, text):
         self.searchbox.start_editing(text)
 
@@ -721,9 +724,6 @@ class SearchTitlebar(ItemListTitlebar):
 
     def save_search_icon(self):
         return 'save-as-podcast'
-
-    def get_search_text(self):
-        return self.searchbox.get_text()
 
     def _on_save_search(self, button):
         self.emit('save-search', self.get_search_text())
