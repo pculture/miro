@@ -42,4 +42,3 @@ apt-get install \
     ffmpeg2theora \
     libfaac0 \
     python-appindicator
-    # libwebkit-1.0-2 \
