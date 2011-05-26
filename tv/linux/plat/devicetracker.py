@@ -34,6 +34,7 @@ import gio
 from glib import GError
 
 from miro import app
+from miro.gtcache import gettext as _
 from miro import messages
 
 class DeviceTracker(object):
@@ -166,4 +167,8 @@ class DeviceTracker(object):
             logging.exception('eject failed for %r' % drive)
             result = False
         if not result:
-            messages.DeviceEjectFailed(device).send_to_frontend()
+            messages.ShowWarning(
+                _('Eject failed'),
+                _("Ejecting device '%(name)s' failed.\n\n"
+                        "The device is in use.", {'name': device.name})
+                ).send_to_frontend()

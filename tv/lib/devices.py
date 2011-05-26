@@ -439,6 +439,11 @@ class DeviceManager(object):
         sync_manager = app.device_manager.get_sync_for_device(info,
                                                               create=False)
         if sync_manager:
+            messages.ShowWarning(
+                _('Device removed during sync'),
+                _('%(name)s was removed while a sync was in progress.  '
+                  'Not all items may have been copied.',
+                  {'name': info.name})).send_to_frontend()
             sync_manager.cancel()
 
         if info.mount:
