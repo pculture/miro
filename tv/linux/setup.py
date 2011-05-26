@@ -475,8 +475,7 @@ class build(distutils.command.build.build):
                                     output_dir=output_dir)
         cc.link_executable(segmenter_objs, 'miro-segmenter',
                            output_dir=output_dir)
-        segmenter_exe = os.path.join(platform_dir, output_dir,
-                                     'miro-segmenter')
+        segmenter_exe = os.path.join(output_dir, 'miro-segmenter')
         self.distribution.scripts.append(segmenter_exe)
 
     def run(self):
