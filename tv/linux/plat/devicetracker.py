@@ -110,10 +110,11 @@ class DeviceTracker(object):
             app.device_manager.device_disconnected(id_)
 
     def _volume_added(self, volume_monitor, volume):
+        id_, info = self._get_volume_info(volume)
+        # have to set this so that we can access it when the volume is removed
+        self._unix_device_to_drive[id_] = volume.get_drive()
         if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
-        id_, info = self._get_volume_info(volume)
-        self._unix_device_to_drive[id_] = volume.get_drive()
         app.device_manager.device_connected(id_, **info)
         drive_id = volume.get_drive().get_identifier('unix-device')
         self._drive_has_volumes.setdefault(drive_id, 0)
@@ -131,7 +132,8 @@ class DeviceTracker(object):
             app.device_manager.device_changed(id_, **info)
 
     def _mount_added(self, volume_monitor, mount):
-        self._volume_changed(volume_monitor, mount.get_volume())
+        if mount.get_volume():
+            self._volume_changed(volume_monitor, mount.get_volume())
 
     def _volume_removed(self, volume_monitor, volume):
         if volume is None:
