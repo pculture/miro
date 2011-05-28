@@ -27,8 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""``miro.messages`` -- Message passing between the frontend thread
-and the backend thread.
+"""``miro.messages`` -- Message passing between the frontend thread and the
+backend thread.
 
 The backend thread is the eventloop, which processes things like feed
 updates and handles reading and writing to the database.  The frontend
@@ -36,15 +36,14 @@ thread is the thread of the UI toolkit we're using.  Communication
 between the two threads is handled by passing messages between the
 two.  These messages are handled asynchronously.
 
-This module defines the messages that are passed between the two
-threads.
+This module defines the messages that are passed between the two threads.
 """
 
 import logging
-import re
 
 from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
+from miro.messagetools import Message, MessageHandler
 from miro.plat import resources
 from miro import app
 from miro import displaytext
@@ -52,62 +51,6 @@ from miro import guide
 from miro import search
 from miro import prefs
 from miro import util
-
-class MessageHandler(object):
-    def __init__(self):
-        self.message_map = {} # maps message classes to method names
-        self.complained_about = set()
-
-    def call_handler(self, method, message):
-        """Arrange for a message handler method to be called in the correct
-        thread.  Must be implemented by subclasses.
-        """
-        raise NotImplementedError()
-
-    def handle(self, message):
-        """Handles a given message.
-        """
-        handler_name = self.get_message_handler_name(message)
-        try:
-            handler = getattr(self, handler_name)
-        except AttributeError:
-            if handler_name not in self.complained_about:
-                logging.warn("MessageHandler doesn't have a %s method "
-                        "to handle the %s message" % (handler_name,
-                            message.__class__))
-                self.complained_about.add(handler_name)
-        else:
-            self.call_handler(handler, message)
-
-    def get_message_handler_name(self, message):
-        try:
-            return self.message_map[message.__class__]
-        except KeyError:
-            self.message_map[message.__class__] = \
-                    self.calc_message_handler_name(message.__class__)
-            return self.message_map[message.__class__]
-
-    def calc_message_handler_name(self, message_class):
-        def replace(match):
-            return '%s_%s' % (match.group(1), match.group(2))
-        underscores = re.sub(r'([a-z])([A-Z])', replace,
-                message_class.__name__)
-        return 'handle_' + util.ascii_lower(underscores)
-
-class Message(object):
-    """Base class for all Messages.
-    """
-    @classmethod
-    def install_handler(cls, handler):
-        """Install a new message handler for this class.  When
-        send_to_frontend() or send_to_backend() is called, this handler will
-        be invoked.
-        """
-        cls.handler = handler
-
-    @classmethod
-    def reset_handler(cls):
-        del cls.handler
 
 class BackendMessage(Message):
     """Base class for Messages that get sent to the backend.
