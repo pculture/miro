@@ -83,25 +83,6 @@ class MovieDataTest(EventLoopTest):
         self.check_media_file(item)
         return item
 
-    # def test_media_with_mdp(self):
-    #     results_path = resources.path(path.join('testdata', 'moviedata.json'))
-    #     expected_results = json.load(open(results_path))
-    #     for filename, expected in expected_results.iteritems():
-    #         actual = self.process_file(FilenameType(filename))
-    #         self.assertNotEqual(actual.mdp_state, None, filename)
-    #         del actual['mdp_state']
-    #         expected['metadata_version'] = filetags.METADATA_VERSION
-    #         expected['test'], actual.test = filename, filename
-    #         if hasattr(actual, 'cover_art'):
-    #             actual.cover_art = bool(actual.cover_art)
-    #         if hasattr(actual, 'screenshot'):
-    #             actual.screenshot = bool(actual.screenshot)
-    #         expected = dict((str(k), v) for k, v in expected.iteritems())
-    #         actual = dict(actual)
-    #         self.assertEqual(actual, expected)
-    #         assert actual == expected, ("metadata wrong for %s "
-    #                 "actual: %r expected: %r" % (filename, actual, expected))
-
 class MovieDataRequestTest(MiroTestCase):
     """Test when we choose to invoke our moviedata programs."""
     def setUp(self):
