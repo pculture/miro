@@ -87,69 +87,6 @@ USER_AGENT = (feedparser.USER_AGENT + " %s/%s (%s)" %
 def parse(url_file_stream_or_string):
     return feedparser.parse(url_file_stream_or_string, USER_AGENT)
 
-class _QueueParseProcessor(threading.Thread):
-    """Object that handles the queue_parse() call."""
-
-    WAIT_TIME = 0.2 # time to wait between parse() calls
-
-    def __init__(self):
-        self.queue = Fifo()
-        self.last_end_time = 0
-        self.current_call_info = None
-
-    def add_to_queue(self, url_file_stream_or_string, callback, errback):
-        call_info = (url_file_stream_or_string, callback, errback)
-        self.queue.enqueue(call_info)
-        self._schedule_next()
-
-    def _schedule_next(self):
-        if len(self.queue) == 0:
-            return # nothing to schedule
-        if self.current_call_info is not None:
-            return # we'll run again once that call is finished
-
-        self.current_call_info = self.queue.dequeue()
-        wait_left = (self.last_end_time + self.WAIT_TIME) - clock()
-        if wait_left <= 0:
-            self._run_current()
-        else:
-            eventloop.add_timeout(wait_left, self._run_current,
-                    "feedparser queue timeout")
-
-    def _run_current(self):
-        url_file_stream_or_string = self.current_call_info[0]
-        eventloop.call_in_thread(self._callback, self._errback,
-                feedparser.parse, "Feedparser callback",
-                url_file_stream_or_string)
-
-    def _finish_call(self, callback, *args, **kwargs):
-        self.last_end_time = clock()
-        self.current_call_info = None
-        callback(*args, **kwargs)
-        self._schedule_next()
-
-    def _callback(self, *args, **kwargs):
-        callback = self.current_call_info[1]
-        self._finish_call(callback, *args, **kwargs)
-
-    def _errback(self, *args, **kwargs):
-        errback = self.current_call_info[2]
-        self._finish_call(errback, *args, **kwargs)
-
-_queue_parse_proccessor = _QueueParseProcessor()
-
-def queue_parse(url_file_stream_or_string, callback, errback):
-    """Call parse in a separet thread.
-
-    This method tries to ensure that feedparser doesn't hog the whole CPU
-    using a few methods:
-      - Only feedparser.parse() call is running at a given time.
-      - After a parse() call, we wait for a bit to give other things time to
-        access the CPU.
-    """
-    _queue_parse_proccessor.add_to_queue(url_file_stream_or_string, callback,
-            errback)
-
 def sanitizeHTML(htmlSource, encoding):
     return feedparser.sanitizeHTML(htmlSource, encoding)
 
