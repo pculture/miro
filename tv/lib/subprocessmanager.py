@@ -59,6 +59,10 @@ from miro import trapcall
 from miro import util
 from miro.plat.utils import miro_helper_program_info, initialize_locale
 
+def _on_windows():
+    """Test if we are unfortunate enough to be running in windows."""
+    return sys.platform == 'win32'
+
 # Protocol between miro and subprocesses:
 #
 # We spawn a child process and communicate to it by sending messages through
@@ -84,7 +88,7 @@ class SubprocessMessage(messagetools.Message):
         try:
             handler = self.handler
         except AttributeError:
-            logging.warn("No handler for subprocess messages")
+            logging.warn("No handler for %s" % self)
         else:
             handler.handle(self)
 
@@ -107,7 +111,7 @@ class SubprocessResponse(messagetools.Message):
         try:
             handler = self.handler
         except AttributeError:
-            logging.warn("No handler for subprocess responses")
+            logging.warn("No handler for %s" % self)
         else:
             handler.handle(self)
 
@@ -191,7 +195,7 @@ class SubprocessResponder(messagetools.MessageHandler):
             logging.warn("Error in subprocess: %s", msg.report)
 
 def _load_obj(pipe):
-    """Dump an object to the other side of the pipe."""
+    """Load an object from one side of a pipe."""
     size_data = pipe.read(4)
     if len(size_data) < 4:
         raise EOFError()
@@ -202,7 +206,7 @@ def _load_obj(pipe):
     return pickle.loads(pickle_data)
 
 def _dump_obj(obj, pipe):
-    """Load an object from one side of a pipe."""
+    """Dump an object to the other side of the pipe."""
     pickle_data = pickle.dumps(obj)
     size_data = struct.pack("L", len(pickle_data))
     pipe.write(size_data)
@@ -278,7 +282,7 @@ class SubprocessManager(object):
                   "startupinfo": util.no_console_startupinfo(),
                   "env": env,
         }
-        if os.name == "nt":
+        if _on_windows():
             # normally we just clone stderr for the subprocess, but on windows
             # this doesn't work.  So we use a pipe that we immediately close
             kwargs["stderr"] = subprocess.PIPE
@@ -286,7 +290,7 @@ class SubprocessManager(object):
             kwargs["stderr"] = None
             kwargs["close_fds"] = True
         process = subprocess.Popen(cmd_line, **kwargs)
-        if os.name == "nt":
+        if _on_windows():
             process.stderr.close()
         return process
 
@@ -311,23 +315,26 @@ class SubprocessManager(object):
             self.process.terminate()
         self._cleanup_process()
 
-    def _on_thread_quit(self):
-        """Handle our thread exiting.
-
-        unexpected_quit is True if the process didn't signal that it was ready
-        to shutdown before it closed it's connection.
-        """
+    def _on_thread_quit(self, thread):
+        """Handle our thread exiting."""
 
         # Igoner this call if it was queued from while we were in the middle
         # of shutdown().
         if not self.is_running:
             return
 
-        if self.thread.quit_type == 'normal':
+        if thread is not self.thread:
+            app.controller.failed_soft('handling subprocess',
+                    '_on_thread_quit called by an old thread')
+            return
+
+        if self.thread.quit_type == self.thread.QUIT_NORMAL:
             self._cleanup_process()
         else:
             logging.warn("Restarting failed subprocess (reason: %s)",
                     self.thread.quit_type)
+            # NOTE: should we enforce some sort of cool-down time before
+            # restarting the subprocess?
             self._restart()
 
     def _restart(self):
@@ -373,18 +380,7 @@ class SubprocessManager(object):
         We just send over the bare minimum needed to make sure basic modules
         like gtcache load properly.
         """
-        prefs_to_send = [
-            prefs.SHORT_APP_NAME,
-            prefs.LONG_APP_NAME,
-            prefs.APP_PLATFORM,
-            prefs.APP_VERSION,
-            prefs.APP_SERIAL,
-            prefs.APP_REVISION,
-            prefs.PUBLISHER,
-            prefs.PROJECT_URL,
-            prefs.GETTEXT_PATHNAME,
-            ]
-        return dict((p.key, app.config.get(p)) for p in prefs_to_send)
+        return dict((p.key, app.config.get(p)) for p in prefs.all_prefs())
 
     # implement the MessageHandler interface
 
@@ -410,6 +406,12 @@ class SubprocessResponderThread(threading.Thread):
     :ivar quit_type: Reason why the thread quit (or None)
     """
 
+    # constants for quit_type
+    QUIT_NORMAL = 0
+    QUIT_READ_ERROR = 1
+    QUIT_CLOSED_PIPE = 2
+    QUIT_UNKNOWN = 3
+
     def __init__(self, subprocess_stdout, responder, quit_callback):
         """Create a new SubprocessResponderThread
 
@@ -429,23 +431,24 @@ class SubprocessResponderThread(threading.Thread):
             for msg in _read_from_pipe(self.subprocess_stdout):
                 self.responder.handle(msg)
         except EOFError:
-            self.quit_type = 'closed-pipe'
+            self.quit_type = self.QUIT_CLOSED_PIPE
         except StandardError, e:
             logging.warn("Quiting on read error from pipe in "
                     "SubprocessResponderThread: %s", e)
-            self.quit_type = 'read-error'
+            self.quit_type = self.QUIT_READ_ERROR
         except Exception, e:
             logging.exception("Exception in SubprocessResponderThread")
-            self.quit_type = 'unknown'
+            self.quit_type = self.QUIT_UNKNOWN
         else:
-            self.quit_type = 'normal'
-        eventloop.add_idle(self.quit_callback, 'subprocess quit callback')
+            self.quit_type = self.QUIT_NORMAL
+        eventloop.add_idle(self.quit_callback, 'subprocess quit callback',
+                args=(self,))
 
 def subprocess_main():
     """Run loop inside the subprocess."""
     # make sure that we are using binary mode for stdout
-    if sys.platform == "win32":
-        import os, msvcrt
+    if _on_windows():
+        import msvcrt
         msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
     # unset stdin and stdout so that we don't accidentally print to them
     stdin = sys.stdin
@@ -484,7 +487,7 @@ def _subprocess_setup(stdin, stdout):
     # disable warnings so we don't get too much junk on stderr
     warnings.filterwarnings("ignore")
     # setup MessageHandler for messages going to the main process
-    msg_handler = FileMessageProxy(stdout)
+    msg_handler = PipeMessageFile(stdout)
     SubprocessResponse.install_handler(msg_handler)
     # load startup info
     msg = _load_obj(stdin)
@@ -511,16 +514,15 @@ def _subprocess_pipe_thread(stdin, queue):
         for msg in _read_from_pipe(stdin):
             queue.put(msg)
     except StandardError, e:
-        # our pipe got closed.  There's not much we can do here, because we
-        # rely on the pipe to log warnings.
-        pass
+        _send_subprocess_error_for_exception()
     # put None to our queue so the main thread quits
     queue.put(None)
 
-class FileMessageProxy(object):
-    """Handles messages by writing them to a file
+class PipeMessageFile(object):
+    """Handles messages by writing them to a pipe
 
     This is used in the subprocess to send messages back to the main process
+    over it's stdout pipe.
     """
     def __init__(self, fileobj):
         self.fileobj = fileobj

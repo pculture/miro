@@ -10,6 +10,7 @@ from miro import app
 from miro import config
 from miro import database
 from miro import eventloop
+from miro import feed
 from miro import feedparserutil
 from miro import downloader
 from miro import httpauth
@@ -23,6 +24,7 @@ from miro import signals
 from miro import storedatabase
 from time import sleep
 from miro import models
+from miro import workerprocess
 
 from miro.test import testhttpserver
 
@@ -265,8 +267,8 @@ class MiroTestCase(unittest.TestCase):
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
         moviedata.movie_data_updater = moviedata.MovieDataUpdater()
-        # make feed parser updates happen immediately
-        feedparserutil._queue_parse_proccessor.WAIT_TIME = 0.0
+        # Skip worker proccess for feedparser
+        feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary
         config.load_temporary()
         self.platform = app.config.get(prefs.APP_PLATFORM)
@@ -294,6 +296,8 @@ class MiroTestCase(unittest.TestCase):
         return self.platform == "windows"
 
     def tearDown(self):
+        # shutdown workerprocess if we started it for some reason.
+        workerprocess.shutdown()
         self.reset_log_filter()
         signals.system.disconnect_all()
         util.chatter = True

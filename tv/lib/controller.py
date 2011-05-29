@@ -52,6 +52,7 @@ from miro import moviedata
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro import workerprocess
 from miro.plat.utils import exit_miro
 
 BOGON_URL = "http://bogondeflector.pculture.org/index.php"
@@ -70,6 +71,8 @@ class Controller:
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)
         try:
+            logging.info("Shutting down worker process.")
+            workerprocess.shutdown()
             if app.device_manager is not None:
                 logging.info("Shutting down device manager")
                 app.device_manager.shutdown()

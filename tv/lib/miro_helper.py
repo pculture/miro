@@ -30,8 +30,15 @@
 """```miro_helper.py``` -- Script for subprocessmanager child processes.
 """
 
+import sys
+
 from miro import subprocessmanager
 
 
 if __name__ == '__main__':
-    subprocessmanager.subprocess_main()
+    try:
+        subprocessmanager.subprocess_main()
+    except:
+        sys.exit(1)
+    else:
+        sys.exit(0)
