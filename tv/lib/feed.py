@@ -71,7 +71,12 @@ from miro.plat.filebundle import is_file_bundle
 from miro import filetypes
 from miro.item import FeedParserValues
 from miro import searchengines
+from miro import workerprocess
 from miro.clock import clock
+
+# should we not use our worker process for feedparser.  This is just used in
+# the unittests to speed things up
+_RUN_FEED_PARSER_INLINE = False
 
 WHITESPACE_PATTERN = re.compile(r"^[ \t\r\n]*$")
 
@@ -199,6 +204,17 @@ def _on_config_change(obj, key, value):
             except (AttributeError, KeyError):
                 pass
             feed.set_update_frequency(update_freq)
+
+def run_feedparser(html, callback, errback):
+    if _RUN_FEED_PARSER_INLINE:
+        try:
+            rv = feedparserutil.parse(html)
+        except StandardError, e:
+            errback(e)
+        else:
+            callback(rv)
+    else:
+        workerprocess.run_feedparser(html, callback, errback)
 
 # Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0
@@ -1429,7 +1445,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def call_feedparser(self, html):
         self.ufeed.confirm_db_thread()
-        feedparserutil.queue_parse(html, self.feedparser_callback,
+        run_feedparser(html, self.feedparser_callback,
                 self.feedparser_errback)
 
     def update(self):
@@ -1587,7 +1603,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
 
     def call_feedparser(self, html, url):
         self.ufeed.confirm_db_thread()
-        feedparserutil.queue_parse(html,
+        run_feedparser(html,
             lambda parsed, url=url: self.feedparser_callback(parsed, url),
             lambda e, url=url: self.feedparser_errback(e, url))
 

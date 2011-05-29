@@ -1,8 +1,11 @@
+import os
 import time
 import Queue
 
 from miro import app
 from miro import subprocessmanager
+from miro import workerprocess
+from miro.plat import resources
 from miro.test.framework import EventLoopTest
 
 # setup some test messages/handlers
@@ -116,6 +119,7 @@ class SubprocessManagerTest(EventLoopTest):
         self.runEventLoop(0.3, timeoutNormal=True)
         self.assert_(not thread.is_alive())
         self.assert_(process.poll() is not None)
+        self.assertEquals(process.returncode, 0)
         self.assert_(not self.subprocess.is_running)
 
     def test_send_and_receive(self):
@@ -189,3 +193,81 @@ class SubprocessManagerTest(EventLoopTest):
         Ping().send_to_process()
         self.runEventLoop(0.1, timeoutNormal=True)
         self.assertEquals(self.responder.pong_count, 1)
+
+class UnittestWorkerProcessHandler(workerprocess.WorkerProcessHandler):
+    def handle_feedparser_task(self, msg):
+        if msg.html == 'FORCE EXCEPTION':
+            raise ValueError("Simulated Exception")
+        else:
+            return workerprocess.WorkerProcessHandler.handle_feedparser_task(
+                    self, msg)
+
+class WorkerProcessTest(EventLoopTest):
+    """Test our worker process."""
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        # override the normal handler class with our own
+        workerprocess._subprocess_manager.handler_class = (
+                UnittestWorkerProcessHandler)
+        self.result = self.error = None
+
+    def callback(self, result):
+        self.result = result
+        self.stopEventLoop(abnormal=False)
+
+    def errback(self, error):
+        self.error = error
+        self.stopEventLoop(abnormal=False)
+
+    def send_feedparser_task(self):
+        # send feedparser successfully parsing a feed
+        path = os.path.join(resources.path("testdata/feedparsertests/feeds"),
+            "http___feeds_miroguide_com_miroguide_featured.xml")
+        html = open(path).read()
+        workerprocess.run_feedparser(html, self.callback, self.errback)
+
+    def check_successful_result(self):
+        self.assertNotEquals(self.result, None)
+        self.assertEquals(self.error, None)
+        # just do some very basic test to see if the result is correct
+        if self.result['bozo']:
+            raise AssertionError("Feedparser parse error: %s",
+                    self.result['bozo_exception'])
+
+    def test_feedparser_success(self):
+        # test feedparser successfully parsing a feed
+        workerprocess.startup()
+        self.send_feedparser_task()
+        self.runEventLoop(4.0)
+        self.check_successful_result()
+
+    def test_feedparser_error(self):
+        # test feedparser failing to parse a feed
+        workerprocess.startup()
+        workerprocess.run_feedparser('FORCE EXCEPTION', self.callback,
+                self.errback)
+        self.runEventLoop(4.0)
+        self.assertEquals(self.result, None)
+        self.assert_(isinstance(self.error, ValueError))
+
+    def test_crash(self):
+        # force a crash of our subprocess right after we send the task
+        workerprocess.startup()
+        original_pid = workerprocess._subprocess_manager.process.pid
+        self.send_feedparser_task()
+        workerprocess._subprocess_manager.process.terminate()
+        self.runEventLoop(4.0)
+        # check that we really restarted the subprocess
+        self.assertNotEqual(original_pid,
+                workerprocess._subprocess_manager.process.pid)
+        self.check_successful_result()
+
+    def test_queue_before_start(self):
+        # test sending tasks before we start the worker process
+
+        # since our process hasn't started, this should just queue up things
+        self.send_feedparser_task()
+        # start the process and check that we process the task
+        workerprocess.startup()
+        self.runEventLoop(4.0)
+        self.check_successful_result()

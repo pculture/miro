@@ -190,11 +190,6 @@ def _entry_equal(a, b):
             return a == b
 
 class FeedParserDict(UserDict):
-    # This is a complete hack to prevent problems if data is saved with a
-    # newer version of Miro and an older version of Miro tries to open it.
-    # See storedatabase.py for more info.
-    __module__ = 'feedparser'
-
     # values of keymap are in order of preference.  for example,
     # in description, summary is preferred to subtitle.
     keymap = {'channel': 'feed',

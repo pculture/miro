@@ -138,8 +138,6 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         my_feed = self.make_feed(u"file://" + self.filename)
 
         my_feed.update()
-        self.processThreads()
-        self.process_idles()
         self.assertEqual(my_feed.items.count(), 1)
         my_item = list(my_feed.items)[0]
         self.assertEqual(len(my_item.get_title()), 14)

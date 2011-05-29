@@ -59,7 +59,13 @@ from miro import trapcall
 from miro import util
 from miro.plat.utils import miro_helper_program_info, initialize_locale
 
-# Protocol between miro and subprocesses:
+def _on_windows():
+    """Test if we are unfortunate enough to be running in windows."""
+    return sys.platform == 'win32'
+
+# DESIGN NOTES:
+#
+# ** Protocol between miro and subprocesses **
 #
 # We spawn a child process and communicate to it by sending messages through
 # it's stdin and stdout.  Each message contains a length (4 bytes) plus a
@@ -72,6 +78,19 @@ from miro.plat.utils import miro_helper_program_info, initialize_locale
 #   3) The main process sends None to stdin to indicate that it's through
 #      sending messages and the subprocess should quit.  The subprocess should
 #      then finish up and send back None over stdout.
+#
+# ** MessageHandlers **
+#
+# We create 4 MessageHandler-like objects for each subprocess.
+#
+# In the subprocess, we create a SubprocessHandler to handle the messages
+# coming from the main process and a PipeMessageProxy that handles messages
+# going to the main process by writing them to stdout.
+#
+# In the main process, we create a SubprocessResponder to handle the messages
+# coming back from the subprocess, and use the SubprocessManager object to
+# handle messages going to the subprocess by writing them to the subproccess's
+# stdin.
 
 class SubprocessMessage(messagetools.Message):
     """Message from the main process to a subprocess.
@@ -84,7 +103,7 @@ class SubprocessMessage(messagetools.Message):
         try:
             handler = self.handler
         except AttributeError:
-            logging.warn("No handler for subprocess messages")
+            logging.warn("No handler for %s" % self)
         else:
             handler.handle(self)
 
@@ -107,7 +126,7 @@ class SubprocessResponse(messagetools.Message):
         try:
             handler = self.handler
         except AttributeError:
-            logging.warn("No handler for subprocess responses")
+            logging.warn("No handler for %s" % self)
         else:
             handler.handle(self)
 
@@ -190,21 +209,52 @@ class SubprocessResponder(messagetools.MessageHandler):
         else:
             logging.warn("Error in subprocess: %s", msg.report)
 
+class LoadError(StandardError):
+    """Exception for corrupt data when reading from a pipe."""
+
 def _load_obj(pipe):
-    """Dump an object to the other side of the pipe."""
+    """Load an object from one side of a pipe.
+
+    _load_obj blocks until the all the data has been sent.
+
+    :raises IOError: low-level error while reading from the pipe
+    :raises LoadError: data read was corrupted
+
+    :returns: Python object send from the other side
+    """
     size_data = pipe.read(4)
     if len(size_data) < 4:
-        raise EOFError()
+        raise LoadError("EOF reached while reading size field")
     size = struct.unpack("L", size_data)[0]
     pickle_data = pipe.read(size)
     if len(pickle_data) < size:
-        raise EOFError()
-    return pickle.loads(pickle_data)
+        raise LoadError("EOF reached while reading pickle data")
+    try:
+        return pickle.loads(pickle_data)
+    except pickle.PickleError:
+        raise LoadError("Pickle data corrupt")
+    except ImportError:
+        raise LoadError("Pickle data references unimportable module")
+    except StandardError, e:
+        # log this exception for easier debugging.
+        _send_subprocess_error_for_exception()
+        raise LoadError("Unknown error in pickle.loads: %s" % e)
 
 def _dump_obj(obj, pipe):
-    """Load an object from one side of a pipe."""
+    """Dump an object to the other side of the pipe.
+
+    :raises IOError: low-level error while writing to the pipe
+    :raises pickle.PickleError: obj could not be pickled
+    """
+
     pickle_data = pickle.dumps(obj)
     size_data = struct.pack("L", len(pickle_data))
+    # NOTE: We do a blocking write here.  This should be fine, since on both
+    # sides we have a thread dedicated to just reading from the pipe and
+    # pushing the data into a Queue.  However, there's some chance that the
+    # process on the other side has gone really haywire and the reader thread
+    # is hung.  I (BDK) can't really see a way for this to realistically
+    # happen, so we stick with blocking writes.
     pipe.write(size_data)
     pipe.write(pickle_data)
     pipe.flush()
@@ -278,7 +328,7 @@ class SubprocessManager(object):
                   "startupinfo": util.no_console_startupinfo(),
                   "env": env,
         }
-        if os.name == "nt":
+        if _on_windows():
             # normally we just clone stderr for the subprocess, but on windows
             # this doesn't work.  So we use a pipe that we immediately close
             kwargs["stderr"] = subprocess.PIPE
@@ -286,7 +336,7 @@ class SubprocessManager(object):
             kwargs["stderr"] = None
             kwargs["close_fds"] = True
         process = subprocess.Popen(cmd_line, **kwargs)
-        if os.name == "nt":
+        if _on_windows():
             process.stderr.close()
         return process
 
@@ -311,23 +361,26 @@ class SubprocessManager(object):
             self.process.terminate()
         self._cleanup_process()
 
-    def _on_thread_quit(self):
-        """Handle our thread exiting.
-
-        unexpected_quit is True if the process didn't signal that it was ready
-        to shutdown before it closed it's connection.
-        """
+    def _on_thread_quit(self, thread):
+        """Handle our thread exiting."""
 
         # Igoner this call if it was queued from while we were in the middle
         # of shutdown().
         if not self.is_running:
             return
 
-        if self.thread.quit_type == 'normal':
+        if thread is not self.thread:
+            app.controller.failed_soft('handling subprocess',
+                    '_on_thread_quit called by an old thread')
+            return
+
+        if self.thread.quit_type == self.thread.QUIT_NORMAL:
             self._cleanup_process()
         else:
             logging.warn("Restarting failed subprocess (reason: %s)",
                     self.thread.quit_type)
+            # NOTE: should we enforce some sort of cool-down time before
+            # restarting the subprocess?
             self._restart()
 
     def _restart(self):
@@ -358,6 +411,8 @@ class SubprocessManager(object):
             # we could try to restart our subprocess here, but if the pipe is
             # really broken, then our thread will quit soon and this will
             # cause a restart.
+        except pickle.PickleError:
+            logging.warn("Error pickling message in send_message() (%s)", msg)
 
     def send_quit(self):
         """Ask the subprocess to shutdown."""
@@ -373,17 +428,11 @@ class SubprocessManager(object):
         We just send over the bare minimum needed to make sure basic modules
         like gtcache load properly.
         """
-        prefs_to_send = [
-            prefs.SHORT_APP_NAME,
-            prefs.LONG_APP_NAME,
-            prefs.APP_PLATFORM,
-            prefs.APP_VERSION,
-            prefs.APP_SERIAL,
-            prefs.APP_REVISION,
-            prefs.PUBLISHER,
-            prefs.PROJECT_URL,
-            prefs.GETTEXT_PATHNAME,
-            ]
+        # On OS X, the proxy information is in a CFDictionary, so we can't
+        # pickle it.  Just avoid sending it for now
+        prefs_to_send = [p for p in prefs.all_prefs()
+                if not p.key.startswith("HttpProxy")
+        ]
         return dict((p.key, app.config.get(p)) for p in prefs_to_send)
 
     # implement the MessageHandler interface
@@ -397,6 +446,11 @@ def _read_from_pipe(pipe):
 
     This method is a generator that reads pickled objects from pipe.  It
     terminates when None is sent over the pipe.
+
+    raises the same exceptions that _load_obj does, namely:
+
+    :raises IOError: low-level error while reading from the pipe
+    :raises LoadError: data read was corrupted
     """
     while True:
         msg = _load_obj(pipe)
@@ -409,6 +463,12 @@ class SubprocessResponderThread(threading.Thread):
 
     :ivar quit_type: Reason why the thread quit (or None)
     """
+
+    # constants for quit_type
+    QUIT_NORMAL = 0
+    QUIT_READ_ERROR = 1
+    QUIT_BAD_DATA = 2
+    QUIT_UNKNOWN = 3
 
     def __init__(self, subprocess_stdout, responder, quit_callback):
         """Create a new SubprocessResponderThread
@@ -428,24 +488,27 @@ class SubprocessResponderThread(threading.Thread):
         try:
             for msg in _read_from_pipe(self.subprocess_stdout):
                 self.responder.handle(msg)
-        except EOFError:
-            self.quit_type = 'closed-pipe'
-        except StandardError, e:
+        except LoadError, e:
+            logging.warn("Quiting from bad data from our subprocess in "
+                    "SubprocessResponderThread: %s", e)
+            self.quit_type = self.QUIT_BAD_DATA
+        except IOError, e:
             logging.warn("Quiting on read error from pipe in "
                     "SubprocessResponderThread: %s", e)
-            self.quit_type = 'read-error'
+            self.quit_type = self.QUIT_READ_ERROR
         except Exception, e:
-            logging.exception("Exception in SubprocessResponderThread")
-            self.quit_type = 'unknown'
+            logging.exception("Unknown error in SubprocessResponderThread")
+            self.quit_type = self.QUIT_UNKNOWN
         else:
-            self.quit_type = 'normal'
-        eventloop.add_idle(self.quit_callback, 'subprocess quit callback')
+            self.quit_type = self.QUIT_NORMAL
+        eventloop.add_idle(self.quit_callback, 'subprocess quit callback',
+                args=(self,))
 
 def subprocess_main():
     """Run loop inside the subprocess."""
     # make sure that we are using binary mode for stdout
-    if sys.platform == "win32":
-        import os, msvcrt
+    if _on_windows():
+        import msvcrt
         msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
     # unset stdin and stdout so that we don't accidentally print to them
     stdin = sys.stdin
@@ -455,10 +518,11 @@ def subprocess_main():
     try:
         handler = _subprocess_setup(stdin, stdout)
     except Exception, e:
-        # error reading our initial messages.  Log a warning, then quit
+        # error reading our initial messages.  Try to log a warning, then
+        # quit.
         _send_subprocess_error_for_exception()
-        _dump_obj(None, stdout)
-        return
+        _finish_subprocess_message_stream(stdout)
+        raise # reraise so that miro_helper.py returns a non-zero exit code
     # startup thread to process stdin
     queue = Queue.Queue()
     thread = threading.Thread(target=_subprocess_pipe_thread, args=(stdin,
@@ -467,29 +531,48 @@ def subprocess_main():
     thread.start()
     # run our message loop
     handler.on_startup()
-    while True:
-        msg = queue.get()
-        if msg is None:
-            break
-        handler.handle(msg)
-    handler.on_shutdown()
-    # send None to signal that we are about to quit
-    _dump_obj(None, stdout)
+    try:
+        while True:
+            msg = queue.get()
+            if msg is None:
+                break
+            handler.handle(msg)
+    finally:
+        handler.on_shutdown()
+        # send None to signal that we are about to quit
+        _finish_subprocess_message_stream(stdout)
+        # exceptions will continue on here, which causes miro_helper.py
+        # to return a non-zero exit code
+
+def _finish_subprocess_message_stream(stdout):
+    """Signal that we are done sending messages in the subprocess."""
+    try:
+        _dump_obj(None, stdout)
+    except IOError:
+        # just ignore since we're done writing out anyways
+        pass
+    # Note we don't catch PickleError, but there should never be an issue
+    # pickling None
 
 def _subprocess_setup(stdin, stdout):
     """Does initial setup for a subprocess.
 
     Returns a SubprocessHandler to use for the subprocess
+
+    raises the same exceptions that _load_obj does, namely:
+
+    :raises IOError: low-level error while reading from the pipe
+    :raises LoadError: data read was corrupted
     """
     # disable warnings so we don't get too much junk on stderr
     warnings.filterwarnings("ignore")
     # setup MessageHandler for messages going to the main process
-    msg_handler = FileMessageProxy(stdout)
+    msg_handler = PipeMessageProxy(stdout)
     SubprocessResponse.install_handler(msg_handler)
     # load startup info
     msg = _load_obj(stdin)
     if not isinstance(msg, StartupInfo):
-        raise TypeError("first message must a StartupInfo obj")
+        raise LoadError("first message must a StartupInfo obj")
     # setup some basic modules like config and gtcache
     initialize_locale()
     config.load(config.ManualConfig())
@@ -498,8 +581,13 @@ def _subprocess_setup(stdin, stdout):
     # setup our handler
     msg = _load_obj(stdin)
     if not isinstance(msg, HandlerInfo):
-        raise TypeError("second message must a HandlerInfo obj")
-    return msg.handler_class(*msg.handler_args)
+        raise LoadError("second message must a HandlerInfo obj")
+    try:
+        return msg.handler_class(*msg.handler_args)
+    except StandardError, e:
+        # log this exception for easier debugging.
+        _send_subprocess_error_for_exception()
+        raise LoadError("Exception while constructing handler: %s" % e)
 
 def _subprocess_pipe_thread(stdin, queue):
     """Thread inside the subprocess that reads messages from stdin.
@@ -511,19 +599,27 @@ def _subprocess_pipe_thread(stdin, queue):
         for msg in _read_from_pipe(stdin):
             queue.put(msg)
     except StandardError, e:
-        # our pipe got closed.  There's not much we can do here, because we
-        # rely on the pipe to log warnings.
+        # we could try to send a SubprocessError message, but it's highly
+        # likely that our main process is dead, so it's simplest to just avoid
+        # writing to the (likely closed) stdout pipe.
         pass
     # put None to our queue so the main thread quits
     queue.put(None)
 
-class FileMessageProxy(object):
-    """Handles messages by writing them to a file
+class PipeMessageProxy(object):
+    """Handles messages by writing them to a pipe
 
     This is used in the subprocess to send messages back to the main process
+    over it's stdout pipe.
     """
     def __init__(self, fileobj):
         self.fileobj = fileobj
 
     def handle(self, msg):
-        _dump_obj(msg, self.fileobj)
+        try:
+            _dump_obj(msg, self.fileobj)
+        except pickle.PickleError:
+            _send_subprocess_error_for_exception()
+        # NOTE: we don't handle IOError here because what can we do about
+        # that?  Just let it propagate up to the top and which should cause us
+        # to shutdown.

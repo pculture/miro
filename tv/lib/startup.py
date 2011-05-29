@@ -86,6 +86,7 @@ from miro import conversions
 from miro import devices
 from miro import sharing
 from miro import transcode
+from miro import workerprocess
 from miro.plat import devicetracker
 
 DEBUG_DB_MEM_USAGE = False
@@ -412,6 +413,8 @@ def on_frontend_started():
     # Delay running high CPU/IO operations for a bit
     eventloop.add_timeout(5, downloader.startup_downloader,
             "start downloader daemon")
+    eventloop.add_timeout(10, workerprocess.startup,
+            "start worker process")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
     eventloop.add_timeout(60, item.update_incomplete_movie_data,
             "update movie data")
