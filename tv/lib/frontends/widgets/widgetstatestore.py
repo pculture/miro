@@ -366,6 +366,13 @@ class WidgetStateStore(object):
         self.global_info.guide_sidebar_expanded = expanded
         self._save_global_state()
 
+    def get_tabs_width(self):
+        return self.global_info.tabs_width
+
+    def set_tabs_width(self, width):
+        self.global_info.tabs_width = width
+        self._save_global_state()
+
 # Real ViewState properties:
 
     def get_scroll_position(self, display_type, display_id, view_type):

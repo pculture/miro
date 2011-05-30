@@ -260,6 +260,7 @@ class Application:
         videobox.controls.previous.connect('released', self.on_stop_fast_playback)
         videobox.playback_mode.shuffle.connect('clicked', self.on_shuffle_clicked)
         videobox.playback_mode.repeat.connect('clicked', self.on_repeat_clicked)
+        self.set_left_width(app.widget_state.get_tabs_width())
         self.window.show()
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
@@ -282,6 +283,12 @@ class Application:
         """Returns the width of the right side of the splitter.
         """
         return self.window.get_frame().get_width() - self.window.splitter.get_left_width()
+
+    def get_left_width(self):
+        return self.window.splitter.get_left_width()
+
+    def set_left_width(self, width):
+        self.window.splitter.set_left_width(width)
 
     def on_volume_change(self, slider, volume):
         app.playback_manager.set_volume(volume)
@@ -1143,6 +1150,7 @@ class Application:
             app.item_list_controller_manager.undisplay_controller()
         if self.window is not None:
             self.window.destroy()
+        app.widget_state.set_tabs_width(self.get_left_width())
         app.controller.shutdown()
         self.quit_ui()
 
