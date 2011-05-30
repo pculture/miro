@@ -39,12 +39,22 @@ class FileTagsTest(MiroTestCase):
         # FIXME: losing data - TVSH='The Most Extreme'
         # FIXME: losing data - TVNN='Animal Planet'
 
-    def test_mutagen_data(self):
-        results_path = resources.path(path.join('testdata', 'filetags.json'))
-        expected_results = json.load(open(results_path))
-        for filename, expected in expected_results.iteritems():
-            file_type = expected['file_type']
-            duration = expected['duration']
-            tags = expected['tags']
-            cover_art = expected['cover_art']
-            self.assert_file_data(filename, file_type, duration, tags, cover_art)
+# This is the same _test_closure technique used for FeedParserTest:
+
+def _test_closure(self, filename, expected):
+    file_type = expected['file_type']
+    duration = expected['duration']
+    tags = expected['tags']
+    cover_art = expected['cover_art']
+    self.assert_file_data(filename, file_type, duration, tags, cover_art)
+
+# this creates a separate test method in FileTagsTest for each test
+# in the filetags.json file.  makes it easier to debug tests that
+# go awry, makes it easier to see test progress from the command line
+# (lots of little tests rather than one big test), and increases the
+# test count appropriately.
+results_path = resources.path(path.join('testdata', 'filetags.json'))
+expected_results = json.load(open(results_path))
+for filename, expected in expected_results.iteritems():
+    setattr(FileTagsTest, 'test_%s' % filename.replace(".", ""),
+            lambda self: _test_closure(self, filename, expected))
