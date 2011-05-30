@@ -2218,7 +2218,6 @@ def filename_to_title(filename):
     title = filename_to_unicode(os.path.basename(filename))
     title = title.rsplit('.', 1)[0]
     title = title.replace('_', ' ')
-    title = title.lstrip('0123456789. -')
     t2 = []
     for word in title.split(' '):
         t2.append(word.capitalize())
