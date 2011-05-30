@@ -3301,3 +3301,8 @@ def upgrade159(cursor):
     # for video kind, just drop the bad data
     cursor.execute("UPDATE item SET kind=NULL WHERE kind='_mixed'")
     # rating is unaffected because it's an integer
+
+def upgrade160(cursor):
+    cursor.execute("ALTER TABLE global_state ADD COLUMN tabs_width integer")
+    cursor.execute("UPDATE global_state SET tabs_width=200")
+

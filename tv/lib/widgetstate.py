@@ -80,3 +80,4 @@ class GlobalState(DDBObject):
                 STANDARD_VIEW: False,
         }
         self.guide_sidebar_expanded = True
+        self.tabs_width = 200
