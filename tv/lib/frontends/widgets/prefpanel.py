@@ -980,32 +980,34 @@ class PlaybackPanel(PanelBuilder):
         subtitles_cbx = widgetset.Checkbox(
             _('Automatically enable movie subtitles when available.'))
 
-        playback_heading = dialogwidgets.heading(_("Continuous Playback"))
-
-        rbg = widgetset.RadioButtonGroup()
-        play_rb = widgetset.RadioButton(
-            _("Play video and audio items one after another"), rbg)
-        stop_rb = widgetset.RadioButton(
-            _("Stop after each video or audio item"), rbg)
-
-        resume_heading = dialogwidgets.heading(_("Resume Playback"))
-
+        videos_heading = dialogwidgets.heading(_("Video Playback"))
         resume_videos_cbx = widgetset.Checkbox(
-            _('Continue playing videos from where they were last stopped.'))
+            _('Resume playback from where the video was last stopped.'))
+        continue_videos_cbx = widgetset.Checkbox(
+               _('Play continuously - when one item finishes, play the next item in the list.'))
+
+        music_heading = dialogwidgets.heading(_("Music Playback"))
         resume_music_cbx = widgetset.Checkbox(
-            _('Continue playing music files from '
-              'where they were last stopped.'))
+            _('Resume playback from where the song was last stopped.'))
+        continue_music_cbx = widgetset.Checkbox(
+               _('Play continuously - when one item finishes, play the next item in the list.'))
+
+        podcasts_heading = dialogwidgets.heading(_("Podcast Playback"))
         resume_podcasts_cbx = widgetset.Checkbox(
-            _('Continue playing podcast files from '
-              'where they were last stopped.'))
+            _('Resume playback from where the podcast was last stopped.'))
+        continue_podcasts_cbx = widgetset.Checkbox(
+               _('Play continuously - when one item finishes, play the next item in the list.'))
 
         attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO,
-                       (separate_cbx, resume_heading,
+                       (separate_cbx, videos_heading,
+                        music_heading, podcasts_heading,
                         resume_videos_cbx,
+                        continue_videos_cbx,
                         resume_music_cbx,
+                        continue_music_cbx,
                         resume_podcasts_cbx,
-                        subtitles_cbx, playback_heading,
-                        play_rb, stop_rb))
+                        continue_podcasts_cbx,
+                        subtitles_cbx))
 
         v.pack_start(widgetutil.align_left(miro_cbx, bottom_pad=6))
 
@@ -1015,23 +1017,26 @@ class PlaybackPanel(PanelBuilder):
         attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
         v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))
 
-        v.pack_start(widgetutil.align_left(playback_heading,
-                     left_pad=3, top_pad=6 , bottom_pad=6))
-
-        attach_radio([(stop_rb, True), (play_rb, False)],
-                     prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-        v.pack_start(widgetutil.align_left(play_rb), padding=2)
-        v.pack_start(widgetutil.align_left(stop_rb))
-
-        v.pack_start(widgetutil.align_left(resume_heading,
+        v.pack_start(widgetutil.align_left(videos_heading,
                      left_pad=3, top_pad=12 , bottom_pad=6))
-
         attach_boolean(resume_videos_cbx, prefs.RESUME_VIDEOS_MODE)
-        attach_boolean(resume_music_cbx, prefs.RESUME_MUSIC_MODE)
-        attach_boolean(resume_podcasts_cbx, prefs.RESUME_PODCASTS_MODE)
         v.pack_start(widgetutil.align_left(resume_videos_cbx, bottom_pad=6))
+        attach_boolean(continue_videos_cbx, prefs.CONTINUOUS_VIDEO_PLAYBACK_MODE)
+        v.pack_start(widgetutil.align_left(continue_videos_cbx, bottom_pad=6))
+
+        v.pack_start(widgetutil.align_left(music_heading,
+                     left_pad=3, top_pad=12 , bottom_pad=6))
+        attach_boolean(resume_music_cbx, prefs.RESUME_MUSIC_MODE)
         v.pack_start(widgetutil.align_left(resume_music_cbx, bottom_pad=6))
+        attach_boolean(continue_music_cbx, prefs.CONTINUOUS_MUSIC_PLAYBACK_MODE)
+        v.pack_start(widgetutil.align_left(continue_music_cbx, bottom_pad=6))
+
+        v.pack_start(widgetutil.align_left(podcasts_heading,
+                     left_pad=3, top_pad=12 , bottom_pad=6))
+        attach_boolean(resume_podcasts_cbx, prefs.RESUME_PODCASTS_MODE)
         v.pack_start(widgetutil.align_left(resume_podcasts_cbx, bottom_pad=6))
+        attach_boolean(continue_podcasts_cbx, prefs.CONTINUOUS_PODCAST_PLAYBACK_MODE)
+        v.pack_start(widgetutil.align_left(continue_podcasts_cbx, bottom_pad=6))
 
         pack_extras(v, "playback")
 

@@ -580,7 +580,8 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.player_ready():
             return
         self._handle_skip()
-        if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+        if not self.item_continuous_playback_mode(
+                            self.playlist.currently_playing):
             self.stop()
         else:
             self.playlist.select_next_item(self._not_skipped_by_user)
@@ -605,7 +606,8 @@ class PlaybackManager (signals.SignalEmitter):
                 self.seek_to(0)
                 return
         self._handle_skip()
-        if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+        if not self.item_continuous_playback_mode(
+                            self.playlist.currently_playing):
             self.stop()
         else:
             self.playlist.select_previous_item()
@@ -717,6 +719,27 @@ class PlaybackManager (signals.SignalEmitter):
                and resume
                and app.config.get(prefs.PLAY_IN_MIRO))
         return result
+
+    def item_continuous_playback_mode(self, item_info):
+        if (item_info.remote or
+          (item_info.feed_url and
+          (item_info.feed_url.startswith('dtv:manualFeed') or
+           item_info.feed_url.startswith('dtv:directoryfeed') or
+           item_info.feed_url.startswith('dtv:search') or
+           item_info.feed_url.startswith('dtv:searchDownloads')))):
+            if(item_info.file_type == u'video'):
+                continuous_playback = app.config.get(
+                                          prefs.CONTINUOUS_VIDEO_PLAYBACK_MODE)
+            else:
+                continuous_playback = app.config.get(
+                                          prefs.CONTINUOUS_MUSIC_PLAYBACK_MODE)
+        else:
+            continuous_playback = app.config.get(
+                                      prefs.CONTINUOUS_PODCAST_PLAYBACK_MODE)
+
+        result = continuous_playback and app.config.get(prefs.PLAY_IN_MIRO)
+        return result
+    
 
 class PlaybackPlaylist(signals.SignalEmitter):
     def __init__(self, item_tracker, start_id):
