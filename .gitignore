@@ -1,6 +1,5 @@
 tv/linux/build
 tv/linux/dist
-tv/linux/miro
 tv/linux/miro.1.gz
 tv/linux/miro.real.1.gz
 tv/linux/plat/__init__.pyc
