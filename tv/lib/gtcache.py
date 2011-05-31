@@ -107,9 +107,6 @@ def init(languages=None, localedir=None):
         languages = map(lambda lang: lang.encode('utf-8')
                         if isinstance(lang, unicode) else lang, languages)
 
-[lang.encode('utf-8') for lang in languages
-                     if isinstance(lang, unicode)]
-
     _translation = _gt.translation("miro",
             localedir=localedir,
             languages=languages,
