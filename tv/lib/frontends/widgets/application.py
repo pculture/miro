@@ -512,6 +512,10 @@ class Application:
         def playback_finished_if_playing_selection():
             if app.playback_manager.is_playing:
                 item = app.playback_manager.get_playing_item()
+                # bz:17555
+                # Snarf the id out.  Turns out that while the ItemInfo id
+                # is the same but the object is different so the boolean
+                # expression fails.
                 if item in selection:
                     app.playback_manager.on_movie_finished()
 
