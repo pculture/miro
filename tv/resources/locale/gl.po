@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-04-27 03:54+0000\n"
+"PO-Revision-Date: 2011-05-27 10:48+0000\n"
 "Last-Translator: Marcos Lans <Unknown>\n"
 "Language-Team: Marcos Lans <marcoslansgarza@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:02+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:22+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 "X-Poedit-Language: Galician\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
@@ -62,7 +62,7 @@ msgstr "A actualizar a base de datos"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Preparando os elementos"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -76,7 +76,7 @@ msgstr "%(host)s pechou a conexion"
 #: ../../lib/httpclient.py:111
 #, python-format
 msgid "%(host)s gave us an empty response"
-msgstr ""
+msgstr "%(host)s deu unha resposta baleira"
 
 #: ../../lib/httpclient.py:116
 #, python-format
@@ -299,6 +299,8 @@ msgstr ""
 #: ../../lib/opml.py:234
 msgid "The selected OPML file could not be read.  Import was interrupted."
 msgstr ""
+"Non foi posible ler o ficheiro OPML seleccionado. A importación "
+"interrumpiuse."
 
 #: ../../lib/opml.py:242
 msgid "OPML Import summary"
@@ -573,7 +575,7 @@ msgstr "Erro"
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Produciuse un erro movendo o cartafol das películas"
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
 msgid "Not enough disk space"
@@ -1218,7 +1220,7 @@ msgstr "Conversión"
 
 #: ../../lib/frontends/widgets/searchcontroller.py:75
 msgid "Use the search box above to search for videos on these sites"
-msgstr ""
+msgstr "Use a caixa de busca superior para encontrar vídeos nestes sitios"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:118
@@ -1974,6 +1976,8 @@ msgid ""
 "Directory '%(dir)s' could not be created.  Please choose a directory you "
 "have write access to."
 msgstr ""
+"Non foi posible crear o cartafol '%(dir)s'.  Escolla un cartafol no que teña "
+"permisos de escritura."
 
 #: ../../lib/frontends/widgets/prefpanel.py:735
 msgid "Migrate existing movies?"
@@ -2144,7 +2148,7 @@ msgstr "Visible"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1108
 msgid "MP3 stores:"
-msgstr ""
+msgstr "Tendas de MP3:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1131
 msgid "enabled"
@@ -2254,7 +2258,7 @@ msgstr "mostrar os contidos"
 #: ../../lib/frontends/widgets/itemrenderer.py:103
 #, python-format
 msgid "Copy to %(appname)s"
-msgstr ""
+msgstr "Copiar ao %(appname)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:105
 msgid "Download Torrent"
@@ -2304,7 +2308,7 @@ msgstr "Conversión a %(format)s"
 #: ../../lib/frontends/widgets/itemrenderer.py:1341
 #, python-format
 msgid "Conversion to %(format)s failed: %(error)s"
-msgstr ""
+msgstr "Produciuse un fallo na conversión a %(format)s: %(error)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1348
 #: ../../lib/frontends/widgets/itemrenderer.py:1355
@@ -2330,7 +2334,7 @@ msgstr "Completado"
 #: ../../lib/frontends/widgets/itemrenderer.py:1366
 #, python-format
 msgid "%(percent)i%% done"
-msgstr ""
+msgstr "%(percent)i%% feito"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -2478,16 +2482,18 @@ msgstr ""
 msgid ""
 "That directory could not be found. Please check the path and try again."
 msgstr ""
+"Non foi posible encontrar ese cartafol. Comprobe a ruta e probe de novo."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:125
 msgid ""
 "That directory could not be accessed. Please check the permissions and try "
 "again."
 msgstr ""
+"Non foi posible acceder ao cartafol. Comprobe os permisos e probe de novo."
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:63
 msgid "Searching for files"
-msgstr ""
+msgstr "Buscando os ficheiros"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:145
 #: ../../lib/frontends/widgets/firsttimedialog.py:513
@@ -2498,8 +2504,8 @@ msgstr "Cancelar a procura"
 #, python-format
 msgid "Searched %(count)s file"
 msgid_plural "Searched %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Buscado %(count)s ficheiro"
+msgstr[1] "Buscados %(count)s ficheiros"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
 #: ../../lib/frontends/widgets/firsttimedialog.py:449
@@ -2650,12 +2656,12 @@ msgstr "Sincronizar as listas de reprodución"
 #: ../../lib/frontends/widgets/devicecontroller.py:460
 #, python-format
 msgid "Device Default (%(audio)s)"
-msgstr ""
+msgstr "Dispositivo predeterminado (%(audio)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:463
 #, python-format
 msgid "Device Default (%(video)s)"
-msgstr ""
+msgstr "Dispositivo predeterminado (%(video)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:476
 msgid "Name of Device"
@@ -2861,7 +2867,11 @@ msgid_plural ""
 "Some of these items are folders.  Deleting/Removing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Un destes elementos é un cartafol. Borrar/Eliminar un cartafol "
+"borrará/eliminará o seu contido"
 msgstr[1] ""
+"Algúns destes elementos son cartafoles. Borrar/Eliminar un cartafol "
+"borrará/eliminará o seu contido"
 
 #: ../../lib/frontends/widgets/application.py:566
 #, python-format
@@ -2893,15 +2903,15 @@ msgstr "Escoller un cartafol onde procurar ficheiros multimedia"
 
 #: ../../lib/frontends/widgets/application.py:687
 msgid "Choose files to import"
-msgstr ""
+msgstr "Escolla os ficheiros a importar"
 
 #: ../../lib/frontends/widgets/application.py:689
 msgid "Video Files"
-msgstr ""
+msgstr "Ficheiros de vídeo"
 
 #: ../../lib/frontends/widgets/application.py:690
 msgid "Audio Files"
-msgstr ""
+msgstr "Ficheiros de audio"
 
 #: ../../lib/frontends/widgets/application.py:728
 msgid "Enter the URL of the source to add"
@@ -3101,10 +3111,14 @@ msgid ""
 "process can take a long time if you  have a large number of items in Miro "
 "(it can even take more than 30 minutes)."
 msgstr ""
+"Miro está actualizando a base de datos de podcasts e ficheiros. Este "
+"proceso, que se realiza unha vez, pode levar unha boa miga se ten un grande "
+"número de elementos no Miro (incluso máis de 30 minutos)."
 
 #: ../../lib/frontends/widgets/application.py:1424
 msgid "Miro shutdown improperly and needs to prepare your items for display."
 msgstr ""
+"Miro pechou de forma inadecuada e precisa preparar os elementos a mostrar."
 
 #: ../../lib/frontends/widgets/application.py:1661
 msgid "Message"
@@ -3116,7 +3130,7 @@ msgstr "Vistos recentemente"
 
 #: ../../lib/frontends/widgets/guidecontroller.py:179
 msgid "Recently Listened To"
-msgstr ""
+msgstr "Escoitado recentemente en"
 
 #: ../../lib/frontends/widgets/guidecontroller.py:181
 msgid "Recent Downloads"
@@ -3124,27 +3138,28 @@ msgstr "Descargas recentes"
 
 #: ../../lib/frontends/widgets/videobox.py:155
 msgid "Unknown Album"
-msgstr ""
+msgstr "Álbum descoñecido"
 
 #: ../../lib/frontends/widgets/videobox.py:156
 msgid "Unknown Artist"
-msgstr ""
+msgstr "Artista descoñecido"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:78
 #, python-format
 msgid "%(appname)s Setup"
-msgstr ""
+msgstr "Configuración do %(appname)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:181
 #, python-format
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
+"Benvido a  %(name)s. Temos un par de preguntas para axudalo a empezar."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #, python-format
 msgid "What language would you like %(name)s to be in?"
-msgstr ""
+msgstr "Que idioma desexa utilizar no %(name)s?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:231
 #: ../../lib/frontends/widgets/firsttimedialog.py:268
@@ -3159,6 +3174,8 @@ msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
 "resume your downloads and update your podcasts."
 msgstr ""
+"%(name)s pode executarse automaticamente, continuar as descargas e "
+"actualizar os podcasts  cando inicia o computador."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:253
 #, python-format
@@ -3178,19 +3195,21 @@ msgid ""
 "%(name)s can find music and video on your computer and show them in your "
 "%(name)s library.  No files will be copied or duplicated."
 msgstr ""
+"%(name)s pode encontrar música e vídeos no computador e mostrar os elementos "
+"na biblioteca do %(name)s. Non se copiará nin duplicará ningún ficheiro."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:292
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
-msgstr ""
+msgstr "Desexa que o %(name)s busque ficheiros multimedia no computador?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:308
 msgid "Search everywhere."
-msgstr ""
+msgstr "Buscar en todos."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:310
 msgid "Just search in this folder:"
-msgstr ""
+msgstr "Buscar só neste cartafol:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:357
 #: ../../lib/frontends/widgets/firsttimedialog.py:524
@@ -3212,7 +3231,7 @@ msgstr[1] "%(count)s ficheiros analizados"
 #, python-format
 msgid ""
 "Would you like to display your %(player)s music and video in %(appname)s?"
-msgstr ""
+msgstr "Desexa mostrar a música do %(player)s e os vídeos no %(appname)s?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:558
 #, python-format
@@ -3220,11 +3239,13 @@ msgid ""
 "Note: %(appname)s won't move or copy any files on your disk.  It will just "
 "add them to your %(appname)s library."
 msgstr ""
+"Aviso: %(appname)s non moverá nin copiará ningún ficheiro no seu disco. "
+"Unicamente os engadirá á biblioteca do %(appname)s."
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:299
 #, python-format
 msgid "%(item)s at %(resumetime)s"
-msgstr ""
+msgstr "%(item)s en %(resumetime)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:302
 #, python-format
@@ -3266,7 +3287,7 @@ msgstr "Ver|Todo"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:791
 msgid "Save as Playlist"
-msgstr ""
+msgstr "Gardar como lista de reprodución"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:809
 msgid "Movies"
@@ -3392,7 +3413,7 @@ msgstr "Ver a licenza"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2216
 msgid "Select an item to view more of its details"
-msgstr ""
+msgstr "Seleccione un elemento para ver máis información"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2269
 msgid "DRM Locked"
@@ -3408,27 +3429,27 @@ msgstr "_Abrir"
 
 #: ../../lib/frontends/widgets/menus.py:218
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Search all my Files..."
-msgstr ""
+msgstr "Buscar en todos os meus ficheiros..."
 
 #: ../../lib/frontends/widgets/menus.py:222
 msgid "Search in a Folder..."
-msgstr ""
+msgstr "Buscar nun cartafol..."
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "Watch a Folder..."
-msgstr ""
+msgstr "Ver un cartafol..."
 
 #: ../../lib/frontends/widgets/menus.py:228
 msgid "Choose Files...."
-msgstr ""
+msgstr "Escoller os ficheiros..."
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "Download from a URL"
-msgstr ""
+msgstr "Descargar desde unha URL"
 
 #: ../../lib/frontends/widgets/menus.py:236
 msgid "Remove Item"
@@ -3645,7 +3666,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:392
 msgid "Memory Stats"
-msgstr ""
+msgstr "Estadísticas da memoria"
 
 #: ../../lib/frontends/widgets/menus.py:430
 msgid "_Encoding"
@@ -3678,7 +3699,7 @@ msgstr "Escoller un ficheiro de miniaturas"
 
 #: ../../lib/frontends/widgets/itemedit.py:327
 msgid "Click to choose image."
-msgstr ""
+msgstr "Prema para escoller unha imaxe."
 
 #: ../../lib/frontends/widgets/itemedit.py:404
 msgid "Move"
@@ -3883,13 +3904,15 @@ msgstr ""
 #: ../../lib/storedatabase.py:906
 #, python-format
 msgid "%(appname)s database corrupt."
-msgstr ""
+msgstr "A base de datos do %(appname)s está corrupta."
 
 #: ../../lib/storedatabase.py:908
 msgid ""
 "Your Miro database is corrupt.  It will be backed up in your Miro database "
 "directory and a new database will be created now."
 msgstr ""
+"A base de datos do Miro está corrupta. Farase unha copia de seguranza no "
+"cartafol da base de datos do Miro e crearase unha base de datos nova."
 
 #: ../../lib/singleclick.py:71
 msgid "Download already exists"

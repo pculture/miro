@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-04-23 16:01+0000\n"
+"PO-Revision-Date: 2011-05-26 22:03+0000\n"
 "Last-Translator: Atheos <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:02+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:22+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
 msgid "File not found"
-msgstr "Δε βρέθηκε το αρχείο"
+msgstr "Το αρχείο δε βρέθηκε"
 
 #: ../../lib/downloader.py:336
 msgid "Flash URL Scraping Error"
@@ -34,11 +34,11 @@ msgstr "εκκίνηση"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "δεν υπάρχει σύνδεση - επανάληψη σε %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
-msgstr "δεν υπάρχει σύνδεση - επανάληψη προσπάθειας σύντομα"
+msgstr "δεν υπάρχει σύνδεση - σύντομα θα γίνει επανάληψη"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/httpclient.py:218 ../../lib/httpclient.py:750
@@ -61,7 +61,7 @@ msgstr "Αναβάθμιση της βάσης δεδομένων"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Προετοιμασία αντικειμένων"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -75,12 +75,12 @@ msgstr "Το %(host)s τερμάτισε τη σύνδεση"
 #: ../../lib/httpclient.py:111
 #, python-format
 msgid "%(host)s gave us an empty response"
-msgstr ""
+msgstr "%(host)s μας έδωσε κενού περιεχομένου απάντηση"
 
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "Host returned %(status)s"
-msgstr "Ο ξενιστής επέστρεψε %(status)s"
+msgstr "Ο υποδοχέας επέστρεψε %(status)s"
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
@@ -108,7 +108,7 @@ msgstr "Ελήφθη κώδικας κατάστασης 404"
 #: ../../lib/httpclient.py:143
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr "Ο ξενιστής επέστρεψε κώδικα κακής κατάστασης: %(code)s"
+msgstr "Ο υποδοχέας επέστρεψε κώδικα κακής κατάστασης: %(code)s"
 
 #: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
 msgid "Authorization failed"
@@ -133,7 +133,7 @@ msgstr "Το \"%(url)s\" δεν είναι μία έγκυρη διεύθυνσ�
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Άγνωστος υποδοχέας"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -165,11 +165,11 @@ msgstr "Σφάλμα εγγραφής"
 
 #: ../../lib/httpclient.py:384
 msgid "Website"
-msgstr "Ιστότοπος"
+msgstr "Ιστοσελίδα"
 
 #: ../../lib/httpclient.py:389
 msgid "Proxy"
-msgstr "Διαμεσολαβητής"
+msgstr "Διαμεσολαβητής (proxy)"
 
 #: ../../lib/conversions.py:230
 #, python-format
@@ -178,12 +178,12 @@ msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/conversions.py:516
 msgid "Reason unknown--check log"
-msgstr ""
+msgstr "Άγνωστος λόγος--δείτε πληροφορίες στο log"
 
 #: ../../lib/conversions.py:842
 #, python-format
 msgid "%(program)s does not exist."
-msgstr ""
+msgstr "%(program)s  δεν υπάρχουν"
 
 #: ../../lib/conversions.py:957
 #: ../../lib/frontends/widgets/devicecontroller.py:453
@@ -200,15 +200,15 @@ msgstr "%(original_name)s (Μετατράπηκε σε %(format)s)"
 
 #: ../../lib/devices.py:175
 msgid "Your drive must be mounted."
-msgstr ""
+msgstr "Ο δίσκος σας πρέπει να προσαρμοστεί (mount)"
 
 #: ../../lib/devices.py:364
 msgid "USB Device"
-msgstr ""
+msgstr "Συσκευή USB"
 
 #: ../../lib/startup.py:134
 msgid "Database Error"
-msgstr "Σφάλμα βάσης δεδομένων"
+msgstr "Σφάλμα της βάσης δεδομένων"
 
 #: ../../lib/startup.py:135
 #, python-format
@@ -227,6 +227,21 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Ζητούμε συγνώμη , %(appname)s είχε πρόβλημα στην εκκινησή του λόγω ενός "
+"προβλήματος με τη βάση δεδομένων:\n"
+"\n"
+"Πρόβλημα: %(error)s\n"
+"\n"
+"Είναι πιθανό το αρχείο της βάσης δεδομένων σας να ειναι κατεστραμμένο και να "
+"μην μπορεί να χρησιμοποιηθεί.\n"
+"\n"
+"Μπορεις να κάνεις καθαρή εκκίνηση όπου η κατεστραμμένη βάση δεδομένων θα "
+"διαγραφεί , αλλά θα έχεις την δηνατότητα να ξαναπροσθέσεις τα δικά σου "
+"podcasts και αρχεία media. Εάν επιθυμείς να αυτό, πάτησε το κουμπί Καθαρής "
+"Εκκίνησης και κάνε επανεκκίνηση το %(appname)s.\n"
+"\n"
+"Για να μας βοηθήσεις να διορθώσουμε προβλήματα όπως αυτο στο μέλλον, "
+"παρακαλούμε κάντε μια αναφορά σφάλματος στo %(url)s."
 
 #: ../../lib/startup.py:156
 msgid "Unknown Error"
@@ -243,7 +258,7 @@ msgstr ""
 
 #: ../../lib/startup.py:272
 msgid "Database too new"
-msgstr "Η βάση δεδομένων είναι πολύ νέα"
+msgstr "Η βάση δεδομένων είναι πολύ καινούργια"
 
 #: ../../lib/startup.py:274
 #, python-format
@@ -267,6 +282,12 @@ msgid ""
 "Do you want to include entire program database including all video and "
 "podcast metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"%(appname)s θα στείλει τώρα μία αναφορά κατάρευσης στην βάση δεδομένων μας "
+"για κατάρευση \n"
+"\n"
+"Θέλεις να συμπεριλάβουμε ολόκληρη τη βάση δεδομένων του προγράμματος "
+"συμπεριλαμβάνοντας όλα τα βίντεο και τα μεταδεδομένα των podcast μαζί με την "
+"αναφορά κατάρρευσης ; Αυτό θα μας βοηθήσει να διαγνώσουμε το πρόβλημα."
 
 #: ../../lib/opml.py:224 ../../lib/opml.py:232
 msgid "OPML Import failed"
@@ -632,15 +653,15 @@ msgstr[1] ""
 #, python-format
 msgid "%(num)d hr"
 msgid_plural "%(num)d hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d ώρα"
+msgstr[1] "%(num)d ώρες"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(num)d min"
 msgid_plural "%(num)d mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d λεπτό"
+msgstr[1] "%(num)d λεπτά"
 
 #: ../../lib/displaytext.py:109
 #, python-format
@@ -769,7 +790,7 @@ msgstr "Εισαγωγή του ονόματος του φακέλου για π
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: ../../lib/frontends/widgets/widgetconst.py:58
 #: ../../lib/frontends/widgets/tabcontroller.py:517
@@ -817,7 +838,7 @@ msgstr "Χρόνος"
 
 #: ../../lib/frontends/widgets/widgetconst.py:67
 msgid "Status"
-msgstr "Κατάσταση"
+msgstr "Θέση"
 
 #: ../../lib/frontends/widgets/widgetconst.py:68
 #: ../../lib/frontends/widgets/itemedit.py:517
@@ -826,7 +847,7 @@ msgstr "Μέγεθος"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
-msgstr ""
+msgstr "Πηγή"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
@@ -885,7 +906,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:921
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1115
 msgid "Unplayed"
-msgstr "Μη αναπαραγμένα"
+msgstr "Μη αναπαραγμένο"
 
 #: ../../lib/frontends/widgets/style.py:551
 msgid "paused"
@@ -939,8 +960,8 @@ msgstr "Λήψη αυτού του βίντεο"
 #: ../../lib/frontends/widgets/menus.py:275
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Αφαίρεση podcast"
+msgstr[1] "Αφαίρεση podcasts"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
@@ -997,7 +1018,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tabcontroller.py:122
 #: ../../lib/frontends/widgets/prefpanel.py:514
 msgid "Off"
-msgstr "Ανενεργή"
+msgstr "Off"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:148
 msgid "Get Help"
@@ -1093,7 +1114,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:919
 #: ../../lib/frontends/widgets/tablist.py:927
 msgid "Sources"
-msgstr ""
+msgstr "Πηγές"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:454
 #, python-format
@@ -1110,25 +1131,25 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:727
 #: ../../lib/frontends/widgets/menus.py:259
 msgid "Add Source"
-msgstr ""
+msgstr "Προσθήκη πηγής"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:502
 #: ../../lib/frontends/widgets/tablist.py:1098
 #: ../../lib/frontends/widgets/tablist.py:1104
 #: ../../lib/frontends/widgets/devicecontroller.py:580
 msgid "Playlists"
-msgstr ""
+msgstr "Λίστες αναπαραγωγής"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:526
 msgid "Add Playlist"
-msgstr ""
+msgstr "Προσθήκη λίστας αναπαραγωγής"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:552
 #: ../../lib/frontends/widgets/tablist.py:982
 #: ../../lib/frontends/widgets/tablist.py:990
 #: ../../lib/frontends/widgets/prefpanel.py:1269
 msgid "Stores"
-msgstr ""
+msgstr "Καταστήματα"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:568
 #, python-format
@@ -1376,7 +1397,7 @@ msgstr "Αφαίρεση από τη βιβλιοθήκη"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:73
 msgid "Delete from Drive"
-msgstr ""
+msgstr "Διαγραφή από το δίσκο"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:108
 #: ../../lib/frontends/widgets/itemcontextmenu.py:166
@@ -1389,7 +1410,7 @@ msgstr "Αναπαραγωγή εξωτερικά"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:176
 #: ../../lib/frontends/widgets/itemcontextmenu.py:226
 msgid "Edit Item Details"
-msgstr ""
+msgstr "Επεξεργασία λεπτομερειών αντικειμένου"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:123
 #, python-format
@@ -1429,7 +1450,7 @@ msgstr "Σήμανση ως μη αναπαραγμένο"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:156
 #: ../../lib/frontends/widgets/itemcontextmenu.py:381
 msgid "Mark as Played"
-msgstr "Σήμανση ως αναπαραχθέν"
+msgstr "Σήμανση ως αναπαραγμένο"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:163
 msgid "Play Just This Item"
@@ -1483,7 +1504,7 @@ msgstr "Αντιγραφή της διεύθυνσης (URL) στο πρόχει
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:259
 msgid "View Web Page"
-msgstr ""
+msgstr "Προβολή ιστοσελίδας"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:264
 #: ../../osx/plat/frontends/widgets/overlay.py:128
@@ -1719,7 +1740,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tablist.py:1078
 msgid "Update Podcast Now"
-msgstr ""
+msgstr "Ενημέρωση του podcast τώρα"
 
 #: ../../lib/frontends/widgets/tablist.py:1081
 #: ../../lib/frontends/widgets/menus.py:267
@@ -1728,7 +1749,7 @@ msgstr "Μετονομασία"
 
 #: ../../lib/frontends/widgets/tablist.py:1083
 msgid "Revert Podcast Name"
-msgstr ""
+msgstr "Επαναφορά ονόματος podcast"
 
 #: ../../lib/frontends/widgets/tablist.py:1085
 #: ../../lib/frontends/widgets/devicecontroller.py:581
@@ -2085,11 +2106,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1062
 msgid "Store"
-msgstr ""
+msgstr "Κατάστημα"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1068
 msgid "Visible"
-msgstr ""
+msgstr "Ορατό"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1108
 msgid "MP3 stores:"
@@ -2643,11 +2664,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:749
 msgid "This is my device"
-msgstr ""
+msgstr "Αυτή είναι η συσκευή μου."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:757
 msgid "This device is not yet mounted."
-msgstr ""
+msgstr "Αυτή η συσκευή δεν έχει προσαρτηθεί ακόμα."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:261
@@ -2769,7 +2790,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a podcast. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Ένα από αυτά τα αντικείμενα δε λήφθηκε από podcast. Θέλεις να το διαγράψεις "
+"ή απλώς να το αφαιρέσεις από τη βιβλιοθήκη;"
 msgstr[1] ""
+"Ορισμένα από αυτά τα αντικείμενα δε λήφθηκαν από podcast. Θέλεις να τα "
+"διαγράψεις ή απλώς να τα αφαιρέσεις από τη βιβλιοθήκη;"
 
 #: ../../lib/frontends/widgets/application.py:551
 msgid ""
@@ -3241,19 +3266,19 @@ msgstr "Ρυθμίσεις λήψεων"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1440
 msgid "Auto-Download All"
-msgstr ""
+msgstr "Αυτόματη λήψη όλων"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1441
 msgid "Auto-Download New"
-msgstr ""
+msgstr "Αυτόματη λήψη νέων"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1442
 msgid "Auto-Download Off"
-msgstr ""
+msgstr "Αυτόματη λήψη ανενεργή"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1450
 msgid "Remove podcast"
-msgstr ""
+msgstr "Αφαίρεση podcast"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1800
 msgid "Importing audio details and artwork: {0} of {1}"
@@ -3386,7 +3411,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:276
 msgid "Remove Podcasts"
-msgstr ""
+msgstr "Αφαίρεση podcasts"
 
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "Remove Folder"
@@ -3498,11 +3523,11 @@ msgstr "Επιλογή ενός αρχείου υποτίτλων..."
 
 #: ../../lib/frontends/widgets/menus.py:359
 msgid "Sorts"
-msgstr ""
+msgstr "Ταξινόμηση"
 
 #: ../../lib/frontends/widgets/menus.py:361
 msgid "_Convert"
-msgstr ""
+msgstr "_Μετατροπή"
 
 #: ../../lib/frontends/widgets/menus.py:363
 msgid "_Help"

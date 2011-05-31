@@ -8,19 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2010-09-07 10:58+0000\n"
-"Last-Translator: Aljullu <aljullu@gmail.com>\n"
+"PO-Revision-Date: 2011-05-31 11:59+0000\n"
+"Last-Translator: David Xaus <Unknown>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
-
-#: ../../lib/downloader.py:336
-msgid "Flash URL Scraping Error"
-msgstr "Error amb l'adreça Flash"
+"X-Launchpad-Export-Date: 2011-05-31 19:21+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/httpclient.py:141
 msgid "Got 404 status code"
@@ -59,7 +55,7 @@ msgstr "Esborrar Arxius"
 
 #: ../../lib/dialogs.py:112
 msgid "Keep Videos"
-msgstr "Mantindre Vídeos"
+msgstr "Mantenir vídeos"
 
 #: ../../lib/dialogs.py:113
 msgid "Delete Videos"
@@ -75,7 +71,7 @@ msgstr "Afegir"
 
 #: ../../lib/dialogs.py:119
 msgid "Add Into New Folder"
-msgstr "Afegir Dins d'una Carpeta Nova"
+msgstr "Afegir dins d'una carpeta nova"
 
 #: ../../lib/dialogs.py:120 ../../lib/frontends/widgets/itemcontextmenu.py:383
 #: ../../osx/plat/frontends/widgets/overlay.py:132
@@ -123,7 +119,7 @@ msgstr "temps esgotat"
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1075
 #: ../../lib/frontends/widgets/application.py:832
 msgid "Create Playlist"
-msgstr "Crear Llista de reproducció"
+msgstr "Crear llista de reproducció"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1076
 #: ../../lib/frontends/widgets/application.py:833
@@ -171,11 +167,11 @@ msgstr "Torrent no vàlid"
 
 #: ../../windows/plat/frontends/widgets/application.py:260
 msgid "Error Bombing Item"
-msgstr "Error creant l'arxiu bomba"
+msgstr "Error enviant l'element"
 
 #: ../../windows/plat/frontends/widgets/application.py:262
 msgid "Error Recommending Item"
-msgstr "Error al recomanar l'item"
+msgstr "Error al recomanar l'element"
 
 #: ../../windows/plat/frontends/widgets/application.py:264
 msgid "Error Opening Website"
@@ -187,7 +183,7 @@ msgstr "Amaga les altres"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Show All"
-msgstr "Mostrar tots"
+msgstr "Mostrar tot"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:239
 msgid "Cut"
@@ -222,7 +218,11 @@ msgstr "Porta-ho tot al devant"
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
 msgid "File not found"
-msgstr "Arxiu no trobat"
+msgstr "Fitxer no trobat"
+
+#: ../../lib/downloader.py:336
+msgid "Flash URL Scraping Error"
+msgstr "Error en l'adreça Flash"
 
 #: ../../lib/downloader.py:543
 msgid "starting up"
@@ -231,11 +231,11 @@ msgstr "començant"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "no hi ha connexió - tornant a provar en %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "no hi ha connexió - tornant a provar aviat"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/httpclient.py:218 ../../lib/httpclient.py:750
@@ -258,7 +258,7 @@ msgstr "S'està actualitzant la base de dades"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Preparant Elements"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -277,11 +277,11 @@ msgstr ""
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "L'ordinador ha retonrat %(status)s"
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
-msgstr ""
+msgstr "Si us plau, torna-ho a provar després"
 
 #: ../../lib/httpclient.py:122
 #, python-format
@@ -309,11 +309,11 @@ msgstr "Autorització fallida"
 
 #: ../../lib/httpclient.py:154
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Autorització cancel.lada"
 
 #: ../../lib/httpclient.py:155
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Autorització cancel.lada per l'usuari"
 
 #: ../../lib/httpclient.py:159
 msgid "Invalid URL"
@@ -326,7 +326,7 @@ msgstr "\"%(url)s\" no és una URL vàlida"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Ordinador desconegut"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -354,15 +354,15 @@ msgstr ""
 
 #: ../../lib/httpclient.py:187
 msgid "Write error"
-msgstr ""
+msgstr "S'ha produït un error d’escriptura"
 
 #: ../../lib/httpclient.py:384
 msgid "Website"
-msgstr ""
+msgstr "Lloc web"
 
 #: ../../lib/httpclient.py:389
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/conversions.py:230
 #, python-format
@@ -389,7 +389,7 @@ msgstr ""
 
 #: ../../lib/devices.py:364
 msgid "USB Device"
-msgstr ""
+msgstr "Dispositiu USB"
 
 #: ../../lib/startup.py:134
 msgid "Database Error"
@@ -439,7 +439,7 @@ msgstr ""
 
 #: ../../lib/startup.py:549
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "Enviant informe d'error"
 
 #: ../../lib/startup.py:551
 #, python-format
@@ -485,11 +485,11 @@ msgstr[1] ""
 
 #: ../../lib/dialogs.py:94
 msgid "OK"
-msgstr ""
+msgstr "Acceptar"
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/gtk/window.py:919
 msgid "Close"
@@ -529,7 +529,7 @@ msgstr "Ignora"
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "Importar fitxers"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -541,7 +541,7 @@ msgstr "Arxiu Esborrat"
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
-msgstr ""
+msgstr "Crear Podcast"
 
 #: ../../lib/dialogs.py:116
 msgid "Create Folder"
@@ -549,7 +549,7 @@ msgstr "Crea carpeta"
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
-msgstr ""
+msgstr "Afegeix carpeta"
 
 #: ../../lib/dialogs.py:121 ../../lib/frontends/widgets/gtk/video.py:313
 #: ../../osx/plat/frontends/widgets/osxmenus.py:242
@@ -575,7 +575,7 @@ msgstr "Descarrega de totes maneres"
 
 #: ../../lib/dialogs.py:127
 msgid "Open in External Browser"
-msgstr ""
+msgstr "Obre en un navegador extern"
 
 #: ../../lib/dialogs.py:128
 msgid "Don't Install"
@@ -587,11 +587,11 @@ msgstr "Subscriure"
 
 #: ../../lib/dialogs.py:130
 msgid "Stop Watching"
-msgstr ""
+msgstr "Deixar de vigilar"
 
 #: ../../lib/dialogs.py:131
 msgid "Retry"
-msgstr ""
+msgstr "Reintentar"
 
 #: ../../lib/dialogs.py:132
 msgid "Start Fresh"
@@ -599,11 +599,11 @@ msgstr "Inicia netament"
 
 #: ../../lib/dialogs.py:133
 msgid "Include Database"
-msgstr ""
+msgstr "Inclou Base de Dades"
 
 #: ../../lib/dialogs.py:134
 msgid "Don't Include Database"
-msgstr ""
+msgstr "No incloguis Base de Dades"
 
 #: ../../lib/dialogs.py:211
 #, python-format
@@ -658,7 +658,7 @@ msgstr "Error"
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Error movent al directori de pel.lícules"
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
 msgid "Not enough disk space"
@@ -667,11 +667,11 @@ msgstr "No hi ha espai suficient en el disc dur"
 #: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1062
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "Es requereixen %(amount)s MB per a guardar aquest vídeo"
 
 #: ../../lib/dl_daemon/download.py:853
 msgid "no content"
-msgstr ""
+msgstr "sense contingut"
 
 #: ../../lib/dl_daemon/download.py:1096
 msgid "BitTorrent failure"
@@ -683,15 +683,15 @@ msgstr "BitTorrent ha fallat al iniciar"
 
 #: ../../lib/dl_daemon/download.py:1239
 msgid "waiting to check existing files"
-msgstr ""
+msgstr "esperant per comprovar els fitxers existents"
 
 #: ../../lib/dl_daemon/download.py:1241
 msgid "checking existing files"
-msgstr ""
+msgstr "comprovant els fitxers existents"
 
 #: ../../lib/dl_daemon/download.py:1243
 msgid "allocating disk space"
-msgstr ""
+msgstr "assignant espai de disc"
 
 #: ../../lib/dl_daemon/download.py:1486
 msgid "Corrupt Torrent"
@@ -710,43 +710,43 @@ msgstr ""
 #: ../../lib/displaytext.py:62
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:65
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:68
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:71
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:95
 #, python-format
 msgid "%(num)d day"
 msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d dia"
+msgstr[1] "%(num)d dies"
 
 #: ../../lib/displaytext.py:100
 #, python-format
 msgid "%(num)d hr"
 msgid_plural "%(num)d hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d hora"
+msgstr[1] "%(num)d hores"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(num)d min"
 msgid_plural "%(num)d mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d min"
+msgstr[1] "%(num)d minuts"
 
 #: ../../lib/displaytext.py:109
 #, python-format
@@ -758,22 +758,22 @@ msgstr[1] "%(num)d segons"
 #: ../../lib/displaytext.py:129
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:132
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:135
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:137
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:142
 #, python-format
@@ -855,7 +855,7 @@ msgstr "Nom de la carpeta:"
 
 #: ../../lib/frontends/widgets/newfolder.py:87
 msgid "Create Podcast Folder"
-msgstr ""
+msgstr "Crear Carpeta Podcast"
 
 #: ../../lib/frontends/widgets/newfolder.py:88
 msgid "Enter the name of the folder to add"
@@ -874,32 +874,32 @@ msgstr "Nom"
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
-msgstr ""
+msgstr "Artista"
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
 #: ../../lib/frontends/widgets/itemedit.py:494
 msgid "Album"
-msgstr ""
+msgstr "Àlbum"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 #: ../../lib/frontends/widgets/itemedit.py:497
 msgid "Track"
-msgstr ""
+msgstr "Pista"
 
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "Any"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495
 msgid "Genre"
-msgstr ""
+msgstr "Gènere"
 
 #: ../../lib/frontends/widgets/widgetconst.py:64
 #: ../../lib/frontends/widgets/itemedit.py:311
 msgid "Rating"
-msgstr ""
+msgstr "Puntuació"
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
@@ -920,7 +920,7 @@ msgstr "Mida"
 
 #: ../../lib/frontends/widgets/widgetconst.py:69
 msgid "Source"
-msgstr ""
+msgstr "Origen"
 
 #: ../../lib/frontends/widgets/widgetconst.py:70
 msgid "ETA"
@@ -928,7 +928,7 @@ msgstr "Temps estimat"
 
 #: ../../lib/frontends/widgets/widgetconst.py:71
 msgid "Torrent details"
-msgstr ""
+msgstr "Detalls del torrent"
 
 #: ../../lib/frontends/widgets/widgetconst.py:72
 msgid "Speed"
@@ -936,19 +936,19 @@ msgstr "Velocitat"
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
-msgstr ""
+msgstr "Data d'addició"
 
 #: ../../lib/frontends/widgets/widgetconst.py:74
 msgid "Last Played"
-msgstr ""
+msgstr "Última reproducció"
 
 #: ../../lib/frontends/widgets/widgetconst.py:75
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"
-msgstr ""
+msgstr "DRM"
 
 #: ../../lib/frontends/widgets/widgetconst.py:77
 msgid "File Type"
@@ -966,11 +966,11 @@ msgstr "Mostra"
 #: ../../lib/frontends/widgets/widgetconst.py:79
 #: ../../lib/frontends/widgets/itemedit.py:552
 msgid "Video Kind"
-msgstr ""
+msgstr "Tipus de vídeo"
 
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: ../../lib/frontends/widgets/style.py:543
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1098
@@ -987,7 +987,7 @@ msgstr "en pausa"
 
 #: ../../lib/frontends/widgets/style.py:553
 msgid "queued"
-msgstr ""
+msgstr "encuat"
 
 #: ../../lib/frontends/widgets/style.py:561
 #: ../../lib/frontends/widgets/itemrenderer.py:111
@@ -1005,7 +1005,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/feedcontroller.py:73
 #: ../../lib/frontends/widgets/sharingcontroller.py:73
 msgid "No Results"
-msgstr ""
+msgstr "Sense Resultats"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1089
 msgid "Unwatched"
@@ -1023,8 +1023,8 @@ msgstr "Descarregar aquest vídeo"
 #: ../../lib/frontends/widgets/menus.py:275
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Suprimeix el podcast"
+msgstr[1] "Suprimeix els podcasts"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:116
 msgid "On"
-msgstr ""
+msgstr "Actiu"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:122
 #: ../../lib/frontends/widgets/prefpanel.py:514
@@ -1081,12 +1081,12 @@ msgstr "Apagat"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:148
 msgid "Get Help"
-msgstr ""
+msgstr "Ajuda"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:201
 #: ../../lib/frontends/widgets/tablist.py:858
 msgid "Connect"
-msgstr ""
+msgstr "Connecta"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:229
 #, python-format
@@ -3202,7 +3202,7 @@ msgstr "Descarregat"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:781
 msgid "View|All"
-msgstr ""
+msgstr "Veure tot"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:791
 msgid "Save as Playlist"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-23 12:11+0000\n"
+"PO-Revision-Date: 2011-05-25 16:47+0000\n"
 "Last-Translator: Rise-T <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:22+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -1246,13 +1246,13 @@ msgstr "Nutzen sie das Suchfeld um auf diesen Seiten nach Videos zu suchen"
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:118
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "Nächstes ungesehenes Objekt abspielen (%(unplayed)d ungesehene)"
+msgstr "Nächstes ungesehenes Objekt wiedergeben (%(unplayed)d ungesehene)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:99
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:122
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "Alle ungesehenen Objekte abspielen (%(unplayed)d ungesehene)"
+msgstr "Alle ungesehenen Objekte wiedergeben (%(unplayed)d ungesehene)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:102
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:125
@@ -1370,10 +1370,11 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
-"%(count)d Download wartet wegen unabgespielter Elemente (siehe Einstellungen)"
-msgstr[1] ""
-"%(count)d Downloads warten wegen unabgespielter Elemente (siehe "
+"%(count)d Download wartet wegen bisher nicht wiedergegebener Elemente (siehe "
 "Einstellungen)"
+msgstr[1] ""
+"%(count)d Downloads warten wegen bisher nicht wiedergegebener Elemente "
+"(siehe Einstellungen)"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:210
 #, python-format
@@ -1439,7 +1440,7 @@ msgstr "Aus der Mediathek entfernen"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:73
 msgid "Delete from Drive"
-msgstr "Von der festplatte löschen"
+msgstr "Vom Laufwerk löschen"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:108
 #: ../../lib/frontends/widgets/itemcontextmenu.py:166
@@ -1487,16 +1488,16 @@ msgstr "Fortsetzen bei %(resumetime)s"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:153
 #: ../../lib/frontends/widgets/itemcontextmenu.py:379
 msgid "Mark as Unplayed"
-msgstr "Als ungespielt markieren"
+msgstr "Als nicht wiedergegeben markieren"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:156
 #: ../../lib/frontends/widgets/itemcontextmenu.py:381
 msgid "Mark as Played"
-msgstr "Als gespielt markieren"
+msgstr "Als wiedergegeben markieren"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:163
 msgid "Play Just This Item"
-msgstr "Nur dieses Objekt abspielen"
+msgstr "Nur dieses Objekt wiedergeben"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:181
 msgid "Stop Seeding"
@@ -1631,8 +1632,8 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
-"%(appname)s kann diese Datei nicht abspielen. Sie können sie möglicherweise "
-"mit einem anderen Programm öffnen."
+"%(appname)s kann diese Datei nicht wiedergeben. Sie können diese "
+"möglicherweise mit einem anderen Programm öffnen."
 
 #: ../../lib/frontends/widgets/displays.py:533
 msgid "Filename:"
@@ -2117,11 +2118,11 @@ msgstr "Bonjour installieren"
 
 #: ../../lib/frontends/widgets/prefpanel.py:961
 msgid "Play media in Miro."
-msgstr "Medium in Miro abspielen."
+msgstr "Medium in Miro wiedergeben."
 
 #: ../../lib/frontends/widgets/prefpanel.py:963
 msgid "Always play videos in a separate window."
-msgstr "Videos immer in einem eigenen Fenster abspielen."
+msgstr "Videos immer in einem eigenen Fenster wiedergeben."
 
 #: ../../lib/frontends/widgets/prefpanel.py:966
 msgid "Automatically enable movie subtitles when available."
@@ -2133,7 +2134,7 @@ msgstr "Ununterbrochene Wiedergabe"
 
 #: ../../lib/frontends/widgets/prefpanel.py:972
 msgid "Play video and audio items one after another"
-msgstr "Video- bzw. Audioinhalte nacheinander abspielen."
+msgstr "Video- bzw. Audioinhalte nacheinander wiedergeben."
 
 #: ../../lib/frontends/widgets/prefpanel.py:974
 msgid "Stop after each video or audio item"
@@ -2459,7 +2460,7 @@ msgstr "Ältere Objekte wurden entfernt"
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
 "Automatisches Herunterladen pausieren, falls folgende Anzahl von Elementen "
-"noch nicht abgespielt wurde:"
+"bisher nicht wiedergegeben wurde:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "1 unplayed item"
@@ -2681,7 +2682,7 @@ msgstr "Podcasts synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:402
 msgid "Only sync unplayed items"
-msgstr "Nur ungespielte Dateien synchronisieren"
+msgstr "Nur noch nicht wiedergegebene Dateien synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:431
 msgid "Sync These Playlists"

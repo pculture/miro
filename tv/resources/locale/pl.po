@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-24 15:19+0000\n"
-"Last-Translator: saperr.pmi@gmail.com <Unknown>\n"
+"PO-Revision-Date: 2011-05-25 19:15+0000\n"
+"Last-Translator: godzio <Unknown>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:21+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -40,7 +40,7 @@ msgstr "uruchamianie…"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "Brak połączenia - spróbuj za %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
@@ -86,7 +86,7 @@ msgstr ""
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Host zwrócił %(status)s"
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
@@ -105,7 +105,7 @@ msgstr ""
 #: ../../lib/httpclient.py:133
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Autoryzacja nieudana dla proxy: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:141
 msgid "Got 404 status code"
@@ -139,12 +139,12 @@ msgstr "„%(url)s” nie jest poprawnym adresem URL"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Nieznany host"
 
 #: ../../lib/httpclient.py:166
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Domena \"%(host)s\" nie może być znaleziona"
 
 #: ../../lib/httpclient.py:172
 #, python-format
@@ -184,12 +184,12 @@ msgstr ""
 
 #: ../../lib/conversions.py:516
 msgid "Reason unknown--check log"
-msgstr ""
+msgstr "Powód nieznany--sprawdź log"
 
 #: ../../lib/conversions.py:842
 #, python-format
 msgid "%(program)s does not exist."
-msgstr ""
+msgstr "%(program)s nie istnieje."
 
 #: ../../lib/conversions.py:957
 #: ../../lib/frontends/widgets/devicecontroller.py:453
@@ -202,15 +202,15 @@ msgstr "Kopiuj"
 #: ../../lib/conversions.py:1100
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Skonwertowany do %(format)s)"
 
 #: ../../lib/devices.py:175
 msgid "Your drive must be mounted."
-msgstr ""
+msgstr "Twój napęd musi być zamontowany."
 
 #: ../../lib/devices.py:364
 msgid "USB Device"
-msgstr ""
+msgstr "Urządzenie USB"
 
 #: ../../lib/startup.py:134
 msgid "Database Error"
@@ -271,6 +271,10 @@ msgid ""
 "Do you want to include entire program database including all video and "
 "podcast metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"%(appname)s sporządzi teraz raport o błędzie do naszej bazy danych\n"
+"\n"
+"Czy chcesz załączyć do raportu całą swoją bazę programów zawierającą "
+"wszystkie filmy i podcasty? To pomoże nam zdiagnozować usterkę."
 
 #: ../../lib/opml.py:224 ../../lib/opml.py:232
 msgid "OPML Import failed"
@@ -307,7 +311,7 @@ msgstr[1] ""
 
 #: ../../lib/dialogs.py:94
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
@@ -351,7 +355,7 @@ msgstr "Pomiń"
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "Importuj pliki"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -398,7 +402,7 @@ msgstr "Utwórz"
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
-msgstr ""
+msgstr "Utwórz podcast"
 
 #: ../../lib/dialogs.py:116
 msgid "Create Folder"
@@ -406,7 +410,7 @@ msgstr "Utwórz folder"
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
-msgstr ""
+msgstr "Dodaj katalog"
 
 #: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:768
 msgid "Add"
@@ -550,7 +554,7 @@ msgstr "Błąd"
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Błąd w przenoszeniu do katalogu filmów"
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
 msgid "Not enough disk space"
@@ -575,15 +579,15 @@ msgstr "BitTorrent uległ awarii przy uruchamianiu"
 
 #: ../../lib/dl_daemon/download.py:1239
 msgid "waiting to check existing files"
-msgstr ""
+msgstr "oczekiwanie na sprawdzenie istniejących plików"
 
 #: ../../lib/dl_daemon/download.py:1241
 msgid "checking existing files"
-msgstr ""
+msgstr "sprawdzanie istniejących plików"
 
 #: ../../lib/dl_daemon/download.py:1243
 msgid "allocating disk space"
-msgstr ""
+msgstr "dzielenie przestrzeni dyskowej"
 
 #: ../../lib/dl_daemon/download.py:1486
 msgid "Corrupt Torrent"
@@ -621,28 +625,31 @@ msgstr "%(size)s kB/s"
 #: ../../lib/displaytext.py:71
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:95
 #, python-format
 msgid "%(num)d day"
 msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d dzień"
+msgstr[1] "%(num)d dni"
+msgstr[2] "%(num)d dni"
 
 #: ../../lib/displaytext.py:100
 #, python-format
 msgid "%(num)d hr"
 msgid_plural "%(num)d hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d godzina"
+msgstr[1] "%(num)d godzin"
+msgstr[2] "%(num)d godzin"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(num)d min"
 msgid_plural "%(num)d mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d minuta"
+msgstr[1] "%(num)d minut"
+msgstr[2] "%(num)d minuty"
 
 #: ../../lib/displaytext.py:109
 #, python-format
@@ -785,22 +792,22 @@ msgstr "Nazwa"
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
-msgstr ""
+msgstr "Wykonawca"
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
 #: ../../lib/frontends/widgets/itemedit.py:494
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 #: ../../lib/frontends/widgets/itemedit.py:497
 msgid "Track"
-msgstr ""
+msgstr "Utwór"
 
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "Rok"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495

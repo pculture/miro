@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2010-12-21 15:45+0000\n"
-"Last-Translator: cvhien <Unknown>\n"
+"PO-Revision-Date: 2011-05-25 08:49+0000\n"
+"Last-Translator: Thanh Tài <Unknown>\n"
 "Language-Team: Vietnamese <vi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:02+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:21+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -34,7 +34,7 @@ msgstr "Đang bắt đầu"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "không có kết nối - thử lại trong  %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
@@ -61,7 +61,7 @@ msgstr "Đang nâng cấp cơ sở dữ liệu cũ"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Chuẩn bị đối tượng"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -84,7 +84,7 @@ msgstr ""
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
-msgstr ""
+msgstr "Hãy thử lại sau"
 
 #: ../../lib/httpclient.py:122
 #, python-format
@@ -99,7 +99,7 @@ msgstr ""
 #: ../../lib/httpclient.py:133
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Xác thực proxy thất bại: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:141
 msgid "Got 404 status code"
@@ -108,7 +108,7 @@ msgstr "Xảy ra mã trạng thái 404"
 #: ../../lib/httpclient.py:143
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Máy chủ trả về mã trạng thái không tốt: %(code)s"
 
 #: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
 msgid "Authorization failed"
@@ -116,7 +116,7 @@ msgstr "Xác thực thất bại"
 
 #: ../../lib/httpclient.py:154
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Xác thực bị hủy"
 
 #: ../../lib/httpclient.py:155
 msgid "Authorization canceled by user"

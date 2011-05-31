@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: getdemocracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-24 12:38+0000\n"
-"Last-Translator: Fiertel91 <fiertel91@gmail.com>\n"
+"PO-Revision-Date: 2011-05-28 11:09+0000\n"
+"Last-Translator: Egon D'Argento <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:23+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -35,13 +35,6 @@ msgstr "Ricevuto codice di stato 404"
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Il file \"%(path)s\" non esiste"
-
-#: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:216
-#: ../../lib/frontends/widgets/itemcontextmenu.py:398
-#: ../../lib/frontends/widgets/itemrenderer.py:102
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1961
-msgid "Download"
-msgstr "Scaricamento"
 
 #: ../../lib/net.py:104
 msgid "Timeout"
@@ -80,7 +73,7 @@ msgstr "Nessuna connessione - nuovo tentativo tra %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
-msgstr "Nessuna connessione - Nuovo tentativo tra poco"
+msgstr "Nessuna connessione - Nuovo tentativo a breve"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/httpclient.py:218 ../../lib/httpclient.py:750
@@ -256,6 +249,19 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Ci scusiamo, %(appname)s non è riuscito ad aprirsi a causa di un problema "
+"con il database:\n"
+"\n"
+"Errore: %(error)s\n"
+"\n"
+"E' possibile che il tuo database sia corrotto e inutilizzabile.\n"
+"\n"
+"Puoi iniziare la pulizia e il tuo database danneggiato sarà rimosso, ma "
+"dovrai riaggiungere i podcast e i file musicali. Se vuoi fare la pulizia, "
+"premi il bottone appropriato e riavvia %(appname)s.\n"
+"\n"
+"Se vuoi aiutarci a risolvere problemi come questi in futuro, ti preghiamo di "
+"compilare un Bug Report sul sito %(url)s."
 
 #: ../../lib/startup.py:156
 msgid "Unknown Error"
@@ -397,6 +403,13 @@ msgstr "Migra"
 #: ../../lib/dialogs.py:107
 msgid "Don't Migrate"
 msgstr "Non migrare"
+
+#: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:216
+#: ../../lib/frontends/widgets/itemcontextmenu.py:398
+#: ../../lib/frontends/widgets/itemrenderer.py:102
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1961
+msgid "Download"
+msgstr "Download"
 
 #: ../../lib/dialogs.py:109
 msgid "Remove Entry"
@@ -778,7 +791,7 @@ msgstr "Errore di connessione SSL"
 
 #: ../../lib/net.py:292
 msgid "Couldn't find address family to use"
-msgstr ""
+msgstr "Impossibile trovare un indirizzo da utilizzare"
 
 #: ../../lib/net.py:367
 msgid "Connection closed"
@@ -1082,7 +1095,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tabcontroller.py:272
 #, python-format
 msgid "My %(shortappname)s Share Name"
-msgstr ""
+msgstr "Il mio %(shortappname)s Nome di condivisione"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:309
 msgid "Sync a Phone, Tablet, or Digital Camera"
@@ -1221,7 +1234,7 @@ msgstr "Musica"
 #: ../../lib/frontends/widgets/statictabs.py:152
 #: ../../lib/frontends/widgets/itemedit.py:515
 msgid "Misc"
-msgstr ""
+msgstr "Miscellanea"
 
 #: ../../lib/frontends/widgets/statictabs.py:167
 #: ../../lib/frontends/widgets/statictabs.py:174
@@ -2202,10 +2215,11 @@ msgstr "Il caricamento dell'estensione è fallito"
 #, python-format
 msgid "Extension %(extensionname)s failed to unload: %(errormessage)s"
 msgstr ""
+"L'estensione %(extensionname)s ha fallito il caricamento: %(errormessage)s"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1222
 msgid "Extension failed to unload"
-msgstr ""
+msgstr "L'estensione ha fallito il caricamento"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1238
 msgid ""
@@ -2349,7 +2363,7 @@ msgstr "Completato"
 #: ../../lib/frontends/widgets/itemrenderer.py:1366
 #, python-format
 msgid "%(percent)i%% done"
-msgstr ""
+msgstr "%(percent)i%% fatto"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -2515,8 +2529,8 @@ msgstr "Annulla ricerca"
 #, python-format
 msgid "Searched %(count)s file"
 msgid_plural "Searched %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Cercato %(count)s file"
+msgstr[1] "Cercati %(count)s files"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
 #: ../../lib/frontends/widgets/firsttimedialog.py:449
@@ -2611,7 +2625,7 @@ msgstr "Sincronizza ora"
 #: ../../lib/frontends/widgets/devicecontroller.py:142
 #, python-format
 msgid "%(used)s used / %(total)s total - %(percent)i%% full"
-msgstr ""
+msgstr "%(used)s usato / %(total)s totale - %(percent)i%% pieno"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:159
 #, python-format
@@ -2669,16 +2683,16 @@ msgstr "Sincronizza le playlist"
 #: ../../lib/frontends/widgets/devicecontroller.py:460
 #, python-format
 msgid "Device Default (%(audio)s)"
-msgstr ""
+msgstr "Dispositivo di default (%(audio)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:463
 #, python-format
 msgid "Device Default (%(video)s)"
-msgstr ""
+msgstr "Dispositivo di default (%(video)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:476
 msgid "Name of Device"
-msgstr ""
+msgstr "Nome del Dispositivo"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:477
 msgid "Video Conversion"
@@ -2690,11 +2704,11 @@ msgstr "Conversione audio"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:479
 msgid "Store video in this directory"
-msgstr ""
+msgstr "Posiziona video in questa cartella"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:480
 msgid "Store audio in this directory"
-msgstr ""
+msgstr "Posiziona musica in questa cartella"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:481
 msgid "Always show this device, even if 'show all devices' is turned off"
@@ -2755,7 +2769,7 @@ msgstr "In questo:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:107
 msgid "Podcast:"
-msgstr ""
+msgstr "Podcast:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:114
 msgid "Search engine:"
@@ -3518,7 +3532,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Rimuovi playlist"
 
 #: ../../lib/frontends/widgets/menus.py:313
 msgid "Remove Playlists"
@@ -3749,6 +3763,8 @@ msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
+"S: %(seeders)s | L: %(leechers)s | UR: %(up_rate)s | UT: %(up_total)s | DR: "
+"%(down_rate)s | DT: %(down_total)s | R: %(ratio).2f"
 
 #: ../../lib/messages.py:1351 ../../lib/item.py:1297
 msgid "queued for download"
@@ -4354,6 +4370,10 @@ msgid ""
 "When the installation is finished, simply restart Miro for the changes to "
 "take effect."
 msgstr ""
+"Il browser si aprirà alla pagina da cui sarà possibile scaricare ed "
+"installare Bonjour.\n"
+"Al termine dell'installazione, riavviare Miro per rendere effettive le "
+"modifiche."
 
 #: ../../windows/plat/frontends/widgets/update.py:150
 msgid "Update Available"
@@ -4493,6 +4513,9 @@ msgid ""
 "a standard part of Mac OS X installations.  Please review your Mac OS X "
 "installation."
 msgstr ""
+"Miro ha rilevato che non è installata la componente Bonjour, inclusa "
+"nell'installazione predefinita di MacOS X. Si prega di controllare "
+"l'installazione di MacOS X."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 #: ../../osx/plat/frontends/widgets/osxmenus.py:293

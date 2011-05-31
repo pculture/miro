@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-20 20:58+0000\n"
-"Last-Translator: Kim Hansen <Unknown>\n"
+"PO-Revision-Date: 2011-05-25 02:58+0000\n"
+"Last-Translator: Daniel Hyldebrandt Hemmingsen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:01+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:21+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/frontends/widgets/style.py:561
 #: ../../lib/frontends/widgets/itemrenderer.py:111
@@ -40,7 +40,7 @@ msgstr "starter"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "ingen forbindelse - forsøger igen om %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
@@ -139,12 +139,12 @@ msgstr "\"%(url)s\" er ikke en gyldig URL"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Ukendt Host"
 
 #: ../../lib/httpclient.py:166
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Domænet \"%(host)s\" kunne ikke blive fundet"
 
 #: ../../lib/httpclient.py:172
 #, python-format
@@ -167,7 +167,7 @@ msgstr "Kunne ikke skrive til %(filename)s"
 
 #: ../../lib/httpclient.py:187
 msgid "Write error"
-msgstr ""
+msgstr "Skrivningsfejl"
 
 #: ../../lib/httpclient.py:384
 msgid "Website"
@@ -184,7 +184,7 @@ msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/conversions.py:516
 msgid "Reason unknown--check log"
-msgstr ""
+msgstr "Årsag ukendt, tjek log fil"
 
 #: ../../lib/conversions.py:842
 #, python-format
@@ -206,7 +206,7 @@ msgstr "%(original_name)s (Converted to %(format)s)"
 
 #: ../../lib/devices.py:175
 msgid "Your drive must be mounted."
-msgstr ""
+msgstr "Din driver skal være mounted."
 
 #: ../../lib/devices.py:364
 msgid "USB Device"

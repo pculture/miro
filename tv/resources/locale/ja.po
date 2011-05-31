@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-24 16:49+0000\n"
-"Last-Translator: Hiroaki Hirose <Unknown>\n"
+"PO-Revision-Date: 2011-05-26 01:34+0000\n"
+"Last-Translator: Ippei Okazaki <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:03+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:22+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -302,7 +302,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
-msgstr ""
+msgstr "適用する"
 
 #: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/gtk/window.py:919
 msgid "Close"
@@ -334,7 +334,7 @@ msgstr "終了"
 
 #: ../../lib/dialogs.py:102
 msgid "Continue"
-msgstr "コンティニュー"
+msgstr "続行"
 
 #: ../../lib/dialogs.py:103
 msgid "Ignore"
@@ -1156,7 +1156,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/statictabs.py:162
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1112
 msgid "Downloading"
-msgstr "ダウンローディング"
+msgstr "ダウンロード中です"
 
 #: ../../lib/frontends/widgets/statictabs.py:167
 #: ../../lib/frontends/widgets/statictabs.py:174
@@ -1748,7 +1748,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:477
 #: ../../lib/frontends/widgets/firsttimedialog.py:224
 msgid "Language:"
-msgstr ""
+msgstr "言語:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:481
 msgid "(Changing the language requires you to restart Miro.)"
@@ -2997,7 +2997,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #, python-format
 msgid "What language would you like %(name)s to be in?"
-msgstr ""
+msgstr "どの言語で %(name)s を使用しますか？"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:231
 #: ../../lib/frontends/widgets/firsttimedialog.py:268
@@ -3012,11 +3012,12 @@ msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
 "resume your downloads and update your podcasts."
 msgstr ""
+"%(name)s は、コンピュータの起動時に自動的に開始することができます。そうすることで、ポッドキャストのダウンロードとアップデートの再開が可能です。"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:253
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "起動時に %(name)s を開始しますか？"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:265
 #: ../../lib/frontends/widgets/firsttimedialog.py:341

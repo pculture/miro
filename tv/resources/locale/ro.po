@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-04-04 16:02+0000\n"
-"Last-Translator: Alexandru Cucu <cracknel.org@gmail.com>\n"
+"PO-Revision-Date: 2011-05-30 04:56+0000\n"
+"Last-Translator: ANDROBETA <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2011-05-24 19:02+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-05-31 19:23+0000\n"
+"X-Generator: Launchpad (build 13117)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -30,7 +30,7 @@ msgstr "pornire"
 #: ../../lib/downloader.py:550
 #, python-format
 msgid "no connection - retrying in %(time)s"
-msgstr ""
+msgstr "nicio conexiune - reîncercare în %(time)s"
 
 #: ../../lib/downloader.py:552
 msgid "no connection - retrying soon"
@@ -57,7 +57,7 @@ msgstr "Baza de date este reactualizată"
 #: ../../lib/dbupgradeprogress.py:104
 #: ../../lib/frontends/widgets/application.py:1423
 msgid "Preparing Items"
-msgstr ""
+msgstr "Se pregătesc elementele"
 
 #: ../../lib/httpclient.py:102
 msgid "HTTP error"
@@ -80,7 +80,7 @@ msgstr "Surasa a returnat %(status)s"
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
-msgstr "Va rugam re-incercati mai tarziu"
+msgstr "Vă rugăm reîncercaţi mai târziu"
 
 #: ../../lib/httpclient.py:122
 #, python-format
@@ -112,7 +112,7 @@ msgstr "Autorizare eşuată"
 
 #: ../../lib/httpclient.py:154
 msgid "Authorization canceled"
-msgstr "Autorizare anulata"
+msgstr "Autorizare anulată"
 
 #: ../../lib/httpclient.py:155
 msgid "Authorization canceled by user"
@@ -129,7 +129,7 @@ msgstr "„%(url)s” nu este un URL corect"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Gazdă necunoscută"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -179,7 +179,7 @@ msgstr ""
 #: ../../lib/conversions.py:842
 #, python-format
 msgid "%(program)s does not exist."
-msgstr ""
+msgstr "%(program)s nu există."
 
 #: ../../lib/conversions.py:957
 #: ../../lib/frontends/widgets/devicecontroller.py:453
@@ -196,7 +196,7 @@ msgstr "%(original_name)s (convertit in %(format)s)"
 
 #: ../../lib/devices.py:175
 msgid "Your drive must be mounted."
-msgstr ""
+msgstr "Unitatea de disc trebuie să fie montată."
 
 #: ../../lib/devices.py:364
 msgid "USB Device"
@@ -275,6 +275,7 @@ msgstr "Fișierul OPML pare să fie invalid. Importarea a fost întreruptă."
 #: ../../lib/opml.py:234
 msgid "The selected OPML file could not be read.  Import was interrupted."
 msgstr ""
+"Fișierul OPML selectat nu a putut fi citit. Importarea a fot întreruptă."
 
 #: ../../lib/opml.py:242
 msgid "OPML Import summary"
