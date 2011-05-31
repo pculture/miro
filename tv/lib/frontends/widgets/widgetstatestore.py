@@ -33,8 +33,14 @@ Widgets frontend. See WidgetState design doc.
 
 from miro.messages import (SaveDisplayState, SaveViewState, SaveGlobalState,
         DisplayInfo, ViewInfo)
+from miro import prefs
+from miro import app
 
 class WidgetStateStore(object):
+    # A CUSTOM_VIEW is a view which dynamically decides which view it is 
+    # supposed to be. The CUSTOM_VIEW has to be caught in widgetstatestore 
+    # and replaced with the proper view for the given situation.
+    CUSTOM_VIEW = 2 
     LIST_VIEW = 1
     STANDARD_VIEW = 0
     DEFAULT_VIEW_TYPE = {
@@ -42,7 +48,7 @@ class WidgetStateStore(object):
         u'device-audio': LIST_VIEW,
         u'device-video': STANDARD_VIEW,
         u'downloading': STANDARD_VIEW,
-        u'feed': STANDARD_VIEW,
+        u'feed': CUSTOM_VIEW,
         u'folder-contents': STANDARD_VIEW,
         u'music': LIST_VIEW,
         u'others': LIST_VIEW,
@@ -209,6 +215,15 @@ class WidgetStateStore(object):
             view = display.selected_view
         else:
             view = WidgetStateStore.DEFAULT_VIEW_TYPE[display_type]
+            if view == WidgetStateStore.CUSTOM_VIEW:
+                if display_type == u'feed':
+                    view = app.config.get(prefs.PODCASTS_DEFAULT_VIEW)
+                else:
+                    app.widgetapp.handle_soft_failure("Getting default view",
+                                       "Unknown CUSTOM_VIEW, falling back to "
+                                       "STANDARD_VIEW",
+                                       with_exception=True)
+                    view = WidgetStateStore.STANDARD_VIEW
         return view
 
     def set_selected_view(self, display_type, display_id, selected_view):
