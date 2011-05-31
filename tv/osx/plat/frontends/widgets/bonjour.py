@@ -29,6 +29,8 @@
 
 import logging
 
+from miro import app
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 
@@ -37,9 +39,10 @@ from miro.frontends.widgets import dialogs
 def install_bonjour():
     title = _("Install Bonjour")
     description = _(
-        "Miro has determined that your system may be "
+        "%(appname)s has determined that your system may be "
         "missing the Bonjour components, a standard part of "
-        "Mac OS X installations.  Please review your Mac OS X installation."
+        "Mac OS X installations.  Please review your Mac OS X installation.",
+        {"appname": app.config.get(prefs.SHORT_APP_NAME)}
     )
     dialogs.show_message(title, description)
     logging.debug('install bonjour clicked')

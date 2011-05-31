@@ -34,6 +34,8 @@ processing code for adding a new watched folder
 import logging
 import os
 
+from miro import app
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog, ask_for_directory
@@ -45,8 +47,9 @@ from miro.plat.utils import filename_to_unicode, PlatformFilenameType
 
 class NewWatchedFolderDialog(MainDialog):
     TITLE = _("Add Watched Folder")
-    DESCRIPTION = _("Miro can watch a folder on your computer and show "
-                    "those media files in your library.")
+    DESCRIPTION = _("%(appname)s can watch a folder on your computer and "
+                    "show those media files in your library.",
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)})
     def __init__(self, path, error=None):
         MainDialog.__init__(self, self.TITLE, self.DESCRIPTION)
         self.path = path # PlatformFilenameType

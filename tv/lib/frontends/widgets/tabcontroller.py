@@ -57,11 +57,16 @@ class SharingBroken(widgetset.Background):
         label.set_bold(True)
         label.set_color((1, 1, 1))
         vbox.pack_start(widgetutil.align_left(label, top_pad=10))
+        # Note: "Miro iPad app" is the name of a specific piece of
+        # software and thus should not be %(appname)s iPad app.
         label = widgetset.Label(
             _("You need to install the Bonjour libraries to be able to "
-              "share files from Miro-to-Miro or to the Miro iPad app.\n\n"
+              "share files from %(appname)s-to-%(appname)s or to the "
+              "Miro iPad app.\n\n"
               "Once you install the Bonjour libraries, you will have "
-              "to restart Miro."))
+              "to restart %(appname)s.",
+              {'appname': app.config.get(prefs.SHORT_APP_NAME)}))
+
         label.set_wrap(True)
         label.set_size_request(550, -1)
         label.set_color((1, 1, 1))
@@ -230,6 +235,8 @@ class ConnectTab(widgetset.VBox):
                                     self.trans_data))
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=10))
+        # Note: "Miro iPad app" is the name of a piece of software--
+        # don't substitute Miro for %(appname)s here.
         label = widgetset.Label(
             _("%(shortappname)s can stream and download files to and from "
               "other %(shortappname)ss on your local network and to the "
@@ -567,9 +574,9 @@ class StoresTab(widgetset.VBox):
         label = widgetset.Label(_(
                 "Select the music and video stores you'd like to have "
                 "appear in %(shortappname)s.  Note: some other store "
-                "websites may work well with Miro if you add them as "
-                "Sources, but these are Stores that we've integrated "
-                "and tested.",
+                "websites may work well with %(shortappname)s if you "
+                "add them as Sources, but these are Stores that we've "
+                "integrated and tested.",
                 {'shortappname': app.config.get(prefs.SHORT_APP_NAME)}))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_wrap(True)

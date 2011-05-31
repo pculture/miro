@@ -222,8 +222,8 @@ class Application:
             "not have write permission to, or there is something that is "
             "not a directory at that path.\n"
             "\n"
-            "Miro will now exit. You can connect the drive or otherwise "
-            "fix the problem and relaunch %(shortappname)s.",
+            "%(shortappname)s will now exit. You can connect the drive "
+            "or otherwise fix the problem and relaunch %(shortappname)s.",
             {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
              "moviedirectory": app.config.get(prefs.MOVIES_DIRECTORY)}
         )
@@ -1387,10 +1387,11 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_sharing_connect_failed(self, message):
         name = message.share.name
         title = _('Connect failed')
-        fmtargs = dict(name=name)
         description = _('Connection to share %(name)s failed.\n\n'
                         'The share is either unreachable or incompatible '
-                        'with Miro sharing.' % fmtargs)
+                        'with %(appname)s sharing.',
+                        {"name": name,
+                         "appname": app.config.get(prefs.SHORT_APP_NAME)})
         dialogs.show_message(title, description, dialogs.INFO_MESSAGE)
         app.tabs.select_guide()
 
@@ -1408,14 +1409,17 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if self.dbupgrade_progress_dialog is None:
             if message.doing_db_upgrade:
                 title = _('Upgrading database')
-                text = _("Miro is upgrading your database of podcasts and "
-                "files.  This one-time process can take a long time if you  "
-                "have a large number of items in Miro (it can even take more "
-                "than 30 minutes).")
+                text = _(
+                    "%(appname)s is upgrading your database of podcasts "
+                    "and files.  This one-time process can take a long "
+                    "time if you have a large number of items in "
+                    "%(appname)s (it can even take more than 30 minutes).",
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)})
             else:
                 title = _('Preparing Items')
-                text = _("Miro shutdown improperly and needs to prepare "
-                        "your items for display.")
+                text = _("%(appname)s shutdown improperly and needs to "
+                         "prepare your items for display.",
+                         {"appname": app.config.get(prefs.SHORT_APP_NAME)})
             self.dbupgrade_progress_dialog = dialogs.DBUpgradeProgressDialog(
                     title, text)
             self.dbupgrade_progress_dialog.run()

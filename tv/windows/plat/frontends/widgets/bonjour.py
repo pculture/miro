@@ -53,7 +53,7 @@ def check_bonjour_install():
         'as well as stream media from other %(appname)s users '
         'on your network.\n\n'
         'After installing Print Services, you will have to restart '
-        'Miro.\n\n'
+        '%(appname)s.\n\n'
         'Would you like to do this now?',
         {"appname": app.config.get(prefs.SHORT_APP_NAME)}
         )
@@ -74,7 +74,7 @@ def install_bonjour():
     description = _(
         "Your browser will load the web-site where you can download "
         "and install Bonjour.\n\n"
-        "When the installation is finished, simply restart Miro for "
+        "When the installation is finished, simply restart %(appname)s for "
         "the changes to take effect."
     )
     dialogs.show_message(title, description)
