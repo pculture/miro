@@ -29,6 +29,7 @@
 # mdns.py
 #
 
+import logging
 import select
 import socket
 import errno
