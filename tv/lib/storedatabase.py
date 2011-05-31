@@ -332,9 +332,10 @@ class LiveStorage:
         self.startup_version = current_version = self._get_version()
 
         if current_version > self._schema_version:
-            msg = _("Database was created by a newer version of Miro " +
+            msg = _("Database was created by a newer version of %(appname)s "
                     "(db version is %(version)s)",
-                    {"version": current_version})
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME),
+                     "version": current_version})
             raise databaseupgrade.DatabaseTooNewError(msg)
 
         if current_version < self._schema_version:
@@ -905,9 +906,11 @@ class LiveStorage:
     def _show_corrupt_db_dialog(self):
         title = _("%(appname)s database corrupt.",
                   {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _("Your Miro database is corrupt.  It will be "
-                "backed up in your Miro database directory and a new "
-                "database will be created now.")
+        description = _(
+            "Your %(appname)s database is corrupt.  It will be "
+            "backed up in your Miro database directory and a new "
+            "database will be created now.",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         dialogs.MessageBoxDialog(title, description).run_blocking()
 
     def _handle_load_error(self, message):

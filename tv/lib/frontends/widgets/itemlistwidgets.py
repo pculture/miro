@@ -1802,16 +1802,17 @@ class ProgressToolbar(Toolbar):
 
     def _update_label(self):
         # TODO: display eta
-        state = (self.total-self.remaining, self.total)
+        state = {"number": self.total-self.remaining,
+                 "total": self.total}
         if self.mediatype == 'audio':
             text = _("Importing audio details and artwork: "
-                    "{0} of {1}").format(*state)
+                    "%(number)d of %(total)d", state)
         elif self.mediatype == 'video':
             text = _("Importing video details and creating thumbnails: "
-                    "{0} of {1}").format(*state)
+                    "%(number)d of %(total)d", state)
         else:
             text = _("Importing file details: "
-                    "{0} of {1}").format(*state)
+                    "%(number)d of %(total)d", state)
         self.label.set_text(text)
 
     def update(self, mediatype, remaining, seconds, total):

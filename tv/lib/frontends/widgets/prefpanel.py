@@ -479,7 +479,8 @@ class GeneralPanel(PanelBuilder):
         v.pack_start(widgetutil.align_left(
             dialogwidgets.note(
                     _("(Changing the language requires you to "
-                      "restart Miro.)"))))
+                      "restart %(appname)s.)",
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME)}))))
 
         pack_extras(v, "general")
 
@@ -958,7 +959,9 @@ class PlaybackPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox()
 
-        miro_cbx = widgetset.Checkbox(_('Play media in Miro.'))
+        miro_cbx = widgetset.Checkbox(
+                    _('Play media in %(appname)s.',
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
         separate_cbx = widgetset.Checkbox(
             _('Always play videos in a separate window.'))
 

@@ -951,9 +951,10 @@ class AboutDialog(Dialog):
             gtk.Label(app.config.get(prefs.PROJECT_URL)))
 
         contributor_label = gtk.Label(
-            _("Thank you to all the people who contributed to Miro "
+            _("Thank you to all the people who contributed to %(appname)s "
               "%(version)s:",
-              {"version": app.config.get(prefs.APP_VERSION)}))
+              {"appname": app.config.get(prefs.SHORT_APP_NAME),
+               "version": app.config.get(prefs.APP_VERSION)}))
         contributor_label.set_justify(gtk.JUSTIFY_CENTER)
         packing_vbox._widget.pack_start(contributor_label)
 
@@ -979,8 +980,9 @@ class AboutDialog(Dialog):
 
         # FIXME - make the project url clickable
         donate_label = gtk.Label(
-            _("To help fund continued Miro development, visit the "
-              "donation page at:"))
+            _("To help fund continued %(appname)s development, visit the "
+              "donation page at:",
+              {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
         donate_label.set_justify(gtk.JUSTIFY_CENTER)
         packing_vbox._widget.pack_start(donate_label)
 
