@@ -199,7 +199,6 @@ def parse_pkg_config(command, components, options_dict=None):
         options_dict = {
             'include_dirs': [],
             'library_dirs': [],
-            'runtime_dirs': [],
             'libraries': [],
             'extra_compile_args': []
         }
@@ -218,7 +217,6 @@ def parse_pkg_config(command, components, options_dict=None):
 
     commandLine = "%s --variable=libdir %s" % (command, components)
     output = get_command_output(commandLine).strip()
-    options_dict['runtime_dirs'].append(output)
 
     return options_dict
 
