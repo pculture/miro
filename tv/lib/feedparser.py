@@ -2818,6 +2818,16 @@ def parse(url_file_stream_or_string, etag=None, modified=None, agent=None, refer
             (result['encoding'], proposed_encoding))
         result['encoding'] = proposed_encoding
 
+    # NUL bytes cause problems for GTK (#17586); we will get NUL bytes at this
+    # point if we couldn't identify the input encoding and it's an encoding that
+    # uses NULs, or if it is a known_encoding but for some reason the data
+    # contains actual NUL characters. In either case the NUL is not conveying
+    # any useful information anyway; replacing NULs with the utf-8 encoding of
+    # 0xFFFD - which is the non-character placeholder codepoint that
+    # str.encode() and similar methods use with encoding=replace.
+    NON_CHARACTER_PLACEHOLDER = '\xEF\xBF\xBD'
+    data = data.replace('\0', NON_CHARACTER_PLACEHOLDER)
+
     if not _XML_AVAILABLE:
         use_strict_parser = 0
     if use_strict_parser:
