@@ -1233,11 +1233,15 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
             # click is outside the content area, don't try to handle this.
             # In particular, our DnD code messes up resizing table columns.
             return False
-        if event.button == 1 and self.drag_source:
+        if (event.button == 1 and self.drag_source and
+          not self._x_coord_in_expander(treeview, path_info)):
             return self.start_drag(treeview, event, path_info)
         elif event.button == 3 and self.context_menu_callback:
             self.show_context_menu(treeview, event, path_info)
             return True
+
+        # FALLTHROUGH
+        return False
 
     def show_context_menu(self, treeview, event, path_info):
         """Pop up a context menu for the given click event (which is a
