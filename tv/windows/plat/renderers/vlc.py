@@ -531,7 +531,7 @@ class VLCRenderer(object):
         return
 
     def get_audio_tracks(self):
-        return 1
+        return 1 if self.media_playing else 0
 
     def get_enabled_audio_track(self):
         return 0
