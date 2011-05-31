@@ -80,10 +80,10 @@ class LowerBox(widgetset.Background):
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 120
-    MIN_ICON_WIDTH_TALL = 25
+    MIN_ICON_WIDTH_TALL = 21
     MIN_ICON_WIDTH = 16
-    MIN_HEIGHT = 28
-    MIN_HEIGHT_TALL = 31
+    MIN_HEIGHT = 24
+    MIN_HEIGHT_TALL = 27
     TALL_FONT_SIZE = 1.0
     FONT_SIZE = 0.85
     SELECTED_FONT_COLOR = widgetutil.WHITE
