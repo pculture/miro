@@ -508,7 +508,7 @@ class Application:
                 # Snarf the id out.  Turns out that while the ItemInfo id
                 # is the same but the object is different so the boolean
                 # expression fails.
-                if item in selection:
+                if item.id in [s.id for s in selection]:
                     app.playback_manager.on_movie_finished()
 
         external_count = len([s for s in selection if s.is_external])
