@@ -60,7 +60,7 @@ from miro.util import returns_filename
 
 from miro.plat import resources
 from miro.plat.utils import thread_body
-from miro.plat.frontends.widgets.threads import on_ui_thread
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 try:
     import libdaap
@@ -2148,12 +2148,13 @@ class SharingManager(object):
         app.config.set(prefs.SHARE_MEDIA, value)
         return True
 
-    @on_ui_thread
     def sharing_set_complete(self, value):
-        if not self.sharing_frontend_volatile:
-            return
-        for t in self.sharing_frontend_callbacks:
-            callbacks, args = self.sharing_frontend_callbacks[t]
-            (_, end) = callbacks
-            end(value, t, args)
-        self.sharing_frontend_volatile = False
+        def func():
+            if not self.sharing_frontend_volatile:
+                return
+            for t in self.sharing_frontend_callbacks:
+                callbacks, args = self.sharing_frontend_callbacks[t]
+                (_, end) = callbacks
+                end(value, t, args)
+            self.sharing_frontend_volatile = False
+        call_on_ui_thread(func)
