@@ -1420,9 +1420,6 @@ class SharingManager(object):
             self.sharing = False
             return
 
-        def log_message_func(format, *args):
-            logging.debug(format, *args)
-
         self.server.set_log_message_callback(
             lambda format, *args: logging.info(format, *args))
 
