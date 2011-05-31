@@ -527,6 +527,12 @@ class PodcastsPanel(PanelBuilder):
         attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT,
             [op[0] for op in max_options])
 
+        view_options = [(WidgetStateStore.STANDARD_VIEW, _("Standard view")),
+                      (WidgetStateStore.LIST_VIEW, _("List view"))]
+        view_option_menu = widgetset.OptionMenu([op[1] for op in view_options])
+        attach_combo(view_option_menu, prefs.PODCASTS_DEFAULT_VIEW,
+            [op[0] for op in view_options])
+
         grid.pack(dialogwidgets.heading(
                 _("Default settings for new podcasts:")),
                 grid.ALIGN_LEFT, span=2)
@@ -545,6 +551,11 @@ class PodcastsPanel(PanelBuilder):
         grid.pack_label(_("Auto-download setting:"),
                 dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(ad_option_menu)
+        grid.end_line(spacing=4)
+
+        grid.pack_label(_("Default view:"),
+                dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(view_option_menu)
         grid.end_line(spacing=4)
 
         grid.pack(dialogwidgets.label_with_note(
