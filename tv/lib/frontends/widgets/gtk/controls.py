@@ -123,6 +123,7 @@ class MultilineTextEntry(Widget):
         if initial_text is not None:
             self.set_text(initial_text)
         self._widget.set_wrap_mode(gtk.WRAP_WORD)
+        self._widget.set_accepts_tab(False)
         self.border = border
 
     def focus(self):
