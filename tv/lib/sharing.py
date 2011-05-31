@@ -659,6 +659,12 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             raise IOError('Cannot get playlist')
         returned_playlists = []
         for k in playlists.keys():
+            # Clean the playlist: remove NUL characters.
+            for k_ in playlists[k]:
+                if isinstance(playlists[k][k_], str):
+                    tmp = playlists[k][k_]
+                    playlists[k][k_] = tmp.replace('\x00', '')
+
             is_base_playlist = None
             if playlists[k].has_key('daap.baseplaylist'):
                 is_base_playlist = playlists[k]['daap.baseplaylist']
@@ -724,6 +730,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         audio_items_meth = audio_items.append
         video_items_meth = video_items.append
         for itemkey in items.keys():
+            # Clean it of NUL
+            for k in items[itemkey]:
+                if isinstance(items[itemkey][k], str):
+                    tmp = items[itemkey][k]
+                    items[itemkey][k] = tmp.replace('\x00', '')
             item = sharing_item_meth(items[itemkey])
             itemdict[itemkey] = item
             returned_items_meth(item)
