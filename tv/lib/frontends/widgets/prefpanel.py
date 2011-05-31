@@ -59,6 +59,7 @@ from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
 from miro.plat.frontends.widgets.bonjour import install_bonjour
