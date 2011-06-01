@@ -406,7 +406,6 @@ class WindowsApplication(Application):
                     raise
 
     def handle_first_time(self, callback):
-        self._get_icon_location() # also sets the icon
         Application.handle_first_time(self, callback)
 
     def handle_update_available(self, obj, item):
