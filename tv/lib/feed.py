@@ -1223,25 +1223,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             app.bulk_sql_manager.finish()
 
     def _create_items_for_parsed(self, parsed):
-        # This is a HACK for Yahoo! search which doesn't provide
-        # enclosures
-        for entry in parsed['entries']:
-            if 'enclosures' not in entry:
-                try:
-                    url = entry['link']
-                except KeyError:
-                    continue
-                mimetype = filetypes.guess_mime_type(url)
-                if mimetype is not None:
-                    entry['enclosures'] = [{'url': to_uni(url),
-                                            'type': to_uni(mimetype)}]
-                elif flashscraper.is_maybe_flashscrapable(url):
-                    entry['enclosures'] = [{'url': to_uni(url),
-                                            'type': to_uni("video/flv")}]
-                else:
-                    logging.warning(
-                        'unknown url type %s, not generating enclosure', url)
-
         channel_title = None
         try:
             channel_title = parsed["feed"]["title"]
@@ -1427,7 +1408,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             self.feedparser_finished()
             return
         start = clock()
-        parsed = self.parsed = unicodify(parsed)
+        self.parsed = parsed
         self.remember_old_items()
         self.create_items_for_parsed(parsed)
 
@@ -1593,7 +1574,6 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         if not self.ufeed.id_exists() or url not in self.download_dc:
             return
         start = clock()
-        parsed = unicodify(parsed)
         self.create_items_for_parsed(parsed)
         self.feedparser_finished(url)
         end = clock()
