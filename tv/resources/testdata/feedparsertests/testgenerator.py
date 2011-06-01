@@ -38,8 +38,16 @@ import unittest
 import pprint
 import os
 
-# need to use the right feedparser
-sys.path.insert(0, os.path.join(os.pardir, os.pardir, os.pardir, "lib"))
+# hack to setup the miro module
+sys.path.insert(0, os.path.join(os.pardir, os.pardir, os.pardir))
+import lib
+sys.modules['miro'] = lib
+# hack to setup the miro.plat module.
+# This assumes we're calling on linux, which is unfortunate, but I don't see a
+# bette way to do this
+sys.path.insert(0, os.path.join(os.pardir, os.pardir, os.pardir, 'linux'))
+import plat
+sys.modules['miro.plat'] = sys.modules['miro'].plat = plat
 
 from time import struct_time
 
@@ -80,7 +88,7 @@ def main(argv):
     inputdir = os.path.abspath(argv[0])
     outputdir = os.path.abspath(argv[1])
 
-    import feedparser
+    from miro import feedparserutil
 
     inputfiles = os.listdir(inputdir)
     print "%s total input files" % len(inputfiles)
@@ -96,7 +104,7 @@ def main(argv):
         print "Generating %s files:" % len(to_generate)
         for i, mem in enumerate(to_generate):
             print "%s: Generating output for %s" % (i, mem)
-            run_parser(feedparser, inputdir, outputdir, mem)
+            run_parser(feedparserutil, inputdir, outputdir, mem)
 
     return 0
 
