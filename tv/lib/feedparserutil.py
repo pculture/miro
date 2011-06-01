@@ -39,6 +39,9 @@ from miro.clock import clock
 
 from miro import eventloop
 from miro import feedparser
+from miro import filetypes
+from miro import flashscraper
+from miro import util
 from miro.datastructures import Fifo
 
 # values from feedparser dicts that don't have to convert in
@@ -77,15 +80,32 @@ def _convert_if_feedparser_dict(obj):
         return normalize_feedparser_dict(obj)
     return obj
 
-from miro import app
-from miro import prefs
-USER_AGENT = (feedparser.USER_AGENT + " %s/%s (%s)" %
-              (app.config.get(prefs.SHORT_APP_NAME),
-               app.config.get(prefs.APP_VERSION),
-               app.config.get(prefs.PROJECT_URL)))
-
 def parse(url_file_stream_or_string):
-    return feedparser.parse(url_file_stream_or_string, USER_AGENT)
+    """Parse a feed.
+
+    This method runs the feed data through feedparser.parse, then does some
+    other things like unicodify it and fix issues with certain feed providers.
+    """
+    parsed = feedparser.parse(url_file_stream_or_string)
+    parsed = util.unicodify(parsed)
+    _yahoo_hack(parsed['entries'])
+    return parsed
+
+def _yahoo_hack(feedparser_entries):
+    """Hack yahoo search to provide enclosures"""
+    for entry in feedparser_entries:
+        if 'enclosures' not in entry:
+            try:
+                url = entry['link']
+            except KeyError:
+                continue
+            mimetype = filetypes.guess_mime_type(url)
+            if mimetype is not None:
+                entry['enclosures'] = [{'url': util.to_uni(url),
+                                        'type': util.to_uni(mimetype)}]
+            elif flashscraper.is_maybe_flashscrapable(url):
+                entry['enclosures'] = [{'url': util.to_uni(url),
+                                        'type': util.to_uni("video/flv")}]
 
 def sanitizeHTML(htmlSource, encoding):
     return feedparser.sanitizeHTML(htmlSource, encoding)
