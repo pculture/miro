@@ -338,8 +338,11 @@ class Player(player.Player):
             self.movie.setVolume_(volume)
 
     def get_elapsed_playback_time(self):
-        qttime = self.movie.currentTime()
-        return utils.qttime2secs(qttime)
+        if self.movie:
+            qttime = self.movie.currentTime()
+            return utils.qttime2secs(qttime)
+        else:
+            return 0
 
     def get_total_playback_time(self):
         if self.movie is None:
