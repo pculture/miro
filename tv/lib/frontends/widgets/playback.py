@@ -580,8 +580,9 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.player_ready():
             return
         self._handle_skip()
-        if not self.item_continuous_playback_mode(
-                            self.playlist.currently_playing):
+        if ((not self.item_continuous_playback_mode(
+                            self.playlist.currently_playing) and
+             self._not_skipped_by_user)):
             self.stop()
         else:
             self.playlist.select_next_item(self._not_skipped_by_user)
@@ -606,12 +607,8 @@ class PlaybackManager (signals.SignalEmitter):
                 self.seek_to(0)
                 return
         self._handle_skip()
-        if not self.item_continuous_playback_mode(
-                            self.playlist.currently_playing):
-            self.stop()
-        else:
-            self.playlist.select_previous_item()
-            self._play_current()
+        self.playlist.select_previous_item()
+        self._play_current()
 
     def skip_forward(self):
         if not self.player_ready():
