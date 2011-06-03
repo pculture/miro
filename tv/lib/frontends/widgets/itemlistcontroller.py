@@ -381,6 +381,8 @@ class ItemListController(object):
         self.widget.vbox[standard_view].pack_start(
                 standard_view_scroller, expand=True)
         self.views[standard_view].set_scroller(standard_view_scroller)
+        standard_view_scroller.set_background_color(
+                standard_view_widget.BACKGROUND_COLOR)
 
         toolbar.connect_weak('sort-changed',
             self.on_sort_changed, standard_view)
