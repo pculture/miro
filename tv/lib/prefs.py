@@ -86,7 +86,7 @@ UPLOAD_RATIO                = Pref(key='uploadRatio',           default=2.0,   p
 LIMIT_UPLOAD_RATIO          = Pref(key='limitUploadRatio',      default=False, platformSpecific=False)
 STARTUP_TASKS_DONE          = Pref(key='startupTasksDone',      default=False, platformSpecific=False)
 CONTINUOUS_VIDEO_PLAYBACK_MODE  = Pref(key='continuousVideoPlaybackMode', default=False, platformSpecific=False)
-CONTINUOUS_MUSIC_PLAYBACK_MODE  = Pref(key='continuousMusicPlaybackMode', default=False, platformSpecific=False)
+CONTINUOUS_MUSIC_PLAYBACK_MODE  = Pref(key='continuousMusicPlaybackMode', default=True, platformSpecific=False)
 CONTINUOUS_PODCAST_PLAYBACK_MODE  = Pref(key='continuousPodcastPlaybackMode', default=False, platformSpecific=False)
 PLAY_DETACHED               = Pref(key='detachedPlaybackMode',  default=False, platformSpecific=False)
 DETACHED_WINDOW_FRAME       = Pref(key='detachedWindowFrame',   default=None,  platformSpecific=False)
