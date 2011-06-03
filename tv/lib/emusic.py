@@ -27,119 +27,79 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Functions for downloading stuff from Amazon's MP3 Store.
-"""
-
-# NOTE: This file is not run through gettext because gettext kicks up an
-# error.
-
-import base64
-import urlparse
-from xml.dom import minidom
+"""Functions for downloading from eMusic."""
 
 from miro import app
 from miro import httpclient
 from miro import fileutil
-try:
-    import pyDes as des
-except ImportError:
-    from miro import des
 
-# keys courtesy of Steven C. Colbert's pymazon
-AMAZON_DES_KEY = '\x29\xAB\x9D\x18\xB2\x44\x9E\x31'
-AMAZON_DES_IV = '\x5E\x72\xD7\x9A\x11\xB3\x4F\xEE'
+import StringIO
 
-def decrypt_amz(data):
-    decrypter = des.des(AMAZON_DES_KEY,
-                        des.CBC,
-                        AMAZON_DES_IV)
-    return decrypter.decrypt(data)
+import urlparse
+from xml.dom import minidom
 
-def is_amazon_url(url):
+def is_emusic_url(url):
     parts = urlparse.urlparse(url)
-    return ((parts.path.endswith('.amz') or
-             parts.path.endswith('.m3u')))
-
-def is_amazon_content_type(content_type):
-    """
-    Returns True if this is a content type from Amazon.
-    """
-    return content_type.startswith(('audio/x-amzxml',
-                                    'audio/x-mpegurl'))
-
+    return parts.path.endswith('.emx')
+            
 def download_file(url, handle_unknown_callback):
     """
     Deals with turning an .amz file into some real downloads.
     """
-    def unknown():
-        handle_unknown_callback(url)
-    def callback(data):
-        _amazon_callback(data, unknown)
-
     if url.startswith('file://'):
         path = url[7:]
         try:
-            _amz_callback(file(path).read())
+            _download_emx_files(path)
         finally:
             fileutil.remove(path)
         return
+
+    def callback(data):
+        _emx_callback(data, handle_unknown_callback)
+
     options = httpclient.TransferOptions(url)
     options.requires_cookies = True
     transfer = httpclient.CurlTransfer(options, callback,
                                        handle_unknown_callback)
     transfer.start()
 
-def _amazon_callback(data, unknown):
+def _emx_callback(data, unknown):
     if data['status'] != 200:
-        unknown()
-        return
+        return unknown(data['original-url'])
+    if data['content-type'].startswith('text/html'):
+        return unknown(data['original-url'])
 
-    if not is_amazon_content_type(data.get('content-type')):
-        unknown()
-        return
+    _download_emx_files(StringIO(data['body']))
 
-    if data['content-type'].startswith('audio/x-amzxml'): # .amz file:
-        _amz_callback(data['body'])
-    elif data['content-type'].startswith('audio/x-mpegurl'): # .m3u file:
-        _m3u_callback(data['body'])
-
-def _amz_callback(data):
-    content = decrypt_amz(base64.b64decode(data)).rstrip('\x00\x08')
-
-    dom = minidom.parseString(content)
+def _download_emx_files(file_):
+    dom = minidom.parse(file_)
 
     from miro.singleclick import _build_entry, download_video
 
-    for track in dom.documentElement.getElementsByTagName('track'):
+    for track in dom.documentElement.getElementsByTagName('TRACK'):
         url = None
         additional = {}
         for node in track.childNodes:
             if node.nodeType != node.TEXT_NODE:
                 key = node.nodeName
-                value = node.childNodes[0].nodeValue
-                if key == 'location':
+                if node.childNodes:
+                    value = node.childNodes[0].nodeValue
+                else:
+                    value = None
+                if key == 'TRACKURL':
                     url = value
-                elif key == 'title':
+                elif key == 'TITLE':
                     additional['title'] = value
-                elif key == 'image':
+                elif key == 'ALBUMARTLARGE':
                     additional['thumbnail'] = value
-                elif key == 'duration':
-                    additional['length'] = int(value) / 1000
+                elif key == 'ALBUMART' and 'thumbnail' not in additional:
+                    additional['thumbnail'] = value
+                elif key == 'DURATION':
+                    additional['length'] = int(value)
         if url is None:
-            app.controller.failed_soft("_amz_callback",
+            app.controller.failed_soft("_emx_callback",
                                        "could not find URL for track",
                                        with_exception=False)
         else:
             entry = _build_entry(url, 'audio/mp3', additional)
-            download_video(entry)
-
-def _m3u_callback(data):
-    from miro.singleclick import _build_entry, download_video
-
-    for line in data.split('\n'):
-        line = line.strip()
-        if line.startswith('#'): # comment
-            continue
-        elif line:
-            entry = _build_entry(line.decode('utf8'), 'audio/mp3')
             download_video(entry)
