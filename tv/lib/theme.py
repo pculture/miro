@@ -194,6 +194,7 @@ class ThemeHistory(DDBObject):
              u"%26node%3D2350149011&tag=pcultureorg-20&linkCode=ur2&camp="
              u"1789&creative=9325", u"Amazon Android Store", True),
             (u"http://market.android.com/", u"Google Android Store", True),
+            (u"http://www.kqzyfj.com/click-5294129-10364534", u"eMusic", True)
             ]
 
         if app.debugmode:
