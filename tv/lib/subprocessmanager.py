@@ -194,19 +194,44 @@ class SubprocessResponder(messagetools.MessageHandler):
         else:
             logging.warn("Error in subprocess: %s", msg.report)
 
+class LoadError(StandardError):
+    """Exception for corrupt data when reading from a pipe."""
+
 def _load_obj(pipe):
-    """Load an object from one side of a pipe."""
+    """Load an object from one side of a pipe.
+
+    _load_obj blocks until the all the data has been sent.
+
+    :raises IOError: low-level error while reading from the pipe
+    :raises LoadError: data read was corrupted
+
+    :returns: Python object send from the other side
+    """
     size_data = pipe.read(4)
     if len(size_data) < 4:
-        raise EOFError()
+        raise LoadError("EOF reached while reading size field")
     size = struct.unpack("L", size_data)[0]
     pickle_data = pipe.read(size)
     if len(pickle_data) < size:
-        raise EOFError()
-    return pickle.loads(pickle_data)
+        raise LoadError("EOF reached while reading pickle data")
+    try:
+        return pickle.loads(pickle_data)
+    except pickle.PickleError:
+        raise LoadError("Pickle data corrupt")
+    except ImportError:
+        raise LoadError("Pickle data references unimportable module")
+    except StandardError, e:
+        # log this exception for easier debugging.
+        _send_subprocess_error_for_exception()
+        raise LoadError("Unknown error in pickle.loads: %s" % e)
 
 def _dump_obj(obj, pipe):
-    """Dump an object to the other side of the pipe."""
+    """Dump an object to the other side of the pipe.
+
+    :raises IOError: low-level error while writing to the pipe
+    :raises pickle.PickleError: obj could not be pickled
+    """
+
     pickle_data = pickle.dumps(obj)
     size_data = struct.pack("L", len(pickle_data))
     pipe.write(size_data)
@@ -365,6 +390,8 @@ class SubprocessManager(object):
             # we could try to restart our subprocess here, but if the pipe is
             # really broken, then our thread will quit soon and this will
             # cause a restart.
+        except pickle.PickleError:
+            logging.warn("Error pickling message in send_message() (%s)", msg)
 
     def send_quit(self):
         """Ask the subprocess to shutdown."""
@@ -393,6 +420,11 @@ def _read_from_pipe(pipe):
 
     This method is a generator that reads pickled objects from pipe.  It
     terminates when None is sent over the pipe.
+
+    raises the same exceptions that _load_obj does, namely:
+
+    :raises IOError: low-level error while reading from the pipe
+    :raises LoadError: data read was corrupted
     """
     while True:
         msg = _load_obj(pipe)
@@ -409,7 +441,7 @@ class SubprocessResponderThread(threading.Thread):
     # constants for quit_type
     QUIT_NORMAL = 0
     QUIT_READ_ERROR = 1
-    QUIT_CLOSED_PIPE = 2
+    QUIT_BAD_DATA = 2
     QUIT_UNKNOWN = 3
 
     def __init__(self, subprocess_stdout, responder, quit_callback):
@@ -430,14 +462,16 @@ class SubprocessResponderThread(threading.Thread):
         try:
             for msg in _read_from_pipe(self.subprocess_stdout):
                 self.responder.handle(msg)
-        except EOFError:
-            self.quit_type = self.QUIT_CLOSED_PIPE
-        except StandardError, e:
+        except LoadError, e:
+            logging.warn("Quiting from bad data from our subprocess in "
+                    "SubprocessResponderThread: %s", e)
+            self.quit_type = self.QUIT_BAD_DATA
+        except IOError, e:
             logging.warn("Quiting on read error from pipe in "
                     "SubprocessResponderThread: %s", e)
             self.quit_type = self.QUIT_READ_ERROR
         except Exception, e:
-            logging.exception("Exception in SubprocessResponderThread")
+            logging.exception("Unknown error in SubprocessResponderThread")
             self.quit_type = self.QUIT_UNKNOWN
         else:
             self.quit_type = self.QUIT_NORMAL
@@ -458,10 +492,11 @@ def subprocess_main():
     try:
         handler = _subprocess_setup(stdin, stdout)
     except Exception, e:
-        # error reading our initial messages.  Log a warning, then quit
+        # error reading our initial messages.  Try to log a warning, then
+        # quit.
         _send_subprocess_error_for_exception()
-        _dump_obj(None, stdout)
-        return
+        _finish_subprocess_message_stream(stdout)
+        raise # reraise so that miro_helper.py returns a non-zero exit code
     # startup thread to process stdin
     queue = Queue.Queue()
     thread = threading.Thread(target=_subprocess_pipe_thread, args=(stdin,
@@ -470,29 +505,48 @@ def subprocess_main():
     thread.start()
     # run our message loop
     handler.on_startup()
-    while True:
-        msg = queue.get()
-        if msg is None:
-            break
-        handler.handle(msg)
-    handler.on_shutdown()
-    # send None to signal that we are about to quit
-    _dump_obj(None, stdout)
+    try:
+        while True:
+            msg = queue.get()
+            if msg is None:
+                break
+            handler.handle(msg)
+    finally:
+        handler.on_shutdown()
+        # send None to signal that we are about to quit
+        _finish_subprocess_message_stream(stdout)
+        # exceptions will continue on here, which causes miro_helper.py
+        # to return a non-zero exit code
+
+def _finish_subprocess_message_stream(stdout):
+    """Signal that we are done sending messages in the subprocess."""
+    try:
+        _dump_obj(None, stdout)
+    except IOError:
+        # just ignore since we're done writing out anyways
+        pass
+    # Note we don't catch PickleError, but there should never be an issue
+    # pickling None
 
 def _subprocess_setup(stdin, stdout):
     """Does initial setup for a subprocess.
 
     Returns a SubprocessHandler to use for the subprocess
+
+    raises the same exceptions that _load_obj does, namely:
+
+    :raises IOError: low-level error while reading from the pipe
+    :raises LoadError: data read was corrupted
     """
     # disable warnings so we don't get too much junk on stderr
     warnings.filterwarnings("ignore")
     # setup MessageHandler for messages going to the main process
-    msg_handler = PipeMessageFile(stdout)
+    msg_handler = PipeMessageProxy(stdout)
     SubprocessResponse.install_handler(msg_handler)
     # load startup info
     msg = _load_obj(stdin)
     if not isinstance(msg, StartupInfo):
-        raise TypeError("first message must a StartupInfo obj")
+        raise LoadError("first message must a StartupInfo obj")
     # setup some basic modules like config and gtcache
     initialize_locale()
     config.load(config.ManualConfig())
@@ -501,8 +555,13 @@ def _subprocess_setup(stdin, stdout):
     # setup our handler
     msg = _load_obj(stdin)
     if not isinstance(msg, HandlerInfo):
-        raise TypeError("second message must a HandlerInfo obj")
-    return msg.handler_class(*msg.handler_args)
+        raise LoadError("second message must a HandlerInfo obj")
+    try:
+        return msg.handler_class(*msg.handler_args)
+    except StandardError, e:
+        # log this exception for easier debugging.
+        _send_subprocess_error_for_exception()
+        raise LoadError("Exception while constructing handler: %s" % e)
 
 def _subprocess_pipe_thread(stdin, queue):
     """Thread inside the subprocess that reads messages from stdin.
@@ -518,7 +577,7 @@ def _subprocess_pipe_thread(stdin, queue):
     # put None to our queue so the main thread quits
     queue.put(None)
 
-class PipeMessageFile(object):
+class PipeMessageProxy(object):
     """Handles messages by writing them to a pipe
 
     This is used in the subprocess to send messages back to the main process
@@ -528,4 +587,10 @@ class PipeMessageFile(object):
         self.fileobj = fileobj
 
     def handle(self, msg):
-        _dump_obj(msg, self.fileobj)
+        try:
+            _dump_obj(msg, self.fileobj)
+        except pickle.PickleError:
+            _send_subprocess_error_for_exception()
+        # NOTE: we don't handle IOError here because what can we do about
+        # that?  Just let it propagate up to the top and which should cause us
+        # to shutdown.
