@@ -232,6 +232,11 @@ class Scroller(Bin):
         else:
             self._widget.set_shadow_type(gtk.SHADOW_NONE)
 
+    def prepare_for_dark_content(self):
+        # this is just a hack for cocoa
+        pass
+
+
 class SolidBackground(Bin):
     def __init__(self, color=None):
         Bin.__init__(self)

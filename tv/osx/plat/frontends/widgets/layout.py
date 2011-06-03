@@ -645,6 +645,14 @@ class Scroller(Bin):
         self.document_view = FlippedView.alloc().init()
         self.view.setDocumentView_(self.document_view)
 
+    def prepare_for_dark_content(self):
+        try:
+            self.view.setScrollerStyle_(0)
+        except AttributeError:
+            # This only works on 10.7 and abvoe
+            pass
+
+
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)
 
