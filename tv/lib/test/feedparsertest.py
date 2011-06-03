@@ -5,7 +5,7 @@ import pprint
 from miro import feedparserutil
 from miro.item import FeedParserValues
 from miro.plat import resources
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, dynamic_test
 
 FPTESTINPUT = resources.path("testdata/feedparsertests/feeds")
 FPTESTOUTPUT = resources.path("testdata/feedparsertests/output")
@@ -68,6 +68,7 @@ class FeedParserDictTest(MiroTestCase):
         self.assertEqual(a.equal(d), False)
         self.assertEqual(d.equal(a), False)
 
+@dynamic_test(expected_cases=9)
 class FeedParserTest(MiroTestCase):
     def eq_output(self, str1, str2):
         # we do this to allow the strings to match on windows where
@@ -108,16 +109,15 @@ class FeedParserTest(MiroTestCase):
         # this should kick up a KeyError and NOT a TypeError
         self.assertRaises(KeyError, lambda: d['url'])
 
-# this creates a separate test method in FeedParserTest for each test
-# in the FPTESTINPUT directory.  makes it easier to debug tests that
-# go awry, makes it easier to see test progress from the command line
-# (lots of little tests rather than one big test), and increases the
-# test count appropriately.
-def _test_closure(mem):
-    def _actual_test(self):
-        d = _parse_feed(mem)
+    @classmethod
+    def generate_tests(cls):
+        for path in os.listdir(FPTESTINPUT):
+            yield (path,)
+
+    def dynamic_test_case(self, path):
+        d = _parse_feed(path)
         d = feedparserutil.convert_datetime(d)
-        fp = open(os.path.join(FPTESTOUTPUT, "%s.output" % mem), "r")
+        fp = open(os.path.join(FPTESTOUTPUT, "%s.output" % path), "r")
         output = fp.read()
         fp.close()
         if 'entries' in d:
@@ -125,12 +125,6 @@ def _test_closure(mem):
         else:
             d = d['bozo_exception']
         self.eq_output(pprint.pformat(d), output)
-
-    return _actual_test
-
-for mem in os.listdir(FPTESTINPUT):
-    setattr(FeedParserTest, 'test_%s' % mem.replace(".", ""),
-            _test_closure(mem))
 
 class FeedParserValuesTest(unittest.TestCase):
     def test_empty(self):

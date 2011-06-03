@@ -97,6 +97,8 @@ def main(argv):
         for i, mem in enumerate(to_generate):
             print "%s: Generating output for %s" % (i, mem)
             run_parser(feedparser, inputdir, outputdir, mem)
+        print("Remember to update expected_cases for the @dynamic_test in"
+                "feedparsertset if the number of tests has changed.")
 
     return 0
 

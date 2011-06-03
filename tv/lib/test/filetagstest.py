@@ -4,13 +4,14 @@ writing - to be implemented) of metadata tags.
 
 import json
 
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, dynamic_test
 
 from os import path
 
 from miro.plat import resources
 from miro.filetags import read_metadata
 
+@dynamic_test(expected_cases=8)
 class FileTagsTest(MiroTestCase):
     def assert_file_data(self, test,
             mediatype='*', duration='*', data='*', cover_art='*'):
@@ -39,22 +40,14 @@ class FileTagsTest(MiroTestCase):
         # FIXME: losing data - TVSH='The Most Extreme'
         # FIXME: losing data - TVNN='Animal Planet'
 
-# This is the same _test_closure technique used for FeedParserTest:
+    @classmethod
+    def generate_tests(cls):
+        results_path = resources.path(path.join('testdata', 'filetags.json'))
+        return json.load(open(results_path)).iteritems()
 
-def _test_closure(self, filename, expected):
-    file_type = expected['file_type']
-    duration = expected['duration']
-    tags = expected['tags']
-    cover_art = expected['cover_art']
-    self.assert_file_data(filename, file_type, duration, tags, cover_art)
-
-# this creates a separate test method in FileTagsTest for each test
-# in the filetags.json file.  makes it easier to debug tests that
-# go awry, makes it easier to see test progress from the command line
-# (lots of little tests rather than one big test), and increases the
-# test count appropriately.
-results_path = resources.path(path.join('testdata', 'filetags.json'))
-expected_results = json.load(open(results_path))
-for filename, expected in expected_results.iteritems():
-    setattr(FileTagsTest, 'test_%s' % filename.replace(".", ""),
-            lambda self: _test_closure(self, filename, expected))
+    def dynamic_test_case(self, filename, expected):
+        file_type = expected['file_type']
+        duration = expected['duration']
+        tags = expected['tags']
+        cover_art = expected['cover_art']
+        self.assert_file_data(filename, file_type, duration, tags, cover_art)
