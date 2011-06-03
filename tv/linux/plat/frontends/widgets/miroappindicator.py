@@ -114,7 +114,9 @@ class MiroAppIndicator:
                     menu_items.append((None, None))
                     break
 
-        if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+        if ((app.playback_manager.is_playing and
+            app.playback_manager.item_continuous_playback_mode(
+                    app.playback_manager.playlist.currently_playing))):
             menu_items.append((_("Play Next Unplayed (%(unplayed)d)",
                                  {"unplayed": app.widgetapp.unwatched_count}),
                                self.on_play_unwatched))
