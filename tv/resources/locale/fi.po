@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-05-21 15:44-0400\n"
-"PO-Revision-Date: 2011-05-31 07:06+0000\n"
-"Last-Translator: Jani Uusitalo <jani@mummila.net>\n"
+"POT-Creation-Date: 2011-05-31 15:28-0400\n"
+"PO-Revision-Date: 2011-06-02 18:17+0000\n"
+"Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-31 19:21+0000\n"
-"X-Generator: Launchpad (build 13117)\n"
+"X-Launchpad-Export-Date: 2011-06-05 16:52+0000\n"
+"X-Generator: Launchpad (build 13144)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -42,7 +42,7 @@ msgstr "yhteys puuttuu — yritetään pian uudestaan"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/httpclient.py:218 ../../lib/httpclient.py:750
-#: ../../lib/sharing.py:179
+#: ../../lib/sharing.py:187
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -59,7 +59,7 @@ msgid "Upgrading Database"
 msgstr "Päivitetään tietokantaa"
 
 #: ../../lib/dbupgradeprogress.py:104
-#: ../../lib/frontends/widgets/application.py:1423
+#: ../../lib/frontends/widgets/application.py:1426
 msgid "Preparing Items"
 msgstr "Valmistellaan kohteita"
 
@@ -375,9 +375,9 @@ msgid "Don't Migrate"
 msgstr "Älä siirrä tietoja"
 
 #: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:216
-#: ../../lib/frontends/widgets/itemcontextmenu.py:398
+#: ../../lib/frontends/widgets/itemcontextmenu.py:396
 #: ../../lib/frontends/widgets/itemrenderer.py:102
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1961
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1969
 msgid "Download"
 msgstr "Lataa"
 
@@ -417,7 +417,7 @@ msgstr "Luo kansio"
 msgid "Add Folder"
 msgstr "Lisää kansio"
 
-#: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:768
+#: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:769
 msgid "Add"
 msgstr "Lisää"
 
@@ -425,7 +425,7 @@ msgstr "Lisää"
 msgid "Add Into New Folder"
 msgstr "Lisää uuteen kansioon"
 
-#: ../../lib/dialogs.py:120 ../../lib/frontends/widgets/itemcontextmenu.py:383
+#: ../../lib/dialogs.py:120 ../../lib/frontends/widgets/itemcontextmenu.py:381
 #: ../../osx/plat/frontends/widgets/overlay.py:132
 msgid "Keep"
 msgstr "Säilytä"
@@ -442,7 +442,7 @@ msgstr "Poista"
 #: ../../lib/frontends/widgets/tablist.py:1139
 #: ../../lib/frontends/widgets/tablist.py:1145
 #: ../../lib/frontends/widgets/tablist.py:1150
-#: ../../lib/frontends/widgets/prefpanel.py:771
+#: ../../lib/frontends/widgets/prefpanel.py:772
 #: ../../lib/frontends/widgets/menus.py:272
 msgid "Remove"
 msgstr "Poista"
@@ -794,7 +794,7 @@ msgid "State"
 msgstr "Tila"
 
 #: ../../lib/frontends/widgets/widgetconst.py:58
-#: ../../lib/frontends/widgets/tabcontroller.py:517
+#: ../../lib/frontends/widgets/tabcontroller.py:524
 #: ../../lib/frontends/widgets/itemedit.py:492
 msgid "Name"
 msgstr "Nimi"
@@ -886,7 +886,7 @@ msgstr "Tiedostotyyppi"
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/diagnostics.py:80
 #: ../../lib/frontends/widgets/itemedit.py:544
-#: ../../lib/frontends/widgets/itemedit.py:556 ../../lib/messages.py:1274
+#: ../../lib/frontends/widgets/itemedit.py:556 ../../lib/messages.py:1275
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:138
 msgid "Show"
 msgstr "Näytä"
@@ -900,8 +900,8 @@ msgstr "Videon tyyppi"
 msgid "Order"
 msgstr "Järjestys"
 
-#: ../../lib/frontends/widgets/style.py:543
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1098
+#: ../../lib/frontends/widgets/style.py:547
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1105
 #: ../../lib/frontends/widgets/itemrenderer.py:109
 #: ../../lib/frontends/widgets/itemlistwidgets.py:757
 #: ../../lib/frontends/widgets/itemlistwidgets.py:921
@@ -909,43 +909,43 @@ msgstr "Järjestys"
 msgid "Unplayed"
 msgstr "Toistamaton"
 
-#: ../../lib/frontends/widgets/style.py:551
+#: ../../lib/frontends/widgets/style.py:555
 msgid "paused"
 msgstr "keskeytetty"
 
-#: ../../lib/frontends/widgets/style.py:553
+#: ../../lib/frontends/widgets/style.py:557
 msgid "queued"
 msgstr "jonossa"
 
-#: ../../lib/frontends/widgets/style.py:561
+#: ../../lib/frontends/widgets/style.py:565
 #: ../../lib/frontends/widgets/itemrenderer.py:111
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1118
 msgid "Newly Available"
 msgstr "Uudet"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:970
+#: ../../lib/frontends/widgets/itemlistcontroller.py:977
 #, python-format
 msgid "%(count)s items"
 msgstr "%(count)s kohdetta"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1061
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1113
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1068
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1120
 #: ../../lib/frontends/widgets/feedcontroller.py:73
 #: ../../lib/frontends/widgets/sharingcontroller.py:73
 msgid "No Results"
 msgstr "Ei tuloksia"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1075
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1082
 #: ../../lib/frontends/widgets/application.py:832
 msgid "Create Playlist"
 msgstr "Luo soittolista"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1076
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1083
 #: ../../lib/frontends/widgets/application.py:833
 msgid "Enter a name for the new playlist"
 msgstr "Kirjoita uuden soittolistan nimi"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1089
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1096
 msgid "Unwatched"
 msgstr "Katsomatta"
 
@@ -1003,46 +1003,43 @@ msgstr[1] ""
 msgid "Sharing Disabled"
 msgstr "Jako pois käytöstä"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:61
+#: ../../lib/frontends/widgets/tabcontroller.py:63
+#, python-format
 msgid ""
 "You need to install the Bonjour libraries to be able to share files from "
-"Miro-to-Miro or to the Miro iPad app.\n"
+"%(appname)s-to-%(appname)s or to the Miro iPad app.\n"
 "\n"
-"Once you install the Bonjour libraries, you will have to restart Miro."
+"Once you install the Bonjour libraries, you will have to restart %(appname)s."
 msgstr ""
-"Asenna Bonjour-kirjastot jakaaksesi tiedostoja Mirosta Miroon tai Miro iPad -"
-"sovellukseen.\n"
-"\n"
-"Käynnistä Miro uudelleen asennettuasi Bonjour-kirjastot."
 
-#: ../../lib/frontends/widgets/tabcontroller.py:69
+#: ../../lib/frontends/widgets/tabcontroller.py:74
 msgid "Click here to install"
 msgstr "Napsauta asentaaksesi"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:116
+#: ../../lib/frontends/widgets/tabcontroller.py:121
 msgid "On"
 msgstr "Päällä"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:122
-#: ../../lib/frontends/widgets/prefpanel.py:514
+#: ../../lib/frontends/widgets/tabcontroller.py:127
+#: ../../lib/frontends/widgets/prefpanel.py:515
 msgid "Off"
 msgstr "Pois päältä"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:148
+#: ../../lib/frontends/widgets/tabcontroller.py:153
 msgid "Get Help"
 msgstr "Ohjeita"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:201
+#: ../../lib/frontends/widgets/tabcontroller.py:206
 #: ../../lib/frontends/widgets/tablist.py:858
 msgid "Connect"
 msgstr "Yhdistä"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:229
+#: ../../lib/frontends/widgets/tabcontroller.py:234
 #, python-format
 msgid "%(shortappname)s Sharing"
 msgstr "%(shortappname)s-jakaminen"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:234
+#: ../../lib/frontends/widgets/tabcontroller.py:241
 #, python-format
 msgid ""
 "%(shortappname)s can stream and download files to and from other "
@@ -1053,33 +1050,33 @@ msgstr ""
 "%(shortappname)sista paikallisverkossa sekä Miro iPad -sovelluksessa. Se on "
 "huippua!"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:245
+#: ../../lib/frontends/widgets/tabcontroller.py:252
 msgid "Disabled: Needs Bonjour"
 msgstr "Ei käytössä: edellyttää Bonjouria"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:261
+#: ../../lib/frontends/widgets/tabcontroller.py:268
 msgid "Share Music"
 msgstr "Jaa musiikkia"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:262
+#: ../../lib/frontends/widgets/tabcontroller.py:269
 msgid "Share Videos"
 msgstr "Jaa videoita"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:264
-#: ../../lib/frontends/widgets/prefpanel.py:900
+#: ../../lib/frontends/widgets/tabcontroller.py:271
+#: ../../lib/frontends/widgets/prefpanel.py:901
 msgid "Warn on quit when others are connected to my media library."
 msgstr "Varoita lopettaessa, mikäli muita on kytkeytyneenä mediakirjastooni"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:272
+#: ../../lib/frontends/widgets/tabcontroller.py:279
 #, python-format
 msgid "My %(shortappname)s Share Name"
 msgstr "%(shortappname)s-jakoni nimi"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:309
+#: ../../lib/frontends/widgets/tabcontroller.py:316
 msgid "Sync a Phone, Tablet, or Digital Camera"
 msgstr "Synkronoi puhelin, taulutietokone tai digikamera"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:318
+#: ../../lib/frontends/widgets/tabcontroller.py:325
 #, python-format
 msgid ""
 "Connect the USB cable to sync your Android device with %(shortappname)s.  Be "
@@ -1091,11 +1088,11 @@ msgstr ""
 "Varmista, että Android-laitteesi on sen asetuksissa määritelty levyasemaksi. "
 "Kiinnitä kamera ja muunna videosi välittömästi web-kelpoisiksi."
 
-#: ../../lib/frontends/widgets/tabcontroller.py:332
+#: ../../lib/frontends/widgets/tabcontroller.py:339
 msgid "Show all attached devices and drives"
 msgstr "Näytä kaikki kytketyt laitteet ja asemat"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:339
+#: ../../lib/frontends/widgets/tabcontroller.py:346
 #, python-format
 msgid ""
 "Use this if your phone doesn't appear in %(shortappname)s when you connect "
@@ -1104,11 +1101,11 @@ msgstr ""
 "Käytä tätä mikäli %(shortappname)s ei näytä puhelintasi kun kytket sen "
 "tietokoneeseen, tai mikäli haluat synkronoida ulkoisen aseman kanssa."
 
-#: ../../lib/frontends/widgets/tabcontroller.py:361
+#: ../../lib/frontends/widgets/tabcontroller.py:368
 msgid "Miro on your iPad"
 msgstr "Miro iPadissasi"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:365
+#: ../../lib/frontends/widgets/tabcontroller.py:372
 #, python-format
 msgid ""
 "The gorgeous Miro iPad app lets you wirelessly stream music and videos from "
@@ -1119,11 +1116,11 @@ msgstr ""
 "pöytäkoneelta, jossa on %(shortappname)s. Voit myös ladata musiikkia ja "
 "videoita iPadiisi ja ottaa ne mukaasi."
 
-#: ../../lib/frontends/widgets/tabcontroller.py:385
+#: ../../lib/frontends/widgets/tabcontroller.py:392
 msgid "Miro on Android"
 msgstr "Miro Androidille"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:389
+#: ../../lib/frontends/widgets/tabcontroller.py:396
 msgid ""
 "We don't yet have a Miro app for Android, but you can stream to your device "
 "using other DAAP apps."
@@ -1131,13 +1128,13 @@ msgstr ""
 "Mirosta ei vielä ole saatavana sovellusta Androidille, mutta voit "
 "suoratoistaa Miron sisältöä laitteessasi muiden DAAP-sovelluksien avulla."
 
-#: ../../lib/frontends/widgets/tabcontroller.py:438
+#: ../../lib/frontends/widgets/tabcontroller.py:445
 #: ../../lib/frontends/widgets/tablist.py:919
 #: ../../lib/frontends/widgets/tablist.py:927
 msgid "Sources"
 msgstr "Lähteet"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:454
+#: ../../lib/frontends/widgets/tabcontroller.py:461
 #, python-format
 msgid ""
 "Sources are any websites that offer audio, video, or torrents for download "
@@ -1146,45 +1143,42 @@ msgstr ""
 "Lähteet ovat mitä tahansa websivustoja, joilta voi ladata ääntä, videota tai "
 "torrentteja, ja joita haluaisit käyttää %(shortappname)sssa."
 
-#: ../../lib/frontends/widgets/tabcontroller.py:466
+#: ../../lib/frontends/widgets/tabcontroller.py:473
 msgid "URL"
 msgstr "Osoite"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:475
+#: ../../lib/frontends/widgets/tabcontroller.py:482
 #: ../../lib/frontends/widgets/application.py:727
 #: ../../lib/frontends/widgets/menus.py:259
 msgid "Add Source"
 msgstr "Lisää lähde"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:502
+#: ../../lib/frontends/widgets/tabcontroller.py:509
 #: ../../lib/frontends/widgets/tablist.py:1098
 #: ../../lib/frontends/widgets/tablist.py:1104
 #: ../../lib/frontends/widgets/devicecontroller.py:580
 msgid "Playlists"
 msgstr "Soittolistat"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:526
+#: ../../lib/frontends/widgets/tabcontroller.py:533
 msgid "Add Playlist"
 msgstr "Lisää soittolista"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:552
+#: ../../lib/frontends/widgets/tabcontroller.py:559
 #: ../../lib/frontends/widgets/tablist.py:982
 #: ../../lib/frontends/widgets/tablist.py:990
-#: ../../lib/frontends/widgets/prefpanel.py:1269
+#: ../../lib/frontends/widgets/prefpanel.py:1272
 msgid "Stores"
 msgstr "Kaupat"
 
-#: ../../lib/frontends/widgets/tabcontroller.py:568
+#: ../../lib/frontends/widgets/tabcontroller.py:575
 #, python-format
 msgid ""
 "Select the music and video stores you'd like to have appear in "
-"%(shortappname)s.  Note: some other store websites may work well with Miro "
-"if you add them as Sources, but these are Stores that we've integrated and "
-"tested."
+"%(shortappname)s.  Note: some other store websites may work well with "
+"%(shortappname)s if you add them as Sources, but these are Stores that we've "
+"integrated and tested."
 msgstr ""
-"Valitse ne musiikki- ja videokaupat, jotka haluat olevan %(shortappname)sssa "
-"esillä. Huomio: muutkin kauppasivustot saattavat toimia Miron kanssa "
-"lähteinä, mutta nämä kaupat on integroitu ja testattu."
 
 #: ../../lib/frontends/widgets/statictabs.py:108
 #: ../../lib/frontends/widgets/statictabs.py:115
@@ -1324,30 +1318,34 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/gtk/window.py:954
 #, python-format
-msgid "Thank you to all the people who contributed to Miro %(version)s:"
-msgstr "Kiitos kaikille, jotka auttoivat Miro %(version)s:n tekemisessä:"
+msgid ""
+"Thank you to all the people who contributed to %(appname)s %(version)s:"
+msgstr ""
+"Kiitos kaikille, jotka auttoivat %(appname)s %(version)s:n tekemisessä:"
 
-#: ../../lib/frontends/widgets/gtk/window.py:982
-msgid "To help fund continued Miro development, visit the donation page at:"
-msgstr "Vieraile lahjoitussivulla tukeaksesi Miron kehitystyön jatkumista:"
+#: ../../lib/frontends/widgets/gtk/window.py:983
+#, python-format
+msgid ""
+"To help fund continued %(appname)s development, visit the donation page at:"
+msgstr ""
 
-#: ../../lib/frontends/widgets/feedcontroller.py:165
-#: ../../lib/frontends/widgets/feedcontroller.py:192
+#: ../../lib/frontends/widgets/feedcontroller.py:161
+#: ../../lib/frontends/widgets/feedcontroller.py:188
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
 msgstr[0] "%(count)d ladataan"
 msgstr[1] "%(count)d ladataan"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:176
-#: ../../lib/frontends/widgets/feedcontroller.py:188
+#: ../../lib/frontends/widgets/feedcontroller.py:172
+#: ../../lib/frontends/widgets/feedcontroller.py:184
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
 msgstr[0] "%(count)d kohde"
 msgstr[1] "%(count)d kohdetta"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:197
+#: ../../lib/frontends/widgets/feedcontroller.py:193
 #, python-format
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
@@ -1357,7 +1355,7 @@ msgstr[0] ""
 msgstr[1] ""
 "%(count)d latausta lisätty toistamattomien kohteiden jonoon (katso asetukset)"
 
-#: ../../lib/frontends/widgets/feedcontroller.py:210
+#: ../../lib/frontends/widgets/feedcontroller.py:206
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
@@ -1442,13 +1440,13 @@ msgid "Convert to %(conversion)s"
 msgstr "Muunna muotoon %(conversion)s"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
-#: ../../lib/frontends/widgets/itemcontextmenu.py:387
+#: ../../lib/frontends/widgets/itemcontextmenu.py:385
 msgid "Convert to..."
 msgstr "Muunna muotoon..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:141
 #: ../../lib/frontends/widgets/itemcontextmenu.py:230
-#: ../../lib/frontends/widgets/itemcontextmenu.py:373
+#: ../../lib/frontends/widgets/itemcontextmenu.py:371
 #: ../../lib/frontends/widgets/menus.py:319
 #: ../../lib/frontends/widgets/menus.py:321
 #: ../../linux/extensions/miroappindicator/main.py:55
@@ -1467,12 +1465,12 @@ msgid "Resume at %(resumetime)s"
 msgstr "Jatka kohdasta %(resumetime)s"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:153
-#: ../../lib/frontends/widgets/itemcontextmenu.py:379
+#: ../../lib/frontends/widgets/itemcontextmenu.py:377
 msgid "Mark as Unplayed"
 msgstr "Merkitse toistamattomaksi"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:156
-#: ../../lib/frontends/widgets/itemcontextmenu.py:381
+#: ../../lib/frontends/widgets/itemcontextmenu.py:379
 msgid "Mark as Played"
 msgstr "Merkitse toistetuksi"
 
@@ -1489,24 +1487,24 @@ msgid "Resume Seeding"
 msgstr "Jatka lähettämistä"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:189
-#: ../../lib/frontends/widgets/itemcontextmenu.py:375
+#: ../../lib/frontends/widgets/itemcontextmenu.py:373
 msgid "Add to Playlist"
 msgstr "Lisää soittolistalle"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:200
 #: ../../lib/frontends/widgets/itemcontextmenu.py:221
-#: ../../lib/frontends/widgets/itemcontextmenu.py:408
-#: ../../lib/frontends/widgets/itemcontextmenu.py:420
+#: ../../lib/frontends/widgets/itemcontextmenu.py:406
+#: ../../lib/frontends/widgets/itemcontextmenu.py:418
 msgid "Cancel Download"
 msgstr "Peru lataaminen"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:204
-#: ../../lib/frontends/widgets/itemcontextmenu.py:409
+#: ../../lib/frontends/widgets/itemcontextmenu.py:407
 msgid "Pause Download"
 msgstr "Keskeytä lataaminen"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:208
-#: ../../lib/frontends/widgets/itemcontextmenu.py:419
+#: ../../lib/frontends/widgets/itemcontextmenu.py:417
 msgid "Resume Download"
 msgstr "Jatka lataamista"
 
@@ -1535,64 +1533,64 @@ msgstr "Avaa verkkosivu"
 msgid "Share"
 msgstr "Jaa"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:361
+#: ../../lib/frontends/widgets/itemcontextmenu.py:359
 #, python-format
 msgid "%(count)d Device Item"
 msgid_plural "%(count)d Device Items"
 msgstr[0] "%(count)d laite"
 msgstr[1] "%(count)d laitetta"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:367
+#: ../../lib/frontends/widgets/itemcontextmenu.py:365
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
 msgstr[0] "%(count)d ladattu kohde"
 msgstr[1] "%(count)d ladattua kohdetta"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:393
+#: ../../lib/frontends/widgets/itemcontextmenu.py:391
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
 msgstr[0] "%(count)d kohde saatavilla"
 msgstr[1] "%(count)d kohdetta saatavilla"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:403
+#: ../../lib/frontends/widgets/itemcontextmenu.py:401
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
 msgstr[0] "%(count)d ladattava kohde"
 msgstr[1] "%(count)d ladattavaa kohdetta"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:414
+#: ../../lib/frontends/widgets/itemcontextmenu.py:412
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
 msgstr[0] "%(count)d pysäytetty kohde"
 msgstr[1] "%(count)d pysäytettyä kohdetta"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:423
+#: ../../lib/frontends/widgets/itemcontextmenu.py:421
 msgid "Restart Upload"
 msgstr "Aloita lataus uudestaan"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:426
+#: ../../lib/frontends/widgets/itemcontextmenu.py:424
 msgid "Edit Items"
 msgstr "Muokkaa kohteita"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:441
-#: ../../lib/frontends/widgets/itemlistwidgets.py:650
+#: ../../lib/frontends/widgets/itemcontextmenu.py:439
+#: ../../lib/frontends/widgets/itemlistwidgets.py:653
 #: ../../lib/frontends/widgets/menus.py:410
 msgid "Show Conversion Folder"
 msgstr "Näytä muunnoskansio"
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:455
+#: ../../lib/frontends/widgets/itemcontextmenu.py:453
 msgid "Remove From Playlist"
 msgstr "Poista soittolistalta"
 
-#: ../../lib/frontends/widgets/playback.py:674
+#: ../../lib/frontends/widgets/playback.py:678
 msgid "Open Subtitles File..."
 msgstr "Avaa tekstitystiedosto..."
 
-#: ../../lib/frontends/widgets/playback.py:675
+#: ../../lib/frontends/widgets/playback.py:679
 msgid "Subtitle files"
 msgstr "Tekstitystiedostot"
 
@@ -1749,10 +1747,9 @@ msgstr "Poista lähteet"
 
 #: ../../lib/frontends/widgets/tablist.py:1026
 #: ../../lib/frontends/widgets/tablist.py:1032
-#: ../../lib/frontends/widgets/prefpanel.py:1258
+#: ../../lib/frontends/widgets/prefpanel.py:1261
 #: ../../lib/frontends/widgets/devicecontroller.py:579
 #: ../../lib/frontends/widgets/itemlistwidgets.py:815
-#: ../../lib/messagehandler.py:577
 msgid "Podcasts"
 msgstr "Podcastit"
 
@@ -1781,7 +1778,7 @@ msgstr "Palauta podcastin nimi"
 #: ../../lib/frontends/widgets/tablist.py:1085
 #: ../../lib/frontends/widgets/devicecontroller.py:581
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1366
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1435
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1436
 msgid "Settings"
 msgstr "Asetukset"
 
@@ -1824,152 +1821,153 @@ msgid "Language:"
 msgstr "Kieli:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:481
-msgid "(Changing the language requires you to restart Miro.)"
-msgstr "(Kielen vaihtaminen vaatii Miron uudelleenkäynnistyksen.)"
+#, python-format
+msgid "(Changing the language requires you to restart %(appname)s.)"
+msgstr "(Kielen muuttaminen vaatii %(appname)sn uudelleenkäynnistyksen.)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:492
+#: ../../lib/frontends/widgets/prefpanel.py:493
 msgid "Show videos from podcasts in the Videos section."
 msgstr "Näytä podcastien videot Videot-osiossa"
 
-#: ../../lib/frontends/widgets/prefpanel.py:498
+#: ../../lib/frontends/widgets/prefpanel.py:499
 msgid "Show audio from podcasts in the Music section."
 msgstr "Näytä podcastien äänitiedostot Musiikki-osiossa"
 
-#: ../../lib/frontends/widgets/prefpanel.py:504
+#: ../../lib/frontends/widgets/prefpanel.py:505
 msgid "Every day"
 msgstr "Joka päivä"
 
-#: ../../lib/frontends/widgets/prefpanel.py:505
+#: ../../lib/frontends/widgets/prefpanel.py:506
 msgid "Every hour"
 msgstr "Tunnin välein"
 
-#: ../../lib/frontends/widgets/prefpanel.py:506
+#: ../../lib/frontends/widgets/prefpanel.py:507
 msgid "Every 30 minutes"
 msgstr "30 minuutin välein"
 
-#: ../../lib/frontends/widgets/prefpanel.py:507
+#: ../../lib/frontends/widgets/prefpanel.py:508
 msgid "Manually"
 msgstr "Manuaalisesti"
 
-#: ../../lib/frontends/widgets/prefpanel.py:512
+#: ../../lib/frontends/widgets/prefpanel.py:513
 msgid "New"
 msgstr "Uusi"
 
-#: ../../lib/frontends/widgets/prefpanel.py:513
+#: ../../lib/frontends/widgets/prefpanel.py:514
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1366
 msgid "All"
 msgstr "Kaikki"
 
-#: ../../lib/frontends/widgets/prefpanel.py:520
+#: ../../lib/frontends/widgets/prefpanel.py:521
 msgid "0"
 msgstr "0"
 
-#: ../../lib/frontends/widgets/prefpanel.py:521
+#: ../../lib/frontends/widgets/prefpanel.py:522
 msgid "20"
 msgstr "20"
 
-#: ../../lib/frontends/widgets/prefpanel.py:522
+#: ../../lib/frontends/widgets/prefpanel.py:523
 msgid "50"
 msgstr "50"
 
-#: ../../lib/frontends/widgets/prefpanel.py:523
+#: ../../lib/frontends/widgets/prefpanel.py:524
 msgid "100"
 msgstr "100"
 
-#: ../../lib/frontends/widgets/prefpanel.py:524
+#: ../../lib/frontends/widgets/prefpanel.py:525
 msgid "1000"
 msgstr "1000"
 
-#: ../../lib/frontends/widgets/prefpanel.py:530
+#: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "Default settings for new podcasts:"
 msgstr "Podcastien oletusasetukset:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:534
+#: ../../lib/frontends/widgets/prefpanel.py:535
 msgid "(These can be changed using the podcast's settings button)"
 msgstr "(Näitä voi muuttaa podcastin Asetukset-napista)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:539
+#: ../../lib/frontends/widgets/prefpanel.py:540
 msgid "Check for new content:"
 msgstr "Tarkista uusi sisältö:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:544
+#: ../../lib/frontends/widgets/prefpanel.py:545
 msgid "Auto-download setting:"
 msgstr "Automaattisen lataamisen asetus:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:550
+#: ../../lib/frontends/widgets/prefpanel.py:551
 msgid "Remember this many old items:"
 msgstr "Muista näin monta vanhaa kohdetta:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:551
+#: ../../lib/frontends/widgets/prefpanel.py:552
 msgid "(in addition to the current contents)"
 msgstr "(nykyisten kohteiden lisäksi)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:564
+#: ../../lib/frontends/widgets/prefpanel.py:565
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Suurin määrä manuaalisia latauksia kerralla:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:576
+#: ../../lib/frontends/widgets/prefpanel.py:577
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Suurin määrä automaattisia latauksia kerralla:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:590
+#: ../../lib/frontends/widgets/prefpanel.py:591
 msgid "Bittorrent:"
 msgstr "Bittorrent:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:594
+#: ../../lib/frontends/widgets/prefpanel.py:595
 msgid "Limit upstream bandwidth to:"
 msgstr "Rajoita lähetysnopeus:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:608
-#: ../../lib/frontends/widgets/prefpanel.py:623
+#: ../../lib/frontends/widgets/prefpanel.py:609
+#: ../../lib/frontends/widgets/prefpanel.py:624
 msgid "KB/s"
 msgstr "kt/s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:612
+#: ../../lib/frontends/widgets/prefpanel.py:613
 msgid "Limit downstream bandwidth to:"
 msgstr "Rajoita latausnopeus:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:627
+#: ../../lib/frontends/widgets/prefpanel.py:628
 msgid "Limit torrent connections to:"
 msgstr "Rajoita torrent-yhteydet:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:654
+#: ../../lib/frontends/widgets/prefpanel.py:655
 msgid "Starting port:"
 msgstr "Portista:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:660
+#: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "Ending port:"
 msgstr "Porttiin:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:668
+#: ../../lib/frontends/widgets/prefpanel.py:669
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Välitä portit automaattisesti (UPNP)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:672
+#: ../../lib/frontends/widgets/prefpanel.py:673
 msgid "Use DHT to find more peers"
 msgstr "Käytä DHT:tä vertaisten hakuun"
 
-#: ../../lib/frontends/widgets/prefpanel.py:676
+#: ../../lib/frontends/widgets/prefpanel.py:677
 msgid "Ignore unencrypted connections."
 msgstr "Hylkää salaamattomat yhteydet"
 
-#: ../../lib/frontends/widgets/prefpanel.py:681
+#: ../../lib/frontends/widgets/prefpanel.py:682
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Lopeta torrentin lähetys, kun seuraava jakosuhde on saavutettu"
 
-#: ../../lib/frontends/widgets/prefpanel.py:702
+#: ../../lib/frontends/widgets/prefpanel.py:703
 msgid "Change"
 msgstr "Muuta"
 
-#: ../../lib/frontends/widgets/prefpanel.py:708
+#: ../../lib/frontends/widgets/prefpanel.py:709
 msgid "Choose Movies Directory"
 msgstr "Valitse videokansio"
 
-#: ../../lib/frontends/widgets/prefpanel.py:719
+#: ../../lib/frontends/widgets/prefpanel.py:720
 msgid "Directory not valid"
 msgstr "Sijainti ei ole kelvollinen"
 
-#: ../../lib/frontends/widgets/prefpanel.py:720
+#: ../../lib/frontends/widgets/prefpanel.py:721
 #, python-format
 msgid ""
 "Directory '%(dir)s' could not be created.  Please choose a directory you "
@@ -1978,11 +1976,11 @@ msgstr ""
 "Kansion '%(dir)s' luonti epäonnistui. Valitse kansio, johon sinulla on "
 "kirjoitusoikeus."
 
-#: ../../lib/frontends/widgets/prefpanel.py:735
+#: ../../lib/frontends/widgets/prefpanel.py:736
 msgid "Migrate existing movies?"
 msgstr "Siirretäänkö olemassa olevat videot?"
 
-#: ../../lib/frontends/widgets/prefpanel.py:737
+#: ../../lib/frontends/widgets/prefpanel.py:738
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -1993,24 +1991,24 @@ msgstr ""
 "siirtävän aiemmat latauksesi sinne? (Meneillään olevat lataukset siirretään "
 "vasta kun ne valmistuvat.)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:755
+#: ../../lib/frontends/widgets/prefpanel.py:756
 msgid "folder"
 msgstr "kansio"
 
-#: ../../lib/frontends/widgets/prefpanel.py:761
+#: ../../lib/frontends/widgets/prefpanel.py:762
 msgid "visible"
 msgstr "näkyvissä"
 
-#: ../../lib/frontends/widgets/prefpanel.py:812
-#: ../../lib/frontends/widgets/newwatchedfolder.py:47
+#: ../../lib/frontends/widgets/prefpanel.py:813
+#: ../../lib/frontends/widgets/newwatchedfolder.py:49
 msgid "Add Watched Folder"
 msgstr "Lisää tarkasteltava kansio"
 
-#: ../../lib/frontends/widgets/prefpanel.py:831
+#: ../../lib/frontends/widgets/prefpanel.py:832
 msgid "Store downloads in this folder:"
 msgstr "Tallenna ladatut tiedostot kansioon:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:837
+#: ../../lib/frontends/widgets/prefpanel.py:838
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -2018,178 +2016,179 @@ msgstr ""
 "Tarkkaile uusia video- ja äänitiedostoja näissä kansioissa ja lisää ne "
 "kirjastoon:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:858
+#: ../../lib/frontends/widgets/prefpanel.py:859
 msgid "Keep at least this much free space on my drive:"
 msgstr "Säilytä vähintään näin paljon vapaata levytilaa kiintolevyllä:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:872
+#: ../../lib/frontends/widgets/prefpanel.py:873
 msgid "GB"
 msgstr "Gt"
 
-#: ../../lib/frontends/widgets/prefpanel.py:876
+#: ../../lib/frontends/widgets/prefpanel.py:877
 msgid "1 day"
 msgstr "1 päivä"
 
-#: ../../lib/frontends/widgets/prefpanel.py:877
+#: ../../lib/frontends/widgets/prefpanel.py:878
 msgid "3 days"
 msgstr "3 päivää"
 
-#: ../../lib/frontends/widgets/prefpanel.py:878
+#: ../../lib/frontends/widgets/prefpanel.py:879
 msgid "6 days"
 msgstr "6 päivää"
 
-#: ../../lib/frontends/widgets/prefpanel.py:879
+#: ../../lib/frontends/widgets/prefpanel.py:880
 msgid "10 days"
 msgstr "10 päivää"
 
-#: ../../lib/frontends/widgets/prefpanel.py:880
+#: ../../lib/frontends/widgets/prefpanel.py:881
 msgid "1 month"
 msgstr "1 kuukausi"
 
-#: ../../lib/frontends/widgets/prefpanel.py:881
+#: ../../lib/frontends/widgets/prefpanel.py:882
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:103
 msgid "never"
 msgstr "ei koskaan"
 
-#: ../../lib/frontends/widgets/prefpanel.py:886
+#: ../../lib/frontends/widgets/prefpanel.py:887
 msgid "By default, video and audio items expire after:"
 msgstr "Oletuksena video- ja äänitiedostot vanhenevat:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:898
+#: ../../lib/frontends/widgets/prefpanel.py:899
 msgid "Share my media library."
 msgstr "Jaa mediakirjastoni"
 
-#: ../../lib/frontends/widgets/prefpanel.py:903
+#: ../../lib/frontends/widgets/prefpanel.py:904
 msgid "Share my music library."
 msgstr "Jaa musiikkikirjastoni"
 
-#: ../../lib/frontends/widgets/prefpanel.py:904
+#: ../../lib/frontends/widgets/prefpanel.py:905
 msgid "Share my video library."
 msgstr "Jaa videokirjastoni"
 
-#: ../../lib/frontends/widgets/prefpanel.py:930
+#: ../../lib/frontends/widgets/prefpanel.py:931
 msgid "Share Name:"
 msgstr "Jaon nimi:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:940
+#: ../../lib/frontends/widgets/prefpanel.py:941
 msgid ""
 "Bonjour is required for sharing. Click on 'Install Bonjour' to install."
 msgstr ""
 "Jakaminen edellyttää Bonjouria. Valitse 'Asenna Bonjour' asentaaksesi."
 
-#: ../../lib/frontends/widgets/prefpanel.py:946
+#: ../../lib/frontends/widgets/prefpanel.py:947
 #: ../../linux/plat/frontends/widgets/bonjour.py:45
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
 #: ../../windows/plat/frontends/widgets/bonjour.py:73
-#: ../../osx/plat/frontends/widgets/bonjour.py:38
+#: ../../osx/plat/frontends/widgets/bonjour.py:40
 msgid "Install Bonjour"
 msgstr "Asenna Bonjour"
 
-#: ../../lib/frontends/widgets/prefpanel.py:961
-msgid "Play media in Miro."
-msgstr "Toista mediaa Mirolla"
-
 #: ../../lib/frontends/widgets/prefpanel.py:963
+#, python-format
+msgid "Play media in %(appname)s."
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:966
 msgid "Always play videos in a separate window."
 msgstr "Toista videot aina erillisessä ikkunassa"
 
-#: ../../lib/frontends/widgets/prefpanel.py:966
+#: ../../lib/frontends/widgets/prefpanel.py:969
 msgid "Automatically enable movie subtitles when available."
 msgstr "Käytä automaattisesti elokuvan teksityksiä, jos saatavilla"
 
-#: ../../lib/frontends/widgets/prefpanel.py:968
+#: ../../lib/frontends/widgets/prefpanel.py:971
 msgid "Continuous Playback"
 msgstr "Jatkuva soitto"
 
-#: ../../lib/frontends/widgets/prefpanel.py:972
+#: ../../lib/frontends/widgets/prefpanel.py:975
 msgid "Play video and audio items one after another"
 msgstr "Toista video- ja äänitiedostot yksi toisensa jälkeen"
 
-#: ../../lib/frontends/widgets/prefpanel.py:974
+#: ../../lib/frontends/widgets/prefpanel.py:977
 msgid "Stop after each video or audio item"
 msgstr "Pysäytä jokaisen video- ja äänitiedoston jälkeen"
 
-#: ../../lib/frontends/widgets/prefpanel.py:976
+#: ../../lib/frontends/widgets/prefpanel.py:979
 msgid "Resume Playback"
 msgstr "Jatka soittoa"
 
-#: ../../lib/frontends/widgets/prefpanel.py:979
+#: ../../lib/frontends/widgets/prefpanel.py:982
 msgid "Continue playing videos from where they were last stopped."
 msgstr "Jatka videoiden toistoa kohdasta, jossa ne viimeksi pysäytettiin."
 
-#: ../../lib/frontends/widgets/prefpanel.py:981
+#: ../../lib/frontends/widgets/prefpanel.py:984
 msgid "Continue playing music files from where they were last stopped."
 msgstr ""
 "Jatka musiikkitiedostojen soittoa kohdasta, jossa ne viimeksi pysäytettiin."
 
-#: ../../lib/frontends/widgets/prefpanel.py:984
+#: ../../lib/frontends/widgets/prefpanel.py:987
 msgid "Continue playing podcast files from where they were last stopped."
 msgstr "Jatka podcastien soittoa kohdasta, jossa ne viimeksi pysäytettiin."
 
-#: ../../lib/frontends/widgets/prefpanel.py:1044
+#: ../../lib/frontends/widgets/prefpanel.py:1047
 msgid "Allow this many concurrent conversions:"
 msgstr "Samanaikaisten muuntojen enimmäismäärä:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1045
+#: ../../lib/frontends/widgets/prefpanel.py:1048
 msgid "(changing this will not apply to currently running conversions)"
 msgstr "(asetuksen muuttaminen ei vaikuta meneillään oleviin muuntoihin)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1062
+#: ../../lib/frontends/widgets/prefpanel.py:1065
 msgid "Store"
 msgstr "Kauppa"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1068
+#: ../../lib/frontends/widgets/prefpanel.py:1071
 msgid "Visible"
 msgstr "Näytetään"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1108
+#: ../../lib/frontends/widgets/prefpanel.py:1111
 msgid "MP3 stores:"
 msgstr "MP3-kaupat:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1131
+#: ../../lib/frontends/widgets/prefpanel.py:1134
 msgid "enabled"
 msgstr "käytössä"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1136
+#: ../../lib/frontends/widgets/prefpanel.py:1139
 msgid "extension"
 msgstr "laajennus"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1176
+#: ../../lib/frontends/widgets/prefpanel.py:1179
 #, python-format
 msgid "Name:  %(extensionname)s"
 msgstr "Nimi: %(extensionname)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1178
+#: ../../lib/frontends/widgets/prefpanel.py:1181
 #, python-format
 msgid "Version:  %(extensionversion)s"
 msgstr "Versio: %(extensionversion)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1181
+#: ../../lib/frontends/widgets/prefpanel.py:1184
 msgid "Description:"
 msgstr "Kuvaus:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1199
+#: ../../lib/frontends/widgets/prefpanel.py:1202
 #, python-format
 msgid "Extension %(extensionname)s failed to load: %(errormessage)s"
 msgstr ""
 "Laajennuksen %(extensionname)s lataaminen epäonnistui: %(errormessage)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1204
+#: ../../lib/frontends/widgets/prefpanel.py:1207
 msgid "Extension failed to load"
 msgstr "Laajennuksen lataaminen epäonnistui"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1217
+#: ../../lib/frontends/widgets/prefpanel.py:1220
 #, python-format
 msgid "Extension %(extensionname)s failed to unload: %(errormessage)s"
 msgstr ""
 "%(extensionname)s-laajennuksen poiskytkeminen epäonnistui: %(errormessage)s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1222
+#: ../../lib/frontends/widgets/prefpanel.py:1225
 msgid "Extension failed to unload"
 msgstr "Laajennuksen poiskytkeminen epäonnistui"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1238
+#: ../../lib/frontends/widgets/prefpanel.py:1241
 msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
@@ -2197,48 +2196,48 @@ msgstr ""
 "Laajennukset ovat beta-ominaisuus. Laajennusten ohjelmoinnista "
 "kiinnostuneille kehittäjille on lisätietoa wikissämme."
 
-#: ../../lib/frontends/widgets/prefpanel.py:1242
+#: ../../lib/frontends/widgets/prefpanel.py:1245
 msgid "Extensions:"
 msgstr "Laajennukset:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1246
+#: ../../lib/frontends/widgets/prefpanel.py:1249
 msgid "Details:"
 msgstr "Tiedot:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1257
+#: ../../lib/frontends/widgets/prefpanel.py:1260
 #: ../../lib/frontends/widgets/itemedit.py:761
 msgid "General"
 msgstr "Yleiset"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1259
+#: ../../lib/frontends/widgets/prefpanel.py:1262
 msgid "Downloads"
 msgstr "Lataukset"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1261
+#: ../../lib/frontends/widgets/prefpanel.py:1264
 msgid "Folders"
 msgstr "Kansiot"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1262
+#: ../../lib/frontends/widgets/prefpanel.py:1265
 msgid "Disk space"
 msgstr "Levytila"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1264
+#: ../../lib/frontends/widgets/prefpanel.py:1267
 msgid "Playback"
 msgstr "Toisto"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1266
+#: ../../lib/frontends/widgets/prefpanel.py:1269
 msgid "Sharing"
 msgstr "Jakaminen"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1267
+#: ../../lib/frontends/widgets/prefpanel.py:1270
 msgid "Conversions"
 msgstr "Muunnokset"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1270
+#: ../../lib/frontends/widgets/prefpanel.py:1273
 msgid "Extensions"
 msgstr "Laajennukset"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1275
+#: ../../lib/frontends/widgets/prefpanel.py:1278
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "Preferences"
 msgstr "Asetukset"
@@ -2449,37 +2448,36 @@ msgstr "15 katsomatonta kohdetta"
 msgid "Podcast Settings"
 msgstr "Podcast-asetukset"
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:48
+#: ../../lib/frontends/widgets/newwatchedfolder.py:50
+#, python-format
 msgid ""
-"Miro can watch a folder on your computer and show those media files in your "
-"library."
+"%(appname)s can watch a folder on your computer and show those media files "
+"in your library."
 msgstr ""
-"Miro voi tarkkailla hakemistoa tietokoneellasi ja näyttää sen sisältämät "
-"mediatiedostot kirjastossasi."
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:70
+#: ../../lib/frontends/widgets/newwatchedfolder.py:73
 #: ../../lib/frontends/widgets/firsttimedialog.py:318
 msgid "Choose..."
 msgstr "Valitse..."
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:75
+#: ../../lib/frontends/widgets/newwatchedfolder.py:78
 msgid "Directory:"
 msgstr "Kansio:"
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:82
+#: ../../lib/frontends/widgets/newwatchedfolder.py:85
 msgid "Show in my sidebar as a podcast"
 msgstr "Näytä podcastina laitapalkissani"
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:115
+#: ../../lib/frontends/widgets/newwatchedfolder.py:118
 msgid "Choose Watched Folder Directory"
 msgstr "Valitse tarkkailtava kansio"
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:123
+#: ../../lib/frontends/widgets/newwatchedfolder.py:126
 msgid ""
 "That directory could not be found. Please check the path and try again."
 msgstr "Tätä kansiota ei löytynyt. Tarkista polku ja yritä uudestaan."
 
-#: ../../lib/frontends/widgets/newwatchedfolder.py:125
+#: ../../lib/frontends/widgets/newwatchedfolder.py:128
 msgid ""
 "That directory could not be accessed. Please check the permissions and try "
 "again."
@@ -2767,20 +2765,9 @@ msgid ""
 "connected, is a directory that %(shortappname)s does not have write "
 "permission to, or there is something that is not a directory at that path.\n"
 "\n"
-"Miro will now exit. You can connect the drive or otherwise fix the problem "
-"and relaunch %(shortappname)s."
+"%(shortappname)s will now exit. You can connect the drive or otherwise fix "
+"the problem and relaunch %(shortappname)s."
 msgstr ""
-"%(shortappname)s ei voi käyttää ensisijaista videohakemistoa sijainnissa:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"Tämä voi johtua siitä, että sijainti on ulkoisella asemalla, jota ei ole "
-"kytketty, tai siitä, että %(shortappname)slla ei ole oikeutta kirjoittaa "
-"hakemistoon, tai sitten siitä, että polku viittaa kansion sijaan esimerkiksi "
-"tiedostoon.\n"
-"\n"
-"Miro lopetetaan nyt. Voit kytkeä aseman tai korjata ongelman muulla tavoin, "
-"ja käynnistää %(shortappname)sn sen jälkeen uudestaan."
 
 #: ../../lib/frontends/widgets/application.py:406
 msgid "Error Revealing File"
@@ -3077,23 +3064,19 @@ msgstr "Varoita jos jos yritän poistua, kun muunto on kesken"
 msgid "Connect failed"
 msgstr "Yhdistäminen epäonnistui"
 
-#: ../../lib/frontends/widgets/application.py:1395
+#: ../../lib/frontends/widgets/application.py:1394
 #, python-format
 msgid ""
 "Connection to share %(name)s failed.\n"
 "\n"
-"The share is either unreachable or incompatible with Miro sharing."
+"The share is either unreachable or incompatible with %(appname)s sharing."
 msgstr ""
-"Yhteyden muodostaminen jakoon %(name)s epäonnistui.\n"
-"\n"
-"Jakoon ei joko ole pääsyä tai sitten se ei ole yhteensopiva Miro-jakamisen "
-"kanssa."
 
-#: ../../lib/frontends/widgets/application.py:1403
+#: ../../lib/frontends/widgets/application.py:1404
 msgid "Eject failed"
 msgstr "Irrotus epäonnistui"
 
-#: ../../lib/frontends/widgets/application.py:1404
+#: ../../lib/frontends/widgets/application.py:1405
 #, python-format
 msgid ""
 "Ejecting device '%(name)s' failed.\n"
@@ -3104,27 +3087,25 @@ msgstr ""
 "\n"
 "Laite on käytössä."
 
-#: ../../lib/frontends/widgets/application.py:1417
+#: ../../lib/frontends/widgets/application.py:1418
 msgid "Upgrading database"
 msgstr "Päivitetään tietokantaa"
 
-#: ../../lib/frontends/widgets/application.py:1418
+#: ../../lib/frontends/widgets/application.py:1420
+#, python-format
 msgid ""
-"Miro is upgrading your database of podcasts and files.  This one-time "
-"process can take a long time if you  have a large number of items in Miro "
-"(it can even take more than 30 minutes)."
+"%(appname)s is upgrading your database of podcasts and files.  This one-time "
+"process can take a long time if you have a large number of items in "
+"%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
-"Miro päivittää podcastien ja tiedostojen tietokantaasi. Tämä kertaalleen "
-"suoritettava toiminto saattaa kestää kauan (jopa kauemmin kuin puoli tuntia) "
-"mikäli sinulla on paljon kohteita Mirossa."
 
-#: ../../lib/frontends/widgets/application.py:1424
-msgid "Miro shutdown improperly and needs to prepare your items for display."
+#: ../../lib/frontends/widgets/application.py:1427
+#, python-format
+msgid ""
+"%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
-"Miro sulkeutui huonosti ja kohteitasi joudutaan siksi valmistelemaan "
-"näyttämistä varten."
 
-#: ../../lib/frontends/widgets/application.py:1661
+#: ../../lib/frontends/widgets/application.py:1665
 msgid "Message"
 msgstr "Viesti"
 
@@ -3261,19 +3242,19 @@ msgstr "%(item)s"
 msgid "Resume"
 msgstr "Jatka"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:625
+#: ../../lib/frontends/widgets/itemlistwidgets.py:628
 msgid "Back to podcast"
 msgstr "Takaisin podcastiin"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:645
+#: ../../lib/frontends/widgets/itemlistwidgets.py:648
 msgid "Stop All Conversions"
 msgstr "Pysäytä kaikki muunnokset"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:655
+#: ../../lib/frontends/widgets/itemlistwidgets.py:658
 msgid "Clear Finished Conversions"
 msgstr "Tyhjennä valmiit muunnokset"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:720
+#: ../../lib/frontends/widgets/itemlistwidgets.py:723
 #: ../../lib/frontends/widgets/itemlistwidgets.py:897
 msgid "Save as Podcast"
 msgstr "Tallenna podcastina"
@@ -3352,72 +3333,76 @@ msgstr "Peru kaikki"
 msgid "Download Settings"
 msgstr "Latausasetukset"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1440
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1441
 msgid "Auto-Download All"
 msgstr "Lataa automaattisesti kaikki"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1441
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1442
 msgid "Auto-Download New"
 msgstr "Lataa automaattisesti uudet"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1442
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1443
 msgid "Auto-Download Off"
 msgstr "Automaattinen lataaminen pois käytöstä"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1450
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1451
 msgid "Remove podcast"
 msgstr "Poista podcast"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1800
-msgid "Importing audio details and artwork: {0} of {1}"
-msgstr "Tuodaan äänitiedoston tietoja ja kansikuvia: {0}/{1}"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1808
+#, python-format
+msgid "Importing audio details and artwork: %(number)d of %(total)d"
+msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1803
-msgid "Importing video details and creating thumbnails: {0} of {1}"
-msgstr "Tuodaan videon tietoja ja luodaan kuvakkeita: {0}/{1}"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1811
+#, python-format
+msgid ""
+"Importing video details and creating thumbnails: %(number)d of %(total)d"
+msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1806
-msgid "Importing file details: {0} of {1}"
-msgstr "Tuodaan tiedoston tietoja: {0}/{1}"
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1814
+#, python-format
+msgid "Importing file details: %(number)d of %(total)d"
+msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1960
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1968
 msgid "Remaining"
 msgstr "Jäljellä"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1962
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1970
 msgid "Upload"
 msgstr "Lähetys"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1963
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1964
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1971
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1972
 msgid "Total"
 msgstr "Yhteensä"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2008
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2016
 msgid "Connected Peers"
 msgstr "Yhdistetyt vertaiset"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2009
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2017
 msgid "Seeders"
 msgstr "Lähteet"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2010
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2018
 msgid "Leechers"
 msgstr "Lataajat"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2011
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2019
 msgid "Share Ratio"
 msgstr "Jakosuhde"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2195
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2203
 msgid "View License"
 msgstr "Näytä lisenssi"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2216
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2224
 msgid "Select an item to view more of its details"
 msgstr "Valitse kohde nähdäksesi sen tiedot"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2269
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2277
 msgid "DRM Locked"
 msgstr "DRM-lukittu"
 
@@ -3743,15 +3728,15 @@ msgstr "Kausinumero"
 msgid "Episode Number"
 msgstr "Jaksonumero"
 
-#: ../../lib/frontends/widgets/itemedit.py:555 ../../lib/messages.py:1272
+#: ../../lib/frontends/widgets/itemedit.py:555 ../../lib/messages.py:1273
 msgid "Movie"
 msgstr "Elokuva"
 
-#: ../../lib/frontends/widgets/itemedit.py:557 ../../lib/messages.py:1276
+#: ../../lib/frontends/widgets/itemedit.py:557 ../../lib/messages.py:1277
 msgid "Clip"
 msgstr "Leike"
 
-#: ../../lib/frontends/widgets/itemedit.py:558 ../../lib/messages.py:1278
+#: ../../lib/frontends/widgets/itemedit.py:558 ../../lib/messages.py:1279
 msgid "Podcast"
 msgstr "Podcast"
 
@@ -3774,30 +3759,30 @@ msgstr ""
 "Muokataksesi jotain tietoa kaikkien valittujen kohteiden osalta, merkitse "
 "muokattava tieto ruksilla."
 
-#: ../../lib/messages.py:1269 ../../lib/sharing.py:242
+#: ../../lib/messages.py:1270 ../../lib/sharing.py:250
 msgid "Locked"
 msgstr "Lukittu"
 
-#: ../../lib/messages.py:1297
+#: ../../lib/messages.py:1298
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
 
-#: ../../lib/messages.py:1351 ../../lib/item.py:1297
+#: ../../lib/messages.py:1352 ../../lib/item.py:1297
 msgid "queued for download"
 msgstr "lataus asetettu jonoon"
 
-#: ../../lib/messagehandler.py:1590
+#: ../../lib/messagehandler.py:1593
 msgid "Subscribed to new podcast:"
 msgstr "Tilattiin uusi podcast:"
 
-#: ../../lib/messagehandler.py:1593
+#: ../../lib/messagehandler.py:1596
 msgid "Subscribed to new podcasts:"
 msgstr "Tilattiin uusia podcasteja:"
 
-#: ../../lib/messagehandler.py:1614
+#: ../../lib/messagehandler.py:1617
 msgid "Migrating Files"
 msgstr "Siirretään tiedostoja"
 
@@ -3850,15 +3835,20 @@ msgstr ""
 "uudestaan."
 
 #: ../../lib/storedatabase.py:335
-msgid "Database was created by a newer version of Miro "
-msgstr "Tietokanta on luotu Miron uudemmassa versiossa "
+#, python-format
+msgid ""
+"Database was created by a newer version of %(appname)s (db version is "
+"%(version)s)"
+msgstr ""
+"Tietokannan luontiin käytettiin %(appname)sn uudempaa versiota (tietokannan "
+"versio on %(version)s)"
 
-#: ../../lib/storedatabase.py:748
+#: ../../lib/storedatabase.py:749
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s-tietokannan tallennus onnistui"
 
-#: ../../lib/storedatabase.py:750
+#: ../../lib/storedatabase.py:751
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -3866,12 +3856,12 @@ msgstr ""
 "Tietokanta on onnistuneesti tallennettu. Nyt on turvallista lopettaa "
 "menettämättä tietoja."
 
-#: ../../lib/storedatabase.py:811
+#: ../../lib/storedatabase.py:812
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s-tietokannan tallennus epäonnistui"
 
-#: ../../lib/storedatabase.py:814
+#: ../../lib/storedatabase.py:815
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -3899,18 +3889,17 @@ msgstr ""
 "Virhe: %(error_text)s\n"
 "\n"
 
-#: ../../lib/storedatabase.py:906
+#: ../../lib/storedatabase.py:907
 #, python-format
 msgid "%(appname)s database corrupt."
 msgstr "%(appname)s-tietokanta vaurioitunut."
 
-#: ../../lib/storedatabase.py:908
+#: ../../lib/storedatabase.py:910
+#, python-format
 msgid ""
-"Your Miro database is corrupt.  It will be backed up in your Miro database "
-"directory and a new database will be created now."
+"Your %(appname)s database is corrupt.  It will be backed up in your Miro "
+"database directory and a new database will be created now."
 msgstr ""
-"Miro-tietokantasi on vaurioitunut. Siitä luodaan varmuuskopio Miron "
-"tietokantakansioon, ja tilalle luodaan uusi tietokanta."
 
 #: ../../lib/singleclick.py:71
 msgid "Download already exists"
@@ -4180,17 +4169,17 @@ msgid "Subtitle file %(tracknumber)d"
 msgstr "Tekstitystiedosto %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:603
-#: ../../windows/plat/renderers/vlc.py:746
-#: ../../windows/plat/renderers/vlc.py:749
 #: ../../windows/plat/renderers/vlc.py:750
+#: ../../windows/plat/renderers/vlc.py:753
+#: ../../windows/plat/renderers/vlc.py:754
 msgid "Eastern European"
 msgstr "Itäeurooppalainen"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
-#: ../../windows/plat/renderers/vlc.py:747
-#: ../../windows/plat/renderers/vlc.py:748
+#: ../../windows/plat/renderers/vlc.py:751
+#: ../../windows/plat/renderers/vlc.py:752
 msgid "Baltic"
 msgstr "balttilainen"
 
@@ -4228,21 +4217,21 @@ msgid "Romanian"
 msgstr "Romania"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
-#: ../../windows/plat/renderers/vlc.py:756
-#: ../../windows/plat/renderers/vlc.py:758
+#: ../../windows/plat/renderers/vlc.py:760
+#: ../../windows/plat/renderers/vlc.py:762
 msgid "Western European"
 msgstr "Länsieurooppalainen"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
-#: ../../windows/plat/renderers/vlc.py:757
+#: ../../windows/plat/renderers/vlc.py:761
 msgid "Celtic"
 msgstr "Kelttiläinen"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
-#: ../../windows/plat/renderers/vlc.py:760
-#: ../../windows/plat/renderers/vlc.py:761
+#: ../../windows/plat/renderers/vlc.py:764
+#: ../../windows/plat/renderers/vlc.py:765
 msgid "Greek"
 msgstr "Kreikka"
 
@@ -4267,7 +4256,7 @@ msgid "Western"
 msgstr "Länsimaalainen"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
-#: ../../windows/plat/renderers/vlc.py:764
+#: ../../windows/plat/renderers/vlc.py:768
 msgid "East Asian"
 msgstr "Itäaasialainen"
 
@@ -4287,8 +4276,8 @@ msgstr "Kiina, perinteinen"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:646
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
-#: ../../windows/plat/renderers/vlc.py:768
-#: ../../windows/plat/renderers/vlc.py:770
+#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:774
 msgid "Japanese"
 msgstr "Japani"
 
@@ -4296,13 +4285,13 @@ msgstr "Japani"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:650
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
-#: ../../windows/plat/renderers/vlc.py:771
-#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:775
+#: ../../windows/plat/renderers/vlc.py:776
 msgid "Korean"
 msgstr "Korea"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:654
-#: ../../windows/plat/renderers/vlc.py:778
+#: ../../windows/plat/renderers/vlc.py:782
 msgid "SE and SW Asian"
 msgstr ""
 
@@ -4327,7 +4316,7 @@ msgid "Hindi"
 msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:660
-#: ../../windows/plat/renderers/vlc.py:781
+#: ../../windows/plat/renderers/vlc.py:785
 msgid "Thai"
 msgstr "Thai"
 
@@ -4335,21 +4324,21 @@ msgstr "Thai"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:662
 #: ../../linux/plat/renderers/gstreamerrenderer.py:663
 #: ../../linux/plat/renderers/gstreamerrenderer.py:664
-#: ../../windows/plat/renderers/vlc.py:779
-#: ../../windows/plat/renderers/vlc.py:780
+#: ../../windows/plat/renderers/vlc.py:783
+#: ../../windows/plat/renderers/vlc.py:784
 msgid "Turkish"
 msgstr "Turkki"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:665
 #: ../../linux/plat/renderers/gstreamerrenderer.py:666
 #: ../../linux/plat/renderers/gstreamerrenderer.py:667
-#: ../../windows/plat/renderers/vlc.py:782
-#: ../../windows/plat/renderers/vlc.py:783
+#: ../../windows/plat/renderers/vlc.py:786
+#: ../../windows/plat/renderers/vlc.py:787
 msgid "Vietnamese"
 msgstr "Vietnam"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:669
-#: ../../windows/plat/renderers/vlc.py:786
+#: ../../windows/plat/renderers/vlc.py:790
 msgid "Middle Eastern"
 msgstr ""
 
@@ -4357,8 +4346,8 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:671
 #: ../../linux/plat/renderers/gstreamerrenderer.py:672
 #: ../../linux/plat/renderers/gstreamerrenderer.py:673
-#: ../../windows/plat/renderers/vlc.py:787
-#: ../../windows/plat/renderers/vlc.py:788
+#: ../../windows/plat/renderers/vlc.py:791
+#: ../../windows/plat/renderers/vlc.py:792
 msgid "Arabic"
 msgstr "Arabia"
 
@@ -4366,8 +4355,8 @@ msgstr "Arabia"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:675
 #: ../../linux/plat/renderers/gstreamerrenderer.py:676
 #: ../../linux/plat/renderers/gstreamerrenderer.py:677
-#: ../../windows/plat/renderers/vlc.py:789
-#: ../../windows/plat/renderers/vlc.py:790
+#: ../../windows/plat/renderers/vlc.py:793
+#: ../../windows/plat/renderers/vlc.py:794
 msgid "Hebrew"
 msgstr "Heprea"
 
@@ -4385,7 +4374,7 @@ msgstr "Persia"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:684
 #: ../../linux/plat/renderers/gstreamerrenderer.py:685
 #: ../../linux/plat/renderers/gstreamerrenderer.py:686
-#: ../../windows/plat/renderers/vlc.py:793
+#: ../../windows/plat/renderers/vlc.py:797
 msgid "Unicode"
 msgstr "Unicode"
 
@@ -4420,33 +4409,20 @@ msgid ""
 "%(appname)s users on your network, as well as stream media from other "
 "%(appname)s users on your network.\n"
 "\n"
-"After installing Print Services, you will have to restart Miro.\n"
+"After installing Print Services, you will have to restart %(appname)s.\n"
 "\n"
 "Would you like to do this now?"
 msgstr ""
-"Parhaan %(appname)s-kokemuksen saavuttamiseksi on suositeltavaa asentaa "
-"Bonjour, joka kuuluu tulostuspalveluihin.\n"
-"\n"
-"Bonjourin asennettuasi voit jakaa mediakirjastosi muiden samassa verkossa "
-"olevien %(appname)s-käyttäjien kanssa. Lisäksi voit suoratoistaa muiden "
-"samassa verkossa olevien %(appname)s-käyttäjien mediatiedostoja.\n"
-"\n"
-"Tulostuspalvelujen asennuksen jälkeen Miro on käynnistettävä uudelleen.\n"
-"\n"
-"Haluatko tehdä asennuksen nyt?"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:75
+#, python-format
 msgid ""
 "Your browser will load the web-site where you can download and install "
 "Bonjour.\n"
 "\n"
-"When the installation is finished, simply restart Miro for the changes to "
-"take effect."
+"When the installation is finished, simply restart %(appname)s for the "
+"changes to take effect."
 msgstr ""
-"Selaimesi avaa sivun, jolta voit ladata ja asentaa Bonjourin.\n"
-"\n"
-"Kun asennus on valmis, käynnistä Miro uudestaan, jotta muutokset tulevat "
-"voimaan."
 
 #: ../../windows/plat/frontends/widgets/update.py:150
 msgid "Update Available"
@@ -4492,11 +4468,11 @@ msgstr ""
 "Kun asennus on valmis, käynnistä %(appname)s uudestaan, jotta muutokset "
 "tulevat voimaan."
 
-#: ../../windows/plat/frontends/widgets/application.py:194
+#: ../../windows/plat/frontends/widgets/application.py:205
 msgid "Close to tray?"
 msgstr "Suljetaanko ilmoitusalueelle?"
 
-#: ../../windows/plat/frontends/widgets/application.py:195
+#: ../../windows/plat/frontends/widgets/application.py:206
 #, python-format
 msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
@@ -4505,19 +4481,19 @@ msgstr ""
 "Haluatko %(appname)sn pienenevän ilmoitusalueelle vai sammuvan, kun painat "
 "punaista sulje-nappia? Voit muuttaa tämän asetuksen myöhemmin asetuksista."
 
-#: ../../windows/plat/frontends/widgets/application.py:260
+#: ../../windows/plat/frontends/widgets/application.py:271
 msgid "Error Bombing Item"
 msgstr "Virhe suositeltaessa kohdetta Bomb-palveluun"
 
-#: ../../windows/plat/frontends/widgets/application.py:262
+#: ../../windows/plat/frontends/widgets/application.py:273
 msgid "Error Recommending Item"
 msgstr "Virhe suositeltaessa kohdetta"
 
-#: ../../windows/plat/frontends/widgets/application.py:264
+#: ../../windows/plat/frontends/widgets/application.py:275
 msgid "Error Opening Website"
 msgstr "Virhe avattaessa sivustoa"
 
-#: ../../windows/plat/frontends/widgets/application.py:269
+#: ../../windows/plat/frontends/widgets/application.py:280
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -4529,65 +4505,64 @@ msgstr ""
 msgid "iTunes"
 msgstr "iTunes"
 
-#: ../../windows/plat/renderers/vlc.py:751
+#: ../../windows/plat/renderers/vlc.py:755
 msgid "Russian"
 msgstr "Venäjä"
 
-#: ../../windows/plat/renderers/vlc.py:752
+#: ../../windows/plat/renderers/vlc.py:756
 msgid "South-Eastern European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:753
+#: ../../windows/plat/renderers/vlc.py:757
 msgid "Ukrainian"
 msgstr "Ukraina"
 
-#: ../../windows/plat/renderers/vlc.py:759
+#: ../../windows/plat/renderers/vlc.py:763
 msgid "Esperanto"
 msgstr "Esperanto"
 
-#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:769
 msgid "Universal Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:766
+#: ../../windows/plat/renderers/vlc.py:770
 msgid "Simplified Chinese"
 msgstr "Kiina (yksinkertaistettu)"
 
-#: ../../windows/plat/renderers/vlc.py:767
+#: ../../windows/plat/renderers/vlc.py:771
 msgid "Simplified Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:769
+#: ../../windows/plat/renderers/vlc.py:773
 msgid "Japanese Unix"
 msgstr "Japanilainen Unix"
 
-#: ../../windows/plat/renderers/vlc.py:773
+#: ../../windows/plat/renderers/vlc.py:777
 msgid "Traditional Chinese"
 msgstr "Kiina (perinteinen)"
 
-#: ../../windows/plat/renderers/vlc.py:774
+#: ../../windows/plat/renderers/vlc.py:778
 msgid "Traditional Chinese Unix"
 msgstr "Perinteinen kiinalainen Unix"
 
-#: ../../windows/plat/renderers/vlc.py:775
+#: ../../windows/plat/renderers/vlc.py:779
 msgid "Hong-Kong Supplementary"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:794
-#: ../../windows/plat/renderers/vlc.py:795
-#: ../../windows/plat/renderers/vlc.py:796
-#: ../../windows/plat/renderers/vlc.py:797
+#: ../../windows/plat/renderers/vlc.py:798
+#: ../../windows/plat/renderers/vlc.py:799
+#: ../../windows/plat/renderers/vlc.py:800
+#: ../../windows/plat/renderers/vlc.py:801
 msgid "Universal"
 msgstr "Yleinen"
 
-#: ../../osx/plat/frontends/widgets/bonjour.py:40
+#: ../../osx/plat/frontends/widgets/bonjour.py:42
+#, python-format
 msgid ""
-"Miro has determined that your system may be missing the Bonjour components, "
-"a standard part of Mac OS X installations.  Please review your Mac OS X "
-"installation."
+"%(appname)s has determined that your system may be missing the Bonjour "
+"components, a standard part of Mac OS X installations.  Please review your "
+"Mac OS X installation."
 msgstr ""
-"Miro havaitsi, että järjestelmästäsi kenties puuttuu Bonjour-osa, joka "
-"kuuluu vakiona Mac OS X:ään. Tarkista Mac OS X -asennuksesi tila."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 #: ../../osx/plat/frontends/widgets/osxmenus.py:293
@@ -5635,6 +5610,9 @@ msgstr "Kiinnitä"
 #~ "yksinkertaisesti poistamaan joitain elokuvia kokoelmaltasi.\n"
 #~ "Tuoreet muutokset voivat hävitä."
 
+#~ msgid "Database was created by a newer version of Miro "
+#~ msgstr "Tietokanta on luotu Miron uudemmassa versiossa "
+
 #~ msgid "Insufficient disk space"
 #~ msgstr "Levytila ei riitä"
 
@@ -5827,6 +5805,9 @@ msgstr "Kiinnitä"
 #~ msgid "(Pending)"
 #~ msgstr "(Odottaa)"
 
+#~ msgid "(Changing the language requires you to restart Miro.)"
+#~ msgstr "(Kielen vaihtaminen vaatii Miron uudelleenkäynnistyksen.)"
+
 #~ msgid "Choose Language"
 #~ msgstr "Valitse kieli"
 
@@ -5940,8 +5921,15 @@ msgstr "Kiinnitä"
 #~ msgid "Would you like to keep the podcast?"
 #~ msgstr "Haluaisitko säilyttää podcastin?"
 
+#, python-format
+#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
+#~ msgstr "Kiitos kaikille, jotka auttoivat Miro %(version)s:n tekemisessä:"
+
 #~ msgid "Miro"
 #~ msgstr "Miro"
+
+#~ msgid "To help fund continued Miro development, visit the donation page at:"
+#~ msgstr "Vieraile lahjoitussivulla tukeaksesi Miron kehitystyön jatkumista:"
 
 #, python-format
 #~ msgid ""
@@ -5951,6 +5939,38 @@ msgstr "Kiinnitä"
 #~ "Hakemistoa '%s' ei pystytty luomaan. Valitse sellainen hakemisto, johon "
 #~ "sinulla on kirjoitusoikeudet."
 
+#~ msgid ""
+#~ "Miro can watch a folder on your computer and show those media files in your "
+#~ "library."
+#~ msgstr ""
+#~ "Miro voi tarkkailla hakemistoa tietokoneellasi ja näyttää sen sisältämät "
+#~ "mediatiedostot kirjastossasi."
+
+#~ msgid "Miro shutdown improperly and needs to prepare your items for display."
+#~ msgstr ""
+#~ "Miro sulkeutui huonosti ja kohteitasi joudutaan siksi valmistelemaan "
+#~ "näyttämistä varten."
+
+#, python-format
+#~ msgid ""
+#~ "Connection to share %(name)s failed.\n"
+#~ "\n"
+#~ "The share is either unreachable or incompatible with Miro sharing."
+#~ msgstr ""
+#~ "Yhteyden muodostaminen jakoon %(name)s epäonnistui.\n"
+#~ "\n"
+#~ "Jakoon ei joko ole pääsyä tai sitten se ei ole yhteensopiva Miro-jakamisen "
+#~ "kanssa."
+
+#~ msgid ""
+#~ "Miro is upgrading your database of podcasts and files.  This one-time "
+#~ "process can take a long time if you  have a large number of items in Miro "
+#~ "(it can even take more than 30 minutes)."
+#~ msgstr ""
+#~ "Miro päivittää podcastien ja tiedostojen tietokantaasi. Tämä kertaalleen "
+#~ "suoritettava toiminto saattaa kestää kauan (jopa kauemmin kuin puoli tuntia) "
+#~ "mikäli sinulla on paljon kohteita Mirossa."
+
 #, python-format
 #~ msgid "%(appname)s First Time Setup"
 #~ msgstr "%(appname)sn ensimmäisen käynnistyskerran asetustenluominen"
@@ -5958,3 +5978,113 @@ msgstr "Kiinnitä"
 #, python-format
 #~ msgid "Display %(player)s Library"
 #~ msgstr "Näytä %(player)s-kirjasto"
+
+#~ msgid ""
+#~ "Miro has determined that your system may be missing the Bonjour components, "
+#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
+#~ "installation."
+#~ msgstr ""
+#~ "Miro havaitsi, että järjestelmästäsi kenties puuttuu Bonjour-osa, joka "
+#~ "kuuluu vakiona Mac OS X:ään. Tarkista Mac OS X -asennuksesi tila."
+
+#, python-format
+#~ msgid ""
+#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
+#~ "is distributed as a part of Print Services.\n"
+#~ "\n"
+#~ "Installing Bonjour will allow you share your media library with other "
+#~ "%(appname)s users on your network, as well as stream media from other "
+#~ "%(appname)s users on your network.\n"
+#~ "\n"
+#~ "After installing Print Services, you will have to restart Miro.\n"
+#~ "\n"
+#~ "Would you like to do this now?"
+#~ msgstr ""
+#~ "Parhaan %(appname)s-kokemuksen saavuttamiseksi on suositeltavaa asentaa "
+#~ "Bonjour, joka kuuluu tulostuspalveluihin.\n"
+#~ "\n"
+#~ "Bonjourin asennettuasi voit jakaa mediakirjastosi muiden samassa verkossa "
+#~ "olevien %(appname)s-käyttäjien kanssa. Lisäksi voit suoratoistaa muiden "
+#~ "samassa verkossa olevien %(appname)s-käyttäjien mediatiedostoja.\n"
+#~ "\n"
+#~ "Tulostuspalvelujen asennuksen jälkeen Miro on käynnistettävä uudelleen.\n"
+#~ "\n"
+#~ "Haluatko tehdä asennuksen nyt?"
+
+#, python-format
+#~ msgid ""
+#~ "Select the music and video stores you'd like to have appear in "
+#~ "%(shortappname)s.  Note: some other store websites may work well with Miro "
+#~ "if you add them as Sources, but these are Stores that we've integrated and "
+#~ "tested."
+#~ msgstr ""
+#~ "Valitse ne musiikki- ja videokaupat, jotka haluat olevan %(shortappname)sssa "
+#~ "esillä. Huomio: muutkin kauppasivustot saattavat toimia Miron kanssa "
+#~ "lähteinä, mutta nämä kaupat on integroitu ja testattu."
+
+#~ msgid ""
+#~ "You need to install the Bonjour libraries to be able to share files from "
+#~ "Miro-to-Miro or to the Miro iPad app.\n"
+#~ "\n"
+#~ "Once you install the Bonjour libraries, you will have to restart Miro."
+#~ msgstr ""
+#~ "Asenna Bonjour-kirjastot jakaaksesi tiedostoja Mirosta Miroon tai Miro iPad -"
+#~ "sovellukseen.\n"
+#~ "\n"
+#~ "Käynnistä Miro uudelleen asennettuasi Bonjour-kirjastot."
+
+#~ msgid ""
+#~ "Your browser will load the web-site where you can download and install "
+#~ "Bonjour.\n"
+#~ "\n"
+#~ "When the installation is finished, simply restart Miro for the changes to "
+#~ "take effect."
+#~ msgstr ""
+#~ "Selaimesi avaa sivun, jolta voit ladata ja asentaa Bonjourin.\n"
+#~ "\n"
+#~ "Kun asennus on valmis, käynnistä Miro uudestaan, jotta muutokset tulevat "
+#~ "voimaan."
+
+#~ msgid "Play media in Miro."
+#~ msgstr "Toista mediaa Mirolla"
+
+#~ msgid "Importing audio details and artwork: {0} of {1}"
+#~ msgstr "Tuodaan äänitiedoston tietoja ja kansikuvia: {0}/{1}"
+
+#~ msgid "Importing file details: {0} of {1}"
+#~ msgstr "Tuodaan tiedoston tietoja: {0}/{1}"
+
+#~ msgid "Importing video details and creating thumbnails: {0} of {1}"
+#~ msgstr "Tuodaan videon tietoja ja luodaan kuvakkeita: {0}/{1}"
+
+#~ msgid ""
+#~ "Your Miro database is corrupt.  It will be backed up in your Miro database "
+#~ "directory and a new database will be created now."
+#~ msgstr ""
+#~ "Miro-tietokantasi on vaurioitunut. Siitä luodaan varmuuskopio Miron "
+#~ "tietokantakansioon, ja tilalle luodaan uusi tietokanta."
+
+#, python-format
+#~ msgid ""
+#~ "%(shortappname)s can't use the primary video directory located at:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "This may be because it is located on an external drive that is not "
+#~ "connected, is a directory that %(shortappname)s does not have write "
+#~ "permission to, or there is something that is not a directory at that path.\n"
+#~ "\n"
+#~ "Miro will now exit. You can connect the drive or otherwise fix the problem "
+#~ "and relaunch %(shortappname)s."
+#~ msgstr ""
+#~ "%(shortappname)s ei voi käyttää ensisijaista videohakemistoa sijainnissa:\n"
+#~ "\n"
+#~ "%(moviedirectory)s\n"
+#~ "\n"
+#~ "Tämä voi johtua siitä, että sijainti on ulkoisella asemalla, jota ei ole "
+#~ "kytketty, tai siitä, että %(shortappname)slla ei ole oikeutta kirjoittaa "
+#~ "hakemistoon, tai sitten siitä, että polku viittaa kansion sijaan esimerkiksi "
+#~ "tiedostoon.\n"
+#~ "\n"
+#~ "Miro lopetetaan nyt. Voit kytkeä aseman tai korjata ongelman muulla tavoin, "
+#~ "ja käynnistää %(shortappname)sn sen jälkeen uudestaan."
