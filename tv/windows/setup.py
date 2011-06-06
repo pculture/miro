@@ -96,6 +96,7 @@ XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
+GSTREAMER_PATH = os.path.join(BINARY_KIT_ROOT, 'gstreamer')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
@@ -171,6 +172,7 @@ from miro import buildutils
 # .pyd file
 sys.path.insert(0, LIBTORRENT_PATH)
 sys.path.insert(0, MUTAGEN_PATH)
+sys.path.insert(0, os.path.join(GSTREAMER_PATH, 'lib', 'site-packages', 'gst-0.10'))
 
 #### Extensions ####
 ngrams_ext = \
@@ -283,6 +285,10 @@ theme_path = os.path.join('share', 'themes')
 for path in (image_loader_path, theme_engine_path, theme_path):
     src_path = os.path.join(GTK_ROOT_PATH, path)
     data_files.extend(find_data_files(path, src_path))
+
+# gstreamer files
+data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*'))))
+data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
 
 data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 data_files.extend(find_data_files(
@@ -681,7 +687,7 @@ if __name__ == "__main__":
                 # don't include stray DLLs from Win2008
                 'dll_excludes': ['DNSAPI.DLL', 'MSIMG32.DLL'],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
-                             'gio, libtorrent, mutagen'),
+                             'gio, libtorrent, mutagen, gst'),
                 },
             },
         )

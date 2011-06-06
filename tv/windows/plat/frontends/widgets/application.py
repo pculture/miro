@@ -52,6 +52,8 @@ from miro.plat import options
 from miro.plat import resources
 from miro.plat import associate
 from miro.plat.renderers.vlc import VLCRenderer, get_item_type
+from miro.plat.renderers.gstreamerrenderer import AudioRenderer, VideoRenderer
+
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import gtkdirectorywatch
 from miro.frontends.widgets.gtk import trayicon
@@ -113,7 +115,8 @@ class WindowsApplication(Application):
             logging.info("pycurl:            %s", pycurl.version)
         except ImportError:
             logging.exception("pycurl won't load")
-        app.video_renderer = app.audio_renderer = VLCRenderer()
+        app.audio_renderer = AudioRenderer()
+        app.video_renderer = VideoRenderer()
         app.get_item_type = get_item_type
         self.initXULRunner()
         gtk.gdk.threads_init()
@@ -241,7 +244,6 @@ class WindowsApplication(Application):
             self.quit()
 
     def quit_ui(self):
-        app.video_renderer.shutdown()
         logging.debug('Destroying persistent window widgets')
         for widget in persistentwindow.get_widgets():
             widget.destroy()
