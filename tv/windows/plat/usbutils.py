@@ -117,12 +117,18 @@ class STORAGE_DEVICE_NUMBER(ctypes.Structure):
 
 GUID_DEVINTERFACE_VOLUME = GUID(0x53F5630D, 0xB6BF, 0x11D0,
         (ctypes.c_ubyte*8)(0x94, 0xF2, 0x00, 0xA0, 0xC9, 0x1E, 0xFB, 0x8B))
+GUID_DEVINTERFACE_DISK = GUID(0x53F56307, 0xB6BF, 0x11D0,
+        (ctypes.c_ubyte*8)(0x94, 0xF2, 0x00, 0xA0, 0xC9, 0x1E, 0xFB, 0x8B))
 
 hDevInfo = None
+current_guid = None
 
-def get_class_devs():
-    global hDevInfo
-    hDevInfo = SetupDiGetClassDevs(ctypes.byref(GUID_DEVINTERFACE_VOLUME),
+def get_class_devs(guid=None):
+    global hDevInfo, current_guid
+    if guid is None:
+        guid = GUID_DEVINTERFACE_VOLUME
+    current_guid = guid
+    hDevInfo = SetupDiGetClassDevs(ctypes.byref(current_guid),
                                    0,
                                    0,
                                    DIGCF_PRESENT | DIGCF_DEVICEINTERFACE)
@@ -136,7 +142,7 @@ def get_device_interface(i, device=None):
     if SetupDiEnumDeviceInterfaces(
         hDevInfo,
         device and ctypes.byref(device) or None,
-        ctypes.byref(GUID_DEVINTERFACE_VOLUME),
+        ctypes.byref(current_guid),
         i,
         ctypes.byref(interfaceData)):
         return interfaceData
@@ -250,7 +256,7 @@ def eject_mount(mount_point):
     """
     Given a mount point ('G:\\'), ejects the drive.
     """
-    get_class_devs()
+    get_class_devs(guid=GUID_DEVINTERFACE_DISK)
     if mount_point.endswith('\\'):
         # strip trailing slash
         mount_point = mount_point[:-1]
@@ -265,7 +271,7 @@ def eject_mount(mount_point):
         index += 1
         path, device = get_device_interface_detail(interface)
         if get_device_number(path) == device_number:
-            device_eject(get_parent(get_parent(device.DevInst)))
+            device_eject(get_parent(device.DevInst))
             return True      
 
 def iter_reg_keys(key_or_handle, root=_winreg.HKEY_LOCAL_MACHINE):
