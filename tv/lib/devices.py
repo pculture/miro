@@ -483,10 +483,6 @@ class DeviceSyncManager(object):
         self.waiting = set()
         self.stopping = False
 
-        self.device.is_updating = True # start the spinner
-        messages.TabsChanged('connect', [], [self.device],
-                             []).send_to_frontend()
-
         self.audio_target_folder = os.path.join(
             device.mount,
             self._get_path_from_setting('audio_path'))
@@ -498,6 +494,10 @@ class DeviceSyncManager(object):
             self._get_path_from_setting('video_path'))
         if not os.path.exists(self.video_target_folder):
             os.makedirs(self.video_target_folder)
+
+        self.device.is_updating = True # start the spinner
+        messages.TabsChanged('connect', [], [self.device],
+                             []).send_to_frontend()
 
     def _get_path_from_setting(self, setting):
         device_settings = self.device.database.setdefault(u'settings', {})
