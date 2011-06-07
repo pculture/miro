@@ -1226,7 +1226,7 @@ class ItemInfo(object):
     html_stripper = util.HTMLStripper()
 
     def __repr__(self):
-        return "<ItemInfo %s>" % self.id
+        return "<ItemInfo %r>" % self.id
 
     def __getstate__(self):
         d = self.__dict__.copy()
