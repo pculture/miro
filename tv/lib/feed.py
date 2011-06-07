@@ -89,6 +89,29 @@ def default_feed_icon_url():
 def default_feed_icon_path():
     return resources.path(DEFAULT_FEED_ICON)
 
+class _RateLimiter(object):
+    """Helper class used by create_items_for_parsed() to avoid hogging the
+    GIL.
+
+    This class helps ensure that a potentially long-running operation doesn't
+    take more than a fixed-percentage of the CPU.  It's not really a great
+    solution, but it's the simplest way for 4.0.2
+    """
+    def __init__(self):
+        self.last_time = time.time()
+
+    def check_for_sleep(self):
+        new_time = time.time()
+        elapsed = self.last_time - time.time()
+        if elapsed < 0.1:
+            return # don't sleep until a decent of time has passed.
+        # We want to yield at least 10% of the CPU.  Sleep for 10% of the time
+        # we took since the last check
+        sleep_time = elapsed / 10.0
+        time.sleep(sleep_time)
+        # get ready for the next check() call
+        self.last_time = time.time()
+
 # Notes on character set encoding of feeds:
 #
 # The parsing libraries built into Python mostly use byte strings
@@ -1223,6 +1246,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             app.bulk_sql_manager.finish()
 
     def _create_items_for_parsed(self, parsed):
+        rate_limiter = _RateLimiter()
         channel_title = None
         try:
             channel_title = parsed["feed"]["title"]
@@ -1244,6 +1268,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         items_byURLTitle = {}
         items_nokey = []
         for item in self.items:
+            rate_limiter.check_for_sleep()
             try:
                 items_byid[item.get_rss_id()] = item
             except KeyError:
@@ -1252,6 +1277,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if by_url_title_key != (None, None):
                 items_byURLTitle[by_url_title_key] = item
         for entry in parsed.entries:
+            rate_limiter.check_for_sleep()
             entry = self.add_scraped_thumbnail(entry)
             fp_values = FeedParserValues(entry)
             new = True
