@@ -60,6 +60,16 @@ from miro.plat import utils
 from miro.plat.resources import get_osname
 from miro.net import NetworkError, ConnectionError, ConnectionTimeout
 
+try:
+    import gzip
+except:
+    gzip = None
+
+try:
+    from cStringIO import StringIO as _StringIO
+except:
+    from StringIO import StringIO as _StringIO
+
 REDIRECTION_LIMIT = 10
 MAX_AUTH_ATTEMPTS = 5
 
@@ -651,6 +661,15 @@ class CurlTransfer(object):
         self.last_url = self.handle.getinfo(pycurl.EFFECTIVE_URL)
         if self.options.write_file is None:
             info['body'] = self.buffer.getvalue()
+
+            if gzip and info.get('content-encoding', '') == 'gzip':
+                try:
+                    info['body'] = gzip.GzipFile(
+                                       fileobj=_StringIO(info['body'])).read()
+                except StandardError, e:
+                    logging.warning("Received header with content-encoding "
+                                    "gzip, but content is not gzip encoded")
+
         if self.check_response_code(info['status']):
             if not self.trying_head_request:
                 self.call_callback(info)
