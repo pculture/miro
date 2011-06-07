@@ -407,7 +407,12 @@ class SubprocessManager(object):
         We just send over the bare minimum needed to make sure basic modules
         like gtcache load properly.
         """
-        return dict((p.key, app.config.get(p)) for p in prefs.all_prefs())
+        # On OS X, the proxy information is in a CFDictionary, so we can't
+        # pickle it.  Just avoid sending it for now
+        prefs_to_send = [p for p in prefs.all_prefs()
+                if not p.key.startswith("HttpProxy")
+        ]
+        return dict((p.key, app.config.get(p)) for p in prefs_to_send)
 
     # implement the MessageHandler interface
 
