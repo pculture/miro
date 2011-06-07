@@ -908,7 +908,10 @@ class MiroTableHeaderCell(NSTableHeaderCell):
         context = DrawingContext(view, drawing_rect, drawing_rect)
         context.style = self.make_drawing_style(frame, view)
         self.layout_manager.reset()
-        self.button.draw(context, self.layout_manager)
+        columns = wrappermap.wrapper(view.tableView()).columns
+        header_cells = [c._column.headerCell() for c in columns]
+        background_only = not self in header_cells
+        self.button.draw(context, self.layout_manager, background_only)
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def make_drawing_style(self, frame, view):
@@ -1407,10 +1410,21 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         column = self.columns.pop(index)
         if column.custom_header:
             self.custom_header -= 1
-        if self.custom_header == 0:
-            self.tableview.setCornerView_(None)
-            self.header_view.custom_header = False
-            self.header_height = HEADER_HEIGHT
+        # XXX Disabled due to bz:17103
+        # We don't want the header to shrink when we remove a custom
+        # column, because the custom ones and the standard fare ones could
+        # have different heights.  So once you add a custom column you
+        # it is a point of no return: you cannot revert to using standard
+        # columns anymore.  But the reverse is not true; you can start off
+        # with a standard fare header and then upgrade.  Probably much better
+        # to add a method to stipulate ahead of time whether a table view
+        # contains custom headers, and administratively prohibit people from
+        # mixing and matching standard and custom ones (though we don't do this
+        # currently).
+        #if self.custom_header == 0:
+        #    self.tableview.setCornerView_(None)
+        #    self.header_view.custom_header = False
+        #    self.header_height = HEADER_HEIGHT
         self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
 

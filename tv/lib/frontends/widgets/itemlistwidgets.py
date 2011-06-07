@@ -1606,7 +1606,12 @@ class SorterWidget(widgetset.CustomButton):
         return int(text_size[0]) + 36, int(max(text_size[1],
                                       widgetset.CUSTOM_HEADER_HEIGHT - 1))
 
-    def draw(self, context, layout):
+    def draw(self, context, layout, background_only=False):
+        # bz:17103 this button is not stipulated not to be in the list of 
+        # column headers so just draw the background then return.
+        if background_only:
+            self.surface.draw(context, 0, 0, context.width, context.height)
+            return
         text = 1    # white text
         arrow = 1   # white arrow
         if self.state == 'pressed' or self._enabled:
