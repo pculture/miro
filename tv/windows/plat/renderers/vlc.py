@@ -393,9 +393,13 @@ class VLCRenderer(object):
             # output #12692
             self._disable_video()
 
+        length = 0
         length = libvlc.libvlc_media_player_get_length(
             self.media_player, self.exc.ref())
-        self.exc.check()
+        try:
+            self.exc.check()
+        except VLCError, e:
+            vlc_logger.warning("libvlc_media_player_get_length: %s" % e)
 
         if length > 0:
             self._open_success()
@@ -428,14 +432,22 @@ class VLCRenderer(object):
     def _disable_video(self):
         desc = libvlc.libvlc_video_get_track_description(
                 self.media_player, self.exc.ref())
-        self.exc.check()
+        try:
+            self.exc.check()
+        except VLCError, e: 
+            vlc_logger.warning("libvlc_video_get_track_description: %s" % e)
+            return
+
         # the 1st description should be "Disable"
         if desc:
             track_id = desc.contents.id
             libvlc.libvlc_track_description_release(desc)
             libvlc.libvlc_video_set_track(self.media_player, track_id,
                     self.exc.ref())
-            self.exc.check()
+            try:
+                self.exc.check()
+            except VLCError, e:
+                vlc_logger.warning("libvlc_video_set_track: %s" % e)
 
     def set_widget(self, widget):
         self.hwnd = widget.persistent_window.handle
