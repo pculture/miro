@@ -282,10 +282,17 @@ class Application:
     def get_right_width(self):
         """Returns the width of the right side of the splitter.
         """
-        return self.window.get_frame().get_width() - self.window.splitter.get_left_width()
+        left_width = self.get_left_width()
+        if left_width:
+            return self.window.get_frame().get_width() - left_width
+        else:
+            return None
 
     def get_left_width(self):
-        return self.window.splitter.get_left_width()
+        if hasattr(self, 'window.splitter'):
+            return self.window.splitter.get_left_width()
+        else:
+            return None
 
     def set_left_width(self, width):
         self.window.splitter.set_left_width(width)
@@ -1155,7 +1162,9 @@ class Application:
             app.item_list_controller_manager.undisplay_controller()
         if self.window is not None:
             self.window.destroy()
-        app.widget_state.set_tabs_width(self.get_left_width())
+        width = self.get_left_width()
+        if width:
+            app.widget_state.set_tabs_width(width)
         app.controller.shutdown()
         self.quit_ui()
 
