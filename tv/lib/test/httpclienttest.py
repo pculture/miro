@@ -98,6 +98,12 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_info['body'], self.test_response_data)
 
     @uses_httpclient
+    def test_gzip_get(self):
+        self.httpserver.add_header("content-encoding", "gzip")
+        self.grab_url(self.httpserver.build_url('test.txt.gz'))
+        self.assertEquals(self.grab_url_info['body'], self.test_response_data)
+
+    @uses_httpclient
     def test_unicode_url(self):
         self.grab_url(unicode(self.httpserver.build_url('test.txt')))
         self.assertEquals(self.grab_url_info['body'], self.test_response_data)
