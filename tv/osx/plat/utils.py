@@ -360,7 +360,7 @@ def launch_download_daemon(oldpid, env):
         launch_path = exe
         launch_arguments = [u'--download-daemon']
     else:
-        arch = subprocess.Popen("arch", stdout=subprocess.PIPE).communicate()[0].strip()
+        arch = subprocess.Popen("/usr/bin/arch", stdout=subprocess.PIPE).communicate()[0].strip()
         launch_path = '/usr/bin/arch'
         launch_arguments = ['-%s' % arch, exe, u'--download-daemon']
 
