@@ -102,6 +102,10 @@ def init(languages=None, localedir=None):
         print "gtcache.init: setlocale failed.  setting locale to 'C'"
         locale.setlocale(locale.LC_ALL, 'C')
 
+    # bz:17713 - convert to str in utf-8 encoding before trying to use.
+    languages = [lang.encode('utf-8') for lang in languages
+                 if isinstance(lang, unicode)]
+
     _translation = _gt.translation("miro",
             localedir=localedir,
             languages=languages,
