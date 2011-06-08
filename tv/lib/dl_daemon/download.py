@@ -958,9 +958,21 @@ def save_fast_resume_data(info_hash, fast_resume_data):
             logging.exception("can't save fast_resume_data")
             return
 
-    f = open(fast_resume_file, "wb")
-    f.write(fast_resume_data)
-    f.close()
+    try:
+        f = None
+        f = open(fast_resume_file, "wb")
+        f.write(fast_resume_data)
+        f.close()
+    except (OSError, IOError), e:
+        logging.exception("Error occured trying to write fast_resume_data %s",
+                          e)
+    finally:
+        if f:
+            f.close()
+            os.unlink(fast_resume_file)
+        except (OSError, IOError), e:
+            logging.exception('Error occured recovering from writing to '
+                              'fast_resume_data (%s)', e)
 
 def load_fast_resume_data(info_hash):
     """Loads fast_resume_data from file on disk.
