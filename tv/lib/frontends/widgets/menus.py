@@ -979,7 +979,8 @@ class MenuStateManager(signals.SignalEmitter):
 
 def _get_view_menu():
     menu = list()
-    for name in sorted(WidgetStateStore.get_columns(), key=COLUMN_LABELS.get):
+    toggleable = WidgetStateStore.get_toggleable_columns()
+    for name in sorted(toggleable, key=COLUMN_LABELS.get):
         groups = ['column-%s' % name]
         label = COLUMN_LABELS[name]
         handler_name = make_column_toggle_handler(name)

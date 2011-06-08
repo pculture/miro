@@ -160,6 +160,13 @@ class WidgetStateStore(object):
 
     REPEAT_OFF, REPEAT_PLAYLIST, REPEAT_TRACK = range(3)
 
+    # Sorters that should always be enabled when available, and should not
+    # appear in the Sorts menu (#17696).
+    # This needs to be handled here, though analagous properties (e.g.
+    # NO_RESIZE_COLUMNS) are handled in widgetconst. #16783 refers to fixing the
+    # WSS mess - these shouldn't be sets of strings anyway.
+    MANDATORY_SORTERS = frozenset([u'name'])
+
     def __init__(self):
         self.displays = {}
         self.views = {}
@@ -310,6 +317,12 @@ class WidgetStateStore(object):
         if columns is None:
             columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
         available = WidgetStateStore.AVAILABLE_COLUMNS[display_type]
+        # If a column used to be disableable for a display but now is not,
+        # re-add it at the end of the list:
+        mandatory = available & WidgetStateStore.MANDATORY_SORTERS
+        columns.extend(mandatory.difference(columns))
+        # If a column used to be enableable for a display but now is not,
+        # filter it out:
         return [x for x in columns if x in available]
 
     def set_sorts_enabled(self, display_type, display_id, enabled):
@@ -484,6 +497,10 @@ class WidgetStateStore(object):
     @staticmethod
     def get_columns():
         return WidgetStateStore.ALL_COLUMNS
+
+    @staticmethod
+    def get_toggleable_columns():
+        return WidgetStateStore.ALL_COLUMNS - WidgetStateStore.MANDATORY_SORTERS
 
     # displays:
 
