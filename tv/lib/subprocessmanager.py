@@ -63,7 +63,9 @@ def _on_windows():
     """Test if we are unfortunate enough to be running in windows."""
     return sys.platform == 'win32'
 
-# Protocol between miro and subprocesses:
+# DESIGN NOTES:
+#
+# ** Protocol between miro and subprocesses **
 #
 # We spawn a child process and communicate to it by sending messages through
 # it's stdin and stdout.  Each message contains a length (4 bytes) plus a
@@ -76,6 +78,19 @@ def _on_windows():
 #   3) The main process sends None to stdin to indicate that it's through
 #      sending messages and the subprocess should quit.  The subprocess should
 #      then finish up and send back None over stdout.
+#
+# ** MessageHandlers **
+#
+# We create 4 MessageHandler-like objects for each subprocess.
+#
+# In the subprocess, we create a SubprocessHandler to handle the messages
+# coming from the main process and a PipeMessageProxy that handles messages
+# going to the main process by writing them to stdout.
+#
+# In the main process, we create a SubprocessResponder to handle the messages
+# coming back from the subprocess, and use the SubprocessManager object to
+# handle messages going to the subprocess by writing them to the subproccess's
+# stdin.
 
 class SubprocessMessage(messagetools.Message):
     """Message from the main process to a subprocess.
@@ -234,6 +249,12 @@ def _dump_obj(obj, pipe):
 
     pickle_data = pickle.dumps(obj)
     size_data = struct.pack("L", len(pickle_data))
+    # NOTE: We do a blocking write here.  This should be fine, since on both
+    # sides we have a thread dedicated to just reading from the pipe and
+    # pushing the data into a Queue.  However, there's some chance that the
+    # process on the other side has gone really haywire and the reader thread
+    # is hung.  I (BDK) can't really see a way for this to realistically
+    # happen, so we stick with blocking writes.
     pipe.write(size_data)
     pipe.write(pickle_data)
     pipe.flush()
