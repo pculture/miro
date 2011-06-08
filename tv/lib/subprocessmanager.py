@@ -599,7 +599,10 @@ def _subprocess_pipe_thread(stdin, queue):
         for msg in _read_from_pipe(stdin):
             queue.put(msg)
     except StandardError, e:
-        _send_subprocess_error_for_exception()
+        # we could try to send a SubprocessError message, but it's highly
+        # likely that our main process is dead, so it's simplest to just avoid
+        # writing to the (likely closed) stdout pipe.
+        pass
     # put None to our queue so the main thread quits
     queue.put(None)
 
