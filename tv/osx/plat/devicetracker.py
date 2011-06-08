@@ -42,7 +42,7 @@ kFSEventStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
 STREAM_INTERVAL = 0.5
 
 def diskutil(cmd, path_or_disk, use_plist=True):
-    args = ['diskutil', cmd]
+    args = ['/usr/sbin/diskutil', cmd]
     if use_plist:
         args.append('-plist')
     if path_or_disk:
