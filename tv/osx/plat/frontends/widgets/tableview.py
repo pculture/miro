@@ -855,8 +855,8 @@ class MiroTableHeaderView(NSTableHeaderView):
     def initWithFrame_(self, frame):
         # frame is not used
         self = super(MiroTableHeaderView, self).initWithFrame_(frame)
-        self.custom_header = False
         self.selected = None
+        self.custom_header = False
         return self
 
     def drawRect_(self, rect):
@@ -1088,7 +1088,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
 
     draws_selection = True
 
-    def __init__(self, model):
+    def __init__(self, model, custom_headers=False):
         Widget.__init__(self)
         CocoaSelectionOwnerMixin.__init__(self)
         CocoaScrollbarOwnerMixin.__init__(self)
@@ -1123,8 +1123,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, 0))
         self.tableview.setCornerView_(None)
-        self.header_view.custom_header = False
-        self.custom_header = 0
+        self.custom_header = False
         self.header_height = HEADER_HEIGHT
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
@@ -1134,6 +1133,14 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.iters_to_update = []
         self.height_changed = self.reload_needed = False
         self._resizing = False
+        if custom_headers:
+            self._enable_custom_headers()
+
+    def _enable_custom_headers(self):
+        self.custom_header = True
+        self.header_height = CUSTOM_HEADER_HEIGHT
+        self.header_view.custom_header = True
+        self.tableview.setCornerView_(SorterPadding.alloc().init())
 
     def focus(self):
         if self.tableview.window() is not None:
@@ -1386,12 +1393,9 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         return None
 
     def add_column(self, column):
-        if column.custom_header:
-            self.header_view.custom_header = True
-            if not self.custom_header:
-                self.tableview.setCornerView_(SorterPadding.alloc().init())
-            self.custom_header += 1
-            self.header_height = CUSTOM_HEADER_HEIGHT
+        if not self.custom_header == column.custom_header:
+            raise ValueError('Column header does not match type '
+                             'required by TableView')
         self.columns.append(column)
         self.tableview.addTableColumn_(column)
         if self.column_count() == 1 and self.is_tree():
@@ -1408,23 +1412,6 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
 
     def remove_column(self, index):
         column = self.columns.pop(index)
-        if column.custom_header:
-            self.custom_header -= 1
-        # XXX Disabled due to bz:17103
-        # We don't want the header to shrink when we remove a custom
-        # column, because the custom ones and the standard fare ones could
-        # have different heights.  So once you add a custom column you
-        # it is a point of no return: you cannot revert to using standard
-        # columns anymore.  But the reverse is not true; you can start off
-        # with a standard fare header and then upgrade.  Probably much better
-        # to add a method to stipulate ahead of time whether a table view
-        # contains custom headers, and administratively prohibit people from
-        # mixing and matching standard and custom ones (though we don't do this
-        # currently).
-        #if self.custom_header == 0:
-        #    self.tableview.setCornerView_(None)
-        #    self.header_view.custom_header = False
-        #    self.header_height = HEADER_HEIGHT
         self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
 

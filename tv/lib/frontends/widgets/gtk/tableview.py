@@ -1064,7 +1064,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
 
     draws_selection = True
 
-    def __init__(self, model):
+    def __init__(self, model, custom_headers=False):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
         self.model = model
@@ -1076,6 +1076,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         self.context_menu_callback = None
         self.in_bulk_change = False
         self.delaying_press = False
+        self._use_custom_headers = False
         self.layout_manager = LayoutManager(self._widget)
         self.height_changed = None # 17178 hack
         self._connect_signals()
@@ -1086,6 +1087,8 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         ColumnOwnerMixin.__init__(self)
         HoverTrackingMixin.__init__(self)
         GTKScrollbarOwnerMixin.__init__(self)
+        if custom_headers:
+            self._enable_custom_headers()
 
     def _connect_signals(self):
         self.create_signal('row-expanded')
@@ -1148,6 +1151,11 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
 
     def focus(self):
         self._widget.grab_focus()
+
+    def _enable_custom_headers(self):
+        # NB: this is currently not used because the GTK tableview does not
+        # support custom headers.
+        self._use_custom_headers = True
 
     def set_show_headers(self, show):
         self._widget.set_headers_visible(show)

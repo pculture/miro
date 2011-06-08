@@ -958,8 +958,9 @@ class SearchListTitlebar(SearchTitlebar):
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
-    def __init__(self, item_list):
-        widgetset.TableView.__init__(self, item_list.model)
+    def __init__(self, item_list, custom_headers=False):
+        widgetset.TableView.__init__(self, item_list.model,
+                                     custom_headers=custom_headers)
 
         self.item_list = item_list
         self.set_fixed_height(True)
@@ -1072,7 +1073,7 @@ class ListView(ItemView, SorterOwner):
     """TableView that displays a list of items using the list view."""
     COLUMN_PADDING = 12
     def __init__(self, item_list, renderer_set, sorts, column_widths):
-        ItemView.__init__(self, item_list)
+        ItemView.__init__(self, item_list, custom_headers=True)
         self.column_widths = column_widths
         self._column_by_label = {}
         self.set_show_headers(True)
