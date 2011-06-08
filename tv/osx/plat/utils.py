@@ -515,13 +515,15 @@ def get_logical_cpu_count():
     try:
         import multiprocessing
         return multiprocessing.cpu_count()
-    except ImportError:
+    except (NotImplementedError, ImportError):
         try:
             ncpus = os.sysconf("SC_NPROCESSORS_ONLN")
             if isinstance(ncpus, int) and ncpus > 0:
                 return ncpus
-        except:
-            return int(os.popen2("sysctl -n hw.ncpu")[1].read())
+        # NB: No need to catch AttributeError for os.sysconf, or TypeError in
+        # int(cpus) conversion.
+        except ValueError:
+            return int(os.popen2("/usr/sbin/sysctl -n hw.ncpu")[1].read())
     return 1
 
 ###############################################################################
