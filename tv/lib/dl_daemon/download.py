@@ -968,11 +968,12 @@ def save_fast_resume_data(info_hash, fast_resume_data):
                           e)
     finally:
         if f:
-            f.close()
-            os.unlink(fast_resume_file)
-        except (OSError, IOError), e:
-            logging.exception('Error occured recovering from writing to '
-                              'fast_resume_data (%s)', e)
+            try:
+                f.close()
+                os.unlink(fast_resume_file)
+            except (OSError, IOError), e:
+                logging.exception('Error occured recovering from writing to '
+                                  'fast_resume_data (%s)', e)
 
 def load_fast_resume_data(info_hash):
     """Loads fast_resume_data from file on disk.
