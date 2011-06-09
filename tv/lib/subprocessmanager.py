@@ -226,11 +226,13 @@ def _load_obj(pipe):
     """
     size_data = pipe.read(SIZEOF_LONG)
     if len(size_data) < SIZEOF_LONG:
-        raise LoadError("EOF reached while reading size field")
+        raise LoadError("EOF reached while reading size field "
+                "(read %s bytes)" % len(size_data))
     size = struct.unpack("L", size_data)[0]
     pickle_data = pipe.read(size)
     if len(pickle_data) < size:
-        raise LoadError("EOF reached while reading pickle data")
+        raise LoadError("EOF reached while reading pickle data "
+                "(read %s bytes)" % len(pickle_data))
     try:
         return pickle.loads(pickle_data)
     except pickle.PickleError:
