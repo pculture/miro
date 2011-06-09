@@ -1918,6 +1918,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # In split_item() we found out that all our children were
             # deleted, so we were removed as well.  (#11979)
             return
+        return
         eventloop.add_idle(self.check_deleted, 'checking item deleted')
         if self.screenshot and not fileutil.exists(self.screenshot):
             logging.warn("file disappeared: %s", self.screenshot)
