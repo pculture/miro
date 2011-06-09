@@ -45,14 +45,14 @@ class DeviceTracker(object):
         self._connected = {}
 
     def start_tracking(self):
-	self._wndproc_wrapped = WndProcType(self._wndproc) # keep it around to
+        self._wndproc_wrapped = WndProcType(self._wndproc) # keep it around to
                                                            # avoid GC
         self._oldwndproc = None
         self._pending_messages = []
 
         self._oldwndproc = ctypes.windll.user32.SetWindowLongW(
-		app.widgetapp.window._window.window.handle,
-		GWL_WNDPROC, self._wndproc_wrapped)
+                app.widgetapp.window._window.window.handle,
+                GWL_WNDPROC, self._wndproc_wrapped)
         if self._pending_messages:
             for args in self._pending_messages:
                 ctypes.windll.user32.CallWindowProcW(self._oldwndproc, *args)
@@ -90,7 +90,7 @@ class DeviceTracker(object):
         for vol in self._connected.keys():
             if vol not in volumes:
                 device = self._connected.pop(vol)
-		self._device_disconnected(device)
+                self._device_disconnected(device)
 
     def _get_device_info(self, device):
         mount = device['mount']
@@ -118,7 +118,7 @@ class DeviceTracker(object):
             device['mount'] = device['future_mount']
             del device['future_mount']
             self._device_changed(device)
-	    return
+            return
         timer.add(0.5, self._check_device_mount, device)
 
     def _device_connected(self, device):
