@@ -323,13 +323,14 @@ static PyObject* LinkedList_new(PyTypeObject *type, PyObject *args, PyObject *kw
 
 static void LinkedList_dealloc(LinkedListObject* self)
 {
-    LinkedListNode* node;
+    LinkedListNode *node, *tmp;
 
     node = self->sentinal->next;
     while(node != self->sentinal) {
         node->deleted = 1;
+        tmp = node->next;
         check_node_deleted(node);
-        node = node->next;
+        node = tmp;
     }
 
     self->sentinal->iter_count -= 1;
