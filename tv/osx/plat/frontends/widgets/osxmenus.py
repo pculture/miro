@@ -135,7 +135,7 @@ def update_view_menu_state():
         except KeyError:
             # Column could have been hidden, as per bz:17696.  If so, nothing
             # to see here, carry on.
-            pass
+            continue
         hidden = not column in WidgetStateStore.get_columns_available(display.type)
         menu_item.setHidden_(hidden)
         if hidden:
