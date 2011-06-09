@@ -68,8 +68,8 @@ def _on_windows():
 # ** Protocol between miro and subprocesses **
 #
 # We spawn a child process and communicate to it by sending messages through
-# it's stdin and stdout.  Each message contains a length (4 bytes) plus a
-# pickled object.
+# it's stdin and stdout.  Each message contains a length (a unsigned long)
+# followed by a pickled object.
 #
 # The communication goes like this:
 #
@@ -212,6 +212,8 @@ class SubprocessResponder(messagetools.MessageHandler):
 class LoadError(StandardError):
     """Exception for corrupt data when reading from a pipe."""
 
+SIZEOF_LONG = struct.calcsize("L")
+
 def _load_obj(pipe):
     """Load an object from one side of a pipe.
 
@@ -222,8 +224,8 @@ def _load_obj(pipe):
 
     :returns: Python object send from the other side
     """
-    size_data = pipe.read(4)
-    if len(size_data) < 4:
+    size_data = pipe.read(SIZEOF_LONG)
+    if len(size_data) < SIZEOF_LONG:
         raise LoadError("EOF reached while reading size field")
     size = struct.unpack("L", size_data)[0]
     pickle_data = pipe.read(size)
