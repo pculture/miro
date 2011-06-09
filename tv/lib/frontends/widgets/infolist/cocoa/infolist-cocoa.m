@@ -127,6 +127,6 @@ infolistplat_iter_for_node(InfoListNodeList* nodelist,
                            InfoListNode* node)
 {
         /* We handle this by subclassing in python-land on OS X.*/
-        PyErr_SetNone(&PyExc_NotImplementedError);
+        PyErr_SetNone(PyExc_NotImplementedError);
         return NULL;
 }
