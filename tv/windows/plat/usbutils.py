@@ -48,6 +48,8 @@ DIGCF_DEVICEINTERFACE = 0x00000010
 ERROR_INSUFFICIENT_BUFFER = 122
 ERROR_NO_MORE_ITEMS = 259
 MAXIMUM_USB_STRING_LENGTH = 255
+FILE_READ_ONLY_VOLUME = 0x00080000
+MAX_PATH = 260
 
 GENERIC_READ = 0x80000000L
 GENERIC_WRITE = 0x40000000L
@@ -67,6 +69,7 @@ setupapi = ctypes.windll.setupapi
 SetupDiGetClassDevs = setupapi.SetupDiGetClassDevsW
 SetupDiEnumDeviceInterfaces = setupapi.SetupDiEnumDeviceInterfaces
 SetupDiGetDeviceInterfaceDetail = setupapi.SetupDiGetDeviceInterfaceDetailW
+GetVolumeInformation = kernel32.GetVolumeInformationA
 
 CM_Get_Parent = setupapi.CM_Get_Parent
 CM_Get_Device_ID = setupapi.CM_Get_Device_IDW
@@ -206,14 +209,20 @@ def read_write_drive(mount):
     Checks if the given mount path is read write.
     """
     try:
-        if not os.path.exists(mount):
+        # create buffers for output params.  We don't actually use volume_name
+        # or fs_name at the moment, but the API requires us to pass them in.
+        volume_name = ctypes.create_string_buffer(MAX_PATH+1)
+        fs_name = ctypes.create_string_buffer(MAX_PATH+1)
+        volume_flags = ctypes.wintypes.DWORD(0)
+
+        rv = GetVolumeInformation(mount, volume_name, MAX_PATH+1,
+                None, None, ctypes.byref(volume_flags), fs_name, MAX_PATH+1)
+        if rv == 0: # mount path is invalid
+            return False 
+
+        if volume_flags.value & FILE_READ_ONLY_VOLUME:
             return False
-        try:
-            temp_dir = tempfile.mkdtemp(dir=mount)
-        except OSError:
-            return False
-        else:
-            os.rmdir(temp_dir)
+
         return True
     except EnvironmentError:
         if LOTS_OF_DEBUGGING:
