@@ -130,7 +130,12 @@ def update_view_menu_state():
     enabled = app.widget_state.get_sorts_enabled(display.type, display.id)
 
     for column in WidgetStateStore.get_columns():
-        menu_item = VIEW_ITEM_MAP[column]
+        try:
+            menu_item = VIEW_ITEM_MAP[column]
+        except KeyError:
+            # Column could have been hidden, as per bz:17696.  If so, nothing
+            # to see here, carry on.
+            pass
         hidden = not column in WidgetStateStore.get_columns_available(display.type)
         menu_item.setHidden_(hidden)
         if hidden:
