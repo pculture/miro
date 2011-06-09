@@ -1441,7 +1441,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         try:
             updateFreq = self.parsed["feed"]["ttl"]
         except KeyError:
-            updateFreq = -1
+            updateFreq = 0
         self.set_update_frequency(updateFreq)
 
         self.feedparser_finished()
