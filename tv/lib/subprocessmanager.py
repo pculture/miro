@@ -214,6 +214,24 @@ class LoadError(StandardError):
 
 SIZEOF_LONG = struct.calcsize("L")
 
+def _read_bytes_from_pipe(pipe, length):
+    """Read size bytes from a pipe.
+
+    This is different from just calling read() because read can return partial
+    data.
+
+    This method call read() until either:
+      a) read() returns no data, meaning the pipe is closed
+      b) we've read length bytes
+    """
+    data = []
+    while length > 0:
+        data = pipe.read(length)
+        if data == '':
+            break
+        length -= len(data)
+    return ''.join(data)
+
 def _load_obj(pipe):
     """Load an object from one side of a pipe.
 
@@ -224,12 +242,12 @@ def _load_obj(pipe):
 
     :returns: Python object send from the other side
     """
-    size_data = pipe.read(SIZEOF_LONG)
+    size_data = _read_bytes_from_pipe(pipe, SIZEOF_LONG)
     if len(size_data) < SIZEOF_LONG:
         raise LoadError("EOF reached while reading size field "
                 "(read %s bytes)" % len(size_data))
     size = struct.unpack("L", size_data)[0]
-    pickle_data = pipe.read(size)
+    pickle_data = _read_bytes_from_pipe(pipe, size)
     if len(pickle_data) < size:
         raise LoadError("EOF reached while reading pickle data "
                 "(read %s bytes)" % len(pickle_data))
