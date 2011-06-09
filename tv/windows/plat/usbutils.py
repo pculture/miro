@@ -69,7 +69,7 @@ setupapi = ctypes.windll.setupapi
 SetupDiGetClassDevs = setupapi.SetupDiGetClassDevsW
 SetupDiEnumDeviceInterfaces = setupapi.SetupDiEnumDeviceInterfaces
 SetupDiGetDeviceInterfaceDetail = setupapi.SetupDiGetDeviceInterfaceDetailW
-GetVolumeInformation = kernel32.GetVolumeInformationA
+GetVolumeInformation = kernel32.GetVolumeInformationW
 
 CM_Get_Parent = setupapi.CM_Get_Parent
 CM_Get_Device_ID = setupapi.CM_Get_Device_IDW
@@ -218,7 +218,7 @@ def read_write_drive(mount):
         rv = GetVolumeInformation(mount, volume_name, MAX_PATH+1,
                 None, None, ctypes.byref(volume_flags), fs_name, MAX_PATH+1)
         if rv == 0: # mount path is invalid
-            return False 
+            return False
 
         if volume_flags.value & FILE_READ_ONLY_VOLUME:
             return False
@@ -259,7 +259,7 @@ def get_device_number(handle_or_path):
             return sdn.DeviceNumber
     finally:
         if opened_handle:
-            kernel32.CloseHandle(handle)            
+            kernel32.CloseHandle(handle)
 
 def eject_mount(mount_point):
     """
@@ -281,7 +281,7 @@ def eject_mount(mount_point):
         path, device = get_device_interface_detail(interface)
         if get_device_number(path) == device_number:
             device_eject(get_parent(device.DevInst))
-            return True      
+            return True
 
 def iter_reg_keys(key_or_handle, root=_winreg.HKEY_LOCAL_MACHINE):
     if isinstance(key_or_handle, basestring):
