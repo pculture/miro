@@ -61,8 +61,6 @@ static int one_pass(PyObject* ngram_list, PyObject* string, int n)
 static PyObject *breakup_word(PyObject *self, PyObject *args)
 {
     PyObject* source_string;
-    PyObject* iter;
-    PyObject* item;
     PyObject* ngram_list;
     long min, max;
     Py_ssize_t n;
