@@ -228,7 +228,6 @@ class SimpleEventLoop(signals.SignalEmitter):
                                        'end-loop')
         self.quit_flag = False
         self.wake_sender, self.wake_receiver = util.make_dummy_socket_pair()
-        self.wakup_sent = False
         self.loop_ready = threading.Event()
 
     def loop(self):
@@ -260,18 +259,13 @@ class SimpleEventLoop(signals.SignalEmitter):
             self.emit('end-loop')
 
     def wakeup(self):
-        if self.wakup_sent:
-            return # no need to keep pushing data to the socket
         try:
             self.wake_sender.send("b")
         except socket.error, e:
             logging.warn("Error waking up eventloop (%s)", e)
-        else:
-            self.wakup_sent = True
 
     def _slurp_waker_data(self):
         self.wake_receiver.recv(1024)
-        self.wakup_sent = False
 
 class EventLoop(SimpleEventLoop):
     def __init__(self):
