@@ -1807,7 +1807,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         # idle callback to handle this.  We don't want to call
         # check_delete() now because it's not safe if we're called inside
         # setup_new().  See #17344
-        eventloop.add_idle(self.check_deleted, 'checking item deleted')
+        _deleted_file_checker.schedule_check(self)
 
     def _check_media_file(self):
         """Does the work for check_media_file()
@@ -1918,7 +1918,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # In split_item() we found out that all our children were
             # deleted, so we were removed as well.  (#11979)
             return
-        eventloop.add_idle(self.check_deleted, 'checking item deleted')
+        _deleted_file_checker.schedule_check(self)
         if self.screenshot and not fileutil.exists(self.screenshot):
             logging.warn("file disappeared: %s", self.screenshot)
             self.screenshot = None
@@ -2261,6 +2261,35 @@ class IncompleteMovieDataUpdator(object):
         else:
             eventloop.add_idle(self.do_some_updates,
                     'update incomplete movie data')
+
+class DeletedFileChecker(object):
+    """Utility class that manages calling Item.check_deleted().
+
+    This class ensures that we only schedule one idle callback at a time.
+    """
+    def __init__(self):
+        self.items_to_check = set()
+        self.check_scheduled = False
+
+    def schedule_check(self, item):
+        self.items_to_check.add(item)
+        if not self.check_scheduled:
+            eventloop.add_idle(self.run_checks, 'checking items deleted')
+            self.check_scheduled = True
+
+    def run_checks(self):
+        # prepare for add_check() to be called again.  Do this first in case
+        # it happens in response to us calling check_deleted()
+        self.check_scheduled = False
+        items_this_pass = self.items_to_check
+        self.items_to_check = set()
+
+        for item in items_this_pass:
+            if item.id_exists():
+                item.check_deleted()
+
+_deleted_file_checker = DeletedFileChecker()
+
 
 def fix_non_container_parents():
     """Make sure all items referenced by parent_id have isContainerItem set
