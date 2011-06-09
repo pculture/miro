@@ -129,7 +129,7 @@ def update_view_menu_state():
     view_menu.setHidden_(False)
     enabled = app.widget_state.get_sorts_enabled(display.type, display.id)
 
-    for column in WidgetStateStore.get_columns():
+    for column in WidgetStateStore.get_toggleable_columns():
         menu_item = VIEW_ITEM_MAP[column]
         hidden = not column in WidgetStateStore.get_columns_available(display.type)
         menu_item.setHidden_(hidden)
