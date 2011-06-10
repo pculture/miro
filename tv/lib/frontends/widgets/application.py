@@ -289,7 +289,7 @@ class Application:
             return None
 
     def get_left_width(self):
-        if hasattr(self, 'window.splitter'):
+        if hasattr(self.window, 'splitter'):
             return self.window.splitter.get_left_width()
         else:
             return None
