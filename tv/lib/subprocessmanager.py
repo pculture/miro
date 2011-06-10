@@ -226,10 +226,11 @@ def _read_bytes_from_pipe(pipe, length):
     """
     data = []
     while length > 0:
-        data = pipe.read(length)
-        if data == '':
+        d = pipe.read(length)
+        if d == '':
             break
-        length -= len(data)
+        length -= len(d)
+        data.append(d)
     return ''.join(data)
 
 def _load_obj(pipe):
