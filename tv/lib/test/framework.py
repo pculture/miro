@@ -11,7 +11,6 @@ from miro import config
 from miro import database
 from miro import eventloop
 from miro import feed
-from miro import feedparserutil
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
@@ -536,34 +535,36 @@ def dynamic_test(expected_cases=None):
     separate test method for each case; this makes it easier to debug tests that
     go awry, makes it easier to see test progress from the command line (lots of
     little tests rather than one big test), and increases the test count
-    appropriately.
+    appropriately::
+
+        class ExampleDynamicTest(object):
+            @classmethod
+            def generate_tests(cls):
+                # Should return an iterable of test cases. Each test case is an
+                # iterable of arguments to pass to the dynamic_test_case implementation.
+                #
+                # Test names will be created by stripping non-alphanumeric chars out of
+                # the value of the first arg in each test case, so the first arg should be
+                # a string that can be used to identify the test uniquely.
+                raise NotImplementedError
+
+            def dynamic_test_case(self, *args):
+                # This will be run once for each value produced by setup_tests. The
+                # iterables of values returned by generate_tests will be passed as
+                # arguments.
+                raise NotImplementedError
     """
-    class ExampleDynamicTest(object):
-        @classmethod
-        def generate_tests(cls):
-            """Should return an iterable of test cases. Each test case is an
-            iterable of arguments to pass to the dynamic_test_case implementation.
 
-            Test names will be created by stripping non-alphanumeric chars out of
-            the value of the first arg in each test case, so the first arg should be
-            a string that can be used to identify the test uniquely.
-            """
-            raise NotImplementedError
-
-        def dynamic_test_case(self, *args):
-            """This will be run once for each value produced by setup_tests. The
-            iterables of values returned by generate_tests will be passed as
-            arguments.
-            """
-            raise NotImplementedError
+    def _generate_closure(cls, args):
+        return lambda self: cls.dynamic_test_case(self, *args)
 
     def wrap_class(cls):
         generated_cases = 0
         for test_args in cls.generate_tests():
             test_name = ''.join(x for x in test_args[0] if x.isalnum())
-            setattr(cls, 'test_%s' % test_name,
-                    lambda self: self.dynamic_test_case(*test_args))
+            setattr(cls, 'test_%s_dyn' % test_name, _generate_closure(cls, test_args))
             generated_cases += 1
+
         if expected_cases is not None:
             assert generated_cases == expected_cases, (
                     "generated test count %d not equal to expected count %d for"
