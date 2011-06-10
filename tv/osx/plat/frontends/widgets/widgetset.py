@@ -57,3 +57,4 @@ from miro.plat.frontends.widgets.tablemodel import (TableModel,
 from miro.plat.frontends.widgets.audio import AudioPlayer
 from miro.plat.frontends.widgets.video import VideoPlayer
 from miro.plat.frontends.widgets.sniffer import get_item_type
+from miro.plat.frontends.widgets.base import Widget
