@@ -54,6 +54,10 @@ class EventHandler:
     def handle_update_available(self, obj, item):
         print "There is a Miro Update available!"
 
+    def handle_first_time(self, callback):
+        print "Welcome to Miro!"
+        callback()
+
     def handle_dialog(self, obj, dialog):
         self.dialog_queue.put(dialog)
 
@@ -93,3 +97,9 @@ class CliMessageHandler(messages.MessageHandler):
 
     def handle_startup_success(self, message):
         self.on_startup_success()
+
+    def handle_database_upgrade_end(self, message):
+        print "Done with database upgrades"
+
+    def handle_item_list(self, message):
+        print "Item list %s %s %d" % (message.type, message.id, len(message.items))
