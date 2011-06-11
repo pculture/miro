@@ -203,6 +203,13 @@ class MiroInterpreter(cmd.Cmd):
         self._print_feeds(self.feed_tabs.get_all_tabs())
 
     @run_in_event_loop
+    def do_update(self, line):
+        """update -- Updates all the feeds."""
+        for mem in self.feed_tabs.get_all_tabs():
+            print "telling %s to update" % mem.get_title()
+            mem.update()
+
+    @run_in_event_loop
     def do_play(self, line):
         """play <name> -- Plays an item by name in an external player."""
         if self.selection_type is None:
