@@ -98,6 +98,9 @@ class CliMessageHandler(messages.MessageHandler):
     def handle_startup_success(self, message):
         self.on_startup_success()
 
+    def handle_items_changed(self, message):
+        pass
+
     def handle_database_upgrade_end(self, message):
         print "Done with database upgrades"
 

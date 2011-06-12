@@ -220,7 +220,7 @@ class MiroInterpreter(cmd.Cmd):
             print "No item named %r" % line
             return
         if item_.is_downloaded():
-            resources.open_file(item_.get_video_filename())
+            resources.open_file(item_.get_filename())
         else:
             print '%s is not downloaded' % item_.get_title()
 
