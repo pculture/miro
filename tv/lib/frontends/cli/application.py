@@ -37,6 +37,7 @@ from miro import prefs
 from miro import startup
 from miro import controller
 from miro import signals
+from miro import messages
 from miro import eventloop
 from miro import feed
 from miro import workerprocess
@@ -49,6 +50,10 @@ def setup_logging():
     # the logging level so it's way less spammy.
     logger = logging.getLogger('')
     logger.setLevel(logging.WARN)    
+
+def setup_movie_data_program_info():
+    from miro.plat.renderers.gstreamerrenderer import movie_data_program_info
+    app.movie_data_program_info = movie_data_program_info
 
 def run_application():
     setup_logging()
@@ -76,8 +81,8 @@ def run_application():
         app.controller.shutdown()
         return
 
-    eventloop.add_idle(workerprocess.startup, "start worker process")
-    eventloop.add_idle(feed.start_updates, "start feed updates")
+    setup_movie_data_program_info()
+    messages.FrontendStarted().send_to_backend()
 
     print "Startup complete.  Type \"help\" for list of commands."
     app.cli_interpreter = MiroInterpreter()
