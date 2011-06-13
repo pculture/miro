@@ -2273,20 +2273,36 @@ class DeletedFileChecker(object):
 
     def schedule_check(self, item):
         self.items_to_check.add(item)
+        self._add_callback()
+
+    def _add_callback(self):
         if not self.check_scheduled:
             eventloop.add_idle(self.run_checks, 'checking items deleted')
             self.check_scheduled = True
 
     def run_checks(self):
-        # prepare for add_check() to be called again.  Do this first in case
-        # it happens in response to us calling check_deleted()
         self.check_scheduled = False
-        items_this_pass = self.items_to_check
-        self.items_to_check = set()
+        # Grab a limited number items at a time to prevent us from using too
+        # much time in for this idle callback.
+        # Update items_to_check immediately in case schedule_check() is called
+        # in response to us calling check_deleted()
+        items_this_pass = []
+        for x in xrange(100):
+            try:
+                to_check = self.items_to_check.pop()
+                items_this_pass.append(to_check)
+            except KeyError:
+                break # items_to_check is empty
 
-        for item in items_this_pass:
-            if item.id_exists():
-                item.check_deleted()
+        app.bulk_sql_manager.start()
+        try:
+            for item in items_this_pass:
+                if item.id_exists():
+                    item.check_deleted()
+        finally:
+            app.bulk_sql_manager.finish()
+            if self.items_to_check:
+                self._add_callback()
 
 _deleted_file_checker = DeletedFileChecker()
 
