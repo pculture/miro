@@ -165,6 +165,10 @@ def launch_downloader_daemon():
     # after its launch as this function returns have been seen in the wild.
     eventloop.join()
 
+def launch_miro_helper():
+    from miro import miro_helper
+    miro_helper.launch()
+
 # =============================================================================
 
 # Uncomment the following two lines to check for non unicode string trying to
@@ -184,6 +188,12 @@ parser.add_option('--download-daemon',
                   action='store_true',
                   help='Start Downloader Process')
 parser.set_defaults(download_daemon=False)
+
+parser.add_option('--miro-helper',
+                  dest='miro_helper',
+                  action='store_true',
+                  help='Start Miro Helper Process')
+parser.set_defaults(miro_helper=False)
 
 parser.add_option('-p',
                   dest='pid',
@@ -212,6 +222,8 @@ parser.set_defaults(unittest_failfast=False)
 # Launch player or downloader, depending on command line parameter`
 if parsed_options.download_daemon:
     launch_downloader_daemon()
+elif parsed_options.miro_helper:
+    launch_miro_helper()
 elif parsed_options.unittest:
     launch_unit_tests()
 else:

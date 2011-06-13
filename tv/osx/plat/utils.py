@@ -343,6 +343,18 @@ def kill_process(pid):
         except:
             logging.exception ("error killing process")
 
+def _app_command_line():
+    """Get the command line to lanch the Miro.app bundle. """
+    exe = NSBundle.mainBundle().executablePath()
+
+    os_info = os.uname()
+    os_version = int(os_info[2].split('.')[0])
+    if os_version < 9:
+        return [exe]
+    else:
+        arch = subprocess.Popen("/usr/bin/arch", stdout=subprocess.PIPE).communicate()[0].strip()
+        return ['/usr/bin/arch', '-%s' % arch, exe]
+
 @on_ui_thread
 def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
@@ -352,17 +364,9 @@ def launch_download_daemon(oldpid, env):
     env["MIRO_APP_VERSION"] = app.config.get(prefs.APP_VERSION)
     env.update(os.environ)
 
-    exe = NSBundle.mainBundle().executablePath()
-
-    os_info = os.uname()
-    os_version = int(os_info[2].split('.')[0])
-    if os_version < 9:
-        launch_path = exe
-        launch_arguments = [u'--download-daemon']
-    else:
-        arch = subprocess.Popen("/usr/bin/arch", stdout=subprocess.PIPE).communicate()[0].strip()
-        launch_path = '/usr/bin/arch'
-        launch_arguments = ['-%s' % arch, exe, u'--download-daemon']
+    command_line = _app_command_line()
+    launch_path = command_line[0]
+    launch_arguments = command_line[1:] + [u'--download-daemon']
 
     global dlTask
     dlTask = NSTask.alloc().init()
@@ -446,7 +450,12 @@ def movie_data_program_info(movie_path, thumbnail_path):
     return (cmd_line + (movie_path, thumbnail_path), env)
 
 def miro_helper_program_info():
-    return _get_cmd_line_and_env_for_script('miro_helper.py')
+    cmd_line = _app_command_line() + [u'--miro-helper']
+    env = {
+            'VERSIONER_PYTHON_PREFER_32_BIT': 'yes',
+            'MIRO_APP_VERSION': app.config.get(prefs.APP_VERSION)
+    }
+    return cmd_line, env
 
 ###############################################################################
 
