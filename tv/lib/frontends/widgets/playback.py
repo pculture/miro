@@ -700,7 +700,8 @@ class PlaybackManager (signals.SignalEmitter):
         # Figure out if its from a library or feed. Also, if feed_url
         # is None don't consider it a podcast.
         if (item_info.remote or 
-          (not item_info.feed_url or 
+           not item_info.feed_id or
+          (item_info.feed_url and
           (item_info.feed_url.startswith('dtv:manualFeed') or
            item_info.feed_url.startswith('dtv:directoryfeed') or
            item_info.feed_url.startswith('dtv:search') or
@@ -720,7 +721,8 @@ class PlaybackManager (signals.SignalEmitter):
 
     def item_continuous_playback_mode(self, item_info):
         if (item_info.remote or
-          (not item_info.feed_url or 
+           not item_info.feed_id or
+          (item_info.feed_url and
           (item_info.feed_url.startswith('dtv:manualFeed') or
            item_info.feed_url.startswith('dtv:directoryfeed') or
            item_info.feed_url.startswith('dtv:search') or
