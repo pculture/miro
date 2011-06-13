@@ -697,9 +697,10 @@ class PlaybackManager (signals.SignalEmitter):
         # FIXME: we should have a better way of deciding
         # which tab something is listed in.  In addition, assume all items
         # from a remote share is either audio or video (no podcast).
-        # Figure out if its from a library or feed
+        # Figure out if its from a library or feed. Also, if feed_url
+        # is None don't consider it a podcast.
         if (item_info.remote or 
-          (item_info.feed_url and 
+          (not item_info.feed_url or 
           (item_info.feed_url.startswith('dtv:manualFeed') or
            item_info.feed_url.startswith('dtv:directoryfeed') or
            item_info.feed_url.startswith('dtv:search') or
@@ -719,7 +720,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def item_continuous_playback_mode(self, item_info):
         if (item_info.remote or
-          (item_info.feed_url and
+          (not item_info.feed_url or 
           (item_info.feed_url.startswith('dtv:manualFeed') or
            item_info.feed_url.startswith('dtv:directoryfeed') or
            item_info.feed_url.startswith('dtv:search') or
