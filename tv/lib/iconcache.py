@@ -263,37 +263,48 @@ class IconCache(DDBObject):
             icon_cache_updater.update_finished()
 
     def request_icon(self):
+        logging.warn("in request icon")
         if self.removed:
+            logging.warn("self.removed is true")
             icon_cache_updater.update_finished()
             return
 
         self.dbItem.confirm_db_thread()
         if self.updating:
+            logging.warn("already updating")
             self.needsUpdate = True
             icon_cache_updater.update_finished()
             return
 
         if hasattr(self.dbItem, "get_thumbnail_url"):
+            logging.warn("calling get_thumbnail_url()")
             url = self.dbItem.get_thumbnail_url()
+            logging.warn("done with get_thumbnail_url()")
         else:
             url = self.url
 
         # Only verify each icon once per run unless the url changes
         if (url == self.url and self.filename
                 and fileutil.access(self.filename, os.R_OK)):
+            logging.warn("calling update_finished()")
             icon_cache_updater.update_finished()
+            logging.warn("done with update_finished()")
             return
 
         self.updating = True
 
         # No need to extract the icon again if we already have it.
         if url is None or url.startswith(u"/") or url.startswith(u"file://"):
+            logging.warn("calling error callback")
             self.error_callback(url)
+            logging.warn("done with error_callback")
             return
 
         # Last try, get the icon from HTTP.
+        logging.warn("calling glab_url")
         httpclient.grab_url(url, lambda info: self.update_icon_cache(url, info),
                 lambda error: self.error_callback(url, error))
+        logging.warn("done with glab_url")
 
     def request_update(self, is_vital=False):
         if hasattr(self, "updating") and hasattr(self, "dbItem"):
