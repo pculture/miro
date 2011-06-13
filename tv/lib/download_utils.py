@@ -140,6 +140,25 @@ def check_filename_extension(filename, content_type):
             filename += guessed_ext
     return filename
 
+def _next_free_filename_candidates(path):
+    """Generates candidate names for next_free_filename."""
+
+    # try unmodified path first
+    yield path
+    # add stuff to the filename to try to make it unique
+
+    dirname, filename = os.path.split(path)
+    if not filename:
+        raise ValueError("%s is a directory name" % path)
+    basename, ext = os.path.splitext(filename)
+    count = 1
+    while True:
+        filename = "%s.%s%s" % (basename, count, ext)
+        yield os.path.join(dirname, filename)
+        count += 1
+        if count > 1000:
+            raise ValueError("Can't find available name for %s" % path)
+
 @returns_file
 def next_free_filename(name):
     """Finds a filename that's unused and similar the the file we want
@@ -152,42 +171,16 @@ def next_free_filename(name):
     if sys.platform == 'win32':
         mask |= os.O_BINARY
 
-    # Try with the name supplied.
-    try:
-        fd = os.open(expand_filename(name), mask)
-        fp = os.fdopen(fd, 'wb')
-        return expand_filename(name), fp
-    except OSError:
-        pass
-
-    # Boh boh ... did't work.  Let's try to create a variant name and 
-    # open that instead.
-    parts = name.split('.')
-    count = 1
-    if len(parts) == 1:
-        newname = "%s.%s" % (name, count)
-        while True:
-            try:
-                fd = os.open(expand_filename(newname), mask)
-                fp = os.fdopen(fd, 'wb')
-                break
-            except OSError:
-                count += 1
-                newname = "%s.%s" % (name, count)
-                continue
-    else:
-        parts[-1:-1] = [str(count)]
-        newname = '.'.join(parts)
-        while True:
-            try:
-                fd = os.open(expand_filename(newname), mask)
-                fp = os.fdopen(fd, 'wb')
-                break
-            except OSError:
-                count += 1
-                parts[-2] = str(count)
-                newname = '.'.join(parts)
-                continue
+    candidates = _next_free_filename_candidates(name)
+    while True:
+        # Try with the name supplied.
+        newname = candidates.next()
+        try:
+            fd = os.open(expand_filename(newname), mask)
+            fp = os.fdopen(fd, 'wb')
+            return expand_filename(newname), fp
+        except OSError:
+            continue
     return (expand_filename(newname), fp)
 
 def _next_free_directory_candidates(name):
