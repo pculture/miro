@@ -34,11 +34,13 @@ import sys
 
 from miro import subprocessmanager
 
-
-if __name__ == '__main__':
+def launch():
     try:
         subprocessmanager.subprocess_main()
     except:
         sys.exit(1)
     else:
         sys.exit(0)
+
+if __name__ == '__main__':
+    launch()
