@@ -766,7 +766,13 @@ class CurlTransfer(object):
             return
         else:
             logging.warn("Unknown network error.  Code: %s", code)
-            error = NetworkError(_("Unknown"), unicode(handle.errstr()))
+            errstr = handle.errstr()
+            try:
+                description = errstr.decode('utf-8')
+            except UnicodeError, e:
+                logging.warn("error converting errstr: %s (%r)", e, errstr)
+                description = u'Unknown'
+            error = NetworkError(_("Unknown"), description)
         self.call_errback(error)
 
     def call_callback(self, info):
@@ -941,9 +947,15 @@ class LibCURLManager(eventloop.SimpleEventLoop):
     def check_finished(self):
         queued, finished, errors = self.multi.info_read()
         for handle in finished:
-            self.pop_transfer(handle).on_finished()
+            try:
+                self.pop_transfer(handle).on_finished()
+            except StandardError:
+                logging.stacktrace("Error calling on_finished()")
         for handle, code, message in errors:
-            self.pop_transfer(handle).on_error(code, handle)
+            try:
+                self.pop_transfer(handle).on_error(code, handle)
+            except StandardError:
+                logging.stacktrace("Error calling on_error()")
 
     def pop_transfer(self, handle):
         transfer = self.transfer_map.pop(handle)
