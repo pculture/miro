@@ -7,7 +7,7 @@ import shutil
 import unittest
 import sys
 
-from miro.test.framework import skip_for_platforms
+from miro.test.framework import skip_for_platforms, MiroTestCase
 from miro import download_utils
 from miro import util
 from miro.fileobject import FilenameType
@@ -436,7 +436,7 @@ class UtilTest(unittest.TestCase):
         self.assertEqual(';2%/*()_-?+z', util.ascii_lower(';2%/*()_-?+Z'))
 
 
-class DownloadUtilsTest(unittest.TestCase):
+class DownloadUtilsTest(MiroTestCase):
     def check_clean_filename(self, filename, test_against):
         self.assertEquals(download_utils.clean_filename(filename),
                           test_against)
@@ -454,6 +454,99 @@ class DownloadUtilsTest(unittest.TestCase):
                                   'abc' + long_extension)
         self.check_clean_filename(long_filename + long_extension,
                                   long_filename[:50] + long_extension[:50])
+
+    def test_next_free_filename_generators(self):
+        # try path without extension
+        path = "/foo/.bar/test"
+        generator = download_utils.next_free_filename_candidates(path)
+        # first candidate should just be the file itself
+        self.assertEquals(generator.next(), "/foo/.bar/test")
+        # next candidate should just be the file with .X added to it
+        self.assertEquals(generator.next(), "/foo/.bar/test.1")
+        self.assertEquals(generator.next(), "/foo/.bar/test.2")
+
+        # try path with extension
+        path = "/foo/.bar/test.jpg"
+        generator = download_utils.next_free_filename_candidates(path)
+        # first candidate should just be the file itself
+        self.assertEquals(generator.next(), "/foo/.bar/test.jpg")
+        # next candidate should just be the file with .X added before the
+        # extension
+        self.assertEquals(generator.next(), "/foo/.bar/test.1.jpg")
+        self.assertEquals(generator.next(), "/foo/.bar/test.2.jpg")
+
+        # test that if we call it too many times, we get an exception
+        generator = download_utils.next_free_filename_candidates(path)
+        for x in xrange(100000):
+            try:
+                generator.next()
+            except ValueError:
+                # this is good, it means that there's a failsafe if we try too
+                # many candidates
+                if x < 100:
+                    raise # we shouldn't get an exception too soon
+                break
+        else:
+            raise AssertionError("next_free_filename_candidates() "
+                    "continues forever")
+
+    def test_next_free_directory_generators(self):
+        path = "/foo/.bar/test"
+        generator = download_utils.next_free_directory_candidates(path)
+        # first candidate should just be the file itself
+        self.assertEquals(generator.next(), "/foo/.bar/test")
+        # next candidate should just be the file with .X added to it
+        self.assertEquals(generator.next(), "/foo/.bar/test.1")
+        self.assertEquals(generator.next(), "/foo/.bar/test.2")
+
+        # test that if we call it too many times, we get an exception
+        generator = download_utils.next_free_directory_candidates(path)
+        for x in xrange(100000):
+            try:
+                generator.next()
+            except ValueError:
+                # this is good, it means that there's a failsafe if we try too
+                # many candidates
+                if x < 100:
+                    raise # we shouldn't get an exception too soon
+                break
+        else:
+            raise AssertionError("next_free_filename_candidates() "
+                    "continues forever")
+
+
+    def test_next_free_filename(self):
+        # make a bunch of files that we should skip over
+        for name in ('foo', 'foo.1', 'foo.2', 'bar.jpg', 'bar.1.jpg'):
+            path = os.path.join(self.tempdir, name)
+            open(path, 'wt').write("FAKE FILE")
+
+        path1 = os.path.join(self.tempdir, 'foo')
+        # test we find the a nonexistent file
+        returned_path, fp = download_utils.next_free_filename(path1)
+        self.assertEquals(returned_path, os.path.join(self.tempdir, 'foo.3'))
+        # test that we create the file
+        self.assert_(os.path.exists(returned_path))
+
+        # try with an extension
+        path2 = os.path.join(self.tempdir, 'bar.jpg')
+        returned_path, fp = download_utils.next_free_filename(path2)
+        self.assertEquals(returned_path, os.path.join(self.tempdir,
+            'bar.2.jpg'))
+        self.assert_(os.path.exists(returned_path))
+
+    def test_next_free_directory(self):
+        # make a bunch of directories that we should skip over
+        for name in ('foo', 'foo.1', 'foo.2'):
+            path = os.path.join(self.tempdir, name)
+            os.mkdir(path)
+
+        path = os.path.join(self.tempdir, 'foo')
+        # test we find the a nonexistent file
+        returned_path = download_utils.next_free_directory(path)
+        self.assertEquals(returned_path, os.path.join(self.tempdir, 'foo.3'))
+        # test that we don't create the directory
+        self.assert_(not os.path.exists(returned_path))
 
 class Test_simple_config_file(unittest.TestCase):
     def setUp(self):
