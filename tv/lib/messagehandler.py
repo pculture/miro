@@ -313,7 +313,8 @@ class GuideTracker(SimpleHideableTracker):
         return (guide.ChannelGuide.site_view(),)
 
     def get_initial_views(self):
-        return (guide.ChannelGuide.site_view(), guide.ChannelGuide.guide_view())
+        return (guide.ChannelGuide.site_view(),
+                guide.ChannelGuide.guide_view())
 
 class StoreTracker(SimpleHideableTracker):
     type = 'store'
