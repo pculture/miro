@@ -193,8 +193,18 @@ class ViewTracker(object):
         self.schedule_send_messages()
 
     def on_bulk_added(self, emitter, objects):
+        if self.tabs_being_reordered:
+            for obj in objects:
+                self._make_new_info(obj)
+            return
+        sent_messages = False
         for obj in objects:
-            self.on_object_added(emitter, obj)
+            if not sent_messages and obj.id in self.removed:
+                self.send_messages()
+                sent_messages = True
+            self.added[obj.id] = obj
+        self.added_order.extend(objects)
+        self.schedule_send_messages()
 
     def on_bulk_removed(self, emitter, objects):
         for obj in objects:
