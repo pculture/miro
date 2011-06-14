@@ -2268,19 +2268,27 @@ class DeletedFileChecker(object):
     This class ensures that we only schedule one idle callback at a time.
     """
     def __init__(self):
+        # track items that we should call check_deleted for
         self.items_to_check = set()
+        # track if we have run_checks() scheduled as an idle callback
         self.check_scheduled = False
 
     def schedule_check(self, item):
         self.items_to_check.add(item)
-        self._add_callback()
+        self._ensure_run_checks_scheduled()
 
-    def _add_callback(self):
+    def _ensure_run_checks_scheduled(self):
+        """Ensure that we run_checks() scheduled as an idle callback.
+
+        If this method is called multiple times before run_checks() runs, then
+        it only schedules one callback.
+        """
         if not self.check_scheduled:
             eventloop.add_idle(self.run_checks, 'checking items deleted')
             self.check_scheduled = True
 
     def run_checks(self):
+        """Call check_deleted() for the items that are scheduled to check."""
         self.check_scheduled = False
         # Grab a limited number items at a time to prevent us from using too
         # much time in for this idle callback.
@@ -2302,7 +2310,7 @@ class DeletedFileChecker(object):
         finally:
             app.bulk_sql_manager.finish()
             if self.items_to_check:
-                self._add_callback()
+                self._ensure_run_checks_scheduled()
 
 _deleted_file_checker = DeletedFileChecker()
 
