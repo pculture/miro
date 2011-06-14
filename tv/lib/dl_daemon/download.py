@@ -657,16 +657,20 @@ class BGDownloader(object):
         self.update_client()
 
     def handle_network_error(self, error):
+        logging.warn("handle_network_error: %s", error)
         if isinstance(error, httpclient.NetworkError):
+            logging.warn("is network error")
             if (isinstance(error, (httpclient.MalformedURL,
                                    httpclient.UnknownHostError,
                                    httpclient.AuthorizationFailed,
                                    httpclient.ProxyAuthorizationFailed,
                                    httpclient.UnexpectedStatusCode))):
+                logging.warn("non temp error")
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())
                 self.retryCount = -1 # reset retryCount
             else:
+                logging.warn("temp error")
                 self.handle_temporary_error(error.getFriendlyDescription(),
                                             error.getLongDescription())
         else:
@@ -770,7 +774,9 @@ class HTTPDownloader(BGDownloader):
     def destroy_client(self):
         """update the stats before we throw away the client.
         """
+        logging.warn("update stats in destroy_client")
         self.update_stats()
+        logging.warn("done with update_stats")
         self.client = None
 
     def cancel_request(self, remove_file=False):
@@ -827,18 +833,23 @@ class HTTPDownloader(BGDownloader):
                 ext_content_type)
 
     def on_download_error(self, error):
+        logging.warn("HTTP DOWNLOAD ERROR: %s", error)
         if isinstance(error, httpclient.ResumeFailed):
+            logging.warn("ResumeFailed")
             # try starting from scratch
             self.currentSize = 0
             self.totalSize = -1
             self.start_new_download()
         elif isinstance(error, httpclient.AuthorizationCanceled):
+            logging.warn("AuthorizationCanceled")
             self.destroy_client()
             self.stop(False)
         elif self.restartOnError:
+            logging.warn("restarting")
             self.restartOnError = False
             self.start_download()
         else:
+            logging.warn("default case")
             self.destroy_client()
             self.handle_network_error(error)
 
@@ -1507,6 +1518,7 @@ class BTDownloader(BGDownloader):
         self.handle_metainfo(info['body'])
 
     def on_metainfo_download_error(self, exception):
+        logging.warn("metainfo download error: %s", exception)
         self.handle_network_error(exception)
 
     def get_metainfo(self):
