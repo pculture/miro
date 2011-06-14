@@ -666,7 +666,7 @@ class CurlTransfer(object):
                 try:
                     info['body'] = gzip.GzipFile(
                                        fileobj=_StringIO(info['body'])).read()
-                except StandardError, e:
+                except IOError, e:
                     logging.warning("Received header with content-encoding "
                                     "gzip, but content is not gzip encoded")
 
