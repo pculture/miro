@@ -38,9 +38,13 @@ if [ -d "miro-binary-kit-win-${VERSION}" ]
 then
     echo "Binary kit ${BINARYKIT} is already installed.";
 else
-    echo "Installing ${BINARYKIT}."
+    echo "Installing ${BINARYKIT}..."
     wget "${BINARYKITURL}"
     tar -xzvf "${BINARYKIT}"
+
+    echo "Fixing permissions..."
+    chmod 777 miro-binary-kit-win-${VERSION}/requirements/*
+
     echo "Binary kit ${BINARYKIT} is installed."
     rm -rf ${BINARYKIT}
 fi
