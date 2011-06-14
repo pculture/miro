@@ -756,7 +756,9 @@ class CurlTransfer(object):
                 args=(info,))
 
     def call_errback(self, error):
+        logging.warn("in call_errback, calling _cleanup_filehandle")
         self._cleanup_filehandle()
+        logging.warn("calling errback: %s", self.errback)
         eventloop.add_idle(self.errback, 'curl transfer errback',
                            args=(error,))
 
