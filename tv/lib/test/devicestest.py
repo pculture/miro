@@ -28,7 +28,10 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
-import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType

@@ -2,7 +2,10 @@
 writing - to be implemented) of metadata tags.
 """
 
-import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 from miro.test.framework import MiroTestCase, dynamic_test
 

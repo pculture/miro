@@ -30,7 +30,10 @@
 from datetime import datetime
 from glob import glob
 from fnmatch import fnmatch
-import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import codecs
 import logging
 import os, os.path
