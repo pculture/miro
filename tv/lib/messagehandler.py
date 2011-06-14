@@ -33,6 +33,7 @@
 import logging
 import time
 import os
+import itertools
 
 from miro import app
 from miro import autoupdate
@@ -368,8 +369,28 @@ class SourceTrackerBase(ViewTracker):
 
     def send_initial_list(self):
         infos = []
+        iters = []
         for source in self.trackers:
-            infos.extend(source.fetch_all())
+            items_or_iter = source.fetch_all()
+            if isinstance(items_or_iter, list): # items
+                infos.extend(items_or_iter)
+            else:
+                infos.extend(items_or_iter.next())
+                iters.append(items_or_iter)
+
+        self._send_initial_list(infos)
+        if iters:
+            chain = itertools.chain(*iters)
+            self._send_adds_from_iter(chain)
+
+    @eventloop.idle_iterator
+    def _send_adds_from_iter(self, chain):
+        for infos in chain:
+            if infos:
+                self.on_bulk_added(self, infos)
+                yield
+
+    def _send_initial_list(self, infos):
         self._last_sent_info.update([(info.id, info) for info in infos])
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
         self.sent_initial_list = True

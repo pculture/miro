@@ -29,6 +29,7 @@
 
 import logging
 import os.path
+from itertools import islice
 
 from miro import app
 from miro import database
@@ -36,6 +37,13 @@ from miro.devices import DeviceItem
 from miro import item
 from miro import messages
 from miro import signals
+
+def split_every(n, iterable):
+    i = iter(iterable)
+    piece = list(islice(i, n))
+    while piece:
+        yield piece
+        piece = list(islice(i, n))
 
 class ItemSource(signals.SignalEmitter):
     """
@@ -648,7 +656,8 @@ class DeviceItemSource(ItemSource):
         data = self.device.database[type_]
 
         def _cache(id_):
-            if id_ in info_cache:
+            # commented out to focus on the speed of the initial load
+            if False: #id_ in info_cache:
                 return info_cache[id_]
             else:
                 info = info_cache[id_] = _item_info_for(
@@ -660,13 +669,13 @@ class DeviceItemSource(ItemSource):
                 return info
 
         def _all_videos():
-            for id_ in list(data.keys()):
+            for id_ in data.iterkeys():
                 try:
                     yield _cache(id_)
                 except (OSError, IOError): # couldn't find the file
                     pass
 
-        return list(_all_videos())
+        return split_every(500, _all_videos())
 
     def unlink(self):
         for handle in self.signal_handles:
