@@ -140,7 +140,7 @@ def check_filename_extension(filename, content_type):
             filename += guessed_ext
     return filename
 
-def _next_free_filename_candidates(path):
+def next_free_filename_candidates(path):
     """Generates candidate names for next_free_filename."""
 
     # try unmodified path first
@@ -157,7 +157,7 @@ def _next_free_filename_candidates(path):
         yield os.path.join(dirname, filename)
         count += 1
         if count > 1000:
-            raise ValueError("Can't find available name for %s" % path)
+            raise ValueError("Can't find available filename for %s" % path)
 
 @returns_file
 def next_free_filename(name):
@@ -171,7 +171,7 @@ def next_free_filename(name):
     if sys.platform == 'win32':
         mask |= os.O_BINARY
 
-    candidates = _next_free_filename_candidates(name)
+    candidates = next_free_filename_candidates(name)
     while True:
         # Try with the name supplied.
         newname = candidates.next()
@@ -183,13 +183,15 @@ def next_free_filename(name):
             continue
     return (expand_filename(newname), fp)
 
-def _next_free_directory_candidates(name):
+def next_free_directory_candidates(name):
     """Generates candidate names for next_free_directory."""
     yield name
     count = 1
     while True:
         yield "%s.%s" % (name, count)
         count += 1
+        if count > 1000:
+            raise ValueError("Can't find available directory for %s" % name)
 
 @returns_filename
 def next_free_directory(name):
@@ -197,7 +199,7 @@ def next_free_directory(name):
 
     This method doesn't create the directory, it just finds an an-used one.
     """
-    candidates = _next_free_directory_candidates(name)
+    candidates = next_free_directory_candidates(name)
     while True:
         candidate = candidates.next()
         if not os.path.exists(candidate):
