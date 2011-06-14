@@ -750,9 +750,14 @@ class CurlTransfer(object):
             logging.warn("calling errstr()")
             errstr = handle.errstr()
             logging.warn("calling unicode()")
-            unicode(errstr)
+            try:
+                uerrstr = unicode(errstr)
+            except UnicodeError, e:
+                logging.warn("Error converting errstr to unicode: %s (%r)",
+                        e, errstr)
+                uerrstr = u"Unknown"
             logging.warn("creating NetworkError")
-            error = NetworkError(_("Unknown"), unicode(handle.errstr()))
+            error = NetworkError(_("Unknown"), uerrstr)
             logging.warn("created NetworkError")
         self.call_errback(error)
 
