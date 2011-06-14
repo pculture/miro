@@ -71,11 +71,15 @@ class NetworkError(Exception):
     getLongDescription() -- detailed description
     """
     def __init__(self, shortDescription, longDescription=None):
+        logging.warn("in NetworkError constructor")
         if longDescription is None:
             longDescription = shortDescription
+        logging.warn("creating friendlyDescription")
         self.friendlyDescription = _("Error: %(msg)s",
                                      {"msg": shortDescription})
+        logging.warn("creating longDescription")
         self.longDescription = longDescription
+        logging.warn("end of NetworkError.__init__")
 
     def getFriendlyDescription(self):
         return self.friendlyDescription

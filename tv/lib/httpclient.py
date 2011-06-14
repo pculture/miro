@@ -753,6 +753,7 @@ class CurlTransfer(object):
             unicode(errstr)
             logging.warn("creating NetworkError")
             error = NetworkError(_("Unknown"), unicode(handle.errstr()))
+            logging.warn("created NetworkError")
         self.call_errback(error)
 
     def call_callback(self, info):
