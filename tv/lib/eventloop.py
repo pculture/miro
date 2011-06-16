@@ -138,7 +138,19 @@ class CallQueue(object):
             kwargs = {}
         dc = DelayedCall(function, "idle (%s)" % (name,), args, kwargs)
         self.queue.put(dc)
-        self._check_queue_size()
+
+        # Check if our queue size is too big and log a warning if so.  Only do
+        # this a few times.  That should be enough to track down errors, but
+        # not too much to kill the log file.
+        #
+        # NOTE: the code below doesn't take into account that this method
+        # runs on multiple threads.  However, the worst that can happen is
+        # we log an extra warning or two, so this doesn't seem bad.
+        if self.queue_size_warning_count < 5 and self.queue.qsize() > 1000:
+            if self.queue_size_warning_count < 5:
+                logging.stacktrace("Queued called size too large")
+                self.queue_size_warning_count += 1
+
         return dc
 
     def process_next_idle(self):
@@ -153,20 +165,6 @@ class CallQueue(object):
         while self.has_pending_idle() and not self.quit_flag:
             self.process_next_idle()
 
-
-    def _check_queue_size(self):
-        """Do a sanity check on the size of our queue."""
-
-        # Check if our queue size is too big and log a warning if so.  Only do
-        # this a few times.  That should be enough to track down errors, but
-        # not too much to kill the log file.
-        if self.queue.qsize() > 1000:
-            # NOTE: the code below doesn't take into account that this method
-            # runs on multiple threads.  However, the worst that can happen is
-            # we log an extra warning or two, so this doesn't seem bad.
-            if self.queue_size_warning_count < 5:
-                logging.stacktrace("Queued called size too large")
-                self.queue_size_warning_count += 1
 
 class ThreadPool(object):
     """The thread pool is used to handle calls like gethostbyname()
