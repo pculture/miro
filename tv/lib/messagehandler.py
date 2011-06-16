@@ -381,13 +381,14 @@ class SourceTrackerBase(ViewTracker):
         self._send_initial_list(infos)
         if iters:
             chain = itertools.chain(*iters)
-            self._send_adds_from_iter(chain)
+            self._send_adds_from_iter(chain, infos)
 
     @eventloop.idle_iterator
-    def _send_adds_from_iter(self, chain):
+    def _send_adds_from_iter(self, chain, all_infos):
         for infos in chain:
             if infos:
-                self.on_bulk_added(self, infos)
+                all_infos.extend(infos)
+                self._send_initial_list(all_infos)
                 yield
 
     def _send_initial_list(self, infos):
