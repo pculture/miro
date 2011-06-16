@@ -409,6 +409,9 @@ class SubprocessManager(object):
     def _restart(self):
         # close our stream to the subprocess
         self.process.stdin.close()
+        # unset our attributes for the process that just quit.  This protects
+        # us in case _start() fails for some reason.
+        self._cleanup_process()
         # restart ourselves
         self._start()
         trapcall.trap_call("subprocess restart", self.responder.on_restart)
