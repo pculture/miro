@@ -2846,10 +2846,16 @@ def upgrade124(cursor):
         "ON display_state (type, id_)")
     cursor.execute("SELECT list_view_displays, active_filters, sort_states "
         "FROM widgets_frontend_state")
-    (list_view_displays, all_active_filters, sort_states) = cursor.fetchone()
-    list_view_displays = eval(list_view_displays, {})
-    all_active_filters = eval(all_active_filters, {})
-    sort_states = eval(sort_states, {})
+    row = cursor.fetchone()
+    if row is not None:
+        (list_view_displays, all_active_filters, sort_states) = row
+        list_view_displays = eval(list_view_displays, {})
+        all_active_filters = eval(all_active_filters, {})
+        sort_states = eval(sort_states, {})
+    else:
+        list_view_displays = {}
+        all_active_filters = {}
+        sort_states = {}
 
     displays = (set(list_view_displays) | set(all_active_filters.keys()) |
         set(sort_states.keys()))
