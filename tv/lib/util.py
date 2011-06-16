@@ -240,13 +240,11 @@ def use_ipv6():
 
 def localhost_family_and_addr():
     """Returns the tuple (family, address) to use for the localhost.
-
-    This method is aware of ipv6 and tries to use it when possible
+    We only try to use ipv4 here - this is only used by Miro internally
+    for the eventloop and prevents problems on hosts with (possibly)
+    misconfigured ipv6 setup.
     """
-    if use_ipv6():
-        return (socket.AF_INET6, '::1')
-    else:
-        return (socket.AF_INET, '127.0.0.1')
+    return (socket.AF_INET, '127.0.0.1')
 
 def make_dummy_socket_pair():
     """Create a pair of sockets connected to each other on the local
@@ -275,16 +273,6 @@ def make_dummy_socket_pair():
         except socket.error:
             # if we hit this, then it's hopeless--give up
             if port > 65500:
-
-                # if we're using ipv6 and it's sucking wind, then switch it
-                # off and try ipv4.
-                global _use_ipv6
-                if _use_ipv6:
-                    sys.stdout.write(
-                        "ipv6 is sucking wind, so we're switching to ipv4.")
-                    _use_ipv6 = False
-                    return make_dummy_socket_pair()
-
                 sys.stderr.write(
                     ("Tried %s bind attempts and failed on "
                      "addr %s port %d\n") % (
