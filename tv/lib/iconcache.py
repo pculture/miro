@@ -50,7 +50,6 @@ class IconCacheUpdater:
         self.running_count = 0
         self.in_shutdown = False
 
-    @eventloop.as_idle
     def request_update(self, item, is_vital=False):
         if is_vital:
             item.dbItem.confirm_db_thread()
@@ -166,9 +165,6 @@ class IconCache(DDBObject):
         if self.needsUpdate:
             self.needsUpdate = False
             self.request_update(True)
-        elif error is not None:
-            eventloop.add_timeout(
-                3600, self.request_update, "Thumbnail request for %s" % url)
         icon_cache_updater.update_finished()
 
     def update_icon_cache(self, url, info):
