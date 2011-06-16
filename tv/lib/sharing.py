@@ -1130,7 +1130,7 @@ class SharingManagerBackend(object):
             # out the container.  We can change it if that's no longer true.
             # Fixup the media kind: XXX what about u'other'?
             enclosure = item.file_format
-            if not enclosure:
+            if enclosure not in supported_filetypes:
                 nam, ext = os.path.splitext(item.video_path)
                 if ext in supported_filetypes:
                     enclosure = ext
@@ -1145,27 +1145,17 @@ class SharingManagerBackend(object):
             if itemprop['com.apple.itunes.mediakind'] == u'video':
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_VIDEO)
-                if not itemprop['daap.songformat']:
-                    if not enclosure:
-                        enclosure = '.mp4'
-                    enclosure = enclosure[1:]
-                    itemprop['daap.songformat'] = enclosure
-                else:
-                    # make sure we strip away the .dot
-                    enclosure = itemprop['daap.songformat'][1:]
-                    itemprop['daap.songformat'] = enclosure
+                if not enclosure:
+                    enclosure = '.mp4'
+                enclosure = enclosure[1:]
+                itemprop['daap.songformat'] = enclosure
             else:
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_AUDIO)
-                if not itemprop['daap.songformat']:
-                    if not enclosure:
-                        enclosure = '.mp3'
-                    enclosure = enclosure[1:]
-                    itemprop['daap.songformat'] = enclosure
-                else:
-                    # make sure we strip away the .dot
-                    enclosure = itemprop['daap.songformat'][1:]
-                    itemprop['daap.songformat'] = enclosure
+                if not enclosure:
+                    enclosure = '.mp3'
+                enclosure = enclosure[1:]
+                itemprop['daap.songformat'] = enclosure
             # Normally our strings are fixed up above, but then we re-pull
             # this out of the input data structure, so have to re-convert.
             if isinstance(itemprop['daap.songformat'], unicode):
