@@ -429,8 +429,10 @@ class SubprocessManager(object):
             raise ValueError("subprocess not running")
         try:
             _dump_obj(msg, self.process.stdin)
-        except IOError:
-            logging.warn("Broken pipe in send_message()")
+        except ValueError, e:
+            logging.warn("ValueError: (err msg = %s)", e)
+        except IOError, e:
+            logging.warn("Broken pipe in send_message() (err msg = %s)", e)
             # we could try to restart our subprocess here, but if the pipe is
             # really broken, then our thread will quit soon and this will
             # cause a restart.
@@ -571,7 +573,7 @@ def _finish_subprocess_message_stream(stdout):
     """Signal that we are done sending messages in the subprocess."""
     try:
         _dump_obj(None, stdout)
-    except IOError:
+    except (ValueError, IOError):
         # just ignore since we're done writing out anyways
         pass
     # Note we don't catch PickleError, but there should never be an issue
@@ -643,6 +645,6 @@ class PipeMessageProxy(object):
             _dump_obj(msg, self.fileobj)
         except pickle.PickleError:
             _send_subprocess_error_for_exception()
-        # NOTE: we don't handle IOError here because what can we do about
-        # that?  Just let it propagate up to the top and which should cause us
-        # to shutdown.
+        # NOTE: we don't handle IOError/ValueError here because what can we do 
+        # about that?  Just let it propagate up to the top and which should
+        # cause us to shutdown.
