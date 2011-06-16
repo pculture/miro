@@ -349,16 +349,14 @@ def check_firsttime():
 def check_movies_gone():
     """Checks to see if the movies directory is gone.
     """
+
+    # callback is what the frontend will call if the user asks us to continue
     callback = lambda: eventloop.add_urgent_call(fix_movies_gone,
                                                "fix movies gone")
 
-    if is_movies_directory_gone():
-        logging.info("Movies directory is gone -- calling handler.")
-        _movies_directory_gone_handler(callback)
-        return
-
     movies_dir = fileutil.expand_filename(app.config.get(
         prefs.MOVIES_DIRECTORY))
+
     # if the directory doesn't exist, create it.
     if not os.path.exists(movies_dir):
         try:
@@ -376,6 +374,14 @@ def check_movies_gone():
     if not os.access(movies_dir, os.W_OK):
         _movies_directory_gone_handler(callback)
         return
+
+    # make sure that the directory is populated if we've downloaded stuff to
+    # it
+    if is_movies_directory_gone():
+        logging.info("Movies directory is gone -- calling handler.")
+        _movies_directory_gone_handler(callback)
+        return
+
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
