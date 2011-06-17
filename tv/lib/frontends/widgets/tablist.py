@@ -233,7 +233,6 @@ class TabList(signals.SignalEmitter):
         self.iter_map = {}
         self._removing = 0
         self._adding = 0
-        self.delayed_selection_change = False
 
     @property
     def changing(self):
@@ -252,11 +251,12 @@ class TabList(signals.SignalEmitter):
         """
         if now or not self.changing:
             self.view.model_changed()
-        if not self.changing and self.delayed_selection_change:
-            self.delayed_selection_change = False
+            # When we update the view send update based on the new selection.
+            # This is definitely needed if we remove rows that are selected,
+            # and it seems good to do always, since there's no side-effects.
             app.tabs.on_selection_changed(self.view, self)
-        if not self.changing and not was_removing:
-            self.emit('tab-added')
+            if not was_removing:
+                self.emit('tab-added')
 
     @contextmanager
     def removing(self, now=False):
