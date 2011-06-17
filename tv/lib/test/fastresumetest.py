@@ -28,14 +28,12 @@ class FastResumeTest(MiroTestCase):
 
     # test_resume_data: Test easy load/store.
     def test_resume_data(self):
-        print 'running test 3'
         save_fast_resume_data(FAKE_INFO_HASH, FAKE_RESUME_DATA)
         data = load_fast_resume_data(FAKE_INFO_HASH)
         self.assertEquals(FAKE_RESUME_DATA, data)
 
     # Precreate the file but lock down the file so the file open fails.
     def test_save_fast_resume_data_bad(self):
-        print 'running test 2'
         # Grab the filename that will be used
         filename = generate_fast_resume_filename(FAKE_INFO_HASH)
         # Create the file
@@ -50,7 +48,6 @@ class FastResumeTest(MiroTestCase):
 
     # Try to load a unreadable file so the load fails.
     def test_load_fast_resume_data_bad(self):
-        print 'running test 1'
         # Grab the filename that will be used
         filename = generate_fast_resume_filename(FAKE_INFO_HASH)
         # Create the file
