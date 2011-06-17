@@ -72,6 +72,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
             self.historyLocation = None
             self.history = []
 
+        self.setup_common()
         self.download_guide()
 
     def setup_restored(self):
@@ -81,6 +82,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.client = None
         if self.store is None:
             self.store = self.STORE_NOT_STORE
+        self.setup_common()
 
     def setup_common(self):
         self.type = u'guide'
