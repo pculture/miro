@@ -270,9 +270,7 @@ class TabListManager(dict):
         """When the user has changed the selection, we set the selected tablist
         and then display the new tab(s).
         """
-        if tab_list.changing:
-            tab_list.delayed_selection_change = True
-        else:
+        if not tab_list.changing:
             self._select_from_tab_list(tab_list.type, or_bust=True)
 
     def on_tab_added(self, tab_list):
