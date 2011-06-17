@@ -300,6 +300,8 @@ def finish_startup(obj, thread):
     app.metadata_progress_updater = metadataprogress.MetadataProgressUpdater()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
+    logging.info("ITEM INFO CACHE LOADED")
+    time.sleep(20)
     dbupgradeprogress.upgrade_end()
 
     logging.info("Loading video converters...")
