@@ -65,7 +65,6 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.favicon = None
         self.firstTime = True
         self.store = self.STORE_NOT_STORE
-        self.type = u'guide'
         if url:
             self.historyLocation = 0
             self.history = [self.url]
@@ -82,6 +81,9 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.client = None
         if self.store is None:
             self.store = self.STORE_NOT_STORE
+
+    def setup_common(self):
+        self.type = u'guide'
 
     @classmethod
     def site_view(cls):
