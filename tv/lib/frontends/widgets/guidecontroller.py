@@ -29,6 +29,7 @@
 
 """Controller for the Guide tab.  It's a browser with an informational sidebar.
 """
+import logging
 import operator
 
 from miro.gtcache import gettext as _
@@ -246,7 +247,15 @@ class GuideSidebarDetails(widgetset.SolidBackground):
             # add/remove pair, otherwise update the info
             collection = self.collection_for(info)
             if collection != self.id_to_collection.get(info.id):
-                self.id_to_collection[info.id].remove(info.id)
+                # bz:17684 self.id_to_collection.get() could return None while
+                # collection_for() always return valid value, so we will hit
+                # this path.  If there's nothing in the id_to_collection
+                # mapping just add.
+                try:
+                    self.id_to_collection[info.id].remove(info.id)
+                except KeyError:
+                    logging.error('ItemInfo %s not in id_to_collection map',
+                                  repr(info))
                 collection.add(info)
                 self.id_to_collection[info.id] = collection
             else:
