@@ -210,6 +210,9 @@ class Application:
         call_on_ui_thread(self._handle_movies_directory_gone, continue_callback)
 
     def _handle_movies_directory_gone(self, continue_callback):
+        # Make sure we close the upgrade dialog before showing a new one
+        self.message_handler.close_upgrade_dialog()
+
         title = _("Movies directory gone")
         movies_directory = app.config.get(prefs.MOVIES_DIRECTORY)
         if os.path.isdir(movies_directory):
