@@ -82,6 +82,10 @@ class BrowserLoadingImage(widgetset.HBox):
             self.remove(widget)
 
     def redraw(self):
+        if self._width is None:
+            # Haven't seen a size-allocated signal yet.  Wait until we get one
+            # to draw ourselves
+            return
         self.clear()
         available = self._width
         right_padding = 0
