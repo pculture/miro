@@ -52,11 +52,16 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
         if f.get_path() in self.skip_dirs:
             logging.info("Not watching directory: %s", f.get_path())
             return
-        monitor = f.monitor_directory()
+        try:
+            monitor = f.monitor_directory()
+        except (gio.Error, gobject.GError), e:
+            logging.warn("Error calling monitor_directory on %s: %s",
+                    f.get_path(), e)
+            return
+
         monitor.connect('changed', self._on_directory_changed)
         self._monitors[f.get_path()] = monitor
         self._contents[f.get_path()] = set()
-        f.monitor_directory()
         glib.idle_add(self._add_subdirectories, f, send_contents,
                 priority=glib.PRIORITY_LOW)
 
