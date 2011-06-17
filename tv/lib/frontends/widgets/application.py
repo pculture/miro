@@ -1502,6 +1502,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if hasattr(self, "_startup_failure_mode"):
             return
         self._startup_failure_mode = True
+        # We may still have the DB upgrade dialog open.  If so, close it.
+        self.close_upgrade_dialog()
 
         dialogs.show_message(message.summary, message.description,
                 dialogs.CRITICAL_MESSAGE)
@@ -1512,6 +1514,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             logging.info("already in db failure mode--skipping")
             return
         self._database_failure_mode = True
+        # We may still have the DB upgrade dialog open.  If so, close it.
+        self.close_upgrade_dialog()
 
         ret = dialogs.show_choice_dialog(
             message.summary, message.description,

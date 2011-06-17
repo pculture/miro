@@ -118,6 +118,7 @@ def startup_function(func):
             # db attribute
             if ((isinstance(exc, (database.DatabaseException,
                                   database.DatabaseStandardError,
+                                  storedatabase.sqlite3.DatabaseError,
                                   storedatabase.sqlite3.OperationalError))
                  and app.db is not None)):
 
@@ -264,6 +265,8 @@ def load_extensions():
 @startup_function
 def finish_startup(obj, thread):
     database.set_thread(thread)
+    logging.info("Installing deleted file checker...")
+    item.setup_deleted_checker()
     logging.info("Restoring database...")
     start = time.time()
     app.db = storedatabase.LiveStorage()
@@ -421,6 +424,8 @@ def on_frontend_started():
             "start downloader daemon")
     eventloop.add_timeout(10, workerprocess.startup,
             "start worker process")
+    eventloop.add_timeout(20, item.start_deleted_checker,
+            "start checking deleted items")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
     eventloop.add_timeout(60, item.update_incomplete_movie_data,
             "update movie data")

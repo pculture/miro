@@ -195,7 +195,7 @@ class LiveStorage:
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
 
-    def close(self):
+    def close(self, ignore_vacuum_error=True):
         logging.info("closing database")
         if self._dc:
             self._dc.cancel()
@@ -209,7 +209,11 @@ class LiveStorage:
             try:
                 self.cursor.execute("vacuum")
             except sqlite3.DatabaseError, sdbe:
-                logging.info("... Vacuuming failed with DatabaseError: %s", sdbe)
+                if ignore_vacuum_error:
+                    msg = "... Vacuuming failed with DatabaseError: %s"
+                    logging.info(msg, sdbe)
+                else:
+                    raise
         self.connection.close()
 
     def get_backup_directory(self):
@@ -298,7 +302,7 @@ class LiveStorage:
         """
         logging.info("database path: %s", self.path)
         # close database
-        self.close()
+        self.close(ignore_vacuum_error=False)
 
         # copy the db to a backup file for posterity
         target_path = self.get_backup_directory()
@@ -323,7 +327,7 @@ class LiveStorage:
         database we were using to the normal place, and switches our sqlite
         connection to use that file
         """
-        self.close()
+        self.close(ignore_vacuum_error=False)
         shutil.move(self._changed_db_path, self.path)
         self.open_connection()
         del self._changed_db_path
