@@ -21,11 +21,11 @@ class FastResumeTest(MiroTestCase):
         app.config.set(prefs.SUPPORT_DIRECTORY, self.sandbox_support_directory)
 
     def tearDown(self): 
+        app.config.set(prefs.SUPPORT_DIRECTORY, self.old_support_directory)
         try:
             shutil.rmtree(self.sandbox_support_directory)
         except OSError, e:
             assert 0, "test teardown failed"
-        app.config.set(prefs.SUPPORT_DIRECTORY, self.old_support_directory)
 
     # test_resume_data: Test easy load/store.
     def test_resume_data(self):
