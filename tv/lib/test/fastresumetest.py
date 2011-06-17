@@ -4,6 +4,8 @@ import os
 import tempfile
 import shutil
 
+from miro import prefs
+from miro import app
 from miro.test.framework import MiroTestCase
 from miro.dl_daemon.download import (save_fast_resume_data,
                                      load_fast_resume_data,
@@ -13,18 +15,17 @@ FAKE_INFO_HASH = 'PINKPASTA'
 FAKE_RESUME_DATA = 'BEER'
   
 class FastResumeTest(MiroTestCase):
-    # NOTICE: because generate_fast_resume_filename() relies on the prefs
-    # SUPPORT_DIRECTORY and this is not specfically changed for the test
-    # it will muck around with the support directory from your existing Miro
-    # installation!
+    def setUp(self):
+        self.sandbox_support_directory = tempfile.mkdtemp()
+        self.old_support_directory = app.config.get(prefs.SUPPORT_DIRECTORY)
+        app.config.set(prefs.SUPPORT_DIRECTORY, self.sandbox_support_directory)
+
     def tearDown(self): 
-        dirname = os.path.dirname(generate_fast_resume_filename(
-                                  FAKE_INFO_HASH))
         try:
-            shutil.rmtree(dirname)
+            shutil.rmtree(self.sandbox_support_directory)
         except OSError, e:
-            if e.errno != errno.ENOENT:
-                assert 0, "test teardown failed"
+            assert 0, "test teardown failed"
+        app.config.set(prefs.SUPPORT_DIRECTORY, self.old_support_directory)
 
     # test_resume_data: Test easy load/store.
     def test_resume_data(self):
