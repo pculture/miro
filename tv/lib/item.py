@@ -2272,18 +2272,27 @@ class DeletedFileChecker(object):
         self.items_to_check = set()
         # track if we have run_checks() scheduled as an idle callback
         self.check_scheduled = False
+        # track if we should be checking yet
+        self.started = False
 
     def schedule_check(self, item):
         self.items_to_check.add(item)
         self._ensure_run_checks_scheduled()
 
+    def start_checks(self):
+        """Start the deleted file checking."""
+        self.started = True
+        self._ensure_run_checks_scheduled()
+
     def _ensure_run_checks_scheduled(self):
         """Ensure that we run_checks() scheduled as an idle callback.
+
+        This method is a no-op if start_checks() hasn't been called yet.
 
         If this method is called multiple times before run_checks() runs, then
         it only schedules one callback.
         """
-        if not self.check_scheduled:
+        if self.started and not self.check_scheduled:
             eventloop.add_idle(self.run_checks, 'checking items deleted')
             self.check_scheduled = True
 
@@ -2312,8 +2321,13 @@ class DeletedFileChecker(object):
             if self.items_to_check:
                 self._ensure_run_checks_scheduled()
 
-_deleted_file_checker = DeletedFileChecker()
 
+def setup_deleted_checker():
+    global _deleted_file_checker
+    _deleted_file_checker = DeletedFileChecker()
+
+def start_deleted_checker():
+    _deleted_file_checker.start_checks()
 
 def fix_non_container_parents():
     """Make sure all items referenced by parent_id have isContainerItem set

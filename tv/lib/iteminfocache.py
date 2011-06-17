@@ -90,6 +90,10 @@ class ItemInfoCache(signals.SignalEmitter):
         self.loaded = False
 
     def load(self):
+        # call _reset_changes() first.  This way if we throw an exception
+        # inside this method, we're at least ready to shutdown cleanly
+        # (see #17729)
+        self._reset_changes()
         did_failsafe_load = False
         try:
             self._quick_load()
@@ -101,7 +105,6 @@ class ItemInfoCache(signals.SignalEmitter):
             app.db.cursor.execute("DELETE FROM item_info_cache")
             did_failsafe_load = True
         app.db.set_variable(self.VERSION_KEY, self.version())
-        self._reset_changes()
         self._save_dc = None
         if did_failsafe_load:
             # Need to save the cache data we just created
