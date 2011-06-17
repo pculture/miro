@@ -4,7 +4,7 @@ from miro.plat.utils import unicode_to_filename
 from miro.test.framework import MiroTestCase
 from miro import fileobject
 
-class Test_url_encode_dict(MiroTestCase):
+class FileObjectTest(MiroTestCase):
     def test_type(self):
         filename = fileobject.FilenameType("/foo/bar")
         if sys.platform == 'win32':
