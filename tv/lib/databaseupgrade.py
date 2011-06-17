@@ -2231,7 +2231,7 @@ def upgrade88(cursor):
     for row in list(cursor.execute(sql)):
         id, item_ids = row
         item_ids = eval(item_ids, {}, {})
-        this_folder_count = folder_count[id]
+        this_folder_count = folder_count.get(id, {})
         for i, item_id in enumerate(item_ids):
             try:
                 count = this_folder_count[item_id]
