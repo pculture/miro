@@ -207,8 +207,6 @@ class MovieDataUpdater(signals.SignalEmitter):
                 mdi.video_path)
         else:
             self.update_finished(mdi.item, *results)
-        if hasattr(app, 'metadata_progress_updater'): # hack for unittests
-            app.metadata_progress_updater.path_processed(mdi.video_path)
 
     def run_movie_data_program(self, command_line, env):
         start_time = time.time()
@@ -284,6 +282,8 @@ class MovieDataUpdater(signals.SignalEmitter):
 
     @as_idle
     def update_finished(self, item, duration, screenshot, mediatype):
+        if hasattr(app, 'metadata_progress_updater'): # hack for unittests
+            app.metadata_progress_updater.path_processed(item.get_filename())
         self.in_progress.remove(item.id)
         if item.id_exists():
             item.mdp_state = State.RAN

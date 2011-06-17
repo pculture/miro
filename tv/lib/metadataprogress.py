@@ -85,12 +85,10 @@ class MetadataProgressUpdater(object):
         else: # mediatype 'other'
             return None
 
-    @eventloop.as_idle
     def will_process_path(self, path, device=None):
         """Call we've started processing metadata for a file
 
-        This method executes as an idle callback, so it's safe to call from
-        any thread.
+        This method should only be called from the backend thread.
         """
         if path in self.path_to_target:
             # hmm, we already are storing path in our system.  Log a warning
@@ -110,12 +108,10 @@ class MetadataProgressUpdater(object):
         self.remaining[target] += 1
         self._schedule_update(target)
 
-    @eventloop.as_idle
     def path_processed(self, path):
         """Call we've finished all processing for a file.
 
-        This method executes as an idle callback, so it's safe to call from
-        any thread.
+        This method should only be called from the backend thread.
         """
         try:
             target = self.path_to_target.pop(path)
