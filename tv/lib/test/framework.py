@@ -15,6 +15,7 @@ from miro import feedparserutil
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
+from miro import item
 from miro import iteminfocache
 from miro import moviedata
 from miro import util
@@ -263,6 +264,9 @@ class MiroTestCase(unittest.TestCase):
         app.in_unit_tests = True
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
+        # setup the deleted file checker
+        item.setup_deleted_checker()
+        item.start_deleted_checker()
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
