@@ -26,6 +26,7 @@ except ImportError:
     sys.exit()
 import HTMLParser
 
+INTERP_RE = re.compile(r'%([(].+?[)])?[#0 +-]?[.\d*]*[hlL]?[diouxXeEfFgGcrs%]')
 
 def wc(c):
     return c == "'" or c in string.letters
@@ -81,6 +82,13 @@ def chef_transform(s):
             out.append(s[0])
             s = s[1:]
             continue
+
+        if s.startswith('%'):
+            match = INTERP_RE.match(s)
+            if match:
+                out.append(match.group())
+                s = s[len(out[-1]):]
+                continue
 
         for mem in TRANSFORM:
             if in_word and not mem[0]:
@@ -181,8 +189,8 @@ def munge_one_file(fname):
     count = 0
     for entry in po:
         if entry.msgid_plural:
-            entry.msgstr_plural["0"] = translate_string(entry.msgid_plural)
-            entry.msgstr_plural["1"] = translate_string(entry.msgid)
+            entry.msgstr_plural["0"] = translate_string(entry.msgid)
+            entry.msgstr_plural["1"] = translate_string(entry.msgid_plural)
         else:
             entry.msgstr = translate_string(entry.msgid)
 
