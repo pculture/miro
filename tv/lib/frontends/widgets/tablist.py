@@ -306,6 +306,14 @@ class TabList(signals.SignalEmitter):
     def remove(self, name):
         with self.removing():
             iter_ = self.iter_map.pop(name)
+            if name in app.tabs.selected_ids:
+                # hack for 17653: on OS X, deleting the selected tab doesn't
+                # send selection-changed - so if the tab we're about to
+                # delete is selected, explicitly change the selection to
+                # this list's root before removing the tab. This preempts
+                # GTK's handling of this case, which is behaviorally the
+                # same.
+                app.tabs._handle_no_tabs_selected(self)
             self.view.model.remove(iter_)
 
     def get_tab(self, name):
@@ -674,6 +682,14 @@ class HideableTabList(TabList):
                     # child of a tab we already deleted
                     continue
                 self.forget_child_iters(iter_)
+                if id_ in app.tabs.selected_ids:
+                    # hack for 17653: on OS X, deleting the selected tab doesn't
+                    # send selection-changed - so if the tab we're about to
+                    # delete is selected, explicitly change the selection to
+                    # this list's root before removing the tab. This preempts
+                    # GTK's handling of this case, which is behaviorally the
+                    # same.
+                    app.tabs._handle_no_tabs_selected(self)
                 self.view.model.remove(iter_)
 
     def forget_child_iters(self, parent_iter):
