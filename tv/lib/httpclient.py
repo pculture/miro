@@ -65,11 +65,6 @@ try:
 except:
     gzip = None
 
-try:
-    from cStringIO import StringIO as _StringIO
-except:
-    from StringIO import StringIO as _StringIO
-
 REDIRECTION_LIMIT = 10
 MAX_AUTH_ATTEMPTS = 5
 
@@ -660,15 +655,17 @@ class CurlTransfer(object):
         info = self._make_callback_info()
         self.last_url = self.handle.getinfo(pycurl.EFFECTIVE_URL)
         if self.options.write_file is None:
-            info['body'] = self.buffer.getvalue()
-
             if gzip and info.get('content-encoding', '') == 'gzip':
                 try:
+                    self.buffer.seek(0)
                     info['body'] = gzip.GzipFile(
-                                       fileobj=_StringIO(info['body'])).read()
+                                       fileobj=self.buffer).read()
                 except IOError, e:
+                    info['body'] = self.buffer.getvalue()
                     logging.warning("Received header with content-encoding "
                                     "gzip, but content is not gzip encoded")
+            else:
+                info['body'] = self.buffer.getvalue()
 
         if self.check_response_code(info['status']):
             if not self.trying_head_request:
