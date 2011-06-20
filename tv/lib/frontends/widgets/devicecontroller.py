@@ -239,11 +239,12 @@ class SyncProgressWidget(widgetset.Background):
         self.sync_progress.set_progress(progress)
         if eta:
             self.sync_remaining.set_text(
-                _('%(eta)s left',
-                  {'eta': displaytext.time_string(int(eta))}))
+                _('%(eta)s left (%(percent).1f%%)',
+                  {'eta': displaytext.time_string(int(eta)),
+                   'percent': progress * 100}))
         else:
-            self.sync_remaining.set_text(_('%(percent)i%% percent complete',
-                                           {'percent': int(progress * 100)}))
+            self.sync_remaining.set_text(_('%(percent).1f%% complete',
+                                           {'percent': progress * 100}))
 
     def draw(self, context, layout):
         # we draw the rectangle off the bottom so that it's flat

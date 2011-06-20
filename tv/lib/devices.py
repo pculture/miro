@@ -39,6 +39,13 @@ import logging
 import os, os.path
 import shutil
 import time
+try:
+    from collections import Counter
+except ImportError:
+    from collections import defaultdict
+    class Counter(defaultdict):
+        def __init__(self, *args, **kwargs):
+            super(Counter, self).__init__(int, *args, **kwargs)
 
 from miro import app
 from miro.database import confirm_db_thread
@@ -58,6 +65,10 @@ from miro.util import returns_filename, check_u
 from miro.plat import resources
 from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
                              utf8_to_filename)
+
+
+# how much slower converting a file is, compared to copying
+CONVERSION_SCALE = 500
 
 def unicode_to_path(path):
     """
@@ -478,13 +489,16 @@ class DeviceSyncManager(object):
     def __init__(self, device):
         self.device = device
         self.start_time = time.time()
-        self.etas = {}
         self.signal_handles = []
         self.finished = 0
         self.total = 0
-        self.copying = set()
+        self.progress_size = Counter()
+        self.total_size = Counter()
+        self.copying = {}
         self.waiting = set()
         self.stopping = False
+        self._change_timeout = None
+        self._copy_iter_running = False
 
         self.audio_target_folder = os.path.join(
             device.mount,
@@ -521,7 +535,7 @@ class DeviceSyncManager(object):
         video_conversion = (device_settings.get(u'video_conversion') or
                             device_info.video_conversion)
         self.total += len(item_infos)
-        self._send_sync_changed()
+        self._schedule_sync_changed()
         for info in item_infos:
             if self.stopping:
                 self._check_finished()
@@ -570,58 +584,66 @@ class DeviceSyncManager(object):
 
         task = start_conversion(conversion, info, target,
                                 create_item=False)
+        self.total_size[task.key] = task.get_output_size_guess() * CONVERSION_SCALE
         self.waiting.add(task.key)
 
     def copy_file(self, info, final_path):
-        if info.id in self.copying:
+        if (info, final_path) in self.copying:
             logging.warn('tried to copy %r twice', info)
             return
-        self.copying.add(info.id)
-        eventloop.call_in_thread(lambda x: self._copy_file_callback(x),
-                                 lambda x: None,
-                                 self._copy_in_thread,
-                                 self, info, final_path)
+        self.copying[final_path] = info
+        self.total_size[info.id] = info.size
+        if not self._copy_iter_running:
+            self._copy_iter_running = True
+            eventloop.idle_iterate(self._copy_as_iter,
+                                   'copying files to device')
 
-    def _copy_in_thread(self, info, final_path):
-        if self.stopping:
-            return None, info
-        try:
-            shutil.copy(info.video_path, final_path)
-        except IOError:
-            return None, info
-        else:
-            return final_path, info
-
-    def _copy_file_callback(self, (final_path, info)):
-        if info.id not in self.copying:
-            app.controller.failed_soft(
-                '_copy_file_callback',
-                '%r not in self.copying (final path: %r)' % (
-                    info, final_path))
+    def _copy_as_iter(self):
+        while self.copying:
+            final_path, info = self.copying.popitem()
+            iterable = fileutil.copy_with_progress(info.video_path, final_path,
+                                                   block_size=128 * 1024)
+            try:
+                for count in iterable:
+                    self.progress_size[info.id] += count
+                    if self.stopping:
+                        break
+                    # let other stuff run
+                    self._schedule_sync_changed()
+                    yield
+            except IOError:
+                final_path = None
+            if final_path:
+                self._add_item(final_path, info)
+            # don't throw off the progress bar; we're done so pretend we got
+            # all the bytes
+            self.progress_size[info.id] = self.total_size[info.id]
             self.finished += 1
             self._check_finished()
-            return
-        if final_path:
-            self._add_item(final_path, info)
-        self.copying.remove(info.id)
-        self.finished += 1
-        self._check_finished()
+            if self.stopping:
+                break # no more copies
+            yield
+        self._copy_iter_running = False
 
     def _conversion_changed_callback(self, conversion_manager, task):
-        self.etas[task.key] = task.get_eta()
-        self._send_sync_changed()
+        total = self.total_size[task.key]
+        self.progress_size[task.key] = task.progress * total
+        self._schedule_sync_changed()
 
     def _conversion_removed_callback(self, conversion_manager, task=None):
         if task is not None:
             self.finished += 1
             try:
                 self.waiting.remove(task.key)
-                del self.etas[task.key]
+                # don't throw off the progress bar; we're done so pretend we
+                # got all the bytes
+                self.progress_size[task.key] = self.total_size[task.key]
             except KeyError:
                 pass
         else: # remove all tasks
             self.finished += len(self.waiting)
-            self.etas = {}
+            for key in self.waiting:
+                self.progress_size[key] = self.total_size[key]
             self.waiting = set()
         self._check_finished()
 
@@ -629,7 +651,9 @@ class DeviceSyncManager(object):
         self.finished += 1
         try:
             self.waiting.remove(task.key)
-            del self.etas[task.key]
+            # don't throw off the progress bar; we're done so pretend we got
+            # all the bytes
+            self.progress_size[task.key] = self.total_size[task.key]
         except KeyError:
             pass # missing for some reason
         else:
@@ -695,16 +719,24 @@ class DeviceSyncManager(object):
             # finished!
             if not self.stopping:
                 self._send_sync_finished()
-        self._send_sync_changed()
+        self._schedule_sync_changed()
+
+    def _schedule_sync_changed(self):
+        if not self._change_timeout:
+            self._change_timeout = eventloop.add_timeout(
+                1.0,
+                self._send_sync_changed,
+                'sync changed update')
 
     def _send_sync_changed(self):
         message = messages.DeviceSyncChanged(self)
         message.send_to_frontend()
+        self._change_timeout = None
 
     def _send_sync_finished(self):
         for handle in self.signal_handles:
             conversions.conversion_manager.disconnect(handle)
-        self.signal_handles = None
+        self.signal_handles = []
         self.device.is_updating = False # stop the spinner
         messages.TabsChanged('connect', [], [self.device],
                              []).send_to_frontend()
@@ -719,19 +751,20 @@ class DeviceSyncManager(object):
         return self.device.id not in app.device_manager.syncs_in_progress
 
     def get_eta(self):
-        etas = [eta for eta in self.etas.values() if eta is not None]
-        if not etas:
-            return
-        longest_eta = max(etas)
-        return longest_eta
+        progress = self.get_progress() * 100
+        if not progress:
+            return None
+        
+        duration = time.time() - self.start_time
+        time_per_percent = duration / progress
+        return int(time_per_percent * (100 - progress))
 
     def get_progress(self):
-        eta = self.get_eta()
-        if eta is None:
-            return float(self.finished) / self.total
-        total_time = time.time() - self.start_time
-        total_eta = total_time + eta
-        return total_time / total_eta
+        total = sum(self.total_size.itervalues())
+        if not total:
+            return 0.0
+        progress = float(sum(self.progress_size.itervalues()))
+        return progress / total
 
     def cancel(self):
         for key in self.waiting:
@@ -1066,7 +1099,9 @@ def write_database(database, mount):
     except OSError:
         pass
     try:
-        json.dump(database, file(os.path.join(mount, '.miro', 'json'), 'wb'))
+        with file(os.path.join(mount, '.miro', 'json'), 'wb') as output:
+            iterable = json._default_encoder.iterencode(database)
+            output.writelines(iterable)
     except IOError:
         # couldn't write to the device
         # XXX throw up an error?

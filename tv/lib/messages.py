@@ -1561,6 +1561,7 @@ class ConversionTaskInfo(object):
         self.item_thumbnail = task.item_info.thumbnail
         self.eta = task.get_eta()
         self.target = task.get_display_name()
+        self.output_size_guess = task.get_output_size_guess()
 
 class ConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 

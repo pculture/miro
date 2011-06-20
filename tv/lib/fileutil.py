@@ -122,6 +122,19 @@ def abspath(path):
     path = collapse_filename(path)
     return path
 
+def copy_with_progress(input_path, output_path, block_size=32*1024):
+    with file(input_path, 'rb') as input:
+        with file(output_path, 'wb') as output:
+            data = input.read(block_size)
+            while data:
+                output.write(data)
+                result = yield len(data)
+                if result:
+                    # return True to cancel. NB: you should probably remove the
+                    # output file
+                    break
+                data = input.read(block_size)
+
 try:
     samefile = os.path.samefile
 except AttributeError:

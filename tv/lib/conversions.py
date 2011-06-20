@@ -224,6 +224,8 @@ class ConverterInfo(object):
             name, parser, "extension", {})
         self.screen_size = self._get_config_value(
             name, parser, "ssize", {})
+        self.bit_rate = int(self._get_config_value(
+                name, parser, "bitrate", {'bitrate': 0}))
         self.platforms = self._get_config_value(
             name, parser, "only_on", {'only_on': None})
         self.displayname = _(
@@ -772,6 +774,11 @@ class ConversionTask(object):
     def get_parameters(self):
         raise NotImplementedError()
 
+    def get_output_size_guess(self):
+        if self.item_info.duration and self.converter_info.bit_rate:
+            return self.converter_info.bit_rate * self.item_info.duration / 8
+        return self.item_info.size
+
     def get_display_name(self):
         return self.converter_info.displayname
 
@@ -952,6 +959,9 @@ class CopyConversionTask(ConversionTask):
     def get_executable(self):
         # never actually executed
         return "copy"
+
+    def get_output_size_guess(self):
+        return self.item_info.size
 
     def get_display_name(self):
         return _("Copy")

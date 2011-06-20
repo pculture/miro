@@ -2,6 +2,7 @@
 name: Android Devices
 executable: ffmpeg
 extension: mp4
+bitrate: 300000
 parameters: -i {input} -y -acodec aac -ab 160k -s {ssize} -vcodec libx264 -vpre slow -vpre ipod640 -f mp4 -threads 0 {output}
 mediatype: video
 
