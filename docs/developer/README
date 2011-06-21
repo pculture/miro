@@ -14,7 +14,7 @@ have all the requirements to run ``run.sh`` in ``tv/platform/gtk-x11/``.
 You must have the Sphinx documentation tools installed.  On Ubuntu,
 this is usually as easy as::
 
-    sudo apt-get python-sphinx
+    sudo apt-get install python-sphinx
 
 
 Building the docs
