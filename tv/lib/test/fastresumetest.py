@@ -16,6 +16,7 @@ FAKE_RESUME_DATA = 'BEER'
   
 class FastResumeTest(MiroTestCase):
     def setUp(self):
+        MiroTestCase.setUp(self)
         self.sandbox_support_directory = tempfile.mkdtemp()
         self.old_support_directory = app.config.get(prefs.SUPPORT_DIRECTORY)
         app.config.set(prefs.SUPPORT_DIRECTORY, self.sandbox_support_directory)
@@ -26,6 +27,7 @@ class FastResumeTest(MiroTestCase):
             shutil.rmtree(self.sandbox_support_directory)
         except OSError, e:
             assert 0, "test teardown failed"
+        MiroTestCase.tearDown(self)
 
     # test_resume_data: Test easy load/store.
     def test_resume_data(self):
