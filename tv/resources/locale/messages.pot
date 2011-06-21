@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.pculture.org/\n"
-"POT-Creation-Date: 2011-06-20 17:05-0400\n"
+"POT-Creation-Date: 2011-06-21 12:26-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,10 +63,10 @@ msgid "Cut"
 msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:240
-#: ../../lib/frontends/widgets/devicecontroller.py:453
-#: ../../lib/frontends/widgets/devicecontroller.py:461
-#: ../../lib/frontends/widgets/devicecontroller.py:464
-#: ../../lib/conversions.py:957
+#: ../../lib/frontends/widgets/devicecontroller.py:454
+#: ../../lib/frontends/widgets/devicecontroller.py:462
+#: ../../lib/frontends/widgets/devicecontroller.py:465
+#: ../../lib/conversions.py:967
 msgid "Copy"
 msgstr ""
 
@@ -2077,7 +2077,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:815
 #: ../../lib/frontends/widgets/tablist.py:1026
 #: ../../lib/frontends/widgets/tablist.py:1032
-#: ../../lib/frontends/widgets/devicecontroller.py:579
+#: ../../lib/frontends/widgets/devicecontroller.py:580
 #: ../../lib/frontends/widgets/prefpanel.py:1278
 msgid "Podcasts"
 msgstr ""
@@ -2128,7 +2128,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1367
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1437
 #: ../../lib/frontends/widgets/tablist.py:1085
-#: ../../lib/frontends/widgets/devicecontroller.py:581
+#: ../../lib/frontends/widgets/devicecontroller.py:582
 msgid "Settings"
 msgstr ""
 
@@ -2261,7 +2261,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tablist.py:1098
 #: ../../lib/frontends/widgets/tablist.py:1104
-#: ../../lib/frontends/widgets/devicecontroller.py:580
+#: ../../lib/frontends/widgets/devicecontroller.py:581
 #: ../../lib/frontends/widgets/tabcontroller.py:509
 msgid "Playlists"
 msgstr ""
@@ -2334,109 +2334,109 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:242
 #, python-format
-msgid "%(eta)s left"
+msgid "%(eta)s left (%(percent).1f%%)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:245
+#: ../../lib/frontends/widgets/devicecontroller.py:246
 #, python-format
-msgid "%(percent)i%% percent complete"
+msgid "%(percent).1f%% complete"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:261
+#: ../../lib/frontends/widgets/devicecontroller.py:262
 msgid "Sync These Podcasts"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:295
+#: ../../lib/frontends/widgets/devicecontroller.py:296
 msgid "Select none"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:298
+#: ../../lib/frontends/widgets/devicecontroller.py:299
 msgid "Select all"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:399
+#: ../../lib/frontends/widgets/devicecontroller.py:400
 msgid "Sync Podcasts"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:402
+#: ../../lib/frontends/widgets/devicecontroller.py:403
 msgid "Only sync unplayed items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:431
+#: ../../lib/frontends/widgets/devicecontroller.py:432
 msgid "Sync These Playlists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:432
+#: ../../lib/frontends/widgets/devicecontroller.py:433
 msgid "Sync Playlists"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:460
+#: ../../lib/frontends/widgets/devicecontroller.py:461
 #, python-format
 msgid "Device Default (%(audio)s)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:463
+#: ../../lib/frontends/widgets/devicecontroller.py:464
 #, python-format
 msgid "Device Default (%(video)s)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:476
+#: ../../lib/frontends/widgets/devicecontroller.py:477
 msgid "Name of Device"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:477
+#: ../../lib/frontends/widgets/devicecontroller.py:478
 msgid "Video Conversion"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:478
+#: ../../lib/frontends/widgets/devicecontroller.py:479
 msgid "Audio Conversion"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:479
+#: ../../lib/frontends/widgets/devicecontroller.py:480
 msgid "Store video in this directory"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:480
+#: ../../lib/frontends/widgets/devicecontroller.py:481
 msgid "Store audio in this directory"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:481
+#: ../../lib/frontends/widgets/devicecontroller.py:482
 msgid "Always show this device, even if 'show all devices' is turned off"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:578
+#: ../../lib/frontends/widgets/devicecontroller.py:579
 msgid "Main"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:597
+#: ../../lib/frontends/widgets/devicecontroller.py:598
 msgid ""
 "Drag individual video and audio files onto the device in the sidebar to copy "
 "them."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:602
+#: ../../lib/frontends/widgets/devicecontroller.py:603
 msgid "Use these options and the tabs above for automatic syncing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:699
+#: ../../lib/frontends/widgets/devicecontroller.py:700
 msgid "Your device isn't telling us its exact model number."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:704
+#: ../../lib/frontends/widgets/devicecontroller.py:705
 msgid "For optimal video conversion, select the device model."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:720
+#: ../../lib/frontends/widgets/devicecontroller.py:721
 msgid ""
 "If you don't know the model or it doesn't appear in the list, it's fine to "
 "choose the 'Generic' device option."
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:749
+#: ../../lib/frontends/widgets/devicecontroller.py:750
 msgid "This is my device"
 msgstr ""
 
-#: ../../lib/frontends/widgets/devicecontroller.py:757
+#: ../../lib/frontends/widgets/devicecontroller.py:758
 msgid "This device is not yet mounted."
 msgstr ""
 
@@ -3908,21 +3908,21 @@ msgid ""
 "podcast metadata with crash report? This will help us diagnose the issue."
 msgstr ""
 
-#: ../../lib/conversions.py:230
+#: ../../lib/conversions.py:232
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
 msgstr ""
 
-#: ../../lib/conversions.py:516
+#: ../../lib/conversions.py:518
 msgid "Reason unknown--check log"
 msgstr ""
 
-#: ../../lib/conversions.py:842
+#: ../../lib/conversions.py:849
 #, python-format
 msgid "%(program)s does not exist."
 msgstr ""
 
-#: ../../lib/conversions.py:1100
+#: ../../lib/conversions.py:1110
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
@@ -4162,19 +4162,19 @@ msgstr ""
 msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
 
-#: ../../lib/devices.py:178
+#: ../../lib/devices.py:189
 msgid "Your drive must be mounted."
 msgstr ""
 
-#: ../../lib/devices.py:367
+#: ../../lib/devices.py:378
 msgid "USB Device"
 msgstr ""
 
-#: ../../lib/devices.py:446
+#: ../../lib/devices.py:457
 msgid "Device removed during sync"
 msgstr ""
 
-#: ../../lib/devices.py:447
+#: ../../lib/devices.py:458
 #, python-format
 msgid ""
 "%(name)s was removed while a sync was in progress.  Not all items may have "

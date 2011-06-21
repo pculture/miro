@@ -26,7 +26,8 @@ except ImportError:
     sys.exit()
 import HTMLParser
 
-INTERP_RE = re.compile(r'%([(].+?[)])?[#0 +-]?[.\d*]*[hlL]?[diouxXeEfFgGcrs%]')
+INTERP_RE = re.compile(
+    r'(%(?:[(].+?[)])?[#0 +-]?[.\d*]*[hlL]?[diouxXeEfFgGcrs%])')
 
 def wc(c):
     return c == "'" or c in string.letters
@@ -82,13 +83,6 @@ def chef_transform(s):
             out.append(s[0])
             s = s[1:]
             continue
-
-        if s.startswith('%'):
-            match = INTERP_RE.match(s)
-            if match:
-                out.append(match.group())
-                s = s[len(out[-1]):]
-                continue
 
         for mem in TRANSFORM:
             if in_word and not mem[0]:
@@ -156,7 +150,7 @@ class HtmlAwareMessageMunger(HTMLParser.HTMLParser):
     def handle_data(self, data):
         # We don't want to munge placeholders, so split on them, keeping them
         # in the list, then xform every other token.
-        toks = re.split(r"(%\(\w+\)[ds])", data)
+        toks = INTERP_RE.split(data)
         for i, tok in enumerate(toks):
             if i % 2:
                 self.s += tok
