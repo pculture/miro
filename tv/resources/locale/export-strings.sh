@@ -30,7 +30,7 @@
 # statement from all source files in the program, then also delete it here.
 
 
-xgettext --package-name="Miro" --msgid-bugs-address="http://bugzilla.pculture.org/" --copyright-holder="Participatory Culture Foundation" -o messages.pot `find ../../ -name '*.py' -and -not -path '*testdata*' -and -not -path '*.git*' -and -not -path '*.svn*' -and -not -path '*build*' -and -not -path '*dist*' -and -not -path '*feedparser.py' -and -not -path '*amazon.py' -and -not -path '*lib/test/*'`
+xgettext --package-name="Miro" --msgid-bugs-address="http://bugzilla.pculture.org/" --copyright-holder="Participatory Culture Foundation" -o messages.pot `find ../../ -name '*.py' -and -not -path '*testdata*' -and -not -path '*.git*' -and -not -path '*.svn*' -and -not -path '*build*' -and -not -path '*dist*' -and -not -path '*feedparser.py' -and -not -path '*amazon.py' -and -not -path '*lib/test/*' | sort`
 
 # generates faux translation
 cp messages.pot swch.po
