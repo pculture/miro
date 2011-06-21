@@ -91,7 +91,7 @@ class SubprocessManagerTest(EventLoopTest):
         self.subprocess.shutdown()
         EventLoopTest.tearDown(self)
 
-    def _wait_for_subprocess_ready(self, timeout=4.0):
+    def _wait_for_subprocess_ready(self, timeout=6.0):
         """Wait for the subprocess to startup."""
 
         start = time.time()
