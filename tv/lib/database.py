@@ -434,6 +434,33 @@ class BulkSQLManager(object):
                 obj.removed_from_db()
 
     def _update_view_trackers(self, to_insert, to_remove):
+        # figure out the total number of objects that have changed
+        changed_objs = set()
+        for table_name, objects in to_insert.items():
+            changed_objs.update(objects)
+        for table_name, objects in to_remove.items():
+            changed_objs.update(objects)
+        # Figure out which strategy is fastest based on the number of objects
+        # that have changed
+        if len(changed_objs) < 100:
+            self._update_view_trackers_by_object(changed_objs)
+        else:
+            self._update_view_trackers_by_table(to_insert, to_remove)
+
+    def _update_view_trackers_by_object(self, changed_objs):
+        """Update view trackers by checking each changed object.
+
+        This method is the fastest when there are not a lot of changed objects
+        """
+        for obj in changed_objs:
+            app.view_tracker_manager.update_view_trackers(obj)
+
+
+    def _update_view_trackers_by_table(self, to_insert, to_remove):
+        """Update view trackers by checking each table
+
+        This method is fastest when there are many changed objects
+        """
         for table_name in to_insert:
             app.view_tracker_manager.bulk_update_view_trackers(table_name)
 
