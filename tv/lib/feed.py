@@ -2194,7 +2194,7 @@ class DirectoryScannerImplBase(FeedImpl):
             yield # yield after doing prep work
             try:
                 while not finished:
-                    finished = self._add_batch_of_videos(path_iter, 0.5)
+                    finished = self._add_batch_of_videos(path_iter, 0.2)
                     yield # yield after each batch
             except ObjectNotFoundError:
                 # whoops, we disappeared! clean up and quit
