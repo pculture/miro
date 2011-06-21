@@ -312,15 +312,15 @@ msgstr "OPML Impurt soommary bork!"
 #, python-format
 msgid "Successfully imported %(count)d podcast."
 msgid_plural "Successfully imported %(count)d podcasts."
-msgstr[0] "Sooccessffoolly eempurted %(count)d pudcasts. bork!"
-msgstr[1] "Sooccessffoolly eempurted %(count)d pudcast. bork!"
+msgstr[0] "Sooccessffoolly eempurted %(count)d pudcast. bork!"
+msgstr[1] "Sooccessffoolly eempurted %(count)d pudcasts. bork!"
 
 #: ../../lib/opml.py:249
 #, python-format
 msgid "Skipped %(count)d podcast already present."
 msgid_plural "Skipped %(count)d podcasts already present."
-msgstr[0] "Skeepped %(count)d pudcasts already present. bork!"
-msgstr[1] "Skeepped %(count)d pudcast already present. bork!"
+msgstr[0] "Skeepped %(count)d pudcast already present. bork!"
+msgstr[1] "Skeepped %(count)d pudcasts already present. bork!"
 
 #: ../../lib/messagehandler.py:1593
 msgid "Subscribed to new podcast:"
@@ -598,29 +598,29 @@ msgstr "%(size)s B/s bork!"
 #, python-format
 msgid "%(num)d day"
 msgid_plural "%(num)d days"
-msgstr[0] "%(num)d deys bork!"
-msgstr[1] "%(num)d dey bork!"
+msgstr[0] "%(num)d dey bork!"
+msgstr[1] "%(num)d deys bork!"
 
 #: ../../lib/displaytext.py:100
 #, python-format
 msgid "%(num)d hr"
 msgid_plural "%(num)d hrs"
-msgstr[0] "%(num)d hrs bork!"
-msgstr[1] "%(num)d hr bork!"
+msgstr[0] "%(num)d hr bork!"
+msgstr[1] "%(num)d hrs bork!"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(num)d min"
 msgid_plural "%(num)d mins"
-msgstr[0] "%(num)d meens bork!"
-msgstr[1] "%(num)d meen bork!"
+msgstr[0] "%(num)d meen bork!"
+msgstr[1] "%(num)d meens bork!"
 
 #: ../../lib/displaytext.py:109
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] "%(num)d secs bork!"
-msgstr[1] "%(num)d sec bork!"
+msgstr[0] "%(num)d sec bork!"
+msgstr[1] "%(num)d secs bork!"
 
 #: ../../lib/displaytext.py:129
 #, python-format
@@ -646,43 +646,43 @@ msgstr "%(size)s B bork!"
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] "Expures een %(count)d deys bork!"
-msgstr[1] "Expures een %(count)d dey bork!"
+msgstr[0] "Expures een %(count)d dey bork!"
+msgstr[1] "Expures een %(count)d deys bork!"
 
 #: ../../lib/displaytext.py:148
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Expures een %(count)d huoors bork!"
-msgstr[1] "Expures een %(count)d huoor bork!"
+msgstr[0] "Expures een %(count)d huoor bork!"
+msgstr[1] "Expures een %(count)d huoors bork!"
 
 #: ../../lib/displaytext.py:154
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "Expures een %(count)d meenootes bork!"
-msgstr[1] "Expures een %(count)d meenoote bork!"
+msgstr[0] "Expures een %(count)d meenoote bork!"
+msgstr[1] "Expures een %(count)d meenootes bork!"
 
 #: ../../lib/displaytext.py:162
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] "Expures: %(count)d deys bork!"
-msgstr[1] "Expures: %(count)d dey bork!"
+msgstr[0] "Expures: %(count)d dey bork!"
+msgstr[1] "Expures: %(count)d deys bork!"
 
 #: ../../lib/displaytext.py:168
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] "Expures: %(count)d huoors bork!"
-msgstr[1] "Expures: %(count)d huoor bork!"
+msgstr[0] "Expures: %(count)d huoor bork!"
+msgstr[1] "Expures: %(count)d huoors bork!"
 
 #: ../../lib/displaytext.py:174
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "Expures: %(count)d meenootes bork!"
-msgstr[1] "Expures: %(count)d meenoote bork!"
+msgstr[0] "Expures: %(count)d meenoote bork!"
+msgstr[1] "Expures: %(count)d meenootes bork!"
 
 #: ../../lib/displaytext.py:193
 #, python-format
@@ -1081,36 +1081,36 @@ msgstr "Feeoo Web Page bork!"
 #, python-format
 msgid "%(count)d Device Item"
 msgid_plural "%(count)d Device Items"
-msgstr[0] "%(count)d Defeece-a Items bork!"
-msgstr[1] "%(count)d Defeece-a Item bork!"
+msgstr[0] "%(count)d Defeece-a Item bork!"
+msgstr[1] "%(count)d Defeece-a Items bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:365
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d Doonluaded Items bork!"
-msgstr[1] "%(count)d Doonluaded Item bork!"
+msgstr[0] "%(count)d Doonluaded Item bork!"
+msgstr[1] "%(count)d Doonluaded Items bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:391
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d Evaeelable-a Items bork!"
-msgstr[1] "%(count)d Evaeelable-a Item bork!"
+msgstr[0] "%(count)d Evaeelable-a Item bork!"
+msgstr[1] "%(count)d Evaeelable-a Items bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:401
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d Doonluadeeng Items bork!"
-msgstr[1] "%(count)d Doonluadeeng Item bork!"
+msgstr[0] "%(count)d Doonluadeeng Item bork!"
+msgstr[1] "%(count)d Doonluadeeng Items bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:412
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d Poosed Items bork!"
-msgstr[1] "%(count)d Poosed Item bork!"
+msgstr[0] "%(count)d Poosed Item bork!"
+msgstr[1] "%(count)d Poosed Items bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:421
 msgid "Restart Upload"
@@ -1140,22 +1140,22 @@ msgstr "nefer bork!"
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] "%(count)d huoors agu bork!"
-msgstr[1] "%(count)d huoor agu bork!"
+msgstr[0] "%(count)d huoor agu bork!"
+msgstr[1] "%(count)d huoors agu bork!"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] "%(count)d deys agu bork!"
-msgstr[1] "%(count)d dey agu bork!"
+msgstr[0] "%(count)d dey agu bork!"
+msgstr[1] "%(count)d deys agu bork!"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] "%(count)d munths agu bork!"
-msgstr[1] "%(count)d munth agu bork!"
+msgstr[0] "%(count)d munth agu bork!"
+msgstr[1] "%(count)d munths agu bork!"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:93
 msgid "Auto-Expire Items:"
@@ -1991,14 +1991,14 @@ msgstr "Seerch engeene-a: bork!"
 #: ../../lib/frontends/widgets/menus.py:275
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
-msgstr[0] "Remuve-a Pudcasts bork!"
-msgstr[1] "Remuve-a Pudcast bork!"
+msgstr[0] "Remuve-a Pudcast bork!"
+msgstr[1] "Remuve-a Pudcasts bork!"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
 msgid_plural "Are you sure you want to remove these podcasts:"
-msgstr[0] "Ere-a yuoo soore-a yuoo want tu remuve-a these-a pudcasts: bork!"
-msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a thees pudcast: bork!"
+msgstr[0] "Ere-a yuoo soore-a yuoo want tu remuve-a thees pudcast: bork!"
+msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a these-a pudcasts: bork!"
 
 #: ../../lib/frontends/widgets/removefeeds.py:87
 msgid "Keep items that have been downloaded in my library."
@@ -2063,50 +2063,50 @@ msgstr "Opee Externally bork!"
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
-msgstr[0] "%(count)d Pudcast Fulders Selected bork!"
-msgstr[1] "%(count)d Pudcast Fulder Selected bork!"
+msgstr[0] "%(count)d Pudcast Fulder Selected bork!"
+msgstr[1] "%(count)d Pudcast Fulders Selected bork!"
 
 #: ../../lib/frontends/widgets/displays.py:705
 #, python-format
 msgid "(contains %(count)d podcast)"
 msgid_plural "(contains %(count)d podcasts)"
-msgstr[0] "(cuntaeens %(count)d pudcasts) bork!"
-msgstr[1] "(cuntaeens %(count)d pudcast) bork!"
+msgstr[0] "(cuntaeens %(count)d pudcast) bork!"
+msgstr[1] "(cuntaeens %(count)d pudcasts) bork!"
 
 #: ../../lib/frontends/widgets/displays.py:711
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d Pleyleest Fulders Selected bork!"
-msgstr[1] "%(count)d Pleyleest Fulder Selected bork!"
+msgstr[0] "%(count)d Pleyleest Fulder Selected bork!"
+msgstr[1] "%(count)d Pleyleest Fulders Selected bork!"
 
 #: ../../lib/frontends/widgets/displays.py:716
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlists)"
-msgstr[0] "(cuntaeens %(count)d pleyleests) bork!"
-msgstr[1] "(cuntaeens %(count)d pleyleest) bork!"
+msgstr[0] "(cuntaeens %(count)d pleyleest) bork!"
+msgstr[1] "(cuntaeens %(count)d pleyleests) bork!"
 
 #: ../../lib/frontends/widgets/displays.py:726
 #, python-format
 msgid "%(count)d Podcast Selected"
 msgid_plural "%(count)d Podcasts Selected"
-msgstr[0] "%(count)d Pudcasts Selected bork!"
-msgstr[1] "%(count)d Pudcast Selected bork!"
+msgstr[0] "%(count)d Pudcast Selected bork!"
+msgstr[1] "%(count)d Pudcasts Selected bork!"
 
 #: ../../lib/frontends/widgets/displays.py:732
 #, python-format
 msgid "%(count)d Source Selected"
 msgid_plural "%(count)d Sources Selected"
-msgstr[0] "%(count)d Suoorces Selected bork!"
-msgstr[1] "%(count)d Suoorce-a Selected bork!"
+msgstr[0] "%(count)d Suoorce-a Selected bork!"
+msgstr[1] "%(count)d Suoorces Selected bork!"
 
 #: ../../lib/frontends/widgets/displays.py:738
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "%(count)d Pleyleests Selected bork!"
-msgstr[1] "%(count)d Pleyleest Selected bork!"
+msgstr[0] "%(count)d Pleyleest Selected bork!"
+msgstr[1] "%(count)d Pleyleests Selected bork!"
 
 #: ../../lib/frontends/widgets/displays.py:745
 msgid "Delete All"
@@ -2580,14 +2580,14 @@ msgstr "Sync Noo bork!"
 #: ../../lib/frontends/widgets/devicecontroller.py:142
 #, python-format
 msgid "%(used)s used / %(total)s total - %(percent)i%% full"
-msgstr "%(used)s oosed / %(total)s tutal - %(percent)ee%% ffooll bork!"
+msgstr "%(used)s oosed / %(total)s tutal - %(percent)i%% ffooll bork!"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:159
 #, python-format
 msgid "1 file selected to sync"
 msgid_plural "%(count)i files selected to sync"
-msgstr[0] "%(cuoont)ee ffeeles selected tu sync bork!"
-msgstr[1] "1 ffeele-a selected tu sync bork!"
+msgstr[0] "1 ffeele-a selected tu sync bork!"
+msgstr[1] "%(count)i ffeeles selected tu sync bork!"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:165
 msgid "Up to date"
@@ -2605,7 +2605,7 @@ msgstr "%(eta)s lefft bork!"
 #: ../../lib/frontends/widgets/devicecontroller.py:245
 #, python-format
 msgid "%(percent)i%% percent complete"
-msgstr "%(percent)ee%% percent cumplete bork!"
+msgstr "%(percent)i%% percent cumplete bork!"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:261
 msgid "Sync These Podcasts"
@@ -3126,7 +3126,7 @@ msgstr "Cumpleted bork!"
 #: ../../lib/frontends/widgets/itemrenderer.py:1366
 #, python-format
 msgid "%(percent)i%% done"
-msgstr "%(percent)ee%% dune bork!"
+msgstr "%(percent)i%% dune bork!"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1373
 #: ../../lib/frontends/widgets/statictabs.py:167
@@ -3188,8 +3188,8 @@ msgstr "Cuncel Search bork!"
 #, python-format
 msgid "Searched %(count)s file"
 msgid_plural "Searched %(count)s files"
-msgstr[0] "Seerched %(count)s ffeeles bork!"
-msgstr[1] "Seerched %(count)s ffeele bork!"
+msgstr[0] "Seerched %(count)s ffeele bork!"
+msgstr[1] "Seerched %(count)s ffeeles bork!"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
 #: ../../lib/frontends/widgets/firsttimedialog.py:449
@@ -3198,8 +3198,8 @@ msgstr[1] "Seerched %(count)s ffeele bork!"
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] "ffuoond %(count)s medeea ffeeles bork!"
-msgstr[1] "ffuoond %(count)s medeea ffeele bork!"
+msgstr[0] "ffuoond %(count)s medeea ffeele bork!"
+msgstr[1] "ffuoond %(count)s medeea ffeeles bork!"
 
 #: ../../lib/frontends/widgets/statictabs.py:108
 #: ../../lib/frontends/widgets/statictabs.py:115
@@ -3338,8 +3338,8 @@ msgstr "%(appname)s ees oop tu date-a! bork!"
 #: ../../lib/frontends/widgets/application.py:590
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] "Remuve-a eetems bork!"
-msgstr[1] "Remuve-a eetem bork!"
+msgstr[0] "Remuve-a eetem bork!"
+msgstr[1] "Remuve-a eetems bork!"
 
 #: ../../lib/frontends/widgets/application.py:594
 msgid ""
@@ -3373,8 +3373,8 @@ msgstr[1] ""
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Ere-a yuoo soore-a yuoo want tu delete-a all %(count)d eetems? bork!"
-msgstr[1] "Ere-a yuoo soore-a yuoo want tu delete-a the-a eetem? bork!"
+msgstr[0] "Ere-a yuoo soore-a yuoo want tu delete-a the-a eetem? bork!"
+msgstr[1] "Ere-a yuoo soore-a yuoo want tu delete-a all %(count)d eetems? bork!"
 
 #: ../../lib/frontends/widgets/application.py:628
 msgid ""
@@ -3492,8 +3492,8 @@ msgstr "Enter a noo name-a ffur the-a suoorce-a %(name)s bork!"
 #: ../../lib/frontends/widgets/application.py:970
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] "Remuve-a playleests bork!"
-msgstr[1] "Remuve-a playleest bork!"
+msgstr[0] "Remuve-a playleest bork!"
+msgstr[1] "Remuve-a playleests bork!"
 
 #: ../../lib/frontends/widgets/application.py:972
 #, python-format
@@ -3501,13 +3501,13 @@ msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] ""
 "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s pleyleests? bork!"
-msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a thees playleest? bork!"
+msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s pleyleests? bork!"
 
 #: ../../lib/frontends/widgets/application.py:987
 msgid "Remove source"
 msgid_plural "Remove sources"
-msgstr[0] "Remuve-a suoorces bork!"
-msgstr[1] "Remuve-a suoorce bork!"
+msgstr[0] "Remuve-a suoorce bork!"
+msgstr[1] "Remuve-a suoorces bork!"
 
 #: ../../lib/frontends/widgets/application.py:989
 #, python-format
@@ -3515,7 +3515,7 @@ msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
 msgstr[0] ""
 "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s suoorces? bork!"
-msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a thees suoorce-a? bork!"
+msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s suoorces? bork!"
 
 #: ../../lib/frontends/widgets/application.py:1013
 #, python-format
@@ -3553,8 +3553,8 @@ msgstr ""
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "Yuoo have-a %(count)d doonluads een prugress.  Qooeet anyway? bork!"
-msgstr[1] "Yuoo have-a %(count)d doonluad een prugress.  Qooeet anyway? bork!"
+msgstr[0] "Yuoo have-a %(count)d doonluad een prugress.  Qooeet anyway? bork!"
+msgstr[1] "Yuoo have-a %(count)d doonluads een prugress.  Qooeet anyway? bork!"
 
 #: ../../lib/frontends/widgets/application.py:1167
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -3568,7 +3568,7 @@ msgid_plural ""
 msgstr[0] ""
 "Yuoo have-a %(count)d cunverseeuns een prugress ur pendeeng.  Qooeet anyway?"
 " bork!"
-msgstr[1] "Yuoo have-a %(count)d cunverseeun een prugress.  Qooeet anyway? bork!"
+msgstr[1] "Yuoo have-a %(count)d cunverseeuns een prugress ur pendeeng.  Qooeet anyway? bork!"
 
 #: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
@@ -3722,8 +3722,8 @@ msgstr "Cuncelled bork!"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] "persed %(count)s ffeeles bork!"
-msgstr[1] "persed %(count)s ffeele bork!"
+msgstr[0] "persed %(count)s ffeele bork!"
+msgstr[1] "persed %(count)s ffeeles bork!"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:544
 #, python-format
@@ -3854,8 +3854,8 @@ msgstr[1] "%(count)d Doonluadeeng bork!"
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] "%(count)d Items bork!"
-msgstr[1] "%(count)d Item bork!"
+msgstr[0] "%(count)d Item bork!"
+msgstr[1] "%(count)d Items bork!"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:193
 #, python-format
@@ -3872,8 +3872,8 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] "%(count)d Items Metch Search bork!"
-msgstr[1] "%(count)d Item Metches Search bork!"
+msgstr[0] "%(count)d Item Metches Search bork!"
+msgstr[1] "%(count)d Items Metch Search bork!"
 
 #: ../../lib/frontends/widgets/playlist.py:161
 msgid "This Playlist is Empty"
@@ -3956,8 +3956,8 @@ msgstr "Edeet Item bork!"
 #, python-format
 msgid "%(items)d"
 msgid_plural "%(items)d items selected to edit"
-msgstr[0] "%(items)d eetems selected tu edeet bork!"
-msgstr[1] "%(items)d bork!"
+msgstr[0] "%(items)d bork!"
+msgstr[1] "%(items)d eetems selected tu edeet bork!"
 
 #: ../../lib/frontends/widgets/itemedit.py:708
 msgid ""

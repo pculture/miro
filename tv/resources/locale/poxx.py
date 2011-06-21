@@ -26,6 +26,8 @@ except ImportError:
     sys.exit()
 import HTMLParser
 
+INTERP_RE = re.compile(
+    r'(%(?:[(].+?[)])?[#0 +-]?[.\d*]*[hlL]?[diouxXeEfFgGcrs%])')
 
 def wc(c):
     return c == "'" or c in string.letters
@@ -148,7 +150,7 @@ class HtmlAwareMessageMunger(HTMLParser.HTMLParser):
     def handle_data(self, data):
         # We don't want to munge placeholders, so split on them, keeping them
         # in the list, then xform every other token.
-        toks = re.split(r"(%\(\w+\)[ds])", data)
+        toks = INTERP_RE.split(data)
         for i, tok in enumerate(toks):
             if i % 2:
                 self.s += tok
@@ -181,8 +183,8 @@ def munge_one_file(fname):
     count = 0
     for entry in po:
         if entry.msgid_plural:
-            entry.msgstr_plural["0"] = translate_string(entry.msgid_plural)
-            entry.msgstr_plural["1"] = translate_string(entry.msgid)
+            entry.msgstr_plural["0"] = translate_string(entry.msgid)
+            entry.msgstr_plural["1"] = translate_string(entry.msgid_plural)
         else:
             entry.msgstr = translate_string(entry.msgid)
 
