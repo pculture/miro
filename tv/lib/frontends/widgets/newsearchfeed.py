@@ -184,28 +184,28 @@ class NewSearchFeedDialogRunner(object):
     def set_initial_source(self):
         source = app.item_list_controller_manager.get_saved_search_source()
         if source is not None:
-            type, id = source
-            if type == 'channel':
+            typ, id_ = source
+            if typ == 'channel':
                 self.channel_rb.set_selected()
                 for i, info in enumerate(self.channels):
-                    if info.id == id:
+                    if info.id == id_:
                         self.channel_option.set_selected(i)
                         break
                 else:
                     app.widgetapp.handle_soft_failure("New search feed dialog",
-                            "didn't find channel with id: %r" % id,
+                            "didn't find channel with id: %r" % id_,
                             with_exception=False)
-            elif type == 'search':
+            elif typ == 'search':
                 self.search_engine_rb.set_selected()
                 self.enable_choice_table_row(1)
                 for i, info in enumerate(self.search_engines):
-                    if info.name == id:
+                    if info.name == id_:
                         self.search_engine_option.set_selected(i)
                         break
                 else:
                     app.widgetapp.handle_soft_failure("New search feed dialog",
-                            "didn't find search engine with id: %r" % id,
+                            "didn't find search engine with id: %r" % id_,
                             with_exception=False)
             else:
                 app.widgetapp.handle_soft_failure("New search feed dialog",
-                        "unknown source type %r" % type, with_exception=False)
+                        "unknown source type %r" % typ, with_exception=False)
