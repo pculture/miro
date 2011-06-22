@@ -288,6 +288,8 @@ OPEN_FOLDER_ON_STARTUP = \
     Pref(key='openFolderOnStartup',default=None, platformSpecific=False)
 OPEN_CHANNEL_ON_STARTUP = \
     Pref(key='openChannelOnStartup',default=None, platformSpecific=False)
+DISABLE_IPV6 = \
+    Pref(key='disableIPV6',default=True, platformSpecific=False)
 
 def all_prefs():
     return [obj for obj in globals().values() if isinstance(obj, Pref)]
