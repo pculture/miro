@@ -41,8 +41,10 @@ import errno
 import logging
 import socket
 
+from miro import app
 from miro import eventloop
 from miro import util
+from miro import prefs
 from miro import signals
 from miro import trapcall
 from miro.clock import clock
@@ -242,7 +244,8 @@ class AsyncSocket(object):
         :param addresses: list of address tuples returned by getaddrinfo()
         :returns: one of the tuples, or None if no address could be found
         """
-        if util.use_ipv6(): # prefer ipv6 if possible
+        if not app.config.get(prefs.DISABLE_IPV6) and util.use_ipv6():
+            # prefer ipv6 if possible
             for entry in addresses:
                 if entry[0] == socket.AF_INET6:
                     return entry
