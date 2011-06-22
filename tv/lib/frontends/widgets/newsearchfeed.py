@@ -192,9 +192,14 @@ class NewSearchFeedDialogRunner(object):
                         self.channel_option.set_selected(i)
                         break
                 else:
-                    app.widgetapp.handle_soft_failure("New search feed dialog",
-                            "didn't find channel with id: %r" % id_,
-                            with_exception=False)
+                    # bz:17818
+                    # Watched folders are not listed in this dialog, but is
+                    # in the feed/channel category.  So we could come here
+                    # with a watched folder selected, and fall into else
+                    # path.  There used to be a soft failure here, now
+                    # I think it is okay if we just print a debug message.
+                    logging.debug(("didn't find channel with id: %r "
+                                   "(possibly watched folder selected)"), id_)
             elif typ == 'search':
                 self.search_engine_rb.set_selected()
                 self.enable_choice_table_row(1)
