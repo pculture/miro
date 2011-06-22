@@ -605,6 +605,11 @@ class DeviceMountedView(widgetset.VBox):
         label.set_size(label_size)
         vbox.pack_start(widgetutil.align_center(label, top_pad=10))
 
+        self.auto_sync = widgetset.Checkbox(_("Sync automatically?"))
+        self.auto_sync.connect('toggled', self._auto_sync_changed)
+        vbox.pack_start(widgetutil.align_center(self.auto_sync,
+                                                top_pad=20))
+
         self.device_size = SizeWidget()
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
         self.pack_end(self.device_size)
@@ -631,6 +636,8 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.set_size(device.size, device.remaining)
         if not self.device.mount:
             return
+        self.auto_sync.set_checked(
+            device.database.get(u'sync', {}).get(u'auto', False))
         for name in 'podcasts', 'playlists', 'settings':
             tab = self.tabs[name]
             tab.child.set_device(device)
@@ -645,6 +652,17 @@ class DeviceMountedView(widgetset.VBox):
         self.button_row.set_active(key)
         self.tab_container.remove()
         self.tab_container.set_child(self.tabs[key])
+
+    def _auto_sync_changed(self, widget):
+        is_checked = widget.get_checked()
+        was_checked = self.device.database.get(u'sync', {}).get(u'auto', False)
+        if is_checked != was_checked:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       None,
+                                                       u'auto', is_checked)
+            message.send_to_backend()
+            if is_checked:
+                messages.DeviceSyncFeeds(self.device).send_to_backend()
 
     def _get_sync_state(self):
         sync_type = {}

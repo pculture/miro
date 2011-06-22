@@ -407,7 +407,7 @@ class DeviceManager(object):
     def _send_connect(self, info):
         if info.mount:
             self.info_cache.setdefault(info.mount, {})
-            scan_device_for_files(info)
+            on_mount(info)
         messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
     def device_changed(self, id_, **kwargs):
@@ -432,7 +432,7 @@ class DeviceManager(object):
 
         if info.mount:
             self.info_cache.setdefault(info.mount, {})
-            scan_device_for_files(info)
+            on_mount(info)
         else:
             sync_manager = app.device_manager.get_sync_for_device(info,
                                                                   create=False)
@@ -1132,6 +1132,14 @@ def clean_database(device):
         device.database.set_bulk_mode(False)
 
     return known_files
+
+def on_mount(info):
+    """Stuff that we need to do when the device is first mounted.
+    """
+    if info.database.get(u'sync', {}).get(u'auto', False):
+        message = messages.DeviceSyncFeeds(info)
+        message.send_to_backend()
+    scan_device_for_files(info)
 
 @eventloop.idle_iterator
 def scan_device_for_files(device):

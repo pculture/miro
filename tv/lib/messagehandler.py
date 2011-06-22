@@ -1741,7 +1741,10 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_change_device_sync_setting(self, message):
         db = message.device.database
-        this_sync = db[u'sync'].setdefault(message.file_type, {})
+        if message.file_type:
+            this_sync = db[u'sync'].setdefault(message.file_type, {})
+        else:
+            this_sync = db[u'sync']
         this_sync[message.setting] = message.value
 
     def handle_change_device_setting(self, message):
