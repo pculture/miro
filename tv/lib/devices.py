@@ -253,7 +253,7 @@ class DeviceManager(object):
     def shutdown(self):
         self.running = False
         for device in self.connected.values():
-            if device.mount:
+            if device.mount and not self._is_hidden(device):
                 write_database(device.database, device.mount)
 
     def load_devices(self, path):
