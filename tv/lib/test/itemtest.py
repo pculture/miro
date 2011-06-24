@@ -252,8 +252,8 @@ class ItemSearchTest(MiroTestCase):
         f1 = Feed(u'http://example.com/1')
         item = Item(fp_values_for_url(u'http://example.com/1/item1', {'title':u"<em>miro</em>"}), feed_id=f1.id)
         self.assertEquals(item.matches_search('miro'), True)
-        self.assertEquals(item.matches_search('<'), False)
-        self.assertEquals(item.matches_search('em'), False)
+        self.assertEquals(item.matches_search('<em'), False)
+        self.assertEquals(item.matches_search('em>'), False)
         self.assertEquals(item.matches_search('<em>miro</miro'), False)
 
 class DeletedItemTest(MiroTestCase):

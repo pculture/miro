@@ -43,6 +43,7 @@ QUOTEKILLER = re.compile(r'(?<!\\)"')
 SLASHKILLER = re.compile(r'\\.')
 # Let's hope all this stuff is in Unicode...
 WORDMATCHER = re.compile("\w+", re.UNICODE)
+NGRAM_MIN = 3
 NGRAM_MAX = 5
 SEARCHOBJECTS = {}
 
@@ -90,7 +91,6 @@ class BooleanSearch:
             term_list = self.positive_terms
         substring = QUOTEKILLER.sub("", substring)
         substring = SLASHKILLER.sub(lambda x: x.group(0)[1], substring)
-        #print substring
         term_list.append(substring.lower())
 
     def as_string(self):
@@ -116,7 +116,7 @@ def _calc_search_text(item_info):
 def calc_ngrams(item_info):
     """Get the N-grams that we want to index for a ItemInfo object"""
     words = WORDMATCHER.findall(_calc_search_text(item_info))
-    return ngrams.breakup_list(words, 1, NGRAM_MAX)
+    return ngrams.breakup_list(words, NGRAM_MIN, NGRAM_MAX)
 
 def _ngrams_for_term(term):
     """Given a term, return a list of N-grams that we should search for.
@@ -124,11 +124,17 @@ def _ngrams_for_term(term):
     If the term is shorter than NGRAM_MAX, this is just the term itself.
     If it's longer, we split it up into a bunch of N-grams to search for.
     """
-    if len(term) <= NGRAM_MAX:
+    if len(term) < NGRAM_MIN:
+        # term is shorter than our smallest ngrams, return an empty list,
+        # which causes us to match everything
+        return []
+    elif len(term) <= NGRAM_MAX:
+        # normal case, search for term in using the n-grams we've calculated
         return [term]
     else:
-        # Note that we only need to use the longest N-grams, since shorter
-        # N-grams will just be substrings of those.
+        # term is longer than our longest N-grams, try the best we can using
+        # substrings of term.  We only need to use the longest N-grams, since
+        # shorter N-grams will just be substrings of those.
         return ngrams.breakup_word(term, NGRAM_MAX, NGRAM_MAX)
 
 def item_matches(item_info, search_text):
@@ -213,21 +219,8 @@ class ItemSearcher(object):
         for ngram in self._ngrams_for_item.pop(item_id):
             self._ngram_map[ngram].discard(item_id)
 
-    def _ngrams_for_term(self, term):
-        """Given a term, return a list of N-grams that we should search for.
-
-        If the term is shorter than NGRAM_MAX, this is just the term itself.
-        If it's longer, we split it up into a bunch of N-grams to search for.
-        """
-        if len(term) <= NGRAM_MAX:
-            return [term]
-        else:
-            # Note that we only need to use the longest N-grams, since shorter
-            # N-grams will just be substrings of those.
-            return ngrams.breakup_word(term, NGRAM_MAX, NGRAM_MAX)
-
     def _term_search(self, term):
-        grams = self._ngrams_for_term(term)
+        grams = _ngrams_for_term(term)
         # note that we need to copy the value from _ngram_map.  We don't want
         # our calls to intersection_update to change it.
         rv = set(self._ngram_map[grams[0]])
@@ -243,15 +236,20 @@ class ItemSearcher(object):
         :returns: set of ids that match the search
         """
         parsed_search = _get_boolean_search(search_text)
+        # filter out terms smaller than the smallest N-gram we index.
+        positive_terms = [t for t in parsed_search.positive_terms
+                if len(t) >= NGRAM_MIN]
+        negative_terms = [t for t in parsed_search.negative_terms
+                if len(t) >= NGRAM_MIN]
 
-        if parsed_search.positive_terms:
-            first_term = parsed_search.positive_terms[0]
+        if positive_terms:
+            first_term = positive_terms[0]
             matching_ids = self._term_search(first_term)
-            for term in parsed_search.positive_terms[1:]:
+            for term in positive_terms[1:]:
                 matching_ids.intersection_update(self._term_search(term))
         else:
             matching_ids = set(self._ngrams_for_item.keys())
 
-        for term in parsed_search.negative_terms:
+        for term in negative_terms:
             matching_ids.difference_update(self._term_search(term))
         return matching_ids
