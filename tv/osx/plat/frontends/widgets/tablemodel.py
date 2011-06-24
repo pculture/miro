@@ -31,7 +31,7 @@
 
 import logging
 
-from AppKit import (NSDragOperationNone, NSTableViewDropOn,
+from AppKit import (NSDragOperationNone, NSDragOperationAll, NSTableViewDropOn,
                     NSOutlineViewDropOnItemIndex, protocols)
 from Foundation import NSObject, NSNotFound, NSMutableIndexSet
 from objc import YES, NO, nil
@@ -41,6 +41,11 @@ from miro import infolist
 from miro import signals
 from miro.errors import WidgetActionError
 from miro.plat.frontends.widgets import wrappermap
+
+MIRO_DND_ITEM_LOCAL = 'miro-local-item'
+
+# XXX need unsigned but value comes out as signed.
+NSDragOperationEvery = NSDragOperationAll
 
 def list_from_nsindexset(index_set):
     rows = list()
@@ -440,9 +445,10 @@ class DataSourceBase(NSObject):
         drag_data = self.drag_source.begin_drag(wrapper, data)
         if not drag_data:
             return NO
-        pasteboard.declareTypes_owner_(drag_data.keys(), self)
+        pasteboard.declareTypes_owner_((MIRO_DND_ITEM_LOCAL,), self)
         for typ, value in drag_data.items():
-            pasteboard.setString_forType_(repr(value), typ)
+            stringval = repr((repr(value), typ))
+            pasteboard.setString_forType_(stringval, MIRO_DND_ITEM_LOCAL)
         return YES
 
     def calcType_(self, drag_info):
@@ -451,7 +457,16 @@ class DataSourceBase(NSObject):
                 (self.drag_dest.allowed_actions() | source_actions)):
             return None
         types = self.drag_dest.allowed_types()
-        return drag_info.draggingPasteboard().availableTypeFromArray_(types)
+        available = drag_info.draggingPasteboard().availableTypeFromArray_(
+            (MIRO_DND_ITEM_LOCAL,))
+        if available:
+            # XXX using eval() sucks.
+            data = eval(drag_info.draggingPasteboard().stringForType_(
+                MIRO_DND_ITEM_LOCAL))
+            if data:
+                _, typ = data
+                return typ
+        return None
 
     def validateDrop_dragInfo_parentIter_position_(self, view, drag_info, 
             parent, position):
@@ -476,7 +491,10 @@ class DataSourceBase(NSObject):
             parent, position):
         typ = self.calcType_(drag_info)
         if typ:
-            ids = eval(drag_info.draggingPasteboard().stringForType_(typ))
+            # XXX using eval sucks.
+            data = eval(drag_info.draggingPasteboard().stringForType_(MIRO_DND_ITEM_LOCAL))
+            ids, _ = data
+            ids = eval(ids)
             wrapper = wrappermap.wrapper(view)
             self.drag_dest.accept_drop(wrapper, self.model, typ, 
                 drag_info.draggingSourceOperationMask(), parent,

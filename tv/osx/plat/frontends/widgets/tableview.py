@@ -1111,6 +1111,8 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         else:
             self.tableview = MiroTableView.alloc().init()
             self.data_source = tablemodel.MiroTableViewDataSource.alloc()
+        types = (tablemodel.MIRO_DND_ITEM_LOCAL,)
+        self.tableview.registerForDraggedTypes_(types)
         self.view = self.tableview
         self.data_source.initWithModel_(self.model)
         self.tableview.setDataSource_(self.data_source)
@@ -1501,9 +1503,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
     def set_drag_dest(self, drag_dest):
         self.drag_dest = drag_dest
         if drag_dest is None:
-            self.tableview.unregisterDraggedTypes()
             self.data_source.setDragDest_(None)
         else:
             types = drag_dest.allowed_types()
-            self.tableview.registerForDraggedTypes_(types)
             self.data_source.setDragDest_(drag_dest)
