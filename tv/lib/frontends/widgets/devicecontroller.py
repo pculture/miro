@@ -609,6 +609,24 @@ class DeviceMountedView(widgetset.VBox):
         self.auto_sync.connect('toggled', self._auto_sync_changed)
         vbox.pack_start(widgetutil.align_center(self.auto_sync,
                                                 top_pad=20))
+        max_fill_label = _(
+            "Don't fill more than %(count)i percent of the "
+            "free space on my device",
+            {'count': id(self)})
+        checkbox_label, text_label = max_fill_label.split(unicode(id(self)), 1)
+        self.max_fill_enabled = widgetset.Checkbox(checkbox_label)
+        self.max_fill_enabled.connect('toggled',
+                                      self._max_fill_enabled_changed)
+        self.max_fill_percent = widgetset.TextEntry()
+        self.max_fill_percent.set_size_request(50, -1)
+        self.max_fill_percent.connect('focus-out',
+                                      self._max_fill_percent_changed)
+        label = widgetset.Label(text_label)
+        vbox.pack_start(widgetutil.align_center(
+                widgetutil.build_hbox([self.max_fill_enabled,
+                                       self.max_fill_percent,
+                                       label], 0),
+                top_pad=10))
 
         self.device_size = SizeWidget()
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
@@ -638,12 +656,16 @@ class DeviceMountedView(widgetset.VBox):
             return
         self.auto_sync.set_checked(
             device.database.get(u'sync', {}).get(u'auto', False))
+        self.max_fill_enabled.set_checked(
+            device.database.get(u'sync', {}).get(u'max_fill', False))
+        self.max_fill_percent.set_text(str(
+                device.database.get(u'sync', {}).get(u'max_fill_percent', 90)))
         for name in 'podcasts', 'playlists', 'settings':
             tab = self.tabs[name]
             tab.child.set_device(device)
         sync_manager = app.device_manager.get_sync_for_device(device,
                                                               create=False)
-        if sync_manager is not None:
+        if sync_manager is not None and sync_manager.started:
             self.set_sync_status(sync_manager.get_progress(),
                                  sync_manager.get_eta())
 
@@ -663,6 +685,33 @@ class DeviceMountedView(widgetset.VBox):
             message.send_to_backend()
             if is_checked:
                 messages.DeviceSyncFeeds(self.device).send_to_backend()
+
+    def _max_fill_enabled_changed(self, widget):
+        is_checked = widget.get_checked()
+        was_checked = self.device.database.get(u'sync', {}).get(u'max_fill',
+                                                                False)
+        if is_checked != was_checked:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       None,
+                                                       u'max_fill', is_checked)
+            message.send_to_backend()
+            self.sync_settings_changed(widget)
+
+
+    def _max_fill_percent_changed(self, widget):
+        try:
+            value = int(widget.get_text())
+        except ValueError:
+            return
+        old_value = self.device.database.get(u'sync', {}).get(
+            u'max_fill_percent', 90)
+        if value != old_value:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       None,
+                                                       u'max_fill_percent',
+                                                       value)
+            message.send_to_backend()
+            self.sync_settings_changed(widget)
 
     def _get_sync_state(self):
         sync_type = {}
@@ -685,7 +734,15 @@ class DeviceMountedView(widgetset.VBox):
         message = messages.DeviceSyncFeeds(self.device)
         message.send_to_backend()
 
-    def current_sync_information(self, count):
+    def current_sync_information(self, count, size):
+        sync = self.device.database.get(u'sync', {})
+        if sync.get(u'max_fill', False):
+            percent = sync.get(u'max_fill_percent', 90) * 0.01
+            min_remaining = self.device.size * (1 - percent)
+            if self.device.remaining - size < min_remaining:
+                self.device_size.set_sync_state(0)
+                return
+
         self.device_size.set_sync_state(count)
 
     def set_sync_status(self, progress, eta):
@@ -816,10 +873,10 @@ class DeviceWidget(widgetset.VBox):
             self.device_view.set_child(view)
 
 
-    def current_sync_information(self, count):
+    def current_sync_information(self, count, size):
         view = self.get_view()
         if isinstance(view, DeviceMountedView):
-            view.current_sync_information(count)
+            view.current_sync_information(count, size)
 
     def set_sync_status(self, progress, eta):
         view = self.get_view()
@@ -850,7 +907,8 @@ class DeviceController(object):
         if message.device.id != self.device.id:
             return # not our device
 
-        self.widget.current_sync_information(message.count)
+        self.widget.current_sync_information(message.count,
+                                             message.size)
 
     def handle_device_sync_changed(self, message):
         if message.device.id != self.device.id:

@@ -1658,9 +1658,10 @@ class DeviceChanged(FrontendMessage):
 class CurrentSyncInformation(FrontendMessage):
     """Informs the frontend of what the current sync would look like.
     """
-    def __init__(self, device, count):
+    def __init__(self, device, count, size):
         self.device = device
         self.count = count
+        self.size = size
 
 class DeviceSyncChanged(FrontendMessage):
     """Informs the frontend that the status of a device sync has changed.  This

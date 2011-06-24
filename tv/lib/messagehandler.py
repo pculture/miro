@@ -38,6 +38,7 @@ from miro import app
 from miro import autoupdate
 from miro import database
 from miro import devices
+from miro import conversions
 from miro import downloader
 from miro import eventloop
 from miro import feed
@@ -1806,17 +1807,26 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         return infos
 
     def handle_query_sync_information(self, message):
+        dsm = app.device_manager.get_sync_for_device(message.device)
         infos = self._get_sync_items_for_message(message)
-        count = sum(1 for info in infos
-                    if info.file_type in ('video', 'audio'))
+        count = size = 0
+        for info in infos:
+            converter = dsm.conversion_for_info(info)
+            task = conversions.conversion_manager._make_conversion_task(
+                converter, info, None, False)
+            if task:
+                count += 1
+                size += task.get_output_size_guess()
         message = messages.CurrentSyncInformation(message.device,
-                                                  count)
+                                                  count,
+                                                  size)
         message.send_to_frontend()
 
     def handle_device_sync_feeds(self, message):
         infos = self._get_sync_items_for_message(message)
         if infos:
             dsm = app.device_manager.get_sync_for_device(message.device)
+            dsm.start()
             dsm.add_items(infos)
 
     def handle_device_sync_media(self, message):
@@ -1829,6 +1839,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             return
 
         dsm = app.device_manager.get_sync_for_device(message.device)
+        dsm.start()
         dsm.add_items(item_infos)
 
     def handle_cancel_device_sync(self, message):

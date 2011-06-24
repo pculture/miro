@@ -499,15 +499,20 @@ class DeviceSyncManager(object):
         self.stopping = False
         self._change_timeout = None
         self._copy_iter_running = False
+        self.started = False
 
+    def start(self):
+        if self.started:
+            return
+        self.started = True
         self.audio_target_folder = os.path.join(
-            device.mount,
+            self.device.mount,
             self._get_path_from_setting('audio_path'))
         if not os.path.exists(self.audio_target_folder):
             os.makedirs(self.audio_target_folder)
 
         self.video_target_folder = os.path.join(
-            device.mount,
+            self.device.mount,
             self._get_path_from_setting('video_path'))
         if not os.path.exists(self.video_target_folder):
             os.makedirs(self.video_target_folder)
@@ -528,45 +533,47 @@ class DeviceSyncManager(object):
         self.device = device
 
     def add_items(self, item_infos):
-        device_settings = self.device.database[u'settings']
-        device_info = self.device.info
-        audio_conversion = (device_settings.get(u'audio_conversion') or
-                            device_info.audio_conversion)
-        video_conversion = (device_settings.get(u'video_conversion') or
-                            device_info.video_conversion)
-        self.total += len(item_infos)
-        self._schedule_sync_changed()
         for info in item_infos:
             if self.stopping:
                 self._check_finished()
                 return
             if self.device.database.item_exists(info):
                 continue # don't recopy stuff
+            conversion = self.conversion_for_info(info)
             if info.file_type == 'audio':
-                if (audio_conversion == 'copy' or (info.file_format and
-                    info.file_format.split()[0] in device_info.audio_types)):
-                    final_path = os.path.join(self.audio_target_folder,
+                target_folder = self.audio_target_folder
+            elif info.file_type == 'video':
+                target_folder = self.video_target_folder
+            else:
+                continue
+            if conversion:
+                self.total += 1
+                if conversion == 'copy':
+                    final_path = os.path.join(target_folder,
                                               os.path.basename(
                             info.video_path))
                     self.copy_file(info, final_path)
                 else:
-                    logging.debug('unable to detect format of %r: %s',
-                                  info.video_path, info.file_format)
-                    self.start_conversion(audio_conversion,
+                    self.start_conversion(conversion,
                                           info,
-                                          self.audio_target_folder)
-            elif info.file_type == 'video':
-                if video_conversion == 'copy':
-                    final_path = os.path.join(self.video_target_folder,
-                                              os.path.basename(
-                                                  info.video_path))
-                    self.copy_file(info, final_path)
-                else:
-                    self.start_conversion(video_conversion,
-                                          info,
-                                          self.video_target_folder)
+                                          target_folder)
 
         self._check_finished()
+
+    def conversion_for_info(self, info):
+        device_settings = self.device.database[u'settings']
+        device_info = self.device.info
+        if info.file_type == 'audio':
+            audio_conversion = (device_settings.get(u'audio_conversion') or
+                                device_info.audio_conversion)
+            if (audio_conversion == 'copy' or (info.file_format and
+                info.file_format.split()[0] in device_info.audio_types)):
+                return 'copy'
+            else:
+                return audio_conversion
+        elif info.file_type == 'video':
+            return(device_settings.get(u'video_conversion') or
+                   device_info.video_conversion)
 
     def start_conversion(self, conversion, info, target):
         conversion_manager = conversions.conversion_manager
@@ -584,7 +591,8 @@ class DeviceSyncManager(object):
 
         task = start_conversion(conversion, info, target,
                                 create_item=False)
-        self.total_size[task.key] = task.get_output_size_guess() * CONVERSION_SCALE
+        self.total_size[task.key] = (task.get_output_size_guess() *
+                                     CONVERSION_SCALE)
         self.waiting.add(task.key)
 
     def copy_file(self, info, final_path):
@@ -767,6 +775,8 @@ class DeviceSyncManager(object):
         return progress / total
 
     def cancel(self):
+        if not self.started:
+            return
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
         self.stopping = True # kill in-progress copies
