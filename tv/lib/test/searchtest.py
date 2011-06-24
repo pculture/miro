@@ -61,10 +61,17 @@ class SearchTest(MiroTestCase):
         self.assertNotMatches('irst', self.item2)
 
     def test_item_matches_short(self):
-        self.assertMatches('d', self.item2)
-        self.assertNotMatches('d', self.item1)
+        # try a 3-character search.  This is the shortest search that we have
+        # n-grams for.
+        self.assertMatches('ond', self.item2)
+        self.assertNotMatches('ond', self.item1)
+        # all searches less than 3 characters should match everything
         self.assertMatches('', self.item1)
         self.assertMatches('', self.item2)
+        self.assertMatches('d', self.item1)
+        self.assertMatches('d', self.item2)
+        self.assertMatches('st', self.item1)
+        self.assertMatches('st', self.item2)
 
     def test_item_matches_case_insensitive(self):
         self.assertMatches('FiRsT', self.item1)
@@ -84,8 +91,8 @@ class SearchTest(MiroTestCase):
                           [])
 
     def test_ngrams_for_term(self):
-        self.assertEquals(search._ngrams_for_term('a'),
-                ['a'])
+        self.assertEquals(search._ngrams_for_term('abc'),
+                ['abc'])
         self.assertEquals(search._ngrams_for_term('five'),
                 ['five'])
         self.assertEquals(search._ngrams_for_term('verybig'),
