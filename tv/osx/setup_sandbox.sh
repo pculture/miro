@@ -85,6 +85,7 @@ cd $WORK_DIR/Python-2.7.2
             --enable-universalsdk=$SDK_DIR \
             --with-universal-archs=32-bit
 
+patch -p0 < $BKIT_DIR/patches/Python-2.7.2/setup.py.patch
 make frameworkinstall
 
 PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION
