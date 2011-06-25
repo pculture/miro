@@ -53,7 +53,7 @@ if [ ! -d $SBOX_DIR ]; then
     exit 1
 fi
 
-PYTHON_VERSION=2.6
+PYTHON_VERSION=2.7
 PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION
 PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 

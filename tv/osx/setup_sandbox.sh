@@ -47,7 +47,7 @@ fi
 
 # =============================================================================
 
-PYTHON_VERSION=2.6
+PYTHON_VERSION=2.7
 SDK_DIR="/Developer/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
 
 ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
@@ -77,16 +77,13 @@ mkdir $WORK_DIR
 
 cd $WORK_DIR
 
-tar -zxf $BKIT_DIR/Python-2.6.5.tgz
-cd $WORK_DIR/Python-2.6.5
+tar -zxf $BKIT_DIR/Python-2.7.2.tgz
+cd $WORK_DIR/Python-2.7.2
 
 ./configure --prefix=$SBOX_DIR \
             --enable-framework=$SBOX_DIR/Frameworks \
             --enable-universalsdk=$SDK_DIR \
             --with-universal-archs=32-bit
-
-patch -p0 < $BKIT_DIR/patches/Python-2.6.5/setup.py.patch
-patch -p0 < $BKIT_DIR/patches/Python-2.6.5/logging.py.patch
 
 make frameworkinstall
 
@@ -101,8 +98,8 @@ export LDFLAGS=$CFLAGS
 
 cd $WORK_DIR
 
-tar -xzf $BKIT_DIR/curl-7.20.1.tar.gz
-cd $WORK_DIR/curl-7.20.1
+tar -xzf $BKIT_DIR/curl-7.21.7.tar.gz
+cd $WORK_DIR/curl-7.21.7
 
 ./configure --disable-dependency-tracking --with-ssl=/usr --prefix=$SBOX_DIR
 make install
@@ -129,11 +126,11 @@ for pkg in "setuptools-0.6c11" \
            "pyobjc-framework-ScriptingBridge-2.2" \
            "pyobjc-framework-WebKit-2.2" \
            "pyobjc-framework-FSEvents-2.2" \
-           "altgraph-0.6.7" \
-           "macholib-1.2.1" \
+           "altgraph-0.9" \
+           "macholib-1.4.1" \
            "mutagen-1.20" \
-           "modulegraph-0.7.3" \
-           "py2app-0.4.3" \
+           "modulegraph-0.9" \
+           "py2app-0.6.3" \
            "Pyrex-0.9.9"
 do
     cd $WORK_DIR
@@ -163,13 +160,13 @@ done
 
 cd $WORK_DIR
 
-BOOST_VERSION=1_43
-BOOST_VERSION_FULL=1_43_0
+BOOST_VERSION=1_46
+BOOST_VERSION_FULL=1_46_1
 
 tar -xzf $BKIT_DIR/boost_$BOOST_VERSION_FULL.tar.gz
 cd boost_$BOOST_VERSION_FULL
 
-cd tools/jam/src
+cd tools/build/v2/engine/src
 ./build.sh
 cd `find . -type d -maxdepth 1 | grep bin.`
 mkdir -p $SBOX_DIR/bin
@@ -185,8 +182,10 @@ USER_CONFIG=`find $BOOST_ROOT -name user-config.jam`
 echo "using python : : $PYTHON_ROOT/bin/python$PYTHON_VERSION ;" >> $USER_CONFIG
 
 tar -xvf $BKIT_DIR/libtorrent-rasterbar-*
+pushd libtorrent-rasterbar-*
+patch -p1 < $BKIT_DIR/patches/libtorrent-rasterbar-0.15.5/libtorrent-boost-filesystem-version.patch
+popd
 cd libtorrent-rasterbar-*/bindings/python
-
 $SBOX_DIR/bin/bjam dht-support=on \
                    toolset=darwin \
                    macosx-version=$TARGET_OS_VERSION \
