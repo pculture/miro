@@ -115,9 +115,11 @@ static PyObject * growl_PostDictionary(CFStringRef name, PyObject *self, PyObjec
 				CFDataRef convertedValue = CFDataCreate(kCFAllocatorDefault,
 														(const UInt8 *)PyString_AsString(lValue),
 														PyString_Size(lValue));
+				Py_DECREF(lValue);
 				CFDictionarySetValue(note, convertedKey, convertedValue);
 				CFRelease(convertedValue);
 			} else {
+				Py_DECREF(lValue);
 				CFRelease(convertedKey);
 				PyErr_SetString(PyExc_TypeError, "Icon with rawImageData attribute present must ensure it is a string.");
 				goto error;

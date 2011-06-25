@@ -38,6 +38,7 @@ newImageObject(NSImage *img)
 static void
 ImageObject_dealloc(ImageObject *self)
 {
+    [self->theImage release];
     PyObject_Del(self);
 }
 
