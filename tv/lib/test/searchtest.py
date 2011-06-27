@@ -188,7 +188,7 @@ class SearchFilterTest(MiroTestCase):
 
     def update_info(self, info, name):
         info.name = name
-        info.search_ngrams = search.calc_ngrams(info)
+        info.search_terms = search.calc_search_terms(info)
 
     def test_initial_list(self):
         # try with no search just to see

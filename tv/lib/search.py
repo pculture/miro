@@ -29,7 +29,7 @@
 
 """search.py -- Indexed searching of items.
 
-To make incremental search fast, we index the n-grams for each item.
+To make incremental search fast, we index the N-grams for each item.
 """
 import collections
 import os
@@ -113,10 +113,9 @@ def _calc_search_text(item_info):
         match_against.append(filename_to_unicode(filename))
     return (' '.join(match_against)).lower()
 
-def calc_ngrams(item_info):
-    """Get the N-grams that we want to index for a ItemInfo object"""
-    words = WORDMATCHER.findall(_calc_search_text(item_info))
-    return ngrams.breakup_list(words, NGRAM_MIN, NGRAM_MAX)
+def calc_search_terms(item_info):
+    """Return a list of terms that we want to index for an ItemInfo. """
+    return WORDMATCHER.findall(_calc_search_text(item_info))
 
 def _ngrams_for_term(term):
     """Given a term, return a list of N-grams that we should search for.
@@ -129,13 +128,18 @@ def _ngrams_for_term(term):
         # which causes us to match everything
         return []
     elif len(term) <= NGRAM_MAX:
-        # normal case, search for term in using the n-grams we've calculated
+        # normal case, search for term in using the N-grams we've calculated
         return [term]
     else:
         # term is longer than our longest N-grams, try the best we can using
         # substrings of term.  We only need to use the longest N-grams, since
         # shorter N-grams will just be substrings of those.
         return ngrams.breakup_word(term, NGRAM_MAX, NGRAM_MAX)
+
+def _ngrams_for_item(item_info):
+    """Given an ItemInfo, return a list of N-grams contained."""
+
+    return ngrams.breakup_list(item_info.search_terms, NGRAM_MIN, NGRAM_MAX)
 
 def item_matches(item_info, search_text):
     """Test if a single ItemInfo matches a search
@@ -146,7 +150,7 @@ def item_matches(item_info, search_text):
     :returns: True if the item matches the search string
     """
     parsed_search = _get_boolean_search(search_text)
-    item_ngrams = item_info.search_ngrams
+    item_ngrams = _ngrams_for_item(item_info)
 
     for term in parsed_search.positive_terms:
         if not set(_ngrams_for_term(term)).issubset(item_ngrams):
@@ -174,7 +178,7 @@ def list_matches(item_infos, search_text):
         negative_set |= set(_ngrams_for_term(term))
 
     for info in item_infos:
-        item_ngrams_set = set(info.search_ngrams)
+        item_ngrams_set = set(_ngrams_for_item(info))
         match = positive_set.issubset(item_ngrams_set)
         if match and negative_set:
             match = negative_set.isdisjoint(item_ngrams_set)
@@ -188,8 +192,8 @@ class ItemSearcher(object):
     def __init__(self):
         # map N-grams -> set of item ids
         self._ngram_map = collections.defaultdict(set)
-        # map item id -> set of N-grams
-        self._ngrams_for_item = {}
+        # map item id -> list of N-grams
+        self._item_ngrams = {}
 
     def add_item(self, item_info):
         """Add an item info to the index."""
@@ -211,12 +215,13 @@ class ItemSearcher(object):
         self._remove_item(item_id)
 
     def _add_item(self, item_info):
-        for ngram in item_info.search_ngrams:
+        item_ngrams = _ngrams_for_item(item_info)
+        for ngram in item_ngrams:
             self._ngram_map[ngram].add(item_info.id)
-        self._ngrams_for_item[item_info.id] = set(item_info.search_ngrams)
+        self._item_ngrams[item_info.id] = item_ngrams
 
     def _remove_item(self, item_id):
-        for ngram in self._ngrams_for_item.pop(item_id):
+        for ngram in self._item_ngrams.pop(item_id):
             self._ngram_map[ngram].discard(item_id)
 
     def _term_search(self, term):
@@ -248,7 +253,7 @@ class ItemSearcher(object):
             for term in positive_terms[1:]:
                 matching_ids.intersection_update(self._term_search(term))
         else:
-            matching_ids = set(self._ngrams_for_item.keys())
+            matching_ids = set(self._item_ngrams.keys())
 
         for term in negative_terms:
             matching_ids.difference_update(self._term_search(term))
