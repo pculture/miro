@@ -361,7 +361,8 @@ def check_movies_gone():
         prefs.MOVIES_DIRECTORY))
 
     # if the directory doesn't exist, create it.
-    if not os.path.exists(movies_dir):
+    if (not os.path.exists(movies_dir) and
+            should_create_movies_directory(movies_dir)):
         try:
             fileutil.makedirs(movies_dir)
         except OSError:
@@ -465,6 +466,14 @@ def mark_first_time():
     # make sure we save the config now, it's really annoying if a first-time
     # startup dialog pops up again
     app.config.save()
+
+def should_create_movies_directory(path):
+    """Figure out if we should create the movies directory if it's missing."""
+    if sys.platform == 'darwin' and path.startswith("/Volumes/"):
+        # Hack to fix #17826.  Don't try to create new directories in the
+        # mount points on OS X.
+        return False
+    return True
 
 def is_movies_directory_gone():
     """Checks to see if the MOVIES_DIRECTORY exists.
