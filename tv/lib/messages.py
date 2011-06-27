@@ -1175,14 +1175,14 @@ class ItemInfo(object):
         d = self.__dict__.copy()
         d['device'] = None
         del d['description_stripped']
-        del d['search_ngrams']
+        del d['search_terms']
         return d
 
     def __setstate__(self, d):
         self.__dict__.update(d)
         self.description_stripped = ItemInfo.html_stripper.strip(
                 self.description)
-        self.search_ngrams = search.calc_ngrams(self)
+        self.search_terms = search.calc_search_terms(self)
 
     def __init__(self, id_, **kwargs):
         self.id = id_
@@ -1194,8 +1194,8 @@ class ItemInfo(object):
         if not hasattr(self, 'description_stripped'):
             self.description_stripped = ItemInfo.html_stripper.strip(
                 self.description)
-        if not hasattr(self, 'search_ngrams'):
-            self.search_ngrams = search.calc_ngrams(self)
+        if not hasattr(self, 'search_terms'):
+            self.search_terms = search.calc_search_terms(self)
         self.name_sort_key = util.name_sort_key(self.name)
         self.album_sort_key = util.name_sort_key(self.album)
         self.artist_sort_key = util.name_sort_key(self.artist)
