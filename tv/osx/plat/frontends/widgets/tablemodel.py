@@ -31,7 +31,8 @@
 
 import logging
 
-from AppKit import NSDragOperationNone, NSTableViewDropOn, protocols
+from AppKit import (NSDragOperationNone, NSTableViewDropOn,
+                    NSOutlineViewDropOnItemIndex, protocols)
 from Foundation import NSObject, NSNotFound, NSMutableIndexSet
 from objc import YES, NO, nil
 
@@ -457,9 +458,17 @@ class DataSourceBase(NSObject):
         typ = self.calcType_(drag_info)
         if typ:
             wrapper = wrappermap.wrapper(view)
-            return self.drag_dest.validate_drop(wrapper, self.model, typ,
-                    drag_info.draggingSourceOperationMask(), parent,
-                    position)
+            drop_action = self.drag_dest.validate_drop(
+                wrapper, self.model, typ,
+                drag_info.draggingSourceOperationMask(), parent,
+                position)
+            if not drop_action:
+                return NSDragOperationNone
+            if isinstance(drop_action, (tuple, list)):
+                drop_action, iter = drop_action
+                view.setDropRow_dropOperation_(self.model.row_of_iter(iter),
+                                               NSTableViewDropOn)
+            return drop_action
         else:
             return NSDragOperationNone
 
@@ -501,8 +510,14 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
     def tableView_validateDrop_proposedRow_proposedDropOperation_(self,
             tableview, drag_info, row, operation):
         parent, position  = self.translateRow_operation_(row, operation)
-        return self.validateDrop_dragInfo_parentIter_position_(tableview,
+        drop_action = self.validateDrop_dragInfo_parentIter_position_(tableview,
                 drag_info, parent, position)
+        if isinstance(drop_action, (list, tuple)):
+            # XXX nothing uses this yet
+            drop_action, iter = drop_action
+            tableview.setDropRow_dropOperation_(self.model.row_of_iter(iter),
+                                                NSTableViewDropOn)
+        return drop_action
 
     def tableView_acceptDrop_row_dropOperation_(self,
             tableview, drag_info, row, operation):
@@ -563,8 +578,13 @@ class MiroOutlineViewDataSource(DataSourceBase, protocols.NSOutlineViewDataSourc
             iter = None
         else:
             iter = self.model.iter_for_item[item]
-        return self.validateDrop_dragInfo_parentIter_position_( outlineview,
-                drag_info, iter, child_index)
+        drop_action = self.validateDrop_dragInfo_parentIter_position_(
+            outlineview, drag_info, iter, child_index)
+        if isinstance(drop_action, (tuple, list)):
+            drop_action, iter = drop_action
+            outlineview.setDropItem_dropChildIndex_(
+                iter.value(), NSOutlineViewDropOnItemIndex)
+        return drop_action
 
     def outlineView_acceptDrop_item_childIndex_(self, outlineview, drag_info,
             item, child_index):

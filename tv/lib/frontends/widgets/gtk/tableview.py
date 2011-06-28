@@ -694,8 +694,15 @@ class DNDHandlerMixin(object):
         for pos_info in self.calc_positions(x, y):
             drop_action = self.drag_dest.validate_drop(self, self.model, type,
                     drag_context.actions, pos_info[0], pos_info[1])
+            if isinstance(drop_action, (list, tuple)):
+                drop_action, iter = drop_action
+                path = self.model.get_path(iter)
+                pos = gtk.TREE_VIEW_DROP_INTO_OR_BEFORE
+            else:
+                path, pos = pos_info[2:4]
+            
             if drop_action:
-                self.set_drag_dest_row(pos_info[2], pos_info[3])
+                self.set_drag_dest_row(path, pos)
                 break
         else:
             self.unset_drag_dest_row()

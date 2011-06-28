@@ -270,13 +270,19 @@ class DeviceDropHandler(object):
 
     def validate_drop(self,
             _widget, model, typ, _source_actions, parent, position):
-        if position == -1 and parent and typ in self.allowed_types():
-            device = model[parent][0]
-            if not isinstance(device, messages.DeviceInfo):
-                # DAAP share
-                return widgetset.DRAG_ACTION_NONE
-            if device.mount and not getattr(device, 'fake', False):
+        if typ not in self.allowed_types() or not parent:
+            return widgetset.DRAG_ACTION_NONE
+        device = model[parent][0]
+        if not isinstance(device, messages.DeviceInfo):
+            return widgetset.DRAG_ACTION_NONE
+        if device.mount:
+            if position != -1:
+                return (widgetset.DRAG_ACTION_COPY, parent)
+            elif not getattr(device, 'fake', False):
                 return widgetset.DRAG_ACTION_COPY
+            else:
+                return (widgetset.DRAG_ACTION_COPY,
+                        model.parent_iter(parent))
         return widgetset.DRAG_ACTION_NONE
 
     def accept_drop(self,
