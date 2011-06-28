@@ -40,6 +40,7 @@ from miro.gtcache import gettext as _
 import logging
 import os
 import config
+import sys
 import traceback
 import threading
 import time
