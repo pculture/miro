@@ -30,7 +30,7 @@
 import os
 import objc
 import logging
-import Foundation
+from Foundation import *
 
 from miro import app
 from miro import prefs
@@ -48,59 +48,114 @@ SUSkippedVersionPref = prefs.Pref(key="SUSkippedVersion", default='', platformSp
 updater = None
 alerter = None
 
-class MiroUpdater (SUUpdater):
+(
+    SUInstallUpdateChoice,
+    SURemindMeLaterChoice,
+    SUSkipThisVersionChoice
+) = range(3)
 
+# Dummy NSURLDownload override so we can avoid checking the DSA key by
+# pretending we got the download from a SSL-enabled source.
+class DummyURLDownload(NSObject):
+    @objc.signature("@@:")
+    def request(self):
+        return self.theRequest
+
+    def initWithRequest_(self, request):
+        self = self.init()
+        self.theRequest = request
+        return self
+
+class MiroUpdateDriver(SUUIBasedUpdateDriver):
+    @objc.signature("v@:@i")
     def updateAlert_finishedWithChoice_(self, alert, choice):
-        global alerter # release our kept reference
-        alerter = None
-
-        if choice == 0:    # SUInstallUpdateChoice
+        if choice == SUInstallUpdateChoice:
             app.config.set(SUSkippedVersionPref, '')
-            self.beginDownload()
-
-        elif choice == 1:  # SURemindMeLaterChoice
-            objc.setInstanceVariable(self, 'updateInProgress', objc.NO, True)
+        elif choice == SURemindMeLaterChoice:
             app.config.set(SUSkippedVersionPref, '')
-            self.scheduleCheckWithInterval_(30 * 60)
+        elif choice == SUSkipThisVersionChoice:
+            suItem = objc.getInstanceVariable(self, 'updateItem')
+            app.config.set(SUSkippedVersionPref, suItem.versionString())
+        # Do whatever it is the superclass has to do.
+        SUUIBasedUpdateDriver.updateAlert_finishedWithChoice_(self, alert,
+                                                              choice)
 
-        elif choice == 2:  # SUSkipThisVersionChoice
-            objc.setInstanceVariable(self, 'updateInProgress', objc.NO, True)
-            suItem = objc.getInstanceVariable(updater, 'updateItem')
-            app.config.set(SUSkippedVersionPref, suItem.fileVersion())
+    # NB: we override this because Sparkle 1.5 or above will require DSA
+    # checking on all non-secure download.  (Secure = appcast + download
+    # both transmitted via SSL).  We currently don't do this so need to trick
+    # Sparkle into thinking we got it over SSL.
+    @objc.signature("v@:@")
+    def downloadDidFinish_(self, d):
+        url = d.request().URL()
+        temp_url = NSURL.alloc().initWithScheme_host_path_('https', url.host(),
+                                                           url.path())
+        appcast_url = objc.getInstanceVariable(self, 'appcastURL')
+        temp_appcast_url = NSURL.alloc().initWithScheme_host_path_('https',
+                                                           appcast_url.host(),
+                                                           appcast_url.path())
+        request = NSURLRequest.requestWithURL_(temp_url)
+        fake_d = DummyURLDownload.alloc().initWithRequest_(request)
+
+        objc.setInstanceVariable(self, 'appcastURL', temp_appcast_url, objc.YES)
+
+        # Back to your regular scheduled programming ..
+        SUUIBasedUpdateDriver.downloadDidFinish_(self, fake_d)
+
+        # Restoring values to what they were previously.
+        objc.setInstanceVariable(self, 'appcastURL', appcast_url, objc.YES)
 
 ###############################################################################
 
 def setup():
     """ Instantiate the unique global MiroUpdater object."""
     global updater
-    updater = MiroUpdater.alloc().init()
-    updater.scheduleCheckWithInterval_(0)
-
+    updater = SUUpdater.sharedUpdater()
 
 @on_ui_thread
 def handleNewUpdate(latest):
-    """ A new update has been found, the Sparkle framework will now take control
+    """A new update has been found, the Sparkle framework will now take control
     and perform user interaction and automatic update on our behalf. Since the
-    appcast has already been fetched and parsed by the crossplatform code, Sparkle 
-    is actually not used in *full* automatic mode so we have to short-circuit 
-    some of its code and manually call the parts we are interested in.
+    appcast has already been fetched and parsed by the crossplatform code,
+    Sparkle is actually not used in *full* automatic mode so we have to
+    short-circuit some of its code and manually call the parts we are
+    interested in.
     
     This includes:
-    - manually building a clean dictionary containing the RSS item corresponding 
-      to the latest version of the software and then creating an SUAppcastItem 
-      with this dictionary.
-    - manually setting the global updater 'updateItem' ivar to the SUAppcastItem
-      instance we just created. This is slightly hackish, but this is the *only* 
-      way to make it work correctly in our case, otherwise Sparkle will fail to
-      download the update and throw a 'bad URL' error.
-    - manually creating and calling an SUUpdateAlert object (which we must retain
-      to prevent it to be automatically released by the Python garbage collector
-      and therefore cause bad crashes).
+    - manually building a clean dictionary containing the RSS item
+      corresponding to the latest version of the software and then
+      creating an SUAppcastItem with this dictionary.
+
+    - manually allocating and initializing a driver for the updater.  The
+      driver determines the policy for doing updates (e.g. auto updates,
+      UI, etc).  We use our own driver based on the SUUIBasedUpdateDriver,
+      which has overrides for a couple of functions to bypass functionality
+      which we don't implement yet, or if we have extra work that needs to be
+      done (possibly by calling portable code).
+
+    - manually setting ivar updateItem, host, appcastURL into the driver, which
+      would normally be done by Sparkle internally.  Set the driver to be an
+      ivar of the updater object, which was created at startup.  We ask the
+      bridge to retain these for us, as they would be if they were done by
+      Sparkle internally.  A bit hackish but it is the only way to make the
+      Sparkle guts happy since we are creating things manually.
+
+    - manually creating and calling an SUUpdateAlert object (which we must
+      retain to prevent it to be automatically released by the Python
+      garbage collector and therefore cause bad crashes).
+
+    - Set the delegate of the alerter to be the driver - which will handle
+      callbacks in response to state changes in the alerter.
     """
     if not _host_supported(latest):
         logging.warn("Update available but host system not supported.")
         return
-    
+
+    # If already running don't bother.
+    global updater
+    if updater.updateInProgress():
+        # Update currently in progress.
+        return
+
     dictionary = dict()
     _transfer(latest, 'title',            dictionary)
     _transfer(latest, 'pubdate',          dictionary, 'pubDate')
@@ -119,15 +174,25 @@ def handleNewUpdate(latest):
     suItem = SUAppcastItem.alloc().initWithDictionary_(dictionary)
     skipped_version = app.config.get(SUSkippedVersionPref)
     
-    if suItem.fileVersion() == skipped_version:
+    if suItem.versionString() == skipped_version:
         logging.debug("Skipping update by user request")
     else:
-        global updater
-        objc.setInstanceVariable(updater, 'updateItem', suItem, True)
+        host = objc.getInstanceVariable(updater, 'host')
 
         global alerter # keep a reference around
-        alerter = SUUpdateAlert.alloc().initWithAppcastItem_(suItem)
-        alerter.setDelegate_(updater)
+
+        final = app.config.get(prefs.APP_FINAL_RELEASE)
+        pref = prefs.AUTOUPDATE_URL if final else prefs.AUTOUPDATE_BETA_URL
+        appcast_url = NSURL.alloc().initWithString_(app.config.get(pref))
+        
+        alerter = SUUpdateAlert.alloc().initWithAppcastItem_host_(suItem, host)
+        driver = MiroUpdateDriver.alloc().initWithUpdater_(updater)
+        objc.setInstanceVariable(driver, 'updateItem', suItem, True)
+        objc.setInstanceVariable(driver, 'host', host, True)
+        objc.setInstanceVariable(driver, 'appcastURL', appcast_url, True)
+        objc.setInstanceVariable(updater, 'driver', driver, True)
+
+        alerter.setDelegate_(driver)
         alerter.showWindow_(updater)
 
 
