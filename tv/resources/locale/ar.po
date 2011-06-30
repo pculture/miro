@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-06-05 14:33-0400\n"
+"POT-Creation-Date: 2011-06-20 14:32-0400\n"
 "PO-Revision-Date: 2011-06-12 07:27+0000\n"
 "Last-Translator: Muhammed <Unknown>\n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2011-06-20 18:34+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-06-30 14:59+0000\n"
+"X-Generator: Launchpad (build 13333)\n"
 
 #: ../../windows/plat/frontends/widgets/application.py:205
 msgid "Close to tray?"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "System Default"
 msgstr "الإعدادات الإفتراضية"
 
-#: ../../osx/plat/utils.py:591 ../../windows/plat/utils.py:509
+#: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
 msgstr "iTunes"
 
@@ -213,12 +213,12 @@ msgstr "تم التحمبل"
 msgid "Download of video '%s' is finished."
 msgstr "انتهى تنزيل الفيديو '%s'"
 
-#: ../../lib/storedatabase.py:259
+#: ../../lib/storedatabase.py:263
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr "تحديث قاعدة بيانات %(appname)s فشل"
 
-#: ../../lib/storedatabase.py:262
+#: ../../lib/storedatabase.py:266
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -233,31 +233,31 @@ msgid ""
 "you will have to re-add your podcasts and media files."
 msgstr ""
 
-#: ../../lib/storedatabase.py:335
+#: ../../lib/storedatabase.py:339
 #, python-format
 msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
 "%(version)s)"
 msgstr ""
 
-#: ../../lib/storedatabase.py:749
+#: ../../lib/storedatabase.py:753
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../lib/storedatabase.py:751
+#: ../../lib/storedatabase.py:755
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "لقد نجح حفظ قاعدة البيانات. إنه آمن الآن أن تخرج بدون فقدان أي بيانات."
 
-#: ../../lib/storedatabase.py:812
+#: ../../lib/storedatabase.py:816
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../lib/storedatabase.py:815
+#: ../../lib/storedatabase.py:819
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -275,12 +275,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../lib/storedatabase.py:907
+#: ../../lib/storedatabase.py:911
 #, python-format
 msgid "%(appname)s database corrupt."
 msgstr ""
 
-#: ../../lib/storedatabase.py:910
+#: ../../lib/storedatabase.py:914
 #, python-format
 msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
@@ -354,7 +354,7 @@ msgstr "لا يوجد اتصال - سيحاول مجددًا قريبًا"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
-#: ../../lib/httpclient.py:750
+#: ../../lib/httpclient.py:756
 msgid "Unknown"
 msgstr "مجهول"
 
@@ -416,11 +416,11 @@ msgstr "خطأ مجهول"
 msgid "Connection closed"
 msgstr "تم غلق الإتصال"
 
-#: ../../lib/startup.py:134
+#: ../../lib/startup.py:136
 msgid "Database Error"
 msgstr "خطأ في قاعدة البيانات"
 
-#: ../../lib/startup.py:135
+#: ../../lib/startup.py:137
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to start up due to a problem with the "
@@ -438,11 +438,11 @@ msgid ""
 "%(url)s."
 msgstr ""
 
-#: ../../lib/startup.py:156
+#: ../../lib/startup.py:158
 msgid "Unknown Error"
 msgstr "خطأ مجهول"
 
-#: ../../lib/startup.py:157
+#: ../../lib/startup.py:159
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
@@ -451,11 +451,11 @@ msgstr ""
 "خطأ غير معروف منع %(appname)s من البدأ. من فضلك قم بالابلاغ عن الخطأ هنا "
 "%(url)s"
 
-#: ../../lib/startup.py:272
+#: ../../lib/startup.py:276
 msgid "Database too new"
 msgstr "قاعدة بيانات جديدة جدا"
 
-#: ../../lib/startup.py:274
+#: ../../lib/startup.py:278
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
@@ -464,11 +464,11 @@ msgstr ""
 "لديك قاعدة بيانات محفوظة عن طريق نسخة جديدة من %(appname)s. يجب تنزيل أحدث "
 "نسخة من %(appname)s وتشغيله"
 
-#: ../../lib/startup.py:552
+#: ../../lib/startup.py:566
 msgid "Submitting Crash Report"
 msgstr "جاري ارسال تقرير عن انهيار البرنامج"
 
-#: ../../lib/startup.py:554
+#: ../../lib/startup.py:568
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -521,7 +521,7 @@ msgid ""
 "and you have permission to access this file."
 msgstr ""
 
-#: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1670
+#: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1692
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr ""
@@ -534,7 +534,7 @@ msgstr ""
 msgid "USB Device"
 msgstr "جهاز يوإس‌بي"
 
-#: ../../lib/item.py:1297 ../../lib/messages.py:1352
+#: ../../lib/item.py:1297 ../../lib/messages.py:1295
 msgid "queued for download"
 msgstr "في قائمة الإنتظار للتحميل"
 
@@ -550,7 +550,7 @@ msgstr "جاري البدأ..."
 msgid "Search All"
 msgstr "بحث الكل"
 
-#: ../../lib/sharing.py:250 ../../lib/messages.py:1270
+#: ../../lib/sharing.py:250 ../../lib/messages.py:1213
 msgid "Locked"
 msgstr "مقفل"
 
@@ -697,16 +697,16 @@ msgstr[1] ""
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../lib/feed.py:994
+#: ../../lib/feed.py:1033
 msgid "Bad content-type"
 msgstr "نوع المحتوى غير صالح"
 
-#: ../../lib/feed.py:1007
+#: ../../lib/feed.py:1046
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
 msgstr ""
 
-#: ../../lib/feed.py:1010
+#: ../../lib/feed.py:1049
 #, python-format
 msgid ""
 "This podcast is not compatible with %(appname)s but we'll try our best to "
@@ -719,20 +719,20 @@ msgid ""
 "Do you want to try to load this podcast anyway?"
 msgstr ""
 
-#: ../../lib/feed.py:2297 ../../lib/feed.py:2437
+#: ../../lib/feed.py:2319 ../../lib/feed.py:2459
 msgid "Local Files"
 msgstr "ملفات محلية"
 
-#: ../../lib/feed.py:2306 ../../lib/feed.py:2412 ../../lib/feed.py:2422
+#: ../../lib/feed.py:2328 ../../lib/feed.py:2434 ../../lib/feed.py:2444
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Search"
 msgstr "ابحث"
 
-#: ../../lib/messages.py:1273 ../../lib/frontends/widgets/itemedit.py:555
+#: ../../lib/messages.py:1216 ../../lib/frontends/widgets/itemedit.py:555
 msgid "Movie"
 msgstr "فيلم"
 
-#: ../../lib/messages.py:1275 ../../lib/frontends/widgets/diagnostics.py:80
+#: ../../lib/messages.py:1218 ../../lib/frontends/widgets/diagnostics.py:80
 #: ../../lib/frontends/widgets/widgetconst.py:78
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/itemedit.py:544
@@ -741,37 +741,37 @@ msgstr "فيلم"
 msgid "Show"
 msgstr "إظهار"
 
-#: ../../lib/messages.py:1277 ../../lib/frontends/widgets/itemedit.py:557
+#: ../../lib/messages.py:1220 ../../lib/frontends/widgets/itemedit.py:557
 msgid "Clip"
 msgstr "مقطع"
 
-#: ../../lib/messages.py:1279 ../../lib/frontends/widgets/itemedit.py:558
+#: ../../lib/messages.py:1222 ../../lib/frontends/widgets/itemedit.py:558
 msgid "Podcast"
 msgstr "بودكاست"
 
-#: ../../lib/messages.py:1298
+#: ../../lib/messages.py:1241
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
 
-#: ../../lib/util.py:455 ../../lib/util.py:457
+#: ../../lib/util.py:443 ../../lib/util.py:445
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)s جيجا بايت"
 
-#: ../../lib/util.py:461 ../../lib/util.py:463
+#: ../../lib/util.py:449 ../../lib/util.py:451
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)s ميجا بايت"
 
-#: ../../lib/util.py:467 ../../lib/util.py:469
+#: ../../lib/util.py:455 ../../lib/util.py:457
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)s كيلو بايت"
 
-#: ../../lib/util.py:473 ../../lib/util.py:475
+#: ../../lib/util.py:461 ../../lib/util.py:463
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)s بايت"
@@ -1666,7 +1666,7 @@ msgstr "المسار"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:482
 #: ../../lib/frontends/widgets/menus.py:259
-#: ../../lib/frontends/widgets/application.py:731
+#: ../../lib/frontends/widgets/application.py:782
 msgid "Add Source"
 msgstr "أضف مصدرًا"
 
@@ -1921,11 +1921,11 @@ msgstr ""
 msgid "No Results"
 msgstr "لا توجد نتائج"
 
-#: ../../lib/frontends/widgets/browser.py:157
+#: ../../lib/frontends/widgets/browser.py:161
 msgid "Open in browser"
 msgstr "افتح في المتصفح"
 
-#: ../../lib/frontends/widgets/browser.py:164
+#: ../../lib/frontends/widgets/browser.py:168
 msgid "Download this video"
 msgstr "نزّل هذا الفيديو"
 
@@ -2674,12 +2674,12 @@ msgid "%(count)s items"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1085
-#: ../../lib/frontends/widgets/application.py:836
+#: ../../lib/frontends/widgets/application.py:887
 msgid "Create Playlist"
 msgstr "إنشاء لائحة تشغيل"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1086
-#: ../../lib/frontends/widgets/application.py:837
+#: ../../lib/frontends/widgets/application.py:888
 msgid "Enter a name for the new playlist"
 msgstr "أدخل اسم اللائحة الجديدة"
 
@@ -2769,12 +2769,12 @@ msgid "Rename"
 msgstr "إعادة تسمية"
 
 #: ../../lib/frontends/widgets/menus.py:270
-#: ../../lib/frontends/widgets/application.py:885
+#: ../../lib/frontends/widgets/application.py:936
 msgid "Rename Podcast"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:271
-#: ../../lib/frontends/widgets/application.py:899
+#: ../../lib/frontends/widgets/application.py:950
 #: ../../lib/frontends/widgets/tablist.py:969
 msgid "Rename Source"
 msgstr ""
@@ -2842,7 +2842,7 @@ msgid "New Playlist Folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:309
-#: ../../lib/frontends/widgets/application.py:890
+#: ../../lib/frontends/widgets/application.py:941
 #: ../../lib/frontends/widgets/tablist.py:1144 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "إعادة تسمية قائمة الملفات"
@@ -3179,11 +3179,30 @@ msgstr "الصوتيات"
 msgid "Misc"
 msgstr "متنوع"
 
-#: ../../lib/frontends/widgets/application.py:213
+#: ../../lib/frontends/widgets/application.py:216
 msgid "Movies directory gone"
 msgstr "اختفى مسار الأفلام"
 
-#: ../../lib/frontends/widgets/application.py:215
+#: ../../lib/frontends/widgets/application.py:221
+#, python-format
+msgid ""
+"%(shortappname)s can't use the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected, is a directory that %(shortappname)s does not have write "
+"permission to, or there is something that is not a directory at that path.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+" \n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:246
 #, python-format
 msgid ""
 "%(shortappname)s can't use the primary video directory located at:\n"
@@ -3198,47 +3217,47 @@ msgid ""
 "the problem and relaunch %(shortappname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:406
+#: ../../lib/frontends/widgets/application.py:457
 msgid "Error Revealing File"
 msgstr "الخطأ الذي يكشف ملفا"
 
-#: ../../lib/frontends/widgets/application.py:407
+#: ../../lib/frontends/widgets/application.py:458
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:418
+#: ../../lib/frontends/widgets/application.py:469
 msgid "Open Files..."
 msgstr "افتح ملفات..."
 
-#: ../../lib/frontends/widgets/application.py:429
-#: ../../lib/frontends/widgets/application.py:434
+#: ../../lib/frontends/widgets/application.py:480
+#: ../../lib/frontends/widgets/application.py:485
 msgid "Open Files - Error"
 msgstr "فتح ملفات - خطأ"
 
-#: ../../lib/frontends/widgets/application.py:430
-#: ../../lib/frontends/widgets/application.py:801
+#: ../../lib/frontends/widgets/application.py:481
+#: ../../lib/frontends/widgets/application.py:852
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:435
+#: ../../lib/frontends/widgets/application.py:486
 msgid "The following files do not exist:"
 msgstr "الملفات التالية غير موجودة"
 
-#: ../../lib/frontends/widgets/application.py:469
+#: ../../lib/frontends/widgets/application.py:520
 msgid "New Download"
 msgstr "تنزيل جديد"
 
-#: ../../lib/frontends/widgets/application.py:470
+#: ../../lib/frontends/widgets/application.py:521
 msgid "Enter the URL of the item to download"
 msgstr "أدخل عنوان العنصر لتنزيله"
 
-#: ../../lib/frontends/widgets/application.py:471
+#: ../../lib/frontends/widgets/application.py:522
 msgid "New Download - Invalid URL"
 msgstr "تنزيل جديد - العنوان غير صالح"
 
-#: ../../lib/frontends/widgets/application.py:472
+#: ../../lib/frontends/widgets/application.py:523
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -3250,22 +3269,22 @@ msgstr ""
 "\n"
 "أدخل عنوان العنصر لتنزيله"
 
-#: ../../lib/frontends/widgets/application.py:488
+#: ../../lib/frontends/widgets/application.py:539
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:490
+#: ../../lib/frontends/widgets/application.py:541
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:539
+#: ../../lib/frontends/widgets/application.py:590
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "حذف عنصر"
 
-#: ../../lib/frontends/widgets/application.py:543
+#: ../../lib/frontends/widgets/application.py:594
 msgid ""
 "One of these items was not downloaded from a podcast. Would you like to "
 "delete it or just remove it from the Library?"
@@ -3275,7 +3294,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:555
+#: ../../lib/frontends/widgets/application.py:606
 msgid ""
 "One of these items is a folder.  Deleting/Removing a folder will "
 "delete/remove it's contents"
@@ -3285,14 +3304,14 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:570
+#: ../../lib/frontends/widgets/application.py:621
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:577
+#: ../../lib/frontends/widgets/application.py:628
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -3300,36 +3319,36 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:635
+#: ../../lib/frontends/widgets/application.py:686
 msgid "Save Item As..."
 msgstr "حفظ العنصر..."
 
-#: ../../lib/frontends/widgets/application.py:678
+#: ../../lib/frontends/widgets/application.py:729
 #: ../../lib/frontends/widgets/firsttimedialog.py:326
 msgid "Choose directory to search for media files"
 msgstr "اختيار مجلد للبحث عن ملفات الوسائط المتعددة."
 
-#: ../../lib/frontends/widgets/application.py:691
+#: ../../lib/frontends/widgets/application.py:742
 msgid "Choose files to import"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:693
+#: ../../lib/frontends/widgets/application.py:744
 msgid "Video Files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:694
+#: ../../lib/frontends/widgets/application.py:745
 msgid "Audio Files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:732
+#: ../../lib/frontends/widgets/application.py:783
 msgid "Enter the URL of the source to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:733
+#: ../../lib/frontends/widgets/application.py:784
 msgid "Add Source - Invalid URL"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:734
+#: ../../lib/frontends/widgets/application.py:785
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -3337,131 +3356,131 @@ msgid ""
 "Enter the URL of the source to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:791
+#: ../../lib/frontends/widgets/application.py:842
 msgid "Import OPML File"
 msgstr "إستيراد ملف الOPML"
 
-#: ../../lib/frontends/widgets/application.py:793
+#: ../../lib/frontends/widgets/application.py:844
 msgid "OPML Files"
 msgstr "ملفات الOPML"
 
-#: ../../lib/frontends/widgets/application.py:800
+#: ../../lib/frontends/widgets/application.py:851
 msgid "Import OPML File - Error"
 msgstr "استيراد ملف OPML - خطأ"
 
-#: ../../lib/frontends/widgets/application.py:806
+#: ../../lib/frontends/widgets/application.py:857
 msgid "Export OPML File"
 msgstr "تصدير ملف الOPML"
 
-#: ../../lib/frontends/widgets/application.py:858
+#: ../../lib/frontends/widgets/application.py:909
 msgid "Create Playlist Folder"
 msgstr "إنشاء مجلّد لوائح التشغيل"
 
-#: ../../lib/frontends/widgets/application.py:859
+#: ../../lib/frontends/widgets/application.py:910
 msgid "Enter a name for the new playlist folder"
 msgstr "أدخل اسم لمجلّد لوائح التشغيل الجديد"
 
-#: ../../lib/frontends/widgets/application.py:880
+#: ../../lib/frontends/widgets/application.py:931
 #: ../../lib/frontends/widgets/tablist.py:1072
 msgid "Rename Podcast Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:881
+#: ../../lib/frontends/widgets/application.py:932
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:886
+#: ../../lib/frontends/widgets/application.py:937
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:891
+#: ../../lib/frontends/widgets/application.py:942
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:895
+#: ../../lib/frontends/widgets/application.py:946
 #: ../../lib/frontends/widgets/tablist.py:1138
 msgid "Rename Playlist Folder"
 msgstr "إعادة تسمية مجلد قائمة الملفات"
 
-#: ../../lib/frontends/widgets/application.py:896
+#: ../../lib/frontends/widgets/application.py:947
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:900
+#: ../../lib/frontends/widgets/application.py:951
 #, python-format
 msgid "Enter a new name for the source %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:919
+#: ../../lib/frontends/widgets/application.py:970
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:921
+#: ../../lib/frontends/widgets/application.py:972
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:936
+#: ../../lib/frontends/widgets/application.py:987
 msgid "Remove source"
 msgid_plural "Remove sources"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:938
+#: ../../lib/frontends/widgets/application.py:989
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:962
+#: ../../lib/frontends/widgets/application.py:1013
 #, python-format
 msgid "Import Music from %(media_player)s?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:963
+#: ../../lib/frontends/widgets/application.py:1014
 #, python-format
 msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1005
-#: ../../lib/frontends/widgets/application.py:1029
+#: ../../lib/frontends/widgets/application.py:1056
+#: ../../lib/frontends/widgets/application.py:1080
 msgid "Select File to write Profile to"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1090
-#: ../../lib/frontends/widgets/application.py:1109
-#: ../../lib/frontends/widgets/application.py:1128
+#: ../../lib/frontends/widgets/application.py:1141
+#: ../../lib/frontends/widgets/application.py:1160
+#: ../../lib/frontends/widgets/application.py:1179
 msgid "Are you sure you want to quit?"
 msgstr "أمتأكد أنك تريد الخروج؟"
 
-#: ../../lib/frontends/widgets/application.py:1099
+#: ../../lib/frontends/widgets/application.py:1150
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1111
+#: ../../lib/frontends/widgets/application.py:1162
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:1116
+#: ../../lib/frontends/widgets/application.py:1167
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "نبهني عند محاولة الخروج أثناء التنزيل"
 
-#: ../../lib/frontends/widgets/application.py:1130
+#: ../../lib/frontends/widgets/application.py:1181
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -3469,15 +3488,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:1135
+#: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1397
+#: ../../lib/frontends/widgets/application.py:1451
 msgid "Connect failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1398
+#: ../../lib/frontends/widgets/application.py:1452
 #, python-format
 msgid ""
 "Connection to share %(name)s failed.\n"
@@ -3485,11 +3504,11 @@ msgid ""
 "The share is either unreachable or incompatible with %(appname)s sharing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1408
+#: ../../lib/frontends/widgets/application.py:1462
 msgid "Eject failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1409
+#: ../../lib/frontends/widgets/application.py:1463
 #, python-format
 msgid ""
 "Ejecting device '%(name)s' failed.\n"
@@ -3497,11 +3516,11 @@ msgid ""
 "The device is in use."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1422
+#: ../../lib/frontends/widgets/application.py:1476
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1424
+#: ../../lib/frontends/widgets/application.py:1478
 #, python-format
 msgid ""
 "%(appname)s is upgrading your database of podcasts and files.  This one-time "
@@ -3509,18 +3528,18 @@ msgid ""
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1430
+#: ../../lib/frontends/widgets/application.py:1484
 #: ../../lib/dbupgradeprogress.py:104
 msgid "Preparing Items"
 msgstr "يجهز العناصر"
 
-#: ../../lib/frontends/widgets/application.py:1431
+#: ../../lib/frontends/widgets/application.py:1485
 #, python-format
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1669
+#: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
 msgstr "رسالة"
 
@@ -3993,11 +4012,11 @@ msgstr "لائحة تشغيل مثالي"
 msgid "Enter a new name for the playlist %s"
 msgstr "أدخل اسم جديد للائحة التشغيل %s"
 
-#: ../../lib/controller.py:173
+#: ../../lib/controller.py:176
 msgid "Sending Crash Report"
 msgstr ""
 
-#: ../../lib/controller.py:194
+#: ../../lib/controller.py:197
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
@@ -4051,11 +4070,11 @@ msgstr ""
 msgid "Error moving to movies directory"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
+#: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1067
 msgid "Not enough disk space"
 msgstr "لا يوجد مساحة كافية على القرص"
 
-#: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1062
+#: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1068
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr ""
@@ -4064,40 +4083,40 @@ msgstr ""
 msgid "no content"
 msgstr "لا يوجد محتوى"
 
-#: ../../lib/dl_daemon/download.py:1096
+#: ../../lib/dl_daemon/download.py:1102
 msgid "BitTorrent failure"
 msgstr "فشل بيت-تورنت"
 
-#: ../../lib/dl_daemon/download.py:1097
+#: ../../lib/dl_daemon/download.py:1103
 msgid "BitTorrent failed to startup"
 msgstr "فشل بيت-تورنت في البدأ"
 
-#: ../../lib/dl_daemon/download.py:1239
+#: ../../lib/dl_daemon/download.py:1245
 msgid "waiting to check existing files"
 msgstr "ينتظر التحقق من الملفات الموجودة"
 
-#: ../../lib/dl_daemon/download.py:1241
+#: ../../lib/dl_daemon/download.py:1247
 msgid "checking existing files"
 msgstr "يتحقق من الملفات الموجودة"
 
-#: ../../lib/dl_daemon/download.py:1243
+#: ../../lib/dl_daemon/download.py:1249
 msgid "allocating disk space"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1486
+#: ../../lib/dl_daemon/download.py:1492
 msgid "Corrupt Torrent"
 msgstr "التورنت فاسد"
 
-#: ../../lib/dl_daemon/download.py:1487
+#: ../../lib/dl_daemon/download.py:1493
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1531
+#: ../../lib/dl_daemon/download.py:1537
 msgid "Torrent file deleted"
 msgstr "ملف التورنت محذوف"
 
-#: ../../lib/dl_daemon/download.py:1532
+#: ../../lib/dl_daemon/download.py:1538
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
@@ -4171,17 +4190,17 @@ msgid "Subtitle file %(tracknumber)d"
 msgstr "ملف الترجمة %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:603
-#: ../../windows/plat/renderers/vlc.py:750
-#: ../../windows/plat/renderers/vlc.py:753
-#: ../../windows/plat/renderers/vlc.py:754
+#: ../../windows/plat/renderers/vlc.py:762
+#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:766
 msgid "Eastern European"
 msgstr "أوروبي شرقي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
-#: ../../windows/plat/renderers/vlc.py:751
-#: ../../windows/plat/renderers/vlc.py:752
+#: ../../windows/plat/renderers/vlc.py:763
+#: ../../windows/plat/renderers/vlc.py:764
 msgid "Baltic"
 msgstr "بلطيقي"
 
@@ -4219,21 +4238,21 @@ msgid "Romanian"
 msgstr "روماني"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
-#: ../../windows/plat/renderers/vlc.py:760
-#: ../../windows/plat/renderers/vlc.py:762
+#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:774
 msgid "Western European"
 msgstr "أوروبي غربي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
-#: ../../windows/plat/renderers/vlc.py:761
+#: ../../windows/plat/renderers/vlc.py:773
 msgid "Celtic"
 msgstr "السلتية"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
-#: ../../windows/plat/renderers/vlc.py:764
-#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:776
+#: ../../windows/plat/renderers/vlc.py:777
 msgid "Greek"
 msgstr "اليونانية"
 
@@ -4258,7 +4277,7 @@ msgid "Western"
 msgstr "غربي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
-#: ../../windows/plat/renderers/vlc.py:768
+#: ../../windows/plat/renderers/vlc.py:780
 msgid "East Asian"
 msgstr "شرق آسيوي"
 
@@ -4278,8 +4297,8 @@ msgstr "صيني تقليدي"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:646
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
-#: ../../windows/plat/renderers/vlc.py:772
-#: ../../windows/plat/renderers/vlc.py:774
+#: ../../windows/plat/renderers/vlc.py:784
+#: ../../windows/plat/renderers/vlc.py:786
 msgid "Japanese"
 msgstr "اليابانية"
 
@@ -4287,13 +4306,13 @@ msgstr "اليابانية"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:650
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
-#: ../../windows/plat/renderers/vlc.py:775
-#: ../../windows/plat/renderers/vlc.py:776
+#: ../../windows/plat/renderers/vlc.py:787
+#: ../../windows/plat/renderers/vlc.py:788
 msgid "Korean"
 msgstr "الكورية"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:654
-#: ../../windows/plat/renderers/vlc.py:782
+#: ../../windows/plat/renderers/vlc.py:794
 msgid "SE and SW Asian"
 msgstr "آسيوي جنوبي شرقي وجنوبي غربي"
 
@@ -4318,7 +4337,7 @@ msgid "Hindi"
 msgstr "هندي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:660
-#: ../../windows/plat/renderers/vlc.py:785
+#: ../../windows/plat/renderers/vlc.py:797
 msgid "Thai"
 msgstr "التايلاندية"
 
@@ -4326,21 +4345,21 @@ msgstr "التايلاندية"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:662
 #: ../../linux/plat/renderers/gstreamerrenderer.py:663
 #: ../../linux/plat/renderers/gstreamerrenderer.py:664
-#: ../../windows/plat/renderers/vlc.py:783
-#: ../../windows/plat/renderers/vlc.py:784
+#: ../../windows/plat/renderers/vlc.py:795
+#: ../../windows/plat/renderers/vlc.py:796
 msgid "Turkish"
 msgstr "التركية"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:665
 #: ../../linux/plat/renderers/gstreamerrenderer.py:666
 #: ../../linux/plat/renderers/gstreamerrenderer.py:667
-#: ../../windows/plat/renderers/vlc.py:786
-#: ../../windows/plat/renderers/vlc.py:787
+#: ../../windows/plat/renderers/vlc.py:798
+#: ../../windows/plat/renderers/vlc.py:799
 msgid "Vietnamese"
 msgstr "الفيتنامية"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:669
-#: ../../windows/plat/renderers/vlc.py:790
+#: ../../windows/plat/renderers/vlc.py:802
 msgid "Middle Eastern"
 msgstr "شرق أوسطي"
 
@@ -4348,8 +4367,8 @@ msgstr "شرق أوسطي"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:671
 #: ../../linux/plat/renderers/gstreamerrenderer.py:672
 #: ../../linux/plat/renderers/gstreamerrenderer.py:673
-#: ../../windows/plat/renderers/vlc.py:791
-#: ../../windows/plat/renderers/vlc.py:792
+#: ../../windows/plat/renderers/vlc.py:803
+#: ../../windows/plat/renderers/vlc.py:804
 msgid "Arabic"
 msgstr "العربية"
 
@@ -4357,8 +4376,8 @@ msgstr "العربية"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:675
 #: ../../linux/plat/renderers/gstreamerrenderer.py:676
 #: ../../linux/plat/renderers/gstreamerrenderer.py:677
-#: ../../windows/plat/renderers/vlc.py:793
-#: ../../windows/plat/renderers/vlc.py:794
+#: ../../windows/plat/renderers/vlc.py:805
+#: ../../windows/plat/renderers/vlc.py:806
 msgid "Hebrew"
 msgstr "العبريّة"
 
@@ -4376,7 +4395,7 @@ msgstr "فارسي"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:684
 #: ../../linux/plat/renderers/gstreamerrenderer.py:685
 #: ../../linux/plat/renderers/gstreamerrenderer.py:686
-#: ../../windows/plat/renderers/vlc.py:797
+#: ../../windows/plat/renderers/vlc.py:809
 msgid "Unicode"
 msgstr "Unicode"
 
@@ -4495,54 +4514,54 @@ msgstr "اخرج نهائيًا من %(appname)s."
 msgid "Subtitle font:"
 msgstr "خط الترجمة"
 
-#: ../../windows/plat/renderers/vlc.py:755
+#: ../../windows/plat/renderers/vlc.py:767
 msgid "Russian"
 msgstr "الروسية"
 
-#: ../../windows/plat/renderers/vlc.py:756
+#: ../../windows/plat/renderers/vlc.py:768
 msgid "South-Eastern European"
 msgstr "أوروبي جنوب شرقي"
 
-#: ../../windows/plat/renderers/vlc.py:757
+#: ../../windows/plat/renderers/vlc.py:769
 msgid "Ukrainian"
 msgstr "الأوكرانية"
 
-#: ../../windows/plat/renderers/vlc.py:763
+#: ../../windows/plat/renderers/vlc.py:775
 msgid "Esperanto"
 msgstr "الاسبرانتو"
 
-#: ../../windows/plat/renderers/vlc.py:769
+#: ../../windows/plat/renderers/vlc.py:781
 msgid "Universal Chinese"
 msgstr "الصينية العالمية"
 
-#: ../../windows/plat/renderers/vlc.py:770
+#: ../../windows/plat/renderers/vlc.py:782
 msgid "Simplified Chinese"
 msgstr "صينية مبسّطة"
 
-#: ../../windows/plat/renderers/vlc.py:771
+#: ../../windows/plat/renderers/vlc.py:783
 msgid "Simplified Chinese Unix"
 msgstr "صينية مبسّطة لنظام يونيكس"
 
-#: ../../windows/plat/renderers/vlc.py:773
+#: ../../windows/plat/renderers/vlc.py:785
 msgid "Japanese Unix"
 msgstr "اليابانية لنظام يونيكس"
 
-#: ../../windows/plat/renderers/vlc.py:777
+#: ../../windows/plat/renderers/vlc.py:789
 msgid "Traditional Chinese"
 msgstr "صينية تقليدية"
 
-#: ../../windows/plat/renderers/vlc.py:778
+#: ../../windows/plat/renderers/vlc.py:790
 msgid "Traditional Chinese Unix"
 msgstr "صينية تقليدية لنظام يونيكس"
 
-#: ../../windows/plat/renderers/vlc.py:779
+#: ../../windows/plat/renderers/vlc.py:791
 msgid "Hong-Kong Supplementary"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:798
-#: ../../windows/plat/renderers/vlc.py:799
-#: ../../windows/plat/renderers/vlc.py:800
-#: ../../windows/plat/renderers/vlc.py:801
+#: ../../windows/plat/renderers/vlc.py:810
+#: ../../windows/plat/renderers/vlc.py:811
+#: ../../windows/plat/renderers/vlc.py:812
+#: ../../windows/plat/renderers/vlc.py:813
 msgid "Universal"
 msgstr "عالمي"
 

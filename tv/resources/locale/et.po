@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-06-05 14:33-0400\n"
+"POT-Creation-Date: 2011-06-20 14:32-0400\n"
 "PO-Revision-Date: 2011-05-23 18:18+0000\n"
 "Last-Translator: bushido <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -15,10 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-06-20 18:34+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-06-30 14:59+0000\n"
+"X-Generator: Launchpad (build 13333)\n"
 
-#: ../../osx/plat/utils.py:591 ../../windows/plat/utils.py:509
+#: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
 msgstr "iTunes"
 
@@ -195,12 +195,12 @@ msgstr "Allalaadimine lõpetatud"
 msgid "Download of video '%s' is finished."
 msgstr "Video '%s' allalaadimine on lõppenud."
 
-#: ../../lib/storedatabase.py:259
+#: ../../lib/storedatabase.py:263
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr "%(appname)s andmebaasi uuendamine luhtus"
 
-#: ../../lib/storedatabase.py:262
+#: ../../lib/storedatabase.py:266
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -215,31 +215,31 @@ msgid ""
 "you will have to re-add your podcasts and media files."
 msgstr ""
 
-#: ../../lib/storedatabase.py:335
+#: ../../lib/storedatabase.py:339
 #, python-format
 msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
 "%(version)s)"
 msgstr ""
 
-#: ../../lib/storedatabase.py:749
+#: ../../lib/storedatabase.py:753
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s andmebaas salvestati edukalt"
 
-#: ../../lib/storedatabase.py:751
+#: ../../lib/storedatabase.py:755
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "Andmebaas on edukalt salvestatud. Väljumisel pole nüüd andmekadude ohtu."
 
-#: ../../lib/storedatabase.py:812
+#: ../../lib/storedatabase.py:816
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s andmebaasi salvestamine ebaõnnestus"
 
-#: ../../lib/storedatabase.py:815
+#: ../../lib/storedatabase.py:819
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -257,12 +257,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../lib/storedatabase.py:907
+#: ../../lib/storedatabase.py:911
 #, python-format
 msgid "%(appname)s database corrupt."
 msgstr ""
 
-#: ../../lib/storedatabase.py:910
+#: ../../lib/storedatabase.py:914
 #, python-format
 msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
@@ -336,7 +336,7 @@ msgstr "pole ühendust - taastatakse  varsti"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
-#: ../../lib/httpclient.py:750
+#: ../../lib/httpclient.py:756
 msgid "Unknown"
 msgstr "Tundmatu"
 
@@ -398,11 +398,11 @@ msgstr "Tundmatu veakood"
 msgid "Connection closed"
 msgstr "Ühendus suletud"
 
-#: ../../lib/startup.py:134
+#: ../../lib/startup.py:136
 msgid "Database Error"
 msgstr "Andmebaasi viga"
 
-#: ../../lib/startup.py:135
+#: ../../lib/startup.py:137
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to start up due to a problem with the "
@@ -420,11 +420,11 @@ msgid ""
 "%(url)s."
 msgstr ""
 
-#: ../../lib/startup.py:156
+#: ../../lib/startup.py:158
 msgid "Unknown Error"
 msgstr "Tundmatu viga"
 
-#: ../../lib/startup.py:157
+#: ../../lib/startup.py:159
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
@@ -433,11 +433,11 @@ msgstr ""
 "Tundmatu viga takistas %(appname)s käivitumist. Palun esita vearaport "
 "aadressil %(url)s."
 
-#: ../../lib/startup.py:272
+#: ../../lib/startup.py:276
 msgid "Database too new"
 msgstr "Liiga uus andmebaas"
 
-#: ../../lib/startup.py:274
+#: ../../lib/startup.py:278
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
@@ -446,11 +446,11 @@ msgstr ""
 "Sul on andmebaas,mis on salvestatud koos uuema %(appname)s versiooniga. Sa "
 "pead allalaadima viimase %(appname)s versiooni ja käivitama selle."
 
-#: ../../lib/startup.py:552
+#: ../../lib/startup.py:566
 msgid "Submitting Crash Report"
 msgstr "Saadan krahhi raporti."
 
-#: ../../lib/startup.py:554
+#: ../../lib/startup.py:568
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -504,7 +504,7 @@ msgid ""
 "and you have permission to access this file."
 msgstr ""
 
-#: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1670
+#: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1692
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr "%(engine)s selle jaoks  -> '%(query)s'"
@@ -517,7 +517,7 @@ msgstr "Sinu kõvaketas peab olema tühjaks tehtud."
 msgid "USB Device"
 msgstr "USB seade"
 
-#: ../../lib/item.py:1297 ../../lib/messages.py:1352
+#: ../../lib/item.py:1297 ../../lib/messages.py:1295
 msgid "queued for download"
 msgstr "lisatud allalaadimise järjekorda"
 
@@ -533,7 +533,7 @@ msgstr "käivitumas..."
 msgid "Search All"
 msgstr "Otsi kõike"
 
-#: ../../lib/sharing.py:250 ../../lib/messages.py:1270
+#: ../../lib/sharing.py:250 ../../lib/messages.py:1213
 msgid "Locked"
 msgstr "Lukus"
 
@@ -652,16 +652,16 @@ msgstr[1] "Aegub: %(count)d minutit"
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
-#: ../../lib/feed.py:994
+#: ../../lib/feed.py:1033
 msgid "Bad content-type"
 msgstr "Vigane sisutüüp."
 
-#: ../../lib/feed.py:1007
+#: ../../lib/feed.py:1046
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
 msgstr ""
 
-#: ../../lib/feed.py:1010
+#: ../../lib/feed.py:1049
 #, python-format
 msgid ""
 "This podcast is not compatible with %(appname)s but we'll try our best to "
@@ -674,20 +674,20 @@ msgid ""
 "Do you want to try to load this podcast anyway?"
 msgstr ""
 
-#: ../../lib/feed.py:2297 ../../lib/feed.py:2437
+#: ../../lib/feed.py:2319 ../../lib/feed.py:2459
 msgid "Local Files"
 msgstr "Kohalikud failid"
 
-#: ../../lib/feed.py:2306 ../../lib/feed.py:2412 ../../lib/feed.py:2422
+#: ../../lib/feed.py:2328 ../../lib/feed.py:2434 ../../lib/feed.py:2444
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Search"
 msgstr "Otsi"
 
-#: ../../lib/messages.py:1273 ../../lib/frontends/widgets/itemedit.py:555
+#: ../../lib/messages.py:1216 ../../lib/frontends/widgets/itemedit.py:555
 msgid "Movie"
 msgstr ""
 
-#: ../../lib/messages.py:1275 ../../lib/frontends/widgets/diagnostics.py:80
+#: ../../lib/messages.py:1218 ../../lib/frontends/widgets/diagnostics.py:80
 #: ../../lib/frontends/widgets/widgetconst.py:78
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/itemedit.py:544
@@ -696,37 +696,37 @@ msgstr ""
 msgid "Show"
 msgstr "Näita"
 
-#: ../../lib/messages.py:1277 ../../lib/frontends/widgets/itemedit.py:557
+#: ../../lib/messages.py:1220 ../../lib/frontends/widgets/itemedit.py:557
 msgid "Clip"
 msgstr ""
 
-#: ../../lib/messages.py:1279 ../../lib/frontends/widgets/itemedit.py:558
+#: ../../lib/messages.py:1222 ../../lib/frontends/widgets/itemedit.py:558
 msgid "Podcast"
 msgstr ""
 
-#: ../../lib/messages.py:1298
+#: ../../lib/messages.py:1241
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
 
-#: ../../lib/util.py:455 ../../lib/util.py:457
+#: ../../lib/util.py:443 ../../lib/util.py:445
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../lib/util.py:461 ../../lib/util.py:463
+#: ../../lib/util.py:449 ../../lib/util.py:451
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../lib/util.py:467 ../../lib/util.py:469
+#: ../../lib/util.py:455 ../../lib/util.py:457
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../lib/util.py:473 ../../lib/util.py:475
+#: ../../lib/util.py:461 ../../lib/util.py:463
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -1590,7 +1590,7 @@ msgstr "Viide"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:482
 #: ../../lib/frontends/widgets/menus.py:259
-#: ../../lib/frontends/widgets/application.py:731
+#: ../../lib/frontends/widgets/application.py:782
 msgid "Add Source"
 msgstr "Lisa allikas"
 
@@ -1846,11 +1846,11 @@ msgstr "Tundmatu esitaja"
 msgid "No Results"
 msgstr "Tulemused puuduvad"
 
-#: ../../lib/frontends/widgets/browser.py:157
+#: ../../lib/frontends/widgets/browser.py:161
 msgid "Open in browser"
 msgstr "Ava veebilehitsejas"
 
-#: ../../lib/frontends/widgets/browser.py:164
+#: ../../lib/frontends/widgets/browser.py:168
 msgid "Download this video"
 msgstr "Lae alla see video"
 
@@ -2601,12 +2601,12 @@ msgid "%(count)s items"
 msgstr "%(count)s kirjet"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1085
-#: ../../lib/frontends/widgets/application.py:836
+#: ../../lib/frontends/widgets/application.py:887
 msgid "Create Playlist"
 msgstr "Loo esitusnimekiri"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1086
-#: ../../lib/frontends/widgets/application.py:837
+#: ../../lib/frontends/widgets/application.py:888
 msgid "Enter a name for the new playlist"
 msgstr "Sisesta uuele esitusnimekirjale nimi"
 
@@ -2696,12 +2696,12 @@ msgid "Rename"
 msgstr "Nimeta ümber"
 
 #: ../../lib/frontends/widgets/menus.py:270
-#: ../../lib/frontends/widgets/application.py:885
+#: ../../lib/frontends/widgets/application.py:936
 msgid "Rename Podcast"
 msgstr "Podcasti ümbernimetamine"
 
 #: ../../lib/frontends/widgets/menus.py:271
-#: ../../lib/frontends/widgets/application.py:899
+#: ../../lib/frontends/widgets/application.py:950
 #: ../../lib/frontends/widgets/tablist.py:969
 msgid "Rename Source"
 msgstr "Allika ümbernimetanine"
@@ -2769,7 +2769,7 @@ msgid "New Playlist Folder"
 msgstr "Uus esituloendi kasut"
 
 #: ../../lib/frontends/widgets/menus.py:309
-#: ../../lib/frontends/widgets/application.py:890
+#: ../../lib/frontends/widgets/application.py:941
 #: ../../lib/frontends/widgets/tablist.py:1144 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "Esitusnimekirja nime muutmine"
@@ -3102,11 +3102,30 @@ msgstr "Muusika"
 msgid "Misc"
 msgstr "Muu"
 
-#: ../../lib/frontends/widgets/application.py:213
+#: ../../lib/frontends/widgets/application.py:216
 msgid "Movies directory gone"
 msgstr "Filmide kataloog kadunud"
 
-#: ../../lib/frontends/widgets/application.py:215
+#: ../../lib/frontends/widgets/application.py:221
+#, python-format
+msgid ""
+"%(shortappname)s can't use the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected, is a directory that %(shortappname)s does not have write "
+"permission to, or there is something that is not a directory at that path.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+" \n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:246
 #, python-format
 msgid ""
 "%(shortappname)s can't use the primary video directory located at:\n"
@@ -3121,47 +3140,47 @@ msgid ""
 "the problem and relaunch %(shortappname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:406
+#: ../../lib/frontends/widgets/application.py:457
 msgid "Error Revealing File"
 msgstr "Viga faili näitamisel"
 
-#: ../../lib/frontends/widgets/application.py:407
+#: ../../lib/frontends/widgets/application.py:458
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr "Fail %(filename)s kustutati väljastpoolt  %(appname)s programmi."
 
-#: ../../lib/frontends/widgets/application.py:418
+#: ../../lib/frontends/widgets/application.py:469
 msgid "Open Files..."
 msgstr "Ava faile..."
 
-#: ../../lib/frontends/widgets/application.py:429
-#: ../../lib/frontends/widgets/application.py:434
+#: ../../lib/frontends/widgets/application.py:480
+#: ../../lib/frontends/widgets/application.py:485
 msgid "Open Files - Error"
 msgstr "Tõrge - faili avamisel"
 
-#: ../../lib/frontends/widgets/application.py:430
-#: ../../lib/frontends/widgets/application.py:801
+#: ../../lib/frontends/widgets/application.py:481
+#: ../../lib/frontends/widgets/application.py:852
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Faili %(filename)s pole olemas."
 
-#: ../../lib/frontends/widgets/application.py:435
+#: ../../lib/frontends/widgets/application.py:486
 msgid "The following files do not exist:"
 msgstr "Järgmisi faile pole olemas:"
 
-#: ../../lib/frontends/widgets/application.py:469
+#: ../../lib/frontends/widgets/application.py:520
 msgid "New Download"
 msgstr "Uus allalaadimine"
 
-#: ../../lib/frontends/widgets/application.py:470
+#: ../../lib/frontends/widgets/application.py:521
 msgid "Enter the URL of the item to download"
 msgstr "Sisesta meedia URL allalaadimiseks"
 
-#: ../../lib/frontends/widgets/application.py:471
+#: ../../lib/frontends/widgets/application.py:522
 msgid "New Download - Invalid URL"
 msgstr "Lae uuesti - vigane URL"
 
-#: ../../lib/frontends/widgets/application.py:472
+#: ../../lib/frontends/widgets/application.py:523
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -3173,23 +3192,23 @@ msgstr ""
 "\n"
 "Sisesta meedia URL allalaadimiseks"
 
-#: ../../lib/frontends/widgets/application.py:488
+#: ../../lib/frontends/widgets/application.py:539
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr "%(appname)s ei vaja uuendamist"
 
-#: ../../lib/frontends/widgets/application.py:490
+#: ../../lib/frontends/widgets/application.py:541
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr "%(appname)s ei vaja uuendamist"
 
-#: ../../lib/frontends/widgets/application.py:539
+#: ../../lib/frontends/widgets/application.py:590
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "Eemalda kirje"
 msgstr[1] "Eemalda kirjed"
 
-#: ../../lib/frontends/widgets/application.py:543
+#: ../../lib/frontends/widgets/application.py:594
 msgid ""
 "One of these items was not downloaded from a podcast. Would you like to "
 "delete it or just remove it from the Library?"
@@ -3199,7 +3218,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:555
+#: ../../lib/frontends/widgets/application.py:606
 msgid ""
 "One of these items is a folder.  Deleting/Removing a folder will "
 "delete/remove it's contents"
@@ -3209,14 +3228,14 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:570
+#: ../../lib/frontends/widgets/application.py:621
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Kas oled kinnel et soovid kustudad seda?"
 msgstr[1] "Kas oled kinnel et soovid kustuda kõik %(count)d kirjed?"
 
-#: ../../lib/frontends/widgets/application.py:577
+#: ../../lib/frontends/widgets/application.py:628
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -3228,36 +3247,36 @@ msgstr[1] ""
 "Mõned nendest kirdejest on kaustad. Selle kausta kustutamine võib kustutada "
 "selle sisu"
 
-#: ../../lib/frontends/widgets/application.py:635
+#: ../../lib/frontends/widgets/application.py:686
 msgid "Save Item As..."
 msgstr "Salvesta element kui..."
 
-#: ../../lib/frontends/widgets/application.py:678
+#: ../../lib/frontends/widgets/application.py:729
 #: ../../lib/frontends/widgets/firsttimedialog.py:326
 msgid "Choose directory to search for media files"
 msgstr "Vali asukoht, kust meediafaile otsida"
 
-#: ../../lib/frontends/widgets/application.py:691
+#: ../../lib/frontends/widgets/application.py:742
 msgid "Choose files to import"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:693
+#: ../../lib/frontends/widgets/application.py:744
 msgid "Video Files"
 msgstr "Videofailid"
 
-#: ../../lib/frontends/widgets/application.py:694
+#: ../../lib/frontends/widgets/application.py:745
 msgid "Audio Files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:732
+#: ../../lib/frontends/widgets/application.py:783
 msgid "Enter the URL of the source to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:733
+#: ../../lib/frontends/widgets/application.py:784
 msgid "Add Source - Invalid URL"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:734
+#: ../../lib/frontends/widgets/application.py:785
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -3265,72 +3284,72 @@ msgid ""
 "Enter the URL of the source to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:791
+#: ../../lib/frontends/widgets/application.py:842
 msgid "Import OPML File"
 msgstr "OPML faili importimine"
 
-#: ../../lib/frontends/widgets/application.py:793
+#: ../../lib/frontends/widgets/application.py:844
 msgid "OPML Files"
 msgstr "OPML failid"
 
-#: ../../lib/frontends/widgets/application.py:800
+#: ../../lib/frontends/widgets/application.py:851
 msgid "Import OPML File - Error"
 msgstr "OPML faili importimine - Viga"
 
-#: ../../lib/frontends/widgets/application.py:806
+#: ../../lib/frontends/widgets/application.py:857
 msgid "Export OPML File"
 msgstr "OPML faili eksportimine"
 
-#: ../../lib/frontends/widgets/application.py:858
+#: ../../lib/frontends/widgets/application.py:909
 msgid "Create Playlist Folder"
 msgstr "Loo esitusnimekirjade kataloog"
 
-#: ../../lib/frontends/widgets/application.py:859
+#: ../../lib/frontends/widgets/application.py:910
 msgid "Enter a name for the new playlist folder"
 msgstr "Sisesta nimi uuele esitusnimekirjade kataloogile"
 
-#: ../../lib/frontends/widgets/application.py:880
+#: ../../lib/frontends/widgets/application.py:931
 #: ../../lib/frontends/widgets/tablist.py:1072
 msgid "Rename Podcast Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:881
+#: ../../lib/frontends/widgets/application.py:932
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:886
+#: ../../lib/frontends/widgets/application.py:937
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:891
+#: ../../lib/frontends/widgets/application.py:942
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Sisesta uus nimi esitusloendile %(name)s"
 
-#: ../../lib/frontends/widgets/application.py:895
+#: ../../lib/frontends/widgets/application.py:946
 #: ../../lib/frontends/widgets/tablist.py:1138
 msgid "Rename Playlist Folder"
 msgstr "Esitusnimekirjade kataloogi nime muutmine"
 
-#: ../../lib/frontends/widgets/application.py:896
+#: ../../lib/frontends/widgets/application.py:947
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Sisesta uus nimi esitusloendi kaustale %(name)s"
 
-#: ../../lib/frontends/widgets/application.py:900
+#: ../../lib/frontends/widgets/application.py:951
 #, python-format
 msgid "Enter a new name for the source %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:919
+#: ../../lib/frontends/widgets/application.py:970
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Eemalda esitusnimekiri"
 msgstr[1] "Eemalda esitusnimekirjad"
 
-#: ../../lib/frontends/widgets/application.py:921
+#: ../../lib/frontends/widgets/application.py:972
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -3338,48 +3357,48 @@ msgstr[0] "Kas oled kindel, et tahad selle esitusnimekirja eemaldada?"
 msgstr[1] ""
 "Kas oled kindel, et tahad need %(count)s esitusnimekirja eemaldada?"
 
-#: ../../lib/frontends/widgets/application.py:936
+#: ../../lib/frontends/widgets/application.py:987
 msgid "Remove source"
 msgid_plural "Remove sources"
 msgstr[0] "Eemalda allikas"
 msgstr[1] "Eemalda allikad"
 
-#: ../../lib/frontends/widgets/application.py:938
+#: ../../lib/frontends/widgets/application.py:989
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
 msgstr[0] "Oled kinnel et soovid eemaltada selle allika?"
 msgstr[1] "Oled kinnel et soovid eemaltada need %(count)s allikat?"
 
-#: ../../lib/frontends/widgets/application.py:962
+#: ../../lib/frontends/widgets/application.py:1013
 #, python-format
 msgid "Import Music from %(media_player)s?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:963
+#: ../../lib/frontends/widgets/application.py:1014
 #, python-format
 msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1005
-#: ../../lib/frontends/widgets/application.py:1029
+#: ../../lib/frontends/widgets/application.py:1056
+#: ../../lib/frontends/widgets/application.py:1080
 msgid "Select File to write Profile to"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1090
-#: ../../lib/frontends/widgets/application.py:1109
-#: ../../lib/frontends/widgets/application.py:1128
+#: ../../lib/frontends/widgets/application.py:1141
+#: ../../lib/frontends/widgets/application.py:1160
+#: ../../lib/frontends/widgets/application.py:1179
 msgid "Are you sure you want to quit?"
 msgstr "Kas sa soovid lõpetada?"
 
-#: ../../lib/frontends/widgets/application.py:1099
+#: ../../lib/frontends/widgets/application.py:1150
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1111
+#: ../../lib/frontends/widgets/application.py:1162
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
@@ -3388,11 +3407,11 @@ msgstr[0] ""
 msgstr[1] ""
 "Sul on %(count)d allalaadimist pooleli.  Kas väljud sellegipoolest?"
 
-#: ../../lib/frontends/widgets/application.py:1116
+#: ../../lib/frontends/widgets/application.py:1167
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Allalaadimiste ajal programmi sulgemisel hoiatatakse"
 
-#: ../../lib/frontends/widgets/application.py:1130
+#: ../../lib/frontends/widgets/application.py:1181
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -3400,15 +3419,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:1135
+#: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1397
+#: ../../lib/frontends/widgets/application.py:1451
 msgid "Connect failed"
 msgstr "Ühendamine nurjus"
 
-#: ../../lib/frontends/widgets/application.py:1398
+#: ../../lib/frontends/widgets/application.py:1452
 #, python-format
 msgid ""
 "Connection to share %(name)s failed.\n"
@@ -3416,11 +3435,11 @@ msgid ""
 "The share is either unreachable or incompatible with %(appname)s sharing."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1408
+#: ../../lib/frontends/widgets/application.py:1462
 msgid "Eject failed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1409
+#: ../../lib/frontends/widgets/application.py:1463
 #, python-format
 msgid ""
 "Ejecting device '%(name)s' failed.\n"
@@ -3428,11 +3447,11 @@ msgid ""
 "The device is in use."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1422
+#: ../../lib/frontends/widgets/application.py:1476
 msgid "Upgrading database"
 msgstr "Andmebaasi uuendamine"
 
-#: ../../lib/frontends/widgets/application.py:1424
+#: ../../lib/frontends/widgets/application.py:1478
 #, python-format
 msgid ""
 "%(appname)s is upgrading your database of podcasts and files.  This one-time "
@@ -3440,18 +3459,18 @@ msgid ""
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1430
+#: ../../lib/frontends/widgets/application.py:1484
 #: ../../lib/dbupgradeprogress.py:104
 msgid "Preparing Items"
 msgstr "Kirjete ettevalmistamine"
 
-#: ../../lib/frontends/widgets/application.py:1431
+#: ../../lib/frontends/widgets/application.py:1485
 #, python-format
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1669
+#: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
 msgstr "Sõnum"
 
@@ -3909,11 +3928,11 @@ msgstr "Esitusnimekirja näidis"
 msgid "Enter a new name for the playlist %s"
 msgstr "Sisesta uus nimi esitusnimekirjale '%s'"
 
-#: ../../lib/controller.py:173
+#: ../../lib/controller.py:176
 msgid "Sending Crash Report"
 msgstr "Saadetakse kokkujooksmise raporti"
 
-#: ../../lib/controller.py:194
+#: ../../lib/controller.py:197
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
 msgstr "Saadetakse kokkujooksmise raporti (%(progress)d%%)"
@@ -3967,11 +3986,11 @@ msgstr ""
 msgid "Error moving to movies directory"
 msgstr "Filmide sektsiooni liigutamisel tekkis viga"
 
-#: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
+#: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1067
 msgid "Not enough disk space"
 msgstr "Liiga vähe kettaruumi"
 
-#: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1062
+#: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1068
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "%(amount)s MB vaja selle video salvestamiseks"
@@ -3980,40 +3999,40 @@ msgstr "%(amount)s MB vaja selle video salvestamiseks"
 msgid "no content"
 msgstr "pole sisu"
 
-#: ../../lib/dl_daemon/download.py:1096
+#: ../../lib/dl_daemon/download.py:1102
 msgid "BitTorrent failure"
 msgstr "BitTorrenti viga"
 
-#: ../../lib/dl_daemon/download.py:1097
+#: ../../lib/dl_daemon/download.py:1103
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrenti käivitumine ebaõnnestus"
 
-#: ../../lib/dl_daemon/download.py:1239
+#: ../../lib/dl_daemon/download.py:1245
 msgid "waiting to check existing files"
 msgstr "olemasolevate failide kontrollimise ootel"
 
-#: ../../lib/dl_daemon/download.py:1241
+#: ../../lib/dl_daemon/download.py:1247
 msgid "checking existing files"
 msgstr "olemasolevate failide kontrollimine"
 
-#: ../../lib/dl_daemon/download.py:1243
+#: ../../lib/dl_daemon/download.py:1249
 msgid "allocating disk space"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1486
+#: ../../lib/dl_daemon/download.py:1492
 msgid "Corrupt Torrent"
 msgstr "Vigane torrent"
 
-#: ../../lib/dl_daemon/download.py:1487
+#: ../../lib/dl_daemon/download.py:1493
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Torrenti fail asukohas %(url)s  pole õige"
 
-#: ../../lib/dl_daemon/download.py:1531
+#: ../../lib/dl_daemon/download.py:1537
 msgid "Torrent file deleted"
 msgstr "Torrenti fail kustutatud"
 
-#: ../../lib/dl_daemon/download.py:1532
+#: ../../lib/dl_daemon/download.py:1538
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "Torrent fail selle kirje jaoks kustutatu väljaspool %(appname)s."
@@ -4088,17 +4107,17 @@ msgid "Subtitle file %(tracknumber)d"
 msgstr "%(tracknumber)d. raja subtiitrifail"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:603
-#: ../../windows/plat/renderers/vlc.py:750
-#: ../../windows/plat/renderers/vlc.py:753
-#: ../../windows/plat/renderers/vlc.py:754
+#: ../../windows/plat/renderers/vlc.py:762
+#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:766
 msgid "Eastern European"
 msgstr "Ida-Euroopa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
-#: ../../windows/plat/renderers/vlc.py:751
-#: ../../windows/plat/renderers/vlc.py:752
+#: ../../windows/plat/renderers/vlc.py:763
+#: ../../windows/plat/renderers/vlc.py:764
 msgid "Baltic"
 msgstr "Balti"
 
@@ -4136,21 +4155,21 @@ msgid "Romanian"
 msgstr "Rumeenia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
-#: ../../windows/plat/renderers/vlc.py:760
-#: ../../windows/plat/renderers/vlc.py:762
+#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:774
 msgid "Western European"
 msgstr "Lääne-Euroopa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
-#: ../../windows/plat/renderers/vlc.py:761
+#: ../../windows/plat/renderers/vlc.py:773
 msgid "Celtic"
 msgstr "Keldi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
-#: ../../windows/plat/renderers/vlc.py:764
-#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:776
+#: ../../windows/plat/renderers/vlc.py:777
 msgid "Greek"
 msgstr "Kreeka"
 
@@ -4175,7 +4194,7 @@ msgid "Western"
 msgstr "Lääne"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
-#: ../../windows/plat/renderers/vlc.py:768
+#: ../../windows/plat/renderers/vlc.py:780
 msgid "East Asian"
 msgstr "Ida-Aasia"
 
@@ -4195,8 +4214,8 @@ msgstr "Hiina (traditsiooniline)"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:646
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
-#: ../../windows/plat/renderers/vlc.py:772
-#: ../../windows/plat/renderers/vlc.py:774
+#: ../../windows/plat/renderers/vlc.py:784
+#: ../../windows/plat/renderers/vlc.py:786
 msgid "Japanese"
 msgstr "Jaapani"
 
@@ -4204,13 +4223,13 @@ msgstr "Jaapani"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:650
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
-#: ../../windows/plat/renderers/vlc.py:775
-#: ../../windows/plat/renderers/vlc.py:776
+#: ../../windows/plat/renderers/vlc.py:787
+#: ../../windows/plat/renderers/vlc.py:788
 msgid "Korean"
 msgstr "Korea"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:654
-#: ../../windows/plat/renderers/vlc.py:782
+#: ../../windows/plat/renderers/vlc.py:794
 msgid "SE and SW Asian"
 msgstr "Kagu ja Edela-Aasia"
 
@@ -4235,7 +4254,7 @@ msgid "Hindi"
 msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:660
-#: ../../windows/plat/renderers/vlc.py:785
+#: ../../windows/plat/renderers/vlc.py:797
 msgid "Thai"
 msgstr "Tai"
 
@@ -4243,21 +4262,21 @@ msgstr "Tai"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:662
 #: ../../linux/plat/renderers/gstreamerrenderer.py:663
 #: ../../linux/plat/renderers/gstreamerrenderer.py:664
-#: ../../windows/plat/renderers/vlc.py:783
-#: ../../windows/plat/renderers/vlc.py:784
+#: ../../windows/plat/renderers/vlc.py:795
+#: ../../windows/plat/renderers/vlc.py:796
 msgid "Turkish"
 msgstr "Türgi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:665
 #: ../../linux/plat/renderers/gstreamerrenderer.py:666
 #: ../../linux/plat/renderers/gstreamerrenderer.py:667
-#: ../../windows/plat/renderers/vlc.py:786
-#: ../../windows/plat/renderers/vlc.py:787
+#: ../../windows/plat/renderers/vlc.py:798
+#: ../../windows/plat/renderers/vlc.py:799
 msgid "Vietnamese"
 msgstr "Vietnami"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:669
-#: ../../windows/plat/renderers/vlc.py:790
+#: ../../windows/plat/renderers/vlc.py:802
 msgid "Middle Eastern"
 msgstr "Lähis-Ida"
 
@@ -4265,8 +4284,8 @@ msgstr "Lähis-Ida"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:671
 #: ../../linux/plat/renderers/gstreamerrenderer.py:672
 #: ../../linux/plat/renderers/gstreamerrenderer.py:673
-#: ../../windows/plat/renderers/vlc.py:791
-#: ../../windows/plat/renderers/vlc.py:792
+#: ../../windows/plat/renderers/vlc.py:803
+#: ../../windows/plat/renderers/vlc.py:804
 msgid "Arabic"
 msgstr "Araabia"
 
@@ -4274,8 +4293,8 @@ msgstr "Araabia"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:675
 #: ../../linux/plat/renderers/gstreamerrenderer.py:676
 #: ../../linux/plat/renderers/gstreamerrenderer.py:677
-#: ../../windows/plat/renderers/vlc.py:793
-#: ../../windows/plat/renderers/vlc.py:794
+#: ../../windows/plat/renderers/vlc.py:805
+#: ../../windows/plat/renderers/vlc.py:806
 msgid "Hebrew"
 msgstr "Heebrea"
 
@@ -4293,7 +4312,7 @@ msgstr "Pärsia"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:684
 #: ../../linux/plat/renderers/gstreamerrenderer.py:685
 #: ../../linux/plat/renderers/gstreamerrenderer.py:686
-#: ../../windows/plat/renderers/vlc.py:797
+#: ../../windows/plat/renderers/vlc.py:809
 msgid "Unicode"
 msgstr "Unicode"
 
@@ -4432,54 +4451,54 @@ msgstr "Süsteemi vaikeväärtus"
 msgid "Subtitle font:"
 msgstr "Subtiitri font:"
 
-#: ../../windows/plat/renderers/vlc.py:755
+#: ../../windows/plat/renderers/vlc.py:767
 msgid "Russian"
 msgstr "Vene"
 
-#: ../../windows/plat/renderers/vlc.py:756
+#: ../../windows/plat/renderers/vlc.py:768
 msgid "South-Eastern European"
 msgstr "Lõuna-Ida Euroopa"
 
-#: ../../windows/plat/renderers/vlc.py:757
+#: ../../windows/plat/renderers/vlc.py:769
 msgid "Ukrainian"
 msgstr "Ukraina"
 
-#: ../../windows/plat/renderers/vlc.py:763
+#: ../../windows/plat/renderers/vlc.py:775
 msgid "Esperanto"
 msgstr "Esperanto"
 
-#: ../../windows/plat/renderers/vlc.py:769
+#: ../../windows/plat/renderers/vlc.py:781
 msgid "Universal Chinese"
 msgstr "Universaalne Hiina"
 
-#: ../../windows/plat/renderers/vlc.py:770
+#: ../../windows/plat/renderers/vlc.py:782
 msgid "Simplified Chinese"
 msgstr "Lihtsustatud hiina"
 
-#: ../../windows/plat/renderers/vlc.py:771
+#: ../../windows/plat/renderers/vlc.py:783
 msgid "Simplified Chinese Unix"
 msgstr "Hiina (lihtsustatud, Unix)"
 
-#: ../../windows/plat/renderers/vlc.py:773
+#: ../../windows/plat/renderers/vlc.py:785
 msgid "Japanese Unix"
 msgstr "Jaapani Unix"
 
-#: ../../windows/plat/renderers/vlc.py:777
+#: ../../windows/plat/renderers/vlc.py:789
 msgid "Traditional Chinese"
 msgstr "Hiina (traditsiooniline)"
 
-#: ../../windows/plat/renderers/vlc.py:778
+#: ../../windows/plat/renderers/vlc.py:790
 msgid "Traditional Chinese Unix"
 msgstr "Hiina (traditsiooniline, Unix)"
 
-#: ../../windows/plat/renderers/vlc.py:779
+#: ../../windows/plat/renderers/vlc.py:791
 msgid "Hong-Kong Supplementary"
 msgstr "Hong-Kong Spl."
 
-#: ../../windows/plat/renderers/vlc.py:798
-#: ../../windows/plat/renderers/vlc.py:799
-#: ../../windows/plat/renderers/vlc.py:800
-#: ../../windows/plat/renderers/vlc.py:801
+#: ../../windows/plat/renderers/vlc.py:810
+#: ../../windows/plat/renderers/vlc.py:811
+#: ../../windows/plat/renderers/vlc.py:812
+#: ../../windows/plat/renderers/vlc.py:813
 msgid "Universal"
 msgstr "Universaalne"
 

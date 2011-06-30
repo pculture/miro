@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.pculture.org/\n"
-"POT-Creation-Date: 2011-06-20 14:32-0400\n"
+"POT-Creation-Date: 2011-06-30 11:08-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -334,8 +334,8 @@ msgstr "Soobscreebed tu noo pudcasts: bork!"
 msgid "Migrating Files"
 msgstr "Meegrateeng Feeles bork!"
 
-#: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
-#: ../../lib/httpclient.py:171
+#: ../../lib/downloader.py:335 ../../lib/httpclient.py:145
+#: ../../lib/httpclient.py:176
 msgid "File not found"
 msgstr "Feele-a nut ffuoond bork!"
 
@@ -357,8 +357,8 @@ msgid "no connection - retrying soon"
 msgstr "nu cunnecshun - retryeeng suun bork!"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
-#: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
-#: ../../lib/httpclient.py:756
+#: ../../lib/sharing.py:187 ../../lib/httpclient.py:223
+#: ../../lib/httpclient.py:772
 msgid "Unknown"
 msgstr "Oonknoon bork!"
 
@@ -381,50 +381,50 @@ msgstr "%(program)s dues nut exeest. bork!"
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr "%(original_name)s (Cunverted tu %(format)s) bork!"
 
-#: ../../lib/net.py:76
+#: ../../lib/net.py:78
 #, python-format
 msgid "Error: %(msg)s"
 msgstr "Errur: %(msg)s bork!"
 
-#: ../../lib/net.py:93 ../../lib/net.py:99
+#: ../../lib/net.py:95 ../../lib/net.py:101
 msgid "Can't connect"
 msgstr "Cun't cunnect bork!"
 
-#: ../../lib/net.py:94
+#: ../../lib/net.py:96
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr "Cunnecshun Errur: %(msg)s bork!"
 
-#: ../../lib/net.py:100
+#: ../../lib/net.py:102
 msgid "SSL connection error"
 msgstr "SSL cunnecshun errur bork!"
 
-#: ../../lib/net.py:104
+#: ../../lib/net.py:106
 msgid "Timeout"
 msgstr "Teemeuoot bork!"
 
-#: ../../lib/net.py:105
+#: ../../lib/net.py:107
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr "Cunnecshun tu %(host)s teemed uoot bork!"
 
-#: ../../lib/net.py:292
+#: ../../lib/net.py:295
 msgid "Couldn't find address family to use"
 msgstr "Cuooldn't ffeend address ffameely tu oose bork!"
 
-#: ../../lib/net.py:321
+#: ../../lib/net.py:324
 msgid "Unknown Error code"
 msgstr "Oonknoon Errur cude bork!"
 
-#: ../../lib/net.py:367
+#: ../../lib/net.py:370
 msgid "Connection closed"
 msgstr "Cunnecshun clused bork!"
 
-#: ../../lib/startup.py:136
+#: ../../lib/startup.py:137
 msgid "Database Error"
 msgstr "Detabase-a Errur bork!"
 
-#: ../../lib/startup.py:137
+#: ../../lib/startup.py:138
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to start up due to a problem with the database:\n"
@@ -447,11 +447,11 @@ msgstr ""
 "\n"
 "Tu help oos ffeex prublems leeke-a thees een the-a ffootoore-a, please-a ffeele-a a boog repurt at %(url)s. bork!"
 
-#: ../../lib/startup.py:158
+#: ../../lib/startup.py:159
 msgid "Unknown Error"
 msgstr "Oonknoon Errur bork!"
 
-#: ../../lib/startup.py:159
+#: ../../lib/startup.py:160
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
@@ -460,11 +460,11 @@ msgstr ""
 "Un oonknoon errur prevented %(appname)s ffrum startoop.  Pleese-a ffeele-a a"
 " boog repurt at %(url)s. bork!"
 
-#: ../../lib/startup.py:276
+#: ../../lib/startup.py:277
 msgid "Database too new"
 msgstr "Detabase-a tuu noo bork!"
 
-#: ../../lib/startup.py:278
+#: ../../lib/startup.py:279
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
@@ -474,11 +474,11 @@ msgstr ""
 "%(appname)s. Yuoo moost doonluad the-a latest verseeun uff %(appname)s und "
 "roon that. bork!"
 
-#: ../../lib/startup.py:566
+#: ../../lib/startup.py:576
 msgid "Submitting Crash Report"
 msgstr "Soobmeetteeng Crash Repurt bork!"
 
-#: ../../lib/startup.py:568
+#: ../../lib/startup.py:578
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -750,8 +750,8 @@ msgid ""
 "  |  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
 "S: %(seeders)s  |  L: %(leechers)s  |  OoR: %(up_rate)s  |  OoT: "
-"%(up_total)s  |  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: "
-"%(reteeu).2ff bork!"
+"%(up_total)s  |  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
+" bork!"
 
 #: ../../lib/util.py:443 ../../lib/util.py:445
 #, python-format
@@ -886,12 +886,12 @@ msgstr "Edd Intu Noo Fulder bork!"
 
 #: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/prefpanel.py:784
 #: ../../lib/frontends/widgets/menus.py:272
-#: ../../lib/frontends/widgets/tablist.py:1073
-#: ../../lib/frontends/widgets/tablist.py:1087
-#: ../../lib/frontends/widgets/tablist.py:1093
-#: ../../lib/frontends/widgets/tablist.py:1139
-#: ../../lib/frontends/widgets/tablist.py:1145
-#: ../../lib/frontends/widgets/tablist.py:1150
+#: ../../lib/frontends/widgets/tablist.py:1089
+#: ../../lib/frontends/widgets/tablist.py:1103
+#: ../../lib/frontends/widgets/tablist.py:1109
+#: ../../lib/frontends/widgets/tablist.py:1155
+#: ../../lib/frontends/widgets/tablist.py:1161
+#: ../../lib/frontends/widgets/tablist.py:1166
 msgid "Remove"
 msgstr "Remuve bork!"
 
@@ -1067,9 +1067,9 @@ msgid "File on Disk"
 msgstr "Feele-a un Deesk bork!"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:255
-#: ../../lib/frontends/widgets/tablist.py:968
-#: ../../lib/frontends/widgets/tablist.py:1005
-#: ../../lib/frontends/widgets/tablist.py:1086
+#: ../../lib/frontends/widgets/tablist.py:984
+#: ../../lib/frontends/widgets/tablist.py:1021
+#: ../../lib/frontends/widgets/tablist.py:1102
 msgid "Copy URL to clipboard"
 msgstr "Cupy OoRL tu cleepbuard bork!"
 
@@ -1284,8 +1284,8 @@ msgid "Save as Podcast"
 msgstr "Seve-a as Pudcast bork!"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:743
-#: ../../lib/frontends/widgets/tablist.py:729
-#: ../../lib/frontends/widgets/tablist.py:849
+#: ../../lib/frontends/widgets/tablist.py:745
+#: ../../lib/frontends/widgets/tablist.py:865
 #: ../../lib/frontends/widgets/itemedit.py:514
 #: ../../lib/frontends/widgets/itemedit.py:762
 msgid "Video"
@@ -1331,8 +1331,8 @@ msgstr "Cleeps bork!"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:815
 #: ../../lib/frontends/widgets/prefpanel.py:1273
 #: ../../lib/frontends/widgets/devicecontroller.py:579
-#: ../../lib/frontends/widgets/tablist.py:1026
-#: ../../lib/frontends/widgets/tablist.py:1032
+#: ../../lib/frontends/widgets/tablist.py:1042
+#: ../../lib/frontends/widgets/tablist.py:1048
 msgid "Podcasts"
 msgstr "Pudcasts bork!"
 
@@ -1385,7 +1385,7 @@ msgstr "Ell bork!"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1366
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1436
 #: ../../lib/frontends/widgets/devicecontroller.py:581
-#: ../../lib/frontends/widgets/tablist.py:1085
+#: ../../lib/frontends/widgets/tablist.py:1101
 msgid "Settings"
 msgstr "Setteengs bork!"
 
@@ -1534,7 +1534,7 @@ msgid "Get Help"
 msgstr "Get Help bork!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:206
-#: ../../lib/frontends/widgets/tablist.py:858
+#: ../../lib/frontends/widgets/tablist.py:874
 msgid "Connect"
 msgstr "Cunnect bork!"
 
@@ -1636,8 +1636,8 @@ msgstr ""
 "yuoor deveece-a ooseeng uther DAAP apps. bork!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:445
-#: ../../lib/frontends/widgets/tablist.py:919
-#: ../../lib/frontends/widgets/tablist.py:927
+#: ../../lib/frontends/widgets/tablist.py:935
+#: ../../lib/frontends/widgets/tablist.py:943
 msgid "Sources"
 msgstr "Suoorces bork!"
 
@@ -1662,8 +1662,8 @@ msgstr "Edd Suoorce bork!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:509
 #: ../../lib/frontends/widgets/devicecontroller.py:580
-#: ../../lib/frontends/widgets/tablist.py:1098
-#: ../../lib/frontends/widgets/tablist.py:1104
+#: ../../lib/frontends/widgets/tablist.py:1114
+#: ../../lib/frontends/widgets/tablist.py:1120
 msgid "Playlists"
 msgstr "Pleyleests bork!"
 
@@ -1679,8 +1679,8 @@ msgstr "Edd Playleest bork!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:559
 #: ../../lib/frontends/widgets/prefpanel.py:1284
-#: ../../lib/frontends/widgets/tablist.py:982
-#: ../../lib/frontends/widgets/tablist.py:990
+#: ../../lib/frontends/widgets/tablist.py:998
+#: ../../lib/frontends/widgets/tablist.py:1006
 msgid "Stores"
 msgstr "Stures bork!"
 
@@ -2023,10 +2023,10 @@ msgid_plural ""
 "Are you sure you want to remove these podcasts?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
-"Ere-a yuoo soore-a yuoo want tu remuve-a these-a pudcasts?  Zee doonluads "
+"Ere-a yuoo soore-a yuoo want tu remuve-a thees pudcast?  Zee doonluads "
 "coorrently een prugress weell be-a canceled. bork!"
 msgstr[1] ""
-"Ere-a yuoo soore-a yuoo want tu remuve-a thees pudcast?  Zee doonluads "
+"Ere-a yuoo soore-a yuoo want tu remuve-a these-a pudcasts?  Zee doonluads "
 "coorrently een prugress weell be-a canceled. bork!"
 
 #: ../../lib/frontends/widgets/displays.py:523
@@ -2809,7 +2809,7 @@ msgid "_New Folder"
 msgstr "_Noo Fulder bork!"
 
 #: ../../lib/frontends/widgets/menus.py:267
-#: ../../lib/frontends/widgets/tablist.py:1081
+#: ../../lib/frontends/widgets/tablist.py:1097
 msgid "Rename"
 msgstr "Reneme bork!"
 
@@ -2820,7 +2820,7 @@ msgstr "Reneme-a Pudcast bork!"
 
 #: ../../lib/frontends/widgets/menus.py:271
 #: ../../lib/frontends/widgets/application.py:950
-#: ../../lib/frontends/widgets/tablist.py:969
+#: ../../lib/frontends/widgets/tablist.py:985
 msgid "Rename Source"
 msgstr "Reneme-a Suoorce bork!"
 
@@ -2837,12 +2837,12 @@ msgid "Remove Folders"
 msgstr "Remuve-a Fulders bork!"
 
 #: ../../lib/frontends/widgets/menus.py:279
-#: ../../lib/frontends/widgets/tablist.py:970
+#: ../../lib/frontends/widgets/tablist.py:986
 msgid "Remove Source"
 msgstr "Remuve-a Suoorce bork!"
 
 #: ../../lib/frontends/widgets/menus.py:280
-#: ../../lib/frontends/widgets/tablist.py:973
+#: ../../lib/frontends/widgets/tablist.py:989
 msgid "Remove Sources"
 msgstr "Remuve-a Suoorces bork!"
 
@@ -2888,7 +2888,7 @@ msgstr "Noo Playleest Fulder bork!"
 
 #: ../../lib/frontends/widgets/menus.py:309
 #: ../../lib/frontends/widgets/application.py:941
-#: ../../lib/frontends/widgets/tablist.py:1144 ../../lib/playlist.py:203
+#: ../../lib/frontends/widgets/tablist.py:1160 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "Reneme-a Playleest bork!"
 
@@ -3214,8 +3214,8 @@ msgstr "Feedeus bork!"
 
 #: ../../lib/frontends/widgets/statictabs.py:131
 #: ../../lib/frontends/widgets/statictabs.py:139
-#: ../../lib/frontends/widgets/tablist.py:730
-#: ../../lib/frontends/widgets/tablist.py:852
+#: ../../lib/frontends/widgets/tablist.py:746
+#: ../../lib/frontends/widgets/tablist.py:868
 #: ../../lib/frontends/widgets/itemedit.py:513
 msgid "Music"
 msgstr "Mooseec bork!"
@@ -3349,11 +3349,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a podcast. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
-"Sume-a uff these-a eetems were-a nut doonluaded ffrum a pudcast. Vuoold yuoo"
-" leeke-a tu delete-a them ur joost remuve-a them ffrum the-a Leebrary? bork!"
-msgstr[1] ""
 "One-a uff these-a eetems was nut doonluaded ffrum a pudcast. Vuoold yuoo "
 "leeke-a tu delete-a eet ur joost remuve-a eet ffrum the-a Leebrary? bork!"
+msgstr[1] ""
+"Sume-a uff these-a eetems were-a nut doonluaded ffrum a pudcast. Vuoold yuoo"
+" leeke-a tu delete-a them ur joost remuve-a them ffrum the-a Leebrary? bork!"
 
 #: ../../lib/frontends/widgets/application.py:606
 msgid ""
@@ -3363,11 +3363,11 @@ msgid_plural ""
 "Some of these items are folders.  Deleting/Removing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
-"Sume-a uff these-a eetems are-a ffulders.  Deleteeng/Remuveeng a ffulder "
-"weell delete-a/remuve-a eet's cuntents bork!"
-msgstr[1] ""
 "One-a uff these-a eetems ees a ffulder.  Deleteeng/Remuveeng a ffulder weell"
 " delete-a/remuve-a eet's cuntents bork!"
+msgstr[1] ""
+"Sume-a uff these-a eetems are-a ffulders.  Deleteeng/Remuveeng a ffulder "
+"weell delete-a/remuve-a eet's cuntents bork!"
 
 #: ../../lib/frontends/widgets/application.py:621
 #, python-format
@@ -3383,11 +3383,11 @@ msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's "
 "contents"
 msgstr[0] ""
-"Sume-a uff these-a eetems are-a ffulders.  Deleteeng a ffulder weell "
-"delete-a eet's cuntents bork!"
-msgstr[1] ""
 "One-a uff these-a eetems ees a ffulder.  Deleteeng a ffulder weell delete-a "
 "eet's cuntents bork!"
+msgstr[1] ""
+"Sume-a uff these-a eetems are-a ffulders.  Deleteeng a ffulder weell "
+"delete-a eet's cuntents bork!"
 
 #: ../../lib/frontends/widgets/application.py:686
 msgid "Save Item As..."
@@ -3455,7 +3455,7 @@ msgid "Enter a name for the new playlist folder"
 msgstr "Enter a neme-a ffur the-a noo playleest ffulder bork!"
 
 #: ../../lib/frontends/widgets/application.py:931
-#: ../../lib/frontends/widgets/tablist.py:1072
+#: ../../lib/frontends/widgets/tablist.py:1088
 msgid "Rename Podcast Folder"
 msgstr "Reneme-a Pudcast Fulder bork!"
 
@@ -3475,7 +3475,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr "Enter a noo name-a ffur the-a playleest %(name)s bork!"
 
 #: ../../lib/frontends/widgets/application.py:946
-#: ../../lib/frontends/widgets/tablist.py:1138
+#: ../../lib/frontends/widgets/tablist.py:1154
 msgid "Rename Playlist Folder"
 msgstr "Reneme-a Playleest Fulder bork!"
 
@@ -3499,9 +3499,9 @@ msgstr[1] "Remuve-a playleests bork!"
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
+msgstr[0] "Ere-a yuoo soore-a yuoo want tu remuve-a thees playleest? bork!"
+msgstr[1] ""
 "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s pleyleests? bork!"
-msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s pleyleests? bork!"
 
 #: ../../lib/frontends/widgets/application.py:987
 msgid "Remove source"
@@ -3513,9 +3513,9 @@ msgstr[1] "Remuve-a suoorces bork!"
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
-msgstr[0] ""
+msgstr[0] "Ere-a yuoo soore-a yuoo want tu remuve-a thees suoorce-a? bork!"
+msgstr[1] ""
 "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s suoorces? bork!"
-msgstr[1] "Ere-a yuoo soore-a yuoo want tu remuve-a these-a %(count)s suoorces? bork!"
 
 #: ../../lib/frontends/widgets/application.py:1013
 #, python-format
@@ -3565,10 +3565,10 @@ msgstr "Varn me-a when I attempt tu qooeet weeth doonluads een prugress bork!"
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] ""
+msgstr[0] "Yuoo have-a %(count)d cunverseeun een prugress.  Qooeet anyway? bork!"
+msgstr[1] ""
 "Yuoo have-a %(count)d cunverseeuns een prugress ur pendeeng.  Qooeet anyway?"
 " bork!"
-msgstr[1] "Yuoo have-a %(count)d cunverseeuns een prugress ur pendeeng.  Qooeet anyway? bork!"
 
 #: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
@@ -3742,19 +3742,19 @@ msgstr ""
 "Nute-a: %(appname)s vun't muve-a ur cupy any ffeeles un yuoor deesk.  It "
 "veell joost add them tu yuoor %(appname)s leebrary. bork!"
 
-#: ../../lib/frontends/widgets/tablist.py:1070
+#: ../../lib/frontends/widgets/tablist.py:1086
 msgid "Update Podcasts In Folder"
 msgstr "Oopdate-a Pudcasts In Fulder bork!"
 
-#: ../../lib/frontends/widgets/tablist.py:1078
+#: ../../lib/frontends/widgets/tablist.py:1094
 msgid "Update Podcast Now"
 msgstr "Oopdate-a Pudcast Noo bork!"
 
-#: ../../lib/frontends/widgets/tablist.py:1083
+#: ../../lib/frontends/widgets/tablist.py:1099
 msgid "Revert Podcast Name"
 msgstr "Refert Pudcast Name bork!"
 
-#: ../../lib/frontends/widgets/tablist.py:1092
+#: ../../lib/frontends/widgets/tablist.py:1108
 msgid "Update Podcasts Now"
 msgstr "Oopdate-a Pudcasts Noo bork!"
 
@@ -3862,10 +3862,10 @@ msgstr[1] "%(count)d Items bork!"
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
-"%(count)d Doonluads Qooeooed Dooe-a Tu Oonplayed Items (See-a Setteengs) "
+"%(count)d Doonluad Qooeooed Dooe-a Tu Oonplayed Items (See-a Setteengs) "
 "bork!"
 msgstr[1] ""
-"%(count)d Doonluad Qooeooed Dooe-a Tu Oonplayed Items (See-a Setteengs) "
+"%(count)d Doonluads Qooeooed Dooe-a Tu Oonplayed Items (See-a Setteengs) "
 "bork!"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:206
@@ -3987,111 +3987,111 @@ msgstr "poosed bork!"
 msgid "queued"
 msgstr "qooeooed bork!"
 
-#: ../../lib/httpclient.py:102
+#: ../../lib/httpclient.py:107
 msgid "HTTP error"
 msgstr "HTTP errur bork!"
 
-#: ../../lib/httpclient.py:106
+#: ../../lib/httpclient.py:111
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s clused cunnecshun bork!"
 
-#: ../../lib/httpclient.py:111
+#: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s gave us an empty response"
 msgstr "%(host)s geve-a oos an empty respunse bork!"
 
-#: ../../lib/httpclient.py:116
+#: ../../lib/httpclient.py:121
 #, python-format
 msgid "Host returned %(status)s"
 msgstr "Hust retoorned %(status)s bork!"
 
-#: ../../lib/httpclient.py:118
+#: ../../lib/httpclient.py:123
 msgid "Please retry later"
 msgstr "Pleese-a retry later bork!"
 
-#: ../../lib/httpclient.py:122
+#: ../../lib/httpclient.py:127
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr "%(host)s duesn't sooppurt HTTP resoome bork!"
 
-#: ../../lib/httpclient.py:127
+#: ../../lib/httpclient.py:132
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr "HTTP Redurecshun leemeet heet ffur %(url)s bork!"
 
-#: ../../lib/httpclient.py:133
+#: ../../lib/httpclient.py:138
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr "Oothureezashun ffaeeled ffur pruxy: %(host)s:%(port)s bork!"
 
-#: ../../lib/httpclient.py:141
+#: ../../lib/httpclient.py:146
 msgid "Got 404 status code"
 msgstr "Gut 404 statoos cude bork!"
 
-#: ../../lib/httpclient.py:143
+#: ../../lib/httpclient.py:148
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr "Hust retoorned bad statoos cude-a: %(code)s bork!"
 
-#: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
+#: ../../lib/httpclient.py:154 ../../lib/httpclient.py:155
 msgid "Authorization failed"
 msgstr "Oothureezashun ffaeeled bork!"
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:159
 msgid "Authorization canceled"
 msgstr "Oothureezashun canceled bork!"
 
-#: ../../lib/httpclient.py:155
+#: ../../lib/httpclient.py:160
 msgid "Authorization canceled by user"
 msgstr "Oothureezashun canceled by ooser bork!"
 
-#: ../../lib/httpclient.py:159
+#: ../../lib/httpclient.py:164
 msgid "Invalid URL"
 msgstr "Infaleed OoRL bork!"
 
-#: ../../lib/httpclient.py:160
+#: ../../lib/httpclient.py:165
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "\"%(url)s\" ees nut a valeed OoRL bork!"
 
-#: ../../lib/httpclient.py:165
+#: ../../lib/httpclient.py:170
 msgid "Unknown Host"
 msgstr "Oonknoon Hust bork!"
 
-#: ../../lib/httpclient.py:166
+#: ../../lib/httpclient.py:171
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr "Zee dumaeenname-a \"%(host)s\" cuooldn't be-a ffuoond bork!"
 
-#: ../../lib/httpclient.py:172
+#: ../../lib/httpclient.py:177
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Zee ffeele-a \"%(path)s\" duesn't exeest bork!"
 
-#: ../../lib/httpclient.py:176
+#: ../../lib/httpclient.py:181
 msgid "Read error"
 msgstr "Reed errur bork!"
 
-#: ../../lib/httpclient.py:177
+#: ../../lib/httpclient.py:182
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "Errur wheele-a readeeng ffrum \"%(path)s\" bork!"
 
-#: ../../lib/httpclient.py:185
+#: ../../lib/httpclient.py:190
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Cuoold nut wreete-a tu %(filename)s bork!"
 
-#: ../../lib/httpclient.py:187
+#: ../../lib/httpclient.py:192
 msgid "Write error"
 msgstr "Vreete-a errur bork!"
 
-#: ../../lib/httpclient.py:384
+#: ../../lib/httpclient.py:389
 msgid "Website"
 msgstr "Vebseete bork!"
 
-#: ../../lib/httpclient.py:389
+#: ../../lib/httpclient.py:394
 msgid "Proxy"
 msgstr "Pruxy bork!"
 

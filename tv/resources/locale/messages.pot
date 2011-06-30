@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.pculture.org/\n"
-"POT-Creation-Date: 2011-06-20 14:32-0400\n"
+"POT-Creation-Date: 2011-06-30 11:08-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -310,8 +310,8 @@ msgstr ""
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
-#: ../../lib/httpclient.py:171
+#: ../../lib/downloader.py:335 ../../lib/httpclient.py:145
+#: ../../lib/httpclient.py:176
 msgid "File not found"
 msgstr ""
 
@@ -333,8 +333,8 @@ msgid "no connection - retrying soon"
 msgstr ""
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
-#: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
-#: ../../lib/httpclient.py:756
+#: ../../lib/sharing.py:187 ../../lib/httpclient.py:223
+#: ../../lib/httpclient.py:772
 msgid "Unknown"
 msgstr ""
 
@@ -357,50 +357,50 @@ msgstr ""
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
 
-#: ../../lib/net.py:76
+#: ../../lib/net.py:78
 #, python-format
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../lib/net.py:93 ../../lib/net.py:99
+#: ../../lib/net.py:95 ../../lib/net.py:101
 msgid "Can't connect"
 msgstr ""
 
-#: ../../lib/net.py:94
+#: ../../lib/net.py:96
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
 
-#: ../../lib/net.py:100
+#: ../../lib/net.py:102
 msgid "SSL connection error"
 msgstr ""
 
-#: ../../lib/net.py:104
+#: ../../lib/net.py:106
 msgid "Timeout"
 msgstr ""
 
-#: ../../lib/net.py:105
+#: ../../lib/net.py:107
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
 
-#: ../../lib/net.py:292
+#: ../../lib/net.py:295
 msgid "Couldn't find address family to use"
 msgstr ""
 
-#: ../../lib/net.py:321
+#: ../../lib/net.py:324
 msgid "Unknown Error code"
 msgstr ""
 
-#: ../../lib/net.py:367
+#: ../../lib/net.py:370
 msgid "Connection closed"
 msgstr ""
 
-#: ../../lib/startup.py:136
+#: ../../lib/startup.py:137
 msgid "Database Error"
 msgstr ""
 
-#: ../../lib/startup.py:137
+#: ../../lib/startup.py:138
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to start up due to a problem with the "
@@ -418,33 +418,33 @@ msgid ""
 "%(url)s."
 msgstr ""
 
-#: ../../lib/startup.py:158
+#: ../../lib/startup.py:159
 msgid "Unknown Error"
 msgstr ""
 
-#: ../../lib/startup.py:159
+#: ../../lib/startup.py:160
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
 
-#: ../../lib/startup.py:276
+#: ../../lib/startup.py:277
 msgid "Database too new"
 msgstr ""
 
-#: ../../lib/startup.py:278
+#: ../../lib/startup.py:279
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
 
-#: ../../lib/startup.py:566
+#: ../../lib/startup.py:576
 msgid "Submitting Crash Report"
 msgstr ""
 
-#: ../../lib/startup.py:568
+#: ../../lib/startup.py:578
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -837,12 +837,12 @@ msgstr ""
 
 #: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/prefpanel.py:784
 #: ../../lib/frontends/widgets/menus.py:272
-#: ../../lib/frontends/widgets/tablist.py:1073
-#: ../../lib/frontends/widgets/tablist.py:1087
-#: ../../lib/frontends/widgets/tablist.py:1093
-#: ../../lib/frontends/widgets/tablist.py:1139
-#: ../../lib/frontends/widgets/tablist.py:1145
-#: ../../lib/frontends/widgets/tablist.py:1150
+#: ../../lib/frontends/widgets/tablist.py:1089
+#: ../../lib/frontends/widgets/tablist.py:1103
+#: ../../lib/frontends/widgets/tablist.py:1109
+#: ../../lib/frontends/widgets/tablist.py:1155
+#: ../../lib/frontends/widgets/tablist.py:1161
+#: ../../lib/frontends/widgets/tablist.py:1166
 msgid "Remove"
 msgstr ""
 
@@ -1017,9 +1017,9 @@ msgid "File on Disk"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:255
-#: ../../lib/frontends/widgets/tablist.py:968
-#: ../../lib/frontends/widgets/tablist.py:1005
-#: ../../lib/frontends/widgets/tablist.py:1086
+#: ../../lib/frontends/widgets/tablist.py:984
+#: ../../lib/frontends/widgets/tablist.py:1021
+#: ../../lib/frontends/widgets/tablist.py:1102
 msgid "Copy URL to clipboard"
 msgstr ""
 
@@ -1233,8 +1233,8 @@ msgid "Save as Podcast"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:743
-#: ../../lib/frontends/widgets/tablist.py:729
-#: ../../lib/frontends/widgets/tablist.py:849
+#: ../../lib/frontends/widgets/tablist.py:745
+#: ../../lib/frontends/widgets/tablist.py:865
 #: ../../lib/frontends/widgets/itemedit.py:514
 #: ../../lib/frontends/widgets/itemedit.py:762
 msgid "Video"
@@ -1280,8 +1280,8 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:815
 #: ../../lib/frontends/widgets/prefpanel.py:1273
 #: ../../lib/frontends/widgets/devicecontroller.py:579
-#: ../../lib/frontends/widgets/tablist.py:1026
-#: ../../lib/frontends/widgets/tablist.py:1032
+#: ../../lib/frontends/widgets/tablist.py:1042
+#: ../../lib/frontends/widgets/tablist.py:1048
 msgid "Podcasts"
 msgstr ""
 
@@ -1331,7 +1331,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1366
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1436
 #: ../../lib/frontends/widgets/devicecontroller.py:581
-#: ../../lib/frontends/widgets/tablist.py:1085
+#: ../../lib/frontends/widgets/tablist.py:1101
 msgid "Settings"
 msgstr ""
 
@@ -1475,7 +1475,7 @@ msgid "Get Help"
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:206
-#: ../../lib/frontends/widgets/tablist.py:858
+#: ../../lib/frontends/widgets/tablist.py:874
 msgid "Connect"
 msgstr ""
 
@@ -1561,8 +1561,8 @@ msgid ""
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:445
-#: ../../lib/frontends/widgets/tablist.py:919
-#: ../../lib/frontends/widgets/tablist.py:927
+#: ../../lib/frontends/widgets/tablist.py:935
+#: ../../lib/frontends/widgets/tablist.py:943
 msgid "Sources"
 msgstr ""
 
@@ -1585,8 +1585,8 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:509
 #: ../../lib/frontends/widgets/devicecontroller.py:580
-#: ../../lib/frontends/widgets/tablist.py:1098
-#: ../../lib/frontends/widgets/tablist.py:1104
+#: ../../lib/frontends/widgets/tablist.py:1114
+#: ../../lib/frontends/widgets/tablist.py:1120
 msgid "Playlists"
 msgstr ""
 
@@ -1602,8 +1602,8 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:559
 #: ../../lib/frontends/widgets/prefpanel.py:1284
-#: ../../lib/frontends/widgets/tablist.py:982
-#: ../../lib/frontends/widgets/tablist.py:990
+#: ../../lib/frontends/widgets/tablist.py:998
+#: ../../lib/frontends/widgets/tablist.py:1006
 msgid "Stores"
 msgstr ""
 
@@ -2672,7 +2672,7 @@ msgid "_New Folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:267
-#: ../../lib/frontends/widgets/tablist.py:1081
+#: ../../lib/frontends/widgets/tablist.py:1097
 msgid "Rename"
 msgstr ""
 
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:271
 #: ../../lib/frontends/widgets/application.py:950
-#: ../../lib/frontends/widgets/tablist.py:969
+#: ../../lib/frontends/widgets/tablist.py:985
 msgid "Rename Source"
 msgstr ""
 
@@ -2700,12 +2700,12 @@ msgid "Remove Folders"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:279
-#: ../../lib/frontends/widgets/tablist.py:970
+#: ../../lib/frontends/widgets/tablist.py:986
 msgid "Remove Source"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:280
-#: ../../lib/frontends/widgets/tablist.py:973
+#: ../../lib/frontends/widgets/tablist.py:989
 msgid "Remove Sources"
 msgstr ""
 
@@ -2751,7 +2751,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:309
 #: ../../lib/frontends/widgets/application.py:941
-#: ../../lib/frontends/widgets/tablist.py:1144 ../../lib/playlist.py:203
+#: ../../lib/frontends/widgets/tablist.py:1160 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr ""
 
@@ -3070,8 +3070,8 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/statictabs.py:131
 #: ../../lib/frontends/widgets/statictabs.py:139
-#: ../../lib/frontends/widgets/tablist.py:730
-#: ../../lib/frontends/widgets/tablist.py:852
+#: ../../lib/frontends/widgets/tablist.py:746
+#: ../../lib/frontends/widgets/tablist.py:868
 #: ../../lib/frontends/widgets/itemedit.py:513
 msgid "Music"
 msgstr ""
@@ -3281,7 +3281,7 @@ msgid "Enter a name for the new playlist folder"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:931
-#: ../../lib/frontends/widgets/tablist.py:1072
+#: ../../lib/frontends/widgets/tablist.py:1088
 msgid "Rename Podcast Folder"
 msgstr ""
 
@@ -3301,7 +3301,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:946
-#: ../../lib/frontends/widgets/tablist.py:1138
+#: ../../lib/frontends/widgets/tablist.py:1154
 msgid "Rename Playlist Folder"
 msgstr ""
 
@@ -3534,19 +3534,19 @@ msgid ""
 "add them to your %(appname)s library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1070
+#: ../../lib/frontends/widgets/tablist.py:1086
 msgid "Update Podcasts In Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1078
+#: ../../lib/frontends/widgets/tablist.py:1094
 msgid "Update Podcast Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1083
+#: ../../lib/frontends/widgets/tablist.py:1099
 msgid "Revert Podcast Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:1092
+#: ../../lib/frontends/widgets/tablist.py:1108
 msgid "Update Podcasts Now"
 msgstr ""
 
@@ -3762,111 +3762,111 @@ msgstr ""
 msgid "queued"
 msgstr ""
 
-#: ../../lib/httpclient.py:102
+#: ../../lib/httpclient.py:107
 msgid "HTTP error"
-msgstr ""
-
-#: ../../lib/httpclient.py:106
-#, python-format
-msgid "%(host)s closed connection"
 msgstr ""
 
 #: ../../lib/httpclient.py:111
 #, python-format
-msgid "%(host)s gave us an empty response"
+msgid "%(host)s closed connection"
 msgstr ""
 
 #: ../../lib/httpclient.py:116
 #, python-format
+msgid "%(host)s gave us an empty response"
+msgstr ""
+
+#: ../../lib/httpclient.py:121
+#, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:118
+#: ../../lib/httpclient.py:123
 msgid "Please retry later"
-msgstr ""
-
-#: ../../lib/httpclient.py:122
-#, python-format
-msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
 #: ../../lib/httpclient.py:127
 #, python-format
+msgid "%(host)s doesn't support HTTP resume"
+msgstr ""
+
+#: ../../lib/httpclient.py:132
+#, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:133
+#: ../../lib/httpclient.py:138
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:141
+#: ../../lib/httpclient.py:146
 msgid "Got 404 status code"
 msgstr ""
 
-#: ../../lib/httpclient.py:143
+#: ../../lib/httpclient.py:148
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
+#: ../../lib/httpclient.py:154 ../../lib/httpclient.py:155
 msgid "Authorization failed"
 msgstr ""
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:159
 msgid "Authorization canceled"
 msgstr ""
 
-#: ../../lib/httpclient.py:155
+#: ../../lib/httpclient.py:160
 msgid "Authorization canceled by user"
 msgstr ""
 
-#: ../../lib/httpclient.py:159
+#: ../../lib/httpclient.py:164
 msgid "Invalid URL"
 msgstr ""
 
-#: ../../lib/httpclient.py:160
+#: ../../lib/httpclient.py:165
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr ""
 
-#: ../../lib/httpclient.py:165
+#: ../../lib/httpclient.py:170
 msgid "Unknown Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:166
+#: ../../lib/httpclient.py:171
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:172
+#: ../../lib/httpclient.py:177
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr ""
 
-#: ../../lib/httpclient.py:176
+#: ../../lib/httpclient.py:181
 msgid "Read error"
 msgstr ""
 
-#: ../../lib/httpclient.py:177
+#: ../../lib/httpclient.py:182
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
 
-#: ../../lib/httpclient.py:185
+#: ../../lib/httpclient.py:190
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:187
+#: ../../lib/httpclient.py:192
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:384
+#: ../../lib/httpclient.py:389
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:389
+#: ../../lib/httpclient.py:394
 msgid "Proxy"
 msgstr ""
 

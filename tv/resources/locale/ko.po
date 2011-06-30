@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-06-05 14:33-0400\n"
-"PO-Revision-Date: 2011-06-06 17:24+0000\n"
+"POT-Creation-Date: 2011-06-20 14:32-0400\n"
+"PO-Revision-Date: 2011-06-21 19:44+0000\n"
 "Last-Translator: MINJUNG KIM <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-06-20 18:33+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
+"X-Generator: Launchpad (build 13333)\n"
 
-#: ../../osx/plat/utils.py:591 ../../windows/plat/utils.py:509
+#: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
 msgstr "iTunes"
 
@@ -30,11 +30,11 @@ msgstr "서비스"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:218
 #, python-format
 msgid "Hide %(appname)s"
-msgstr "%(appname)s 감춤"
+msgstr "%(appname)s 감추기"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
-msgstr "다른 창 숨기기"
+msgstr "다른 창 감추기"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Show All"
@@ -47,7 +47,7 @@ msgstr "환경설정..."
 #: ../../osx/plat/frontends/widgets/osxmenus.py:229
 #, python-format
 msgid "Quit %(appname)s"
-msgstr "%(appname)s 종료"
+msgstr "%(appname)s 끝내기"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:233
 msgid "Close Window"
@@ -85,11 +85,11 @@ msgstr "편집"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:251
 msgid "Present Half Size"
-msgstr "절반 크기로 보이기"
+msgstr "절반 크기로 보기"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:254
 msgid "Present Actual Size"
-msgstr "실제 크기로 보이기"
+msgstr "실제 크기로 보기"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:257
 msgid "Present Double Size"
@@ -128,13 +128,13 @@ msgstr "%(appname)s 도움말"
 #: ../../lib/frontends/widgets/gtk/window.py:352
 #: ../../lib/frontends/widgets/gtk/video.py:410
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "자막을 사용할 수 없음"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:450
 #: ../../lib/frontends/widgets/menus.py:350
 #: ../../lib/frontends/widgets/gtk/video.py:388
 msgid "None Available"
-msgstr "이용 가능한 것이 없습니다."
+msgstr "이용 가능한 파일이 없습니다."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:457
 #: ../../lib/frontends/widgets/gtk/video.py:421
@@ -195,14 +195,14 @@ msgstr "다운로드 완료"
 #: ../../osx/plat/frontends/widgets/application.py:257
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "'%s' 비디오 다운로드 완료."
+msgstr "비디오 '%s'의 다운로드가 완료되었습니다."
 
-#: ../../lib/storedatabase.py:259
+#: ../../lib/storedatabase.py:263
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr "%(appname)s 데이터베이스 업그레이드 실패"
 
-#: ../../lib/storedatabase.py:262
+#: ../../lib/storedatabase.py:266
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -222,30 +222,30 @@ msgstr ""
 "만약 당신의 디스크가 가득차 있지 않다면, 문제를 해결할 수 있도록 우리의 충돌 데이터베이스에 보고해 주세요.\n"
 "마지막으로, 새롭게 시작하시면 당신의 손상된 데이터베이스는 제거됩니다. 그러나 팟캐스트와 미디어 파일들은 다시 추가해 주셔야 합니다."
 
-#: ../../lib/storedatabase.py:335
+#: ../../lib/storedatabase.py:339
 #, python-format
 msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
 "%(version)s)"
-msgstr ""
+msgstr "데이터베이스는 %(appname)s의 새로운 버전으로 만들어졌습니다. (db version is %(version)s)"
 
-#: ../../lib/storedatabase.py:749
+#: ../../lib/storedatabase.py:753
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s가 데이터베이스 저장에 성공하였습니다."
 
-#: ../../lib/storedatabase.py:751
+#: ../../lib/storedatabase.py:755
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "데이터베이스를 저장했습니다. 데이터 분실 없이 안전하게 종료하실 수 있습니다."
 
-#: ../../lib/storedatabase.py:812
+#: ../../lib/storedatabase.py:816
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s가 데이터베이스 저장에 실패하였습니다."
 
-#: ../../lib/storedatabase.py:815
+#: ../../lib/storedatabase.py:819
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -270,41 +270,42 @@ msgstr ""
 "오류r: %(error_text)s\n"
 "\n"
 
-#: ../../lib/storedatabase.py:907
+#: ../../lib/storedatabase.py:911
 #, python-format
 msgid "%(appname)s database corrupt."
-msgstr ""
+msgstr "%(appname)s 데이터베이스 충돌"
 
-#: ../../lib/storedatabase.py:910
+#: ../../lib/storedatabase.py:914
 #, python-format
 msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
 "database directory and a new database will be created now."
 msgstr ""
+"당신의 %(appname)s 데이터베이스가 충돌했습니다. 그것은 당신의 Miro 데이터베이스 디렉토리에 백업되고, 새로운 데이터베이스는 "
+"지금 만들어질 것입니다."
 
 #: ../../lib/opml.py:224 ../../lib/opml.py:232
 msgid "OPML Import failed"
-msgstr "OPML 가져오기 실패"
+msgstr "OPML 불러오기 실패"
 
 #: ../../lib/opml.py:226
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr "선택하신 OPML 파일이 올바르지 않습니다. 가져오는데 실패했습니다."
+msgstr "선택하신 OPML 파일이 올바르지 않습니다. 불러오는데 실패했습니다."
 
 #: ../../lib/opml.py:234
 msgid "The selected OPML file could not be read.  Import was interrupted."
-msgstr "선택하신 OPML 파일을 읽을 수 없습니다. 가져오는데 실패했습니다."
+msgstr "선택하신 OPML 파일을 읽을 수 없습니다. 불러오는데 실패했습니다."
 
 #: ../../lib/opml.py:242
 msgid "OPML Import summary"
-msgstr "OPML 가져오기 결과 요약"
+msgstr "OPML 불러오기 결과 요약"
 
 #: ../../lib/opml.py:243
 #, python-format
 msgid "Successfully imported %(count)d podcast."
 msgid_plural "Successfully imported %(count)d podcasts."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d개의 팟캐스트를 성공적으로 불러옴"
 
 #: ../../lib/opml.py:249
 #, python-format
@@ -314,11 +315,11 @@ msgstr[0] "건너뛴 %(count)d 팟캐스트가 이미 존재합니다."
 
 #: ../../lib/messagehandler.py:1593
 msgid "Subscribed to new podcast:"
-msgstr "새로운 팟캐스트 구독하기"
+msgstr "새로운 팟캐스트 구독하기:"
 
 #: ../../lib/messagehandler.py:1596
 msgid "Subscribed to new podcasts:"
-msgstr "새로운 팟캐스트 구독하기"
+msgstr "새로운 팟캐스트 구독하기:"
 
 #: ../../lib/messagehandler.py:1617
 msgid "Migrating Files"
@@ -348,7 +349,7 @@ msgstr "접속할 수 없습니다 - 곧 재시도"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
-#: ../../lib/httpclient.py:750
+#: ../../lib/httpclient.py:756
 msgid "Unknown"
 msgstr "알 수 없음"
 
@@ -400,7 +401,7 @@ msgstr "%(host)s에 연결 중 시간 초과"
 
 #: ../../lib/net.py:292
 msgid "Couldn't find address family to use"
-msgstr ""
+msgstr "사용할 address family를 찾을 수 없음"
 
 #: ../../lib/net.py:321
 msgid "Unknown Error code"
@@ -410,11 +411,11 @@ msgstr "알 수 없는 오류 코드"
 msgid "Connection closed"
 msgstr "연결 종료"
 
-#: ../../lib/startup.py:134
+#: ../../lib/startup.py:136
 msgid "Database Error"
 msgstr "데이터베이스 오류"
 
-#: ../../lib/startup.py:135
+#: ../../lib/startup.py:137
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to start up due to a problem with the "
@@ -438,22 +439,22 @@ msgstr ""
 "하시려면, 새로 시작 버튼을 누르고 %(appname)s을 다시 시작하십시오.\n"
 "후에 이같은 문제를 해결하시려면, %(url)s에 버그를 보고해 주십시오."
 
-#: ../../lib/startup.py:156
+#: ../../lib/startup.py:158
 msgid "Unknown Error"
 msgstr "알 수 없는 오류"
 
-#: ../../lib/startup.py:157
+#: ../../lib/startup.py:159
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr "알 수 없는 오류로 인하여 %(appname)s을 시작할 수 없습니다. %(url)s에 버그를 보고해 주십시오."
 
-#: ../../lib/startup.py:272
+#: ../../lib/startup.py:276
 msgid "Database too new"
 msgstr "새 데이터 베이스"
 
-#: ../../lib/startup.py:274
+#: ../../lib/startup.py:278
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
@@ -461,11 +462,11 @@ msgid ""
 msgstr ""
 "%(appname)s의 최신 버전 데이터베이스가 있습니다. 가장 최신 버전의 %(appname)s 프로그램을 설치하신 후 실행하십시오."
 
-#: ../../lib/startup.py:552
+#: ../../lib/startup.py:566
 msgid "Submitting Crash Report"
 msgstr "충돌 보고서 제출 중"
 
-#: ../../lib/startup.py:554
+#: ../../lib/startup.py:568
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -502,13 +503,13 @@ msgstr "%(appname)s 팟캐스트 파일을 다운로드 할 수 없습니다: %(
 
 #: ../../lib/commandline.py:237
 msgid "Invalid Torrent"
-msgstr "유효하지 않은 토런트"
+msgstr "유효하지 않은 Torrent"
 
 #: ../../lib/commandline.py:239
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
-msgstr "torrent 파일 %(filename)s에 오류가 생긴 것 같습니다. 파일을 열 수 없습니다."
+msgstr "Torrent 파일 %(filename)s에 오류가 생긴 것 같습니다. 파일을 열 수 없습니다."
 
 #: ../../lib/commandline.py:246
 msgid "File Error"
@@ -520,12 +521,12 @@ msgid ""
 "The torrent file %(filename)s could not be opened. Please ensure it exists "
 "and you have permission to access this file."
 msgstr ""
-"torrent 파일 %(filename)s을 열 수 없습니다. 존재하는 파일인지 확인하시고, 이 파일의 접근 승인을 받으시기 바랍니다."
+"Torrent 파일 %(filename)s을 열 수 없습니다. 존재하는 파일인지 확인하시고, 이 파일의 접근 권한을 받으시기 바랍니다."
 
-#: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1670
+#: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1692
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr ""
+msgstr "'%(query)s'을 위한 %(engine)s"
 
 #: ../../lib/devices.py:175
 msgid "Your drive must be mounted."
@@ -535,7 +536,7 @@ msgstr "드라이브를 장착하십시오."
 msgid "USB Device"
 msgstr "USB 장치"
 
-#: ../../lib/item.py:1297 ../../lib/messages.py:1352
+#: ../../lib/item.py:1297 ../../lib/messages.py:1295
 msgid "queued for download"
 msgstr "다운로드 대기중"
 
@@ -551,7 +552,7 @@ msgstr "시작 중..."
 msgid "Search All"
 msgstr "모두 검색"
 
-#: ../../lib/sharing.py:250 ../../lib/messages.py:1270
+#: ../../lib/sharing.py:250 ../../lib/messages.py:1213
 msgid "Locked"
 msgstr "잠김"
 
@@ -660,16 +661,16 @@ msgstr[0] "만료: %(count)d분"
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
-#: ../../lib/feed.py:994
+#: ../../lib/feed.py:1033
 msgid "Bad content-type"
 msgstr "잘못된 컨텐트 타입"
 
-#: ../../lib/feed.py:1007
+#: ../../lib/feed.py:1046
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
 msgstr "팟캐스트가 %(appname)s과 호환되지 않습니다."
 
-#: ../../lib/feed.py:1010
+#: ../../lib/feed.py:1049
 #, python-format
 msgid ""
 "This podcast is not compatible with %(appname)s but we'll try our best to "
@@ -687,20 +688,20 @@ msgstr ""
 "그래도 이 팟캐스트를 로딩하시겠습니까?\n"
 "Do you want to try to load this podcast anyway?"
 
-#: ../../lib/feed.py:2297 ../../lib/feed.py:2437
+#: ../../lib/feed.py:2319 ../../lib/feed.py:2459
 msgid "Local Files"
 msgstr "로컬 파일"
 
-#: ../../lib/feed.py:2306 ../../lib/feed.py:2412 ../../lib/feed.py:2422
+#: ../../lib/feed.py:2328 ../../lib/feed.py:2434 ../../lib/feed.py:2444
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Search"
 msgstr "검색"
 
-#: ../../lib/messages.py:1273 ../../lib/frontends/widgets/itemedit.py:555
+#: ../../lib/messages.py:1216 ../../lib/frontends/widgets/itemedit.py:555
 msgid "Movie"
 msgstr "영화"
 
-#: ../../lib/messages.py:1275 ../../lib/frontends/widgets/diagnostics.py:80
+#: ../../lib/messages.py:1218 ../../lib/frontends/widgets/diagnostics.py:80
 #: ../../lib/frontends/widgets/widgetconst.py:78
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 #: ../../lib/frontends/widgets/itemedit.py:544
@@ -709,15 +710,15 @@ msgstr "영화"
 msgid "Show"
 msgstr "보기"
 
-#: ../../lib/messages.py:1277 ../../lib/frontends/widgets/itemedit.py:557
+#: ../../lib/messages.py:1220 ../../lib/frontends/widgets/itemedit.py:557
 msgid "Clip"
 msgstr "클립"
 
-#: ../../lib/messages.py:1279 ../../lib/frontends/widgets/itemedit.py:558
+#: ../../lib/messages.py:1222 ../../lib/frontends/widgets/itemedit.py:558
 msgid "Podcast"
 msgstr "팟캐스트"
 
-#: ../../lib/messages.py:1298
+#: ../../lib/messages.py:1241
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
@@ -726,22 +727,22 @@ msgstr ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 
-#: ../../lib/util.py:455 ../../lib/util.py:457
+#: ../../lib/util.py:443 ../../lib/util.py:445
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../lib/util.py:461 ../../lib/util.py:463
+#: ../../lib/util.py:449 ../../lib/util.py:451
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../lib/util.py:467 ../../lib/util.py:469
+#: ../../lib/util.py:455 ../../lib/util.py:457
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../lib/util.py:473 ../../lib/util.py:475
+#: ../../lib/util.py:461 ../../lib/util.py:463
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -780,7 +781,7 @@ msgstr "아니오"
 
 #: ../../lib/dialogs.py:101 ../../linux/extensions/miroappindicator/main.py:60
 msgid "Quit"
-msgstr "종료"
+msgstr "끝내기"
 
 #: ../../lib/dialogs.py:102
 msgid "Continue"
@@ -920,7 +921,7 @@ msgstr "데이터베이스에 포함하지 않기"
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
-msgstr "%(authtype)s %(url)s은 \"%(realm)s\"에 대한 사용자이름과 비밀번호가 필요합니다."
+msgstr "%(authtype)s %(url)s은 \"%(realm)s\"에 대한 사용자이름과 비밀번호를 필요로 합니다."
 
 #: ../../lib/dialogs.py:214
 msgid "Login Required"
@@ -1091,7 +1092,7 @@ msgstr "항목 편집"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:653
 #: ../../lib/frontends/widgets/menus.py:410
 msgid "Show Conversion Folder"
-msgstr "변환 폴더 보기"
+msgstr "변환된 파일이 있는 폴더 보기"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:453
 msgid "Remove From Playlist"
@@ -1231,7 +1232,7 @@ msgstr "다시 시작"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:628
 msgid "Back to podcast"
-msgstr "팟캐스트로"
+msgstr "팟캐스트로 돌아가기"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:648
 msgid "Stop All Conversions"
@@ -1388,18 +1389,18 @@ msgstr "팟캐스트 제거"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1808
 #, python-format
 msgid "Importing audio details and artwork: %(number)d of %(total)d"
-msgstr ""
+msgstr "오디오 세부사항과 아트워크 불러오기 : %(total)d개 중 %(number)d개"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1811
 #, python-format
 msgid ""
 "Importing video details and creating thumbnails: %(number)d of %(total)d"
-msgstr ""
+msgstr "비디오 세부사항을 불러오고 썸네일 만들기 : %(total)d개 중 %(number)d개"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1814
 #, python-format
 msgid "Importing file details: %(number)d of %(total)d"
-msgstr ""
+msgstr "파일 세부사항 불러오기 : %(total)d개 중 %(number)d개"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1968
 msgid "Remaining"
@@ -1436,7 +1437,7 @@ msgstr "라이센스 보기"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2224
 msgid "Select an item to view more of its details"
-msgstr "더 자세한 사항 보기 위해 항목 선택"
+msgstr "더 자세한 사항을 보기 위해 항목 선택"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2277
 msgid "DRM Locked"
@@ -1470,6 +1471,8 @@ msgid ""
 "\n"
 "Once you install the Bonjour libraries, you will have to restart %(appname)s."
 msgstr ""
+"%(appname)s부터 %(appname)s나 Miro iPad app까지 파일을 공유하기를 원하시면  Bonjour 라이브러리를 "
+"설치하셔야 합니다. 일단 Bonjour 라이브러리를 설치하시고 나서 %(appname)s를 다시 시작해 주세요."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:74
 msgid "Click here to install"
@@ -1477,12 +1480,12 @@ msgstr "설치하려면 여기를 클릭하세요."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:121
 msgid "On"
-msgstr "켬"
+msgstr "켜기"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:127
 #: ../../lib/frontends/widgets/prefpanel.py:516
 msgid "Off"
-msgstr "끔"
+msgstr "끄기"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:153
 msgid "Get Help"
@@ -1505,8 +1508,8 @@ msgid ""
 "%(shortappname)ss on your local network and to the Miro iPad app.  It's "
 "awesome!"
 msgstr ""
-"%(shortappname)s은 데이터 전송을 이어서 하거나, 당신의 로컬 네트워크에 다른 %(shortappname)s로부터 Miro "
-"iPad app으로 파일을 다운로드할 수 있습니다. 멋지죠!"
+"%(shortappname)s는 데이터 전송을 이어서 하거나, 당신의 로컬 네트워크의 다른 %(shortappname)s로부터 Miro "
+"iPad app으로 파일을 다운로드할 수 있습니다. 멋지지 않나요!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:252
 msgid "Disabled: Needs Bonjour"
@@ -1523,7 +1526,7 @@ msgstr "비디오 공유"
 #: ../../lib/frontends/widgets/tabcontroller.py:271
 #: ../../lib/frontends/widgets/prefpanel.py:913
 msgid "Warn on quit when others are connected to my media library."
-msgstr "다른 사람들이 내 미디어 라이브러리에 접속해 있을 때 중지에 대한 경고"
+msgstr "다른 사람들이 내 미디어 라이브러리에 접속해 있을 때 멈추는 것에 대해 경고"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:279
 #, python-format
@@ -1569,8 +1572,8 @@ msgid ""
 "%(shortappname)s on your desktop to your iPad. You can also download songs "
 "and videos to your iPad and take them with you."
 msgstr ""
-"이 멋진 Miro iPad app은 무선으로 음악과 비디오를 %(shortappname)s로 부터 당신의 iPad 데스크탑으로 "
-"보내줍니다. 당신은 노래나 비디오를 당신의 iPad에 다운로드 해서 가지고 다닐 수 있습니다."
+"이 멋진 Miro iPad app은 음악과 비디오를  무선으로 %(shortappname)s로 부터 당신의 iPad 데스크탑으로 "
+"보내줍니다. 당신은 노래나 비디오를 iPad에 다운로드 받아 가지고 다닐 수 있습니다."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:392
 msgid "Miro on Android"
@@ -1596,8 +1599,7 @@ msgid ""
 "Sources are any websites that offer audio, video, or torrents for download "
 "that you would like to use within %(shortappname)s."
 msgstr ""
-"소스는 %(shortappname)s.에서 당신이 사용하기를 원하는 오디오, 비디오, torrents의 다운로드를 제공하는 "
-"웹사이트들입니다."
+"소스는 %(shortappname)s에서 당신이 사용하기를 원하는 오디오, 비디오, torrents의 다운로드를 제공하는 웹사이트들입니다."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:473
 msgid "URL"
@@ -1605,7 +1607,7 @@ msgstr "URL 주소"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:482
 #: ../../lib/frontends/widgets/menus.py:259
-#: ../../lib/frontends/widgets/application.py:731
+#: ../../lib/frontends/widgets/application.py:782
 msgid "Add Source"
 msgstr "소스 추가"
 
@@ -1641,6 +1643,9 @@ msgid ""
 "%(shortappname)s if you add them as Sources, but these are Stores that we've "
 "integrated and tested."
 msgstr ""
+"%(shortappname)s에 나타나게 하고 싶은 음악, 비디오 스토어를 선택하세요. 노트: 당신이 그것들을 소스로 추가한다면, 몇몇 "
+"다른 스토어 웹사이트이 %(shortappname)s와 잘 작동할 수도 있습니다. 그러나 이 스토어들은 이미 우리가 통합하고 테스트한 "
+"것들입니다."
 
 #: ../../lib/frontends/widgets/diagnostics.py:61
 #: ../../lib/frontends/widgets/diagnostics.py:138
@@ -1811,7 +1816,7 @@ msgstr "이런! %(appname)s 내부 오류입니다."
 
 #: ../../lib/frontends/widgets/crashdialog.py:68
 msgid "You can help us fix this problem by submitting an error report."
-msgstr "오류 보고서를 제출하시면 이 문제를 고치도록 도울 수 있습니다."
+msgstr "오류 보고서를 제출하시면 우리가 이 문제를 고치도록 도우실 수 있습니다."
 
 #: ../../lib/frontends/widgets/crashdialog.py:75
 msgid ""
@@ -1835,7 +1840,7 @@ msgstr "오류 보고서와 함께 모든 파일 이름, 웹사이트, 팟캐스
 #: ../../lib/frontends/widgets/crashdialog.py:95
 msgid ""
 "What were you doing when you got this message?  (Helpful, but not required.)"
-msgstr "이 메시지를 받으셨을 때 무엇을 하고 계셨습니까? (도움이 되지만, 꼭 하실 필요는 없습니다.)"
+msgstr "이 메시지를 받으셨을 때 무엇을 하고 계셨습니까? (도움이 되지만, 꼭 작성하실 필요는 없습니다.)"
 
 #: ../../lib/frontends/widgets/crashdialog.py:108
 msgid "Crash Report:"
@@ -1864,11 +1869,11 @@ msgstr "알 수 없는 음악가"
 msgid "No Results"
 msgstr "결과 없음"
 
-#: ../../lib/frontends/widgets/browser.py:157
+#: ../../lib/frontends/widgets/browser.py:161
 msgid "Open in browser"
 msgstr "브라우저에서 열기"
 
-#: ../../lib/frontends/widgets/browser.py:164
+#: ../../lib/frontends/widgets/browser.py:168
 msgid "Download this video"
 msgstr "이 동영상 다운로드"
 
@@ -1904,7 +1909,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:261
 msgid "New Search Podcast"
-msgstr "새로운 검색 팟캐스트"
+msgstr "새로운 팟캐스트 검색"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:60
 msgid "A search podcast contains items that match a search term."
@@ -1965,7 +1970,7 @@ msgstr[0] "이 팟캐스트를 정말 제거하려고 하십니까? 현재 진�
 msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
-msgstr "%(appname)s 이 파일을 재생할 수 없습니다. 다른 프로그램에서 재생해 보십시오."
+msgstr "%(appname)s는 이 파일을 재생할 수 없습니다. 다른 프로그램에서 재생해 보십시오."
 
 #: ../../lib/frontends/widgets/displays.py:533
 msgid "Filename:"
@@ -2041,13 +2046,13 @@ msgstr "새 폴더에 넣기"
 #: ../../lib/frontends/widgets/prefpanel.py:444
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr "로그인하면 자동으로 %(appname)s 실행"
+msgstr "로그인할 때 자동으로 %(appname)s 실행"
 
 #: ../../lib/frontends/widgets/prefpanel.py:450
 #, python-format
 msgid ""
 "When starting up %(appname)s, remember what screen I was on when I last quit."
-msgstr "%(appname)s 시작할 때, 마지막으로 본 화면 기억하기"
+msgstr "%(appname)s를 시작할 때, 마지막으로 본 화면 기억하기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:457
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -2070,7 +2075,7 @@ msgstr "언어:"
 #: ../../lib/frontends/widgets/prefpanel.py:482
 #, python-format
 msgid "(Changing the language requires you to restart %(appname)s.)"
-msgstr ""
+msgstr "언어를 변경하시면 %(appname)s를 다시 시작하셔야 합니다."
 
 #: ../../lib/frontends/widgets/prefpanel.py:494
 msgid "Show videos from podcasts in the Videos section."
@@ -2122,11 +2127,11 @@ msgstr "1000"
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "Standard view"
-msgstr ""
+msgstr "표준으로 보기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:532
 msgid "List view"
-msgstr ""
+msgstr "리스트로 보기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:538
 msgid "Default settings for new podcasts:"
@@ -2134,7 +2139,7 @@ msgstr "새 팟캐스트에 대한 기본 설정"
 
 #: ../../lib/frontends/widgets/prefpanel.py:542
 msgid "(These can be changed using the podcast's settings button)"
-msgstr "(이것들은 팟캐스트 설정 버튼을 사용해서 변경될 수 있습니다.)"
+msgstr "(팟캐스트 설정 버튼을 이용해서 이것들을 변경하실 수 있습니다.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Check for new content:"
@@ -2146,11 +2151,11 @@ msgstr "자동 다운로드 설정"
 
 #: ../../lib/frontends/widgets/prefpanel.py:557
 msgid "Default view:"
-msgstr ""
+msgstr "기본으로 보기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:563
 msgid "Remember this many old items:"
-msgstr "오래 된 항목 다음 개수만큼 기억:"
+msgstr "다음 개수만큼 오래된 항목들을 기억하기:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:564
 msgid "(in addition to the current contents)"
@@ -2183,7 +2188,7 @@ msgstr "다운로드 대역폭 제한:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:640
 msgid "Limit torrent connections to:"
-msgstr "토런트 연결 수 제한:"
+msgstr "Torrent 연결 수 제한:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:667
 msgid "Starting port:"
@@ -2203,11 +2208,11 @@ msgstr "더 많은 비슷한 것들을 찾기 위해 DHT 사용"
 
 #: ../../lib/frontends/widgets/prefpanel.py:689
 msgid "Ignore unencrypted connections."
-msgstr "암호화되지 않은 연결 무시."
+msgstr "암호화되지 않은 연결 무시"
 
 #: ../../lib/frontends/widgets/prefpanel.py:694
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "이 비율에 도달하면 토렌트 업로드 중지:"
+msgstr "이 비율에 도달하면 Torrent 업로드 중지:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:715
 msgid "Change"
@@ -2248,7 +2253,7 @@ msgstr "폴더"
 
 #: ../../lib/frontends/widgets/prefpanel.py:774
 msgid "visible"
-msgstr "볼 수 있음"
+msgstr "보임"
 
 #: ../../lib/frontends/widgets/prefpanel.py:825
 #: ../../lib/frontends/widgets/newwatchedfolder.py:49
@@ -2295,19 +2300,19 @@ msgstr "1개월"
 
 #: ../../lib/frontends/widgets/prefpanel.py:899
 msgid "By default, video and audio items expire after:"
-msgstr "동영상과 음악 항목을 자동으로 다음 후에 만료:"
+msgstr "다음 시간 후에 동영상과 음악 항목 자동으로 만료:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:911
 msgid "Share my media library."
-msgstr "나의 미디어 라이브러리 공유."
+msgstr "나의 미디어 라이브러리 공유"
 
 #: ../../lib/frontends/widgets/prefpanel.py:916
 msgid "Share my music library."
-msgstr "나의 음악 라이브러리 공유."
+msgstr "나의 음악 라이브러리 공유"
 
 #: ../../lib/frontends/widgets/prefpanel.py:917
 msgid "Share my video library."
-msgstr "나의 동영상 라이브러리 공유."
+msgstr "나의 동영상 라이브러리 공유"
 
 #: ../../lib/frontends/widgets/prefpanel.py:943
 msgid "Share Name:"
@@ -2321,11 +2326,11 @@ msgstr "공유하려면 Bonjour가 필요합니다. 설치하려면 'Bonjour 설
 #: ../../lib/frontends/widgets/prefpanel.py:975
 #, python-format
 msgid "Play media in %(appname)s."
-msgstr ""
+msgstr "%(appname)s에서 미디어 재생하기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:978
 msgid "Always play videos in a separate window."
-msgstr "항상 새 윈도우에서 동영상 재생."
+msgstr "항상 새 윈도우에서 동영상 재생하기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:981
 msgid "Automatically enable movie subtitles when available."
@@ -2337,7 +2342,7 @@ msgstr "계속 재생"
 
 #: ../../lib/frontends/widgets/prefpanel.py:987
 msgid "Play video and audio items one after another"
-msgstr "동영상과 음악 항목 차례로 재생"
+msgstr "동영상과 음악 항목을 차례로 재생하기"
 
 #: ../../lib/frontends/widgets/prefpanel.py:989
 msgid "Stop after each video or audio item"
@@ -2381,11 +2386,11 @@ msgstr "MP3 스토어:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1146
 msgid "enabled"
-msgstr "사용 가능"
+msgstr "사용가능"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1151
 msgid "extension"
-msgstr "확장자"
+msgstr "확장 기능"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1191
 #, python-format
@@ -2404,30 +2409,30 @@ msgstr "설명:"
 #: ../../lib/frontends/widgets/prefpanel.py:1214
 #, python-format
 msgid "Extension %(extensionname)s failed to load: %(errormessage)s"
-msgstr "확장자 %(extensionname)s을 로딩하는데 실패했습니다: %(errormessage)s"
+msgstr "확장 기능 %(extensionname)s을 불러오는데 실패했습니다: %(errormessage)s"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1219
 msgid "Extension failed to load"
-msgstr "확장자를 로딩하는데 실패했습니다."
+msgstr "확장 기능을 불러오는데 실패했습니다."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1232
 #, python-format
 msgid "Extension %(extensionname)s failed to unload: %(errormessage)s"
-msgstr "확장자 %(extensionname)s을 없애는데 실패했습니다: %(errormessage)s"
+msgstr "확장 기능 %(extensionname)s을 없애는데 실패했습니다: %(errormessage)s"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1237
 msgid "Extension failed to unload"
-msgstr "확장자를 없애는데 실패했습니다."
+msgstr "확장 기능을 없애는데 실패했습니다."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1253
 msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
-msgstr "확장자는 베타의 특징입니다. 쓰기 확장자에 관심있는 개발자들은 우리 위키에서 더 많은 것들을 보실 수 있습니다."
+msgstr "확장 기능은 베타의 특징입니다. 쓰기 확장에 관심있는 개발자들은 우리 위키에서 더 많은 것들을 보실 수 있습니다."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1257
 msgid "Extensions:"
-msgstr "확장자(extension)："
+msgstr "확장 기능:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1261
 msgid "Details:"
@@ -2464,7 +2469,7 @@ msgstr "변환"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1285
 msgid "Extensions"
-msgstr "확장"
+msgstr "확장 기능"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1290
 #: ../../lib/frontends/widgets/menus.py:251
@@ -2565,7 +2570,7 @@ msgstr "이 디렉토리에 오디오 저장"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:481
 msgid "Always show this device, even if 'show all devices' is turned off"
-msgstr "'모든 장치 보기'가 꺼져있어도 이 장치는 항상 보기"
+msgstr "'모든 장치 보기'가 꺼져있더라도 이 장치는 항상 보기"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:578
 msgid "Main"
@@ -2609,18 +2614,18 @@ msgid "%(count)s items"
 msgstr "%(count)s개 항목"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1085
-#: ../../lib/frontends/widgets/application.py:836
+#: ../../lib/frontends/widgets/application.py:887
 msgid "Create Playlist"
 msgstr "재생 목록 만들기"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1086
-#: ../../lib/frontends/widgets/application.py:837
+#: ../../lib/frontends/widgets/application.py:888
 msgid "Enter a name for the new playlist"
 msgstr "새 재생 목록에 대한 이름을 입력하십시오"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1099
 msgid "Unwatched"
-msgstr "미 시청"
+msgstr "시청 안 함"
 
 #: ../../lib/frontends/widgets/menus.py:215
 msgid "_File"
@@ -2636,7 +2641,7 @@ msgstr "불러오기"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Search all my Files..."
-msgstr "모든 내 파일에서 검색..."
+msgstr "내 모든 파일에서 검색..."
 
 #: ../../lib/frontends/widgets/menus.py:222
 msgid "Search in a Folder..."
@@ -2672,11 +2677,11 @@ msgstr "항목 편집"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "_Save Item As"
-msgstr "_으로 항목 저장"
+msgstr "다른 이름으로 저장"
 
 #: ../../lib/frontends/widgets/menus.py:245
 msgid "_Save Items As"
-msgstr "_으로 항목 저장"
+msgstr "다른 이름으로 저장"
 
 #: ../../lib/frontends/widgets/menus.py:246
 msgid "Copy Item _URL"
@@ -2688,7 +2693,7 @@ msgstr "버전 체크"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Quit"
-msgstr "종료(_Q)"
+msgstr "끝내기(_Q)"
 
 #: ../../lib/frontends/widgets/menus.py:255
 msgid "_Sidebar"
@@ -2704,12 +2709,12 @@ msgid "Rename"
 msgstr "이름 바꾸기"
 
 #: ../../lib/frontends/widgets/menus.py:270
-#: ../../lib/frontends/widgets/application.py:885
+#: ../../lib/frontends/widgets/application.py:936
 msgid "Rename Podcast"
 msgstr "팟캐스트 이름 바꾸기"
 
 #: ../../lib/frontends/widgets/menus.py:271
-#: ../../lib/frontends/widgets/application.py:899
+#: ../../lib/frontends/widgets/application.py:950
 #: ../../lib/frontends/widgets/tablist.py:969
 msgid "Rename Source"
 msgstr "소스 이름 바꾸기"
@@ -2777,7 +2782,7 @@ msgid "New Playlist Folder"
 msgstr "새 재생목록 폴더"
 
 #: ../../lib/frontends/widgets/menus.py:309
-#: ../../lib/frontends/widgets/application.py:890
+#: ../../lib/frontends/widgets/application.py:941
 #: ../../lib/frontends/widgets/tablist.py:1144 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "재생 목록 이름 바꾸기"
@@ -2857,7 +2862,7 @@ msgstr "도움말(_H)"
 #: ../../lib/frontends/widgets/menus.py:364
 #, python-format
 msgid "About %(name)s"
-msgstr "%(name)s 대해"
+msgstr "%(name)s에 대해"
 
 #: ../../lib/frontends/widgets/menus.py:372
 msgid "Donate"
@@ -2869,7 +2874,7 @@ msgstr "도움말"
 
 #: ../../lib/frontends/widgets/menus.py:379
 msgid "Report a Bug"
-msgstr "버그 보고하기"
+msgstr "버그 보고"
 
 #: ../../lib/frontends/widgets/menus.py:381
 msgid "Translate"
@@ -2877,7 +2882,7 @@ msgstr "번역"
 
 #: ../../lib/frontends/widgets/menus.py:383
 msgid "Planet Miro"
-msgstr ""
+msgstr "Planet Miro"
 
 #: ../../lib/frontends/widgets/menus.py:386
 msgid "Dev"
@@ -2926,7 +2931,7 @@ msgstr "추가할 폴더의 이름을 입력하십시오"
 #: ../../lib/frontends/widgets/itemrenderer.py:98
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr "%(progname)s에 보임"
+msgstr "%(progname)s에 보이기"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:101
 msgid "display contents"
@@ -3029,7 +3034,7 @@ msgstr "변환 중"
 msgid ""
 "%(appname)s can watch a folder on your computer and show those media files "
 "in your library."
-msgstr ""
+msgstr "%(appname)s는 당신의 컴퓨터에 있는 폴더를 보거나 라이브러리에 있는 미디어파일들을 보여줄 수 있습니다."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:73
 #: ../../lib/frontends/widgets/firsttimedialog.py:318
@@ -3051,7 +3056,7 @@ msgstr "시청한 폴더 디렉토리 선택"
 #: ../../lib/frontends/widgets/newwatchedfolder.py:126
 msgid ""
 "That directory could not be found. Please check the path and try again."
-msgstr "디렉토리를 찾을 수 없습니다. 확인하시고 다시 시도해 주세요."
+msgstr "디렉토리를 찾을 수 없습니다. 확인하고 다시 시도해 주세요."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:128
 msgid ""
@@ -3108,11 +3113,41 @@ msgstr "음악"
 msgid "Misc"
 msgstr "기타"
 
-#: ../../lib/frontends/widgets/application.py:213
+#: ../../lib/frontends/widgets/application.py:216
 msgid "Movies directory gone"
 msgstr "동영상 디렉토리가 사라졌습니다."
 
-#: ../../lib/frontends/widgets/application.py:215
+#: ../../lib/frontends/widgets/application.py:221
+#, python-format
+msgid ""
+"%(shortappname)s can't use the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected, is a directory that %(shortappname)s does not have write "
+"permission to, or there is something that is not a directory at that path.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+" \n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+"%(shortappname)s는 이 디렉토리에 있는 주요 비디오를 사용할 수 없습니다.\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"이것은 아마 그것이 연결되지 않은 외장 드라이브에 있거나, %(shortappname)s가 쓰기 권한이 없거나, 그 경로에 디렉토리가 "
+"아닌 뭔가가 있기 때문입니다.\n"
+"\n"
+"만약 계속하시면, 주요 비디오 디렉토리는 이 드라이브로 다시 맞춰집니다. 만약 비디오를 다운로드 하셨다면, 이것은 "
+"%(shortappname)s는 그 비디오들에 대한 세부사항을 잃게될 것입니다.\n"
+"\n"
+"만약 중지하시면, 당신은 드라이브에 연결하거나 아니면 %(shortappname)s를 다시 실행하여 이 문제를 해결할 수 있습니다."
+
+#: ../../lib/frontends/widgets/application.py:246
 #, python-format
 msgid ""
 "%(shortappname)s can't use the primary video directory located at:\n"
@@ -3126,48 +3161,57 @@ msgid ""
 "%(shortappname)s will now exit. You can connect the drive or otherwise fix "
 "the problem and relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s는 이 디렉토리에 있는 주요 비디오를 사용할 수 없습니다.\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"이것은 아마 그것이 연결되지 않은 외장 드라이브에 있거나, %(shortappname)s가 쓰기 권한이 없거나, 그 경로에 디렉토리가 "
+"아닌 뭔가가 있기 때문입니다.\n"
+"\n"
+"%(shortappname)s는 종료됩니다. 당신은 드라이브를 연결하거나 %(shortappname)s를 다시 실행하여 이 문제를 해결할 "
+"수 있습니다."
 
-#: ../../lib/frontends/widgets/application.py:406
+#: ../../lib/frontends/widgets/application.py:457
 msgid "Error Revealing File"
 msgstr "파일 보이기 오류"
 
-#: ../../lib/frontends/widgets/application.py:407
+#: ../../lib/frontends/widgets/application.py:458
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr "파일 %(filename)s은 %(appname)s 외부에서 삭제되었습니다."
 
-#: ../../lib/frontends/widgets/application.py:418
+#: ../../lib/frontends/widgets/application.py:469
 msgid "Open Files..."
 msgstr "파일 열기..."
 
-#: ../../lib/frontends/widgets/application.py:429
-#: ../../lib/frontends/widgets/application.py:434
+#: ../../lib/frontends/widgets/application.py:480
+#: ../../lib/frontends/widgets/application.py:485
 msgid "Open Files - Error"
 msgstr "파일 열기 - 오류"
 
-#: ../../lib/frontends/widgets/application.py:430
-#: ../../lib/frontends/widgets/application.py:801
+#: ../../lib/frontends/widgets/application.py:481
+#: ../../lib/frontends/widgets/application.py:852
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "%(filename)s 파일은 존재하지 않습니다."
 
-#: ../../lib/frontends/widgets/application.py:435
+#: ../../lib/frontends/widgets/application.py:486
 msgid "The following files do not exist:"
 msgstr "다음 파일이 없습니다:"
 
-#: ../../lib/frontends/widgets/application.py:469
+#: ../../lib/frontends/widgets/application.py:520
 msgid "New Download"
 msgstr "새 다운로드"
 
-#: ../../lib/frontends/widgets/application.py:470
+#: ../../lib/frontends/widgets/application.py:521
 msgid "Enter the URL of the item to download"
 msgstr "다운로드할 항목의 URL 입력"
 
-#: ../../lib/frontends/widgets/application.py:471
+#: ../../lib/frontends/widgets/application.py:522
 msgid "New Download - Invalid URL"
 msgstr "새 다운로드 - 잘못된 URL"
 
-#: ../../lib/frontends/widgets/application.py:472
+#: ../../lib/frontends/widgets/application.py:523
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -3179,22 +3223,22 @@ msgstr ""
 "\n"
 "다운로드할 URL을 입력하십시오."
 
-#: ../../lib/frontends/widgets/application.py:488
+#: ../../lib/frontends/widgets/application.py:539
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr "%(appname)s은(는) 최신입니다"
+msgstr "%(appname)s는 최신입니다"
 
-#: ../../lib/frontends/widgets/application.py:490
+#: ../../lib/frontends/widgets/application.py:541
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr "%(appname)s은(는) 최신입니다!"
+msgstr "%(appname)s는 최신입니다!"
 
-#: ../../lib/frontends/widgets/application.py:539
+#: ../../lib/frontends/widgets/application.py:590
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "항목 제거"
 
-#: ../../lib/frontends/widgets/application.py:543
+#: ../../lib/frontends/widgets/application.py:594
 msgid ""
 "One of these items was not downloaded from a podcast. Would you like to "
 "delete it or just remove it from the Library?"
@@ -3203,7 +3247,7 @@ msgid_plural ""
 "delete them or just remove them from the Library?"
 msgstr[0] "이 항목들 중 하나는 팟캐스트에서 다운로드 되지 못했습니다. 그것을 삭제하거나 라이브러리에서 제거 하시겠습니까?"
 
-#: ../../lib/frontends/widgets/application.py:555
+#: ../../lib/frontends/widgets/application.py:606
 msgid ""
 "One of these items is a folder.  Deleting/Removing a folder will "
 "delete/remove it's contents"
@@ -3212,49 +3256,49 @@ msgid_plural ""
 "delete/remove it's contents"
 msgstr[0] "이 항목들 중 하나는 폴더입니다. 폴더를 삭제하면 내용이 모두 지워집니다."
 
-#: ../../lib/frontends/widgets/application.py:570
+#: ../../lib/frontends/widgets/application.py:621
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "%(count)d개의 항목을 정말로 삭제하시겠습니까?"
 
-#: ../../lib/frontends/widgets/application.py:577
+#: ../../lib/frontends/widgets/application.py:628
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] "이 항목들 중 하나는 폴더입니다. 폴더를 삭제하면 내용이 모두 지워집니다."
 
-#: ../../lib/frontends/widgets/application.py:635
+#: ../../lib/frontends/widgets/application.py:686
 msgid "Save Item As..."
 msgstr "다른 이름으로 저장..."
 
-#: ../../lib/frontends/widgets/application.py:678
+#: ../../lib/frontends/widgets/application.py:729
 #: ../../lib/frontends/widgets/firsttimedialog.py:326
 msgid "Choose directory to search for media files"
 msgstr "미디어 파일을 검색할 디렉토리 선택"
 
-#: ../../lib/frontends/widgets/application.py:691
+#: ../../lib/frontends/widgets/application.py:742
 msgid "Choose files to import"
 msgstr "불러올 파일 선택"
 
-#: ../../lib/frontends/widgets/application.py:693
+#: ../../lib/frontends/widgets/application.py:744
 msgid "Video Files"
 msgstr "동영상 파일"
 
-#: ../../lib/frontends/widgets/application.py:694
+#: ../../lib/frontends/widgets/application.py:745
 msgid "Audio Files"
 msgstr "오디오 파일"
 
-#: ../../lib/frontends/widgets/application.py:732
+#: ../../lib/frontends/widgets/application.py:783
 msgid "Enter the URL of the source to add"
 msgstr "추가할 소스의 URL 입력"
 
-#: ../../lib/frontends/widgets/application.py:733
+#: ../../lib/frontends/widgets/application.py:784
 msgid "Add Source - Invalid URL"
 msgstr "소스 추가 - 잘못된 URL"
 
-#: ../../lib/frontends/widgets/application.py:734
+#: ../../lib/frontends/widgets/application.py:785
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -3266,153 +3310,156 @@ msgstr ""
 "\n"
 "추가할 소스의 URL을 입력하세요."
 
-#: ../../lib/frontends/widgets/application.py:791
+#: ../../lib/frontends/widgets/application.py:842
 msgid "Import OPML File"
 msgstr "OPML 파일 불러오기"
 
-#: ../../lib/frontends/widgets/application.py:793
+#: ../../lib/frontends/widgets/application.py:844
 msgid "OPML Files"
 msgstr "OPML 파일"
 
-#: ../../lib/frontends/widgets/application.py:800
+#: ../../lib/frontends/widgets/application.py:851
 msgid "Import OPML File - Error"
 msgstr "OPML 파일 불러오기 - 오류"
 
-#: ../../lib/frontends/widgets/application.py:806
+#: ../../lib/frontends/widgets/application.py:857
 msgid "Export OPML File"
 msgstr "OPML 파일 보내기"
 
-#: ../../lib/frontends/widgets/application.py:858
+#: ../../lib/frontends/widgets/application.py:909
 msgid "Create Playlist Folder"
 msgstr "재생 목록 폴더 만들기"
 
-#: ../../lib/frontends/widgets/application.py:859
+#: ../../lib/frontends/widgets/application.py:910
 msgid "Enter a name for the new playlist folder"
 msgstr "새 재생 목록 폴더 이름 입력"
 
-#: ../../lib/frontends/widgets/application.py:880
+#: ../../lib/frontends/widgets/application.py:931
 #: ../../lib/frontends/widgets/tablist.py:1072
 msgid "Rename Podcast Folder"
 msgstr "팟캐스트 폴더 이름 바꾸기"
 
-#: ../../lib/frontends/widgets/application.py:881
+#: ../../lib/frontends/widgets/application.py:932
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
-msgstr "%(name)s 팟캐스트 폴더에 새 이름을 입력하십시오"
+msgstr "%(name)s의 팟캐스트 폴더에 새 이름을 입력하십시오"
 
-#: ../../lib/frontends/widgets/application.py:886
+#: ../../lib/frontends/widgets/application.py:937
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
-msgstr "%(name)s 팟캐스트에 새 이름을 입력하십시오"
+msgstr "%(name)s의 팟캐스트에 새 이름을 입력하십시오"
 
-#: ../../lib/frontends/widgets/application.py:891
+#: ../../lib/frontends/widgets/application.py:942
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr "%(name)s 재생 목록의 새 이름을 입력하십시오"
+msgstr "%(name)s의 재생 목록에 새 이름을 입력하십시오"
 
-#: ../../lib/frontends/widgets/application.py:895
+#: ../../lib/frontends/widgets/application.py:946
 #: ../../lib/frontends/widgets/tablist.py:1138
 msgid "Rename Playlist Folder"
 msgstr "재생 목록 폴더 이름 바꾸기"
 
-#: ../../lib/frontends/widgets/application.py:896
+#: ../../lib/frontends/widgets/application.py:947
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "%(name)s 재생 목록 폴더의 새 이름을 입력하십시오"
+msgstr "%(name)s의 재생 목록 폴더에 새 이름을 입력하십시오"
 
-#: ../../lib/frontends/widgets/application.py:900
+#: ../../lib/frontends/widgets/application.py:951
 #, python-format
 msgid "Enter a new name for the source %(name)s"
-msgstr "%(name)s 소스의 새 이름을 입력하십시오"
+msgstr "%(name)s의 소스에 새 이름을 입력하십시오"
 
-#: ../../lib/frontends/widgets/application.py:919
+#: ../../lib/frontends/widgets/application.py:970
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "재생 목록 제거"
 
-#: ../../lib/frontends/widgets/application.py:921
+#: ../../lib/frontends/widgets/application.py:972
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "%(count)s개의 재생 목록을 정말 제거하시겠습니까?"
 
-#: ../../lib/frontends/widgets/application.py:936
+#: ../../lib/frontends/widgets/application.py:987
 msgid "Remove source"
 msgid_plural "Remove sources"
 msgstr[0] "소스 삭제"
 
-#: ../../lib/frontends/widgets/application.py:938
+#: ../../lib/frontends/widgets/application.py:989
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
-msgstr[0] "정말 이 %(count)s 소스를 삭제하려고 하십니까?"
+msgstr[0] "정말 %(count)s개의 소스를 삭제하려고 하십니까?"
 
-#: ../../lib/frontends/widgets/application.py:962
+#: ../../lib/frontends/widgets/application.py:1013
 #, python-format
 msgid "Import Music from %(media_player)s?"
 msgstr "%(media_player)s?로부터 음악 불러오기"
 
-#: ../../lib/frontends/widgets/application.py:963
+#: ../../lib/frontends/widgets/application.py:1014
 #, python-format
 msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr "%(media_player)s를 설치하셨습니다. %(short_app_name)s가 음악을 불러올까요?"
 
-#: ../../lib/frontends/widgets/application.py:1005
-#: ../../lib/frontends/widgets/application.py:1029
+#: ../../lib/frontends/widgets/application.py:1056
+#: ../../lib/frontends/widgets/application.py:1080
 msgid "Select File to write Profile to"
 msgstr "프로필에 쓸 파일 선택하기"
 
-#: ../../lib/frontends/widgets/application.py:1090
-#: ../../lib/frontends/widgets/application.py:1109
-#: ../../lib/frontends/widgets/application.py:1128
+#: ../../lib/frontends/widgets/application.py:1141
+#: ../../lib/frontends/widgets/application.py:1160
+#: ../../lib/frontends/widgets/application.py:1179
 msgid "Are you sure you want to quit?"
-msgstr "프로그램을 종료하시겠습니까?"
+msgstr "정말로 끝내시겠습니까?"
 
-#: ../../lib/frontends/widgets/application.py:1099
+#: ../../lib/frontends/widgets/application.py:1150
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
-msgstr "다른 사람이 내 미디어 라이브러리에 접속해있을 때 내가 종료하려고 하면 경고하기"
+msgstr "다른 사람이 내 미디어 라이브러리에 접속해있을 때 내가 끝내려고 하면 경고하기"
 
-#: ../../lib/frontends/widgets/application.py:1111
+#: ../../lib/frontends/widgets/application.py:1162
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "%(count)d개의 다운로드가 진행 중입니다. 그래도 종료할까요?"
+msgstr[0] "%(count)d개의 다운로드가 진행 중입니다. 그래도 끝내시겠습니까?"
 
-#: ../../lib/frontends/widgets/application.py:1116
+#: ../../lib/frontends/widgets/application.py:1167
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "다운로드 진행 중 종료 시 알려주기"
+msgstr "끝내려고 할 때 다운로드 진행 상황 알려주기"
 
-#: ../../lib/frontends/widgets/application.py:1130
+#: ../../lib/frontends/widgets/application.py:1181
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] "%(count)d개가 변환 중이거나 곧 변환되려고 합니다. 그래도 종료 하시겠습니까?"
+msgstr[0] "%(count)d개가 변환 중이거나 곧 변환되려고 합니다. 그래도 끝내시겠습니까?"
 
-#: ../../lib/frontends/widgets/application.py:1135
+#: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr "변환 중에 종료하려고 하면 경고하기"
+msgstr "변환 중에 끝내려고 하면 경고하기"
 
-#: ../../lib/frontends/widgets/application.py:1397
+#: ../../lib/frontends/widgets/application.py:1451
 msgid "Connect failed"
 msgstr "연결 실패"
 
-#: ../../lib/frontends/widgets/application.py:1398
+#: ../../lib/frontends/widgets/application.py:1452
 #, python-format
 msgid ""
 "Connection to share %(name)s failed.\n"
 "\n"
 "The share is either unreachable or incompatible with %(appname)s sharing."
 msgstr ""
+"%(name)s를 공유하기 위한 연결에 실패했습니다.\n"
+"\n"
+"이 공유는 도달할 수 없거나 %(appname)s 공유와 호환되지 않습니다."
 
-#: ../../lib/frontends/widgets/application.py:1408
+#: ../../lib/frontends/widgets/application.py:1462
 msgid "Eject failed"
 msgstr "제거 실패"
 
-#: ../../lib/frontends/widgets/application.py:1409
+#: ../../lib/frontends/widgets/application.py:1463
 #, python-format
 msgid ""
 "Ejecting device '%(name)s' failed.\n"
@@ -3420,30 +3467,32 @@ msgid ""
 "The device is in use."
 msgstr "장치 '%(name)s' 제거 실패"
 
-#: ../../lib/frontends/widgets/application.py:1422
+#: ../../lib/frontends/widgets/application.py:1476
 msgid "Upgrading database"
 msgstr "데이터베이스 업그레이드 중"
 
-#: ../../lib/frontends/widgets/application.py:1424
+#: ../../lib/frontends/widgets/application.py:1478
 #, python-format
 msgid ""
 "%(appname)s is upgrading your database of podcasts and files.  This one-time "
 "process can take a long time if you have a large number of items in "
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
+"%(appname)s는 당신의 팟캐스트와 파일 데이터베이스를 업그레이드 중입니다. 만약 당신이 %(appname)s에 수많은 항목을 "
+"가지고 있다면 이 한 번의 과정은 오랜 시간이 걸릴 수 있습니다. (30분 이상이 걸릴 수도 있습니다.)"
 
-#: ../../lib/frontends/widgets/application.py:1430
+#: ../../lib/frontends/widgets/application.py:1484
 #: ../../lib/dbupgradeprogress.py:104
 msgid "Preparing Items"
 msgstr "항목 준비 중"
 
-#: ../../lib/frontends/widgets/application.py:1431
+#: ../../lib/frontends/widgets/application.py:1485
 #, python-format
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
-msgstr ""
+msgstr "%(appname)s는 부적절하게 중지되었으며 당신의 항목들을 나타낼 준비가 필요합니다."
 
-#: ../../lib/frontends/widgets/application.py:1669
+#: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
 msgstr "메세지"
 
@@ -3456,12 +3505,12 @@ msgstr "%(appname)s 설치"
 #, python-format
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
-msgstr "%(name)s님 환영합니다! 시작하는데 도움을 드릴 몇 가지 질문이 있습니다."
+msgstr "%(name)s에 오신 것을 환영합니다! 시작하는데 도움을 드릴 몇 가지 질문이 있습니다."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #, python-format
 msgid "What language would you like %(name)s to be in?"
-msgstr "%(name)s님 어떤 언어를 사용하십니까?"
+msgstr "%(name)s에서 어떤 언어를 사용하고 싶으십니까?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:231
 #: ../../lib/frontends/widgets/firsttimedialog.py:268
@@ -3475,12 +3524,12 @@ msgstr "다음 >"
 msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
 "resume your downloads and update your podcasts."
-msgstr "컴퓨터를 켜면 팟캐스트의 다운로드와 업데이트를 다시 시작하도록  %(name)s이 자동으로 실행됩니다."
+msgstr "컴퓨터를 켜면 팟캐스트의 다운로드와 업데이트를 다시 시작하도록  %(name)s가 자동으로 실행됩니다."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:253
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr "컴퓨터를 시작하실 때 %(name)s을 실행하시겠습니까?"
+msgstr "컴퓨터를 시작하실 때 %(name)s를 실행하시겠습니까?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:265
 #: ../../lib/frontends/widgets/firsttimedialog.py:341
@@ -3495,13 +3544,13 @@ msgid ""
 "%(name)s can find music and video on your computer and show them in your "
 "%(name)s library.  No files will be copied or duplicated."
 msgstr ""
-"%(name)s이 당신의 컴퓨터에 있는 음악과 동영상을 찾아서 %(name)s 라이브러리에 그것들을 나타냅니다. 파일을 복사하거나 "
+"%(name)s가 당신의 컴퓨터에 있는 음악과 동영상을 찾아서 %(name)s 라이브러리에 그것들을 나타냅니다. 파일을 복사하거나 "
 "복제하지 않습니다."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:292
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
-msgstr "%(name)s이 당신의 컴퓨터에 있는 미디어 파일을 검색하시겠습니까?"
+msgstr "%(name)s가 당신의 컴퓨터에 있는 미디어 파일을 검색하기를 원하십니까?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:308
 msgid "Search everywhere."
@@ -3530,7 +3579,7 @@ msgstr[0] "%(count)s개 파일 분석됨"
 #, python-format
 msgid ""
 "Would you like to display your %(player)s music and video in %(appname)s?"
-msgstr "당신의 %(player)s 음악과 동영상을 %(appname)s에 나타나게 하시겠습니까?"
+msgstr "당신의 %(player)s가 %(appname)s에 음악과 동영상을 나타내게 하시겠습니까?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:558
 #, python-format
@@ -3568,7 +3617,7 @@ msgstr "선택"
 #: ../../lib/frontends/widgets/gtk/window.py:917
 #, python-format
 msgid "About %(appname)s"
-msgstr "%(appname)s에 대하여"
+msgstr "%(appname)s에 대해"
 
 #: ../../lib/frontends/widgets/gtk/window.py:940
 #, python-format
@@ -3583,13 +3632,13 @@ msgstr ""
 #, python-format
 msgid ""
 "Thank you to all the people who contributed to %(appname)s %(version)s:"
-msgstr ""
+msgstr "%(appname)s %(version)s에 공헌해 주신 모든 분들께 감사 드립니다:"
 
 #: ../../lib/frontends/widgets/gtk/window.py:983
 #, python-format
 msgid ""
 "To help fund continued %(appname)s development, visit the donation page at:"
-msgstr ""
+msgstr "%(appname)s 개발을 위해 계속해서 기부하고 싶으시면, 기부 페이지에 방문해 주세요:"
 
 #: ../../lib/frontends/widgets/gtk/video.py:285
 msgid "Pop-in"
@@ -3601,7 +3650,7 @@ msgstr "Pop-out"
 
 #: ../../lib/frontends/widgets/gtk/video.py:334
 msgid "Subtitles On"
-msgstr "자막 켬"
+msgstr "자막 켜기"
 
 #: ../../lib/frontends/widgets/gtk/video.py:340
 msgid "Subtitles Found"
@@ -3655,7 +3704,7 @@ msgstr[0] "%(count)d개 항목"
 msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
-msgstr[0] "재생되지 않은 항목으로 인해 %(count)d 다운로드 대기 중 (설정 보기)"
+msgstr[0] "재생되지 않은 항목으로 인해 %(count)d개 다운로드 대기 중 (설정 보기)"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:206
 #, python-format
@@ -3786,7 +3835,7 @@ msgstr "%(host)s에서 응답이 없습니다."
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "돌아온 호스트 %(status)s"
 
 #: ../../lib/httpclient.py:118
 msgid "Please retry later"
@@ -3800,7 +3849,7 @@ msgstr "%(host)s가 HTTP 요약을 지원하지 않습니다."
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "HTTP 변환 제한이 %(url)s을 요구합니다."
 
 #: ../../lib/httpclient.py:133
 #, python-format
@@ -3814,7 +3863,7 @@ msgstr "404 status code - 문서를 찾을 수 없음"
 #: ../../lib/httpclient.py:143
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "호스트가 나쁜 상태 코드로 돌아옴: %(code)s"
 
 #: ../../lib/httpclient.py:149 ../../lib/httpclient.py:150
 msgid "Authorization failed"
@@ -3844,7 +3893,7 @@ msgstr "알 수 없는 호스트"
 #: ../../lib/httpclient.py:166
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "도메인 네임 \"%(host)s\"를 찾을 수 없습니다."
 
 #: ../../lib/httpclient.py:172
 #, python-format
@@ -3896,13 +3945,13 @@ msgstr "재생 목록 예제"
 #: ../../lib/playlist.py:204
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "%s 재생 목록의 새로운 이름을 입력하십시오."
+msgstr "재생 목록 %s 의 새로운 이름을 입력하십시오."
 
-#: ../../lib/controller.py:173
+#: ../../lib/controller.py:176
 msgid "Sending Crash Report"
 msgstr "충돌 보고서 보내기"
 
-#: ../../lib/controller.py:194
+#: ../../lib/controller.py:197
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
 msgstr "충돌 보고서 보내기 (%(progress)d%%)"
@@ -3951,7 +4000,7 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
-"이 URL에서 %(appname)s은 파일을 다운 받을 수 없습니다.\n"
+"이 URL에서 %(appname)s는 파일을 다운 받을 수 없습니다.\n"
 "URL: %(url)s\n"
 "오류: %(error)s (%(errordesc)s)"
 
@@ -3959,11 +4008,11 @@ msgstr ""
 msgid "Error moving to movies directory"
 msgstr "영화 디렉토리로 옮기기 오류"
 
-#: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1061
+#: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1067
 msgid "Not enough disk space"
 msgstr "충분한 디스크 공간이 없습니다."
 
-#: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1062
+#: ../../lib/dl_daemon/download.py:813 ../../lib/dl_daemon/download.py:1068
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "이 비디오를 저장하려면 %(amount)s MB가 필요합니다."
@@ -3972,43 +4021,43 @@ msgstr "이 비디오를 저장하려면 %(amount)s MB가 필요합니다."
 msgid "no content"
 msgstr "내용 없음"
 
-#: ../../lib/dl_daemon/download.py:1096
+#: ../../lib/dl_daemon/download.py:1102
 msgid "BitTorrent failure"
 msgstr "BitTorrent 실패"
 
-#: ../../lib/dl_daemon/download.py:1097
+#: ../../lib/dl_daemon/download.py:1103
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent 시작 실패"
 
-#: ../../lib/dl_daemon/download.py:1239
+#: ../../lib/dl_daemon/download.py:1245
 msgid "waiting to check existing files"
 msgstr "존재하는 파일을 찾기위해 기다리는 중"
 
-#: ../../lib/dl_daemon/download.py:1241
+#: ../../lib/dl_daemon/download.py:1247
 msgid "checking existing files"
 msgstr "존재하는 파일 찾는 중"
 
-#: ../../lib/dl_daemon/download.py:1243
+#: ../../lib/dl_daemon/download.py:1249
 msgid "allocating disk space"
 msgstr "디스크 공간 할당 중"
 
-#: ../../lib/dl_daemon/download.py:1486
+#: ../../lib/dl_daemon/download.py:1492
 msgid "Corrupt Torrent"
 msgstr "Torrent 오류"
 
-#: ../../lib/dl_daemon/download.py:1487
+#: ../../lib/dl_daemon/download.py:1493
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr "%(url)s에 있는 torrent 파일은 유효하지 않습니다."
+msgstr "%(url)s에 있는 Torrent 파일은 유효하지 않습니다."
 
-#: ../../lib/dl_daemon/download.py:1531
+#: ../../lib/dl_daemon/download.py:1537
 msgid "Torrent file deleted"
-msgstr "torrent 파일이 삭제되었습니다."
+msgstr "Torrent 파일이 삭제되었습니다."
 
-#: ../../lib/dl_daemon/download.py:1532
+#: ../../lib/dl_daemon/download.py:1538
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr "이 항목의 torrent 파일이 %(appname)s 외부에서 삭제되었습니다."
+msgstr "이 항목의 Torrent 파일이 %(appname)s 외부에서 삭제되었습니다."
 
 #: ../../linux/plat/frontends/widgets/bonjour.py:47
 #, python-format
@@ -4086,17 +4135,17 @@ msgid "Subtitle file %(tracknumber)d"
 msgstr "자막 파일 %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:603
-#: ../../windows/plat/renderers/vlc.py:750
-#: ../../windows/plat/renderers/vlc.py:753
-#: ../../windows/plat/renderers/vlc.py:754
+#: ../../windows/plat/renderers/vlc.py:762
+#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:766
 msgid "Eastern European"
 msgstr "동부 유럽어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
-#: ../../windows/plat/renderers/vlc.py:751
-#: ../../windows/plat/renderers/vlc.py:752
+#: ../../windows/plat/renderers/vlc.py:763
+#: ../../windows/plat/renderers/vlc.py:764
 msgid "Baltic"
 msgstr "발트 문자"
 
@@ -4134,21 +4183,21 @@ msgid "Romanian"
 msgstr "루마니아어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
-#: ../../windows/plat/renderers/vlc.py:760
-#: ../../windows/plat/renderers/vlc.py:762
+#: ../../windows/plat/renderers/vlc.py:772
+#: ../../windows/plat/renderers/vlc.py:774
 msgid "Western European"
 msgstr "서부 유럽어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
-#: ../../windows/plat/renderers/vlc.py:761
+#: ../../windows/plat/renderers/vlc.py:773
 msgid "Celtic"
 msgstr "켈틱"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
-#: ../../windows/plat/renderers/vlc.py:764
-#: ../../windows/plat/renderers/vlc.py:765
+#: ../../windows/plat/renderers/vlc.py:776
+#: ../../windows/plat/renderers/vlc.py:777
 msgid "Greek"
 msgstr "그리스어"
 
@@ -4173,7 +4222,7 @@ msgid "Western"
 msgstr "서양"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
-#: ../../windows/plat/renderers/vlc.py:768
+#: ../../windows/plat/renderers/vlc.py:780
 msgid "East Asian"
 msgstr "동부 아시아어"
 
@@ -4193,8 +4242,8 @@ msgstr "중국 번자체"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:646
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
-#: ../../windows/plat/renderers/vlc.py:772
-#: ../../windows/plat/renderers/vlc.py:774
+#: ../../windows/plat/renderers/vlc.py:784
+#: ../../windows/plat/renderers/vlc.py:786
 msgid "Japanese"
 msgstr "일본어"
 
@@ -4202,13 +4251,13 @@ msgstr "일본어"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:650
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
-#: ../../windows/plat/renderers/vlc.py:775
-#: ../../windows/plat/renderers/vlc.py:776
+#: ../../windows/plat/renderers/vlc.py:787
+#: ../../windows/plat/renderers/vlc.py:788
 msgid "Korean"
 msgstr "한국어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:654
-#: ../../windows/plat/renderers/vlc.py:782
+#: ../../windows/plat/renderers/vlc.py:794
 msgid "SE and SW Asian"
 msgstr "남동 남서 아시안어"
 
@@ -4233,7 +4282,7 @@ msgid "Hindi"
 msgstr "힌두어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:660
-#: ../../windows/plat/renderers/vlc.py:785
+#: ../../windows/plat/renderers/vlc.py:797
 msgid "Thai"
 msgstr "태국어"
 
@@ -4241,21 +4290,21 @@ msgstr "태국어"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:662
 #: ../../linux/plat/renderers/gstreamerrenderer.py:663
 #: ../../linux/plat/renderers/gstreamerrenderer.py:664
-#: ../../windows/plat/renderers/vlc.py:783
-#: ../../windows/plat/renderers/vlc.py:784
+#: ../../windows/plat/renderers/vlc.py:795
+#: ../../windows/plat/renderers/vlc.py:796
 msgid "Turkish"
 msgstr "터키어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:665
 #: ../../linux/plat/renderers/gstreamerrenderer.py:666
 #: ../../linux/plat/renderers/gstreamerrenderer.py:667
-#: ../../windows/plat/renderers/vlc.py:786
-#: ../../windows/plat/renderers/vlc.py:787
+#: ../../windows/plat/renderers/vlc.py:798
+#: ../../windows/plat/renderers/vlc.py:799
 msgid "Vietnamese"
 msgstr "베트남어"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:669
-#: ../../windows/plat/renderers/vlc.py:790
+#: ../../windows/plat/renderers/vlc.py:802
 msgid "Middle Eastern"
 msgstr "중동어"
 
@@ -4263,8 +4312,8 @@ msgstr "중동어"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:671
 #: ../../linux/plat/renderers/gstreamerrenderer.py:672
 #: ../../linux/plat/renderers/gstreamerrenderer.py:673
-#: ../../windows/plat/renderers/vlc.py:791
-#: ../../windows/plat/renderers/vlc.py:792
+#: ../../windows/plat/renderers/vlc.py:803
+#: ../../windows/plat/renderers/vlc.py:804
 msgid "Arabic"
 msgstr "아랍어"
 
@@ -4272,8 +4321,8 @@ msgstr "아랍어"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:675
 #: ../../linux/plat/renderers/gstreamerrenderer.py:676
 #: ../../linux/plat/renderers/gstreamerrenderer.py:677
-#: ../../windows/plat/renderers/vlc.py:793
-#: ../../windows/plat/renderers/vlc.py:794
+#: ../../windows/plat/renderers/vlc.py:805
+#: ../../windows/plat/renderers/vlc.py:806
 msgid "Hebrew"
 msgstr "히브리어"
 
@@ -4291,7 +4340,7 @@ msgstr "페르시아어"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:684
 #: ../../linux/plat/renderers/gstreamerrenderer.py:685
 #: ../../linux/plat/renderers/gstreamerrenderer.py:686
-#: ../../windows/plat/renderers/vlc.py:797
+#: ../../windows/plat/renderers/vlc.py:809
 msgid "Unicode"
 msgstr "유니코드(단일 코드,다국적 지원코드)"
 
@@ -4348,10 +4397,10 @@ msgid ""
 "\n"
 "Would you like to do this now?"
 msgstr ""
-"%(appname)s 최고의 경험을 하시기 위해, 프린트 서비스로 배포된 Bonjour를 다시 설치하시는 것이 좋습니다. \n"
+"%(appname)s를 최고로 경험하시기 위해, 프린트 서비스로 배포된 Bonjour를 다시 설치하시는 것이 좋습니다. \n"
 "Bonjour를 설치하시면 당신의 네트워크에 있는 다른 %(appname)s 사용자들과 미디어 라이브러리와 스트리밍 미디어를 공유하실 수 "
 "있습니다.\n"
-"프린트 서비스를 설치하신 후, %(appname)s을 다시 시작하셔야 합니다.\n"
+"프린트 서비스를 설치하신 후, %(appname)s를 다시 시작하셔야 합니다.\n"
 "지금 이것을 하시겠습니까?"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:75
@@ -4376,7 +4425,7 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"빨간 닫기 버튼을 클릭하실 때, %(appname)s을 시스템 트레이로 닫으시거나 끝내시겠습니까? 나중에 옵션에서 이 설정을 변경하실 수 "
+"빨간 닫기 버튼을 클릭하실 때, %(appname)s를 시스템 트레이로 닫으시거나 끝내시겠습니까? 나중에 옵션에서 이 설정을 변경하실 수 "
 "있습니다."
 
 #: ../../windows/plat/frontends/widgets/application.py:271
@@ -4404,7 +4453,7 @@ msgstr "업데이트 있음"
 #: ../../windows/plat/frontends/widgets/update.py:154
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "다운로드 가능한 새로운 버전의 %(appname)s 이(가) 있습니다."
+msgstr "다운로드 가능한 새로운 버전의 %(appname)s가 있습니다."
 
 #: ../../windows/plat/frontends/widgets/update.py:158
 msgid "Do you want to download it now?"
@@ -4421,7 +4470,7 @@ msgstr "다운로드 계속 하도록 트레이만 닫기"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:50
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "%(appname)s 를(을) 완전히 종료하십시오."
+msgstr "%(appname)s를 완전히 종료하기"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:60
 msgid "System Default"
@@ -4431,54 +4480,54 @@ msgstr "시스템 기본값"
 msgid "Subtitle font:"
 msgstr "자막 폰트:"
 
-#: ../../windows/plat/renderers/vlc.py:755
+#: ../../windows/plat/renderers/vlc.py:767
 msgid "Russian"
 msgstr "러시아어"
 
-#: ../../windows/plat/renderers/vlc.py:756
+#: ../../windows/plat/renderers/vlc.py:768
 msgid "South-Eastern European"
 msgstr "남동부 유럽어"
 
-#: ../../windows/plat/renderers/vlc.py:757
+#: ../../windows/plat/renderers/vlc.py:769
 msgid "Ukrainian"
 msgstr "우크라이나어"
 
-#: ../../windows/plat/renderers/vlc.py:763
+#: ../../windows/plat/renderers/vlc.py:775
 msgid "Esperanto"
 msgstr "에스페란토어"
 
-#: ../../windows/plat/renderers/vlc.py:769
+#: ../../windows/plat/renderers/vlc.py:781
 msgid "Universal Chinese"
 msgstr "중국어"
 
-#: ../../windows/plat/renderers/vlc.py:770
+#: ../../windows/plat/renderers/vlc.py:782
 msgid "Simplified Chinese"
 msgstr "중국어 간체"
 
-#: ../../windows/plat/renderers/vlc.py:771
+#: ../../windows/plat/renderers/vlc.py:783
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "중국어 간체 유닉스"
 
-#: ../../windows/plat/renderers/vlc.py:773
+#: ../../windows/plat/renderers/vlc.py:785
 msgid "Japanese Unix"
-msgstr ""
+msgstr "일본어 유닉스"
 
-#: ../../windows/plat/renderers/vlc.py:777
+#: ../../windows/plat/renderers/vlc.py:789
 msgid "Traditional Chinese"
 msgstr "중국어 번체"
 
-#: ../../windows/plat/renderers/vlc.py:778
+#: ../../windows/plat/renderers/vlc.py:790
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "중국어 번체 유닉스"
 
-#: ../../windows/plat/renderers/vlc.py:779
+#: ../../windows/plat/renderers/vlc.py:791
 msgid "Hong-Kong Supplementary"
 msgstr "홍콩어"
 
-#: ../../windows/plat/renderers/vlc.py:798
-#: ../../windows/plat/renderers/vlc.py:799
-#: ../../windows/plat/renderers/vlc.py:800
-#: ../../windows/plat/renderers/vlc.py:801
+#: ../../windows/plat/renderers/vlc.py:810
+#: ../../windows/plat/renderers/vlc.py:811
+#: ../../windows/plat/renderers/vlc.py:812
+#: ../../windows/plat/renderers/vlc.py:813
 msgid "Universal"
 msgstr "다중"
 
