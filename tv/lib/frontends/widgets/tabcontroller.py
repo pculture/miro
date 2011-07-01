@@ -46,6 +46,7 @@ from miro.frontends.widgets import widgetutil
 from miro.plat import resources
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class SharingBroken(widgetset.Background):
     def __init__(self):
@@ -219,9 +220,10 @@ class ConnectTab(widgetset.VBox):
 
         self.pack_start(widgetutil.align_center(bottom))
 
-        self.callback_handle = app.backend_config_watcher.connect_weak(
-            'changed',
-            self.on_config_changed)
+    def __del__(self):
+        call_on_ui_thread(
+            lambda: app.sharing_manager.unregister_interest(self))
+        widgetset.VBox.__del__(self)
 
     def build_header(self, text):
         label = widgetset.Label(text)
@@ -308,6 +310,11 @@ class ConnectTab(widgetset.VBox):
         bg.add(widgetutil.pad(container, 20, 20, 20, 20))
         bottom.pack_start(widgetutil.align_left(bg, left_pad=20,
                                                 bottom_pad=50))
+
+        widgets = [self.share_button, self.share_entry, self.share_audio_cbx,
+                   self.share_video_cbx, self.share_warnonquit_cbx]
+        callbacks = (self.sharing_start_volatile, self.sharing_end_volatile)
+        app.sharing_manager.register_interest(self, callbacks, widgets)
 
     def _build_sync_section(self, bottom):
         hbox = widgetset.HBox()
@@ -405,24 +412,26 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(vbox)
         bottom.pack_start(hbox)
 
-    def on_config_changed(self, obj, key, value):
-        if key == prefs.SHARE_MEDIA.key:
-            self.share_button.set_value(value)
-            self.daap_changed(self.share_button)
-
     def daap_install_clicked(self, button):
         install_bonjour()
 
-    def daap_changed(self, button):
-        app.config.set(prefs.SHARE_MEDIA, button.get_value())
-        widgets = [self.share_entry, self.share_audio_cbx,
-                   self.share_video_cbx, self.share_warnonquit_cbx]
-        if button.get_value():
-            for w in widgets:
+    # Freeze!  Nobody move!  Doesn't matter whether you are enabling or
+    # disabing controls remain disabled until it is complete!
+    def sharing_start_volatile(self, value, tag, widgets):
+        self.share_button.set_value(value)
+        for w in widgets:
+            w.disable()
+
+    # If sharing is disabled, only reenable the control if the toggler.
+    def sharing_end_volatile(self, value, tag, widgets):
+        for w in widgets:
+            if value or (not value and w is self.share_button):
                 w.enable()
-        else:
-            for w in widgets:
-                w.disable()
+
+    def daap_changed(self, button):
+        if not app.sharing_manager.sharing_set_enable(self,
+                                                      button.get_value()):
+            button.set_value(not button.get_value())
 
     def help_button_clicked(self, button):
         app.widgetapp.open_url(app.config.get(prefs.DEVICE_SYNCING_URL))
