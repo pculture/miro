@@ -1649,6 +1649,24 @@ class DeviceInfo(object):
     def __repr__(self):
         return "<miro.messages.DeviceInfo %r %r>" % (self.id, self.info)
 
+    def max_sync_size(self):
+        """
+        Returns the largest sync (in bytes) that we can perform on this device.
+        """
+        if not self.mount:
+            return 0
+        sync = self.database.get(u'sync', {})
+        if not sync.get(u'max_fill'):
+            return self.remaining
+        else:
+            try:
+                percent = int(sync[u'max_fill_percent']) * 0.01
+            except ValueError:
+                return self.remaining
+            else:
+                min_remaining = self.size * (1 - percent)
+                return self.remaining - min_remaining
+
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.
     """

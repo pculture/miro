@@ -735,13 +735,9 @@ class DeviceMountedView(widgetset.VBox):
         message.send_to_backend()
 
     def current_sync_information(self, count, size):
-        sync = self.device.database.get(u'sync', {})
-        if sync.get(u'max_fill', False):
-            percent = sync.get(u'max_fill_percent', 90) * 0.01
-            min_remaining = self.device.size * (1 - percent)
-            if self.device.remaining - size < min_remaining:
-                self.device_size.set_sync_state(0)
-                return
+        if size > self.device.max_sync_size():
+            self.device_size.set_sync_state(0)
+            return
 
         self.device_size.set_sync_state(count)
 

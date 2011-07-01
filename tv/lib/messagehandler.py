@@ -1806,17 +1806,24 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 source.unlink()
         return infos
 
-    def handle_query_sync_information(self, message):
-        dsm = app.device_manager.get_sync_for_device(message.device)
-        infos = self._get_sync_items_for_message(message)
+    @staticmethod
+    def _get_sync_info_for_items(device, items):
+        if not items:
+            return 0, 0
         count = size = 0
-        for info in infos:
+        dsm = app.device_manager.get_sync_for_device(device)
+        for info in items:
             converter = dsm.conversion_for_info(info)
             task = conversions.conversion_manager._make_conversion_task(
                 converter, info, None, False)
             if task:
                 count += 1
                 size += task.get_output_size_guess()
+        return count, size
+
+    def handle_query_sync_information(self, message):
+        infos = self._get_sync_items_for_message(message)
+        count, size = self._get_sync_info_for_items(message.device, infos)
         message = messages.CurrentSyncInformation(message.device,
                                                   count,
                                                   size)
@@ -1824,6 +1831,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_device_sync_feeds(self, message):
         infos = self._get_sync_items_for_message(message)
+        count, size = self._get_sync_info_for_items(message.device, infos)
+        if size > message.device.max_sync_size():
+            return
         if infos:
             dsm = app.device_manager.get_sync_for_device(message.device)
             dsm.start()
@@ -1836,6 +1846,10 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         except database.ObjectNotFoundError:
             logging.warn("HandleDeviceSyncMedia: Items not found -- %s",
                          message.item_ids)
+            return
+
+        count, size = self._get_sync_info_for_items(message.device, item_infos)
+        if size > message.device.max_sync_size():
             return
 
         dsm = app.device_manager.get_sync_for_device(message.device)
