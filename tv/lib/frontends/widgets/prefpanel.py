@@ -112,7 +112,8 @@ def text_is_not_blank(error_widget, value):
         error_widget.show()
         return False
 
-def attach_boolean(widget, descriptor, sensitive_widget=None):
+def attach_boolean(widget, descriptor, sensitive_widget=None,
+                   manualconfig=None):
     """This is for preferences implemented as a checkbox where the
     value is True or False.
 
@@ -123,6 +124,9 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
     descriptor - prefs preference
     sensitive_widget - tuple of widgets that are sensitive to this boolean
         or None
+    manualconfig - Callback to deal with configuration changes manually.
+         Disables listening for changes witin the config system and auto
+         enable and disable of dependent widgets.
     """
     def boolean_changed(widget):
         app.config.set(descriptor, widget.get_checked())
@@ -143,7 +147,8 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
                     [sw.disable() for sw in sensitive_widget]
             widget.thaw_signals()
 
-    app.frontend_config_watcher.connect('changed', on_config_changed)
+    if not manualconfig:
+        app.frontend_config_watcher.connect('changed', on_config_changed)
 
     widget.set_checked(app.config.get(descriptor))
     if sensitive_widget != None:
@@ -152,9 +157,10 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
         else:
             [sw.disable() for sw in sensitive_widget]
 
-    widget.connect('toggled', boolean_changed)
+    callback = manualconfig if manualconfig else boolean_changed
+    widget.connect('toggled', callback)
 
-def attach_radio(widget_values, descriptor):
+def attach_radio(widget_values, descriptor, manualconfig=None):
     def radio_changed(widget):
         for w, v in widget_values:
             if widget is w:
@@ -169,16 +175,19 @@ def attach_radio(widget_values, descriptor):
                     w.set_selected()
                     w.thaw_signals()
 
-    app.frontend_config_watcher.connect('changed', on_config_changed)
+    if not manualconfig:
+        app.frontend_config_watcher.connect('changed', on_config_changed)
 
     pref_value = app.config.get(descriptor)
     for w, v in widget_values:
         if v == pref_value:
             w.set_selected()
+    callback = manualconfig if manualconfig else radio_changed
     for w, v in widget_values:
-        w.connect('clicked', radio_changed)
+        w.connect('clicked', callback)
 
-def attach_integer(widget, descriptor, error_widget, check_function=None):
+def attach_integer(widget, descriptor, error_widget, check_function=None,
+                   manualconfig=None):
     """This is for preferences implemented as a text entry where the
     value is an integer.
 
@@ -191,6 +200,9 @@ def attach_integer(widget, descriptor, error_widget, check_function=None):
         the value is bad
     :param check_function: function with signature ``widget * int -> boolean``
         that checks the value for appropriateness
+    :param manualconfig - Callback to deal with configuration changes manually.
+         Disables listening for changes witin the config system and auto
+         enable and disable of dependent widgets.
     """
     def check_value(widget):
         try:
@@ -211,7 +223,10 @@ def attach_integer(widget, descriptor, error_widget, check_function=None):
               not check_function(error_widget, v))):
                 restore(widget, error_widget)
                 return
-            app.config.set(descriptor, v)
+            if manualconfig:
+                manualconfig(widget)
+            else:
+                app.config.set(descriptor, v)
         except ValueError:
             restore(widget, error_widget)
             pass
@@ -222,7 +237,8 @@ def attach_integer(widget, descriptor, error_widget, check_function=None):
             widget.set_text(str(app.config.get(descriptor)))
             widget.thaw_signals()
 
-    app.frontend_config_watcher.connect('changed', on_config_changed)
+    if not manualconfig:
+        app.frontend_config_watcher.connect('changed', on_config_changed)
     widget.set_text(str(app.config.get(descriptor)))
     if check_function:
         widget.connect('changed', check_value)
@@ -242,7 +258,8 @@ def float_value_to_text(value):
         text = "0"
     return text
 
-def attach_float(widget, descriptor, error_widget, check_function=None):
+def attach_float(widget, descriptor, error_widget, check_function=None,
+                 manualconfig=None):
     """This is for preferences implemented as a text entry where the
     value is a float.
 
@@ -256,6 +273,9 @@ def attach_float(widget, descriptor, error_widget, check_function=None):
     :param check_function: function with signature
         ``widget * float -> boolean`` that checks the value for
         itemappropriateness
+    :param manualconfig - Callback to deal with configuration changes manually.
+         Disables listening for changes witin the config system and auto
+         enable and disable of dependent widgets.
     """
     def check_value(widget):
         try:
@@ -276,7 +296,10 @@ def attach_float(widget, descriptor, error_widget, check_function=None):
               not check_function(error_widget, v))):
                 restore(widget, error_widget)
                 return
-            app.config.set(descriptor, v)
+            if manualconfig:
+                manualconfig(widget)
+            else:
+                app.config.set(descriptor, v)
         except ValueError:
             restore(widget, error_widget)
             pass
@@ -287,13 +310,15 @@ def attach_float(widget, descriptor, error_widget, check_function=None):
             widget.set_text(float_value_to_text(app.config.get(descriptor)))
             widget.thaw_signals()
 
-    app.frontend_config_watcher.connect('changed', on_config_changed)
+    if not manualconfig:
+        app.frontend_config_watcher.connect('changed', on_config_changed)
     widget.set_text(float_value_to_text(app.config.get(descriptor)))
     if check_function:
         widget.connect('changed', check_value)
     widget.connect('focus-out', save_value)
 
-def attach_text(widget, descriptor, error_widget=None, check_function=None):
+def attach_text(widget, descriptor, error_widget=None, check_function=None,
+                manualconfig=None):
     """This is for text entry preferences.
 
     It allows for a check_function which takes a widget and a value
@@ -305,6 +330,9 @@ def attach_text(widget, descriptor, error_widget=None, check_function=None):
         the value is bad
     :param check_function: function with signature ``widget * int -> boolean``
         that checks the value for appropriateness
+    :param manualconfig - Callback to deal with configuration changes manually.
+         Disables listening for changes witin the config system and auto
+         enable and disable of dependent widgets.
     """
     def check_value(widget):
         try:
@@ -326,7 +354,10 @@ def attach_text(widget, descriptor, error_widget=None, check_function=None):
                 if not check_function(error_widget, v):
                     restore(widget, error_widget)
                     return
-            app.config.set(descriptor, v)
+            if manualconfig:
+                manualconfig(widget)
+            else:
+                app.config.set(descriptor, v)
         except ValueError:
             restore(widget, error_widget)
             pass
@@ -337,20 +368,24 @@ def attach_text(widget, descriptor, error_widget=None, check_function=None):
             widget.set_text(str(app.config.get(descriptor)))
             widget.thaw_signals()
 
-    app.frontend_config_watcher.connect('changed', on_config_changed)
+    if not manualconfig:
+        app.frontend_config_watcher.connect('changed', on_config_changed)
 
     widget.set_text(app.config.get(descriptor))
     if check_function:
         widget.connect('changed', check_value)
     widget.connect('focus-out', save_value)
 
-def attach_combo(widget, descriptor, values):
+def attach_combo(widget, descriptor, values, manualconfig=None):
     """This is for preferences implemented as an option menu where there
     is a set of possible values of which only one can be chosen.
 
     widget - widget
     descriptor - prefs preference
     values - the list of all possible values as strings
+    manualconfig - Callback to deal with configuration changes manually.
+         Disables listening for changes witin the config system and auto
+         enable and disable of dependent widgets.
     """
     def combo_changed(widget, index):
         app.config.set(descriptor, values[index])
@@ -365,7 +400,8 @@ def attach_combo(widget, descriptor, values):
                 widget.set_selected(1)
             widget.thaw_signals()
 
-    app.frontend_config_watcher.connect('changed', on_config_changed)
+    if not manualconfig:
+        app.frontend_config_watcher.connect('changed', on_config_changed)
 
     value = app.config.get(descriptor)
     try:
@@ -904,6 +940,11 @@ class DiskSpacePanel(PanelBuilder):
         return grid.make_table()
 
 class SharingPanel(PanelBuilder):
+    def __del__(self):
+        call_on_ui_thread(
+            lambda: app.sharing_manager.unregister_interest(self))
+        PanelBuilder.__del__(self)
+
     def build_widget(self):
         vbox = widgetset.VBox()
         grid = dialogwidgets.ControlGrid()
@@ -916,9 +957,15 @@ class SharingPanel(PanelBuilder):
         share_audio_cbx = widgetset.Checkbox(_('Share my music library.'))
         share_video_cbx = widgetset.Checkbox(_('Share my video library.'))
 
+        def manual_configuration(widget):
+            checked = widget.get_checked()
+            if not app.sharing_manager.sharing_set_enable(self, checked):
+                widget.set_checked(not checked)
+
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
                        [share_audio_cbx, share_video_cbx,
-                        sharing_warnonquit_cbx, share_txt])
+                        sharing_warnonquit_cbx, share_txt],
+                       manualconfig=manual_configuration)
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
         attach_boolean(share_audio_cbx, prefs.SHARE_AUDIO)
         attach_boolean(share_video_cbx, prefs.SHARE_VIDEO)
@@ -935,6 +982,12 @@ class SharingPanel(PanelBuilder):
             sharing_warnonquit_cbx.disable()
             share_audio_cbx.disable()
             share_video_cbx.disable()
+
+        widgets = [sharing_cbx, share_audio_cbx, share_video_cbx,
+                   sharing_warnonquit_cbx, share_txt]
+        callbacks = (self.sharing_start_volatile, self.sharing_end_volatile)
+        # Register interest with the enable/disable provider for sharing.
+        app.sharing_manager.register_interest(self, callbacks, widgets)
 
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
         vbox.pack_start(widgetutil.align_left(sharing_warnonquit_cbx,
@@ -964,6 +1017,19 @@ class SharingPanel(PanelBuilder):
 
         return vbox
 
+    def sharing_start_volatile(self, value, tag, widgets):
+        main = widgets[0]
+        if not tag is self:
+            main.set_checked(value)
+        for w in widgets:
+            w.disable()
+
+    def sharing_end_volatile(self, value, tag, widgets):
+        main = widgets[0]
+        for w in widgets:
+            if value or (not value and w is main):
+                w.enable()
+ 
     def install_bonjour_clicked(self, button):
         call_on_ui_thread(install_bonjour)
 

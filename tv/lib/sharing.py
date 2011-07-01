@@ -57,6 +57,7 @@ from miro.util import returns_filename
 
 from miro.plat import resources
 from miro.plat.utils import thread_body
+from miro.plat.frontends.widgets.threads import on_ui_thread
 
 try:
     import libdaap
@@ -1562,6 +1563,50 @@ class SharingManager(object):
     Important note: mdns_present only indicates the ability to interact with
     the mdns libraries, does not mean that mdns functionality is present
     on the system (e.g. server may be disabled).
+
+    You may not call normally call anything here from the frontend EXCEPT
+    for sharing_set_enable() and register_interest(), and
+    unregister_interest().
+
+    How to turn on sharing from frontend:
+
+    (1) call register_interest().  This will notify you when the share on/off
+        settings change.  You will need to supply a tag, by convention this is
+        the object instance you are calling it from.  You will also need to
+        supply 2 callbacks the start and end callback.  The start callback
+        is called just before the share on/off settings gets written. The 
+        end callback is called just after twiddle_sharing() finishs its work.
+        You can safely assume that both callbacks will be run from the
+        frontend.
+
+    (2) When you change a on/off setting, call sharing_set_enable() with the
+        new value and your tag.  You should check the return value.  A return
+        value of False indicates that a sharing on/off change is in progress
+        and if so you restore the orgiinal value of on/off widget that was
+        activated by the user and not proceed any further.
+
+    (3) If sharing_set_enable() returned True, your configuration change
+        has been queued and at some point your callbacks should be called.
+        You can identify whether it is a particular class of widget 
+        that activated the configuration change by looking at the tag in 
+        your callback.
+
+    (4) In your start callback, typically you would disable the on/off toggle
+        and other dependent widgets.  In your end callback, typically you
+        would re-enable the on/off toggle unconditionally, while for dependent
+        widgets you would enable if sharing is enabled (and hence dependents
+        should be active).
+
+    (4) When you are done with a paritcular set of widgets, call 
+        unregister_interest() with the tag to tell who you are.
+
+    In no event do you have to call app.config.set() to toggle the sharing
+    on/off state, it is done for you.  These steps are required because
+    there is more than one place for you to disable/enable sharing and it is
+    needed to make sure that these widgets are always in sync.  This is made
+    further difficult because sharing is not just a configuration change: it
+    requires startup/shutdown of extra services and takes an indeterminate
+    amount of time.  This scheme should solve it satisfactorily.
     """
     # These commands should all be of the same size.
     CMD_QUIT = 'quit'
@@ -1574,6 +1619,8 @@ class SharingManager(object):
         self.mdns_present = libdaap.mdns_init()
         self.reload_done_event = threading.Event()
         self.mdns_callback = None
+        self.sharing_frontend_volatile = False
+        self.sharing_frontend_callbacks = dict()
         self.callback_handle = app.backend_config_watcher.connect('changed',
                                self.on_config_changed)
         # Create the sharing server backend that keeps track of all the list
@@ -1621,6 +1668,7 @@ class SharingManager(object):
                 if not self.enable_sharing():
                     # if it didn't work then it must be false regardless.
                     self.discoverable = False
+                    self.sharing_set_complete(sharing)
                     return
             else:
                 if self.discoverable:
@@ -1631,6 +1679,7 @@ class SharingManager(object):
         # need to check the discoverable bits since it is not relevant, and
         # would already have been disabled anyway.
         if not self.sharing:
+            self.sharing_set_complete(sharing)
             return
 
         # Did we change the name?  If we have, then disable the share publish
@@ -1647,6 +1696,8 @@ class SharingManager(object):
             else:
                 self.disable_discover()
 
+        self.sharing_set_complete(sharing)
+ 
     def finished_callback(self, session):
         eventloop.add_idle(lambda: self.backend.finished_callback(session),
                            'daap logout notification')
@@ -1815,3 +1866,32 @@ class SharingManager(object):
             # XXX: need to break off existing connections
             self.disable_sharing()
         self.backend.shutdown()
+
+    def unregister_interest(self, tag):
+        del self.sharing_frontend_callbacks[tag]
+
+    def register_interest(self, tag, callbacks, args):
+        self.sharing_frontend_callbacks[tag] = (callbacks, args)
+        
+    def sharing_set_enable(self, tag, value):
+        if self.sharing_frontend_volatile:
+            logging.debug('Refusing to set sharing to %s while sharing '
+                          'set/unset is volatile.', value)
+            return False
+        self.sharing_frontend_volatile = True
+        for t in self.sharing_frontend_callbacks:
+            callbacks, args = self.sharing_frontend_callbacks[t]
+            (start, _) = callbacks
+            start(value, t, args)
+        app.config.set(prefs.SHARE_MEDIA, value)
+        return True
+
+    @on_ui_thread
+    def sharing_set_complete(self, value):
+        if not self.sharing_frontend_volatile:
+            return
+        for t in self.sharing_frontend_callbacks:
+            callbacks, args = self.sharing_frontend_callbacks[t]
+            (_, end) = callbacks
+            end(value, t, args)
+        self.sharing_frontend_volatile = False
