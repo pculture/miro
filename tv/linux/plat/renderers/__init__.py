@@ -60,8 +60,12 @@ def set_renderer(modname):
         app.get_item_type = module.get_item_type
         logging.info("set_renderer: successfully loaded %s", modname)
     except StandardError:
-        logging.warn("set_renderer: couldn't load %s: %s", modname,
-                traceback.format_exc())
+        if app.debugmode:
+            logging.warn("set_renderer: couldn't load %s: %s", modname,
+                         traceback.format_exc())
+        else:
+            logging.warn("set_renderer: couldn't load %s.  "
+                         "run miro in debugmode for more details.", modname)
         raise
 
 
@@ -81,8 +85,12 @@ def init_renderer():
         set_renderer("%srenderer" % r)
         return
     except StandardError:
-        logging.exception("init_renderer: error detected...  "
-                          "trying to use gstreamerrenderer")
+        if app.debugmode:
+            logging.exception("init_renderer: error when trying to load renderer")
+        else:
+            logging.warn("init_renderer: error when trying to load renderer.  "
+                         "run miro in debugmode for more details.")
+        logging.info("trying to use gstreamerrenderer")
 
     try:
         # try to add the gstreamer renderer if the preferences aren't
