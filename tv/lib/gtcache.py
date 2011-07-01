@@ -176,10 +176,10 @@ def gettext(text, values=None):
             s = s % values
         return s
 
-    except (KeyError, ValueError):
+    except (KeyError, ValueError), e:
         import logging
-        logging.warn("gtcache.gettext: translation has bad formatting "
-            "characters.  returning english form.  '%s'", text)
+        logging.warn("gtcache.gettext: translation problem '%s'.  "
+                     "returning english form.  '%s'", e, text)
         _gtcache[text] = text
         return text % values
 
