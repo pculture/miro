@@ -1777,16 +1777,20 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def _get_sync_items_for_message(message):
         sync = message.device.database[u'sync']
         views = []
+        url_to_view = {}
         infos = set()
+        expired = set()
+        sync_all_podcasts = sync[u'podcasts'].get(u'all', True)
         if sync.setdefault(u'podcasts', {}).get(u'enabled', False):
             for url in sync[u'podcasts'].setdefault(u'items', []):
                 feed_ = lookup_feed(url)
                 if feed_ is not None:
-                    if sync[u'podcasts'].get(u'all', True):
+                    if sync_all_podcasts:
                         view = feed_.downloaded_items
                     else:
                         view = feed_.unwatched_items
                     views.append(view)
+                    url_to_view[url] = view
 
         if sync.setdefault(u'playlists', {}).get(u'enabled', False):
             for name in sync[u'playlists'].setdefault(u'items', []):
@@ -1804,11 +1808,25 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                      if not message.device.database.item_exists(info)])
             finally:
                 source.unlink()
-        return infos
+
+        for file_type in (u'audio', u'video'):
+            for info in itemsource.DeviceItemSource(message.device, file_type).fetch_all():
+                if info.feed_url and info.file_url and info.feed_url in url_to_view:
+                    view = url_to_view[info.feed_url]
+                    new_view = database.View(
+                        view.fetcher,
+                        view.where + ' AND (rd.origURL=? OR rd.url=? OR item.url=?)',
+                        view.values + (info.file_url, info.file_url, info.file_url),
+                        view.order_by,
+                        view.joins,
+                        view.limit)
+                    if not new_view.count():
+                        expired.add(info)
+        return infos, expired
 
     @staticmethod
-    def _get_sync_info_for_items(device, items):
-        if not items:
+    def _get_sync_info_for_items(device, items, expired=None):
+        if not items and not expired:
             return 0, 0
         count = size = 0
         dsm = app.device_manager.get_sync_for_device(device)
@@ -1819,25 +1837,38 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             if task:
                 count += 1
                 size += task.get_output_size_guess()
+        if expired:
+            count += len(expired)
+            size -= sum(i.size for i in expired)
         return count, size
 
     def handle_query_sync_information(self, message):
-        infos = self._get_sync_items_for_message(message)
-        count, size = self._get_sync_info_for_items(message.device, infos)
+        infos, expired = self._get_sync_items_for_message(message)
+        print infos, expired
+        count, size = self._get_sync_info_for_items(message.device, infos, expired)
         message = messages.CurrentSyncInformation(message.device,
                                                   count,
                                                   size)
         message.send_to_frontend()
 
     def handle_device_sync_feeds(self, message):
-        infos = self._get_sync_items_for_message(message)
-        count, size = self._get_sync_info_for_items(message.device, infos)
+        infos, expired = self._get_sync_items_for_message(message)
+        print infos, expired
+        count, size = self._get_sync_info_for_items(message.device, infos, expired)
         if size > message.device.max_sync_size():
             return
-        if infos:
+
+        if infos or expired:
             dsm = app.device_manager.get_sync_for_device(message.device)
-            dsm.start()
-            dsm.add_items(infos)
+            if expired:
+                dsm.expire_items(expired)
+            if infos:
+                dsm.start()
+                dsm.add_items(infos)
+            else:
+                message = messages.CurrentSyncInformation(message.device,
+                                                          0, 0)
+                message.send_to_frontend()
 
     def handle_device_sync_media(self, message):
         try:

@@ -532,6 +532,12 @@ class DeviceSyncManager(object):
     def set_device(self, device):
         self.device = device
 
+    def expire_items(self, item_infos):
+        for info in item_infos:
+            del self.device.database[info.file_type][info.id]
+            fileutil.delete(info.video_path)
+        self._check_finished()
+
     def add_items(self, item_infos):
         for info in item_infos:
             if self.stopping:
@@ -795,7 +801,8 @@ class DeviceItem(metadata.Store):
                 raise TypeError('DeviceItem must be given a "%s" argument'
                                 % required)
         self.file_format = self.size = None
-        self.release_date = self.feed_name = self.feed_id = None
+        self.release_date = None
+        self.feed_name = self.feed_id = self.feed_url = None
         self.keep = True
         self.isContainerItem = False
         self.url = self.payment_link = None

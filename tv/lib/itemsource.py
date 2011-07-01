@@ -519,11 +519,14 @@ class DeviceItemSource(ItemSource):
     """
     An ItemSource which pulls its data from a device's JSON database.
     """
-    def __init__(self, device):
+    def __init__(self, device, file_type=None):
         ItemSource.__init__(self)
         self.device = device
         self.info_cache = app.device_manager.info_cache[device.mount]
-        self.type = device.id.rsplit('-', 1)[1]
+        if file_type is None:
+            self.type = device.id.rsplit('-', 1)[1]
+        else:
+            self.type = file_type
         self.signal_handles = [
             device.database.connect('item-added', self._on_device_added),
             device.database.connect('item-changed', self._on_device_changed),
@@ -583,7 +586,7 @@ class DeviceItemSource(ItemSource):
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
                          self.device.name),
-            feed_url = None,
+            feed_url = item.feed_url,
             state = u'saved',
             release_date = item.get_release_date(),
             size = item.size,
