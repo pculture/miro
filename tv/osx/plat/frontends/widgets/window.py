@@ -371,7 +371,7 @@ class Dialog(DialogBase):
 
     def build_text(self):
         vbox = VBox(spacing=6)
-        if self.description:
+        if self.description is not None:
             description_label = Label(self.description, wrap=True)
             description_label.set_bold(True)
             description_label.set_size_request(360, -1)

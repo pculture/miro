@@ -72,14 +72,19 @@ def _set_transient_for(dialog, transient_for):
         dialog.set_transient_for(transient_for)
 
 class MainDialog(widgetset.Dialog):
-    """Dialog that is transient for the main window."""
+    """Dialog that is transient for the main window.
+
+    description=None means that no text will ever be set in this dialog,
+    if you have no description text to set right now, but would like to
+    update the description text at a later point in time, use ''.
+    """
     def __init__(self, title, description=None):
         widgetset.Dialog.__init__(self, title, description)
         set_transient_for_main(self)
 
 class ProgressDialog(MainDialog):
     def __init__(self, title):
-        MainDialog.__init__(self, title)
+        MainDialog.__init__(self, title, description='')
         self.progress_bar = widgetset.ProgressBar()
         self.label = widgetset.Label()
         self.label.set_size(1.2)
