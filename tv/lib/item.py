@@ -481,7 +481,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         return cls.make_view("NOT item.seen AND "
                 "(item.file_type != 'other') AND "
                 "((is_file_item AND NOT deleted) OR "
-                "rd.state in ('finished', 'uploading', 'uploading-paused'))",
+                "(rd.main_item_id=item.id AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')))",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 order_by='downloadedTime DESC')
 
