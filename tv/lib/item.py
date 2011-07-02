@@ -479,7 +479,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     @classmethod
     def newly_downloaded_view(cls):
         return cls.make_view("NOT item.seen AND "
-                "(item.file_type != 'other') AND "
+                "(item.file_type in ('audio', 'video')) AND "
                 "((is_file_item AND NOT deleted) OR "
                 "(rd.main_item_id=item.id AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')))",
@@ -627,7 +627,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     @classmethod
     def feed_unwatched_view(cls, feed_id):
         return cls.make_view("feed_id=? AND not seen AND "
-                "file_type !='other' AND "
+                "file_type in ('audio', 'video') AND "
                 "(is_file_item OR rd.state in ('finished', 'uploading', "
                 "'uploading-paused'))",
                 (feed_id,),
@@ -677,7 +677,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             "not isContainerItem AND "
             "(deleted IS NULL or not deleted) AND "
             "(is_file_item OR rd.main_item_id=item.id) AND "
-            "NOT item.file_type='other'",
+            "item.file_type in ('audio', 'video')",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
