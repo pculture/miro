@@ -347,7 +347,7 @@ def get_menu():
                              Shortcut("t", MOD),
                              groups=["PlayingVideo"]),
                     Menu(_("Audio Track"), "AudioTrackMenu", [
-                            MenuItem(_("None Available"), "NoneAvailable",
+                            MenuItem(_("None Available"), "NoAudioTracks",
                                      groups=["NeverEnabled"]),
                             ]),
                     Menu(_("Subtitles"), "SubtitlesMenu", [

@@ -526,6 +526,16 @@ class VLCRenderer(object):
         self.exc.check()
         gobject.idle_add(self._handle_state_change, self.media_playing, state)
 
+    # XXX These are short-term placeholders for bz9226.
+    def set_audio_track(self, track_index):
+        return
+
+    def get_audio_tracks(self):
+        return 1
+
+    def get_enabled_audio_track(self):
+        return 0
+
     def play(self):
         if self.play_state == PLAYING:
             return
