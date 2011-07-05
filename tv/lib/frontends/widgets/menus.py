@@ -346,6 +346,10 @@ def get_menu():
                     MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach",
                              Shortcut("t", MOD),
                              groups=["PlayingVideo"]),
+                    Menu(_("Audio Track"), "AudioTrackMenu", [
+                            MenuItem(_("None Available"), "NoneAvailable",
+                                     groups=["NeverEnabled"]),
+                            ]),
                     Menu(_("Subtitles"), "SubtitlesMenu", [
                             MenuItem(_("None Available"), "NoneAvailable",
                                      groups=["NeverEnabled"]),
