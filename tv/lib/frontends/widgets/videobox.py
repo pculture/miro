@@ -538,28 +538,7 @@ class VideoBox(style.LowerBox):
         self.selected_file = None
 
     def on_title_clicked(self, button):
-        if not self.selected_tab_list or not self.selected_file:
-            return
-        if app.playback_manager.is_playing and not (
-            app.playback_manager.is_playing_audio or
-            app.playback_manager.detached_window):
-            # playing a video in the app, so don't bother
-            return
-        try:
-            tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
-        except KeyError:
-            #17495 - item may be from a tab that no longer exists
-            self.selected_tab_list = self.selected_tabs = None
-            return
-        app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
-        display = app.display_manager.current_display
-        if hasattr(display, 'controller'):
-            controller = display.controller
-            controller.scroll_to_item(self.selected_file, manual=True, recenter=True)
-        else:
-            #17488 - GuideDisplay doesn't have a controller
-            logging.debug("current display doesn't have a controller - "
-                    "can't switch to")
+        app.playback_manager.goto_currently_playing()
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)

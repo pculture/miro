@@ -340,6 +340,11 @@ def get_menu():
                     MenuItem(_("Volume Down"), "DownVolume",
                              Shortcut(DOWN_ARROW,MOD)),
                     Separator(),
+                    MenuItem(_("Go to Currently Playing"),
+                             "GotoCurrentlyPlaying",
+                             Shortcut("l", MOD),
+                             groups=["Playing"]),
+                    Separator(),
                     MenuItem(_("_Fullscreen"), "Fullscreen",
                              (Shortcut("f", MOD), Shortcut(ENTER, ALT)),
                              groups=["PlayingVideo"]),
@@ -651,6 +656,10 @@ def on_up_volume():
 @action_handler("DownVolume")
 def on_down_volume():
     app.widgetapp.down_volume()
+
+@action_handler("GotoCurrentlyPlaying")
+def on_goto_currently_playing():
+    app.playback_manager.goto_currently_playing()
 
 @action_handler("Fullscreen")
 def on_fullscreen():
