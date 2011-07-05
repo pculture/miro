@@ -37,3 +37,6 @@ ssize: 1024x800
 
 [Epic]
 ssize: 800x480
+
+[Xoom]
+ssize: 1280x800
