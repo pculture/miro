@@ -68,6 +68,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist = None
         self.mark_as_watched_timeout = None
         self.update_timeout = None
+        self.selected_tab_list = self.selected_tabs = None
         self.presentation_mode = 'fit-to-bounds'
         self.create_signal('will-start')
         self.create_signal('selecting-file')
@@ -120,12 +121,43 @@ class PlaybackManager (signals.SignalEmitter):
         tracker = itemtrack.ManualItemListTracker.create(item_infos)
         self.start(None, tracker)
 
+    def goto_currently_playing(self):
+        """Jump to the currently playing item in the display."""
+        playing_item = self.get_playing_item()
+        if not self.selected_tab_list or not playing_item:
+            return
+        if (self.is_playing and not
+          (self.is_playing_audio or self.detached_window)):
+            # playing a video in the app, so don't bother
+            return
+        try:
+            tab_iter = self.selected_tab_list.iter_map[self.selected_tabs[0].id]
+        except KeyError:
+            #17495 - item may be from a tab that no longer exists
+            self.selected_tab_list = self.selected_tabs = None
+            return
+        app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
+        display = app.display_manager.current_display
+        if hasattr(display, 'controller'):
+            controller = display.controller
+            controller.scroll_to_item(playing_item, manual=True, recenter=True)
+        else:
+            #17488 - GuideDisplay doesn't have a controller
+            logging.debug("current display doesn't have a controller - "
+                    "can't switch to")
+
     def start(self, start_id, item_tracker,
             presentation_mode='fit-to-bounds', force_resume=False):
         """Start playback, playing the items from an ItemTracker"""
         if self.is_playing:
             self.stop()
         self.emit('will-start')
+
+        # Remember where we are, so we can switch to it later
+        list_type, selected = app.tabs.selection
+        self.selected_tab_list = app.tabs[list_type]
+        self.selected_tabs = selected
+
         play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
         # Only setup a playlist if we are playing in Miro - otherwise we
         # farm off to an external player for an individual item and the
