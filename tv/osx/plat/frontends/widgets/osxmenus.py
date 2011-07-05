@@ -260,9 +260,12 @@ def populate_menu():
     ]
     playback_menu = menubar.get("PlaybackMenu")
     subtitlesMenu = playback_menu.get("SubtitlesMenu")
+    audioMenu = playback_menu.get("AudioTrackMenu")
     playback_menu.remove("SubtitlesMenu")
+    playback_menu.remove("AudioTrackMenu")
     presentMenu = menus.Menu(_("Present Video"), "Present", presentMenuItems)
     playback_menu.append(presentMenu)
+    playback_menu.append(audioMenu)
     playback_menu.append(subtitlesMenu)
     fullscreen_menu_item = playback_menu.get("Fullscreen")
     fullscreen_menu_item.shortcuts = [ menus.Shortcut("f", MOD)]
@@ -388,7 +391,13 @@ class SubtitleChangesHandler(NSObject):
         app.playback_manager.player.disable_subtitles()
         on_playback_change(app.playback_manager)
 
+class AudioTrackChangesHandler(NSObject):
+    def selectAudioTrack_(self, sender):
+        app.playback_manager.player.set_audio_track(sender.tag())
+        on_playback_change(app.playback_manager)
+
 subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
+audio_track_menu_handler = AudioTrackChangesHandler.alloc().init()
 
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
@@ -407,14 +416,43 @@ def on_playback_change(playback_manager):
     main_menu = NSApp().mainMenu()
     # XXX Flaky: we should be using the tag to prevent interface and language
     # XXX breakages.
-    subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
+    subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(16)
     subtitles_menu = NSMenu.alloc().init()
     subtitles_menu.setAutoenablesItems_(NO)
     subtitles_tracks = None
+
+    audio_track_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
+    audio_track_menu = NSMenu.alloc().init()
+    audio_track_menu.setAutoenablesItems_(NO)
+    audio_tracks = None
     if app.playback_manager.is_playing and not app.playback_manager.is_playing_audio:
         subtitles_tracks = app.playback_manager.player.get_subtitle_tracks()
+        audio_tracks = app.playback_manager.player.get_audio_tracks()
+    populate_audio_track_menu(audio_track_menu, audio_tracks)
     populate_subtitles_menu(subtitles_menu, subtitles_tracks)
+    # Keep the original None available unless we found valid tracks.
+    audio_track_menu_root.setSubmenu_(audio_track_menu)
     subtitles_menu_root.setSubmenu_(subtitles_menu)
+
+def populate_audio_track_menu(nsmenu, tracks):
+    if tracks is not None and len(tracks) > 0:
+        for track in tracks:
+            item = NSMenuItem.alloc().init()
+            item.setTag_(track[0])
+            item.setTitle_(track[1])
+            item.setEnabled_(YES)
+            item.setTarget_(audio_track_menu_handler)
+            item.setAction_('selectAudioTrack:')
+            if track[2]:
+                item.setState_(NSOnState)
+            else:
+                item.setState_(NSOffState)
+            nsmenu.addItem_(item)
+    else:
+        item = NSMenuItem.alloc().init()
+        item.setTitle_(_("None Available"))
+        item.setEnabled_(NO)
+        nsmenu.addItem_(item)
 
 def populate_subtitles_menu(nsmenu, tracks):
     if tracks is not None and len(tracks) > 0:
