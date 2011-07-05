@@ -288,4 +288,6 @@ class DeviceDropHandler(object):
     def accept_drop(self,
             _widget, model, _type, _source_actions, parent, _position, videos):
         device = model[parent][0]
+        if getattr(device, 'fake', False):
+            device = model[model.parent_iter(parent)][0]
         messages.DeviceSyncMedia(device, videos).send_to_backend()
