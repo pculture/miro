@@ -1656,7 +1656,7 @@ class DeviceInfo(object):
         if not self.mount:
             return 0
         sync = self.database.get(u'sync', {})
-        if not sync.get(u'max_fill', True):
+        if not sync.get(u'max_fill', False):
             return self.remaining
         else:
             try:

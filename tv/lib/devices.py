@@ -567,7 +567,7 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def conversion_for_info(self, info):
-        device_settings = self.device.database[u'settings']
+        device_settings = self.device.database.get(u'settings', {})
         device_info = self.device.info
         if info.file_type == 'audio':
             audio_conversion = (device_settings.get(u'audio_conversion') or
