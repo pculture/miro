@@ -1656,11 +1656,11 @@ class DeviceInfo(object):
         if not self.mount:
             return 0
         sync = self.database.get(u'sync', {})
-        if not sync.get(u'max_fill'):
+        if not sync.get(u'max_fill', True):
             return self.remaining
         else:
             try:
-                percent = int(sync[u'max_fill_percent']) * 0.01
+                percent = int(sync.get(u'max_fill_percent', 90)) * 0.01
             except ValueError:
                 return self.remaining
             else:
