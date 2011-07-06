@@ -39,6 +39,7 @@ from miro import app
 from miro import prefs
 from miro import player
 from miro import iso639
+from miro.gtcache import gettext as _
 from miro.plat import utils
 from miro.plat import bundle
 from miro.plat import qtcomp
@@ -235,6 +236,28 @@ class Player(player.Player):
             return None
         return qtmovie
 
+    def get_audio_tracks(self):
+        tracks = list()
+        for i, track in enumerate(
+          self.movie.tracksOfMediaType_(QTMediaTypeSound)):
+            is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
+            track_id = track.attributeForKey_(QTTrackIDAttribute)
+            # To avoid crappy names encoded into files, use "Track %d (xxx)
+            display_name = track.attributeForKey_(QTTrackDisplayNameAttribute)
+            name = _("Track %(track)d (%(name)s)",
+                {"track": i + 1, 
+                 "name": display_name
+                })
+            tracks.append((track_id, name, is_enabled))
+        return tracks
+
+    def set_audio_track(self, tag):
+        for track in self.movie.tracksOfMediaType_(QTMediaTypeSound):
+            track_id = track.attributeForKey_(QTTrackIDAttribute)
+            # In theory, you could have multiple enabled audio tracks, playing
+            # at the same time but that'd be a bit silly?
+            track.setEnabled_(track_id == tag)
+
     def setup_subtitles(self, force_subtitles):
         if app.config.get(prefs.ENABLE_SUBTITLES) or force_subtitles:
             enabled_tracks = self.get_all_enabled_subtitle_tracks()
@@ -408,6 +431,7 @@ class Player(player.Player):
                 self.movie_notifications.disconnect(
                     QTMovieLoadStateDidChangeNotification)
             self.setup_subtitles(force_subtitles)
+            tracks = self.movie.tracks()
             threads.call_on_ui_thread(callback)
         else:
             raise ValueError('Unknown QTMovieLoadStateAttribute value')
