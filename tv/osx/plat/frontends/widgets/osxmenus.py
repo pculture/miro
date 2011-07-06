@@ -416,12 +416,12 @@ def on_playback_change(playback_manager):
     main_menu = NSApp().mainMenu()
     # XXX Flaky: we should be using the tag to prevent interface and language
     # XXX breakages.
-    subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(16)
+    subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(18)
     subtitles_menu = NSMenu.alloc().init()
     subtitles_menu.setAutoenablesItems_(NO)
     subtitles_tracks = None
 
-    audio_track_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
+    audio_track_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(17)
     audio_track_menu = NSMenu.alloc().init()
     audio_track_menu.setAutoenablesItems_(NO)
     audio_tracks = None
