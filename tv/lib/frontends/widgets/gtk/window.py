@@ -174,7 +174,7 @@ class WindowBase(signals.SignalEmitter):
         # menu stuff.
         self.menu_structure = None
         self.menu_action_groups = None
-        self._merge_id = None
+        self._audio_merge_id = self._merge_id = None
         self._subtitle_tracks_cached = None
         self._setup_ui_manager()
 
@@ -213,7 +213,8 @@ class WindowBase(signals.SignalEmitter):
         outstream.write('</menu>')
 
     def _add_menuitem(self, menu, outstream):
-        if menu.action not in ("NoneAvailable", "SubtitlesSelect"):
+        if menu.action not in ("NoAudioTracks", "NoneAvailable",
+                               "SubtitlesSelect"):
             outstream.write('<menuitem action="%s" />' % menu.action)
 
     def _add_separator(self, menu, outstream):
@@ -357,8 +358,30 @@ class WindowBase(signals.SignalEmitter):
             self._raw_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
 
+        # make a bunch of AudioTrack# actions
+        self._raw_check_action("AudioTrack0", _("Track %(count)d", {"count":1}),
+                               ["AlwaysOn"], self.on_audio_track_change, 0)
+        radio_group = self.action_groups["AlwaysOn"].get_action(
+            "AudioTrack0")
+        for i in range(1, 199):
+            self._raw_check_action("AudioTrack%d" % i, "", ["AlwaysOn"],
+                                   self.on_audio_track_change, i, radio_group)
+
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)
+
+    def on_audio_track_change(self, action, track_index):
+        if action.get_property("current-value") != action.get_property(
+            "value"):
+            return
+        action_group = self.action_groups["AlwaysOn"]
+        action_group.get_action(
+            "AudioTrack0").current_value = track_index
+        if app.playback_manager.is_playing_audio:
+            renderer = app.audio_renderer
+        else:
+            renderer = app.video_renderer
+        renderer.set_audio_track(track_index)
 
     def on_subtitles_select(self, action, track_index):
         action_group = self.action_groups["AlwaysOn"]
@@ -558,6 +581,7 @@ class MainWindow(Window):
         self._window.connect('configure-event', self.on_configure_event)
         self._window.connect('map-event', lambda w, a: self.emit('on-shown'))
         self._clear_subtitles_menu()
+        self._clear_audio_track_menu()
 
     def _make_gtk_window(self):
         return WrappedMainWindow()
@@ -639,6 +663,7 @@ class MainWindow(Window):
         self._ignore_on_subtitles_change = True
         if app.playback_manager.is_playing_audio:
             self._clear_subtitles_menu()
+            renderer = app.audio_renderer
         else:
             tracks = app.video_renderer.get_subtitle_tracks()
 #             if tracks is None or len(tracks) == 0:
@@ -646,7 +671,49 @@ class MainWindow(Window):
                 self._clear_subtitles_menu()
             else:
                 self._populate_subtitles_menu(tracks)
+            renderer = app.video_renderer
+        audio_tracks = renderer.get_audio_tracks()
+        if audio_tracks == 0:
+            self._clear_audio_track_menu()
+        else:
+            self._populate_audio_tracks(audio_tracks)
         delattr(self, "_ignore_on_subtitles_change")
+
+    def _populate_audio_tracks(self, tracks):
+        if app.playback_manager.is_playing_audio:
+            renderer = app.audio_renderer
+        else:
+            renderer = app.video_renderer
+        enabled_track = renderer.get_enabled_audio_track()
+
+        if self._audio_merge_id is not None:
+            self.ui_manager.remove_ui(self._audio_merge_id)
+
+        outstream = StringIO.StringIO()
+        outstream.write('''<ui>
+<menubar name="MiroMenu">
+   <menu action="PlaybackMenu">
+      <menu action="AudioTrackMenu">
+''')
+        for i in range(tracks):
+            outstream.write(
+                '         <menuitem action="AudioTrack%d"/>\n' % i)
+        outstream.write('''         <separator/>
+      </menu>
+   </menu>
+</menubar>
+</ui>''')
+
+        self._audio_merge_id = self.ui_manager.add_ui_from_string(
+            outstream.getvalue())
+
+        action_group = self.action_groups["AlwaysOn"]
+        for i in range(tracks):
+            action_group.get_action("AudioTrack%d" % i).set_property(
+                "label", _("Track %(count)d", {"count": i}))
+
+        action_group.get_action("AudioTrack0").set_property(
+            "current-value", enabled_track)
 
     def _populate_subtitles_menu(self, tracks):
         enabled_track = app.video_renderer.get_enabled_subtitle_track()
@@ -703,6 +770,21 @@ class MainWindow(Window):
 </menubar>
 </ui>'''
         self._merge_id = self.ui_manager.add_ui_from_string(s)
+
+    def _clear_audio_track_menu(self):
+        if self._audio_merge_id is not None:
+            self.ui_manager.remove_ui(self._audio_merge_id)
+
+        s = '''<ui>
+<menubar name="MiroMenu">
+<menu action="PlaybackMenu">
+<menu action="AudioTrackMenu">
+<menuitem action="NoAudioTracks"/>
+</menu>
+</menu>
+</menubar>
+</ui>'''
+        self._audio_merge_id = self.ui_manager.add_ui_from_string(s)
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)
