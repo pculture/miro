@@ -205,10 +205,15 @@ class ItemContextMenuHandler(object):
         else:
             if not item.device:
                 # Download
+                def start_download():
+                    if item.remote:
+                        messages.DownloadSharingItems([item]).send_to_backend()
+                    else:
+                        messages.StartDownload(item.id).send_to_backend()
                 if not item.downloaded:
                     section.append((
                             _('Download'),
-                            messages.StartDownload(item.id).send_to_backend))
+                            start_download))
                     if (item.download_info and
                         item.download_info.state == u'failed'):
                         section.append((
@@ -310,7 +315,10 @@ class ItemContextMenuHandler(object):
                     messages.KeepVideo(item.id).send_to_backend()
         def download_all():
             for item in available:
-                messages.StartDownload(item.id).send_to_backend()
+                if item.remote:
+                    messages.DownloadSharingItems([item]).send_to_backend()
+                else:
+                    messages.StartDownload(item.id).send_to_backend()
         def cancel_all():
             for item in downloading:
                 messages.CancelDownload(item.id).send_to_backend()
