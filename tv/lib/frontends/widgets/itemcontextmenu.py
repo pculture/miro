@@ -137,8 +137,10 @@ class ItemContextMenuHandler(object):
             playing_item = app.playback_manager.get_playing_item()
             is_paused = app.playback_manager.is_paused
 
-            if item != playing_item or (item == playing_item and is_paused):
+            if item != playing_item:
                 section.append((_('Play'), app.widgetapp.play_selection))
+            elif item == playing_item and is_paused:
+                section.append((_('Play'), app.playback_manager.toggle_paused))
             else:
                 section.append((_('Pause'), app.playback_manager.pause))
             # Resume
