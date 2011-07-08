@@ -144,10 +144,10 @@ class ContinuousDrawableButton(DrawableButton):
         self.cell().trackMouse_inRect_ofView_untilMouseUp_(event,
                 self.bounds(), self, YES)
         wrapper = wrappermap.wrapper(self)
-        if self.releaseInbounds and not wrapper.get_disabled():
+        if not wrapper.get_disabled():
             if self.firedOnce:
                 wrapper.emit('released')
-            else:
+            elif self.releaseInBounds:
                 wrapper.emit('clicked')
 
     def sendAction_to_(self, action, to):
