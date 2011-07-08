@@ -73,17 +73,21 @@ OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'include')
 OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'lib')
 OPENSSL_LIBRARIES = ['ssleay32', 'libeay32']
 
-# GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.20.0-20100406_win32')
-GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.16.6-20091215_win32')
+import gtk
+GTK_ROOT_PATH = os.path.join(
+    os.path.dirname(gtk.__file__),
+    os.pardir,
+    "runtime")
+GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
 GTK_INCLUDE_PATH = os.path.join(GTK_ROOT_PATH, 'include')
 GTK_LIB_PATH = os.path.join(GTK_ROOT_PATH, 'lib')
-GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
 GTK_INCLUDE_DIRS = [
     os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
     os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
     os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
     os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
     os.path.join(GTK_INCLUDE_PATH, 'cairo'),
+    os.path.join(GTK_INCLUDE_PATH, 'gdk-pixbuf-2.0'),
     os.path.join(GTK_LIB_PATH, 'glib-2.0', 'include'),
     os.path.join(GTK_LIB_PATH, 'gtk-2.0', 'include'),
 ]
@@ -174,6 +178,7 @@ sys.path.insert(0, LIBTORRENT_PATH)
 sys.path.insert(0, MUTAGEN_PATH)
 sys.path.insert(0, os.path.join(GSTREAMER_PATH, 'lib', 'site-packages', 'gst-0.10'))
 
+
 #### Extensions ####
 ngrams_ext = \
     Extension("miro.ngrams",
@@ -258,7 +263,8 @@ infolist_ext = \
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
         OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
-        LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
+        LIBTORRENT_PATH, GTK_LIB_PATH,
+        os.environ['PATH']])
 
 # Private extension modules to build.
 ext_modules = [
@@ -279,18 +285,16 @@ def fill_template(templatepath, outpath, **vars):
 data_files = []
 data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
 
-image_loader_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'loaders')
-theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
-theme_path = os.path.join('share', 'themes')
-for path in (image_loader_path, theme_engine_path, theme_path):
-    src_path = os.path.join(GTK_ROOT_PATH, path)
-    data_files.extend(find_data_files(path, src_path))
+# theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
+# theme_path = os.path.join('share', 'themes')
+# for path in (theme_engine_path, theme_path):
+#     src_path = os.path.join(GTK_ROOT_PATH, path)
+#     data_files.extend(find_data_files(path, src_path))
 
 # gstreamer files
 data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*'))))
-data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
+# data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
 
-data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 data_files.extend(find_data_files(
         'vlc-plugins', os.path.join(VLC_PATH, 'vlc-plugins')))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
@@ -314,6 +318,7 @@ data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
 data_files.append((os.path.join('etc', 'gtk-2.0'), [
             os.path.join(os.path.dirname(__file__), 'gtkrc')]))
+data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images', 'conversions', 'devices'):
@@ -390,23 +395,9 @@ class install_data(distutils.command.install_data.install_data):
             BUILD_TIME=str(time.time()))
         self.outfiles.append(dest)
 
-    def install_gdk_pixbuf_loaders(self):
-        basename = os.path.join('etc', 'gtk-2.0', 'gdk-pixbuf.loaders')
-        source = os.path.join(GTK_ROOT_PATH, basename)
-        dest = os.path.join(self.install_dir, basename)
-        contents = open(source).read()
-        # Not sure why they have paths like this in the file, but we
-        # need to change them.
-        contents = contents.replace(
-            "c:/devel/target/9c384abfa28a3e070eb60fc2972f823b/", "")
-        self.mkpath(os.path.dirname(dest))
-        open(dest, 'wt').write(contents)
-        self.outfiles.append(dest)
-
     def run(self):
         distutils.command.install_data.install_data.run(self)
         self.install_app_config()
-        self.install_gdk_pixbuf_loaders()
 
 # We want to make sure we include msvcp90.dll in the dist directory.
 # Recipe taken from
