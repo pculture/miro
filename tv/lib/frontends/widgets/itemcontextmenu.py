@@ -180,7 +180,10 @@ class ItemContextMenuHandler(object):
                             _('Add to Playlist'),
                             app.widgetapp.add_to_playlist))
 
-        elif ((item.download_info is not None and
+        # Nuke it ...
+        section = []
+
+        if ((item.download_info is not None and
                item.download_info.state != 'failed')):
             if item.download_info.state != 'finished':
                 if not menu_sections:
@@ -200,7 +203,7 @@ class ItemContextMenuHandler(object):
                             messages.ResumeDownload(item.id).send_to_backend))
 
         else:
-            if not (item.device or item.remote):
+            if not item.device:
                 # Download
                 if not item.downloaded:
                     section.append((
@@ -214,11 +217,8 @@ class ItemContextMenuHandler(object):
                                 item.id).send_to_backend))
                 else:
                     # Other
-                    section.append((_("Edit Item Details"), app.widgetapp.edit_items))
-
-            else:
-                # Play
-                section.append((_('Play'), app.widgetapp.play_selection))
+                    section.append((_("Edit Item Details"),
+                                   app.widgetapp.edit_items))
 
         if item.seeding_status == 'seeding':
             section.append((
@@ -327,22 +327,6 @@ class ItemContextMenuHandler(object):
         for info in selection:
             if info.downloaded:
                 downloaded.append(info)
-                if info.is_playable:
-                    playable.append(info)
-                    if info.device:
-                        device.append(info)
-                    if info.remote:
-                        remote.append(info)
-                    if info.video_watched:
-                        watched.append(info)
-                        if info.expiration_date:
-                            expiring.append(info)
-                    else:
-                        unwatched.append(info)
-                    if info.is_container_item:
-                        container.append(info)
-                if not (info.device or info.remote):
-                    editable = True
             elif info.state == 'paused':
                 paused.append(info)
             elif info.state == 'downloading':
@@ -352,37 +336,52 @@ class ItemContextMenuHandler(object):
                     uploadable.append(info)
             else:
                 available.append(info)
+            if info.is_playable:
+                playable.append(info)
+                if info.device:
+                    device.append(info)
+                if info.remote:
+                    remote.append(info)
+                if info.video_watched:
+                    watched.append(info)
+                    if info.expiration_date:
+                        expiring.append(info)
+                else:
+                    unwatched.append(info)
+                if info.is_container_item:
+                    container.append(info)
+            if not (info.device or info.remote):
+                editable = True
 
         menu = []
-        if downloaded:
-            if device:
-                menu.append((ngettext('%(count)d Device Item',
-                                      '%(count)d Device Items',
-                                      len(downloaded),
-                                      {"count": len(downloaded)}),
-                             None))
-            else:
-                menu.append((ngettext('%(count)d Downloaded Item',
-                                      '%(count)d Downloaded Items',
-                                      len(downloaded),
-                                      {"count": len(downloaded)}),
-                             None))
-            if playable:
-                menu.append((_('Play'), app.widgetapp.play_selection)),
-                if not (device or remote or container):
-                    menu.append((_('Add to Playlist'),
-                                 app.widgetapp.add_to_playlist))
+        if device:
+            menu.append((ngettext('%(count)d Device Item',
+                                  '%(count)d Device Items',
+                                  len(downloaded),
+                                  {"count": len(downloaded)}),
+                         None))
+        else:
+            menu.append((ngettext('%(count)d Downloaded Item',
+                                  '%(count)d Downloaded Items',
+                                  len(downloaded),
+                                  {"count": len(downloaded)}),
+                         None))
+        if playable:
+            menu.append((_('Play'), app.widgetapp.play_selection)),
+            if not (device or remote or container):
+                menu.append((_('Add to Playlist'),
+                             app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
-            if watched:
-                menu.append((_('Mark as Unplayed'), mark_unwatched))
-            if unwatched:
-                menu.append((_('Mark as Played'), mark_watched))
-            if expiring:
-                menu.append((_('Keep'), keep_videos))
-            if playable and not (device or remote) and not container:
-                menu.append(None)
-                convert_menu = self._make_convert_menu()
-                menu.append((_('Convert to...'), convert_menu))
+        if watched and not (device or remote):
+            menu.append((_('Mark as Unplayed'), mark_unwatched))
+        if unwatched and not (device or remote):
+            menu.append((_('Mark as Played'), mark_watched))
+        if expiring and not (device or remote):
+            menu.append((_('Keep'), keep_videos))
+        if playable and not (device or remote) and not container:
+            menu.append(None)
+            convert_menu = self._make_convert_menu()
+            menu.append((_('Convert to...'), convert_menu))
 
 
         if available:
