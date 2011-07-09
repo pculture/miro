@@ -80,12 +80,14 @@ cd $WORK_DIR
 tar -zxf $BKIT_DIR/Python-2.7.2.tgz
 cd $WORK_DIR/Python-2.7.2
 
+patch -p0 < $BKIT_DIR/patches/Python-2.7.2/setup.py.patch
+patch -p0 < $BKIT_DIR/patches/Python-2.7.2/Makefile.pre.in.patch
+
 ./configure --prefix=$SBOX_DIR \
             --enable-framework=$SBOX_DIR/Frameworks \
             --enable-universalsdk=$SDK_DIR \
             --with-universal-archs=32-bit
 
-patch -p0 < $BKIT_DIR/patches/Python-2.7.2/setup.py.patch
 make frameworkinstall
 
 PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION
