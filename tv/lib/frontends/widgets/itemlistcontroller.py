@@ -192,7 +192,7 @@ class ItemListController(object):
     :attribute widget: Container widget used to display this controller
     :attribute views: The ListView and StandardView objects
     """
-
+    has_downloadables = True
     def __init__(self, typ, id_):
         """Construct a ItemListController.
 
@@ -202,6 +202,7 @@ class ItemListController(object):
         self.type = typ
         self.id = id_
         self.views = {}
+        self.has_downloadables = self.__class__.has_downloadables
         self._search_text = ''
         self._got_initial_list = False
         self._playing_items = False
@@ -982,7 +983,9 @@ class ItemListController(object):
         self.check_for_empty_list()
 
     def check_for_empty_list(self):
-        self.widget.set_list_empty_mode(self.calc_list_empty_mode())
+        empty = self.calc_list_empty_mode()
+        self.widget.set_list_empty_mode(empty)
+        self.titlebar.set_list_empty_mode(empty)
 
     def calc_list_empty_mode(self):
         return (self.item_list.get_count() == 0 and
@@ -1079,15 +1082,23 @@ class SimpleItemListController(ItemListController):
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
     def make_titlebar(self):
-        titlebar = itemlistwidgets.ItemListTitlebar()
+        titlebar = itemlistwidgets.ItemListTitlebar(self.has_downloadables)
         titlebar.connect('search-changed', self._on_search_changed)
         return titlebar
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 
+    def on_selection_changed(self, item_view, view_type):
+        ItemListController.on_selection_changed(self, item_view, view_type)
+        self.titlebar.on_selection_changed(self)
+
+    def on_initial_list(self):
+        self.titlebar.on_selection_changed(self)
+
 class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
         ProgressTrackingListMixin):
+    has_downloadables = False
     def __init__(self):
         SimpleItemListController.__init__(self)
         FilteredListMixin.__init__(self)
@@ -1103,7 +1114,7 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
                 itemlistwidgets.EmptyListHeader(text))
 
     def make_titlebar(self):
-        titlebar = self.titlebar_class()
+        titlebar = self.titlebar_class(self.has_downloadables)
         titlebar.connect('search-changed', self._on_search_changed)
         titlebar.connect('toggle-filter', self.on_toggle_filter)
         titlebar.connect('save-search', self._on_save_search)

@@ -49,6 +49,7 @@ from miro import prefs
 from miro import displaytext
 from miro import util
 from miro import eventloop
+from miro import messages
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 from miro.frontends.widgets import imagepool
@@ -432,8 +433,9 @@ class ItemListTitlebar(Titlebar):
     """
     uses_resume_button = False
 
-    def __init__(self):
+    def __init__(self, has_downloadables=True):
         Titlebar.__init__(self)
+        self.has_downloadables = has_downloadables
         self.create_signal('resume-playing')
         hbox = widgetset.HBox()
         self.add(hbox)
@@ -609,6 +611,9 @@ class ItemListTitlebar(Titlebar):
         self.filters[name] = button
         return button
 
+    def on_selection_changed(self, controller):
+        pass
+
 class FolderContentsTitlebar(ItemListTitlebar):
     def _build_before_filters(self):
         self.create_signal('podcast-clicked')
@@ -697,8 +702,57 @@ class SearchTitlebar(ItemListTitlebar):
                 self.save_search_icon())
         self.save_button.connect('clicked', self._on_save_search)
         self.save_button_holder = widgetutil.HideableWidget(
-                widgetutil.pad(self.save_button, left=10, right=10))
-        return widgetutil.align_middle(self.save_button_holder)
+                widgetutil.pad(self.save_button))
+
+        if self.has_downloadables:
+            self.create_signal('download')
+            self.download_button = widgetutil.TitlebarButton(
+                self.download_title())
+            self.download_button.connect('clicked', self._on_download)
+            self.download_button_holder = widgetutil.HideableWidget(
+                widgetutil.pad(self.download_button))
+
+        hbox = widgetset.HBox(spacing=10)
+        hbox.pack_start(self.save_button_holder)
+        if self.has_downloadables:
+            hbox.pack_start(self.download_button_holder)
+
+        return widgetutil.align_middle(hbox)
+
+    def on_selection_changed(self, controller):
+        if self.has_downloadables:
+            self.download_button.set_title(self.download_title())
+
+    def _on_download(self, button):
+        selection = app.item_list_controller_manager.get_selection()
+        if not selection:
+            if app.item_list_controller_manager.displayed is None:
+                selection = []
+            else:
+                model = app.item_list_controller_manager.displayed.current_item_view.model
+                item_info = model.get_first_info()
+                selection = []
+                while item_info is not None:
+                    selection.append(item_info)
+                    item_info = model.get_next_info(item_info.id)
+        for s in selection:
+            if s.remote:
+                messages.DownloadSharingItems([s]).send_to_backend()
+            elif s.device:
+                messages.DownloadDeviceItems([s]).send_to_backend()
+            elif not s.downloaded:
+                messages.StartDownload(s.id).send_to_backend()
+
+    def download_title(self):
+        # Question: how do we know that this selection is for our display?
+        # We don't!  But if this button was activated then we must be the
+        # current titlebar and we just grab whatever selection is on the active
+        # display.
+        selection = app.item_list_controller_manager.get_selection()
+        if not selection:
+            return _('Download All')
+        else:
+            return _('Download Selected')
 
     def calculate_width_requests(self):
         # show the save button to make our size requests include it
@@ -721,6 +775,15 @@ class SearchTitlebar(ItemListTitlebar):
         else:
             self.save_button_holder.show()
         self.emit('search-changed', searchbox.get_text())
+
+    def set_list_empty_mode(self, empty):
+        if not self.has_downloadables:
+            return
+        if empty:
+            self.download_button_holder.hide()
+        else:
+            self.download_button_holder.show()
+            self.download_button.set_title(self.download_title())
 
 class VideoAudioFilterMixin(object):
     def setup_filters(self):
