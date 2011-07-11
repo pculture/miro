@@ -140,6 +140,18 @@ class HotspotTracker(object):
                     self.row)
             self.tableview.setNeedsDisplayInRect_(cell_frame)
 
+def _calc_interior_frame(total_frame, tableview):
+    """Calculate the inner cell area for a table cell.
+
+    We tell cocoa that the intercell spacing is (0, 0) and instead handle the
+    spacing ourselves.  This method calculates the area that a cell should
+    render to, given the total spacing.
+    """
+    return NSMakeRect(total_frame.origin.x + tableview.column_spacing // 2,
+            total_frame.origin.y + tableview.row_spacing // 2,
+            total_frame.size.width - tableview.column_spacing,
+            total_frame.size.height - tableview.row_spacing)
+
 class MiroTableCell(NSTextFieldCell):
     def init(self):
         return super(MiroTableCell, self).initTextCell_('')
@@ -158,6 +170,10 @@ class MiroTableCell(NSTextFieldCell):
         else:
             # OS X calls setObjectValue_('') on intialization
             NSCell.setObjectValue_(self, value_dict)
+
+    def drawInteriorWithFrame_inView_(self, frame, view):
+        return NSTextFieldCell.drawInteriorWithFrame_inView_(self,
+                _calc_interior_frame(frame, view), view)
 
 class MiroTableInfoListTextCell(MiroTableCell):
     def initWithAttrGetter_(self, attr_getter):
@@ -206,6 +222,10 @@ class MiroTableImageCell(NSImageCell):
     def setObjectValue_(self, value_dict):
         NSImageCell.setObjectValue_(self, value_dict['image'])
 
+    def drawInteriorWithFrame_inView_(self, frame, view):
+        return NSImageCell.drawInteriorWithFrame_inView_(self,
+                _calc_interior_frame(frame, view), view)
+
 class MiroCheckboxCell(NSButtonCell):
     def init(self):
         self = super(MiroCheckboxCell, self).init()
@@ -243,6 +263,10 @@ class MiroCheckboxCell(NSButtonCell):
                 column.renderer.emit('clicked', itr)
         return NSButtonCell.stopTracking_at_inView_mouseIsUp_(self, lastPoint,
                 at, tableview, mouseIsUp)
+
+    def drawInteriorWithFrame_inView_(self, frame, view):
+        return NSButtonCell.drawInteriorWithFrame_inView_(self,
+                _calc_interior_frame(frame, view), view)
 
 class CellRendererBase(object):
     def set_index(self, index):
@@ -353,6 +377,8 @@ class CustomTableCell(NSCell):
 
     def drawInteriorWithFrame_inView_(self, frame, view):
         NSGraphicsContext.currentContext().saveGraphicsState()
+        # adjust frame based on the cell spacing
+        frame = _calc_interior_frame(frame, view)
         if self.wrapper.outline_column:
             pad_left = EXPANDER_PADDING
         else:
@@ -414,17 +440,17 @@ class InfoListRendererText(CellRenderer):
         return cell.initWithAttrGetter_(self.get_value)
 
 def calc_row_height(view, model_row):
-    row_height = 0
+    cell_height = 0
     model = view.dataSource().model
     for column in view.tableColumns():
         cell = column.dataCell()
         data = model.get_column_data(model_row, column)
         cell.setObjectValue_(data)
         cell_height = cell.calcHeight_(view)
-        row_height = max(row_height, cell_height)
-    if row_height == 0:
-        row_height = 12
-    return row_height
+        cell_height = max(cell_height, cell_height)
+    if cell_height == 0:
+        cell_height = 12
+    return cell_height + view.row_spacing
 
 class TableViewDelegate(NSObject):
     def tableView_willDisplayCell_forTableColumn_row_(self, view, cell,
@@ -517,6 +543,10 @@ class TableViewCommon(object):
         self.gradientHighlight = False
         self._column_wrappers = []
         self.tracking_area = None
+        # we handle cell spacing manually
+        self.setIntercellSpacing_(NSSize(0, 0))
+        self.column_spacing = 3
+        self.row_spacing = 2
         return self
 
     def updateTrackingAreas(self):
@@ -1290,7 +1320,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         if self.auto_resize:
             # Table auto-resizes, we can shrink to min-width for each column
             width = sum(column.minWidth() for column in columns)
-            width += self.tableview.intercellSpacing().width * self.column_count()
+            width += self.tableview.column_spacing * self.column_count()
         else:
             # Table doesn't auto-resize, the columns can't get smaller than
             # their current width
@@ -1352,14 +1382,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         return width - spacing
 
     def set_column_spacing(self, column_spacing):
-        spacing = self.tableview.intercellSpacing()
-        spacing.width = column_spacing
-        self.tableview.setIntercellSpacing_(spacing)
+        self.tableview.column_spacing = column_spacing
 
     def set_row_spacing(self, row_spacing):
-        spacing = self.tableview.intercellSpacing()
-        spacing.height = row_spacing
-        self.tableview.setIntercellSpacing_(spacing)
+        self.tableview.row_spacing = row_spacing
 
     def set_alternate_row_backgrounds(self, setting):
         self.tableview.setUsesAlternatingRowBackgroundColors_(setting)
