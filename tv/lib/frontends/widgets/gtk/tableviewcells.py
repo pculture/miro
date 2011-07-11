@@ -147,6 +147,9 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
 
     def on_render(self, window, widget, background_area, cell_area, expose_area,
             flags):
+        widget_wrapper = wrappermap.wrapper(widget)
+        cell_wrapper = wrappermap.wrapper(self)
+
         selected = (flags & gtk.CELL_RENDERER_SELECTED)
         if selected:
             if widget.flags() & gtk.HAS_FOCUS:
@@ -155,12 +158,14 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
                 state = gtk.STATE_ACTIVE
         else:
             state = gtk.STATE_NORMAL
-        xpad = self.props.xpad
-        ypad = self.props.ypad
-        area = gtk.gdk.Rectangle(cell_area.x + xpad, cell_area.y + ypad,
-                cell_area.width - xpad * 2, cell_area.height - ypad * 2)
+        if cell_wrapper.IGNORE_PADDING:
+            area = background_area
+        else:
+            xpad = self.props.xpad
+            ypad = self.props.ypad
+            area = gtk.gdk.Rectangle(cell_area.x + xpad, cell_area.y + ypad,
+                    cell_area.width - xpad * 2, cell_area.height - ypad * 2)
         context = drawing.DrawingContext(window, area, expose_area)
-        widget_wrapper = wrappermap.wrapper(widget)
         if (selected and not widget_wrapper.draws_selection and
                 widget_wrapper.use_custom_style):
             # Draw the base color as our background.  This erases the gradient
@@ -170,7 +175,6 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
                     background_area.width, background_area.height)
         context.style = drawing.DrawingStyle(widget_wrapper,
                 use_base_color=True, state=state)
-        owner = wrappermap.wrapper(self)
         widget_wrapper.layout_manager.update_cairo_context(context.context)
         hotspot_tracker = widget_wrapper.hotspot_tracker
         if (hotspot_tracker and hotspot_tracker.hit and
@@ -188,7 +192,7 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         # from the model itself, so we don't have to worry about setting them
         # here.
         widget_wrapper.layout_manager.reset()
-        owner.render(context, widget_wrapper.layout_manager, selected,
+        cell_wrapper.render(context, widget_wrapper.layout_manager, selected,
                 hotspot, hover)
 
     def on_activate(self, event, widget, path, background_area, cell_area,
@@ -203,6 +207,9 @@ gobject.type_register(GTKCustomCellRenderer)
 class CustomCellRenderer(object):
     """Customizable Cell Renderer
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
+
+    IGNORE_PADDING = False
+
     def __init__(self):
         self._renderer = GTKCustomCellRenderer()
         self.want_hover = False

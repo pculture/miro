@@ -377,8 +377,9 @@ class CustomTableCell(NSCell):
 
     def drawInteriorWithFrame_inView_(self, frame, view):
         NSGraphicsContext.currentContext().saveGraphicsState()
-        # adjust frame based on the cell spacing
-        frame = _calc_interior_frame(frame, view)
+        if not self.wrapper.IGNORE_PADDING:
+            # adjust frame based on the cell spacing
+            frame = _calc_interior_frame(frame, view)
         if self.wrapper.outline_column:
             pad_left = EXPANDER_PADDING
         else:
@@ -403,6 +404,8 @@ class CustomTableCell(NSCell):
 
 class CustomCellRenderer(CellRendererBase):
     CellClass = CustomTableCell
+
+    IGNORE_PADDING = False
 
     def __init__(self):
         self.outline_column = False

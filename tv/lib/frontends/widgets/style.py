@@ -750,6 +750,7 @@ class HybridAlbumRenderer(widgetset.InfoListRenderer):
     """Renderer for albums in hybrid view."""
 
     min_width = 200
+    IGNORE_PADDING = True
 
     def get_size(self, style, layout_manager):
         # return 0 for height because we render to multiple columns.  We let
