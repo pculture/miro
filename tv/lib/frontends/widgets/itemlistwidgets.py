@@ -1024,6 +1024,7 @@ class ListViewColumnRendererSet(ColumnRendererSet):
         'name': style.NameRenderer,
         'artist': style.ArtistRenderer,
         'album': style.AlbumRenderer,
+        'hybrid-album': style.HybridAlbumRenderer,
         'track': style.TrackRenderer,
         'year': style.YearRenderer,
         'genre': style.GenreRenderer,

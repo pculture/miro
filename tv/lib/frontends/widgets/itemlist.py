@@ -168,6 +168,9 @@ class AlbumSort(ItemSort):
                 info.track,
                 info.artist_sort_key)
 
+class HybridAlbumSort(ItemSort):
+    KEY = 'hybrid-album'
+
 class TrackSort(ItemSort):
     KEY = 'track'
     def sort_key(self, info):

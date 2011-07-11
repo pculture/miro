@@ -746,6 +746,24 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         else:
             return None
 
+class HybridAlbumRenderer(widgetset.InfoListRenderer):
+    """Renderer for albums in hybrid view."""
+
+    min_width = 200
+
+    def get_size(self, style, layout_manager):
+        # return 0 for height because we render to multiple columns.  We let
+        # the other columns determin the row height
+        return self.min_width, 0
+
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        return None
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        context.set_color((0, 0, 1))
+        context.rectangle(0, 0, context.width, context.height)
+        context.fill()
+
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
     PROGRESS_BASE_BOTTOM = (0.90, 0.45, 0.08)

@@ -58,6 +58,7 @@ COLUMN_LABELS = {
     u'name': _('Name'),
     u'artist': _('Artist'),
     u'album': _('Album'),
+    u'hybrid-album': _('Hybrid Album'),
     u'track': _('Track'),
     u'year': _('Year'),
     u'genre': _('Genre'),

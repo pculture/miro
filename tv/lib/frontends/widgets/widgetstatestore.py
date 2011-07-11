@@ -78,6 +78,7 @@ class WidgetStateStore(object):
         u'feed-name': 70,
         u'file-type': 70,
         u'genre': 65,
+        u'hybrid-album': 200,
         u'kind': 70,
         u'length': 60,
         u'name': 200,
@@ -142,7 +143,7 @@ class WidgetStateStore(object):
     )
     # add available but non-default columns here:
     AVAILABLE_COLUMNS['music'] |= set([u'date', u'date-added', u'feed-name',
-        u'size', u'file-type', u'status'])
+        u'size', u'file-type', u'status', u'hybrid-album'])
     AVAILABLE_COLUMNS['others'] |= set([u'date', u'date-added', u'drm',
         u'rating'])
     AVAILABLE_COLUMNS['downloading'] |= set([u'torrent-details', u'date',
