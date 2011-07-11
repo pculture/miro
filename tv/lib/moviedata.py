@@ -159,8 +159,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             mediatype = self.parse_type(stdout)
         screenshot = self.parse_screenshot(stdout, mdi)
 
+        # bz:17364 HACK: need to avoid UnicodeDecodeError - until we do a
+        # proper pathname cleanup.
         logging.debug("moviedata: mdp %s %s %s %s", duration, screenshot,
-                mediatype, mdi.video_path)
+                mediatype, mdi.video_path.encode('utf-8', 'replace'))
         return duration, screenshot, mediatype
 
     @contextmanager
