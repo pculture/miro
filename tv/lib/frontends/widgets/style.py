@@ -750,8 +750,25 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
 class HybridAlbumRenderer(widgetset.InfoListRenderer):
     """Renderer for albums in hybrid view."""
 
-    min_width = 200
     IGNORE_PADDING = True
+    IMAGE_SIZE = (138, 138)
+    IMAGE_MARGIN_TOP = 11
+    IMAGE_MARGIN_BOTTOM = 0
+    MARGIN_RIGHT = 45
+    MARGIN_LEFT = 11
+    TRACK_NUMBER_MARGIN_RIGHT = 13
+    BACKGROUND_COLOR = widgetutil.WHITE
+    TEXT_COLOR = widgetutil.BLACK
+    TRACK_TEXT_COLOR = widgetutil.css_to_color('#969696')
+    FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
+
+    min_width = IMAGE_SIZE[0] + MARGIN_LEFT + MARGIN_RIGHT
+
+    def __init__(self):
+        widgetset.InfoListRenderer.__init__(self)
+        album_art_path = resources.path('images/album-art-placeholder.gif')
+        self.album_art = imagepool.get_surface(album_art_path,
+                size=self.IMAGE_SIZE)
 
     def get_size(self, style, layout_manager):
         # return 0 for height because we render to multiple columns.  We let
@@ -762,16 +779,130 @@ class HybridAlbumRenderer(widgetset.InfoListRenderer):
         return None
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        context.set_color((0, 0, 1))
-        context.rectangle(0, 0, context.width, context.height)
+        if self.group_info is None:
+            # we can't render if group_info isn't set
+            logging.warn("group_info is None in HybridAlbumRenderer")
+            return
+        if context.height == 0:
+            # not sure how this would happen, but we need to avoid
+            # divide-by-zero errors if it does
+            logging.warn("row height is 0 in HybridAlbumRenderer")
+            return
+
+        current_row, total_rows = self.group_info
+
+        # calculate how many rows we need to display the image
+        total_image_height = (self.album_art.height + self.IMAGE_MARGIN_TOP +
+                self.IMAGE_MARGIN_BOTTOM)
+        image_row_count = math.ceil(float(total_image_height) /
+                context.height)
+
+        # render the current cell
+        if total_rows < image_row_count:
+            # we don't have enough room to draw the image, just try to draw
+            # the text
+            image_row_count = 0
+        if current_row < image_row_count:
+            # draw image cells
+            self.render_image(context, self.album_art, current_row)
+        else:
+            # draw text and empty cells
+            # fill in our background
+            context.set_color(self.BACKGROUND_COLOR)
+            context.rectangle(0, 0, context.width, context.height)
+            context.fill()
+
+            if current_row == image_row_count:
+                self.render_text(context, layout_manager, self.info.album,
+                        True)
+            elif current_row == image_row_count + 1:
+                self.render_text(context, layout_manager, self.info.artist,
+                        False)
+
+        # draw track number
+        self.render_track_number(context, layout_manager, current_row)
+
+    def render_image(self, context, image, current_row):
+        if context.width < image.width:
+            # not enough width to draw
+            return
+
+        # setup our background color as the fill color in case we need to fill
+        # in whitespace.
+        context.set_color(self.BACKGROUND_COLOR)
+        # setup variables to track where we are copying from and to
+
+        dest_x = self.MARGIN_LEFT
+        width = image.width
+
+        dest_y = 0
+        height = context.height
+
+        src_x = 0
+        src_y = current_row * context.height - self.IMAGE_MARGIN_TOP
+
+        if src_y < 0:
+            # The cell is contains the top padding for our image.
+            # move dest_y and src_y down
+            dest_y -= src_y
+            src_y = 0
+            # descrease height
+            height -= dest_y
+            # fill top with whitespace
+            context.rectangle(dest_x, 0, image.width, -dest_y)
+            context.fill()
+        src_y_bottom = src_y + height
+        if src_y_bottom > image.height:
+            # The cell is contains the bottom padding for our image.
+            # decrease height
+            extra_space = src_y_bottom - image.height
+            height -= extra_space
+            # fill bottom with whitespace
+            context.rectangle(dest_x, height, image.width, extra_space)
+            context.fill()
+        # draw our image slice
+        if height > 0:
+            image.draw_rect(context, dest_x, dest_y, src_x, src_y,
+                    width, height)
+        # draw whitespace on the right/left of the image
+        context.rectangle(0, 0, dest_x, context.height)
+        context.fill()
+        image_right = dest_x + image.width
+        context.rectangle(image_right, 0, context.width-image_right,
+                context.height)
         context.fill()
 
-        if self.group_info is not None:
-            group_str = '%s / %s ' % (self.group_info)
-            textbox = layout_manager.textbox(group_str)
-            textbox.draw(context, 0, 0, context.width, context.height)
-        else:
-            logging.warn("group_info is None in HybridAlbumRenderer")
+    def render_text(self, context, layout_manager, text, bold):
+        x = self.MARGIN_LEFT
+        width = context.width - self.MARGIN_LEFT - self.MARGIN_RIGHT
+        # setup a textbox for the text
+        layout_manager.set_font(self.FONT_SIZE, bold=bold)
+        layout_manager.set_text_color(self.TEXT_COLOR)
+        textbox = layout_manager.textbox(text)
+        # truncate the textbox to the area we have in a cell.
+        textbox.set_wrap_style('truncated-char')
+        textbox.set_width(width)
+        # middle-align the text to line-up with the other cells
+        line_height = textbox.font.line_height()
+        y = (context.height - line_height) // 2
+        # okay, ready to draw
+        textbox.draw(context, x, y, width, line_height)
+
+    def render_track_number(self, context, layout_manager, track_number):
+        x = 0
+        width = context.width - self.TRACK_NUMBER_MARGIN_RIGHT
+        # setup a textbox for the text
+        layout_manager.set_font(self.FONT_SIZE)
+        layout_manager.set_text_color(self.TRACK_TEXT_COLOR)
+        textbox = layout_manager.textbox(str(track_number + 1))
+        # place the text on the right-side of the cell
+        textbox.set_width(width)
+        textbox.set_alignment('right')
+        # middle-align the text to line-up with the other cells
+        line_height = textbox.font.line_height()
+        y = (context.height - line_height) // 2
+        # okay, ready to draw
+        textbox.draw(context, x, y, width, line_height)
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)

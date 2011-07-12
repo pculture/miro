@@ -69,6 +69,20 @@ class ImageSurface:
             NSBezierPath.fillRect_(dest_rect)
             current_context.restoreGraphicsState()
 
+    def draw_rect(self, context, dest_x, dest_y, source_x, source_y, width,
+            height, fraction=1.0):
+        if width == 0 or height == 0:
+            return
+        current_context = NSGraphicsContext.currentContext()
+        current_context.setShouldAntialias_(YES)
+        current_context.setImageInterpolation_(NSImageInterpolationHigh)
+        dest_rect = NSMakeRect(dest_x, dest_y, width, height)
+        # adjust source_y to work with cocoas coordinate system
+        source_rect = NSMakeRect(source_x, self.height-source_y-height, width,
+                height)
+        self.image.drawInRect_fromRect_operation_fraction_(
+                dest_rect, source_rect, NSCompositeSourceOver, fraction)
+
     def _calc_pattern_phase(self, context, x, y):
         """Calculate the pattern phase to draw tiled images.
 

@@ -64,15 +64,35 @@ class ImageSurface:
     def get_size(self):
         return self.width, self.height
 
-    def draw(self, context, x, y, width, height, fraction=1.0):
+    def _align_pattern(self, x, y):
+        """Line up our image pattern so that it's top-left corner is x, y."""
         m = cairo.Matrix()
         m.translate(-x, -y)
         self.pattern.set_matrix(m)
+
+    def draw(self, context, x, y, width, height, fraction=1.0):
+        self._align_pattern(x, y)
         cairo_context = context.context
         cairo_context.save()
         cairo_context.set_source(self.pattern)
         cairo_context.new_path()
         cairo_context.rectangle(x, y, width, height)
+        if fraction >= 1.0:
+            cairo_context.fill()
+        else:
+            cairo_context.clip()
+            cairo_context.paint_with_alpha(fraction)
+        cairo_context.restore()
+
+    def draw_rect(self, context, dest_x, dest_y, source_x, source_y,
+            width, height, fraction=1.0):
+
+        self._align_pattern(dest_x-source_x, dest_y-source_y)
+        cairo_context = context.context
+        cairo_context.save()
+        cairo_context.set_source(self.pattern)
+        cairo_context.new_path()
+        cairo_context.rectangle(dest_x, dest_y, width, height)
         if fraction >= 1.0:
             cairo_context.fill()
         else:
