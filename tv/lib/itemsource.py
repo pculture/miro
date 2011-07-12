@@ -417,7 +417,7 @@ class SharingItemSource(ItemSource):
             pending_auto_dl = False,
             expiration_date = None,
             item_viewed = True,
-            downloaded = False,
+            downloaded = True,
             is_external = False,
             video_watched = True,
             video_path = item.get_filename(),

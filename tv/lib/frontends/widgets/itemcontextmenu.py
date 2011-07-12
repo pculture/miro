@@ -179,6 +179,9 @@ class ItemContextMenuHandler(object):
                     section.append((
                             _('Add to Playlist'),
                             app.widgetapp.add_to_playlist))
+            if section:
+                menu_sections.append(section)
+                section = []
 
         # Nuke it ...
         section = []
@@ -210,7 +213,7 @@ class ItemContextMenuHandler(object):
                         messages.DownloadSharingItems([item]).send_to_backend()
                     else:
                         messages.StartDownload(item.id).send_to_backend()
-                if not item.downloaded:
+                if not item.downloaded or item.remote:
                     section.append((
                             _('Download'),
                             start_download))
@@ -335,6 +338,8 @@ class ItemContextMenuHandler(object):
         for info in selection:
             if info.downloaded:
                 downloaded.append(info)
+                if info.remote:
+                    available.append(info)
             elif info.state == 'paused':
                 paused.append(info)
             elif info.state == 'downloading':
