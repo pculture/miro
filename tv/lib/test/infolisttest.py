@@ -29,6 +29,7 @@ class InfoListTestBase(MiroTestCase):
         self.infolist = self.build_infolist()
         self.sorter = self.sort_key_func
         self.reverse = False
+        self.grouping_func = None
         self.correct_infos = []
 
     def build_infolist(self):
@@ -85,6 +86,10 @@ class InfoListTestBase(MiroTestCase):
 
         self.infolist._sanity_check()
 
+        # test grouping info
+        if self.grouping_func is not None:
+            self.check_grouping()
+
     def check_insert(self, infos):
         self.correct_infos.extend(infos)
         self.sort_info_list(self.correct_infos)
@@ -129,6 +134,33 @@ class InfoListTestBase(MiroTestCase):
             self.correct_infos.sort(key=new_sorter, reverse=reverse)
         self.infolist.change_sort(new_sorter, reverse)
         self.check_info_list(self.correct_infos)
+
+    def check_update_grouping(self, new_grouping):
+        old_list = self.infolist.info_list()
+        self.infolist.set_grouping(new_grouping)
+        self.grouping_func = new_grouping
+        # check that the ordering of infos is the same
+        self.assertEquals(old_list, self.infolist.info_list())
+        # check grouping info
+        self.check_grouping()
+
+    def check_grouping(self):
+        # check that grouping info is correct for each info
+        groups = itertools.groupby(self.infolist.info_list(),
+                self.grouping_func)
+        for key, group in groups:
+            # key is the value that new_grouping() returned.  group is an
+            # iterater that contains infos in that group
+            group = list(group)
+            total_count = len(group)
+            for i, info in enumerate(group):
+                # check get_group_info()
+                self.assertEquals(self.infolist.get_group_info(info.id),
+                        (i, total_count))
+                # check group_info part of row_for_iter
+                it = self.infolist.iter_for_id(info.id)
+                info, attrs, group_info = self.infolist.row_for_iter(it)
+                self.assertEquals(group_info, (i, total_count))
 
 class InfoListDataTest(InfoListTestBase):
     def check_list(self, *names):
@@ -206,6 +238,26 @@ class InfoListDataTest(InfoListTestBase):
         self.check_update_sort(lambda info: info.id)
         # None shouldn't be allowed
         self.assertRaises(ValueError, self.infolist.change_sort, None)
+
+    def test_grouping(self):
+        # insert and order some infos
+        self.check_insert(self.make_infos('miro', 'monday', 'tuesday', 'moo'))
+        self.check_update_sort(lambda info: info.id)
+        # check that get_group_info() raises a ValueError before a grouping
+        # func is set
+        for info in self.correct_infos:
+            self.assertRaises(ValueError, self.infolist.get_group_info,
+                    info.id)
+        # test setting a grouping function
+        def first_letter_grouping(info):
+            return info.name[0]
+        self.check_update_grouping(first_letter_grouping)
+        # test changing a grouping function
+        def last_letter_grouping(info):
+            return info.name[-1]
+        self.check_update_grouping(first_letter_grouping)
+        # test grouping is correct after changing the sort
+        self.check_update_sort(lambda info: info.name)
 
 class InfoListMemoryTest(InfoListTestBase):
     def test_objects_released(self):
@@ -301,7 +353,7 @@ class InfoListGTKTest(InfoListDataTest):
     def on_row_inserted(self, obj, path, it):
         try:
             # check that that our current model reflects the insert
-            info, attrs = self.infolist.row_for_iter(it)
+            info, attrs, group_info = self.infolist.row_for_iter(it)
             if self.sorter is not None:
                 self.tracked_infos.append(info)
                 self.sort_info_list(self.tracked_infos)
@@ -323,7 +375,7 @@ class InfoListGTKTest(InfoListDataTest):
             # check path points to the correct info
             self.assertEquals(len(path), 1)
             info = self.tracked_infos[path[0]]
-            model_info, attrs = self.infolist.row_for_iter(it)
+            model_info, attrs, group_info = self.infolist.row_for_iter(it)
             self.assertEquals(info.id, model_info.id)
             # update tracked_infos to reflect the change
             self.tracked_infos[path[0]] = model_info
@@ -417,8 +469,8 @@ class InfoListCocoaTest(InfoListDataTest):
         rows = self.data_source.numberOfRowsInTableView_(None)
         data_source_rows = []
         for i in xrange(rows):
-            info, attrs = self.infolist.row_for_iter(i)
-            self.assertEquals((info, attrs),
+            info, attrs, group_info = self.infolist.row_for_iter(i)
+            self.assertEquals((info, attrs, group_info),
                     self.data_source.tableView_objectValueForTableColumn_row_(
                         None, 0, i))
             data_source_rows.append(info)

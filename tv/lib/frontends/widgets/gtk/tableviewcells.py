@@ -236,7 +236,8 @@ class InfoListRenderer(CustomCellRenderer):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     def cell_data_func(self, column, cell, model, iter, attr_map):
-        self.info, self.attrs = wrappermap.wrapper(model).row_for_iter(iter)
+        self.info, self.attrs, self.group_info = \
+                wrappermap.wrapper(model).row_for_iter(iter)
         cell.column = column
         cell.path = model.get_path(iter)
 

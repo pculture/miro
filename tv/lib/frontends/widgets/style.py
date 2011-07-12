@@ -29,6 +29,7 @@
 
 """Constants that define the look-and-feel."""
 
+import logging
 import math
 
 from miro import displaytext
@@ -764,6 +765,13 @@ class HybridAlbumRenderer(widgetset.InfoListRenderer):
         context.set_color((0, 0, 1))
         context.rectangle(0, 0, context.width, context.height)
         context.fill()
+
+        if self.group_info is not None:
+            group_str = '%s / %s ' % (self.group_info)
+            textbox = layout_manager.textbox(group_str)
+            textbox.draw(context, 0, 0, context.width, context.height)
+        else:
+            logging.warn("group_info is None in HybridAlbumRenderer")
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)

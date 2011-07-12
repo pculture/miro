@@ -61,6 +61,8 @@ struct InfoListNodeStruct
         PyObject* sort_key;
         struct InfoListNodeStruct *next;
         struct InfoListNodeStruct *prev;
+        // group_hash is used by the pyrex code to handle grouping functions
+        long group_hash;
         // Call infolist_nodelist_calc_positions before using position
         unsigned int position;
 };

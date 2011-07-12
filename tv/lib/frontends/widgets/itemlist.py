@@ -353,6 +353,10 @@ DEFAULT_SORT = ArtistSort(False)
 
 SORT_KEY_MAP = dict((sort.KEY, sort) for sort in ItemSort.__subclasses__())
 
+def album_grouping(info):
+    """Grouping function that groups infos by albums."""
+    return info.album
+
 class ItemList(object):
     """
     Attributes:
@@ -375,6 +379,7 @@ class ItemList(object):
         self._sorter = DEFAULT_SORT
         self.model = widgetset.InfoListModel(self._sorter.sort_key,
                 self._sorter.reverse)
+        self.model.set_grouping(album_grouping)
         self.video_only = self.audio_only = False
         self.movies_only = self.shows_only = False
         self.clips_only = self.podcasts_only = False

@@ -61,6 +61,7 @@ infolist_node_new(PyObject* id,
         node->info = info;
         node->sort_key = sort_key;
         node->prev = node->next = NULL;
+        node->group_hash = -1;
         return node;
 }
 

@@ -204,7 +204,7 @@ class MiroTableInfoListTextCell(MiroTableCell):
 
     def setObjectValue_(self, value):
         if isinstance(value, tuple):
-            info, attrs = value
+            info, attrs, group_info = value
             cell_text = self.attr_getter(info)
             NSCell.setObjectValue_(self, cell_text)
         else:
@@ -429,7 +429,8 @@ class CustomCellRenderer(CellRendererBase):
     
 class InfoListTableCell(CustomTableCell):
     def set_wrapper_data(self):
-        self.wrapper.info, self.wrapper.attrs = self.object_value
+        self.wrapper.info, self.wrapper.attrs, self.wrapper.group_info = \
+                self.object_value
 
 class InfoListRenderer(CustomCellRenderer):
     CellClass = InfoListTableCell

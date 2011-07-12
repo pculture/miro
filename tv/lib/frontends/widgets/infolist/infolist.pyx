@@ -51,6 +51,14 @@ cdef extern from "infolist-nodelist.h":
     ctypedef struct InfoListNode:
             InfoListNode *next
             InfoListNode *prev
+            # group_hash stores the hash of return value of the current
+            # grouping function.
+            # We use the hash the value for quick comparisons.  With at least
+            # 32 bits of hash data and since we only compare adjacent items,
+            # collisions shouldn't be an issue.
+            # group_hash is computed lazily, it's -1 if the value hasn't been
+            # computed
+            long group_hash
             # would be nice to list the python objects here, but Pyrex doesn't
             # support it well.  Use the infolist_node_get_* methods for
             # access.
@@ -211,6 +219,7 @@ cdef class InfoList:
     cdef InfoListNodeList* nodelist
     cdef dict id_map # maps ids -> CObjects that point to nodes
     cdef object sort_key_func
+    cdef object grouping_func
     cdef int sort_mode
     cdef InfoListAttributeStore attributes
 
@@ -524,6 +533,78 @@ cdef class InfoList:
         finally:
             PyMem_Free(nodes)
 
+    cdef long _get_group_hash(self, InfoListNode* node):
+        """Get the group hash value for a node.
+
+        grouping_func must be not None for this to work!
+
+        _get_group_hash() handles caching group_hash values for nodes so we
+        only have to calculate them once.
+        """
+        if node.group_hash == -1:
+            node.group_hash = hash(self.grouping_func(
+                infolist_node_get_info(node)))
+        return node.group_hash
+
+    def set_grouping(self, grouping_func):
+        """Set a grouping function for this info list.
+
+        Grouping functions input info objects and return values that will be
+        used to segment the list into groups.  Adjacent infos with the same
+        grouping value are part of the same group.
+
+        get_group_info() can be used to find the position of an info inside
+        its group.  row_for_iter() also returns this info.
+        """
+        cdef InfoListNode* node
+
+        self.grouping_func = grouping_func
+        # reset group_hash values
+        node = infolist_nodelist_head(self.nodelist)
+        while not infolist_node_is_sentinal(node):
+            node.group_hash = -1
+            node = node.next
+
+    def get_group_info(self, id_):
+        """Get the info about the group an info is inside.
+
+        This method fetches the index of the info inside the group and the
+        total size of the group.
+
+        :returns: an (index, count) tuple
+        :raises ValueError: if no groupping is set
+        """
+        if self.grouping_func is None:
+            raise ValueError("no grouping set")
+
+        return self._get_group_info(self._fetch_node(id_))
+
+    cdef object _get_group_info(self, InfoListNode* node):
+        """low-level function that the work for get_group_info().
+        """
+        cdef InfoListNode* other_node
+        cdef long group_hash
+        cdef int nodes_before
+        cdef int nodes_after
+
+        group_hash = self._get_group_hash(node)
+        # count nodes in the same group before node
+        nodes_before = 0
+        other_node = node.prev
+        while (not infolist_node_is_sentinal(other_node)
+                and self._get_group_hash(other_node) == group_hash):
+            nodes_before += 1
+            other_node = other_node.prev
+        # count nodes in the same group after node
+        nodes_after = 0
+        other_node = node.next
+        while (not infolist_node_is_sentinal(other_node)
+                and self._get_group_hash(other_node) == group_hash):
+            nodes_after += 1
+            other_node = other_node.next
+        # now we can calculate the index of node and the size of the group
+        return (nodes_before, nodes_before + nodes_after + 1)
+
     def __len__(self):
         return self.nodelist.node_count
 
@@ -544,7 +625,7 @@ cdef class InfoList:
         infolistplat_add_to_tableview(self.nodelist, tableview)
 
     def row_for_iter(self, pos):
-        """Get a (info, attr_dict) tuple for a row in this list.
+        """Get a (info, attr_dict, group_info) tuple for a row in this list.
 
         pos is platform-specific, on gtk it's a gtk.TreeIter object.
 
@@ -555,7 +636,11 @@ cdef class InfoList:
 
         node = infolistplat_node_for_pos(self.nodelist, pos)
         info = infolist_node_get_info(node)
-        return (info, self.attributes.get_attr_dict(info.id))
+        if self.grouping_func is None:
+            group_info = None
+        else:
+            group_info = self._get_group_info(node)
+        return (info, self.attributes.get_attr_dict(info.id), group_info)
 
     def iter_for_id(self, id_):
         """Get an TableModel iterator for an info in the list
