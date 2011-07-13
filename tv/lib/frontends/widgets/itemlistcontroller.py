@@ -192,7 +192,11 @@ class ItemListController(object):
     :attribute widget: Container widget used to display this controller
     :attribute views: The ListView and StandardView objects
     """
-    has_downloadables = True
+    # XXX temporary: False by default because this hideable widget takes 
+    # up valuable screen real estate where the total size of widgets for
+    # titlebar is too wide for to be contained in the margin when run in
+    # window'ed mode, for certain displays.
+    has_downloadables = False
     def __init__(self, typ, id_):
         """Construct a ItemListController.
 

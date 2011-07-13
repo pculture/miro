@@ -39,7 +39,7 @@ from miro.gtcache import gettext as _
 # when it is a connect or not so let it handle that case.
 class SharingView(itemlistcontroller.SimpleItemListController,
                   itemlistcontroller.FilteredListMixin):
-
+    has_downloadables = True
     def __init__(self, share):
         self.type = u'sharing'
         self.share = share
