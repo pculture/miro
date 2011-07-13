@@ -44,6 +44,7 @@ from miro import prefs
 from miro import downloader
 from miro import messages
 from miro import eventloop
+from miro import fileutil
 from miro import moviedata
 from miro import signals
 from miro import httpclient
@@ -54,7 +55,7 @@ from miro.plat import growl
 from miro.plat import bundle
 from miro.plat import _growlImage
 from miro.plat import migrateappname
-from miro.plat.utils import ensureDownloadDaemonIsTerminated, filename_type_to_os_filename, os_filename_to_filename_type
+from miro.plat.utils import ensureDownloadDaemonIsTerminated
 from miro.plat.utils import begin_thread_loop, finish_thread_loop
 from miro.plat.frontends.widgets import (widgetupdates, quicktime, osxmenus,
         sparkleupdater, threads)
@@ -201,15 +202,13 @@ class OSXApplication(Application, signals.SignalEmitter):
             NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def reveal_file(self, fn):
-        filename = filename_type_to_os_filename(fn)
-        NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
+        NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(fn, nil)
     
     def open_file(self, fn):
-        filename = filename_type_to_os_filename(fn)
         ws = NSWorkspace.sharedWorkspace()
         # Let's only open files that are of content type - we don't want to
         # automatically launch executables here.
-        typ, error = ws.typeOfFile_error_(filename, None)
+        typ, error = ws.typeOfFile_error_(fn, None)
         if not typ or error:
             logging.warn('Cannot determine UTI of file %s' % fn)
             return
@@ -218,13 +217,13 @@ class OSXApplication(Application, signals.SignalEmitter):
             logging.warn('Not opening executable file %s' % fn)
             return
 
-        ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename, None, None)
+        ok, externalApp, movieType = ws.getInfoForFile_application_type_(fn, None, None)
         if ok:
             if externalApp == bundle.getBundlePath():
                 logging.warn('trying to play movie externally with ourselves.')
                 ok = False
             else:
-                ok = ws.openFile_withApplication_andDeactivate_(filename, nil, YES)
+                ok = ws.openFile_withApplication_andDeactivate_(fn, nil, YES)
         if not ok:
             logging.warn("movie %s could not be externally opened" % fn)
     
@@ -414,7 +413,7 @@ class AppController(NSObject):
         return NO
 
     def application_openFiles_(self, nsapp, filenames):
-        filenames = [os_filename_to_filename_type(f) for f in filenames]
+        filenames = [fileutil.make_filename(f) for f in filenames]
         if self.startup_done:
             self.do_open_files(filenames)
         else:
@@ -456,7 +455,7 @@ class AppController(NSObject):
     @signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
         keyDirectObject = struct.unpack(">i", "----")[0]
-        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().encode('utf8')
+        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue()
 
         eventloop.add_idle(lambda: commandline.parse_command_line_args([url]), "Open URL")
 

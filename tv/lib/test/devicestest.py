@@ -34,7 +34,6 @@ except ImportError:
     import json
 
 from miro.gtcache import gettext as _
-from miro.plat.utils import PlatformFilenameType
 from miro.test.framework import MiroTestCase
 
 from miro import devices
@@ -96,9 +95,9 @@ devices = [target1, multiple]
         self.assertEqual(device.device_name, 'Bar')
         self.assertEqual(device.video_conversion, "mp4")
         self.assertEqual(device.audio_path, 'Audio')
-        self.assertTrue(isinstance(device.audio_path, PlatformFilenameType))
+        self.assertTrue(isinstance(device.audio_path, unicode))
         self.assertEqual(device.video_path, 'Video')
-        self.assertTrue(isinstance(device.video_path, PlatformFilenameType))
+        self.assertTrue(isinstance(device.video_path, unicode))
         # these are a special case
         self.assertFalse(device.has_multiple_devices)
         self.assertEqual(device.mount_instructions,

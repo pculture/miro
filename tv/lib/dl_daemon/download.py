@@ -43,7 +43,7 @@ from miro.gtcache import gettext as _
 import libtorrent as lt
 from miro.clock import clock
 from miro.download_utils import (
-    clean_filename, next_free_filename, next_free_directory,
+    next_free_filename, next_free_directory,
     check_filename_extension, filter_directory_name, filename_from_url,
     get_file_url_path)
 from miro import eventloop
@@ -58,8 +58,7 @@ from miro.dl_daemon import daemon
 from miro.util import (
     check_f, check_u, stringify, MAX_TORRENT_SIZE, returns_filename,
     info_hash_from_magnet, is_magnet_uri)
-from miro.plat.utils import (
-    get_available_bytes_for_movies, utf8_to_filename, PlatformFilenameType)
+from miro.plat.utils import get_available_bytes_for_movies
 
 # Don't remove - it is used for unit tests.
 chatter = True
@@ -521,7 +520,7 @@ class BGDownloader(object):
         filename = self.shortFilename + suffix
         if not torrent:
             # this is an ascii filename and needs to be fixed
-            filename = clean_filename(filename)
+            filename = fileutil.clean_filename(filename)
 
         full_path = os.path.join(download_dir, filename)
         if is_directory:
@@ -818,7 +817,7 @@ class HTTPDownloader(BGDownloader):
         self.restartOnError = False
         # update shortFilename based on the headers.  This will affect
         # how we move the file once the download is finished
-        self.shortFilename = clean_filename(info['filename'])
+        self.shortFilename = fileutil.clean_filename(info['filename'])
         if self.expectedContentType is not None:
             ext_content_type = self.expectedContentType
         else:
@@ -930,7 +929,7 @@ class HTTPDownloader(BGDownloader):
 
 @returns_filename
 def generate_fast_resume_filename(info_hash):
-    filename = PlatformFilenameType(clean_filename(info_hash) + ".fastresume")
+    filename = fileutil.clean_filename(u'%s.fastresume' % info_hash)
 
     support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
     fast_resume_file = os.path.join(support_dir, 'fastresume', filename)
@@ -1438,7 +1437,9 @@ class BTDownloader(BGDownloader):
             except (KeyError, RuntimeError):
                 self.handle_corrupt_torrent()
                 return
-            self.shortFilename = utf8_to_filename(name)
+            # libtorrent uses utf-8 for filenames.  Convert to unicode for
+            # internal use
+            self.shortFilename = name.decode('utf-8')
             try:
                 self.pick_initial_filename(
                     suffix="", torrent=True, is_directory=is_directory)
@@ -1461,18 +1462,19 @@ class BTDownloader(BGDownloader):
         """
         if not self.torrent.has_metadata():
             return
-        self.shortFilename =  utf8_to_filename(
-            self.torrent.get_torrent_info().name())
+        # libtorrent uses utf-8 for filenames.  Convert to unicode for
+        # internal use
+        torrent_info = self.torrent_info.get_torrent_info()
+        self.shortFilename = torrent_info.name().decode('utf-8')
 
         # FIXME: we should determine whether it is a directory
         # in the same way in got_metainfo and got_delayed_metainfo
         is_directory = False
-        for file_ in self.torrent.get_torrent_info().files():
+        for file_ in torrent_info.files():
             if os.sep in file_.path:
                 is_directory = True
 
-        is_directory = (is_directory or 
-                       len(self.torrent.get_torrent_info().files()) > 1)
+        is_directory = (is_directory or len(torrent_info.files()) > 1)
         try:
             self.pick_initial_filename(
                 suffix="", torrent=True, is_directory=is_directory)

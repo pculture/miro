@@ -36,7 +36,6 @@ from miro import eventloop
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.download_utils import next_free_filename, get_file_url_path
 from miro.util import unicodify
-from miro.plat.utils import unicode_to_filename
 from miro import app
 from miro import prefs
 from miro import fileutil
@@ -219,9 +218,7 @@ class IconCache(DDBObject):
                 self.filename = None
                 self.remove_file(filename)
 
-            filename = unicode(info["filename"])
-            filename = unicode_to_filename(filename, cachedir)
-            filename = os.path.join(cachedir, filename)
+            filename = os.path.join(cachedir, info['filename'])
             filename, fp = next_free_filename(filename)
             needs_save = True
 
@@ -312,7 +309,7 @@ class IconCache(DDBObject):
         if self.url and self.url.startswith(u"file://"):
             return get_file_url_path(self.url)
         elif self.url and self.url.startswith(u"/"):
-            return unicode_to_filename(self.url)
+            return self.url
         else:
             return self.filename
 

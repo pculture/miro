@@ -33,19 +33,19 @@ from PyObjCTools import Conversion
 import os
 import objc
 
+from miro import fileutil
 from miro import prefs
 from miro.plat import bundle
 from miro.plat import keychain
 from miro.plat import resources
-from miro.plat.filenames import os_filename_to_filename_type, filename_type_to_os_filename
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)
 objc.loadBundleFunctions(sysconfBundle, globals(), ((u'SCDynamicStoreCopyProxies', '@@'), ))
 
 
-MOVIES_DIRECTORY_PARENT = os.path.expanduser('~/Movies')
-SUPPORT_DIRECTORY_PARENT = os.path.expanduser('~/Library/Application Support')
+MOVIES_DIRECTORY_PARENT = os.path.expanduser(u'~/Movies')
+SUPPORT_DIRECTORY_PARENT = os.path.expanduser(u'~/Library/Application Support')
 
 def load():
     domain = bundle.getBundleIdentifier()
@@ -67,7 +67,7 @@ def load():
             elif type(v) is objc._pythonify.OC_PythonLong:
                 pydict[k] = long(v)
             elif k == prefs.MOVIES_DIRECTORY.key:
-                pydict[k] = os_filename_to_filename_type(v)
+                pydict[k] = fileutil.make_filename(v)
 
     return pydict
 
@@ -77,10 +77,6 @@ def save(data):
         for k, v in data.iteritems():
             if v is None:
                 data[k] = ""
-            elif k == prefs.MOVIES_DIRECTORY.key:
-                if isinstance(v, str):
-                    data[k] = filename_type_to_os_filename(v)
-
         plist = Conversion.propertyListFromPythonCollection(data)
     except:
         print "WARNING!! Error while converting the settings dictionary to a property list:"
@@ -97,7 +93,7 @@ def get(descriptor):
         return os.path.join(MOVIES_DIRECTORY_PARENT, "Miro")
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
-        return os.path.expanduser('~/Desktop')
+        return os.path.expanduser(u'~/Desktop')
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
         return os.path.abspath(resources.path("../locale"))

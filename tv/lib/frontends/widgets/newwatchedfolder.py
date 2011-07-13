@@ -43,7 +43,6 @@ from miro.dialogs import BUTTON_CANCEL, BUTTON_ADD_FOLDER
 
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
-from miro.plat.utils import filename_to_unicode, PlatformFilenameType
 
 class NewWatchedFolderDialog(MainDialog):
     TITLE = _("Add Watched Folder")
@@ -52,7 +51,7 @@ class NewWatchedFolderDialog(MainDialog):
                     {"appname": app.config.get(prefs.SHORT_APP_NAME)})
     def __init__(self, path, error=None):
         MainDialog.__init__(self, self.TITLE, self.DESCRIPTION)
-        self.path = path # PlatformFilenameType
+        self.path = path
         self.vbox = None
         self.previous_error = error
 
@@ -67,7 +66,7 @@ class NewWatchedFolderDialog(MainDialog):
 
             self.folder_entry = widgetset.TextEntry()
             self.folder_entry.set_activates_default(True)
-            self.folder_entry.set_text(filename_to_unicode(self.path))
+            self.folder_entry.set_text(self.path)
             self.folder_entry.set_size_request(300, -1)
 
             choose_button = widgetset.Button(_("Choose..."))
@@ -94,11 +93,7 @@ class NewWatchedFolderDialog(MainDialog):
 
             ret = self.run()
             if ret == 0:
-                # 17407 band-aid - don't init with PlatformFilenameType since
-                # str use ascii codec
                 dir = self.folder_entry.get_text()
-                if PlatformFilenameType == str:
-                    dir = dir.encode('utf-8')
                 return (dir, self.visible_checkbox.get_checked())
 
             return None
@@ -107,11 +102,7 @@ class NewWatchedFolderDialog(MainDialog):
             logging.exception("newwatchedfolder threw exception.")
 
     def handle_choose(self, widget):
-        # 17407 band-aid - don't init with PlatformFilenameType since
-        # str use ascii codec
         path = self.folder_entry.get_text()
-        if PlatformFilenameType == str:
-            path = path.encode('utf-8')
         if not os.path.exists(path):
             path = resources.get_default_search_dir()
 

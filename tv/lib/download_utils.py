@@ -41,15 +41,9 @@ from miro import filetypes
 from miro import util
 
 from miro.util import check_f, check_u, returns_filename, returns_file
-from miro.plat.utils import unicode_to_filename, unmake_url_safe
-from miro.fileutil import expand_filename
+from miro import fileutil
 
 URI_PATTERN = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
-
-# filename limits this is mostly for windows where we have a 255 character
-# limit on entire pathname
-MAX_FILENAME_LENGTH = 100 
-MAX_FILENAME_EXTENSION_LENGTH = 50
 
 def fix_file_urls(url):
     """Fix file urls that start with file:// instead of file:///.
@@ -126,7 +120,7 @@ def get_file_url_path(url):
     scheme, host, port, path = parse_url(url)
     if scheme != 'file':
         raise ValueError("%r is not a file URL" % url)
-    return unmake_url_safe(path)
+    return fileutil.make_filename(path)
 
 def check_filename_extension(filename, content_type):
     """If a filename doesn't have an extension, this tries to find a
@@ -176,12 +170,12 @@ def next_free_filename(name):
         # Try with the name supplied.
         newname = candidates.next()
         try:
-            fd = os.open(expand_filename(newname), mask)
+            fd = os.open(fileutil.expand_filename(newname), mask)
             fp = os.fdopen(fd, 'wb')
-            return expand_filename(newname), fp
+            return fileutil.expand_filename(newname), fp
         except OSError:
             continue
-    return (expand_filename(newname), fp)
+    return (fileutil.expand_filename(newname), fp)
 
 def next_free_directory_candidates(name):
     """Generates candidate names for next_free_directory."""
@@ -214,7 +208,7 @@ def filename_from_url(url, clean=False):
         match = URI_PATTERN.match(url)
         if match is None:
             # This code path will never be executed.
-            return unicode_to_filename(url)
+            return url
         filename = match.group(2)
         query = match.group(4)
         if not filename:
@@ -228,30 +222,11 @@ def filename_from_url(url, clean=False):
         if ret is None:
             ret = u'unknown'
         if clean:
-            return clean_filename(ret)
+            return fileutil.clean_filename(ret)
         else:
-            return unicode_to_filename(ret)
+            return ret
     except (TypeError, KeyError, AttributeError, UnicodeDecodeError):
-        return unicode_to_filename(u'unknown')
-
-@returns_filename
-def clean_filename(filename):
-    """Given either a filename or a unicode "filename" return a valid
-    clean version of it.
-    """
-    for char in (':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
-        filename = filename.replace(char, '')
-    if len(filename) == 0:
-        return unicode_to_filename(u'_')
-    if len(filename) > MAX_FILENAME_LENGTH:
-        base, ext = os.path.splitext(filename)
-        ext = ext[:MAX_FILENAME_EXTENSION_LENGTH]
-        base = base[:MAX_FILENAME_LENGTH-len(ext)]
-        filename = base + ext
-    if isinstance(filename, str):
-        return unicode_to_filename(filename.decode('ascii', 'replace'))
-    else:
-        return unicode_to_filename(filename)
+        return u'unknown'
 
 def filter_directory_name(name):
     """Filter out all non alpha-numeric characters from a future directory

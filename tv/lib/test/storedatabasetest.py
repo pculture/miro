@@ -21,7 +21,6 @@ from miro.fileobject import FilenameType
 import shutil
 from miro import storedatabase
 from miro.plat import resources
-from miro.plat.utils import PlatformFilenameType
 
 from miro.test.framework import EventLoopTest, skip_for_platforms
 from miro.schema import (SchemaString, SchemaInt, SchemaFloat,
@@ -69,9 +68,7 @@ class PCFProgramer(Human):
 class SpecialProgrammer(PCFProgramer):
     def setup_new(self):
         PCFProgramer.setup_new(self, u'I.M. Special', 44, 2.1, [],
-                               PlatformFilenameType(
-                               '/home/specialdude/\u1234'.encode("utf-8")),
-                               True)
+                               u'/home/specialdude/\u1234', True)
 
 class HumanSchema(schema.ObjectSchema):
     klass = Human
@@ -236,8 +233,7 @@ class FakeSchemaTest(StoreDatabaseTest):
         self.joe = RestorableHuman(u"joe", 14, 1.4, [self.lee], car=u'toyota',
                                    dog=u'scruffy')
         self.ben = PCFProgramer(u'ben', 25, 3.4, [self.joe],
-                                PlatformFilenameType(
-                                '/home/ben/\u1234'.encode("utf-8")), True)
+                                u'/home/ben/\u1234', True)
         self.db = [self.lee, self.joe, self.ben]
         databaseupgrade._upgrade_overide[1] = upgrade1
         databaseupgrade._upgrade_overide[2] = upgrade2

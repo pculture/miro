@@ -61,7 +61,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
-from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
+from miro.plat.utils import get_logical_cpu_count
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.gtcache import gettext as _
@@ -773,11 +773,11 @@ class _MovieDirectoryHelper(object):
                 return
             logging.debug("Created directory.  It's valid.")
             self.path = d
-            self.label.set_text(filename_to_unicode(d))
+            self.label.set_text(d)
 
     def set_initial_path(self):
         self.path = self.initial_path = app.config.get(prefs.MOVIES_DIRECTORY)
-        self.label.set_text(filename_to_unicode(self.path))
+        self.label.set_text(self.path)
 
     def on_window_closed(self):
         if self.path != self.initial_path:

@@ -58,7 +58,7 @@ from miro import itemsource
 from miro import httpclient
 from miro import download_utils
 from miro.util import get_torrent_info_hash, is_magnet_uri
-from miro.plat.utils import samefile, filename_to_unicode
+from miro.plat.utils import samefile
 from miro import singleclick
 from miro import opml
 
@@ -70,8 +70,7 @@ _command_line_view = None
 def _item_exists_for_path(path):
     # in SQLite, LIKE is case insensitive, so we can use it to only look at
     # filenames that possibly will match
-    for item_ in item.Item.make_view('filename LIKE ?',
-            (filename_to_unicode(path),)):
+    for item_ in item.Item.make_view('filename LIKE ?', (path,)):
         if samefile(item_.filename, path):
             return item_
     return False
@@ -188,7 +187,15 @@ def add_subscription_url(prefix, expected_content_type, url):
     httpclient.grab_url(real_url, callback, errback)
 
 def set_command_line_args(args):
-    _command_line_args.extend(args)
+    """Set the startup arguments.
+
+    args should be a list of command line arguments.  Each argument can either
+    be unicode or bytestrings.  If it's a bytestring, it should be encoded
+    with sys.getfilesystemencoding().
+
+    The arguments will be parsed when startup() is called.
+    """
+    _command_line_args.extend(_normalize_args(args))
 
 def reset_command_line_view():
     global _command_line_view, _command_line_videos
@@ -197,11 +204,28 @@ def reset_command_line_view():
         _command_line_view = None
     _command_line_videos = set()
 
+def _normalize_args(args):
+    """Make sure all args are unicode objects.
+
+    Since command line args usually from the OS, they are sometimes bytestrings
+    and sometimes unicode objects.  Normalizing them to unicode makes things
+    simpler, especially filename handling.
+
+    We use fileutil.make_filename() to do the conversion, which uses
+    sys.getfilesystemencoding() to decode bytestrings.  Hopefully this
+    assumption is okay, because what other encoding makes sense?
+    """
+    return [fileutil.make_filename(a) for a in args]
+
 def parse_command_line_args(args):
+    """Parse the startup arguments.
+
+    args should be a list of command line arguments.  Each argument can either
+    be unicode or bytestrings.  If it's a bytestring, it should be encoded
+    with sys.getfilesystemencoding().
     """
-    This goes through a list of files which could be arguments passed
-    in on the command line or a list of files from other source.
-    """
+    args = _normalize_args(args)
+
     if not _started_up:
         _command_line_args.extend(args)
         return
@@ -227,7 +251,7 @@ def parse_command_line_args(args):
               or arg.startswith('feed:')
               or arg.startswith('feeds:')
               or is_magnet_uri(arg)):
-            singleclick.add_download(filename_to_unicode(arg))
+            singleclick.add_download(arg)
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):

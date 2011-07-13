@@ -35,7 +35,6 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
-from miro.plat.utils import filename_to_unicode
 from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 from miro.plat.frontends.widgets import drawing
@@ -46,8 +45,7 @@ from miro.plat.frontends.widgets import wrappermap
 class Image(object):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, path):
-        self._set_image(NSImage.alloc().initByReferencingFile_(
-            filename_to_unicode(path)))
+        self._set_image(NSImage.alloc().initByReferencingFile_(path))
 
     def _set_image(self, nsimage):
         self.nsimage = nsimage
@@ -213,7 +211,7 @@ class ClickableImageButton(ImageDisplay):
 class AnimatedImageDisplay(Widget):
     def __init__(self, path):
         Widget.__init__(self)
-        self.nsimage = NSImage.alloc().initByReferencingFile_(filename_to_unicode(path))
+        self.nsimage = NSImage.alloc().initByReferencingFile_(path)
         self.view = NSImageView.alloc().init()
         self.view.setImage_(self.nsimage)
 

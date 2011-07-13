@@ -52,7 +52,6 @@ from miro import prefs
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
-from miro.fileobject import FilenameType
 from miro.plat import utils
 from miro.plat import resources
 
@@ -641,22 +640,22 @@ def build_output_paths(item_info, target_folder, converter_info):
     input_path = item_info.video_path
     basename = os.path.basename(input_path)
 
-    title = utils.unicode_to_filename(item_info.name, target_folder).strip()
+    title = fileutil.clean_filename(item_info.name).strip()
     if not title:
         title = basename
 
     if converter_info:
-        target_name = "%s.%s.%s" % (title, converter_info.identifier,
+        target_name = u"%s.%s.%s" % (title, converter_info.identifier,
                                     converter_info.extension)
     else:
         target_name = basename
-    final_path = FilenameType(os.path.join(target_folder, target_name))
+    final_path = os.path.join(target_folder, target_name)
 
     if not use_temp_dir:
         # convert directly onto the device
         temp_path = final_path + '.tmp'
     else:
-        temp_dir = FilenameType(tempfile.mkdtemp("miro-conversion"))
+        temp_dir = fileutil.make_filename(tempfile.mkdtemp("miro-conversion"))
         temp_path = os.path.join(temp_dir, basename)
 
     return (final_path, temp_path)

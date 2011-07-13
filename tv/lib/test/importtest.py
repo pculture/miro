@@ -1,7 +1,6 @@
 import os
 import urllib
 from miro.test.framework import MiroTestCase
-from miro.plat.utils import filename_to_unicode
 
 from miro.importmedia import import_itunes_path
 
@@ -403,8 +402,7 @@ class TestImportITunes(MiroTestCase):
         self.tmpf.flush()
         path = import_itunes_path(tmpf_dir)
         self.assertEquals(type(path), unicode)
-        self.assertEquals(path, filename_to_unicode(
-                urllib.url2pathname(path1)))
+        self.assertEquals(path, urllib.url2pathname(path1))
 
         # Test path with utf-8 escapes
         self._clean_tmpf()
@@ -412,8 +410,7 @@ class TestImportITunes(MiroTestCase):
         self.tmpf.flush()
         path = import_itunes_path(tmpf_dir)
         self.assertEquals(type(path), unicode)
-        self.assertEquals(path, filename_to_unicode(
-                urllib.url2pathname(path2)))
+        self.assertEquals(path, urllib.url2pathname(path2))
 
         # Test Windows path
         self._clean_tmpf()
@@ -421,6 +418,5 @@ class TestImportITunes(MiroTestCase):
         self.tmpf.flush()
         path = import_itunes_path(tmpf_dir)
         self.assertEquals(type(path), unicode)
-        self.assertEquals(path, filename_to_unicode(
-                urllib.url2pathname(path3)))
+        self.assertEquals(path, urllib.url2pathname(path3))
 

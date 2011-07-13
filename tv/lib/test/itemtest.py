@@ -263,4 +263,4 @@ class DeletedItemTest(MiroTestCase):
         # cause a crash.  A soft failure is okay though.
         app.controller.failed_soft_okay = True
         Item._allow_nonexistent_paths = False
-        FileItem("/non/existent/path/", feed.id)
+        FileItem(u"/non/existent/path/", feed.id)

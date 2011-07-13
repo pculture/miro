@@ -84,6 +84,7 @@ from miro.test.tableselectiontest import *
 from miro.test.filetagstest import *
 from miro.test.watchedfoldertest import *
 from miro.test.subprocesstest import *
+from miro.test.filenametest import *
 
 # platform specific tests
 

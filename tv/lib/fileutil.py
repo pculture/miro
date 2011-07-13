@@ -35,10 +35,56 @@ where file locking semantics can cause problems.
 import logging
 import os
 import shutil
+import sys
 
 from miro import u3info
 
 from miro.plat.filebundle import is_file_bundle
+
+# filename limits this is mostly for windows where we have a 255 character
+# limit on entire pathname
+MAX_FILENAME_LENGTH = 100 
+MAX_FILENAME_EXTENSION_LENGTH = 50
+
+def make_filename(path):
+    """Convert a bytestring or unicode path into a filename objects.
+
+    Miro stores filenames internally as unicode objects.  But if we get a path
+    from an outside source, it might be a bytestring.
+
+    If path is a bytestring, it's converted using sys.getfilesystemencoding().
+    If it's a unicode object it's returned as-is.
+    """
+    if isinstance(path, unicode):
+        return path
+    elif isinstance(path, str):
+        return path.decode(sys.getfilesystemencoding())
+    else:
+        raise TypeError("Unknown path type: %s (path: %r)",
+                type(path), path)
+
+def clean_filename(filename):
+    """Clean filenames by removing invalid characters.
+
+    This method removes characters that are invalid on certain filesystems.
+    It also truncates really long filenames.
+
+    NOTE: This method should only be called on filenames, not full paths.  It
+    will strip out the "/" characters.
+    """
+    if not filename:
+        return u'_'
+
+    for char in (':', '?', '<', '>', '|', '*', '\\', '/', '"', "'", '%',
+            '\x00', '\r', '\n'):
+        filename = filename.replace(char, '_')
+    if len(filename) > MAX_FILENAME_LENGTH:
+        base, ext = os.path.splitext(filename)
+        ext = ext[:MAX_FILENAME_EXTENSION_LENGTH]
+        base = base[:MAX_FILENAME_LENGTH-len(ext)]
+        filename = base + ext
+    return filename
+
 
 def makedirs(path):
     path = expand_filename(path)

@@ -217,11 +217,10 @@ class Player(player.Player):
             threads.call_on_ui_thread(errback)
 
     def get_movie_from_file(self, path):
-        osfilename = utils.filename_type_to_os_filename(path)
         try:
             url = NSURL.URLWithString_(path.urlize())
         except AttributeError:
-            url = NSURL.fileURLWithPath_(osfilename)
+            url = NSURL.fileURLWithPath_(path)
         attributes = NSMutableDictionary.dictionary()
         no = NSNumber.alloc().initWithBool_(NO)
         yes = NSNumber.alloc().initWithBool_(YES)
