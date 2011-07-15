@@ -290,16 +290,6 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
         x2, y = self.tree_to_widget_coords(x2, y)
         return x1, x2, y
 
-    def get_left_offset(self):
-        offset = self.horizontal_separator / 2
-        if 1 or isinstance(self.get_model(), TreeTableModel):
-            offset += self.expander_size
-            offset += 4
-            # This seems to be hardcoded in GTK see:
-            # http://svn.gnome.org/viewvc/gtk%2B/trunk/gtk/gtktreeview.c
-            # (look for "#define EXPANDER_EXTRA_PADDING")
-        return offset
-
     def get_position_info(self, x, y):
         """Wrapper for get_path_at_pos that converts the path_info to a named
         tuple and handles rounding the coordinates.
@@ -1365,9 +1355,6 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
             self._widget.thaw_child_notify()
             self.hotspot_model_changed()
             self.in_bulk_change = False
-
-    def get_left_offset(self):
-        return self._widget.get_left_offset()
 
     def get_path(self, iter_):
         """Always use this rather than the model's get_path directly -
