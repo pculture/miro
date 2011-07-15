@@ -44,6 +44,7 @@ import logging
 
 from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
+from miro.fileobject import FilenameType, daap_handler
 from miro.messagetools import Message, MessageHandler
 from miro.plat import resources
 from miro import app
@@ -1177,12 +1178,20 @@ class ItemInfo(object):
         d['device'] = None
         del d['description_stripped']
         del d['search_terms']
+        if self.remote:
+            del d['item_source']
         return d
 
     def __setstate__(self, d):
         self.__dict__.update(d)
         self.description_stripped = ItemInfo.html_stripper.strip(
                 self.description)
+        # No need to restore the item_source attribute which we ditched,
+        # since should never have to unpickle such item and expect it to
+        # be used in a general context ever again.
+        if self.remote:
+            self.video_path.set_urlize_handler(daap_handler,
+                                               [self.address, self.port])
         self.search_terms = search.calc_search_terms(self)
 
     def __init__(self, id_, **kwargs):

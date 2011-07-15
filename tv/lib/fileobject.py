@@ -96,7 +96,18 @@ class FilenameType(PlatformFilenameType):
         # remove handler and args which cause FilenameType to be
         # un-pickle-able.
         d = dict(self.__dict__)
-        for mem in ("handler", "args"):
+        for mem in ("handler",): #"args"):
             if mem in d:
                 del d[mem]
         return d
+
+    def __setstate__(self, d):
+        self.__dict__.update(d)
+        # Restore default handler and default arguments.  User responsible
+        # for restoring the actual handler and arguments through
+        # set_urlize_handler().
+        self.args = []
+        self.handler = self.file_handler    # Default to file handler.
+
+def daap_handler(path, host, port):
+    return 'http://%s:%s%s' % (host, port, path)

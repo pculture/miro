@@ -26,13 +26,31 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""playlist.py -- Handle displaying a playlist."""
+"""sharingcontroller.py -- Handle displaying a remote share."""
+
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemtrack
 from miro.gtcache import gettext as _
+
+from miro.plat.frontends.widgets import widgetset
+
+class SharingDragHandler(object):
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY
+
+    def allowed_types(self):
+        return ('sharing-item',)
+
+    def begin_drag(self, tableview, rows):
+        items = [row[0] for row in rows]
+        return { 'sharing-item': pickle.dumps(items) }
 
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know
@@ -48,7 +66,7 @@ class SharingView(itemlistcontroller.SimpleItemListController,
         itemlistcontroller.FilteredListMixin.__init__(self)
 
     def make_drag_handler(self):
-        return None
+        return SharingDragHandler()
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.SharingTitlebar()

@@ -450,6 +450,7 @@ class SharingItemSource(ItemSource):
             up_down_ratio = 0,
             play_count=0,
             skip_count=0,
+            address=item.address,
             host=item.host,
             port=item.port,
             is_playing=False)

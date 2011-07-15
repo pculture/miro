@@ -31,6 +31,11 @@
 
 import logging
 
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
+
 from miro import app
 from miro import messages
 from miro.plat.frontends.widgets import widgetset
@@ -137,7 +142,8 @@ class MediaTypeDropHandler(object):
     """
 
     def allowed_types(self):
-        return ('downloaded-item', 'device-video-item', 'device-audio-item')
+        return ('downloaded-item', 'device-video-item', 'device-audio-item',
+                'sharing-item')
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
@@ -151,12 +157,19 @@ class MediaTypeDropHandler(object):
             return widgetset.DRAG_ACTION_COPY
         elif typ == 'device-%s-item' % getattr(parent, 'media_type', None):
             return widgetset.DRAG_ACTION_COPY
+        elif typ == 'sharing-item':
+            return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self,
-            _table_view, model, typ, _source_actions, parent, position, videos):
-        media_type = model[parent][0].media_type
-        messages.SetItemMediaType(media_type, videos).send_to_backend()
+    def accept_drop(self, _table_view, model, typ, _source_actions, parent,
+                    position, videos):
+        if typ == 'sharing-item':
+            videos = pickle.loads(videos)
+            messages.DownloadSharingItems(videos).send_to_backend()
+        else:
+            logging.debug('TYPE %s, %s', type(videos), list(videos)[0])
+            media_type = model[parent][0].media_type
+            messages.SetItemMediaType(media_type, videos).send_to_backend()
 
 class NestedTabListDropHandler(object):
     item_types = NotImplemented

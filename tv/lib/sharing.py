@@ -52,7 +52,7 @@ from miro import filetypes
 from miro import util
 from miro import transcode
 from miro import metadata
-from miro.fileobject import FilenameType
+from miro.fileobject import FilenameType, daap_handler
 from miro.util import returns_filename
 
 from miro.plat import resources
@@ -224,8 +224,6 @@ class SharingItem(metadata.Source):
     def get_filename(self):
         # For daap, sent it to be the same as http as it is basically
         # http with a different port.
-        def daap_handler(path, host, port):
-            return 'http://%s:%s%s' % (host, port, path)
         fn = FilenameType(self.video_path)
         fn.set_urlize_handler(daap_handler, [self.address, self.port])
         return fn
