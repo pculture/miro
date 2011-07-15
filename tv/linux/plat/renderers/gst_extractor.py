@@ -91,7 +91,8 @@ class Extractor:
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.on_bus_message)
 
-        self.pipeline.set_property("uri", "file://%s" % urllib.quote(filename))
+        fileurl = urllib.pathname2url(filename)
+        self.pipeline.set_property("uri", "file:%s" % fileurl)
         self.pipeline.set_state(gst.STATE_PAUSED)
 
 
