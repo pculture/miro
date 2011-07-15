@@ -51,6 +51,12 @@ from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Container, Bin, FlippedView
 from miro.util import Matrix
 
+try:
+    from AppKit import NSScrollerKnobStyleLight
+except ImportError:
+    # NSScrollerKnobStyleLight is only defined in recent x code versions.
+    NSScrollerKnobStyleLight = 2
+
 rbSplitViewBundlePath = '%s/RBSplitView.framework' % NSBundle.mainBundle().privateFrameworksPath()
 loadBundle('RBSplitView', globals(), bundle_path=rbSplitViewBundlePath)
 
@@ -647,11 +653,10 @@ class Scroller(Bin):
 
     def prepare_for_dark_content(self):
         try:
-            self.view.setScrollerStyle_(0)
+            self.view.setScrollerKnobStyle_(NSScrollerKnobStyleLight)
         except AttributeError:
             # This only works on 10.7 and abvoe
             pass
-
 
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)
