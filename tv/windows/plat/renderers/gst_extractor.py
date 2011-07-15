@@ -91,7 +91,8 @@ class Extractor:
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.on_bus_message)
 
-        self.pipeline.set_property("uri", "file://%s" % urllib.quote(filename))
+        fileurl = urllib.pathname2url(filename)
+        self.pipeline.set_property("uri", "file:%s" % fileurl)
         self.pipeline.set_state(gst.STATE_PAUSED)
 
 
@@ -186,10 +187,11 @@ class Extractor:
         self.grabit = True
         self.buffer_probes = {}
 
+        fileurl = self.filename.replace("\\", "/")
         self.thumbnail_pipeline = gst.parse_launch(
             'filesrc location="%s" ! decodebin ! '
             'ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! '
-            'fakesink signal-handoffs=True' % self.filename)
+            'fakesink signal-handoffs=True' % fileurl)
 
         self.thumbnail_bus = self.thumbnail_pipeline.get_bus()
         self.thumbnail_bus.add_signal_watch()
@@ -234,6 +236,7 @@ class Extractor:
                 width, height, width * 3)
 
             # NOTE: 200x136 is sort of arbitrary.  it's larger than what
+
             # the ui uses at the time of this writing.
             new_width, new_height = scaled_size((width, height), (200, 136))
 

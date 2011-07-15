@@ -51,8 +51,8 @@ from miro.plat import clipboard
 from miro.plat import options
 from miro.plat import resources
 from miro.plat import associate
-from miro.plat.renderers.vlc import VLCRenderer, get_item_type
-from miro.plat.renderers.gstreamerrenderer import AudioRenderer, VideoRenderer
+from miro.plat.renderers.gstreamerrenderer import (
+    AudioRenderer, VideoRenderer, get_item_type)
 
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import gtkdirectorywatch

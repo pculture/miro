@@ -486,7 +486,6 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   RMDir /r "${directory}\share"
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
-  RMDir /r "${directory}\vlc-plugins"
   RMDir /r "${directory}\Microsoft.VC90.CRT"
   RMDir /r "${directory}\imagemagick"
 
@@ -780,7 +779,6 @@ unzipok:
   File  /r extensions
   File  /r resources
   File  /r xulrunner
-  File  /r vlc-plugins
   File  /r Microsoft.VC90.CRT
 !endif
 
