@@ -481,8 +481,9 @@ class DataSourceBase(NSObject):
                 return NSDragOperationNone
             if isinstance(drop_action, (tuple, list)):
                 drop_action, iter = drop_action
-                view.setDropRow_dropOperation_(self.model.row_of_iter(iter),
-                                               NSTableViewDropOn)
+                view.setDropRow_dropOperation_(
+                    self.model.row_of_iter(view, iter),
+                    NSTableViewDropOn)
             return drop_action
         else:
             return NSDragOperationNone
@@ -533,8 +534,9 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
         if isinstance(drop_action, (list, tuple)):
             # XXX nothing uses this yet
             drop_action, iter = drop_action
-            tableview.setDropRow_dropOperation_(self.model.row_of_iter(iter),
-                                                NSTableViewDropOn)
+            tableview.setDropRow_dropOperation_(
+                self.model.row_of_iter(tableview, iter),
+                NSTableViewDropOn)
         return drop_action
 
     def tableView_acceptDrop_row_dropOperation_(self,
