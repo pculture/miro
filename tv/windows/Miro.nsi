@@ -487,7 +487,6 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\Microsoft.VC90.CRT"
-  RMDir /r "${directory}\imagemagick"
 
   RMDIR ${directory}
 !macroend
