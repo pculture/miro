@@ -59,14 +59,6 @@ from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 from miro.plat.frontends.widgets.widgetset import CustomButton
 
-
-# Disclosure button used as a reference in get_left_offset()
-_disclosure_button = NSButton.alloc().init()
-_disclosure_button.setButtonType_(NSOnOffButton)
-_disclosure_button.setBezelStyle_(NSDisclosureBezelStyle)
-_disclosure_button.sizeToFit()
-_disclosure_button_width = _disclosure_button.frame().size.width 
-
 EXPANDER_PADDING = 6
 HEADER_HEIGHT = 17
 CUSTOM_HEADER_HEIGHT = 25
@@ -1151,14 +1143,6 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
         self.emit('hotspot-clicked', tracker.name, tracker.iter)
-
-    def get_left_offset(self):
-        offset = self.tableview.intercellSpacing().width / 2
-        # Yup this can be a non-integer, it seems like that's what OS X does,
-        # because either way I round it looks worse than this.
-        if self.is_tree():
-            offset +=  _disclosure_button_width + EXPANDER_PADDING
-        return offset
 
     def on_row_change(self, model, iter):
         self.iters_to_update.append(iter)
