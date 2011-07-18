@@ -336,6 +336,16 @@ class Renderer:
                               gst.SEEK_TYPE_SET,
                               position + (rate * gst.SECOND))
 
+    def get_audio_tracks(self):
+        if not self.playbin:
+            return 0
+        return self.playbin.get_property('n-audio')
+
+    def set_audio_track(self, track_index):
+        self.playbin.set_property('current-audio', track_index)
+
+    def get_enabled_audio_track(self):
+        return self.playbin.get_property('current-audio')
 
 class AudioRenderer(Renderer):
     pass
