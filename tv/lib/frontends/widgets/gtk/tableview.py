@@ -679,13 +679,13 @@ class DNDHandlerMixin(object):
     def on_drag_motion(self, treeview, drag_context, x, y, timestamp):
         if not self.drag_dest:
             return True
-        type = self.find_type(drag_context)
-        if type == "NONE":
+        typ = self.find_type(drag_context)
+        if typ == "NONE":
             drag_context.drag_status(0, timestamp)
             return True
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
-            drop_action = self.drag_dest.validate_drop(self, self.model, type,
+            drop_action = self.drag_dest.validate_drop(self, self.model, typ,
                     drag_context.actions, pos_info[0], pos_info[1])
             if isinstance(drop_action, (list, tuple)):
                 drop_action, iter = drop_action
@@ -726,17 +726,17 @@ class DNDHandlerMixin(object):
         treeview.emit_stop_by_name('drag-data-received')
         if not self.drag_dest:
             return
-        type = self.find_type(drag_context)
-        if type == "NONE":
+        typ = self.find_type(drag_context)
+        if typ == "NONE":
             return
         if selection.data is None:
             return
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
-            drop_action = self.drag_dest.validate_drop(self, self.model, type,
+            drop_action = self.drag_dest.validate_drop(self, self.model, typ,
                     drag_context.actions, pos_info[0], pos_info[1])
             if drop_action:
-                self.drag_dest.accept_drop(self, self.model, type,
+                self.drag_dest.accept_drop(self, self.model, typ,
                         drag_context.actions, pos_info[0], pos_info[1],
                         eval(selection.data))
                 # unset in drag-end.
@@ -761,7 +761,7 @@ class DNDHandlerMixin(object):
     @staticmethod
     def _gtk_target_list(types):
         count = itertools.count()
-        return [(type, gtk.TARGET_SAME_APP, count.next()) for type in types]
+        return [(typ, gtk.TARGET_SAME_APP, count.next()) for typ in types]
 
 class HotspotTrackingMixin(object):
     def __init__(self):
@@ -1417,7 +1417,7 @@ class TableModel(object):
                 'object': object,
         }
         try:
-            return [type_map[type] for type in miro_column_types]
+            return [type_map[typ] for typ in miro_column_types]
         except KeyError, e:
             raise ValueError("Unknown column type: %s" % e[0])
 
