@@ -167,7 +167,6 @@ class MediaTypeDropHandler(object):
             videos = pickle.loads(videos)
             messages.DownloadSharingItems(videos).send_to_backend()
         else:
-            logging.debug('TYPE %s, %s', type(videos), list(videos)[0])
             media_type = model[parent][0].media_type
             messages.SetItemMediaType(media_type, videos).send_to_backend()
 
