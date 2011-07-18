@@ -627,6 +627,7 @@ class DNDHandlerMixin(object):
 
     def on_drag_end(self, treeview, context):
         self.drag_data = {}
+        self.drag_source.end_drag()
 
     def find_type(self, drag_context):
         return self._widget.drag_dest_find_target(drag_context,

@@ -59,6 +59,9 @@ class TabListDragHandler(object):
             typ = self.item_type
         return { str(typ): set(row[0].id for row in rows) }
 
+    def end_drag(self):
+        pass
+
 class TabDnDReorder(object):
     """Handles re-ordering tabs for doing drag and drop reordering."""
     def __init__(self):
@@ -157,7 +160,7 @@ class MediaTypeDropHandler(object):
             return widgetset.DRAG_ACTION_COPY
         elif typ == 'device-%s-item' % getattr(parent, 'media_type', None):
             return widgetset.DRAG_ACTION_COPY
-        elif typ == 'sharing-item':
+        elif parent == 'downloading' and typ == 'sharing-item':
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 

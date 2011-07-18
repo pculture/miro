@@ -440,6 +440,18 @@ class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
         """Returns an iter pointing to the channel guide tab."""
         return self.view.model.first_iter()
 
+    def show_downloading_tab(self):
+        self.auto_tabs_to_show.add('downloading')
+        self.show_auto_tab('downloading')
+
+    def hide_downloading_tab(self):
+        if 'downloading' in self.iter_map:
+            iter_ = self.iter_map['downloading']
+            tab = self.view.model[iter_][0]
+            if not tab.downloading:
+                self.auto_tabs_to_show.discard('downloading')
+                self.remove_auto_tab_if_not_selected('downloading')
+
     def update_auto_tab_count(self, name, count):
         if count > 0:
             self.auto_tabs_to_show.add(name)
@@ -451,7 +463,7 @@ class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
     def show_auto_tab(self, name):
         if name not in self.iter_map:
             new_tab = self.auto_tabs[name]
-            # we need to keep the auto-tabs in the currect order.  First try
+            # we need to keep the auto-tabs in the correct order.  First try
             # to insert the new tab below the one that's below it.
             for other in self._auto_tabs_after(name):
                 if other in self.iter_map:

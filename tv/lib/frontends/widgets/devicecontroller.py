@@ -1125,3 +1125,7 @@ class DeviceItemDragHandler(object):
     def begin_drag(self, tableview, rows):
         videos = [row[0] for row in rows]
         return { 'device-%s-item' % videos[0].file_type: pickle.dumps(videos) }
+
+    def end_drag(self):
+        pass
+        

@@ -654,6 +654,11 @@ class TableViewCommon(object):
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):
         return YES
 
+    def draggedImage_endedAt_operation_(self, anImage, aPoint, operation):
+        drag_source = wrappermap.wrapper(self).drag_source
+        if drag_source:
+            drag_source.end_drag()
+
     def draggingSourceOperationMaskForLocal_(self, local):
         drag_source = wrappermap.wrapper(self).drag_source
         if drag_source and local:

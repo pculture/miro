@@ -74,6 +74,9 @@ class ItemListDragHandler(object):
         else:
             return {}
 
+    def end_drag(self):
+        pass
+
 class FilteredListMixin(object):
     """Track a filter switch attached to an ItemListController
     """

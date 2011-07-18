@@ -33,6 +33,7 @@ try:
 except ImportError:
     import pickle
 
+from miro import app
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
@@ -50,7 +51,11 @@ class SharingDragHandler(object):
 
     def begin_drag(self, tableview, rows):
         items = [row[0] for row in rows]
+        app.tabs['library'].show_downloading_tab()
         return { 'sharing-item': pickle.dumps(items) }
+
+    def end_drag(self):
+        app.tabs['library'].hide_downloading_tab()
 
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know
