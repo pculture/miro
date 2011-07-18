@@ -657,7 +657,7 @@ class TableViewCommon(object):
     def draggedImage_endedAt_operation_(self, anImage, aPoint, operation):
         drag_source = wrappermap.wrapper(self).drag_source
         if drag_source:
-            drag_source.end_drag()
+            drag_source.end_drag(operation != NSDragOperationNone)
 
     def draggingSourceOperationMaskForLocal_(self, local):
         drag_source = wrappermap.wrapper(self).drag_source

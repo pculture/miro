@@ -74,7 +74,7 @@ class ItemListDragHandler(object):
         else:
             return {}
 
-    def end_drag(self):
+    def end_drag(self, succeeded):
         pass
 
 class FilteredListMixin(object):

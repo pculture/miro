@@ -59,7 +59,7 @@ class TabListDragHandler(object):
             typ = self.item_type
         return { str(typ): set(row[0].id for row in rows) }
 
-    def end_drag(self):
+    def end_drag(self, succeeded):
         pass
 
 class TabDnDReorder(object):

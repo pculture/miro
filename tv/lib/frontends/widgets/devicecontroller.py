@@ -1126,6 +1126,6 @@ class DeviceItemDragHandler(object):
         videos = [row[0] for row in rows]
         return { 'device-%s-item' % videos[0].file_type: pickle.dumps(videos) }
 
-    def end_drag(self):
+    def end_drag(self, succeeded):
         pass
         

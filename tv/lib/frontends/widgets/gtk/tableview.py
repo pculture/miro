@@ -554,6 +554,7 @@ class DNDHandlerMixin(object):
         on_motion_notify: may call potential_drag_motion
     """
     def __init__(self):
+        self.drop_succeeded = False
         self.drag_button_down = False
         self.drag_data = {}
         self.drag_source = self.drag_dest = None
@@ -626,8 +627,9 @@ class DNDHandlerMixin(object):
             selection.set(typ, 8, repr(data))
 
     def on_drag_end(self, treeview, context):
+        self.drag_source.end_drag(self.drop_succeeded)
+        self.drop_succeeded = False
         self.drag_data = {}
-        self.drag_source.end_drag()
 
     def find_type(self, drag_context):
         return self._widget.drag_dest_find_target(drag_context,
@@ -737,6 +739,8 @@ class DNDHandlerMixin(object):
                 self.drag_dest.accept_drop(self, self.model, type,
                         drag_context.actions, pos_info[0], pos_info[1],
                         eval(selection.data))
+                # unset in drag-end.
+                self.drop_succeeded = True
                 return True
         return False
 
