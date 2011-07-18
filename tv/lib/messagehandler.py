@@ -1746,7 +1746,13 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             this_sync = db[u'sync'].setdefault(message.file_type, {})
         else:
             this_sync = db[u'sync']
-        this_sync[message.setting] = message.value
+        if not isinstance(message.setting, (tuple, list)):
+            settings = [message.setting]
+        else:
+            settings = list(message.setting)
+        while len(settings) > 1:
+            this_sync = this_sync.setdefault(settings.pop(0), {})
+        this_sync[settings[0]] = message.value
 
     def handle_change_device_setting(self, message):
         device = message.device
@@ -1773,98 +1779,38 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         devices.write_database(message.device.database, message.device.mount)
         app.device_tracker.eject(message.device)
 
-    @staticmethod
-    def _get_sync_items_for_message(message):
-        sync = message.device.database[u'sync']
-        views = []
-        url_to_view = {}
-        infos = set()
-        expired = set()
-        sync_all_podcasts = sync[u'podcasts'].get(u'all', True)
-        if sync.setdefault(u'podcasts', {}).get(u'enabled', False):
-            for url in sync[u'podcasts'].setdefault(u'items', []):
-                feed_ = lookup_feed(url)
-                if feed_ is not None:
-                    if sync_all_podcasts:
-                        view = feed_.downloaded_items
-                    else:
-                        view = feed_.unwatched_items
-                    views.append(view)
-                    url_to_view[url] = view
-
-        if sync.setdefault(u'playlists', {}).get(u'enabled', False):
-            for name in sync[u'playlists'].setdefault(u'items', []):
-                try:
-                    playlist_ = SavedPlaylist.get_by_title(name)
-                except database.ObjectNotFoundError:
-                    continue
-                views.append(item.Item.playlist_view(playlist_.id))
-
-        for view in views:
-            source = itemsource.DatabaseItemSource(view)
-            try:
-                infos.update(
-                    [info for info in source.fetch_all()
-                     if not message.device.database.item_exists(info)])
-            finally:
-                source.unlink()
-
-        for file_type in (u'audio', u'video'):
-            for info in itemsource.DeviceItemSource(message.device, file_type).fetch_all():
-                if info.feed_url and info.file_url and info.feed_url in url_to_view:
-                    view = url_to_view[info.feed_url]
-                    new_view = database.View(
-                        view.fetcher,
-                        view.where + ' AND (rd.origURL=? OR rd.url=? OR item.url=?)',
-                        view.values + (info.file_url, info.file_url, info.file_url),
-                        view.order_by,
-                        view.joins,
-                        view.limit)
-                    if not new_view.count():
-                        expired.add(info)
-        return infos, expired
-
-    @staticmethod
-    def _get_sync_info_for_items(device, items, expired=None):
-        if not items and not expired:
-            return 0, 0
-        count = size = 0
-        dsm = app.device_manager.get_sync_for_device(device)
-        for info in items:
-            converter = dsm.conversion_for_info(info)
-            task = conversions.conversion_manager._make_conversion_task(
-                converter, info, None, False)
-            if task:
-                count += 1
-                size += task.get_output_size_guess()
-        if expired:
-            count += len(expired)
-            size -= sum(i.size for i in expired)
-        return count, size
 
     def handle_query_sync_information(self, message):
-        infos, expired = self._get_sync_items_for_message(message)
-        print infos, expired
-        count, size = self._get_sync_info_for_items(message.device, infos, expired)
+        dsm = app.device_manager.get_sync_for_device(message.device)
+        infos, expired = dsm.get_sync_items()
+        count, size = dsm.get_sync_size(infos, expired)
         message = messages.CurrentSyncInformation(message.device,
                                                   count,
                                                   size)
         message.send_to_frontend()
 
     def handle_device_sync_feeds(self, message):
-        infos, expired = self._get_sync_items_for_message(message)
-        print infos, expired
-        count, size = self._get_sync_info_for_items(message.device, infos, expired)
+        dsm = app.device_manager.get_sync_for_device(message.device)
+        infos, expired = dsm.get_sync_items()
+        count, size = dsm.get_sync_size(infos, expired)
+
         if size > message.device.max_sync_size():
             return
 
         if infos or expired:
-            dsm = app.device_manager.get_sync_for_device(message.device)
             if expired:
                 dsm.expire_items(expired)
+            without_auto = message.device.max_sync_size(include_auto=False)
+            if size > without_auto:
+                dsm.expire_auto_items(size - without_auto)
             if infos:
                 dsm.start()
                 dsm.add_items(infos)
+                if size < without_auto:
+                    remaining = message.device.max_sync_size() - size
+                    auto_items = dsm.get_auto_items(remaining)
+                    if auto_items:
+                        dsm.add_items(auto_items)
             else:
                 message = messages.CurrentSyncInformation(message.device,
                                                           0, 0)
@@ -1879,11 +1825,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                          message.item_ids)
             return
 
-        count, size = self._get_sync_info_for_items(message.device, item_infos)
+        dsm = app.device_manager.get_sync_for_device(message.device)
+        count, size = dsm.get_sync_size(item_infos)
+        
         if size > message.device.max_sync_size():
             return
 
-        dsm = app.device_manager.get_sync_for_device(message.device)
         dsm.start()
         dsm.add_items(item_infos)
 

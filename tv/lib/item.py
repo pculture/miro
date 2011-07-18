@@ -36,12 +36,14 @@ import os.path
 import traceback
 import logging
 import re
+import shutil
 
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
-from miro.plat.utils import filename_to_unicode, unicode_to_filename
+from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
+                             utf8_to_filename)
 
 from miro.download_utils import (clean_filename, next_free_filename,
         next_free_directory)
@@ -2322,6 +2324,202 @@ class DeletedFileChecker(object):
             if self.items_to_check:
                 self._ensure_run_checks_scheduled()
 
+class DeviceItem(metadata.Store):
+    """
+    An item which lives on a device.  There's a separate, per-device JSON
+    database, so this implements the necessary Item logic for those files.
+    """
+    def __init__(self, **kwargs):
+        self.__initialized = False
+        for required in ('video_path', 'file_type', 'device'):
+            if required not in kwargs:
+                raise TypeError('DeviceItem must be given a "%s" argument'
+                                % required)
+        self.file_format = self.size = None
+        self.release_date = None
+        self.feed_name = self.feed_id = self.feed_url = None
+        self.keep = True
+        self.isContainerItem = False
+        self.url = self.payment_link = None
+        self.comments_link = self.permalink = self.file_url = None
+        self.license = self.downloader = None
+        self.duration = self.screenshot = self.thumbnail_url = None
+        self.resumeTime = 0
+        self.subtitle_encoding = self.enclosure_type = None
+        self.auto_sync = False
+        self.file_type = None
+        self.creation_time = None
+        self.is_playing = False
+        metadata.Store.setup_new(self)
+        self.__dict__.update(kwargs)
+
+        if isinstance(self.video_path, unicode):
+            # make sure video path is a filename and ID is Unicode
+            self.id = self.video_path
+            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
+        else:
+            self.id = filename_to_unicode(self.video_path)
+        if isinstance(self.screenshot, unicode):
+            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
+        if isinstance(self.cover_art, unicode):
+            self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
+        if self.file_format is None:
+            self.file_format = filename_to_unicode(
+                os.path.splitext(self.video_path)[1])
+            if self.file_type == 'audio':
+                self.file_format = self.file_format + ' audio'
+
+        try: # filesystem operations
+            if self.size is None:
+                self.size = os.path.getsize(self.get_filename())
+            if self.release_date is None or self.creation_time is None:
+                ctime = fileutil.getctime(self.get_filename())
+                if self.release_date is None:
+                    self.release_date = ctime
+                if self.creation_time is None:
+                    self.creation_time = ctime
+            if not self.metadata_version:
+                # haven't run read_metadata yet.  We don't check the actual
+                # version because upgrading metadata isn't supported.
+                self.read_metadata()
+                if not self.get_title():
+                    self.title = filename_to_unicode(
+                        os.path.basename(self.video_path))
+
+        except (OSError, IOError):
+            # if there was an error reading the data from the filesystem, don't
+            # bother continuing with other FS operations or starting moviedata
+            logging.debug('error reading %s', self.id, exc_info=True)
+        else:
+            if self.mdp_state is None: # haven't run MDP yet
+                moviedata.movie_data_updater.request_update(self)
+        self.__initialized = True
+
+    @staticmethod
+    def id_exists():
+        return True
+
+    def get_release_date(self):
+        try:
+            return datetime.fromtimestamp(self.release_date)
+        except (ValueError, TypeError):
+            logging.warn('DeviceItem: release date %s invalid',
+                          self.release_date)
+            return datetime.now()
+           
+
+    def get_creation_time(self):
+        try:
+            return datetime.fromtimestamp(self.creation_time)
+        except (ValueError, TypeError):
+            logging.warn('DeviceItem: creation time %s invalid',
+                          self.creation_time)
+            return datetime.now()
+
+    @returns_filename
+    def get_filename(self):
+        return os.path.join(self.device.mount, self.video_path)
+
+    def get_url(self):
+        return self.url or u''
+
+    @returns_filename
+    def get_thumbnail(self):
+        if self.cover_art:
+            return os.path.join(self.device.mount,
+                                self.cover_art)
+        elif self.screenshot:
+            return os.path.join(self.device.mount,
+                                self.screenshot)
+        elif self.file_type == 'audio':
+            return resources.path("images/thumb-default-audio.png")
+        else:
+            return resources.path("images/thumb-default-video.png")
+
+    def _migrate_image_field(self, field_name):
+        value = getattr(self, field_name)
+        icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
+        if value is not None:
+            if (value.startswith(icon_cache_directory) or
+                value.startswith(cover_art_directory)):
+                # migrate the screenshot onto the device
+                basename = os.path.basename(value)
+                try:
+                    new_path = os.path.join(self.device.mount, '.miro',
+                                            basename)
+                    shutil.copyfile(value, new_path)
+                except (IOError, OSError):
+                    # error copying the thumbnail, just erase it
+                    setattr(self, field_name, None)
+                else:
+                    extracted = os.path.join(icon_cache_directory, 'extracted')
+                    if (value.startswith(extracted) or
+                        value.startswith(cover_art_directory)):
+                        # moviedata extracted this for us, so we can remove it
+                        try:
+                            os.unlink(value)
+                        except OSError:
+                            pass
+                    setattr(self, field_name,
+                            os.path.join('.miro', basename))
+            elif value.startswith(resources.root()):
+                setattr(self, field_name, None) # don't save a default
+                                                # thumbnail
+
+    def _migrate_thumbnail(self):
+        self._migrate_image_field('screenshot')
+        self._migrate_image_field('cover_art')
+
+    def remove(self, save=True):
+        for file_type in [u'video', u'audio', u'other']:
+            if self.video_path in self.device.database[file_type]:
+                del self.device.database[file_type][self.id]
+        if save:
+            self.device.database.emit('item-removed', self)
+
+    def signal_change(self):
+        if not self.__initialized:
+            return
+
+        if not os.path.exists(
+            os.path.join(self.device.mount, self.video_path)):
+            # file was removed from the filesystem
+            self.remove()
+            return
+
+        if (not isinstance(self.file_type, unicode) and
+            self.file_type is not None):
+            self.file_type = unicode(self.file_type)
+
+        was_removed = False
+        for type_ in set((u'video', u'audio', u'other')) - set(
+            (self.file_type,)):
+            if self.id in self.device.database[type_]:
+                # clean up old types, if necessary
+                self.remove(save=False)
+                was_removed = True
+                break
+
+        self._migrate_thumbnail()
+        if self.file_type:
+            db = self.device.database
+            db[self.file_type][self.id] =  self.to_dict()
+
+            if self.file_type != u'other' or was_removed:
+                db.emit('item-changed', self)
+
+    def to_dict(self):
+        data = {}
+        for k, v in self.__dict__.items():
+            if v is not None and k not in (u'device', u'file_type', u'id',
+                                           u'video_path', u'_deferred_update'):
+                if ((k == u'screenshot' or k == u'cover_art')):
+                    v = filename_to_unicode(v)
+                data[k] = v
+        return data
+
+_deleted_file_checker = None
 
 def setup_deleted_checker():
     global _deleted_file_checker

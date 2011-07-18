@@ -1649,7 +1649,7 @@ class DeviceInfo(object):
     def __repr__(self):
         return "<miro.messages.DeviceInfo %r %r>" % (self.id, self.info)
 
-    def max_sync_size(self):
+    def max_sync_size(self, include_auto=True):
         """
         Returns the largest sync (in bytes) that we can perform on this device.
         """
@@ -1657,15 +1657,31 @@ class DeviceInfo(object):
             return 0
         sync = self.database.get(u'sync', {})
         if not sync.get(u'max_fill', False):
-            return self.remaining
+            return self.remaining + (self._auto_fill_size() if include_auto
+                                     else 0)
         else:
             try:
                 percent = int(sync.get(u'max_fill_percent', 90)) * 0.01
             except ValueError:
-                return self.remaining
+                return self.remaining + (self._auto_fill_size() if include_auto
+                                         else 0)
             else:
                 min_remaining = self.size * (1 - percent)
-                return self.remaining - min_remaining
+                return self.remaining - min_remaining + (
+                    self._auto_fill_size() if include_auto else 0)
+
+    def _auto_fill_size(self):
+        """
+        Returns the total size of auto-filled files.
+        """
+        sync = self.database.get(u'sync')
+        if not sync:
+            return 0
+        if not sync.get(u'auto_fill', False):
+            return 0
+        return sum(item[u'size'] for file_type in (u'audio', u'video')
+                   for item in self.database[file_type].values()
+                   if item.get(u'auto_sync'))
 
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.

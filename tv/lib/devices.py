@@ -27,7 +27,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from datetime import datetime
 from glob import glob
 from fnmatch import fnmatch
 try:
@@ -37,8 +36,8 @@ except ImportError:
 import codecs
 import logging
 import os, os.path
-import shutil
 import time
+import bisect
 try:
     from collections import Counter
 except ImportError:
@@ -48,19 +47,20 @@ except ImportError:
             super(Counter, self).__init__(int, *args, **kwargs)
 
 from miro import app
-from miro.database import confirm_db_thread
+from miro import database
 from miro import eventloop
+from miro import item
+from miro import itemsource
+from miro import feed
 from miro import fileutil
 from miro import filetypes
-from miro import filetags
 from miro import prefs
+from miro import playlist
 from miro.gtcache import gettext as _
 from miro import messages
 from miro import signals
 from miro import conversions
-from miro import moviedata
-from miro import metadata
-from miro.util import returns_filename, check_u
+from miro.util import check_u
 
 from miro.plat import resources
 from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
@@ -356,12 +356,12 @@ class DeviceManager(object):
 
     def _set_connected(self, id_, kwargs):
         if kwargs.get('mount'):
-            database = load_database(kwargs['mount'])
-            device_name = database.get(u'device_name',
+            db = load_database(kwargs['mount'])
+            device_name = db.get(u'device_name',
                                        kwargs.get('device_name'))
         else:
             device_name = None
-            database = DeviceDatabase()
+            db = DeviceDatabase()
         if 'name' in kwargs:
             try:
                 info = self.get_device(kwargs['name'],
@@ -381,12 +381,12 @@ class DeviceManager(object):
                                'name or vendor/product IDs')
 
         kwargs.update({
-                'database': database,
+                'database': db,
                 'device_name': device_name,
                 'info': info})
 
         info = self.connected[id_] = messages.DeviceInfo(
-            id_, info, kwargs.get('mount'), database,
+            id_, info, kwargs.get('mount'), db,
             kwargs.get('size'), kwargs.get('remaining'))
 
         return info
@@ -484,7 +484,7 @@ class DeviceManager(object):
 
 class DeviceSyncManager(object):
     """
-    Represents a sync in progress to a given device.
+    Represents a sync to a given device.
     """
     def __init__(self, device):
         self.device = device
@@ -500,6 +500,144 @@ class DeviceSyncManager(object):
         self._change_timeout = None
         self._copy_iter_running = False
         self.started = False
+
+    def get_sync_items(self):
+        """
+        Returns two lists of ItemInfos; one for items we need to sync, and one
+        for items which have expired.
+        """
+        sync = self.device.database[u'sync']
+        views = []
+        url_to_view = {}
+        infos = set()
+        expired = set()
+        sync_all_podcasts = sync[u'podcasts'].get(u'all', True)
+        if sync.setdefault(u'podcasts', {}).get(u'enabled', False):
+            for url in sync[u'podcasts'].setdefault(u'items', []):
+                feed_ = feed.lookup_feed(url)
+                if feed_ is not None:
+                    if sync_all_podcasts:
+                        view = feed_.downloaded_items
+                    else:
+                        view = feed_.unwatched_items
+                    views.append(view)
+                    url_to_view[url] = view
+
+        if sync.setdefault(u'playlists', {}).get(u'enabled', False):
+            for name in sync[u'playlists'].setdefault(u'items', []):
+                try:
+                    playlist_ = playlist.SavedPlaylist.get_by_title(name)
+                except database.ObjectNotFoundError:
+                    continue
+                views.append(item.Item.playlist_view(playlist_.id))
+
+        for view in views:
+            source = itemsource.DatabaseItemSource(view)
+            try:
+                infos.update(
+                    [info for info in source.fetch_all()
+                     if not self.device.database.item_exists(info)])
+            finally:
+                source.unlink()
+
+        for file_type in (u'audio', u'video'):
+            for info in itemsource.DeviceItemSource(self.device,
+                                                    file_type).fetch_all():
+                if (info.feed_url and info.file_url and
+                    info.feed_url in url_to_view):
+                    view = url_to_view[info.feed_url]
+                    new_view = database.View(
+                        view.fetcher,
+                        view.where + (' AND (rd.origURL=? OR rd.url=? '
+                                      'OR item.url=?)'),
+                        view.values + (info.file_url, info.file_url,
+                                       info.file_url),
+                        view.order_by,
+                        view.joins,
+                        view.limit)
+                    if not new_view.count():
+                        expired.add(info)
+        return infos, expired
+
+    def get_auto_items(self, size):
+        """
+        Returns a list of ItemInfos to be automatically synced to the device.
+        The items should be roughly 'size' bytes.
+        """
+        sync = self.device.database[u'sync']
+        if not sync.get(u'auto_fill', False):
+            return []
+
+        name_to_view = {
+            u'recent_music': item.Item.watchable_audio_view(),
+            u'random_music': item.Item.watchable_audio_view(),
+            u'most_played_music': item.Item.watchable_audio_view(),
+            u'new_playlists': playlist.SavedPlaylist.make_view(),
+            u'recent_podcasts': item.Item.toplevel_view()
+            }
+
+        name_to_view[u'recent_music'].order_by = 'item.id DESC'
+        name_to_view[u'random_music'].order_by = 'RANDOM()'
+        name_to_view[u'most_played_music'].order_by = 'item.play_count DESC'
+        name_to_view[u'new_playlists'].order_by = 'playlist.id DESC'
+        name_to_view[u'recent_podcasts'].order_by = 'item.id DESC'
+        
+        scores = sync.get(u'auto_fill_settings', {})
+        total = float(sum(scores.setdefault(name, 0.5)
+                          for name in name_to_view))
+
+        sizes = dict((name, int(size * scores[name] / total))
+                     for name in name_to_view)
+
+        auto_syncs = {}
+        for name, view in name_to_view.items():
+            auto_syncs[name] = syncs = set()
+            remaining = sizes[name]
+            if name == u'new_playlists':
+                for playlist_ in view:
+                    playlist_view = item.Item.playlist_view(playlist_.id)
+                    infos = itemsource.DatabaseItemSource(
+                        playlist_view).fetch_all()
+                    size = self.get_sync_size(infos)[1]
+                    if size and size < remaining:
+                        for info in infos:
+                            info.auto_sync = True
+                        syncs.update(infos)
+                        remaining -= size
+            else:
+                source = itemsource.DatabaseItemSource(view)
+                for info in source.fetch_all():
+                    size = self.get_sync_size([info])[1]
+                    if size and size < remaining:
+                        info.auto_sync = True
+                        syncs.add(info)
+                        remaining -= size
+
+        return set().union(*auto_syncs.values())
+
+    def get_sync_size(self, items, expired=None):
+        """
+        Returns the number of items that will be synced, and the size that sync
+        will take.
+
+        The count includes items that will be removed, but their size counts
+        against the total sync size.
+        """
+        if not items and not expired:
+            return 0, 0
+        count = size = 0
+        for info in items:
+            converter = self.conversion_for_info(info, )
+            if converter:
+                task = conversions.conversion_manager._make_conversion_task(
+                    converter, info, None, False)
+                if task:
+                    count += 1
+                    size += task.get_output_size_guess()
+        if expired:
+            count += len(expired)
+            size -= sum(i.size for i in expired)
+        return count, size
 
     def start(self):
         if self.started:
@@ -536,7 +674,49 @@ class DeviceSyncManager(object):
         for info in item_infos:
             del self.device.database[info.file_type][info.id]
             fileutil.delete(info.video_path)
+            self.device.remaining += info.size
         self._check_finished()
+
+    def expire_auto_items(self, size):
+        """
+        Expires automatically synced items.
+
+        The algorithm we use is:
+        * Sort all the auto items by their size
+        * While we need more space:
+            * bisect the sorted sizes with the size we've got left
+            * If there's an exact match, remove it and we're done
+            * Otherwise, remove the item around the insertion point which is
+              closest and try again with the new remaining size
+        """
+        sizes = [(data[u'size'], file_type, id_)
+                 for file_type in u'audio', u'video'
+                 for id_, data in self.device.database[file_type].items()
+                 if data.get(u'auto_sync', False)]
+        sizes.sort()
+        keys = [i[0] for i in sizes]
+        def remove_(index):
+            size, file_type, id_ = sizes.pop(index)
+            del self.device.database[file_type][id_]
+            fileutil.delete(os.path.join(self.device.mount,
+                                         utf8_to_filename(
+                        id_.encode('utf8'))))
+            self.device.remaining += size
+            return keys.pop(index)
+
+        while size >= 0 and keys:
+            left = bisect.bisect_left(keys, size)
+            if left == size: # perfect fit!
+                remove_(left)
+                return
+            right = bisect.bisect_right(keys, size)
+            if left == right == len(keys):
+                remove_(len(keys) - 1)
+                continue
+            if (abs(left - size) < abs(right - size)): # left is closer
+                size -= remove_(left)
+            else:
+                size -= remove_(right)
 
     def add_items(self, item_infos):
         for info in item_infos:
@@ -688,7 +868,7 @@ class DeviceSyncManager(object):
             if not os.path.exists(new_path):
                 return # copy failed, just give up
 
-            device_item = DeviceItem(
+            device_item = item.DeviceItem(
                 device=self.device,
                 file_type=item_info.file_type,
                 video_path=new_path[len(self.device.mount):],
@@ -718,6 +898,7 @@ class DeviceSyncManager(object):
                 genre=item_info.genre,
                 metadata_version=item_info.metadata_version,
                 mdp_state=item_info.mdp_state,
+                auto_sync=getattr(item_info, 'auto_sync', False)
                 )
             device_item._migrate_thumbnail()
             database = self.device.database
@@ -725,6 +906,7 @@ class DeviceSyncManager(object):
             database[device_item.file_type][device_item.id] = \
                 device_item.to_dict()
             database.emit('item-added', device_item)
+            self.device.remaining -= device_item.size
 
         fileutil.migrate_file(final_path, new_path, callback)
 
@@ -788,200 +970,6 @@ class DeviceSyncManager(object):
         self.stopping = True # kill in-progress copies
         self._send_sync_changed()
         self._send_sync_finished()
-
-class DeviceItem(metadata.Store):
-    """
-    An item which lives on a device.  There's a separate, per-device JSON
-    database, so this implements the necessary Item logic for those files.
-    """
-    def __init__(self, **kwargs):
-        self.__initialized = False
-        for required in ('video_path', 'file_type', 'device'):
-            if required not in kwargs:
-                raise TypeError('DeviceItem must be given a "%s" argument'
-                                % required)
-        self.file_format = self.size = None
-        self.release_date = None
-        self.feed_name = self.feed_id = self.feed_url = None
-        self.keep = True
-        self.isContainerItem = False
-        self.url = self.payment_link = None
-        self.comments_link = self.permalink = self.file_url = None
-        self.license = self.downloader = None
-        self.duration = self.screenshot = self.thumbnail_url = None
-        self.resumeTime = 0
-        self.subtitle_encoding = self.enclosure_type = None
-        self.file_type = None
-        self.creation_time = None
-        self.is_playing = False
-        metadata.Store.setup_new(self)
-        self.__dict__.update(kwargs)
-
-        if isinstance(self.video_path, unicode):
-            # make sure video path is a filename and ID is Unicode
-            self.id = self.video_path
-            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
-        else:
-            self.id = filename_to_unicode(self.video_path)
-        if isinstance(self.screenshot, unicode):
-            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
-        if isinstance(self.cover_art, unicode):
-            self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
-        if self.file_format is None:
-            self.file_format = filename_to_unicode(
-                os.path.splitext(self.video_path)[1])
-            if self.file_type == 'audio':
-                self.file_format = self.file_format + ' audio'
-
-        try: # filesystem operations
-            if self.size is None:
-                self.size = os.path.getsize(self.get_filename())
-            if self.release_date is None or self.creation_time is None:
-                ctime = fileutil.getctime(self.get_filename())
-                if self.release_date is None:
-                    self.release_date = ctime
-                if self.creation_time is None:
-                    self.creation_time = ctime
-            if not self.metadata_version:
-                # haven't run read_metadata yet.  We don't check the actual
-                # version because upgrading metadata isn't supported.
-                self.read_metadata()
-                if not self.get_title():
-                    self.title = filename_to_unicode(
-                        os.path.basename(self.video_path))
-
-        except (OSError, IOError):
-            # if there was an error reading the data from the filesystem, don't
-            # bother continuing with other FS operations or starting moviedata
-            logging.debug('error reading %s', self.id, exc_info=True)
-        else:
-            if self.mdp_state is None: # haven't run MDP yet
-                moviedata.movie_data_updater.request_update(self)
-        self.__initialized = True
-
-    @staticmethod
-    def id_exists():
-        return True
-
-    def get_release_date(self):
-        try:
-            return datetime.fromtimestamp(self.release_date)
-        except (ValueError, TypeError):
-            logging.warn('DeviceItem: release date %s invalid',
-                          self.release_date)
-            return datetime.now()
-           
-
-    def get_creation_time(self):
-        try:
-            return datetime.fromtimestamp(self.creation_time)
-        except (ValueError, TypeError):
-            logging.warn('DeviceItem: creation time %s invalid',
-                          self.creation_time)
-            return datetime.now()
-
-    @returns_filename
-    def get_filename(self):
-        return os.path.join(self.device.mount, self.video_path)
-
-    def get_url(self):
-        return self.url or u''
-
-    @returns_filename
-    def get_thumbnail(self):
-        if self.cover_art:
-            return os.path.join(self.device.mount,
-                                self.cover_art)
-        elif self.screenshot:
-            return os.path.join(self.device.mount,
-                                self.screenshot)
-        elif self.file_type == 'audio':
-            return resources.path("images/thumb-default-audio.png")
-        else:
-            return resources.path("images/thumb-default-video.png")
-
-    def _migrate_image_field(self, field_name):
-        value = getattr(self, field_name)
-        icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
-        if value is not None:
-            if (value.startswith(icon_cache_directory) or
-                value.startswith(cover_art_directory)):
-                # migrate the screenshot onto the device
-                basename = os.path.basename(value)
-                try:
-                    new_path = os.path.join(self.device.mount, '.miro',
-                                            basename)
-                    shutil.copyfile(value, new_path)
-                except (IOError, OSError):
-                    # error copying the thumbnail, just erase it
-                    setattr(self, field_name, None)
-                else:
-                    extracted = os.path.join(icon_cache_directory, 'extracted')
-                    if (value.startswith(extracted) or
-                        value.startswith(cover_art_directory)):
-                        # moviedata extracted this for us, so we can remove it
-                        try:
-                            os.unlink(value)
-                        except OSError:
-                            pass
-                    setattr(self, field_name,
-                            os.path.join('.miro', basename))
-            elif value.startswith(resources.root()):
-                setattr(self, field_name, None) # don't save a default
-                                                # thumbnail
-
-    def _migrate_thumbnail(self):
-        self._migrate_image_field('screenshot')
-        self._migrate_image_field('cover_art')
-
-    def remove(self, save=True):
-        for file_type in [u'video', u'audio', u'other']:
-            if self.video_path in self.device.database[file_type]:
-                del self.device.database[file_type][self.id]
-        if save:
-            self.device.database.emit('item-removed', self)
-
-    def signal_change(self):
-        if not self.__initialized:
-            return
-
-        if not os.path.exists(
-            os.path.join(self.device.mount, self.video_path)):
-            # file was removed from the filesystem
-            self.remove()
-            return
-
-        if (not isinstance(self.file_type, unicode) and
-            self.file_type is not None):
-            self.file_type = unicode(self.file_type)
-
-        was_removed = False
-        for type_ in set((u'video', u'audio', u'other')) - set(
-            (self.file_type,)):
-            if self.id in self.device.database[type_]:
-                # clean up old types, if necessary
-                self.remove(save=False)
-                was_removed = True
-                break
-
-        self._migrate_thumbnail()
-        if self.file_type:
-            db = self.device.database
-            db[self.file_type][self.id] =  self.to_dict()
-
-            if self.file_type != u'other' or was_removed:
-                db.emit('item-changed', self)
-
-    def to_dict(self):
-        data = {}
-        for k, v in self.__dict__.items():
-            if v is not None and k not in (u'device', u'file_type', u'id',
-                                           u'video_path', u'_deferred_update'):
-                if ((k == u'screenshot' or k == u'cover_art')):
-                    v = filename_to_unicode(v)
-                data[k] = v
-        return data
 
 class DeviceDatabase(dict, signals.SignalEmitter):
     def __init__(self, data=None, parent=None):
@@ -1101,13 +1089,13 @@ def load_database(mount, countdown=0):
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
 
-def write_database(database, mount):
+def write_database(db, mount):
     """
     Writes the given dictionary to the device.
 
     The database lives at [MOUNT]/.miro/json
     """
-    confirm_db_thread()
+    database.confirm_db_thread()
     if not os.path.exists(mount):
         # device disappeared, so we can't write to it
         return
@@ -1117,7 +1105,7 @@ def write_database(database, mount):
         pass
     try:
         with file(os.path.join(mount, '.miro', 'json'), 'wb') as output:
-            iterable = json._default_encoder.iterencode(database)
+            iterable = json._default_encoder.iterencode(db)
             output.writelines(iterable)
     except IOError:
         # couldn't write to the device
@@ -1213,7 +1201,7 @@ def scan_device_for_files(device):
         device.database.set_bulk_mode(True)
         start = time.time()
         for ufilename, item_type in item_data:
-            i = DeviceItem(video_path=ufilename,
+            i = item.DeviceItem(video_path=ufilename,
                            file_type=item_type,
                            device=device)
             device.database[item_type][ufilename] = i.to_dict()

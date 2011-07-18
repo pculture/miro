@@ -258,6 +258,54 @@ class SyncProgressWidget(widgetset.Background):
         context.set_color(widgetutil.css_to_color('#bec1d0'))
         context.fill()
 
+class AutoFillSlider(widgetset.CustomSlider):
+    def __init__(self):
+        widgetset.CustomSlider.__init__(self)
+        self.set_can_focus(False)
+        self.set_range(0.0, 1.0)
+        self.set_increments(0.05, 0.20)
+        self.track = widgetutil.ThreeImageSurface('device-slider-track')
+        self.filled_track = widgetutil.ThreeImageSurface(
+            'device-slider-filled')
+        self.knob = widgetutil.make_surface('device-slider-knob')
+
+    def is_horizontal(self):
+        return True
+
+    def is_continuous(self):
+        return True
+
+    def size_request(self, layout):
+        return (200, self.knob.height)
+
+    def slider_size(self):
+        return self.knob.width
+
+    def draw(self, context, layout):
+        self.draw_track(context)
+        self.draw_filled(context)
+        self.draw_knob(context)
+
+    def draw_track(self, context):
+        y = (context.height - self.track.height) / 2
+        self.track.draw(context, 0, y, context.width)
+
+    def draw_filled(self, context):
+        portion_right = self.get_value()
+        y = (context.height - self.filled_track.height) / 2
+        width = int(round(portion_right * context.width))
+        self.filled_track.draw(context, 0, y, width)
+        
+
+    def draw_knob(self, context):
+        portion_right = self.get_value()
+        x_max = context.width - self.slider_size()
+        slider_x = int(round(portion_right * x_max))
+        slider_y = (context.height - self.knob.height) / 2
+        self.knob.draw(context, slider_x, slider_y, self.knob.width,
+                self.knob.height)
+    
+
 class SyncWidget(widgetset.VBox):
     list_label = _("Sync These Podcasts")
 
@@ -628,6 +676,46 @@ class DeviceMountedView(widgetset.VBox):
                                        label], 0),
                 top_pad=10))
 
+        self.auto_fill = widgetset.Checkbox(
+            _("After syncing my selections in the tabs above, "
+              "fill remaining space with:"))
+        self.auto_fill.connect('toggled', self._auto_fill_changed)
+        vbox.pack_start(widgetutil.align_center(self.auto_fill,
+                                                top_pad=20))
+        names = [
+            (_('Newest Music'), u'recent_music'),
+            (_('Random Music'), u'random_music'),
+            (_('Most Played Songs'), u'most_played_music'),
+            (_('New Playlists'), u'new_playlists'),
+            (_('Most Recent Podcasts'), u'recent_podcasts')]
+        longest = max(names, key=lambda x: len(x[0]))[0]
+        width = widgetset.Label(longest).get_width()
+        less_label = widgetset.Label(_('Less').upper())
+        less_label.set_size(label_size / 2)
+        more_label = widgetset.Label(_('More').upper())
+        more_label.set_size(label_size / 2)
+        label_hbox = widgetutil.build_hbox([
+                less_label,
+                widgetutil.pad(more_label,
+                               left=(200 - less_label.get_width() -
+                                     more_label.get_width()))],
+                                           padding=0)
+        label_hbox.set_size_request(200, -1)
+        scrollers = [widgetutil.align_right(label_hbox,
+                                            right_pad=20)]
+        self.auto_fill_sliders = {}
+        for name, setting in names:
+            label = widgetutil.align_right(widgetset.Label(name))
+            label.set_size_request(width, -1)
+            dragger = AutoFillSlider()
+            dragger.connect('released', self._auto_fill_slider_changed,
+                            setting)
+            self.auto_fill_sliders[setting] = dragger
+            hbox = widgetutil.build_hbox([label, dragger], 20)
+            scrollers.append(hbox)
+        vbox.pack_start(widgetutil.align_center(
+                widgetutil.build_vbox(scrollers, 10)))
+
         self.device_size = SizeWidget()
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
         self.pack_end(self.device_size)
@@ -654,12 +742,16 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.set_size(device.size, device.remaining)
         if not self.device.mount:
             return
-        self.auto_sync.set_checked(
-            device.database.get(u'sync', {}).get(u'auto', False))
-        self.max_fill_enabled.set_checked(
-            device.database.get(u'sync', {}).get(u'max_fill', False))
-        self.max_fill_percent.set_text(str(
-                device.database.get(u'sync', {}).get(u'max_fill_percent', 90)))
+        sync = device.database.get(u'sync', {})
+        self.auto_sync.set_checked(sync.get(u'auto', False))
+        self.max_fill_enabled.set_checked(sync.get(u'max_fill', False))
+        self.max_fill_percent.set_text(str(sync.get(u'max_fill_percent', 90)))
+        self.auto_fill.set_checked(sync.get(u'auto_fill', False))
+        auto_fill_settings = sync.get(u'auto_fill_settings', {})
+        for auto_fill_setting in self.auto_fill_sliders:
+            slider = self.auto_fill_sliders[auto_fill_setting]
+            slider.set_value(float(
+                    auto_fill_settings.get(auto_fill_setting, 0.5)))
         for name in 'podcasts', 'playlists', 'settings':
             tab = self.tabs[name]
             tab.child.set_device(device)
@@ -713,6 +805,32 @@ class DeviceMountedView(widgetset.VBox):
             message.send_to_backend()
             self.sync_settings_changed(widget)
 
+    def _auto_fill_changed(self, widget):
+        value = widget.get_checked()
+        old_value = self.device.database.get(u'sync', {}).get(
+            u'auto_fill', False)
+        if value != old_value:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       None,
+                                                       u'auto_fill',
+                                                       value)
+            message.send_to_backend()
+            self.sync_settings_changed(widget)
+
+
+    def _auto_fill_slider_changed(self, widget, setting):
+        value = widget.get_value()
+        old_value = self.device.database.get(u'sync', {}).get(
+            u'auto_fill_settings', {}).get(setting, 0.5)
+        if value != old_value:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       None,
+                                                       (u'auto_fill_settings',
+                                                        setting),
+                                                       value)
+            message.send_to_backend()
+            self.sync_settings_changed(widget)
+
     def _get_sync_state(self):
         sync_type = {}
         sync_ids = {}
@@ -748,6 +866,7 @@ class DeviceMountedView(widgetset.VBox):
             self.sync_container.set_child(widget)
             widget.set_text(self.device_size.get_text())
             self.device_size.set_in_progress(True)
+        self.device_size.set_size(self.device.size, self.device.remaining)
         self.sync_container.child.set_status(progress, eta)
 
     def cancel_sync(self, obj):
@@ -757,6 +876,7 @@ class DeviceMountedView(widgetset.VBox):
     def sync_finished(self):
         self.sync_container.remove()
         self.device_size.set_in_progress(False)
+        self.device_size.set_size(self.device.size, self.device.remaining)
         self.sync_settings_changed(self)
 
 class DeviceItemList(itemlist.ItemList):

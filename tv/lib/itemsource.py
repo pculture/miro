@@ -32,7 +32,6 @@ import os.path
 
 from miro import app
 from miro import database
-from miro.devices import DeviceItem
 from miro import item
 from miro import messages
 from miro import signals
@@ -655,7 +654,7 @@ class DeviceItemSource(ItemSource):
                 return info_cache[id_]
             else:
                 info = info_cache[id_] = _item_info_for(
-                    DeviceItem(
+                    item.DeviceItem(
                         video_path=id_,
                         file_type=type_,
                         device=device,

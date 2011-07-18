@@ -755,9 +755,6 @@ class ConversionTask(object):
             item_info, target_folder, converter_info)
         self.create_item = create_item
 
-        logging.debug("temp_output_path: [%s] final_output_path: [%s]",
-                      self.temp_output_path, self.final_output_path)
-
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
         self.duration = None
@@ -783,6 +780,9 @@ class ConversionTask(object):
         return self.converter_info.displayname
 
     def run(self):
+        logging.debug("temp_output_path: [%s] final_output_path: [%s]",
+                      self.temp_output_path, self.final_output_path)
+
         self.progress = 0
         self.thread = threading.Thread(target=utils.thread_body,
                                        args=[self._loop],
