@@ -433,7 +433,7 @@ class ItemListTitlebar(Titlebar):
     """
     uses_resume_button = False
 
-    def __init__(self, has_downloadables=True):
+    def __init__(self, has_downloadables=False):
         Titlebar.__init__(self)
         self.has_downloadables = has_downloadables
         self.create_signal('resume-playing')

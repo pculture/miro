@@ -69,7 +69,7 @@ class SharingView(itemlistcontroller.SimpleItemListController,
         return SharingDragHandler()
 
     def make_titlebar(self):
-        titlebar = itemlistwidgets.SharingTitlebar()
+        titlebar = itemlistwidgets.SharingTitlebar(self.has_downloadables)
         titlebar.connect('search-changed', self._on_search_changed)
         titlebar.connect('toggle-filter', self.on_toggle_filter)
         return titlebar
