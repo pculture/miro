@@ -104,6 +104,7 @@ class MixedItemListDragHandler(object):
     def end_drag(self, succeeded):
         if not succeeded and self.shown_downloading_tab:
             app.tabs['library'].hide_downloading_tab()
+        self.shown_downloading_tab = False
 
 class FilteredListMixin(object):
     """Track a filter switch attached to an ItemListController
