@@ -53,6 +53,9 @@ class FeedController(itemlistcontroller.ItemListController,
         itemlistcontroller.FilteredListMixin.__init__(self)
         self.show_resume_playing_button = True
 
+    def make_drag_handler(self):
+        return itemlistcontroller.MixedItemListDragHandler()
+
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
 

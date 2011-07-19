@@ -141,6 +141,9 @@ class SearchController(itemlistcontroller.SimpleItemListController):
         self.widget.list_empty_mode_vbox.pack_start(
             scroller, expand=True)
 
+    def make_drag_handler(self):
+        return itemlistcontroller.MixedItemListDragHandler()
+
     def initialize_search(self):
         if app.search_manager.text != '':
             self.titlebar.set_search_text(app.search_manager.text)

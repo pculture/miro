@@ -77,6 +77,34 @@ class ItemListDragHandler(object):
     def end_drag(self, succeeded):
         pass
 
+class MixedItemListDragHandler(object):
+    def __init__(self):
+        self.shown_downloading_tab = False
+
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY | widgetset.DRAG_ACTION_MOVE
+
+    def allowed_types(self):
+        return ('downloaded-item', 'available-item')
+
+    def begin_drag(self, tableview, rows):
+        videos = set(row[0].id for row in rows if row[0].downloaded)
+        available = set(row[0].id for row in rows if not row[0].downloaded)
+        if videos and available:
+            return {}
+        if videos:
+            return {'downloaded-item': videos}
+        elif available:
+            self.shown_downloading_tab = True
+            app.tabs['library'].show_downloading_tab()
+            return {'available-item': available}
+        else:
+            return {}
+
+    def end_drag(self, succeeded):
+        if not succeeded and self.shown_downloading_tab:
+            app.tabs['library'].hide_downloading_tab()
+
 class FilteredListMixin(object):
     """Track a filter switch attached to an ItemListController
     """

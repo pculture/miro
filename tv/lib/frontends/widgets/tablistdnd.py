@@ -146,7 +146,7 @@ class MediaTypeDropHandler(object):
 
     def allowed_types(self):
         return ('downloaded-item', 'device-video-item', 'device-audio-item',
-                'sharing-item')
+                'sharing-item', 'available-item')
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
@@ -162,6 +162,8 @@ class MediaTypeDropHandler(object):
             return widgetset.DRAG_ACTION_COPY
         elif parent == 'downloading' and typ == 'sharing-item':
             return widgetset.DRAG_ACTION_COPY
+        elif parent == 'downloading' and typ == 'available-item':
+            return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
     def accept_drop(self, _table_view, model, typ, _source_actions, parent,
@@ -169,6 +171,9 @@ class MediaTypeDropHandler(object):
         if typ == 'sharing-item':
             videos = pickle.loads(videos)
             messages.DownloadSharingItems(videos).send_to_backend()
+        elif typ == 'available-item':
+            for v in videos:
+                messages.StartDownload(v.id).send_to_backend()
         else:
             media_type = model[parent][0].media_type
             messages.SetItemMediaType(media_type, videos).send_to_backend()
