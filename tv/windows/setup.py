@@ -98,6 +98,7 @@ XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
+WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
 
 SEGMENTER_PATH = os.path.join(BINARY_KIT_ROOT, 'segmenter')
 FFMPEG_PATH = os.path.join(
@@ -288,6 +289,7 @@ data_files.extend(find_data_files(
         'vlc-plugins', os.path.join(VLC_PATH, 'vlc-plugins')))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
+data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
             os.path.join(SEGMENTER_PATH, 'miro-segmenter.exe'),
