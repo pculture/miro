@@ -125,6 +125,7 @@ class WindowsApplication(Application):
             gtk.gdk.threads_leave()
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
+        ctypes.cdll.winsparkle.win_sparkle_cleanup()
 
     def startup_ui(self):
         sys.excepthook = self.exception_handler
@@ -132,6 +133,13 @@ class WindowsApplication(Application):
         call_on_ui_thread(migrateappname.migrateVideos, 'Democracy', 'Miro')
         call_on_ui_thread(flash.check_flash_install)
         call_on_ui_thread(bonjour.check_bonjour_install)
+        ctypes.cdll.winsparkle.win_sparkle_set_appcast_url(
+               app.config.get(prefs.AUTOUPDATE_URL).encode('ascii', 'ignore'))
+        ctypes.cdll.winsparkle.win_sparkle_set_app_details(
+                                unicode(app.config.get(prefs.PUBLISHER)),
+                                unicode(app.config.get(prefs.SHORT_APP_NAME)),
+                                unicode(app.config.get(prefs.APP_VERSION)))
+        ctypes.cdll.winsparkle.win_sparkle_init()
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
@@ -254,6 +262,11 @@ class WindowsApplication(Application):
 
     def on_new_window(self, uri):
         self.open_url(uri)
+        
+    # This overwrites the Application.check_update method since the Windows 
+    # autoupdate code does not use autoupdate.py.
+    def check_version(self):
+        ctypes.cdll.winsparkle.win_sparkle_check_update_with_ui()
 
     def open_url(self, url):
         # It looks like the maximum URL length is about 2k. I can't
@@ -409,22 +422,6 @@ class WindowsApplication(Application):
         Application.handle_first_time(self, callback)
 
     def handle_update_available(self, obj, item):
-        call_on_ui_thread(self.show_update_available, item)
-
-    def show_update_available(self, item):
-        if self.showing_update_dialog:
-            return
-        self.showing_update_dialog = True
-        releaseNotes = item.get('description', '')
-        dialog = update.UpdateAvailableDialog(releaseNotes)
-        try:
-            ret = dialog.run()
-
-            if ret == dialogs.BUTTON_YES:
-                enclosures = [enclosure for enclosure in item['enclosures']
-                              if enclosure['type'] == 'application/octet-stream']
-                downloadURL = enclosures[0]['href']
-                self.open_url(downloadURL)
-        finally:
-            dialog.destroy()
-            self.showing_update_dialog = False
+        # On Windows the autoupdate.py code is not used, so the
+        # 'update-available' signal will never be emitted.
+        pass
