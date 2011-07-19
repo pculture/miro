@@ -554,7 +554,6 @@ class DNDHandlerMixin(object):
         on_motion_notify: may call potential_drag_motion
     """
     def __init__(self):
-        self.drop_succeeded = False
         self.drag_button_down = False
         self.drag_data = {}
         self.drag_source = self.drag_dest = None
@@ -627,8 +626,7 @@ class DNDHandlerMixin(object):
             selection.set(typ, 8, repr(data))
 
     def on_drag_end(self, treeview, context):
-        self.drag_source.end_drag(self.drop_succeeded)
-        self.drop_succeeded = False
+        self.drag_source.end_drag(context.action != 0)
         self.drag_data = {}
 
     def find_type(self, drag_context):
@@ -725,11 +723,17 @@ class DNDHandlerMixin(object):
         # prevent the default handler
         treeview.emit_stop_by_name('drag-data-received')
         if not self.drag_dest:
+            drag_context.drag_status(0, timestamp)
+            drag_context.drop_finish(False, timestamp)
             return
         typ = self.find_type(drag_context)
         if typ == "NONE":
+            drag_context.drag_status(0, timestamp)
+            drag_context.drop_finish(False, timestamp)
             return
         if selection.data is None:
+            drag_context.drag_status(0, timestamp)
+            drag_context.drop_finish(False, timestamp)
             return
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
@@ -739,9 +743,10 @@ class DNDHandlerMixin(object):
                 self.drag_dest.accept_drop(self, self.model, typ,
                         drag_context.actions, pos_info[0], pos_info[1],
                         eval(selection.data))
-                # unset in drag-end.
-                self.drop_succeeded = True
+                drag_context.drop_finish(True, timestamp)
                 return True
+        drag_context.drag_status(0, timestamp)
+        drag_context.drop_finish(False, timestamp)
         return False
 
     def on_drag_unrealize(self, treeview):
