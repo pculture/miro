@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-30 00:47+0000\n"
-"Last-Translator: Rise-T <Unknown>\n"
+"PO-Revision-Date: 2011-07-20 15:18+0000\n"
+"Last-Translator: gomuboru <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:11+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -25,7 +25,7 @@ msgstr "iTunes"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 #: ../../osx/plat/frontends/widgets/osxmenus.py:293
 msgid "Services"
-msgstr "Dienstleistungen"
+msgstr "Dienste"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:218
 #, python-format
@@ -185,6 +185,9 @@ msgid ""
 "components, a standard part of Mac OS X installations.  Please review your "
 "Mac OS X installation."
 msgstr ""
+"%(appname)s hat festgestellt, dass auf ihrem System die Bonkour Komponenten "
+"fehlen, ein Standart Teil der Mac OS X Installation. Bitte überorüfen Sie "
+"ihre Mac OS X Installation."
 
 #: ../../osx/plat/frontends/widgets/application.py:256
 msgid "Download Completed"
@@ -300,6 +303,8 @@ msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
 "database directory and a new database will be created now."
 msgstr ""
+"Ihre %(appname)s Datenbank ist fehlerhaft. Sie wird in dein Miro Datenbank "
+"Verzeichnis gesichert und eine neue Datenbank wird jetzt erstellt"
 
 #: ../../lib/opml.py:224 ../../lib/opml.py:232
 msgid "OPML Import failed"
@@ -1262,8 +1267,8 @@ msgstr "Ältere Objekte wurden entfernt"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:194
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
-"Automatisches Herunterladen pausieren, falls folgende Anzahl von Elementen "
-"bisher nicht wiedergegeben wurde:"
+"Automatisches Herunterladen pausieren wenn diese Anzahl an neuen Folgen "
+"erreicht ist"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "1 unplayed item"
@@ -1456,7 +1461,7 @@ msgstr "Neue automatisch herunterladen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1443
 msgid "Auto-Download Off"
-msgstr "Keine automatisch herunterladen"
+msgstr "Kein automatisches Herunterladen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1451
 msgid "Remove podcast"
@@ -1548,6 +1553,10 @@ msgid ""
 "\n"
 "Once you install the Bonjour libraries, you will have to restart %(appname)s."
 msgstr ""
+"Sie müssen die Bonjour Bibliotheken installieren um Dateien von %(appname)s-"
+"zu-%(appname)s oder zur Miro-iPad-App freigeben zu können.\n"
+"Wenn sie die Bonjour Bibliotheken installiert haben, müssen sie %(appname)s "
+"neustarten."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:74
 msgid "Click here to install"
@@ -3297,6 +3306,19 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s konnte den Primären Videoordner unter %(moviedirectory)s "
+"nicht finden.\n"
+"\n"
+"Dies kann daran liegen, dass der Ort sich auf einem externen Laufwerk "
+"befindet, welches nicht angeschlossen ist, dass der Ort schreibgeschützt "
+"ist, oder der angegebene Pfad etwas anderes als ein Ordner ist.\n"
+"\n"
+"Wenn Sie Fortfahren wird der Pfad des Videoordners zurückgesetzt zum "
+"Standard Videoordner. Wenn Sie bereits Videos heruntergeladen hatten wird  "
+"%(shortappname)s diese nicht mehr anzeigen.\n"
+" \n"
+"Wenn Sie Beenden können sie das Laufwerk anschließen oder anders das Problem "
+"lösen und %(shortappname)s neustarten."
 
 #: ../../lib/frontends/widgets/application.py:246
 #, python-format
@@ -3312,6 +3334,14 @@ msgid ""
 "%(shortappname)s will now exit. You can connect the drive or otherwise fix "
 "the problem and relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s kann der Videoordner %(moviedirectory)s nicht nutzen.\n"
+"\n"
+"Dies kann daran liegen, dass eine externe Festplatte nicht angeschlossen "
+"ist, der Ordner Schreibgeschützt ist, oder der angegebene Pfad kein Ordner "
+"ist.\n"
+"\n"
+"%(shortappname)s wird nun beendet. Sie können die Festplatte anschließen "
+"oder das Problem anderweitig lösen und %(shortappname)s neustarten."
 
 #: ../../lib/frontends/widgets/application.py:457
 msgid "Error Revealing File"
@@ -3627,6 +3657,10 @@ msgid ""
 "\n"
 "The share is either unreachable or incompatible with %(appname)s sharing."
 msgstr ""
+"Verbindung zu Freigabe %(name)s ist fehlgeschlagen.\n"
+"\n"
+"Die Freigabe ist nicht erreichbar oder inkompatibel mit der Freigabefunktion "
+"von %(appname)s."
 
 #: ../../lib/frontends/widgets/application.py:1462
 msgid "Eject failed"
@@ -3654,6 +3688,9 @@ msgid ""
 "process can take a long time if you have a large number of items in "
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
+"%(appname)s aktualisiert Ihre Datenbank der Podcasts und Dateien. Dieser "
+"einmaliger Vorgang kann eine lange Zeit brauchen, wenn Sie viele Einträge in "
+"%(appname)s haben (Dies kann unter Umständen mehr als 30 Minuten dauern)."
 
 #: ../../lib/frontends/widgets/application.py:1484
 #: ../../lib/dbupgradeprogress.py:104
@@ -3665,6 +3702,7 @@ msgstr "Einträge werden vorbereitet."
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
+"%(appname)s wurde unsachgemäß beendet und muss ihre Einträge neu einlesen."
 
 #: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
@@ -4617,6 +4655,17 @@ msgid ""
 "\n"
 "Would you like to do this now?"
 msgstr ""
+"Für die beste Nutzung von %(appname)s, empfehlen wir Bonjour zu "
+"installieren, welches als ein Teil von Druckerdiensten ist.\n"
+"\n"
+"Die Installation von Bonjour wird es Ihnen ermöglichen ihre Medien mit "
+"anderen %(appname)s Nutzern zu teilen, außerdem Bonjour es Ihnen Medien von "
+"anderen %(appname)s Nutzern abzurufen und zu Ihnen zu streamen.\n"
+"\n"
+"Nach der Installation des Druckerdienstes, müssen Sie %(appname)s "
+"neustarten.\n"
+"\n"
+"Möchten sie die Jetzt tun?"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:75
 #, python-format
@@ -4627,6 +4676,11 @@ msgid ""
 "When the installation is finished, simply restart %(appname)s for the "
 "changes to take effect."
 msgstr ""
+"Ihr Browser wird die Website, wo sie Bonjour herunterladen und installieren "
+"können nun öffnen.\n"
+"\n"
+"Wenn die Installation fertig ist, starten sie einfach %(appname)s neu um "
+"Bonjour mit %(appname)s nutzen zu können."
 
 #: ../../windows/plat/frontends/widgets/application.py:205
 msgid "Close to tray?"

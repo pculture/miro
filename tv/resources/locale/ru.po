@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-22 13:56+0000\n"
-"Last-Translator: Nkolay Parukhin <parukhin@gmail.com>\n"
+"PO-Revision-Date: 2011-07-17 19:33+0000\n"
+"Last-Translator: Мирзаева Асаль <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:11+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -437,6 +437,19 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Сожалеем, но %(appname)s не может быть запущено из-за проблемы в базе "
+"данных:\n"
+"\n"
+"Ошбика: %(error)s\n"
+"\n"
+"Возможно файл базы данных поврежден и не может быть использован.\n"
+"\n"
+"Вы можете перезапустить программу и поврежденный файл базы данных будет "
+"удален, но при этом придется заново добавить подкасты и медиа файлы. Если вы "
+"хотите это сделать, нажмите кнопку Start Fresh и перезапустите %(appname)s.\n"
+"\n"
+"Чтобы помочь нам решить проблемы, как эта в будущем, пожалуйста, отправьте "
+"отчет об ошибке по ссылке %(url)s."
 
 #: ../../lib/startup.py:158
 msgid "Unknown Error"
@@ -701,6 +714,14 @@ msgid ""
 "\n"
 "Do you want to try to load this podcast anyway?"
 msgstr ""
+"Этот подкаст не совместим с %(appname)s, но мы будем стараться изо всех сил "
+"чтоб добавить файлы. Это может занять дополнительное время, при этом "
+"описание может выглядеть смешно.\n"
+"\n"
+"Пожалуйста, свяжитесь с издателями %(url)s и спросите, если они могут "
+"предоставить подкаст в формате, который будет работать с %(appname)s.\n"
+"\n"
+"Вы хотите, чтобы попытаться загрузить этот подкаст все равно?"
 
 #: ../../lib/feed.py:2319 ../../lib/feed.py:2459
 msgid "Local Files"
@@ -967,7 +988,7 @@ msgstr "Открыть внешней программой"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:176
 #: ../../lib/frontends/widgets/itemcontextmenu.py:226
 msgid "Edit Item Details"
-msgstr ""
+msgstr "Редактировать детальную информацию"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:123
 #, python-format
@@ -1559,7 +1580,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tabcontroller.py:279
 #, python-format
 msgid "My %(shortappname)s Share Name"
-msgstr ""
+msgstr "Мое имя %(shortappname)s для обмена файлами"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:316
 msgid "Sync a Phone, Tablet, or Digital Camera"
@@ -1626,6 +1647,9 @@ msgid ""
 "Sources are any websites that offer audio, video, or torrents for download "
 "that you would like to use within %(shortappname)s."
 msgstr ""
+"Источники представляют собой любые веб-сайты предоставляющие аудио-, видео-"
+"контент или торренты для загрузки, которые вы хотели бы использовать в "
+"%(shortappname)s."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:473
 msgid "URL"
@@ -4076,7 +4100,7 @@ msgstr ""
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Ошибка при перемещении в директорию фильмов."
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1067
 msgid "Not enough disk space"

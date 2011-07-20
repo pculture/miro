@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-06 03:20+0000\n"
+"PO-Revision-Date: 2011-07-15 21:55+0000\n"
 "Last-Translator: Wille <wille@riseup.net>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:11+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -1289,7 +1289,7 @@ msgstr "%(item)s em %(resumetime)s"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:302
 #, python-format
 msgid "%(item)s"
-msgstr ""
+msgstr "%(item)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:306
 msgid "Resume"
@@ -1386,7 +1386,7 @@ msgstr "Recém Disponível"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1328
 #, python-format
 msgid "%(rate)s"
-msgstr ""
+msgstr "%(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1305
 #, python-format
@@ -2228,11 +2228,11 @@ msgstr "1000"
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "Standard view"
-msgstr ""
+msgstr "Visão Padrão"
 
 #: ../../lib/frontends/widgets/prefpanel.py:532
 msgid "List view"
-msgstr ""
+msgstr "Lista de Visão"
 
 #: ../../lib/frontends/widgets/prefpanel.py:538
 msgid "Default settings for new podcasts:"
@@ -2253,7 +2253,7 @@ msgstr "Configuração de Auto Download:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:557
 msgid "Default view:"
-msgstr ""
+msgstr "Visão Padrão"
 
 #: ../../lib/frontends/widgets/prefpanel.py:563
 msgid "Remember this many old items:"
@@ -3011,7 +3011,7 @@ msgstr "Planeta Miro"
 
 #: ../../lib/frontends/widgets/menus.py:386
 msgid "Dev"
-msgstr ""
+msgstr "Dev"
 
 #: ../../lib/frontends/widgets/menus.py:387
 msgid "Profile Message"
@@ -3027,7 +3027,7 @@ msgstr "Testar Reportador de Falhas"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "Test Soft Crash Reporter"
-msgstr ""
+msgstr "Teste Suave Reportação de Erros"
 
 #: ../../lib/frontends/widgets/menus.py:392
 msgid "Memory Stats"
@@ -3094,15 +3094,15 @@ msgstr "Parar de distribuir"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:388
 msgid "PEERS"
-msgstr ""
+msgstr "PEERS"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:389
 msgid "SEEDS"
-msgstr ""
+msgstr "SEEDS"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:390
 msgid "LEECH"
-msgstr ""
+msgstr "LEECH"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:391
 msgid "SHARE"
@@ -3268,6 +3268,21 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s não pode utilizar o diretório principal de vídeos "
+"localizado em:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"As causas desse problema podem ser: diretório localizado em um disco externo "
+"que não está conectado,%(shortappname)s não tem permissão de escrita no "
+"diretório ou o caminho para o diretório está errado.\n"
+"\n"
+"Se você continuar, o diretório principal de vídeos será reconfigurado para "
+"um outro diretório no disco. Se você possui vídeos baixados pelo "
+"%(shortappname)s, as informações sobre estes vídeos serão perdidas.\n"
+" \n"
+"Se você sair, você poderá conectar o disco, ou corrigir o problema de outra "
+"forma, e carregar novamente o %(shortappname)s."
 
 #: ../../lib/frontends/widgets/application.py:246
 #, python-format

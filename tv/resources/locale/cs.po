@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:59+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"

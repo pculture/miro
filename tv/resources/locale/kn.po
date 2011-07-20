@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-13 12:06+0000\n"
-"Last-Translator: Ullas <Unknown>\n"
+"PO-Revision-Date: 2011-07-08 07:30+0000\n"
+"Last-Translator: bhavana <Unknown>\n"
 "Language-Team: Kannada <kn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -134,7 +134,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/menus.py:350
 #: ../../lib/frontends/widgets/gtk/video.py:388
 msgid "None Available"
-msgstr ""
+msgstr "ಯಾವುದು ಲಭ್ಯವಿಲ್ಲ"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:457
 #: ../../lib/frontends/widgets/gtk/video.py:421
@@ -164,7 +164,7 @@ msgstr "ಉಳಿಸು"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:219
 msgid "Pop Out"
-msgstr ""
+msgstr "ಹೊರ ತೆಗೆ"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:222
 msgid "Pop In"
@@ -176,7 +176,7 @@ msgstr ""
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
 #: ../../windows/plat/frontends/widgets/bonjour.py:73
 msgid "Install Bonjour"
-msgstr ""
+msgstr "ಬೋಂಜೋರ್ ಅನುಸ್ಥಾಪಿಸಿ"
 
 #: ../../osx/plat/frontends/widgets/bonjour.py:42
 #, python-format
@@ -188,12 +188,12 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/application.py:256
 msgid "Download Completed"
-msgstr ""
+msgstr "ಇಳಿಸಿಕೊಳ್ಳುವುದು ಮುಗಿದಿದೆ"
 
 #: ../../osx/plat/frontends/widgets/application.py:257
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "'%s' ವೀಡಿಯೊ ಇಳಿಸಿಕೊಳ್ಳುವುದು ಮುಗಿದಿದೆ"
 
 #: ../../lib/storedatabase.py:263
 #, python-format
@@ -731,7 +731,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
-msgstr ""
+msgstr "ಅನ್ವಯಗೊಳಿಸಿ"
 
 #: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/gtk/window.py:919
 msgid "Close"
@@ -810,7 +810,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:113
 msgid "Delete Videos"
-msgstr ""
+msgstr "ವಿಡಿಯೋಗಳನ್ನು ಅಳಿಸು"
 
 #: ../../lib/dialogs.py:114
 msgid "Create"
@@ -873,11 +873,11 @@ msgstr "ಅನುಸ್ಥಾಪಿಸದಿರು"
 
 #: ../../lib/dialogs.py:129
 msgid "Subscribe"
-msgstr ""
+msgstr "ಚಂದಾದಾರನಾಗಿಸು"
 
 #: ../../lib/dialogs.py:130
 msgid "Stop Watching"
-msgstr ""
+msgstr "ನೋಡುವುದನ್ನು ನಿಲ್ಲಿಸು"
 
 #: ../../lib/dialogs.py:131
 msgid "Retry"
@@ -989,7 +989,7 @@ msgstr "ಸೀಡಿಂಗ್‌ ಪುನರಾರಂಭಿಸು"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:189
 #: ../../lib/frontends/widgets/itemcontextmenu.py:373
 msgid "Add to Playlist"
-msgstr ""
+msgstr "ಪ್ಳಯ್ಲಿಸ್ತಿಗೆ ಸೇರಿಸಿ"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:200
 #: ../../lib/frontends/widgets/itemcontextmenu.py:221
@@ -1670,7 +1670,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr "ರಾಜ್ಯ"
+msgstr "ಸ್ಥಿತಿ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
@@ -4294,7 +4294,7 @@ msgstr "ಎಲ್ಲ ಇಲಿಸಿಕೊಳ್ಳುವುದನ್ನು ಮ�
 
 #: ../../linux/extensions/miroappindicator/main.py:59
 msgid "Show Miro"
-msgstr ""
+msgstr "ಮಿರೋವನ್ನು ತೋರಿಸು"
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"
@@ -4309,7 +4309,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/flash.py:71
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "ಅಡೋಬ್ ಫ್ಲಾಶ್ ಅನುಸ್ಥಾಪಿಸಿ"
 
 #: ../../windows/plat/frontends/widgets/flash.py:73
 #, python-format
@@ -4382,7 +4382,7 @@ msgstr ""
 #: ../../windows/plat/frontends/widgets/update.py:154
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "%(appname)s ನ ಹೊಸ ಆವೃತ್ತಿ ಇಳಿಸಿಕೊಳ್ಳಲು ಲಭ್ಯವಿದೆ."
 
 #: ../../windows/plat/frontends/widgets/update.py:158
 msgid "Do you want to download it now?"
@@ -4635,3 +4635,6 @@ msgstr ""
 
 #~ msgid "From"
 #~ msgstr "ಇಂದ"
+
+#~ msgid "Pause Auto-Downloading when this many items are unplayed:"
+#~ msgstr "ಇಷ್ಟು ಪದಾರ್ಥಗಳು ನಾಡಿದೆ ಇದ್ದೆರೆ ಈ ಡೌನ್ಲೋಡ್ ಅನ್ನು ನಿಲ್ಲಿಸಿ"

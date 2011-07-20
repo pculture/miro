@@ -11,15 +11,15 @@ msgstr ""
 "Project-Id-Version: democracyplayer-bg\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-29 16:19+0000\n"
+"PO-Revision-Date: 2011-07-05 07:18+0000\n"
 "Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../lib/net.py:94
 #, python-format
@@ -205,6 +205,9 @@ msgid ""
 "components, a standard part of Mac OS X installations.  Please review your "
 "Mac OS X installation."
 msgstr ""
+"%(appname)s определи, че в системата ви вероятно липсват компонентите на "
+"Bonjour, които са стандартна част от инсталацията на Mac OS X. Моля "
+"проверете инсталацията си."
 
 #: ../../osx/plat/frontends/widgets/application.py:256
 msgid "Download Completed"
@@ -297,12 +300,12 @@ msgstr ""
 "работа.\n"
 "\n"
 "Ако повторен опит не свърши работа, моля излезте %(appname)s и "
-"рестартирайте.  Скорошни промени който сте направили могат да бъдат "
+"рестартирайте.  Скорошни промени, който сте направили могат да бъдат "
 "изгубени.\n"
 "\n"
-"Ако виждате това съобщение често когато сваляте файлове, ви съветваме да "
-"намалите броя на едновременните файлове които сваляте в прозореца Опции  в "
-"менюто Сваляния.\n"
+"Ако виждате това съобщение често, когато сваляте файлове, ви съветваме да "
+"намалите броя на едновременните файлове които изтегляте в прозореца Опции  в "
+"менюто Изтегляния.\n"
 "\n"
 "Грешка: %(error_text)s\n"
 "\n"
@@ -410,7 +413,7 @@ msgstr "%(program)s не съществува."
 #: ../../lib/conversions.py:1100
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr "%(original_name)s (Конвертирано в %(format)s)"
+msgstr "%(original_name)s (Преобразувано в %(format)s)"
 
 #: ../../lib/net.py:76
 #, python-format
@@ -432,7 +435,7 @@ msgstr "Връзката към %(host)s изтече"
 
 #: ../../lib/net.py:292
 msgid "Couldn't find address family to use"
-msgstr ""
+msgstr "Не може да бъде открито адресно семество, което да бъде използвано"
 
 #: ../../lib/net.py:321
 msgid "Unknown Error code"
@@ -740,6 +743,14 @@ msgid ""
 "\n"
 "Do you want to try to load this podcast anyway?"
 msgstr ""
+"Този подкаст не е съвместим с %(appname)s, но ще се опитаме да получим "
+"файловете. Може да отнеме допълнително време да се покажат видеата и "
+"описанията могат да бъдат странни.\n"
+"\n"
+"Моля свържене се с издателя на %(url)s и го попитайте дали може да осигур "
+"подкаст във формат, който ще работи с %(appname)s.\n"
+"\n"
+"Желаете ли въпреки това този подкаст да опита да бъде зареден?"
 
 #: ../../lib/feed.py:2319 ../../lib/feed.py:2459
 msgid "Local Files"
@@ -1006,17 +1017,17 @@ msgstr "Външно изпълнение"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:176
 #: ../../lib/frontends/widgets/itemcontextmenu.py:226
 msgid "Edit Item Details"
-msgstr "Редактиране подробностите на елемента"
+msgstr "Редактиране подробностите на обекта"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:123
 #, python-format
 msgid "Convert to %(conversion)s"
-msgstr "Конвертиране в %(conversion)s"
+msgstr "Преобразуване в в %(conversion)s"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:385
 msgid "Convert to..."
-msgstr "Преобразувай в..."
+msgstr "Преобразуване в..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:141
 #: ../../lib/frontends/widgets/itemcontextmenu.py:230
@@ -1050,7 +1061,7 @@ msgstr "Маркиране като преглеждан"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:163
 msgid "Play Just This Item"
-msgstr "Изпълни само този обект"
+msgstr "Възпроизвеждане само този обект"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:181
 msgid "Stop Seeding"
@@ -1143,13 +1154,13 @@ msgstr "Рестартиране на качването"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:424
 msgid "Edit Items"
-msgstr ""
+msgstr "Редактиране на обектите"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:439
 #: ../../lib/frontends/widgets/itemlistwidgets.py:653
 #: ../../lib/frontends/widgets/menus.py:410
 msgid "Show Conversion Folder"
-msgstr "Отвори папката за преобразуване"
+msgstr "Отваряне на папката за преобразуване"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:453
 msgid "Remove From Playlist"
@@ -1184,7 +1195,7 @@ msgstr[1] "Преди %(count)d месеца"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:93
 msgid "Auto-Expire Items:"
-msgstr "Auto-Expire Items:"
+msgstr "Автоматично изтичащи обекти:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:96
 #, python-format
@@ -1213,7 +1224,7 @@ msgstr "Гледано преди 1 месец"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:138
 msgid "Outdated Podcast Items:"
-msgstr ""
+msgstr "Остарели подкаст обекти:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:140
 #, python-format
@@ -1251,28 +1262,28 @@ msgstr "Старите обекти бяха премахнати"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:194
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
-"Поставяне на автоматичното изтегляне на пауза, при следен брой неизпълнени "
-"елементи:"
+"Поставяне на автоматичното изтегляне на пауза, при следен брой "
+"невъзпроизведени обекти:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "1 unplayed item"
-msgstr "1 непускан обект"
+msgstr "1 незпроизведен обект"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:199
 msgid "3 unplayed items"
-msgstr "3 непускани обекта"
+msgstr "3 невъзпроизведени обекта"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:200
 msgid "5 unplayed items"
-msgstr "5 непускани обекта"
+msgstr "5 невъзпроизведени обекта"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:201
 msgid "10 unplayed items"
-msgstr "10 непускани обекта"
+msgstr "10 невъзпроизведени обекта"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:202
 msgid "15 unplayed items"
-msgstr "15 непускани обекта"
+msgstr "15 невъзпроизведени обекта"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:242
 msgid "Podcast Settings"
@@ -1281,7 +1292,7 @@ msgstr "Настройки на подкаст"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:299
 #, python-format
 msgid "%(item)s at %(resumetime)s"
-msgstr ""
+msgstr "%(item)s в %(resumetime)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:302
 #, python-format
@@ -1298,11 +1309,11 @@ msgstr "Връщане към подкаста"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:648
 msgid "Stop All Conversions"
-msgstr "Спри всички преобразувания"
+msgstr "Спиране на всички преобразувания"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:658
 msgid "Clear Finished Conversions"
-msgstr "Изчистване на завършените конвертирания"
+msgstr "Изчистване на завършените преобразувания"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:723
 #: ../../lib/frontends/widgets/itemlistwidgets.py:897
@@ -1501,11 +1512,11 @@ msgstr "Преглед на лиценза"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2224
 msgid "Select an item to view more of its details"
-msgstr "Изберете елемент за да видите повече от подробностите му"
+msgstr "Изберете обект, за да видите повече от подробностите му"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2277
 msgid "DRM Locked"
-msgstr ""
+msgstr "Заключен със защита срещу копиране (DRM)"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:56
 msgid "Add a Playlist"
@@ -1570,6 +1581,9 @@ msgid ""
 "%(shortappname)ss on your local network and to the Miro iPad app.  It's "
 "awesome!"
 msgstr ""
+"%(shortappname)s може да излъчва и изтегля файлове от другата "
+"%(shortappname)ss по локалната ви мрежа и към версията на Miro за iPad. Това "
+"е страхотно!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:252
 msgid "Disabled: Needs Bonjour"
@@ -1587,6 +1601,8 @@ msgstr "Споделяне на видео"
 #: ../../lib/frontends/widgets/prefpanel.py:913
 msgid "Warn on quit when others are connected to my media library."
 msgstr ""
+"При изход предупреждаване когато други са свързани към медийната ми "
+"библиотека"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:279
 #, python-format
@@ -1607,7 +1623,7 @@ msgid ""
 msgstr ""
 "Свържете USB кабела за да синхронизирате своето Android устройство с "
 "%(shortappname)s.  Уверете се че сте задали устройството като 'USB Mass "
-"Storage' в настройките му.  Свържете цифровата си камера и конвертирайте "
+"Storage' в настройките му.  Свържете цифровата си камера и преобразувайте "
 "моментално клиповете си да са готови за уеб."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:339
@@ -1644,6 +1660,8 @@ msgid ""
 "We don't yet have a Miro app for Android, but you can stream to your device "
 "using other DAAP apps."
 msgstr ""
+"Все още не разполагаме с версия на Miroза Android, но може да излъчвате към "
+"устройството си чрез други DAAP приложения."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:445
 #: ../../lib/frontends/widgets/tablist.py:919
@@ -1702,6 +1720,10 @@ msgid ""
 "%(shortappname)s if you add them as Sources, but these are Stores that we've "
 "integrated and tested."
 msgstr ""
+"Изберете музикалните и видео магазини, които желаете да се появят в "
+"%(shortappname)s.  Забележка: някои други магазини може да не работят добре "
+"с %(shortappname)s, ако ги добравите като Източници, но тези са Магазини, "
+"които ние сме интегрирали и пробвали."
 
 #: ../../lib/frontends/widgets/diagnostics.py:61
 #: ../../lib/frontends/widgets/diagnostics.py:138
@@ -1728,7 +1750,7 @@ msgstr "Място за лог файла"
 
 #: ../../lib/frontends/widgets/diagnostics.py:108
 msgid "Downloader log file location:"
-msgstr "Локация на лог файла на даунлоудера"
+msgstr "Местоположение на дневника на програмата за изтегляне"
 
 #: ../../lib/frontends/widgets/diagnostics.py:113
 msgid "Database file location:"
@@ -1756,7 +1778,7 @@ msgstr "Общ брой резевни копия на базата данни:"
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr ""
+msgstr "Състояние"
 
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
@@ -1835,7 +1857,7 @@ msgstr "Описание"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"
-msgstr ""
+msgstr "Защита срещу копиране (DRM)"
 
 #: ../../lib/frontends/widgets/widgetconst.py:77
 msgid "File Type"
@@ -1940,7 +1962,7 @@ msgstr "Отваряне в четеца"
 
 #: ../../lib/frontends/widgets/browser.py:168
 msgid "Download this video"
-msgstr "Свали това видео"
+msgstr "Изтегляне на това видео"
 
 #: ../../lib/frontends/widgets/newfeed.py:59
 #: ../../lib/frontends/widgets/newsearchfeed.py:121
@@ -1974,11 +1996,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:261
 msgid "New Search Podcast"
-msgstr ""
+msgstr "Нов подкаст от търсене"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:60
 msgid "A search podcast contains items that match a search term."
 msgstr ""
+"Подкастът от търсене съдържа обекти, отговарящи на даден критерий за търсене."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:92
 msgid "Search for:"
@@ -2072,8 +2095,8 @@ msgstr "Отвори външно"
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избрана е %(count)d папка с подкасти"
+msgstr[1] "Избрани са %(count)d папки с подкасти"
 
 #: ../../lib/frontends/widgets/displays.py:705
 #, python-format
@@ -2086,8 +2109,8 @@ msgstr[1] "(съдържа %(count)d подкаста)"
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избрана е %(count)d папка със списъци за изпълнение"
+msgstr[1] "Избрани са %(count)d папки със списъци за изпълнение"
 
 #: ../../lib/frontends/widgets/displays.py:716
 #, python-format
@@ -2145,7 +2168,7 @@ msgstr "Препупреждение при опит за напускане с 
 #: ../../lib/frontends/widgets/prefpanel.py:463
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
-"Предупреждение при опит за излизане при изпълняващи се конвертирания."
+"Предупреждение при опит за излизане при изпълняващи се преобразувания."
 
 #: ../../lib/frontends/widgets/prefpanel.py:471
 #: ../../lib/frontends/widgets/firsttimedialog.py:190
@@ -2306,7 +2329,7 @@ msgstr "Промяна"
 
 #: ../../lib/frontends/widgets/prefpanel.py:721
 msgid "Choose Movies Directory"
-msgstr "Изберете директория за филмите"
+msgstr "Изберете папка за филмите"
 
 #: ../../lib/frontends/widgets/prefpanel.py:732
 msgid "Directory not valid"
@@ -2446,7 +2469,7 @@ msgstr "Възобновяване на възпроизвеждането"
 
 #: ../../lib/frontends/widgets/prefpanel.py:994
 msgid "Continue playing videos from where they were last stopped."
-msgstr ""
+msgstr "Продължаване на видеата от последното им място на спиране."
 
 #: ../../lib/frontends/widgets/prefpanel.py:996
 msgid "Continue playing music files from where they were last stopped."
@@ -2458,12 +2481,12 @@ msgstr "Продължаване на подкаст файловете от м�
 
 #: ../../lib/frontends/widgets/prefpanel.py:1059
 msgid "Allow this many concurrent conversions:"
-msgstr "Разрешаване на следния брой едновременни конвертирания:"
+msgstr "Разрешаване на следния брой едновременни преобразувания:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1060
 msgid "(changing this will not apply to currently running conversions)"
 msgstr ""
-"(промяната на това няма да се отрази на текущо изпълняваните конвертирания)"
+"(промяната на това няма да се отрази на текущо изпълняваните преобразувания)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1077
 msgid "Store"
@@ -2524,6 +2547,8 @@ msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
 msgstr ""
+"Разширенията са бета функционалност. Разработчиците, които се интересуват от "
+"писане на разширения могат да научат повече от нашата уики страница"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1257
 msgid "Extensions:"
@@ -2560,7 +2585,7 @@ msgstr "Споделяне"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1282
 msgid "Conversions"
-msgstr "Преобразуване"
+msgstr "Преобразувания"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1285
 msgid "Extensions"
@@ -2579,18 +2604,18 @@ msgstr "Синхронизиране сега"
 #: ../../lib/frontends/widgets/devicecontroller.py:142
 #, python-format
 msgid "%(used)s used / %(total)s total - %(percent)i%% full"
-msgstr ""
+msgstr "%(used)s използвано/ %(total)s общо - %(percent)i%% заето"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:159
 #, python-format
 msgid "1 file selected to sync"
 msgid_plural "%(count)i files selected to sync"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избран е 1 файл за синхронизиране"
+msgstr[1] "Избрани са %(count)i файла на синхронизиране"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:165
 msgid "Up to date"
-msgstr ""
+msgstr "Обновен"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:172
 msgid "In Progress"
@@ -2637,77 +2662,85 @@ msgstr "Синхронизиране на списъци за изпълнени
 #: ../../lib/frontends/widgets/devicecontroller.py:460
 #, python-format
 msgid "Device Default (%(audio)s)"
-msgstr ""
+msgstr "Стандартното за устройството (%(audio)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:463
 #, python-format
 msgid "Device Default (%(video)s)"
-msgstr ""
+msgstr "Стандартното за устройството (%(video)s)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:476
 msgid "Name of Device"
-msgstr ""
+msgstr "Име на устройството"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:477
 msgid "Video Conversion"
-msgstr ""
+msgstr "Преобразуване на видео"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:478
 msgid "Audio Conversion"
-msgstr ""
+msgstr "Преобразуване на аудио"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:479
 msgid "Store video in this directory"
-msgstr ""
+msgstr "Съхраняване на видеото в тази папка"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:480
 msgid "Store audio in this directory"
-msgstr ""
+msgstr "Съхраняване на аудиотов тази папка"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:481
 msgid "Always show this device, even if 'show all devices' is turned off"
 msgstr ""
+"Винаги да се показва това устройство, дори ако е изключено 'показване на "
+"всички устройства'"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:578
 msgid "Main"
-msgstr ""
+msgstr "Основни"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:597
 msgid ""
 "Drag individual video and audio files onto the device in the sidebar to copy "
 "them."
 msgstr ""
+"Завлечете отделни видео и аудио файлове върху устройството в страничната "
+"лента, за да ги копирате."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:602
 msgid "Use these options and the tabs above for automatic syncing."
 msgstr ""
+"Използване на тези настройки и подпрозорците по-горе за автоматично "
+"синхронизиране."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:699
 msgid "Your device isn't telling us its exact model number."
-msgstr ""
+msgstr "Устройството ви не ни съобщава точния си модел."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:704
 msgid "For optimal video conversion, select the device model."
-msgstr ""
+msgstr "За оптимално преобразуване на видео изберете модел на устройството."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:720
 msgid ""
 "If you don't know the model or it doesn't appear in the list, it's fine to "
 "choose the 'Generic' device option."
 msgstr ""
+"Ако не знаете модела или той не се появява в списъка, няма проблем да "
+"изберете 'Общ'."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:749
 msgid "This is my device"
-msgstr ""
+msgstr "Това е моето устройство"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:757
 msgid "This device is not yet mounted."
-msgstr ""
+msgstr "Това устройство все още не е монтирано."
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:980
 #, python-format
 msgid "%(count)s items"
-msgstr ""
+msgstr "%(count)s обекта"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1085
 #: ../../lib/frontends/widgets/application.py:887
@@ -2733,51 +2766,51 @@ msgstr "_Отваряне"
 
 #: ../../lib/frontends/widgets/menus.py:218
 msgid "Import"
-msgstr ""
+msgstr "Внасяне"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Search all my Files..."
-msgstr ""
+msgstr "Търсене из всичките ми файлове..."
 
 #: ../../lib/frontends/widgets/menus.py:222
 msgid "Search in a Folder..."
-msgstr ""
+msgstr "Търсене в папка"
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "Watch a Folder..."
-msgstr ""
+msgstr "Наблюдаване на папка..."
 
 #: ../../lib/frontends/widgets/menus.py:228
 msgid "Choose Files...."
-msgstr ""
+msgstr "Избор на файлове..."
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "Download from a URL"
-msgstr ""
+msgstr "Изтегляне от Интернет адрес"
 
 #: ../../lib/frontends/widgets/menus.py:236
 msgid "Remove Item"
-msgstr ""
+msgstr "Премахване на обекта"
 
 #: ../../lib/frontends/widgets/menus.py:238
 msgid "Remove Items"
-msgstr ""
+msgstr "Премахване на обектите"
 
 #: ../../lib/frontends/widgets/menus.py:239
 msgid "Edit _Item"
-msgstr ""
+msgstr "Редактиране на _обекта"
 
 #: ../../lib/frontends/widgets/menus.py:241
 msgid "Edit _Items"
-msgstr ""
+msgstr "Редактиране на _обектите"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "_Save Item As"
-msgstr ""
+msgstr "_Запазване на обекта като"
 
 #: ../../lib/frontends/widgets/menus.py:245
 msgid "_Save Items As"
-msgstr ""
+msgstr "_Запазване на обектите като"
 
 #: ../../lib/frontends/widgets/menus.py:246
 msgid "Copy Item _URL"
@@ -2785,7 +2818,7 @@ msgstr "Копиране адреса на _обекта"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "Check Version"
-msgstr ""
+msgstr "Проверка на версията"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Quit"
@@ -2797,7 +2830,7 @@ msgstr "_Страничен панел"
 
 #: ../../lib/frontends/widgets/menus.py:263
 msgid "_New Folder"
-msgstr ""
+msgstr "_Нова папка"
 
 #: ../../lib/frontends/widgets/menus.py:267
 #: ../../lib/frontends/widgets/tablist.py:1081
@@ -2807,59 +2840,59 @@ msgstr "Преименуване"
 #: ../../lib/frontends/widgets/menus.py:270
 #: ../../lib/frontends/widgets/application.py:936
 msgid "Rename Podcast"
-msgstr ""
+msgstr "Преименуване на подкаст"
 
 #: ../../lib/frontends/widgets/menus.py:271
 #: ../../lib/frontends/widgets/application.py:950
 #: ../../lib/frontends/widgets/tablist.py:969
 msgid "Rename Source"
-msgstr ""
+msgstr "Преименуване на източник"
 
 #: ../../lib/frontends/widgets/menus.py:276
 msgid "Remove Podcasts"
-msgstr ""
+msgstr "Премахване на подкасти"
 
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "Remove Folder"
-msgstr ""
+msgstr "Премахване на папка"
 
 #: ../../lib/frontends/widgets/menus.py:278
 msgid "Remove Folders"
-msgstr ""
+msgstr "Премахване на папки"
 
 #: ../../lib/frontends/widgets/menus.py:279
 #: ../../lib/frontends/widgets/tablist.py:970
 msgid "Remove Source"
-msgstr ""
+msgstr "Премахване на източник"
 
 #: ../../lib/frontends/widgets/menus.py:280
 #: ../../lib/frontends/widgets/tablist.py:973
 msgid "Remove Sources"
-msgstr ""
+msgstr "Премахване на източници"
 
 #: ../../lib/frontends/widgets/menus.py:281
 msgid "Update Podcast"
-msgstr ""
+msgstr "Обновяване на подкаст"
 
 #: ../../lib/frontends/widgets/menus.py:284
 msgid "Update Podcasts"
-msgstr ""
+msgstr "Обновяване на подкасти"
 
 #: ../../lib/frontends/widgets/menus.py:285
 msgid "Update All Podcasts and Library"
-msgstr ""
+msgstr "Обновяване на всички подкасти и библиотеката"
 
 #: ../../lib/frontends/widgets/menus.py:290
 msgid "Import Podcasts (OPML)"
-msgstr ""
+msgstr "Внасяне на подкасти (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:292
 msgid "Export Podcasts (OPML)"
-msgstr ""
+msgstr "Изнасяне на подкасти (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:295
 msgid "Share with a Friend"
-msgstr ""
+msgstr "Споделяне с приятел"
 
 #: ../../lib/frontends/widgets/menus.py:297
 msgid "Copy URL"
@@ -2875,7 +2908,7 @@ msgstr "Нов _списък за изпълнение"
 
 #: ../../lib/frontends/widgets/menus.py:305
 msgid "New Playlist Folder"
-msgstr ""
+msgstr "Нова папка със списъци за изпълнение"
 
 #: ../../lib/frontends/widgets/menus.py:309
 #: ../../lib/frontends/widgets/application.py:941
@@ -2893,11 +2926,11 @@ msgstr "Премахване на списъците за изпълнение"
 
 #: ../../lib/frontends/widgets/menus.py:314
 msgid "Remove Playlist Folders"
-msgstr ""
+msgstr "Премапване на папки със списъци за изпълнение"
 
 #: ../../lib/frontends/widgets/menus.py:315
 msgid "Remove Playlist Folder"
-msgstr ""
+msgstr "Премапване на папка със списъци за изпълнение"
 
 #: ../../lib/frontends/widgets/menus.py:318
 msgid "P_layback"
@@ -2905,31 +2938,31 @@ msgstr "Из_пълнение"
 
 #: ../../lib/frontends/widgets/menus.py:323
 msgid "Stop"
-msgstr ""
+msgstr "Спиране"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Next Item"
-msgstr ""
+msgstr "Следващ обект"
 
 #: ../../lib/frontends/widgets/menus.py:329
 msgid "Previous Item"
-msgstr ""
+msgstr "Предишен обект"
 
 #: ../../lib/frontends/widgets/menus.py:333
 msgid "Skip Forward"
-msgstr ""
+msgstr "Прескачане напред"
 
 #: ../../lib/frontends/widgets/menus.py:335
 msgid "Skip Back"
-msgstr ""
+msgstr "Прескачане назад"
 
 #: ../../lib/frontends/widgets/menus.py:338
 msgid "Volume Up"
-msgstr ""
+msgstr "Увеличаване на звука"
 
 #: ../../lib/frontends/widgets/menus.py:340
 msgid "Volume Down"
-msgstr ""
+msgstr "Намаляване на звука"
 
 #: ../../lib/frontends/widgets/menus.py:343
 msgid "_Fullscreen"
@@ -2945,11 +2978,11 @@ msgstr "Посочи файл със субтитри"
 
 #: ../../lib/frontends/widgets/menus.py:359
 msgid "Sorts"
-msgstr ""
+msgstr "Подреждане"
 
 #: ../../lib/frontends/widgets/menus.py:361
 msgid "_Convert"
-msgstr ""
+msgstr "_Преобразуване"
 
 #: ../../lib/frontends/widgets/menus.py:363
 msgid "_Help"
@@ -2958,27 +2991,27 @@ msgstr "Помо_щ"
 #: ../../lib/frontends/widgets/menus.py:364
 #, python-format
 msgid "About %(name)s"
-msgstr ""
+msgstr "Относно %(name)s"
 
 #: ../../lib/frontends/widgets/menus.py:372
 msgid "Donate"
-msgstr ""
+msgstr "Дарение"
 
 #: ../../lib/frontends/widgets/menus.py:375
 msgid "Help"
-msgstr ""
+msgstr "Помощ"
 
 #: ../../lib/frontends/widgets/menus.py:379
 msgid "Report a Bug"
-msgstr ""
+msgstr "Докладване за грешка"
 
 #: ../../lib/frontends/widgets/menus.py:381
 msgid "Translate"
-msgstr ""
+msgstr "Превеждане"
 
 #: ../../lib/frontends/widgets/menus.py:383
 msgid "Planet Miro"
-msgstr ""
+msgstr "Планета Miro"
 
 #: ../../lib/frontends/widgets/menus.py:386
 msgid "Dev"
@@ -3002,7 +3035,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:392
 msgid "Memory Stats"
-msgstr ""
+msgstr "Статистика за паметта"
 
 #: ../../lib/frontends/widgets/menus.py:430
 msgid "_Encoding"
@@ -3018,7 +3051,7 @@ msgstr "Име на папка:"
 
 #: ../../lib/frontends/widgets/newfolder.py:87
 msgid "Create Podcast Folder"
-msgstr ""
+msgstr "Създаване на папка с подкасти"
 
 #: ../../lib/frontends/widgets/newfolder.py:88
 msgid "Enter the name of the folder to add"
@@ -3031,12 +3064,12 @@ msgstr "Покажи в %(progname)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:101
 msgid "display contents"
-msgstr ""
+msgstr "показване на съдържанието"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:103
 #, python-format
 msgid "Copy to %(appname)s"
-msgstr ""
+msgstr "Копиране в %(appname)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:105
 msgid "Download Torrent"
@@ -3057,7 +3090,7 @@ msgstr "Текущо възпроизвеждане"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:112
 msgid "Saved"
-msgstr ""
+msgstr "Запазено"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:113
 msgid "Stop seeding"
@@ -3077,21 +3110,21 @@ msgstr "КОНСУМАТОРИ"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:391
 msgid "SHARE"
-msgstr ""
+msgstr "СПОДЕЛЯНЕ"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:450
 msgid "DRM locked"
-msgstr ""
+msgstr "Заключено със защита срещу копиране (DRM)"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1338
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr "Конвертиране в %(format)s"
+msgstr "Преобразуване в %(format)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1341
 #, python-format
 msgid "Conversion to %(format)s failed: %(error)s"
-msgstr ""
+msgstr "Преобразуването в %(format)s се провали: %(error)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1348
 #: ../../lib/frontends/widgets/itemrenderer.py:1355
@@ -3100,7 +3133,7 @@ msgstr "Изчистване"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1350
 msgid "Failed"
-msgstr ""
+msgstr "Неуспех"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1351
 msgid "Troubleshoot"
@@ -3108,7 +3141,7 @@ msgstr "Отстраняване на грешки"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1352
 msgid "Open Log"
-msgstr ""
+msgstr "Отваряне на дневник"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1357
 msgid "Completed"
@@ -3117,13 +3150,13 @@ msgstr "Завършено"
 #: ../../lib/frontends/widgets/itemrenderer.py:1366
 #, python-format
 msgid "%(percent)i%% done"
-msgstr ""
+msgstr "%(percent)i%% завършено"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1373
 #: ../../lib/frontends/widgets/statictabs.py:167
 #: ../../lib/frontends/widgets/statictabs.py:174
 msgid "Converting"
-msgstr ""
+msgstr "Преобразуване"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:50
 #, python-format
@@ -3131,50 +3164,56 @@ msgid ""
 "%(appname)s can watch a folder on your computer and show those media files "
 "in your library."
 msgstr ""
+"%(appname)s може да наблюдава папка в компютъра ви и да показва тези медийни "
+"файлове във вашата библиотека."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:73
 #: ../../lib/frontends/widgets/firsttimedialog.py:318
 msgid "Choose..."
-msgstr ""
+msgstr "Избор..."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:78
 msgid "Directory:"
-msgstr ""
+msgstr "Папка:"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:85
 msgid "Show in my sidebar as a podcast"
-msgstr ""
+msgstr "Показване в моята странична лента като подкаст"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:118
 msgid "Choose Watched Folder Directory"
-msgstr ""
+msgstr "Изберете папка за наблюдение"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:126
 msgid ""
 "That directory could not be found. Please check the path and try again."
 msgstr ""
+"Тази папка не може да бъде избрана. Моля проверете пътя за достъп и опитайте "
+"отново."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:128
 msgid ""
 "That directory could not be accessed. Please check the permissions and try "
 "again."
 msgstr ""
+"Не може да се осъществи достъп до тази папка. Моля проверете правата за "
+"достъп и опитайте отново."
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:63
 msgid "Searching for files"
-msgstr ""
+msgstr "Търсене за файлове"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:145
 #: ../../lib/frontends/widgets/firsttimedialog.py:513
 msgid "Cancel Search"
-msgstr ""
+msgstr "Отказване на търсенето"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:231
 #, python-format
 msgid "Searched %(count)s file"
 msgid_plural "Searched %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Претърсен е %(count)s файл"
+msgstr[1] "Претърсени са %(count)s файла"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
 #: ../../lib/frontends/widgets/firsttimedialog.py:449
@@ -3195,7 +3234,7 @@ msgstr "Търсене на филми"
 #: ../../lib/frontends/widgets/statictabs.py:120
 #: ../../lib/frontends/widgets/statictabs.py:126
 msgid "Videos"
-msgstr ""
+msgstr "Видео"
 
 #: ../../lib/frontends/widgets/statictabs.py:131
 #: ../../lib/frontends/widgets/statictabs.py:139
@@ -3203,13 +3242,13 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:852
 #: ../../lib/frontends/widgets/itemedit.py:513
 msgid "Music"
-msgstr ""
+msgstr "Музика"
 
 #: ../../lib/frontends/widgets/statictabs.py:144
 #: ../../lib/frontends/widgets/statictabs.py:152
 #: ../../lib/frontends/widgets/itemedit.py:515
 msgid "Misc"
-msgstr ""
+msgstr "Разни"
 
 #: ../../lib/frontends/widgets/application.py:216
 msgid "Movies directory gone"
@@ -3325,7 +3364,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a podcast. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Един от тези обекти не е изтеглен от подкаст. Желаете ли да го изтриете или "
+"само ще го премахнете от библиотеката?"
 msgstr[1] ""
+"Някои от тези обекти не е изтеглен от подкаст. Желаете ли да ги изтриете или "
+"само ще ги премахнете от библиотеката?"
 
 #: ../../lib/frontends/widgets/application.py:606
 msgid ""
@@ -3335,14 +3378,18 @@ msgid_plural ""
 "Some of these items are folders.  Deleting/Removing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Един от тези обекти е папка. Изтриването/премахването на папка няма да "
+"изтрие/премахне нейното съдържание."
 msgstr[1] ""
+"Някои от тези обекти са папки. Изтриването/прехването на папка няма да "
+"изтрие/премахнет нейното съдържание."
 
 #: ../../lib/frontends/widgets/application.py:621
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Сигурни ли сте, че желаете да изтриете обекта?"
-msgstr[1] "Сигурни ли сте, че желаете да изтриете обектите?"
+msgstr[1] "Сигурни ли сте, че желаете да изтриете всички  %(count)d обекта?"
 
 #: ../../lib/frontends/widgets/application.py:628
 msgid ""
@@ -3350,10 +3397,11 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
-"Един от тези елементи е папка. Изтриването на папка ще изтрие съдържанието й."
+"Един от тези обекти е папка. Изтриването на папка ще изтрие нейното "
+"съдържание."
 msgstr[1] ""
-"Няколко от тези елементи са папки. Изтриването на папка ще изтрие/премахне "
-"съдържанието й."
+"Няколко от тези обекти са папки. Изтриването на папка ще изтрие нейното "
+"съдържание."
 
 #: ../../lib/frontends/widgets/application.py:686
 msgid "Save Item As..."
@@ -3366,23 +3414,23 @@ msgstr "Избиране на папка, в която да се търсят �
 
 #: ../../lib/frontends/widgets/application.py:742
 msgid "Choose files to import"
-msgstr ""
+msgstr "Изберете файлове за внасяне"
 
 #: ../../lib/frontends/widgets/application.py:744
 msgid "Video Files"
-msgstr ""
+msgstr "Видео файлове"
 
 #: ../../lib/frontends/widgets/application.py:745
 msgid "Audio Files"
-msgstr ""
+msgstr "Аудио файлове"
 
 #: ../../lib/frontends/widgets/application.py:783
 msgid "Enter the URL of the source to add"
-msgstr ""
+msgstr "Въведете адрес на източника за добавяне"
 
 #: ../../lib/frontends/widgets/application.py:784
 msgid "Add Source - Invalid URL"
-msgstr ""
+msgstr "Добавяне на източник - невалиден адрес"
 
 #: ../../lib/frontends/widgets/application.py:785
 msgid ""
@@ -3391,6 +3439,10 @@ msgid ""
 "\n"
 "Enter the URL of the source to add"
 msgstr ""
+"Въведеният адрес не е валиден.\n"
+"Моля проверете го и опитайте отново.\n"
+"\n"
+"Въведете адреса на източника за добавяне"
 
 #: ../../lib/frontends/widgets/application.py:842
 msgid "Import OPML File"
@@ -3419,17 +3471,17 @@ msgstr "Въведете име за новата папка със списъц
 #: ../../lib/frontends/widgets/application.py:931
 #: ../../lib/frontends/widgets/tablist.py:1072
 msgid "Rename Podcast Folder"
-msgstr ""
+msgstr "Преименуване на папка с подкасти"
 
 #: ../../lib/frontends/widgets/application.py:932
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
-msgstr ""
+msgstr "Въведете ново име за папката с подкасти %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:937
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
-msgstr ""
+msgstr "Въведете ново име за подкаста %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:942
 #, python-format
@@ -3449,7 +3501,7 @@ msgstr "Въведете ново име на папката със списък
 #: ../../lib/frontends/widgets/application.py:951
 #, python-format
 msgid "Enter a new name for the source %(name)s"
-msgstr ""
+msgstr "Въведете ново име за източника %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:970
 msgid "Remove playlist"
@@ -3470,20 +3522,21 @@ msgstr[1] ""
 #: ../../lib/frontends/widgets/application.py:987
 msgid "Remove source"
 msgid_plural "Remove sources"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Премахване на източник"
+msgstr[1] "Премахване на източници"
 
 #: ../../lib/frontends/widgets/application.py:989
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
-msgstr[0] ""
+msgstr[0] "Сигурни ли сте, че желаете да премахнете този източник?"
 msgstr[1] ""
+"Сигурни ли сте, че желаете да премахнете тези %(count)s източника?"
 
 #: ../../lib/frontends/widgets/application.py:1013
 #, python-format
 msgid "Import Music from %(media_player)s?"
-msgstr ""
+msgstr "Внасяне на музика от %(media_player)s?"
 
 #: ../../lib/frontends/widgets/application.py:1014
 #, python-format
@@ -3491,11 +3544,13 @@ msgid ""
 "We see that you have %(media_player)s installed.  Would you like "
 "%(short_app_name)s to import the music from it?"
 msgstr ""
+"Виждаме, че имате инсталиран медийният плеър %(media_player)s.  Желаете ли "
+"%(short_app_name)s да внесе музиката от него?"
 
 #: ../../lib/frontends/widgets/application.py:1056
 #: ../../lib/frontends/widgets/application.py:1080
 msgid "Select File to write Profile to"
-msgstr ""
+msgstr "Изберете файл, в който да се запише профила"
 
 #: ../../lib/frontends/widgets/application.py:1141
 #: ../../lib/frontends/widgets/application.py:1160
@@ -3507,6 +3562,8 @@ msgstr "Наистина ли искате да спрете програмат�
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
 msgstr ""
+"Предупреди ме при опит за спиране, ако други са свързани към медийната ми "
+"библиотека"
 
 #: ../../lib/frontends/widgets/application.py:1162
 #, python-format
@@ -3525,16 +3582,17 @@ msgstr ""
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] "Извършва се %(count)d конвертиране.  Излизане въпреки това?"
-msgstr[1] "Извършват се %(count)d конвертирания.  Излизане въпреки това?"
+msgstr[0] "Извършва се %(count)d преобразуване.  Излизане въпреки това?"
+msgstr[1] "Извършват се %(count)d преобразувания.  Излизане въпреки това?"
 
 #: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr "Предупреждение при опит за излизане при изпълняващи се конвертирания"
+msgstr ""
+"Предупреждение при опит за излизане при изпълняващи се преобразувания"
 
 #: ../../lib/frontends/widgets/application.py:1451
 msgid "Connect failed"
-msgstr ""
+msgstr "Неуспешно свързване"
 
 #: ../../lib/frontends/widgets/application.py:1452
 #, python-format
@@ -3546,7 +3604,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1462
 msgid "Eject failed"
-msgstr ""
+msgstr "Изваждането се провали"
 
 #: ../../lib/frontends/widgets/application.py:1463
 #, python-format
@@ -3555,6 +3613,9 @@ msgid ""
 "\n"
 "The device is in use."
 msgstr ""
+"Изваждането на устройството '%(name)s' се провали.\n"
+"\n"
+"Устройството се използва."
 
 #: ../../lib/frontends/widgets/application.py:1476
 msgid "Upgrading database"
@@ -3567,17 +3628,22 @@ msgid ""
 "process can take a long time if you have a large number of items in "
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
+"%(appname)s надгражда вашата база данни от подкасти и файлове. Ако в "
+"%(appname)s има много обекти, този еднократен процес може да отнеме дълго "
+"време (дори и повече от 30 минути)."
 
 #: ../../lib/frontends/widgets/application.py:1484
 #: ../../lib/dbupgradeprogress.py:104
 msgid "Preparing Items"
-msgstr ""
+msgstr "Подготвяне на обекти"
 
 #: ../../lib/frontends/widgets/application.py:1485
 #, python-format
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
+"%(appname)s е неправилно изключено и трябва да подготви обектите ви за "
+"показване."
 
 #: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
@@ -3586,18 +3652,20 @@ msgstr "Съобщение"
 #: ../../lib/frontends/widgets/firsttimedialog.py:78
 #, python-format
 msgid "%(appname)s Setup"
-msgstr ""
+msgstr "Настройване на %(appname)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:181
 #, python-format
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
+"Добре дошли в %(name)s!  Имаме няколко въпроса, с който да ви помогнем да "
+"започнете."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #, python-format
 msgid "What language would you like %(name)s to be in?"
-msgstr ""
+msgstr "На какъв език желаете да е %(name)s?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:231
 #: ../../lib/frontends/widgets/firsttimedialog.py:268
@@ -3612,6 +3680,8 @@ msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
 "resume your downloads and update your podcasts."
 msgstr ""
+"%(name)s може да се пуска автоматично при пускане на компютъра и така ще се "
+"възобновят вашите изтегляния и да обновите подкастите си."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:253
 #, python-format
@@ -3632,19 +3702,21 @@ msgid ""
 "%(name)s can find music and video on your computer and show them in your "
 "%(name)s library.  No files will be copied or duplicated."
 msgstr ""
+"%(name)s може да открие музика и видео на компютъра ви и да ги покаже във "
+"вашата библиотека %(name)s.  Файловете няма да бъдат копирани или дублирани."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:292
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
-msgstr ""
+msgstr "Желаете ли %(name)s да претърси компютъра ви за медийни файлове?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:308
 msgid "Search everywhere."
-msgstr ""
+msgstr "Търсене навсякъде."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:310
 msgid "Just search in this folder:"
-msgstr ""
+msgstr "Търсене само в тази папка:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:357
 #: ../../lib/frontends/widgets/firsttimedialog.py:524
@@ -3653,7 +3725,7 @@ msgstr "Край"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:428
 msgid "Cancelled"
-msgstr ""
+msgstr "Отменено"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:444
 #, python-format
@@ -3667,6 +3739,7 @@ msgstr[1] "сканирани %(count)s файла"
 msgid ""
 "Would you like to display your %(player)s music and video in %(appname)s?"
 msgstr ""
+"Желаете ли вашите музика и видео от %(player)s да се покажат в %(appname)s?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:558
 #, python-format
@@ -3674,22 +3747,24 @@ msgid ""
 "Note: %(appname)s won't move or copy any files on your disk.  It will just "
 "add them to your %(appname)s library."
 msgstr ""
+"Забележка: %(appname)s няма да премества или копира никакви файлове по диска "
+"ви, а просто ще ти добави към библиотеката на %(appname)s."
 
 #: ../../lib/frontends/widgets/tablist.py:1070
 msgid "Update Podcasts In Folder"
-msgstr ""
+msgstr "Обновяване на подкастите в папка"
 
 #: ../../lib/frontends/widgets/tablist.py:1078
 msgid "Update Podcast Now"
-msgstr ""
+msgstr "Обновяване на подкаста сега"
 
 #: ../../lib/frontends/widgets/tablist.py:1083
 msgid "Revert Podcast Name"
-msgstr ""
+msgstr "Връщане името на подкаста"
 
 #: ../../lib/frontends/widgets/tablist.py:1092
 msgid "Update Podcasts Now"
-msgstr ""
+msgstr "Обновяване на подкастите сега"
 
 #: ../../lib/frontends/widgets/gtk/window.py:837
 msgid "All files"
@@ -3718,6 +3793,7 @@ msgstr ""
 msgid ""
 "Thank you to all the people who contributed to %(appname)s %(version)s:"
 msgstr ""
+"Благодарности на всички, които допринесоха към %(appname)s %(version)s:"
 
 #: ../../lib/frontends/widgets/gtk/window.py:983
 #, python-format
@@ -3735,11 +3811,11 @@ msgstr "Покажи отвън"
 
 #: ../../lib/frontends/widgets/gtk/video.py:334
 msgid "Subtitles On"
-msgstr ""
+msgstr "Включени субтитри"
 
 #: ../../lib/frontends/widgets/gtk/video.py:340
 msgid "Subtitles Found"
-msgstr ""
+msgstr "Открити са субтитри"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
 #: ../../linux/plat/frontends/widgets/miroappindicator.py:118
@@ -3792,9 +3868,11 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
-"%(count)d сваляне изчаква заради негледани видео файлове (Виж настройки)"
+"%(count)d изтегляне е добавено към опашката с невъзпроизвеждани обекти "
+"(вижте Настройки)"
 msgstr[1] ""
-"%(count)d сваляния изчакват заради негледани видео файлове (Виж настройки)"
+"%(count)d изтегляния са добавени към опашката с невъзпроизвеждани обекти "
+"(вижте Настройки)"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:206
 #, python-format
@@ -3817,11 +3895,13 @@ msgstr ""
 #: ../../lib/frontends/widgets/searchcontroller.py:75
 msgid "Use the search box above to search for videos on these sites"
 msgstr ""
+"Използвайте полето за търсене по-горе, за да търсите за видеа на тези уеб "
+"сайтове"
 
 #: ../../lib/frontends/widgets/itemedit.py:225
 #: ../../lib/frontends/widgets/itemedit.py:283
 msgid "(mixed)"
-msgstr ""
+msgstr "(смесено)"
 
 #: ../../lib/frontends/widgets/itemedit.py:310
 msgid "None"
@@ -3829,80 +3909,82 @@ msgstr "Нищо"
 
 #: ../../lib/frontends/widgets/itemedit.py:318
 msgid "Choose a thumbnail file"
-msgstr ""
+msgstr "Изберете файл-миниатюра"
 
 #: ../../lib/frontends/widgets/itemedit.py:327
 msgid "Click to choose image."
-msgstr ""
+msgstr "Натиснете, за да изберете изображение."
 
 #: ../../lib/frontends/widgets/itemedit.py:404
 msgid "Move"
-msgstr ""
+msgstr "Преместване"
 
 #: ../../lib/frontends/widgets/itemedit.py:410
 msgid "Choose location for file"
-msgstr ""
+msgstr "Изберете местоположение за файла"
 
 #: ../../lib/frontends/widgets/itemedit.py:498
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: ../../lib/frontends/widgets/itemedit.py:501
 msgid "About"
-msgstr ""
+msgstr "Относно"
 
 #: ../../lib/frontends/widgets/itemedit.py:512
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: ../../lib/frontends/widgets/itemedit.py:519
 msgid "Art"
-msgstr ""
+msgstr "Художествено оформление"
 
 #: ../../lib/frontends/widgets/itemedit.py:530
 msgid "Path"
-msgstr ""
+msgstr "Път"
 
 #: ../../lib/frontends/widgets/itemedit.py:545
 msgid "Episode ID"
-msgstr ""
+msgstr "Идентификатор на епизода"
 
 #: ../../lib/frontends/widgets/itemedit.py:547
 msgid "Season Number"
-msgstr ""
+msgstr "Номер на сезона"
 
 #: ../../lib/frontends/widgets/itemedit.py:549
 msgid "Episode Number"
-msgstr ""
+msgstr "Номер на епизода"
 
 #: ../../lib/frontends/widgets/itemedit.py:679
 msgid "Edit Item"
-msgstr "Редактиране на елемент"
+msgstr "Редактиране на обект"
 
 #: ../../lib/frontends/widgets/itemedit.py:701
 #, python-format
 msgid "%(items)d"
 msgid_plural "%(items)d items selected to edit"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(items)d"
+msgstr[1] "%(items)d обекта са избрани за редактиране"
 
 #: ../../lib/frontends/widgets/itemedit.py:708
 msgid ""
 "To change a field for all the selected items, check the checkbox next to the "
 "field you'd like to change."
 msgstr ""
+"За да промените поле за всички избрани обекти, сложете отметка срещу полето, "
+"което желаете да промените."
 
 #: ../../lib/frontends/widgets/guidecontroller.py:177
 msgid "Recently Watched"
-msgstr ""
+msgstr "Наскоро гледани"
 
 #: ../../lib/frontends/widgets/guidecontroller.py:179
 msgid "Recently Listened To"
-msgstr ""
+msgstr "Наскоро слушани"
 
 #: ../../lib/frontends/widgets/guidecontroller.py:181
 msgid "Recent Downloads"
-msgstr ""
+msgstr "Последно изтеглени"
 
 #: ../../lib/frontends/widgets/style.py:555
 msgid "paused"
@@ -3910,7 +3992,7 @@ msgstr "на пауза"
 
 #: ../../lib/frontends/widgets/style.py:557
 msgid "queued"
-msgstr ""
+msgstr "на опашка"
 
 #: ../../lib/httpclient.py:106
 #, python-format
@@ -3920,7 +4002,7 @@ msgstr "%(host)s затвори връзката"
 #: ../../lib/httpclient.py:111
 #, python-format
 msgid "%(host)s gave us an empty response"
-msgstr ""
+msgstr "%(host)s върна празен отговор"
 
 #: ../../lib/httpclient.py:116
 #, python-format
@@ -3978,7 +4060,7 @@ msgstr "\"%(url)s\" не е валиден адрес"
 
 #: ../../lib/httpclient.py:165
 msgid "Unknown Host"
-msgstr ""
+msgstr "Неизвестен адрес"
 
 #: ../../lib/httpclient.py:166
 #, python-format
@@ -4057,7 +4139,7 @@ msgstr "Този URL-адрес вече е даден за изтегляне."
 #: ../../lib/singleclick.py:78
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr "%(appname)s ще започне да го сваяля сега."
+msgstr "%(appname)s ще започне да го изтегля сега."
 
 #: ../../lib/singleclick.py:81
 msgid "It is downloading now."
@@ -4076,6 +4158,7 @@ msgstr "Изтегляне на файл"
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or a podcast."
 msgstr ""
+"Изглежда, че този файл на адрес %(url)s не  е аудио, видео или подкаст."
 
 #: ../../lib/singleclick.py:171
 msgid "Download Error"
@@ -4098,7 +4181,7 @@ msgstr ""
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Грешка при преместване в папката с филми"
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1067
 msgid "Not enough disk space"
@@ -4123,15 +4206,15 @@ msgstr "Грешка при зареждане на BitTorrent"
 
 #: ../../lib/dl_daemon/download.py:1245
 msgid "waiting to check existing files"
-msgstr ""
+msgstr "изчакване за проверка на съществуващи файлове"
 
 #: ../../lib/dl_daemon/download.py:1247
 msgid "checking existing files"
-msgstr ""
+msgstr "проверка на съществуващи файлове"
 
 #: ../../lib/dl_daemon/download.py:1249
 msgid "allocating disk space"
-msgstr ""
+msgstr "заделяне на диското пространство"
 
 #: ../../lib/dl_daemon/download.py:1492
 msgid "Corrupt Torrent"
@@ -4201,7 +4284,7 @@ msgstr "Видео рендер"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:96
 msgid "Binaries to use:"
-msgstr "Бинарни файлове за използване:"
+msgstr "Двоични файлове за използване:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:102
 msgid "ffmpeg binary path:"
@@ -4433,15 +4516,15 @@ msgstr "Уникод"
 
 #: ../../linux/extensions/miroappindicator/main.py:56
 msgid "Pause all downloads"
-msgstr ""
+msgstr "Пауза на всички изтегляния"
 
 #: ../../linux/extensions/miroappindicator/main.py:57
 msgid "Resume all downloads"
-msgstr ""
+msgstr "Продължаване на всички изтегляния"
 
 #: ../../linux/extensions/miroappindicator/main.py:59
 msgid "Show Miro"
-msgstr ""
+msgstr "Показване на Miro"
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"
@@ -4469,7 +4552,7 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"Вашият браузър ще зареди уеб страница, къде може да свалите и инсталирате "
+"Вашият браузър ще зареди уеб страница, къде може да изтеглите и инсталирате "
 "Adobe Flash.\n"
 "\n"
 "Трябва да изключите %(appname)s сега и да го стартирате след като Adobe "
@@ -4539,7 +4622,7 @@ msgstr "Налични са обновявания"
 #: ../../windows/plat/frontends/widgets/update.py:154
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "Нова версия на %(appname)s е налична за сваляне."
+msgstr "Нова версия на %(appname)s е налична за изтегляне."
 
 #: ../../windows/plat/frontends/widgets/update.py:158
 msgid "Do you want to download it now?"
@@ -4629,7 +4712,7 @@ msgstr ""
 #: ../../resources/devices/generic_phone.py:32
 #, python-format
 msgid "Generic %(name)s Device"
-msgstr ""
+msgstr "Стандартно %(name)s устройство"
 
 #: ../../resources/devices/android.py:119
 msgid ""

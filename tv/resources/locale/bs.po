@@ -8,25 +8,25 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2010-12-20 11:48+0000\n"
-"Last-Translator: Samir Ribić <Unknown>\n"
+"PO-Revision-Date: 2011-07-10 11:00+0000\n"
+"Last-Translator: mujanovic <Unknown>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
-msgstr ""
+msgstr "iTunes"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 #: ../../osx/plat/frontends/widgets/osxmenus.py:293
 msgid "Services"
-msgstr "Usluge"
+msgstr "Servisi"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:218
 #, python-format
@@ -35,15 +35,15 @@ msgstr "Sakrij %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
-msgstr "Sakrij Ostale"
+msgstr "Sakrij ostalo"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Show All"
-msgstr "Pokaži Sve"
+msgstr "Prikaži sve"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:227
 msgid "Preferences..."
-msgstr "Povlastice..."
+msgstr "Postavke..."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:229
 #, python-format
@@ -52,7 +52,7 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:233
 msgid "Close Window"
-msgstr "Zatvori Prozor"
+msgstr "Zatvori prozor"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:239
 msgid "Cut"
@@ -86,23 +86,23 @@ msgstr "Uredi"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:251
 msgid "Present Half Size"
-msgstr "Prikaži Pola Veličine"
+msgstr "Prikaži u pola veličine"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:254
 msgid "Present Actual Size"
-msgstr "Prikaži Stvarnu Veličinu"
+msgstr "Prikaži u stvarnoj veličini"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:257
 msgid "Present Double Size"
-msgstr "Prikaži Dvostruku Veličinu"
+msgstr "Prikaži u dvostrukoj veličini"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:264
 msgid "Present Video"
-msgstr "Prikaži Video"
+msgstr "Prikaži video"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:272
 msgid "Zoom"
-msgstr ""
+msgstr "Zumiraj"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:273
 msgid "Minimize"
@@ -110,11 +110,11 @@ msgstr "Minimiziraj"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:275
 msgid "Main Window"
-msgstr "Glavni Prozor"
+msgstr "Glavni prozor"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:278
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Dovedi sve naprijed"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:280
 msgid "Window"
@@ -129,34 +129,34 @@ msgstr ""
 #: ../../lib/frontends/widgets/gtk/window.py:352
 #: ../../lib/frontends/widgets/gtk/video.py:410
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Isključi titlove"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:450
 #: ../../lib/frontends/widgets/menus.py:350
 #: ../../lib/frontends/widgets/gtk/video.py:388
 msgid "None Available"
-msgstr ""
+msgstr "Nije dostupno"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:457
 #: ../../lib/frontends/widgets/gtk/video.py:421
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Odaberi datoteku sa titlovima"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:124
 #: ../../lib/frontends/widgets/menus.py:349
 #: ../../lib/frontends/widgets/gtk/video.py:344
 msgid "Subtitles"
-msgstr ""
+msgstr "Titlovi"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125
 #: ../../lib/frontends/widgets/gtk/video.py:276
 msgid "Fullscreen"
-msgstr ""
+msgstr "Preko cijelog ekrana"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:128
 #: ../../lib/frontends/widgets/itemcontextmenu.py:264
 msgid "Share"
-msgstr "Razmjeni"
+msgstr "Razmijeni"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:132 ../../lib/dialogs.py:120
 #: ../../lib/frontends/widgets/itemcontextmenu.py:381
@@ -165,7 +165,7 @@ msgstr "Zadrži"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:219
 msgid "Pop Out"
-msgstr ""
+msgstr "Skočni prozor"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:222
 msgid "Pop In"
@@ -177,7 +177,7 @@ msgstr ""
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
 #: ../../windows/plat/frontends/widgets/bonjour.py:73
 msgid "Install Bonjour"
-msgstr ""
+msgstr "Instaliraj Bonjour"
 
 #: ../../osx/plat/frontends/widgets/bonjour.py:42
 #, python-format
@@ -186,10 +186,13 @@ msgid ""
 "components, a standard part of Mac OS X installations.  Please review your "
 "Mac OS X installation."
 msgstr ""
+"Aplikacija %(appname)s je utvrdila da Vašem sistemu nedostaju Bonjour "
+"komponente, standardni dio instalacija Mac OS X. Molimo, pregledajte svoju "
+"instalaciju sistema Mac OS X."
 
 #: ../../osx/plat/frontends/widgets/application.py:256
 msgid "Download Completed"
-msgstr "Preuzimanje Kompletirano"
+msgstr "Preuzimanje završeno"
 
 #: ../../osx/plat/frontends/widgets/application.py:257
 #, python-format
@@ -199,7 +202,7 @@ msgstr "Preuzimanje videoteke '%s' završeno."
 #: ../../lib/storedatabase.py:263
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "Nadogradnja baze podataka za %(appname)s nije uspjela."
 
 #: ../../lib/storedatabase.py:266
 #, python-format
@@ -215,6 +218,14 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your podcasts and media files."
 msgstr ""
+"Žao nam je, aplikacija %(appname)s nije uspjela nadograditi bazu podatka "
+"zbog grešaka.\n"
+"Provjerite je li Vaš disk pun. Ako je pun, isključite aplikaciju "
+"%(appname)s, oslobodite prostora i pokrenite %(appname)s ponovo.\n"
+"Ako Vaš disk nije pun, pomozite nam da razumijemo problem tako šte ćete "
+"poslati izvještaj o bugu našoj bazi podataka o problemima.\n"
+"Naposljetku, možete započeti ispočetka i Vaša oštećena baza podatka će biti "
+"uklonjena ali morat ćete ponovo dodati svoje podkaste i medijske datoteke."
 
 #: ../../lib/storedatabase.py:339
 #, python-format
@@ -222,22 +233,26 @@ msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
 "%(version)s)"
 msgstr ""
+"Baza podatka je kreirana pomoću novije verzije %(appname)s (verzija baze je "
+"%(version)s)"
 
 #: ../../lib/storedatabase.py:753
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr ""
+msgstr "Uspješno sačuvana baza podatka %(appname)s"
 
 #: ../../lib/storedatabase.py:755
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"Baza podatak je uspješno sačuvana. Sada je uredu da zatvorite program bez "
+"gubitka podatka."
 
 #: ../../lib/storedatabase.py:816
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "Pohranjivanje baze podataka %(appname)s nije uspjelo"
 
 #: ../../lib/storedatabase.py:819
 #, python-format
@@ -271,7 +286,7 @@ msgstr ""
 
 #: ../../lib/opml.py:224 ../../lib/opml.py:232
 msgid "OPML Import failed"
-msgstr "Neuspio OPML Uvoz"
+msgstr "OPML uvoz nije uspio"
 
 #: ../../lib/opml.py:226
 msgid ""

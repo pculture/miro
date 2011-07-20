@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: getdemocracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-10 18:29+0000\n"
+"PO-Revision-Date: 2011-07-08 10:20+0000\n"
 "Last-Translator: Lucio Pileggi <lucio@pileggi.eu>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:59+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
@@ -546,6 +546,8 @@ msgid ""
 "This %(appname)s podcast file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Questo file podcast per %(appname)s ha un formato non valido: %(url)s. Per "
+"favore segnala il problema a chi ha pubblicato il file."
 
 #: ../../lib/commandline.py:173
 #, python-format
@@ -553,11 +555,14 @@ msgid ""
 "This %(appname)s podcast file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
+"Questo file podcast per %(appname)s ha un tipo di contenuto errato: %(url)s. "
+"Per favore segnala il problema a chi ha pubblicato il file."
 
 #: ../../lib/commandline.py:182
 #, python-format
 msgid "Could not download the %(appname)s podcast file: %(url)s"
 msgstr ""
+"Non è stato possibile scaricare il file del %(appname)s podcast: %(url)s"
 
 #: ../../lib/commandline.py:237
 msgid "Invalid Torrent"
@@ -1553,6 +1558,8 @@ msgid ""
 "\n"
 "Once you install the Bonjour libraries, you will have to restart %(appname)s."
 msgstr ""
+"Devi installare le librerie Bonjour per poter condividere file da "
+"%(appname)s a %(appname)s olla applicazione Miro per iPad."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:74
 msgid "Click here to install"
@@ -2833,7 +2840,7 @@ msgstr "_Riquadro laterale"
 
 #: ../../lib/frontends/widgets/menus.py:263
 msgid "_New Folder"
-msgstr ""
+msgstr "_Nuova cartella"
 
 #: ../../lib/frontends/widgets/menus.py:267
 #: ../../lib/frontends/widgets/tablist.py:1081
@@ -2941,7 +2948,7 @@ msgstr "T_rasmetti"
 
 #: ../../lib/frontends/widgets/menus.py:323
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Next Item"
@@ -3584,7 +3591,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1462
 msgid "Eject failed"
-msgstr ""
+msgstr "Espulsione fallita."
 
 #: ../../lib/frontends/widgets/application.py:1463
 #, python-format
@@ -3593,6 +3600,8 @@ msgid ""
 "\n"
 "The device is in use."
 msgstr ""
+"L'espulsione della periferica '%(name)s è fallita.\n"
+"La periferica è in uso."
 
 #: ../../lib/frontends/widgets/application.py:1476
 msgid "Upgrading database"
@@ -3616,6 +3625,8 @@ msgstr "Preparazione degli elementi"
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
+"%(appname)s si è chiuso in modo non corretto e deve preparare i tuoi "
+"contenuti per la visualizzazione."
 
 #: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
@@ -3624,13 +3635,15 @@ msgstr "Messaggio"
 #: ../../lib/frontends/widgets/firsttimedialog.py:78
 #, python-format
 msgid "%(appname)s Setup"
-msgstr ""
+msgstr "Confidurazione di %(appname)s"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:181
 #, python-format
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
+"Benvenuto in %(name)s! Abbiamo un paio di domande da farti per aiutarti a "
+"cominciare."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #, python-format
@@ -3673,7 +3686,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:292
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
-msgstr ""
+msgstr "Vuoi che %(name)s cerchi nel tuo computer i file multimediali?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:308
 msgid "Search everywhere."
@@ -3704,6 +3717,8 @@ msgstr[1] "analizzati %(count)s file"
 msgid ""
 "Would you like to display your %(player)s music and video in %(appname)s?"
 msgstr ""
+"Ti piacerebbe vedere la musica ed i video contenuri nel tuo %(player)s "
+"dentro %(appname)s?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:558
 #, python-format
@@ -3755,6 +3770,7 @@ msgstr ""
 msgid ""
 "Thank you to all the people who contributed to %(appname)s %(version)s:"
 msgstr ""
+"Grazie a tutte le persone che hanno contribuito a %(appname)s %(version)s:"
 
 #: ../../lib/frontends/widgets/gtk/window.py:983
 #, python-format
@@ -3887,7 +3903,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:498
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: ../../lib/frontends/widgets/itemedit.py:501
 msgid "About"

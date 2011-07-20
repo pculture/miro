@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-16 11:08+0000\n"
-"Last-Translator: Bartosz Janda <Unknown>\n"
+"PO-Revision-Date: 2011-07-04 23:51+0000\n"
+"Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-06-30 14:58+0000\n"
-"X-Generator: Launchpad (build 13333)\n"
+"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
+"X-Generator: Launchpad (build 13468)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -191,6 +191,9 @@ msgid ""
 "components, a standard part of Mac OS X installations.  Please review your "
 "Mac OS X installation."
 msgstr ""
+"%(appname)s ustalił, że na twoim komputerze prawdopodobnie brakuje "
+"komponentów Bonjour, będących standardową częścią instalacji systemu Mac OS "
+"X. Sprawdź poprawność instalacji systemu Mac OS X."
 
 #: ../../osx/plat/frontends/widgets/application.py:256
 msgid "Download Completed"
@@ -220,6 +223,19 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your podcasts and media files."
 msgstr ""
+"Niestety, aplikacja %(appname)s nie była w stanie uaktualnić twojej bazy "
+"danych z powodu wystąpienia błędów.\n"
+"\n"
+"Sprawdź, czy dysk nie jest zapełniony.  Jeśli jest, to zakończ aplikację "
+"%(appname)s, zwolnij trochę miejsca i uruchom %(appname)s ponownie.\n"
+"\n"
+"Jeśli jednak dysk nie jest zapełniony, prosimy o zgłoszenie błędu do naszej "
+"bazy danych z informacjami o awariach programu, co pomoże nam rozwiązać "
+"problem.\n"
+"\n"
+"Możesz też użyć funkcji uruchamiania na czysto, co spowoduje usunięcie "
+"uszkodzonej bazy danych, wówczas zajdzie jednak konieczność ponownego "
+"dodania podcastów i plików multimedialnych."
 
 #: ../../lib/storedatabase.py:339
 #, python-format
@@ -227,6 +243,8 @@ msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
 "%(version)s)"
 msgstr ""
+"Bazę danych utworzono za pomocą nowszej wersji aplikacji %(appname)s (wersja "
+"bazy danych to %(version)s)"
 
 #: ../../lib/storedatabase.py:753
 #, python-format
@@ -263,11 +281,26 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"Aplikacja %(appname)s nie była w stanie zapisać swojej bazy danych.\n"
+"\n"
+"Jeśli twój dysk jest zapełniony, sugerujemy zwolnienie trochę miejsca na "
+"dysku i spróbowanie jeszcze raz.  Jeśli dysk nie jest zapełniony, być może "
+"zadziała samo ponowienie próby.\n"
+"\n"
+"Jeśli ponowna próba nie przyniosła rezultatu, zakończ aplikację %(appname)s "
+"i uruchom ponownie.  Ostatnie zmiany mogą zostać utracone.\n"
+"\n"
+"Jeśli ten błąd często występuje podczas pobierania danych, sugerujemy "
+"zmniejszenie liczby jednocześnie pobieranych plików w oknie Opcji w zakładce "
+"Pobieranie.\n"
+"\n"
+"Błąd: %(error_text)s\n"
+"\n"
 
 #: ../../lib/storedatabase.py:911
 #, python-format
 msgid "%(appname)s database corrupt."
-msgstr ""
+msgstr "Baza danych aplikacji %(appname)s jest uszkodzona."
 
 #: ../../lib/storedatabase.py:914
 #, python-format
@@ -275,6 +308,9 @@ msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
 "database directory and a new database will be created now."
 msgstr ""
+"Twoja baza danych aplikacji %(appname)s jest uszkodzona.  Jej kopia zapasowa "
+"zostanie zapisana w twoim katalogu baz danych Miro, a następnie zostanie "
+"utworzona nowa baza."
 
 #: ../../lib/opml.py:224 ../../lib/opml.py:232
 msgid "OPML Import failed"
@@ -290,6 +326,7 @@ msgstr ""
 #: ../../lib/opml.py:234
 msgid "The selected OPML file could not be read.  Import was interrupted."
 msgstr ""
+"Nie udało się odczytać wybranego pliku OPML. Importowanie zostało przerwane."
 
 #: ../../lib/opml.py:242
 msgid "OPML Import summary"
@@ -299,23 +336,25 @@ msgstr "Podsumowanie importu OPML"
 #, python-format
 msgid "Successfully imported %(count)d podcast."
 msgid_plural "Successfully imported %(count)d podcasts."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Zaimportowano %(count)d podcast."
+msgstr[1] "Zaimportowano %(count)d podcasty."
+msgstr[2] "Zaimportowano %(count)d podcastów."
 
 #: ../../lib/opml.py:249
 #, python-format
 msgid "Skipped %(count)d podcast already present."
 msgid_plural "Skipped %(count)d podcasts already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Pominięto %(count)d istniejący podcast."
+msgstr[1] "Pominięto %(count)d istniejące podcasty."
+msgstr[2] "Pominięto %(count)d istniejące podcastów."
 
 #: ../../lib/messagehandler.py:1593
 msgid "Subscribed to new podcast:"
-msgstr ""
+msgstr "Dokonano subskrypcji nowego podcastu:"
 
 #: ../../lib/messagehandler.py:1596
 msgid "Subscribed to new podcasts:"
-msgstr ""
+msgstr "Dokonano subskrypcji nowych podcastów:"
 
 #: ../../lib/messagehandler.py:1617
 msgid "Migrating Files"
@@ -393,7 +432,7 @@ msgstr "Upłynął limit czasu połączenia z %(host)s"
 
 #: ../../lib/net.py:292
 msgid "Couldn't find address family to use"
-msgstr ""
+msgstr "Nie udało się znaleźć rodziny adresów"
 
 #: ../../lib/net.py:321
 msgid "Unknown Error code"
@@ -424,6 +463,21 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Niestety, aplikacja %(appname)s nie mogła zostać uruchomiona ze względu na "
+"problem z bazą danych:\n"
+"\n"
+"Błąd: %(error)s\n"
+"\n"
+"Możliwe, że Twoja baza danych jest uszkodzona i nie może zostać użyta.\n"
+"\n"
+"Możesz użyć funkcji uruchamiania na czysto, co spowoduje usunięcie "
+"uszkodzonej bazy, zajdzie wówczas jednak konieczność ponownego dodania "
+"podcastów i plików multimedialnych.  Jeśli chcesz to zrobić, kliknij "
+"przycisk Uruchom na czysto, a następnie uruchom ponownie aplikację "
+"%(appname)s.\n"
+"\n"
+"Aby pomóc nam uniknąć takich problemów w przyszłości, wyślij raport o "
+"błędzie na adres %(url)s."
 
 #: ../../lib/startup.py:158
 msgid "Unknown Error"
@@ -477,6 +531,8 @@ msgid ""
 "This %(appname)s podcast file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Nieprawidłowy format pliku podcastu aplikacji %(appname)s: %(url)s.  "
+"Powiadom o tym osobę, która ten plik opublikowała."
 
 #: ../../lib/commandline.py:173
 #, python-format
@@ -484,11 +540,13 @@ msgid ""
 "This %(appname)s podcast file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
+"Niewłaściwy typ zawartości pliku podcastu aplikacji %(appname)s: %(url)s.  "
+"Powiadom o tym osobę, która ten plik opublikowała."
 
 #: ../../lib/commandline.py:182
 #, python-format
 msgid "Could not download the %(appname)s podcast file: %(url)s"
-msgstr ""
+msgstr "Nie udało się pobrać pliku podcastu aplikacji %(appname)s: %(url)s"
 
 #: ../../lib/commandline.py:237
 msgid "Invalid Torrent"
@@ -503,7 +561,7 @@ msgstr ""
 
 #: ../../lib/commandline.py:246
 msgid "File Error"
-msgstr ""
+msgstr "Błąd pliku"
 
 #: ../../lib/commandline.py:248
 #, python-format
@@ -511,6 +569,8 @@ msgid ""
 "The torrent file %(filename)s could not be opened. Please ensure it exists "
 "and you have permission to access this file."
 msgstr ""
+"Nie udało się otworzyć pliku torrent %(filename)s. Upewnij się, że taki plik "
+"istnieje, a także że masz uprawnienia umożliwiające dostęp do niego."
 
 #: ../../lib/databaseupgrade.py:2738 ../../lib/feed.py:1692
 #, python-format
@@ -691,6 +751,14 @@ msgid ""
 "\n"
 "Do you want to try to load this podcast anyway?"
 msgstr ""
+"Ten podcast nie jest zgodny z %(appname)s, lecz mimo tego można podjąć próbę "
+"rozpoznania plików. Wyświetlenie listy plików wideo może zabrać trochę "
+"więcej czasu, a ich opisy mogą wyglądać dziwnie.\n"
+"\n"
+"Skontaktuj się z wydawcą %(url)s i zapytaj, czy może dostarczyć podcast w "
+"formacie zgodnym z %(appname)s.\n"
+"\n"
+"Czy mimo wszystko chcesz spróbować załadować ten podcast?"
 
 #: ../../lib/feed.py:2319 ../../lib/feed.py:2459
 msgid "Local Files"
@@ -924,6 +992,8 @@ msgstr "Nie dołączaj bazy danych"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s wymaga podania nazwy użytkownika i hasło do "
+"\"%(realm)s\"."
 
 #: ../../lib/dialogs.py:214
 msgid "Login Required"
@@ -943,7 +1013,7 @@ msgstr "Usuń z biblioteki"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:73
 msgid "Delete from Drive"
-msgstr ""
+msgstr "Usuń z dysku"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:108
 #: ../../lib/frontends/widgets/itemcontextmenu.py:166
@@ -956,7 +1026,7 @@ msgstr "Odtwarzacz zewnętrzny"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:176
 #: ../../lib/frontends/widgets/itemcontextmenu.py:226
 msgid "Edit Item Details"
-msgstr ""
+msgstr "Edytuj szczegóły elementu"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:123
 #, python-format
@@ -980,7 +1050,7 @@ msgstr "Odtwórz"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "Pause"
-msgstr ""
+msgstr "Pauza"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:147
 #: ../../lib/frontends/widgets/itemrenderer.py:472
@@ -1035,7 +1105,7 @@ msgstr "Wznów pobieranie"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:234
 #, python-format
 msgid "Show File in %(progname)s"
-msgstr ""
+msgstr "Wyświetl plik w %(progname)s"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:237
 msgid "File on Disk"
@@ -1050,14 +1120,15 @@ msgstr "Kopiuj URL do schowka"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:259
 msgid "View Web Page"
-msgstr ""
+msgstr "Wyświetl stronę WWW"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:359
 #, python-format
 msgid "%(count)d Device Item"
 msgid_plural "%(count)d Device Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d urządzenie"
+msgstr[1] "%(count)d urządzenia"
+msgstr[2] "%(count)d urządzeń"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:365
 #, python-format
@@ -1097,7 +1168,7 @@ msgstr "Uruchom ponownie wysyłanie"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:424
 msgid "Edit Items"
-msgstr ""
+msgstr "Edytuj elementy"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:439
 #: ../../lib/frontends/widgets/itemlistwidgets.py:653
@@ -1170,7 +1241,7 @@ msgstr "obejrzane miesiąc temu"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:138
 msgid "Outdated Podcast Items:"
-msgstr ""
+msgstr "Nieaktualne podcasty"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:140
 #, python-format
@@ -1231,7 +1302,7 @@ msgstr "15 elementów"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:242
 msgid "Podcast Settings"
-msgstr ""
+msgstr "Ustawienia podcastu"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:299
 #, python-format
@@ -1241,7 +1312,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:302
 #, python-format
 msgid "%(item)s"
-msgstr ""
+msgstr "%(item)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:306
 msgid "Resume"
@@ -1262,7 +1333,7 @@ msgstr "Wyczyść ukończone konwersje"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:723
 #: ../../lib/frontends/widgets/itemlistwidgets.py:897
 msgid "Save as Podcast"
-msgstr ""
+msgstr "Zapisz jako podcast"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:743
 #: ../../lib/frontends/widgets/tablist.py:729
@@ -1295,15 +1366,15 @@ msgstr "Zobacz|Wszystkie"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:791
 msgid "Save as Playlist"
-msgstr ""
+msgstr "Zapisz jako listę odtwarzania"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:809
 msgid "Movies"
-msgstr ""
+msgstr "Filmy"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:811
 msgid "Shows"
-msgstr ""
+msgstr "Pokazy"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:813
 msgid "Clips"
@@ -1315,11 +1386,11 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:1026
 #: ../../lib/frontends/widgets/tablist.py:1032
 msgid "Podcasts"
-msgstr ""
+msgstr "Podcasty"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:895
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1112
 #: ../../lib/frontends/widgets/statictabs.py:157
@@ -1338,7 +1409,7 @@ msgstr "Najnowsze dostępne"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1328
 #, python-format
 msgid "%(rate)s"
-msgstr ""
+msgstr "%(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1305
 #, python-format
@@ -1389,39 +1460,43 @@ msgstr "Ustawienia pobierania"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1441
 msgid "Auto-Download All"
-msgstr ""
+msgstr "Automatycznie pobierz wszystko"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1442
 msgid "Auto-Download New"
-msgstr ""
+msgstr "Automatycznie pobierz nowe"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1443
 msgid "Auto-Download Off"
-msgstr ""
+msgstr "Wyłącz automatyczne pobieranie"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1451
 msgid "Remove podcast"
-msgstr ""
+msgstr "Usuń podcast"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1808
 #, python-format
 msgid "Importing audio details and artwork: %(number)d of %(total)d"
 msgstr ""
+"Importowanie informacji oraz grafiki związanej z plikiem audio: %(number)d z "
+"%(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1811
 #, python-format
 msgid ""
 "Importing video details and creating thumbnails: %(number)d of %(total)d"
 msgstr ""
+"Importowanie informacji o pliku wideo oraz tworzenie miniaturek: %(number)d "
+"z %(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1814
 #, python-format
 msgid "Importing file details: %(number)d of %(total)d"
-msgstr ""
+msgstr "Importowanie informacji o pliku: %(number)d z %(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1968
 msgid "Remaining"
-msgstr ""
+msgstr "Pozostało"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1970
 msgid "Upload"
@@ -1430,7 +1505,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1971
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1972
 msgid "Total"
-msgstr ""
+msgstr "Ogółem"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2016
 msgid "Connected Peers"
@@ -1450,15 +1525,15 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2203
 msgid "View License"
-msgstr ""
+msgstr "Wyświetl licencję"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2224
 msgid "Select an item to view more of its details"
-msgstr ""
+msgstr "Wybierz element, aby obejrzeć szczegółowe informacje"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2277
 msgid "DRM Locked"
-msgstr ""
+msgstr "Zabezpieczone za pomocą DRM"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:56
 msgid "Add a Playlist"
@@ -1478,7 +1553,7 @@ msgstr "Nowa lista odtwarzania:"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:56
 msgid "Sharing Disabled"
-msgstr ""
+msgstr "Współdzielenie wyłączone"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:63
 #, python-format
@@ -1491,11 +1566,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:74
 msgid "Click here to install"
-msgstr ""
+msgstr "Kliknij tutaj, aby zainstalować"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:121
 msgid "On"
-msgstr ""
+msgstr "Włączone"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:127
 #: ../../lib/frontends/widgets/prefpanel.py:516
@@ -1504,7 +1579,7 @@ msgstr "nie pobieraj"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:153
 msgid "Get Help"
-msgstr ""
+msgstr "Uzyskaj pomoc"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:206
 #: ../../lib/frontends/widgets/tablist.py:858
@@ -1526,7 +1601,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:252
 msgid "Disabled: Needs Bonjour"
-msgstr ""
+msgstr "Wyłączone: wymaga Bonjour"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:268
 msgid "Share Music"
@@ -1534,12 +1609,14 @@ msgstr "Współdziel muzykę"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:269
 msgid "Share Videos"
-msgstr ""
+msgstr "Współdziel video"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:271
 #: ../../lib/frontends/widgets/prefpanel.py:913
 msgid "Warn on quit when others are connected to my media library."
 msgstr ""
+"Ostrzegaj przy kończeniu programu jeśli do mojej biblioteki multimediów są "
+"podłączeni inni użytkownicy."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:279
 #, python-format
@@ -1548,7 +1625,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:316
 msgid "Sync a Phone, Tablet, or Digital Camera"
-msgstr ""
+msgstr "Zsynchronizuj telefon, tablet albo cyfrowy aparat fotograficzny"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:325
 #, python-format
@@ -1561,7 +1638,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:339
 msgid "Show all attached devices and drives"
-msgstr ""
+msgstr "Pokaż wszystkie podłączone urządzenia i dyski"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:346
 #, python-format
@@ -1607,7 +1684,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:473
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:482
 #: ../../lib/frontends/widgets/menus.py:259
@@ -1620,7 +1697,7 @@ msgstr "Dodaj źródło"
 #: ../../lib/frontends/widgets/tablist.py:1098
 #: ../../lib/frontends/widgets/tablist.py:1104
 msgid "Playlists"
-msgstr ""
+msgstr "Listy odtwarzania"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:524
 #: ../../lib/frontends/widgets/widgetconst.py:58
@@ -1630,7 +1707,7 @@ msgstr "Nazwa"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:533
 msgid "Add Playlist"
-msgstr ""
+msgstr "Dodaj listę odtwarzania"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:559
 #: ../../lib/frontends/widgets/prefpanel.py:1284
@@ -1652,7 +1729,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:138
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Usuń"
 
 #: ../../lib/frontends/widgets/diagnostics.py:91
 #: ../../lib/frontends/widgets/menus.py:377
@@ -1697,7 +1774,7 @@ msgstr "Całkowita liczba obiektów w pamięci:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:136
 msgid "Total db backups:"
-msgstr ""
+msgstr "Łączna liczba kopii zapasowych bazy:"
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
@@ -1743,7 +1820,7 @@ msgstr "Czas"
 
 #: ../../lib/frontends/widgets/widgetconst.py:67
 msgid "Status"
-msgstr "Stan"
+msgstr "Status"
 
 #: ../../lib/frontends/widgets/widgetconst.py:68
 #: ../../lib/frontends/widgets/itemedit.py:517
@@ -1768,19 +1845,19 @@ msgstr "Prędkość"
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
-msgstr ""
+msgstr "Data dodania"
 
 #: ../../lib/frontends/widgets/widgetconst.py:74
 msgid "Last Played"
-msgstr ""
+msgstr "Ostatnio odtwarzane"
 
 #: ../../lib/frontends/widgets/widgetconst.py:75
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"
-msgstr ""
+msgstr "DRM"
 
 #: ../../lib/frontends/widgets/widgetconst.py:77
 msgid "File Type"
@@ -1789,15 +1866,15 @@ msgstr "Typ pliku"
 #: ../../lib/frontends/widgets/widgetconst.py:79
 #: ../../lib/frontends/widgets/itemedit.py:552
 msgid "Video Kind"
-msgstr ""
+msgstr "Rodzaj wideo"
 
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Order"
-msgstr ""
+msgstr "Kolejność"
 
 #: ../../lib/frontends/widgets/linkhandler.py:55
 msgid "Subscribe to Podcast"
-msgstr ""
+msgstr "Zasubskrybuj podcast"
 
 #: ../../lib/frontends/widgets/linkhandler.py:57
 #, python-format
@@ -1807,6 +1884,9 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Ten link wygląda na podcast.  Czy chcesz go dodać do swoich subskrypcji?\n"
+"\n"
+"%(url)s"
 
 #: ../../lib/frontends/widgets/crashdialog.py:53
 #, python-format
@@ -1815,7 +1895,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/crashdialog.py:68
 msgid "You can help us fix this problem by submitting an error report."
-msgstr ""
+msgstr "Możesz nam pomóc rozwiązać ten problem nadsyłając zgłoszenie błędu."
 
 #: ../../lib/frontends/widgets/crashdialog.py:75
 msgid ""
@@ -1823,25 +1903,32 @@ msgid ""
 "uniquely identifable information including file names, website URLs, podcast "
 "URLs, and disk paths."
 msgstr ""
+"Uwaga: To zgłoszenie błędu nie zostanie opublikowane, lecz może zawierać "
+"informacje umożliwiające jednoznaczną identyfikację, takie jak: nazwy "
+"plików, adresy URL stron WWW, adresy URL podcastów oraz ścieżki dostępu na "
+"dyskach."
 
 #: ../../lib/frontends/widgets/crashdialog.py:83
 msgid "See crash report"
-msgstr ""
+msgstr "Zobacz raport o wystąpieniu awarii"
 
 #: ../../lib/frontends/widgets/crashdialog.py:89
 msgid ""
 "Include entire program database including all filenames, websites, and "
 "podcasts with the error report."
 msgstr ""
+"Zawrzyj w zgłoszeniu błędu całą bazę danych programu, włącznie ze wszystkimi "
+"nazwami plików, stronami WWW oraz podcastami."
 
 #: ../../lib/frontends/widgets/crashdialog.py:95
 msgid ""
 "What were you doing when you got this message?  (Helpful, but not required.)"
 msgstr ""
+"Co robiłeś kiedy pojawił się ten komunikat? (Pomocne, lecz niewymagane)."
 
 #: ../../lib/frontends/widgets/crashdialog.py:108
 msgid "Crash Report:"
-msgstr ""
+msgstr "Zgłoszenie awarii:"
 
 #: ../../lib/frontends/widgets/playback.py:678
 msgid "Open Subtitles File..."
@@ -1853,7 +1940,7 @@ msgstr "Pliki z napisami"
 
 #: ../../lib/frontends/widgets/videobox.py:155
 msgid "Unknown Album"
-msgstr ""
+msgstr "Nieznany album"
 
 #: ../../lib/frontends/widgets/videobox.py:156
 msgid "Unknown Artist"
@@ -1882,15 +1969,15 @@ msgstr "adresie URL:"
 #: ../../lib/frontends/widgets/newfeed.py:96
 #: ../../lib/frontends/widgets/menus.py:256
 msgid "Add Podcast"
-msgstr ""
+msgstr "Dodaj podcast"
 
 #: ../../lib/frontends/widgets/newfeed.py:97
 msgid "Enter the URL of the podcast to add"
-msgstr ""
+msgstr "Wpisz adres URL podcastu, który chcesz dodać"
 
 #: ../../lib/frontends/widgets/newfeed.py:108
 msgid "Add Podcast - Invalid URL"
-msgstr ""
+msgstr "Dodaj podcast - Nieprawidłowy adres URL"
 
 #: ../../lib/frontends/widgets/newfeed.py:110
 msgid ""
@@ -1899,6 +1986,10 @@ msgid ""
 "\n"
 "Enter the URL of the podcast to add"
 msgstr ""
+"Wpisany adres nie jest prawidłowym adres URL. Sprawdź URL i spróbuj "
+"ponownie.\n"
+"\n"
+"Wprowadź adres URL podcastu, który chcesz dodać"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:261
@@ -1919,7 +2010,7 @@ msgstr "W:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:107
 msgid "Podcast:"
-msgstr ""
+msgstr "Podcast:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:114
 msgid "Search engine:"
@@ -1929,14 +2020,16 @@ msgstr "wyszukiwarce:"
 #: ../../lib/frontends/widgets/menus.py:275
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Usuń podcast"
+msgstr[1] "Usuń podcasty"
+msgstr[2] "Usuń podcasty"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
 msgid_plural "Are you sure you want to remove these podcasts:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Czy na pewno chcesz usunąć ten podcast:"
+msgstr[1] "Czy na pewno chcesz usunąć te podcasty:"
+msgstr[2] "Czy na pewno chcesz usunąć te podcasty:"
 
 #: ../../lib/frontends/widgets/removefeeds.py:87
 msgid "Keep items that have been downloaded in my library."
@@ -1961,7 +2054,14 @@ msgid_plural ""
 "Are you sure you want to remove these podcasts?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Czy na pewno chcesz usunąć ten podcast? Spowoduje to anulowanie pobierania "
+"plików."
 msgstr[1] ""
+"Czy na pewno chcesz usunąć te podcasty? Spowoduje to anulowanie pobierania "
+"plików."
+msgstr[2] ""
+"Czy na pewno chcesz usunąć te podcasty? Spowoduje to anulowanie pobierania "
+"plików."
 
 #: ../../lib/frontends/widgets/displays.py:523
 #, python-format
@@ -1997,15 +2097,17 @@ msgstr "Otwórz zewnętrznie"
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Zaznaczono %(count)d folder podcastów"
+msgstr[1] "Zaznaczono %(count)d foldery podcastów"
+msgstr[2] "Zaznaczono %(count)d folderów podcastów"
 
 #: ../../lib/frontends/widgets/displays.py:705
 #, python-format
 msgid "(contains %(count)d podcast)"
 msgid_plural "(contains %(count)d podcasts)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(zawiera %(count)d podcast)"
+msgstr[1] "(zawiera %(count)d podcasty)"
+msgstr[2] "(zawiera %(count)d podcastów)"
 
 #: ../../lib/frontends/widgets/displays.py:711
 #, python-format
@@ -2027,8 +2129,9 @@ msgstr[2] "(zawiera %(count)d list odtwarzania)"
 #, python-format
 msgid "%(count)d Podcast Selected"
 msgid_plural "%(count)d Podcasts Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Zaznaczono %(count)d podcast"
+msgstr[1] "Zaznaczono %(count)d podcasty"
+msgstr[2] "Zaznaczono %(count)d podcastów"
 
 #: ../../lib/frontends/widgets/displays.py:732
 #, python-format
@@ -2064,6 +2167,8 @@ msgstr "Automatycznie uruchamiaj %(appname)s po zalogowaniu użytkownika"
 msgid ""
 "When starting up %(appname)s, remember what screen I was on when I last quit."
 msgstr ""
+"Po uruchomieniu wyświetlaj ekran, na którym poprzednio zakończono pracę "
+"%(appname)s."
 
 #: ../../lib/frontends/widgets/prefpanel.py:457
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -2086,15 +2191,15 @@ msgstr "Język:"
 #: ../../lib/frontends/widgets/prefpanel.py:482
 #, python-format
 msgid "(Changing the language requires you to restart %(appname)s.)"
-msgstr ""
+msgstr "(Zmiana języka wymaga ponownego uruchomienia %(appname)s.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:494
 msgid "Show videos from podcasts in the Videos section."
-msgstr ""
+msgstr "Pokaż wideo z podcastów w sekcji Wideo"
 
 #: ../../lib/frontends/widgets/prefpanel.py:500
 msgid "Show audio from podcasts in the Music section."
-msgstr ""
+msgstr "Pokaż audio z podcastów w sekcji Muzyka"
 
 #: ../../lib/frontends/widgets/prefpanel.py:506
 msgid "Every day"
@@ -2138,19 +2243,19 @@ msgstr "1000"
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "Standard view"
-msgstr ""
+msgstr "Widok standardowy"
 
 #: ../../lib/frontends/widgets/prefpanel.py:532
 msgid "List view"
-msgstr ""
+msgstr "Widok listy"
 
 #: ../../lib/frontends/widgets/prefpanel.py:538
 msgid "Default settings for new podcasts:"
-msgstr ""
+msgstr "Domyślne ustawienia nowych podcastów:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:542
 msgid "(These can be changed using the podcast's settings button)"
-msgstr ""
+msgstr "(Można je zmienić używając przycisku ustawień podcastu)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Check for new content:"
@@ -2162,7 +2267,7 @@ msgstr "Auto-pobieranie ustawienia:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:557
 msgid "Default view:"
-msgstr ""
+msgstr "Widok domyślny:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:563
 msgid "Remember this many old items:"
@@ -2243,6 +2348,8 @@ msgid ""
 "Directory '%(dir)s' could not be created.  Please choose a directory you "
 "have write access to."
 msgstr ""
+"Nie można utworzyć katalogu %(dir)s. Wybierz katalog, do którego masz "
+"uprawnienia do zapisu."
 
 #: ../../lib/frontends/widgets/prefpanel.py:748
 msgid "Migrate existing movies?"
@@ -2255,6 +2362,9 @@ msgid ""
 "migrate your existing downloads there?  (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Wybrano nowy folder do zapisywania pobieranych filmów.  Czy %(appname)s ma "
+"tam przenieść twoje pobrane pliki?  (Pliki aktualnie pobierane nie zostaną "
+"przeniesione do czasu zakończenia pobierania.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:768
 msgid "folder"
@@ -2337,7 +2447,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:975
 #, python-format
 msgid "Play media in %(appname)s."
-msgstr ""
+msgstr "Odtwórz plik multimedialny w %(appname)s."
 
 #: ../../lib/frontends/widgets/prefpanel.py:978
 msgid "Always play videos in a separate window."
@@ -2349,7 +2459,7 @@ msgstr "Automatycznie pokazuj napisy do filmu, kiedy będą dostępne."
 
 #: ../../lib/frontends/widgets/prefpanel.py:983
 msgid "Continuous Playback"
-msgstr ""
+msgstr "Odtwarzanie ciągłe"
 
 #: ../../lib/frontends/widgets/prefpanel.py:987
 msgid "Play video and audio items one after another"
@@ -2361,23 +2471,24 @@ msgstr "Zatrzymaj odtwarzanie po każdym elemencie wideo lub audio"
 
 #: ../../lib/frontends/widgets/prefpanel.py:991
 msgid "Resume Playback"
-msgstr ""
+msgstr "Wznów odtwarzanie"
 
 #: ../../lib/frontends/widgets/prefpanel.py:994
 msgid "Continue playing videos from where they were last stopped."
-msgstr ""
+msgstr "Kontynuuj odtwarzanie wideo od miejsca ostatniego zatrzymania."
 
 #: ../../lib/frontends/widgets/prefpanel.py:996
 msgid "Continue playing music files from where they were last stopped."
-msgstr ""
+msgstr "Kontynuuj odtwarzanie muzyki od miejsca ostatniego zatrzymania."
 
 #: ../../lib/frontends/widgets/prefpanel.py:999
 msgid "Continue playing podcast files from where they were last stopped."
 msgstr ""
+"Kontynuuj odtwarzanie plików podcastów od miejsca ostatniego zatrzymania."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1059
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Zezwól na następującą liczbę jednoczesnych konwersji:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1060
 msgid "(changing this will not apply to currently running conversions)"
@@ -2406,12 +2517,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:1191
 #, python-format
 msgid "Name:  %(extensionname)s"
-msgstr ""
+msgstr "Nazwa:  %(extensionname)s"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1193
 #, python-format
 msgid "Version:  %(extensionversion)s"
-msgstr ""
+msgstr "Wersja:  %(extensionversion)s"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1196
 msgid "Description:"
@@ -2735,7 +2846,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:950
 #: ../../lib/frontends/widgets/tablist.py:969
 msgid "Rename Source"
-msgstr ""
+msgstr "Zmień nazwę źródła"
 
 #: ../../lib/frontends/widgets/menus.py:276
 msgid "Remove Podcasts"
@@ -3003,7 +3114,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:450
 msgid "DRM locked"
-msgstr ""
+msgstr "Zabezpieczone przez DRM"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:1338
 #, python-format
@@ -3312,7 +3423,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:784
 msgid "Add Source - Invalid URL"
-msgstr ""
+msgstr "Dodaj źródło - Nieprawidłowy URL"
 
 #: ../../lib/frontends/widgets/application.py:785
 msgid ""
@@ -3412,7 +3523,7 @@ msgstr[1] ""
 #: ../../lib/frontends/widgets/application.py:1013
 #, python-format
 msgid "Import Music from %(media_player)s?"
-msgstr ""
+msgstr "Zamportować muzykę z %(media_player)s?"
 
 #: ../../lib/frontends/widgets/application.py:1014
 #, python-format
@@ -3771,7 +3882,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:327
 msgid "Click to choose image."
-msgstr ""
+msgstr "Kliknij, aby wybrać obraz."
 
 #: ../../lib/frontends/widgets/itemedit.py:404
 msgid "Move"
@@ -3779,7 +3890,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:410
 msgid "Choose location for file"
-msgstr ""
+msgstr "Wybierz miejsce dla tego pliku"
 
 #: ../../lib/frontends/widgets/itemedit.py:498
 msgid "/"
@@ -4140,7 +4251,7 @@ msgstr "Pliki binarne do użycia:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:102
 msgid "ffmpeg binary path:"
-msgstr "ścieżka pliku binarnergo ffmpeg"
+msgstr "ścieżka pliku binarnego ffmpeg:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:109
 msgid "ffmpeg2theora binary path:"
