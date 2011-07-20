@@ -55,10 +55,12 @@ class SharingDragHandler(object):
         return { 'sharing-item': pickle.dumps(items) }
 
     def end_drag(self, succeeded):
-        # Delay hiding.  We want the item to be added without the download
-        # tab disappearing for a split second in the meantime.
-        if not succeeded:
-            app.tabs['library'].hide_downloading_tab()
+        # If the drag and drop was not successful, hide the tab immediately,
+        # otherwise we want to delay hiding.  We want the item to be added
+        # without the download tab disappearing for a split second in the
+        # meantime.
+        hide_now = not succeeded
+        app.tabs['library'].hide_downloading_tab(hide_now=hide_now)
 
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know

@@ -102,8 +102,14 @@ class MixedItemListDragHandler(object):
             return {}
 
     def end_drag(self, succeeded):
+        hide_now = False
+        # If the drag and drop was not successful and we have manually enabled
+        # the downloading tab as a result of the drag, then hide the
+        # downloading tab immediately.  Otherwise delay it to avoid it
+        # disappearing and then reappearing.
         if not succeeded and self.shown_downloading_tab:
-            app.tabs['library'].hide_downloading_tab()
+            hide_now = True
+        app.tabs['library'].hide_downloading_tab(hide_now=hide_now)
         self.shown_downloading_tab = False
 
 class FilteredListMixin(object):
