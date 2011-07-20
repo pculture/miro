@@ -382,9 +382,9 @@ class DatabaseSourceTrackerBase(SourceTrackerBase):
 
 class AllFeedsItemTracker(DatabaseSourceTrackerBase):
     type = u'feed'
-    def __init__(self, id):
+    def __init__(self, id_):
         self.view = item.Item.toplevel_view()
-        self.id = id
+        self.id = id_
         DatabaseSourceTrackerBase.__init__(self)
 
 class FeedItemTracker(DatabaseSourceTrackerBase):
@@ -973,7 +973,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             feed_ = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("feed not found: %s" % id)
+            logging.warn("feed not found: %s" % message.id)
         else:
             feed_.update()
 
@@ -981,7 +981,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             f = ChannelFolder.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("folder not found: %s" % id)
+            logging.warn("folder not found: %s" % message.id)
         else:
             for feed in f.get_children_view():
                 feed.schedule_update_events(0)
@@ -1239,11 +1239,11 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             logging.warn("AddVideosToPlaylist: Playlist not found -- %s",
                     message.playlist_id)
             return
-        for id in message.video_ids:
+        for id_ in message.video_ids:
             try:
-                item_ = item.Item.get_by_id(id)
+                item_ = item.Item.get_by_id(id_)
             except database.ObjectNotFoundError:
-                logging.warn("AddVideosToPlaylist: Item not found -- %s", id)
+                logging.warn("AddVideosToPlaylist: Item not found -- %s", id_)
                 continue
             if not item_.is_downloaded():
                 logging.warn("AddVideosToPlaylist: Item not downloaded (%s)",
