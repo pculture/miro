@@ -153,18 +153,28 @@ class MediaTypeDropHandler(object):
 
     def validate_drop(self,
             _table_view, model, typ, _source_actions, parent_iter, position):
+        downloadables = ('sharing-item', 'available-item')
+        library = ('videos', 'music', 'others')
         if parent_iter is None or position != -1:
             return widgetset.DRAG_ACTION_NONE
         parent = model[parent_iter][0].id
-        if typ == 'downloaded-item' and parent in ('videos', 'music', 'others'):
+        if typ == 'downloaded-item' and parent in library:
             return widgetset.DRAG_ACTION_COPY
         elif typ == 'device-%s-item' % getattr(parent, 'media_type', None):
             return widgetset.DRAG_ACTION_COPY
-        elif parent == 'downloading' and typ == 'sharing-item':
+        elif parent == 'downloading' and typ in downloadables:
             return widgetset.DRAG_ACTION_COPY
-        elif parent == 'downloading' and typ == 'available-item':
-            return widgetset.DRAG_ACTION_COPY
-        return widgetset.DRAG_ACTION_NONE
+        elif parent in library and typ in downloadables:
+            # iter should be valid here because we have shown the
+            # downloading tab in the begin_drag() operation.
+            if 'downloading' not in app.tabs['library'].iter_map:
+                logging.debug('Downloading tab missing, missing call to '
+                              'show_downloading_tab?')
+                return widgetset.DRAG_ACTION_NONE
+            iter_ = app.tabs['library'].iter_map['downloading']
+            return (widgetset.DRAG_ACTION_COPY, iter_)
+        else:
+            return widgetset.DRAG_ACTION_NONE
 
     def accept_drop(self, _table_view, model, typ, _source_actions, parent,
                     position, videos):

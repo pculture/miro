@@ -476,11 +476,6 @@ class DataSourceBase(NSObject):
                 position)
             if not drop_action:
                 return NSDragOperationNone
-            if isinstance(drop_action, (tuple, list)):
-                drop_action, iter = drop_action
-                view.setDropRow_dropOperation_(
-                    self.model.row_of_iter(view, iter),
-                    NSTableViewDropOn)
             return drop_action
         else:
             return NSDragOperationNone
