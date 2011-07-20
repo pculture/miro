@@ -305,10 +305,6 @@ class TabList(signals.SignalEmitter):
 
     def remove(self, name):
         with self.removing():
-            iter_ = self.iter_map[name]
-            tab = self.view.model[iter_][0]
-            if not tab.obey_autohide:
-                return
             iter_ = self.iter_map.pop(name)
             if name in app.tabs.selected_ids:
                 # hack for 17653: on OS X, deleting the selected tab doesn't
@@ -490,7 +486,10 @@ class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
         # can't query app.tabs.selection here without changing it (#16914#c4)
         if name not in (self.view.model[iter_][0].id
                 for iter_ in self.view.get_selection()):
-            self.remove(name)
+            iter_ = self.iter_map[name]
+            tab = self.view.model[iter_][0]
+            if tab.obey_autohide:
+                self.remove(name)
 
     def on_deselected(self, view):
         """deselected is a more specific signal that selection-changed, to
