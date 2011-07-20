@@ -183,7 +183,7 @@ class MediaTypeDropHandler(object):
             messages.DownloadSharingItems(videos).send_to_backend()
         elif typ == 'available-item':
             for v in videos:
-                messages.StartDownload(v.id).send_to_backend()
+                messages.StartDownload(v).send_to_backend()
         else:
             media_type = model[parent][0].media_type
             messages.SetItemMediaType(media_type, videos).send_to_backend()
