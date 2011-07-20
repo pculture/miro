@@ -836,7 +836,12 @@ class SharingManagerBackend(object):
         pass
 
     def handle_item_list(self, message):
-        self.make_item_dict(message.items)
+        item_ids = [item.id for item in message.items]
+        if message.id is not None:
+            self.playlist_item_map[message.id] += item_ids
+        for item_id in item_ids:
+            if not item_id in self.daapitems:
+                self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
         # If items are changed, overwrite with a recreated entry.  This
@@ -900,7 +905,15 @@ class SharingManagerBackend(object):
         def _handle_playlist_added():
             with self.item_lock:
                 self.make_daap_playlists(playlists)
-
+                for p in playlists:
+                    self.playlist_item_map[p.id] = []
+                    app.info_updater.item_list_callbacks.add(self.type,
+                                                     p.id,
+                                                     self.handle_item_list)
+                    app.info_updater.item_changed_callbacks.add(self.type,
+                                                     p.id,
+                                                     self.handle_items_changed)
+                    messages.TrackItems(self.type, p.id).send_to_backend()
         eventloop.add_urgent_call(lambda: _handle_playlist_added(),
                                   "SharingManagerBackend: playlist added")
 
@@ -927,10 +940,22 @@ class SharingManagerBackend(object):
                     # Missing key means it's a folder and we skip over it.
                     if self.daap_playlists.has_key(x):
                         del self.daap_playlists[x]
+                        del self.playlist_item_map[x]
+                        messages.StopTrackingItems(self.type,
+                                                   x).send_to_backend()
+                        app.info_updater.item_list_callbacks.remove(self.type,
+                                                    x,
+                                                    self.handle_item_list)
+                        app.info_updater.item_changed_callbacks.remove(
+                                                    self.type,
+                                                    x,
+                                                    self.handle_items_changed)
 
         eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
                                   "SharingManagerBackend: playlist removed")
 
+    # XXX I think we can probably do away with this one, since the item list
+    # callbacks will end up populating this anyway?
     def populate_playlists(self):
         with self.item_lock:
             self.make_daap_playlists(playlist.SavedPlaylist.make_view())

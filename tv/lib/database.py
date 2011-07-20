@@ -654,7 +654,7 @@ class DDBObject(signals.SignalEmitter):
         self.changed_attributes = set()
 
     def get_id(self):
-        """Returns unique integer assocaited with this object
+        """Returns unique integer associated with this object
         """
         return self.id
 
