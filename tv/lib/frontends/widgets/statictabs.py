@@ -42,6 +42,7 @@ class StaticTab(object):
 
     def __init__(self):
         self.unwatched = self.downloading = 0
+        self.obey_autohide = True
         self.icon = widgetutil.make_surface(self.icon_name)
         self.active_icon = widgetutil.make_surface(
             self.icon_name + '_active')

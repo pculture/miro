@@ -305,6 +305,10 @@ class TabList(signals.SignalEmitter):
 
     def remove(self, name):
         with self.removing():
+            iter_ = self.iter_map[name]
+            tab = self.view.model[iter_][0]
+            if not tab.obey_autohide:
+                return
             iter_ = self.iter_map.pop(name)
             if name in app.tabs.selected_ids:
                 # hack for 17653: on OS X, deleting the selected tab doesn't
@@ -443,11 +447,15 @@ class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
     def show_downloading_tab(self):
         self.auto_tabs_to_show.add('downloading')
         self.show_auto_tab('downloading')
+        iter_ = self.iter_map['downloading']
+        tab = self.view.model[iter_][0]
+        tab.obey_autohide = False
 
     def hide_downloading_tab(self):
         if 'downloading' in self.iter_map:
             iter_ = self.iter_map['downloading']
             tab = self.view.model[iter_][0]
+            tab.obey_autohide = True
             if not tab.downloading:
                 self.auto_tabs_to_show.discard('downloading')
                 self.remove_auto_tab_if_not_selected('downloading')
