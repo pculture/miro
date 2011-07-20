@@ -954,8 +954,9 @@ class SharingManagerBackend(object):
         eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
                                   "SharingManagerBackend: playlist removed")
 
-    # XXX I think we can probably do away with this one, since the item list
-    # callbacks will end up populating this anyway?
+    # Can't do away with this one.  Info_updater callbacks only notifies us
+    # on the fly when something is added/changed/removed, but not the initial
+    # state that should be in place on startup.
     def populate_playlists(self):
         with self.item_lock:
             self.make_daap_playlists(playlist.SavedPlaylist.make_view())
