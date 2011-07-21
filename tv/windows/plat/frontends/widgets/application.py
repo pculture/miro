@@ -132,8 +132,18 @@ class WindowsApplication(Application):
         call_on_ui_thread(migrateappname.migrateVideos, 'Democracy', 'Miro')
         call_on_ui_thread(flash.check_flash_install)
         call_on_ui_thread(bonjour.check_bonjour_install)
+        if app.config.get(prefs.APP_FINAL_RELEASE) == u"0":
+            # if this is not a final release, look at the beta
+            # channel
+            url = app.config.get(prefs.AUTOUPDATE_BETA_URL)
+            logging.info("Using beta channel")
+        else:
+            # if this is a final release, look at the final
+            # channel
+            url = app.config.get(prefs.AUTOUPDATE_URL)
+            logging.info("Using the final channel")
         ctypes.cdll.winsparkle.win_sparkle_set_appcast_url(
-               app.config.get(prefs.AUTOUPDATE_URL).encode('ascii', 'ignore'))
+                                            url.encode('ascii', 'ignore'))
         ctypes.cdll.winsparkle.win_sparkle_set_app_details(
                                 unicode(app.config.get(prefs.PUBLISHER)),
                                 unicode(app.config.get(prefs.SHORT_APP_NAME)),
