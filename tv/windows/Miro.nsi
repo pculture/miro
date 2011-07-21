@@ -161,27 +161,19 @@ start:
   StrCpy $ZUGO_HOMEPAGE "0"
   Goto after_zugo
 !endif
-  StrCmp "$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH$ZUGO_HOMEPAGE" "" 0 toolbar_options
 
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
-  StrCmp $ZUGO_COUNTRY "US" 0 zugo_int
-  ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /TOOLBAR /DEFAULTSTART /DEFAULTSEARCH"
-  Exec "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /TOOLBAR /DEFAULTSTART /DEFAULTSEARCH"
+  StrCmp "$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH$ZUGO_HOMEPAGE" "" 0 +10
+  StrCmp $ZUGO_COUNTRY "US" 0 +5
   StrCpy $ZUGO_TOOLBAR "1"
   StrCpy $ZUGO_DEFAULT_SEARCH "1"
   StrCpy $ZUGO_HOMEPAGE "1"
-  Goto toolbar_options
-  
-zugo_int:
-  ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /DEFAULTSTART /DEFAULTSEARCH"
-  Exec "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /DEFAULTSTART /DEFAULTSEARCH"
+  Goto +6
   StrCpy $ZUGO_TOOLBAR "0"
   StrCpy $ZUGO_DEFAULT_SEARCH "0"
   StrCpy $ZUGO_HOMEPAGE "1"
   StrCpy $ZUGO_PROVIDER "Yahoo"
   StrCpy $ZUGO_TERMS "http://www.mirostart.com/terms/yahoo/"
 
-toolbar_options:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Type"   "label"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Text"   "Included Components"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Left"   "120"
@@ -210,7 +202,7 @@ toolbar_options:
 
   StrCmp $ZUGO_COUNTRY "US" 0 no_toolbar
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Type"   "checkbox"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "StartNow Toolbar (powered by $ZUGO_PROVIDER)"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "Search Toolbar (powered by $ZUGO_PROVIDER)"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Right"  "315"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Top"    "155"
@@ -1063,7 +1055,7 @@ Function .onInit
   StrCpy $SIMPLE_INSTALL "1"
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
-  StrCpy $ZUGO_PROVIDER "Bing™"
+  StrCpy $ZUGO_PROVIDER "Bing"
   StrCpy $ZUGO_TERMS "http://www.mirostart.com/terms/bing/"
 
   ; Check if we're reinstalling
@@ -1333,6 +1325,8 @@ Function .onInstSuccess
 ;StrCmp "$ZUGO_COUNTRY" "US" 0 +2
 ;StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /OFFERED"
 
+!insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
+
 StrCpy $R1 "0"
 StrCmp "$ZUGO_HOMEPAGE" "0" +3
 StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULTSTART"
@@ -1348,7 +1342,9 @@ StrCmp "$R1" "0" zugo_install
 StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
 
 zugo_install:
-StrCmp "$ZUGO_FLAGS" "" end
+StrCmp "$ZUGO_FLAGS" "" 0 +3
+StrCmp "$ZUGO_COUNTRY" "US" 0 end
+StrCpy $ZUGO_FLAGS "/OFFERED"
 
 ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
 Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
