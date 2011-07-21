@@ -165,16 +165,16 @@ start:
 
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
   StrCmp $ZUGO_COUNTRY "US" 0 zugo_int
-  ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /TOOLBAR /DEFAULTSTART /DEFAULTSEARCH"
-  Exec "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /TOOLBAR /DEFAULTSTART /DEFAULTSEARCH"
+  ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /TOOLBAR /DEFAULTSTART /DEFAULTSEARCH $ZUGO_FLAGS"
+  Exec "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /TOOLBAR /DEFAULTSTART /DEFAULTSEARCH $ZUGO_FLAGS"
   StrCpy $ZUGO_TOOLBAR "1"
   StrCpy $ZUGO_DEFAULT_SEARCH "1"
   StrCpy $ZUGO_HOMEPAGE "1"
   Goto toolbar_options
   
 zugo_int:
-  ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /DEFAULTSTART /DEFAULTSEARCH"
-  Exec "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /DEFAULTSTART /DEFAULTSEARCH"
+  ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /DEFAULTSTART /DEFAULTSEARCH $ZUGO_FLAGS"
+  Exec "$PLUGINSDIR\${MIROBAR_EXE} /OFFERED /DEFAULTSTART /DEFAULTSEARCH $ZUGO_FLAGS"
   StrCpy $ZUGO_TOOLBAR "0"
   StrCpy $ZUGO_DEFAULT_SEARCH "0"
   StrCpy $ZUGO_HOMEPAGE "1"
@@ -199,7 +199,7 @@ toolbar_options:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Flags"  "DISABLED"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Type"   "checkbox"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Text"   "$APP_NAME Start Homepage (by $ZUGO_PROVIDER)"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Text"   "$APP_NAME Start Homepage (powered by $ZUGO_PROVIDER)"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Right"  "315"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Top"    "135"
@@ -235,11 +235,18 @@ no_toolbar:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Left"   "132"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Right"  "315"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Top"    "165"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Bottom" "180"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Bottom" "185"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Type"   "label"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Text"   "By clicking 'Next' you are agreeing to our"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Left"   "132"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Right"  "249"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Top"    "185"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Bottom" "195"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Type"   "link"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Text"   "Terms and Conditions"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Left"   "132"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Left"   "249"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Right"  "315"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Top"    "185"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Bottom" "195"
