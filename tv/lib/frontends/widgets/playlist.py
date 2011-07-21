@@ -55,16 +55,20 @@ class DropHandler(signals.SignalEmitter):
         return widgetset.DRAG_ACTION_MOVE
 
     def allowed_types(self):
-        return ('downloaded-item',)
+        return ('downloaded-item', 'mixed-item')
 
     def validate_drop(self,
             table_view, model, typ, source_actions, parent, position):
-        if position != -1 and typ == 'downloaded-item':
+        if position != -1 and typ in ('downloaded-item', 'mixed-item'):
             return widgetset.DRAG_ACTION_MOVE
         return widgetset.DRAG_ACTION_NONE
 
     def accept_drop(self,
             table_view, model, typ, source_actions, parent, position, dragged):
+        if typ == 'mixed-item':
+            dragged, _ = dragged
+            typ = 'downloaded-item'
+            app.tabs['library'].set_auto_tab_autohide('downloading', True)
         if 0 <= position < len(model):
             insert_id =  model.nth_row(position)[0].id
             # If we try to insert before an ID that iself is being

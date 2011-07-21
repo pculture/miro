@@ -1128,4 +1128,3 @@ class DeviceItemDragHandler(object):
 
     def end_drag(self, succeeded):
         pass
-        

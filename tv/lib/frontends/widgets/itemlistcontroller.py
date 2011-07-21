@@ -85,18 +85,21 @@ class MixedItemListDragHandler(object):
         return widgetset.DRAG_ACTION_COPY | widgetset.DRAG_ACTION_MOVE
 
     def allowed_types(self):
-        return ('downloaded-item', 'available-item')
+        return ('downloaded-item', 'available-item', 'mixed-item')
 
     def begin_drag(self, tableview, rows):
         videos = set(row[0].id for row in rows if row[0].downloaded)
         available = set(row[0].id for row in rows if not row[0].downloaded)
+
+        if available:
+            self.shown_downloading_tab = True
+            app.tabs['library'].show_downloading_tab()
+
         if videos and available:
-            return {}
+            return {'mixed-item': (videos, available)}
         if videos:
             return {'downloaded-item': videos}
         elif available:
-            self.shown_downloading_tab = True
-            app.tabs['library'].show_downloading_tab()
             return {'available-item': available}
         else:
             return {}
@@ -107,7 +110,8 @@ class MixedItemListDragHandler(object):
         # the downloading tab as a result of the drag, then hide the
         # downloading tab immediately.  Otherwise delay it to avoid it
         # disappearing and then reappearing.
-        if not succeeded and self.shown_downloading_tab:
+        if (not succeeded and self.shown_downloading_tab or
+          app.tabs['library'].auto_tab_autohide('downloading')):
             hide_now = True
         app.tabs['library'].hide_downloading_tab(hide_now=hide_now)
         self.shown_downloading_tab = False

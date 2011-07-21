@@ -443,15 +443,21 @@ class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
     def show_downloading_tab(self):
         self.auto_tabs_to_show.add('downloading')
         self.show_auto_tab('downloading')
-        self.auto_tabs['downloading'].obey_autohide = False
+        self.set_auto_tab_autohide('downloading', False)
 
     def hide_downloading_tab(self, hide_now=True):
-        tab = self.auto_tabs['downloading']
-        tab.obey_autohide = True
+        self.set_auto_tab_autohide('downloading', True)
         if hide_now and 'downloading' in self.iter_map:
+            tab = self.auto_tabs['downloading']
             if not tab.downloading:
                 self.auto_tabs_to_show.discard('downloading')
                 self.remove_auto_tab_if_not_selected('downloading')
+
+    def set_auto_tab_autohide(self, name, autohide):
+        self.auto_tabs[name].obey_autohide = autohide
+
+    def auto_tab_autohide(self, name):
+        return self.auto_tabs[name].obey_autohide
 
     def update_auto_tab_count(self, name, count):
         if count > 0:

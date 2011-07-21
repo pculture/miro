@@ -146,7 +146,7 @@ class MediaTypeDropHandler(object):
 
     def allowed_types(self):
         return ('downloaded-item', 'device-video-item', 'device-audio-item',
-                'sharing-item', 'available-item')
+                'sharing-item', 'available-item', 'mixed-item')
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
@@ -164,6 +164,9 @@ class MediaTypeDropHandler(object):
             return widgetset.DRAG_ACTION_COPY
         elif parent == 'downloading' and typ in downloadables:
             return widgetset.DRAG_ACTION_COPY
+        elif (typ == 'mixed-item' and (parent in library or
+          parent == 'downloading')):
+            return widgetset.DRAG_ACTION_COPY
         elif parent in library and typ in downloadables:
             # iter should be valid here because we have shown the
             # downloading tab in the begin_drag() operation.
@@ -176,8 +179,29 @@ class MediaTypeDropHandler(object):
         else:
             return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, _table_view, model, typ, _source_actions, parent,
-                    position, videos):
+    def accept_drop(self, _table_view, model, typ, _source_actions,
+                    parent_iter, position, videos):
+        library = ('videos', 'music', 'others')
+
+        # Mixed item.  Determine where we were dropped on, and override
+        # the drop to be either a media type assignment or a download operation
+        # as necessary.
+        if typ == 'mixed-item':
+            downloaded, available = videos
+            parent = model[parent_iter][0].id
+            if parent == 'downloading':
+                typ = 'available-item'
+                videos = available
+            elif parent in library:
+                typ = 'downloaded-item'
+                videos = downloaded
+                # Additionally, hint to end_drag() that we can actually hide
+                # the tab.
+                app.tabs['library'].set_auto_tab_autohide('downloading', True)
+            else:
+                raise ValueError('Dropped item not one of available or '
+                                 'downloaded')
+
         if typ == 'sharing-item':
             videos = pickle.loads(videos)
             messages.DownloadSharingItems(videos).send_to_backend()
@@ -185,7 +209,7 @@ class MediaTypeDropHandler(object):
             for v in videos:
                 messages.StartDownload(v).send_to_backend()
         else:
-            media_type = model[parent][0].media_type
+            media_type = model[parent_iter][0].media_type
             messages.SetItemMediaType(media_type, videos).send_to_backend()
 
 class NestedTabListDropHandler(object):
@@ -261,11 +285,12 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
                 widgetset.DRAG_ACTION_COPY)
 
     def allowed_types(self):
-        return NestedTabListDropHandler.allowed_types(self) + ('downloaded-item',)
+        extras = ('downloaded-item', 'mixed-item')
+        return NestedTabListDropHandler.allowed_types(self) + extras
 
     def validate_drop(self,
             table_view, model, typ, source_actions, parent, position):
-        if typ == 'downloaded-item':
+        if typ in ('downloaded-item', 'mixed-item'):
             if position != -1:
                 return widgetset.DRAG_ACTION_NONE
             if (not parent or model[parent][0].type == 'tab'
@@ -277,6 +302,11 @@ class PlaylistListDropHandler(NestedTabListDropHandler):
 
     def accept_drop(self,
             table_view, model, typ, source_actions, parent, position, ids):
+        # Override
+        if typ == 'mixed-item':
+            ids, _ = ids
+            typ = 'downloaded-item'
+            app.tabs['library'].set_auto_tab_autohide('downloading', True)
         if typ == 'downloaded-item':
             playlist_id = model[parent][0].id
             messages.AddVideosToPlaylist(playlist_id, ids).send_to_backend()
@@ -296,7 +326,7 @@ class DeviceDropHandler(object):
         return widgetset.DRAG_ACTION_COPY
 
     def allowed_types(self):
-        return ('downloaded-item',)
+        return ('downloaded-item', 'mixed-item')
 
     def validate_drop(self,
             _widget, model, typ, _source_actions, parent, position):
@@ -317,6 +347,10 @@ class DeviceDropHandler(object):
 
     def accept_drop(self,
             _widget, model, _type, _source_actions, parent, _position, videos):
+        if _type == 'mixed-item':
+            videos, _ = videos
+            _type = 'downloaded-item'
+            app.tabs['library'].set_auto_tab_autohide('downloading', True)
         device = model[parent][0]
         if getattr(device, 'fake', False):
             device = model[model.parent_iter(parent)][0]
