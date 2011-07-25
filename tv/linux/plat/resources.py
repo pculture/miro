@@ -89,8 +89,9 @@ def share_path(relative_path):
 def url(relative_path):
     """As path(), but return a file: URL instead.
     """
-    return u'file://%s' % urllib.quote(path(relative_path))
-
+    # utf-8 encode the path before using it in the URL
+    utf8_path = path(relative_path).encode('utf-8')
+    return u'file://%s' % urllib.pathname2url(utf8_path)
 
 def theme_path(theme, relative_path):
     return os.path.join(u'/usr/share/miro/themes', theme, relative_path)

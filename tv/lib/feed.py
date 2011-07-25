@@ -2242,20 +2242,23 @@ def path_to_directory_feed_url(path):
     """Convert a file path into a directory feed URL."""
 
     # To handle extended chars, convert the path to utf-8, then urlquote it.
-    url_path = urllib.quote(path.encode('utf-8', 'replace'), safe='/')
+    url_path = urllib.pathname2url(path.encode('utf-8'))
     return u"dtv:directoryfeed:" + url_path
 
 def directory_feed_url_to_path(url):
     """Convert a directory feed URL into a path."""
 
+    # URLs are always ascii, even if we store them as a unicode object.
+    url = str(url)
+
     # extract the path part
-    prefix = u"dtv:directoryfeed:"
+    prefix = "dtv:directoryfeed:"
     if not url.startswith(prefix):
         raise ValueError("Not a directory feed URL: %s" % url)
     url_path = url[len(prefix):]
-    # undo the quoting done in path_to_directory_feed_url()
-    # The path part should have been quoted, and only contain ascii chars
-    return urllib.unquote(url_path.decode('ascii'))
+    # The path part should have been encoded as utf-8 then quoted 
+    # in path_to_directory_feed_url().  Undo the above operations
+    return urllib.unquote(url_path).decode('utf-8')
 
 class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def setup_new(self, ufeed, directory):
