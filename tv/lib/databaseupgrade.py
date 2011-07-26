@@ -42,7 +42,6 @@ import itertools
 import os
 import re
 import logging
-import sys
 import time
 import urllib
 
@@ -163,20 +162,6 @@ def get_object_tables(cursor):
             "WHERE type='table' AND name != 'dtv_variables' AND "
             "name NOT LIKE 'sqlite%'")
     return [row[0] for row in cursor]
-
-def filename_to_unicode(path):
-    # We used to store filename paths using bytestrings on OSX and linux, but
-    # we don't do it anymore.  This is a replacement for the old function that
-    # handled converting a filename to unicode.
-
-    # NOTE: this is slightly different than the old version, since don't
-    # always do the conversion on linux and OSX.  The only difference is if
-    # we stored a filename as a unicode object by mistake on one of those
-    # platforms, then we won't convert an extra time
-    if isinstance(path, unicode):
-        return path
-    else:
-        return path.decode(sys.getfilesystemencoding(), 'replace')
 
 def get_next_id(cursor):
     """Calculate the next id to assign to new rows.
@@ -758,12 +743,9 @@ def unicodify(d):
     return d
 
 def upgrade41(objectList):
+    from miro.plat.utils import PlatformFilenameType
     # This is where John Lennon's ghost sings "Binary Fields Forever"
-    #
-    # We used to import PlatformFilenameType, but that's no longer used.  When
-    # it was used, it was bytestrings on linux/OSX and unicode on
-    # windows
-    if sys.platform != 'win32':
+    if PlatformFilenameType == str:
         binaryFields = ['filename', 'videoFilename', 'shortFilename',
                         'offsetPath', 'initialHTML', 'status', 'channelName']
         icStrings = ['etag', 'modified', 'url']
@@ -2268,6 +2250,7 @@ def upgrade88(cursor):
 def upgrade89(cursor):
     """Set videoFilename column for downloaded items."""
     import datetime
+    from miro.plat.utils import filename_to_unicode
 
     # for Items, calculate from the downloader
     for row in cursor.execute("SELECT id, downloader_id FROM item "
@@ -2418,6 +2401,7 @@ def upgrade98(cursor):
 def upgrade99(cursor):
     """Set the filename attribute for downloaded Item objects
     """
+    from miro.plat.utils import filename_to_unicode
     cursor.execute("SELECT id, status from remote_downloader "
             "WHERE state in ('stopped', 'finished', 'uploading', "
             "'uploading-paused')")

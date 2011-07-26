@@ -60,6 +60,8 @@ from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import HideableTab, FolderBase, ChannelFolder, PlaylistFolder
 
+from miro.plat.utils import make_url_safe, filename_to_unicode
+
 import shutil
 
 class ViewTracker(object):
@@ -1174,7 +1176,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 message.child_feed_ids).send_to_frontend()
 
     def handle_new_watched_folder(self, message):
-        url = feed.path_to_directory_feed_url(message.path)
+        url = u"dtv:directoryfeed:%s" % make_url_safe(message.path)
         if not lookup_feed(url):
             feed_ = feed.Feed(url)
             if message.visible is not None:
@@ -1867,7 +1869,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             final_path = os.path.join(video_directory,
                                       os.path.basename(item_info.video_path))
             view = item.Item.make_view('is_file_item AND filename=?',
-                                       (final_path),)
+                                       (filename_to_unicode(final_path),))
             if view.count(): # file already exists
                 continue
             shutil.copyfile(item_info.video_path, final_path)

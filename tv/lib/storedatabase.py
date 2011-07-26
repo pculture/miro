@@ -77,6 +77,7 @@ from miro import schema
 from miro import prefs
 from miro import util
 from miro.gtcache import gettext as _
+from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
 class UpgradeError(Exception):
     """While upgrading the database, we ran out of disk space."""
@@ -961,6 +962,11 @@ class SQLiteConverter(object):
                 self._convert_status
         # bools get stored as integers in sqlite
         self._from_sql_converters[schema.SchemaBool] = bool
+        # filenames are always stored in sqlite as unicode
+        if PlatformFilenameType != unicode:
+            self._to_sql_converters[schema.SchemaFilename] = filename_to_unicode
+            self._from_sql_converters[schema.SchemaFilename] = \
+                    self._unicode_to_filename
         # make sure SchemaBinary is always restored as a byte-string
         self._to_sql_converters[schema.SchemaBinary] = buffer
         self._from_sql_converters[schema.SchemaBinary] = self._convert_binary
@@ -986,6 +992,9 @@ class SQLiteConverter(object):
         else:
             return None
 
+    def _unicode_to_filename(self, value):
+        return value.encode('utf-8')
+
     def _null_convert(self, value):
         return value
 
@@ -1001,10 +1010,22 @@ class SQLiteConverter(object):
         return eval(value, __builtins__, {'datetime': datetime, 'time': _TIME_MODULE_SHADOW})
 
     def _convert_status(self, repr_value):
-        return self._convert_repr(repr_value)
+        status_dict = self._convert_repr(repr_value)
+        filename_fields = schema.SchemaStatusContainer.filename_fields
+        for key in filename_fields:
+            value = status_dict.get(key)
+            if value is not None and PlatformFilenameType != unicode:
+                status_dict[key] = self._unicode_to_filename(value)
+        return status_dict
 
     def _convert_status_to_sql(self, status_dict):
-        return repr(status_dict)
+        to_save = status_dict.copy()
+        filename_fields = schema.SchemaStatusContainer.filename_fields
+        for key in filename_fields:
+            value = to_save.get(key)
+            if value is not None:
+                to_save[key] = filename_to_unicode(value)
+        return repr(to_save)
 
 class TimeModuleShadow:
     """In Python 2.6, time.struct_time is a named tuple and evals poorly,

@@ -35,7 +35,6 @@ FIXME - talk about Feed architecture here
 import os
 import re
 import time
-import urllib
 import xml
 from urlparse import urljoin
 from HTMLParser import HTMLParser, HTMLParseError
@@ -67,6 +66,7 @@ from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
                        check_f, quote_unicode_url, escape, to_uni,
                        is_url, stringify, is_magnet_uri)
 from miro import fileutil
+from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
 from miro.plat.filebundle import is_file_bundle
 from miro import filetypes
 from miro.item import FeedParserValues
@@ -865,7 +865,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             newFeed = DirectoryFeedImpl(self)
             self.visible = False
         elif (self.origURL.startswith(u"dtv:directoryfeed:")):
-            dir_ = directory_feed_url_to_path(self.origURL)
+            url = self.origURL[len(u"dtv:directoryfeed:"):]
+            dir_ = unmake_url_safe(url)
             newFeed = DirectoryWatchFeedImpl(self, dir_)
         elif self.origURL == u"dtv:search":
             newFeed = SearchFeedImpl(self)
@@ -2232,42 +2233,23 @@ class DirectoryScannerImplBase(FeedImpl):
         """
         rv = []
         for path in paths:
+            ufile = filename_to_unicode(path)
             if (not known_files.contains_path(path) and
-                    filetypes.is_media_filename(path)):
+                    filetypes.is_media_filename(ufile)):
                 rv.append(path)
         return rv
-
-
-def path_to_directory_feed_url(path):
-    """Convert a file path into a directory feed URL."""
-
-    # To handle extended chars, convert the path to utf-8, then urlquote it.
-    url_path = urllib.quote(path.encode('utf-8', 'replace'), safe='/')
-    return u"dtv:directoryfeed:" + url_path
-
-def directory_feed_url_to_path(url):
-    """Convert a directory feed URL into a path."""
-
-    # extract the path part
-    prefix = u"dtv:directoryfeed:"
-    if not url.startswith(prefix):
-        raise ValueError("Not a directory feed URL: %s" % url)
-    url_path = url[len(prefix):]
-    # undo the quoting done in path_to_directory_feed_url()
-    # The path part should have been quoted, and only contain ascii chars
-    return urllib.unquote(url_path.decode('ascii'))
 
 class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def setup_new(self, ufeed, directory):
         # calculate url and title arguments to FeedImpl's constructor
         if directory is not None:
-            url = path_to_directory_feed_url(directory)
+            url = u"dtv:directoryfeed:%s" % make_url_safe(directory)
         else:
             url = u"dtv:directoryfeed"
         title = directory
         if title[-1] == '/':
             title = title[:-1]
-        title = os.path.basename(title) + os.path.sep
+        title = filename_to_unicode(os.path.basename(title)) + "/"
 
         DirectoryScannerImplBase.setup_new(self, url=url, ufeed=ufeed,
                 title=title)

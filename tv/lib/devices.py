@@ -63,9 +63,20 @@ from miro import conversions
 from miro.util import check_u
 
 from miro.plat import resources
+from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
+                             utf8_to_filename)
+
 
 # how much slower converting a file is, compared to copying
 CONVERSION_SCALE = 500
+
+def unicode_to_path(path):
+    """
+    Convert a Unicode string into a file path.  We don't do any of the string
+    replace nonsense that unicode_to_filename does.  We also convert separators
+    into the appropriate type for the platform.
+    """
+    return utf8_to_filename(path.encode('utf8')).replace('/', os.path.sep)
 
 class BaseDeviceInfo(object):
     """
@@ -81,9 +92,9 @@ class BaseDeviceInfo(object):
     def update(self, kwargs):
         for key, value in kwargs.items():
             if key == 'audio_path':
-                self.audio_path = value
+                self.audio_path = unicode_to_path(value)
             elif key == 'video_path':
-                self.video_path = value
+                self.video_path = unicode_to_path(value)
             else:
                 setattr(self, key, value)
 
@@ -656,7 +667,7 @@ class DeviceSyncManager(object):
         if device_path is None:
             return getattr(self.device.info, setting)
         else:
-            return device_path
+            return unicode_to_path(device_path)
 
     def set_device(self, device):
         self.device = device
@@ -689,7 +700,9 @@ class DeviceSyncManager(object):
         def remove_(index):
             size, file_type, id_ = sizes.pop(index)
             del self.device.database[file_type][id_]
-            fileutil.delete(os.path.join(self.device.mount, id_))
+            fileutil.delete(os.path.join(self.device.mount,
+                                         utf8_to_filename(
+                        id_.encode('utf8'))))
             self.device.remaining += size
             return keys.pop(index)
 
@@ -853,7 +866,9 @@ class DeviceSyncManager(object):
     def _add_item(self, final_path, item_info):
         dirname, basename = os.path.split(final_path)
         _, extension = os.path.splitext(basename)
-        new_basename = fileutil.clean_filename(item_info.name + extension)
+        new_basename = "%s%s" % (unicode_to_filename(item_info.name,
+                                                     self.device.mount),
+                                 extension)
         new_path = os.path.join(dirname, new_basename)
 
         def callback():
@@ -1115,7 +1130,8 @@ def clean_database(device):
         if isinstance(device.database[item_type], list):
             # 17554: we could accidentally set this to a list
             device.database[item_type] = {}
-        for item_path in device.database[item_type]:
+        for item_path_unicode in device.database[item_type]:
+            item_path = utf8_to_filename(item_path_unicode.encode('utf8'))
             if _exists(item_path):
                 known_files.add(os.path.normcase(item_path))
             else:
@@ -1161,15 +1177,16 @@ def scan_device_for_files(device):
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
+        ufilename = filename_to_unicode(short_filename)
         item_type = None
         if os.path.normcase(short_filename) in known_files:
             continue
-        if filetypes.is_video_filename(short_filename):
+        if filetypes.is_video_filename(ufilename):
             item_type = u'video'
-        elif filetypes.is_audio_filename(short_filename):
+        elif filetypes.is_audio_filename(ufilename):
             item_type = u'audio'
         if item_type is not None:
-            item_data.append((short_filename, item_type))
+            item_data.append((ufilename, item_type))
             app.metadata_progress_updater.will_process_path(filename,
                                                             device)
         if time.time() - start > 0.4:
@@ -1190,11 +1207,11 @@ def scan_device_for_files(device):
 
         device.database.set_bulk_mode(True)
         start = time.time()
-        for filename, item_type in item_data:
-            i = item.DeviceItem(video_path=filename,
+        for ufilename, item_type in item_data:
+            i = item.DeviceItem(video_path=ufilename,
                            file_type=item_type,
                            device=device)
-            device.database[item_type][filename] = i.to_dict()
+            device.database[item_type][ufilename] = i.to_dict()
             device.database.emit('item-added', i)
             if time.time() - start > 0.4:
                 device.database.set_bulk_mode(False) # save the database

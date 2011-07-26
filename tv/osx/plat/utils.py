@@ -48,6 +48,9 @@ from miro import prefs
 from miro.gtcache import gettext as _
 from miro.importmedia import import_itunes_path
 from miro.util import returns_unicode, returns_binary, check_u, check_b
+from miro.plat.filenames import (PlatformFilenameType,
+                                 os_filename_to_filename_type,
+                                 filename_type_to_os_filename)
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 # We need to define samefile for the portable code.  Lucky for us, this is
@@ -93,7 +96,7 @@ def get_available_bytes_for_movies():
         except IOError:
             del pool
             return -1
-    info = fm.fileSystemAttributesAtPath_(movies_dir)
+    info = fm.fileSystemAttributesAtPath_(filename_to_unicode(movies_dir))
     if info:
         available = info[NSFileSystemFreeSize]
     else:
@@ -181,6 +184,100 @@ def setup_logging (in_downloader=False):
     logging.getLogger('').addHandler(rotater)
     logging.getLogger('').setLevel(level)
     rotater.doRollover()
+
+@returns_binary
+def utf8_to_filename(filename):
+    if not isinstance(filename, str):
+        raise ValueError("filename is not a str")
+    return filename
+
+# Takes in a unicode string representation of a filename and creates a
+# valid byte representation of it attempting to preserve extensions
+#
+# This is not guaranteed to give the same results every time it is run,
+# not is it guaranteed to reverse the results of filename_to_unicode
+@returns_binary
+def unicode_to_filename(filename, path = None):
+    check_u(filename)
+    if path:
+        check_b(path)
+    else:
+        path = os.getcwd()
+
+    # Keep this a little shorter than the max length, so we can run
+    # nextFilename
+    MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
+
+    for mem in ("/", "\000", "\\", ":", "*", "?", "'", "\"", "<", ">", "|", "&", "\r", "\n"):
+        filename = filename.replace(mem, "_")
+
+    new_filename = filename.encode('utf-8','replace')
+    while len(new_filename) > MAX_LEN:
+        filename = shortenFilename(filename)
+        new_filename = filename.encode('utf-8','replace')
+
+    return new_filename
+
+@returns_unicode
+def shortenFilename(filename):
+    check_u(filename)
+    # Find the first part and the last part
+    pieces = filename.split(u".")
+    lastpart = pieces[-1]
+    if len(pieces) > 1:
+        firstpart = u".".join(pieces[:-1])
+    else:
+        firstpart = u""
+    # If there's a first part, use that, otherwise shorten what we have
+    if len(firstpart) > 0:
+        return u"%s.%s" % (firstpart[:-1],lastpart)
+    else:
+        return filename[:-1]
+
+# Given a filename in raw bytes, return the unicode representation
+#
+# Since this is not guaranteed to give the same results every time it is run,
+# not is it guaranteed to reverse the results of unicode_to_filename.
+@returns_unicode
+def filename_to_unicode(filename, path = None):
+    if path:
+        check_b(path)
+    check_b(filename)
+    return filename.decode('utf-8', 'replace')
+
+@returns_unicode
+def make_url_safe(string, safe='/'):
+    """Takes in a byte string or a unicode string and does the right thing
+    to make a URL
+    """
+    if type(string) == str:
+        # quote the byte string
+        return urllib.quote(string, safe=safe).decode('ascii')
+    else:
+        return urllib.quote(string.encode('utf-8','replace'), safe=safe).decode('ascii')
+
+@returns_binary
+def unmake_url_safe(string):
+    """Undoes make_url_safe (assuming it was passed a filenameType)
+    """
+    # unquote the byte string
+    check_u(string)
+    return urllib.unquote(string.encode('ascii'))
+
+# Load the image at source_path, resize it to [width, height] (and use
+# letterboxing if source and destination ratio are different) and save it to
+# dest_path
+def resizeImage(source_path, dest_path, width, height):
+    source_path = filename_type_to_os_filename(source_path)
+    source = NSImage.alloc().initWithContentsOfFile_(source_path)
+    jpegData = getResizedJPEGData(source, width, height)
+    if jpegData is not None:
+        dest_path = filename_type_to_os_filename(dest_path)
+        destinationFile = open(dest_path, "w")
+        try:
+            destinationFile.write(jpegData)
+        finally:
+            destinationFile.close()
 
 # Returns a resized+letterboxed version of image source as JPEG data.
 def getResizedJPEGData(source, width, height):

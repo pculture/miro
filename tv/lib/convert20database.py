@@ -55,20 +55,7 @@ from miro import dbupgradeprogress
 from miro import feedparser
 from miro import schemav79 as schema_mod
 from miro import util
-
-def filename_to_unicode(path):
-    # We used to store filename paths using bytestrings on OSX and linux, but
-    # we don't do it anymore.  This is a replacement for the old function that
-    # handled converting a filename to unicode.
-
-    # NOTE: this is slightly different than the old version, since don't
-    # always do the conversion on linux and OSX.  The only difference is if
-    # we stored a filename as a unicode object by mistake on one of those
-    # platforms, then we won't convert an extra time
-    if isinstance(path, unicode):
-        return path
-    else:
-        return path.decode(sys.getfilesystemencoding(), 'replace')
+from miro.plat.utils import filename_to_unicode
 
 def _loads(str):
     """Version of cPickle.loads() that can handle the SavableObject class."""

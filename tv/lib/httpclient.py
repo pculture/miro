@@ -735,12 +735,7 @@ class CurlTransfer(object):
         else:
             filename = self.find_value_from_header(disposition, 'filename')
             if filename is not None:
-                # Non-ascii characters are invalid according to RFC 2183.
-                # There's a draft to fix this, but for our purposes, I think
-                # we can just ignore them.
-                filename = filename.decode('ascii', 'replace')
-                # Clean up the filename before passing it to other components
-                return fileutil.clean_filename(filename)
+                return download_utils.clean_filename(filename)
         return download_utils.filename_from_url(util.unicodify(redirected_url), 
                 clean=True)
 

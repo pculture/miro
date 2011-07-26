@@ -39,7 +39,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import dialogs
-from miro import fileutil
+from miro.fileobject import FilenameType
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap, widgets
 from miro.frontends.widgets.gtk import keymap, layout
@@ -885,10 +885,7 @@ class FileDialogBase(DialogBase):
     def _run(self):
         ret = self._window.run()
         if ret == gtk.RESPONSE_OK:
-            # GTK returns bytestrings for get_filenames.  Convert them to
-            # unicode before we return them to portable code.
-            self._files = [fileutil.make_filename(f) for f in
-                    self._window.get_filenames()]
+            self._files = self._window.get_filenames()
             return 0
 
 class FileOpenDialog(FileDialogBase):
@@ -924,14 +921,14 @@ class FileOpenDialog(FileDialogBase):
         self._window.add_filter(f)
 
     def get_filenames(self):
-        return self._files
+        return [FilenameType(f) for f in self._files]
 
     def get_filename(self):
         if self._files is None:
             # clicked Cancel
             return None
         else:
-            return self._files[0]
+            return FilenameType(self._files[0])
 
     # provide a common interface for file chooser dialogs
     get_path = get_filename
@@ -960,7 +957,7 @@ class FileSaveDialog(FileDialogBase):
             # clicked Cancel
             return None
         else:
-            return self._files[0]
+            return FilenameType(self._files[0])
 
     # provide a common interface for file chooser dialogs
     get_path = get_filename
@@ -990,7 +987,7 @@ class DirectorySelectDialog(FileDialogBase):
             # clicked Cancel
             return None
         else:
-            return self._files[0]
+            return FilenameType(self._files[0])
 
     # provide a common interface for file chooser dialogs
     get_path = get_directory

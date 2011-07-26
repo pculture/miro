@@ -31,6 +31,7 @@
 """
 
 from miro.xhtmltools import urlencode
+from miro.plat.utils import PlatformFilenameType
 
 # FilenameType is currently a transitional object and as such is incomplete.
 # You should NOT use its urlize functionality for anything other than DAAP
@@ -60,17 +61,22 @@ from miro.xhtmltools import urlencode
 # Interesting reading: http://docs.python.org/howto/unicode.html
 # We kind of, sort of, but not really do what they describe there, which is
 # where all this filename iffiness is coming from.
-class FilenameType(unicode):
+class FilenameType(PlatformFilenameType):
     """FilenameType: the file representation for a given platform.
     It defaults to local files but can be specified to be remote files by
     passing an appropriate url handler.
 
     It defaults to file for legacy support, a lot of places depend on this.
 
+    Note to platform implementors: the PlatformFileType must be a string-type
+    basetype, so either unicode or str.  Nothing else.
+
     NOTE: This is a transitional object.  You should NOT use its urlize()
     functionality other than for DAAP at the moment.
     """
-    base_type = unicode
+    base_type = PlatformFilenameType
+    def __new__(cls, s):
+        return PlatformFilenameType.__new__(cls, s)
 
     def __init__(self, string):
         self.args = []

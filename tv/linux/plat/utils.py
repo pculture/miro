@@ -43,6 +43,8 @@ from miro.util import returns_unicode, returns_binary, check_u, check_b
 import miro
 from miro.plat import options
 
+PlatformFilenameType = str
+
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
 from os.path import samefile
@@ -143,6 +145,113 @@ def setup_logging(in_downloader=False):
     rotater.setFormatter(formatter)
     logging.getLogger('').addHandler(rotater)
     rotater.doRollover()
+
+
+@returns_binary
+def utf8_to_filename(filename):
+    """Converts a utf-8 encoded string to a FilenameType.
+    """
+    if not isinstance(filename, str):
+        raise ValueError("filename is not a str")
+    return filename
+
+
+@returns_unicode
+def shorten_fn(filename):
+    check_u(filename)
+    first, last = os.path.splitext(filename)
+
+    if first:
+        return u"".join([first[:-1], last])
+
+    return unicode(last[:-1])
+
+
+def encode_fn(filename):
+    try:
+        return filename.encode(locale.getpreferredencoding())
+    except UnicodeEncodeError:
+        return filename.encode('ascii', 'replace')
+
+
+@returns_binary
+def unicode_to_filename(filename, path=None):
+    """Takes in a unicode string representation of a filename (NOT a
+    file path) and creates a valid byte representation of it
+    attempting to preserve extensions.
+
+    .. Note::
+
+       This is not guaranteed to give the same results every time it
+       is run, nor is it guaranteed to reverse the results of
+       filename_to_unicode.
+    """
+    check_u(filename)
+    if path:
+        check_b(path)
+    else:
+        path = os.getcwd()
+
+    # keep this a little shorter than the max length, so we can
+    # add a number to the end
+    max_len = os.statvfs(path)[statvfs.F_NAMEMAX] - 5
+
+    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "'",
+                "<", ">", "|", "&", "\r", "\n"):
+        filename = filename.replace(mem, "_")
+
+    new_filename = encode_fn(filename)
+
+    while len(new_filename) > max_len:
+        filename = shorten_fn(filename)
+        new_filename = encode_fn(filename)
+
+    return new_filename
+
+
+@returns_unicode
+def filename_to_unicode(filename, path=None):
+    """Given a filename in raw bytes, return the unicode representation
+
+    .. Note::
+
+       This is not guaranteed to give the same results every time it
+       is run, not is it guaranteed to reverse the results of
+       unicode_to_filename.
+    """
+    if path:
+        check_b(path)
+    check_b(filename)
+    try:
+        return filename.decode(locale.getpreferredencoding())
+    except UnicodeDecodeError:
+        return filename.decode('ascii', 'replace')
+
+
+@returns_unicode
+def make_url_safe(s, safe='/'):
+    """Takes in a byte string or a unicode string and does the right thing
+    to make a URL
+    """
+    if isinstance(s, str):
+        # quote the byte string
+        return urllib.quote(s, safe=safe).decode('ascii')
+
+    try:
+        return urllib.quote(s.encode(locale.getpreferredencoding()),
+                            safe=safe).decode('ascii')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return s.decode('ascii', 'replace')
+
+
+@returns_binary
+def unmake_url_safe(s):
+    """Undoes make_url_safe (assuming it was passed a FilenameType)
+    """
+    # unquote the byte string
+    check_u(s)
+    return urllib.unquote(s.encode('ascii'))
+
 
 def _pid_is_running(pid):
     if pid is None:

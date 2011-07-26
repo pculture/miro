@@ -11,7 +11,6 @@ from miro import config
 from miro import database
 from miro import eventloop
 from miro import feed
-from miro import fileutil
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
@@ -259,8 +258,6 @@ class MiroTestCase(unittest.TestCase):
         self.tempdir = tempfile.mkdtemp()
         if not os.path.exists(self.tempdir):
             os.makedirs(self.tempdir)
-        # ensure tempdir is unicode
-        self.tempdir = fileutil.make_filename(self.tempdir)
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True

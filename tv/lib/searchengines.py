@@ -35,6 +35,7 @@ from miro.util import check_u
 from miro.xhtmltools import urlencode
 from xml.dom.minidom import parse
 from miro.plat import resources
+from miro.plat.utils import unicode_to_filename
 import os
 from miro import app
 from miro import prefs
@@ -262,12 +263,13 @@ def set_last_engine(engine):
     app.config.set(prefs.LAST_SEARCH_ENGINE, engine)
 
 def icon_path_for_engine(engine):
-    engine_path = u'images/search_icon_%s.png' % engine.name
-    icon_path = resources.path(engine_path)
+    engine_name = unicode_to_filename(engine.name)
+    icon_path = resources.path('images/search_icon_%s.png' % engine_name)
     if app.config.get(prefs.THEME_NAME):
         logging.debug('engine %s filename: %s' % (engine.name, engine.filename))
         test_icon_path = resources.theme_path(app.config.get(prefs.THEME_NAME),
-                                              engine_path)
+                                              'images/search_icon_%s.png' %
+                                              engine_name)
         if os.path.exists(test_icon_path):
             # this search engine came from a theme; look up the icon in the
             # theme directory instead

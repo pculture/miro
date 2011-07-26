@@ -42,8 +42,11 @@ from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
+from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
+                             utf8_to_filename)
 
-from miro.download_utils import (next_free_filename, next_free_directory)
+from miro.download_utils import (clean_filename, next_free_filename,
+        next_free_directory)
 
 from miro.database import (DDBObject, ObjectNotFoundError,
                            DatabaseConstraintError)
@@ -926,7 +929,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             if self.title != filename:
                 # we skip set_title() since we're already in the DB
                 # thread/signal_change()
-                self.title = filename
+                self.title = filename_to_unicode(filename)
 
     def recalc_feed_counts(self):
         self.get_feed().recalc_counts()
@@ -1305,7 +1308,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if dler is not None:
             self.set_downloader(dler)
             self.downloader.set_channel_name(
-                    fileutil.clean_filename(self.get_channel_title(True)))
+                unicode_to_filename(self.get_channel_title(True)))
             if self.downloader.is_finished():
                 self.on_download_finished()
             else:
@@ -1838,7 +1841,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         FileItems that duplicate existing Items.  See #12253 for details.
         """
         view = Item.make_view('is_file_item AND filename=? AND id !=?',
-                (self.filename, self.id))
+                (filename_to_unicode(self.filename), self.id))
         for dup in view:
             dup.remove()
 
@@ -2006,8 +2009,7 @@ class FileItem(Item):
         self.set_release_date()
         self.deleted = deleted
         self.offsetPath = offsetPath
-        self.shortFilename = fileutil.clean_filename(
-                os.path.basename(self.filename))
+        self.shortFilename = clean_filename(os.path.basename(self.filename))
         self.was_downloaded = False
         if mark_seen:
             self.watchedTime = datetime.now()
@@ -2201,12 +2203,12 @@ filename was %s""", stringify(self.filename))
     def setup_links(self):
         if self.shortFilename is None:
             if self.parent_id is None:
-                self.shortFilename = fileutil.clean_filename(
+                self.shortFilename = clean_filename(
                     os.path.basename(self.filename))
             else:
                 parent_file = self.get_parent().get_filename()
                 if self.filename.startswith(parent_file):
-                    self.shortFilename = fileutil.clean_filename(
+                    self.shortFilename = clean_filename(
                         self.filename[len(parent_file):])
                 else:
                     logging.warn("%s is not a subdirectory of %s",
@@ -2216,7 +2218,7 @@ filename was %s""", stringify(self.filename))
 
 @returns_unicode
 def filename_to_title(filename):
-    title = os.path.basename(filename)
+    title = filename_to_unicode(os.path.basename(filename))
     title = title.rsplit('.', 1)[0]
     title = title.replace('_', ' ')
     t2 = []
@@ -2351,9 +2353,19 @@ class DeviceItem(metadata.Store):
         metadata.Store.setup_new(self)
         self.__dict__.update(kwargs)
 
-        self.id = self.video_path
+        if isinstance(self.video_path, unicode):
+            # make sure video path is a filename and ID is Unicode
+            self.id = self.video_path
+            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
+        else:
+            self.id = filename_to_unicode(self.video_path)
+        if isinstance(self.screenshot, unicode):
+            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
+        if isinstance(self.cover_art, unicode):
+            self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
         if self.file_format is None:
-            self.file_format = os.path.splitext(self.video_path)[1]
+            self.file_format = filename_to_unicode(
+                os.path.splitext(self.video_path)[1])
             if self.file_type == 'audio':
                 self.file_format = self.file_format + ' audio'
 
@@ -2371,7 +2383,8 @@ class DeviceItem(metadata.Store):
                 # version because upgrading metadata isn't supported.
                 self.read_metadata()
                 if not self.get_title():
-                    self.title = os.path.basename(self.video_path)
+                    self.title = filename_to_unicode(
+                        os.path.basename(self.video_path))
 
         except (OSError, IOError):
             # if there was an error reading the data from the filesystem, don't
@@ -2501,6 +2514,8 @@ class DeviceItem(metadata.Store):
         for k, v in self.__dict__.items():
             if v is not None and k not in (u'device', u'file_type', u'id',
                                            u'video_path', u'_deferred_update'):
+                if ((k == u'screenshot' or k == u'cover_art')):
+                    v = filename_to_unicode(v)
                 data[k] = v
         return data
 

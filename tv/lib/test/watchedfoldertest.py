@@ -2,12 +2,12 @@ import os
 import shutil
 
 from miro import app
-from miro import feed
 from miro import models
 from miro import signals
 from miro.test import mock
 from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.plat import resources
+from miro.plat.utils import make_url_safe
 
 class FakeDirectoryWatcher(signals.SignalEmitter):
     def __init__(self, directory, skip_dirs=None):
@@ -18,7 +18,7 @@ class WatchedFolderTest(EventLoopTest):
         EventLoopTest.setUp(self)
         app.directory_watcher = FakeDirectoryWatcher
         self.dir = self.make_temp_dir_path()
-        self.url = feed.path_to_directory_feed_url(self.dir)
+        self.url = u'dtv:directoryfeed:%s' % make_url_safe(self.dir)
         self.feed = models.Feed(self.url)
         self.source_path = resources.path("testdata/pop.mp3")
         self.directory_watcher = self.feed.actualFeed.watcher

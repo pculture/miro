@@ -43,24 +43,12 @@ functions.
 import os
 import urllib
 import platform
-import sys
 
-def _make_path_from_env(key, default):
-    """Make a filename for root paths
+RESOURCE_ROOT = os.path.abspath(
+    os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/'))
+SHARE_ROOT = os.path.abspath(
+    os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
 
-    We first try to fetch the path from the environment using key.  If that
-    lookup fails, we use the default.
-
-    """
-    try:
-        path = os.environ[key].decode(sys.getfilesystemencoding())
-    except KeyError:
-        path = default
-    return os.path.abspath(path)
-
-RESOURCE_ROOT = _make_path_from_env('MIRO_RESOURCE_ROOT',
-        u'/usr/share/miro/resources/')
-SHARE_ROOT = _make_path_from_env('MIRO_SHARE_ROOT', u'/usr/share/')
 
 def root():
     return RESOURCE_ROOT
@@ -71,7 +59,7 @@ def extension_core_roots():
 
 
 def extension_user_roots():
-    return [u"%(supportdir)s/extensions"]
+    return ["%(supportdir)s/extensions"]
 
 
 def path(relative_path):
@@ -93,7 +81,7 @@ def url(relative_path):
 
 
 def theme_path(theme, relative_path):
-    return os.path.join(u'/usr/share/miro/themes', theme, relative_path)
+    return os.path.join('/usr/share/miro/themes', theme, relative_path)
 
 
 def check_kde():
@@ -160,4 +148,4 @@ def get_osname():
 
 
 def get_default_search_dir():
-    return os.path.expanduser(u"~/")
+    return os.path.expanduser("~/")

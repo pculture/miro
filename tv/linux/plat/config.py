@@ -38,11 +38,9 @@ Preferences are listed in miro.pref and also miro.plat.options.
 
 import os
 import logging
+from miro import prefs
 import gconf
 import threading
-
-from miro import fileutil
-from miro import prefs
 from miro.plat import options
 from miro.plat import resources
 
@@ -160,24 +158,16 @@ def load():
 def save(data):
     pass
 
-def _get_user_dir(relative_path):
-    """Get a directory under the user's home directory.
-
-    This method uses options.user_home to calculate the user's directory,
-    so it works properly when the user sets their home directory from the
-    command line.
-    """
-    home_dir = fileutil.make_filename(options.user_home)
-    return os.path.expanduser(os.path.join(home_dir, relative_path))
 
 def get(descriptor):
     value = descriptor.default
 
     if descriptor == prefs.MOVIES_DIRECTORY:
-        value = _get_user_dir(u'Videos/Miro')
+        value = os.path.expanduser(os.path.join(options.user_home,
+                                                'Videos/Miro'))
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
-        value = _get_user_dir(u'Desktop')
+        value = os.path.expanduser(os.path.join(options.user_home, 'Desktop'))
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
         value = resources.path("../../locale")
@@ -188,7 +178,7 @@ def get(descriptor):
         value = os.path.exists(destination)
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        value = _get_user_dir(u'.miro')
+        value = os.path.expanduser(os.path.join(options.user_home, '.miro'))
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         value = get(prefs.SUPPORT_DIRECTORY)

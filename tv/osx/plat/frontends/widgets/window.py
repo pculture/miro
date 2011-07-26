@@ -48,6 +48,7 @@ from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment
 from miro.plat.frontends.widgets.control import Button
 from miro.plat.frontends.widgets.simple import Label
 from miro.plat.frontends.widgets.rect import Rect, NSRectWrapper
+from miro.plat.utils import filename_to_unicode
 
 # Tracks all windows that haven't been destroyed.  This makes sure there
 # object stay alive as long as the window is alive.
@@ -531,10 +532,13 @@ class FileSaveDialog(FileDialogBase):
         self._filter_on_run = False
 
     def set_filename(self, s):
-        self._filename = s
+        self._filename = filename_to_unicode(s)
 
     def get_filename(self):
-        return self._filename
+        # Use encode('utf-8') instead of unicode_to_filename, because
+        # unicode_to_filename has code to make sure nextFilename works, but it's
+        # more important here to not change the filename.
+        return self._filename.encode('utf-8')
 
     def run(self):
         response = FileDialogBase.run(self)            
@@ -565,10 +569,10 @@ class FileOpenDialog(FileDialogBase):
             self._panel.setAllowsMultipleSelection_(NO)
 
     def set_directory(self, d):
-        self._directory = d
+        self._directory = filename_to_unicode(d)
 
     def set_filename(self, s):
-        self._filename = s
+        self._filename = filename_to_unicode(s)
 
     def add_filters(self, filters):
         self._types = []
@@ -585,7 +589,10 @@ class FileOpenDialog(FileDialogBase):
         if self._filenames is None:
             # canceled
             return []
-        return self._filenames
+        # Use encode('utf-8') instead of unicode_to_filename, because
+        # unicode_to_filename has code to make sure nextFilename works, but it's
+        # more important here to not change the filename.
+        return [f.encode('utf-8') for f in self._filenames]
 
     def run(self):
         response = FileDialogBase.run(self)            
@@ -611,10 +618,14 @@ class DirectorySelectDialog(FileDialogBase):
         self._directory = None
 
     def set_directory(self, d):
-        self._directory = d
+        self._directory = filename_to_unicode(d)
 
     def get_directory(self):
-        return self._directory
+        # Use encode('utf-8') instead of unicode_to_filename, because
+        # unicode_to_filename has code to make sure nextFilename
+        # works, but it's more important here to not change the
+        # filename.
+        return self._directory.encode('utf-8')
 
     def run(self):
         response = FileDialogBase.run(self)            

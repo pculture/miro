@@ -55,6 +55,7 @@ from miro.util import AutoLoggingStream
 from miro import fileutil
 
 _locale_initialized = False
+PlatformFilenameType = unicode
 
 def dirfilt(root, dirs):
     """
@@ -234,6 +235,88 @@ def setup_logging(in_downloader=False):
         sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
 
     logging.info("Logging set up to %s at level %s", pathname, level)
+
+@returns_unicode
+def utf8_to_filename(filename):
+    if not isinstance(filename, str):
+        raise ValueError("filename is not a str")
+    return filename.decode('utf-8', 'replace')
+
+@returns_unicode
+def unicode_to_filename(filename, path=None):
+    """Takes in a unicode string representation of a filename and
+    creates a valid byte representation of it attempting to preserve
+    extensions
+
+    This is not guaranteed to give the same results every time it is
+    run, not is it garanteed to reverse the results of
+    filename_to_unicode
+    """
+    @returns_unicode
+    def shorten_filename(filename):
+        check_u(filename)
+        # Find the first part and the last part
+        pieces = filename.split(u".")
+        lastpart = pieces[-1]
+        if len(pieces) > 1:
+            firstpart = u".".join(pieces[:-1])
+        else:
+            firstpart = u""
+        # If there's a first part, use that, otherwise shorten what we have
+        if len(firstpart) > 0:
+            return u"%s.%s" % (firstpart[:-1], lastpart)
+        else:
+            return filename[:-1]
+
+    check_u(filename)
+    if path:
+        check_u(path)
+    else:
+        path = os.getcwd()
+
+    # Keep this a little shorter than the max length, so we can run
+    # nextFilename
+    MAX_LEN = 200
+
+    badchars = ('/', '\000', '\\', ':', '*', '?', "'", '"',
+                '<', '>', '|', "\n", "\r")
+    for mem in badchars:
+        filename = filename.replace(mem, "_")
+
+    new_filename = filename
+    while len(new_filename) > MAX_LEN:
+        new_filename = shorten_filename(new_filename)
+
+    return new_filename
+
+@returns_unicode
+def filename_to_unicode(filename, path=None):
+    """Given a filename in raw bytes, return the unicode
+    representation.
+
+    Since this is not guaranteed to give the same results every time
+    it is run, not is it garanteed to reverse the results of
+    unicode_to_filename.
+    """
+    if path:
+        check_u(path)
+    check_u(filename)
+    return filename
+
+@returns_unicode
+def make_url_safe(string, safe='/'):
+    """Takes in a byte string or a unicode string and does the right
+    thing to make a URL
+    """
+    check_u(string)
+    return urllib.quote(string.encode('utf_8'), safe=safe).decode('ascii')
+
+@returns_unicode
+def unmake_url_safe(string):
+    """Undoes make_url_safe.
+    """
+    check_u(string)
+    return urllib.unquote(string.encode('ascii')).decode('utf_8')
 
 def kill_process(pid):
     """Kill the old process, if it exists.

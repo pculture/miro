@@ -306,7 +306,11 @@ class UtilTest(unittest.TestCase):
             correct_type = FilenameType(text)
             util.check_f(correct_type)
 
-            incorrect_type = str(text)
+            if sys.platform == 'win32':
+                incorrect_type = str(text)
+            else:
+                incorrect_type = unicode(text)
+
             self.assertRaises(util.MiroUnicodeError,
                               util.check_f, incorrect_type)
 
@@ -433,6 +437,24 @@ class UtilTest(unittest.TestCase):
 
 
 class DownloadUtilsTest(MiroTestCase):
+    def check_clean_filename(self, filename, test_against):
+        self.assertEquals(download_utils.clean_filename(filename),
+                          test_against)
+
+    def test_clean_filename(self):
+        self.check_clean_filename('normalname', 'normalname')
+        self.check_clean_filename('a:b?c>d<e|f*/g\\h"\'', 'abcdefgh')
+        self.check_clean_filename('', '_')
+        long_filename = 'booya' * 100
+        long_extension = '.' + 'foo' * 20
+        self.check_clean_filename(long_filename, long_filename[:100])
+        # total file length isn't over the limit, so the extension
+        # stays the same
+        self.check_clean_filename('abc' + long_extension,
+                                  'abc' + long_extension)
+        self.check_clean_filename(long_filename + long_extension,
+                                  long_filename[:50] + long_extension[:50])
+
     def test_next_free_filename_generators(self):
         # try path without extension
         path = "/foo/.bar/test"

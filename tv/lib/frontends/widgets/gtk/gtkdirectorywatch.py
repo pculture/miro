@@ -38,6 +38,7 @@ import gobject
 
 from miro import directorywatch
 from miro import eventloop
+from miro.plat.utils import utf8_to_filename
 
 class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
     def startup(self, directory):
@@ -132,12 +133,9 @@ class GTKDirectoryWatcher(directorywatch.DirectoryWatcher):
     def _send_added(self, path):
         # use add_idle() to pass things over to the backend thread
         # FIXME: there should be a cleaner way to do this
-        #
-        # GIO uses utf-8 values.  Convert to unicode before emitting them.
         eventloop.add_idle(self.emit, "emit added signal",
-                args=("added", path.decode('utf-8')))
+                args=("added", utf8_to_filename(path)))
 
     def _send_deleted(self, path):
-        # GIO uses utf-8 values.  Convert to unicode before emitting them.
         eventloop.add_idle(self.emit, "emit deleted signal",
-                args=("deleted", path.decode('utf-8')))
+                args=("deleted", utf8_to_filename(path)))

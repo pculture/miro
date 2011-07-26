@@ -38,7 +38,9 @@ from miro import filetypes
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
+# from miro.fileobject import FilenameType
 from miro.frontends.widgets import widgetutil
+# from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 

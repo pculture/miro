@@ -50,6 +50,7 @@ Go to the bottom of this file for the current database schema.
 import datetime
 import time
 from types import NoneType
+from miro.plat.utils import PlatformFilenameType
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -136,7 +137,7 @@ class SchemaFilename(SchemaSimpleItem):
     """Defines the SchemaFilename type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
-        self.validateType(data, unicode)
+        self.validateType(data, PlatformFilenameType)
 
 class SchemaURL(SchemaSimpleItem):
     """Defines the SchemaURL type."""
@@ -307,6 +308,8 @@ class SchemaStatusContainer(SchemaReprContainer):
 
     def _binary_fields(self):
         rv = ('metainfo',)
+        if PlatformFilenameType != unicode:
+            rv += self.filename_fields
         return rv
 
 class SchemaObject(SchemaItem):

@@ -48,6 +48,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.tableselection import SelectionOwnerMixin
 from miro.frontends.widgets.tablescroll import ScrollbarOwnerMixin
 from miro.plat import resources
+from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
@@ -477,9 +478,9 @@ class OutlineViewDelegate(NSObject):
                                                                 cell, column,
                                                                 item):
         cell.setImage_(NSImage.alloc().initByReferencingFile_(
-                self.collapsed_path))
+                filename_to_unicode(self.collapsed_path)))
         cell.setAlternateImage_(NSImage.alloc().initByReferencingFile_(
-                self.expanded_path))
+                filename_to_unicode(self.expanded_path)))
 
     def outlineView_didClickTableColumn_(self, tableview, column):
         wrapper = wrappermap.wrapper(tableview)

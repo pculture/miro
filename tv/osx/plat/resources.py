@@ -33,10 +33,14 @@ import urllib
 from miro.plat import bundle
 
 def root():
-    return os.path.join(bundle.getBundleResourcePath(), u'resources')
+    # XXX sigh.
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    path = os.path.join(bundle.getBundleResourcePath(), u'resources')
+    return path.encode('utf-8')
 
 def extension_core_roots():
     syspath = os.path.join(bundle.getBundleResourcePath(), u'extensions')
+    syspath = syspath.encode('utf-8')
     return [syspath]
 
 def extension_user_roots():
@@ -46,6 +50,10 @@ def extension_user_roots():
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
+    # XXX sigh.
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    if isinstance(relative_path, unicode):
+        relative_path = relative_path.encode('utf-8')
     rsrcpath = os.path.join(root(), relative_path)
     return os.path.abspath(rsrcpath)
 
@@ -54,8 +62,16 @@ def url(relative_path):
     return u"file://" + urllib.quote(path(relative_path))
 
 def theme_path(theme, relative_path):
-    return os.path.join(bundle.getBundlePath(), "Contents", "Theme", theme,
+    # XXX sigh.
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    bundlePath = bundle.getBundlePath().encode('utf-8')
+    if isinstance(theme, unicode):
+        theme = theme.encode('utf-8')
+    if isinstance(relative_path, unicode):
+        relative_path = relative_path.encode('utf-8')
+    path = os.path.join(bundlePath, "Contents", "Theme", theme,
             relative_path)
+    return path
 
 def get_osname():
     osname = '%s %s %s' % (platform.system(), platform.release(),
@@ -63,4 +79,4 @@ def get_osname():
     return osname
 
 def get_default_search_dir():
-    return os.path.expanduser("~/")
+    return os.path.expanduser("~/").encode("utf-8")

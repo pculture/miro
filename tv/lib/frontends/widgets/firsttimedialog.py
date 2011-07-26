@@ -43,7 +43,8 @@ from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
-from miro.plat.utils import get_plat_media_player_name_path
+from miro.plat.utils import (filename_to_unicode,
+                             get_plat_media_player_name_path)
 from miro.plat.resources import get_default_search_dir
 
 import os
@@ -311,7 +312,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
         group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
-        search_entry = widgetset.TextEntry(get_default_search_dir())
+        search_entry = widgetset.TextEntry(
+            filename_to_unicode(get_default_search_dir()))
         search_entry.set_width(20)
         change_button = widgetset.Button(_("Choose..."))
         hbox = widgetutil.build_hbox((
@@ -325,7 +327,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                 initial_directory=get_default_search_dir(),
                 transient_for=self)
             if dir_:
-                search_entry.set_text(dir_)
+                search_entry.set_text(filename_to_unicode(dir_))
                 self.search_directory = dir_
             else:
                 self.search_directory = get_default_search_dir()

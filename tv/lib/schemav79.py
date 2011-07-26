@@ -53,14 +53,7 @@ Go to the bottom of this file for the current database schema.
 import datetime
 import time
 from types import NoneType
-import sys
-
-# PlatformFilename is no longer used.  When it was used, it was unicode on
-# windows and bytestrings on OSX/Linux
-if sys.platform == 'win32':
-    PlatformFilenameType = unicode
-else:
-    PlatformFilenameType = str
+from miro.plat.utils import PlatformFilenameType
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""

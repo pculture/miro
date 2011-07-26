@@ -36,6 +36,7 @@ import os
 import re
 
 from miro import ngrams
+from miro.plat.utils import filename_to_unicode
 
 # XXX not correct as we don't take into account of foreign quotation marks
 QUOTEKILLER = re.compile(r'(?<!\\)"')
@@ -108,7 +109,8 @@ def _calc_search_text(item_info):
     if item_info.download_info and item_info.download_info.torrent:
         match_against.append(u'torrent')
     if item_info.video_path:
-        match_against.append(os.path.basename(item_info.video_path))
+        filename = os.path.basename(item_info.video_path)
+        match_against.append(filename_to_unicode(filename))
     return (' '.join(match_against)).lower()
 
 def calc_search_terms(item_info):

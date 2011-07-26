@@ -35,7 +35,6 @@ from glib import GError
 
 from miro import app
 from miro.gtcache import gettext as _
-from miro import fileutil
 from miro import messages
 
 class DeviceTracker(object):
@@ -75,8 +74,6 @@ class DeviceTracker(object):
             if mount and os.path.exists(mount):
                 if mount[-1] != os.path.sep:
                     mount = mount + os.path.sep  # make sure it ends with a /
-                # make sure we use unicode objects for mount
-                mount = fileutil.make_filename(mount)
                 statinfo = os.statvfs(mount)
                 size = statinfo.f_frsize * statinfo.f_blocks
                 remaining = statinfo.f_frsize * statinfo.f_bavail
