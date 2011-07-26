@@ -377,7 +377,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     seekend = 0
                 rc = DAAP_PARTIAL_CONTENT
         generation = threading.current_thread().generation
-        file_obj = self.server.backend.get_file(item_id, generation, ext,
+        file_obj, hint = self.server.backend.get_file(item_id, generation, ext,
                                                 self.get_session(),
                                                 self.get_request_path,
                                                 offset=seekpos, chunk=chunk)
@@ -385,7 +385,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             return (DAAP_FILENOTFOUND, [], extra_headers)
         self.log_message('daap server: streaming with filobj %s', file_obj)
         # Return a special response, the encode_reponse() will handle correctly
-        return (rc, [(file_obj, seekpos, seekend)], extra_headers)
+        return (rc, [(file_obj, hint, seekpos, seekend)], extra_headers)
 
     def get_request_path(self, itemid, enclosure):
         # XXX

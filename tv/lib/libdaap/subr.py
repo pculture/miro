@@ -86,7 +86,10 @@ class ChunkedStreamObj(object):
     """
     DEFAULT_CHUNK_SIZE = 128 * 1024
 
-    def __init__(self, file_obj, start=0, end=0, chunksize=DEFAULT_CHUNK_SIZE):
+    def __init__(self, file_obj, hint, start=0, end=0,
+                 chunksize=DEFAULT_CHUNK_SIZE):
+        hint = os.path.basename(hint) if hint else ''
+        self.file_hint = hint
         self.chunksize = chunksize
         self.file_obj = file_obj
         self.end = end
@@ -137,6 +140,9 @@ class ChunkedStreamObj(object):
         headers = []
         if self.rangetext:
             headers.append(('Content-Range', self.get_rangetext()))
+        if self.file_hint:
+            headers.append(('Content-disposition',
+                            'attachment; filename=%s' % self.file_hint))
         return headers
 
     def get_rangetext(self):
@@ -290,8 +296,8 @@ def encode_response(reply):
     except ValueError:
         # This is probably a file.  Just pass up to the
         # caller and let the caller deal with it.
-        [(file_obj, start, end)] = reply
-        blob = ChunkedStreamObj(file_obj, start, end)
+        [(file_obj, hint, start, end)] = reply
+        blob = ChunkedStreamObj(file_obj, hint, start, end)
     return blob
 
 def split_url_path(urlpath):

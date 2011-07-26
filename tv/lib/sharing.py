@@ -1009,6 +1009,7 @@ class SharingManagerBackend(object):
     def get_file(self, itemid, generation, ext, session, request_path_func,
                  offset=0, chunk=None):
         file_obj = None
+        no_file = (None, None)
         # Get a copy of the item under the lock ... if the underlying item
         # is going away then we'll deal with it later on.  only care about
         # the reference being valid (?)
@@ -1016,7 +1017,7 @@ class SharingManagerBackend(object):
             try:
                 daapitem = self.daapitems[itemid]
             except KeyError:
-                return None
+                return no_file
         path = daapitem['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
@@ -1025,7 +1026,7 @@ class SharingManagerBackend(object):
             need_create = False
             with self.transcode_lock:
                 if self.in_shutdown:
-                    return None
+                    return no_file
                 try:
                     transcode_obj = self.transcode[session]
                     if transcode_obj.itemid != itemid:
@@ -1037,7 +1038,7 @@ class SharingManagerBackend(object):
                         if generation < transcode_obj.generation:
                             logging.debug('item %s transcode out of order',
                                           itemid)
-                            return None
+                            return no_file
                         if chunk is not None and transcode_obj.isseek(chunk):
                             need_create = True
                             old_transcode_obj = transcode_obj
@@ -1092,7 +1093,7 @@ class SharingManagerBackend(object):
             except OSError:
                 if file_obj:
                     file_obj.close()
-        return file_obj
+        return file_obj, os.path.basename(path)
 
     def get_playlists(self):
         return self.daap_playlists
