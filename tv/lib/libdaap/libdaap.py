@@ -641,10 +641,9 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             rcode = DAAP_BADREQUEST
             reply = []
             extra_headers = []
+        self.do_send_reply(rcode, reply, extra_headers=extra_headers)
         if endconn:
             self.wfile.close()
-        else:
-            self.do_send_reply(rcode, reply, extra_headers=extra_headers)
 
 def mdns_init():
     return mdns.mdns_init()
