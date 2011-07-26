@@ -815,6 +815,7 @@ class SharingManagerBackend(object):
     id = u'sharing-backend'
 
     def __init__(self):
+        self.revision = 2
         self.share_types = []
         if app.config.get(prefs.SHARE_AUDIO):
             self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
@@ -1005,6 +1006,13 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_added)
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
+
+    def get_revision(self, session, old_revision):
+        if self.revision != old_revision:
+            return self.revision
+        while True:
+            # XXX HACK until we support delta updates
+            import time; time.sleep(1)
 
     def get_file(self, itemid, generation, ext, session, request_path_func,
                  offset=0, chunk=None):

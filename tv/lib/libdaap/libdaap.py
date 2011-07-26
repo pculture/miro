@@ -278,8 +278,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         reply.append(('minm', self.server_version))    # XXX FIXME
         reply.append(('mstm', DAAP_TIMEOUT))
 
-        # 'msup' not supported, but we don't indicate that by writing a 0.
-        # We do it by leaving it out.
         not_supported = [
                          'msix',    # Indexing
                          'msex',    # Extensions
@@ -291,7 +289,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         ]
         supported = [
                      'msal',        # auto-logout
-                     'mslr'         # login
+                     'mslr',        # login
+                     'msup'         # on the fly updates
                     ]
         for code in not_supported:
             reply.append((code, 0))
@@ -346,17 +345,18 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
            return (DAAP_FORBIDDEN, [], [])
         self.server.del_session(session)
 
-    # We don't support this but Rhythmbox sends this anyway.  Grr.
     def do_update(self):
         path, query = split_url_path(self.path)
         session = self.get_session()
+        try:
+            old_revision = int(query['revision-number'])
+        except (ValueError, KeyError):
+            return (DAAP_BADREQUEST, [], [])
         if not session:
             return (DAAP_FORBIDDEN, [], [])
-        # UGH.  We should be updating this ... this is not supported at the 
-        # moment.
-        xxx_revision = 2
+        revision = self.server.backend.get_revision(session, old_revision)
         reply = []
-        reply.append(('mupd', [('mstt', DAAP_OK), ('musr', xxx_revision)]))
+        reply.append(('mupd', [('mstt', DAAP_OK), ('musr', revision)]))
         return (DAAP_OK, reply, [])
 
     def do_stream_file(self, db_id, item_id, ext, chunk):
