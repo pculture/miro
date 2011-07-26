@@ -790,6 +790,11 @@ class DeviceSyncManager(object):
                 for count in iterable:
                     self.progress_size[info.id] += count
                     if self.stopping:
+                        iterable.close()
+                        eventloop.add_idle(fileutil.delete,
+                                           "deleting canceled sync",
+                                           args=(final_path,))
+                        final_path = None
                         break
                     # let other stuff run
                     self._schedule_sync_changed()
