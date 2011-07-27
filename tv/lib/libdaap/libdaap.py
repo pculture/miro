@@ -348,9 +348,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_update(self):
         path, query = split_url_path(self.path)
         session = self.get_session()
-        try:
-            old_revision = int(query['revision-number'])
-        except (ValueError, KeyError):
+        old_revision, old_delta = self.get_revision(query)
+        if not old_revision:
             return (DAAP_BADREQUEST, [], [])
         if not session:
             return (DAAP_FORBIDDEN, [], [])
@@ -441,12 +440,23 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def _check_db_id(self, db_id):
         return db_id == 1
 
+    # NB: Should probably be a static class method.
+    def get_revision(self, query):
+        revision = delta = 0
+        try:
+            revision = int(query['revision-number'])
+            delta = int(query['delta'])
+        except (KeyError, ValueError):
+            pass
+        return revision, delta
+    
     # do_database_xxx(self, path, query): helper functions.  Session already
     # checked and we know we are in database/xxx.
     def do_database_containers(self, path, query):
         db_id = int(path[1])
         if not self._check_db_id(db_id):
             return (DAAP_FORBIDDEN, [], [])
+        revision, delta = self.get_revision(query)
         reply = []
         if len(path) == 3:
             # There is a requirement to send a default playlist so we
