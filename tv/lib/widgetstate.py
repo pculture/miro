@@ -35,6 +35,8 @@ from miro.database import DDBObject, ObjectNotFoundError
 
 STANDARD_VIEW = 0
 LIST_VIEW = 1
+# skip over 2 since that's used in the frontend for CUSTOM_VIEW
+ALBUM_VIEW = 3
 
 class DisplayState(DDBObject):
     """Properties that are shared across all TableViews for a Display, or only
@@ -47,13 +49,13 @@ class DisplayState(DDBObject):
         self.shuffle = None
         self.repeat = None
         self.selected_view = None
+        self.selection = None
+        self.last_played_item_id = None
         self.active_filters = None
+        self.sort_state = None
         # ListView properties
         self.list_view_columns = None
         self.list_view_widths = None
-        self.selection = None
-        self.sort_state = None
-        self.last_played_item_id = None
 
 class ViewState(DDBObject):
     """Properties that need to be stored for each TableView
@@ -76,6 +78,7 @@ class GlobalState(DDBObject):
 
     def setup_new(self):
         self.item_details_expanded = {
+                ALBUM_VIEW: False,
                 LIST_VIEW: True,
                 STANDARD_VIEW: False,
         }

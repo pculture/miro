@@ -39,6 +39,7 @@ two.  These messages are handled asynchronously.
 This module defines the messages that are passed between the two threads.
 """
 
+import copy
 import logging
 
 from miro.gtcache import gettext as _
@@ -1778,6 +1779,10 @@ class DisplayInfo(object):
             self.selection = display.selection
             self.sort_state = display.sort_state
             self.last_played_item_id = display.last_played_item_id
+            # shallow-copy attributes that store lists and dicts so that
+            # changing the database object doesn't change the DisplayInfo
+            self.list_view_columns = copy.copy(display.list_view_columns)
+            self.list_view_widths = copy.copy(display.list_view_widths)
         else:
             self.selected_view = None
             self.active_filters = None
@@ -1786,13 +1791,7 @@ class DisplayInfo(object):
             self.selection = None
             self.sort_state = None
             self.last_played_item_id = None
-        if display is not None and display.list_view_columns is not None:
-            self.list_view_columns = display.list_view_columns[:]
-        else:
             self.list_view_columns = None
-        if display is not None and display.list_view_widths is not None:
-            self.list_view_widths = display.list_view_widths.copy()
-        else:
             self.list_view_widths = None
 
 class GlobalInfo(object):

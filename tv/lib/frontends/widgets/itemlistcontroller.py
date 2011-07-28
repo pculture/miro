@@ -358,10 +358,12 @@ class ItemListController(object):
         self.build_widget()
         self.list_item_view = self.build_list_view()
         self.standard_item_view = self.build_standard_view()
+        self.album_item_view = self.build_album_view()
         self.expand_or_contract_item_details()
         # connect to signals
         list_view = WidgetStateStore.get_list_view_type()
         standard_view = WidgetStateStore.get_standard_view_type()
+        album_view = WidgetStateStore.get_album_view_type()
         self.standard_view_toolbar.connect_weak('sort-changed',
             self.on_sort_changed, standard_view)
         self.widget.item_details.expander_button.connect_weak('clicked',
@@ -372,6 +374,8 @@ class ItemListController(object):
             self.set_view, list_view)
         self.titlebar.connect_weak('normal-view-clicked',
             self.set_view, standard_view)
+        self.titlebar.connect_weak('album-view-clicked',
+            self.set_view, album_view)
         self.titlebar.connect_weak('resume-playing', self.on_resume_playing)
         self.standard_item_view.renderer.signals.connect_weak(
                 'throbber-drawn', self.on_throbber_drawn)
@@ -474,6 +478,30 @@ class ItemListController(object):
         self.views[list_view_type] = list_view
         return list_view
 
+    def build_album_view(self):
+        """Build the album view widget for this controller."""
+        # build album view widget
+        album_view_type = WidgetStateStore.get_album_view_type()
+        columns = app.widget_state.get_sorts_enabled(self.type, self.id)
+        # use list view column widths for now.  I think we want to separate
+        # values for these eventually, but since we're sharing which columns
+        # are enabled, let's share the widths too.
+        album_view_widths = app.widget_state.get_column_widths(
+                self.type, self.id, WidgetStateStore.get_list_view_type())
+        column_renderers = self.build_column_renderers()
+        album_view = itemlistwidgets.AlbumView(self.item_list,
+                column_renderers, columns, album_view_widths)
+        # add widget to a scroller
+        scroller = widgetset.Scroller(True, True)
+        scroller.add(album_view)
+        # make the min-width for album view match standard view
+        scroller.set_size_request(600, -1)
+        # add the scroller to our container widget
+        self.widget.vbox[album_view_type].pack_start(scroller, expand=True)
+        # add to our views map
+        self.views[album_view_type] = album_view
+        return album_view
+
     def build_column_renderers(self):
         return itemlistwidgets.ListViewColumnRendererSet()
 
@@ -507,6 +535,8 @@ class ItemListController(object):
             WidgetStateStore.get_list_view_type())
         self.list_item_view.column_widths.update(widths)
         self.list_item_view.update_sorts(sorts)
+        self.album_item_view.column_widths.update(widths)
+        self.album_item_view.update_sorts(sorts)
         self.standard_view_toolbar.update_sorts(sorts)
 
     def _init_item_views(self):

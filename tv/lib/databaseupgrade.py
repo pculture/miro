@@ -3312,3 +3312,17 @@ def upgrade160(cursor):
     cursor.execute("ALTER TABLE global_state ADD COLUMN tabs_width integer")
     cursor.execute("UPDATE global_state SET tabs_width=200")
 
+def upgrade161(cursor):
+    """Set the album view data to widget state tables ."""
+    # update item_details_expanded
+    ALBUM_VIEW = 3
+
+    cursor.execute("SELECT item_details_expanded FROM global_state")
+    row = cursor.fetchone()
+    if row is None:
+        # defaults not set yet, just ignore
+        return
+    item_details_expanded = eval(row[0])
+    item_details_expanded[ALBUM_VIEW] = False
+    cursor.execute("UPDATE global_state set item_details_expanded=?",
+            (repr(item_details_expanded),))

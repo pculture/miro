@@ -41,6 +41,7 @@ class WidgetStateStore(object):
     # supposed to be. The CUSTOM_VIEW has to be caught in widgetstatestore 
     # and replaced with the proper view for the given situation.
     CUSTOM_VIEW = 2 
+    ALBUM_VIEW = 3
     LIST_VIEW = 1
     STANDARD_VIEW = 0
     DEFAULT_VIEW_TYPE = {
@@ -143,7 +144,7 @@ class WidgetStateStore(object):
     )
     # add available but non-default columns here:
     AVAILABLE_COLUMNS['music'] |= set([u'date', u'date-added', u'feed-name',
-        u'size', u'file-type', u'status', u'hybrid-album'])
+        u'size', u'file-type', u'status'])
     AVAILABLE_COLUMNS['others'] |= set([u'date', u'date-added', u'drm',
         u'rating'])
     AVAILABLE_COLUMNS['downloading'] |= set([u'torrent-details', u'date',
@@ -343,8 +344,12 @@ class WidgetStateStore(object):
 
     def get_column_widths(self, display_type, display_id, view_type):
         if WidgetStateStore.is_list_view(view_type):
-            display = self._get_display(display_type, display_id)
-            column_widths = display.list_view_widths or {}
+            # fetch dict containing the widths from the DisplayInfo
+            display_info = self._get_display(display_type, display_id)
+            column_widths = display_info.list_view_widths
+            if column_widths is None:
+                column_widths = {}
+            # get widths for each enabled column
             columns = self.get_sorts_enabled(display_type, display_id)
             for name in columns:
                 default = WidgetStateStore.DEFAULT_COLUMN_WIDTHS[name]
@@ -418,6 +423,10 @@ class WidgetStateStore(object):
     @staticmethod
     def is_standard_view(view_type):
         return view_type == WidgetStateStore.STANDARD_VIEW
+
+    @staticmethod
+    def is_album_view(view_type):
+        return view_type == WidgetStateStore.ALBUM_VIEW
 
 # manipulate a filter set:
 
@@ -530,6 +539,16 @@ class WidgetStateStore(object):
     @staticmethod
     def get_standard_view_type():
         return WidgetStateStore.STANDARD_VIEW
+
+    @staticmethod
+    def get_album_view_type():
+        return WidgetStateStore.ALBUM_VIEW
+
+    @staticmethod
+    def get_all_view_types():
+        return (WidgetStateStore.LIST_VIEW,
+                WidgetStateStore.STANDARD_VIEW,
+                WidgetStateStore.ALBUM_VIEW)
 
     # filters:
 

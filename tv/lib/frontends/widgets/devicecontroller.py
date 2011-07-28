@@ -1085,10 +1085,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         titlebar.connect('toggle-filter', self.on_toggle_filter)
         return titlebar
 
-    def build_header_toolbar(self):
-        sorts_enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
-        return itemlistwidgets.HeaderToolbar(sorts_enabled)
-
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create('device', self.device)
 

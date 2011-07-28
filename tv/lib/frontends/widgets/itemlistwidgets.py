@@ -83,14 +83,12 @@ class Titlebar(Toolbar):
         self.set_size_request(-1, self.HEIGHT)
 
 class TogglerButton(widgetset.CustomButton):
-    LEFT = 0
-    RIGHT = 1
-    def __init__(self, image_name, pos):
+
+    def __init__(self, image_name):
         widgetset.CustomButton.__init__(self)
         self.set_can_focus(False)
         self.state = 'normal'
         self._enabled = False
-        self._pos = pos
         self.surface = imagepool.get_surface(
             resources.path('images/%s.png' % image_name))
         self.active_surface = imagepool.get_surface(
@@ -99,12 +97,9 @@ class TogglerButton(widgetset.CustomButton):
             resources.path('images/%s_pressed.png' % image_name))
         self.current_surface = self.surface
 
-    def do_size_request(self):
-        return (max(self.surface.width, self.active_surface.width),
-                max(self.surface.height, self.active_surface.height))
-
     def size_request(self, layout):
-        return self.do_size_request()
+        # NOTE: this assumes all surfaces are the same size.
+        return self.surface.get_size()
 
     def set_pressed(self, pressed):
         self._enabled = pressed
@@ -122,42 +117,36 @@ class TogglerButton(widgetset.CustomButton):
 
         self.current_surface = surface
 
-        # XXX Working on the basis of LEFT/RIGHT only does not allow toggles
-        # with multiple states.
-        w = int(surface.width)
-        h = int(surface.height)
-        y = 0
-        if self._pos == TogglerButton.RIGHT:
-            x = 0
-        else:
-            x = int(self.do_size_request()[0] - surface.width)
-        surface.draw(context, x, y, w, h)
+        surface.draw(context, 0, 0, surface.width, surface.height)
 
 class ViewToggler(widgetset.HBox):
     def __init__(self):
         widgetset.HBox.__init__(self)
         self.create_signal('normal-view-clicked')
+        self.create_signal('album-view-clicked')
         self.create_signal('list-view-clicked')
         self.selected_view = WidgetStateStore.get_standard_view_type()
         self.togglers = dict()
         standard_view = WidgetStateStore.get_standard_view_type()
         list_view = WidgetStateStore.get_list_view_type()
+        album_view = WidgetStateStore.get_album_view_type()
 
         self.toggler_events = dict()
 
         self.toggler_events[standard_view] = 'normal-view-clicked'
+        self.toggler_events[album_view] = 'album-view-clicked'
         self.toggler_events[list_view] = 'list-view-clicked'
 
-        self.togglers[standard_view] = TogglerButton('standard-view',
-                                                     TogglerButton.LEFT)
-        self.togglers[list_view]= TogglerButton('list-view',
-                                                 TogglerButton.RIGHT)
+        self.togglers[standard_view] = TogglerButton('standard-view')
+        self.togglers[album_view]= TogglerButton('album-view')
+        self.togglers[list_view]= TogglerButton('list-view')
 
         for t in self.togglers.values():
             t.connect('clicked', self.on_clicked)
 
         self.togglers[self.selected_view].set_pressed(True)
         self.pack_start(self.togglers[standard_view])
+        self.pack_start(self.togglers[album_view])
         self.pack_start(self.togglers[list_view])
 
     def size_request(self, layout):
@@ -564,13 +553,17 @@ class ItemListTitlebar(Titlebar):
                                        left_pad=15)
 
     def _build_view_toggle(self):
-        self.create_signal('list-view-clicked')
-        self.create_signal('normal-view-clicked')
         self.view_toggler = ViewToggler()
-        self.view_toggler.connect('list-view-clicked', self._on_list_clicked)
-        self.view_toggler.connect('normal-view-clicked',
-                                  self._on_normal_clicked)
+        # forward signals from view_toggler
+        for signal_name in ('list-view-clicked', 'normal-view-clicked',
+                'album-view-clicked'):
+            self.create_signal(signal_name)
+            self.view_toggler.connect(signal_name,
+                    self._forward_view_toggler_signal, signal_name)
         return self.view_toggler
+
+    def _forward_view_toggler_signal(self, view_toggler, signal_name):
+        self.emit(signal_name)
 
     def _on_resume_button_clicked(self, button):
         self.emit('resume-playing')
@@ -581,12 +574,6 @@ class ItemListTitlebar(Titlebar):
 
     def _on_search_changed(self, searchbox):
         self.emit('search-changed', searchbox.get_text())
-
-    def _on_normal_clicked(self, button):
-        self.emit('normal-view-clicked')
-
-    def _on_list_clicked(self, button):
-        self.emit('list-view-clicked')
 
     def switch_to_view(self, view):
         self.view_toggler.switch_to_view(view)
@@ -970,6 +957,7 @@ class ItemView(widgetset.TableView):
 
 class SorterOwner(object):
     """Mixin for objects that need to handle a set of sort indicators."""
+
     def __init__(self, sorts_enabled):
         self.create_signal('sort-changed')
         self.sorters = dict()
@@ -1212,6 +1200,11 @@ class ListView(ItemView, SorterOwner):
 
         for name, sorter in self.sorters.iteritems():
             sorter.set_width(self.column_widths[name])
+
+class AlbumView(ListView):
+    def update_sorts(self, sorters):
+        # force hybrid-album column to be included as the first column
+        ListView.update_sorts(self, ['hybrid-album'] + sorters)
 
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed
@@ -2362,10 +2355,8 @@ class ItemContainerWidget(widgetset.VBox):
     def __init__(self, toolbar, view):
         widgetset.VBox.__init__(self)
         self.vbox = {}
-        standard_view = WidgetStateStore.get_standard_view_type()
-        list_view = WidgetStateStore.get_list_view_type()
-        self.vbox[standard_view] = widgetset.VBox()
-        self.vbox[list_view] = widgetset.VBox()
+        for view_type in WidgetStateStore.get_all_view_types():
+            self.vbox[view_type] = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.item_details = ItemDetailsWidget()
@@ -2384,6 +2375,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False
+        standard_view = WidgetStateStore.get_standard_view_type()
         self.vbox[standard_view].pack_start(self.toolbar)
         self.vbox[standard_view].pack_start(separator.HThinSeparator(color2))
         self.background.add(self.vbox[view])

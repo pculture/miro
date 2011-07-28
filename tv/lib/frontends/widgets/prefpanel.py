@@ -564,8 +564,11 @@ class PodcastsPanel(PanelBuilder):
         attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT,
             [op[0] for op in max_options])
 
-        view_options = [(WidgetStateStore.STANDARD_VIEW, _("Standard view")),
-                      (WidgetStateStore.LIST_VIEW, _("List view"))]
+        view_options = [
+                (WidgetStateStore.STANDARD_VIEW, _("Standard view")),
+                (WidgetStateStore.LIST_VIEW, _("List view"))
+                (WidgetStateStore.ALBUM_VIEW, _("Album view"))
+            ]
         view_option_menu = widgetset.OptionMenu([op[1] for op in view_options])
         attach_combo(view_option_menu, prefs.PODCASTS_DEFAULT_VIEW,
             [op[0] for op in view_options])
