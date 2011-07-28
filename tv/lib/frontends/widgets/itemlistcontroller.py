@@ -349,43 +349,20 @@ class ItemListController(object):
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
 
     def _init_widget(self):
-        toolbar = self.build_header_toolbar()
         self.selected_view = app.widget_state.get_selected_view(self.type,
                                                                 self.id)
-        self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
-                self.selected_view)
-
+        # build widgets
+        self.standard_view_toolbar = self.build_header_toolbar()
+        self.widget = itemlistwidgets.ItemContainerWidget(
+                self.standard_view_toolbar, self.selected_view)
         self.build_widget()
-
-        list_view = WidgetStateStore.get_list_view_type()
-        self.views[list_view] = self.build_list_view()
-
+        self.list_item_view = self.build_list_view()
+        self.standard_item_view = self.build_standard_view()
         self.expand_or_contract_item_details()
-
+        # connect to signals
+        list_view = WidgetStateStore.get_list_view_type()
         standard_view = WidgetStateStore.get_standard_view_type()
-        standard_view_widget = itemlistwidgets.StandardView(
-            self.item_list, self.build_renderer())
-        self.views[standard_view] = standard_view_widget
-        standard_view_background = widgetset.SolidBackground(
-                standard_view_widget.BACKGROUND_COLOR)
-        standard_view_background.add(widgetutil.pad(standard_view_widget,
-            top=10, bottom=10))
-
-        # set up member attrs to easily get our list/standard view widgets
-        self.list_item_view = self.views[list_view]
-        self.standard_item_view = self.views[standard_view]
-        self.standard_view_toolbar = toolbar
-        
-        standard_view_scroller = widgetset.Scroller(False, True)
-        standard_view_scroller.add(standard_view_background)
-        self.widget.vbox[standard_view].pack_start(
-                standard_view_scroller, expand=True)
-        self.views[standard_view].set_scroller(standard_view_scroller)
-        standard_view_scroller.set_background_color(
-                standard_view_widget.BACKGROUND_COLOR)
-        standard_view_scroller.prepare_for_dark_content()
-
-        toolbar.connect_weak('sort-changed',
+        self.standard_view_toolbar.connect_weak('sort-changed',
             self.on_sort_changed, standard_view)
         self.widget.item_details.expander_button.connect_weak('clicked',
                 self.on_item_details_expander_clicked)
@@ -457,6 +434,28 @@ class ItemListController(object):
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=False)
 
+    def build_standard_view(self):
+        # make the widget
+        standard_view = itemlistwidgets.StandardView(self.item_list,
+                self.build_renderer())
+        # put background behind it
+        standard_view_background = widgetset.SolidBackground(
+                standard_view.BACKGROUND_COLOR)
+        standard_view_background.add(widgetutil.pad(standard_view,
+            top=10, bottom=10))
+        # put scroller behind the background
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(standard_view_background)
+        standard_view.set_scroller(scroller)
+        scroller.set_background_color(standard_view.BACKGROUND_COLOR)
+        scroller.prepare_for_dark_content()
+        # put the scroller in our container widget
+        standard_view_type = WidgetStateStore.get_standard_view_type()
+        self.widget.vbox[standard_view_type].pack_start(scroller, expand=True)
+        # add to our views map
+        self.views[standard_view_type] = standard_view
+        return standard_view
+
     def build_list_view(self):
         """Build the list view widget for this controller."""
         list_view_type = WidgetStateStore.get_list_view_type()
@@ -471,6 +470,8 @@ class ItemListController(object):
         # make the min-width for list view match standard view
         scroller.set_size_request(600, -1)
         self.widget.vbox[list_view_type].pack_start(scroller, expand=True)
+        # add to our views map
+        self.views[list_view_type] = list_view
         return list_view
 
     def build_column_renderers(self):
