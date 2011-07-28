@@ -879,8 +879,9 @@ class SharingManagerBackend(object):
         return dict(revision=self.revision, valid=False)
 
     # At this point: item_lock acquired
-    def update_revision(self):
+    def update_revision(self, directed=None):
         self.revision += 1
+        self.directed = directed
         self.revision_cv.notify_all()
 
     def make_daap_playlists(self, items):
@@ -1041,8 +1042,15 @@ class SharingManagerBackend(object):
 
     def get_revision(self, session, old_revision):
         self.revision_cv.acquire()
-        if self.revision == old_revision:
+        while self.revision == old_revision:
             self.revision_cv.wait()
+            # If we really did a update or if the wakeup was directed at us
+            # (because we are quitting or something) then release the lock
+            # and return the revision
+            if self.directed is None or self.directed == session:
+                break
+            # update revision and then wait again
+            old_revision = self.revision
         self.revision_cv.release()
         return self.revision
 
@@ -1263,6 +1271,9 @@ class SharingManagerBackend(object):
                 self.transcode[session].shutdown()
             except KeyError:
                 pass
+        # Unlock the revision by bumping it
+        with self.item_lock:
+            self.update_revision(directed=session)
 
     def shutdown(self):
         # Set the in_shutdown flag inside the transcode lock to ensure that
