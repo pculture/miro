@@ -1143,8 +1143,7 @@ class SharingManagerBackend(object):
                     file_obj.close()
         return file_obj, os.path.basename(path)
 
-    def get_playlists(self, revision=0, delta=0):
-        #return [p for p in self.daap_playlists if p['revision'] > delta]
+    def get_playlists(self):
         return self.daap_playlists
 
     def on_config_changed(self, obj, key, value):
@@ -1165,15 +1164,14 @@ class SharingManagerBackend(object):
                 if share_types_orig != self.share_types:
                     self.update_revision()
 
-    def get_items(self, playlist_id=None, revision=0, delta=0):
+    def get_items(self, playlist_id=None):
         # Easy: just return
         with self.item_lock:
             items = dict()
             if not playlist_id:
                 for k in self.daapitems.keys():
                     item = self.daapitems[k]
-                    if (item['com.apple.itunes.mediakind'] in
-                      self.share_types and item['revision'] > delta):
+                    if item['com.apple.itunes.mediakind'] in self.share_types:
                         items[k] = item
                 return items
             # XXX Somehow cache this?
@@ -1182,8 +1180,7 @@ class SharingManagerBackend(object):
                 for x in self.daapitems.keys():
                     item = self.daapitems[x]
                     if (x in self.playlist_item_map[playlist_id] and
-                      item['com.apple.itunes.mediakind'] in
-                      self.share_types and item['revision'] > delta):
+                      item['com.apple.itunes.mediakind'] in self.share_types):
                         playlist[x] = item
             return playlist
 
