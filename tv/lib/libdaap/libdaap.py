@@ -473,6 +473,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                                )]
             playlists = self.server.backend.get_playlists()
             playlist_list = []
+            deleted = []
             try:
                 meta = query['meta']
             except KeyError:
@@ -481,15 +482,18 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             for k in playlists.keys():
                 playlistprop = playlists[k]
                 playlist = []
-                for m in meta_list:
-                    if m in playlistprop.keys():
-                        try:
-                            code = dmap_consts_rmap[m]
-                        except KeyError:
-                            continue
-                        if playlistprop[m] is not None:
-                            attribute = (code, playlistprop[m])
-                            playlist.append(attribute)
+                if playlistprop['valid']:
+                    for m in meta_list:
+                        if m in playlistprop.keys():
+                            try:
+                                code = dmap_consts_rmap[m]
+                            except KeyError:
+                                continue
+                            if playlistprop[m] is not None:
+                                attribute = (code, playlistprop[m])
+                                playlist.append(attribute)
+                else:
+                    deleted.append(('miid', k))
                 playlist_list.append(('mlit', playlist))
                                           
             npl = 1 + len(playlists)
@@ -498,7 +502,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                                    ('muty', 0),       # Update type
                                    ('mtco', npl),     # total count
                                    ('mrco', npl),     # returned count
-                                   ('mlcl', default_playlist + playlist_list)
+                                   ('mlcl', default_playlist + playlist_list),
+                                   ('mudl', deleted)
                                   ]
                         ))
         else:

@@ -970,8 +970,8 @@ class SharingManagerBackend(object):
                 for x in removed:
                     # Missing key means it's a folder and we skip over it.
                     if self.daap_playlists.has_key(x):
-                        #self.daap_playlists[x] = self.deleted_item()
-                        del self.daap_playlists[x]
+                        self.daap_playlists[x] = self.deleted_item()
+                        #del self.daap_playlists[x]
                         del self.playlist_item_map[x]
                         messages.StopTrackingItems(self.type,
                                                    x).send_to_backend()
