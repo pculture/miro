@@ -50,8 +50,8 @@ from miro import displaytext
 from miro import util
 from miro import eventloop
 from miro.gtcache import gettext as _
-from miro.gtcache import declarify
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import itemfilter
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -419,6 +419,44 @@ class ResumeButtonHolder(widgetset.Alignment):
         width_available = width - self.LEFT_PAD - self.RIGHT_PAD
         self.resume_button.set_width_available(width_available)
 
+class ItemFilterBox(widgetset.HBox):
+    """Pack filter buttons for the titlebar.  """
+
+    def __init__(self):
+        widgetset.HBox.__init__(self, spacing=10)
+        self.create_signal('filter-clicked')
+        # map filter keys -> FilterButton objects
+        self.button_map = {}
+
+    def set_filters(self, filter_set):
+        for key, button in self.button_map.iteritems():
+            enabled = (key in filter_set)
+            self.button_map[key].set_enabled(enabled)
+
+    def add_filter(self, key):
+        # lookup label using itemfilter
+        try:
+            label = itemfilter.get_label(key)
+        except KeyError:
+            logging.warn("KeyError when looking up item filter: %s" % key)
+            return
+        # enable the first button added
+        if not self.button_map:
+            enabled = True
+        else:
+            enabled = False
+        button = FilterButton(label, enabled=enabled)
+        button.connect('clicked', self._on_filter_clicked, key)
+        self.pack_start(button)
+        self.button_map[key] = button
+
+    def add_filters(self, key_list):
+        for key in key_list:
+            self.add_filter(key)
+
+    def _on_filter_clicked(self, button, filter_key):
+        self.emit("filter-clicked", filter_key)
+
 class ItemListTitlebar(Titlebar):
     """Titlebar for feeds, playlists and static tabs that display
     items.
@@ -435,13 +473,16 @@ class ItemListTitlebar(Titlebar):
     def __init__(self):
         Titlebar.__init__(self)
         self.create_signal('resume-playing')
+        self.create_signal('filter-clicked')
         hbox = widgetset.HBox()
         self.add(hbox)
         # Pack stuff to the right
         before_filters = self._build_before_filters()
         if before_filters:
             hbox.pack_start(before_filters)
-        self.filter_box = widgetset.HBox(spacing=10)
+        self.filter_box = ItemFilterBox()
+        self.filter_box.connect('filter-clicked', self._on_filter_clicked)
+        self.filter_box.add_filters(self.get_filters())
         self.filter_box_holder = widgetutil.HideableWidget(
             widgetutil.align_middle(self.filter_box, left_pad=15))
         self.filter_box_holder.show()
@@ -464,9 +505,6 @@ class ItemListTitlebar(Titlebar):
             self.resume_button_holder = ResumeButtonHolder(self.resume_button)
             hbox.pack_start(self.resume_button_holder, expand=True)
 
-        self.filters = {}
-        self.setup_filters()
-
         self.calculate_width_requests()
         # force our size request to be the smaller of the two.  If we get
         # allocated less than normal_width_needed, we will go into small width
@@ -474,12 +512,20 @@ class ItemListTitlebar(Titlebar):
         self.set_size_request(self.small_width_needed, self.HEIGHT)
         self.in_small_width_mode = False
 
-    def setup_filters(self):
-        """Add filters that we want to show.
+    def set_filters(self, filter_keys):
+        self.filter_box.set_filters(filter_keys)
 
-        Subclasses can define this to add filters to the titlebar.
+    def get_filters(self):
+        """Get the list of filters to show.
+
+        By default we return no filters.  Subclasses can override this if they
+        want to display filters.
         """
-        pass
+        return []
+
+    def _on_filter_clicked(self, filterbox, filter_key):
+        # just forward the signal on
+        self.emit("filter-clicked", filter_key)
 
     def calculate_width_requests(self):
         """Calculate the width required for normal mode and small-width
@@ -590,24 +636,6 @@ class ItemListTitlebar(Titlebar):
 
     def start_editing_search(self, text):
         self.searchbox.start_editing(text)
-
-    def toggle_filter(self, filter_):
-        # implemented by subclasses
-        pass
-
-    def add_filter(self, name, signal_name, signal_param, label):
-        if not self.filters:
-            enabled = True
-        else:
-            enabled = False
-        self.create_signal(signal_name)
-        def callback(button):
-            self.emit(signal_name, signal_param)
-        button = FilterButton(label, enabled=enabled)
-        button.connect('clicked', callback)
-        self.filter_box.pack_start(button)
-        self.filters[name] = button
-        return button
 
 class FolderContentsTitlebar(ItemListTitlebar):
     def _build_before_filters(self):
@@ -722,95 +750,16 @@ class SearchTitlebar(ItemListTitlebar):
             self.save_button_holder.show()
         self.emit('search-changed', searchbox.get_text())
 
-class VideoAudioFilterMixin(object):
-    def setup_filters(self):
-        view_video = WidgetStateStore.get_view_video_filter()
-        view_audio = WidgetStateStore.get_view_audio_filter()
-        self.add_filter('view-video', 'toggle-filter', view_video,
-                        _('Video'))
-        self.add_filter('view-audio', 'toggle-filter', view_audio,
-                        _('Audio'))
-
-    def toggle_filter(self):
-        view_video = WidgetStateStore.is_view_video_filter(self.filter)
-        view_audio = WidgetStateStore.is_view_audio_filter(self.filter)
-        self.filters['view-video'].set_enabled(view_video)
-        self.filters['view-audio'].set_enabled(view_audio)
-
-class UnplayedFilterMixin(object):
-    def setup_filters(self):
-        unwatched = WidgetStateStore.get_unwatched_filter()
-        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
-                        _('Unplayed'))
-
-    def toggle_filter(self):
-        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        self.filters['only-unplayed'].set_enabled(unwatched)
-
-class DownloadedUnplayedFilterMixin(UnplayedFilterMixin):
-    def setup_filters(self):
-        downloaded = WidgetStateStore.get_downloaded_filter()
-        self.add_filter('only-downloaded', 'toggle-filter', downloaded,
-                        _('Downloaded'))
-        UnplayedFilterMixin.setup_filters(self)
-
-    def toggle_filter(self):
-        downloaded = WidgetStateStore.has_downloaded_filter(self.filter)
-        self.filters['only-downloaded'].set_enabled(downloaded)
-        UnplayedFilterMixin.toggle_filter(self)
-
-class FilteredTitlebar(ItemListTitlebar):
-    def setup_filters(self):
-        # this "All" is different than other "All"s in the codebase, so it
-        # needs to be clarified
-        view_all = WidgetStateStore.get_view_all_filter()
-        self.add_filter('view-all', 'toggle-filter', view_all,
-                         declarify(_('View|All')))
-        self.filter = view_all
-
-    def toggle_filter(self, filter_):
-        self.filter = WidgetStateStore.toggle_filter(self.filter, filter_)
-        view_all = WidgetStateStore.is_view_all_filter(self.filter)
-        self.filters['view-all'].set_enabled(view_all)
-
-class MediaTitlebar(SearchTitlebar, FilteredTitlebar):
+class MediaTitlebar(SearchTitlebar):
     def save_search_title(self):
         return _('Save as Playlist')
 
     def save_search_icon(self):
         return 'save-as-playlist'
 
-# Note that this is not related to VideoAudioFilterMixin.
-# VideoAudioFilterMixin adds video and audio filtering, 
-# while VideosTitlebar is the static video tab.
 class VideosTitlebarMixin(object):
-    def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        view_all = WidgetStateStore.get_view_all_filter()
-        view_movies = WidgetStateStore.get_view_movies_filter()
-        view_shows = WidgetStateStore.get_view_shows_filter()
-        view_clips = WidgetStateStore.get_view_clips_filter()
-        view_podcasts = WidgetStateStore.get_view_podcasts_filter()
-
-        self.add_filter('view-movies', 'toggle-filter', view_movies,
-                            _('Movies'))
-        self.add_filter('view-shows', 'toggle-filter', view_shows,
-                            _('Shows'))
-        self.add_filter('view-clips', 'toggle-filter', view_clips,
-                            _('Clips'))
-        self.add_filter('view-podcasts', 'toggle-filter', view_podcasts,
-                            _('Podcasts'))
-
-    def toggle_filter(self, filter_):
-        FilteredTitlebar.toggle_filter(self, filter_)
-        view_movies = WidgetStateStore.is_view_movies_filter(self.filter)
-        view_shows = WidgetStateStore.is_view_shows_filter(self.filter)
-        view_clips = WidgetStateStore.is_view_clips_filter(self.filter)
-        view_podcasts = WidgetStateStore.is_view_podcasts_filter(self.filter)
-        self.filters['view-movies'].set_enabled(view_movies)
-        self.filters['view-shows'].set_enabled(view_shows)
-        self.filters['view-clips'].set_enabled(view_clips)
-        self.filters['view-podcasts'].set_enabled(view_podcasts)
+    def get_filters(self):
+        return ('all', 'movies', 'shows', 'clips', 'podcasts')
 
     def set_small_width_mode(self, enabled):
         if enabled:
@@ -822,60 +771,36 @@ class VideosTitlebarMixin(object):
 class VideosTitlebar(VideosTitlebarMixin, MediaTitlebar):
     pass
 
-class DeviceVideosTitlebar(VideosTitlebarMixin, FilteredTitlebar):
+class DeviceVideosTitlebar(VideosTitlebarMixin, ItemListTitlebar):
     pass
 
 # This is the same as the videos titlebar (with all the filters etc) except
 # we don't let saving as a playlist (because everything here is transient).
 class SharingTitlebar(VideosTitlebar):
-   def _on_search_changed(self, searchbox):
-       self.emit('search-changed', searchbox.get_text())
+    def _on_search_changed(self, searchbox):
+        self.emit('search-changed', searchbox.get_text())
 
-class MusicTitlebar(MediaTitlebar, UnplayedFilterMixin):
-   def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        UnplayedFilterMixin.setup_filters(self)
+class MusicTitlebar(MediaTitlebar):
+    def get_filters(self):
+        return ('all', 'unplayed')
 
-   def toggle_filter(self, filter_):
-       FilteredTitlebar.toggle_filter(self, filter_)
-       UnplayedFilterMixin.toggle_filter(self)
+class DeviceMusicTitlebar(ItemListTitlebar):
+   def get_filters(self):
+        return ('all', 'unplayed')
 
-class DeviceMusicTitlebar(FilteredTitlebar, UnplayedFilterMixin):
-   def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        UnplayedFilterMixin.setup_filters(self)
-
-   def toggle_filter(self, filter_):
-       FilteredTitlebar.toggle_filter(self, filter_)
-       UnplayedFilterMixin.toggle_filter(self)
-
-class AllFeedsTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin,
-                       VideoAudioFilterMixin):
+class AllFeedsTitlebar(ItemListTitlebar):
     uses_resume_button = True
 
-    def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        DownloadedUnplayedFilterMixin.setup_filters(self)
-        VideoAudioFilterMixin.setup_filters(self)
+    def get_filters(self):
+        return ('all', 'downloaded', 'unplayed', 'video', 'audio')
 
-    def toggle_filter(self, filter_):
-        FilteredTitlebar.toggle_filter(self, filter_)
-        DownloadedUnplayedFilterMixin.toggle_filter(self)
-        VideoAudioFilterMixin.toggle_filter(self)
-
-class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
-                      DownloadedUnplayedFilterMixin):
+class ChannelTitlebar(SearchTitlebar):
     """Titlebar for a channel
     """
     uses_resume_button = True
 
-    def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        DownloadedUnplayedFilterMixin.setup_filters(self)
-
-    def toggle_filter(self, filter_):
-        FilteredTitlebar.toggle_filter(self, filter_)
-        DownloadedUnplayedFilterMixin.toggle_filter(self)
+    def get_filters(self):
+        return ('all', 'downloaded', 'unplayed')
 
     def set_small_width_mode(self, enabled):
         if enabled:
@@ -884,35 +809,20 @@ class ChannelTitlebar(SearchTitlebar, FilteredTitlebar,
             self.save_button.set_title(_("Save as Podcast"))
         SearchTitlebar.set_small_width_mode(self, enabled)
 
-class ChannelFolderTitlebar(FilteredTitlebar, DownloadedUnplayedFilterMixin):
+class ChannelFolderTitlebar(ItemListTitlebar):
     """Titlebar for a channel folder; like the channel titlebar, but without the
     save search button.
     """
     uses_resume_button = True
 
-    def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        DownloadedUnplayedFilterMixin.setup_filters(self)
+    def get_filters(self):
+        return ('all', 'downloaded', 'unplayed')
 
-    def toggle_filter(self, filter_):
-        FilteredTitlebar.toggle_filter(self, filter_)
-        DownloadedUnplayedFilterMixin.toggle_filter(self)
-
-class WatchedFolderTitlebar(FilteredTitlebar, VideoAudioFilterMixin):
+class WatchedFolderTitlebar(ItemListTitlebar):
     uses_resume_button = True
 
-    def setup_filters(self):
-        FilteredTitlebar.setup_filters(self)
-        unwatched = WidgetStateStore.get_unwatched_filter()
-        self.add_filter('only-unplayed', 'toggle-filter', unwatched,
-                        _('Unplayed'))
-        VideoAudioFilterMixin.setup_filters(self)
-
-    def toggle_filter(self, filter_):
-        FilteredTitlebar.toggle_filter(self, filter_)
-        unwatched = WidgetStateStore.has_unwatched_filter(self.filter)
-        self.filters['only-unplayed'].set_enabled(unwatched)
-        VideoAudioFilterMixin.toggle_filter(self)
+    def get_filters(self):
+        return ('all', 'unplayed', 'video', 'audio')
 
 class SearchListTitlebar(SearchTitlebar):
     """Titlebar for the search page.

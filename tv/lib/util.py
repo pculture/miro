@@ -1114,3 +1114,13 @@ class Cache(object):
 
     def create_new_value(self, val):
         raise NotImplementedError()
+
+def all_subclasses(cls):
+    """Find all subclasses of a given new-style class.
+
+    This method also returns sub-subclasses, etc.
+    """
+    for subclass in cls.__subclasses__():
+        yield subclass
+        for sub_subclass in all_subclasses(subclass):
+            yield sub_subclass

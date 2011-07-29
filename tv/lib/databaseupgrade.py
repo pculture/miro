@@ -3326,3 +3326,57 @@ def upgrade161(cursor):
     item_details_expanded[ALBUM_VIEW] = False
     cursor.execute("UPDATE global_state set item_details_expanded=?",
             (repr(item_details_expanded),))
+
+def upgrade162(cursor):
+    """Convert the active_filters column to string values."""
+
+    FILTER_VIEW_ALL = 0
+    FILTER_UNWATCHED = 1
+    FILTER_NONFEED = 2
+    FILTER_DOWNLOADED = 4
+    FILTER_VIEW_VIDEO = 8
+    FILTER_VIEW_AUDIO = 16
+    FILTER_VIEW_MOVIES = 32
+    FILTER_VIEW_SHOWS = 64
+    FILTER_VIEW_CLIPS = 128
+    FILTER_VIEW_PODCASTS = 256
+
+    # map the old integer constants to strings.  Rename "unwatched" to
+    # "unplayed" since we've done it other places so we might as well do it
+    # here during the upgrade.
+    value_map = {
+            FILTER_VIEW_ALL: 'all',
+            FILTER_UNWATCHED: 'unplayed',
+            FILTER_NONFEED: 'nonfeed',
+            FILTER_DOWNLOADED: 'downloaded',
+            FILTER_VIEW_VIDEO: 'video',
+            FILTER_VIEW_AUDIO: 'audio',
+            FILTER_VIEW_MOVIES: 'movies',
+            FILTER_VIEW_SHOWS: 'shows',
+            FILTER_VIEW_CLIPS: 'clips',
+            FILTER_VIEW_PODCASTS: 'podcasts',
+    }
+
+    # convert old int values to strings
+    converted_values = []
+    cursor.execute("SELECT type, id_, active_filters FROM display_state")
+    for row in cursor.fetchall():
+        type, id_, active_filters = row
+        if active_filters is None:
+            continue
+        filters = []
+        for int_value, string_value in value_map.iteritems():
+            if active_filters & int_value:
+                filters.append(string_value)
+        new_active_filters = ":".join(filters)
+        converted_values.append((type, id_, new_active_filters))
+    # drop old integer column
+    remove_column(cursor, 'display_state', ['active_filters'])
+    # add new text column
+    cursor.execute("ALTER TABLE display_state ADD COLUMN active_filters text")
+    # fill in the new values
+    for (type, id_, new_active_filters) in converted_values:
+        cursor.execute("UPDATE display_state "
+                "SET active_filters=? "
+                "WHERE type = ? AND id_ = ?",
+                (new_active_filters, type, id_))

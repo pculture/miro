@@ -58,17 +58,7 @@ class WidgetStateStore(object):
         u'sharing': LIST_VIEW,
         u'videos': STANDARD_VIEW,
      }
-    FILTER_VIEW_ALL = 0
-    FILTER_UNWATCHED = 1
-    FILTER_NONFEED = 2
-    FILTER_DOWNLOADED = 4
-    FILTER_VIEW_VIDEO = 8
-    FILTER_VIEW_AUDIO = 16
-    FILTER_VIEW_MOVIES = 32
-    FILTER_VIEW_SHOWS = 64
-    FILTER_VIEW_CLIPS = 128
-    FILTER_VIEW_PODCASTS = 256
-    DEFAULT_DISPLAY_FILTERS = FILTER_VIEW_ALL
+    DEFAULT_DISPLAY_FILTERS = ['all']
     DEFAULT_COLUMN_WIDTHS = {
         u'album': 100,
         u'artist': 110,
@@ -241,16 +231,22 @@ class WidgetStateStore(object):
         self._save_display_state(display_type, display_id)
 
     def get_filters(self, display_type, display_id):
+        """Get the active filters
+
+        :returns: set of active filter strings
+        """
         display = self._get_display(display_type, display_id)
         if display.active_filters is None:
-            return WidgetStateStore.DEFAULT_DISPLAY_FILTERS
+            return set(WidgetStateStore.DEFAULT_DISPLAY_FILTERS)
         return display.active_filters
 
-    def toggle_filters(self, display_type, display_id, filter_):
-        filters = self.get_filters(display_type, display_id)
-        filters = WidgetStateStore.toggle_filter(filters, filter_)
+    def set_filters(self, display_type, display_id, active_filters):
+        """Set the active filters
+
+        active_filters should be a set of filter key strings.
+        """
         display = self._get_display(display_type, display_id)
-        display.active_filters = filters
+        display.active_filters = active_filters
         self._save_display_state(display_type, display_id)
 
     def set_shuffle(self, display_type, display_id, shuffle):
@@ -428,80 +424,6 @@ class WidgetStateStore(object):
     def is_album_view(view_type):
         return view_type == WidgetStateStore.ALBUM_VIEW
 
-# manipulate a filter set:
-
-    @staticmethod
-    def toggle_filter(filters, filter_):
-        if filter_ == WidgetStateStore.FILTER_VIEW_ALL:
-            return filter_
-        elif filter_ in (WidgetStateStore.FILTER_VIEW_VIDEO,
-                         WidgetStateStore.FILTER_VIEW_AUDIO):
-            exclude = ~(WidgetStateStore.FILTER_VIEW_VIDEO |
-                       WidgetStateStore.FILTER_VIEW_AUDIO)
-            if not ((filters & WidgetStateStore.FILTER_DOWNLOADED) or
-                    (filters & WidgetStateStore.FILTER_UNWATCHED)):
-                # only downloaded items have a file type
-                filters = filters | WidgetStateStore.FILTER_DOWNLOADED
-            return (filters & exclude) | filter_
-        elif filter_ in (WidgetStateStore.FILTER_UNWATCHED,
-                         WidgetStateStore.FILTER_DOWNLOADED):
-            exclude = ~(WidgetStateStore.FILTER_UNWATCHED |
-                         WidgetStateStore.FILTER_DOWNLOADED)
-            return (filters & exclude) | filter_
-        elif filter_ in (WidgetStateStore.FILTER_VIEW_MOVIES,
-                         WidgetStateStore.FILTER_VIEW_SHOWS,
-                         WidgetStateStore.FILTER_VIEW_CLIPS,
-                         WidgetStateStore.FILTER_VIEW_PODCASTS):
-            exclude = ~(WidgetStateStore.FILTER_VIEW_MOVIES |
-                         WidgetStateStore.FILTER_VIEW_SHOWS |
-                         WidgetStateStore.FILTER_VIEW_CLIPS |
-                         WidgetStateStore.FILTER_VIEW_PODCASTS)
-            return (filters & exclude) | filter_
-        else:
-            return filters | filter_
-
-# static properties of a filter combination:
-
-    @staticmethod
-    def is_view_all_filter(filters):
-        return filters == WidgetStateStore.FILTER_VIEW_ALL
-
-    @staticmethod
-    def is_view_video_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_VIEW_VIDEO)
-
-    @staticmethod
-    def is_view_audio_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_VIEW_AUDIO)
-
-    @staticmethod
-    def is_view_movies_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_VIEW_MOVIES)
-
-    @staticmethod
-    def is_view_shows_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_VIEW_SHOWS)
-
-    @staticmethod
-    def is_view_clips_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_VIEW_CLIPS)
-
-    @staticmethod
-    def is_view_podcasts_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_VIEW_PODCASTS)
-
-    @staticmethod
-    def has_unwatched_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_UNWATCHED)
-
-    @staticmethod
-    def has_non_feed_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_NONFEED)
-
-    @staticmethod
-    def has_downloaded_filter(filters):
-        return bool(filters & WidgetStateStore.FILTER_DOWNLOADED)
-
 # static properties:
 
     @staticmethod
@@ -549,45 +471,3 @@ class WidgetStateStore(object):
         return (WidgetStateStore.LIST_VIEW,
                 WidgetStateStore.STANDARD_VIEW,
                 WidgetStateStore.ALBUM_VIEW)
-
-    # filters:
-
-    @staticmethod
-    def get_view_all_filter():
-        return WidgetStateStore.FILTER_VIEW_ALL
-
-    @staticmethod
-    def get_view_video_filter():
-        return WidgetStateStore.FILTER_VIEW_VIDEO
-
-    @staticmethod
-    def get_view_audio_filter():
-        return WidgetStateStore.FILTER_VIEW_AUDIO
-
-    @staticmethod
-    def get_view_movies_filter():
-        return WidgetStateStore.FILTER_VIEW_MOVIES
-
-    @staticmethod
-    def get_view_shows_filter():
-        return WidgetStateStore.FILTER_VIEW_SHOWS
-
-    @staticmethod
-    def get_view_clips_filter():
-        return WidgetStateStore.FILTER_VIEW_CLIPS
-
-    @staticmethod
-    def get_view_podcasts_filter():
-        return WidgetStateStore.FILTER_VIEW_PODCASTS
-
-    @staticmethod
-    def get_unwatched_filter():
-        return WidgetStateStore.FILTER_UNWATCHED
-
-    @staticmethod
-    def get_non_feed_filter():
-        return WidgetStateStore.FILTER_NONFEED
-
-    @staticmethod
-    def get_downloaded_filter():
-        return WidgetStateStore.FILTER_DOWNLOADED
