@@ -100,6 +100,7 @@ XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 GSTREAMER_PATH = os.path.join(BINARY_KIT_ROOT, 'gstreamer')
+GSTREAMER_BIN_PATH = os.path.join(GSTREAMER_PATH, 'bin')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
@@ -175,6 +176,7 @@ from miro import buildutils
 # .pyd file
 sys.path.insert(0, LIBTORRENT_PATH)
 sys.path.insert(0, MUTAGEN_PATH)
+sys.path.insert(0, os.path.join(GSTREAMER_PATH, 'lib', 'site-packages'))
 sys.path.insert(0, os.path.join(GSTREAMER_PATH, 'lib', 'site-packages', 'gst-0.10'))
 
 
@@ -261,8 +263,11 @@ infolist_ext = \
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-        OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
-        LIBTORRENT_PATH, GTK_LIB_PATH,
+        OPENSSL_LIB_PATH,
+        ZLIB_RUNTIME_LIBRARY_PATH,
+        LIBTORRENT_PATH,
+        GTK_LIB_PATH,
+        GSTREAMER_BIN_PATH,
         os.environ['PATH']])
 
 # Private extension modules to build.
@@ -291,8 +296,9 @@ data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
 #     data_files.extend(find_data_files(path, src_path))
 
 # gstreamer files
+data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', '*.dll'))))
 data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*'))))
-# data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
+data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
 data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
