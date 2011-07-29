@@ -1012,7 +1012,7 @@ class ListViewColumnRendererSet(ColumnRendererSet):
         'name': style.NameRenderer,
         'artist': style.ArtistRenderer,
         'album': style.AlbumRenderer,
-        'hybrid-album': style.HybridAlbumRenderer,
+        'multi-row-album': style.MultiRowAlbumRenderer,
         'track': style.TrackRenderer,
         'year': style.YearRenderer,
         'genre': style.GenreRenderer,
@@ -1203,8 +1203,8 @@ class ListView(ItemView, SorterOwner):
 
 class AlbumView(ListView):
     def update_sorts(self, sorters):
-        # force hybrid-album column to be included as the first column
-        ListView.update_sorts(self, ['hybrid-album'] + sorters)
+        # force multi-row-album column to be included as the first column
+        ListView.update_sorts(self, ['multi-row-album'] + sorters)
 
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed

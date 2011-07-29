@@ -58,7 +58,7 @@ COLUMN_LABELS = {
     u'name': _('Name'),
     u'artist': _('Artist'),
     u'album': _('Album'),
-    u'hybrid-album': _('Hybrid Album'),
+    u'multi-row-album': _('Album/Artist'),
     u'track': _('Track'),
     u'year': _('Year'),
     u'genre': _('Genre'),
@@ -80,7 +80,7 @@ COLUMN_LABELS = {
     u'kind': _('Video Kind'),
     u'playlist': _('Order'),
 }
-NO_RESIZE_COLUMNS = set(['state', 'rating', 'hybrid-album'])
+NO_RESIZE_COLUMNS = set(['state', 'rating', 'multi-row-album'])
 NO_PAD_COLUMNS = set(['state'])
 DESCENDING_BY_DEFAULT = frozenset(['date', 'date-added', 'rate'])
 COLUMN_WIDTH_WEIGHTS = {

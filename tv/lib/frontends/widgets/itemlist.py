@@ -168,8 +168,10 @@ class AlbumSort(ItemSort):
                 info.track,
                 info.artist_sort_key)
 
-class HybridAlbumSort(ItemSort):
-    KEY = 'hybrid-album'
+class MultiRowAlbumSort(AlbumSort):
+    """Sorter for the album view column.  It operates the same as AlbumSort
+    """
+    KEY = 'multi-row-album'
 
 class TrackSort(ItemSort):
     KEY = 'track'

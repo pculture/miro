@@ -79,7 +79,7 @@ class WidgetStateStore(object):
         u'feed-name': 70,
         u'file-type': 70,
         u'genre': 65,
-        u'hybrid-album': 200,
+        u'multi-row-album': 200,
         u'kind': 70,
         u'length': 60,
         u'name': 200,

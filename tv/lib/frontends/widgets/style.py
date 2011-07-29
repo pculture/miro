@@ -747,8 +747,8 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         else:
             return None
 
-class HybridAlbumRenderer(widgetset.InfoListRenderer):
-    """Renderer for albums in hybrid view."""
+class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
+    """Renderer for album view."""
 
     IGNORE_PADDING = True
     IMAGE_SIZE = (138, 138)
@@ -781,12 +781,12 @@ class HybridAlbumRenderer(widgetset.InfoListRenderer):
     def render(self, context, layout_manager, selected, hotspot, hover):
         if self.group_info is None:
             # we can't render if group_info isn't set
-            logging.warn("group_info is None in HybridAlbumRenderer")
+            logging.warn("group_info is None in MultiRowAlbumRenderer")
             return
         if context.height == 0:
             # not sure how this would happen, but we need to avoid
             # divide-by-zero errors if it does
-            logging.warn("row height is 0 in HybridAlbumRenderer")
+            logging.warn("row height is 0 in MultiRowAlbumRenderer")
             return
 
         current_row, total_rows = self.group_info
