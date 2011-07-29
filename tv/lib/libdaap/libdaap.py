@@ -482,8 +482,9 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             meta_list = [m.strip() for m in meta.split(',')]
             for k in playlists.keys():
                 playlistprop = playlists[k]
-                #if playlistprop['revision'] <= delta:
-                #    continue
+                if (playlistprop['revision'] <= delta or
+                  playlistprop['revision'] > revision):
+                    continue
                 if playlistprop['valid']:
                     playlist = []
                     for m in meta_list:
@@ -499,10 +500,11 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 else:
                     deleted.append(('miid', k))
                                           
-            npl = 1 + len(playlists)
+            npl = 1 + len(playlist_list)
+            update = 1 if delta else 0
             content = [                    # Database playlists
                         ('mstt', DAAP_OK), # Status - OK
-                        ('muty', 0),       # Update type
+                        ('muty', update),  # Update type
                         ('mtco', npl),     # total count
                         ('mrco', npl),     # returned count
                         ('mlcl', default_playlist + playlist_list)
@@ -549,9 +551,9 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # it doesn't work!
         for k in items.keys():
             itemprop = items[k]
-            #if (itemprop['revision'] <= delta or
-            #  itemprop['revision'] > revision):
-            #    continue
+            if (itemprop['revision'] <= delta or
+              itemprop['revision'] > revision):
+                continue
             if itemprop['valid']:
                 item = []
                 for m in meta_list:
@@ -572,11 +574,12 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 deleted.append(('miid', k))
 
         tag = 'apso' if playlist_id else 'adbs'
-        nfiles = len(items)
+        nfiles = len(itemlist)
+        update = 1 if delta else 0
         reply = []
         content = [                          # Container type
                         ('mstt', DAAP_OK),   # Status: OK
-                        ('muty', 0),         # Update type
+                        ('muty', update),    # Update type
                         ('mtco', nfiles),    # Specified total count
                         ('mrco', nfiles),    # Returned count
                         ('mlcl', itemlist),  # Itemlist container
