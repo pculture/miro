@@ -864,8 +864,9 @@ class SharingManagerBackend(object):
                 except KeyError:
                     pass
                 try:
-                    #self.daapitems[itemid] = self.deleted_item()
-                    del self.daapitems[itemid]
+                    if message.id is None:
+                        #self.daapitems[itemid] = self.deleted_item()
+                        del self.daapitems[itemid]
                 except KeyError:
                     pass
             if message.id is not None:
