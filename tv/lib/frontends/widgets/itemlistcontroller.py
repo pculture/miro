@@ -79,19 +79,21 @@ class FilteredListMixin(object):
     """
     def __init__(self):
         filters = app.widget_state.get_filters(self.type, self.id)
-        self.update_filters(filters)
+        self.item_list.set_filters(filters)
+        self.after_filters_changed()
 
-    def on_toggle_filter(self, button, filter_):
+    def on_filter_clicked(self, button, filter_key):
         """Handle the filter switch changing state."""
-        self.update_filters(filter_)
-        app.widget_state.toggle_filters(self.type, self.id, filter_)
+        self.item_list.select_filter(filter_key)
+        self.after_filters_changed()
+        app.widget_state.set_filters(self.type, self.id,
+                self.item_list.get_filters())
 
-    def update_filters(self, filters):
-        """Update the display and toolbar filter switch state."""
+    def after_filters_changed(self):
         self.item_list_will_change()
-        self.titlebar.toggle_filter(filters)
-        self.item_list.toggle_filter(filters)
+        self.item_list.recalculate_hidden_items()
         self.send_model_changed()
+        self.titlebar.set_filters(self.item_list.get_filters())
         self.check_for_empty_list()
 
 class ProgressTrackingListMixin(object):
@@ -1112,7 +1114,7 @@ class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
     def make_titlebar(self):
         titlebar = self.titlebar_class()
         titlebar.connect('search-changed', self._on_search_changed)
-        titlebar.connect('toggle-filter', self.on_toggle_filter)
+        titlebar.connect('filter-clicked', self.on_filter_clicked)
         titlebar.connect('save-search', self._on_save_search)
         return titlebar
 

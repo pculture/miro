@@ -1775,16 +1775,16 @@ class DisplayInfo(object):
         self.key = key
         if display is not None:
             self.selected_view = display.selected_view
-            self.active_filters = display.active_filters
             self.shuffle = display.shuffle
             self.repeat = display.repeat
             self.selection = display.selection
             self.sort_state = display.sort_state
             self.last_played_item_id = display.last_played_item_id
-            # shallow-copy attributes that store lists and dicts so that
-            # changing the database object doesn't change the DisplayInfo
+            # shallow-copy attributes that store lists, dicts, and sets so
+            # that changing the database object doesn't change the DisplayInfo
             self.list_view_columns = copy.copy(display.list_view_columns)
             self.list_view_widths = copy.copy(display.list_view_widths)
+            self.active_filters = copy.copy(display.active_filters)
         else:
             self.selected_view = None
             self.active_filters = None

@@ -33,16 +33,16 @@ itemlist, itemlistcontroller and itemlistwidgets work together using the MVC
 pattern.  itemlist handles the Model, itemlistwidgets handles the View and
 itemlistcontroller handles the Controller.
 
-ItemList manages a TableModel that stores ItemInfo objects.  It handles
-filtering out items from the list (for example in the Downloading items list).
-They also handle temporarily filtering out items based the user's search
-terms.
+ItemList manages a TableModel that stores ItemInfo objects.  It uses an
+ItemFilter object to filter out items from the list.
 """
 
 import itertools
 import sys
 
 from miro import app
+from miro import util
+from miro.frontends.widgets import itemfilter
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
 
@@ -353,17 +353,7 @@ class PlaylistSort(ItemSort):
 
 DEFAULT_SORT = ArtistSort(False)
 
-def all_subclasses(cls):
-    """Find all subclasses of a given new-style class.
-
-    This method also returns sub-subclasses, etc.
-    """
-    for subclass in cls.__subclasses__():
-        yield subclass
-        for sub_subclass in all_subclasses(subclass):
-            yield sub_subclass
-
-SORT_KEY_MAP = dict((sort.KEY, sort) for sort in all_subclasses(ItemSort))
+SORT_KEY_MAP = dict((sort.KEY, sort) for sort in util.all_subclasses(ItemSort))
 
 def album_grouping(info):
     """Grouping function that groups infos by albums."""
@@ -382,12 +372,7 @@ class ItemList(object):
         * show_details flag (boolean)
         * counter used to change the progress throbber (integer)
 
-    video_only -- Are we only displaying videos?
-    audio_only -- Are we only displaying audio?
-    new_only -- Are we only displaying the new items?
-    unwatched_only -- Are we only displaying the unwatched items?
-    downloaded_only -- Are we only displaying the downloaded items?
-    non_feed_only -- Are we only displaying file items?
+    filter_set -- ItemFilterSet for this item list
     resort_on_update -- Should we re-sort the list when items change?
     """
 
@@ -395,18 +380,11 @@ class ItemList(object):
         self._sorter = DEFAULT_SORT
         self.model = widgetset.InfoListModel(self._sorter.sort_key,
                 self._sorter.reverse)
-        self.video_only = self.audio_only = False
-        self.movies_only = self.shows_only = False
-        self.clips_only = self.podcasts_only = False
-        self.new_only = False
-        self.unwatched_only = False
-        self.downloaded_only = False
-        self.non_feed_only = False
+        self.filter_set = itemfilter.ItemFilterSet()
         self.resort_on_update = False
+        # maps ids -> items that are this list, but are filtered by our
+        # ItemFilters
         self._hidden_items = {}
-        self._filter = WidgetStateStore.get_view_all_filter()
-        # maps ids -> items that should be in this list, but are filtered out
-        # for some reason
 
     def set_sort(self, sorter):
         self._sorter = sorter
@@ -461,30 +439,6 @@ class ItemList(object):
     def __iter__(self):
         return self.iter_items()
 
-    def filter(self, item_info):
-        """Can be overrided by subclasses to filter out items from the list.
-        """
-        return True
-
-    def _should_show_item(self, item_info):
-        if not self.filter(item_info):
-            return False
-        return (not (self.new_only and item_info.item_viewed) and
-                not (self.unwatched_only and
-                    not app.playback_manager.is_playing_item(item_info) and
-                        (item_info.video_path is None or
-                            item_info.video_watched)) and
-                not (self.downloaded_only and
-                    item_info.video_path is None) and
-                not (self.non_feed_only and (not item_info.is_external and
-                    item_info.feed_url != 'dtv:searchDownloads')) and
-                not (self.video_only and item_info.file_type != 'video') and
-                not (self.audio_only and item_info.file_type != 'audio') and
-                not (self.movies_only and item_info.kind != 'movie') and
-                not (self.shows_only and item_info.kind != 'show') and
-                not (self.clips_only and item_info.kind != 'clip') and
-                not (self.podcasts_only and item_info.kind != 'podcast'))
-
     def set_show_details(self, item_id, value):
         """Change the show details value for an item"""
         try:
@@ -514,7 +468,7 @@ class ItemList(object):
     def add_items(self, item_list):
         to_add = []
         for item in item_list:
-            if self._should_show_item(item):
+            if self.filter_set.filter(item):
                 to_add.append(item)
             else:
                 self._hidden_items[item.id] = item
@@ -525,7 +479,7 @@ class ItemList(object):
         to_remove = []
         to_update = []
         for info in changed_items:
-            should_show = self._should_show_item(info)
+            should_show = self.filter_set.filter(info)
             if info.id in self._hidden_items:
                 # Item not already displayed
                 if should_show:
@@ -558,40 +512,28 @@ class ItemList(object):
         self.model.remove_all()
         self._hidden_items = {}
 
-    def set_new_only(self, new_only):
-        """Set if only new items are to be displayed (default False)."""
-        self.new_only = new_only
-        self._recalculate_hidden_items()
+    def select_filter(self, key):
+        self.filter_set.select(key)
 
-    def toggle_filter(self, filter_):
-        self._filter = WidgetStateStore.toggle_filter(self._filter, filter_)
-        self.video_only = WidgetStateStore.is_view_video_filter(self._filter)
-        self.audio_only = WidgetStateStore.is_view_audio_filter(self._filter)
-        self.movies_only = WidgetStateStore.is_view_movies_filter(self._filter)
-        self.shows_only = WidgetStateStore.is_view_shows_filter(self._filter)
-        self.clips_only = WidgetStateStore.is_view_clips_filter(self._filter)
-        self.podcasts_only = WidgetStateStore.is_view_podcasts_filter(self._filter)
-        self.unwatched_only = WidgetStateStore.has_unwatched_filter(
-                self._filter)
-        self.downloaded_only = WidgetStateStore.has_downloaded_filter(
-                self._filter)
-        self.non_feed_only = WidgetStateStore.has_non_feed_filter(
-                self._filter)
-        self._recalculate_hidden_items()
+    def set_filters(self, filter_keys):
+        self.filter_set.set_filters(filter_keys)
 
-    def _recalculate_hidden_items(self):
+    def get_filters(self):
+        return self.filter_set.active_filters
+
+    def recalculate_hidden_items(self):
         info_list_at_start = self.model.info_list()
 
         newly_matching = []
         for item in self._hidden_items.values():
-            if self._should_show_item(item):
+            if self.filter_set.filter(item):
                 newly_matching.append(item)
                 del self._hidden_items[item.id]
         self._insert_items(newly_matching)
 
         newly_unmatching_ids = []
         for item in info_list_at_start:
-            if not self._should_show_item(item):
+            if not self.filter_set.filter(item):
                 newly_unmatching_ids.append(item.id)
                 self._hidden_items[item.id] = item
         self.model.remove_ids(newly_unmatching_ids)
@@ -608,53 +550,6 @@ class ItemList(object):
         else:
             insert_before_id = None
         self.model.move_before(insert_before_id, list(item_ids))
-
-class IndividualDownloadItemList(ItemList):
-    """ItemList that only displays single downloads items.
-
-    Used in the downloads tab."""
-    def filter(self, item_info):
-        return (item_info.is_external
-                and not (item_info.download_info
-                         and item_info.download_info.state in (
-                             'uploading', 'uploading-paused')))
-
-class ChannelDownloadItemList(ItemList):
-    """ItemList that only displays channel downloads items.
-
-    Used in the downloads tab."""
-    def filter(self, item_info):
-        return (not item_info.is_external
-                and not (item_info.download_info
-                         and item_info.download_info.state in (
-                             'uploading', 'uploading-paused')))
-
-class SeedingItemList(ItemList):
-    """ItemList that only displays seeding items.
-
-    Used in the downloads tab."""
-    def filter(self, item_info):
-        return (item_info.download_info
-                and item_info.download_info.state in ('uploading',
-                                                      'uploading-paused'))
-
-class DownloadingItemList(ItemList):
-    """ItemList that only displays downloading items."""
-    def filter(self, item_info):
-        return (item_info.download_info
-                and not item_info.download_info.finished
-                and not item_info.download_info.state == 'failed')
-
-class ConvertingItemList(ItemList):
-    """ItemList that displays items being converted."""
-    def filter(self, item_info):
-        return item_info.converting
-
-class DownloadedItemList(ItemList):
-    """ItemList that only displays downloaded items."""
-    def filter(self, item_info):
-        return (item_info.download_info and
-                item_info.download_info.finished)
 
 class _ItemReorderer(object):
     """Handles re-ordering items inside an itemlist.

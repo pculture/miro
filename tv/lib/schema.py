@@ -742,7 +742,7 @@ class DisplayStateSchema(DDBObjectSchema):
         ('type', SchemaString()),
         ('id_', SchemaString()),
         ('selected_view', SchemaInt(noneOk=True)),
-        ('active_filters', SchemaInt(noneOk=True)),
+        ('active_filters', SchemaStringSet(noneOk=True)),
         ('list_view_columns', SchemaList(SchemaString(), noneOk=True)),
         ('list_view_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
         ('shuffle', SchemaBool(noneOk=True)),
@@ -804,7 +804,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 161
+VERSION = 162
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

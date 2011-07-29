@@ -61,7 +61,7 @@ class FeedController(itemlistcontroller.ItemListController,
         feed_info = widgetutil.get_feed_info(self.id)
 
         self.titlebar = self.make_titlebar(feed_info)
-        self.titlebar.connect('toggle-filter', self.on_toggle_filter)
+        self.titlebar.connect('filter-clicked', self.on_filter_clicked)
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.widget.titlebar_vbox.pack_start(self.titlebar)

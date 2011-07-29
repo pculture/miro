@@ -30,6 +30,7 @@
 """``miro.messagehandler``` -- Backend message handler
 """
 
+import copy
 import logging
 import time
 import os
@@ -1697,9 +1698,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         info = message.display_info
         state = self._get_display_state(info.key)
         state.selected_view = info.selected_view
-        state.active_filters = info.active_filters
-        state.list_view_columns = info.list_view_columns
-        state.list_view_widths = info.list_view_widths
         state.shuffle = info.shuffle
         state.repeat = info.repeat
         state.selection = info.selection
@@ -1710,6 +1708,11 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             # don't save device/share items, since they might not be there next
             # time
             state.last_played_item_id = None
+        # shallow-copy attributes that store lists, dicts, and sets so
+        # that changing the DisplayInfo doesn't change the database object
+        state.active_filters = copy.copy(info.active_filters)
+        state.list_view_columns = copy.copy(info.list_view_columns)
+        state.list_view_widths = copy.copy(info.list_view_widths)
         state.signal_change()
 
     def handle_save_view_state(self, message):

@@ -645,12 +645,12 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         app.db.cursor.execute("UPDATE display_state SET "
                 "active_filters=?, selected_view=?, "
                 "list_view_columns=?, list_view_widths=? WHERE id=?",
-                (5, 1, '{baddata', '{baddata', self.display_state.id))
+                ('all', 1, '{baddata', '{baddata', self.display_state.id))
         self.check_fixed_value(self.display_state, 'list_view_columns', None)
         self.check_fixed_value(self.display_state, 'list_view_widths', None)
         # check that fields with valid values were salvaged
         reloaded = self.reload_object(self.display_state)
-        self.assertEquals(reloaded.active_filters, 5)
+        self.assertEquals(reloaded.active_filters, set([u'all']))
         self.assertEquals(reloaded.selected_view, 1)
 
     def test_corrupt_link_history(self):
