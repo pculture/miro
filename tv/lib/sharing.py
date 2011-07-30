@@ -1282,6 +1282,10 @@ class SharingManagerBackend(object):
             itemprop['path'] = item.video_path
             itemprop['cover_art'] = item.thumbnail
 
+            # HACK: the rmapping dict doesn't work because we can't
+            # double up the key.
+            itemprop['dmap.containeritemid'] = itemprop['dmap.itemid']
+
             # piece de resistance: tack on the revision.
             itemprop['revision'] = self.revision
             itemprop['valid'] = True
