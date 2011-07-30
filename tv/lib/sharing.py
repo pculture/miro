@@ -868,8 +868,8 @@ class SharingManagerBackend(object):
                     pass
                 try:
                     if message.id is None:
-                        #self.daapitems[itemid] = self.deleted_item()
-                        del self.daapitems[itemid]
+                        item = self.daapitems[itemid]
+                        self.daapitems[itemid] = self.deleted_item(old_item=item)
                 except KeyError:
                     pass
             if message.id is not None:
@@ -897,8 +897,11 @@ class SharingManagerBackend(object):
                 for x in message.changed:
                     self.daapitems[x.id]['revision'] = self.revision
 
-    def deleted_item(self):
-        return dict(revision=self.revision, valid=False)
+    def deleted_item(self, old_item=None):
+        deleted = dict(revision=self.revision, valid=False)
+        if old_item:
+            deleted['inactive_playlists'] = old_item['inactive_playlists']
+        return deleted
 
     # At this point: item_lock acquired
     def update_revision(self, directed=None):
@@ -1193,7 +1196,8 @@ class SharingManagerBackend(object):
             if not playlist_id:
                 for k in self.daapitems.keys():
                     item = self.daapitems[k]
-                    if item['com.apple.itunes.mediakind'] in self.share_types:
+                    if (not item['valid'] or
+                      item['com.apple.itunes.mediakind'] in self.share_types):
                         items[k] = item
                 return items
             # XXX Somehow cache this?
@@ -1202,7 +1206,8 @@ class SharingManagerBackend(object):
                 for x in self.daapitems.keys():
                     item = self.daapitems[x]
                     if (x in self.playlist_item_map[playlist_id] and
-                      item['com.apple.itunes.mediakind'] in self.share_types):
+                      (not item['valid'] or
+                      item['com.apple.itunes.mediakind'] in self.share_types)):
                         try:
                             playlist[x] = item['inactive_playlists'][playlist_id]
                         except KeyError:

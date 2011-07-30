@@ -404,7 +404,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if len(path) == 1:
             reply = []
             db = []
-            count = len(self.server.backend.get_items())
+            items = self.server.backend.get_items()
+            count = len([i for i in items.values() if i['valid']])
             name = self.server.name
             playlists = self.server.backend.get_playlists()
             npl = 1 + len([p for p in playlists.values() if p['valid']])
@@ -466,9 +467,9 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # try to always send that one.
             count = len(self.server.backend.get_items())
             default_playlist = [('mlit', [
-                                          ('miid', 1),     # Item id
+                                          ('miid', 2),     # Item id
                                           ('minm', 'Library'),
-                                          ('mper', 1),     # Persistent id
+                                          ('mper', 2),     # Persistent id
                                           ('mimc', count), # count
                                           ('mpco', 0),     # parent containerid
                                           ('abpl', 1)      # Base playlist 
@@ -503,10 +504,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     deleted.append(('miid', k))
                                           
             update = 1 if delta else 0
-            if update:
-                mlcl = playlist_list
-            else:
-                mlcl = default_playlist + playlist_list
+            mlcl = default_playlist + playlist_list
             npl = len(mlcl)
             content = [                    # Database playlists
                         ('mstt', DAAP_OK), # Status - OK
@@ -541,7 +539,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # on.  playlist_id is Library default so it if asks for that as a 
         # container (playlist) we still want to send the playlist version.
         backend_id = playlist_id
-        if backend_id == 1:
+        if backend_id == 2:
             backend_id = None
         items = self.server.backend.get_items(playlist_id=backend_id)
         itemlist = []
