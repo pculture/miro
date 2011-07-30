@@ -400,6 +400,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         session = self.get_session()
         if not session:
             return (DAAP_FORBIDDEN, [], [])
+        revision, delta = self.get_revision(query)
         if len(path) == 1:
             reply = []
             db = []
@@ -416,9 +417,10 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                                 # default playlist.
                                 ('mctc', npl)   # Playlist count
                                ]))
+            update = 1 if delta else 0
             reply.append(('avdb', [
                                    ('mstt', DAAP_OK),   # OK
-                                   ('muty', 0),         # Update type
+                                   ('muty', update),    # Update type
                                    ('mtco', 1),         # Specified total count
                                    ('mrco', 1),         # Returned count
                                    ('mlcl', db)         # db listing
@@ -500,14 +502,18 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 else:
                     deleted.append(('miid', k))
                                           
-            npl = 1 + len(playlist_list)
             update = 1 if delta else 0
+            if update:
+                mlcl = playlist_list
+            else:
+                mlcl = default_playlist + playlist_list
+            npl = len(mlcl)
             content = [                    # Database playlists
                         ('mstt', DAAP_OK), # Status - OK
                         ('muty', update),  # Update type
                         ('mtco', npl),     # total count
                         ('mrco', npl),     # returned count
-                        ('mlcl', default_playlist + playlist_list)
+                        ('mlcl', mlcl)     # Playlist listing
                        ]
             if deleted:
                 content.append(('mudl', deleted))
@@ -582,10 +588,12 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         ('muty', update),    # Update type
                         ('mtco', nfiles),    # Specified total count
                         ('mrco', nfiles),    # Returned count
-                        ('mlcl', itemlist),  # Itemlist container
+                        ('mlcl', itemlist)
                   ]
         if deleted:
+            import logging; logging.debug('DELETING %s %s', backend_id, deleted)
             content.append(('mudl', deleted))    # Itemlist deleted
+
         reply = [(tag, content)]
         return (DAAP_OK, reply, [])
 

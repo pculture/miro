@@ -857,10 +857,12 @@ class SharingManagerBackend(object):
             self.update_revision()
             for itemid in message.removed:
                 try:
+                    import logging; logging.debug('REMOVING itemid %s from %s', itemid, message.id)
                     if message.id is not None:
                         revision = self.revision
                         self.daap_playlists[message.id]['revision'] = revision
                         self.playlist_item_map[message.id].remove(itemid)
+                        self.playlist_item_map[message.id].append(-itemid)
                 except KeyError:
                     pass
                 try:
@@ -872,6 +874,12 @@ class SharingManagerBackend(object):
             if message.id is not None:
                 item_ids = [item.id for item in message.added]
                 self.daap_playlists[message.id]['revision'] = self.revision
+                # If they have been previously removed, unmark deleted.
+                for i in item_ids:
+                    try:
+                        self.playlist_item_map[message.id].remove(-i)
+                    except ValueError:
+                        pass
                 self.playlist_item_map[message.id] += item_ids
             self.make_item_dict(message.added)
             self.make_item_dict(message.changed)
@@ -1183,6 +1191,8 @@ class SharingManagerBackend(object):
                     if (x in self.playlist_item_map[playlist_id] and
                       item['com.apple.itunes.mediakind'] in self.share_types):
                         playlist[x] = item
+                    elif -x in self.playlist_item_map[playlist_id]:
+                        playlist[x] = self.deleted_item()
             return playlist
 
     def make_item_dict(self, items):
