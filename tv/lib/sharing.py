@@ -881,8 +881,13 @@ class SharingManagerBackend(object):
                     except ValueError:
                         pass
                 self.playlist_item_map[message.id] += item_ids
-            self.make_item_dict(message.added)
-            self.make_item_dict(message.changed)
+
+            # Only make or modify an item if it is for main library.
+            # Otherwise, we just re-create an item when all that's changed
+            # is the contents of the playlist.
+            if message.id is None:
+                self.make_item_dict(message.added)
+                self.make_item_dict(message.changed)
 
     def deleted_item(self):
         return dict(revision=self.revision, valid=False)
