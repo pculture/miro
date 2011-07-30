@@ -854,6 +854,7 @@ class SharingManagerBackend(object):
         # item being moved out of, and then into, a playlist.  Also, based on 
         # message.id, change the playlists accordingly.
         with self.item_lock:
+            import logging; logging.debug('HANDLE CHANGED %s %s %s %s', message.id, message.added, message.changed, message.removed)
             self.update_revision()
             for itemid in message.removed:
                 try:
@@ -888,6 +889,12 @@ class SharingManagerBackend(object):
             if message.id is None:
                 self.make_item_dict(message.added)
                 self.make_item_dict(message.changed)
+            else:
+                # Simply update the item's revision.
+                for x in message.added:
+                    self.daapitems[x.id]['revision'] = self.revision
+                for x in message.changed:
+                    self.daapitems[x.id]['revision'] = self.revision
 
     def deleted_item(self):
         return dict(revision=self.revision, valid=False)
