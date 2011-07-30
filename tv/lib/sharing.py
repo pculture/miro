@@ -862,8 +862,8 @@ class SharingManagerBackend(object):
                     if message.id is not None:
                         revision = self.revision
                         self.daap_playlists[message.id]['revision'] = revision
-                        self.playlist_item_map[message.id].remove(itemid)
-                        self.playlist_item_map[message.id].append(-itemid)
+                        self.daapitems[itemid]['inactive_playlists'][message.id] = self.deleted_item()
+                        logging.debug('INACTIVE %s %s', itemid, message.id)
                 except KeyError:
                     pass
                 try:
@@ -878,8 +878,8 @@ class SharingManagerBackend(object):
                 # If they have been previously removed, unmark deleted.
                 for i in item_ids:
                     try:
-                        self.playlist_item_map[message.id].remove(-i)
-                    except ValueError:
+                        del self.daapitems[i]['inactive_playlists'][message.id]
+                    except KeyError:
                         pass
                 self.playlist_item_map[message.id] += item_ids
 
@@ -890,6 +890,7 @@ class SharingManagerBackend(object):
                 self.make_item_dict(message.added)
                 self.make_item_dict(message.changed)
             else:
+                pass
                 # Simply update the item's revision.
                 for x in message.added:
                     self.daapitems[x.id]['revision'] = self.revision
@@ -1202,9 +1203,10 @@ class SharingManagerBackend(object):
                     item = self.daapitems[x]
                     if (x in self.playlist_item_map[playlist_id] and
                       item['com.apple.itunes.mediakind'] in self.share_types):
-                        playlist[x] = item
-                    elif -x in self.playlist_item_map[playlist_id]:
-                        playlist[x] = self.deleted_item()
+                        try:
+                            playlist[x] = item['inactive_playlists'][playlist_id]
+                        except KeyError:
+                            playlist[x] = item
             return playlist
 
     def make_item_dict(self, items):
@@ -1278,6 +1280,13 @@ class SharingManagerBackend(object):
             # piece de resistance: tack on the revision.
             itemprop['revision'] = self.revision
             itemprop['valid'] = True
+            # If it previously existed, grab the old inactive playlist
+            # since we want to keep that.
+            try:
+                inactive = self.daapitems[item.id]['inactive_playlists']
+            except KeyError:
+                inactive = dict()
+            itemprop['inactive_playlists'] = inactive
 
             self.daapitems[item.id] = itemprop
 

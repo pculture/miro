@@ -593,7 +593,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if update:
             import logging; logging.debug('UPDATE: nfiles %s backend_id %s itemlist %s deleted %s', nfiles, backend_id, itemlist, deleted)
         if deleted:
-            import logging; logging.debug('DELETING %s %s', backend_id, deleted)
             content.append(('mudl', deleted))    # Itemlist deleted
 
         reply = [(tag, content)]
