@@ -691,7 +691,10 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def reply_encoding(self):
         supported = ['gzip']
-        acceptable = self.headers.getheader('Accept-encoding').split(',')
+        header = self.headers.getheader('Accept-encoding')
+        if not header:
+            return None
+        acceptable = header.split(',')
         candidates = []
         prohibited = []
         for x in acceptable:
