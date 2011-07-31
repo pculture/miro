@@ -32,6 +32,12 @@ import os
 import stat
 import struct
 import urllib
+import gzip
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 from const import *
 
 # XXX calcsize()?  We need to do some overriding however.
@@ -54,11 +60,19 @@ class StreamObj(object):
     """
        Data object for encoding HTTP responses.  Use once then dispose.
     """
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, data, content_encoding=None):
+        self.content_encoding = content_encoding
+        if content_encoding == 'gzip':
+            gzdata = StringIO()
+            f = gzip.GzipFile(fileobj=gzdata, mode='wb')
+            f.write(data)
+            f.close()
+            self.data = gzdata.getvalue()
+        else:
+            self.data = data
 
     def __str__(self):
-        return str(self.data)
+        return self.data
 
     # Treat this as one big block of data.
     def __iter__(self):
@@ -68,7 +82,10 @@ class StreamObj(object):
         return len(self.data)
 
     def get_headers(self):
-        return []
+        headers = []
+        if self.content_encoding:
+            headers.append(('Content-encoding', self.content_encoding))
+        return headers
 
     def get_rangetext(self):
         return ''
@@ -256,7 +273,7 @@ def decode_response(reply):
     except (KeyError, ValueError), e:
         return [(-1, [])]
 
-def encode_response(reply):
+def encode_response(reply, content_encoding=None):
     """
        encode_response(reply) -> StreamObj/ChunkedStreamObj
 
@@ -266,6 +283,9 @@ def encode_response(reply):
 
        DMAP_TYPE_LIST should have a value of list containing other response
        codes.
+
+       content_encoding: specify content encoding.  Right now we only support
+       gzip.
     """
     blob = ''
     subblob = ''
@@ -292,7 +312,7 @@ def encode_response(reply):
             # XXX slow - should bunch up
             blob += struct.pack(fmt, code, size, value)
             blob += subblob
-        blob = StreamObj(blob)
+        blob = StreamObj(blob, content_encoding=content_encoding)
     except ValueError:
         # This is probably a file.  Just pass up to the
         # caller and let the caller deal with it.
