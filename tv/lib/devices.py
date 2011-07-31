@@ -275,7 +275,8 @@ class DeviceManager(object):
         for device_desc in devices:
             global_dict = {}
             # XXX bz:17989 execfile() can't handle unicode paths!
-            device_desc = device_desc.encode('utf-8')
+            if isinstance(device_desc, unicode):
+               device_desc = device_desc.encode('utf-8')
             execfile(device_desc, global_dict)
             if 'devices' in global_dict:
                 for info in global_dict['devices']:
