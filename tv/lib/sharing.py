@@ -1184,10 +1184,12 @@ class SharingManagerBackend(object):
                 # Just by enabling and disabing this, the selection of items
                 # available to a user could have changed.
                 #
-                # XXX actually update our selection of stuff??
-                logging.debug('SHARING: actually update revision stamp?')
                 if share_types_orig != self.share_types:
                     self.update_revision()
+                for p in self.daap_playlists:
+                    self.daap_playlists[p]['revision'] = self.revision
+                for i in self.daapitems:
+                    self.daapitems[i]['revision'] = self.revision
 
     def get_items(self, playlist_id=None):
         # Easy: just return
@@ -1199,6 +1201,8 @@ class SharingManagerBackend(object):
                     if (not item['valid'] or
                       item['com.apple.itunes.mediakind'] in self.share_types):
                         items[k] = item
+                    else:
+                        items[k] = self.deleted_item()
                 return items
             # XXX Somehow cache this?
             playlist = dict()
@@ -1212,6 +1216,8 @@ class SharingManagerBackend(object):
                             playlist[x] = item['inactive_playlists'][playlist_id]
                         except KeyError:
                             playlist[x] = item
+                    else:
+                        playlist[x] = self.deleted_item()
             return playlist
 
     def make_item_dict(self, items):
