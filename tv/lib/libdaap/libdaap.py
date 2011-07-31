@@ -485,8 +485,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             meta_list = [m.strip() for m in meta.split(',')]
             for k in playlists.keys():
                 playlistprop = playlists[k]
-                if (playlistprop['revision'] <= delta or
-                  playlistprop['revision'] > revision):
+                if playlistprop['revision'] <= delta:
                     continue
                 if playlistprop['valid']:
                     playlist = []
@@ -555,8 +554,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # it doesn't work!
         for k in items.keys():
             itemprop = items[k]
-            if (itemprop['revision'] <= delta or
-              itemprop['revision'] > revision):
+            if itemprop['revision'] <= delta:
                 continue
             if itemprop['valid']:
                 item = []
@@ -589,7 +587,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         ('mlcl', itemlist)
                   ]
         if update:
-            import logging; logging.debug('UPDATE: nfiles %s backend_id %s itemlist %s deleted %s', nfiles, backend_id, itemlist, deleted)
+            import logging; logging.debug('UPDATE: nfiles %s backend_id %s item %s', nfiles, backend_id, itemlist)
         if deleted:
             content.append(('mudl', deleted))    # Itemlist deleted
 

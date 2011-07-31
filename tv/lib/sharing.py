@@ -829,6 +829,7 @@ class SharingManagerBackend(object):
         self.daapitems = dict()         # DAAP format XXX - index via the items
         self.daap_playlists = dict()    # Playlist, in daap format
         self.playlist_item_map = dict() # Playlist -> item mapping
+        self.deleted_item_map = dict()  # Playlist -> deleted item mapping
         self.in_shutdown = False
         self.config_handle = app.backend_config_watcher.connect('changed',
                              self.on_config_changed)
@@ -844,6 +845,7 @@ class SharingManagerBackend(object):
             if message.id is not None:
                 self.daap_playlists[message.id]['revision'] = self.revision
                 self.playlist_item_map[message.id] = item_ids
+                self.deleted_item_map[message.id] = []
             for item_id in item_ids:
                 if not item_id in self.daapitems:
                     self.make_item_dict(message.items)
@@ -862,14 +864,14 @@ class SharingManagerBackend(object):
                     if message.id is not None:
                         revision = self.revision
                         self.daap_playlists[message.id]['revision'] = revision
-                        self.daapitems[itemid]['inactive_playlists'][message.id] = self.deleted_item()
+                        self.playlist_item_map[message.id].remove(itemid)
+                        self.deleted_item_map[message.id].append(itemid)
                         logging.debug('INACTIVE %s %s', itemid, message.id)
                 except KeyError:
                     pass
                 try:
                     if message.id is None:
-                        item = self.daapitems[itemid]
-                        self.daapitems[itemid] = self.deleted_item(old_item=item)
+                        self.daapitems[itemid] = self.deleted_item()
                 except KeyError:
                     pass
             if message.id is not None:
@@ -878,8 +880,8 @@ class SharingManagerBackend(object):
                 # If they have been previously removed, unmark deleted.
                 for i in item_ids:
                     try:
-                        del self.daapitems[i]['inactive_playlists'][message.id]
-                    except KeyError:
+                        self.deleted_item_map[message.id].remove(i)
+                    except ValueError:
                         pass
                 self.playlist_item_map[message.id] += item_ids
 
@@ -890,18 +892,14 @@ class SharingManagerBackend(object):
                 self.make_item_dict(message.added)
                 self.make_item_dict(message.changed)
             else:
-                pass
                 # Simply update the item's revision.
                 for x in message.added:
                     self.daapitems[x.id]['revision'] = self.revision
                 for x in message.changed:
                     self.daapitems[x.id]['revision'] = self.revision
 
-    def deleted_item(self, old_item=None):
-        deleted = dict(revision=self.revision, valid=False)
-        if old_item:
-            deleted['inactive_playlists'] = old_item['inactive_playlists']
-        return deleted
+    def deleted_item(self):
+        return dict(revision=self.revision, valid=False)
 
     # At this point: item_lock acquired
     def update_revision(self, directed=None):
@@ -959,6 +957,7 @@ class SharingManagerBackend(object):
                     # no need to update the revision here: already done in
                     # make_daap_playlists.
                     self.playlist_item_map[p.id] = []
+                    self.deleted_item_map[p.id] = []
                     app.info_updater.item_list_callbacks.add(self.type,
                                                      p.id,
                                                      self.handle_item_list)
@@ -998,6 +997,7 @@ class SharingManagerBackend(object):
                         self.daap_playlists[x] = self.deleted_item()
                         #del self.daap_playlists[x]
                         del self.playlist_item_map[x]
+                        del self.deleted_item_map[x]
                         messages.StopTrackingItems(self.type,
                                                    x).send_to_backend()
                         app.info_updater.item_list_callbacks.remove(self.type,
@@ -1022,6 +1022,7 @@ class SharingManagerBackend(object):
                 # revision for playlist already created in make_daap_playlist
                 self.playlist_item_map[playlist_id] = [x.item_id
                   for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
+                self.deleted_item_map[playlist_id] = []
 
     def start_tracking(self):
         self.populate_playlists()
@@ -1212,10 +1213,7 @@ class SharingManagerBackend(object):
                     if (x in self.playlist_item_map[playlist_id] and
                       (not item['valid'] or
                       item['com.apple.itunes.mediakind'] in self.share_types)):
-                        try:
-                            playlist[x] = item['inactive_playlists'][playlist_id]
-                        except KeyError:
-                            playlist[x] = item
+                        playlist[x] = item
                     else:
                         playlist[x] = self.deleted_item()
             return playlist
@@ -1295,13 +1293,6 @@ class SharingManagerBackend(object):
             # piece de resistance: tack on the revision.
             itemprop['revision'] = self.revision
             itemprop['valid'] = True
-            # If it previously existed, grab the old inactive playlist
-            # since we want to keep that.
-            try:
-                inactive = self.daapitems[item.id]['inactive_playlists']
-            except KeyError:
-                inactive = dict()
-            itemprop['inactive_playlists'] = inactive
 
             self.daapitems[item.id] = itemprop
 
