@@ -815,18 +815,21 @@ class SharingManagerBackend(object):
     id = u'sharing-backend'
 
     def __init__(self):
+        self.revision = 1
         self.share_types = []
         if app.config.get(prefs.SHARE_AUDIO):
             self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
         if app.config.get(prefs.SHARE_VIDEO):
             self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
         self.item_lock = threading.Lock()
+        self.revision_cv = threading.Condition(self.item_lock)
         self.transcode_lock = threading.Lock()
         self.transcode = dict()
         # XXX daapplaylist should be hidden from view. 
         self.daapitems = dict()         # DAAP format XXX - index via the items
         self.daap_playlists = dict()    # Playlist, in daap format
         self.playlist_item_map = dict() # Playlist -> item mapping
+        self.deleted_item_map = dict()  # Playlist -> deleted item mapping
         self.in_shutdown = False
         self.config_handle = app.backend_config_watcher.connect('changed',
                              self.on_config_changed)
@@ -836,12 +839,16 @@ class SharingManagerBackend(object):
         pass
 
     def handle_item_list(self, message):
-        item_ids = [item.id for item in message.items]
-        if message.id is not None:
-            self.playlist_item_map[message.id] += item_ids
-        for item_id in item_ids:
-            if not item_id in self.daapitems:
-                self.make_item_dict(message.items)
+        with self.item_lock:
+            self.update_revision()
+            item_ids = [item.id for item in message.items]
+            if message.id is not None:
+                self.daap_playlists[message.id]['revision'] = self.revision
+                self.playlist_item_map[message.id] = item_ids
+                self.deleted_item_map[message.id] = []
+            for item_id in item_ids:
+                if not item_id in self.daapitems:
+                    self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
         # If items are changed, overwrite with a recreated entry.  This
@@ -849,21 +856,56 @@ class SharingManagerBackend(object):
         # item being moved out of, and then into, a playlist.  Also, based on 
         # message.id, change the playlists accordingly.
         with self.item_lock:
+            import logging; logging.debug('HANDLE CHANGED %s %s %s %s', message.id, message.added, message.changed, message.removed)
+            self.update_revision()
             for itemid in message.removed:
                 try:
+                    import logging; logging.debug('REMOVING itemid %s from %s', itemid, message.id)
                     if message.id is not None:
+                        revision = self.revision
+                        self.daap_playlists[message.id]['revision'] = revision
                         self.playlist_item_map[message.id].remove(itemid)
+                        self.deleted_item_map[message.id].append(itemid)
+                        logging.debug('INACTIVE %s %s', itemid, message.id)
                 except KeyError:
                     pass
                 try:
-                    del self.daapitems[itemid]
+                    if message.id is None:
+                        self.daapitems[itemid] = self.deleted_item()
                 except KeyError:
                     pass
             if message.id is not None:
                 item_ids = [item.id for item in message.added]
+                self.daap_playlists[message.id]['revision'] = self.revision
+                # If they have been previously removed, unmark deleted.
+                for i in item_ids:
+                    try:
+                        self.deleted_item_map[message.id].remove(i)
+                    except ValueError:
+                        pass
                 self.playlist_item_map[message.id] += item_ids
-            self.make_item_dict(message.added)
-            self.make_item_dict(message.changed)
+
+            # Only make or modify an item if it is for main library.
+            # Otherwise, we just re-create an item when all that's changed
+            # is the contents of the playlist.
+            if message.id is None:
+                self.make_item_dict(message.added)
+                self.make_item_dict(message.changed)
+            else:
+                # Simply update the item's revision.
+                for x in message.added:
+                    self.daapitems[x.id]['revision'] = self.revision
+                for x in message.changed:
+                    self.daapitems[x.id]['revision'] = self.revision
+
+    def deleted_item(self):
+        return dict(revision=self.revision, valid=False)
+
+    # At this point: item_lock acquired
+    def update_revision(self, directed=None):
+        self.revision += 1
+        self.directed = directed
+        self.revision_cv.notify_all()
 
     def make_daap_playlists(self, items):
         for item in items:
@@ -897,6 +939,11 @@ class SharingManagerBackend(object):
             daap_string = 'dmap.persistentid'
             if daap_string == 'dmap.persistentid':
                 itemprop[daap_string] = item.id
+
+            # piece de resistance
+            itemprop['revision'] = self.revision
+            itemprop['valid'] = True
+
             self.daap_playlists[item.id] = itemprop
 
     def handle_playlist_added(self, obj, added):
@@ -904,9 +951,13 @@ class SharingManagerBackend(object):
 
         def _handle_playlist_added():
             with self.item_lock:
+                self.update_revision()
                 self.make_daap_playlists(playlists)
                 for p in playlists:
+                    # no need to update the revision here: already done in
+                    # make_daap_playlists.
                     self.playlist_item_map[p.id] = []
+                    self.deleted_item_map[p.id] = []
                     app.info_updater.item_list_callbacks.add(self.type,
                                                      p.id,
                                                      self.handle_item_list)
@@ -914,17 +965,20 @@ class SharingManagerBackend(object):
                                                      p.id,
                                                      self.handle_items_changed)
                     messages.TrackItems(self.type, p.id).send_to_backend()
+
         eventloop.add_urgent_call(lambda: _handle_playlist_added(),
                                   "SharingManagerBackend: playlist added")
 
     def handle_playlist_changed(self, obj, changed):
         def _handle_playlist_changed():
             with self.item_lock:
+                self.update_revision()
                 # We could just overwrite everything without actually deleting
                 # the object.  A missing key means it's a folder, and we skip
                 # over it.
                 for x in changed:
                     if self.daap_playlists.has_key(x.id):
+                        #self.daap_playlists[x.id] = self.deleted_item()
                         del self.daap_playlists[x.id]
                 playlist = [x for x in changed if not x.is_folder]
                 self.make_daap_playlists(playlist)
@@ -936,11 +990,14 @@ class SharingManagerBackend(object):
     def handle_playlist_removed(self, obj, removed):
         def _handle_playlist_removed():
             with self.item_lock:
+                self.update_revision()
                 for x in removed:
                     # Missing key means it's a folder and we skip over it.
                     if self.daap_playlists.has_key(x):
-                        del self.daap_playlists[x]
+                        self.daap_playlists[x] = self.deleted_item()
+                        #del self.daap_playlists[x]
                         del self.playlist_item_map[x]
+                        del self.deleted_item_map[x]
                         messages.StopTrackingItems(self.type,
                                                    x).send_to_backend()
                         app.info_updater.item_list_callbacks.remove(self.type,
@@ -959,10 +1016,13 @@ class SharingManagerBackend(object):
     # state that should be in place on startup.
     def populate_playlists(self):
         with self.item_lock:
+            self.update_revision()
             self.make_daap_playlists(playlist.SavedPlaylist.make_view())
             for playlist_id in self.daap_playlists.keys():
+                # revision for playlist already created in make_daap_playlist
                 self.playlist_item_map[playlist_id] = [x.item_id
                   for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
+                self.deleted_item_map[playlist_id] = []
 
     def start_tracking(self):
         self.populate_playlists()
@@ -1005,6 +1065,20 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_added)
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
+
+    def get_revision(self, session, old_revision):
+        self.revision_cv.acquire()
+        while self.revision == old_revision:
+            self.revision_cv.wait()
+            # If we really did a update or if the wakeup was directed at us
+            # (because we are quitting or something) then release the lock
+            # and return the revision
+            if self.directed is None or self.directed == session:
+                break
+            # update revision and then wait again
+            old_revision = self.revision
+        self.revision_cv.release()
+        return self.revision
 
     def get_file(self, itemid, generation, ext, session, request_path_func,
                  offset=0, chunk=None):
@@ -1102,11 +1176,21 @@ class SharingManagerBackend(object):
         keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key]
         if key in keys:
             with self.item_lock:
+                share_types_orig = self.share_types
                 self.share_types = []
                 if app.config.get(prefs.SHARE_AUDIO):
                     self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
                 if app.config.get(prefs.SHARE_VIDEO):
                     self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+                # Just by enabling and disabing this, the selection of items
+                # available to a user could have changed.
+                #
+                if share_types_orig != self.share_types:
+                    self.update_revision()
+                for p in self.daap_playlists:
+                    self.daap_playlists[p]['revision'] = self.revision
+                for i in self.daapitems:
+                    self.daapitems[i]['revision'] = self.revision
 
     def get_items(self, playlist_id=None):
         # Easy: just return
@@ -1114,17 +1198,24 @@ class SharingManagerBackend(object):
             items = dict()
             if not playlist_id:
                 for k in self.daapitems.keys():
-                    if (self.daapitems[k]['com.apple.itunes.mediakind'] in
-                      self.share_types):
-                        items[k] = self.daapitems[k]
+                    item = self.daapitems[k]
+                    if (not item['valid'] or
+                      item['com.apple.itunes.mediakind'] in self.share_types):
+                        items[k] = item
+                    else:
+                        items[k] = self.deleted_item()
                 return items
             # XXX Somehow cache this?
             playlist = dict()
-            for x in self.daapitems.keys():
-                if (x in self.playlist_item_map[playlist_id] and
-                  self.daapitems[x]['com.apple.itunes.mediakind'] in
-                  self.share_types):
-                    playlist[x] = self.daapitems[x]
+            if self.playlist_item_map.has_key(playlist_id):
+                for x in self.daapitems.keys():
+                    item = self.daapitems[x]
+                    if (x in self.playlist_item_map[playlist_id] and
+                      (not item['valid'] or
+                      item['com.apple.itunes.mediakind'] in self.share_types)):
+                        playlist[x] = item
+                    else:
+                        playlist[x] = self.deleted_item()
             return playlist
 
     def make_item_dict(self, items):
@@ -1194,6 +1285,15 @@ class SharingManagerBackend(object):
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
             itemprop['cover_art'] = item.thumbnail
+
+            # HACK: the rmapping dict doesn't work because we can't
+            # double up the key.
+            itemprop['dmap.containeritemid'] = itemprop['dmap.itemid']
+
+            # piece de resistance: tack on the revision.
+            itemprop['revision'] = self.revision
+            itemprop['valid'] = True
+
             self.daapitems[item.id] = itemprop
 
     def finished_callback(self, session):
@@ -1206,6 +1306,9 @@ class SharingManagerBackend(object):
                 self.transcode[session].shutdown()
             except KeyError:
                 pass
+        # Unlock the revision by bumping it
+        with self.item_lock:
+            self.update_revision(directed=session)
 
     def shutdown(self):
         # Set the in_shutdown flag inside the transcode lock to ensure that

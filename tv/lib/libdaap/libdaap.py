@@ -146,8 +146,6 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
     def daap_timeout_callback(self, s):
         self.del_session(s)
-        if self.finished_callback:
-            self.finished_callback(s)
 
     def session_count(self):
         return len(self.activeconn)
@@ -202,6 +200,8 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
                 del self.activeconn[s]
             except KeyError:
                 pass
+        if self.finished_callback:
+            self.finished_callback(s)
 
 class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.1'
@@ -283,8 +283,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         reply.append(('minm', self.server_version))    # XXX FIXME
         reply.append(('mstm', DAAP_TIMEOUT))
 
-        # 'msup' not supported, but we don't indicate that by writing a 0.
-        # We do it by leaving it out.
         not_supported = [
                          'msix',    # Indexing
                          'msex',    # Extensions
@@ -296,7 +294,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         ]
         supported = [
                      'msal',        # auto-logout
-                     'mslr'         # login
+                     'mslr',        # login
+                     'msup'         # on the fly updates
                     ]
         for code in not_supported:
             reply.append((code, 0))
@@ -351,17 +350,17 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
            return (DAAP_FORBIDDEN, [], [])
         self.server.del_session(session)
 
-    # We don't support this but Rhythmbox sends this anyway.  Grr.
     def do_update(self):
         path, query = split_url_path(self.path)
         session = self.get_session()
+        old_revision, old_delta = self.get_revision(query)
+        if not old_revision:
+            return (DAAP_BADREQUEST, [], [])
         if not session:
             return (DAAP_FORBIDDEN, [], [])
-        # UGH.  We should be updating this ... this is not supported at the 
-        # moment.
-        xxx_revision = 2
+        revision = self.server.backend.get_revision(session, old_revision)
         reply = []
-        reply.append(('mupd', [('mstt', DAAP_OK), ('musr', xxx_revision)]))
+        reply.append(('mupd', [('mstt', DAAP_OK), ('musr', revision)]))
         return (DAAP_OK, reply, [])
 
     def do_stream_file(self, db_id, item_id, ext, chunk):
@@ -406,12 +405,15 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         session = self.get_session()
         if not session:
             return (DAAP_FORBIDDEN, [], [])
+        revision, delta = self.get_revision(query)
         if len(path) == 1:
             reply = []
             db = []
-            count = len(self.server.backend.get_items())
+            items = self.server.backend.get_items()
+            count = len([i for i in items.values() if i['valid']])
             name = self.server.name
-            npl = 1 + len(self.server.backend.get_playlists())
+            playlists = self.server.backend.get_playlists()
+            npl = 1 + len([p for p in playlists.values() if p['valid']])
             db.append(('mlit', [
                                 ('miid', 1),    # Item ID
                                 ('mper', 1),    # Persistent ID
@@ -421,9 +423,10 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                                 # default playlist.
                                 ('mctc', npl)   # Playlist count
                                ]))
+            update = 1 if delta else 0
             reply.append(('avdb', [
                                    ('mstt', DAAP_OK),   # OK
-                                   ('muty', 0),         # Update type
+                                   ('muty', update),    # Update type
                                    ('mtco', 1),         # Specified total count
                                    ('mrco', 1),         # Returned count
                                    ('mlcl', db)         # db listing
@@ -446,21 +449,32 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def _check_db_id(self, db_id):
         return db_id == 1
 
+    # NB: Should probably be a static class method.
+    def get_revision(self, query):
+        revision = delta = 0
+        try:
+            revision = int(query['revision-number'])
+            delta = int(query['delta'])
+        except (KeyError, ValueError):
+            pass
+        return revision, delta
+    
     # do_database_xxx(self, path, query): helper functions.  Session already
     # checked and we know we are in database/xxx.
     def do_database_containers(self, path, query):
         db_id = int(path[1])
         if not self._check_db_id(db_id):
             return (DAAP_FORBIDDEN, [], [])
+        revision, delta = self.get_revision(query)
         reply = []
         if len(path) == 3:
             # There is a requirement to send a default playlist so we
             # try to always send that one.
             count = len(self.server.backend.get_items())
             default_playlist = [('mlit', [
-                                          ('miid', 1),     # Item id
+                                          ('miid', 2),     # Item id
                                           ('minm', 'Library'),
-                                          ('mper', 1),     # Persistent id
+                                          ('mper', 2),     # Persistent id
                                           ('mimc', count), # count
                                           ('mpco', 0),     # parent containerid
                                           ('abpl', 1)      # Base playlist 
@@ -468,6 +482,7 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                                )]
             playlists = self.server.backend.get_playlists()
             playlist_list = []
+            deleted = []
             try:
                 meta = query['meta']
             except KeyError:
@@ -475,27 +490,36 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             meta_list = [m.strip() for m in meta.split(',')]
             for k in playlists.keys():
                 playlistprop = playlists[k]
-                playlist = []
-                for m in meta_list:
-                    if m in playlistprop.keys():
-                        try:
-                            code = dmap_consts_rmap[m]
-                        except KeyError:
-                            continue
-                        if playlistprop[m] is not None:
-                            attribute = (code, playlistprop[m])
-                            playlist.append(attribute)
-                playlist_list.append(('mlit', playlist))
+                if playlistprop['revision'] <= delta:
+                    continue
+                if playlistprop['valid']:
+                    playlist = []
+                    for m in meta_list:
+                        if m in playlistprop.keys():
+                            try:
+                                code = dmap_consts_rmap[m]
+                            except KeyError:
+                                continue
+                            if playlistprop[m] is not None:
+                                attribute = (code, playlistprop[m])
+                                playlist.append(attribute)
+                    playlist_list.append(('mlit', playlist))
+                else:
+                    deleted.append(('miid', k))
                                           
-            npl = 1 + len(playlists)
-            reply.append(('aply', [                   # Database playlists
-                                   ('mstt', DAAP_OK), # Status - OK
-                                   ('muty', 0),       # Update type
-                                   ('mtco', npl),     # total count
-                                   ('mrco', npl),     # returned count
-                                   ('mlcl', default_playlist + playlist_list)
-                                  ]
-                        ))
+            update = 1 if delta else 0
+            mlcl = default_playlist + playlist_list
+            npl = len(mlcl)
+            content = [                    # Database playlists
+                        ('mstt', DAAP_OK), # Status - OK
+                        ('muty', update),  # Update type
+                        ('mtco', npl),     # total count
+                        ('mrco', npl),     # returned count
+                        ('mlcl', mlcl)     # Playlist listing
+                       ]
+            if deleted:
+                content.append(('mudl', deleted))
+            reply.append(('aply', content))
         else:
             # len(path) > 3
             playlist_id = int(path[3])
@@ -519,47 +543,60 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # on.  playlist_id is Library default so it if asks for that as a 
         # container (playlist) we still want to send the playlist version.
         backend_id = playlist_id
-        if backend_id == 1:
+        if backend_id == 2:
             backend_id = None
         items = self.server.backend.get_items(playlist_id=backend_id)
-        nfiles = len(items)
         itemlist = []
+        deleted = []
         try:
             meta = query['meta']
         except KeyError:
             meta = DEFAULT_DAAP_META
+        revision, delta = self.get_revision(query) 
         meta_list = [m.strip() for m in meta.split(',')]
         # NB: mikd must be the first guy in the listing.
         # GRR stupid Rhythmbox!  The meta reply must appear in order otherwise
         # it doesn't work!
         for k in items.keys():
             itemprop = items[k]
-            item = []
-            for m in meta_list:
-                if m in itemprop.keys():
-                    try:
-                        code = dmap_consts_rmap[m]
-                    except KeyError:
-                        continue
-                    if itemprop[m] is not None:
-                        attribute = (code, itemprop[m])
-                        item.append(attribute)
-            itemlist.append(('mlit', [       # Listing item
+            if itemprop['revision'] <= delta:
+                continue
+            if itemprop['valid']:
+                item = []
+                for m in meta_list:
+                    if m in itemprop.keys():
+                        try:
+                            code = dmap_consts_rmap[m]
+                        except KeyError:
+                            continue
+                        if itemprop[m] is not None:
+                            attribute = (code, itemprop[m])
+                            item.append(attribute)
+                itemlist.append(('mlit', [       # Listing item
                                       # item kind - seems OK to hardcode this.
-                                      ('mikd', DAAP_ITEMKIND_AUDIO),
-                                     ] + item
+                                          ('mikd', DAAP_ITEMKIND_AUDIO),
+                                         ] + item
                            )) 
- 
+            else:
+                deleted.append(('miid', k))
+
         tag = 'apso' if playlist_id else 'adbs'
+        nfiles = len(itemlist)
+        update = 1 if delta else 0
         reply = []
-        reply = [(tag, [                     # Container type
+        content = [                          # Container type
                         ('mstt', DAAP_OK),   # Status: OK
-                        ('muty', 0),         # Update type
+                        ('muty', update),    # Update type
                         ('mtco', nfiles),    # Specified total count
                         ('mrco', nfiles),    # Returned count
-                        ('mlcl', itemlist)   # Itemlist container
-                       ]
-                )]
+                        ('mlcl', itemlist)
+                  ]
+        if update:
+            import logging; logging.debug('UPDATE: nfiles %s backend_id %s item %s', nfiles, backend_id, itemlist)
+        if deleted:
+            content.append(('mudl', deleted))    # Itemlist deleted
+
+        reply = [(tag, content)]
         return (DAAP_OK, reply, [])
 
     def do_database_items(self, path, query):
