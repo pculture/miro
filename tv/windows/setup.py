@@ -473,7 +473,6 @@ class bdist_nsis(Command):
     user_options = [
         ('generic', None, 'Build a generic installer instead of the Miro-branded installer.'),
         ('nozugo', None, 'Do not include the silent Zugo toolbar installer.'),
-        ('mozilla', None, 'Do not show the toolbar option to international users.'),
         ('install-icon=', None, 'ICO file to use for the installer.'),
         ('install-image=', None, 'BMP file to use for the welcome/finish pages.')
         ]
@@ -481,7 +480,6 @@ class bdist_nsis(Command):
     def initialize_options(self):
         self.generic = False
         self.nozugo = False
-        self.mozilla = False
         self.install_icon = None
         self.install_image = None
 
@@ -529,12 +527,12 @@ class bdist_nsis(Command):
         nsis_vars['MIRO_INSTALL_ICON'] = self.install_icon
         nsis_vars['MIRO_INSTALL_IMAGE'] = self.install_image
         nsis_vars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
+        nsis_vars['MOZILLA_INSTALLER'] = '1' # don't show Zugo to international users
         if not self.nozugo:
             nsis_vars['MIROBAR_EXE'] = 'zugo-silent.exe'
         if self.generic:
             nsis_vars['GENERIC_INSTALLER'] = '1'
-        if self.mozilla:
-            nsis_vars['MOZILLA_INSTALLER'] = '1'
+
 
         output_file = '%s-%s'
         # One stage installer
@@ -542,8 +540,6 @@ class bdist_nsis(Command):
             output_file = "%s-generic" % output_file
         if self.nozugo:
             output_file = "%s-nozugo" % output_file
-        if self.mozilla:
-            output_file = '%s-mozilla' % output_file
 
         output_file = (output_file %
                        (template_vars['shortAppName'], template_vars['appVersion']))
