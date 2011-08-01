@@ -19,7 +19,10 @@ class WidgetStateConstants(MiroTestCase):
         self.assertEqual(self.display_types, display_types)
 
     def test_default_column_widths(self):
-        columns = set(WidgetStateStore.DEFAULT_COLUMN_WIDTHS)
+        columns = set(WidgetStateStore.DEFAULT_COLUMN_WIDTHS.keys())
+        # MultiRowAlbum is only available in Album View and we manually add it
+        # there.
+        columns.remove("multi-row-album")
         self.assertEqual(self.columns, columns)
 
     def test_default_sort_column(self):

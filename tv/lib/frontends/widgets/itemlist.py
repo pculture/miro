@@ -353,7 +353,17 @@ class PlaylistSort(ItemSort):
 
 DEFAULT_SORT = ArtistSort(False)
 
-SORT_KEY_MAP = dict((sort.KEY, sort) for sort in ItemSort.__subclasses__())
+def all_subclasses(cls):
+    """Find all subclasses of a given new-style class.
+
+    This method also returns sub-subclasses, etc.
+    """
+    for subclass in cls.__subclasses__():
+        yield subclass
+        for sub_subclass in all_subclasses(subclass):
+            yield sub_subclass
+
+SORT_KEY_MAP = dict((sort.KEY, sort) for sort in all_subclasses(ItemSort))
 
 def album_grouping(info):
     """Grouping function that groups infos by albums."""
