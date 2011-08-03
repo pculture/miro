@@ -27,7 +27,7 @@ from miro.test.framework import EventLoopTest, skip_for_platforms
 from miro.schema import (SchemaString, SchemaInt, SchemaFloat,
                          SchemaReprContainer, SchemaList, SchemaDict,
                          SchemaBool, SchemaFilename,
-                         SchemaBinary)
+                         SchemaBinary, SchemaStringSet)
 
 # create a dummy object schema
 class Human(database.DDBObject):
@@ -44,6 +44,7 @@ class Human(database.DDBObject):
             self.high_scores = high_scores
         self.stuff = stuff
         self.id_code = None
+        self.favorite_colors = set([u'red', u'blue'])
 
     def add_friend(self, friend):
         self.friends.append(friend)
@@ -85,6 +86,7 @@ class HumanSchema(schema.ObjectSchema):
         ('high_scores', SchemaDict(SchemaString(), SchemaInt())),
         ('stuff', SchemaReprContainer(noneOk=True)),
         ('id_code', SchemaBinary(noneOk=True)),
+        ('favorite_colors', SchemaStringSet(delimiter='@')),
     ]
 
     @staticmethod
