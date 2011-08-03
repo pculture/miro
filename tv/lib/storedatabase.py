@@ -944,8 +944,18 @@ class LiveStorage:
 
 class SQLiteConverter(object):
     def __init__(self):
-        self._to_sql_converters = {}
-        self._from_sql_converters = {}
+        self._to_sql_converters = {
+                schema.SchemaBinary: self._binary_to_sql,
+                schema.SchemaStatusContainer: self._status_to_sql,
+                schema.SchemaFilename: self._filename_to_sql,
+        }
+
+        self._from_sql_converters = {
+                schema.SchemaBool: self._bool_from_sql,
+                schema.SchemaBinary: self._binary_from_sql,
+                schema.SchemaStatusContainer: self._status_from_sql,
+                schema.SchemaFilename: self._filename_from_sql,
+        }
 
         repr_types = (schema.SchemaTimeDelta,
                 schema.SchemaReprContainer,
@@ -954,36 +964,22 @@ class SQLiteConverter(object):
                 schema.SchemaList,
                 )
         for schema_class in repr_types:
-            self._to_sql_converters[schema_class] = repr
-            self._from_sql_converters[schema_class] = self._convert_repr
-        self._to_sql_converters[schema.SchemaStatusContainer] = \
-                self._convert_status_to_sql
-        self._from_sql_converters[schema.SchemaStatusContainer] = \
-                self._convert_status
-        # bools get stored as integers in sqlite
-        self._from_sql_converters[schema.SchemaBool] = bool
-        # filenames are always stored in sqlite as unicode
-        if PlatformFilenameType != unicode:
-            self._to_sql_converters[schema.SchemaFilename] = filename_to_unicode
-            self._from_sql_converters[schema.SchemaFilename] = \
-                    self._unicode_to_filename
-        # make sure SchemaBinary is always restored as a byte-string
-        self._to_sql_converters[schema.SchemaBinary] = buffer
-        self._from_sql_converters[schema.SchemaBinary] = self._convert_binary
+            self._to_sql_converters[schema_class] = self._repr_to_sql
+            self._from_sql_converters[schema_class] = self._repr_from_sql
 
     def to_sql(self, schema, name, schema_item, value):
         if value is None:
             return None
         converter = self._to_sql_converters.get(schema_item.__class__,
                 self._null_convert)
-        return converter(value)
+        return converter(value, schema_item)
 
     def from_sql(self, schema, name, schema_item, value):
         if value is None:
             return None
         converter = self._from_sql_converters.get(schema_item.__class__,
                 self._null_convert)
-        return converter(value)
+        return converter(value, schema_item)
 
     def get_malformed_data_handler(self, schema, name, schema_item, value):
         handler_name = 'handle_malformed_%s' % name
@@ -993,12 +989,25 @@ class SQLiteConverter(object):
             return None
 
     def _unicode_to_filename(self, value):
-        return value.encode('utf-8')
+        # reverses filename_to_unicode().  We can't use the platform
+        # unicode_to_filename() because that also cleans out the filename.
+        # This code is not very good and should be replaces as part of #13182
+        if value is not None and PlatformFilenameType != unicode:
+            return value.encode('utf-8')
+        else:
+            return value
 
-    def _null_convert(self, value):
+    def _null_convert(self, value, schema_item):
         return value
 
-    def _convert_binary(self, value):
+    def _bool_from_sql(self, value, schema_item):
+        # bools are stored as integers in the DB.
+        return bool(value)
+
+    def _binary_to_sql(self, value, schema_item):
+        return buffer(value)
+
+    def _binary_from_sql(self, value, schema_item):
         if isinstance(value, unicode):
             return value.encode('utf-8')
         elif isinstance(value, buffer):
@@ -1006,11 +1015,20 @@ class SQLiteConverter(object):
         else:
             raise TypeError("Unknown type in _convert_binary")
 
-    def _convert_repr(self, value):
+    def _filename_from_sql(self, value, schema_item):
+        return self._unicode_to_filename(value)
+
+    def _filename_to_sql(self, value, schema_item):
+        return filename_to_unicode(value)
+
+    def _repr_to_sql(self, value, schema_item):
+        return repr(value)
+
+    def _repr_from_sql(self, value, schema_item):
         return eval(value, __builtins__, {'datetime': datetime, 'time': _TIME_MODULE_SHADOW})
 
-    def _convert_status(self, repr_value):
-        status_dict = self._convert_repr(repr_value)
+    def _status_from_sql(self, repr_value, schema_item):
+        status_dict = self._repr_from_sql(repr_value)
         filename_fields = schema.SchemaStatusContainer.filename_fields
         for key in filename_fields:
             value = status_dict.get(key)
@@ -1018,7 +1036,7 @@ class SQLiteConverter(object):
                 status_dict[key] = self._unicode_to_filename(value)
         return status_dict
 
-    def _convert_status_to_sql(self, status_dict):
+    def _status_to_sql(self, status_dict, schema_item):
         to_save = status_dict.copy()
         filename_fields = schema.SchemaStatusContainer.filename_fields
         for key in filename_fields:

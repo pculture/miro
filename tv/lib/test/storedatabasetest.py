@@ -553,16 +553,19 @@ class CorruptReprTest(FakeSchemaTest):
 class ConverterTest(StoreDatabaseTest):
     def test_convert_repr(self):
         converter = storedatabase.SQLiteConverter()
+        # _repr_to_sql ignores the schema_item parameter, so we can just pass
+        # in None
+        schema_item = None
 
         test1 = """{'updated_parsed': (2009, 6, 5, 1, 30, 0, 4, 156, 0)}"""
-        val = converter._convert_repr(test1)
+        val = converter._repr_from_sql(test1, schema_item)
         self.assertEquals(val, {"updated_parsed":
                                 (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
 
         test2 = """{'updated_parsed': time.struct_time(tm_year=2009, \
 tm_mon=6, tm_mday=5, tm_hour=1, tm_min=30, tm_sec=0, tm_wday=4, tm_yday=156, \
 tm_isdst=0)}"""
-        val = converter._convert_repr(test2)
+        val = converter._repr_from_sql(test2, schema_item)
         self.assertEquals(val, {"updated_parsed":
                                 (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
 
