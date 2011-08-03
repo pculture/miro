@@ -174,6 +174,28 @@ class SchemaMultiValue(SchemaSimpleItem):
         super(SchemaSimpleItem, self).validate(data)
         self.validateTypes(data, [int, long, bool, str, unicode])
 
+class SchemaStringSet(SchemaItem):
+    """Stores a set of strings.
+
+    This is stored in the database as a long string that separated by a
+    delimiter (by default ":").
+    """
+
+    def __init__(self, noneOk=False, delimiter=':'):
+        SchemaItem.__init__(self, noneOk)
+        self.delimiter = delimiter
+
+    def validate(self, data):
+        if data is None:
+            super(SchemaStringSet, self).validate(data)
+            return
+        self.validateType(data, set)
+        for obj in data:
+            self.validateType(obj, unicode)
+            if self.delimiter in obj:
+                raise ValidationError("%r contains the delimiter (%s)" %
+                        (data, self.delimiter))
+
 class SchemaReprContainer(SchemaItem):
     """SchemaItem saved using repr() to save nested lists, dicts and
     tuples that store simple types.  The look is similar to JSON, but

@@ -104,6 +104,7 @@ _sqlite_type_map = {
         schema.SchemaList: 'pythonrepr',
         schema.SchemaStatusContainer: 'pythonrepr',
         schema.SchemaFilename: 'text',
+        schema.SchemaStringSet: 'text',
 }
 
 VERSION_KEY = "Democracy Version"
@@ -948,6 +949,7 @@ class SQLiteConverter(object):
                 schema.SchemaBinary: self._binary_to_sql,
                 schema.SchemaStatusContainer: self._status_to_sql,
                 schema.SchemaFilename: self._filename_to_sql,
+                schema.SchemaStringSet: self._string_set_to_sql,
         }
 
         self._from_sql_converters = {
@@ -955,6 +957,7 @@ class SQLiteConverter(object):
                 schema.SchemaBinary: self._binary_from_sql,
                 schema.SchemaStatusContainer: self._status_from_sql,
                 schema.SchemaFilename: self._filename_from_sql,
+                schema.SchemaStringSet: self._string_set_from_sql,
         }
 
         repr_types = (schema.SchemaTimeDelta,
@@ -1044,6 +1047,12 @@ class SQLiteConverter(object):
             if value is not None:
                 to_save[key] = filename_to_unicode(value)
         return repr(to_save)
+
+    def _string_set_to_sql(self, value, schema_item):
+        return schema_item.delimiter.join(value)
+
+    def _string_set_from_sql(self, value, schema_item):
+        return set(value.split(schema_item.delimiter))
 
 class TimeModuleShadow:
     """In Python 2.6, time.struct_time is a named tuple and evals poorly,
