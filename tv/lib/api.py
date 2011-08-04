@@ -29,6 +29,40 @@
 
 """miro.api -- API for extensions.
 
+Hook functions
+-------------------------
+Hook functions are used to hook into core components in a well-definined way.
+For example, the 'item_list_filter' hook is used to add item filters to the
+top of an item list.
+
+If your extension wants to implement a hook function, add a "hooks" section in
+your config file containing a list of hooks.  For each hook, the key is the
+name of the hook and the value specifies where to find the hook function.  The
+values are in the form of package.module:path.to.obj.
+
+Here's an example [hooks] section::
+
+    [hooks]
+    hook1 = myext:handle_hook
+    hook2 = myext.foo:handle_hook
+    hook3 = myext:hook_obj.handle_hook
+
+In this example, hook1 will be handled by handle_hook() inside the module
+myext, hook2 will be handled by the handle_hook() function inside the module
+myext.foo, and hook3 will be handled by the handle() method in inside the
+hook_obj object inside the module myext
+
+Hook functions help keep a stable API for extensions over different releases
+and allow extensions to coexist better.  You can probably achieve the same
+results by importing core modules directly and monkey patching things, but
+this approach will almost certainly break when the core code changes or when
+another extension tries to do the same thing.
+
+Your extension can also define a hook for other extensions to use.  You can
+use the hook_invoke() method to call all functions registered for a hook you
+define.
+
+
 .. Note::
 
    This API is missing a lot of important stuff.  If you're interested in
@@ -46,11 +80,15 @@ __all__ = [
     "get_platform",
     "get_frontend",
     "get_support_directory",
+    "hook_invoke",
     ]
 
 # increase this by 1 every time the API changes
 APIVERSION = 0
 
+import logging
+
+from miro import app
 from miro import signals
 
 class ExtensionException(StandardError):
@@ -121,3 +159,23 @@ def get_support_directory():
     """
     from miro import app, prefs
     return app.config.get(prefs.SUPPORT_DIRECTORY)
+
+def hook_invoke(hook_name, *args, **kwargs):
+    """Call all functions registered for a hook.
+
+    We will call each function registered with hook_register() with hook_name.
+    args and kwargs are used to call the hook functions.
+
+    We will return a list of return values, one for each registered hook.
+    """
+    results = []
+    for ext in app.extension_manager.extensions_for_hook(hook_name):
+        try:
+            retval = ext.invoke_hook(hook_name, *args, **kwargs)
+        except StandardError:
+            # hook func raised an error.  Log it, then ignore
+            logging.exception("exception calling hook function %s ", ext.name)
+            continue
+        else:
+            results.append(retval)
+    return results

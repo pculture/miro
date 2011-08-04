@@ -6,10 +6,12 @@ import threading
 import shutil
 import functools
 
+from miro import api
 from miro import app
 from miro import config
 from miro import database
 from miro import eventloop
+from miro import extensionmanager
 from miro import feed
 from miro import downloader
 from miro import httpauth
@@ -294,6 +296,13 @@ class MiroTestCase(unittest.TestCase):
         httpauth.init()
         # reset any logging records from our setUp call()
         self.log_filter.reset_records()
+        # create an extension manager that searches our tempdir for extensions
+        # NOTE: this doesn't actually load any extensions, since the directory
+        # is currently empty.  If you want to use the ExtensionManager you
+        # need to put a .miroext file in the tempdir then call
+        # app.extension_manager.load_extension()
+        app.extension_manager = extensionmanager.ExtensionManager(
+                [self.tempdir], [])
 
     def on_windows(self):
         return self.platform == "windows"
@@ -307,6 +316,9 @@ class MiroTestCase(unittest.TestCase):
         self.stop_http_server()
         del app.metadata_progress_updater
 
+        # unload extensions
+        self.unload_extensions()
+
         # Remove any leftover database
         app.db.close()
         app.db = None
@@ -317,6 +329,11 @@ class MiroTestCase(unittest.TestCase):
 
         # Remove tempdir
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
+
+    def unload_extensions(self):
+        for ext in app.extension_manager.extensions:
+            if ext.loaded:
+                app.extension_manager.unload_extension(ext)
 
     def setup_log_filter(self):
         """Make a LogFilter that will turn loggings into exceptions."""

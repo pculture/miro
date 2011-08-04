@@ -1124,3 +1124,16 @@ def all_subclasses(cls):
         yield subclass
         for sub_subclass in all_subclasses(subclass):
             yield sub_subclass
+
+def import_module(module_name):
+    """Import a module and return it.
+
+    This function works like __import__, except it returns the last module
+    named, rather than the first.  If you import 'foo.bar', __import__ will
+    return foo, but import_module will return bar.
+    """
+    mod = __import__(module_name)
+    parts = module_name.split('.')
+    for part in parts[1:]:
+        mod = getattr(mod, part)
+    return mod

@@ -34,6 +34,7 @@ For more information on the extension system see:
 http://develop.participatoryculture.org/index.php/ExtensionSystem
 """
 
+import collections
 import traceback
 import logging
 import os
@@ -41,9 +42,18 @@ import sys
 import ConfigParser
 from miro import app
 from miro import prefs
+from miro import util
 
 # need to do this otherwise py2exe won't pick up the api module
 from miro import api
+
+class ExtensionParseError(StandardError):
+    """Error when parsing the extension config file.
+
+    This error is raised when ConfigParser can read the file, but we fail to
+    parse a value from it.
+    """
+    pass
 
 class Extension:
     def __init__(self):
@@ -55,6 +65,56 @@ class Extension:
         self.enabled_by_default = False
         # whether or not this extension has been loaded
         self.loaded = False
+        # maps hook names -> hook functions
+        self.hooks = {}
+
+    def module_obj(self):
+        """Gets the module object for this extension.
+
+        If this extension is not loaded, None will be returned
+        """
+        if not self.loaded:
+            return None
+        return sys.modules[self.ext_module]
+
+    def add_hook(self, hook_name, hook_string):
+        """Add a hook to the extension.
+
+        hook_name is the name of the hook to add.
+        hook_string is a string specifying the function object to call for the
+        hook.  It's in the form of package.module:path.to.obj.
+
+        See api.py for the format for hook_string.
+        """
+        try:
+            module_string, object_string = hook_string.split(":")
+        except ValueError:
+            raise ExtensionParseError("Invalid hook string: %s" % hook_string)
+        try:
+            module = util.import_module(module_string)
+        except ImportError:
+            raise ExtensionParseError("Can't import module: %s" % module_string)
+        try:
+            # We allow extensions to execute arbirary code, so calling eval is
+            # not any more of a security risk.
+            hook_func = eval(object_string, module.__dict__)
+        except StandardError, e:
+            raise ExtensionParseError("Error loading hook object: %s (%s)" %
+                    (object_string, e))
+        self.hooks[hook_name] = hook_func
+
+    def invoke_hook(self, hook_name, *args, **kwargs):
+        """Invoke a hook for this extension.
+
+        If this extension implements hook_name, the function for that hook
+        will be called using args and kwargs.  The return value or exception
+        will be passed on.
+
+        :raises KeyError: this extension doesn't implement hook_name
+        :raises: invoke_hook propogates exceptions from the hook function
+        """
+        hook_func = self.hooks[hook_name]
+        return hook_func(*args, **kwargs)
 
     def __repr__(self):
         return "%s (%s)" % (self.name, self.version)
@@ -100,11 +160,15 @@ def get_extensions(ext_dir):
                 e.enabled_by_default = cf.getboolean(
                     "extension", "enabled_by_default")
                 e.enabled = e.enabled_by_default
+            if cf.has_section("hooks"):
+                for hook_name in cf.options("hooks"):
+                    e.add_hook(hook_name, cf.get('hooks', hook_name))
 
             extensions.append(e)
         except (ConfigParser.NoSectionError,
                 ConfigParser.NoOptionError,
-                ConfigParser.ParsingError):
+                ConfigParser.ParsingError,
+                ExtensionParseError):
             logging.warning("Extension file %s is malformed.\n%s",
                             f, traceback.format_exc())
 
@@ -124,6 +188,9 @@ class ExtensionManager(object):
         # list of all extensions--core and user
         self.extensions = []
 
+        # maps hook names to set of extensions that implement the hook
+        self.hook_map = collections.defaultdict(set)
+
     def get_extension_by_name(self, name):
         for mem in self.extensions:
             if mem.name == name:
@@ -132,6 +199,20 @@ class ExtensionManager(object):
 
     def is_enabled(self, ext):
         return ext.name in self.enabled_extensions
+
+    def _register_hooks(self, ext):
+        """Register all hooks for an extension."""
+        for hook_name in ext.hooks.keys():
+            self.hook_map[hook_name].add(ext)
+
+    def _unregister_hooks(self, ext):
+        """Unregister all hooks for an extension."""
+        for hook_name in ext.hooks.keys():
+            self.hook_map[hook_name].discard(ext)
+
+    def extensions_for_hook(self, hook_name):
+        """Get a set of all extensions that implement a hook."""
+        return self.hook_map[hook_name]
 
     def should_load(self, ext):
         if ext.name in self.disabled_extensions:
@@ -173,6 +254,7 @@ class ExtensionManager(object):
         logging.info("extension manager: loading: %r", ext)
         load = getattr(sys.modules[ext.ext_module], "load")
         load()
+        self._register_hooks(ext)
         ext.loaded = True
 
     def disable_extension(self, ext):
@@ -192,6 +274,7 @@ class ExtensionManager(object):
         """
         if not ext.ext_module in sys.modules:
             return
+        self._unregister_hooks(ext)
         logging.info("extension manager: unloading: %r", ext)
         unload = getattr(sys.modules[ext.ext_module], "unload")
         unload()
@@ -203,9 +286,10 @@ class ExtensionManager(object):
         extensions = []
         for d in self.core_ext_dirs:
             logging.info("Loading core extensions in %s", d)
+            if d not in sys.path:
+                sys.path.insert(0, d)
             exts = get_extensions(d)
             if exts:
-                sys.path.insert(0, d)
                 extensions.extend(exts)
 
         self.core_extensions = list(extensions)
@@ -220,9 +304,10 @@ class ExtensionManager(object):
                 continue
 
             logging.info("Loading user extensions in %s", d)
+            if d not in sys.path:
+                sys.path.insert(0, d)
             exts = get_extensions(d)
             if exts:
-                sys.path.insert(0, d)
                 extensions.extend(exts)
 
         self.extensions = extensions

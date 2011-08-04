@@ -41,6 +41,7 @@ cases.
 import logging
 from urlparse import urljoin
 
+from miro import api
 from miro import app
 from miro.errors import (WidgetActionError, WidgetRangeError,
     ActionUnavailableError)
@@ -81,6 +82,7 @@ class FilteredListMixin(object):
         filters = app.widget_state.get_filters(self.type, self.id)
         self.item_list.set_filters(filters)
         self.after_filters_changed()
+        self.add_extension_filters()
 
     def on_filter_clicked(self, button, filter_key):
         """Handle the filter switch changing state."""
@@ -95,6 +97,19 @@ class FilteredListMixin(object):
         self.send_model_changed()
         self.titlebar.set_filters(self.item_list.get_filters())
         self.check_for_empty_list()
+
+    def add_extension_filters(self):
+        hook_results = api.hook_invoke('item_list_filters', self.type,
+                self.id)
+        for filter_list in hook_results:
+            try:
+                self._add_extension_filter_list(filter_list)
+            except StandardError:
+                logging.exception("Error adding extension item filter")
+
+    def _add_extension_filter_list(self, filter_list):
+        for filter_ in filter_list:
+            self.titlebar.filter_box.add_filter(filter_.key)
 
 class ProgressTrackingListMixin(object):
     """Controller that cares about item metadata extraction progress."""
