@@ -845,9 +845,12 @@ class SharingManagerBackend(object):
                 self.daap_playlists[message.id]['revision'] = self.revision
                 self.playlist_item_map[message.id] = item_ids
                 self.deleted_item_map[message.id] = []
-            for item_id in item_ids:
-                if not item_id in self.daapitems:
-                    self.make_item_dict(message.items)
+                # Update the revision of these items, so they will match
+                # when the playlist items are fetched.
+                for item_id in item_ids:
+                    self.daapitems[item_id]['revision'] = self.revision
+            else:
+                self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
         # If items are changed, overwrite with a recreated entry.  This
@@ -855,11 +858,9 @@ class SharingManagerBackend(object):
         # item being moved out of, and then into, a playlist.  Also, based on 
         # message.id, change the playlists accordingly.
         with self.item_lock:
-            import logging; logging.debug('HANDLE CHANGED %s %s %s %s', message.id, message.added, message.changed, message.removed)
             self.update_revision()
             for itemid in message.removed:
                 try:
-                    import logging; logging.debug('REMOVING itemid %s from %s', itemid, message.id)
                     if message.id is not None:
                         revision = self.revision
                         self.daap_playlists[message.id]['revision'] = revision
@@ -1024,19 +1025,21 @@ class SharingManagerBackend(object):
 
     def start_tracking(self):
         self.populate_playlists()
+        # Track items that do not belong in any playlist.  Do this first
+        # so we pick up all items in the media library.
+        app.info_updater.item_list_callbacks.add(self.type, None,
+                                                 self.handle_item_list)
+        app.info_updater.item_changed_callbacks.add(self.type, None,
+                                                 self.handle_items_changed)
+        messages.TrackItems(self.type, None).send_to_backend()
+
+        # Now, for the specific playlists.
         for playlist_id in self.daap_playlists:
             app.info_updater.item_list_callbacks.add(self.type, playlist_id,
                                                  self.handle_item_list)
             app.info_updater.item_changed_callbacks.add(self.type, playlist_id,
                                                  self.handle_items_changed)
             messages.TrackItems(self.type, playlist_id).send_to_backend()
-        # Track items that do not belong in any playlist.
-        app.info_updater.item_list_callbacks.add(self.type, None,
-                                                 self.handle_item_list)
-        app.info_updater.item_changed_callbacks.add(self.type, None,
-                                                 self.handle_items_changed)
-
-        messages.TrackItems(self.type, None).send_to_backend()
 
         app.info_updater.connect('playlists-added',
                                  self.handle_playlist_added)
