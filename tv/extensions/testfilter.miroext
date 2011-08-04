@@ -1,0 +1,9 @@
+[extension]
+name = Test Item Filter
+version = core
+enabled_by_default = False
+module = testfilter
+description = This is an example extension that shows how
+    to implement an item filter.
+[hooks]
+item_list_filters = testfilter:get_item_list_filters

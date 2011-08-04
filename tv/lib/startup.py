@@ -45,6 +45,7 @@ import traceback
 import threading
 import time
 
+from miro import api
 from miro import app
 from miro import autodler
 from miro import autoupdate
