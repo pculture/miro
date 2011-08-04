@@ -121,8 +121,15 @@ def _youtube_callback_step2(info, video_id, callback):
 
         # fmt_url_map is a comma separated list of pipe separated
         # pairs of fmt, url
-        fmt_url_map = params["fmt_url_map"][0].split(",")
-        fmt_url_map = dict([mem.split("|") for mem in fmt_url_map])
+        # build the format codes.
+        fmt_list = [x.split('/')[0] for x in params['fmt_list'][0].split(',')]
+        # build the list of available urls.
+        fmt_url_map = params["url_encoded_fmt_stream_map"][0].split(",")
+        # strip url= from url=xxxxxx, strip trailer.
+        fmt_url_map = [unquote_plus(x[4:]).split(';')[0] for x in fmt_url_map]
+        # now build the actual fmt_url_map ...
+        #fmt_url_map = dict([mem.split("|") for mem in fmt_url_map])
+        fmt_url_map = dict(zip(fmt_list, fmt_url_map))
 
         title = params.get("title", ["No title"])[0]
         try:
