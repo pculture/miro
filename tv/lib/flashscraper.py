@@ -128,7 +128,6 @@ def _youtube_callback_step2(info, video_id, callback):
         # strip url= from url=xxxxxx, strip trailer.
         fmt_url_map = [unquote_plus(x[4:]).split(';')[0] for x in fmt_url_map]
         # now build the actual fmt_url_map ...
-        #fmt_url_map = dict([mem.split("|") for mem in fmt_url_map])
         fmt_url_map = dict(zip(fmt_list, fmt_url_map))
 
         title = params.get("title", ["No title"])[0]
