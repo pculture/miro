@@ -948,7 +948,7 @@ class DaapClient(object):
             self.disconnect()
             return False
         except httplib.BadStatusLine:
-            self.disconnect(polite=False)
+            self.disconnect()
             return False
 
     # XXX Right now, there is only one db_id.
@@ -964,7 +964,7 @@ class DaapClient(object):
             self.disconnect()
             return None
         except httplib.BadStatusLine:
-            self.disconnect(polite=False)
+            self.disconnect()
             return None
 
     def playlists(self, meta=DEFAULT_DAAP_PLAYLIST_META):
@@ -983,7 +983,7 @@ class DaapClient(object):
             self.disconnect()
             return None
         except httplib.BadStatusLine:
-            self.disconnect(polite=False)
+            self.disconnect()
             return None
 
     # XXX: I think this could be cleaner, maybe abstract to have an
@@ -1015,10 +1015,10 @@ class DaapClient(object):
             self.disconnect()
             return None
         except httplib.BadStatusLine:
-            self.disconnect(polite=False)
+            self.disconnect()
             return None
 
-    def disconnect(self, polite=True):
+    def disconnect(self, polite=False):
         try:
             self.timer.cancel()
             if polite:
