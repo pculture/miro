@@ -98,7 +98,7 @@ class DeviceTracker(object):
             return
         if volume_info.BusProtocol != 'USB':
             return # don't care about non-USB devices
-        real_volume = volume_info.MountPoint
+        real_volume = volume_info.MountPoint.encode('utf8')
         disk_info = diskutil('info', volume_info.ParentWholeDisk)
         if not disk_info:
             logging.debug('unknown device connected @ %r' % volume)
