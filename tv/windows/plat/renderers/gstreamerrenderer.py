@@ -38,6 +38,13 @@ import logging
 import os
 import thread
 from threading import Event
+from miro.plat import resources
+
+GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
+
+# need to fix os.environ so gstreamer picks up the plugins
+os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
+os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
 
 import pygst
 pygst.require('0.10')

@@ -297,7 +297,9 @@ data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
 
 # gstreamer files
 data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', '*.dll'))))
-data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*'))))
+data_files.append(
+    ('gstreamer-0.10',
+     iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*.dll'))))
 data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
 data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
