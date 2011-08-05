@@ -179,7 +179,7 @@ zugo_int:
   StrCpy $ZUGO_DEFAULT_SEARCH "1"
   StrCpy $ZUGO_HOMEPAGE "1"
   StrCpy $ZUGO_PROVIDER "Yahoo"
-  StrCpy $ZUGO_TERMS "http://www.mirostart.com/terms/yahoo/"
+  StrCpy $ZUGO_TERMS "http://flmr.startnow.com/terms/yahoo"
 
 toolbar_options:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Type"   "label"
@@ -1073,7 +1073,7 @@ Function .onInit
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
   StrCpy $ZUGO_PROVIDER "Bing™"
-  StrCpy $ZUGO_TERMS "http://www.mirostart.com/terms/bing/"
+  StrCpy $ZUGO_TERMS "http://flmr.startnow.com/terms/bing"
 
   ; Check if we're reinstalling
   ${GetParameters} $R0
