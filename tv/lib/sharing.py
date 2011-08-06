@@ -285,6 +285,7 @@ class SharingTracker(object):
 
     def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
+            logging.debug('SUCCESS!!')
             if self.available_shares.has_key(share_id):
                 info = self.available_shares[share_id]
             else:
@@ -297,6 +298,7 @@ class SharingTracker(object):
             messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
         def failure(unused):
+            logging.debug('FAILURE')
             if self.available_shares.has_key(share_id):
                 info = self.available_shares[share_id]
             else:
@@ -661,7 +663,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         port = self.share.port
         if not self.client.databases():
             raise IOError('Cannot get database')
-        playlists = self.client.playlists()
+        playlists, _ = self.client.playlists()
         if playlists is None:
             raise IOError('Cannot get playlist')
         returned_playlists = []
@@ -722,7 +724,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if not self.base_playlist:
             raise ValueError('Cannot find base playlist')
 
-        items = self.client.items(playlist_id=self.base_playlist,
+        items, _ = self.client.items(playlist_id=self.base_playlist,
                                   meta=DAAP_META)
         if items is None:
             raise ValueError('Cannot find items in base playlist')
@@ -763,7 +765,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 continue
             returned_items = []
             returned_items_meth = returned_items.append
-            items = self.client.items(playlist_id=k, meta=DAAP_META)
+            items, _ = self.client.items(playlist_id=k, meta=DAAP_META)
             if items is None:
                 raise ValueError('Cannot find items for playlist %d' % k)
             for itemkey in items.keys():

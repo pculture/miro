@@ -837,6 +837,8 @@ class DaapClient(object):
         self.gzip = gzip
         self.session = None
         self.headers = dict()
+        self.old_revision = self.revision = 1
+        self.supports_update = False
         if self.gzip:
            self.headers['Accept-encoding'] = 'gzip, identity'
 
@@ -873,6 +875,10 @@ class DaapClient(object):
         if callback:
             callback(data, *args)
 
+    def handle_content_codes(self, data):
+        update = find_daap_tag('msup', decode_response(data))
+        self.supports_update = True if update else False
+
     def handle_login(self, data):
         self.session = find_daap_tag('mlid', decode_response(data))
 
@@ -885,38 +891,55 @@ class DaapClient(object):
         self.db_id = find_daap_tag('miid', db)
         self.db_name = find_daap_tag('minm', db)
 
+    def handle_update(self, data):
+        revision = find_daap_tag('musr', decode_response(data))
+        self.old_revision = self.revision
+        self.revision = revision
+
     def handle_playlist(self, data, meta):
-        listing = find_daap_tag('mlcl', decode_response(data))
+        r = decode_response(data)
+        listing = find_daap_tag('mlcl', r)
+        deleted = find_daap_tag('mudl', r)
         playlist_dict = dict()
+        deleted_list = []
         meta_list = [m.strip() for m in meta.split(',')]
-        for item in find_daap_listitems(listing):
-            playlist_id = find_daap_tag('miid', item)
-            playlist_dict[playlist_id] = dict()
-            for m in meta_list:
-                try:
-                    playlist_dict[playlist_id][m] = find_daap_tag(
+        if listing is not None:
+            for item in find_daap_listitems(listing):
+                playlist_id = find_daap_tag('miid', item)
+                playlist_dict[playlist_id] = dict()
+                for m in meta_list:
+                    try:
+                        playlist_dict[playlist_id][m] = find_daap_tag(
                                                     dmap_consts_rmap[m], item)
-                except KeyError:
-                    continue
-        self.daap_playlists = playlist_dict
+                    except KeyError:
+                        continue
+        if deleted is not None:
+            for item_id in find_daap_listitems(deleted):
+                deleted_list.append(item_id)
+
+        self.daap_playlists = (playlist_dict, deleted_list)
 
     def handle_items(self, data, playlist_id, meta):
-        listing = find_daap_tag('mlcl', decode_response(data))
-        itemdict = dict()
-        if not listing:
-            self.daap_items = dict()    # dummy empty
-            return
+        r = decode_response(data)
+        listing = find_daap_tag('mlcl', r)
+        deleted = find_daap_tag('mudl', r)
         meta_list = [m.strip() for m in meta.split(',')]
-        for item in find_daap_listitems(listing):
-            itemid = find_daap_tag('miid', item)
-            itemdict[itemid] = dict()
-            for m in meta_list:
-                try:
-                    itemdict[itemid][m] = find_daap_tag(
-                                          dmap_consts_rmap[m], item)
-                except KeyError:
-                    continue
-        self.daap_items = itemdict
+        itemdict = dict()
+        deleted_list = []
+        if listing is not None:
+            for item in find_daap_listitems(listing):
+                itemid = find_daap_tag('miid', item)
+                itemdict[itemid] = dict()
+                for m in meta_list:
+                    try:
+                        itemdict[itemid][m] = find_daap_tag(
+                                              dmap_consts_rmap[m], item)
+                    except KeyError:
+                        continue
+        if deleted is not None:
+            for item_id in find_daap_listitems(deleted):
+                deleted_list.append(item_id)
+        self.daap_items = itemdict, deleted_list
 
     def sessionize(self, request, query):
         if not self.session:
@@ -933,10 +956,12 @@ class DaapClient(object):
             self.conn.request('GET', '/server-info', headers=self.headers)
             self.check_reply(self.conn.getresponse())            
             self.conn.request('GET', '/content-codes', headers=self.headers)
-            self.check_reply(self.conn.getresponse())
+            self.check_reply(self.conn.getresponse(),
+                             callback=self.handle_content_codes)
             self.conn.request('GET', '/login', headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_login)
+            self.update()
             # Finally, if this all works, start the heartbeat timer.
             # XXX pick out the daap timeout from the server.
             self.timer = threading.Timer(self.HEARTBEAT,
@@ -952,9 +977,12 @@ class DaapClient(object):
             return False
 
     # XXX Right now, there is only one db_id.
-    def databases(self):
+    # XXX Right now, can't handle deleted database listing (I don't think that
+    # ever happens.)
+    def databases(self, update=False):
         try:
-            self.conn.request('GET', self.sessionize('/databases', []),
+            revquery = self.revision_query(update)
+            self.conn.request('GET', self.sessionize('/databases', revquery),
                               headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_db)
@@ -967,11 +995,41 @@ class DaapClient(object):
             self.disconnect()
             return None
 
-    def playlists(self, meta=DEFAULT_DAAP_PLAYLIST_META):
+    def revision_query(self, update):
+        if not self.supports_update:
+            return []
+        query = [('revision-number', self.revision)]
+        if update:
+            query += [('delta', self.old_revision)]
+        return query
+
+    # How do we work out whether it supports update or not?
+    def update(self):
+        if not self.supports_update:
+            return
         try:
+            # Setting True/False here is not very relevant, since delta is not
+            # used.
+            revquery = self.revision_query(False)
+            self.revision = self.old_revision
+            self.conn.request('GET', self.sessionize('/update', revquery),
+                              headers=self.headers)
+            self.check_reply(self.conn.getresponse(),
+                             callback=self.handle_update)
+        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+            import sys, traceback
+            a, b, c = sys.exc_info()
+            traceback.print_tb(c)
+            self.disconnect()
+            return None
+
+    def playlists(self, meta=DEFAULT_DAAP_PLAYLIST_META, update=False):
+        try:
+            revquery = self.revision_query(update)
             self.conn.request('GET', self.sessionize(
                               '/databases/%d/containers' % self.db_id,
-                              [('meta', meta)]), headers=self.headers)
+                              [('meta', meta)] + revquery),
+                              headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_playlist,
                              args=[meta])
@@ -989,17 +1047,18 @@ class DaapClient(object):
     # XXX: I think this could be cleaner, maybe abstract to have an
     # easy way to provide the daap meta without resorting to providing
     # the raw string which includes the names requested.
-    def items(self, playlist_id=None, meta=DEFAULT_DAAP_META):
+    def items(self, playlist_id=None, meta=DEFAULT_DAAP_META, update=False):
         try:
+            query = self.revision_query(update) + [('meta', meta)]
             if playlist_id is None:
                 self.conn.request('GET', self.sessionize(
                     '/databases/%d/items' % self.db_id,
-                    [('meta', meta)]), headers=self.headers)
+                    query), headers=self.headers)
             else:
                 self.conn.request('GET', self.sessionize(
                     ('/databases/%d/containers/%d/items' % 
                      (self.db_id, playlist_id)),
-                    [('meta', meta)]), headers=self.headers)
+                    query), headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_items,
                              args=[playlist_id, meta])
