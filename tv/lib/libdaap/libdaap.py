@@ -945,6 +945,9 @@ class DaapClient(object):
 
     # Note: in theory there could be multiple DB but in reality there's only
     # one.  So this is a shortcut.
+    #
+    # XXX in theory we may have to handle database being deleted, or new
+    # database being added.
     def handle_db(self, data):
         db_list = find_daap_tag('mlcl', decode_response(data))
         # Just get the first one.
@@ -1065,13 +1068,16 @@ class DaapClient(object):
             query += [('delta', self.old_revision)]
         return query
 
-    # How do we work out whether it supports update or not?
     def update(self):
         if not self.supports_update:
             return
         try:
             # Setting True/False here is not very relevant, since delta is not
             # used.
+            #
+            # NOTE: iTunes uses a revision-number= but no delta= on first go,
+            # all subsequent ones have revision-number= and delta= set to be
+            # the same number.
             revquery = self.revision_query(False)
             self.conn.request('GET', self.sessionize('/update', revquery),
                               headers=self.headers)
