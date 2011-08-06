@@ -875,7 +875,7 @@ class DaapClient(object):
         if callback:
             callback(data, *args)
 
-    def handle_content_codes(self, data):
+    def handle_server_info(self, data):
         update = find_daap_tag('msup', decode_response(data))
         self.supports_update = True if update else False
 
@@ -947,17 +947,18 @@ class DaapClient(object):
         new_request = request + '?session-id=%d' % self.session
         # XXX urllib.quote?
         new_request = '&'.join([new_request] + 
-                               [name + '=' + param for name, param in query])
+                               [name + '=' + str(param) for
+                                name, param in query])
         return new_request
 
     def connect(self):
         try:
             self.conn = httplib.HTTPConnection(self.host, self.port)
             self.conn.request('GET', '/server-info', headers=self.headers)
-            self.check_reply(self.conn.getresponse())            
-            self.conn.request('GET', '/content-codes', headers=self.headers)
             self.check_reply(self.conn.getresponse(),
-                             callback=self.handle_content_codes)
+                             callback=self.handle_server_info)
+            self.conn.request('GET', '/content-codes', headers=self.headers)
+            self.check_reply(self.conn.getresponse())
             self.conn.request('GET', '/login', headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_login)
@@ -1011,7 +1012,6 @@ class DaapClient(object):
             # Setting True/False here is not very relevant, since delta is not
             # used.
             revquery = self.revision_query(False)
-            self.revision = self.old_revision
             self.conn.request('GET', self.sessionize('/update', revquery),
                               headers=self.headers)
             self.check_reply(self.conn.getresponse(),

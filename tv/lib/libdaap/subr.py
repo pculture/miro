@@ -197,11 +197,14 @@ def atox(s, func, base=10):
     return res
 
 def find_daap_listitems(listing):
-    """find_daap_listitems(listing) -> items"""
+    """find_daap_listitems(listing) -> items
+
+       Use this to iterate over mlcl / mudl.
+    """
     values = []
     try:
         for tag, value in listing:
-           if not tag == 'mlit':
+           if not tag in ('mlit', 'miid'):
                raise ValueError('Expected list item but none encountered')
            values.append(value)
         return values

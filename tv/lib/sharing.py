@@ -606,7 +606,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # the loop becomes useless.  There is nothing wait for being updated.
         # 
         # XXX SHORTCIRCUIT for now, till we implement the update logic.
-        return
+        # return
+        logging.debug('UPDATE SUPPORTED = %s', self.client.supports_update)
         if not success or not self.client.supports_update:
             return
         while True:
@@ -701,9 +702,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         name = self.share.name
         host = self.share.host
         port = self.share.port
-        if not self.client.databases():
+        if not self.client.databases(update=update):
             raise IOError('Cannot get database')
-        playlists, _ = self.client.playlists()
+        deleted_items = dict()
+        playlists, deleted_playlists = self.client.playlists(update=update)
         if playlists is None:
             raise IOError('Cannot get playlist')
         returned_playlists = []
@@ -718,8 +720,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             if playlists[k].has_key('daap.baseplaylist'):
                 is_base_playlist = playlists[k]['daap.baseplaylist']
             if is_base_playlist:
-                if self.base_playlist:
+                if not update and self.base_playlist:
                     logging.debug('WARNING: more than one base playlist found')
+                if update and self.base_playlist != k:
+                    logging.debug('WARNING: base playlistid changed in update')
                 self.base_playlist = k
             # This isn't the playlist id of the remote share, this is the
             # playlist id we use internally.
@@ -743,31 +747,36 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         audio_playlist_id = unicode(md5(repr((name,
                                               host,
                                               port, u'audio'))).hexdigest())
-        video_info = messages.SharingInfo(video_playlist_id,
-                                          u'video',
-                                          host,
-                                          port,
-                                          parent_id=self.share.id,
-                                          playlist_id=u'video')
-        audio_info = messages.SharingInfo(audio_playlist_id,
-                                          u'audio',
-                                          host,
-                                          port,
-                                          parent_id=self.share.id,
-                                          playlist_id=u'audio')
-        # Place this stuff at the front
-        returned_playlists.insert(0, audio_info)
-        returned_playlists.insert(0, video_info)
+
+        # These are fake: so we only want to insert these once.
+        if not update:
+            video_info = messages.SharingInfo(video_playlist_id,
+                                              u'video',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'video')
+            audio_info = messages.SharingInfo(audio_playlist_id,
+                                              u'audio',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'audio')
+            # Place this stuff at the front
+            returned_playlists.insert(0, audio_info)
+            returned_playlists.insert(0, video_info)
 
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken?
         if not self.base_playlist:
             raise ValueError('Cannot find base playlist')
 
-        items, _ = self.client.items(playlist_id=self.base_playlist,
-                                  meta=DAAP_META)
+        items, deleted = self.client.items(playlist_id=self.base_playlist,
+                                  meta=DAAP_META, update=update)
         if items is None:
             raise ValueError('Cannot find items in base playlist')
+
+        deleted_items[self.base_playlist] = deleted
 
         itemdict = dict()
         returned_playlist_items = dict()
@@ -805,9 +814,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 continue
             returned_items = []
             returned_items_meth = returned_items.append
-            items, _ = self.client.items(playlist_id=k, meta=DAAP_META)
+            items, deleted = self.client.items(playlist_id=k, meta=DAAP_META,
+                                               update=update)
             if items is None:
                 raise ValueError('Cannot find items for playlist %d' % k)
+            deleted_items[k] = deleted
             for itemkey in items.keys():
                 item = itemdict[itemkey]
                 returned_items_meth(item)
@@ -815,24 +826,59 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
-        return (returned_playlist_items, returned_playlists)
+        return (returned_playlist_items, returned_playlists,
+                deleted_playlists, deleted_items)
 
     def client_update(self):
-        self.client.update()
         logging.debug('CLIENT UPDATE')
-        self.setup_items(update=True)
+        self.client.update()
+        logging.debug('CLIENT UPDATE - RETURN')
+        return self.setup_items(update=True)
 
     def client_update_callback(self, args):
         logging.debug('CLIENT UPDATE CALLBACK')
-        pass
+        deleted = []
+        changed = []
+        added = []
+        (returned_items, returned_playlists,
+         deleted_playlists, deleted_items) = args
+        playlist_dict = dict()
+        # XXX
+        for p in returned_playlists:
+            playlist_dict[p.playlist_id] = p
+        to_remove = []
+        playlist_ids = [p.playlist_id for p in self.playlists]
+        for p in self.playlists:
+            if p.playlist_id in deleted_playlists:
+                if not p.playlist_id in playlist_dict:
+                    deleted.append(p.id)
+                else:
+                    logging.debug('client update: weird server playlist id %s '
+                                  'in deleted and item list at the same time',
+                                  p.playlist_id)
+            if p.playlist_id in playlist_dict:
+                changed.append(playlist_dict[p.playlist_id])
+                to_remove.append(p)
+        added = [playlist_dict[p] for p in playlist_dict if p not in
+                 playlist_ids]
+        for p in to_remove:
+            self.playlists.remove(p)
+        self.playlists += added
+        self.playlists += changed
+        message = messages.TabsChanged('connect', added, changed, deleted)
+        message.send_to_frontend()
+        # Send a list of all the updates to the main sharing tab.
+        # for item in self.items[self.base_playlist]:
+        #    self.emit('added', item)
 
     def client_update_error_callback(self, unused):
         self.client_connect_update_error_callback(unused)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, args):
-        logging.debug('CIENT CONNECT CALLBVACK')
-        returned_items, returned_playlists = args
+        # Just ignore any deleted items on first connect - they shouldn't
+        # be there.
+        returned_items, returned_playlists, _, _ = args
         self.items = returned_items
         self.playlists = returned_playlists
         # Send a list of all the items to the main sharing tab.  Only add
