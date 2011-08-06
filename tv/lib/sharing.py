@@ -898,6 +898,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect_update_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
+        if self.client is None:
+            # someone already did handy-work for us - probably a disconnect
+            # happened while we were in the middle of an update().
+            return
         self.share.is_updating = False
         message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
