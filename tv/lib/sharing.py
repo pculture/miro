@@ -558,6 +558,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     """
     type = u'sharing'
     def __init__(self, share):
+        signals.SignalEmitter.__init__(self)
+        for sig in 'added', 'changed', 'removed':
+            self.create_signal(sig)
         self.client = None
         self.share = share
         self.items = dict()
@@ -567,13 +570,50 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.share.is_updating = True
         message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
-        eventloop.call_in_thread(self.client_connect_callback,
-                                 self.client_connect_error_callback,
-                                 self.client_connect,
-                                 'DAAP client connect')
-        signals.SignalEmitter.__init__(self)
-        for sig in 'added', 'changed', 'removed':
-            self.create_signal(sig)
+        name = self.share.name
+        host = self.share.host
+        port = self.share.port
+        title = 'Sharing Client %s @ (%s, %s)' % (name, host, port)
+        self.thread = threading.Thread(target=self.runloop,
+                                       name=title)
+        self.thread.daemon = True
+        self.thread.start()
+
+    def run(self, func, success, failure):
+        succeeded = False
+        try:
+            result = func()
+        except KeyboardInterrupt:
+            raise
+        except Exception, e:
+                logging.debug('>>> Exception %s %s', self.thread.name,
+                              ''.join(traceback.format_exc()))
+                func = failure
+                name = 'error callback (%s)' % self.thread.name
+                args = (e,)
+        else:
+                func = success
+                name = 'result callback (%s)' % self.thread.name
+                args = (result,)
+                succeeded = True
+        eventloop.add_idle(func, name, args=args)
+        return succeeded
+
+    def runloop(self):
+        success = self.run(self.client_connect, self.client_connect_callback,
+                           self.client_connect_error_callback)
+        # If server does not support update, then we short circuit since
+        # the loop becomes useless.  There is nothing wait for being updated.
+        # 
+        # XXX SHORTCIRCUIT for now, till we implement the update logic.
+        return
+        if not success or not self.client.supports_update:
+            return
+        while True:
+            success = self.run(self.client_update, self.client_update_callback,
+                               self.client_update_error_callback)
+            if not success:
+                break
 
     def sharing_item(self, rawitem):
         kwargs = dict()
@@ -657,7 +697,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.address = address
         return self.setup_items()
 
-    def setup_items(self):
+    def setup_items(self, update=False):
         name = self.share.name
         host = self.share.host
         port = self.share.port
@@ -777,8 +817,21 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # the success callback to do it to prevent race.
         return (returned_playlist_items, returned_playlists)
 
+    def client_update(self):
+        self.client.update()
+        logging.debug('CLIENT UPDATE')
+        self.setup_items(update=True)
+
+    def client_update_callback(self, args):
+        logging.debug('CLIENT UPDATE CALLBACK')
+        pass
+
+    def client_update_error_callback(self, unused):
+        self.client_connect_update_error_callback(unused)
+
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, args):
+        logging.debug('CIENT CONNECT CALLBVACK')
         returned_items, returned_playlists = args
         self.items = returned_items
         self.playlists = returned_playlists
@@ -795,6 +848,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         message.send_to_frontend()
 
     def client_connect_error_callback(self, unused):
+        self.client_connect_update_error_callback(unused)
+
+    def client_connect_update_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
         self.share.is_updating = False
         message = messages.TabsChanged('connect', [], [self.share], [])

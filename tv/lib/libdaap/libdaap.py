@@ -1017,9 +1017,6 @@ class DaapClient(object):
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_update)
         except (httplib.BadStatusLine, socket.error, IOError, ValueError):
-            import sys, traceback
-            a, b, c = sys.exc_info()
-            traceback.print_tb(c)
             self.disconnect()
             return None
 
