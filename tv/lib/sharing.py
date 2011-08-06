@@ -653,6 +653,12 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Lousy Windows and Python API.
         address, port = self.client.conn.sock.getpeername()
         self.address = address
+        return self.setup_items()
+
+    def setup_items(self):
+        name = self.share.name
+        host = self.share.host
+        port = self.share.port
         if not self.client.databases():
             raise IOError('Cannot get database')
         playlists = self.client.playlists()
