@@ -845,9 +845,41 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         (returned_items, returned_playlists,
          deleted_playlists, deleted_items) = args
         logging.debug('UPDATE CALLBACK: DELETED MEDIA %s', deleted_items)
+
+        # Do the playlists first.  So when when we add items, it will
+        # Just Work.
+        playlist_dict = dict()
+        # XXX
+        for p in returned_playlists:
+            playlist_dict[p.playlist_id] = p
+        to_remove = []
+        playlist_ids = [p.playlist_id for p in self.playlists]
+        for p in self.playlists:
+            if p.playlist_id in deleted_playlists:
+                if not p.playlist_id in playlist_dict:
+                    deleted.append(p.id)
+                else:
+                    logging.debug('client update: weird server playlist id %s '
+                                  'in deleted and item list at the same time',
+                                  p.playlist_id)
+            if p.playlist_id in playlist_dict:
+                changed.append(playlist_dict[p.playlist_id])
+                to_remove.append(p)
+        added = [playlist_dict[p] for p in playlist_dict if p not in
+                 playlist_ids]
+        for p in to_remove:
+            self.playlists.remove(p)
+        self.playlists += added
+        self.playlists += changed
+
         for k in deleted_items:
             item_ids = deleted_items[k]
-            playlist_items = self.items[k]
+            try:
+                playlist_items = self.items[k]
+            except KeyError:
+                # Huh what?  Sent us something that we don't have anymore.
+                logging.debug('Playlist %s already deleted', k)
+                continue
             to_remove = []
             for item_id in item_ids:
                 for item in playlist_items:
@@ -883,34 +915,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 playlist_items.remove(r)
             playlist_items += to_add
 
-        playlist_dict = dict()
-        # XXX
-        for p in returned_playlists:
-            playlist_dict[p.playlist_id] = p
-        to_remove = []
-        playlist_ids = [p.playlist_id for p in self.playlists]
-        for p in self.playlists:
-            if p.playlist_id in deleted_playlists:
-                if not p.playlist_id in playlist_dict:
-                    deleted.append(p.id)
-                else:
-                    logging.debug('client update: weird server playlist id %s '
-                                  'in deleted and item list at the same time',
-                                  p.playlist_id)
-            if p.playlist_id in playlist_dict:
-                changed.append(playlist_dict[p.playlist_id])
-                to_remove.append(p)
-        added = [playlist_dict[p] for p in playlist_dict if p not in
-                 playlist_ids]
-        for p in to_remove:
-            self.playlists.remove(p)
-        self.playlists += added
-        self.playlists += changed
+        # Finally, update the tabs.
         message = messages.TabsChanged('connect', added, changed, deleted)
         message.send_to_frontend()
-        # Send a list of all the updates to the main sharing tab.
-        # for item in self.items[self.base_playlist]:
-        #    self.emit('added', item)
 
     def client_update_error_callback(self, unused):
         self.client_connect_update_error_callback(unused)
