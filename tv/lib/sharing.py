@@ -698,14 +698,25 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.address = address
         return self.setup_items()
 
+    # See use of self.client in client_update().
     def setup_items(self, update=False):
         name = self.share.name
         host = self.share.host
         port = self.share.port
-        if not self.client.databases(update=update):
+        try:
+            client = self.client
+        except AttributeError:
+            # Doesn't matter what exception it is, just raise to call error
+            # callback
+            raise
+
+        # From this point on ... if use of client is invalid (because socket
+        # is closed or something it should raise an error and we can bail
+        # out that way, and call the error callback.
+        if not client.databases(update=update):
             raise IOError('Cannot get database')
         deleted_items = dict()
-        playlists, deleted_playlists = self.client.playlists(update=update)
+        playlists, deleted_playlists = client.playlists(update=update)
         if playlists is None:
             raise IOError('Cannot get playlist')
         returned_playlists = []
@@ -771,7 +782,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if not self.base_playlist:
             raise ValueError('Cannot find base playlist')
 
-        items, deleted = self.client.items(playlist_id=self.base_playlist,
+        items, deleted = client.items(playlist_id=self.base_playlist,
                                   meta=DAAP_META, update=update)
         if items is None:
             raise ValueError('Cannot find items in base playlist')
@@ -814,7 +825,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 continue
             returned_items = []
             returned_items_meth = returned_items.append
-            items, deleted = self.client.items(playlist_id=k, meta=DAAP_META,
+            items, deleted = client.items(playlist_id=k, meta=DAAP_META,
                                                update=update)
             if items is None:
                 raise ValueError('Cannot find items for playlist %d' % k)
@@ -829,12 +840,26 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         return (returned_playlist_items, returned_playlists,
                 deleted_playlists, deleted_items)
 
+    # If we are disconnecting, then, disconnect() sets the self.client
+    # to None before actually running the client.disconnect() routine.
+    # So, usage of self.client should be:
+    #
+    # try:
+    #    client = self.client
+    # except AttributeError:
+    #    # Handle error here.
+    #    pass
+    # else:
+    #     client.blah()
     def client_update(self):
         logging.debug('CLIENT UPDATE')
-        self.client.update()
-        logging.debug('CLIENT UPDATE - RETURN - FIXME')
-        # NB: Need to ensure that the disconnect does not happen while this is
-        # also happening
+        try:
+            client = self.client
+        except AttributeError:
+            # Doesn't matter what exception it is, just raise to call error
+            # callback
+            raise
+        client.update()
         return self.setup_items(update=True)
 
     def client_update_callback(self, args):
@@ -959,6 +984,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect_update_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
+        # Non atomic test-and-do check ok - always in eventloop.
         if self.client is None:
             # someone already did handy-work for us - probably a disconnect
             # happened while we were in the middle of an update().
