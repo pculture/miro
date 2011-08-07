@@ -43,6 +43,7 @@ import BaseHTTPServer
 import SocketServer
 import threading
 import httplib
+from httplib import _CS_IDLE, _CS_REQ_STARTED, _CS_REQ_SENT, _UNKNOWN
 import gzip
 try:
     from cStringIO import StringIO
@@ -591,8 +592,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         ('mrco', nfiles),    # Returned count
                         ('mlcl', itemlist)
                   ]
-        if update:
-            import logging; logging.debug('UPDATE: nfiles %s backend_id %s item %s', nfiles, backend_id, itemlist)
         if deleted:
             content.append(('mudl', deleted))    # Itemlist deleted
 
@@ -816,6 +815,66 @@ def make_daap_server(backend, debug=False, name='pydaap', port=DEFAULT_PORT,
 
 ###############################################################################
 
+# Helper overrides
+class MyHTTPConnection(httplib.HTTPConnection):
+    def getresponse(self):
+        "Get the response from the server."
+
+        # if a prior response has been completed, then forget about it.
+        if self._HTTPConnection__response and self._HTTPConnection__response.isclosed():
+            self._HTTPConnection__response = None
+
+        #
+        # if a prior response exists, then it must be completed (otherwise, we
+        # cannot read this response's header to determine the connection-close
+        # behavior)
+        #
+        # note: if a prior response existed, but was connection-close, then the
+        # socket and response were made independent of this HTTPConnection
+        # object since a new request requires that we open a whole new
+        # connection
+        #
+        # this means the prior response had one of two states:
+        #   1) will_close: this connection was reset and the prior socket and
+        #                  response operate independently
+        #   2) persistent: the response was retained and we await its
+        #                  isclosed() status to become true.
+        #
+        if self._HTTPConnection__state != _CS_REQ_SENT or self._HTTPConnection__response:
+            raise httplib.ResponseNotReady()
+
+        if self.debuglevel > 0:
+            response = self.response_class(self.sock, self.debuglevel,
+                                           strict=self.strict,
+                                           method=self._method)
+        else:
+            response = self.response_class(self.sock, strict=self.strict,
+                                           method=self._method)
+        self.response_fp = response.fp
+        response.begin()
+        assert response.will_close != _UNKNOWN
+        self._HTTPConnection__state = _CS_IDLE
+
+        if response.will_close:
+            # this effectively passes the connection to the response
+            self.close()
+        else:
+            # remember this, so we can tell when it is complete
+            self._HTTPConnection__response = response
+
+        return response
+
+    def close(self):
+        # Oh, Python library, how I hate thee.  All I want to do is be able
+        # to close a socket where the server has not given us an HTTP response.
+        #
+        # DIE!! DIE!!! DIE!!!  YOU DIE, YOU!
+        try:
+            os.close(self.response_fp.fileno())
+        except AttributeError:
+            pass
+        httplib.HTTPConnection.close(self)
+
 # DaapClient class
 #
 # TODO Should check daap status codes - but it's duplicated in the http
@@ -839,6 +898,8 @@ class DaapClient(object):
         self.gzip = gzip
         self.session = None
         self.headers = dict()
+        self.old_revision = self.revision = 1
+        self.supports_update = False
         if self.gzip:
            self.headers['Accept-encoding'] = 'gzip, identity'
 
@@ -847,7 +908,7 @@ class DaapClient(object):
             # NB: This is a third connection in addition to the control
             # and a data connection which may already be running.  I think
             # this sits well with most implementations?
-            tmp_conn = httplib.HTTPConnection(self.host, self.port)
+            tmp_conn = MyHTTPConnection(self.host, self.port)
             tmp_conn.request('GET', self.sessionize('/activity', []))
             self.check_reply(tmp_conn.getresponse(), httplib.NO_CONTENT)
             # If it works, Re-arm the timer
@@ -875,11 +936,18 @@ class DaapClient(object):
         if callback:
             callback(data, *args)
 
+    def handle_server_info(self, data):
+        update = find_daap_tag('msup', decode_response(data))
+        self.supports_update = True if update else False
+
     def handle_login(self, data):
         self.session = find_daap_tag('mlid', decode_response(data))
 
     # Note: in theory there could be multiple DB but in reality there's only
     # one.  So this is a shortcut.
+    #
+    # XXX in theory we may have to handle database being deleted, or new
+    # database being added.
     def handle_db(self, data):
         db_list = find_daap_tag('mlcl', decode_response(data))
         # Just get the first one.
@@ -887,38 +955,55 @@ class DaapClient(object):
         self.db_id = find_daap_tag('miid', db)
         self.db_name = find_daap_tag('minm', db)
 
+    def handle_update(self, data):
+        revision = find_daap_tag('musr', decode_response(data))
+        self.old_revision = self.revision
+        self.revision = revision
+
     def handle_playlist(self, data, meta):
-        listing = find_daap_tag('mlcl', decode_response(data))
+        r = decode_response(data)
+        listing = find_daap_tag('mlcl', r)
+        deleted = find_daap_tag('mudl', r)
         playlist_dict = dict()
+        deleted_list = []
         meta_list = [m.strip() for m in meta.split(',')]
-        for item in find_daap_listitems(listing):
-            playlist_id = find_daap_tag('miid', item)
-            playlist_dict[playlist_id] = dict()
-            for m in meta_list:
-                try:
-                    playlist_dict[playlist_id][m] = find_daap_tag(
+        if listing is not None:
+            for item in find_daap_listitems(listing):
+                playlist_id = find_daap_tag('miid', item)
+                playlist_dict[playlist_id] = dict()
+                for m in meta_list:
+                    try:
+                        playlist_dict[playlist_id][m] = find_daap_tag(
                                                     dmap_consts_rmap[m], item)
-                except KeyError:
-                    continue
-        self.daap_playlists = playlist_dict
+                    except KeyError:
+                        continue
+        if deleted is not None:
+            for item_id in find_daap_listitems(deleted):
+                deleted_list.append(item_id)
+
+        self.daap_playlists = (playlist_dict, deleted_list)
 
     def handle_items(self, data, playlist_id, meta):
-        listing = find_daap_tag('mlcl', decode_response(data))
-        itemdict = dict()
-        if not listing:
-            self.daap_items = dict()    # dummy empty
-            return
+        r = decode_response(data)
+        listing = find_daap_tag('mlcl', r)
+        deleted = find_daap_tag('mudl', r)
         meta_list = [m.strip() for m in meta.split(',')]
-        for item in find_daap_listitems(listing):
-            itemid = find_daap_tag('miid', item)
-            itemdict[itemid] = dict()
-            for m in meta_list:
-                try:
-                    itemdict[itemid][m] = find_daap_tag(
-                                          dmap_consts_rmap[m], item)
-                except KeyError:
-                    continue
-        self.daap_items = itemdict
+        itemdict = dict()
+        deleted_list = []
+        if listing is not None:
+            for item in find_daap_listitems(listing):
+                itemid = find_daap_tag('miid', item)
+                itemdict[itemid] = dict()
+                for m in meta_list:
+                    try:
+                        itemdict[itemid][m] = find_daap_tag(
+                                              dmap_consts_rmap[m], item)
+                    except KeyError:
+                        continue
+        if deleted is not None:
+            for item_id in find_daap_listitems(deleted):
+                deleted_list.append(item_id)
+        self.daap_items = itemdict, deleted_list
 
     def sessionize(self, request, query):
         if not self.session:
@@ -926,19 +1011,22 @@ class DaapClient(object):
         new_request = request + '?session-id=%d' % self.session
         # XXX urllib.quote?
         new_request = '&'.join([new_request] + 
-                               [name + '=' + param for name, param in query])
+                               [name + '=' + str(param) for
+                                name, param in query])
         return new_request
 
     def connect(self):
         try:
-            self.conn = httplib.HTTPConnection(self.host, self.port)
+            self.conn = MyHTTPConnection(self.host, self.port)
             self.conn.request('GET', '/server-info', headers=self.headers)
-            self.check_reply(self.conn.getresponse())            
+            self.check_reply(self.conn.getresponse(),
+                             callback=self.handle_server_info)
             self.conn.request('GET', '/content-codes', headers=self.headers)
             self.check_reply(self.conn.getresponse())
             self.conn.request('GET', '/login', headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_login)
+            self.update()
             # Finally, if this all works, start the heartbeat timer.
             # XXX pick out the daap timeout from the server.
             self.timer = threading.Timer(self.HEARTBEAT,
@@ -954,9 +1042,12 @@ class DaapClient(object):
             return False
 
     # XXX Right now, there is only one db_id.
-    def databases(self):
+    # XXX Right now, can't handle deleted database listing (I don't think that
+    # ever happens.)
+    def databases(self, update=False):
         try:
-            self.conn.request('GET', self.sessionize('/databases', []),
+            revquery = self.revision_query(update)
+            self.conn.request('GET', self.sessionize('/databases', revquery),
                               headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_db)
@@ -969,11 +1060,40 @@ class DaapClient(object):
             self.disconnect()
             return None
 
-    def playlists(self, meta=DEFAULT_DAAP_PLAYLIST_META):
+    def revision_query(self, update):
+        if not self.supports_update:
+            return []
+        query = [('revision-number', self.revision)]
+        if update:
+            query += [('delta', self.old_revision)]
+        return query
+
+    def update(self):
+        if not self.supports_update:
+            return
         try:
+            # Setting True/False here is not very relevant, since delta is not
+            # used.
+            #
+            # NOTE: iTunes uses a revision-number= but no delta= on first go,
+            # all subsequent ones have revision-number= and delta= set to be
+            # the same number.
+            revquery = self.revision_query(False)
+            self.conn.request('GET', self.sessionize('/update', revquery),
+                              headers=self.headers)
+            self.check_reply(self.conn.getresponse(),
+                             callback=self.handle_update)
+        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+            self.disconnect()
+            return None
+
+    def playlists(self, meta=DEFAULT_DAAP_PLAYLIST_META, update=False):
+        try:
+            revquery = self.revision_query(update)
             self.conn.request('GET', self.sessionize(
                               '/databases/%d/containers' % self.db_id,
-                              [('meta', meta)]), headers=self.headers)
+                              [('meta', meta)] + revquery),
+                              headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_playlist,
                              args=[meta])
@@ -991,17 +1111,18 @@ class DaapClient(object):
     # XXX: I think this could be cleaner, maybe abstract to have an
     # easy way to provide the daap meta without resorting to providing
     # the raw string which includes the names requested.
-    def items(self, playlist_id=None, meta=DEFAULT_DAAP_META):
+    def items(self, playlist_id=None, meta=DEFAULT_DAAP_META, update=False):
         try:
+            query = self.revision_query(update) + [('meta', meta)]
             if playlist_id is None:
                 self.conn.request('GET', self.sessionize(
                     '/databases/%d/items' % self.db_id,
-                    [('meta', meta)]), headers=self.headers)
+                    query), headers=self.headers)
             else:
                 self.conn.request('GET', self.sessionize(
                     ('/databases/%d/containers/%d/items' % 
                      (self.db_id, playlist_id)),
-                    [('meta', meta)]), headers=self.headers)
+                    query), headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_items,
                              args=[playlist_id, meta])
@@ -1020,11 +1141,13 @@ class DaapClient(object):
             self.disconnect()
             return None
 
-    def disconnect(self, polite=False):
+    def disconnect(self):
         try:
             self.timer.cancel()
-            if polite:
-                self.conn.request('GET', self.sessionize('/logout', []))
+            # Don't use - you are just making life difficult for yourself to
+            # nuke the existing connection ...
+            #if polite:
+            #    self.conn.request('GET', self.sessionize('/logout', []))
         # Don't care since we are going away anyway.
         except (socket.error, ValueError, httplib.ResponseNotReady,
                 httplib.BadStatusLine, AttributeError, IOError):

@@ -284,6 +284,7 @@ class SharingTracker(object):
 
     def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
+            logging.debug('SUCCESS!!')
             if self.available_shares.has_key(share_id):
                 info = self.available_shares[share_id]
             else:
@@ -296,6 +297,7 @@ class SharingTracker(object):
             messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
         def failure(unused):
+            logging.debug('FAILURE')
             if self.available_shares.has_key(share_id):
                 info = self.available_shares[share_id]
             else:
@@ -555,6 +557,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     """
     type = u'sharing'
     def __init__(self, share):
+        signals.SignalEmitter.__init__(self)
+        for sig in 'added', 'changed', 'removed':
+            self.create_signal(sig)
         self.client = None
         self.share = share
         self.items = dict()
@@ -564,13 +569,48 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.share.is_updating = True
         message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
-        eventloop.call_in_thread(self.client_connect_callback,
-                                 self.client_connect_error_callback,
-                                 self.client_connect,
-                                 'DAAP client connect')
-        signals.SignalEmitter.__init__(self)
-        for sig in 'added', 'changed', 'removed':
-            self.create_signal(sig)
+        name = self.share.name
+        host = self.share.host
+        port = self.share.port
+        title = 'Sharing Client %s @ (%s, %s)' % (name, host, port)
+        self.thread = threading.Thread(target=self.runloop,
+                                       name=title)
+        self.thread.daemon = True
+        self.thread.start()
+
+    def run(self, func, success, failure):
+        succeeded = False
+        try:
+            result = func()
+        except KeyboardInterrupt:
+            raise
+        except Exception, e:
+                logging.debug('>>> Exception %s %s', self.thread.name,
+                              ''.join(traceback.format_exc()))
+                func = failure
+                name = 'error callback (%s)' % self.thread.name
+                args = (e,)
+        else:
+                func = success
+                name = 'result callback (%s)' % self.thread.name
+                args = (result,)
+                succeeded = True
+        eventloop.add_idle(func, name, args=args)
+        return succeeded
+
+    def runloop(self):
+        success = self.run(self.client_connect, self.client_connect_callback,
+                           self.client_connect_error_callback)
+        # If server does not support update, then we short circuit since
+        # the loop becomes useless.  There is nothing wait for being updated.
+        logging.debug('UPDATE SUPPORTED = %s', self.client.supports_update)
+        if not success or not self.client.supports_update:
+            return
+        while True:
+            success = self.run(self.client_update, self.client_update_callback,
+                               self.client_update_error_callback)
+            if not success:
+                break
 
     def sharing_item(self, rawitem):
         kwargs = dict()
@@ -652,9 +692,27 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Lousy Windows and Python API.
         address, port = self.client.conn.sock.getpeername()
         self.address = address
-        if not self.client.databases():
+        return self.setup_items()
+
+    # See use of self.client in client_update().
+    def setup_items(self, update=False):
+        name = self.share.name
+        host = self.share.host
+        port = self.share.port
+        try:
+            client = self.client
+        except AttributeError:
+            # Doesn't matter what exception it is, just raise to call error
+            # callback
+            raise
+
+        # From this point on ... if use of client is invalid (because socket
+        # is closed or something it should raise an error and we can bail
+        # out that way, and call the error callback.
+        if not client.databases(update=update):
             raise IOError('Cannot get database')
-        playlists = self.client.playlists()
+        deleted_items = dict()
+        playlists, deleted_playlists = client.playlists(update=update)
         if playlists is None:
             raise IOError('Cannot get playlist')
         returned_playlists = []
@@ -669,8 +727,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             if playlists[k].has_key('daap.baseplaylist'):
                 is_base_playlist = playlists[k]['daap.baseplaylist']
             if is_base_playlist:
-                if self.base_playlist:
+                if not update and self.base_playlist:
                     logging.debug('WARNING: more than one base playlist found')
+                if update and self.base_playlist != k:
+                    logging.debug('WARNING: base playlistid changed in update')
                 self.base_playlist = k
             # This isn't the playlist id of the remote share, this is the
             # playlist id we use internally.
@@ -694,31 +754,36 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         audio_playlist_id = unicode(md5(repr((name,
                                               host,
                                               port, u'audio'))).hexdigest())
-        video_info = messages.SharingInfo(video_playlist_id,
-                                          u'video',
-                                          host,
-                                          port,
-                                          parent_id=self.share.id,
-                                          playlist_id=u'video')
-        audio_info = messages.SharingInfo(audio_playlist_id,
-                                          u'audio',
-                                          host,
-                                          port,
-                                          parent_id=self.share.id,
-                                          playlist_id=u'audio')
-        # Place this stuff at the front
-        returned_playlists.insert(0, audio_info)
-        returned_playlists.insert(0, video_info)
+
+        # These are fake: so we only want to insert these once.
+        if not update:
+            video_info = messages.SharingInfo(video_playlist_id,
+                                              u'video',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'video')
+            audio_info = messages.SharingInfo(audio_playlist_id,
+                                              u'audio',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'audio')
+            # Place this stuff at the front
+            returned_playlists.insert(0, audio_info)
+            returned_playlists.insert(0, video_info)
 
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken?
         if not self.base_playlist:
             raise ValueError('Cannot find base playlist')
 
-        items = self.client.items(playlist_id=self.base_playlist,
-                                  meta=DAAP_META)
+        items, deleted = client.items(playlist_id=self.base_playlist,
+                                  meta=DAAP_META, update=update)
         if items is None:
             raise ValueError('Cannot find items in base playlist')
+
+        deleted_items[self.base_playlist] = deleted
 
         itemdict = dict()
         returned_playlist_items = dict()
@@ -756,9 +821,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 continue
             returned_items = []
             returned_items_meth = returned_items.append
-            items = self.client.items(playlist_id=k, meta=DAAP_META)
+            items, deleted = client.items(playlist_id=k, meta=DAAP_META,
+                                               update=update)
             if items is None:
                 raise ValueError('Cannot find items for playlist %d' % k)
+            deleted_items[k] = deleted
             for itemkey in items.keys():
                 item = itemdict[itemkey]
                 returned_items_meth(item)
@@ -766,17 +833,132 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
-        return (returned_playlist_items, returned_playlists)
+        return (returned_playlist_items, returned_playlists,
+                deleted_playlists, deleted_items)
+
+    # If we are disconnecting, then, disconnect() sets the self.client
+    # to None before actually running the client.disconnect() routine.
+    # So, usage of self.client should be:
+    #
+    # try:
+    #    client = self.client
+    # except AttributeError:
+    #    # Handle error here.
+    #    pass
+    # else:
+    #     client.blah()
+    def client_update(self):
+        logging.debug('CLIENT UPDATE')
+        try:
+            client = self.client
+        except AttributeError:
+            # Doesn't matter what exception it is, just raise to call error
+            # callback
+            raise
+        client.update()
+        return self.setup_items(update=True)
+
+    def client_update_callback(self, args):
+        logging.debug('CLIENT UPDATE CALLBACK')
+        deleted = []
+        changed = []
+        added = []
+        (returned_items, returned_playlists,
+         deleted_playlists, deleted_items) = args
+
+        # Do the playlists first.  So when when we add items, it will
+        # Just Work.
+        playlist_dict = dict()
+        # XXX
+        for p in returned_playlists:
+            playlist_dict[p.playlist_id] = p
+        to_remove = []
+        playlist_ids = [p.playlist_id for p in self.playlists]
+        for p in self.playlists:
+            if p.playlist_id in deleted_playlists:
+                if not p.playlist_id in playlist_dict:
+                    deleted.append(p.id)
+                else:
+                    logging.debug('client update: weird server playlist id %s '
+                                  'in deleted and item list at the same time',
+                                  p.playlist_id)
+            if p.playlist_id in playlist_dict:
+                changed.append(playlist_dict[p.playlist_id])
+                to_remove.append(p)
+        added = [playlist_dict[p] for p in playlist_dict if p not in
+                 playlist_ids]
+        for p in to_remove:
+            self.playlists.remove(p)
+            # Only remove it if it's really going!
+            changed_ids = [p.playlist_id for p in changed]
+            if not p.playlist_id in changed_ids:
+                del self.items[p.playlist_id]
+        # Make sure that when we add something it is accessible.
+        for p in added:
+            self.items[p.playlist_id] = []
+        self.playlists += added
+        self.playlists += changed
+
+        for k in deleted_items:
+            item_ids = deleted_items[k]
+            try:
+                playlist_items = self.items[k]
+            except KeyError:
+                # Huh what?  Sent us something that we don't have anymore.
+                logging.debug('Playlist %s already deleted', k)
+                continue
+            to_remove = []
+            for item_id in item_ids:
+                for item in playlist_items:
+                    if item.id != item_id:
+                        continue
+                    to_remove.append(item)
+                    self.emit('removed', k, item)
+                    break
+            for r in to_remove:
+                playlist_items.remove(r)
+
+        for k in returned_items:
+            candidates = returned_items[k]
+            try:
+                playlist_items = self.items[k]
+            except KeyError:
+                logging.debug('CANNOT ACCESS self.items[%s]', k)
+                raise
+            to_remove = []
+            to_add = []
+            for candidate in candidates:
+                for item in playlist_items:
+                    if candidate.id == item.id:
+                        self.emit('changed', k, candidate)
+                        to_remove.append(item)
+                        to_add.append(candidate)
+                        break
+                else:
+                    self.emit('added', k, candidate)
+                    to_add.append(candidate)
+            for r in to_remove:
+                playlist_items.remove(r)
+            playlist_items += to_add
+
+        # Finally, update the tabs.
+        message = messages.TabsChanged('connect', added, changed, deleted)
+        message.send_to_frontend()
+
+    def client_update_error_callback(self, unused):
+        self.client_connect_update_error_callback(unused)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, args):
-        returned_items, returned_playlists = args
+        # Just ignore any deleted items on first connect - they shouldn't
+        # be there.
+        returned_items, returned_playlists, _, _ = args
         self.items = returned_items
         self.playlists = returned_playlists
         # Send a list of all the items to the main sharing tab.  Only add
         # those that are part of the base playlist.
         for item in self.items[self.base_playlist]:
-            self.emit('added', item)
+            self.emit('added', None, item)
         # Once all the items are added then send display mounted and remove
         # the progress indicator.
         self.share.mount = True
@@ -786,7 +968,15 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         message.send_to_frontend()
 
     def client_connect_error_callback(self, unused):
+        self.client_connect_update_error_callback(unused)
+
+    def client_connect_update_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
+        # Non atomic test-and-do check ok - always in eventloop.
+        if self.client is None:
+            # someone already did handy-work for us - probably a disconnect
+            # happened while we were in the middle of an update().
+            return
         self.share.is_updating = False
         message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()

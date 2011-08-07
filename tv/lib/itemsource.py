@@ -464,15 +464,20 @@ class SharingItemSource(ItemSource):
         else:
             return obj
 
-    def _on_tracker_added(self, tracker, item):
-        self.emit("added", self._ensure_info(item))
+    def _on_tracker_added(self, tracker, playlist, item):
+        if self.playlist_id == playlist:
+            self.emit("added", self._ensure_info(item))
 
-    def _on_tracker_changed(self, tracker, item):
-        self.emit("changed", self._ensure_info(item))
+    def _on_tracker_changed(self, tracker, playlist, item):
+        if self.playlist_id == playlist:
+            self.emit("changed", self._ensure_info(item))
 
-    def _on_tracker_removed(self, tracker, item):
-        del self.info_cache[item.id]
-        self.emit("removed", item.id)
+    def _on_tracker_removed(self, tracker, playlist, item):
+        # Only nuke if we are removing the item from the library.
+        if playlist == None:
+            del self.info_cache[item.id]
+        if playlist == self.playlist_id:
+            self.emit("removed", item.id)
 
     def fetch_all(self):
         # Always call _ensure_info() on the item when fetching.
