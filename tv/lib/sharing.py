@@ -832,7 +832,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_update(self):
         logging.debug('CLIENT UPDATE')
         self.client.update()
-        logging.debug('CLIENT UPDATE - RETURN')
+        logging.debug('CLIENT UPDATE - RETURN - FIXME')
+        # NB: Need to ensure that the disconnect does not happen while this is
+        # also happening
         return self.setup_items(update=True)
 
     def client_update_callback(self, args):
@@ -842,6 +844,45 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         added = []
         (returned_items, returned_playlists,
          deleted_playlists, deleted_items) = args
+        logging.debug('UPDATE CALLBACK: DELETED MEDIA %s', deleted_items)
+        for k in deleted_items:
+            item_ids = deleted_items[k]
+            playlist_items = self.items[k]
+            to_remove = []
+            for item_id in item_ids:
+                for item in playlist_items:
+                    if item.id != item_id:
+                        continue
+                    logging.debug('REMOVING: item %s on playlist %s',
+                        item.id, k)
+                    to_remove.append(item)
+                    self.emit('removed', k, item)
+                    break
+            for r in to_remove:
+                playlist_items.remove(r)
+
+        logging.debug('UPDATE CALLBACK: RETURNED MEDIA %s', returned_items)
+        for k in returned_items:
+            candidates = returned_items[k]
+            playlist_items = self.items[k]
+            to_remove = []
+            to_add = []
+            for candidate in candidates:
+                for item in playlist_items:
+                    if candidate.id == item.id:
+                        logging.debug('EMIT CHANGED ON item %s @ playlist %s',
+                                      item.id, k)
+                        self.emit('changed', k, candidate)
+                        to_remove.append(item)
+                        to_add.append(candidate)
+                        break
+                else:
+                    self.emit('added', k, candidate)
+                    to_add.append(candidate)
+            for r in to_remove:
+                playlist_items.remove(r)
+            playlist_items += to_add
+
         playlist_dict = dict()
         # XXX
         for p in returned_playlists:
@@ -884,7 +925,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Send a list of all the items to the main sharing tab.  Only add
         # those that are part of the base playlist.
         for item in self.items[self.base_playlist]:
-            self.emit('added', item)
+            self.emit('added', None, item)
         # Once all the items are added then send display mounted and remove
         # the progress indicator.
         self.share.mount = True
