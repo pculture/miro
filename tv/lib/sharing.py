@@ -869,6 +869,15 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                  playlist_ids]
         for p in to_remove:
             self.playlists.remove(p)
+            # Only remove it if it's really going!
+            changed_ids = [p.playlist_id for p in changed]
+            if not p.playlist_id in changed_ids:
+                logging.debug('REMOVING PLAYLIST %s', p.playlist_id)
+                del self.items[p.playlist_id]
+        # Make sure that when we add something it is accessible.
+        for p in added:
+            logging.debug('ADDING PLAYLIST %s', p.playlist_id)
+            self.items[p.playlist_id] = []
         self.playlists += added
         self.playlists += changed
 
@@ -896,7 +905,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         logging.debug('UPDATE CALLBACK: RETURNED MEDIA %s', returned_items)
         for k in returned_items:
             candidates = returned_items[k]
-            playlist_items = self.items[k]
+            try:
+                playlist_items = self.items[k]
+            except KeyError:
+                logging.debug('CANNOT ACCESS self.items[%s]', k)
+                raise
             to_remove = []
             to_add = []
             for candidate in candidates:
