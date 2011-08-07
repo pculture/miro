@@ -604,9 +604,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                            self.client_connect_error_callback)
         # If server does not support update, then we short circuit since
         # the loop becomes useless.  There is nothing wait for being updated.
-        # 
-        # XXX SHORTCIRCUIT for now, till we implement the update logic.
-        # return
         logging.debug('UPDATE SUPPORTED = %s', self.client.supports_update)
         if not success or not self.client.supports_update:
             return
@@ -869,7 +866,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         added = []
         (returned_items, returned_playlists,
          deleted_playlists, deleted_items) = args
-        logging.debug('UPDATE CALLBACK: DELETED MEDIA %s', deleted_items)
 
         # Do the playlists first.  So when when we add items, it will
         # Just Work.
@@ -897,11 +893,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             # Only remove it if it's really going!
             changed_ids = [p.playlist_id for p in changed]
             if not p.playlist_id in changed_ids:
-                logging.debug('REMOVING PLAYLIST %s', p.playlist_id)
                 del self.items[p.playlist_id]
         # Make sure that when we add something it is accessible.
         for p in added:
-            logging.debug('ADDING PLAYLIST %s', p.playlist_id)
             self.items[p.playlist_id] = []
         self.playlists += added
         self.playlists += changed
@@ -919,15 +913,12 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 for item in playlist_items:
                     if item.id != item_id:
                         continue
-                    logging.debug('REMOVING: item %s on playlist %s',
-                        item.id, k)
                     to_remove.append(item)
                     self.emit('removed', k, item)
                     break
             for r in to_remove:
                 playlist_items.remove(r)
 
-        logging.debug('UPDATE CALLBACK: RETURNED MEDIA %s', returned_items)
         for k in returned_items:
             candidates = returned_items[k]
             try:
@@ -940,8 +931,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             for candidate in candidates:
                 for item in playlist_items:
                     if candidate.id == item.id:
-                        logging.debug('EMIT CHANGED ON item %s @ playlist %s',
-                                      item.id, k)
                         self.emit('changed', k, candidate)
                         to_remove.append(item)
                         to_add.append(candidate)

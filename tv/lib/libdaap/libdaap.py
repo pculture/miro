@@ -592,8 +592,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         ('mrco', nfiles),    # Returned count
                         ('mlcl', itemlist)
                   ]
-        if update:
-            import logging; logging.debug('UPDATE: nfiles %s backend_id %s item %s', nfiles, backend_id, itemlist)
         if deleted:
             content.append(('mudl', deleted))    # Itemlist deleted
 
