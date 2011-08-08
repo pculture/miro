@@ -1394,6 +1394,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             if (item and item.remote and
               item.host == host and item.port == port):
                 app.playback_manager.stop()
+        logging.debug('SHARING DISAPPEARED')
         message = messages.TabsChanged('connect', [], [], [share.id])
         typ, selected_tabs = app.tabs.selection
         if typ == u'connect' and share in selected_tabs:
