@@ -273,6 +273,8 @@ class ConnectTab(widgetset.VBox):
         hbox.pack_start(widgetutil.align_top(self.share_audio_cbx))
         prefpanel.attach_boolean(self.share_audio_cbx, prefs.SHARE_AUDIO)
         prefpanel.attach_boolean(self.share_video_cbx, prefs.SHARE_VIDEO)
+        prefpanel.attach_boolean(self.share_warnonquit_cbx,
+                                 prefs.SHARE_WARN_ON_QUIT)
         vbox.pack_start(hbox)
 
         label = widgetset.Label(
