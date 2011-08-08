@@ -499,9 +499,13 @@ class SharingTracker(object):
         self.thread.start()
 
     def eject(self, share_id):
-        tracker = self.trackers[share_id]
-        del self.trackers[share_id]
-        tracker.client_disconnect()
+        try:
+            tracker = self.trackers[share_id]
+        except KeyError:
+            pass
+        else:
+            del self.trackers[share_id]
+            tracker.client_disconnect()
 
     def get_tracker(self, share_id):
         try:
@@ -663,17 +667,21 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         client = self.client
         self.client = None
         playlist_ids = [playlist_.id for playlist_ in self.playlists]
-        message = messages.TabsChanged('connect', [], [], playlist_ids)
-        message.send_to_frontend()
         eventloop.call_in_thread(self.client_disconnect_callback,
                                  self.client_disconnect_error_callback,
                                  client.disconnect,
                                  'DAAP client connect')
 
     def client_disconnect_error_callback(self, unused):
+        playlist_ids = [playlist_.id for playlist_ in self.playlists]
+        message = messages.TabsChanged('connect', [], [], playlist_ids)
+        message.send_to_frontend()
         pass
 
     def client_disconnect_callback(self, unused):
+        playlist_ids = [playlist_.id for playlist_ in self.playlists]
+        message = messages.TabsChanged('connect', [], [], playlist_ids)
+        message.send_to_frontend()
         pass
 
     def client_connect(self):
@@ -946,7 +954,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         message.send_to_frontend()
 
     def client_update_error_callback(self, unused):
-        self.client_connect_update_error_callback(unused)
+        self.client_connect_update_error_callback(unused, update=True)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, args):
@@ -970,17 +978,19 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_connect_error_callback(self, unused):
         self.client_connect_update_error_callback(unused)
 
-    def client_connect_update_error_callback(self, unused):
+    def client_connect_update_error_callback(self, unused, update=False):
         # If it didn't work, immediately disconnect ourselves.
         # Non atomic test-and-do check ok - always in eventloop.
         if self.client is None:
             # someone already did handy-work for us - probably a disconnect
             # happened while we were in the middle of an update().
             return
-        self.share.is_updating = False
-        message = messages.TabsChanged('connect', [], [self.share], [])
-        message.send_to_frontend()
-        app.sharing_tracker.eject(self.share.id)
+        if not update:
+            self.share.is_updating = False
+            message = messages.TabsChanged('connect', [], [self.share], [])
+            message.send_to_frontend()
+        if not self.share.stale_callback:
+            app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
     def get_items(self, playlist_id=None):
