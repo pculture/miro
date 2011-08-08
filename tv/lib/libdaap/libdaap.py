@@ -359,7 +359,8 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             return (DAAP_BADREQUEST, [], [])
         if not session:
             return (DAAP_FORBIDDEN, [], [])
-        revision = self.server.backend.get_revision(session, old_revision)
+        revision = self.server.backend.get_revision(session, old_revision,
+                                                    self.request)
         reply = []
         reply.append(('mupd', [('mstt', DAAP_OK), ('musr', revision)]))
         return (DAAP_OK, reply, [])

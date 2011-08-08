@@ -1269,9 +1269,27 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
 
-    def get_revision(self, session, old_revision):
+    def watcher(self, session, request):
+        while True:
+            try:
+                r, w, x = select.select([request], [], [])
+                # Unlock the revision by bumping it
+                with self.item_lock:
+                    logging.debug('WAKEUP %s', session)
+                    self.update_revision(directed=session)
+                break
+            except select.error, (err, errstring):
+                if err == errno.EINTR:
+                    continue
+            except StandardError, err:
+                raise ValueError('watcher: unknown error during select')
+
+    def get_revision(self, session, old_revision, request):
         self.revision_cv.acquire()
         while self.revision == old_revision:
+            t = threading.Thread(target=self.watcher, args=(session, request))
+            t.daemon = True
+            t.start()
             self.revision_cv.wait()
             # If we really did a update or if the wakeup was directed at us
             # (because we are quitting or something) then release the lock
@@ -1509,9 +1527,6 @@ class SharingManagerBackend(object):
                 self.transcode[session].shutdown()
             except KeyError:
                 pass
-        # Unlock the revision by bumping it
-        with self.item_lock:
-            self.update_revision(directed=session)
 
     def shutdown(self):
         # Set the in_shutdown flag inside the transcode lock to ensure that
