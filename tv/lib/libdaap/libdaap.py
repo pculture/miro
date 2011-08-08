@@ -1053,10 +1053,8 @@ class DaapClient(object):
                              callback=self.handle_db)
             return self.db_id
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
-            self.disconnect()
-            return None
-        except httplib.BadStatusLine:
+        except (AttributeError, socket.error, IOError, ValueError,
+                httplib.BadStatusLine):
             self.disconnect()
             return None
 
@@ -1083,7 +1081,8 @@ class DaapClient(object):
                               headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_update)
-        except (httplib.BadStatusLine, socket.error, IOError, ValueError):
+        except (AttributeError, httplib.BadStatusLine, socket.error,
+                IOError, ValueError):
             self.disconnect()
             return None
 
@@ -1101,10 +1100,8 @@ class DaapClient(object):
             del self.daap_playlists
             return playlists
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
-            self.disconnect()
-            return None
-        except httplib.BadStatusLine:
+        except (AttributeError, socket.error, IOError, ValueError,
+                httplib.BadStatusLine):
             self.disconnect()
             return None
 
@@ -1130,14 +1127,8 @@ class DaapClient(object):
             del self.daap_items
             return items
         # We've been disconnected or there was a problem?
-        except (socket.error, IOError, ValueError):
-            typ, value, tb = sys.exc_info()
-            print 'items: typ = %s value = %s' % (str(typ), str(value))
-            for line in traceback.format_tb(tb):
-                print line
-            self.disconnect()
-            return None
-        except httplib.BadStatusLine:
+        except (AttributeError, socket.error, IOError, ValueError,
+                httplib.BadStatusLine):
             self.disconnect()
             return None
 
