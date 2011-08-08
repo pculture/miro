@@ -813,66 +813,6 @@ def make_daap_server(backend, debug=False, name='pydaap', port=DEFAULT_PORT,
 
 ###############################################################################
 
-# Helper overrides
-class MyHTTPConnection(httplib.HTTPConnection):
-    def getresponse(self):
-        "Get the response from the server."
-
-        # if a prior response has been completed, then forget about it.
-        if self._HTTPConnection__response and self._HTTPConnection__response.isclosed():
-            self._HTTPConnection__response = None
-
-        #
-        # if a prior response exists, then it must be completed (otherwise, we
-        # cannot read this response's header to determine the connection-close
-        # behavior)
-        #
-        # note: if a prior response existed, but was connection-close, then the
-        # socket and response were made independent of this HTTPConnection
-        # object since a new request requires that we open a whole new
-        # connection
-        #
-        # this means the prior response had one of two states:
-        #   1) will_close: this connection was reset and the prior socket and
-        #                  response operate independently
-        #   2) persistent: the response was retained and we await its
-        #                  isclosed() status to become true.
-        #
-        if self._HTTPConnection__state != _CS_REQ_SENT or self._HTTPConnection__response:
-            raise httplib.ResponseNotReady()
-
-        if self.debuglevel > 0:
-            response = self.response_class(self.sock, self.debuglevel,
-                                           strict=self.strict,
-                                           method=self._method)
-        else:
-            response = self.response_class(self.sock, strict=self.strict,
-                                           method=self._method)
-        self.response_fp = response.fp
-        response.begin()
-        assert response.will_close != _UNKNOWN
-        self._HTTPConnection__state = _CS_IDLE
-
-        if response.will_close:
-            # this effectively passes the connection to the response
-            self.close()
-        else:
-            # remember this, so we can tell when it is complete
-            self._HTTPConnection__response = response
-
-        return response
-
-    def close(self):
-        # Oh, Python library, how I hate thee.  All I want to do is be able
-        # to close a socket where the server has not given us an HTTP response.
-        #
-        # DIE!! DIE!!! DIE!!!  YOU DIE, YOU!
-        try:
-            os.close(self.response_fp.fileno())
-        except AttributeError:
-            pass
-        httplib.HTTPConnection.close(self)
-
 # DaapClient class
 #
 # TODO Should check daap status codes - but it's duplicated in the http
@@ -906,7 +846,7 @@ class DaapClient(object):
             # NB: This is a third connection in addition to the control
             # and a data connection which may already be running.  I think
             # this sits well with most implementations?
-            tmp_conn = MyHTTPConnection(self.host, self.port)
+            tmp_conn = httplib.HTTPConnection(self.host, self.port)
             tmp_conn.request('GET', self.sessionize('/activity', []))
             self.check_reply(tmp_conn.getresponse(), httplib.NO_CONTENT)
             # If it works, Re-arm the timer
@@ -1015,7 +955,7 @@ class DaapClient(object):
 
     def connect(self):
         try:
-            self.conn = MyHTTPConnection(self.host, self.port)
+            self.conn = httplib.HTTPConnection(self.host, self.port)
             self.conn.request('GET', '/server-info', headers=self.headers)
             self.check_reply(self.conn.getresponse(),
                              callback=self.handle_server_info)
@@ -1146,8 +1086,10 @@ class DaapClient(object):
             # block doesn't raise exception but just prints it out.
             self.session = None
             if self.conn:
-                self.conn.close()
+                conn = self.conn
                 self.conn = None
+                conn.sock.shutdown(socket.SHUT_RDWR)
+                conn.close()
 
     def daap_get_file_request(self, file_id, enclosure=None):
         """daap_file_get_url(file_id) -> url
