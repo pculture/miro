@@ -687,8 +687,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                            content_encoding=content_encoding)
         if endconn:
             self.wfile.close()
-        else:
-            self.do_send_reply(rcode, reply, extra_headers=extra_headers)
 
     def reply_encoding(self):
         supported = ['gzip']
