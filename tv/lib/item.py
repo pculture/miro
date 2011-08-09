@@ -1470,9 +1470,19 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         use that to upate our title.  If this is not a torrent, or there's an
         error downloading the file, then nothing will change
         """
-        httpclient.grab_url(self.get_url(),
+        self._update_title_from_torrent_client = httpclient.grab_url(
+                self.get_url(),
                 self._update_title_from_torrent_callback,
-                self._update_title_from_torrent_errback)
+                self._update_title_from_torrent_errback,
+                header_callback=self._update_title_from_torrent_headers)
+
+    def _update_title_from_torrent_headers(self, info):
+        if info['content-type'] != u'application/x-bittorrent':
+            logging.warn("wrong content-type %s in "
+                "update_title_from_torrent()", info['content-type'])
+            # data doesn't seem like a torrent, cancel the request
+            self._update_title_from_torrent_client.cancel()
+            self._update_title_from_torrent_client = None
 
     def _update_title_from_torrent_callback(self, info):
         try:
@@ -1481,10 +1491,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             logging.exception("Error setting torrent name")
         else:
             self.signal_change()
+        self._update_title_from_torrent_client = None
 
     def _update_title_from_torrent_errback(self, error):
         logging.warn("Error downloading torrent metainfo in "
                 "update_title_from_torrent(): %s", error)
+        self._update_title_from_torrent_client = None
 
     def is_transferring(self):
         return (self.downloader

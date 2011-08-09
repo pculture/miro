@@ -241,10 +241,15 @@ def get_name_from_torrent_metadata(metadata):
     :returns: torrent name unicode string
     :raises ValueError: metadata was not formatted properly
     """
+    metadata_dict = libtorrent.bdecode(metadata)
+    if metadata_dict is None:
+        raise ValueError("metadata is not bencoded")
     try:
-        return libtorrent.bdecode(metadata)['info']['name'].decode('utf-8')
+        return metadata_dict['info']['name'].decode('utf-8')
     except KeyError, e:
         raise ValueError("key missing when reading metadata: %s", e)
+    except UnicodeError:
+        raise ValueError("torrent name is not valid utf-8")
 
 def gather_media_files(path):
     """Gather media files on the disk in a directory tree.
