@@ -171,21 +171,10 @@ class ItemContextMenuHandler(object):
                 menu_sections.append(section)
                 section = []
 
-            # Edit Item Details, Delete, Resume/Stop Seeding
-            # this doesn't work for device or remote items.
             if not (item.device or item.remote):
                 section.append((
                         _("Edit Item Details"), app.widgetapp.edit_items))
 
-            if not (item.device or item.remote):
-                if item.seeding_status == 'seeding':
-                    section.append((
-                            _('Stop Seeding'),
-                            messages.StopUpload(item.id).send_to_backend))
-                elif item.seeding_status == 'stopped':
-                    section.append((
-                            _('Resume Seeding'),
-                            messages.StartUpload(item.id).send_to_backend))
                 if not item.is_container_item:
                     section.append((
                             _('Add to Playlist'),
@@ -230,6 +219,15 @@ class ItemContextMenuHandler(object):
             else:
                 # Play
                 section.append((_('Play'), app.widgetapp.play_selection))
+
+        if item.seeding_status == 'seeding':
+            section.append((
+                    _('Stop Seeding'),
+                    messages.StopUpload(item.id).send_to_backend))
+        elif item.seeding_status == 'stopped':
+            section.append((
+                    _('Resume Seeding'),
+                    messages.StartUpload(item.id).send_to_backend))
 
         if item.downloaded and not item.remote:
             if file_navigator_name:
