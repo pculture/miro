@@ -1009,11 +1009,11 @@ class ItemListController(object):
 
     def no_longer_displayed(self):
         if self._got_initial_list:
-            # rember our selection, but only if we had a chance to call
-            # restore_selection() on the initial item list.
+            # rember our selection, and scroll position, but only if we had a
+            # chance to call restore_selection() on the initial item list.
             self.save_selection()
+            self.save_scroll_positions()
         self.save_columns()
-        self.save_scroll_positions()
 
     def no_longer_primary(self):
         """This is no longer the primary item_list_controller; another has been
