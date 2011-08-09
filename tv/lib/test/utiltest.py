@@ -175,6 +175,16 @@ class UtilTest(unittest.TestCase):
         # input, handleerror, expected output if handlerror is None,
         # then it isn't passed in as an argument
 
+        class GoodStringObject(object):
+            """Object whose __str__ method returns an ASCII string."""
+            def __str__(self):
+                return "abc"
+
+        class BadStringObject(object):
+            """Object whose __str__ method returns a non-ASCII string."""
+            def __str__(self):
+                return "abc\xe4"
+
         for i, h, o in [
             ( "", None, ""),
             ( "abc", None, "abc"),
@@ -182,7 +192,13 @@ class UtilTest(unittest.TestCase):
             ( 5.5, None, "5.5"),
             ( u"abc", None, "abc"),
             ( u"abc\xe4", None, "abc&#228;"),
-            ( u"abc\xe4", "replace", "abc?")
+            ( u"abc\xe4", "replace", "abc?"),
+            # test that bytestrings are converted to plain ASCII
+            ( "abc", None, "abc"),
+            ( "abc\xe4", None, "abc\\xe4"),
+            # test that objects are converted to plain ASCII
+            ( GoodStringObject(), None, "abc"),
+            ( BadStringObject(), None, "abc\\xe4"),
             ]:
 
             if h == None:

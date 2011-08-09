@@ -557,7 +557,7 @@ def unicodify(data):
         data = data.decode('ascii', 'replace')
     return data
 
-def stringify(unicode_str, handleerror="xmlcharrefreplace"):
+def stringify(stringobj, handleerror="xmlcharrefreplace"):
     """Takes a possibly unicode string and converts it to a string
     string.  This is required for some logging especially where the
     things being logged are filenames which can be Unicode in the
@@ -574,11 +574,14 @@ def stringify(unicode_str, handleerror="xmlcharrefreplace"):
 
        This is not the inverse of unicodify!
     """
-    if isinstance(unicode_str, unicode):
-        return unicode_str.encode("ascii", handleerror)
-    if not isinstance(unicode_str, str):
-        return str(unicode_str)
-    return unicode_str
+    if isinstance(stringobj, unicode):
+        return stringobj.encode("ascii", handleerror)
+    if isinstance(stringobj, str):
+        # make sure bytestrings are ASCII
+         return stringobj.encode('string_escape')
+    else:
+        # convert objects to strings, then ensure they are ASCII
+        return stringify(str(stringobj))
 
 def quote_unicode_url(url):
     """Quote international characters contained in a URL according to
