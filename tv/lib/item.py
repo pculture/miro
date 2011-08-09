@@ -52,6 +52,7 @@ from miro.database import (DDBObject, ObjectNotFoundError,
                            DatabaseConstraintError)
 from miro.databasehelper import make_simple_get_set
 from miro import app
+from miro import httpclient
 from miro import iconcache
 from miro import databaselog
 from miro import downloader
@@ -1299,6 +1300,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             self.pendingManualDL = True
             self.pendingReason = _("queued for download")
             self.signal_change()
+            if self.looks_like_torrent():
+                self.update_title_from_torrent()
             return
         else:
             self.set_auto_downloaded(autodl)
@@ -1459,6 +1462,29 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return 'seeding'
         else:
             return 'stopped'
+
+    def update_title_from_torrent(self):
+        """Try to update our title using torrent metadata.
+
+        If this item is a torrent, then we will download the .torrent file and
+        use that to upate our title.  If this is not a torrent, or there's an
+        error downloading the file, then nothing will change
+        """
+        httpclient.grab_url(self.get_url(),
+                self._update_title_from_torrent_callback,
+                self._update_title_from_torrent_errback)
+
+    def _update_title_from_torrent_callback(self, info):
+        try:
+            self.title = util.get_name_from_torrent_metadata(info['body'])
+        except ValueError:
+            logging.exception("Error setting torrent name")
+        else:
+            self.signal_change()
+
+    def _update_title_from_torrent_errback(self, error):
+        logging.warn("Error downloading torrent metainfo in "
+                "update_title_from_torrent(): %s", error)
 
     def is_transferring(self):
         return (self.downloader

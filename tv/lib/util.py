@@ -311,6 +311,19 @@ def get_torrent_info_hash(path):
     finally:
         f.close()
 
+def get_name_from_torrent_metadata(metadata):
+    """Get the name of a torrent
+
+    metadata must be the contents of a torrent file.
+
+    :returns: torrent name unicode string
+    :raises ValueError: metadata was not formatted properly
+    """
+    try:
+        return libtorrent.bdecode(metadata)['info']['name'].decode('utf-8')
+    except KeyError, e:
+        raise ValueError("key missing when reading metadata: %s", e)
+
 def gather_media_files(path):
     """Gather media files on the disk in a directory tree.
     This is used by the first time startup dialog.
