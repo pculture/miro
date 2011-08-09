@@ -167,7 +167,7 @@ sys.path.insert(0, root_dir)
 import lib
 sys.modules['miro'] = lib
 
-from miro import util
+from miro import buildutils
 
 # put the libtorrent extension on the path, so py2exe can find the
 # .pyd file
@@ -343,7 +343,7 @@ data_files.extend(find_data_files(os.path.join("resources", "locale"),
                                   locale_temp_dir))
 
 app_config = os.path.join(resources_dir, 'app.config.template')
-template_vars = util.read_simple_config_file(app_config)
+template_vars = buildutils.read_simple_config_file(app_config)
 
 # pixmap for the about dialog
 icon_path = os.path.join("icons", "hicolor", "128x128", "apps")
@@ -360,7 +360,7 @@ class install_data(distutils.command.install_data.install_data):
     def install_app_config(self):
         template = os.path.join(resources_dir, 'app.config.template')
         dest = os.path.join(self.install_dir, 'resources', 'app.config')
-        revision = util.query_revision()
+        revision = buildutils.query_revision()
         if revision is None:
             revision = "unknown"
             revisionurl = "unknown"

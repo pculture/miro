@@ -116,9 +116,9 @@ import plat
 sys.modules['miro'].plat = plat
 
 # little hack to get the version from the current app.config.template
-from miro import util
+from miro import buildutils
 app_config = os.path.join(resource_dir, 'app.config.template')
-appVersion = util.read_simple_config_file(app_config)['appVersion']
+appVersion = buildutils.read_simple_config_file(app_config)['appVersion']
 
 # RPM hack
 if 'bdist_rpm' in sys.argv:
@@ -371,10 +371,10 @@ class install_data(distutils.command.install_data.install_data):
         source = os.path.join(resource_dir, 'app.config.template')
         dest = '/usr/share/miro/resources/app.config'
 
-        config_file = util.read_simple_config_file(source)
+        config_file = buildutils.read_simple_config_file(source)
         print "Trying to figure out the git revision...."
         if config_file["appVersion"].endswith("git"):
-            revision = util.query_revision()
+            revision = buildutils.query_revision()
             if revision is None:
                 revision = "unknown"
                 revisionurl = "unknown"

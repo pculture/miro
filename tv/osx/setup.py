@@ -97,7 +97,7 @@ sys.path.append(ROOT_DIR)
 import lib
 sys.modules['miro'] = lib
 
-from miro import util
+from miro import buildutils
 
 # =============================================================================
 # Utility function used to extract stuff from the binary kit
@@ -142,13 +142,14 @@ def extract_binaries(source, target, force=True):
 class Config (object):
     
     def __init__(self, path, themePath=None):
-        self.config = util.read_simple_config_file(path)
+        self.config = buildutils.read_simple_config_file(path)
         self.themeDir = os.path.join(ROOT_DIR, 'osx', 'build', 'theme')
         self.themeConfig = None
         if themePath is not None:
             self.extract_theme_content(themePath, self.themeDir)
             themeConfigPath = os.path.join(self.themeDir, "app.config")
-            self.themeConfig = util.read_simple_config_file(themeConfigPath)
+            self.themeConfig = buildutils.read_simple_config_file(
+                    themeConfigPath)
         elif os.path.exists(self.themeDir):
             shutil.rmtree(self.themeDir)
         
@@ -231,7 +232,7 @@ class MiroBuild (py2app):
 
     def setup_config(self):
         # Get revision information.
-        revision = util.query_revision()
+        revision = buildutils.query_revision()
         if revision is None:
             revisionURL = 'unknown'
             revisionNum = '0000'

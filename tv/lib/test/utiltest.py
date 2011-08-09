@@ -10,6 +10,7 @@ import sys
 from miro.test.framework import skip_for_platforms, MiroTestCase
 from miro import download_utils
 from miro import util
+from miro import buildutils
 from miro.fileobject import FilenameType
 
 # We're going to override this so we can guarantee that if the order
@@ -571,7 +572,7 @@ E = F
 """.strip().replace("S", " "))
         f.close()
 
-        cfg = util.read_simple_config_file(fn)
+        cfg = buildutils.read_simple_config_file(fn)
         self.assertEquals(cfg["a"], "b")
         self.assertEquals(cfg["c"], "d   ")
         self.assertEquals(cfg["E"], "F")
@@ -583,9 +584,9 @@ E = F
         cfg = {"a": "b",
                "c": "d",
                "E": "F   "}
-        util.write_simple_config_file(fn, cfg)
+        buildutils.write_simple_config_file(fn, cfg)
 
-        cfg2 = util.read_simple_config_file(fn)
+        cfg2 = buildutils.read_simple_config_file(fn)
         self.assertEquals(cfg2["a"], cfg["a"])
         self.assertEquals(cfg2["c"], cfg["c"])
         self.assertEquals(cfg2["E"], cfg["E"])
