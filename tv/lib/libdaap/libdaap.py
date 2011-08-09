@@ -43,7 +43,6 @@ import BaseHTTPServer
 import SocketServer
 import threading
 import httplib
-from httplib import _CS_IDLE, _CS_REQ_STARTED, _CS_REQ_SENT, _UNKNOWN
 import gzip
 try:
     from cStringIO import StringIO
