@@ -68,7 +68,7 @@ class ItemListDragHandler(object):
         return ('downloaded-item',)
 
     def begin_drag(self, tableview, rows):
-        videos = set(row[0].id for row in rows if row[0].downloaded)
+        videos = list(row[0].id for row in rows if row[0].downloaded)
         if videos:
             return {'downloaded-item': videos}
         else:
