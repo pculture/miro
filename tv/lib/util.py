@@ -33,26 +33,26 @@ This module contains self-contained utility functions.  It shouldn't import
 any other Miro modules.
 """
 
-import sys
+from hashlib import sha1 as sha
+from StringIO import StringIO
 import itertools
+import logging
 import os
 import random
 import re
 import shutil
-import unicodedata
-try:
-    from hashlib import sha1 as sha
-except ImportError:
-    from sha import sha
-import string
-import urllib
 import socket
-import logging
-from miro import filetypes
-import traceback
+import string
 import subprocess
-from StringIO import StringIO
-from clock import clock
+import sys
+import traceback
+import unicodedata
+import urllib
+
+import libtorrent
+
+from miro.clock import clock
+from miro import filetypes
 
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
@@ -295,19 +295,18 @@ def get_torrent_info_hash(path):
         # file is too large, bailout.  (see #12301)
         raise ValueError("%s is not a valid torrent" % path)
 
-    import libtorrent as lt
     f = open(path, 'rb')
     try:
         data = f.read(MAX_TORRENT_SIZE)
         if not data or data[0] != 'd':
             # File doesn't start with 'd', bailout  (see #12301)
             raise ValueError("%s is not a valid torrent" % path)
-        metainfo = lt.bdecode(data)
+        metainfo = libtorrent.bdecode(data)
         try:
             infohash = metainfo['info']
         except StandardError:
             raise ValueError("%s is not a valid torrent" % path)
-        infohash = sha(lt.bencode(infohash)).digest()
+        infohash = sha(libtorrent.bencode(infohash)).digest()
         return infohash
     finally:
         f.close()
