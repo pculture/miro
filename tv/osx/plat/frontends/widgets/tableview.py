@@ -184,6 +184,8 @@ class MiroTableInfoListTextCell(MiroTableCell):
         return self
 
     def drawWithFrame_inView_(self, frame, view):
+        # adjust frame based on the cell spacing
+        frame = _calc_interior_frame(frame, view)
         if (self.isHighlighted() and frame is not None and
             (view.isDescendantOf_(view.window().firstResponder()) or
              view.gradientHighlight) and view.window().isMainWindow()):
@@ -444,17 +446,17 @@ class InfoListRendererText(CellRenderer):
         return cell.initWithAttrGetter_(self.get_value)
 
 def calc_row_height(view, model_row):
-    cell_height = 0
+    max_height = 0
     model = view.dataSource().model
     for column in view.tableColumns():
         cell = column.dataCell()
         data = model.get_column_data(model_row, column)
         cell.setObjectValue_(data)
         cell_height = cell.calcHeight_(view)
-        cell_height = max(cell_height, cell_height)
-    if cell_height == 0:
-        cell_height = 12
-    return cell_height + view.row_spacing
+        max_height = max(max_height, cell_height)
+    if max_height == 0:
+        max_height = 12
+    return max_height + view.row_spacing
 
 class TableViewDelegate(NSObject):
     def tableView_willDisplayCell_forTableColumn_row_(self, view, cell,
@@ -817,6 +819,7 @@ class TableColumn(signals.SignalEmitter):
         self.sort_order_ascending = True
         self.sort_indicator_visible = False
         self.do_horizontal_padding = True
+        self.min_width = self.max_width = None
         renderer.setDataCell_(self._column)
 
     def set_do_horizontal_padding(self, horizontal_padding):
@@ -829,10 +832,10 @@ class TableColumn(signals.SignalEmitter):
             self._column.headerCell().setAlignment_(NSLeftTextAlignment)
 
     def set_min_width(self, width):
-        self._column.setMinWidth_(width)
+        self.min_width = width
 
     def set_max_width(self, width):
-        self._column.setMaxWidth_(width)
+        self.max_width = width
 
     def set_width(self, width):
         self._column.setWidth_(width)
@@ -1414,6 +1417,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
                              'required by TableView')
         self.columns.append(column)
         self.tableview.addTableColumn_(column)
+        self._set_min_max_column_widths(column)
         if self.column_count() == 1 and self.is_tree():
             self.tableview.setOutlineTableColumn_(column._column)
             column.renderer.outline_column = True
@@ -1422,6 +1426,14 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.tableview.noteNumberOfRowsChanged()
         self.invalidate_size_request()
         self.try_to_set_row_height()
+
+    def _set_min_max_column_widths(self, column):
+        if column.min_width > 0:
+            column._column.setMinWidth_(column.min_width +
+                    self.tableview.column_spacing)
+        if column.max_width > 0:
+            column._column.setMaxWidth_(column.max_width +
+                    self.tableview.column_spacing)
 
     def column_count(self):
         return len(self.tableview.tableColumns())

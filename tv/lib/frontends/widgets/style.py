@@ -789,6 +789,15 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             logging.warn("row height is 0 in MultiRowAlbumRenderer")
             return
 
+        if not self.info.album:
+            # if we don't have an album name, then try to render the artist
+            # name.  If not, just leave ourselves blank.
+            self.clear_cell(context)
+            if self.info.artist:
+                self.render_text(context, layout_manager, self.info.artist,
+                        True)
+            return
+
         current_row, total_rows = self.group_info
 
         # calculate how many rows we need to display the image
@@ -807,10 +816,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             self.render_image(context, self.album_art, current_row)
         else:
             # draw text and empty cells
-            # fill in our background
-            context.set_color(self.BACKGROUND_COLOR)
-            context.rectangle(0, 0, context.width, context.height)
-            context.fill()
+            self.clear_cell(context)
 
             if current_row == image_row_count:
                 self.render_text(context, layout_manager, self.info.album,
@@ -821,6 +827,12 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
         # draw track number
         self.render_track_number(context, layout_manager, current_row)
+
+    def clear_cell(self, context):
+        """Draw our background color over the cell to clear it."""
+        context.set_color(self.BACKGROUND_COLOR)
+        context.rectangle(0, 0, context.width, context.height)
+        context.fill()
 
     def render_image(self, context, image, current_row):
         if context.width < image.width:
@@ -849,7 +861,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             # descrease height
             height -= dest_y
             # fill top with whitespace
-            context.rectangle(dest_x, 0, image.width, -dest_y)
+            context.rectangle(dest_x, 0, image.width, dest_y)
             context.fill()
         src_y_bottom = src_y + height
         if src_y_bottom > image.height:
