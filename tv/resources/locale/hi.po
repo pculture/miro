@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/messagehandler.py:1617
 msgid "Migrating Files"
@@ -4521,22 +4521,6 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "ठीक"
 
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "आपको प्ले या चलाने की क्रिया दुबारा शुरू करनी चाहिए ताकि visualization "
-#~ "दुबारा नयी प्रकार से दिखाई दे |"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "जब आवाज़ (audio) चल रही हो तो यह चलचित्र (video) दिखाएँ |"
-
-#~ msgid "Custom Channels"
-#~ msgstr "अपने दुबारा बनाए गए चैनल"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "आप %(appname)s को अपने दुबारा बनाए गए चैनल के साथ चला रहें हैं"
-
 #, python-format
 #~ msgid "Skipped %(count)d feed already present."
 #~ msgid_plural "Skipped %(count)d feeds already present."
@@ -4696,9 +4680,6 @@ msgstr ""
 #~ msgid "Auto download setting:"
 #~ msgstr "अपने आप download शुरू होने वाली व्यवस्था के लिए सेटिंग"
 
-#~ msgid "Add to Library"
-#~ msgstr "कोष में शामिल करें"
-
 #, python-format
 #~ msgid "%(size)s mb"
 #~ msgstr "%(size)s mb"
@@ -4706,21 +4687,6 @@ msgstr ""
 #, python-format
 #~ msgid "%(size)s kb"
 #~ msgstr "%(size)s kb"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "नये विडियो को ढूँढें और कोष में शामिल करें"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "अपने आप विडियो ख़तम हो जातें हैं इस समय बाद"
-
-#~ msgid "Stop after each video"
-#~ msgstr "हर एक विडियो के बाद रुकें"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "एक के बाद दूसरा विडियो चलाएं"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "विडियो को वहीं से चलाएं जहां से इसे रोका था"
 
 #~ msgid "No Results Found"
 #~ msgstr "कुछ भी नहीं मिला"
@@ -4764,50 +4730,6 @@ msgstr ""
 #~ msgid "File name:"
 #~ msgstr "फ़ाइल नाम:"
 
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "हमें खेद है, %(appname)s शुरू करने में असमर्थ डाटाबेस के साथ एक समस्या की "
-#~ "वजह से.\n"
-#~ "\n"
-#~ "त्रुटि: %(error)s\n"
-#~ "\n"
-#~ "यह संभव है कि आपके डेटाबेस फ़ाइल भ्रष्ट है और उपयोग नहीं किया जा सकता.\n"
-#~ "\n"
-#~ "आप नए सिरे से शुरू कर सकते हैं और आपका भ्रष्ट डेटाबेस क्षतिग्रस्त हो जाएगा, "
-#~ "लेकिन आप को फिर से अपने फ़ीड और मीडिया फाइल जोड़ने होगे.यदि आप ऐसा करना "
-#~ "चाहते हैं, फिर शुरू ताजा बटन दबाएँ और %(appname)s पुनः आरंभ करे.\n"
-#~ "\n"
-#~ "भविष्य में इस तरह की समस्याओं को ठीक  करने के लिए एक बग रिपोर्ट फ़ाइल करे "
-#~ "%(url)s."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s अब हमारे दुर्घटना डेटाबेस के लिए एक दुर्घटना की रिपोर्ट सबमिट हो "
-#~ "रही है\n"
-#~ "\n"
-#~ "क्या आप पूर्ण कार्यक्रम डेटाबेस शामिल करना चाहते हैं, दुर्घटना की रिपोर्ट के "
-#~ "साथ सभी वीडियो और भ्रष्ट मेटाडाटा सहित, इस की मदद से हम इस मुद्दे का निदान "
-#~ "कर सकते हैं"
-
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "क्या आप फ़ीड रख रखना चाहते हैं"
 
@@ -4839,10 +4761,6 @@ msgstr ""
 #~ msgstr "फाइल शुरू"
 
 #, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "कोई संबंध नहीं %s में पुन: प्रयास"
-
-#, python-format
 #~ msgid "Channel is not compatible with %(appname)s"
 #~ msgstr "चैनल %(appname)s के साथ संगत नहीं है"
 
@@ -4856,9 +4774,6 @@ msgstr ""
 #~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 #~ msgstr "%(url)s यह फाइल ऑडियो, वीडियो, या एक आरएसएस फ़ीड नहीं लगता है."
-
-#~ msgid "Reason unknown"
-#~ msgstr "अज्ञात कारण"
 
 #~ msgid "Create Feed"
 #~ msgstr "फ़ीड बनाएँ"

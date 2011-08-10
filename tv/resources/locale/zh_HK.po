@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:239
 msgid "Cut"
@@ -4479,23 +4479,6 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "預設情況下，影片會於下列時間後過期:"
-
-#~ msgid "Add to Library"
-#~ msgstr "加入到書庫"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "播音樂時播依段片"
-
-#~ msgid "Custom Channels"
-#~ msgstr "自訂頻度"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "你依家行緊一套有自訂頻度的%(appname)s。"
 
 #, python-format
 #~ msgid ""

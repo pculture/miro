@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
@@ -4568,43 +4568,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Stop after each video"
-#~ msgstr "Stopp etter hver film"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Spill av filmer én etter én"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Du må starte avspillingen på nytt for at visualiseringsendringene skal tre i "
-#~ "kraft."
-
-#~ msgid "Add to Library"
-#~ msgstr "Legg til bibliotek"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Du kjører en versjon av %(appname)s med et egendefinert kanalsett."
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Se etter videoer i disse mappene, og legg de automatisk til i biblioteket:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Fortsett avspilling av videoer der de ble stoppet."
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Er du sikker på at du vil fjerne «%(name)s»?"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Fjern «%(name)s»"
-
-#~ msgid "Add to library"
-#~ msgstr "Legg til bibliotek"
-
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
 #~ msgstr "Ugyldig statuslinje: %(msg)s"
@@ -4617,38 +4580,9 @@ msgstr ""
 #~ msgid "Bad Chunk size: %(msg)s"
 #~ msgstr "Ugyldig blokkstørrelse: %(msg)s"
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Bruk dette som videoillustrasjon ved avspilling av lydfiler:"
-
 #, python-format
 #~ msgid "Bad Header Line: %(msg)s"
 #~ msgstr "Ugyldig protokollhodelinje: %(msg)s"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Abonner på flere kilder"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Skriv inn navn på den nye kildemappen"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "Merk: Du abonnerer allerede på en av disse kildene. Denne kilden blir "
-#~ "værende der den allerede er."
-#~ msgstr[1] ""
-#~ "Merk: Du abonnerer allerede på %(count)d av disse kildene. Disse kildene "
-#~ "blir værende der de allerede er."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Lag kilde?"
-#~ msgstr[1] "Lag %(count)d kilder?"
 
 #, python-format
 #~ msgid ""
@@ -4665,9 +4599,6 @@ msgstr ""
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTEK"
 
-#~ msgid "View:"
-#~ msgstr "Vis:"
-
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "%(name) sitt førstegangsoppsett"
@@ -4675,9 +4606,6 @@ msgstr ""
 #, python-format
 #~ msgid "Welcome to the %(name)s First Time Setup"
 #~ msgstr "Velkommen til %(name) sitt førstegangsoppsett"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Start deling"
 
 #, python-format
 #~ msgid ""
@@ -4690,24 +4618,6 @@ msgstr ""
 #, python-format
 #~ msgid "Completing the %(name)s First Time Setup"
 #~ msgstr "Fullfører %(name)s førstegangsoppsett"
-
-#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
-#~ msgstr "Filen \"%(filename)s\" har blitt slettet utenfor %(appname)s."
-
-#, python-format
-#~ msgid ""
-#~ "%(copyright)s.  See license.txt file for details.\n"
-#~ "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-#~ msgstr ""
-#~ "%(copyright)s. Les license.txt for flere detaljer.\n"
-#~ "Miro og Miro-logoen er varemerker som tilhører Participatory Culture "
-#~ "Foundation."
-
-#, python-format
-#~ msgid "Adding feed to a new folder"
-#~ msgid_plural "Adding %(count)d feeds to a new folder"
-#~ msgstr[0] "Legger kilden til i en ny mappe"
-#~ msgstr[1] "Legger %(count)d kilder til i en ny mappe"
 
 #, python-format
 #~ msgid "%(num).0f min"
@@ -5496,12 +5406,6 @@ msgstr ""
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s B"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Som standard utløper filmer etter:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Ikke-forvalgte kanaler"
-
 #~ msgid "Pipeline request never started"
 #~ msgstr "Forespørsel om kommandokø startet aldri"
 
@@ -5526,186 +5430,3 @@ msgstr ""
 
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "Databasen var opprettet av en nyere versjon av Miro "
-
-#~ msgid "Title:"
-#~ msgstr "Tittel:"
-
-#~ msgid "Media type:"
-#~ msgstr "Medietype:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "NETTSIDER"
-
-#~ msgid "Remove Website"
-#~ msgstr "Fjern nettside"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Fjern nettsider"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Spill av media i Miro"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Mappe '%s'  kunne ikke bli laget.  "
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Skriv inn URLen til nettsiden du vil legge til"
-
-#~ msgid "Add Website"
-#~ msgstr "Legg til nettside"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Legg til nettside - Ugyldig URL"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Fjern Feeds"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Skriv inn det nye namnet for nettsiden %(name)s"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Rediger element"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Innstillinger"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Fjern nettside"
-#~ msgstr[1] "Fjern nettsider"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Er du sikker på at du vil fjerne denne nettsiden?"
-#~ msgstr[1] "Er du sikker på at du vil fjerne disse %(count)s nettsidene?"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Last-opp/ned Ratio"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Fjern Mapper"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Undertekster"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Fjern Nettsider"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Nettside Valgt"
-#~ msgstr[1] "%(count)d Nettsider Valgt"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Fjern Nettside"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Ingen forbinnelse - prøver igjen om %s"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Gi Feed nytt namn"
-
-#~ msgid "Path:"
-#~ msgstr "Filbane"
-
-#~ msgid "Rename Website"
-#~ msgstr "Gi nettside nytt namn"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO FEEDS"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Gi nettside nytt namn"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Fjern Feed"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Vi unskylder, %(appname)s \n"
-#~ "\n"
-#~ "Sjekk om disken din er full. Vis den er full, så avslutt %(appname)s,  slett "
-#~ "unødvendige filer, og start %(appname)s again.\n"
-#~ "\n"
-#~ "Vis disken din ikke er full, hjelp oss å forstå problemet med å avslutte, og "
-#~ "raportere feilen til bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Du kan starte på nytt og slette den skada databasen, men du må legge til "
-#~ "alle filene og feedene på nytt."
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Nettadressen du skrev inn er ikke en gyldig url.\n"
-#~ "Sjekk om du har skrevet riktig og prøv igjen.\n"
-#~ "\n"
-#~ "Skriv in URLen til nettside du vil legge til"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s kan ikke bruke den primære video mappen i:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Det er kanskje fordi den er lokalisert på en ekstern hardisk som ikke er "
-#~ "koblet til, er en mappe som %(shortappname)s ikke har tilatelse til å skrive "
-#~ "i, eller det er ikke en mappe på denne filbanen.\n"
-#~ "\n"
-#~ "Vis du fortseter, det primære video mappen vil bli flyttet til denne disken. "
-#~ "Vis du hadde lasta ned videoer, så vil %(shortappname)s miste detalier om "
-#~ "videoene.\n"
-#~ "\n"
-#~ "Vis du avslutter, du kan koble til disken igjen eller fikse problemet og "
-#~ "starte %(shortappname)s på nytt."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Lukk fullskjerm"
-
-#~ msgid "Choose Language"
-#~ msgstr "Velg språk"
-
-#~ msgid "Update"
-#~ msgstr "Oppdatering"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Venter)"
-
-#~ msgid "Finding Files"
-#~ msgstr "Finner filer"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "For å forandre språk, må du starte Miro på nytt."

@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4613,9 +4613,6 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "Iawn"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Mae'r fideos yn dod i ben wedi:"
-
 #~ msgid "Playing File"
 #~ msgstr "Chwarae Ffeil"
 
@@ -4681,25 +4678,6 @@ msgstr ""
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Gwall mewnol: Dim yn barod i yrru"
-
-#~ msgid "Add to Library"
-#~ msgstr "Ychwanegwch i'r Llyfrgell"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Mae'n rhaid ailddechrau'r chwarae er mwyn cyflawni newidiadau i'r "
-#~ "ddelweddydd."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Defnyddiwch hwn ar gyfer fideo wrth chwarae sain:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Sianeli Cwstwm"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Rydych yn rhedeg fersiwn %(appname)s gyda set gwstwm o sianeli."
 
 #, python-format
 #~ msgid "%(size)s gb/s"
@@ -4896,18 +4874,6 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(Gallwch newid y rhain gan ddefnyddio botwm gosodiadau'r ffrwd)"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Gwylio fideos newydd yn y ffolderi hyn a'u cynnwys yn y llyfrgell:"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Chwarae fideos un ar ôl y llall"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stopio ar ôl pob fideo"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Ailddechrau chwarae fideo o'r pwynt a orffennwyd diwethaf"
-
 #~ msgid "Feeds"
 #~ msgstr "Ffrydau"
 
@@ -4984,10 +4950,6 @@ msgstr ""
 #~ msgid "Rename Feed"
 #~ msgstr "Ailenwi Ffrwd"
 
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Tynnu %(name)s"
-
 #~ msgid "Rename Site"
 #~ msgstr "Ailenwi Safle"
 
@@ -5028,9 +4990,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "Permalink"
-
-#~ msgid "Add to library"
-#~ msgstr "Ychwanegwch i'r Llyfrgell"
 
 #~ msgid "Feed should go in this section:"
 #~ msgstr "Dylai'r ffrwd fynd i'r adran hon:"
@@ -5168,12 +5127,6 @@ msgstr ""
 #~ "Nid yw'r ffeil ar %(url)s yn ymddangos ei bod yn ffeil clywedol, fideo nac "
 #~ "yn ffrwd RSS."
 
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Rhowch enw i ffolder y ffrwd newydd"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Tanysgrifio i sawl ffrwd"
-
 #, python-format
 #~ msgid ""
 #~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -5277,9 +5230,6 @@ msgstr ""
 #~ msgstr[1] "%(count)d ffrwd yn bodoli eisoes - sgipiwyd"
 #~ msgstr[2] "%(count)d ffrwd yn bodoli eisoes - sgipiwyd"
 #~ msgstr[3] "%(count)d ffrwd yn bodoli eisoes - sgipiwyd"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Dechrau Hadu"
 
 #~ msgid "Other"
 #~ msgstr "Arall"
@@ -5419,37 +5369,6 @@ msgstr ""
 #~ msgstr[2] "Dangos %(count)d Eitem yn Fwy"
 #~ msgstr[3] "Dangos %(count)d Eitem yn Fwy"
 
-#~ msgid "View:"
-#~ msgstr "Golwg:"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "D.S: Rydych wedi eisoes wedi tanysgrifio i un o'r ffrydiau hyn. Gwnaiff y "
-#~ "ffrydiau hyn aros lle maen nhw."
-#~ msgstr[1] ""
-#~ "D.S: Rydych wedi eisoes wedi tanysgrifio i %(count)d o'r ffrydiau hyn. "
-#~ "Gwnaiff y ffrydiau hyn aros lle maen nhw."
-#~ msgstr[2] ""
-#~ "D.S: Rydych wedi eisoes wedi tanysgrifio i %(count)d o'r ffrydiau hyn. "
-#~ "Gwnaiff y ffrydiau hyn aros lle maen nhw."
-#~ msgstr[3] ""
-#~ "D.S: Rydych wedi eisoes wedi tanysgrifio i %(count)d o'r ffrydiau hyn. "
-#~ "Gwnaiff y ffrydiau hyn aros lle maen nhw."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Creu ffrwd?"
-#~ msgstr[1] "Creu %(count)d ffrwd?"
-#~ msgstr[2] "Creu %(count)d ffrwd?"
-#~ msgstr[3] "Creu %(count)d ffrwd?"
-
 #, python-format
 #~ msgid "%(num).0f hr"
 #~ msgid_plural "%(num).0f hrs"
@@ -5499,23 +5418,8 @@ msgstr ""
 #~ msgstr[3] "%(count)d diwrnod"
 
 #, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Ydych wir am dynnu %(name)s?"
-
-#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
-#~ msgstr "Mae'r ffeil \"%(filename)s\" wedi'i dileu o du allan %(appname)s."
-
-#, python-format
 #~ msgid "_About %(name)s"
 #~ msgstr "_Ynghylch %(name)s"
-
-#, python-format
-#~ msgid "Adding feed to a new folder"
-#~ msgid_plural "Adding %(count)d feeds to a new folder"
-#~ msgstr[0] "Ychwanegu ffrwd i ffolder newydd"
-#~ msgstr[1] "Ychwanegu %(count)d ffrwd i ffolder newydd"
-#~ msgstr[2] "Ychwanegu %(count)d ffrwd i ffolder newydd"
-#~ msgstr[3] "Ychwanegu %(count)d ffrwd i ffolder newydd"
 
 #, python-format
 #~ msgid ""
@@ -5526,14 +5430,6 @@ msgstr ""
 #~ "Nid yw %(appname)s yn gallu lawrlwytho ffeil o'r URL hwn:\n"
 #~ "\n"
 #~ "URL: %(url)s"
-
-#, python-format
-#~ msgid ""
-#~ "%(copyright)s.  See license.txt file for details.\n"
-#~ "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-#~ msgstr ""
-#~ "%(copyright)s.  Gweler license.txt file am fanylion.\n"
-#~ "Mae Miro a logo Miro yn nodau masnach o'r Participatory Culture Foundation."
 
 #~ msgid "Non Feed"
 #~ msgstr "Di-Ffrwd"
@@ -5632,70 +5528,6 @@ msgstr ""
 #~ "dileu ffilmau oddi ar eich casgliad.\n"
 #~ "Gallwch golli newidiadau diweddar."
 
-#~ msgid "WEBSITES"
-#~ msgstr "GWEFANNAU"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Methu â chreu cyfeiriadur '%s'  "
-
-#~ msgid "Title:"
-#~ msgstr "Teitl:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Golygwch fetaddata'r eitem"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "FFRYDIAU FIDEO"
-
-#~ msgid "other"
-#~ msgstr "arall"
-
-#~ msgid "Media type:"
-#~ msgstr "Teip cyfrwng:"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "Nid yw %(shortappname)s yn gallu defnyddio'r cyfeiriadur fideo cynradd "
-#~ "gyda'r lleoliad:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Gall hyn ddigwydd oherwydd - ei fod ar ddisg allanol sydd heb ei gysylltu; "
-#~ "nid oes gan %(shortappname)s hawliau ysgrifennu i'r cyfeiriadur; mae yna "
-#~ "rhywbeth ar y llwybr hwnnw sydd ddim yn gyfeiriadur.\n"
-#~ "\n"
-#~ "Os ydych yn parhau, bydd y cyfeiriadur fideo cynradd yn cael ei ailosod i "
-#~ "leoliad ar y disgyrrwr hwn. Os oes gennych fideos wedi'u lawrlwytho, bydd "
-#~ "hyn yn achosi %(shortappname)s i golli manylion y fideos hynny.\n"
-#~ "\n"
-#~ "Os ydych yn gadael, gallwch gysylltu'r disgyrrwr neu ceisio â thrwsio'r "
-#~ "broblem ac yna ailddechrau %(shortappname)s."
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Cymhareb I fyny/I lawr"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Isdeitlau"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Chwarae cyfrwng mewn Miro."
-
 #~ msgid ""
 #~ "Miro is upgrading your database of feeds and files.  This one-time process "
 #~ "can take a long time if you have a large number of items in Miro (it can "
@@ -5705,215 +5537,8 @@ msgstr ""
 #~ "broses 'un-tro' gymryd amser hir os oes gennych lawer o eitemau mewn Miro "
 #~ "(gall gymryd yn fwy na 30 munud)."
 
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "dim cysylltiad - ceisio eto ymhen %s"
-
 #~ msgid "Insufficient disk space"
 #~ msgstr "Gofod disg annigonol"
 
-#~ msgid "Unknown Language"
-#~ msgstr "Iaith Anhysbys"
-
-#~ msgid "Path:"
-#~ msgstr "Llwybr:"
-
-#~ msgid "Remove Website"
-#~ msgstr "Tynnu Gwefan"
-
-#~ msgid "Rename Website"
-#~ msgstr "Ailenwi Gwefan"
-
-#~ msgid "Add Website"
-#~ msgstr "Ychwanegwch Wefan"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Tynnu Gwefannau"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Ychwanegu Gwefan - URL Annilys"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Rhowch URL y wefan i'w hychwanegu"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Aile_nwi Gwefan"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Aile_nwi Ffrwd"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Rhowch enw newydd i'r wefan %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Nid yw'r url hwn yn ddilys.\n"
-#~ "Gwiriwch yr URL a cheisio eto.\n"
-#~ "\n"
-#~ "Rhowch URL y wefan i'w hychwanegu"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Tynnu Ffrydiau"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Golygu Eitem"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Hoffterau"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Tynnwch wefan"
-#~ msgstr[1] "Tynnwch wefan"
-#~ msgstr[2] "Tynnwch wefannau"
-#~ msgstr[3] "Tynnwch wefannau"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Ydych wir am dynnu'r wefan?"
-#~ msgstr[1] "Ydych wir am dynnu'r wefan?"
-#~ msgstr[2] "Ydych wir am dynnu'r gwefannau?"
-#~ msgstr[3] "Ydych wir am dynnu'r gwefannau?"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Tynnu Ffrwd"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Tynnu Ffolderi"
-
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "Cafodd y gronfa ddata ei chreu gan fersiwn cynt o Miro "
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Rydym yn ymddiheuro, roedd %(appname)s wedi methu â diweddaru'ch cronfa "
-#~ "ddata oherwydd gwallau.\n"
-#~ "\n"
-#~ "Gwiriwch nid yw'ch disgen galed yn llawn. Os ydyw, ceuwch  %(appname)s, "
-#~ "rhyddhau ychydig o le, ac ailddechrau %(appname)s.\n"
-#~ "\n"
-#~ "Os oes digon o le, ceuwch ac adroddwch y 'byg' ar bugzilla.pculture.org.\n"
-#~ "\n"
-#~ "Gallwch ddechrau o'r newydd a chaiff eich cronfa ddata ddiffygiol ei thynnu, "
-#~ "OND bydd yn rhaid i chi ail-ychwanegu eich ffrydiau a'ch ffeiliau cyfrwng."
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Tynnu Gwefannau"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Gwefan wedi'i Dewis"
-#~ msgstr[1] "%(count)d Gwefan wedi'i Dewis"
-#~ msgstr[2] "%(count)d Gwefan wedi'u Dewis"
-#~ msgstr[3] "%(count)d Gwefan wedi'u Dewis"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Tynnu Gwefan"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Mae angen ailddechrau Miro er mwyn newid yr iaith))"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Gadael sgrin lawn"
-
-#~ msgid "Choose Language"
-#~ msgstr "Dewiswch iaith"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Eitem Cynt"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Eitem Nesaf"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Ar y gweill)"
-
-#~ msgid "Update"
-#~ msgstr "Diweddaru"
-
-#~ msgid "Finding Files"
-#~ msgstr "Darganfod Ffeiliau"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s Startup"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Yn anffodus nid oedd %(appname)s yn gallu uwchraddio eich cronfa ddata "
-#~ "oherwydd gwallau.\n"
-#~ "\n"
-#~ "Gwiriwch i weld os ydy'ch disgen yn llawn. Os ydy'n llawn, gadewch "
-#~ "%(appname)s, rhyddhau ychydig o le, ac ailddechrau %(appname)s.\n"
-#~ "\n"
-#~ "Os nac ydy'r ddisgen yn llawn, adroddwch y byg i'n cronfa ddata.\n"
-#~ "\n"
-#~ "Gallwch ailgychwyn unwaith i'ch cronfa ddiffygiol gael ei thynnu, er bydd "
-#~ "angen i chi ail-ychwanegu eich ffrydiau a'ch ffeiliau cyfrwng."
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Rydym yn awgrymu bod %(name)s yn cael ei lansio wrth i'ch cyfrifiadur "
-#~ "ddechrau.  Felly gall lawrlwythiadau ar y gweill orffen lawrlwytho a gall "
-#~ "ffeiliau cyfrwng newydd eu lawrlwytho yn y cefndir, yn barod i'w gwylio."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "Bydd %(appname)s yn cyflwyno adroddiad chwalfa i'n cronfa ddata chwalfeydd\n"
-#~ "\n"
-#~ "Ydych chi am gynnwys y gronfa ddata gyfan ar gyfer y rhaglen, gan gynnwys "
-#~ "metaddata ffrydiau a fideo gyda'ch adroddiad chwalfa? Bydd hwn yn ein helpu "
-#~ "i ddatrys y broblem."
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Croeso i osodiad cyntaf  %(name)s!\n"
-#~ "\n"
-#~ "Gwnaiff y sgriniau nesaf eich helpu i osod %(name)s yn y ffordd orau i chi.\n"
-#~ "\n"
-#~ "Ym mha iaith hoffech ddefnyddio Miro?"

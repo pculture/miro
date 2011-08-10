@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
@@ -4559,18 +4559,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Secara default, video tamat tempoh selepas:"
-
-#~ msgid "Add to Library"
-#~ msgstr "Tambah pada perpustakaan."
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "Anda mesti ulang semula untuk visual yang diubah berfungsi."
-
-#~ msgid "Custom Channels"
-#~ msgstr "Siaran pilihan"
-
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -4864,12 +4852,6 @@ msgstr ""
 #~ msgid "Save Search"
 #~ msgstr "Simpan Carian"
 
-#~ msgid "Title:"
-#~ msgstr "Tajuk:"
-
-#~ msgid "Media type:"
-#~ msgstr "Jenis media:"
-
 #~ msgid "Feed"
 #~ msgstr "Suapan"
 
@@ -4897,9 +4879,6 @@ msgstr ""
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "CRLF yang dijangka: %(character)r"
-
-#~ msgid "Path:"
-#~ msgstr "Laluan:"
 
 #~ msgid ""
 #~ "Are you sure you want to remove this feed?  The downloads currently in "
@@ -4959,17 +4938,8 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(Ini boleh diubah dengan menggunakan butang penetapan suapan)"
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "SUAPAN VIDEO"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Mainkan media menggunakan Miro."
-
 #~ msgid "Permalink"
 #~ msgstr "Linkkekal"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Keluar dari skrin penuh"
 
 #~ msgid "No Results Found"
 #~ msgstr "Tiada hasil ditemui"
@@ -4990,17 +4960,8 @@ msgstr ""
 #~ msgid "Back to feed"
 #~ msgstr "Kembali ke suapan"
 
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Masukkan URL tapak web untuk tambah"
-
 #~ msgid "Show Less"
 #~ msgstr "Papar Sedikit"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Menunggu)"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Nisbah Naik/Turun"
 
 #~ msgid ""
 #~ "Miro is upgrading your database of feeds and files.  This one-time process "
@@ -5030,12 +4991,6 @@ msgstr ""
 #~ msgid "Add Feed - Invalid URL"
 #~ msgstr "Tambah suapan - URL tidak sah"
 
-#~ msgid "_Edit Item"
-#~ msgstr "_Edit Item"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Namakan _Semula Suapan"
-
 #~ msgid "Add _Feed"
 #~ msgstr "Tambah _Suapan"
 
@@ -5050,15 +5005,6 @@ msgstr ""
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Suapan Carian Baru"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Buang Suapan-suapan"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Buang Folder-folder"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Buang Suapan"
 
 #~ msgid "_Update Feeds"
 #~ msgstr "_Kemaskini Suapan-suapan"
@@ -5087,9 +5033,6 @@ msgstr ""
 #~ msgid "Update _All Feeds"
 #~ msgstr "Kemaskini _Semua Suapan-suapan"
 
-#~ msgid "S_ubtitles"
-#~ msgstr "Sari _kata"
-
 #~ msgid "_Planet Miro"
 #~ msgstr "_Planet Miro"
 
@@ -5102,9 +5045,6 @@ msgstr ""
 
 #~ msgid "_Translate"
 #~ msgstr "_Terjemah"
-
-#~ msgid "Choose Language"
-#~ msgstr "Pilih Bahasa"
 
 #~ msgid "Describe what you were doing when you got this error:"
 #~ msgstr ""
@@ -5125,31 +5065,6 @@ msgstr ""
 #, python-format
 #~ msgid "%(size)s gb/s"
 #~ msgstr "%(size)s gb/s"
-
-#~ msgid "Update"
-#~ msgstr "Kemaskini"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "tiada sambungan - cuba semula dalam %s"
-
-#~ msgid "Finding Files"
-#~ msgstr "Mencari fail-fail"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Mula %(name)s"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Kami syorkan supaya anda lancarkan %(name)s di permulaan anda buka komputer. "
-#~ "Dengan cara ini, muat-muat turun yang masih dalam progres dapat selesai "
-#~ "memuat turun dan fail-fail media baru dapat dimuat turun di belakang latar, "
-#~ "siap tersedia bila-bila anda ingin menonton."
 
 #, python-format
 #~ msgid ""
@@ -5316,46 +5231,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Maaf, %(appname)s tidak dapat menaiktaraf pangkalan data anda akibat ralat-"
-#~ "ralat.\n"
-#~ "\n"
-#~ "Sila periksa samada cakera anda telah penuh. Jika penuh, tutup %(appname)s, "
-#~ "kosongkan sedikit ruang, dan mulakan %(appname)s semula.\n"
-#~ "\n"
-#~ "Jika cakera anda tidak penuh, bantu kami memahami masalah tersebut dengan "
-#~ "melaporkan pepijat ke pangkalan data keruntuhan kami.\n"
-#~ "\n"
-#~ "Akhir sekali, anda boleh mula dari awal dan pangkalan data anda yang telah "
-#~ "rosak akan dibuang, tetapi anda perlu menambah semula sekali lagi suapan-"
-#~ "suapan dan fail-fail media."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s akan menghantarkan laporan keruntuhan ke pengkalan data "
-#~ "keruntuhan kami\n"
-#~ "\n"
-#~ "Adakan anda ingin menyertakan seluruh pangkalan data program termasuk semua "
-#~ "metadata suapan dan video bersama sekali dengan laporan keruntuhan? Ini akan "
-#~ "membantu kami mendiagnos masalah tersebut."
-
-#, python-format
-#~ msgid ""
 #~ "%(appname)s is not able to download a file at this URL:\n"
 #~ "\n"
 #~ "URL: %(url)s"
@@ -5363,9 +5238,6 @@ msgstr ""
 #~ "%(appname)s tidak dapat memuat turun fail di URL ini:\n"
 #~ "\n"
 #~ "URL: %(url)s"
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "Cina, Universal"
 
 #~ msgid "Error loading feed"
 #~ msgstr "Ralat memuatkan suapan"
@@ -5382,30 +5254,6 @@ msgstr ""
 #~ msgid "A search feed contains items that match a search term."
 #~ msgstr "Carian suapan mengandungi item yang sepadan dengan terma gelintar."
 
-#~ msgid "_Preferences"
-#~ msgstr "_Keutamaan"
-
-#~ msgid "Convert"
-#~ msgstr "Tukar"
-
-#~ msgid "Add Website"
-#~ msgstr "Tambah Laman Sesawang"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Namakan _Semula Laman Sesawang"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Buang Laman Sesawang"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Buang Lawang Sesawang"
-
-#~ msgid "_Next Item"
-#~ msgstr "Item Se_terusnya"
-
-#~ msgid "_Previous Item"
-#~ msgstr "Item Se_belumnya"
-
 #~ msgid "Volume _Up"
 #~ msgstr "Volum _Naik"
 
@@ -5419,92 +5267,12 @@ msgstr ""
 #~ msgid "Non Feed"
 #~ msgstr "Bukan Suapan"
 
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s tidak dapat menggunakan direktori video utama di:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Ini mungkin kerana ia terletak di pemacu luaran yang tidak disambungkan, "
-#~ "merupakan direktori yang %(shortappname)s tiada kebenaran untuk ubah, atau "
-#~ "ada sesuatu yang bukan sebuah direktori di laluan tersebut.\n"
-#~ "\n"
-#~ "Jika anda teruskan, direktori video utama akan di tetapkan semula ke lokasi "
-#~ "di pemacu ini.  Jika ada video-video yang telah anda muat turun ini akan "
-#~ "menyebabkan %(shortappname)s hilang butiran-butiran tentang video-video "
-#~ "tersebut.\n"
-#~ "\n"
-#~ "Jika anda berhenti, anda boleh sambungkan pemacu tersebut ataupun selesaikan "
-#~ "masalah tersebut dan lancarkan semula %(shortappname)s."
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Tambah Laman Sesawang - URL tidak sah"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Alamat yang anda masukkan ialah bukan URL yang sah.\n"
-#~ "Sila periksa URL dan cuba semula.\n"
-#~ "\n"
-#~ "Masukkan URL laman sesawang untuk ditambah"
-
 #~ msgid "Rename Feed"
 #~ msgstr "Namakan Semula Suapan"
-
-#~ msgid "Rename Website"
-#~ msgstr "Namakan Semula Laman Sesawang"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Masukkan nama baru untuk laman sesawang %(name)s"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Buang laman sesawang"
-#~ msgstr[1] "Buang laman sesawang"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Adakah anda pasti anda ingin buang laman sesawang ini?"
-#~ msgstr[1] "Adakah anda pasti anda ingin buang laman sesawang ini?"
 
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "Pemasangan kali pertama %(name)s"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Selamat Datang ke pemasangan kali pertama %(name)s\n"
-#~ "Beberapa Skrin-skrin seterusnya akan membantu anda untuk menyediakan "
-#~ "%(name)s supaya ia berfungsi secara terbaik untuk anda.\n"
-#~ "\n"
-#~ "Dalam bahasa apakah anda hendak Miro berada di dalam?"
 
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Hadkan kesemua fail peribadi saya."
@@ -5517,17 +5285,6 @@ msgstr ""
 
 #~ msgid "Pause Auto-Downloading when this many items are unplayed:"
 #~ msgstr "Henti sebentar Muaturun-Automatik bila item ini tidak dimainkan:"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Untuk menggelintar media di laman carian media Internet, klik pada kotak "
-#~ "gelintar diatas, taipkan terma gelintar dan tekan kekunci Enter. Untuk "
-#~ "menukar enjin gelintar, klik pada ikon disebelah kiri kotak gelintar dan "
-#~ "pilih enjin carian dari menu tarik turun."
 
 #~ msgid "Feed should go in this section:"
 #~ msgstr "Suapan patut pergi ke bahagian ini:"
@@ -5546,26 +5303,6 @@ msgstr ""
 #~ "\n"
 #~ "Masukkan URL suapan untuk ditambah"
 
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Laman sesawang telah dipilih"
-#~ msgstr[1] "%(count)d Laman sesawang telah web dipilih"
-
-#, python-format
-#~ msgid "Conversion to %s"
-#~ msgstr "Penukaran ke %s"
-
-#~ msgid "FAILED!"
-#~ msgstr "GAGAL!"
-
-#~ msgid "Open log"
-#~ msgstr "Buka log"
-
-#, python-format
-#~ msgid "Pending conversion to %s"
-#~ msgstr "Tangguh penukaran ke %s"
-
 #~ msgid ""
 #~ "Include entire program database including all video and feed metadata with "
 #~ "crash report"
@@ -5573,24 +5310,8 @@ msgstr ""
 #~ "Sertakan seluruh pangkalan data program termasuk semua video dan metadata "
 #~ "suapan bersama laporan kerosakan."
 
-#~ msgid "Remove Website"
-#~ msgstr "Buang Laman Sesawang"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Buang Laman Sesawang"
-
-#~ msgid "WEBSITES"
-#~ msgstr "LAMAN SESAWANG"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Miro perlu dimulakan semula sebelum menukar bahasa)"
-
 #~ msgid "Auto download setting:"
 #~ msgstr "Tetapan muat turun automatik:"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Direktori '%s' tidak dapat dicipta.  "
 
 #, python-format
 #~ msgid ""
@@ -5605,9 +5326,6 @@ msgstr ""
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr "Mainkan semula item video atau audio dari titik terakhir dihentikan."
-
-#~ msgid "Unknow Host"
-#~ msgstr "Hos Tidak Diketahui"
 
 #~ msgid "Add Site - Invalid URL"
 #~ msgstr "Tambah Laman - URL Tidak Sah"

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4501,9 +4501,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Theo mặc định, video hết hạn vào:"
-
 #~ msgid "_Next Video"
 #~ msgstr "_Video  tiếp"
 
@@ -4515,9 +4512,6 @@ msgstr ""
 
 #~ msgid "Ok"
 #~ msgstr "Đồng ý"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Sử dụng cái biểu hiện này để hát audio:"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
@@ -4541,49 +4535,8 @@ msgstr ""
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "Thay vì CRLF, nhận được: %(character)r"
 
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Chúng tôi xin lỗi, %(appname)s không thể chạy với lỗi cơ sở dữ liệu:\n"
-#~ "\n"
-#~ "Lỗi: %(error)s\n"
-#~ "\n"
-#~ "Có thể file cơ sở dữ liệu bị sửa đổi hoặc không thể sử dụng\n"
-#~ "\n"
-#~ "Bạn có thể làm mới lại hoặc cơ sở dữ liệu đã hỏng sẽ bị xóa bỏ, nhưng bạn "
-#~ "cần phải thêm lại những file thông tin. Nếu bạn muốn làm điều này, ấn nút "
-#~ "Bắt đầu Làm mới và khởi động lại %(appname)s\n"
-#~ "\n"
-#~ "Để giúp chúng tôi sửa như thế này trong những lần sau, xin hãy ghi báo cáo "
-#~ "lỗi ở %(url)s."
-
 #~ msgid "Error loading feed"
 #~ msgstr "Lỗi đang tải thêm thông tin"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s sẽ xác nhận báo cáo lỗi tới cơ sở dữ liệu lỗi của chúng tôi\n"
-#~ "\n"
-#~ "Bạn có muốn bao gồm toàn bộ cơ sở dữ liệu chương trình với tất cả video và "
-#~ "feed siêu dữ liệu với báo cáo lỗi? Điều này giúp chúng tôi chuẩn đoán vấn đề."
 
 #~ msgid "Playing File"
 #~ msgstr "Đang chạy file"
@@ -4595,10 +4548,6 @@ msgstr ""
 #, python-format
 #~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 #~ msgstr "Không thể tải thông tin ở %(url)s (%(errordescription)s)."
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Không có kết nối - Đang cố thử lại trong %s"
 
 #, python-format
 #~ msgid ""
@@ -4634,40 +4583,11 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Chúng tôi xin lỗi, %(appname)s không thể nâp cấp cơ sở dữ liệu của bạn do "
-#~ "các lỗi.\n"
-#~ "\n"
-#~ "Kiểm tra xem nếu đĩa cứng của bạn đầy. Nếu nó đầy, thoát %(appname)s, làm "
-#~ "trống không gian, và bắt đầu %(appname)s  lần nữa.\n"
-#~ "\n"
-#~ "If ổ đĩa của bạn chưa đầy, giúp chúng tôi hiểu vấn đề bằng cách ghi báo cáo "
-#~ "lỗi tới cơ sở dữ liệu lỗi của chúng tôi.\n"
-#~ "\n"
-#~ "Cuối cùng, bạn có thể bắt đầu làm mới lại và dữ liệu đã bị phá hủy sẽ bị xóa "
-#~ "bỏ, nhưng bạn sẽ phải thêm các nguồn thông tin của bạn và các file đa phương "
-#~ "tiện."
-
-#, python-format
-#~ msgid ""
 #~ "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 #~ "the publisher of this file."
 #~ msgstr ""
 #~ "File thông tin %(appname)s này có dạng không hợp lệ: %(url)s. Xin hãy thông "
 #~ "báo này file này tới người xuất bản."
-
-#~ msgid "Reason unknown"
-#~ msgstr "Không rõ nguyên nhân"
 
 #, python-format
 #~ msgid ""
@@ -4738,9 +4658,6 @@ msgstr ""
 #~ msgid "Upload Total"
 #~ msgstr "Tổng tải lên"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Tỉ lệ tải lên/tải về"
-
 #~ msgid "Down Rate"
 #~ msgstr "Tỉ lệ tải về"
 
@@ -4774,17 +4691,8 @@ msgstr ""
 #~ msgid "_Download Item"
 #~ msgstr "_Mục tải về"
 
-#~ msgid "Add Website"
-#~ msgstr "Thêm Website"
-
 #~ msgid "_Remove Items"
 #~ msgstr "_Xóa bỏ mục"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Sửa mục"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Tùy chỉnh sở thích"
 
 #~ msgid "Add _Feed"
 #~ msgstr "Thêm_cấp liệu"
@@ -4795,20 +4703,8 @@ msgstr ""
 #~ msgid "Save Item _As"
 #~ msgstr "Lưu mực dưới dạng khác"
 
-#~ msgid "Re_name Website"
-#~ msgstr "Sửa_tên Website"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Sửa tên cấp liệu"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Xóa bỏ các cấp liệu"
-
 #~ msgid "New _Folder"
 #~ msgstr "Thư mục mới"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Xóa bỏ cấp liệu"
 
 #~ msgid "_Remove"
 #~ msgstr "_Xóa bỏ"
@@ -4852,15 +4748,6 @@ msgstr ""
 #~ msgid "_Pause"
 #~ msgstr "_Tạm ngưng"
 
-#~ msgid "_Next Item"
-#~ msgstr "_Hạng mục tiếp theo"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Hạng mục trước đó"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "Phụ đề"
-
 #~ msgid "_Stop"
 #~ msgstr "_Dừng"
 
@@ -4902,22 +4789,6 @@ msgstr ""
 #~ msgid "%(rate)s downloading"
 #~ msgstr "%(rate)s đang tải về"
 
-#~ msgid "Auto-download"
-#~ msgstr "Tự động tải về"
-
-#~ msgid "Convert"
-#~ msgstr "Chuyển đổi"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Nhập URL của website để thêm v"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Thêm Website- URL không hợp l"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Nhập tên mới cho  %(name)s"
-
 #, python-format
 #~ msgid "Enter a new name for the feed folder %(name)s"
 #~ msgstr "Nhập tên mới cho thư mục cấp liệu %(name)s"
@@ -4932,37 +4803,12 @@ msgstr ""
 #~ msgid "Rename Feed"
 #~ msgstr "Sửa tên cấp liệu"
 
-#~ msgid "Rename Website"
-#~ msgstr "Sửa tên"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Xóa"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Bạn có chắc rằng muốn xóa %(count)s  này ?"
-
-#~ msgid "Choose Language"
-#~ msgstr "Chọn ngôn ng"
-
-#~ msgid "Update"
-#~ msgstr "Cập nh"
-
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "%(name)s Cài đặt giờ lần đầu"
 
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s khởi động"
-
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Hạn chế với tất cả file cá nhân của tôi"
-
-#~ msgid "Finding Files"
-#~ msgstr "Đang tìm file"
 
 #~ msgid "Search custom folders:"
 #~ msgstr "Tìm kiếm thư mục tùy chọn:"

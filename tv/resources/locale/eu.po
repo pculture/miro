@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4507,12 +4507,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Ez bada zehazten, bideoen iraungitze (kaduzitate) denbora:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Kanal pertsonalizatuak"
-
 #~ msgid "Error loading feed"
 #~ msgstr "Jarioa kargatzean hutsegitea"
 
@@ -4637,12 +4631,6 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Bestelakoak"
 
-#~ msgid "Path:"
-#~ msgstr "Kokalekua:"
-
-#~ msgid "Title:"
-#~ msgstr "Izenburua:"
-
 #~ msgid "Save Search"
 #~ msgstr "Gorde bilaketa"
 
@@ -4675,17 +4663,8 @@ msgstr ""
 #~ msgid "Non Feed"
 #~ msgstr "Jarioa ez"
 
-#~ msgid "Rename Website"
-#~ msgstr "Webgunea berrizendatu"
-
 #~ msgid "Update Feeds Now"
 #~ msgstr "Jarioak orain eguneratu"
-
-#~ msgid "Remove Website"
-#~ msgstr "Webgunea ezabatu"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Webguneak ezabatu"
 
 #~ msgid "Update Feed Now"
 #~ msgstr "Eguneratu jarioa orain"
@@ -4696,9 +4675,6 @@ msgstr ""
 #~ msgid "Rename Feed Folder"
 #~ msgstr "Jarioen karpeta berrizendatu"
 
-#~ msgid "WEBSITES"
-#~ msgstr "WEBGUNEAK"
-
 #~ msgid "LIBRARY"
 #~ msgstr "LIBURUTEGIA"
 
@@ -4708,18 +4684,11 @@ msgstr ""
 #~ msgid "PLAYLISTS"
 #~ msgstr "ERREPRODUZIO-ZERRENDAK"
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "BIDEO JARIOAK"
-
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Jario berrientzako lehenetsitako ezarpenak"
 
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(Jarioen ezarpen botoiarekin alda daitezke)"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "'%s' direktorioa ezin izan da sortu.  "
 
 #, python-format
 #~ msgid ""
@@ -4730,9 +4699,6 @@ msgstr ""
 #~ "Filmak deskargatzeko karpeta berri bat aukeratu duzu. %(appname)s-ek jadanik "
 #~ "deskargatutako filmak migratu behar al ditu? (Orain deskargatzen ari direnak "
 #~ "ez dira bukatu arte migratuko)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Multimedia Miron erreproduzitu."
 
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
@@ -4779,26 +4745,6 @@ msgstr ""
 #~ "Ondorengo elementuetako batzuk ez dira jario batetik deskargatu. Elementu "
 #~ "hauek ezabatu edo liburutegian utzi nahi dituzu?"
 
-#~ msgid "Add Website"
-#~ msgstr "Webgunea gehitu"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Webgunea gehitu - Baliogabeko URLa"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Gehitu beharreko webgunearen URLa idatzi"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Idatzitako helbidea ez da baliozko URLa.\n"
-#~ "Mesedez berrikusi ezazu URLa eta saia zaitez berriro.\n"
-#~ "\n"
-#~ "Gehitu beharreko webgunearen URLa idatzi:"
-
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "CRLF espero zen baina %(character)r jaso da"
@@ -4808,9 +4754,6 @@ msgstr ""
 #~ msgid_plural "Show %(count)d More Items"
 #~ msgstr[0] "%(count)d erakutsi. Elementu gehiago"
 #~ msgstr[1] "%(count)d erakutsi. Elementu gehiago"
-
-#~ msgid "Media type:"
-#~ msgstr "Media-mota:"
 
 #~ msgid "Auto download setting:"
 #~ msgstr "Deskarga automatikoen ezarpenak:"
@@ -4855,9 +4798,6 @@ msgstr ""
 #~ msgid "File URL"
 #~ msgstr "Fitxategiaren URL helbidea"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Igoera/Jeitsiera tasa"
-
 #~ msgid "queued for autodownload"
 #~ msgstr "Deskarga automatikorako ilaratuta"
 
@@ -4896,17 +4836,8 @@ msgstr ""
 #~ msgid "Add Feed - Invalid URL"
 #~ msgstr "Jario berria - Baliogabeko URL helbidea"
 
-#~ msgid "_Edit Item"
-#~ msgstr "Elementua _editatu"
-
 #~ msgid "Check _Version"
 #~ msgstr "_Bertsioa egiaztatu"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Jarioa Ber_izendatu"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Hobespenak"
 
 #~ msgid "Add _Feed"
 #~ msgstr "_Jario berria"
@@ -4923,18 +4854,6 @@ msgstr ""
 #~ msgid "New _Folder"
 #~ msgstr "_Karpeta berria"
 
-#~ msgid "Re_name Website"
-#~ msgstr "Webgunea ber_izendatu"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "Jarioak _ezabatu"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "Karpetak _ezabatu"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "Jarioa _ezabatu"
-
 #~ msgid "_Update Feeds"
 #~ msgstr "Jarioak _eguneratu"
 
@@ -4943,12 +4862,6 @@ msgstr ""
 
 #~ msgid "_Remove Folder"
 #~ msgstr "Karpeta _ezabatu"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "Webguneak _ezabatu"
-
-#~ msgid "_Remove Website"
-#~ msgstr "Webgunea _ezabatu"
 
 #~ msgid "_Remove"
 #~ msgstr "_Ezabatu"
@@ -4964,9 +4877,6 @@ msgstr ""
 
 #~ msgid "Update _All Feeds"
 #~ msgstr "Jario _guztiak eguneratu"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "A_zpitituluak"
 
 #~ msgid "Report a _Bug"
 #~ msgstr "_Akats bat jakinarazi"
@@ -5016,10 +4926,6 @@ msgstr ""
 #~ "behera utziko dira."
 
 #, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "%(name)s webgunearen izen berria idatzi"
-
-#, python-format
 #~ msgid "Enter a new name for the feed %(name)s"
 #~ msgstr "%(name)s jarioaren izen berria idatzi"
 
@@ -5034,17 +4940,6 @@ msgstr ""
 #~ "Miro zure jario eta fitxategien datu-basea eguneratzen ari da. Behin egin "
 #~ "beharreko prozesu hau luzea izan daiteke Miron elementu asko izanez gero (30 "
 #~ "minutu baino gehiago iraun dezake)."
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Webgunea ezabatu"
-#~ msgstr[1] "Webguneak ezabatu"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Ziur zaude webgune hau ezabatu nahi duzula?"
-#~ msgstr[1] "Ziur zaude %(count)s webgune hauek ezabatu nahi dituzula?"
 
 #~ msgid ""
 #~ "Include entire program database including all video and feed metadata with "
@@ -5075,12 +4970,6 @@ msgstr ""
 
 #~ msgid "Subscribe to Feed"
 #~ msgstr "Jariora harpidetu"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "Webgune %(count)d hautatuta"
-#~ msgstr[1] "%(count)d webgune hautatuta"
 
 #~ msgid "Pause Auto-Downloading when this many items are unplayed:"
 #~ msgstr ""
@@ -5197,85 +5086,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s-(e)k ezin du lehenetsitako bideo direktorioa erabili:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Hau direktorioa kokatzen den kanpoko unitatea konektaturik ez dagoelako, "
-#~ "%(shortappname)s-(e)k idazteko baimenik ez duen direktorioa delako edo "
-#~ "kokaleku horretan direktorioa ez den beste zerbait dagoelako izan daiteke.\n"
-#~ "\n"
-#~ "Jarraitzen baduzu, lehenetsitako bideo direktorioa unitate honetako kokaleku "
-#~ "batean berrezarriko da. Deskargaturiko bideoren bat bazenuen, "
-#~ "%(shortappname)s-(e)k bideo horiei buruzko informazioa galduko du.\n"
-#~ "\n"
-#~ "Ezeztatzen baduzu, unitatea konekta dezakezu edo arazoa konpondu ondoren "
-#~ "%(shortappname)s berrabiarazi."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Irten pantaila osotik"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Aurreko elementua"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Hurrengo elementua"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Burutu gabe)"
-
-#~ msgid "Choose Language"
-#~ msgstr "Hautatu hizkuntza"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "%(name)s ordenagailuarekin batera abiaraztea gemendatzen dizugu. Horrela, "
-#~ "burutu gabeko deskargak deskargatzen jarrai dezakete eta fitxategi berriak "
-#~ "atzeko planoan deskargatu, zuk ikusi nahi dituzun unerako prest."
-
-#~ msgid "Update"
-#~ msgstr "Eguneratu"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Ongietorri %(name)s-(e)n lehen aldiko konfiguraziora!\n"
-#~ "\n"
-#~ "Hurrengo pantailek %(name)s zure beharretara egokitzen lagunduko dizute.\n"
-#~ "\n"
-#~ "Zein hizkuntzatan nahi duzu Miro erabili?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s abioa"
-
-#, python-format
-#~ msgid ""
 #~ "%(appname)s has encountered an internal error.  You can help us track down "
 #~ "this problem and fix it by submitting an error report."
 #~ msgstr ""
@@ -5284,6 +5094,3 @@ msgstr ""
 
 #~ msgid "Outdated Feed Items:"
 #~ msgstr "Jarioko iraungitako elementuak:"
-
-#~ msgid "Finding Files"
-#~ msgstr "Fitxategiak bilatzen"

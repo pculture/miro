@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/net.py:104
 msgid "Timeout"
@@ -4563,77 +4563,12 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Stop after each video"
-#~ msgstr "Stanna efter varje video"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Spela videor i följd"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr ""
-#~ "Återuppta uppspelning av en video från den position den stoppades på."
-
 #~ msgid "Miro Guide"
 #~ msgstr "Miro-guide"
 
 #, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "Du kör en version av %(appname)s med en uppsättning anpassade kanaler."
-
-#, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "Förväntade CRLF men fick: %(character)r"
-
-#~ msgid "Add to Library"
-#~ msgstr "Lägg till i bibliotek"
-
-#~ msgid "Add to library"
-#~ msgstr "Lägg till i biblioteket"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Ange ett namn för den nya kanalmappen"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Ta bort %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Är du säker på att du vill ta bort %(name)s?"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Skapa kanal?"
-#~ msgstr[1] "Skapa %(count)d kanaler?"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Du måste starta om uppspelningen för att visualiserings-ändringarna ska "
-#~ "genomföras."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Använd denna för video vid uppspelning av ljud:"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Bevaka dessa mappar efter nya videos och lägg till dom i biblioteket:"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "NOTERA: Du prenumererar redan på en av dessa kanaler. Kanalerna kommer "
-#~ "stanna där de är just nu."
-#~ msgstr[1] ""
-#~ "NOTERA: Du prenumererar redan på %(count)d av dessa kanaler. Kanalerna "
-#~ "kommer stanna där de är just nu."
 
 #, python-format
 #~ msgid "Bad Header Line: %(msg)s"
@@ -4653,9 +4588,6 @@ msgstr ""
 
 #~ msgid "Other"
 #~ msgstr "Annat"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Starta dela"
 
 #, python-format
 #~ msgid ""
@@ -4693,9 +4625,6 @@ msgstr ""
 
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTEK"
-
-#~ msgid "View:"
-#~ msgstr "Visa:"
 
 #~ msgid "Remove Sites"
 #~ msgstr "Radera Sidor"
@@ -5053,15 +4982,6 @@ msgstr ""
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Som standard går filmen ut efter:"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Prenumererar på flera kanaler"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Anpassade kanaler"
-
 #, python-format
 #~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
@@ -5092,72 +5012,8 @@ msgstr ""
 #~ msgid "Contents:"
 #~ msgstr "Innehåll:"
 
-#~ msgid "Title:"
-#~ msgstr "Titel:"
-
-#~ msgid "Media type:"
-#~ msgstr "Mediatyp:"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Okänt språk"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Redigera metadatan för det här objektet"
-
-#~ msgid "other"
-#~ msgstr "andra (other)"
-
-#~ msgid "Path:"
-#~ msgstr "Sökväg:"
-
 #~ msgid "Re_name"
 #~ msgstr "_Döp om"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Vi är ledsna, &(appname)s kunde inte uppgradera din databas pga "
-#~ "felaktigheter.\n"
-#~ "\n"
-#~ "Kolla om din disk är full. Om den är full avsluta %(appname)s, frigör "
-#~ "utrymme och försök %(appname)s på nytt.\n"
-#~ "\n"
-#~ "Om din hårddisk inte är full, hjälp oss att förstå genom att avsluta och "
-#~ "rapportera en felaktighet på bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Slutligen, kan börja på nytt och den skadade databasen kommer att tas bort, "
-#~ "med du måste lägga tilldina kanaler ach media filer."
-
-#~ msgid "(Pending)"
-#~ msgstr "(Väntar)"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Redigera objekt"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Inställningar"
-
-#~ msgid "Choose Language"
-#~ msgstr "Välj språk"
-
-#~ msgid "Update"
-#~ msgstr "Uppdatera"
-
-#~ msgid "Finding Files"
-#~ msgstr "Hitta filer"
-
-#~ msgid "Convert"
-#~ msgstr "Konvertera"
 
 #~ msgid ""
 #~ "One of these items was not downloaded from a feed. Would you like to delete "
@@ -5175,18 +5031,11 @@ msgstr ""
 #~ msgid "Outdated Feed Items:"
 #~ msgstr "Föråldrade flödesobjekt:"
 
-#~ msgid "Universal, Chinese"
-#~ msgstr "Universell, kinesisk"
-
 #~ msgid "Error loading feed"
 #~ msgstr "Fel vid inläsning av flöde"
 
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "Vill du behålla flödet?"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "ingen anslutning - försöker igen om %s"
 
 #, python-format
 #~ msgid ""
@@ -5228,9 +5077,6 @@ msgstr ""
 #~ msgid "Upload Total"
 #~ msgstr "Totalt skickat"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Skickat/hämtat-förhållande"
-
 #~ msgid "queued for autodownload"
 #~ msgstr "kölagd för automatisk hämtning"
 
@@ -5246,9 +5092,6 @@ msgstr ""
 #~ msgid "Add new feed to this section:"
 #~ msgstr "Lägg till nytt flöde i den här sektionen:"
 
-#~ msgid "Add Website"
-#~ msgstr "Lägg till webbplats"
-
 #~ msgid "Add _Feed"
 #~ msgstr "Lägg till _flöde"
 
@@ -5260,24 +5103,6 @@ msgstr ""
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Nytt _sökningsflöde"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "_Döp om flöde"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Ta bort flöden"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Ta bort mappar"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Ta bort flöde"
-
-#~ msgid "Re_name Website"
-#~ msgstr "_Döp om webbplats"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Ta bort webbplats"
 
 #~ msgid "_Import Feeds (OPML)"
 #~ msgstr "_Importera flöden (OPML)"
@@ -5294,9 +5119,6 @@ msgstr ""
 #~ msgid "_Update Feed"
 #~ msgstr "_Uppdatera flöde"
 
-#~ msgid "_Remove Websites"
-#~ msgstr "_Ta bort webbplatser"
-
 #~ msgid "Re_name Playlist"
 #~ msgstr "_Döp om spellista"
 
@@ -5311,15 +5133,6 @@ msgstr ""
 
 #~ msgid "_Remove Playlist Folder"
 #~ msgstr "_Ta bort spellistemapp"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Föregående objekt"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Nästa objekt"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Undertexter"
 
 #~ msgid "Skip _Forward"
 #~ msgstr "Hoppa fra_måt"
@@ -5355,9 +5168,6 @@ msgstr ""
 #~ msgstr[0] "Importering av %(count)d flöde lyckades."
 #~ msgstr[1] "Importering av %(count)d flöden lyckades."
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEOFLÖDEN"
-
 #~ msgid "Length"
 #~ msgstr "Längd"
 
@@ -5373,9 +5183,6 @@ msgstr ""
 #~ msgid "Non Feed"
 #~ msgstr "Inget flöde"
 
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Ange adressen till webbplatsen att lägga till"
-
 #, python-format
 #~ msgid "Enter a new name for the feed folder %(name)s"
 #~ msgstr "Ange ett nytt namn för flödesmappen %(name)s"
@@ -5389,18 +5196,6 @@ msgstr ""
 
 #~ msgid "Rename Feed"
 #~ msgstr "Döp om flöde"
-
-#~ msgid "Rename Website"
-#~ msgstr "Döp om webbplats"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Ange ett nytt namn för webbplatsen %(name)s"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Ta bort webbplats"
-#~ msgstr[1] "Ta bort webbplatser"
 
 #~ msgid "Single and external downloads"
 #~ msgstr "Enstaka och externa hämtningar"
@@ -5446,38 +5241,8 @@ msgstr ""
 #~ msgstr "Ny spelliste_mapp"
 
 #, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Vi rekommenderar att %(name)s startas när din dator startar. Då kan "
-#~ "hämtningar som pågår slutföras och nya mediafiler kan hämtas i bakgrunden, "
-#~ "klara när du vill titta på dem."
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Välkommen till förstagångsinstallationen av %(name)s!\n"
-#~ "\n"
-#~ "De kommande dialogrutorna hjälper dig att ställa in %(name)s så det fungerar "
-#~ "som bäst för dig.\n"
-#~ "\n"
-#~ "Vilket språk vill du att Miro ska använda?"
-
-#, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "Förstagångsinstallation av %(name)s"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Uppstart av %(name)s"
 
 #~ msgid "Search custom folders:"
 #~ msgstr "Sök i anpassade mappar:"
@@ -5515,39 +5280,13 @@ msgstr ""
 #~ msgstr[0] "%(count)d flöde valt"
 #~ msgstr[1] "%(count)d flöden valda"
 
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d webbplats vald"
-#~ msgstr[1] "%(count)d webbplatser valda"
-
-#, python-format
-#~ msgid "Conversion to %s"
-#~ msgstr "Konvertering till %s"
-
-#~ msgid "FAILED!"
-#~ msgstr "MISSLYCKADES!"
-
-#~ msgid "Open log"
-#~ msgstr "Öppna logg"
-
 #~ msgid "Feed downloads"
 #~ msgstr "Flödeshämtningar"
-
-#, python-format
-#~ msgid "Pending conversion to %s"
-#~ msgstr "Avvaktande konvertering till %s"
 
 #~ msgid "Remove Feed"
 #~ msgid_plural "Remove Feeds"
 #~ msgstr[0] "Ta bort flöde"
 #~ msgstr[1] "Ta bort flöden"
-
-#~ msgid "Remove Website"
-#~ msgstr "Ta bort webbplats"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Ta bort webbplatser"
 
 #~ msgid "Update Feed Now"
 #~ msgstr "Uppdatera flöde nu"
@@ -5561,9 +5300,6 @@ msgstr ""
 #~ msgid "Update Feeds Now"
 #~ msgstr "Uppdatera flöden nu"
 
-#~ msgid "WEBSITES"
-#~ msgstr "WEBBPLATSER"
-
 #~ msgid "AUDIO FEEDS"
 #~ msgstr "LJUDFLÖDEN"
 
@@ -5576,9 +5312,6 @@ msgstr ""
 #~ msgid "Full Feed"
 #~ msgstr "Hela flödet"
 
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Byte av språket kräver att du startar om Miro.)"
-
 #~ msgid "Subscribe to Feed"
 #~ msgstr "Prenumerera på flöde"
 
@@ -5588,32 +5321,8 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(Dessa kan ändras genom att använda flödets inställningsknapp)"
 
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Katalogen \"%s\" kunde inte skapas.  "
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Spela upp media i Miro"
-
 #~ msgid "Feeds"
 #~ msgstr "Flöden"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Lämna helskärm"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Okänd värd"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "För att söka efter media på mediasöksidor på internet, klicka på sökrutan "
-#~ "ovan, skriv in sökord och tryck på Enter. För att växla sökmotorer, klicka "
-#~ "på ikonen till vänster om sökrutan ovan och välj sökmotorn från "
-#~ "rullgardinsmenyn."
 
 #~ msgid "Pause Auto-Downloading when this many items are unplayed:"
 #~ msgstr "Gör automatiskt paus i hämtning när så här många objekt är ospelade:"
@@ -5634,47 +5343,8 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s kan inte använda den primära videokatalogen som finns på:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Det kan bero på att den finns på en extern hårddisk som inte är ansluten, "
-#~ "att den är en katalog som %(shortappname)s inte har skrivrättigheter till "
-#~ "eller att där är något som inte är en katalog på den sökvägen.\n"
-#~ "\n"
-#~ "Om du fortsätter, kommer den primära videokatalogen att återställas till en "
-#~ "plats på den här hårddisken. Om du har hämtade videor kommer "
-#~ "%(shortappname)s att förlora detaljer om dem.\n"
-#~ "\n"
-#~ "Om du avslutar, kan du ansluta hårddisken eller på annat sätt lösa problemet "
-#~ "och sedan starta om %(shortappname)s."
-
-#, python-format
-#~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 #~ msgstr "Filen på %(url)s verkar inte vara ljud, video eller ett RSS-flöde."
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Är du säker på att du vill ta bort denna webbplats?"
-#~ msgstr[1] ""
-#~ "Är du säker på att du vill ta bort de här %(count)s webbplatserna?"
 
 #, python-format
 #~ msgid ""
@@ -5746,20 +5416,6 @@ msgstr ""
 #~ "\n"
 #~ "Vill du försöka läsa in denna kanal ändå?"
 
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Lägg till webbplats - ogiltig webbadress"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Adressen du angav är inte en giltig webbadress.\n"
-#~ "Kontrollera adressen och försök igen.\n"
-#~ "\n"
-#~ "Ange adressen till webbplatsen att lägga till"
-
 #~ msgid ""
 #~ "The address you entered is not a valid url.\n"
 #~ "Please check the URL and try again.\n"
@@ -5774,68 +5430,6 @@ msgstr ""
 #~ msgid "Add Feed - Invalid URL"
 #~ msgstr "Lägg till flöde - ogiltig webbadress"
 
-#~ msgid "Auto-download"
-#~ msgstr "Auto-hämtning"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Misslyckades: %(error)s"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Vi beklagar, %(appname)s kunde inte starta på grund av ett problem med "
-#~ "databasen:\n"
-#~ "\n"
-#~ "Fel: %(error)s\n"
-#~ "\n"
-#~ "Det är möjligt att din databasfil är trasig och inte kan användas.\n"
-#~ "\n"
-#~ "Du kan göra en fräsch start och då kommer din skadade databas att tas bort, "
-#~ "men du måste lägga till dina flöden och mediafiler igen. Om du vill göra "
-#~ "detta, tryck på \"Fräsch start\"-knappen och starta sedan om %(appname)s.\n"
-#~ "\n"
-#~ "För att hjälpa oss att rätta till liknande problem i framtiden, skicka in en "
-#~ "felrapport på %(url)s."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Vi beklagar, %(appname)s kunde inte uppgradera din databas på grund av flera "
-#~ "fel.\n"
-#~ "\n"
-#~ "Kontrollera om din disk är full. Om den är full, avsluta %(appname)s, frigör "
-#~ "lite utrymme och starta sedan %(appname)s igen.\n"
-#~ "\n"
-#~ "Om din disk inte är full, hjälp oss att förstå problemet genom att "
-#~ "rapportera ett fel till vår kraschdatabas.\n"
-#~ "\n"
-#~ "Slutligen kan du göra en fräsch start och då kommer din skadade databas att "
-#~ "tas bort, men du måste lägga till dina flöden och mediafiler igen."
-
 #, python-format
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "Kunde inte hämta flödesfilen för %(appname)s: %(url)s"
@@ -5843,61 +5437,3 @@ msgstr ""
 #, python-format
 #~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 #~ msgstr "Kunde inte läsa in flödet på %(url)s (%(errordescription)s)."
-
-#~ msgid "Reason unknown"
-#~ msgstr "Okänd orsak"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s kommer nu att skicka en felrapport till vår kraschregister\n"
-#~ "\n"
-#~ "Vill du inkludera hela programdatabasen som innehåller all video- och "
-#~ "flödesmetadata med felrapporten? Det kommer att hjälpa oss diagnostisera "
-#~ "problemet."
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro har upptäckt att ditt system kanske saknar Bonjour-komponenterna, en "
-#~ "standardkomponent av Mac OS X installationer. Var god kontrollera din "
-#~ "installation av Mac OS X."
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Din webbläsare kommer att ladda webb-siten där du kan ladda ner och "
-#~ "installera Bonjour.\n"
-#~ "\n"
-#~ "När installationen är färdig, starta helt enkelt om Miro för att ändringarna "
-#~ "ska ta effekt."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "För den bästa upplevelsen av %(appname)s, föreslår vi att du installerar "
-#~ "Bonjour, vilket distribueras som en del av Print Services.\n"
-#~ "Installering av Bonjour kommer tillåta dig att dela med dig av ditt "
-#~ "mediebibliotek med andra användare av %(appname)s på ditt nätverk, så väl "
-#~ "som som strömmande media från andra användare av %(appname)s på ditt "
-#~ "nätverk.\n"
-#~ "\n"
-#~ "Skulle du vilja göra det nu?"

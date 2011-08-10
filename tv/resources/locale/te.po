@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4537,9 +4537,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Add to Library"
-#~ msgstr "గ్రంధాలయానికి చేర్చు"
-
 #~ msgid "Miro Guide"
 #~ msgstr "మీరో గైడ్"
 
@@ -4702,17 +4699,8 @@ msgstr ""
 #~ msgid "Feed downloads"
 #~ msgstr "ఉచిత దింపుకోళ్ళు"
 
-#~ msgid "Title:"
-#~ msgstr "శీర్షిక:"
-
-#~ msgid "Media type:"
-#~ msgstr "మాధ్యమ రకం:"
-
 #~ msgid "Feed"
 #~ msgstr "ఫీడ్"
-
-#~ msgid "Path:"
-#~ msgstr "త్రోవ:"
 
 #~ msgid "Show Less"
 #~ msgstr "తక్కుప చూపించు"
@@ -4725,9 +4713,6 @@ msgstr ""
 
 #~ msgid "License Page"
 #~ msgstr "లైసెన్సు పుట"
-
-#~ msgid "_Preferences"
-#~ msgstr "_అభిరుచులు"
 
 #~ msgid "Feed:"
 #~ msgstr "ఫీడు:"
@@ -4819,12 +4804,6 @@ msgstr ""
 #~ msgid "%(rate)s uploading"
 #~ msgstr "%(rate)s న ఎక్కిస్తున్నాం"
 
-#~ msgid "Rename Website"
-#~ msgstr "వెబ్‍సైటు పేరు మార్చు"
-
-#~ msgid "Remove Websites"
-#~ msgstr "వెబ్‍సైటులను తీసెయ్యి"
-
 #~ msgid "Update Feed Now"
 #~ msgstr "వడ్డనను ఇప్పుడు తాజాకరించు"
 
@@ -4836,9 +4815,6 @@ msgstr ""
 
 #~ msgid "Update Feeds Now"
 #~ msgstr "వడ్డనలను ఇప్పుడు తాజాకరించు"
-
-#~ msgid "WEBSITES"
-#~ msgstr "వెబ్‍సైట్లు"
 
 #~ msgid "AUDIO FEEDS"
 #~ msgstr "ఆడియో వడ్డనలు"
@@ -4858,12 +4834,6 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(వడ్డనల సెట్టింగులు బొత్తాం ద్వారా వీటిని మార్చవచ్చు)"
 
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(భాష మార్చాలంటే Miro ను మూసి, మళ్ళీ తెరవాలి.)"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "వీడీయో వడ్డనలు"
-
 #~ msgid "Auto download setting:"
 #~ msgstr "ఆటో దింపుకోలు సెట్టింగు:"
 
@@ -4877,64 +4847,13 @@ msgstr ""
 #~ "మూవీలను %(appname)s ఆ ఫోల్డరుకు తరలించాలా? (ప్రస్తుతం దించుకుంటున్న మూవీలు "
 #~ "దింపుకోలు పూర్తయ్యేంతవరకు తరలించబడవు)"
 
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "'%s' డైరెక్టరీని సృష్టించలేకపోయాం.  "
-
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr ""
 #~ "వీడియోగాని, ఆడియోగాని కిందటిసారి ఎక్కడైతే ఆపానో అక్కడి నుండి ప్లే చెయ్యి."
 
-#~ msgid "Play media in Miro."
-#~ msgstr "Miro లో మీడియాను ప్లే చెయ్యి."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "నిండుతెరనుండి నిష్క్రమించు"
-
 #~ msgid "Back to feed"
 #~ msgstr "తిరిగి వడ్దనకు"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "వద్దనున్న ప్రాథమిక వీడియో డైరెక్టరీని %(shortappname)s వాడుకోలేకున్నది\n"
-#~ "\n"
-#~ "కనెక్టు అయిలేని, బయాటి డ్రైవులో అది ఉండటం మూలాన కావచ్చు. %(shortappname)s కు "
-#~ "రాత అనుమతులు లేని డైరెక్టరీ కావచ్చు. లేదా ఆ పాత్ లో డైరెక్టరీ కానిదేదో ఉండి "
-#~ "ఉండవచ్చు.\n"
-#~ "\n"
-#~ "మీరు ముందుకు పోయె పనైతే, ప్రాథమిక వీడియో డైరెక్టరీని ఈ డ్రైవులోనే పెడతాం. "
-#~ "మీరు వీడియోలను దింపుకొని ఉంటే  %(shortappname)s ఆ వీడియోల వివరాలను "
-#~ "కోల్పోతుంది. \n"
-#~ "\n"
-#~ "వదిలి వెళ్ళిపోతే, ఆ డ్రైవును తిరిగి కనెక్టు చెయ్యవచ్చు. లేదా, వేరే సమస్య "
-#~ "ఏదైనా ఉంటే, దాన్ని సరిచేసి ఆనక %(shortappname)s ను తిరిగి నడపవచ్చు."
-
-#~ msgid "Add Website"
-#~ msgstr "వెబ్‍సైటును చేర్చు"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "వెబ్‍సైటును చేర్చు - సరైన URL కాదు"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "చేర్చాల్సిన వెబ్‍సైటు URL ఇవ్వండి"
 
 #~ msgid ""
 #~ "One of these items is a folder.  Delete/Removeing a folder will "
@@ -4966,34 +4885,8 @@ msgstr ""
 #~ msgid "Enter a new name for the feed folder %(name)s"
 #~ msgstr "%(name)s వడ్డన ఫోల్డరుకు కొత్త పేరు ఇవ్వండి"
 
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "మీరిచ్చిన చిరునామా సరైన URL కాదు.\n"
-#~ "దాన్ని సరిచూసుకొని మళ్ళీ ప్రయత్నించండి.\n"
-#~ "\n"
-#~ "చేర్చాలసిన వెబ్‍సైటు URL ఇవ్వండి"
-
 #~ msgid "Rename Feed"
 #~ msgstr "వద్దన పేరుమార్చు"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "%(name)s వెబ్‍సైటుకు కొత్త పేరు ఇవ్వండి"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "వెబ్‍సైటును తీసెయ్యి"
-#~ msgstr[1] "వెబ్‍సైటులను తీసెయ్యి"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "ఈ వెబ్‍సైటును తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
-#~ msgstr[1] "ఈ %(count)s వెబ్‍సైటులనూ తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 
 #, python-format
 #~ msgid "Enter a new name for the feed %(name)s"
@@ -5013,9 +4906,6 @@ msgstr ""
 
 #~ msgid "Remove from playlist"
 #~ msgstr "ప్లేలిస్టు నుంచి తీసెయ్యి"
-
-#~ msgid "(Pending)"
-#~ msgstr "(పెండింగు)"
 
 #~ msgid "Enter the URL of the feed to add"
 #~ msgstr "చేర్చాల్సిన వడ్డన URL ను ఇవ్వండి"
@@ -5097,12 +4987,6 @@ msgstr ""
 #~ msgid "Subscribe to Feed"
 #~ msgstr "వడ్డనకు చందా కట్టు"
 
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d వెబ్‍సైటును ఎంచుకున్నారు"
-#~ msgstr[1] "%(count)d వెబ్‍సైట్లను ఎంచుకున్నారు"
-
 #~ msgid "Outdated Feed Items:"
 #~ msgstr "కాలదోషం పట్టిన వడ్డన ఐటములు:"
 
@@ -5110,47 +4994,8 @@ msgstr ""
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "%(name)s తొలి సెటప్"
 
-#~ msgid "Choose Language"
-#~ msgstr "భాషను ఎంచుకోండి"
-
-#~ msgid "Update"
-#~ msgstr "తాజాకరించు"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "%(name)s తొలి సెటప్ కు స్వాగతం!\n"
-#~ "\n"
-#~ "రాబోయే తెరల్లో %(name)s చక్కగా పనిచేసేలా ఎలా సెటప్ చేసుకోవాలో వివరిస్తాయి.\n"
-#~ "\n"
-#~ "Miro మీకు ఏ భాషలో కావాలి?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s ప్రారంభం"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "కంప్యూటరు మొదలయ్యేటపుడే %(name)s ను కూడా మొదలుపెట్టాలని మేము సూచిస్తున్నాం. "
-#~ "అలా అయితే, జరుగుతూ ఉన్న దింపుకోళ్ళు పూర్తవడం, కొత్త మీడియా ఫైళ్ళను "
-#~ "దించుకోవడం నేపథ్యంలోనే జరుగుతుంది. ఎప్పుడు చూడాలనుకుంటే అప్పుడు సిద్ధంగా "
-#~ "ఉంటాయి."
-
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "నా వ్యక్తిగత ఫైళ్ళకు మాత్రమే పరిమితం చెయ్యి"
-
-#~ msgid "Finding Files"
-#~ msgstr "ఫైళ్ళను వెతకడం"
 
 #~ msgid "Search custom folders:"
 #~ msgstr "కస్టమ్ ఫోల్డర్లలో వెతుకు:"
@@ -5178,10 +5023,6 @@ msgstr ""
 
 #~ msgid "Add new feed to this section:"
 #~ msgstr "ఈ విభాగానికి కొత్త వడ్డనను చేర్చు:"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "కనెక్షను లేదు - %s లో మళ్ళీ ప్రయత్నం చేస్తాం"
 
 #, python-format
 #~ msgid "%(num).0f hr"
@@ -5288,18 +5129,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "ఇప్పుడు %(appname)s క్రాష్ నివేదికను మా క్రాష్ డేటాబేసుకు సమర్పిస్తుంది\n"
-#~ "\n"
-#~ "వీడియో, ఆడియో, ఫీడు మెటాడేటాలతో సహా మొత్తం ప్రోగ్రాము డేటాబేసంతటినీ క్రాష్ "
-#~ "నివేదికలో చేర్చమంటారా? సమస్య మూాన్ని కనుక్కోవడంలో మాకిది పనికొస్తుంది."
-
-#, python-format
-#~ msgid ""
 #~ "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 #~ "notify the publisher of this file."
 #~ msgstr ""
@@ -5318,33 +5147,8 @@ msgstr ""
 #~ msgstr "డేటాబేసు Miro కొత్త కూర్పుతొ తయారుచేసారు "
 
 #, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "సారీ, %(appname)s ను లోపాల కారణంగా ఉన్నతీకరించలేకపోయాం.\n"
-#~ "\n"
-#~ "మీ డిస్కు నిండిపోయిందేమో చూడండి. అలా అయితే, %(appname)s, కొత్త జాగాను ఖాళీ "
-#~ "చేసి, %(appname)s ను మళ్ళీ మొదలుపెట్టండి.\n"
-#~ "\n"
-#~ "చివరిగా, మీరు మళ్ళీ తాజాగా మొదలుపెట్టవచ్చు. మీ చెడిపోయిఅన్ డేటాబేసుని "
-#~ "తీసేస్తాం. కానీ మీరు మి వడ్డనలు, మీడియా ఫైళ్ళను తిరిగి చేర్చుకోవాల్సి "
-#~ "ఉంటుంది."
-
-#, python-format
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "%(appname)s వడ్డన ఫైలును దించలేకపోయాం: %(url)s"
-
-#~ msgid "Remove Website"
-#~ msgstr "డేటాబేసును తీసెయ్యి"
 
 #~ msgid "Rename Item"
 #~ msgstr "పేరు మార్చు"

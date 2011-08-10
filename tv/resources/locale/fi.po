@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-10 06:52+0000\n"
-"Last-Translator: Jiri Grönroos <Unknown>\n"
+"PO-Revision-Date: 2011-08-09 10:54+0000\n"
+"Last-Translator: sampo555 <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -1444,18 +1444,18 @@ msgstr "Poista podcast"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1808
 #, python-format
 msgid "Importing audio details and artwork: %(number)d of %(total)d"
-msgstr ""
+msgstr "Tuodaan tietoja ja kansikuvia: %(number)d/%(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1811
 #, python-format
 msgid ""
 "Importing video details and creating thumbnails: %(number)d of %(total)d"
-msgstr ""
+msgstr "Tuodaan videon tietoja ja luodaan pienoiskuvia: %(number)d/%(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1814
 #, python-format
 msgid "Importing file details: %(number)d of %(total)d"
-msgstr ""
+msgstr "Tuodaan tiedoston tietoja: %(number)d/%(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1968
 msgid "Remaining"
@@ -1700,6 +1700,10 @@ msgid ""
 "%(shortappname)s if you add them as Sources, but these are Stores that we've "
 "integrated and tested."
 msgstr ""
+"Valitse ne musiikki- ja videokaupat, jotka haluat näkyviin "
+"%(shortappname)sssa. Huom: jotkin muut kaupat voivat myös toimia "
+"%(shortappname)sssa lisätessäsi ne lähteisiin mutta emme ole integroineet "
+"tai testanneet näitä kauppoja."
 
 #: ../../lib/frontends/widgets/diagnostics.py:61
 #: ../../lib/frontends/widgets/diagnostics.py:138
@@ -2138,7 +2142,7 @@ msgstr "Varoita, jos yritän sulkea ohjelman, kun tiedostoja on ladattavana"
 
 #: ../../lib/frontends/widgets/prefpanel.py:463
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr "Varoita jos jos yritän poistua, kun muunto on kesken"
+msgstr "Varoita jos yritän poistua, kun muunto on kesken"
 
 #: ../../lib/frontends/widgets/prefpanel.py:471
 #: ../../lib/frontends/widgets/firsttimedialog.py:190
@@ -2410,7 +2414,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:975
 #, python-format
 msgid "Play media in %(appname)s."
-msgstr ""
+msgstr "Toista media %(appname)sssa."
 
 #: ../../lib/frontends/widgets/prefpanel.py:978
 msgid "Always play videos in a separate window."
@@ -3133,6 +3137,8 @@ msgid ""
 "%(appname)s can watch a folder on your computer and show those media files "
 "in your library."
 msgstr ""
+"%(appname)s voi valvoa kansiota tietokoneellasi ja näyttää sen sisältämät "
+"mediatiedostot kirjastossasi."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:73
 #: ../../lib/frontends/widgets/firsttimedialog.py:318
@@ -3235,6 +3241,21 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s ei voi käyttää ensisijaista videokansiota, joka sijaitsee "
+"osoitteessa:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Tämä saattaa johtua siitä, että se sijaitsee ulkoisella asemalla, jota ei "
+"ole liitetty, se on kansio, johon %(shortappname)slla ei ole "
+"kirjoitusoikeuksia tai polussa sijaitseva kohde ei ole kansio.\n"
+"\n"
+"Jos jatkat, ensisijainen videokansio palautetaan oletussijaintiin tässä "
+"asemassa. Jos sinulla oli ladattuja videoita, %(shortappname)s menettää "
+"kyseisten videoiden tiedot.\n"
+" \n"
+"Jos lopetat, voit yhdistää aseman tai korjata ongelman muulla tavalla ja "
+"käynnistää %(shortappname)sn uudelleen."
 
 #: ../../lib/frontends/widgets/application.py:246
 #, python-format
@@ -3250,6 +3271,17 @@ msgid ""
 "%(shortappname)s will now exit. You can connect the drive or otherwise fix "
 "the problem and relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s ei voi käyttää ensisijaista videokansiota, joka sijaitsee "
+"osoitteessa:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Tämä saattaa johtua siitä, että se sijaitsee ulkoisella asemalla, jota ei "
+"ole liitetty, se on kansio, johon %(shortappname)slla ei ole "
+"kirjoitusoikeuksia tai polussa sijaitseva kohde ei ole kansio.\n"
+"\n"
+"%(shortappname)s lopetetaan. Voit yhdistää aseman tai korjata ongelman "
+"muulla tavalla ja käynnistää %(shortappname)sn uudelleen."
 
 #: ../../lib/frontends/widgets/application.py:457
 msgid "Error Revealing File"
@@ -3545,7 +3577,7 @@ msgstr[1] "%(count)d muuntoa on kesken tai vireillä. Poistutaanko silti?"
 
 #: ../../lib/frontends/widgets/application.py:1186
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr "Varoita jos jos yritän poistua, kun muunto on kesken"
+msgstr "Varoita jos yritän poistua, kun muunto on kesken"
 
 #: ../../lib/frontends/widgets/application.py:1451
 msgid "Connect failed"
@@ -3585,6 +3617,9 @@ msgid ""
 "process can take a long time if you have a large number of items in "
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
+"%(appname)s päivittää podcast- ja tiedostotietokantaasi. Tämä kerran tehtävä "
+"toimenpide voi kestää kauan, jos sinulla on suuri määrä kohteita "
+"%(appname)sssa (se voi viedä jopa yli 30 minuuttia)."
 
 #: ../../lib/frontends/widgets/application.py:1484
 #: ../../lib/dbupgradeprogress.py:104
@@ -3596,6 +3631,7 @@ msgstr "Valmistellaan kohteita"
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
+"%(appname)s sammui epäonnistuneesti ja valmistelee kohteitasi näytettäväksi."
 
 #: ../../lib/frontends/widgets/application.py:1727
 msgid "Message"
@@ -4132,7 +4168,7 @@ msgstr ""
 
 #: ../../lib/dl_daemon/download.py:805
 msgid "Error moving to movies directory"
-msgstr ""
+msgstr "Virhe siirryttäessä videokansioon"
 
 #: ../../lib/dl_daemon/download.py:812 ../../lib/dl_daemon/download.py:1067
 msgid "Not enough disk space"
@@ -4551,6 +4587,10 @@ msgid ""
 "When the installation is finished, simply restart %(appname)s for the "
 "changes to take effect."
 msgstr ""
+"Selaimesi lataa nettisivun, josta voit ladata ja asentaa Bonjourin.\n"
+"\n"
+"Kun asennus valmistuu, käynnistä %(appname)s uudelleen ottaaksesi muutokset "
+"käyttöön."
 
 #: ../../windows/plat/frontends/widgets/application.py:205
 msgid "Close to tray?"
@@ -4704,9 +4744,6 @@ msgstr ""
 "Laitteesi tulee olla liitetty, jotta %(shortappname)s voi synkronoida "
 "tiedostot sen kanssa."
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Oletuksena videoiden vanhenemisaika on:"
-
 #~ msgid "_Video"
 #~ msgstr "_Video"
 
@@ -4716,14 +4753,8 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "OK"
 
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Tilataan useita syötteitä"
-
 #~ msgid "Error loading feed"
 #~ msgstr "Virhe ladattaessa syötettä"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Valinnaiset kanavat"
 
 #~ msgid "Re_name Playlist"
 #~ msgstr "Ni_meä soittolista uudelleen"
@@ -4811,24 +4842,6 @@ msgstr ""
 
 #~ msgid "Auto download setting:"
 #~ msgstr "Automaattiset latausasetukset:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Jatka videon toistoa siitä mihin jäin viimeksi."
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Käynnistä toisto uudestaan saadaksesi visualisoinnin muutokset voimaan."
-
-#~ msgid "Add to Library"
-#~ msgstr "Lisää kirjastoon"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Käytä tätä videon toistoon toistettaessa audiota:"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Käytössäsi on versio %(appname)s:sta, jossa on muokattu kanavalista."
 
 #~ msgid "Subscribed to new feed:"
 #~ msgstr "Tilattu uusi syöte:"
@@ -5014,15 +5027,6 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(Näitä voi muuttaa käyttämällä syötteen Asetukset-nappia)"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Tarkkaile näiden kansioiden uusia videoita ja lisää ne kirjastoon:"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Pysähdy jokaisen videon jälkeen"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Toista videot peräkkäin"
-
 #~ msgid "Feeds"
 #~ msgstr "Syötteet"
 
@@ -5107,14 +5111,6 @@ msgstr ""
 #~ msgstr "Uudelleennimeä sivu"
 
 #, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Poista %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Oletko varma, että haluat poistaa %(name)s:n?"
-
-#, python-format
 #~ msgid "Enter a new name for the site %(name)s"
 #~ msgstr "Kirjoita sivun %(name)s uusi nimi"
 
@@ -5167,9 +5163,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "Pysyvä linkki"
-
-#~ msgid "Add to library"
-#~ msgstr "Lisää kirjastoon"
 
 #~ msgid "audio"
 #~ msgstr "ääni"
@@ -5323,29 +5316,6 @@ msgstr ""
 #~ "Tiedosto osoitteessa %(url)s ei näyttäisi olevan ääni-, video, eikä RSS-"
 #~ "syöte."
 
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Kirjoita uuden syötekansion nimi"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "HUOMIO: Sinä tilaat jo yhtä näistä syötteistä. Nämä syötteet pysyvät "
-#~ "nykyisissä sijainneissaan."
-#~ msgstr[1] ""
-#~ "HUOMIO: Sinä tilaat jo %(count)d näistä syötteistä. Nämä syötteet pysyvät "
-#~ "nykyisissä sijainneissaan."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Luo syöte?"
-#~ msgstr[1] "Luo %(count)d syötettä?"
-
 #, python-format
 #~ msgid "%(count)d minute"
 #~ msgid_plural "%(count)d minutes"
@@ -5470,9 +5440,6 @@ msgstr ""
 #~ msgid "Down Total"
 #~ msgstr "Ladattu yhteensä"
 
-#~ msgid "Start Seeding"
-#~ msgstr "Aloita lähettäminen"
-
 #~ msgid "Other"
 #~ msgstr "Muu"
 
@@ -5557,9 +5524,6 @@ msgstr ""
 #~ "Olet valinnut uuden kansion, johon videot ladataan. Haluatko %(appname)s:n "
 #~ "siirtävän olemassa olevat latauksesi sinne? (Tällä hetkellä ladattavat "
 #~ "videot siirretään vasta, kun ne ovat latautuneet.)"
-
-#~ msgid "View:"
-#~ msgstr "Näytä:"
 
 #~ msgid "Remove Sites"
 #~ msgstr "Poista sivut"
@@ -5667,459 +5631,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Levytila ei riitä %(appname)s tietokannan aikaisemman version "
 #~ "päivittämiseen. Yritä poistaa joitakin tiedostoja ja kokeile uudelleen."
-
-#~ msgid "WEBSITES"
-#~ msgstr "Nettisivut"
-
-#~ msgid "Title:"
-#~ msgstr "Nimi:"
-
-#~ msgid "other"
-#~ msgstr "muu"
-
-#~ msgid "Media type:"
-#~ msgstr "Mediatyyppi:"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Tekstitys"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Tuntematon kieli"
-
-#~ msgid "Path:"
-#~ msgstr "Polku:"
-
-#~ msgid "Remove Website"
-#~ msgstr "Poista websivusto"
-
-#~ msgid "Rename Website"
-#~ msgstr "Nimeä websivusto uudelleen"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Hakemiston '%s' luominen ei onnistunut.  "
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "Videosyötteet"
-
-#~ msgid "Add Website"
-#~ msgstr "Lisää websivusto"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Lähetys/lataus-suhde"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Muokkaa jaksoa"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "_Nimeä syöte uudelleen"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Poista syötteet"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Poista kansiot"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Poista syöte"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Asetukset"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Poista verkkosivustot"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Verkkosivuston lisääminen - virheellinen osoite"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Syötä lisättävän verkkosivuston osoite"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Anna uusi nimi verkkosivustolle %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Syöttämäsi osoite on virheellinen.\n"
-#~ "Tarkista osoite ja yritä uudelleen.\n"
-#~ "\n"
-#~ "Syötä lisättävän verkkosivuston osoite"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Poista verkkosivusto"
-#~ msgstr[1] "Poista verkkosivustot"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Haluatko varmasti poistaa tämän verkkosivuston?"
-#~ msgstr[1] "Haluatko varmasti poistaa nämä %(count)s verkkosivustoa?"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Ei yhteyttä - yritetään uudelleen %s sekunnissa"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Poista verkkosivustot"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d verkkosivusto valittu"
-#~ msgstr[1] "%(count)d verkkosivustoa valittu"
-
-#~ msgid "Re_name Website"
-#~ msgstr "_Nimeä verkkosivusto uudelleen"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Poista verkkosivusto"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Virheiden vuoksi %(appname)s ei valitettavasti kyennyt päivittämään "
-#~ "tietokantaa.\n"
-#~ "Tarkista, onko levy täynnä. Jos on, sulje %(appname)s, tee levylle vapaata "
-#~ "tilaa ja käynnistä %(appname)s sen jälkeen uudelleen.\n"
-#~ "Mikäli levy ei ole täynnä, voit auttaa vian löytämisessä sulkemalla ohjelman "
-#~ "ja tekemällä vikailmoituksen bugzilla.pculture.org:ssa.\n"
-#~ "Voit myös aloittaa alusta, jolloin viallinen tietokanta poistetaan, mutta "
-#~ "joudut tällöin lisäämään syötteet ja tiedostot uudestaan."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s ei pysty käyttämään ensisijaista videohakemistoa:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Tämä voi johtua siitä, että hakemisto sijaitsee ulkoisella asemalla, jota ei "
-#~ "ole liitetty, tai siitä, ettei %(shortappname)slla ole kirjoitusoikeuksia "
-#~ "hakemistoon, tai sitten siitä, ettei kohdepolku viittaa hakemistoon.\n"
-#~ "\n"
-#~ "Mikäli haluat jatkaa, ensisijaiseksi videohakemistoksi asetetaan sijainti "
-#~ "tällä asemalla. Tällöin %(shortappname)s menettää tiedot mahdollisesti jo "
-#~ "lataamistasi videoista.\n"
-#~ "\n"
-#~ "Mikäli päätät sulkea ohjelman, voit kytkeä ulkoisen aseman tai korjata muun "
-#~ "ongelman, minkä jälkeen voit käynnistää %(shortappname)sn uudestaan."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Poistu kokoruututilasta"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Odottaa)"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Kielen vaihtaminen vaatii Miron uudelleenkäynnistyksen.)"
-
-#~ msgid "Choose Language"
-#~ msgstr "Valitse kieli"
-
-#~ msgid "Update"
-#~ msgstr "Päivitä"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Edellinen kohde"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Seuraava kohde"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Tervetuloa tekemään %(name)s :n alkuasetuksia!\n"
-#~ "\n"
-#~ "Seuraavat pari ruutua auttavat sinua tekemään %(name)s :n asetukset, niin "
-#~ "että se toimii sinulle parhaalla tavalla.\n"
-#~ "\n"
-#~ "Mitä kieltä haluat Miron käyttävän?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s käynnistys"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Suosittelemme, että annat %(name)s :n käynnistyä tietokoneen käynnistyksen "
-#~ "yhteydessä. Tällä tavoin lataukset voidaan saattaa loppuun ja uudet "
-#~ "mediatiedostot voidaan ladata taustalla, jotta ne ovat valmiina "
-#~ "katsottaviksi."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Olemme pahoillamme, %(appname)s ei pystynyt päivittämään tietokantaasi "
-#~ "virheiden takia.\n"
-#~ "\n"
-#~ "Tarkista, onko kiintolevysi täynnä. Jos se on, niin sammuta %(appname)s, "
-#~ "vapauta levytilaa ja käynnistä %(appname)s uudestaan.\n"
-#~ "\n"
-#~ "Jos kiintolevysi ei ole täynnä, voit auttaa meitä selvittämään tämän "
-#~ "ongelman lähettämällä raportin virhetietokantaamme.\n"
-#~ "\n"
-#~ "Tai sitten voit aloittaa alusta, jolloin vioittunut tietokantasi poistetaan. "
-#~ "Tässä tapauksessa sinun täytyy lisätä syötteesi ja mediatiedostosi uudestaan."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s lähettää nyt kaatumisraportin virhetietokantaamme.\n"
-#~ "\n"
-#~ "Haluatko sisällyttää koko ohjelman tietokannan, video- ja syötetietoineen, "
-#~ "kaatumisraporttiin? Tämä auttaa meitä analysoimaan ongelman."
-
-#~ msgid "Finding Files"
-#~ msgstr "Etsitään tiedostoja"
-
-#~ msgid "Convert"
-#~ msgstr "Muunna"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Etsiäksesi tiedostoja Internetin mediahakusivustoilta valitse yllä oleva "
-#~ "hakukenttä, kirjoita hakusanoja ja paina Enter-näppäintä. Hakukonetta "
-#~ "vaihdetaan hakukentän vasemmalla puolella olevan kuvakkeen valinnalla "
-#~ "avautuvasta alasvetovalikosta."
-
-#~ msgid "Auto-download"
-#~ msgstr "Automaattinen lataus"
-
-#~ msgid "Open log"
-#~ msgstr "Avaa lokitiedosto"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Epäonnistui: %(error)s"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Tuntematon palvelin"
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Haluaisitko säilyttää podcastin?"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Kiitos kaikille, jotka auttoivat Miro %(version)s:n tekemisessä:"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr "Vieraile lahjoitussivulla tukeaksesi Miron kehitystyön jatkumista:"
-
-#, python-format
-#~ msgid ""
-#~ "Directory '%s' could not be created.  Please choose a directory you have "
-#~ "write access to."
-#~ msgstr ""
-#~ "Hakemistoa '%s' ei pystytty luomaan. Valitse sellainen hakemisto, johon "
-#~ "sinulla on kirjoitusoikeudet."
-
-#~ msgid ""
-#~ "Miro can watch a folder on your computer and show those media files in your "
-#~ "library."
-#~ msgstr ""
-#~ "Miro voi tarkkailla hakemistoa tietokoneellasi ja näyttää sen sisältämät "
-#~ "mediatiedostot kirjastossasi."
-
-#~ msgid "Miro shutdown improperly and needs to prepare your items for display."
-#~ msgstr ""
-#~ "Miro sulkeutui huonosti ja kohteitasi joudutaan siksi valmistelemaan "
-#~ "näyttämistä varten."
-
-#, python-format
-#~ msgid ""
-#~ "Connection to share %(name)s failed.\n"
-#~ "\n"
-#~ "The share is either unreachable or incompatible with Miro sharing."
-#~ msgstr ""
-#~ "Yhteyden muodostaminen jakoon %(name)s epäonnistui.\n"
-#~ "\n"
-#~ "Jakoon ei joko ole pääsyä tai sitten se ei ole yhteensopiva Miro-jakamisen "
-#~ "kanssa."
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you  have a large number of items in Miro "
-#~ "(it can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Miro päivittää podcastien ja tiedostojen tietokantaasi. Tämä kertaalleen "
-#~ "suoritettava toiminto saattaa kestää kauan (jopa kauemmin kuin puoli tuntia) "
-#~ "mikäli sinulla on paljon kohteita Mirossa."
-
-#, python-format
-#~ msgid "%(appname)s First Time Setup"
-#~ msgstr "%(appname)sn ensimmäisen käynnistyskerran asetustenluominen"
-
-#, python-format
-#~ msgid "Display %(player)s Library"
-#~ msgstr "Näytä %(player)s-kirjasto"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro havaitsi, että järjestelmästäsi kenties puuttuu Bonjour-osa, joka "
-#~ "kuuluu vakiona Mac OS X:ään. Tarkista Mac OS X -asennuksesi tila."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "After installing Print Services, you will have to restart Miro.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Parhaan %(appname)s-kokemuksen saavuttamiseksi on suositeltavaa asentaa "
-#~ "Bonjour, joka kuuluu tulostuspalveluihin.\n"
-#~ "\n"
-#~ "Bonjourin asennettuasi voit jakaa mediakirjastosi muiden samassa verkossa "
-#~ "olevien %(appname)s-käyttäjien kanssa. Lisäksi voit suoratoistaa muiden "
-#~ "samassa verkossa olevien %(appname)s-käyttäjien mediatiedostoja.\n"
-#~ "\n"
-#~ "Tulostuspalvelujen asennuksen jälkeen Miro on käynnistettävä uudelleen.\n"
-#~ "\n"
-#~ "Haluatko tehdä asennuksen nyt?"
-
-#, python-format
-#~ msgid ""
-#~ "Select the music and video stores you'd like to have appear in "
-#~ "%(shortappname)s.  Note: some other store websites may work well with Miro "
-#~ "if you add them as Sources, but these are Stores that we've integrated and "
-#~ "tested."
-#~ msgstr ""
-#~ "Valitse ne musiikki- ja videokaupat, jotka haluat olevan %(shortappname)sssa "
-#~ "esillä. Huomio: muutkin kauppasivustot saattavat toimia Miron kanssa "
-#~ "lähteinä, mutta nämä kaupat on integroitu ja testattu."
-
-#~ msgid ""
-#~ "You need to install the Bonjour libraries to be able to share files from "
-#~ "Miro-to-Miro or to the Miro iPad app.\n"
-#~ "\n"
-#~ "Once you install the Bonjour libraries, you will have to restart Miro."
-#~ msgstr ""
-#~ "Asenna Bonjour-kirjastot jakaaksesi tiedostoja Mirosta Miroon tai Miro iPad -"
-#~ "sovellukseen.\n"
-#~ "\n"
-#~ "Käynnistä Miro uudelleen asennettuasi Bonjour-kirjastot."
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Selaimesi avaa sivun, jolta voit ladata ja asentaa Bonjourin.\n"
-#~ "\n"
-#~ "Kun asennus on valmis, käynnistä Miro uudestaan, jotta muutokset tulevat "
-#~ "voimaan."
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Toista mediaa Mirolla"
-
-#~ msgid "Importing audio details and artwork: {0} of {1}"
-#~ msgstr "Tuodaan äänitiedoston tietoja ja kansikuvia: {0}/{1}"
-
-#~ msgid "Importing file details: {0} of {1}"
-#~ msgstr "Tuodaan tiedoston tietoja: {0}/{1}"
-
-#~ msgid "Importing video details and creating thumbnails: {0} of {1}"
-#~ msgstr "Tuodaan videon tietoja ja luodaan kuvakkeita: {0}/{1}"
-
-#~ msgid ""
-#~ "Your Miro database is corrupt.  It will be backed up in your Miro database "
-#~ "directory and a new database will be created now."
-#~ msgstr ""
-#~ "Miro-tietokantasi on vaurioitunut. Siitä luodaan varmuuskopio Miron "
-#~ "tietokantakansioon, ja tilalle luodaan uusi tietokanta."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "Miro will now exit. You can connect the drive or otherwise fix the problem "
-#~ "and relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s ei voi käyttää ensisijaista videohakemistoa sijainnissa:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Tämä voi johtua siitä, että sijainti on ulkoisella asemalla, jota ei ole "
-#~ "kytketty, tai siitä, että %(shortappname)slla ei ole oikeutta kirjoittaa "
-#~ "hakemistoon, tai sitten siitä, että polku viittaa kansion sijaan esimerkiksi "
-#~ "tiedostoon.\n"
-#~ "\n"
-#~ "Miro lopetetaan nyt. Voit kytkeä aseman tai korjata ongelman muulla tavoin, "
-#~ "ja käynnistää %(shortappname)sn sen jälkeen uudestaan."

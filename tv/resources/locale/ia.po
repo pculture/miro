@@ -1,61 +1,61 @@
-# Marathi translation for democracy
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Interlingua translation for democracy
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-04-14 07:46+0000\n"
-"Last-Translator: Satish Bhagat <Unknown>\n"
-"Language-Team: Marathi <mr@li.org>\n"
+"PO-Revision-Date: 2011-08-10 17:26+0000\n"
+"Last-Translator: Emilio Sepulveda <emilio@chilemoz.org>\n"
+"Language-Team: Interlingua <ia@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
 "X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
-msgstr ""
+msgstr "iTunes"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:216
 #: ../../osx/plat/frontends/widgets/osxmenus.py:293
 msgid "Services"
-msgstr ""
+msgstr "Servicios"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:218
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "Celar %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
-msgstr ""
+msgstr "Celar alteres"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Show All"
-msgstr ""
+msgstr "Monstrar omne"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:227
 msgid "Preferences..."
-msgstr ""
+msgstr "Preferentias..."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:229
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "Quitar %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:233
 msgid "Close Window"
-msgstr "विंडो बंद करा"
+msgstr "Clauder fenestra"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:239
 msgid "Cut"
-msgstr "कापा"
+msgstr "Taliar"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:240
 #: ../../lib/conversions.py:957
@@ -63,25 +63,25 @@ msgstr "कापा"
 #: ../../lib/frontends/widgets/devicecontroller.py:461
 #: ../../lib/frontends/widgets/devicecontroller.py:464
 msgid "Copy"
-msgstr "कॉपी"
+msgstr "Copiar"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:241
 msgid "Paste"
-msgstr "पेस्ट"
+msgstr "Collar"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:242
 #: ../../osx/plat/frontends/widgets/overlay.py:136 ../../lib/dialogs.py:121
 #: ../../lib/frontends/widgets/gtk/video.py:313
 msgid "Delete"
-msgstr "मिटवा"
+msgstr "Deler"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:244
 msgid "Select All"
-msgstr "सर्व निवडा"
+msgstr "Selectionar omne"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:246
 msgid "Edit"
-msgstr "संपादन"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:251
 msgid "Present Half Size"
@@ -101,15 +101,15 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:272
 msgid "Zoom"
-msgstr "मोठे/लहान करा"
+msgstr "Zoom"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:273
 msgid "Minimize"
-msgstr "लहान करा."
+msgstr "Minimisar"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:275
 msgid "Main Window"
-msgstr ""
+msgstr "Fenestra principal"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:278
 msgid "Bring All to Front"
@@ -117,18 +117,18 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:280
 msgid "Window"
-msgstr "विंडो"
+msgstr "Fenestra"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:285
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "Adjuta de %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:439
 #: ../../lib/frontends/widgets/gtk/window.py:352
 #: ../../lib/frontends/widgets/gtk/video.py:410
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Disactivar le subtitulos"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:450
 #: ../../lib/frontends/widgets/menus.py:350
@@ -145,22 +145,22 @@ msgstr ""
 #: ../../lib/frontends/widgets/menus.py:349
 #: ../../lib/frontends/widgets/gtk/video.py:344
 msgid "Subtitles"
-msgstr ""
+msgstr "Subtitulos"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125
 #: ../../lib/frontends/widgets/gtk/video.py:276
 msgid "Fullscreen"
-msgstr ""
+msgstr "Schermo integre"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:128
 #: ../../lib/frontends/widgets/itemcontextmenu.py:264
 msgid "Share"
-msgstr ""
+msgstr "Compartir"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:132 ../../lib/dialogs.py:120
 #: ../../lib/frontends/widgets/itemcontextmenu.py:381
 msgid "Keep"
-msgstr ""
+msgstr "Mantener"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:219
 msgid "Pop Out"
@@ -176,7 +176,7 @@ msgstr ""
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
 #: ../../windows/plat/frontends/widgets/bonjour.py:73
 msgid "Install Bonjour"
-msgstr ""
+msgstr "Installar Bonjour"
 
 #: ../../osx/plat/frontends/widgets/bonjour.py:42
 #, python-format
@@ -188,12 +188,12 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/application.py:256
 msgid "Download Completed"
-msgstr ""
+msgstr "Discarga completate"
 
 #: ../../osx/plat/frontends/widgets/application.py:257
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "Discarga de video '%s' es terminate."
 
 #: ../../lib/storedatabase.py:263
 #, python-format
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../lib/downloader.py:335 ../../lib/httpclient.py:140
 #: ../../lib/httpclient.py:171
 msgid "File not found"
-msgstr "फाइल  मिळाली नाही"
+msgstr "File non trovate"
 
 #: ../../lib/downloader.py:336
 msgid "Flash URL Scraping Error"
@@ -337,7 +337,7 @@ msgstr ""
 #: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
 #: ../../lib/httpclient.py:756
 msgid "Unknown"
-msgstr "अपरिचित"
+msgstr ""
 
 #: ../../lib/conversions.py:230
 #, python-format
@@ -378,7 +378,7 @@ msgstr ""
 
 #: ../../lib/net.py:104
 msgid "Timeout"
-msgstr "वेळ पूर्ण"
+msgstr ""
 
 #: ../../lib/net.py:105
 #, python-format
@@ -675,7 +675,7 @@ msgstr ""
 #: ../../lib/feed.py:2328 ../../lib/feed.py:2434 ../../lib/feed.py:2444
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Search"
-msgstr "शोधा"
+msgstr ""
 
 #: ../../lib/messages.py:1216 ../../lib/frontends/widgets/itemedit.py:555
 msgid "Movie"
@@ -739,7 +739,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:97 ../../lib/frontends/widgets/itemrenderer.py:107
 msgid "Cancel"
-msgstr "रद्द करा"
+msgstr ""
 
 #: ../../lib/dialogs.py:98
 msgid "Done"
@@ -749,17 +749,17 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:298
 #: ../../lib/frontends/widgets/firsttimedialog.py:550
 msgid "Yes"
-msgstr "हो"
+msgstr ""
 
 #: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/firsttimedialog.py:258
 #: ../../lib/frontends/widgets/firsttimedialog.py:297
 #: ../../lib/frontends/widgets/firsttimedialog.py:551
 msgid "No"
-msgstr "नाही"
+msgstr ""
 
 #: ../../lib/dialogs.py:101 ../../linux/extensions/miroappindicator/main.py:60
 msgid "Quit"
-msgstr "थांबवा"
+msgstr ""
 
 #: ../../lib/dialogs.py:102
 msgid "Continue"
@@ -790,7 +790,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1969
 #: ../../lib/frontends/widgets/itemrenderer.py:102
 msgid "Download"
-msgstr "डाउन्लोड"
+msgstr ""
 
 #: ../../lib/dialogs.py:109
 msgid "Remove Entry"
@@ -798,7 +798,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:110
 msgid "Delete File"
-msgstr "फाइल काढून टाका"
+msgstr ""
 
 #: ../../lib/dialogs.py:111
 msgid "Delete Files"
@@ -814,7 +814,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:114
 msgid "Create"
-msgstr "तयार करा"
+msgstr ""
 
 #: ../../lib/dialogs.py:115
 msgid "Create Podcast"
@@ -830,7 +830,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:781
 msgid "Add"
-msgstr "मिळवा"
+msgstr ""
 
 #: ../../lib/dialogs.py:119
 msgid "Add Into New Folder"
@@ -845,7 +845,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/tablist.py:1145
 #: ../../lib/frontends/widgets/tablist.py:1150
 msgid "Remove"
-msgstr "हटवा"
+msgstr ""
 
 #: ../../lib/dialogs.py:123
 msgid "Not Now"
@@ -907,11 +907,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/rundialog.py:83
 msgid "Username:"
-msgstr "वापरकर्त्याचे नाव"
+msgstr ""
 
 #: ../../lib/frontends/widgets/rundialog.py:87
 msgid "Password:"
-msgstr "पास्वर्ड:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:71
 msgid "Remove From the Library"
@@ -951,7 +951,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/menus.py:321
 #: ../../linux/extensions/miroappindicator/main.py:55
 msgid "Play"
-msgstr "वाजवा"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/menus.py:322
@@ -1294,7 +1294,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/statictabs.py:157
 #: ../../lib/frontends/widgets/statictabs.py:162
 msgid "Downloading"
-msgstr "डाउनलोड करत आहे"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1118
 #: ../../lib/frontends/widgets/itemrenderer.py:111
@@ -1334,7 +1334,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/devicecontroller.py:581
 #: ../../lib/frontends/widgets/tablist.py:1085
 msgid "Settings"
-msgstr "समायोजन"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1368
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1378
@@ -1846,7 +1846,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/newfeed.py:59
 #: ../../lib/frontends/widgets/newsearchfeed.py:121
 msgid "URL:"
-msgstr "यू आर एल (URL):"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newfeed.py:96
 #: ../../lib/frontends/widgets/menus.py:256
@@ -2249,23 +2249,23 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:889
 msgid "1 day"
-msgstr "1 दिवस"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:890
 msgid "3 days"
-msgstr "3  दिवस"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:891
 msgid "6 days"
-msgstr "6 दिन"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:892
 msgid "10 days"
-msgstr "10 दिवस"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:893
 msgid "1 month"
-msgstr "1 महिना"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:899
 msgid "By default, video and audio items expire after:"
@@ -2426,7 +2426,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1279
 msgid "Playback"
-msgstr "प्लेबॅक"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1281
 msgid "Sharing"
@@ -2443,7 +2443,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:1290
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "Preferences"
-msgstr "प्राधान्यता"
+msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:123
 #: ../../lib/frontends/widgets/devicecontroller.py:175
@@ -2663,7 +2663,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Quit"
-msgstr "बाहेर पडा (_Q)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:255
 msgid "_Sidebar"
@@ -2807,7 +2807,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:343
 msgid "_Fullscreen"
-msgstr "पूर्ण स्क्रीन (_F)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:346
 msgid "_Toggle Detached/Attached"
@@ -2827,7 +2827,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:363
 msgid "_Help"
-msgstr "_मदत (_H)"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:364
 #, python-format
@@ -2919,7 +2919,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemrenderer.py:106
 #: ../../lib/dl_daemon/download.py:678
 msgid "Error"
-msgstr "त्रुटी"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemrenderer.py:108
 msgid "Queued for Auto-download"
@@ -3365,7 +3365,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:1160
 #: ../../lib/frontends/widgets/application.py:1179
 msgid "Are you sure you want to quit?"
-msgstr "तुम्हाला खरच बाहेर पडायचय?"
+msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1150
 msgid ""
@@ -4037,7 +4037,7 @@ msgstr ""
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:52
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:42
 msgid "Enable tray icon"
-msgstr "ट्रे चित्र दाखवा."
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:61
 msgid "Renderer options:"
@@ -4298,7 +4298,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"
-msgstr "Adobe Flash प्रस्थापित करायचे आहे?"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/flash.py:58
 #, python-format
@@ -4306,8 +4306,6 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-"%(appname)s च्या सर्वोत्कृष्ट वापरासाठी, आम्ही तुम्हाला Adobe Flash "
-"प्रस्थापित करायचे सुचवितो. तुम्हाला हे करायचे आहे का?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:71
 msgid "Install Adobe Flash"
@@ -4379,29 +4377,29 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:150
 msgid "Update Available"
-msgstr "नवी आवृत्ती उपलब्ध आहे"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:154
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "%(appname)s ची नवी आवृत्ती डाउनलोडसाठी उपलब्ध आहे."
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:158
 msgid "Do you want to download it now?"
-msgstr "तुम्हाला ते आत्ता डाउनलोड करायचे आहे?"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:46
 msgid "When I click the red close button:"
-msgstr "जेव्हा मी लाल बटनावर क्लिक करतो/करते:"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 msgid "Close to tray so that downloads can continue."
-msgstr "ट्रे मध्ये बन्द रहा जेणेकरुन डाउनलोड चालु राहील."
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:50
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "%(appname)s ना पुर्णपणे बन्द करा."
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:60
 msgid "System Default"
@@ -4488,6 +4486,3 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
-
-#~ msgid "Ok"
-#~ msgstr "ठीक"

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -5422,153 +5422,17 @@ msgstr ""
 #~ "wech hepken a c’hellfe padout pell a–walc’h m’hoc’h eus kalzik a draoù e "
 #~ "Miro (ouzhpenn d’un hanter-eur)."
 
-#~ msgid "Reason unknown"
-#~ msgstr "Hep digarez"
-
-#~ msgid "Add Website"
-#~ msgstr "Ouzhpennañ Lec'hienn"
-
-#~ msgid "_Preferences"
-#~ msgstr "Dibaboù gwellañ"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "I_stitloù"
-
-#~ msgid "Rename Website"
-#~ msgstr "Adanvañ Lec'hienn"
-
-#~ msgid "Update"
-#~ msgstr "Hizivaat"
-
-#~ msgid "Choose Language"
-#~ msgstr "Dibab Yezh"
-
-#~ msgid "Finding Files"
-#~ msgstr "O Klask Restroù"
-
-#~ msgid "Title:"
-#~ msgstr "Titl :"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Digarezit, ne oa ket gouest %(appname)s da loc'hañ en abeg d'ur fazi diaz "
-#~ "roadennoù:\n"
-#~ "\n"
-#~ "Fazi: %(error)s\n"
-#~ "\n"
-#~ "Marteze ez eo siet ho tiaz roadennoù ha n'hell ket bezañ implijet.\n"
-#~ "\n"
-#~ "Adkrogit hag e vo tennet ho tiaz kuit, met ret e vo deoc'h adlakaat ho "
-#~ "heuliennoù hag ho restroù media. M'hoc'h eus c'hoant n'ho po ken nemet "
-#~ "pouezhañ war ar voutonenn Adloc'hañ hag adkregiñ gant %(appname)s.\n"
-#~ "\n"
-#~ "A-benn hon sikour da dresañ ar c'hudennoù-se en dazont, kasit dimp mar-plij "
-#~ "ur rentañ-kont beug da %(url)s."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "Kaset e vo gant %(appname)s ur rentañ-kont sac'hadenn d'hon diaz "
-#~ "sac'hadennoù.\n"
-#~ "\n"
-#~ "Ha c'hoant ho pefe e vefe lakaet asambles an diaz poellad penn-da-benn gant "
-#~ "an holl videoioù ha metadata an heuliennoù ? Se a sikourfe ac'hanomp da "
-#~ "gavout ar gudenn."
-
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "C'hoant hoc’h eus da virout an heulienn?"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Kevreadenn ebet - adesaeet e vo a-benn %s"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Hon digarezit, ne oa ket gouest %(appname)s da reneveziñ ho tiaz en abeg "
-#~ "d'ar fazioù.\n"
-#~ "\n"
-#~ "Sellit ervat da welout ha ne vefe ket leun ho pladenn, da heul kuitait "
-#~ "%(appname)s, dieubit un tamm plas, hag adkrogit gant %(appname)s.\n"
-#~ "\n"
-#~ "Ma ne vefe ket leun ho pladenn, kasit deomp ur rentañ-kont beug mar-plij war-"
-#~ "du hon diaz sac'hadennoù.\n"
-#~ "\n"
-#~ "A-benn ar fin e c'hellit adloc'hañ hag e vo dilemet ho tiaz siet, met ret e "
-#~ "vo deoc'h adlakaat ho heuliennoù ha restroù media."
 
 #~ msgid "From"
 #~ msgstr "Eus"
 
-#~ msgid "_Edit Item"
-#~ msgstr "_Kemmañ an Dra"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Ad_anvañ Heulienn"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Tennañ Heuliennoù"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Tennañ Heulienn"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Ad_anvañ Lec'hienn"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Dilemel Teuliadoù"
-
 #~ msgid "E_xport Feeds (OPML)"
 #~ msgstr "E_zporzhiañ restr (OPML)"
 
-#~ msgid "_Remove Websites"
-#~ msgstr "_Dilemel Lec'hiennoù"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Dilemel Lec'hienn"
-
 #~ msgid "_Remove Folder"
 #~ msgstr "_Dilemel Teuliad"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Kentañ tra"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Tra kent"
-
-#~ msgid "Convert"
-#~ msgstr "Treiñ"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Uhelaat/Izelaat Kenfeur"
 
 #, python-format
 #~ msgid "%(num).0f min"
@@ -5577,26 +5441,3 @@ msgstr ""
 #~ "%(num).0f munutenn\r\n"
 #~ "%(num).0f munutenn"
 #~ msgstr[1] "%(num).0f munutenn"
-
-#~ msgid "Auto-download"
-#~ msgstr "Emgargañ"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "O kregiñ gant %(name)s"
-
-#~ msgid "Path:"
-#~ msgstr "Hent :"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Lec'hienn Dibabet"
-#~ msgstr[1] "%(count)d a Lec'hiennoù Dibabet"
-
-#~ msgid "Media type:"
-#~ msgstr "Doare ar media"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "C'hwitet : %(error)s"

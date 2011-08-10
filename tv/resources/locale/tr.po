@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/frontends/widgets/menus.py:318
 msgid "P_layback"
@@ -4520,75 +4520,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Öntanımlı olarak, videoların süresi dolar:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Kişisel Kanallar"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Her videodan sonra dur"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Videoları biribiri ardına oynat"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Videoyu son durdurulduğu yerden oynatmaya devam ettir."
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Bu klasörlerde yeni videoları tara ve bunları kitaplığa ekle:"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Görselleştime değişikliklerinin geçerli olması için oynatıcıyı yeniden "
-#~ "başlatman gerekir."
-
-#~ msgid "Add to Library"
-#~ msgstr "Kütüphaneye ekle"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Video sesini çalarken bunu kullan::"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Birden fazla abone beslemesi"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Yeni yayın klasör için bir isim girin"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] ""
-#~ "Besleme oluştur\r\n"
-#~ "Beslemeler %(count)d oluştur?"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Sizin versiyonunuz %(appname)s bu kanalın ayarlarını yapamaz."
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Sil %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "%(name)s i silmek istediğinizden eminmisiniz?"
-
-#~ msgid "Add to library"
-#~ msgstr "Kütüphaneye ekle"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "Not: %(count)d bu beslemelerden birine zaten üye olmuşsunuz. Bu beslemeler "
-#~ "oldukları gibi kalacaklar."
-
 #~ msgid "Other"
 #~ msgstr "Diğer"
 
@@ -5426,155 +5357,6 @@ msgstr ""
 #~ msgid "Comments"
 #~ msgstr "Yorumlar"
 
-#~ msgid "Media type:"
-#~ msgstr "Ortam türü:"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "bağlantı yok - %s içinde yeniden deneniyor"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Bilinmeyen Dil"
-
-#~ msgid "Title:"
-#~ msgstr "Başlık:"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Miro'da ortam yürüt."
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Beslemeyi Kaldır"
-
-#~ msgid "_Remove Site"
-#~ msgstr "_Siteyi Kaldır"
-
-#~ msgid "_Remove Sites"
-#~ msgstr "_Siteleri Kaldır"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Beslemeleri Kaldır"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Dizinleri Kaldır"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "Al_tyazılar"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Gönderme/İndirme Yüzdesi"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Akışı Yeniden_Adlandır"
-
-#~ msgid "Re_name Site"
-#~ msgstr "Siteyi Yeniden_Adlandır"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "'%s' dizini oluşturulamadı.  "
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO AKIŞLARI"
-
-#~ msgid "WEBSITES"
-#~ msgstr "WEB SİTELERİ"
-
-#~ msgid "Remove Website"
-#~ msgstr "Web Sitesini Kaldır"
-
-#~ msgid "Rename Website"
-#~ msgstr "Web Sitesini Yeniden Adlandır"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Web Sitelerini Kaldır"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Web Sitesi Ekle - Geçersiz URL"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Eklenecek Web Sitesinin URL adresini girin"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "%(name)s Web Sitesi için yeni bir isim girin"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Girdiğiniz adres geçerli bir url değil.\n"
-#~ "Lütfen kontrol edip tekrar deneyin.\n"
-#~ "\n"
-#~ "Eklenecek Web Sitesinin URL adresini girin."
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Websitelerini Kaldır"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Tercihler"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Web Sitesi Seçildi"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Web Sitesini Ye_niden Adlandır"
-
-#~ msgid "_Remove Website"
-#~ msgstr "Web Sitesini _Kaldır"
-
-#~ msgid "Add Website"
-#~ msgstr "Web Sitesi Ekle"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "Web Sitelerini _Kaldır"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] ""
-#~ "Bu web sitesini kaldırmak istediğinizden emin misiniz?\r\n"
-#~ "%(count)s web sitesini kaldırmak istediğinizden emin misiniz?"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s şu dizinde bulunan birincil video dizinini kullanamıyor:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Bunun nedeni, dizinin şu anda bağlı olmayan bir harici sabit diskte "
-#~ "yeralması, bu dizine %(shortappname)s'nun yazma izni olmaması veya ilgili "
-#~ "patikada dizin olmayan birşey bulunması olabilir.\n"
-#~ "\n"
-#~ "Eğer devam ederseniz, birincil video dizini, bu sürücüde bir konuma "
-#~ "sıfırlanacak. Eğer indirilmiş videolarınız varsa %(shortappname)s bunlar ile "
-#~ "ilgili ayrıntı bilgilerini kaybedecektir.\n"
-#~ "\n"
-#~ "Eğer çıkarsanız, sürücüyü yeniden bağlayabilir veya ilgili problemi "
-#~ "çözebilir ve %(shortappname)s'yu yeniden başlatabilirsiniz."
-
-#~ msgid "_Edit Item"
-#~ msgstr "Öğeyi _Düzenle"
-
 #~ msgid "Pipeline request never started"
 #~ msgstr "Sıralı istek hiç başlamadı"
 
@@ -5588,9 +5370,6 @@ msgstr ""
 #~ msgid "Seeding"
 #~ msgstr "Kaynak olunuyor"
 
-#~ msgid "Path:"
-#~ msgstr "Yol:"
-
 #~ msgid ""
 #~ "Are you sure you want to remove this feed?  The downloads currently in "
 #~ "progress will be canceled."
@@ -5603,45 +5382,3 @@ msgstr ""
 
 #~ msgid "Length"
 #~ msgstr "Uzunluk"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Tam ekrandan çık"
-
-#~ msgid "Choose Language"
-#~ msgstr "Dil Seçimi"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Sonraki Öğe"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Önceki Öğe"
-
-#~ msgid "Update"
-#~ msgstr "Güncelle"
-
-#~ msgid "FAILED!"
-#~ msgstr "BAŞARISIZ!"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Bilinmeyen Barındırıcı"
-
-#~ msgid "Finding Files"
-#~ msgstr "Dosyalar Bulunuyor"
-
-#~ msgid "Open log"
-#~ msgstr "Günlüğü aç"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Dil değiştirmek Miro'nun yeniden başlatılmasını gerektirir.)"
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "Çince (Evrensel)"
-
-#~ msgid "Convert"
-#~ msgstr "Dönüştür"
-
-#~ msgid "Auto-download"
-#~ msgstr "Otomatik indir"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Nedeni bilinmeyen"

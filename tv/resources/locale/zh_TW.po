@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4475,9 +4475,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "預設影片保存期限:"
-
 #~ msgid "_Next Video"
 #~ msgstr "下一段影片 (_N)"
 
@@ -4553,9 +4550,6 @@ msgstr ""
 #~ msgid "activity"
 #~ msgstr "活動"
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "播放聲音時用此於影片"
-
 #, python-format
 #~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
@@ -4582,12 +4576,6 @@ msgstr ""
 
 #~ msgid "Down Rate"
 #~ msgstr "下行速度"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "從上次停止的地方繼續觀賞影片."
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "監控這些資料夾中的新影像檔並加入收藏庫中:"
 
 #~ msgid "Rename Site"
 #~ msgstr "重新命名網站"
@@ -4637,16 +4625,8 @@ msgstr ""
 #~ msgid "Couldn't open %(filename)s for writing"
 #~ msgstr "無法打開寫入%(filename)s"
 
-#~ msgid "Custom Channels"
-#~ msgstr "自訂頻道"
-
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "內部錯誤: 尚未準備好送出"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "您正執行%(appname)s的一個版本其中有一組自訂的頻道."
 
 #~ msgid "_Pause"
 #~ msgstr "暫停(_P)"
@@ -4704,20 +4684,11 @@ msgstr ""
 #~ msgid "Auto download setting:"
 #~ msgstr "自動下載設定"
 
-#~ msgid "Play videos one after another"
-#~ msgstr "連續撥放影片"
-
 #~ msgid "Enter the new name for the item"
 #~ msgstr "重新命名該物件"
 
-#~ msgid "Add to library"
-#~ msgstr "匯入資料庫"
-
 #~ msgid "Revert Item Name"
 #~ msgstr "回復物件名稱"
-
-#~ msgid "Add to Library"
-#~ msgstr "加入至資料庫"
 
 #~ msgid "Auto-Expire Videos:"
 #~ msgstr "自動過期影片"
@@ -4820,9 +4791,6 @@ msgstr ""
 
 #~ msgid "E_xport Feeds (OPML)"
 #~ msgstr "匯出 OPML 饋流 (_X)"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "您必須重新播放，才能套用視覺設定。"
 
 #~ msgid "Other"
 #~ msgstr "其他"
@@ -5013,12 +4981,6 @@ msgstr ""
 #~ msgid "Are you sure you want to remove this feed:"
 #~ msgid_plural "Are you sure you want to remove these feeds:"
 #~ msgstr[0] "你確定要移除這個 Feed"
-
-#~ msgid "Title:"
-#~ msgstr "標題："
-
-#~ msgid "Media type:"
-#~ msgstr "媒體類型"
 
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"

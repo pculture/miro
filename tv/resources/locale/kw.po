@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n==3) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4606,18 +4606,6 @@ msgstr ""
 #~ msgid "Error loading feed"
 #~ msgstr "Gwall gans carga an feed"
 
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s a vedn danon derivas gwall dhe'gan database gwallow lebmyn\n"
-#~ "A vednowgh whi keworra database cowal an dowlen, ow comprehendya oll "
-#~ "metadata video ha feed gans an derivas gwall? Hemm a vedn gweres dhyn ajon "
-#~ "an problem."
-
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "A venjewgh whi gwitha an feed?"
 
@@ -4695,9 +4683,6 @@ msgstr ""
 #~ msgid "Upload Total"
 #~ msgstr "Sum ughcarga"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Kebmyns ugh/is"
-
 #~ msgid "Down Rate"
 #~ msgstr "Toth iscarga"
 
@@ -4734,21 +4719,6 @@ msgstr ""
 #~ msgid "Save Item _As"
 #~ msgstr "Gwitha an dra _avel"
 
-#~ msgid "_Edit Item"
-#~ msgstr "_Chanjya an dra"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Das_henwel an wiasva"
-
-#~ msgid "Add Website"
-#~ msgstr "Keworra gwiasva"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Das_henwel an feed"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Dowisyanjow"
-
 #~ msgid "Add _Feed"
 #~ msgstr "Keworra _feed"
 
@@ -4761,15 +4731,6 @@ msgstr ""
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Feed w_hilans nowyth"
 
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Dilea feeds"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Dilea plegellow"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Dilea an feed"
-
 #~ msgid "_Update Feeds"
 #~ msgstr "_Nowedha feeds"
 
@@ -4781,12 +4742,6 @@ msgstr ""
 
 #~ msgid "_Remove Folder"
 #~ msgstr "_Dilea an blegel"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Dilea gwiasvaow"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Dilea an wiasva"
 
 #~ msgid "_Remove"
 #~ msgstr "_Dilea"
@@ -4815,12 +4770,6 @@ msgstr ""
 #~ msgid "_Pause"
 #~ msgstr "_Hockya"
 
-#~ msgid "_Next Item"
-#~ msgstr "_Nessa tra"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Kens tra"
-
 #~ msgid "_Remove Playlist Folders"
 #~ msgstr "_Dilea plegellow canrolyow"
 
@@ -4839,18 +4788,12 @@ msgstr ""
 #~ msgid "Volume _Up"
 #~ msgstr "Uhelhe Sonradh"
 
-#~ msgid "S_ubtitles"
-#~ msgstr "I_stitlys"
-
 #~ msgid "_Donate"
 #~ msgstr "_Ri"
 
 #, python-format
 #~ msgid "_About %(name)s"
 #~ msgstr "_A-dro dhe %(name)s"
-
-#~ msgid "Convert"
-#~ msgstr "Convertya"
 
 #~ msgid "Save Search"
 #~ msgstr "Gwitha an whilans"
@@ -4884,40 +4827,11 @@ msgstr ""
 #~ msgid "%(rate)s uploading"
 #~ msgstr "%(rate)s owth ughcarga"
 
-#~ msgid "Auto-download"
-#~ msgstr "Awto-iscarga"
-
 #~ msgid "Share feed"
 #~ msgstr "Kevradna an feed"
 
 #~ msgid "Remove feed"
 #~ msgstr "Dilea an feed"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Drog yw genen, ny alja %(appname)s dalleth awos cudyn gans an database:\n"
-#~ "Gwall: %(error)s\n"
-#~ "Possybyl yw dr'yw agas restren database legrys ha ny ell bos usys.\n"
-#~ "Whi a ell dalleth arta hag agas database shyndys a vedh dileys, bus res a "
-#~ "vedh dhewgh keworra agas feeds ha restrednow media arta. Mar mednowgh whi "
-#~ "gwul hebma, clyckyowgh an boton Dalleth Arta ha gwrewgh dastalleth "
-#~ "%(appname)s.\n"
-#~ "Rag agan gweres dhe staga cudydnow a'n sort-ma yn termyn a dheu, danonowgh "
-#~ "dhyn derivas gwall orth %(url)s."
 
 #, python-format
 #~ msgid "Channel is not compatible with %(appname)s"
@@ -4959,30 +4873,6 @@ msgstr ""
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "Ny ellam iscarga restren feed %(appname)s: %(url)s"
 
-#~ msgid "Reason unknown"
-#~ msgstr "An cheson yw ancoth"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Drog yw genen, ny alja %(appname)s ughradha agas database awos gwallow.\n"
-#~ "Gwrewgh gweles mars yw agas plasen leun. Mars yw leun, qwityowgh "
-#~ "%(appname)s, gwrewgh neb efander, ha dallethowgh %(appname)s arta.\n"
-#~ "Mar nyns yw agas plasen leun, gwerowgh ni dhe gonvedhes an cudyn dre "
-#~ "dherivas gwall dhe'gan database gwallow.\n"
-#~ "Wor'tiwedh, whi a ell dalleth arta ha'gas database shyndys a vedh dileys, "
-#~ "bus res a vedh dhewgh keworra agas feeds ha restrednow media arta."
-
 #~ msgid "Contents appear in the library"
 #~ msgstr "Yma'n contents owth apperya y'n lyverva"
 
@@ -5013,34 +4903,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "Ny ell %(shortappname)s usya an arayel video elvednek trovys orth:\n"
-#~ "%(moviedirectory)s\n"
-#~ "Y halja bos drefen y vos trovys war plasen a-ves nag yw junys, drefen y vos "
-#~ "arayel nag yw cubmyans scrifa dhe %(shortappname)s dhodho, po yma neppyth "
-#~ "nag yw arayal orth an lergh-na.\n"
-#~ "Mar qwrewgh whi pesya, an arayal video elvednek a vedh dassettys dhe deller "
-#~ "war'n blasen-ma. Mars esa videos iscargys dhewgh, %(shortappname)s a vedn "
-#~ "kelly manylyon a'n videos-na.\n"
-#~ "Mar qwrewgh whi qwitya, whi a ell junya an blasen po staga an cudyn ha "
-#~ "dalleth %(shortappname)s arta."
-
-#, python-format
-#~ msgid ""
 #~ "This channel is not compatible with %(appname)s but we'll try our best to "
 #~ "grab the files.  It may take extra time to list the videos, and descriptions "
 #~ "may look funny.\n"
@@ -5055,13 +4917,6 @@ msgstr ""
 #~ "descrifanjow a alja mires stranj.\n"
 #~ "Mar pleg, kestevowgh orth dyllanjow %(url)s ha govydnowgh mar kallons provya "
 #~ "feed yn furvyans a vedn obery gans %(appname)s."
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "nyns eus junyans - my a vedn saya arta yn %s"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Jynnscrifowgh URL an wiasva rag keworra"
 
 #~ msgid ""
 #~ "One of these items is a folder.  Delete/Removeing a folder will "
@@ -5101,26 +4956,6 @@ msgstr ""
 #~ "Ny veu re a'n taclow-ma iscargys dhort feet. A via da genowgh aga dilea po "
 #~ "aga removya dhort an lyverva?"
 
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Keworra gwiasva - URL drog"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Nyns yw an trigva usy scrifys genowgh da.\n"
-#~ "Gwelowgh mars yw an URL ewn ha sayowgh arta.\n"
-#~ "Jynnscrifowgh URL an wiasva rag keworra"
-
-#~ msgid "Rename Website"
-#~ msgstr "Dashenwel gwiasva"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Scrifowgh hanow nowyth rag an wiasva %(name)s"
-
 #, python-format
 #~ msgid "Enter a new name for the feed folder %(name)s"
 #~ msgstr "Scrifowgh hanow nowyth rag an blegel feeds %(name)s"
@@ -5135,65 +4970,12 @@ msgstr ""
 #~ msgid "Rename Feed"
 #~ msgstr "Dashenwel feed"
 
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Removya an wiasva"
-#~ msgstr[1] "Removya gwiasvaow"
-#~ msgstr[2] "Removya gwiasvaow"
-#~ msgstr[3] "Removya gwiasvaow"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Owgh whi sur dr'eus whans dhewgh removya an wiasva-ma?"
-#~ msgstr[1] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s wiasva-ma?"
-#~ msgstr[2] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s gwiasva-ma?"
-#~ msgstr[3] "Owgh whi sur dr'eus whans dhewgh removya an %(count)s gwiasva-ma?"
-
-#~ msgid "Choose Language"
-#~ msgstr "Dowisowgh an yeth"
-
-#~ msgid "Update"
-#~ msgstr "Nowedha"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Dynnargh dhe gensa fyttyans %(name)s!\n"
-#~ "An nessa nebes scrinys a vedn agas gweres dhe fyttya %(name)s may whra obery "
-#~ "y'n gwella fordh ragowgh.\n"
-#~ "Py yeth a via da genowgh Miro dhe usya?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Dalathans %(name)s"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Yth ero'ni ow comendya %(name)s dhe vos settys dhe lonchya pan wra agas "
-#~ "amontyer dalleth. Yndelma, iscarganjow bew a ell diwedha iscarga ha "
-#~ "restrednow media nowyth a ell bos iscargys y'n gilva, parys pan eus whans "
-#~ "dhewgh mires ortans."
-
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "Kensa fyttyans %(name)s"
 
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Strotha dhe oll ow restrednow personel."
-
-#~ msgid "Finding Files"
-#~ msgstr "Ow cavos restrednow"
 
 #~ msgid "Search custom folders:"
 #~ msgstr "Whilas yn plegellow personelhes:"
@@ -5270,32 +5052,8 @@ msgstr ""
 #~ msgstr[2] "%(count)d feed dowisys"
 #~ msgstr[3] "%(count)d feed dowisys"
 
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d gwiasva dowisys"
-#~ msgstr[1] "%(count)d wiasva dowisys"
-#~ msgstr[2] "%(count)d gwiasva dowisys"
-#~ msgstr[3] "%(count)d gwiasva dowisys"
-
-#~ msgid "Path:"
-#~ msgstr "Fordh:"
-
-#~ msgid "Title:"
-#~ msgstr "Titel:"
-
-#~ msgid "Media type:"
-#~ msgstr "Sort an media:"
-
 #~ msgid "Feed downloads"
 #~ msgstr "Iscarganjow feeds"
-
-#~ msgid "Open log"
-#~ msgstr "Egery an govnoten"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Fylellas: %(error)s"
 
 #~ msgid "Single and external downloads"
 #~ msgstr "Iscarganjow udnik hag a-ves"
@@ -5361,17 +5119,8 @@ msgstr ""
 #~ msgid "Update Feeds Now"
 #~ msgstr "Nowedha an feeds lebmyn"
 
-#~ msgid "WEBSITES"
-#~ msgstr "GWIASVAOW"
-
 #~ msgid "LIBRARY"
 #~ msgstr "LYVERVA"
-
-#~ msgid "Remove Website"
-#~ msgstr "Dilea an wiasva"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Dilea an wiasvaow"
 
 #~ msgid "Revert Feed Name"
 #~ msgstr "Dewheles hanow an feed"
@@ -5393,20 +5142,6 @@ msgstr ""
 
 #~ msgid "Create Feed Folder"
 #~ msgstr "Gwruthyl plegel feeds"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "FEEDS VIDEO"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Rag whilas media war gwiasvaow whilans media Internet, clyckyowgh war'n box "
-#~ "whilans a-ugh, scrifowgh termys whilans ha sqwatyowgh an alwhedhen 'Enter'. "
-#~ "Rag chanjya jynnow-whilas, clyckyowgh war'n arwodhik dhe gledh an box "
-#~ "whilans a-ugh ha dowisowgh an jynn-whilas dhort an rol."
 
 #~ msgid ""
 #~ "Miro is upgrading your database of feeds and files.  This one-time process "
@@ -5467,9 +5202,6 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(An re-ma a ell bos chanjys dre boton settyanjow an feed)"
 
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Chanjya an yeth a wra dervyn whi dhe dhastalleth Miro.)"
-
 #~ msgid "_Share with a Friend"
 #~ msgstr "_Kevradna gans cothman"
 
@@ -5486,13 +5218,6 @@ msgstr ""
 #~ "divroa agas iscarganjow bew ena? (Ny vedh fylmow eus owth iscarga a-lebmyn "
 #~ "bos gwayes kens eus diwedh dhedhans.)"
 
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Ny alja an arayel '%s' bos formys.  "
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Seny media yn Miro."
-
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr ""
@@ -5505,40 +5230,5 @@ msgstr ""
 #~ msgid "Permalink"
 #~ msgstr "Kevren fast"
 
-#~ msgid "Exit fullscreen"
-#~ msgstr "Qwitya scrin leun"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Ost ancoth"
-
 #~ msgid "Show Less"
 #~ msgstr "Disqwedhes le"
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Agas peurel a vedn carga an wiasva may ellowgh iscarga ha lea Bonjour.\n"
-#~ "Pan vedh an leans cowlwres, gwrewgh dastalleth Miro rag gweles an chanjyow "
-#~ "gwres."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Rag an gwella prevyans, ni a venja comendya whi dhe lea Bonjour, neb ew "
-#~ "danonys mes avel radn a Print Services.\n"
-#~ "Lea Bonjour a vedn ri dhewgh chons dhe kevradna agas lyverva media gen "
-#~ "keffrys ha devnydhyoryon %(appname)s erel war agas rosweyth, ha frosa media "
-#~ "dhort devnydhyoryon %(appname)s erel war agas rosweyth.\n"
-#~ "A via da genowgh gwul hebma lebmyn?"

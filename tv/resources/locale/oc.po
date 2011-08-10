@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4490,12 +4490,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Per defaut, las vidèos expiran aprèp :"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Cadenas personalas"
-
 #~ msgid "Internal Error"
 #~ msgstr "Error intèrna"
 
@@ -4631,15 +4625,6 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Autre"
 
-#~ msgid "Path:"
-#~ msgstr "Camin :"
-
-#~ msgid "Title:"
-#~ msgstr "Títol :"
-
-#~ msgid "Media type:"
-#~ msgstr "Tipe de supòrt :"
-
 #~ msgid "Length"
 #~ msgstr "Longor"
 
@@ -4687,9 +4672,6 @@ msgstr ""
 #~ msgid "Rename Feed Folder"
 #~ msgstr "Tornar nomenar lo dorsièr de flux"
 
-#~ msgid "WEBSITES"
-#~ msgstr "Sites internet"
-
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTÈCA"
 
@@ -4699,17 +4681,8 @@ msgstr ""
 #~ msgid "PLAYLISTS"
 #~ msgstr "LISTAS DE LECTURA"
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "Flux vidèo"
-
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Paramètres per defaut pels fluxes novèls :"
-
-#~ msgid "Remove Website"
-#~ msgstr "Suprimir lo site internet"
-
-#~ msgid "Rename Website"
-#~ msgstr "Tornar nomenar lo site internet"
 
 #~ msgid "Feeds"
 #~ msgstr "Fluxes"
@@ -4732,9 +4705,6 @@ msgstr ""
 #~ msgid "Add Feed"
 #~ msgstr "Apondre un flux"
 
-#~ msgid "_Preferences"
-#~ msgstr "_Preferéncias"
-
 #~ msgid "_Remove"
 #~ msgstr "_Suprimir"
 
@@ -4746,9 +4716,6 @@ msgstr ""
 
 #~ msgid "Volume _Up"
 #~ msgstr "_Augmentar lo volum"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Sostítols"
 
 #~ msgid "_Donate"
 #~ msgstr "_Far un don"

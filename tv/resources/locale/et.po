@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4529,20 +4529,8 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Vaikimisi aeguvad videod pärast:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Kohandatud kanalid"
-
-#~ msgid "Add to library"
-#~ msgstr "Lisa videokogusse"
-
 #~ msgid "_Options"
 #~ msgstr "_Valikud"
-
-#~ msgid "Add to Library"
-#~ msgstr "Lisa videokogusse"
 
 #, python-format
 #~ msgid "Bad Status Code: %(code)s"
@@ -4556,9 +4544,6 @@ msgstr ""
 
 #~ msgid "Revert Item Name"
 #~ msgstr "Taasta kirje nimi"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Alusta jagamist"
 
 #~ msgid "Auto-Expire Videos:"
 #~ msgstr "Automaatselt aeguvad videod:"
@@ -4589,9 +4574,6 @@ msgstr ""
 
 #~ msgid "Length"
 #~ msgstr "Pikkus"
-
-#~ msgid "View:"
-#~ msgstr "Vaata:"
 
 #~ msgid "_Remove Item"
 #~ msgstr "Eemalda ki_rje"
@@ -5390,223 +5372,7 @@ msgstr ""
 #~ "kollekstioonist.\n"
 #~ "Hiljutised muudatused võivad kaotsi minna."
 
-#~ msgid "Path:"
-#~ msgstr "Asukoht:"
-
-#~ msgid "Remove Website"
-#~ msgstr "Eemalda veebisait"
-
-#~ msgid "Title:"
-#~ msgstr "Pealkiri:"
-
-#~ msgid "Rename Website"
-#~ msgstr "Nimeta veebilehekülg ümber"
-
-#~ msgid "WEBSITES"
-#~ msgstr "VEEBISAIDID"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Eemalda veebisaidid"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Mängi meediat Miros."
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "'%s' asukohta ei saadud luua.  "
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO VOOD"
-
-#~ msgid "Add Website"
-#~ msgstr "Lisa veebisait"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Lisa veebisait - Vigane URL"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Sisesta veebisaidi URL selle lisamiseks"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Sisesta uus nimi veebisaidile %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Aadress, mille sisestasid on vigane url.\n"
-#~ "Palun kontrolli URL´i ja proovi uuesti.\n"
-#~ "\n"
-#~ "Sisesta veebisaidi URL, et lisada see"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Eemalda veebisait"
-#~ msgstr[1] "Eemalda veebisaidid"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Oled kindel, et tahad eemaldada selle veebisaidi?"
-#~ msgstr[1] "Oled kindel, et tahad eemaldada need %(count)s veebisaidid?"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Taas_nimeta Voog"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Eemalda Vood"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Eemalda kaustad"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Eemalda Voog"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Muuda kirjet"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Eelistused"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Taas_nimeta Veebisait"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Eemalda veebisait"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Eemalda veebisaidid"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "S_ubtiitrid"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "pole ühendust - taastatakse %s"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Veebisait valitud"
-#~ msgstr[1] "%(count)d Veebisaiti valitud"
-
-#~ msgid "Media type:"
-#~ msgstr "Meediatüüp:"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Me vabandame, %(appname)s ei saadud uuendada andmebaasi vigade tõttu.\n"
-#~ "\n"
-#~ "Vaata ega su kõvaketas pole täis.  Kui on täis, siis välju %(appname)s, "
-#~ "puhasta kõvaketast ja käivita  %(appname)s uuesti.\n"
-#~ "\n"
-#~ "Kui su kõvaketas pole täis, aita meil aru saada probleemist väljudes, siis "
-#~ "raporteeida veast siin bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Lõpuks, sa saad alustada uuesti ja sinu kahjustatud andmebaas eemaldatakse, "
-#~ "aga sa pead uuesti lisama oma vood ja meediafailid.."
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "Universaalne, Hiina"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s nüüd saadab kokku jooksmise teate meie andmebaasi\n"
-#~ "\n"
-#~ "Kas soovid lisada terve programmi andmebaasi, sh. video ja fiidide metainfo "
-#~ "kokkujooksmise teatesse? See aitab meil viga diagnoosida."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Meil on kahju kuid %(appname)s ei suutnud käivituda kuna tekkis probleem "
-#~ "andmebaasiga:\n"
-#~ "\n"
-#~ "Viga: %(error)s\n"
-#~ "\n"
-#~ "On võimalik, et teie andmebaasi fail on rikutud ja on kasutamiskõlbmatu.\n"
-#~ "\n"
-#~ "Te võite uue alguse teha ja teie vigane andmebaas eemaldatakse, aga te peate "
-#~ "uuesti lisama oma meediafailid ja uudisevoogid. Kui te tahate seda teha, "
-#~ "vajutage alusta uuesti nuppu ja taaskäivita %(appname)s.\n"
-#~ "\n"
-#~ "\n"
-#~ "Et aidata meid probleemide parandamisega nagu see siis palun esitage "
-#~ "vearaport aadressil %(url)s."
-
 #, python-format
 #~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 #~ msgstr ""
 #~ "Ei suutnud laadida uudisevoogu aadressil %(url)s (%(errordescription)s)."
-
-#~ msgid "Convert"
-#~ msgstr "Konverdi"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Põhjus on teadmata"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "Artists"
-#~ msgstr "Esitajad"
-
-#~ msgid "Albums"
-#~ msgstr "Albumid"
-
-#~ msgid "Songs"
-#~ msgstr "Laulud"
-
-#~ msgid "Genres"
-#~ msgstr "Žanrid"
-
-#~ msgid "Choose Language"
-#~ msgstr "Vali keel"
-
-#~ msgid "Update"
-#~ msgstr "Uuenda"
-
-#~ msgid "Finding Files"
-#~ msgstr "Failide otsimine"
-
-#~ msgid "_View"
-#~ msgstr "_Vaade"
-
-#~ msgid "Watched"
-#~ msgstr "Jälgitav"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Aitäh kõigile, kes annetasid Miro %(version)s versiooni:"

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4625,46 +4625,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Custom Channels"
-#~ msgstr "Bealaí Saincheaptha"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Mar réamhshocrú, téann físeáin as feidhm tar éis:"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Bain feidhm as seo le haghaidh físeán nuair atá fuaim á sheinnt:"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Fair amach do físeáin nua sna fillteáin seo agus cuir sa leabharlann iad:"
-
-#~ msgid "Add to Library"
-#~ msgstr "Cuir leis an Leabharlann"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stad tar éis gach físeán"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Bain %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "An bhfuil tú cinnte go dteastaíonn uait %(name)s a bhaint?"
-
-#~ msgid "Add to library"
-#~ msgstr "Cuir leis an leabharlann"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Cruthaigh fotha?"
-#~ msgstr[1] "Cruthaigh %(count)d fothaí?"
-#~ msgstr[2] "Cruthaigh %(count)d fothaí?"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Seinn na físeáin ceann in ndiaidh a chéile"
-
 #~ msgid "Internal Error"
 #~ msgstr "Botún Inmheánach"
 
@@ -5116,129 +5076,15 @@ msgstr ""
 #~ msgid "Remove Sites"
 #~ msgstr "Bain na Suíomhanna"
 
-#~ msgid "Path:"
-#~ msgstr "Conair:"
-
-#~ msgid "Title:"
-#~ msgstr "Teideal:"
-
-#~ msgid "Media type:"
-#~ msgstr "Cineál meán:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "LÁITHREÁIN GRÉASÁIN"
-
-#~ msgid "Remove Website"
-#~ msgstr "Bain an Láithreán Gréasáin"
-
-#~ msgid "Rename Website"
-#~ msgstr "Athainmnigh an Láithreán Gréasáin"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Bain na Láithreáin Gréasáin"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Ní mór Miro a atosú má athraítear an teanga.)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Seinn i Miro é."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Scoir ó lánscáileán"
-
 #~ msgid "Back to feed"
 #~ msgstr "Siar chuig an fotha"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Cuir isteach URL an láithreáin gréasáin atá le cur leis"
-
-#~ msgid "Add Website"
-#~ msgstr "Cuir láithreán gréasáin leis"
 
 #~ msgid "Display Contents"
 #~ msgstr "Taispeáin Inneachair"
 
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Bain an láthreán gréasáin"
-#~ msgstr[1] "Bain na láthreáin gréasáin"
-#~ msgstr[2] "Bain na láthreáin gréasáin"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] ""
-#~ "An bhfuil tú cinnte gur mian leat an láithreán gréasáin seo a bhaint?"
-#~ msgstr[1] ""
-#~ "An bhfuil tú cinnte gur mian leat na láithreáin gréasáin seo a bhaint?"
-#~ msgstr[2] ""
-#~ "An bhfuil tú cinnte gur mian leat na láithreáin gréasáin seo a bhaint?"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Ag feitheamh)"
-
-#~ msgid "_Edit Item"
-#~ msgstr "Cuir an Mhír In Eagar"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Sainroghanna"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Athainmnigh an Fotha"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "Bain na Fothaí"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "Bain na Fillteáin"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "Bain an Fotha"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Athainmnigh an Láithreán Gréasáin"
-
-#~ msgid "_Remove Website"
-#~ msgstr "Bain an Láithreán Gréasáin"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "Bain na Láithreáin Gréasáin"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Fotheideal"
-
 #, python-format
 #~ msgid "_About %(name)s"
 #~ msgstr "_Maidir le %(name)s"
-
-#~ msgid "Choose Language"
-#~ msgstr "Roghnaigh Teanga"
-
-#~ msgid "Update"
-#~ msgstr "Nuashonraigh"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Fáilte go dtí socrú bunaidh %(name)s!\n"
-#~ "\n"
-#~ "Cabhróidh na scáileáin ar aghaidh leat %(name)s a shocrú le go bhfeidhmeoidh "
-#~ "sé mar is mian leat.\n"
-#~ "\n"
-#~ "Cén teanga ar mhaith leat a bheith ar Miro?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Tosú %(name)s"
-
-#~ msgid "Finding Files"
-#~ msgstr "Ag Aimsiú Comhaid"
 
 #~ msgid "Contents:"
 #~ msgstr "Inneachar:"
@@ -5288,9 +5134,6 @@ msgstr ""
 
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Réamhshocruithe do fhothaí nua:"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "FOTHAÍ FÍSEÁIN"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
@@ -5348,10 +5191,6 @@ msgstr ""
 #~ msgstr "Socrú íosluchtaith uathoibríoch:"
 
 #, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Níorbh fhéidir an chomhadlann '%s' a chruthú.  "
-
-#, python-format
 #~ msgid ""
 #~ "You've selected a new folder to download movies to.  Should %(appname)s "
 #~ "migrate your existing downloads there? (Currently downloading movies will "
@@ -5369,40 +5208,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "Nasc buain"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "Ní féidir le %(shortappname)s feidhm a bhaint as an bpríomhchomhadlann "
-#~ "físeáin lonnaithe ag:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "B'fhéidir go bhfuil sé mar atá mar tá sé lonnaithe ar thiomántán seachtrach "
-#~ "nach bhfuil ceangailte, nó b'fhéidir gurb comhadlann í nach bhfuil cead ag "
-#~ "%(shortappname)s scríobh inti, nó b'fhéidir go bhfuil rud éigin nach "
-#~ "comhadlann é ag an gconair sin.\n"
-#~ "\n"
-#~ "Má leanann tú ar aghaidh, athshocróidh an príomhchomhadlann físeáin chuig "
-#~ "suíomh ar an tiomántán seo. Má bhí físeáin íosluchtaithe agat, caillfidh "
-#~ "%(shortappname)s sonraí na bhfíseán sin dá bharr.\n"
-#~ "\n"
-#~ "Má scoireann tú, is féidir leat an tiomántán a cheangailt nó an fhadhb a "
-#~ "dheisiú agus %(shortappname)s a tosú arís."
 
 #~ msgid ""
 #~ "One of these items was not downloaded from a feed. Would you like to delete "
@@ -5436,36 +5241,15 @@ msgstr ""
 #~ "Is fillteáin iad roinnt de na míreanna seo. Má scriostar/baintear fillteán, "
 #~ "scriosfar/bainfear a inneachar"
 
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Cuir Láithreán Gréasáin Leis - URL Neamhbhailí"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Ní URL bailí é an seoladh a chur tú isteach.\n"
-#~ "Dearbháil an tURL agus triail arís é.\n"
-#~ "\n"
-#~ "Cuir isteach URL an láithreáin gréasáin atá le cur leis"
-
 #, python-format
 #~ msgid "Enter a new name for the feed folder %(name)s"
 #~ msgstr "Cuir isteach ainm nua do fhillteán an fhotha %(name)s"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Cuir isteach ainm nua don láithreán gréasáin %(name)s"
 
 #~ msgid "Upload Rate"
 #~ msgstr "Luas Uasluchtaithe"
 
 #~ msgid "Down Rate"
 #~ msgstr "Luas Síos"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Cóimheas Suas/Síos"
 
 #~ msgid "queued for autodownload"
 #~ msgstr "i scuaine le íosluchtú"
@@ -5532,25 +5316,12 @@ msgstr ""
 #~ msgid "_Pause"
 #~ msgstr "_Cur ar sos"
 
-#~ msgid "_Next Item"
-#~ msgstr "Mír Ar Aghaidh"
-
-#~ msgid "_Previous Item"
-#~ msgstr "Mír Roimhe"
-
 #, python-format
 #~ msgid "%(count)d Feed Folder Selected"
 #~ msgid_plural "%(count)d Feed Folders Selected"
 #~ msgstr[0] "%(count)d Fillteán Fotha  Roghnaithe"
 #~ msgstr[1] "%(count)d Fhillteán Fotha Roghnaithe"
 #~ msgstr[2] "%(count)d bhFillteán Fotha Roghnaithe"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Láithreán Gréasáin Roghnaithe"
-#~ msgstr[1] "%(count)d Láithreáin Gréasáin Roghnaithe"
-#~ msgstr[2] "%(count)d Láithreáin Gréasáin Roghnaithe"
 
 #, python-format
 #~ msgid ""
@@ -5588,17 +5359,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Moltar go mór duit go dtosófar %(name)s nuair a thosaíonn do ríomhaire. Ar "
-#~ "an dóigh seo, is féidir le íosluchtuithe atá ar siúl críochnú ag íosluchtú "
-#~ "agus is féidir le comhaid meán nua íosluchtú go socair sa chúlra, réidh duit "
-#~ "nuair a theastaíonn uait breathnú orthu."
-
-#, python-format
-#~ msgid ""
 #~ "%(name)s can find all the media files on your computer to help you organize "
 #~ "your collection.\n"
 #~ "\n"
@@ -5620,10 +5380,6 @@ msgstr ""
 
 #~ msgid "Add new feed to this section:"
 #~ msgstr "Cuir fotha nua leis an rannóg seo:"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "níl ceangal ann - ag atriail i gceann %s"
 
 #, python-format
 #~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
@@ -5671,20 +5427,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "Cuirfidh %(appname)s fógra tuairte faoi bhráid ár bunachar sonraí "
-#~ "tuairteanna.\n"
-#~ "\n"
-#~ "An mian leat bunachar sonraí an ríomhchláir ar fad, meiteashonraí gach "
-#~ "físeán agus fotha san áireamh, a sheoladh leis an bhfógra tuairte? Cabhróidh "
-#~ "sé linn an fhadhb a fháthmheas."
-
-#, python-format
-#~ msgid ""
 #~ "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 #~ "the publisher of this file."
 #~ msgstr ""
@@ -5702,110 +5444,3 @@ msgstr ""
 #, python-format
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "Níorbh fhéidir an fothachomhad %(appname)s a íosluchtú: %(url)s"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Is dona linn, ní raibh %(appname)s do bhunachar sonraí a fheabhsú mar gheall "
-#~ "ar bhotúin.\n"
-#~ "\n"
-#~ "Dearbháil an bhfuil do dhiosca lán. Má tá sé lán, scoir ó %(appname)s, cuir "
-#~ "slí ar fáil sa dhiosca, agus tosaigh %(appname)s arís.\n"
-#~ "\n"
-#~ "Mura bhfuil do dhiosca lán, cuidigh linn tuiscint a fháil ar an bhfadhb trí "
-#~ "fabht a fhógairt dár bunachar sonraí tuairte.\n"
-#~ "\n"
-#~ "Mar chríoch, is féidir tosú as an nua agus bainfear do bhunachar sonraí "
-#~ "loite, ach beidh ort do fhothaí agus comhaid meán a chur ar ais."
-
-#~ msgid "Reason unknown"
-#~ msgstr "Fáth anaithnid"
-
-#~ msgid "Convert"
-#~ msgstr "Tiontaigh"
-
-#~ msgid "Auto-download"
-#~ msgstr "Uath-íosluchtú"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Óstach Anaithnid"
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Tharla botún ag luchtú an podchraoladh"
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr ""
-#~ "Níorbh fhéidir an podchraoladh ag %(url)s (%(errordescription)s) a luchtú."
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "An mian leat an podchraoladh a choimeád?"
-
-#~ msgid "Download to My Miro"
-#~ msgstr "Íosluchtaigh chuig Mo Mhiro"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "MÍle buíochas do chách a chabhraigh le cruthú Miro %(version)s:"
-
-#~ msgid "Artists"
-#~ msgstr "Ealaíontóirí"
-
-#~ msgid "Genres"
-#~ msgstr "Aicmí"
-
-#~ msgid "Albums"
-#~ msgstr "Albaim"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "Songs"
-#~ msgstr "Amhráin"
-
-#~ msgid "Download Item"
-#~ msgstr "Íosluchtaigh an Mhír"
-
-#~ msgid "_View"
-#~ msgstr "_Amharc"
-
-#~ msgid "Non Podcast"
-#~ msgstr "Ní podchraoladh é"
-
-#~ msgid "Search for files"
-#~ msgstr "Cuardaigh do chomhaid"
-
-#~ msgid "of"
-#~ msgstr "as"
-
-#~ msgid ""
-#~ "Miro can watch a folder on your computer and show those media files in your "
-#~ "library."
-#~ msgstr ""
-#~ "Tig le Miro breathnú ar fhillteán ar do ríomhaire agus na comhaid mheáin a "
-#~ "thaispeáint i do leabharlann."
-
-#, python-format
-#~ msgid "%(appname)s First Time Setup"
-#~ msgstr "Socrú %(appname)s Don Chéad Uair"
-
-#~ msgid "Import Media"
-#~ msgstr "Tabhair Isteach Meáin"
-
-#, python-format
-#~ msgid ""
-#~ "Directory '%s' could not be created.  Please choose a directory you have "
-#~ "write access to."
-#~ msgstr ""
-#~ "Níorbh fhéidir an chomhadlann '%s' a chruthú. Roghnaigh comhadlann a bhfuil "
-#~ "rochtain agat uirthi chun scríobh inti."

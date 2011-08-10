@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4530,9 +4530,6 @@ msgstr ""
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "限定于我个人的配置文件。"
 
-#~ msgid "Custom Channels"
-#~ msgstr "自定义频道"
-
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "您想保留该feed(供稿)吗？"
 
@@ -4544,12 +4541,6 @@ msgstr ""
 
 #~ msgid "Check _Version"
 #~ msgstr "检查版本(_V)"
-
-#~ msgid "Stop after each video"
-#~ msgstr "单个视频结束后停止"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "顺次播放视频"
 
 #~ msgid "Select _All"
 #~ msgstr "全选(_A)"
@@ -4593,9 +4584,6 @@ msgstr ""
 #~ msgid "Auto Download"
 #~ msgstr "添加到下载"
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "当播放声音使用这个作为视频"
-
 #, python-format
 #~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
@@ -4613,14 +4601,6 @@ msgstr ""
 
 #~ msgid "License"
 #~ msgstr "许可"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "您必须重新播放以使可视化设置的变更生效."
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "您正使用自定义频道列表的 %(appname)s 版本."
 
 #~ msgid "Subscribed to new feed:"
 #~ msgstr "订阅新的源:"
@@ -4823,12 +4803,6 @@ msgstr ""
 #~ msgid "Auto download setting:"
 #~ msgstr "自动下载设置:"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "检视在这些文件夹里面的新视频并把他们加入媒体库:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "恢复到上次播放停止的位置开始播放视频"
-
 #~ msgid "Feeds"
 #~ msgstr "订阅源"
 
@@ -4850,9 +4824,6 @@ msgstr ""
 #~ msgid "Full Feed"
 #~ msgstr "全文Feed"
 
-#~ msgid "Add to Library"
-#~ msgstr "添加到库中"
-
 #~ msgid "File name:"
 #~ msgstr "文件名："
 
@@ -4871,14 +4842,6 @@ msgstr ""
 #, python-format
 #~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 #~ msgstr "无法载入位于%(url)s的feed，原因为(%(errordescription)s)"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "移除 %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "确认移除%(name)s？"
 
 #~ msgid "Migrating files"
 #~ msgstr "迁移文件"
@@ -4989,9 +4952,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "永久链接"
-
-#~ msgid "Add to library"
-#~ msgstr "添加到媒体库"
 
 #~ msgid "Are you sure you want to remove this feed:"
 #~ msgid_plural "Are you sure you want to remove these feeds:"
@@ -5118,17 +5078,11 @@ msgstr ""
 #~ msgid "Revert Item Name"
 #~ msgstr "改回项目名称"
 
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "订阅多个 Feeds"
-
 #, python-format
 #~ msgid ""
 #~ "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 #~ "the publisher of this file."
 #~ msgstr "此%(appname)s FEED文件格式不正确%(url)s.请通知此文件的发行者。"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "为新建的FEED文件夹输入一个名字"
 
 #~ msgid "Create Feed"
 #~ msgstr "创建FEED"
@@ -5172,20 +5126,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] "注意：你已经订阅了其中的%(count)d个种子。这些种子将保持不变。"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "创建%(count)d个种子?"
-
-#, python-format
-#~ msgid ""
 #~ "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 #~ "notify the publisher of this file."
 #~ msgstr "%(appname)s 种子文件的内容错误:%(url)s。请通知该文件的发布者。"
@@ -5202,9 +5142,6 @@ msgstr ""
 
 #~ msgid "Pipeline request never started"
 #~ msgstr "管线请求(Pipeline request)从未被启动"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "默认情况下, 视频有效期至:"
 
 #, python-format
 #~ msgid ""
@@ -5294,9 +5231,6 @@ msgstr ""
 
 #~ msgid "Remove Sites"
 #~ msgstr "删除站点"
-
-#~ msgid "View:"
-#~ msgstr "观看"
 
 #~ msgid "Other"
 #~ msgstr "其它"
@@ -5398,279 +5332,3 @@ msgstr ""
 
 #~ msgid "_Donate"
 #~ msgstr "捐助(_D)"
-
-#~ msgid "WEBSITES"
-#~ msgstr "网站"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "目录'%s' 不能创建。  "
-
-#~ msgid "Title:"
-#~ msgstr "标题："
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "编辑项目的元数据"
-
-#~ msgid "other"
-#~ msgstr "其他"
-
-#~ msgid "Media type:"
-#~ msgstr "媒体类型："
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "没有连接 - %s后重试"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "字幕(_U)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "在Miro中播放媒体"
-
-#~ msgid "Unknown Language"
-#~ msgstr "未知语言"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "视频订阅"
-
-#~ msgid "Path:"
-#~ msgstr "路径:"
-
-#~ msgid "Remove Website"
-#~ msgstr "移除站点"
-
-#~ msgid "Rename Website"
-#~ msgstr "重命名站点"
-
-#~ msgid "Add Website"
-#~ msgstr "添加站点"
-
-#~ msgid "Remove Websites"
-#~ msgstr "移除站点"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "（改变语言要求您重新启动米罗。）"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "很抱歉, %(appname)s 因为以下数据库错误不能启动：\n"
-#~ "\n"
-#~ "错误: %(error)s\n"
-#~ "\n"
-#~ "可能您的数据库已经损坏，无法使用。\n"
-#~ "\n"
-#~ "您可以重新启动，损坏的数据库将随之被移除, 不过您需要重新添加源和媒体文件. 如果您确定要这么做，请按下“重启”按钮来重新启动 "
-#~ "%(appname)s.\n"
-#~ "\n"
-#~ "您可以通过 %(url)s 提交错误报告来帮助我们修复这一问题。"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s 现在将向我们的崩溃问题数据库提交崩溃报告。\n"
-#~ "\n"
-#~ "您想要在其中包含程序的完整数据库（包括所有的视频和源的标签数据）吗？这将帮助我们诊断问题所在。"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "很抱歉, %(appname)s 因为发生错误无法升级您的数据库。\n"
-#~ "\n"
-#~ "请检查是否磁盘已满. 如果已满，请退出 %(appname)s, 清理一些磁盘空间，然后重新启动 %(appname)s .\n"
-#~ "\n"
-#~ "如果磁盘未满, 请发送错误报告来帮助我们确定问题.\n"
-#~ "\n"
-#~ "最后，您可以重新启动，损坏的数据库将随之被移除,然而您需要重新添加媒体和源。"
-
-#~ msgid "Reason unknown"
-#~ msgstr "原因未知"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "上行/下载 比率"
-
-#~ msgid "Re_name Website"
-#~ msgstr "重命名站点"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "重命名源"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_移除多个文件夹"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_移除多个源"
-
-#~ msgid "_Edit Item"
-#~ msgstr "编辑项目(_E)"
-
-#~ msgid "_Preferences"
-#~ msgstr "首选项"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_移除源"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_上个项目"
-
-#~ msgid "_Next Item"
-#~ msgstr "_下个项目"
-
-#~ msgid "Convert"
-#~ msgstr "转换"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_移除该站点"
-
-#~ msgid "Auto-download"
-#~ msgstr "自动下载"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_移除多个站点"
-
-#~ msgid "Choose Language"
-#~ msgstr "选择语言"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "添加站点 -无效的地址（URL）"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "输入要添加的站点的地址（URL）"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "为站点%(name)s 输入新名称"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "您输入的地址不是有效的URL。\n"
-#~ "请检查URL并再次尝试。\n"
-#~ "\n"
-#~ "输入要添加的站点的地址（URL）"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s 不能使用在以下位置的主要视频目录：\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "这可能是由于该目录位于没有连接的外接驱动器,或者 %(shortappname)s 对该目录没有写入的权限, 或者在该路径的位置不存在该目录。\n"
-#~ "\n"
-#~ "如果您选择继续, 主要视频目录将被重设到当前驱动器. 如果您有已经下载完成的视频，这将会导致 %(shortappname)s "
-#~ "丢失这些视频文件的细节。\n"
-#~ "如果您选择退出, 那么您可以连接外接驱动器或修复问题并重新启动 %(shortappname)s."
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "移除站点"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "确定要移除 %(count)s 个站点吗？"
-
-#~ msgid "Update"
-#~ msgstr "升级"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "欢迎来到 %(name)s！这是您第一次启动。\n"
-#~ "\n"
-#~ "接下来的几个窗口将帮助您配置 %(name)s 以获得最佳的使用效果。\n"
-#~ "\n"
-#~ "您希望Miro使用哪种语言？"
-
-#~ msgid "Finding Files"
-#~ msgstr "查找文件"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s 启动"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "我们建议您在计算机启动时自动运行 %(name)s 。采用这种方式进行中的下载可以自动完成，新的媒体文件将会在后台下载，从而在您想要观看的时候准备就绪。"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "点击上面的搜索框来在互联网上的媒体搜索站点搜索媒体，输入关键词然后按下Enter键。要切换搜索引擎，点击搜索框左侧的图标从下拉菜单中选择需要的搜索引擎。"
-
-#~ msgid "Open log"
-#~ msgstr "打开日志"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d 个站点已选择"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "失败: %(error)s"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "退出全屏"
-
-#~ msgid "Unknow Host"
-#~ msgstr "未知主机"

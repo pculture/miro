@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:11+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/net.py:367
 msgid "Connection closed"
@@ -4863,80 +4863,8 @@ msgstr ""
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Restringir aos meus ficheiros pessoais."
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Por omissão, os vídeos expiram ao fim de:"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "A subscrever a múltiplos feeds"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Parar depois de cada vídeo"
-
-#~ msgid "Add to Library"
-#~ msgstr "Adicionar à biblioteca"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Deverá reiniciar a reprodução do vídeo para que as alterações de "
-#~ "visualização tenham efeito."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Usar este para vídeo quando estiver a reproduzir audio."
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "Está a correr uma versão do %(appname)s com um conjunto de canais "
-#~ "personalizados."
-
 #~ msgid "File name:"
 #~ msgstr "Nome do ficheiro:"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Reproduzir vídeos um a seguir ao outro"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Continuar a reprodução de um vídeo do ponto em que foi parado."
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Estar atento a vídeos nestas pastas e incluí-los na biblioteca:"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Tem a certeza de que deseja eliminar %(name)s?"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Eliminar %(name)s"
-
-#~ msgid "Add to library"
-#~ msgstr "Adicionar à Biblioteca"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Introduza um nome para a nova pasta"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "NOTA: Já subscreveu uma destas Fontes. Estas Fontes vão ficar onde já estão."
-#~ msgstr[1] ""
-#~ "NOTA: Já subscreveu %(count)d destas Fontes. Estas Fontes vão ficar onde já "
-#~ "estão."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Criar Fonte?"
-#~ msgstr[1] "Criar %(count)d Fontes"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Começar a semear"
 
 #, python-format
 #~ msgid "Bad Chunk size: %(msg)s"
@@ -5343,9 +5271,6 @@ msgstr ""
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
 
-#~ msgid "Custom Channels"
-#~ msgstr "Canais Customizados"
-
 #~ msgid "Insufficient disk space"
 #~ msgstr "Espaço insuficiente no disco"
 
@@ -5365,158 +5290,12 @@ msgstr ""
 #~ msgstr "Página da Web"
 
 #, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "O directório '%s' não pôde ser criado.  "
-
-#~ msgid "Title:"
-#~ msgstr "Título:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Editar a metadata deste item."
-
-#~ msgid "other"
-#~ msgstr "outro"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "O %(shortappname)s não consegue usar o directório primário de vídeos "
-#~ "localizado em:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Isto pode acontecer por estar localizado num disco externo que não está "
-#~ "ligado, ser um directório em que o %(shortappname)s não tem permissão para "
-#~ "escrever, ou haver alguma coisa que não é um directório no caminho "
-#~ "indicado.\n"
-#~ "\n"
-#~ "Se continuar, o directório primário de vídeos vai reverter para uma "
-#~ "localização neste disco.  Se tiver vídeos decarregados, isto causará o "
-#~ "%(shortappname)s a perder os detalhes desses vídeos.\n"
-#~ "\n"
-#~ "Se sair, pode ligar o disco ou resolver o problema em causa e reiniciar o "
-#~ "%(shortappname)s."
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "não há ligação - voltar-se-á a tentar em %s"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Língua Desconhecida"
-
-#~ msgid "_Remove Site"
-#~ msgstr "_Remover o Site"
-
-#~ msgid "Path:"
-#~ msgstr "Caminho:"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Remover as Pastas"
-
-#~ msgid "Re_name Site"
-#~ msgstr "M_udar o Nome do Site"
-
-#~ msgid "_Remove Sites"
-#~ msgstr "_Remover os Sites"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Editar Item"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Preferências"
-
-#~ msgid "Rename Website"
-#~ msgstr "Mudar o nome do Site"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Adicionar site - URL Inválido"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Introduza o URL do site a adicionar"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "O endereço que introduziu não é um URL válido.\n"
-#~ "Por favor verifique o URL e volte a tentar.\n"
-#~ "\n"
-#~ "Introduza o URL do site a adicionar"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Mudar o _Nome do Site"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Lamentamos mas o %(appname)s foi incapaz de actualizar a sua base de dados "
-#~ "devido a erros ocorridos.\n"
-#~ "\n"
-#~ "Verifique se o seu disco está cheio.  Se estiver cheio, feche o %(appname)s, "
-#~ "liberte algum espaço, e reinicie o %(appname)s.\n"
-#~ "\n"
-#~ "Se o seu disco não estiver cheio, ajude-nos a entender o problema ao sair e "
-#~ "relatar o erro em bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Por fim, pode iniciar de novo e a sua base de dados danificada será "
-#~ "removida, contudo, terá de voltar a adicionar as suas fontes de ficheiros de "
-#~ "media."
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d site Seleccionado"
-#~ msgstr[1] "%(count)d sites Seleccionados"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Sair do modo de ecrã completo"
-
-#~ msgid "Choose Language"
-#~ msgstr "Seleccionar idioma"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Pendente)"
-
-#~ msgid "Update"
-#~ msgstr "Actualizar"
-
-#, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "CRLF esperado, recebeu: %(character)r"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
 #~ msgstr "Problema na linha de estado: %(msg)s"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s Início"
 
 #~ msgid "Pipeline request never started"
 #~ msgstr "Pedido de encaminhamento não iniciado"
@@ -5530,53 +5309,12 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Outro(s)"
 
-#~ msgid "Reason unknown"
-#~ msgstr "Motivo desconhecido"
-
-#~ msgid "Convert"
-#~ msgstr "Converter"
-
-#~ msgid "Auto-download"
-#~ msgstr "Transferência automática"
-
-#~ msgid "Open log"
-#~ msgstr "Abrir registo"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Falha: %(error)s"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Servidor Desconhecido"
-
 #~ msgid "_Download Item"
 #~ msgstr "_Transferir o Item"
 
 #, python-format
 #~ msgid "%(rate)s downloading"
 #~ msgstr "A transferir a %(rate)s"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Para pesquisar ficheiro multimídia em sítios web de pesquisa de mídia na "
-#~ "Internet, clique na caixa de pesquisa acima, os termos de pesquisa e prima "
-#~ "'Enter'. Para mudar de motor de busca, clique no ícone à esquerda da caixa "
-#~ "de pesquisa e seleccione o motor de busca do menu."
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Recomendamos-lhe que inicialize o %(name)s ao iniciar da sua sessão. Desta "
-#~ "maneira, os ficheiros que estiverem a ser transferidos podem ser finalizados "
-#~ "e uma nova série de ficheiros poderão ser transferidos sem interrupções em "
-#~ "segundo plano, estando pronto para serem assistidos assim que você desejar."
 
 #, python-format
 #~ msgid ""
@@ -5594,16 +5332,10 @@ msgstr ""
 #~ msgid "Searching for media files"
 #~ msgstr "Procurando ficheiros multimídia"
 
-#~ msgid "Media type:"
-#~ msgstr "Tipos de multimídia:"
-
 #~ msgid "Are you sure you want to remove this feed:"
 #~ msgid_plural "Are you sure you want to remove these feeds:"
 #~ msgstr[0] "Tem a certeza que deseja eliminar este Canal?:"
 #~ msgstr[1] "Tem a certeza que deseja eliminar estes Canais?:"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "CANAIS DE VíDEO"
 
 #~ msgid "AUDIO FEEDS"
 #~ msgstr "CANAIS DE ÁUDIO"
@@ -5645,38 +5377,6 @@ msgstr ""
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Definições predefinidas para novos Canais de Noticias:"
 
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Desculpe, mas o %(appname)s foi incapaz de iniciar devido a um problema na "
-#~ "base de dados:\n"
-#~ "\n"
-#~ "Erro: %(error)s\n"
-#~ "\n"
-#~ "É possível que a sua base de dados esteja danificada e não possa ser "
-#~ "utilizada.\n"
-#~ "\n"
-#~ "Pode começar de novo, para ser criada uma nova base de dados e apagada a "
-#~ "antiga que está avariada, mas terá que adicionar de novo os seus canais e "
-#~ "ficheiros de mídia. Se quiser fazer isto clique o botão 'Começar de novo' e "
-#~ "re-inicialize o %(appname)s.\n"
-#~ "\n"
-#~ "Para nos ajudar a corrigir o problema futuramente, por favor reporte este "
-#~ "erro (bug) no sítio web %(url)s."
-
 #~ msgid "Error loading feed"
 #~ msgstr "Erro ao carregar Canal"
 
@@ -5709,20 +5409,6 @@ msgstr ""
 #~ msgstr ""
 #~ "O ficheiro em %(url)s não parece ser um ficheiro de áudio, vídeo ou um Canal "
 #~ "RSS."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "O %(appname)s irá agora enviar o relatório de falha crítica para o "
-#~ "repositório central de falhas críticas.\n"
-#~ "\n"
-#~ "Permite que seja incluída toda a base de dados do programa, incluindo todos "
-#~ "os vídeos e meta-dados dos Canais, com o relatório de falha crítica? Esta "
-#~ "informação irá ajudar-nos a diagnosticar o problema."
 
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "Gostaria de guardar o Canal de Notícias?"
@@ -5759,32 +5445,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Pedimos desculpa, mas o %(appname)s não conseguiu actualizar a sua base de "
-#~ "dados devido a erros.\n"
-#~ "\n"
-#~ "Verifique se o disco está cheio. Se estiver cheio, então feche %(appname)s, "
-#~ "liberte mais espaço em disco e reinicialize o %(appname)s.\n"
-#~ "\n"
-#~ "Se seu disco não estiver cheio, ajude-nos a entender o ocorrido reportando o "
-#~ "problema na nossa base de dados de falhas críticas.\n"
-#~ "\n"
-#~ "Tem de começar de novo, para ser criada uma nova base de dados e apagada a "
-#~ "antiga que está avariada, mas terá que adicionar de novo os seus Canais de "
-#~ "Notícias e ficheiros de mídia."
-
-#, python-format
-#~ msgid ""
 #~ "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 #~ "notify the publisher of this file."
 #~ msgstr ""
@@ -5809,15 +5469,6 @@ msgstr ""
 
 #~ msgid "Add new feed to this section:"
 #~ msgstr "Adicionar um novo Canal a esta secção:"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "R_enomear Canal"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "Apa_gar Canais"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Apagar Canal"
 
 #~ msgid "_Update Feeds"
 #~ msgstr "Actualiza_r Canais"
@@ -5961,26 +5612,8 @@ msgstr ""
 #~ msgid "Upload Total"
 #~ msgstr "Total Enviado"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Rácio Enviado/Recebido"
-
-#~ msgid "Add Website"
-#~ msgstr "Adicionar Sítio web"
-
 #~ msgid "_Share with a Friend"
 #~ msgstr "Partil_har com um amigo"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Remover Sítios web"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Remover Sítio web"
-
-#~ msgid "_Next Item"
-#~ msgstr "Pró_ximo Item"
-
-#~ msgid "_Previous Item"
-#~ msgstr "Ite_m Anterior"
 
 #~ msgid "_Stop"
 #~ msgstr "P_arar"
@@ -5988,63 +5621,17 @@ msgstr ""
 #~ msgid "_Pause"
 #~ msgstr "_Pausar"
 
-#~ msgid "S_ubtitles"
-#~ msgstr "Le_gendas"
-
 #~ msgid "Report a _Bug"
 #~ msgstr "Relatar um Erro (_Bug)"
 
 #~ msgid "Save Search"
 #~ msgstr "Guardar a pesquisa"
 
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Introduza um novo nome para o sítio web %(name)s"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Remover sítio web"
-#~ msgstr[1] "Remover sítios web"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Tem a certeza de que deseja remover este sítio web?"
-#~ msgstr[1] "Tem a certeza de que deseja remover estes %(count)s sítios web?"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Bem vindo à configuração inicial do %(name)s!\n"
-#~ "\n"
-#~ "Os próximas ecrãs irão ajudar a configurar o %(name)s para que a aplicação "
-#~ "funcione correctamente.\n"
-#~ "\n"
-#~ "Em que idioma quer usar o Miro ?"
-
-#~ msgid "Finding Files"
-#~ msgstr "Procurando ficheiros"
-
 #~ msgid "Search custom folders:"
 #~ msgstr "Procurar nas pastas escolhidas por si:"
 
 #~ msgid "Outdated Feed Items:"
 #~ msgstr "Itens fora do prazo dos Canais:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "SÍTIOS WEB"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Remover os Sítios web"
-
-#~ msgid "Remove Website"
-#~ msgstr "Remover o Sítio web"
 
 #~ msgid "Folder should go in this section:"
 #~ msgstr "A pasta deve ficar nesta secção:"
@@ -6093,187 +5680,5 @@ msgstr ""
 #~ "\n"
 #~ "URL: %(url)s"
 
-#~ msgid "Error loading podcast"
-#~ msgstr "Erro ao carregar o \"podcast\""
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr ""
-#~ "Não foi possível carregar o \"podcast\" em %(url)s (%(errordescription)s)."
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Pretende manter este \"podcast\"?"
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "O seu navegador vai abrir a página web para transferir e instalar o "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "Quando terminar a instalação, reinicie o Miro para aplicar as alterações."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Para uma melhor experiência com o %(appname)s, sugerimos a instalação do "
-#~ "Bonjour, que é disponibilizado como parte dos serviços de impressão.\n"
-#~ "\n"
-#~ "Se instalar o Bonjour conseguirá partilhar a sua biblioteca bem como receber "
-#~ "emissões de outros utilizadores do %(appname)s.\n"
-#~ "\n"
-#~ "Pretende fazê-lo agora?"
-
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "A base de dados foi criada por uma versão mais recente do Miro "
-
-#~ msgid "Device Default"
-#~ msgstr "Dispositivo padrão"
-
-#, python-format
-#~ msgid ""
-#~ "Select the music and video stores you'd like to have appear in "
-#~ "%(shortappname)s.  Note: some other store websites may work well with Miro "
-#~ "if you add them as Sources, but these are Stores that we've integrated and "
-#~ "tested."
-#~ msgstr ""
-#~ "Selecione as lojas de música e vídeo que pretende visualizar no "
-#~ "%(shortappname)s. Estas lojas foram testadas e integradas pelos "
-#~ "programadores. Tenha em conta que existem diversos sítios web que também "
-#~ "funcionam no Miro, se os adicionar como fontes."
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr "Para contribuir monetariamente, visite a página de doações:"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr ""
-#~ "Obrigado a todas as pessoas que contribuiram para o Miro %(version)s:"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Se alterar o idioma, tem que reiniciar o Miro)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Reproduzir ficheiro no Miro."
-
-#~ msgid ""
-#~ "Miro can watch a folder on your computer and show those media files in your "
-#~ "library."
-#~ msgstr ""
-#~ "O Miro pode vigiar uma pasta no computador e mostrar os ficheiros na coleção."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "Miro will now exit. You can connect the drive or otherwise fix the problem "
-#~ "and relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "O %(shortappname)s não consegue utilizar o iretório principal, localizado "
-#~ "em:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Pode ser que o seu local seja um disco externo que não está ligado, um "
-#~ "diretório a que o %(shortappname)s não consegue aceder, ou que o caminho não "
-#~ "é um diretório.\n"
-#~ "\n"
-#~ "O Miro vai terminar. Pode ligar a unidade ou então corrija o problema e "
-#~ "reinicie %(shortappname)s."
-
-#, python-format
-#~ msgid ""
-#~ "Connection to share %(name)s failed.\n"
-#~ "\n"
-#~ "The share is either unreachable or incompatible with Miro sharing."
-#~ msgstr ""
-#~ "Falha ao ligar à partilha %(name)s.\n"
-#~ "\n"
-#~ "A partilha pode estar inacessível ou pode não ser compatível com o Miro."
-
-#~ msgid "Miro shutdown improperly and needs to prepare your items for display."
-#~ msgstr "O Miro foi desligado incorretamente e precisa de preparar os itens."
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you  have a large number of items in Miro "
-#~ "(it can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "O Miro está a atualizar a base de dados. Este processo pode levar algum "
-#~ "tempo, caso você possua uma coleção muito extensa."
-
-#~ msgid "Importing audio details and artwork: {0} of {1}"
-#~ msgstr "A importar detalhes e imagem: {0} de {1}"
-
-#~ msgid "Importing file details: {0} of {1}"
-#~ msgstr "A importar detalhes do ficheiro: {0} de {1}"
-
-#~ msgid "Importing video details and creating thumbnails: {0} of {1}"
-#~ msgstr "A importar detalhes e a criar miniaturas: {0} de {1}"
-
-#~ msgid ""
-#~ "Your Miro database is corrupt.  It will be backed up in your Miro database "
-#~ "directory and a new database will be created now."
-#~ msgstr ""
-#~ "A sua base de dados está danificada. A base de dados vai ser copiada e uma "
-#~ "nova base de dados será inicializada."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "After installing Print Services, you will have to restart Miro.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Para uma melhor utilização do %(appname)s, sugerimos a instalação do "
-#~ "Bonjour, distribuído como parte dos serviços de impressão.\n"
-#~ "\n"
-#~ "Ao instalar o Bonjour, poderá partilhar a sua coleção multimédia com outros "
-#~ "utilizadores do %(appname)s, bem como receber emissões multimédia de outros "
-#~ "utilizadores %(appname)s na sua rede.\n"
-#~ "\n"
-#~ "Após instalar os serviços de impressão, terá que reiniciar o Miro.\n"
-#~ "\n"
-#~ "Pretende reiniciar agora?"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "O Miro acha que o seu sistema não possui o Bonjour, um componente padrão da "
-#~ "instalação do Mac OS X. Por favor, verifique a instalação do seu Mac OS X."
-
-#~ msgid ""
-#~ "You need to install the Bonjour libraries to be able to share files from "
-#~ "Miro-to-Miro or to the Miro iPad app.\n"
-#~ "\n"
-#~ "Once you install the Bonjour libraries, you will have to restart Miro."
-#~ msgstr ""
-#~ "Precisa de instalar as bibliotecas Bonjour para conseguir partilhar os "
-#~ "ficheiros de Miro para Miro ou de Miro para iPad. \n"
-#~ "\n"
-#~ "Assim que instalar as bibliotecas, deve reiniciar o Miro."

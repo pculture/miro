@@ -15,16 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:278
-msgid "Bring All to Front"
-msgstr "Porta-ho tot al devant"
-
-#: ../../lib/net.py:93 ../../lib/net.py:99
-msgid "Can't connect"
-msgstr "No es pot conectar"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/commandline.py:237
 msgid "Invalid Torrent"
@@ -239,6 +231,10 @@ msgstr "Redueix"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:275
 msgid "Main Window"
 msgstr "Finestra principal"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:278
+msgid "Bring All to Front"
+msgstr "Porta-ho tot al davant"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:280
 msgid "Window"
@@ -499,6 +495,10 @@ msgstr "%(original_name)s (Convertit a %(format)s)"
 #, python-format
 msgid "Error: %(msg)s"
 msgstr "S'ha produït un error: %(msg)s"
+
+#: ../../lib/net.py:93 ../../lib/net.py:99
+msgid "Can't connect"
+msgstr "No es pot connectar"
 
 #: ../../lib/net.py:94
 #, python-format
@@ -4581,29 +4581,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Custom Channels"
-#~ msgstr "Canals personalitzats"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Per defecte, els vídeos caduquen després de:"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Empra això pel vídeo quan es reprodueixi àudio:"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "S'està executant una versió de %(appname)s amb una selecció de canals a mida."
-
-#~ msgid "Add to Library"
-#~ msgstr "Afegeix a la biblioteca"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "S'ha de reiniciar la reproducció per tal que els canvis de visualització "
-#~ "tinguin efecte."
-
 #~ msgid "View"
 #~ msgstr "Veure"
 
@@ -4662,15 +4639,6 @@ msgstr ""
 #~ msgid "Rename Site"
 #~ msgstr "Canviar el nom del lloc"
 
-#~ msgid "Stop after each video"
-#~ msgstr "Aturar després de cada vídeo"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Reproduir vídeos un rera l'altre"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Reprèn la reproducció d'un vídeo des del punt de l'última parada."
-
 #~ msgid "audio"
 #~ msgstr "àudio"
 
@@ -4679,9 +4647,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "Enllaç permanent"
-
-#~ msgid "Add to library"
-#~ msgstr "Afegeix a la biblioteca"
 
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTECA"
@@ -4706,9 +4671,6 @@ msgstr ""
 
 #~ msgid "Title"
 #~ msgstr "Títol"
-
-#~ msgid "View:"
-#~ msgstr "Veure:"
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Error intern: No està preparat per enviar"
@@ -4967,12 +4929,6 @@ msgstr ""
 #~ msgstr[0] "Elimina el canal"
 #~ msgstr[1] "Elimina els canals"
 
-#~ msgid "Path:"
-#~ msgstr "Camí:"
-
-#~ msgid "Title:"
-#~ msgstr "Títol:"
-
 #~ msgid "Feed"
 #~ msgstr "Canal"
 
@@ -5008,9 +4964,6 @@ msgstr ""
 #~ msgid "Create Feed Folder"
 #~ msgstr "Crea una carpeta del canal"
 
-#~ msgid "Media type:"
-#~ msgstr "Tipus de suport:"
-
 #~ msgid "Save as a Feed"
 #~ msgstr "Guardar com a canal"
 
@@ -5030,23 +4983,11 @@ msgstr ""
 #~ msgid "Seeding"
 #~ msgstr "Sembrant"
 
-#~ msgid "Remove Website"
-#~ msgstr "Eliminar lloc web"
-
 #~ msgid "Update Feeds In Folder"
 #~ msgstr "Actualitzar canals de la carpeta"
 
-#~ msgid "Rename Website"
-#~ msgstr "Canviar el nom al lloc web"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Eliminar llocs web"
-
 #~ msgid "Update Feeds Now"
 #~ msgstr "Actualitzar Canals Ara"
-
-#~ msgid "WEBSITES"
-#~ msgstr "LLOCS WEB"
 
 #~ msgid "AUDIO FEEDS"
 #~ msgstr "CANALS D'AUDIO"
@@ -5054,41 +4995,8 @@ msgstr ""
 #~ msgid "Update Feed Now"
 #~ msgstr "Actualitzar Canal Ara"
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "CANALS DE VIDEO"
-
 #~ msgid "_Pause"
 #~ msgstr "Fes una _pausa"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "El %(appname)s es pot iniciar a causa d'un problema amb la base de dades:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "És possible que el vostre fitxer de la base de dades sigui corrupte i no es "
-#~ "pugui utilitzar.\n"
-#~ "\n"
-#~ "Podeu iniciar i esborrar la vostra base de dades malmesa, però haureu de "
-#~ "tornar a afegir els vostres canals i fitxers multimèdia. Si voleu fer això, "
-#~ "premeu «Inicia netament» i reinicieu el  %(appname)s.\n"
-#~ "\n"
-#~ "Per a ajudar-nos a sol·lucionar problemes com aquest en un futur, arxiveu "
-#~ "l'informe d'aquest error a %(url)s."
 
 #, python-format
 #~ msgid "Channel is not compatible with %(appname)s"

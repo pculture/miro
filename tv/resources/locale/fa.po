@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4486,18 +4486,6 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "بطور پیش فرض،ویدئوها منقضی میشوند،بعد از:"
-
-#~ msgid "Add to Library"
-#~ msgstr "اضافه کردن به کتابخانه"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "از این برای ویدئو زمانی که صدا پخش می شود استفاده شود"
-
-#~ msgid "Custom Channels"
-#~ msgstr "کانال های سفارشی"
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "اشکال داحلی:برای ارسال آماده نمی باشد"

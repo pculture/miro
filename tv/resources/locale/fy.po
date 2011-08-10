@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4486,9 +4486,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Standert ferrinne fideos nei:"
-
 #~ msgid "Down Total"
 #~ msgstr "Ynlaad Totaal"
 
@@ -4578,15 +4575,6 @@ msgstr ""
 
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "Wolle jo de feed bewarje?"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Eigen Kanalen"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Spilje fideos efter inoar ôf"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stop nei elke fideo"
 
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Behein oant myn persoanlike bestannen."

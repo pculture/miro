@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4558,14 +4558,8 @@ msgstr ""
 #~ msgid "Single and external downloads"
 #~ msgstr "තනි හා බාහිර බාගත කිරීම්"
 
-#~ msgid "Path:"
-#~ msgstr "මාර්‍ගය:"
-
 #~ msgid "Save Search"
 #~ msgstr "සෙවීම සුරකින්න"
-
-#~ msgid "Title:"
-#~ msgstr "මාතෘකාව:"
 
 #~ msgid "Title"
 #~ msgstr "මාතෘකාව"
@@ -4579,15 +4573,6 @@ msgstr ""
 #, python-format
 #~ msgid "%(rate)s downloading"
 #~ msgstr "%(rate)s කින් බාගත කරමින්"
-
-#~ msgid "Remove Website"
-#~ msgstr "වෙබ් අඩවිය ඉවත් කරන්න"
-
-#~ msgid "Remove Websites"
-#~ msgstr "වෙබ් අඩවි ඉවත් කරන්න"
-
-#~ msgid "WEBSITES"
-#~ msgstr "වෙබ් අඩවි"
 
 #~ msgid "PLAYLISTS"
 #~ msgstr "ධාවන ලැයිස්තු"
@@ -4608,18 +4593,11 @@ msgstr ""
 #~ "බාගත කිරීම් එයට සංක්‍රමණය කල යුතුද? (දැනට බාගත වෙමින් පවතින සළරු නිමවන තෙක් "
 #~ "ගෙන නොයනු ඇත.)"
 
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "'%s' බහලුම සෑදිය නොහැක.  "
-
 #~ msgid "Permalink"
 #~ msgstr "නිත්‍ය සබැඳුම"
 
 #~ msgid "No Results Found"
 #~ msgstr "කිසිදු ප්‍රතිඵලයක් හමු නොවිනි"
-
-#~ msgid "Add Website"
-#~ msgstr "වෙබ් අඩවියක් එක් කරන්න"
 
 #~ msgid ""
 #~ "One of these items is a folder.  Delete/Removeing a folder will "

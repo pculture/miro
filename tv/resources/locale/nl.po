@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-05-31 17:25+0000\n"
-"Last-Translator: Emiel Beinema <Unknown>\n"
+"PO-Revision-Date: 2011-08-09 08:02+0000\n"
+"Last-Translator: Rachid <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Hide Others"
@@ -543,7 +543,7 @@ msgstr ""
 #: ../../lib/storedatabase.py:911
 #, python-format
 msgid "%(appname)s database corrupt."
-msgstr ""
+msgstr "%(appname)s database corrupt."
 
 #: ../../lib/storedatabase.py:914
 #, python-format
@@ -1692,7 +1692,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:316
 msgid "Sync a Phone, Tablet, or Digital Camera"
-msgstr ""
+msgstr "Synchroniseer een telefoon, tablet of digitale camera"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:325
 #, python-format
@@ -1825,7 +1825,7 @@ msgstr "Database bestandslocatie"
 
 #: ../../lib/frontends/widgets/diagnostics.py:118
 msgid "Crash reports location:"
-msgstr ""
+msgstr "Locatie voor Crash rapporten:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:125
 msgid "Space free on disk:"
@@ -2047,11 +2047,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 #: ../../lib/frontends/widgets/menus.py:261
 msgid "New Search Podcast"
-msgstr ""
+msgstr "Nieuwe Zoekactie Podcast"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:60
 msgid "A search podcast contains items that match a search term."
 msgstr ""
+"Een zoekactie naar podcasts bevat items die overeenstemmen met een zoekterm."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:107
 msgid "Podcast:"
@@ -2137,15 +2138,14 @@ msgstr "Extern openen"
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Geselecteerde Podcast Map"
 
 #: ../../lib/frontends/widgets/displays.py:705
 #, python-format
 msgid "(contains %(count)d podcast)"
 msgid_plural "(contains %(count)d podcasts)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(bevat %(count)d podcast)"
+msgstr[1] "(bevat %(count)d podcasts)"
 
 #: ../../lib/frontends/widgets/displays.py:711
 #, python-format
@@ -2158,22 +2158,22 @@ msgstr[1] "%(count)d afspeellijstmappen geselecteerd"
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlists)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(bevat %(count)d afspeellijst)"
+msgstr[1] "(bevat %(count)d afspeellijsten)"
 
 #: ../../lib/frontends/widgets/displays.py:726
 #, python-format
 msgid "%(count)d Podcast Selected"
 msgid_plural "%(count)d Podcasts Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Geselecteerde Podcast"
+msgstr[1] "%(count)d Geselecteerde Podcasts"
 
 #: ../../lib/frontends/widgets/displays.py:732
 #, python-format
 msgid "%(count)d Source Selected"
 msgid_plural "%(count)d Sources Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Geselecteerde Bron"
+msgstr[1] "%(count)d Geselecteerde Bronnen"
 
 #: ../../lib/frontends/widgets/displays.py:738
 #, python-format
@@ -4611,92 +4611,21 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Play videos one after another"
-#~ msgstr "Speel video's achtereen af"
-
 #~ msgid "Down Total"
 #~ msgstr "Totaal Gedownload"
 
 #~ msgid "Internal Error"
 #~ msgstr "Interne fout"
 
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "U moet opnieuw afspelen om de veranderingen aan de visualisatie in effect te "
-#~ "brengen."
-
-#~ msgid "Add to library"
-#~ msgstr "Voeg toe aan bibiliotheek"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Verwijder %(name)s"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Abonneren op meerdere podcasts"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Verwijder afgespeelde afleveringen na:"
-
 #~ msgid "Web Page"
 #~ msgstr "Website"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Onthoud afspeelpositie video's"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Weet u zeker dat u %(name)s wilt verwijderen?"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Geen een naam op voor de nieuwe map"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stop telkens na elke video"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Abonneren op podcast?"
-#~ msgstr[1] "Abonneren op %(count)d podcasts?"
-
-#~ msgid "Add to Library"
-#~ msgstr "Voeg toe"
 
 #, python-format
 #~ msgid "File in %(progname)s"
 #~ msgstr "in %(progname)s"
 
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "LET OP: U bent al geabonneerd op een van deze feeds. Deze feeds blijven "
-#~ "staan waar ze staan."
-#~ msgstr[1] ""
-#~ "LET OP: U bent al geabonneerd op %(count)d van deze feeds. Deze feeds "
-#~ "blijven staan waar ze staan."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Deze video tijdens het afspelen van geluid gebruiken:"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "Je gebruikt een versie van %(appname)s met een aangepaste samenstelling van "
-#~ "kanalen."
-
 #~ msgid "Select _All"
 #~ msgstr "_Alles selecteren"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Doorzoek locaties automatisch op nieuwe media en voeg toe aan collectie:"
 
 #, python-format
 #~ msgid "Bad Header Line: %(msg)s"
@@ -4760,9 +4689,6 @@ msgstr ""
 
 #~ msgid "Non Feed"
 #~ msgstr "Geen podcasts"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Start seeden"
 
 #~ msgid "Display Contents"
 #~ msgstr "Inhoud weergeven"
@@ -5370,9 +5296,6 @@ msgstr ""
 #~ msgid "%(size)s b"
 #~ msgstr "%(size)s b"
 
-#~ msgid "Custom Channels"
-#~ msgstr "Aangepaste kanalen"
-
 #~ msgid "Insufficient disk space"
 #~ msgstr "Onvoldoende schijfruimte"
 
@@ -5396,77 +5319,9 @@ msgstr ""
 #~ msgid "Add _Feed"
 #~ msgstr "Op podcast _abonneren"
 
-#~ msgid "WEBSITES"
-#~ msgstr "WEBSITES"
-
-#~ msgid "Title:"
-#~ msgstr "Titel:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Wijzig metadata van dit item"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO FEEDS"
-
-#~ msgid "other"
-#~ msgstr "overige"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Ondertitels"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Up/Down Ratio"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Speel media in Miro"
-
 #, python-format
 #~ msgid "Bad Chunk size: %(msg)s"
 #~ msgstr "Onjuiste blokgrootte: %(msg)s"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Directory '%s' kan niet aangemaakt worden.  "
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "geen verbinding - opnieuw proberen in %s..."
-
-#~ msgid "Unknown Language"
-#~ msgstr "Onbekende Taal"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s kan geen gebruik maken van de primaire video map in:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Dit kan de volgende oorzaken hebben: mogelijk bevindt het zich op een een "
-#~ "externe schijf die niet is aangesloten, is het een map waarvoor "
-#~ "%(shortappname)s geen schrijf-permissie heeft, of het is een map die niet in "
-#~ "het path voorkomt.\n"
-#~ "\n"
-#~ "Als u verder gaat, dan zal de primaire video map worden gereset naar een "
-#~ "locatie op deze schijf. Als u video's gedownload had, dan zal dit ertoe "
-#~ "leiden dat %(shortappname)s alle details over die video's verliest.\n"
-#~ "\n"
-#~ "Als u stopt, dan kunt u de juiste schijf aansluiten of het probleem op een "
-#~ "andere manier verhelpen en vervolgens %(shortappname)s opnieuw starten."
 
 #, python-format
 #~ msgid ""
@@ -5492,211 +5347,8 @@ msgstr ""
 #~ "Afspelen van video- of audio-item hervatten vanaf het punt waar het de "
 #~ "laatste keer gestopt is."
 
-#~ msgid "Path:"
-#~ msgstr "Pad:"
-
-#~ msgid "Remove Website"
-#~ msgstr "Verwijder website"
-
-#~ msgid "Rename Website"
-#~ msgstr "Hernoem website"
-
-#~ msgid "Add Website"
-#~ msgstr "Voeg website toe"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Verwijder websites"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Voeg website toe - ongeldige url"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Type url van website in om toe te voegen"
-
 #~ msgid "Folder should go in this section:"
 #~ msgstr "bestand moet verplaatst worden naar:"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Her_noem website"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Her_noem feed"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_verwijder feeds"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_verwijder feed"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "De url die is ingetypt is niet geldig\n"
-#~ "Controleer de url en probeer nogmaals\n"
-#~ "\n"
-#~ "Type de url van een website om toe te voegen"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Verwijder website"
-#~ msgstr[1] "Verwijder websites"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Weet je zeker dat je deze website wil verwijderen?"
-#~ msgstr[1] "Weet je zeker dat je deze websites %(count)s wil verwijderen?"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_verwijder mappen"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Sorry, %(appname)s was niet mogelijk je database te upgraden als gevolg van "
-#~ "een fout\n"
-#~ "\n"
-#~ "Controleer of je schijf vol is. Als dit het geval is, sluit %(appname)s, "
-#~ "maak schijfruimte vrij en start %(appname)s opnieuw.\n"
-#~ "\n"
-#~ "Als je harde schijf niet vol is, help ons het probleem op te sporen, door "
-#~ "het programma te sluiten en dan een fout te rapporteren aan "
-#~ "bugzilla.pculture.org\n"
-#~ "\n"
-#~ "tenslotten kun je je beschadigde database opnieuw starten waardoor de "
-#~ "beschadigde word verwijdered, maar alle media bestanden moeten opnieuw "
-#~ "worden toegevoegd"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_verwijder websites"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d website geselecteerd"
-#~ msgstr[1] "%(count)d websites geselecteerd"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_verwijder website"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "voer een nieuwe naam in voor de website %(name)s"
-
-#~ msgid "Media type:"
-#~ msgstr "Media type:"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Volledig scherm sluiten"
-
-#~ msgid "Choose Language"
-#~ msgstr "Kies taal"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Wachtend)"
-
-#~ msgid "Update"
-#~ msgstr "Update"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s start"
-
-#~ msgid "Finding Files"
-#~ msgstr "Bestanden vinden"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "We raden aan %(name)s te laten starten als de computer opstart. Zo kunnen "
-#~ "lopende downloads worden afgerond. Bovendien kunnen op de achtergrond nieuwe "
-#~ "mediabestanden worden gedownload, zodat deze beschikbaar zijn wanneer u deze "
-#~ "wilt bekijken."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s zal nu een crashrapport versturen naar onze crashdatabase\n"
-#~ "\n"
-#~ "Wilt u de gehele database van het programma (met de metagegevens van al uw "
-#~ "video's en feeds) meesturen met het crashrapport? Dit helpt ons het probleem "
-#~ "op te lossen."
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Welkom bij de %(name)s eerstekeer-instellingen!\n"
-#~ "\n"
-#~ "De volgende schermen helpen %(name)s in te stellen zodat het voor u het "
-#~ "beste werkt.\n"
-#~ "\n"
-#~ "In welke taal wilt u Miro gebruiken?"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Voor het wijzigen van de taalinstelling moet Miro worden herstart.)"
-
-#~ msgid "_Previous Item"
-#~ msgstr "V_orige item"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Volgende item"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Het spijt ons, %(appname)s kon niet starten door een probleem met de "
-#~ "database:\n"
-#~ "\n"
-#~ "Fout: %(error)s\n"
-#~ "\n"
-#~ "Het is mogelijk dat uw database file corrupt is en niet kan worden "
-#~ "gebruikt.\n"
-#~ "\n"
-#~ "Je kunt opnieuw beginnen en je beschadigde database verwijderen, maar dan "
-#~ "moet u uw feeds en media bestanden opnieuw toevoegen. Als u dit wilt doen, "
-#~ "klik de Start Fresh knop om %(appname)s opnieuw op te starten.\n"
-#~ "\n"
-#~ "Om ons te helpen gelijksoortige problemen in de toekomst te maken, stuur ons "
-#~ "een foutenrapport op %(url)s"
 
 #, python-format
 #~ msgid ""
@@ -5764,35 +5416,11 @@ msgstr ""
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "Probleem downloaden %(appname)s feedsbestand: %(url)s"
 
-#~ msgid "Reason unknown"
-#~ msgstr "Onbekende reden"
-
 #~ msgid "Create Feed"
 #~ msgstr "Maak Feed"
 
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "De database was gecreëerd door een nieuwere versie van Miro "
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Het spijt ons, %(appname)s kon door fouten uw database niet upgraden.\n"
-#~ "Controleer of uw schijf vol is. Als dat zo is, sluit dan %(appname)s, maakt "
-#~ "ruimte op uw schijf vrij en start %(appname)s opnieuw.\n"
-#~ "Als uw schijf niet vol is, help ons dan het probleem op te lossen door een "
-#~ "bug aan onze crashdatabase te rapporteren.\n"
-#~ "De laatste optie is om schoon te beginnen. De beschadigde database wordt dan "
-#~ "verwijderd. U moet dan wel uw feeds en mediabestanden opnieuw toevoegen."
 
 #~ msgid "Show More"
 #~ msgstr "Toon meer"
@@ -5835,114 +5463,11 @@ msgstr ""
 #~ msgid "_Remove Items"
 #~ msgstr "Items _verwijderen"
 
-#~ msgid "_Edit Item"
-#~ msgstr "Item _bewerken"
-
 #~ msgid "Save Items _As"
 #~ msgstr "Bewaar items _als"
 
 #~ msgid "Save Item _As"
 #~ msgstr "Bewaar item _als"
 
-#~ msgid "_Preferences"
-#~ msgstr "_Voorkeuren"
-
 #~ msgid "Show Less"
 #~ msgstr "Toon minder"
-
-#~ msgid "Convert"
-#~ msgstr "Converteren"
-
-#~ msgid "Auto-download"
-#~ msgstr "Download automatisch"
-
-#~ msgid "Open log"
-#~ msgstr "Open log"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Om media te zoeken op Internet media zoeksites, klik op de zoekbox bovenaan, "
-#~ "typ uw zoektermen in en druk op de enter toets. Om over te schakelen naar "
-#~ "een andere zoekmachine, klik op het icoon in de linkerkant van het bovenste "
-#~ "zoekveld en selecteer de zoekmachine in de lijst."
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Mislukt: %(error)s"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Onbekende host"
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Wilt u deze podcast behouden?+"
-
-#~ msgid "N/A"
-#~ msgstr "N/B"
-
-#~ msgid "Save as a Podcast"
-#~ msgstr "Bewaren als podcast"
-
-#~ msgid "Non Podcast"
-#~ msgstr "Niet Podcast"
-
-#~ msgid "Share podcast"
-#~ msgstr "Podcast delen"
-
-#~ msgid "Import Media From..."
-#~ msgstr "Media importeren van..."
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Error bij het laden van de podcast"
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Uw browser zal een website laden, waar u Bonjour kan downloaden en "
-#~ "instaleren .\n"
-#~ "\n"
-#~ "Wanneer de installatie voltooid is, start u Miro simpelweg opnieuw op, en "
-#~ "alles zal naar behoren werken."
-
-#~ msgid "Download to My Miro"
-#~ msgstr "Download naar mijn Miro"
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr "Om de ontwikkeling van Miro te steunen, bezoek de donatiepagina:"
-
-#~ msgid "Download Item"
-#~ msgstr "Download Item"
-
-#~ msgid "Artists"
-#~ msgstr "Artiesten"
-
-#~ msgid "Genres"
-#~ msgstr "Genres"
-
-#~ msgid "Albums"
-#~ msgstr "Albums"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "Songs"
-#~ msgstr "Nummers"
-
-#~ msgid "Import Media"
-#~ msgstr "Importeer Media"
-
-#~ msgid "_View"
-#~ msgstr "_Weergave"
-
-#~ msgid "Search for files"
-#~ msgstr "Zoek naar bestand"
-
-#~ msgid "of"
-#~ msgstr "van"

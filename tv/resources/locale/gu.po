@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/downloader.py:576 ../../lib/downloader.py:584
 #: ../../lib/sharing.py:187 ../../lib/httpclient.py:218
@@ -4486,9 +4486,6 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "આ વિડયો પ્રદષિત કરજો, ધ્વનિ ફાઈલ સાથે"
 
 #~ msgid "Internal Error"
 #~ msgstr "આંતરિક ભૂલ"

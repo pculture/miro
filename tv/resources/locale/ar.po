@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../windows/plat/frontends/widgets/application.py:205
 msgid "Close to tray?"
@@ -4592,9 +4592,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "إفتراضياً، تنتهي مدّة المرئية بعد:"
-
 #~ msgid "_Video"
 #~ msgstr "_مرئية"
 
@@ -4666,9 +4663,6 @@ msgstr ""
 
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "خطأ داخلي: غير جاهز للإرسال"
-
-#~ msgid "Custom Channels"
-#~ msgstr "القنوات المفصّلة"
 
 #~ msgid "Playing File"
 #~ msgstr "جاري تشغيل الملف"
@@ -5052,13 +5046,6 @@ msgstr ""
 #~ msgid "View"
 #~ msgstr "اعرض"
 
-#~ msgid "Universal, Chinese"
-#~ msgstr "عالمي، صيني"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "لا يوجد اتصال - سيتم اعادة المحاولة في خلال %s"
-
 #, python-format
 #~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
@@ -5083,6 +5070,3 @@ msgstr ""
 
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "تم انشاء قاعدة البيانات هذه بنسخة أحدث من برنامج ميرو "
-
-#~ msgid "Error loading podcast"
-#~ msgstr "خطأ في تحميل البودكاست"

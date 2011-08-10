@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4602,32 +4602,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Použiť toto video pri prehrávaní zvuku:"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Sledovať nové videá v týchto priečinko a pridať ich do knižnice:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr ""
-#~ "Pokračovať v prehrávaní videa z miesta, kedy bolo naposledy pozastavené."
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Používate verziu %(appname)s s prispôsobenou sadou kanálov."
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Aby sa prejavili zmeny v nastavení vizualizácie, musíte zastaviť a znovu "
-#~ "spustiť prehrávanie."
-
-#~ msgid "Add to Library"
-#~ msgstr "Pridať do knižnice"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Vlastné kanály"
-
 #~ msgid "From"
 #~ msgstr "Pôvod"
 
@@ -4642,50 +4616,6 @@ msgstr ""
 #~ "Navrhujeme vymazať súbory z plného disku alebo odstrániť nejaké filmy z "
 #~ "Vašej kolekcie.\n"
 #~ "Posledné zmeny môžu byť stratené."
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Naozaj chcete odstrániť %(name)s"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Vytvoriť kanál"
-#~ msgstr[1] "Vytvoriť %(count)d kanály"
-#~ msgstr[2] "Vytvoriť %(count)d kanálov"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Zastaviť po každom videu"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Prehrávať videá za sebou"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Zapísať sa do viacerých kanálov"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Zadaj meno nového adresára pre kanále"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "Poznámka: Už si zapísaný do jedného s týchto kanálov. Tieto kanály zostanú "
-#~ "tam, kde sa momentálne nachádzajú."
-#~ msgstr[1] ""
-#~ "Poznámka: Už si zapísaný do %(count)d s týchto kanálov. Tieto kanály zostanú "
-#~ "tam, kde sa momentálne nachádzajú."
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Štandardne, videá expirujú po:"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Odstrániť %(name)s"
 
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
@@ -5456,83 +5386,6 @@ msgstr ""
 #~ msgid "Feed"
 #~ msgstr "Zdroj"
 
-#~ msgid "Title:"
-#~ msgstr "Názov:"
-
-#~ msgid "Path:"
-#~ msgstr "Umiestnenie:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "WEBOVÉ STRÁNKY"
-
-#~ msgid "Rename Website"
-#~ msgstr "Premenovať webovú stránku"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Odstrániť webové stránky"
-
-#~ msgid "Remove Website"
-#~ msgstr "Odstrániť webovú stránku"
-
-#~ msgid "Media type:"
-#~ msgstr "Typ média:"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Prehrať mediálne súbory v Miro."
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Adresár '%s' sa nedá vytvoriť.  "
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Adresa, ktorú ste vložili nie je platnou url.\n"
-#~ "Prosím skontrolujte URL a skúste znova.\n"
-#~ "\n"
-#~ "Zadajte adresu URL webovej stránky k pridaniu"
-
-#~ msgid "Add Website"
-#~ msgstr "Pridať webovú stránku"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Pridať webovú stránku - neplatná URL"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Zadajte adresu URL webovej stránky k pridaniu"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Vložte nový názov pre webovú stránku %(name)s"
-
-#~ msgid "Re_name Website"
-#~ msgstr "_Premenovať webovú stránku"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Odstrániť priečinky"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Odstrániť webovú stránku"
-#~ msgstr[1] "Odstrániť webové stránky"
-#~ msgstr[2] "Odstrániť webových stránok"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Upraviť položku"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Predvoľby"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "žiadne pripojenie - opakovanie za %s"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Titulky"
-
 #, python-format
 #~ msgid "%(num).0f hr"
 #~ msgid_plural "%(num).0f hrs"
@@ -5557,19 +5410,6 @@ msgstr ""
 #~ msgstr[0] "%(num).0f deň"
 #~ msgstr[1] "%(num).0f dni"
 #~ msgstr[2] "%(num).0f dní"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Odstrániť webové stránky"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Vybraná stránka"
-#~ msgstr[1] "%(count)d Vybrané stránky"
-#~ msgstr[2] "%(count)d Vybraných stránok"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Odstrániť webovú stránku"
 
 #~ msgid "Contents:"
 #~ msgstr "Obsah:"
@@ -5599,18 +5439,6 @@ msgstr ""
 #~ msgstr[2] ""
 #~ "Naozaj chcete odstrániť tieto vlákna?  Prebiehajúce sťahovania budú zrušené."
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO VLÁKNA"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Preme_novať Vlákno"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "Odst_rániť Vlákna"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "Odst_rániť Vlákno"
-
 #, python-format
 #~ msgid ""
 #~ "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -5631,51 +5459,8 @@ msgstr ""
 #~ "\n"
 #~ "Chcete napriek tomu skúsiť nahrať tento kanál?"
 
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s nemôže použiť primárny priečinok na videá nachádzajúci sa "
-#~ "v:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Toto môže byť spôsobené tým, že sa priečinok nachádza na externom disku, "
-#~ "ktorý nie je pripojený, %(shortappname)s nemá práva na zapisovanie do "
-#~ "priečinka alebo taký priečinok neexistuje.\n"
-#~ "\n"
-#~ "Ak budete pokračovať, primárny video priečinok bude nastavený na miesto na "
-#~ "tomto disku.  Ak ste mali stiahnuté nejaké videá, môže to spôsobiť, že "
-#~ "%(shortappname)s stratí podrobnosti o týchto videách.\n"
-#~ "\n"
-#~ "Ak aplikáciu zrušíte, môžete pripojiť disk alebo inak vyriešiť problém a "
-#~ "znovu spustiť %(shortappname)s."
-
 #~ msgid "Back to feed"
 #~ msgstr "Späť k vláknu"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Naozaj chcete odstrániť túto webstránku?"
-#~ msgstr[1] "Naozaj chcete odstrániť tieto %(count)s webstránky?"
-#~ msgstr[2] "Naozaj chcete odstrániť tychto %(count)s webstránok?"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Pomer sťahovanie/odosielanie"
 
 #~ msgid "Contents appear in the library"
 #~ msgstr "Obsah sa zobrazuje v knižnici"
@@ -5709,200 +5494,3 @@ msgstr ""
 #, python-format
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "Súbor s vláknom %(appname)s sa nepodarilo stiahnuť: %(url)s"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Prepáčte, databázu %(appname)s sa nepodarilo aktualizovať kvôli chybám.\n"
-#~ "\n"
-#~ "Skontrolujte či nemáte plný disk.  Ak je plný, ukončite %(appname)s, "
-#~ "uvoľnite na disku miesto a znovu zapnite %(appname)s.\n"
-#~ "\n"
-#~ "Ak Váš disk nie je plný, ukončite program a pomôžte nám pochopiť problém "
-#~ "jeho nahlásením na bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Nakoniec môžete začať odznova a vaša poškodená databáza bude zmazaná, ale "
-#~ "budete musieť znovu pridať všetky vlákna a multimediálne súbory."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Opustiť režim celej obrazovky"
-
-#~ msgid "Choose Language"
-#~ msgstr "Zvoľte jazyk"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Predchádzajúca položka"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Nasledovná položka"
-
-#~ msgid "Update"
-#~ msgstr "Aktualizácia"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Vitajte v prvom nastavení aplikácie %(name)s!\n"
-#~ "\n"
-#~ "Nasledujúce obrazovky vám umožnia nastaviť %(name)s podľa vašich predstáv.\n"
-#~ "\n"
-#~ "Aký jazyk chcete použiť v Miro?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s Štart"
-
-#~ msgid "Finding Files"
-#~ msgstr "Vyhľadávam súbory"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Neznáma príčina"
-
-#~ msgid "Convert"
-#~ msgstr "Konvertovať"
-
-#~ msgid "Auto-download"
-#~ msgstr "Auto-sťahovanie"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Zmena jazyka si vyžaduje reštartovanie aplikácie Miro)"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Neznámy Host"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro zistil, že vo Vašom systéme chýbajú komponenty Bonjour, ktoré sú "
-#~ "štandardnou súčasťou inštalácie Mac OS X.  Prosím skontrolujte svoju "
-#~ "inštaláciu Mac OS X."
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Váš prehliadač načíta stránku, odkiaľ môžete stiahnuť a nainštalovať "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "Po ukončení inštalácie jednoducho reštartujte Miro aby sa prejavili vykonané "
-#~ "zmeny."
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Chyba pri nahrávaní podcastu"
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Chcete si tento podcast ponechať?"
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr "Nepodarilo sa nahrať podcast z %(url)s (%(errordescription)s)."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Odporúčame nainštalovať Bonjour pre lepší zážitok s programom %(appname)s. "
-#~ "Je dodávaný spolu so Službami Tlače.\n"
-#~ "\n"
-#~ "Nainštalovaním Bonjour získate možnosť zdieľať vašu multimediálnu knižnicu s "
-#~ "ostatnými používateľmi programu %(appname)s vo vašej sieti, ako aj sledovať "
-#~ "multimedálne prúdy od iných používateľov programu %(appname)s vo vašej "
-#~ "sieti.\n"
-#~ "\n"
-#~ "\n"
-#~ "Chcete to teraz urobiť?"
-
-#~ msgid "Device Default"
-#~ msgstr "Prednastavené zariadenie"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Vďaka, Vám všetkým, čo ste priložili ruku k dielu Miro %(version)s:"
-
-#~ msgid "N/A"
-#~ msgstr "Nie je k dispozícii"
-
-#, python-format
-#~ msgid "From %(podcast)s"
-#~ msgstr "Z %(podcast)s"
-
-#~ msgid "_Remove Podcast"
-#~ msgstr "Odst_rániť podcast"
-
-#~ msgid "Add _Podcast"
-#~ msgstr "Pridať _Podcast"
-
-#~ msgid "Re_name Podcast"
-#~ msgstr "Preme_novať podcast"
-
-#~ msgid "New Searc_h Podcast"
-#~ msgstr "_Hľadať nový podcast"
-
-#~ msgid "_Remove Podcasts"
-#~ msgstr "Odst_rániť podcasty"
-
-#~ msgid "_Update Podcasts"
-#~ msgstr "Akt_ualizovať podcasty"
-
-#~ msgid "_Update Podcast"
-#~ msgstr "Akt_ualizovať podcast"
-
-#~ msgid "_Import Podcasts (OPML)"
-#~ msgstr "Importovať podcasty (OPML)"
-
-#~ msgid "Update _All Podcasts"
-#~ msgstr "_Aktualizovať všetky podcasty"
-
-#~ msgid "_View"
-#~ msgstr "_Zobraziť"
-
-#~ msgid "E_xport Podcasts (OPML)"
-#~ msgstr "E_xportovať podcasty (OPML)"
-
-#~ msgid "Dump Database"
-#~ msgstr "Výpis obsahu databázy"
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you have a large number of items in Miro (it "
-#~ "can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Miro obnovuje databázu podcastov a súborov. Tento jednorazový úkon može "
-#~ "zabrať veľa času ak máte v Mirovi veľa položiek (môže to trvať aj polhodinu)."
-
-#~ msgid "Save as a Podcast"
-#~ msgstr "Uložiť ako podcast"
-
-#~ msgid "Non Podcast"
-#~ msgstr "Nie je podcast"
-
-#~ msgid "Share podcast"
-#~ msgstr "Zdieľať podcast"

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4549,12 +4549,6 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Iba pa"
 
-#~ msgid "Title:"
-#~ msgstr "Pamagat:"
-
-#~ msgid "Media type:"
-#~ msgstr "Uri ng media:"
-
 #~ msgid "Length"
 #~ msgstr "Habâ"
 
@@ -4564,23 +4558,11 @@ msgstr ""
 #~ msgid "Title"
 #~ msgstr "Pamagat"
 
-#~ msgid "Rename Website"
-#~ msgstr "Baguhin ang Pangalan ng Website"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Tangalin ang mga Website"
-
-#~ msgid "Remove Website"
-#~ msgstr "Tangalin ang Website"
-
 #~ msgid "Revert Feed Name"
 #~ msgstr "Ibalik sa dati ang pangalan ng feed"
 
 #~ msgid "Rename Feed Folder"
 #~ msgstr "Baguhin ang Pangalan ng Feed Folder"
-
-#~ msgid "WEBSITES"
-#~ msgstr "MGA WEBSITE"
 
 #~ msgid "LIBRARY"
 #~ msgstr "LIBRARY"
@@ -4591,9 +4573,6 @@ msgstr ""
 #~ msgid "PLAYLISTS"
 #~ msgstr "MGA PLAYLIST"
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "MGA VIDEO FEED"
-
 #~ msgid "Feeds"
 #~ msgstr "Mga Feed"
 
@@ -4602,9 +4581,6 @@ msgstr ""
 
 #~ msgid "Comments"
 #~ msgstr "Mga Puna"
-
-#~ msgid "Path:"
-#~ msgstr "Daan:"
 
 #~ msgid "Share feed"
 #~ msgstr "Ibahagi ang feed"

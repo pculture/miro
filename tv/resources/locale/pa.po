@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4502,10 +4502,3 @@ msgstr ""
 
 #~ msgid "Seeding"
 #~ msgstr "ਸੀਡਿੰਗ"
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr "ਮੀਰੋ ਦੇ ਵਿਕਾਸ ਨੂੰ ਜਾਰੀ ਰੱਖਣ ਲਈ ਮੱਦਦ ਕਰਨ ਵਾਸਤੇ ਦਾਨ ਸਫ਼ਾ ਵੇਖੋ:"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Miro %(version)s ਵਿੱਚ ਯੋਗਦਾਨ ਦੇਣ ਵਾਲੇ ਸਭ ਲੋਕਾਂ ਦਾ ਧੰਨਵਾਦ:"

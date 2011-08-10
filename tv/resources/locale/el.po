@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-05-26 22:03+0000\n"
-"Last-Translator: Atheos <Unknown>\n"
+"PO-Revision-Date: 2011-07-26 13:51+0000\n"
+"Last-Translator: Kostas Milonas <milonas.ko@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -535,7 +535,7 @@ msgstr ""
 
 #: ../../lib/commandline.py:246
 msgid "File Error"
-msgstr ""
+msgstr "Σφάλμα αρχείου"
 
 #: ../../lib/commandline.py:248
 #, python-format
@@ -575,7 +575,7 @@ msgstr "Αναζήτηση όλων"
 
 #: ../../lib/sharing.py:250 ../../lib/messages.py:1213
 msgid "Locked"
-msgstr ""
+msgstr "Κλείδωμα"
 
 #: ../../lib/displaytext.py:62
 #, python-format
@@ -725,7 +725,7 @@ msgstr "Αναζήτηση"
 
 #: ../../lib/messages.py:1216 ../../lib/frontends/widgets/itemedit.py:555
 msgid "Movie"
-msgstr ""
+msgstr "Ταινία"
 
 #: ../../lib/messages.py:1218 ../../lib/frontends/widgets/diagnostics.py:80
 #: ../../lib/frontends/widgets/widgetconst.py:78
@@ -738,7 +738,7 @@ msgstr "Προβολή"
 
 #: ../../lib/messages.py:1220 ../../lib/frontends/widgets/itemedit.py:557
 msgid "Clip"
-msgstr ""
+msgstr "Κλιπ"
 
 #: ../../lib/messages.py:1222 ../../lib/frontends/widgets/itemedit.py:558
 msgid "Podcast"
@@ -773,7 +773,7 @@ msgstr "%(size)sB"
 
 #: ../../lib/dialogs.py:94
 msgid "OK"
-msgstr ""
+msgstr "Εντάξει"
 
 #: ../../lib/dialogs.py:95
 msgid "Apply"
@@ -817,7 +817,7 @@ msgstr "Αγνόηση"
 
 #: ../../lib/dialogs.py:104
 msgid "Import Files"
-msgstr ""
+msgstr "Εισαγωγή αρχείων"
 
 #: ../../lib/dialogs.py:105
 msgid "Submit Crash Report"
@@ -872,7 +872,7 @@ msgstr "Δημιουργία φακέλου"
 
 #: ../../lib/dialogs.py:117
 msgid "Add Folder"
-msgstr ""
+msgstr "Προσθήκη φακέλου"
 
 #: ../../lib/dialogs.py:118 ../../lib/frontends/widgets/prefpanel.py:781
 msgid "Add"
@@ -1004,7 +1004,7 @@ msgstr "Αναπαραγωγή"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/menus.py:322
 msgid "Pause"
-msgstr ""
+msgstr "Παύση"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:147
 #: ../../lib/frontends/widgets/itemrenderer.py:472
@@ -1262,7 +1262,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:306
 msgid "Resume"
-msgstr ""
+msgstr "Συνέχεια"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:628
 msgid "Back to podcast"
@@ -1316,7 +1316,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:809
 msgid "Movies"
-msgstr ""
+msgstr "Ταινίες"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:811
 msgid "Shows"
@@ -1336,7 +1336,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:895
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1112
 #: ../../lib/frontends/widgets/statictabs.py:157
@@ -1440,7 +1440,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1968
 msgid "Remaining"
-msgstr ""
+msgstr "Απομένουν"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1970
 msgid "Upload"
@@ -1449,7 +1449,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1971
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1972
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2016
 msgid "Connected Peers"
@@ -1465,11 +1465,11 @@ msgstr "Χρήστες παράσιτα"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2019
 msgid "Share Ratio"
-msgstr ""
+msgstr "Αναλογία διαμοιρασμού"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2203
 msgid "View License"
-msgstr ""
+msgstr "Προβολή Άδειας"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2224
 msgid "Select an item to view more of its details"
@@ -1514,7 +1514,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:121
 msgid "On"
-msgstr ""
+msgstr "Ενεργοποιημένο"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:127
 #: ../../lib/frontends/widgets/prefpanel.py:516
@@ -1523,7 +1523,7 @@ msgstr "Off"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:153
 msgid "Get Help"
-msgstr ""
+msgstr "Λήψη βοήθειας"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:206
 #: ../../lib/frontends/widgets/tablist.py:858
@@ -1591,7 +1591,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:368
 msgid "Miro on your iPad"
-msgstr ""
+msgstr "Το Miro στο iPad σας"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:372
 #, python-format
@@ -1603,7 +1603,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:392
 msgid "Miro on Android"
-msgstr ""
+msgstr "Το Miro στο Android"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:396
 msgid ""
@@ -1626,7 +1626,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:473
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:482
 #: ../../lib/frontends/widgets/menus.py:259
@@ -1725,32 +1725,32 @@ msgstr "Κατάσταση"
 #: ../../lib/frontends/widgets/widgetconst.py:59
 #: ../../lib/frontends/widgets/itemedit.py:493
 msgid "Artist"
-msgstr ""
+msgstr "Καλλιτέχνης"
 
 #: ../../lib/frontends/widgets/widgetconst.py:60
 #: ../../lib/frontends/widgets/itemedit.py:494
 msgid "Album"
-msgstr ""
+msgstr "Άλμπουμ"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 #: ../../lib/frontends/widgets/itemedit.py:497
 msgid "Track"
-msgstr ""
+msgstr "Κομμάτι"
 
 #: ../../lib/frontends/widgets/widgetconst.py:62
 #: ../../lib/frontends/widgets/itemedit.py:499
 msgid "Year"
-msgstr ""
+msgstr "Έτος"
 
 #: ../../lib/frontends/widgets/widgetconst.py:63
 #: ../../lib/frontends/widgets/itemedit.py:495
 msgid "Genre"
-msgstr ""
+msgstr "Είδος"
 
 #: ../../lib/frontends/widgets/widgetconst.py:64
 #: ../../lib/frontends/widgets/itemedit.py:311
 msgid "Rating"
-msgstr ""
+msgstr "Αξιολόγηση"
 
 #: ../../lib/frontends/widgets/widgetconst.py:65
 msgid "Date"
@@ -1787,19 +1787,19 @@ msgstr "Ταχύτητα"
 
 #: ../../lib/frontends/widgets/widgetconst.py:73
 msgid "Date Added"
-msgstr ""
+msgstr "Ημερομηνία προσθήκης"
 
 #: ../../lib/frontends/widgets/widgetconst.py:74
 msgid "Last Played"
-msgstr ""
+msgstr "Τελευταία αναπαραγωγή"
 
 #: ../../lib/frontends/widgets/widgetconst.py:75
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #: ../../lib/frontends/widgets/widgetconst.py:76
 msgid "DRM"
-msgstr ""
+msgstr "DRM"
 
 #: ../../lib/frontends/widgets/widgetconst.py:77
 msgid "File Type"
@@ -1812,7 +1812,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Order"
-msgstr ""
+msgstr "Σειρά"
 
 #: ../../lib/frontends/widgets/linkhandler.py:55
 msgid "Subscribe to Podcast"
@@ -1872,11 +1872,11 @@ msgstr "Αρχεία υποτίτλων"
 
 #: ../../lib/frontends/widgets/videobox.py:155
 msgid "Unknown Album"
-msgstr ""
+msgstr "Άγνωστο άλμπουμ"
 
 #: ../../lib/frontends/widgets/videobox.py:156
 msgid "Unknown Artist"
-msgstr ""
+msgstr "Άγνωστος καλλιτέχνης"
 
 #: ../../lib/frontends/widgets/sharingcontroller.py:73
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1071
@@ -1901,7 +1901,7 @@ msgstr "Διεύθυνση (URL):"
 #: ../../lib/frontends/widgets/newfeed.py:96
 #: ../../lib/frontends/widgets/menus.py:256
 msgid "Add Podcast"
-msgstr ""
+msgstr "Προσθήκη Podcast"
 
 #: ../../lib/frontends/widgets/newfeed.py:97
 msgid "Enter the URL of the podcast to add"
@@ -2038,8 +2038,8 @@ msgstr[1] "Επιλέχθηκαν %(count)d φάκελοι λιστών αναπ
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlists)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(περιέχει %(count)d λίστα αναπαραγωγής)"
+msgstr[1] "(περιέχει %(count)d λίστες αναπαραγωγής)"
 
 #: ../../lib/frontends/widgets/displays.py:726
 #, python-format
@@ -2160,7 +2160,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:532
 msgid "List view"
-msgstr ""
+msgstr "Προβολή λίστας"
 
 #: ../../lib/frontends/widgets/prefpanel.py:538
 msgid "Default settings for new podcasts:"
@@ -2416,11 +2416,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1146
 msgid "enabled"
-msgstr ""
+msgstr "ενεργοποιημένο"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1151
 msgid "extension"
-msgstr ""
+msgstr "επέκταση"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1191
 #, python-format
@@ -2462,11 +2462,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1257
 msgid "Extensions:"
-msgstr ""
+msgstr "Επεκτάσεις:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1261
 msgid "Details:"
-msgstr ""
+msgstr "Λεπτομέρειες:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1272
 #: ../../lib/frontends/widgets/itemedit.py:761
@@ -2491,7 +2491,7 @@ msgstr "Αναπαραγωγή"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1281
 msgid "Sharing"
-msgstr ""
+msgstr "Διαμοιρασμός"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1282
 msgid "Conversions"
@@ -2499,7 +2499,7 @@ msgstr "Μετατροπές"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1285
 msgid "Extensions"
-msgstr ""
+msgstr "Επεκτάσεις"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1290
 #: ../../lib/frontends/widgets/menus.py:251
@@ -2525,11 +2525,11 @@ msgstr[1] ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:165
 msgid "Up to date"
-msgstr ""
+msgstr "Ενημερωμένο"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:172
 msgid "In Progress"
-msgstr ""
+msgstr "Σε εξέλιξη"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:242
 #, python-format
@@ -4600,28 +4600,11 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Από προεπιλογή, τα βίντεο λήγουν μετά από:"
-
 #~ msgid "Volume _Down"
 #~ msgstr "_Μείωση έντασης"
 
-#~ msgid "Custom Channels"
-#~ msgstr "Καθορισμένα απο το χρήστη κανάλια"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Αναπαραγωγή βίντεο διαδοχικά"
-
 #~ msgid "queued for autodownload"
 #~ msgstr "Στην ουρά για αυτόματη λήψη"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Παρακολούθησε για νέα βίντεο μέσα σε αυτούς τους φακέλους και συμπερίλαβέ τα "
-#~ "σην βιβλιοθήκη:"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Διακοπή μετά από κάθε βίντεο"
 
 #~ msgid "Rename Site"
 #~ msgstr "Μετονομάστε τον Ιστότοπο"
@@ -4865,12 +4848,6 @@ msgstr ""
 #~ msgid "video"
 #~ msgstr "βίντεο"
 
-#~ msgid "Path:"
-#~ msgstr "Διαδρομή:"
-
-#~ msgid "Title:"
-#~ msgstr "Τίτλος:"
-
 #~ msgid "Title"
 #~ msgstr "Τίτλος"
 
@@ -4885,9 +4862,6 @@ msgstr ""
 
 #~ msgid "All Items Match Search"
 #~ msgstr "Όλα τα αντικείμενα ταιριάζουν στα κριτήρια της αναζήτησης"
-
-#~ msgid "WEBSITES"
-#~ msgstr "ΙΣΤΟΤΟΠΟΙ"
 
 #~ msgid "Miro Guide"
 #~ msgstr "Οδηγός του Miro"
@@ -4925,10 +4899,6 @@ msgstr ""
 
 #~ msgid "Upload Total"
 #~ msgstr "Σύνολο απεσταλμένων"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Η δημιουργία του φακέλου '%s' δεν ήταν δυνατή.  "
 
 #~ msgid "Feeds"
 #~ msgstr "Ροές"
@@ -4990,9 +4960,6 @@ msgstr ""
 #~ msgid "Down Total"
 #~ msgstr "Σύνολο ληφθέντων"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Αναλογία αποστολής/λήψης"
-
 #~ msgid "Remove from playlist"
 #~ msgstr "Αφαίρεση από τη λίστα αναπαραγωγής"
 
@@ -5001,9 +4968,6 @@ msgstr ""
 
 #~ msgid "_Remove Items"
 #~ msgstr "_Αφαίρεση αντικειμένων"
-
-#~ msgid "Add Website"
-#~ msgstr "Προσθήκη ιστότοπου"
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Νέα ροή αναζήτησης"
@@ -5051,14 +5015,6 @@ msgstr ""
 #~ msgid "Rename Feed"
 #~ msgstr "Μετονομασία ροής"
 
-#~ msgid "Rename Website"
-#~ msgstr "Μετονομασία ιστότοπου"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Αφαίρεση ιστότοπου"
-#~ msgstr[1] "Αφαίρεση ιστότοπων"
-
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "Ρύθμιση του %(name)s για πρώτη φορά"
@@ -5083,17 +5039,8 @@ msgstr ""
 #~ msgstr[0] "Αφαίρεση ροής"
 #~ msgstr[1] "Αφαίρεση ροών"
 
-#~ msgid "Remove Website"
-#~ msgstr "Αφαίρεση ιστότοπου"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Αφαίρεση ιστότοπων"
-
 #~ msgid "Update Feeds In Folder"
 #~ msgstr "Ενημέρωση ροών στο φάκελο"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "ΡΟΕΣ ΒΙΝΤΕΟ"
 
 #~ msgid "AUDIO FEEDS"
 #~ msgstr "ΡΟΕΣ ΗΧΟΥ"
@@ -5112,12 +5059,6 @@ msgstr ""
 #~ msgid_plural "Show %(count)d More Items"
 #~ msgstr[0] "Εμφάνιση %(count)d ακόμα αντικειμένου"
 #~ msgstr[1] "Εμφάνιση %(count)d ακόμα αντικειμένων"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Η αλλαγή της γλώσσας απαιτεί την επανεκκίνηση του Miro.)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Αναπαραγωγή μέσων στο Miro."
 
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
@@ -5149,12 +5090,6 @@ msgstr ""
 #~ msgid "_Remove Item"
 #~ msgstr "_Αφαίρεση αντικειμένου"
 
-#~ msgid "_Edit Item"
-#~ msgstr "_Επεξεργασία αντικειμένου"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Προτιμήσεις"
-
 #~ msgid "Add _Feed"
 #~ msgstr "Προσθήκη _ροής"
 
@@ -5167,35 +5102,14 @@ msgstr ""
 #~ msgid "Save Items _As"
 #~ msgstr "Αποθήκευση αντικειμένων _ως"
 
-#~ msgid "Convert"
-#~ msgstr "Μετατροπή"
-
 #~ msgid "Re_name"
 #~ msgstr "Μετ_ονομασία"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Μετ_ονομασία ροής"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Μετ_ονομασία ιστότοπου"
 
 #~ msgid "_Remove"
 #~ msgstr "_Αφαίρεση"
 
-#~ msgid "_Remove Feed"
-#~ msgstr "_Αφαίρεση ροής"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Αφαίρεση ροών"
-
 #~ msgid "_Remove Folder"
 #~ msgstr "_Αφαίρεση φακέλου"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Αφαίρεση φακέλων"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Αφαίρεση ιστότοπου"
 
 #~ msgid "_Update Feed"
 #~ msgstr "_Ενημέρωση ροής"
@@ -5215,39 +5129,11 @@ msgstr ""
 #~ msgid "New Playlist Fol_der"
 #~ msgstr "Νέος φάκε_λος λίστας αναπαραγωγής"
 
-#~ msgid "_Next Item"
-#~ msgstr "_Επόμενο αντικείμενο"
-
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "Θα ήθελες να κρατήσεις τη ροή;"
 
 #~ msgid "Add new feed to this section:"
 #~ msgstr "Προσθήκη νέας ροής σε αυτόν τον τομέα:"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Προηγούμενο αντικείμενο"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "Υ_πότιτλοι"
-
-#~ msgid "Auto-download"
-#~ msgstr "Αυτόματη λήψη"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Θέλεις σίγουρα να αφαιρέσεις αυτόν τον ιστότοπο;"
-#~ msgstr[1] "Θέλεις σίγουρα να αφαιρέσεις και τους %(count)s ιστότοπους;"
-
-#~ msgid "Choose Language"
-#~ msgstr "Επιλογή γλώσσας"
-
-#~ msgid "Update"
-#~ msgstr "Ενημέρωση"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Εκκίνηση του %(name)s"
 
 #~ msgid "Outdated Feed Items:"
 #~ msgstr "Ληγμένα αντικείμενα ροής"
@@ -5276,19 +5162,6 @@ msgstr ""
 #~ msgstr[0] "Επιλέχθηκε %(count)d ροή"
 #~ msgstr[1] "Επιλέχθηκαν %(count)d ροές"
 
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "Επιλέχθηκε %(count)d ιστότοπος"
-#~ msgstr[1] "Επιλέχθηκαν %(count)d ιστότοποι"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Απέτυχε: %(error)s"
-
-#~ msgid "Open log"
-#~ msgstr "Άνοιγμα καταγραφής"
-
 #~ msgid "Are you sure you want to remove this feed:"
 #~ msgid_plural "Are you sure you want to remove these feeds:"
 #~ msgstr[0] "Θέλεις σίγουρα να αφαιρέσεις αυτήν τη ροή:"
@@ -5312,47 +5185,6 @@ msgstr ""
 
 #~ msgid "Subscribe to Feed"
 #~ msgstr "Συνδρομή σε ροή"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Έξοδος από πλήρη οθόνη"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "Το %(shortappname)s δεν μπορεί να χρησιμοποιήσει το βασικό φάκελο των βίντεο "
-#~ "που βρίσκεται στο:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Αυτό μπορεί να συμβαίνει επειδή βρίσκεται σε ένα εξωτερικό δίσκο ο οποίος "
-#~ "δεν είναι συνδεδεμένος, είναι ένας φάκελος που το %(shortappname)s δεν έχει "
-#~ "δικαιώματα εγγραφής σε αυτόν, ή μπορεί η διαδρομή του φακέλου να μην είναι "
-#~ "έγκυρη.\n"
-#~ "\n"
-#~ "Αν συνεχίσεις, ο βασικός φάκελος των βίντεο θα επαναφερθεί σε μια τοποθεσία "
-#~ "σε αυτόν τον δίσκο. Αν έχεις ληφθέντα βίντεο αυτό θα προκαλέσει το "
-#~ "%(shortappname)s να χάσει λεπτομέρειες σχετικά με αυτά τα βίντεο.\n"
-#~ "\n"
-#~ "Αν σταματήσεις, έπειτα μπορείς να συνδέσεις το δίσκο ή να διορθώσεις το "
-#~ "πρόβλημα και να επανεκκινήσεις το %(shortappname)s."
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "δεν υπάρχει σύνδεση - επανάληψη προσπάθειας σε %s"
 
 #, python-format
 #~ msgid "Skipped %(count)d feed already present."
@@ -5388,10 +5220,6 @@ msgstr ""
 #, python-format
 #~ msgid "Enter a new name for the feed %(name)s"
 #~ msgstr "Εισαγωγή ενός νέου ονόματος για τη ροή %(name)s"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Εισαγωγή ενός νέου ονόματος για τον ιστότοπο %(name)s"
 
 #~ msgid ""
 #~ "Miro is upgrading your database of feeds and files.  This one-time process "
@@ -5433,20 +5261,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Αυτό το αρχείο στο %(url)s δεν φαίνεται να είναι αρχείο ήχου, βίντεο ή μία "
 #~ "ροή RSS."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "Το %(appname)s θα υποβάλει τώρα μία αναφορά σφάλματος στη βάση δεδομένων μας "
-#~ "για σφάλματα\n"
-#~ "\n"
-#~ "Θέλεις να συμπεριλάβεις ολόκληρη τη βάση δεδομένων του προγράμματος "
-#~ "συμπεριλαμβανομένων όλων των μεταδεδομένων των βίντεο και των ροών στην "
-#~ "αναφορά σφάλματος; Αυτό θα μας βοηθήσει να διαγνώσουμε το πρόβλημα."
 
 #, python-format
 #~ msgid ""
@@ -5502,50 +5316,6 @@ msgstr ""
 #~ "Κάποια από αυτά τα αντικείμενα είναι φάκελοι. Διαγράφοντας/αφαιρώντας ένα "
 #~ "φάκελο θα διαγράψει/αφαιρέσει τα περιεχόμενά του"
 
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Εισαγωγή της διεύθυνσης (URL) του ιστότοπου για προσθήκη"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Προσθήκη ιστότοπου - Μη έγκυρη διεύθυνση (URL)"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Η διεύθυνση που έχεις εισαγάγει δεν είναι μία έγκυρη διεύθυνση (URL).\n"
-#~ "Παρακαλώ έλεγξε τη διεύθυνση (URL) και προσπάθησε ξανά.\n"
-#~ "\n"
-#~ "Εισαγωγή της διεύθυνσης (URL) του ιστότοπου για προσθήκη"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Καλώς όρισες στην πρώτη ρύθμιση του %(name)s!\n"
-#~ "\n"
-#~ "Οι επόμενες σελίδες θα σε βοηθήσουν να ρυθμίσεις το %(name)s έτσι ώστε να "
-#~ "λειτουργεί καλύτερα για εσένα.\n"
-#~ "\n"
-#~ "Ποια γλώσσα θα ήθελες να χρησιμοποιεί το Miro;"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Προτείνουμε να έχεις το %(name)s να ξεκινάει όταν εκκινεί ο υπολογιστής σου. "
-#~ "Έτσι, οι λήψεις που είναι σε εξέλιξη μπορούν να ολοκληρωθούν και νέα αρχεία "
-#~ "πολυμέσων μπορούν να κατέβουν στο παρασκήνιο και να είναι έτοιμα όταν "
-#~ "θελήσεις να τα παρακολουθήσεις."
-
 #, python-format
 #~ msgid ""
 #~ "%(name)s can find all the media files on your computer to help you organize "
@@ -5587,69 +5357,8 @@ msgstr ""
 #~ "να εντοπίσουμε αυτό το πρόβλημα και να το διορθώσουμε υποβάλλοντας μία "
 #~ "αναφορά σφάλματος."
 
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Λυπούμαστε, το %(appname)s δεν μπόρεσε να εκκινήσει λόγω ενός προβλήματος με "
-#~ "τη βάση δεδομένων:\n"
-#~ "\n"
-#~ "Σφάλμα: %(error)s\n"
-#~ "\n"
-#~ "Είναι πιθανό το αρχείο της βάσης δεδομένων σας να είναι κατεστραμμένο και να "
-#~ "μην μπορεί να χρησιμοποιηθεί.\n"
-#~ "\n"
-#~ "Μπορείς να ξεκινήσεις από την αρχή και η κατεστραμμένη βάση δεδομένων σας θα "
-#~ "αφαιρεθεί, αλλά θα πρέπει να προσθέσεις ξανά τις ροές σου και τα αρχεία "
-#~ "πολυμέσων. Αν θέλεις να το κάνεις αυτό, πάτησε το κουμπί Εκκίνηση από την "
-#~ "αρχή και επανεκκίνησέ το %(appname)s.\n"
-#~ "\n"
-#~ "Για να μας βοηθήσεις να διορθώσουμε προβλήματα σαν αυτό στο μέλλον, "
-#~ "παρακαλούμε κάνε μία αναφορά σφάλματος στο %(url)s."
-
 #~ msgid "Playing File"
 #~ msgstr "Αναπαραγόμενο αρχείο"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Λυπούμαστε, το %(appname)s δεν μπόρεσε να αναβαθμίσει τη βάση δεδομένων σου "
-#~ "λόγω σφαλμάτων.\n"
-#~ "\n"
-#~ "Έλεγξε να δεις αν ο δίσκος σου είναι πλήρης. Αν είναι πλήρης, τότε κλείσε το "
-#~ "%(appname)s, ελευθέρωσε λίγο χώρο, και εκκίνησε το %(appname)s ξανά.\n"
-#~ "\n"
-#~ "Αν ο δίσκος σου δεν είναι πλήρης, βοήθησέ μας να κατανοήσουμε το πρόβλημα "
-#~ "κάνοντας μία αναφορά σφάλματος στη βάση δεδομένων μας για σφάλματα.\n"
-#~ "\n"
-#~ "Τέλος, μπορείς να ξεκινήσεις από την αρχή και η κατεστραμμένη βάση δεδομένων "
-#~ "σου θα αφαιρεθεί, αλλά θα πρέπει να προσθέσεις ξανά τις ροές σου και τα "
-#~ "αρχεία πολυμέσων."
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Αφαίρεση ιστότοπων"
 
 #~ msgid "Volume _Up"
 #~ msgstr "_Αύξηση έντασης"
@@ -5663,39 +5372,15 @@ msgstr ""
 #~ msgid "_Translate"
 #~ msgstr "_Μετάφραση"
 
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Για αναζήτηση πολυμέσων σε διαδικτυακούς τόπους αναζήτησης πολυμέσων, κάνε "
-#~ "κλικ στο παραπάνω πλαίσιο αναζήτησης,πληκτρολόγησε όρους αναζήτησης και "
-#~ "πάτησε το πλήκτρο Enter. Για να αλλάξεις μηχανές αναζήτησης, κάνε κλικ στο "
-#~ "εικονίδιο στα αριστερά του παραπάνω πλαισίου αναζήτησης και επίλεξε τη "
-#~ "μηχανή αναζήτησης από το αναπτυσσόμενο μενού."
-
-#~ msgid "Media type:"
-#~ msgstr "Τύπος πολυμέσου:"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Άγνωστος ξενιστής"
-
 #~ msgid "Share feed"
 #~ msgstr "Διαμοιρασμός ροής"
 
 #~ msgid "_Share with a Friend"
 #~ msgstr "_Διαμοιρασμός με ένα φίλο"
 
-#~ msgid "Reason unknown"
-#~ msgstr "Άγνωστη αιτία"
-
 #, python-format
 #~ msgid "%(rate)s downloading"
 #~ msgstr "Λήψη με %(rate)s"
-
-#~ msgid "Finding Files"
-#~ msgstr "Εύρεση αρχείων"
 
 #~ msgid "Searching for media files"
 #~ msgstr "Αναζήτηση για αρχεία πολυμέσων"

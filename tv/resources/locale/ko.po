@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4561,9 +4561,6 @@ msgid ""
 "it."
 msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십시오."
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "기본 동영상 만료일:"
-
 #~ msgid "Internal Error"
 #~ msgstr "내부 오류"
 
@@ -4572,9 +4569,6 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 
 #~ msgid "Ok"
 #~ msgstr "확인"
-
-#~ msgid "Custom Channels"
-#~ msgstr "채널 설정"
 
 #~ msgid "Error loading feed"
 #~ msgstr "피드 읽기 오류"
@@ -4805,12 +4799,6 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 #~ msgid "_Translate"
 #~ msgstr "번역(_T)"
 
-#~ msgid "Stop after each video"
-#~ msgstr "따로 재생"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "이어서 재생"
-
 #~ msgid "Save as a Feed"
 #~ msgstr "피드로 저장"
 
@@ -4876,20 +4864,6 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 #~ msgid "(contains %(count)d feed)"
 #~ msgid_plural "(contains %(count)d feeds)"
 #~ msgstr[0] "(%(count)d개 피드 포함)"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "시각화를 바꾸면 프로그램을 재생을 다시 시작해야 효과가 있습니다."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "오디오를 재생할 때 사용할 영상:"
-
-#~ msgid "Add to Library"
-#~ msgstr "모음집에 추가"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "고유 채널 모음이 있는 버전의 %(appname)s 프로그램을 실행 중입니다."
 
 #, python-format
 #~ msgid "Successfully imported %(count)d feed."
@@ -4976,12 +4950,6 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(피드 설정 단추를 사용해 바꿀 수 있습니다)"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "폴더에 있는 새 동영상을 찾아 모음집에 추가:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "최근에 멈춘 시점부터 동영상 재생."
-
 #, python-format
 #~ msgid "Show %(count)d More Item"
 #~ msgid_plural "Show %(count)d More Items"
@@ -5045,22 +5013,11 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 #~ msgid "Enter a new name for the site %(name)s"
 #~ msgstr "%(name)s 사이트의 새 이름을 입력하십시오"
 
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "%(name)s 제거"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "정말로 %(name)s을(를) 제거하시겠습니까?"
-
 #~ msgid "Save Search"
 #~ msgstr "검색 저장"
 
 #~ msgid "Remove feed"
 #~ msgstr "피드 제거"
-
-#~ msgid "Add to library"
-#~ msgstr "모음집에 추가"
 
 #~ msgid "Permalink"
 #~ msgstr "고유 주소"
@@ -5214,26 +5171,6 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 #~ msgstr "%(url)s 위치의 파일은 오디오, 동영상, RSS 피드 중 어느 것도 아닌 것으로 보입니다."
 
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "여러 개 피드 구독"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "%(count)d개 피드를 만드시겠습니까?"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "새 피드 폴더의 이름을 입력하십시오"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] "알림: 다음 피드 중에서 이미 %(count)d개를 구독하고 있습니다. 다음 피드는 현재 위치에 남겨 둡니다."
-
 #, python-format
 #~ msgid ""
 #~ "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
@@ -5351,150 +5288,6 @@ msgstr "%(shortappname)s 파일을 동기화 하시려면 장치를 장착하십
 
 #~ msgid "Contents appear in the library"
 #~ msgstr "라이브러리에 컨텐츠가 나타남"
-
-#~ msgid "Path:"
-#~ msgstr "경로:"
-
-#~ msgid "Title:"
-#~ msgstr "제목:"
-
-#~ msgid "Media type:"
-#~ msgstr "미디어 형식:"
-
-#~ msgid "Remove Website"
-#~ msgstr "웹사이트 제거"
-
-#~ msgid "Rename Website"
-#~ msgstr "웹사이트 이름변경"
-
-#~ msgid "Remove Websites"
-#~ msgstr "웹사이트 제거"
-
-#~ msgid "Add Website"
-#~ msgstr "웹사이트 추가"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "웹사이트 추가 - 잘못된 URL"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "업/다운 비율"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "웹사이트 제거"
-
-#~ msgid "_Edit Item"
-#~ msgstr "항목 편집(_E)"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "피드 이름변경(_N)"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "피드 제거(_R)"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "폴더 제거(_R)"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "피드 제거(_R)"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "자막(_U)"
-
-#~ msgid "_Preferences"
-#~ msgstr "기본 설정(_P)"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "웹사이트 제거(_R)"
-
-#~ msgid "Re_name Website"
-#~ msgstr "웹아시트 이름변경(_N)"
-
-#~ msgid ""
-#~ "You need to install the Bonjour libraries to be able to share files from "
-#~ "Miro-to-Miro or to the Miro iPad app.\n"
-#~ "\n"
-#~ "Once you install the Bonjour libraries, you will have to restart Miro."
-#~ msgstr "Miro에서 Miro 또는 Miro iPad app로 파일을 공유하려면 Bonjour 라이브러리를 설치하세요."
-
-#, python-format
-#~ msgid ""
-#~ "Select the music and video stores you'd like to have appear in "
-#~ "%(shortappname)s.  Note: some other store websites may work well with Miro "
-#~ "if you add them as Sources, but these are Stores that we've integrated and "
-#~ "tested."
-#~ msgstr ""
-#~ "%(shortappname)s.에 나타나기를 원하는 음악, 비디오 스토어를 선택하세요. 참고: 몇몇 스토어 웹사이트는 당신이 그 사이트를 "
-#~ "소스로 추가하면, Miro와 잘 작동이 되지 않을 수도 있습니다. 그러나 이 사이트들은 우리가 통합하고 테스트한 스토어들입니다."
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr "Miro 개발자들에게 계속 기부를 하시려면, 기부 페이지를 방문하세요."
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Miro %(version)s:를 위해 힘써주시는 모든 분들께 감사 드립니다."
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(언어를 바꾸시려면 Miro를 다시 시작하세요.)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Miro에서 미디어 재생."
-
-#~ msgid ""
-#~ "Miro can watch a folder on your computer and show those media files in your "
-#~ "library."
-#~ msgstr "Miro는 당신의 컴퓨터에 있는 폴더를 보고, 당신의 라이브러리에 그 미디어 파일들을 보여줄 수 있습니다."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "Miro will now exit. You can connect the drive or otherwise fix the problem "
-#~ "and relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s는 다음에 위치한 기본 동영상 디렉토리를 사용할 수 없습니다.:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "그것은 연결되지 않은 외장 드라이브에 있거나, %(shortappname)s가 쓰기 허가를 받지 못한 디렉토리이거나, 디렉토리가 아닌 "
-#~ "무언가가 있기 때문일지 모릅니다.\n"
-#~ "Miro는 지금 종료됩니다. 당신은 드라이브를 연결할 수 있습니다. 그렇지 않으면 %(shortappname)s을 새로 실행해 문제를 "
-#~ "해결하세요."
-
-#~ msgid "Miro shutdown improperly and needs to prepare your items for display."
-#~ msgstr "Miro가 부적절하게 중단되었습니다. 당신의 항목을 보일 준비를 하고 있습니다."
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you  have a large number of items in Miro "
-#~ "(it can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Miro는 당신의 팟캐스트와 파일의 데이터베이스를 업그레이드 중입니다. 이 한 번의 과정에서 당신의 Miro에 많은 수의 항목이 있다면 "
-#~ "시간이 오래 걸릴 수 있습니다. (30분 이상이 걸릴 수도 있습니다.)"
-
-#, python-format
-#~ msgid ""
-#~ "Connection to share %(name)s failed.\n"
-#~ "\n"
-#~ "The share is either unreachable or incompatible with Miro sharing."
-#~ msgstr ""
-#~ "%(name)s 공유 연결에 실패하였습니다.\n"
-#~ "이 공유는 Miro 공유에 도달할 수 없거나 공존할 수 없습니다."
-
-#~ msgid "Importing audio details and artwork: {0} of {1}"
-#~ msgstr "오디오 세부 사항과 아트워크 불러오기: {0} of {1}"
-
-#~ msgid "Importing file details: {0} of {1}"
-#~ msgstr "파일 세부사항 불러오기: {0} of {1}"
-
-#~ msgid "Importing video details and creating thumbnails: {0} of {1}"
-#~ msgstr "비디오 세부사항을 불러오고 썸네일 만들기: {0} of {1}"
 
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "새로운 버전의 Miro에서 데이터베이스가 만들어졌습니다. "

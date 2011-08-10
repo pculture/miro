@@ -11,8 +11,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -4716,9 +4716,6 @@ msgstr ""
 #~ msgid "Report a _Bug"
 #~ msgstr "Zgłoś _błąd"
 
-#~ msgid "Custom Channels"
-#~ msgstr "Własne kanały"
-
 #~ msgid "activity"
 #~ msgstr "aktywność"
 
@@ -4798,12 +4795,6 @@ msgstr ""
 #~ msgid "_Remove Items"
 #~ msgstr "_Usuń elementy"
 
-#~ msgid "Stop after each video"
-#~ msgstr "Zatrzymaj po każdym filmie"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Odtwarzaj filmy po kolei"
-
 #, python-format
 #~ msgid "%(count)d hour"
 #~ msgid_plural "%(count)d hours"
@@ -4863,12 +4854,6 @@ msgstr ""
 #~ msgid "Channel is not compatible with %(appname)s"
 #~ msgstr "Kanał nie jest kompatybilny z %(appname)s"
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Użyj jako wizualizatora w trakcie odtwarzania dźwięku:"
-
-#~ msgid "Add to Library"
-#~ msgstr "Dodaj do biblioteki"
-
 #~ msgid "FEEDS"
 #~ msgstr "KANAŁY"
 
@@ -4877,11 +4862,6 @@ msgstr ""
 
 #~ msgid "Re_name Item"
 #~ msgstr "Z_mień nazwę elementu"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Używasz wersji %(appname)s ze zmienionym zestawem kanałów."
 
 #, python-format
 #~ msgid "%(size)s gb/s"
@@ -4952,10 +4932,6 @@ msgstr ""
 #~ msgid "Bad Status Line: %(msg)s"
 #~ msgstr "Niepoprawny kod odpowiedzi: %(msg)s"
 
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Czy na pewno chcesz usunąć %(name)s?"
-
 #~ msgid "_Import Feeds (OPML)"
 #~ msgstr "_Importuj kanały (OPML)"
 
@@ -4971,9 +4947,6 @@ msgstr ""
 #~ msgid "Full Feed"
 #~ msgstr "Cały kanał"
 
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Podaj nazwę nowego katalogu kanałów"
-
 #, python-format
 #~ msgid "Show %(count)d More Item"
 #~ msgid_plural "Show %(count)d More Items"
@@ -4986,10 +4959,6 @@ msgstr ""
 
 #~ msgid "Save as a Feed"
 #~ msgstr "Zapisz jako kanał"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Usuń %(name)s"
 
 #, python-format
 #~ msgid "(contains %(count)d feed)"
@@ -5023,13 +4992,6 @@ msgstr ""
 
 #~ msgid "Revert Feed Name"
 #~ msgstr "Przywróć nazwę kanału"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Stworzyć kanał?"
-#~ msgstr[1] "Stworzyć %(count)d kanały?"
-#~ msgstr[2] "Stworzyć %(count)d kanałów?"
 
 #~ msgid "_Download Item"
 #~ msgstr "_Pobierz element"
@@ -5065,20 +5027,6 @@ msgstr ""
 #~ msgid "Update Feeds Now"
 #~ msgstr "Uaktualnij kanały"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Śledź katalogi w poszukiwaniu nowych filmów i uwzględnij je w bibliotece:"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Usuwaj filmy po:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Wznawiaj odtwarzanie filmu w momencie, w którym ostatnio zatrzymano."
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Musisz odtworzyć film ponownie, by zmiany wizualizacji odniosły skutek."
-
 #~ msgid "Update Feed Now"
 #~ msgstr "Uaktualnij kanał"
 
@@ -5092,32 +5040,9 @@ msgstr ""
 #~ msgid "E_xport Feeds (OPML)"
 #~ msgstr "_Eksportuj kanały (OPML)"
 
-#~ msgid "Add to library"
-#~ msgstr "Dodaj do biblioteki"
-
 #, python-format
 #~ msgid "File in %(progname)s"
 #~ msgstr "Plik w %(progname)s"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Subskrybowanie wielu kanałów"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "UWAGA: Subskrybujesz już jeden z tych kanałów. Kanał ten pozostanie na swoim "
-#~ "miejscu."
-#~ msgstr[1] ""
-#~ "UWAGA: Subskrybujesz już %(count)d z tych kanałów. Kanały te pozostana na "
-#~ "swoim miejscu."
-#~ msgstr[2] ""
-#~ "UWAGA: Subskrybujesz już %(count)d z tych kanałów. Kanały te pozostana na "
-#~ "swoim miejscu."
 
 #~ msgid "From"
 #~ msgstr "Źródło:"
@@ -5145,9 +5070,6 @@ msgstr ""
 
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTEKA"
-
-#~ msgid "View:"
-#~ msgstr "Wyświetl:"
 
 #, python-format
 #~ msgid "_About %(name)s"
@@ -5670,199 +5592,5 @@ msgstr ""
 #~ "swojej kolekcji.\n"
 #~ "Ostatnie zmiany mogą zostać utracone."
 
-#~ msgid "WEBSITES"
-#~ msgstr "STRONY WWW"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Katalog '%s' nie może zostać stworzony.  "
-
-#~ msgid "Title:"
-#~ msgstr "Tytuł:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Edytuj metadane tego elementu"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "KANAŁY WIDEO"
-
-#~ msgid "other"
-#~ msgstr "inne"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Napisy"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Odtwarzaj media w Miro."
-
-#~ msgid "Unknown Language"
-#~ msgstr "Nieznany język"
-
-#~ msgid "Path:"
-#~ msgstr "Ścieżka:"
-
-#~ msgid "Media type:"
-#~ msgstr "Typ"
-
-#~ msgid "Remove Website"
-#~ msgstr "Usuń"
-
-#~ msgid "Rename Website"
-#~ msgstr "Zmień nazwę"
-
-#~ msgid "Add Website"
-#~ msgstr "Dodaj Stronę WWW"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Usuń"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Dodaj Stronę WWW - Błędny adres URL"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Podaj adres URL strony, którą chcesz dodać"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Adres, który podałeś nie jest prawidłowy\n"
-#~ "Sprawdź URL i spróbuj ponownie\n"
-#~ "\n"
-#~ "Podaj adres URL strony, którą chcesz dodać"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Usuń stronę"
-#~ msgstr[1] "Usuń strony"
-#~ msgstr[2] "Usuń strony"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Jesteś pewny, że chcesz usunąć tą stronę?"
-#~ msgstr[1] "Jesteś pewny, że chcesz usunąć te %(count)s strony?"
-#~ msgstr[2] "Jesteś pewny, że chcesz usunąć te %(count)s stron?"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "brak połączenia - ponowna próba za %s"
-
-#~ msgid "_Preferences"
-#~ msgstr "P_referencje"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "U_suń kanał"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "U_suń kanały"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Podaj nową nazwę dla strony %(name)s"
-
-#~ msgid "_Remove Website"
-#~ msgstr "U_suń stronę"
-
 #~ msgid "_Remove"
 #~ msgstr "U_suń"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Edytuj element"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Zmień _nazwę kanału"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Usuń kanał"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Usuń stronę"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Zmień _nazwę strony"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "Wybrano %(count)d stronę"
-#~ msgstr[1] "Wybrano %(count)d strony"
-#~ msgstr[2] "Wybrano %(count)d stron"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Stos. wysłano/pobrano"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Zmiana języka wymaga ponownego uruchomienia Miro.)"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Opuść tryb pełnoekranowy"
-
-#~ msgid "Choose Language"
-#~ msgstr "Wybierz język"
-
-#~ msgid "Update"
-#~ msgstr "Uaktualnij"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Poprzednia pozycja"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Następna pozycja"
-
-#~ msgid "Auto-download"
-#~ msgstr "Auto-pobieranie"
-
-#~ msgid "Finding Files"
-#~ msgstr "Znajduję pliki"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Nieznany Host"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Przyczyna nieznana"
-
-#~ msgid "Convert"
-#~ msgstr "Konwertuj"
-
-#~ msgid "Open log"
-#~ msgstr "Otwórz log (rejestr)"
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Błąd podczas ładowania podcastu"
-
-#, python-format
-#~ msgid "From %(podcast)s"
-#~ msgstr "Z %(podcast)s"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Dziękujemy wszystkim ludziom, którzy wspierali Miro %(version)s:"
-
-#~ msgid "Add _Podcast"
-#~ msgstr "Dodaj _podcast"
-
-#~ msgid "_Import Media"
-#~ msgstr "_Zaimportuj media"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro wykrył, że twój system może nie posiadać Bonjour, standardowej części "
-#~ "systemu Mac OS X. Sprawdź poprawność instalacji Mac OS X."
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Twoja przeglądarka otworzy stronę, na której będziesz mógł pobrać i "
-#~ "zainstalować Bonjour.\n"
-#~ "\n"
-#~ "Po instalacji wystarczy zrestartować Miro, aby zmiany odniosły skutek."

@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:278
 msgid "Bring All to Front"
@@ -4541,20 +4541,8 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "כברירת מחדל, קבצי וידאו יפוגו לאחר:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "ערוצים מותאמים אישית"
-
 #~ msgid "Miro Guide"
 #~ msgstr "מדריך מירו"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "ניגון הסרטים אחד אחרי השני"
-
-#~ msgid "Stop after each video"
-#~ msgstr "עצור אחרי כל וידאו"
 
 #~ msgid "Comments"
 #~ msgstr "הערות"
@@ -4562,52 +4550,8 @@ msgstr ""
 #~ msgid "Web Page"
 #~ msgstr "עמוד אינטרנט"
 
-#~ msgid "Add to library"
-#~ msgstr "הוסף ספרייה"
-
-#~ msgid "Add to Library"
-#~ msgstr "הוסף לספרייה"
-
 #~ msgid "Feed Settings"
 #~ msgstr "הגדרות ערוץ"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "חפש סרטים חדשים בתיקיות אלו וכלול אותם בספרייה:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "המשך את צפיית הסרט מהמקום בו הופסקה."
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "הסר %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "האם אתה בטוח שאתה רוצה להסיר את %(name)s?"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "נרשם למספר ערוצים"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "הזן שם לתיקיית הערוץ החדש"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "שים לב: אתה כבר רשום לאחד מערוצים אלה. ערוצים אלה ישארו במקומם הנוכחי."
-#~ msgstr[1] ""
-#~ "שים לב: אתה כבר רשום ל-%(count)d מערוצים אלה. ערוצים אלה ישארו במקומם הנוכחי."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "צור ערוץ?"
-#~ msgstr[1] "צור %(count)d ערוצים?"
 
 #, python-format
 #~ msgid "Bad Chunk size: %(msg)s"
@@ -4627,17 +4571,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "אתה מריץ גירסת %(appname)s עם סט מותאם של אפיקים."
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "אתה חייב לאתחל מחדש את הצפייה כדי ששינויי הצפייה יחולו."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "השתמש בזה לוידאו כשמנגן שמע:"
-
-#, python-format
-#~ msgid ""
 #~ "%(appname)s was unable to save its database: Disk Full.\n"
 #~ "We suggest deleting files from the full disk or simply deleting some movies "
 #~ "from your collection.\n"
@@ -4646,9 +4579,6 @@ msgstr ""
 #~ "%(appname)s לא יכולה לשמור את מסד הנתונים שלה: כונן מלא.\n"
 #~ "אנו ממליצים למחוק קבצים מהכונן המלא או פשוט למחוק כמה קבצים מהאוסף שלך.\n"
 #~ "שינויים אחרונים עלולים לאבד."
-
-#~ msgid "Start Seeding"
-#~ msgstr "התחל זריעה"
 
 #~ msgid "Other"
 #~ msgstr "אחר"
@@ -5298,187 +5228,11 @@ msgstr ""
 #~ msgid "_About %(name)s"
 #~ msgstr "על _אודות %(name)s"
 
-#~ msgid "Remove Website"
-#~ msgstr "מחק אתר"
-
-#~ msgid "Rename Website"
-#~ msgstr "שנה שם אתר"
-
-#~ msgid "Remove Websites"
-#~ msgstr "מחק אתרים"
-
-#~ msgid "Title:"
-#~ msgstr "כותרת:"
-
-#~ msgid "Media type:"
-#~ msgstr "סוג מדיה:"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "נגן מדיה במירו."
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(שינוי השפה דורש ממך לסגור ולהתחיל את התוכנה מחדש.)"
-
-#~ msgid "WEBSITES"
-#~ msgstr "אתרים"
-
-#~ msgid "Add Website"
-#~ msgstr "הוסף אתר"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "הזן את כתובת האתר שברצונך להוסיף"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "צא ממסך מלא"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "הוספת אתר - כתובת שגויה"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "הזן שם חדש לאתר %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "הכתובת שהזנת שגויה.\n"
-#~ "אנא בדוק את הכתובת ונסה שנית.\n"
-#~ "\n"
-#~ "הזן את כתובת האתר שברצונך להוסיף"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "הסר אתר"
-#~ msgstr[1] "הסר אתרים"
-
-#~ msgid "Re_name Website"
-#~ msgstr "שנה שם אתר"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "הסר תיקיות"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_ערוך פריט"
-
-#~ msgid "_Preferences"
-#~ msgstr "_העדפות"
-
-#~ msgid "_Remove Website"
-#~ msgstr "הסר אתר"
-
-#~ msgid "Choose Language"
-#~ msgstr "בחר שפה"
-
-#~ msgid "_Previous Item"
-#~ msgstr "פריט קודם"
-
-#~ msgid "_Next Item"
-#~ msgstr "פריט הבא"
-
-#~ msgid "Update"
-#~ msgstr "עדכן"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_כתוביות"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "איו חיבור - מנסה שנית בעוד %s"
-
-#~ msgid "Finding Files"
-#~ msgstr "מציאת קבצים"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "הסר אתרים"
-
-#~ msgid "Path:"
-#~ msgstr "נתיב:"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "יחס העלאה/הורדה"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "האם להסיר אתר זה?"
-#~ msgstr[1] "האם להסיר את %(count)s האתרים האלו?"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "לא ניתן ליצור את התיקייה '%s'.  "
-
-#~ msgid "(Pending)"
-#~ msgstr "(בהמתנה)"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "הפעלת %(name)s"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "נבחר אתר אחד"
-#~ msgstr[1] "נבחרו %(count)d אתרים"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "שינוי _שם הערוץ"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "הסרת _ערוצים"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "ה_סרת הערוץ"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "ערוצי וידאו"
-
 #~ msgid "Pipeline request never started"
 #~ msgstr "בקשת פייפליין מעולם לא התחילה"
 
 #~ msgid "All Items Match Search"
 #~ msgstr "כל הפריטים מתאימים לחיפוש"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "אנו ממליצים שתפעיל/י %(name)s עם הפעלת המחשב. במצב זה, הורדות פעילות יוכלו "
-#~ "להסתיים וקבצי מדיה חדשים יורדו ברקע, ויהיו מוכנים כשתרצה/י לצפות בהם"
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "אוניברסלי, סינית"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "ברוך בואך לאשף ההגדרה הראשונית של %(name)s!\n"
-#~ "\n"
-#~ "סדרת המסכים הבאים תסייע לך בהגדרת %(name)s להתאמה מרבית לצרכיך.\n"
-#~ "\n"
-#~ "באיזו שפה ברצונך להשתמש ב־Miro?"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "התכנה %(appname)s תשלח כעת את פרטי קריסת התכנה למאגר המרכזי.\n"
-#~ "\n"
-#~ "האם ברצונך לשלב בדיווח את כל הפרטים על ספריית הווידאו והפודקאסטים שלך? דיווח "
-#~ "מקיף שכזה יסייע לנו לאתר את התקלה."
 
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "תרצו לשמור את הערוץ?"
@@ -5517,30 +5271,6 @@ msgstr ""
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "מסד הנתונים נוצר על־ידי גרסה חדשה יותר של מירו "
 
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "אנח מצטערים, התכנית %(appname)s כשלה בעת שדרוג מסד הנתונים שלך עקב שגיאות.\n"
-#~ "\n"
-#~ "נא לבדוק האם הכונן שלך מלא. אם הוא מלא עליך לצאת מ־%(appname)s,לפנות קצת "
-#~ "מקום, ולהפעיל את %(appname)s מחדש.\n"
-#~ "\n"
-#~ "אם הכונן שלך אינו מלא, באפשרותך לסייע לנו להבין את הבעיה על ידי דיווח על באג "
-#~ "למסד נתוני הקריסות שלנו.\n"
-#~ "\n"
-#~ "לבסוף, ניתן להתחיל מחדש ומסד הנתונים הפגום שלך יוסר, אך יהיה עליך להוסיף "
-#~ "מחדש את ההזנות ואת קובצי המדיה שלך."
-
 #~ msgid "Contents appear in the library"
 #~ msgstr "תוכן מופיע בספרייה"
 
@@ -5564,9 +5294,6 @@ msgstr ""
 
 #~ msgid "Upload Total"
 #~ msgstr "סה\"כ העלאה"
-
-#~ msgid "Convert"
-#~ msgstr "המרה"
 
 #~ msgid "Save Search"
 #~ msgstr "שמור חיפוש"
@@ -5618,9 +5345,6 @@ msgstr ""
 #~ "\n"
 #~ "הזן את כתובת הערוץ להוספה"
 
-#~ msgid "Open log"
-#~ msgstr "פתיחת יומן"
-
 #~ msgid ""
 #~ "Include entire program database including all video and feed metadata with "
 #~ "crash report"
@@ -5658,47 +5382,3 @@ msgstr ""
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr "המשך לנגן קובצי וידאו או שמע מהמקום שבו הם הופסקו בפעם האחרונה."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "After installing Print Services, you will have to restart Miro.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "כדי ליהנות מחוויית השימוש הטובה ביותר ב־%(appname)s, אנו ממליצים להתקין את "
-#~ "תכנת בונז׳ור, שמופצת כחלק משירותי הדפסה.\n"
-#~ "\n"
-#~ "התקנת בונז׳ור תאפשר לך לשתף את ספריית המדיה שלך עם משתמשי %(appname)s אחרים "
-#~ "ברשת שלך ולהאזין למדיה שוטפת ממשתמשי %(appname)s ברשת שלך.\n"
-#~ "\n"
-#~ "אחרי התקנת שירותי הדפה תצטרף לאתחל את מירו.\n"
-#~ "\n"
-#~ "האם לעשות זאת עכשיו?"
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "הדפדפן שלך יטען את האתר שממנו אפשר להוריד את בונז׳ור.\n"
-#~ "\n"
-#~ "כאש ההתקנה מסתיימת, יש לאתחל את מירו כדי להחיל את השינויים."
-
-#~ msgid "Error loading podcast"
-#~ msgstr "שגיאה בטעינת פודקאסט"
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr "נכשלה טעינת פודקאסט בכתובת %(url)s‏ (%(errordescription)s)."
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "האם להשאיר את הפודקאסט הזה?"

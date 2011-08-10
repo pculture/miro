@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4541,9 +4541,6 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "Labi"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Pēc noklusējuma video dzēšās pēc:"
-
 #~ msgid "Playing File"
 #~ msgstr "Atskaņo failu"
 
@@ -4625,9 +4622,6 @@ msgstr ""
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Iekšējā kļūda: Nav gatavs sūtīt"
 
-#~ msgid "Custom Channels"
-#~ msgstr "Pašizvēlēti kanāli"
-
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Ierobežot uz visiem maniem personiskajiem failiem."
 
@@ -4639,12 +4633,6 @@ msgstr ""
 
 #~ msgid "_Translate"
 #~ msgstr "_Pārraidīt"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Izmantot šo video, kad tiek atskaņota mūzika"
-
-#~ msgid "Add to Library"
-#~ msgstr "Pievienot bibliotēkai"
 
 #, python-format
 #~ msgid "Skipped %(count)d feed already present."

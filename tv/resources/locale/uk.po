@@ -8,28 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-12 11:21+0000\n"
-"Last-Translator: CrabMan <Unknown>\n"
+"PO-Revision-Date: 2011-07-23 09:16+0000\n"
+"Last-Translator: serg74 <Unknown>\n"
 "Language-Team: Ukranian <serg74@hotmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:251
 msgid "Present Half Size"
 msgstr "Показати на половину розміру"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:254
-msgid "Present Actual Size"
-msgstr "Справжній розмір"
-
-#: ../../osx/plat/frontends/widgets/osxmenus.py:257
-msgid "Present Double Size"
-msgstr "Подвійний розмір"
 
 #: ../../lib/net.py:93 ../../lib/net.py:99
 msgid "Can't connect"
@@ -134,7 +126,7 @@ msgstr "Вставити"
 #: ../../osx/plat/frontends/widgets/overlay.py:136 ../../lib/dialogs.py:121
 #: ../../lib/frontends/widgets/gtk/video.py:313
 msgid "Delete"
-msgstr "Вилучити"
+msgstr "Видалити"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:244
 msgid "Select All"
@@ -144,13 +136,21 @@ msgstr "Вибрати все"
 msgid "Edit"
 msgstr "Редагувати"
 
+#: ../../osx/plat/frontends/widgets/osxmenus.py:254
+msgid "Present Actual Size"
+msgstr "Показати у справжньому розмірі"
+
+#: ../../osx/plat/frontends/widgets/osxmenus.py:257
+msgid "Present Double Size"
+msgstr "Показати у подвійному збільшенні"
+
 #: ../../osx/plat/frontends/widgets/osxmenus.py:264
 msgid "Present Video"
 msgstr "Показати відео"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:272
 msgid "Zoom"
-msgstr "Масштабувати"
+msgstr "Масштабування"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:273
 msgid "Minimize"
@@ -4607,32 +4607,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "По замовчуванню, видаляти відео після:"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Слідкувати за появою нового відео в цих теках і при наявності додавати його "
-#~ "до медіа бібліотеки:"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Зупиняти після кожного відео"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Грати відео  одне за одним"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Продовжувати грати відео з позиції попередньої зупинки."
-
-#~ msgid "Add to Library"
-#~ msgstr "Додати до бібліотеки"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Користуватися цим для відео при програванні аудіо:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Власні канали"
-
 #~ msgid "Save Item _As"
 #~ msgstr "Зберегти елемент _як"
 
@@ -4694,9 +4668,6 @@ msgstr ""
 
 #~ msgid "Other"
 #~ msgstr "Інше"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Почати роздавати"
 
 #, python-format
 #~ msgid "File in %(progname)s"
@@ -5046,9 +5017,6 @@ msgstr ""
 
 #~ msgid "Remove feed"
 #~ msgstr "Вилучити стрічку"
-
-#~ msgid "View:"
-#~ msgstr "Вигляд:"
 
 #~ msgid "Non Feed"
 #~ msgstr "Не з стрічок"
@@ -5539,371 +5507,3 @@ msgstr ""
 
 #~ msgid "Length"
 #~ msgstr "Тривалість"
-
-#~ msgid "Path:"
-#~ msgstr "Тека:"
-
-#~ msgid "Rename Website"
-#~ msgstr "Перейменувати веб-сайт"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Вилучити веб-сайти"
-
-#~ msgid "Remove Website"
-#~ msgstr "Вилучити веб-сайт"
-
-#~ msgid "Title:"
-#~ msgstr "Назва:"
-
-#~ msgid "Media type:"
-#~ msgstr "Тип носія:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "ВЕБ-САЙТИ"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Відтворити в Miro."
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Каталог '%s' не можливо створити.  "
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "ВІДЕО СТРІЧКИ"
-
-#~ msgid "Add Website"
-#~ msgstr "Додати веб-сайт"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Додати веб-сайт - неправильна адреса"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Введіть URL нового веб-сайта"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Введіть нову назву веб-сайта %(name)s"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Введена адреса невірна.\n"
-#~ "Перевірте URL і спробуйте знову.\n"
-#~ "\n"
-#~ "Введіть URL веб-сайта"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Вилучити веб-сайт"
-#~ msgstr[1] "Вилучити веб-сайти"
-#~ msgstr[2] "Вилучити веб-сайтів"
-
-#~ msgid "_Preferences"
-#~ msgstr "Налаштування"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s не може використовувати основний відео-каталог розташований "
-#~ "в:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Причиною може бути, або його розташування на зовнішньому пристрої, що не "
-#~ "під’єднаний, або це каталог, в який %(shortappname)s немає дозволу на запис, "
-#~ "або за цією адресою розташований не каталог.\n"
-#~ "\n"
-#~ "Якщо ви продовжите, основний відео-каталог буде скинутий на цей пристрій.  "
-#~ "Якщо у вас є завантажені відео, %(shortappname)s втратить інформацію про "
-#~ "них.\n"
-#~ "\n"
-#~ "Якщо ви вийдете, то зможете під’єднати пристрій, або вирішити проблему в "
-#~ "інший спосіб та перезапустити %(shortappname)s."
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Ви впевнені, що хочете вилучити цей веб-сайт?"
-#~ msgstr[1] "Ви впевнені, що хочете вилучити ці %(count)s веб-сайти?"
-#~ msgstr[2] "Ви впевнені, що хочете вилучити ці %(count)s веб-сайтів?"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Зміна мови вимагає перезапуск Miro.)"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Вийти з повноекранного режиму"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "П_ерейменувати стрічку"
-
-#~ msgid "Re_name Website"
-#~ msgstr "П_ерейменувати веб-сайт"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Коефіцієнт роздачі"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Правити пункт"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Очікування)"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Вилучити стрічки"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Вилучити теки"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Вилучити стрічку"
-
-#~ msgid "_Previous Item"
-#~ msgstr "П_опередній пункт"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Наступний пункт"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "С_убтитри"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Вилучити веб-сайти"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Вилучити веб-сайт"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "Вибрано %(count)d веб-сайт"
-#~ msgstr[1] "Вибрано %(count)d веб-сайти"
-#~ msgstr[2] "Вибрано %(count)d веб-сайтів"
-
-#~ msgid "Choose Language"
-#~ msgstr "Виберіть мову"
-
-#~ msgid "Update"
-#~ msgstr "Оновити"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "зв’зок відсутній - повторення через %s"
-
-#~ msgid "Finding Files"
-#~ msgstr "Пошук файлів"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Запуск %(name)s"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Ласкаво просимо до програми встановлення %(name)s!\n"
-#~ "\n"
-#~ "Наступні кілька вікон допоможуть вам встановити %(name)s найкращим чином.\n"
-#~ "\n"
-#~ "Яку мову ви хотіли б використовувати в Miro?"
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "Китайська універсальна"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s надішле звіт про помилку до нашої бази даних\n"
-#~ "\n"
-#~ "Хочете включити у звіт всю базу даних програми разом з метаданими усіх "
-#~ "стрічок та відео? Це дасть нам змогу виправити помилки."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Приносимо вибачення, що не вдалось оновити базу даних %(appname)s через "
-#~ "помилки.\n"
-#~ "\n"
-#~ "Перевірте, може диск вже заповнений.  Якщо так, вийдіть з %(appname)s, "
-#~ "вивільніть місце на диску та запустіть %(appname)s знову.\n"
-#~ "\n"
-#~ "Якщо диск не заповнений, надішліть до нашої бази даних звіт про помилку.\n"
-#~ "\n"
-#~ "Нарешті, можете запустити освіження і пошкоджена база даних буде вилучена, "
-#~ "але вам доведеться заново додавати свої канали та мультимедійні файли."
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Рекомендуємо увімкнути запуск %(name)s під час запуску комп’ютера.  Таким "
-#~ "чином, розпочнеться завантаження у фоні не завершених медіа-файлів і ви "
-#~ "зможете їх переглянути."
-
-#~ msgid "Convert"
-#~ msgstr "Перетворити"
-
-#, python-format
-#~ msgid "Conversion to %s"
-#~ msgstr "Перетворення на %s"
-
-#~ msgid "FAILED!"
-#~ msgstr "ЗБІЙ!"
-
-#~ msgid "Open log"
-#~ msgstr "Відкрити журнал"
-
-#, python-format
-#~ msgid "Pending conversion to %s"
-#~ msgstr "Затримка перетворення на %s"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Щоб розпочати пошук медіа-файлів в Інтернеті, клацніть у пошуковому полі та "
-#~ "введіть критерії пошуку і натисніть клавішу «Enter».  Щоб змінити пошуковий "
-#~ "рушій, клацніть на значку ліворуч пошукового поля та виберіть пошуковий "
-#~ "рушій зі спадного списку."
-
-#~ msgid "Unknow Host"
-#~ msgstr "Невідомий вузол"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "На жаль, %(appname)s не вдалось запустити через проблеми з базою даних:\n"
-#~ "\n"
-#~ "Помилка: %(error)s\n"
-#~ "\n"
-#~ "Можливо, файл бази даних пошкоджений і не може бути використаний.\n"
-#~ "\n"
-#~ "Ви можете запустити освіження бази даних і пошкоджена буде вилучена, але вам "
-#~ "доведеться повторно додати стрічки та медіа файли.  Якщо хочете зробити це, "
-#~ "натисніть кнопку «Запустити освіження» та перезапустіть %(appname)s.\n"
-#~ "\n"
-#~ "Щоб допомогти нам виправити подібні проблеми в майбутньому, надішліть звіт "
-#~ "про помилку за адресою %(url)s."
-
-#~ msgid "Auto-download"
-#~ msgstr "Авто-завантаження"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Збій: %(error)s"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Причина невідома"
-
-#~ msgid "N/A"
-#~ msgstr "не доступно"
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Виникла помилка при завантаженні подкасту"
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Бажаєте залишити подкаст"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro визначив, що у вашій системі не вистачає компонентів  Bonjour, "
-#~ "стандартної частини установки Mac OS X. Будь ласка перегляньте вашу "
-#~ "установку Mac OS X."
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Подяка всім людям, які  посприяли  Miro %(version)s:"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "Download Item"
-#~ msgstr "Скачати елемент"
-
-#~ msgid "Add files or folders..."
-#~ msgstr "Додати файли чи папки..."
-
-#~ msgid "New Watched Folder"
-#~ msgstr "Нова відстежувана папка"
-
-#~ msgid "_View"
-#~ msgstr "_Вигляд"
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you have a large number of items in Miro (it "
-#~ "can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Miro оновлює вашу базу даних подкастів та файлів. Цей одноразовий процес "
-#~ "може зайняти багато часу, якщо у вас велика кількість елементів в Miro (може "
-#~ "зайняти більше ніж 30 хвилин)"
-
-#~ msgid "Save as playlist"
-#~ msgstr "Зберегти як плейліст"
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr "Неможливо завантажити подкаст з %(url)s (%(errordescription)s)."
-
-#, python-format
-#~ msgid ""
-#~ "Directory '%s' could not be created.  Please choose a directory you have "
-#~ "write access to."
-#~ msgstr ""
-#~ "Не можливо створити  папку '%s'. Будь ласка, виберіть папку, до якої маєте "
-#~ "дозвіл запису."

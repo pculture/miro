@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:08+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:48+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 "X-Poedit-Country: GEORGIA\n"
 "X-Poedit-Language: Georgian\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -4528,9 +4528,6 @@ msgstr ""
 #~ msgid "Contents:"
 #~ msgstr "შემადგენლობა:"
 
-#~ msgid "N/A"
-#~ msgstr "ხელმიუწვდომელია"
-
 #~ msgid "File name:"
 #~ msgstr "ფაილის სახელი:"
 
@@ -4539,10 +4536,6 @@ msgstr ""
 
 #~ msgid "From"
 #~ msgstr "საიდან"
-
-#, python-format
-#~ msgid "From %(podcast)s"
-#~ msgstr "%(podcast)s-დან"
 
 #~ msgid "Web Page"
 #~ msgstr "ვებ-გვერდი"
@@ -4556,26 +4549,11 @@ msgstr ""
 #~ msgid "Remove from playlist"
 #~ msgstr "დასაკრავი სიიდან მოცილება"
 
-#~ msgid "Open log"
-#~ msgstr "ჟურნალის გახსნა"
-
-#~ msgid "Update"
-#~ msgstr "განახლება"
-
-#~ msgid "Add _Podcast"
-#~ msgstr "_პოდკასტის დამატება"
-
-#~ msgid "_Preferences"
-#~ msgstr "_პარამეტრები"
-
 #~ msgid "Save Items _As"
 #~ msgstr "ელემენტების შენახვა _როგორც"
 
 #~ msgid "Save Item _As"
 #~ msgstr "ელემენტის შენახვა _როგორც"
-
-#~ msgid "_Remove Podcasts"
-#~ msgstr "პოდ_კასტების მოცილება"
 
 #~ msgid "_Remove"
 #~ msgstr "_მოცილება"
@@ -4583,27 +4561,11 @@ msgstr ""
 #~ msgid "Re_name"
 #~ msgstr "გა_დარქმევა"
 
-#~ msgid "_Update Podcasts"
-#~ msgstr "პოდკასტების _განახლება"
-
-#~ msgid "_Update Podcast"
-#~ msgstr "პოდკასტის _განახლება"
-
-#~ msgid "E_xport Podcasts (OPML)"
-#~ msgstr "პოდკასტ_ების ექსპორტირება (OPML)"
-
 #~ msgid "Show More"
 #~ msgstr "დეტალების გამოჩენა"
 
 #~ msgid "Show Less"
 #~ msgstr "დეტალების დამალვა"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "შეცდომა: %(error)s"
-
-#~ msgid "Choose Language"
-#~ msgstr "ენის შეცვლა"
 
 #~ msgid "_Download Item"
 #~ msgstr "ელემენტის _გადმოწერა"
@@ -4617,32 +4579,11 @@ msgstr ""
 #~ msgid "_Remove Items"
 #~ msgstr "ელემენტების მო_ცილება"
 
-#~ msgid "_Edit Item"
-#~ msgstr "ელემე_ნტის რედაქტირება"
-
-#~ msgid "New Searc_h Podcast"
-#~ msgstr "პოდკასტის ახალი _ძებნა"
-
 #~ msgid "New _Folder"
 #~ msgstr "ახალი _საქაღალდე"
 
-#~ msgid "Re_name Podcast"
-#~ msgstr "პო_დკასტის გადარქმევა"
-
-#~ msgid "_Remove Podcast"
-#~ msgstr "პოდკასტის _მოცილება"
-
 #~ msgid "_Remove Folder"
 #~ msgstr "საქაღალდის მოცი_ლება"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "საქეაღალდეებ_ის მოცილება"
-
-#~ msgid "Update _All Podcasts"
-#~ msgstr "ყველა _პოდკასტის განახლება"
-
-#~ msgid "_Import Podcasts (OPML)"
-#~ msgstr "პოდკასტების _იმპორტირება"
 
 #~ msgid "_Play"
 #~ msgstr "_დაკვრა"
@@ -4653,21 +4594,6 @@ msgstr ""
 #~ msgid "_Stop"
 #~ msgstr "_გაჩერება"
 
-#~ msgid "_Next Item"
-#~ msgstr "შემდეგი ე_ლემენტი"
-
-#~ msgid "_Previous Item"
-#~ msgstr "წინა ე_ლემენტი"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_სუბტიტრები"
-
-#~ msgid "_View"
-#~ msgstr "_ხედი"
-
-#~ msgid "Convert"
-#~ msgstr "კონვერტაცია"
-
 #, python-format
 #~ msgid "_About %(name)s"
 #~ msgstr "%(name)s-ის შესახებ"
@@ -4677,24 +4603,6 @@ msgstr ""
 
 #~ msgid "Save Search"
 #~ msgstr "ძებნის შენახვა"
-
-#~ msgid "Auto-download"
-#~ msgstr "ავტომატური გადმოწერა"
-
-#~ msgid "Share podcast"
-#~ msgstr "პოდკასტის გაზიარება"
-
-#~ msgid "Non Podcast"
-#~ msgstr "ახალი პოდკასტი"
-
-#~ msgid "Title:"
-#~ msgstr "დასახელება:"
-
-#~ msgid "Media type:"
-#~ msgstr "ფაილის სახეობა:"
-
-#~ msgid "Path:"
-#~ msgstr "მისამართი:"
 
 #~ msgid "Length"
 #~ msgstr "ხანგრძლივობა"
@@ -4714,12 +4622,6 @@ msgstr ""
 #~ msgid_plural "%(num).0f mins"
 #~ msgstr[0] "%(num).0f წუთი"
 
-#~ msgid "Error loading podcast"
-#~ msgstr "პოდკასტის ჩატვირთვის შეცდომა"
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "გსურთ, პოდკასტის შენახვა?"
-
 #~ msgid "Upload Rate"
 #~ msgstr "ატვირთვის სიჩქარე"
 
@@ -4732,45 +4634,9 @@ msgstr ""
 #~ msgid "Down Total"
 #~ msgstr "სულ გადმოწერილია"
 
-#~ msgid "Up/Down Ratio"
-#~ msgstr "ადვირთვის/გადმოწერის შეფარდება"
-
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "%(name)s - პირველი ნაბიჯები"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "მოგესალმებით %(name)s-ს პირველად გამართვაში!\n"
-#~ "\n"
-#~ "შემდეგი რამდენიმე ფანჯარა დაგეხმარებათ %(name)s-ს თქვენს გემოვნებაზე "
-#~ "მორგებაში.\n"
-#~ "\n"
-#~ "რომელ ენაზე გსურთ, Miro-ს გამოყენება?"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s-ს ავტოგაშვება"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "რეკომენდებულია %(name)s-ს კომპიუტერის ჩართვისთანავე გაშვება. ამ გზით მოხდება "
-#~ "დაწყებული გადმოწერის გაგრძელება და ახალი მედია ფაილების ფონურ რეჟიმში "
-#~ "გადმოწერა."
-
-#~ msgid "Finding Files"
-#~ msgstr "ფაილების ძებნა"
 
 #, python-format
 #~ msgid ""
@@ -4819,9 +4685,3 @@ msgstr ""
 
 #~ msgid "_Donate"
 #~ msgstr "_შემოწირულობა"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(ენის შეცვლისთვის საჭიროა Miro-ს გადატვირთვა.)"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "მედია ფაილების Miro-ში დაკვრა."

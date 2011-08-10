@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 "Language: sr\n"
 
 #: ../../lib/net.py:93 ../../lib/net.py:99
@@ -4607,19 +4607,6 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Add to Library"
-#~ msgstr "Dodaj u Biblioteku"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Morate da restartujete Miro kako bi promene vizualizacije imale efekta."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Koristi ovo za Video kada puštaš audio:"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Po pravilu, video ne radi posle:"
-
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
 #~ msgstr "Лоша статусна линија: %(msg)s"
@@ -4956,9 +4943,6 @@ msgstr ""
 #~ "Nedovoljno mesta na disku za unapređivanje baze podataka sa prethodne "
 #~ "verzije %(appname)s. Molim vas obrišite nekoliko fajlova i pokušajte ponovo."
 
-#~ msgid "Unknown Language"
-#~ msgstr "Nepoznat jezik"
-
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "Очекиван CRLF има вредност: %(character)r"
@@ -4971,20 +4955,11 @@ msgstr ""
 #~ msgid "Bad Chunk size: %(msg)s"
 #~ msgstr "Неисправна величина дела: %(msg)s"
 
-#~ msgid "Path:"
-#~ msgstr "Путања:"
-
-#~ msgid "Title:"
-#~ msgstr "Наслов:"
-
 #~ msgid "Non Feed"
 #~ msgstr "Без довода"
 
 #~ msgid "PLAYLISTS"
 #~ msgstr "СПИСАК НУМЕРА"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "ВИДЕО ДОВОДИ"
 
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Подразумеване поставке за нове доводе:"
@@ -5010,15 +4985,6 @@ msgstr ""
 #~ msgid "Save Items _As"
 #~ msgstr "Сачувај ставке _као"
 
-#~ msgid "Re_name Feed"
-#~ msgstr "_Преименуј довод"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Уклони доводе"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Уклони довод"
-
 #~ msgid "_Remove Folder"
 #~ msgstr "_Уклони фасциклу"
 
@@ -5027,9 +4993,6 @@ msgstr ""
 
 #~ msgid "Re_name"
 #~ msgstr "_Преименуј"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Уклони фасцикле"
 
 #~ msgid "E_xport Feeds (OPML)"
 #~ msgstr "_Извези доводе (OPML)"
@@ -5143,49 +5106,6 @@ msgstr ""
 #~ msgstr "У реду"
 
 #, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Извињавамо се, %(appname)s није успела да ажурира Вашу базу података.\n"
-#~ "\n"
-#~ "Проверите да ли Вам је тврди диск попуњен. Ако јесте, онда изађите из "
-#~ "%(appname)s, ослободите се мало простора, и покрените %(appname)s поново.\n"
-#~ "\n"
-#~ "Ако Вам диск није попуњен, изађите из програма и пошаљите нам извештај квара "
-#~ "на bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Коначно, можете почети испочетка — оштећена база података ће бити избрисана, "
-#~ "тако да ћете морати да поново додате Ваше доводе и медијуме."
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Напусти цео екран"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Претходна ставка"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Следећа ставка"
-
-#~ msgid "(Pending)"
-#~ msgstr "(У току)"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s покретање"
-
-#~ msgid "Finding Files"
-#~ msgstr "Тражење датотека"
-
-#, python-format
 #~ msgid "Bad Status Code: %(code)s"
 #~ msgstr "Неисправан кôд стања : %(code)s"
 
@@ -5230,49 +5150,6 @@ msgstr ""
 #~ msgstr[1] "Прескочена %(count)d довода су већ присутна."
 #~ msgstr[2] "Прескочених %(count)d довода је већ присутно."
 
-#~ msgid "Auto-download"
-#~ msgstr "Аутоматско преузимање"
-
-#~ msgid "Open log"
-#~ msgstr "Отвори извештај"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Неуспело: %(error)s"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Непознат домаћин"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Жао нам је, %(appname)s није покренут због проблема с базом података:\n"
-#~ "\n"
-#~ "Грешка: %(error)s\n"
-#~ "\n"
-#~ "Могуће да је датотека базе података оштећена и више није за употребу.\n"
-#~ "\n"
-#~ "Можете почети из почетка. Оштећена база података ће бити уклоњена, стога "
-#~ "ћете морати да поново додате доводе и медија датотеке.  Ако сте се "
-#~ "определили на ово, кликните на дугме „Почни из почетка“ и поново покрените "
-#~ "%(appname)s.\n"
-#~ "\n"
-#~ "Да бисте нам помогли да исправимо овакве грешке у будућности, попуните "
-#~ "извештај о грешци на %(url)s."
-
 #~ msgid ""
 #~ "The address you entered is not a valid url.\n"
 #~ "Please check the URL and try again.\n"
@@ -5283,17 +5160,6 @@ msgstr ""
 #~ "Проверите је и покушајте поново.\n"
 #~ "\n"
 #~ "Унесите адресу довода који желите да додате."
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Адреса коју сте унели није исправна.\n"
-#~ "Проверите је и покушајте поново.\n"
-#~ "\n"
-#~ "Унесите адресу интернет странице коју желите да додате."
 
 #~ msgid "Check _Version"
 #~ msgstr "Провери _издање"
@@ -5309,9 +5175,6 @@ msgstr ""
 
 #~ msgid "Volume _Up"
 #~ msgstr "По_јачај"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Титлови"
 
 #, python-format
 #~ msgid "Enter a new name for the feed folder %(name)s"
@@ -5329,39 +5192,6 @@ msgstr ""
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "_Нова претрага довода"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s не може да користи примарну фасциклу за видео запис који се "
-#~ "налази у:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Узрок томе може бити то што се видео датотека налази на спољашњем уређају "
-#~ "који није прикључен, налази се у фасцикли која %(shortappname)s нема дозволу "
-#~ "за писање, или на тој путањи се уопште и не налази фасцикла.\n"
-#~ "\n"
-#~ "Уколико наставите, примарна фасцикла видео записа биће измењена с локацијом "
-#~ "на овом уређају. Уколико сте имали преузете видео снимке, то ће довести "
-#~ "%(shortappname)s до губитка података о тим снимцима.\n"
-#~ "\n"
-#~ "Ако изађете, можете поново повезати уређај. У супротном, решите се овог "
-#~ "проблема и поново покрените %(shortappname)s."
 
 #~ msgid ""
 #~ "One of these items is a folder.  Delete/Removeing a folder will "
@@ -5429,12 +5259,6 @@ msgstr ""
 #~ msgid "Could not download the %(appname)s feed file: %(url)s"
 #~ msgstr "Преузимање %(appname)s датотеке довода није успело: %(url)s"
 
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Додавање интернет странице — неисправна адреса"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Унесите адресу интернет странице"
-
 #, python-format
 #~ msgid ""
 #~ "This link appears to be a feed.  Do you want to add it to your "
@@ -5463,65 +5287,14 @@ msgstr ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr "Настави видео или аудио запис на положају на коме је заустављено"
 
-#~ msgid "WEBSITES"
-#~ msgstr "ИНТЕРНЕТ СТРАНИЦЕ"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Унесите нови назив %(name)s интернет странице"
-
 #~ msgid "Enter the URL of the feed to add"
 #~ msgstr "Унесите адресу довода који желите да додате"
-
-#~ msgid "Add Website"
-#~ msgstr "Додај интернет страницу"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Уклони интернет странице"
-
-#~ msgid "Re_name Website"
-#~ msgstr "_Преименуј интернет страницу"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Уклони интернет страницу"
-
-#~ msgid "Remove Website"
-#~ msgstr "Уклони интернет страницу"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Уклони интернет странице"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Уклони интернет страницу"
-#~ msgstr[1] "Уклони интернет странице"
-#~ msgstr[2] "Уклони интернет странице"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Желите ли да уклоните ову интернет страницу?"
-#~ msgstr[1] "Желите ли да уклоните ове интернет странице?"
-#~ msgstr[2] "Желите ли да уклоните ове интернет странице?"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "Изабрана је %(count)d интернет страница"
-#~ msgstr[1] "Изабране су %(count)d интернет странице"
-#~ msgstr[2] "Изабрано је %(count)d интернет страница"
 
 #~ msgid "Folder should go in this section:"
 #~ msgstr "Смести фасциклу у следећи одељак:"
 
-#~ msgid "_Edit Item"
-#~ msgstr "У_реди ставку"
-
 #~ msgid "Save Item _As"
 #~ msgstr "_Сачувај ставку као"
-
-#~ msgid "_Preferences"
-#~ msgstr "П_оставке"
 
 #~ msgid ""
 #~ "Are you sure you want to remove this feed?  The downloads currently in "
@@ -5535,9 +5308,6 @@ msgstr ""
 #~ "Желите ли да уклоните ове доводе? Преузимања која су у току биће обустављена."
 #~ msgstr[2] ""
 #~ "Желите ли да уклоните ове доводе? Преузимања која су у току биће обустављена."
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(промена језика захтева поновно покретање програма.)"
 
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "База података је направљена новијим издањем програма. "
@@ -5559,18 +5329,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Обухвати целу базу података, укључујући и све видео снимке и доводе уз "
 #~ "извештај о грешци."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s ће сада послати грешку у нашу базу података.\n"
-#~ "\n"
-#~ "Желите ли да укључите целу базу података програма са свим снимцима и "
-#~ "доводима? Ово ће нам помоћи да пронађемо проблем."
 
 #, python-format
 #~ msgid ""
@@ -5637,10 +5395,6 @@ msgstr ""
 #~ msgid "Channel is not compatible with %(appname)s"
 #~ msgstr "Канал није сагласан са %(appname)s."
 
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Веза не постоји — поновни покушај за %s"
-
 #~ msgid "Subscribed to new feed:"
 #~ msgstr "Пријављен на нови довод:"
 
@@ -5652,9 +5406,6 @@ msgstr ""
 
 #~ msgid "Upload Rate"
 #~ msgstr "Брзина слања"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Однос преузимања и слања"
 
 #~ msgid "_Remove Playlist Folders"
 #~ msgstr "_Уклони фасцикле за спискове нумера"
@@ -5671,26 +5422,12 @@ msgstr ""
 #~ msgid "Rename Feed"
 #~ msgstr "Преименовање довода"
 
-#~ msgid "Rename Website"
-#~ msgstr "Преименовање интернет странице"
-
 #, python-format
 #~ msgid "%(name)s First Time Setup"
 #~ msgstr "%(name)s прво подешавање"
 
 #~ msgid "Search custom folders:"
 #~ msgstr "Претражи прилагођене фасцикле:"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Да бисте пронашли одређене медијске датотеке, кликните на поље за претрагу "
-#~ "изнад, унесите кључне речи и притисните тастер Enter. Ако желите да "
-#~ "промените претраживач, кликните на иконицу с леве стране поља за претрагу и "
-#~ "изаберите претраживач који желите из падајућег менија."
 
 #~ msgid "Add Feed"
 #~ msgstr "Додавање довода"
@@ -5701,9 +5438,6 @@ msgstr ""
 #~ msgstr[0] "Изабран је %(count)d довод"
 #~ msgstr[1] "Изабрана су %(count)d довода"
 #~ msgstr[2] "Изабрано је %(count)d довода"
-
-#~ msgid "Media type:"
-#~ msgstr "Врста медијске датотеке:"
 
 #~ msgid "Revert Feed Name"
 #~ msgstr "Поврати назив довода"
@@ -5728,24 +5462,14 @@ msgstr ""
 #~ msgid "All Items Match Search"
 #~ msgstr "Све ставке се подударају с претрагом."
 
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Фасцикла „%s“ се не може направити.  "
-
 #~ msgid "Permalink"
 #~ msgstr "Стална веза"
-
-#~ msgid "Convert"
-#~ msgstr "_Претварање"
 
 #~ msgid "Add new feed to this section:"
 #~ msgstr "Смести довод у следећи одељак:"
 
 #~ msgid "Remove feed"
 #~ msgstr "Уклањање довода"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Репродукуј медијске датотеке у Миру"
 
 #, python-format
 #~ msgid "%(rate)s downloading"
@@ -5754,59 +5478,6 @@ msgstr ""
 #, python-format
 #~ msgid "%(rate)s uploading"
 #~ msgstr "%(rate)s брзина отпремања"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Непознат разлог"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Добро дошли у %(name)s водич за подешавање!\n"
-#~ "\n"
-#~ "У следећих неколико корака помоћи ћемо вам да подесите %(name)s за најбољи "
-#~ "могући рад.\n"
-#~ "\n"
-#~ "На ком језику желите да користите програм?"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Жао нам је, али %(appname)s није могао да ажурира базу података због "
-#~ "грешака.\n"
-#~ "\n"
-#~ "Проверите да ли имате довољно простора на диску. Ако немате, онда затворите "
-#~ "%(appname)s, ослободите мало простора и поново покрените %(appname)s.\n"
-#~ "\n"
-#~ "Ако диск није пун, помозите нам да пронађемо проблем тако што ћете нам "
-#~ "послати извештај о грешци.\n"
-#~ "\n"
-#~ "Можете почети и из почетка. Оштећена база података ће бити уклоњена, стога "
-#~ "ћете морати да поново додате доводе и медија датотеке."
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Препоручујемо вам да се %(name)s покреће са системом. На тај начин ће сва "
-#~ "преузимања моћи да се наставе и нови медијуми се могу преузимати у позадини."
 
 #, python-format
 #~ msgid ""
@@ -5819,130 +5490,3 @@ msgstr ""
 #~ "помогао у организацији колекције.\n"
 #~ "\n"
 #~ "Желите ли да %(name)s пронађе датотеке на рачунару?"
-
-#~ msgid "Choose Language"
-#~ msgstr "Избор језика"
-
-#~ msgid "Update"
-#~ msgstr "Ажурирај"
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "After installing Print Services, you will have to restart Miro.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Ради што бољег коришћења програма %(appname)s, предлажемо вам да инсталирате "
-#~ "Бонжур који се расподељује као део услуга штампања.\n"
-#~ "\n"
-#~ "Инсталирањем Бонжура ће вам дозволити да поделите своју мултимедијалну "
-#~ "библиотеку с другим корисницима програма %(appname)s.\n"
-#~ "\n"
-#~ "Након инсталирања услуга штампања, мораћете да поново покренете Миро.\n"
-#~ "\n"
-#~ "Желите ли да ово урадите сада?"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Миро је приметио да на вашем систему недостају компоненте Бонжура, "
-#~ "стандардан део Мек ОС Икс инсталације.  Проверите инсталацију."
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Ваш прегледач ће учитати веб сајт где можете преузети и инсталирати Бонжур.\n"
-#~ "\n"
-#~ "Када се инсталација заврши, поново покрените Миро да би измене ступиле на "
-#~ "снагу."
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Грешка при учитавању подемисије"
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr "Подемисија се не може учитати на %(url)s (%(errordescription)s)."
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Желите ли да задржите подемисију?"
-
-#~ msgid "Download to My Miro"
-#~ msgstr "Преузми у Мој Миро"
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr "Да бисте подржали развијање Мира, посетите страницу за донацију:"
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Хвала свима који су допринели Миру %(version)s:"
-
-#~ msgid "Artists"
-#~ msgstr "Извођачи"
-
-#~ msgid "Genres"
-#~ msgstr "Жанрови"
-
-#~ msgid "Albums"
-#~ msgstr "Албуми"
-
-#~ msgid "Miro"
-#~ msgstr "Миро"
-
-#~ msgid "Songs"
-#~ msgstr "Песме"
-
-#~ msgid "Download Item"
-#~ msgstr "Преузми ставку"
-
-#~ msgid "Import Media"
-#~ msgstr "Увези датотеку"
-
-#, python-format
-#~ msgid "%(appname)s First Time Setup"
-#~ msgstr "%(appname)s уводно подешавање"
-
-#~ msgid "New Watched Folder"
-#~ msgstr "Нова надгледана фасцикла"
-
-#~ msgid "_View"
-#~ msgstr "_Приказ"
-
-#~ msgid ""
-#~ "Include entire program database including all video and podcast metadata "
-#~ "with error report"
-#~ msgstr ""
-#~ "Укључи целу базу података заједно с метаподацима видео снимака и подемисија, "
-#~ "са извештајима грешака."
-
-#, python-format
-#~ msgid "Resume %(item)s at %(resumetime)s"
-#~ msgstr "Настави %(item)s у %(resumetime)s"
-
-#, python-format
-#~ msgid "Resume %(item)s"
-#~ msgstr "Настави %(item)s"
-
-#~ msgid "Importing file details: {0} of {1}"
-#~ msgstr "Увожење података датотека: {0} од {1}"
-
-#~ msgid "Importing audio details and artwork: {0} of {1}"
-#~ msgstr "Увожење аудио података и омота: {0} од {1}"
-
-#~ msgid "Non Podcast"
-#~ msgstr "Без подемисија"
-
-#~ msgid "Importing video details and creating thumbnails: {0} of {1}"
-#~ msgstr "Увожење видео података и стварање умањених приказа: {0} од {1}"

@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4541,9 +4541,6 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "U redu"
 
-#~ msgid "Custom Channels"
-#~ msgstr "Osobni kanali"
-
 #~ msgid "Internal Error"
 #~ msgstr "Interna greška"
 
@@ -4603,11 +4600,6 @@ msgstr ""
 
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Ograničiti povjerljive osobne datoteke"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Trebali biste ponovno pokrenuti playback da bi promjene u vizualizaciji "
-#~ "postale aktivne."
 
 #, python-format
 #~ msgid "%(size)s gb/s"
@@ -4672,12 +4664,6 @@ msgstr ""
 #~ msgid "Down Rate"
 #~ msgstr "Omjer Skidanja"
 
-#~ msgid "Stop after each video"
-#~ msgstr "Zaustaviti nakon svakog videa"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Prikazati videa jedan za drugim"
-
 #~ msgid "Describe what you were doing when you got this error:"
 #~ msgstr "Opišite što ste radili kad se dogodio ovaj kvar:"
 
@@ -4711,12 +4697,6 @@ msgstr ""
 #~ msgid "No Results Found"
 #~ msgstr "Ništa nije pronađeno"
 
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Nastavi učitavanje videa od mjesta zadnje stanke."
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Po standardnoj postavci, video istječe nakon:"
-
 #~ msgid "Feeds"
 #~ msgstr "Veze"
 
@@ -4739,17 +4719,6 @@ msgstr ""
 #~ "Molimo kontaktirajte osobe koje su postavile %(url)s i pitajte ih mogu li "
 #~ "postaviti vezu u formatu koji će raditi sa %(appname)s.\n"
 #~ "Želite li i dalje učitati ovaj kanal?"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Koristi ovo kao filmsku pozadinu prilikom slušanja zvučnog zapisa"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Vi koristite verziju %(appname)s s osobnom zbirkom kanala."
-
-#~ msgid "Add to Library"
-#~ msgstr "Dodati u knjižnicu"
 
 #~ msgid "Subscribed to new feed:"
 #~ msgstr "Pretplati se na novu vezu:"
@@ -4872,9 +4841,6 @@ msgstr ""
 
 #~ msgid "Show Less"
 #~ msgstr "Prikazati manje"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Pripazi na nova videa u ovim mapama i uključi ih u knjižnicu:"
 
 #, python-format
 #~ msgid "Skipped %(count)d feed already present."
@@ -5140,22 +5106,6 @@ msgstr ""
 #~ msgstr "Greška statusne linije: %(msg)s"
 
 #, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Nije uspostavljena veza - pokušavam za %s"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s će sada podnijeti izvještaj o grešci našoj bazi grešaka.\n"
-#~ "Želite li obuhvatiti cijelu programsku bazu uključujući sve podatke o "
-#~ "videima i novostima u izvještaju o grešci? To bi nam pomoglo kod "
-#~ "pronalaženja izvora greške."
-
-#, python-format
 #~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 #~ msgstr "Datoteka s %(url)s ne izgleda kao zvučna, video ili RSS novost."
@@ -5163,35 +5113,6 @@ msgstr ""
 #, python-format
 #~ msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 #~ msgstr "Ne mogu učitati novost sa %(url)s (%(errordescription)s)."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Žao nam je, %(appname)s se nije mogla pokrenuti zbog poteškoća s bazom "
-#~ "podataka\n"
-#~ "Greška: %(error)s\n"
-#~ "Moguće je da je vaša baza podataka oštećena i ne može se koristiti.\n"
-#~ "Možete krenuti ponovno i vaša oštećena baza podataka će biti uklonjena, ali "
-#~ "ćete morati ponovno dodati vaše novosti i medijske datoteke. Ako to želite "
-#~ "učiniti, pritisnite Kreni Nanovo dugme i ponovno pokrenite %(appname)s.\n"
-#~ "Da biste nam pomogli u uklanjanju ovakvih poteškoća za ubuduće, molimo "
-#~ "podnesite izvještaj o grešci na %(url)s."
-
-#~ msgid "Reason unknown"
-#~ msgstr "-nepoznat razlog"
 
 #~ msgid "Create Feed"
 #~ msgstr "Napravi vijest"

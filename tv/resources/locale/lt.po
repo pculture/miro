@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4626,12 +4626,6 @@ msgstr ""
 #~ msgid "_Pause"
 #~ msgstr "_Pauzė"
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Rodyti šį filmuką grojant muziką:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Pasirinkti kanalai"
-
 #, python-format
 #~ msgid "Couldn't open %(filename)s for writing"
 #~ msgstr "Nepavyko atverti %(filename)s rašymui"
@@ -4659,9 +4653,6 @@ msgstr ""
 
 #~ msgid "New _Folder"
 #~ msgstr "Naujas _aplankas"
-
-#~ msgid "Add to Library"
-#~ msgstr "Įtraukti į archyvą"
 
 #, python-format
 #~ msgid "%(size)s gb/s"
@@ -4768,12 +4759,6 @@ msgstr ""
 #~ "Įtraukite visą programos duomenų bazę su visais video failų ir kanalų "
 #~ "duomenimis kartu su klaidos suvestine."
 
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "Jūs esate paleidę %(appname)s modifikuotą versiją su savitais kanalais."
-
 #~ msgid "Feed Settings"
 #~ msgstr "Kanalo nuostatos"
 
@@ -4813,20 +4798,8 @@ msgstr ""
 #~ msgid "(These can be changed using the feed's settings button)"
 #~ msgstr "(Tai gali būti pakeista naudojany kanalų nuostatų mygtuką)"
 
-#~ msgid "Play videos one after another"
-#~ msgstr "Leisti video įrašus vieną po kito"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Groti video įrašus nuo ten kur buvo paskutinį sykį sustabdyti."
-
-#~ msgid "Stop after each video"
-#~ msgstr "Sustabdyti pasibaigus kiekvienam įrašui"
-
 #~ msgid "Feeds"
 #~ msgstr "Kanalai"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Ieškoti naujų video failų šiame kataloge ir įtraukti juos į archyvą:"
 
 #~ msgid "No Results Found"
 #~ msgstr "Nerasta jokių rezultatų"
@@ -4925,12 +4898,6 @@ msgstr ""
 #~ msgid ""
 #~ "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 #~ msgstr "Šis failas %(url)s nėra video ar audio failas, ar RSS kanalas."
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Daugelio kanalų užsisakymas"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Įveskite naujo kanalų katalogo pavadinimą"
 
 #~ msgid "Create Feed"
 #~ msgstr "Sukurti kanalą"
@@ -5109,14 +5076,6 @@ msgstr ""
 #~ msgid "Save Search"
 #~ msgstr "Išsaugoti paiešką"
 
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Pašalinti %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Ar jūs tikrai norite pašalinti %(name)s?"
-
 #~ msgid "Migrating files"
 #~ msgstr "Perkeliami failai"
 
@@ -5170,9 +5129,6 @@ msgstr ""
 #~ msgstr[1] "%(count)d pažymėta kanalų katalogų"
 #~ msgstr[2] "%(count)d pažymėta kanalų katalogų"
 
-#~ msgid "Add to library"
-#~ msgstr "Įtraukti į archyvą"
-
 #~ msgid "Remove Feed"
 #~ msgid_plural "Remove Feeds"
 #~ msgstr[0] "Pašalinti kanalą"
@@ -5217,13 +5173,6 @@ msgstr ""
 #~ msgstr[2] "%(count)d dienos"
 
 #, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Sukurti kanalą?"
-#~ msgstr[1] "Sukurti %(count)d kanalų?"
-#~ msgstr[2] "Sukurti %(count)d kanalų?"
-
-#, python-format
 #~ msgid ""
 #~ "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 #~ "notify the publisher of this file."
@@ -5238,23 +5187,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Šis %(appname)s kanalas yra neteisingo formato: %(url)s. Prašome pranešti "
 #~ "šio kanalo savininkui."
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "PASTABA: Jūs jau prenumeruojate vieną iš šių kanalų. Šitie kanalai bus ten "
-#~ "pat kur jie ir dabar yra."
-#~ msgstr[1] ""
-#~ "PASTABA: Jūs jau esate užsiprenumeravę %(count)d iš šių kanalų. Šitie "
-#~ "kanalai bus ten pat kur jie ir dabar yra."
-#~ msgstr[2] ""
-#~ "PASTABA: Jūs jau esate užsiprenumeravę %(count)d iš šių kanalų. Šitie "
-#~ "kanalai bus ten pat kur jie ir dabar yra."
 
 #, python-format
 #~ msgid "Show %(count)d More Item"
@@ -5291,13 +5223,6 @@ msgstr ""
 
 #~ msgid "Folder should go in this section:"
 #~ msgstr "Kataloge bus laikoma:"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Pagal nutylėjimą, vaizdo įrašas nustoja galioti po:"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Jūs turėsite iš naujo paleisti failą, kad garso vizualizacija pasikeistų."
 
 #~ msgid "File in Browser"
 #~ msgstr "Išoriniame grotuve"
@@ -5509,90 +5434,11 @@ msgstr ""
 #~ "%(appname)s susidūrė su vidine problema. Jūs galite padėti mums surasti šią "
 #~ "problemą ir ją ištaisyti išsiųsdami klaidos ataskaitą."
 
-#~ msgid "Rename Website"
-#~ msgstr "Pervadinti puslapį"
-
-#~ msgid "Remove Website"
-#~ msgstr "Pašalinti puslapį"
-
-#~ msgid "Title:"
-#~ msgstr "Pavadinimas:"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Pakeitus kalbą, reikia iš naujo paleisti Miro.)"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "nėra tinklo susijungimo - bus bandoma po %s"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Pervadi_nti srautą"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Pervadi_nti tinklapį"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Nustatymai"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Pašalinti srautus"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Pašalinti katalogus"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Pašalinti srautą"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "S_ubtitrai"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Pašalinti tinklapius"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Pašalinti tinklapį"
-
-#~ msgid "Choose Language"
-#~ msgstr "Pasirinkite kalbą"
-
-#~ msgid "Update"
-#~ msgstr "Atnaujinti"
-
-#~ msgid "WEBSITES"
-#~ msgstr "TINKLAPIAI"
-
-#~ msgid "Open log"
-#~ msgstr "Atidaryti žurnalą"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO SRAUTAI"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Palikti viso ekrano režimą"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Išs./Ats. santykis"
-
 #~ msgid "Upload Total"
 #~ msgstr "Iš viso išsiųsta"
-
-#~ msgid "Convert"
-#~ msgstr "Konvertuoti"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Kitas įrašas"
-
-#~ msgid "_Previous Item"
-#~ msgstr "An_kstesnis įrašas"
 
 #~ msgid "Skip _Back"
 #~ msgstr "Grįžti _atgal"
 
 #~ msgid "_Translate"
 #~ msgstr "_Vertimai"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Keisti įrašą"
-
-#~ msgid "Path:"
-#~ msgstr "Kelias:"

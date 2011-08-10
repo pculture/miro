@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4547,9 +4547,6 @@ msgstr ""
 #~ msgid "_Video"
 #~ msgstr "_Videó"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "A videó ennyi idő után avul el:"
-
 #~ msgid "_Next Video"
 #~ msgstr "_Következő videó"
 
@@ -4567,9 +4564,6 @@ msgstr ""
 
 #~ msgid "Ok"
 #~ msgstr "Ok"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Egyedi Csatornák"
 
 #~ msgid "Error loading feed"
 #~ msgstr "Hiba a műsor betöltése közben"
@@ -4639,17 +4633,6 @@ msgstr ""
 
 #~ msgid "_Translate"
 #~ msgstr "_Fordít"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Használdd ezt a videót, ha játssza a hangot:"
-
-#~ msgid "Add to Library"
-#~ msgstr "Add hozzá a gyüjteményhez"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Saját csatornád verziót futtatsz a %(appname)s-al."
 
 #, python-format
 #~ msgid "Successfully imported %(count)d feed."
@@ -5437,163 +5420,3 @@ msgstr ""
 
 #~ msgid "Save as a Feed"
 #~ msgstr "Mentés mint Feed"
-
-#~ msgid "Title:"
-#~ msgstr "Cím:"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Ismeretlen Nyelv"
-
-#~ msgid "other"
-#~ msgstr "egyéb"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Média lejátszása a Miro-ban"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "'%s' könyvtárat nem lehet létrehozni  "
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Metaadat szerkesztése"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "Video hírforrások"
-
-#~ msgid "Media type:"
-#~ msgstr "Média típusa"
-
-#~ msgid "WEBSITES"
-#~ msgstr "Webhely"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Nincs kapcsolat - %s múlva újrapróbálom"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "A %(shortappname)s nem tudja használni ezt az elsődleges video könyvtárat:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Ennek oka lehet, hogy külső meghajtón található, ami nincs csatlakoztatva "
-#~ "vagy olyan könyvtár ahol a %(shortappname)s -nak nincs írási jogosultsága "
-#~ "vagy valami nem könyvár az útvonalban.\n"
-#~ "\n"
-#~ "Folytatás esetén az elsődleges video könyvtár visszaállításra kerül a "
-#~ "meghajtón. Ha már vannak letöltött videók, akkor elveszhetnek információk "
-#~ "róluk.\n"
-#~ "\n"
-#~ "Kilépés esetén a meghajtó csatlakoztatható vagy a probléma kijavítható "
-#~ "ezután újra lehet indítani a %(shortappname)s-t."
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Fel/Le arány"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Feliratok"
-
-#~ msgid "_Remove Site"
-#~ msgstr "Webhely el_távolítása"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Hírforrás át_nevezése"
-
-#~ msgid "Path:"
-#~ msgstr "Útvonal:"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "Hírforrások el_távolítása"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "Mappák el_távolítása"
-
-#~ msgid "Re_name Site"
-#~ msgstr "Webhely át_nevezése"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "Hírforrás el_távolítása"
-
-#~ msgid "_Remove Sites"
-#~ msgstr "Webhelyek el_távolítása"
-
-#~ msgid "Rename Website"
-#~ msgstr "Nevezd át a weboldalt"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Ismeretlen ok"
-
-#~ msgid "Add Website"
-#~ msgstr "Weboldal hozzáadása"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Weboldal hozzáadása - Érvénytelen URL"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Előző elem"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Írd be a weboldal URL-jét a hozzáadáshoz"
-
-#~ msgid "Convert"
-#~ msgstr "Konvertálás"
-
-#~ msgid "Auto-download"
-#~ msgstr "Automatikus letöltés"
-
-#~ msgid "Choose Language"
-#~ msgstr "Nyelv kiválasztása"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Írd be a(z) %(name)s weboldal új nevét"
-
-#~ msgid "Update"
-#~ msgstr "Frissítés"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Weboldal eltávolítása"
-#~ msgstr[1] "Weboldalak eltávolítása"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Biztosan eltávolítod ezt a weboldalt?"
-#~ msgstr[1] "Biztosan eltávolítod ezt a %(count)s weboldalt?"
-
-#~ msgid "Finding Files"
-#~ msgstr "Fájlok keresése"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Weboldal kijelölve"
-#~ msgstr[1] "%(count)d Website Selected"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Weboldalak eltávolítása"
-
-#~ msgid "Remove Website"
-#~ msgstr "Weboldal eltávolítása"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Nyelvváltáshoz újra kell indítanod a Miro-t"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Teljes képernyő elhagyása"

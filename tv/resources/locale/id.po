@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4534,9 +4534,6 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "Ok"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Standar, Video akan kedaluarsa setelah :"
-
 #~ msgid "Save Search"
 #~ msgstr "Simpan Pencarian"
 
@@ -4636,20 +4633,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Berkas pada %(url)s tersebut tidak berupa suara, video, atau sebuah umpan "
 #~ "RSS."
-
-#~ msgid "Add to Library"
-#~ msgstr "Tambahkan ke Perpustakaan"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Gunakan video ini saat memainkan audio:"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Anda sedang menggunakan versi %(appname)s dengan set saluran kustom."
-
-#~ msgid "Custom Channels"
-#~ msgstr "Saluran kustom"
 
 #, python-format
 #~ msgid "Skipped %(count)d feed already present."
@@ -4786,15 +4769,6 @@ msgstr ""
 #~ msgid "video"
 #~ msgstr "video"
 
-#~ msgid "Path:"
-#~ msgstr "Lokasi:"
-
-#~ msgid "Media type:"
-#~ msgstr "Jenis Media:"
-
-#~ msgid "Title:"
-#~ msgstr "Judul:"
-
 #~ msgid "Length"
 #~ msgstr "Durasi"
 
@@ -4814,9 +4788,6 @@ msgstr ""
 #~ msgid "Non Feed"
 #~ msgstr "Bukan Feed"
 
-#~ msgid "Rename Website"
-#~ msgstr "Mengganti nama situs"
-
 #~ msgid "Share feed"
 #~ msgstr "Berbagi feed"
 
@@ -4830,17 +4801,8 @@ msgstr ""
 #~ msgid "Update Feeds Now"
 #~ msgstr "Perbaharui feed sekarang"
 
-#~ msgid "WEBSITES"
-#~ msgstr "SITUS"
-
 #~ msgid "LIBRARY"
 #~ msgstr "PUSTAKA"
-
-#~ msgid "Remove Website"
-#~ msgstr "Hapus situs"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Hapus situs"
 
 #~ msgid "Revert Feed Name"
 #~ msgstr "Kembalikan nama feed"
@@ -4853,9 +4815,6 @@ msgstr ""
 
 #~ msgid "Rename Feed Folder"
 #~ msgstr "Ubah nama Folder feed"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "FEED VIDEO"
 
 #~ msgid "AUDIO FEEDS"
 #~ msgstr "FEED SUARA"
@@ -4882,16 +4841,9 @@ msgstr ""
 #~ "Apakah anda ingin %(appname)s memindahkan unduhan Anda saat ini kesana? "
 #~ "(Film yang sedang diunduh tidak akan dipindahkan sampai selesai diunduh.)"
 
-#~ msgid "Play media in Miro."
-#~ msgstr "Mainkan media pada Miro"
-
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr "Jalankan kembali berkas video atau suara dari saat ia dihentikan"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Folder '%s' tidak dapat dibuat  "
 
 #~ msgid "Permalink"
 #~ msgstr "Tautan Permanen"
@@ -4901,41 +4853,6 @@ msgstr ""
 
 #~ msgid "No Results Found"
 #~ msgstr "Tidak ada hasil yang ditemukan"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s Tidak bisa menggunakan folder utama video yang berlokasi "
-#~ "di:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Mungkin disebabkan berada pada tempat penyimpanan luar yang tidak "
-#~ "tersambung, atau berada pada lokasi dimana %(shortappname)s tidak memiliki "
-#~ "izin untuk menulis data disitu, atau terdapat sesuatu yang bukan merupakan "
-#~ "folder pada lokasi tersebut.\n"
-#~ "\n"
-#~ "Jika Anda melanjutkan, folder utama video akan dikembalikan pada lokasi yang "
-#~ "berada di tempat penyimpanan sistem.  Jika Anda memiliki video yang diunduh, "
-#~ "hal ini akan menyebabkan %(shortappname)s kehilangan rincian mengenai video "
-#~ "tersebut.\n"
-#~ "\n"
-#~ "Jika Anda keluar, Anda dapat menyambungkan perangkat atau memperbaiki "
-#~ "masalahnya kemudian menjalankan ulang %(shortappname)s."
 
 #~ msgid "Back to feed"
 #~ msgstr "Kembali ke Feed"
@@ -4960,19 +4877,6 @@ msgstr ""
 #~ "Beberapa berkas tidak dapat diunduh dari feed. Apakah Anda ingin "
 #~ "menghapusnya secara permanen atau hanya mengeluarkannya dari pustaka?"
 
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Masukkan nama baru untuk situs %(name)s"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Hapus situs"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Apa Anda yakin ingin menghapus %(count)s situs?"
-
 #~ msgid "Down Total"
 #~ msgstr "Total Unduh"
 
@@ -4984,9 +4888,6 @@ msgstr ""
 
 #~ msgid "Upload Total"
 #~ msgstr "Jumlah Unggah"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Rasio Unduh/Unggah"
 
 #~ msgid "Down Rate"
 #~ msgstr "Kecepatan Unduh"
@@ -5041,26 +4942,8 @@ msgstr ""
 #~ msgid "Add Feed - Invalid URL"
 #~ msgstr "Tambahkan Feed - URL Salah"
 
-#~ msgid "_Preferences"
-#~ msgstr "_Pengaturan"
-
 #~ msgid "Save Items _As"
 #~ msgstr "Simpan Berkas _Sebagai"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Sunting Berkas"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Ubah_nama Situs"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Ubah_nama Feed"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Hapus Feed"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Hapus Feed"
 
 #~ msgid "Add _Feed"
 #~ msgstr "Tambahkan _Feed"
@@ -5076,9 +4959,6 @@ msgstr ""
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Pencarian Feed Baru"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Hapus Folder"
 
 #~ msgid "_Share with a Friend"
 #~ msgstr "_Bagikan pada Teman"
@@ -5101,20 +4981,11 @@ msgstr ""
 #~ msgid "_Remove Folder"
 #~ msgstr "_Hapus Folder"
 
-#~ msgid "_Remove Websites"
-#~ msgstr "_Hapus Situs"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Hapus Situs"
-
 #~ msgid "Volume _Down"
 #~ msgstr "_Pelankan Suara"
 
 #~ msgid "Volume _Up"
 #~ msgstr "_Perbesar Suara"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Terjemahan"
 
 #~ msgid "_Planet Miro"
 #~ msgstr "_Planet Miro"
@@ -5151,11 +5022,6 @@ msgstr ""
 
 #~ msgid "Subscribe to Feed"
 #~ msgstr "Berlangganan Feed"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Situs Dipilih"
 
 #, python-format
 #~ msgid ""
@@ -5264,10 +5130,6 @@ msgstr ""
 #~ msgstr "%(size)s kb/s"
 
 #, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "tidak ada sambungan - mencoba dalam %s"
-
-#, python-format
 #~ msgid "%(num).0f hr"
 #~ msgid_plural "%(num).0f hrs"
 #~ msgstr[0] "%(num).0f jam"
@@ -5374,32 +5236,6 @@ msgstr ""
 #~ msgid_plural "%(count)d days"
 #~ msgstr[0] "%(count)d hari"
 
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Kami mohon maaf, %(appname)s tidak dapat memperbaharui database karena "
-#~ "terjadi eror.\n"
-#~ "\n"
-#~ "Periksa apakah tempat penyimpanan Anda penuh.  Jika penuh, keluar dari "
-#~ "%(appname)s, bebaskan sejumlah ruang kosong, dan mulai %(appname)s kembali.\n"
-#~ "\n"
-#~ "Jika tempat penyimpanan Anda tidak penuh, bantu kami memahami "
-#~ "permasalahannya dengan keluar, kemudian melaporkan masalahnya ke "
-#~ "bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Terakhir, Anda dapat memulai dari awal dan database yang rusak akan dihapus, "
-#~ "tetapi Anda harus menambahkan kembali feed dan berkas media Anda."
-
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "Database dibuat dengan menggunakan versi terbaru dari Miro "
 
@@ -5428,209 +5264,9 @@ msgstr ""
 #~ msgid "Enter a new name for the feed folder %(name)s"
 #~ msgstr "Masukkan nama baru untuk folder feed %(name)s"
 
-#~ msgid "Add Website"
-#~ msgstr "Tambahkan Situs"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Menambahkan Situs - URL tidak benar"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Masukkan URL situs untuk menambahkan"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Alamat yang Anda masukkan bukan url yang benar.\n"
-#~ "Harap periksa kembali dan coba lagi.\n"
-#~ "\n"
-#~ "Masukkan URL situs untuk menambahkan"
-
 #, python-format
 #~ msgid "Enter a new name for the feed %(name)s"
 #~ msgstr "Masukkan nama baru untuk feed %(name)s"
 
 #~ msgid "Rename Feed"
 #~ msgstr "Ubah Nama Feed"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Maaf, %(appname)s tidak bisa dimulai karena sebuah masalah dengan database:\n"
-#~ "\n"
-#~ "Kesalahan: %(error)s\n"
-#~ "\n"
-#~ "Mungkin file database anda korup dan tidak bisa digunakan\n"
-#~ "\n"
-#~ "Anda bisa memulai dengan yang baru dan database rusak anda akan dipindahkan, "
-#~ "tapi adan harus menambahkan kembali feeds dan file media anda. Jika anda "
-#~ "ingin melakukannya, tekan tombol Start Fresh dan mulai kembali %(appname)s.\n"
-#~ "\n"
-#~ "Untuk membantu kami memperbaiki masalah seperti ini di masa depan, silakan "
-#~ "laporkan file bug di %(url)s."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s sekarang akan menyerahkan laporan crash ke database kami\n"
-#~ "\n"
-#~ "Apakah anda ingin menyertakan seluruh database program termasuk semua "
-#~ "metadata video dan feed bersama laporan crash? Hal ini akan membantu kami "
-#~ "mendiagnosa masalah."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Maaf, %(appname)s tidak bisa meng-upgrade database anda karena kesalahan.\n"
-#~ "\n"
-#~ "Periksa apakah disk anda penuh. Jika penuh, tutup %(appname)s, bebaskan "
-#~ "beberapa ruang, dan mulai %(appname)s lagi.\n"
-#~ "\n"
-#~ "Jika disk anda tidak penuh, bantu kami mengetahui masalahnya dengan "
-#~ "melaporkan bug ke crash database kami.\n"
-#~ "\n"
-#~ "Terakhir, anda bisa memulai baru dan database rusak anda akan dipindahkan, "
-#~ "tapi anda harus menambahkan ulang feeds dan file media anda."
-
-#~ msgid "Reason unknown"
-#~ msgstr "Alasan tidak diketahui"
-
-#~ msgid "_Next Item"
-#~ msgstr "Item Sela_njutnya"
-
-#~ msgid "_Previous Item"
-#~ msgstr "Item Se_belumnya"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Selamat datang di setup %(name)s pertama kali\n"
-#~ "\n"
-#~ "Beberapa layar berikut akan membantu anda mengatur %(name)s sehingga akan "
-#~ "bekerja dengan baik untuk anda.\n"
-#~ "\n"
-#~ "Bahasa apa yang ingin anda gunakan?"
-
-#~ msgid "Convert"
-#~ msgstr "Konversi"
-
-#~ msgid "Auto-download"
-#~ msgstr "Mengunduh-otomatis"
-
-#~ msgid "Choose Language"
-#~ msgstr "Pilih Bahasa"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Untuk mencari media di situs pencarian media Internet, klik pada boks "
-#~ "pencarian di atas, ketikkan kata kunci pencarian dan tekan tombol Enter. "
-#~ "Untuk mengganti mesin pencari, klik pada ikon di kiri boks pencarian dan "
-#~ "pilih mesin pencari dari menu drop down."
-
-#~ msgid "Update"
-#~ msgstr "Pembaharuan"
-
-#~ msgid "Finding Files"
-#~ msgstr "Menemukan File"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s Startup"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Kami menyarankan anda menjalankan %(name)s ketika komputer anda dimulai. "
-#~ "Dengan begitu, unduhan yang tengah berjalan dapat terselesaikan dan file "
-#~ "media baru dapat diunduh di latarbelakang, siap ketika anda ingin "
-#~ "menontonnya."
-
-#~ msgid "Open log"
-#~ msgstr "Buka Catatan"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Gagal: %(error)s"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Mengubah bahasa memerlukan anda untuk memulai Miro kembali.)"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Keluar fullscreen"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Host tidak diketahui"
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Browser Anda akan memuat situs web di mana Anda dapat men-download dan "
-#~ "menginstall Bonjour.\n"
-#~ "\n"
-#~ "Ketika instalasi selesai, cukup restart Miro agar perubahan diterapkan."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Untuk terbaik %(appname)s pengalaman, kami sarankan Anda menginstal Bonjour, "
-#~ "yang didistribusikan sebagai bagian dari Layanan Cetak.\n"
-#~ "\n"
-#~ "Instalasi Bonjour akan memungkinkan Anda berbagi perpustakaan media Anda "
-#~ "dengan yang lain  %(appname)s pengguna di jaringan anda, serta media stream "
-#~ "dari yang lain %(appname)s  pengguna di jaringan anda.\n"
-#~ "\n"
-#~ "Apakah Anda ingin melakukan ini sekarang?"

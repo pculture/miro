@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4584,9 +4584,6 @@ msgstr ""
 #~ msgid "Internal Error: Not ready to send"
 #~ msgstr "Vnitřní chyba: nepřipraven k odesílání"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Standartně vyprší video po:"
-
 #~ msgid "_Next Video"
 #~ msgstr "_Následující video"
 
@@ -4607,9 +4604,6 @@ msgstr ""
 
 #~ msgid "Auto Download"
 #~ msgstr "Automaticky stahovat"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Vybrané kanály"
 
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Omezit na všechny moje soubory."
@@ -4662,12 +4656,6 @@ msgstr ""
 #~ msgid "Skip _Back"
 #~ msgstr "Přeskočit v_zad"
 
-#~ msgid "Stop after each video"
-#~ msgstr "Zastav po každém videu"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Přehraj videa jedno po druhém"
-
 #~ msgid "Miro Guide"
 #~ msgstr "Průvodce"
 
@@ -4676,16 +4664,6 @@ msgstr ""
 
 #~ msgid "Save Search"
 #~ msgstr "Uložit vyhledávání"
-
-#~ msgid "Add to Library"
-#~ msgstr "Přidat do knihovny"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Pro aktivaci provedených vizualizačních změn je třeba restartovat playback."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Při přehrávání audio záznamů použít pro video:"
 
 #~ msgid "_Download Item"
 #~ msgstr "_Stáhnout položku"
@@ -4707,11 +4685,6 @@ msgstr ""
 
 #~ msgid "Report a _Bug"
 #~ msgstr "Ohlásit _závadu"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Používáte verzi aplikace %(appname)s s přizpůsobenou sadou kanálů."
 
 #, python-format
 #~ msgid "%(size)s gb/s"
@@ -4898,14 +4871,6 @@ msgstr ""
 #~ "\n"
 #~ "Vložte URL pro stahování"
 
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Odstranit %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Opravdu chcete odstranit %(name)s?"
-
 #~ msgid "Migrating files"
 #~ msgstr "Migrující soubory"
 
@@ -4932,9 +4897,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "Stálý odkaz"
-
-#~ msgid "Add to library"
-#~ msgstr "Přidat do knihovny"
 
 #~ msgid "audio"
 #~ msgstr "audio"
@@ -4992,33 +4954,6 @@ msgstr ""
 
 #~ msgid "License"
 #~ msgstr "Licenční ujednání"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Vložte název feed složky"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Přihlásit se k více feedům"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "POZNÁMKA: Již jste přihlášen k jednomu z těchto feedů. Tyto feedy zůstanou "
-#~ "tam kde právě jsou."
-#~ msgstr[1] ""
-#~ "POZNÁMKA: Již jste přihlášen k %(count)d z těchto feedů. Tyto feedy zůstanou "
-#~ "tam kde právě jsou."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Vytvořit feed?"
-#~ msgstr[1] "Vytvořit %(count)d feedy?"
-#~ msgstr[2] "Vytvořit %(count)d feedů?"
 
 #, python-format
 #~ msgid "%(count)d minute"
@@ -5170,77 +5105,14 @@ msgstr ""
 #~ msgid "Bad Status Line: %(msg)s"
 #~ msgstr "Chybný stav: %(msg)s"
 
-#~ msgid "Title:"
-#~ msgstr "Název:"
-
-#~ msgid "Media type:"
-#~ msgstr "Druh média:"
-
-#~ msgid "Path:"
-#~ msgstr "Cesta:"
-
 #~ msgid "Non Feed"
 #~ msgstr "Není kanál"
-
-#~ msgid "Rename Website"
-#~ msgstr "Přejmenovat webovou stránku"
-
-#~ msgid "Remove Website"
-#~ msgstr "Odstranit webovou stránku"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Odstranit webové stránky"
-
-#~ msgid "WEBSITES"
-#~ msgstr "WEBOVÉ STRÁNKY"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO KANÁLY"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Adresář '%s' nelze vytvořit.  "
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Přehrávejte mediální soubory v Miro."
 
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr ""
 #~ "Pokračuje v přehrávání video a audio souborů z místa, kde jste je naposledy "
 #~ "skončil."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s nemůže použít výchozí adresář video souborů:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Může to být způsobeno tím, že je umístěn na externím disku, který není "
-#~ "připojený, nebo do adresáře %(shortappname)s nemáte oprávnění zapisovat, "
-#~ "případně cesta neobsahuje adresář.\n"
-#~ "\n"
-#~ "Pokud budete pokračovat, výchozí adresář video souborů změněn na umístění na "
-#~ "tomto disku. U již stažených video souborů dojde v %(shortappname)s ke "
-#~ "ztrátě podrobností o těchto video souborech.\n"
-#~ "\n"
-#~ "Pokud program ukončíte, můžete připojit disk nebo jinak odstranit problém a "
-#~ "znovu spustit %(shortappname)s."
 
 #~ msgid ""
 #~ "One of these items is a folder.  Delete/Removeing a folder will "
@@ -5258,33 +5130,6 @@ msgstr ""
 #~ "Některé z těchto položek jsou složky. Smazání/přesunutí složky povede ke "
 #~ "smazání/přesunutí jejího obsahu"
 
-#~ msgid "Add Website"
-#~ msgstr "Přidat webovou stránku"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Zadejte adresu stránky, kterou chcete přidat"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Přidat webovou stránku - neplatná adresa"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Adresa, kterou jste zadali není platná url.\n"
-#~ "Zkontrolujte prosím adresu a zkuste ji zadat znova.\n"
-#~ "\n"
-#~ "Zadejte adresu stránky, kterou chcete přidat"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Zadejte nové jméno webové stránky %(name)s"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Poměr uploadu/downloadu"
-
 #~ msgid ""
 #~ "Miro is upgrading your database of feeds and files.  This one-time process "
 #~ "can take a long time if you have a large number of items in Miro (it can "
@@ -5294,42 +5139,8 @@ msgstr ""
 #~ "množství položek, může tento jednorázový proces může trvat velmi dlouho "
 #~ "(dokonce i více než 30 minut)."
 
-#~ msgid "_Edit Item"
-#~ msgstr "_Upravit položku"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Nastavení"
-
 #~ msgid "Re_name"
 #~ msgstr "Pře_jmenovat"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Pře_jmenovat kanál"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Pře_jmenovat webovou stránku"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Odstranit kanál"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Odstranit kanály"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Odstranit složky"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Odstranit webovou stránku"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Odstranit webové stránky"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "T_itulky"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "žádné spojení - opakování za %s"
 
 #, python-format
 #~ msgid ""
@@ -5346,31 +5157,6 @@ msgstr ""
 
 #~ msgid "Contents:"
 #~ msgstr "Obsah:"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Omlouváme se, aplikace %(appname)s kvůli chybám nemůže aktualizovat vaši "
-#~ "databázi\n"
-#~ "\n"
-#~ "Zkontrolujte zda disk není zaplněn. Pokud je plný, ukončete aplikaci "
-#~ "%(appname)s, uvolněte nějaké místo, a spusťte %(appname)s znovu.\n"
-#~ "\n"
-#~ "Pokud vas disk není plný, pomožte nám vyřešit tento problém. Ukončete "
-#~ "aplikaci a oznamte chybu na bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Konečna můžete začít načisto. Vaše poškozená databáze bude smazána, budete "
-#~ "do ní ale muset znovu přidat své kanály a mediální soubory."
 
 #~ msgid "Database was created by a newer version of Miro "
 #~ msgstr "Databáze byla vytvořena novější verzí aplikace Miro. "
@@ -5495,12 +5281,6 @@ msgstr ""
 #~ msgid "Enter a new name for the feed %(name)s"
 #~ msgstr "Vložit nový název kanálu %(name)s"
 
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Odebrat webovou stránku"
-#~ msgstr[1] "Odebrat webové stránky"
-#~ msgstr[2] "Odebrat webových stránek"
-
 #~ msgid "Feed should go in this section:"
 #~ msgstr "Kanál by měl patřit do této sekce:"
 
@@ -5554,13 +5334,6 @@ msgstr ""
 #~ msgstr[0] "Označen %(count)d kanál"
 #~ msgstr[1] "Označeny %(count)d kanály"
 #~ msgstr[2] "Označeno %(count)d kanálů"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d webová stránka vybrána"
-#~ msgstr[1] "%(count)d webové stránky vybrány"
-#~ msgstr[2] "%(count)d webových stránek vybráno"
 
 #~ msgid "Subscribe to Feed"
 #~ msgstr "Přihlásit se ke kanálu"
@@ -5679,105 +5452,8 @@ msgstr ""
 #~ msgstr[2] "%(num).0f minut"
 
 #, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Jste si jisti, že chcete odebrat tuto stránku?"
-#~ msgstr[1] "Jste si jisti, že chcete odebrat tyto stránky?"
-#~ msgstr[2] "Jste si jisti, že chcete odebrat těchto %(count)s stránek?"
-
-#, python-format
 #~ msgid "%(num).0f day"
 #~ msgid_plural "%(num).0f days"
 #~ msgstr[0] "%(num).0f den"
 #~ msgstr[1] "%(num).0f dny"
 #~ msgstr[2] "%(num).0f dnů"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Ukončit celou obrazovku"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Předchozí položka"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Další položka"
-
-#~ msgid "(Pending)"
-#~ msgstr "(až do)"
-
-#~ msgid "Choose Language"
-#~ msgstr "Vyberte jazyk"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Vítejte %(name)s v prvotním nastavení!\n"
-#~ "\n"
-#~ "Několik následujících obrazovek vám pomůže vybrat nejlepší nastavení "
-#~ "%(name)s.\n"
-#~ "\n"
-#~ "Jaký jazyk má Miro použít?"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "Změna jazyka vyžaduje restart programu."
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s spouštění"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Doporučujeme vám %(name)s spouštět když startuje počítač. Běžící stahování "
-#~ "mohou být dokončena stahováním na pozadí. Nové mediální soubory pak budou "
-#~ "připraveny ke sledování."
-
-#~ msgid "Finding Files"
-#~ msgstr "Hledání souborů"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Omlouváme se, %(appname)s nemůže aktualizovat vaši databázi kvůli chybám.\n"
-#~ "\n"
-#~ "Zkontrolujte zda není váš disk plný. Jesliže ano, pak ukončete %(appname)s, "
-#~ "uvolněte nějaké místo na disku a spusťte %(appname)s znovu.\n"
-#~ "\n"
-#~ "Jestli váš disk není plný, pomozte nám odhalit problém tím, že odešlete "
-#~ "hlášení o pádu do naší databáze.\n"
-#~ "\n"
-#~ "Nakonec můžete začít znovu a vaše poškozená databáze bude odstraněna, ale vy "
-#~ "budete muset zmovu přidat feedy a mediální soubory."
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s nyní odešle hlášení o pádu do naší databáze\n"
-#~ "\n"
-#~ "Chcete odeslat celou databázi programu včetně všech metadat společně s "
-#~ "hlášením o pádu? To nám pomůže odhalit problém."
-
-#~ msgid "Update"
-#~ msgstr "Aktualizace"

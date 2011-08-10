@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4539,43 +4539,6 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Standartmässig verfällt ein video nach:"
-
-#~ msgid "Add to Library"
-#~ msgstr "Zur Bibliothek hinzufügen"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Du mußt die Wiedergabe neu starten, damit die Anzeigeeinstellungen wirksam "
-#~ "werden."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Die für Video nutzen, wenn Audio abgespielt wird."
-
-#~ msgid "Custom Channels"
-#~ msgstr "Benutzerdefinierte Kanäle"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "Du nutzt eine %(appname)s Version mit einer Sammlung von benutzerdefinierten "
-#~ "Kanälen."
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Prüfe die folgenden Ordner auf neue Videos und füge sie zur Bibliothek hinzu:"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Nach jedem Video anhalten."
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Spiele ein Video nach dem anderen."
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Wiedergabe an dem Punkt fortsetzen, an dem angehalten wurde."
 
 #~ msgid "Internal Error"
 #~ msgstr "Interner Fehler"

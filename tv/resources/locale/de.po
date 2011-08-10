@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-07-20 15:18+0000\n"
-"Last-Translator: gomuboru <Unknown>\n"
+"PO-Revision-Date: 2011-08-04 20:53+0000\n"
+"Last-Translator: hansel <wolfgangmixer@web.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:11+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -38,7 +38,7 @@ msgstr "Andere ausblenden"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Show All"
-msgstr "Alle einblenden"
+msgstr "Alle anzeigen"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:227
 msgid "Preferences..."
@@ -4848,15 +4848,6 @@ msgstr ""
 #~ msgid "Ok"
 #~ msgstr "OK"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Normalerweise werden Videos gelöscht nach:"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Mehrere Abonnements starten"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Eigene Kanäle"
-
 #~ msgid "_Donate"
 #~ msgstr "_Spenden"
 
@@ -4877,12 +4868,6 @@ msgstr ""
 
 #~ msgid "Cu_t"
 #~ msgstr "Aus_schneiden"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Videos hintereinander abspielen"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Wiedergabe nach jedem Video stoppen"
 
 #~ msgid "activity"
 #~ msgstr "Aktivität"
@@ -5031,9 +5016,6 @@ msgstr ""
 #~ msgstr[0] "%(count)d Minute"
 #~ msgstr[1] "%(count)d Minuten"
 
-#~ msgid "Add to Library"
-#~ msgstr "Zur Bibliothek hinzufügen"
-
 #~ msgid "audio"
 #~ msgstr "Audio"
 
@@ -5096,9 +5078,6 @@ msgstr ""
 #~ msgid "Permalink"
 #~ msgstr "Permalink"
 
-#~ msgid "Add to library"
-#~ msgstr "Zur Bibliothek hinzufügen"
-
 #, python-format
 #~ msgid "Search All: %(text)s"
 #~ msgstr "Alles durchsuchen: %(text)s"
@@ -5154,10 +5133,6 @@ msgstr ""
 
 #~ msgid "Full Feed"
 #~ msgstr "Gesamter Feed"
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "%(name)s entfernen"
 
 #~ msgid "Save as a Feed"
 #~ msgstr "Als Feed speichern"
@@ -5218,9 +5193,6 @@ msgstr ""
 #~ "Diese %(appname)s Feed-Datei hat einen ungültigen Content-Type: %(url)s. "
 #~ "Bitte verständigen Sie den Herausgeber dieser Datei."
 
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Geben Sie einen Namen für den neuen Feed-Folder ein"
-
 #, python-format
 #~ msgid ""
 #~ "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
@@ -5235,12 +5207,6 @@ msgstr ""
 
 #~ msgid "Create Feed"
 #~ msgstr "Feed erstellen"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Feed erstellen?"
-#~ msgstr[1] "%(count)d Feeds erstellen?"
 
 #, python-format
 #~ msgid "Enter a new name for the feed folder %(name)s"
@@ -5292,16 +5258,6 @@ msgstr ""
 #~ msgid "Add Feed - Invalid URL"
 #~ msgstr "Feed hinzufügen - Ungültige URL"
 
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Sie müssen die Wiedergabe neu starten, damit die Änderungen in Kraft treten."
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr ""
-#~ "Sie verwenden eine %(appname)s-Version mit einer angepassten Kanalauswahl."
-
 #~ msgid "_Remove Item"
 #~ msgstr "Objekt _löschen"
 
@@ -5351,23 +5307,11 @@ msgstr ""
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Standard-Einstellungen für neue Feeds:"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Diese Ordner auf neue Videos überprüfen:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr ""
-#~ "Wiedergabe ab dem Punkt fortsetzen, an dem das Video zuletzt angehalten "
-#~ "wurde."
-
 #~ msgid "No Results Found"
 #~ msgstr "Nichts gefunden"
 
 #~ msgid "Enter the URL of the site to add"
 #~ msgstr "Geben Sie die URL der Seite ein, die Sie hinzufügen möchten."
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Sind Sie sicher, dass Sie %(name)s entfernen wollen?"
 
 #~ msgid "Migrating files"
 #~ msgstr "Dateien übertragen"
@@ -5428,20 +5372,6 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "Hinweis: Sie haben bereits einen dieser Feeds abonniert. Diese Feeds bleiben "
-#~ "an ihrem ursprünglichen Ort."
-#~ msgstr[1] ""
-#~ "Hinweis: Sie haben bereits %(count)d dieser Feeds abonniert. Diese Feeds "
-#~ "bleiben an ihrem ursprünglichen Ort."
-
-#, python-format
-#~ msgid ""
 #~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
 #~ "[OK]"
 #~ msgstr ""
@@ -5463,9 +5393,6 @@ msgstr ""
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "Möchten Sie den Feed behalten?"
 
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Anzuzeigende Visualisierung beim Abspielen von Audiodateien:"
-
 #~ msgid "File name:"
 #~ msgstr "Dateiname:"
 
@@ -5483,9 +5410,6 @@ msgstr ""
 
 #~ msgid "_Remove Playlists"
 #~ msgstr "Wiedergabelisten  _löschen"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Verteilung starten"
 
 #, python-format
 #~ msgid "Welcome to the %(name)s First Time Setup"
@@ -5550,9 +5474,6 @@ msgstr ""
 #~ "%(appname)s kann keine Datei von dieser  URL herunterladen:\n"
 #~ "\n"
 #~ "URL: %(url)s"
-
-#~ msgid "View:"
-#~ msgstr "Zeige:"
 
 #, python-format
 #~ msgid "%(name)s First Time Setup"
@@ -5667,43 +5588,11 @@ msgstr ""
 #~ "Dieser einmalige Vorgang kann längere Zeit dauern, wenn Du eine große Anzahl "
 #~ "an Objekten in Miro hast. (es kann 30 Minuten oder mehr dauern)"
 
-#~ msgid "Media type:"
-#~ msgstr "Medientyp:"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Verzeichnis '%s' konnte nicht erstellt werden.  "
-
-#~ msgid "Title:"
-#~ msgstr "Titel:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Metadaten dieses Elements bearbeiten"
-
-#~ msgid "other"
-#~ msgstr "Andere"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "Keine Verbindung - versuche erneut in %s"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Untertitel"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Unbekannte Sprache"
-
 #, python-format
 #~ msgid "Show %(count)d More Item"
 #~ msgid_plural "Show %(count)d More Items"
 #~ msgstr[0] "%(count)d weiteres Element anzeigen"
 #~ msgstr[1] "%(count)d weitere Elemente anzeigen"
-
-#~ msgid "WEBSITES"
-#~ msgstr "WEBSEITEN"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO FEEDS"
 
 #, python-format
 #~ msgid ""
@@ -5727,194 +5616,6 @@ msgstr ""
 #~ msgid "Pipeline request never started"
 #~ msgstr "Pipeline-Anfrage wurde nie abgesendet"
 
-#~ msgid "Remove Website"
-#~ msgstr "Webseite entfernen"
-
-#~ msgid "Rename Website"
-#~ msgstr "Webseite umbenennen"
-
-#~ msgid "Add Website"
-#~ msgstr "Webseite hinzufügen"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Webseite entfernen"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Webseite hinzufügen - Ungültige URL"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "URL der hinzuzufügenden Webseite eingeben"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Neuer Name für die Webseite %(name)s eingeben"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Die eingegebene Adresse ist keine gültige URL.\n"
-#~ "Bitte URL überprüfen und erneut versuchen\n"
-#~ "\n"
-#~ "URL der hinzuzufügenden Webseite eingeben"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Webseite entfernen"
-#~ msgstr[1] "Webseiten entfernen"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Sind sie sicher, dass sie diese Webseite entfernen wollen?"
-#~ msgstr[1] ""
-#~ "Sind sie sicher, dass sie diese %(count)s Webseiten entfernen wollen?"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Feeds entfernen"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Ordner entfernen"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Feed entfernen"
-
-#~ msgid "_Edit Item"
-#~ msgstr "Eintrag _bearbeiten"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Einstellungen..."
-
-#~ msgid "_Remove Websites"
-#~ msgstr "Webseiten entfernen"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Webseite ausgewählt"
-#~ msgstr[1] "%(count)d Webseiten ausgewählt"
-
-#~ msgid "_Remove Website"
-#~ msgstr "Webseite entfernen"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by quitting, then "
-#~ "reporting a bug at bugzilla.pculture.org\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Entschuldigung, %(appname)s konnte die Datenbank aufgrund eines Fehlers "
-#~ "nicht aktualisieren.\n"
-#~ "\n"
-#~ "Überprüfen Sie bitte, ob auf Ihrer Festplatte ausreichend Speicherplatz "
-#~ "vorhanden ist. Falls dies nicht der Fall sein sollte, beenden Sie bitte "
-#~ "%(appname)s, stellen Sie eine ausreichende Menge an freiem Speicherplatz "
-#~ "sicher (ggf. durch Löschung nicht benötigter Dateien) und starten Sie danach "
-#~ "%(appname)s erneut.\n"
-#~ "\n"
-#~ "Falls auf Ihrer Festplatte jedoch genügend freier Speicherplatz zur "
-#~ "Verfügung stehen sollte, können Sie uns bei der Suche nach der Ursache des "
-#~ "Problems unterstützen, indem Sie %(appname)s beenden und auf der Webseite "
-#~ "bugzilla.pculture.org eine Fehlermeldung erstellen.\n"
-#~ "\n"
-#~ "Weiterhin haben Sie die Möglichkeit, eine neue Datenbank zu erstellen und "
-#~ "damit die beschädigte bisherige Datenbank zu entfernen. Dies hat aber leider "
-#~ "zur Folge, dass Sie alle Ihre Feeds und Mediendateien neu hinzufügen müssen."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s kann das folgende primäre Video-Verzeichnis nicht "
-#~ "benutzen:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Mögliche Ursachen hierfür: a) das Verzeichnis liegt auf einer externen "
-#~ "Laufwerk, das momentan nicht verbunden ist, b) %(shortappname)s hat keine "
-#~ "Schreibrechte für das angegebene Verzeichnis, c) der angegebene Pfad führt "
-#~ "nicht zu einem Verzeichnis.\n"
-#~ "\n"
-#~ "Wenn Sie hier fortfahren, wird das primäre Video-Verzeichnis auf ein "
-#~ "Verzeichnis auf dem aktuellen Laufwerk zurückgesetzt. %(shortappname)s wird "
-#~ "hierdurch Informationen über eventuell bereits heruntergeladene Videodateien "
-#~ "verlieren.\n"
-#~ "\n"
-#~ "Wenn Sie das Programm beenden, können Sie das Laufwerk falls notwendig "
-#~ "verbinden oder das Problem anderweitig beheben, und danach %(shortappname)s "
-#~ "neu starten."
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr ""
-#~ "(Änderungen der Spracheinstellungen erfordern einen Neustart von Miro.)"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Vollbild verlassen"
-
-#~ msgid "Choose Language"
-#~ msgstr "Sprache auswählen"
-
-#~ msgid "(Pending)"
-#~ msgstr "(Ausstehend)"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Nächstes Element"
-
-#~ msgid "Update"
-#~ msgstr "Aktualisieren"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Willkommen zu %(name)s erstmaligen Setup!\n"
-#~ "Die nächsten Schritte werden Ihnen helfen, %(name)s nach Ihren Wünschen "
-#~ "einzurichten.\n"
-#~ "In welcher Sprache möchten Sie Miro benutzen?"
-
-#~ msgid "Finding Files"
-#~ msgstr "Dateien finden"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s wird nun einen Fehlerbericht an unsere Fehlerdatenbank "
-#~ "übermitteln.\n"
-#~ "Möchten Sie, dass der Fehlerbericht die gesamte Programmdatenbank inklusive "
-#~ "aller Video- und Feed-Metadaten enthält? Dies wird uns bei der Fehlersuche "
-#~ "helfen."
-
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "erwartetes Zeilenende (CRLF), stattdessen %(character)r erhalten"
@@ -5935,45 +5636,8 @@ msgstr ""
 #~ msgid "Seeding"
 #~ msgstr "Verteilen"
 
-#~ msgid "Path:"
-#~ msgstr "Verzeichnis:"
-
 #~ msgid "Title"
 #~ msgstr "Überschrift"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s Start"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Up/Down Verhältnis"
-
-#~ msgid "Convert"
-#~ msgstr "Konvertieren"
-
-#~ msgid ""
-#~ "To search for media on Internet media search sites, click on the search box "
-#~ "above, type in search terms and hit the Enter key.  To switch search "
-#~ "engines, click on the icon to the left of the search box above and select "
-#~ "the search engine from the drop down."
-#~ msgstr ""
-#~ "Um Mediendateien auf Internet-Medien-Suchmaschinen zu suchen, auf das "
-#~ "Suchfeld oben klicken, den Suchbegriff eingeben und mit der Entertaste "
-#~ "bestätigen. Um die Suchmaschinen zu wechseln, auf das Icon links vom "
-#~ "Suchfeld klicken und die Suchmaschine aus der Dropdown-Liste auswählen."
-
-#~ msgid "Auto-download"
-#~ msgstr "Automatischer Download"
-
-#~ msgid "Open log"
-#~ msgstr "Log-Datei öffnen"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Fehlgeschlagen: %(error)s"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Unbekannter Server."
 
 #~ msgid "New Playlist Fol_der"
 #~ msgstr "Neuer Or_dner für Wiedergabelisten"
@@ -5983,75 +5647,6 @@ msgstr ""
 
 #~ msgid "_Remove Playlist Folder"
 #~ msgstr "_Ordner für Wiedergabeliste löschen"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "%(appname)s war es auf Grund von Fehlern leider nicht möglich, Ihre "
-#~ "Datenbank zu aktualisieren.\n"
-#~ "Überprüfen Sie, ob genügend freier Speicherplatz auf Ihrer Festplatte "
-#~ "vorhanden ist. Falls dies nicht der Fall ist, beenden Sie %(appname)s, "
-#~ "schaffen Sie freien Speicherplatz und starten Sie %(appname)s neu.\n"
-#~ "Wenn Sie jedoch über genügend freien Speicherplatz verfügen, helfen Sie uns "
-#~ "bei der Problembehebung, in dem Sie einen Fehlerbericht erstellen und an "
-#~ "unsere Fehlerdatenbank übermitteln.\n"
-#~ "Nun können Sie neu anfangen. Ihre fehlerhafte Datenbank wird entfernt, Sie "
-#~ "müssen allerdings Ihre Feeds und Mediendateien neu hinzufügen."
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Wir empfehlen, dass %(name)s beim Start des Rechners ebenfalls gestartet "
-#~ "wird. So können laufende Downloads vervollständigt, und neue Mediendateien "
-#~ "automatisch im Hintergrund heruntergeladen werden."
-
-#~ msgid "Reason unknown"
-#~ msgstr "Ursache unbekannt"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "%(appname)s konnte auf Grund eines Problems mit der Datenbank nicht "
-#~ "gestartet werden:\n"
-#~ "\n"
-#~ "Fehler: %(error)s\n"
-#~ "\n"
-#~ "Möglicherweise ist die Datenbank beschädigt und kann daher nicht mehr "
-#~ "verwendet werden.\n"
-#~ "\n"
-#~ "Bei einem kompletten Neustart von %(appname)s wird die beschädigte Datenbank "
-#~ "entfernt. Alle Feeds und Medien-Dateien müssen  neu hinzugefügt werden. Wenn "
-#~ "Sie dies tun möchten, klicken Sie auf die \"Neustart\"-Schaltfläche, um "
-#~ "%(appname)s neu zu starten.\n"
-#~ "\n"
-#~ "Um solche Probleme zukünftig zu vermeiden, bitten wir Sie, unter %(url)s uns "
-#~ "den Fehler zu schildern. Danke!"
 
 #, python-format
 #~ msgid "Channel is not compatible with %(appname)s"
@@ -6103,15 +5698,6 @@ msgstr ""
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Neuer Suc_h-Feed"
 
-#~ msgid "Re_name Feed"
-#~ msgstr "Feed umbenennen"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Webseite umbenennen"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Vorheriges Element"
-
 #~ msgid "Skip _Forward"
 #~ msgstr "_Vorwärts springen"
 
@@ -6141,425 +5727,3 @@ msgstr ""
 #~ msgstr ""
 #~ "(Diese können später über die \"Optionen\"-Schaltfläche des Feeds geändert "
 #~ "werden)"
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Fehler beim Laden des Podcastes"
-
-#~ msgid "Device Default"
-#~ msgstr "Voreingestelltes Gerät"
-
-#, python-format
-#~ msgid "From %(podcast)s"
-#~ msgstr "Von %(podcast)s"
-
-#~ msgid "_Remove Podcast"
-#~ msgstr "Podcast _Entfernen"
-
-#~ msgid "Add _Podcast"
-#~ msgstr "Füge einen _Podcast hinzu"
-
-#~ msgid "_Import Media"
-#~ msgstr "_Importiere Medien"
-
-#~ msgid "New Searc_h Podcast"
-#~ msgstr "Neuer Suc_h-Podcast"
-
-#~ msgid "Re_name Podcast"
-#~ msgstr "Podcast Umbe_nnen"
-
-#, python-format
-#~ msgid "Import from %(player)s as watched folder"
-#~ msgstr "Importiere von %(player)s wie von einem überwachten Ordner"
-
-#~ msgid "Re_name Source"
-#~ msgstr "Quelle Umbe_nnen"
-
-#~ msgid "_Remove Podcasts"
-#~ msgstr "Podcast _Entfernen"
-
-#~ msgid "_Remove Sources"
-#~ msgstr "Quellen _Entfernen"
-
-#~ msgid "_Remove Source"
-#~ msgstr "Quelle _Entfernen"
-
-#~ msgid "_Update Podcasts"
-#~ msgstr "Podcasts_ Aktualisieren"
-
-#~ msgid "_Update Podcast"
-#~ msgstr "Podcast _Aktualisieren"
-
-#~ msgid "_Import Podcasts (OPML)"
-#~ msgstr "Podcasts _Importieren (OPML)"
-
-#~ msgid "Update _All Podcasts"
-#~ msgstr "_Alle Podcasts aktualisieren"
-
-#~ msgid "_View"
-#~ msgstr "_Ansicht"
-
-#~ msgid "E_xport Podcasts (OPML)"
-#~ msgstr "Podcasts E_xportieren (OPML)"
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you have a large number of items in Miro (it "
-#~ "can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Miro erneuert deine Podcast- und Dateien-Datenbank. Dieser einmalige Prozess "
-#~ "kann viel Zeit in Anspruch nehmen, wenn du eine große Anzahl von Elementen "
-#~ "in Miro hast (es kann sogar länger als 30 Minuten dauern)."
-
-#~ msgid "Save as a Podcast"
-#~ msgstr "Als Podcast speichern"
-
-#~ msgid "Importing file details: {0} of {1}"
-#~ msgstr "Importieren von Dateidetails: {0} von {1}"
-
-#~ msgid "Importing audio details and artwork: {0} of {1}"
-#~ msgstr "Importieren von Audiodetails und Bildmaterial: {0} von {1}"
-
-#~ msgid "Non Podcast"
-#~ msgstr "Kein Podcast"
-
-#~ msgid "Share podcast"
-#~ msgstr "Podcast mit anderen teilen"
-
-#~ msgid "Importing video details and creating thumbnails: {0} of {1}"
-#~ msgstr ""
-#~ "Importieren von Videodetails und Erstellen von Fingerabdrücken: {0} von {1}"
-
-#, python-format
-#~ msgid ""
-#~ "Connect the USB cable to sync your Android device with %(shortappname)s.  Be "
-#~ "sure to set your device to 'USB Mass Storage' mode in your device settings."
-#~ msgstr ""
-#~ "Verbinde das USB-Kabel, um dein Androidgerät mit %(shortappname)s zu "
-#~ "synchronisieren. Stelle sicher, dass dein Gerät auf \"USB Massenspeicher\"-"
-#~ "Modus gestellt ist."
-
-#~ msgid "Sync a Phone or Tablet"
-#~ msgstr "Ein Smartphone oder Tablet synchronisieren"
-
-#~ msgid ""
-#~ "You need to install the Bonjour libraries to be able to share files from "
-#~ "Miro-to-Miro or to the Miro iPad app."
-#~ msgstr ""
-#~ "Du musst die Bonjour-Bibliotheken installieren, um Dateien mit einem anderen "
-#~ "Miro oder der Miro iPad-App zu teilen."
-
-#~ msgid "Import Media From..."
-#~ msgstr "Medien imporiteren von..."
-
-#~ msgid "N/A"
-#~ msgstr "Nicht verfügbar"
-
-#, python-format
-#~ msgid "Resume %(item)s at %(resumetime)s"
-#~ msgstr "Fahre mit %(item)s ab %(resumetime)s fort"
-
-#, python-format
-#~ msgid "Couldn't load the podcast at %(url)s (%(errordescription)s)."
-#~ msgstr ""
-#~ "Podcast unter %(url)s konnte nicht geladen werden (%(errordescription)s)."
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro hat festgestellt, dass auf ihrem System einige Bonjour Komponenten "
-#~ "fehlen. Bonjour wird bei einer Mac OS X Installation standardmäßig "
-#~ "mitgeliefert. Bitte überprüfen sie ihre Mac OS X Installation."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Um %(appname)s besser nutzen zu können, empfehlen wir dir, Bonjour zu "
-#~ "installieren, welches als Teil einiger Druckerdienste ausgeliefert wird.\n"
-#~ "\n"
-#~ "Wenn Bonjour installiert ist, kannst du deine Medienbibliothek mit anderen "
-#~ "Nutzern von %(appname)s im Netzwerk teilen oder deren Medien wiedergeben.\n"
-#~ "\n"
-#~ "Willst du dies jetzt tun?"
-
-#~ msgid "Artists"
-#~ msgstr "Künstler"
-
-#~ msgid "Genres"
-#~ msgstr "Genres"
-
-#~ msgid "Albums"
-#~ msgstr "Alben"
-
-#~ msgid "Songs"
-#~ msgstr "Lieder"
-
-#~ msgid "Update _All Podcasts and Library"
-#~ msgstr "_Alle Podcasts und Bibliotheken aktualisieren"
-
-#, python-format
-#~ msgid "Resume %(item)s"
-#~ msgstr "Mit %(item)s fortfahren"
-
-#~ msgid ""
-#~ "Include entire program database including all video and podcast metadata "
-#~ "with error report"
-#~ msgstr ""
-#~ "Beziehe die gesamte Programmdatenbank mit allen Video - und Podcast-"
-#~ "Metadaten in den Fehlerbericht mit ein"
-
-#~ msgid "Support trackerless torrents.  (DHT)"
-#~ msgstr "führungslose Torrents unterstützen. (DHT)"
-
-#~ msgid "of"
-#~ msgstr "von"
-
-#~ msgid ""
-#~ "Miro can watch a folder on your computer and show those media files in your "
-#~ "library.\n"
-#~ "\n"
-#~ "That path does not exist."
-#~ msgstr ""
-#~ "Miro kann einen Ordner auf deinem Rechner überwachen und dessen Dateien in "
-#~ "deiner Medienbibliothek zeigen.\n"
-#~ "\n"
-#~ "Dieser Pfad ist nicht vorhanden."
-
-#~ msgid "Download to My Miro"
-#~ msgstr "Zu MeinMiro herunterladen"
-
-#~ msgid "Download Item"
-#~ msgstr "Element herunterladen"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "New Watched Folder"
-#~ msgstr "Neuer überwachter Ordner"
-
-#~ msgid "upload/download ratio:"
-#~ msgstr "Herunterladen/Hochladen verhältnis:"
-
-#~ msgid "connected peers:"
-#~ msgstr "verbundene peers:"
-
-#~ msgid "seeders:"
-#~ msgstr "seeders:"
-
-#~ msgid "leechers:"
-#~ msgstr "leechers:"
-
-#~ msgid "upload rate:"
-#~ msgstr "Hochlad-Rate"
-
-#~ msgid "download rate:"
-#~ msgstr "Herunterlad-Rate:"
-
-#~ msgid "download total:"
-#~ msgstr "Insgesamt heruntergeladen:"
-
-#, python-format
-#~ msgid "%(appname)s First Time Setup"
-#~ msgstr "%(appname)s Erstbenutzungs-Setup"
-
-#~ msgid "Import Media"
-#~ msgstr "Medien importieren"
-
-#, python-format
-#~ msgid "What media would you like %(appname)s to import?"
-#~ msgstr "Welche Medien soll %(appname)s importieren?"
-
-#~ msgid "Search for files"
-#~ msgstr "Nach Dateien suchen"
-
-#~ msgid "Watched"
-#~ msgstr "überwacht"
-
-#~ msgid "Go"
-#~ msgstr "Starten"
-
-#~ msgid "Save as playlist"
-#~ msgstr "Als Wiedergabeliste speichern"
-
-#~ msgid "Add files or folders..."
-#~ msgstr "Dateien oder Ordner hinzufügen..."
-
-#~ msgid "Add Files and Folders"
-#~ msgstr "Dateien und Ordnern hinzufügen"
-
-#~ msgid "Search all my files for music and video"
-#~ msgstr "Persönlichen Ordner nach Musik und Video durchsuchen"
-
-#~ msgid "Choose files to add"
-#~ msgstr "Hinzuzufügende Dateien auswählen"
-
-#~ msgid "Select a specific folder for search"
-#~ msgstr "Einen bestimmten Suchordner auswählen"
-
-#, python-format
-#~ msgid ""
-#~ "Note: Miro won't move or copy any files on your disk.  It will just add them "
-#~ "to your %(appname)s library."
-#~ msgstr ""
-#~ "Hinweis: %(appname)s verschiebt oder kopiert keine Dateien auf dem "
-#~ "Speichermedium. Diese werden lediglich zur Mediathek von %(appname)s "
-#~ "hinzugefügt."
-
-#, python-format
-#~ msgid "Display %(player)s Library"
-#~ msgstr "%(player)s Mediathek anzeigen"
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Möchten Sie den Podcast behalten?"
-
-#, python-format
-#~ msgid ""
-#~ "Directory '%s' could not be created.  Please choose a directory you have "
-#~ "write access to."
-#~ msgstr ""
-#~ "Verzeichnis '%s' konnte nicht erstellt werden. Bitte wählen Sie einen Ordner "
-#~ "mit freigeschalteten Schreibzugriffsrechten."
-
-#, python-format
-#~ msgid ""
-#~ "Select the music and video stores you'd like to have appear in "
-#~ "%(shortappname)s.  Note: some other store websites may work well with Miro "
-#~ "if you add them as Sources, but these are Stores that we've integrated and "
-#~ "tested."
-#~ msgstr ""
-#~ "Wählen Sie die Musik- und Videoanbieter aus, die in %(shortappname)s "
-#~ "erscheinen sollen. Hinweis: Auch Websites anderer Anbieter können eventuell "
-#~ "benutzt werden, wenn diese als Quellen hinzufügt werden. Die hier "
-#~ "angezeigten Anbieter wurden jedoch integriert und getestet."
-
-#~ msgid ""
-#~ "Your Miro database is corrupt.  It will be backed up in your Miro database "
-#~ "directory and a new database will be created now."
-#~ msgstr ""
-#~ "Ihre Miro Datenbank ist beschädigt. Diese wird jetzt in den Miro Datenbank "
-#~ "Ordner gesichert, danach wird eine neue Datenbank erstellt."
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "After installing Print Services, you will have to restart Miro.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "Um alle Möglichkeiten von %(appname)s zu nutzen, wird die Installation von "
-#~ "Bonjour empfohlen, welches als Teil der Druckerdienste verteilt wird.\n"
-#~ "\n"
-#~ "Dies ermöglicht die gemeinsame Nutzung Ihrer Mediathek zusammen mit anderen "
-#~ "%(appname)s Nutzern in Ihrem Netzwerk. Weiterhin können Sie so deren "
-#~ "Medieninhalte auf Ihre eigene %(appname)s Installation streamen.\n"
-#~ "\n"
-#~ "Nach der Installation der Druckerdienste muss Miro neu gestartet werden.\n"
-#~ "\n"
-#~ "Möchten Sie Miro jetzt neu starten?"
-
-#~ msgid ""
-#~ "Miro can watch a folder on your computer and show those media files in your "
-#~ "library."
-#~ msgstr ""
-#~ "Miro kann einen Order auf Ihrem Computer überwachen und gefundene "
-#~ "Mediendateien innerhalb der Mediathek anzeigen."
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Ihr Webbrowser öffnet nun die Webseite, von der Sie Bonjour herunterladen "
-#~ "und installieren können.\n"
-#~ "\n"
-#~ "Wenn die Installation abgeschlossen ist, starten Sie Miro erneut, um die "
-#~ "Änderungen zu übernehmen."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "Miro will now exit. You can connect the drive or otherwise fix the problem "
-#~ "and relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s kann das primäre Videoverzeichnis an folgender Stelle nicht "
-#~ "benutzen:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Dies ist möglicherweise weil es auf einem externen Laufwerk ist das nicht "
-#~ "angeschlossen ist, es ein Verzeichnis ist wozu %(shortappname)s keine "
-#~ "Schreibrechte hat oder auf diesem Pfad etwas ist das kein Verzeichnis ist.\n"
-#~ "\n"
-#~ "%(shortappname)s wird jetzt schließen. Sie können das Laufwerk anschliessen "
-#~ "oder anders das Problem lösen und dann %(shortappname)s neu starten."
-
-#~ msgid ""
-#~ "Miro is upgrading your database of podcasts and files.  This one-time "
-#~ "process can take a long time if you  have a large number of items in Miro "
-#~ "(it can even take more than 30 minutes)."
-#~ msgstr ""
-#~ "Mrio aktualisiert jetzt die Datenbank für Podcasts und Mediendateien. Dieser "
-#~ "einmalig durchzuführende Prozess kann relativ lange dauern, falls eine große "
-#~ "Anzahl von Mediendateien in Miro vorliegt (teilweise sogar mehr als 30 "
-#~ "Minuten)."
-
-#, python-format
-#~ msgid "Thank you to all the people who contributed to Miro %(version)s:"
-#~ msgstr "Danke an alle, die bei der Miro %(version)s mitgeholfen haben:"
-
-#, python-format
-#~ msgid ""
-#~ "Connection to share %(name)s failed.\n"
-#~ "\n"
-#~ "The share is either unreachable or incompatible with Miro sharing."
-#~ msgstr ""
-#~ "Die Verbindung zur Freigabe von %(name)s ist fehlgeschlagen.\n"
-#~ "\n"
-#~ "Die Freigabe ist entweder nicht erreichbar oder aber inkompatibel zur "
-#~ "Freigabe durch Miro."
-
-#~ msgid "Miro shutdown improperly and needs to prepare your items for display."
-#~ msgstr ""
-#~ "Miro wurde beim letzten Mal nicht korrekt beendet und muss daher die "
-#~ "anzuzeigenden Elemente neu vorbereiten."
-
-#~ msgid ""
-#~ "You need to install the Bonjour libraries to be able to share files from "
-#~ "Miro-to-Miro or to the Miro iPad app.\n"
-#~ "\n"
-#~ "Once you install the Bonjour libraries, you will have to restart Miro."
-#~ msgstr ""
-#~ "Sie müssen die \"Bonjour\"-Bibliothek installieren, um Dateien von Miro-zu-"
-#~ "Miro oder mit der Miro iPad App freizugeben."
-
-#~ msgid "To help fund continued Miro development, visit the donation page at:"
-#~ msgstr ""
-#~ "Besuchen Sie folgende Internetadresse, um durch eine Spende bei der "
-#~ "Entwicklungsfinanzierung von Miro mitzuhelfen:"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Medium in Miro wiedergeben."

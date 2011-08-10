@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4524,15 +4524,6 @@ msgstr ""
 
 #~ msgid "_Remove Playlist Folder"
 #~ msgstr "_ลบโฟลเดอร์เพลย์ลิสต์"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "เล่นวิดิโอต่อเนื่องกัน"
-
-#~ msgid "Stop after each video"
-#~ msgstr "หยุดหลังจากเล่นวิดิโอแต่ละอันเสร็จ"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "ค่าโดยปริยาย, วีดีโอ จะหมดอายุ หลังจาก :"
 
 #~ msgid "Down Total"
 #~ msgstr "ดาวน์โหลดทั้งหมด"

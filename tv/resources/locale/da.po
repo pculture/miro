@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1118
 #: ../../lib/frontends/widgets/itemrenderer.py:111
@@ -4566,91 +4566,11 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Som standard udløber videoer efter:"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Afspil videoer efter hinanden"
-
-#~ msgid "Stop after each video"
-#~ msgstr "stop efter hver video"
-
-#~ msgid "Add to Library"
-#~ msgstr "Tilføj til bibliotek"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Brug denne som video når lyd afspilles"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Tilpassede kanaler"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Du kører en version af %(appname)s med tilpassede kanaler"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr ""
-#~ "Du skal genstarte playback for at visualiserings ændringerne kan træde i "
-#~ "kraft."
-
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Fjern %(name)s"
-
-#~ msgid "Add to library"
-#~ msgstr "Tilføj til bibliotek"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Indtast et navn til den nye feed mappe"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "Se efter nye videoer i disse mappe og inkluder dem i biblioteket:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Forsæt afspilning af en video fra det punkt den sidst blev stoppet."
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Er du sikker på at du ønsker at fjerne %(name)s?"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Abonnerer på flere feeds"
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Opret feed?"
-#~ msgstr[1] "Opret %(count)d feeds?"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "NOTE: Du abonnerer allerede på et af disse feeds. Disse feeds vil forblive "
-#~ "hvor de er nu."
-#~ msgstr[1] ""
-#~ "NOTE: Du abonnerer allerede på %(count)d disse feeds. Disse feeds vil "
-#~ "forblive hvor de er nu."
-
-#~ msgid "Start Seeding"
-#~ msgstr "Start seeding"
-
 #~ msgid "Other"
 #~ msgstr "Andre"
 
-#~ msgid "The file \"%(filename)s\" was deleted from outside %s(appname."
-#~ msgstr "Filen \"%(filename)s\" blev slettet fra"
-
 #~ msgid "LIBRARY"
 #~ msgstr "BIBLIOTEK"
-
-#~ msgid "View:"
-#~ msgstr "Vis:"
 
 #~ msgid "Non Feed"
 #~ msgstr "Ikke feed"
@@ -5441,145 +5361,6 @@ msgstr ""
 #~ msgid "Upload Total"
 #~ msgstr "Total upload"
 
-#~ msgid "Unknown Language"
-#~ msgstr "Ukendt sprog"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Mappen '%s' kunne ikke oprettes.  "
-
-#~ msgid "Title:"
-#~ msgstr "Titel:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Rediger metadata for dette element"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "VIDEO FEEDS"
-
-#~ msgid "other"
-#~ msgstr "andet"
-
-#~ msgid "Media type:"
-#~ msgstr "Medietype:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "HJEMMESIDER"
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Forhold mellem down- og uploadet"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "ingen forbindelse - prøver igen om %s"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Undertekster"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Afspil i Miro."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s kan ikke bruge den primære video mappe:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Dette skyldes muligvis at mappen er placeret på et eksternt drev, som ikke "
-#~ "er tilsluttet, at det er en mappe som %(shortappname)s ikke har "
-#~ "skriverettigheder til, eller at der er noget på stien, som ikke er en "
-#~ "mappe.\n"
-#~ "\n"
-#~ "Hvis du fortsætter vil den primære videomappe blive placeret et sted på "
-#~ "dette drev. Hvis du har downloadet videoer vil dette betyde at "
-#~ "%(shortappname)s mister detaljerne for disse videoer.\n"
-#~ "\n"
-#~ "Hvis du lukker programmet kan du tilslutte drevet igen eller løse problemet "
-#~ "på anden måde og igen starte %(shortappname)s."
-
-#~ msgid "_Remove Site"
-#~ msgstr "_Fjern side"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Om_døb Feed"
-
-#~ msgid "Path:"
-#~ msgstr "Placering:"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Fjern Feeds"
-
-#~ msgid "Re_name Site"
-#~ msgstr "Om_døb side"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Fjern Feed"
-
-#~ msgid "_Remove Sites"
-#~ msgstr "_Fjern sider"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Indtast et nyt navn for hjemmesiden %(name)s"
-
-#~ msgid "Remove Website"
-#~ msgstr "Fjern hjemmeside"
-
-#~ msgid "Rename Website"
-#~ msgstr "Omdøb hjemmeside"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Fjern hjemmesider"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Tilføj hjemmeside - Fejl i URL"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Indtast adressen (URL)  for den hjemmeside du vil tilføje"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Den adresse du indtastede er ikke en brugbar URL.\n"
-#~ "Tjek venligst adressen og prøv igen. \n"
-#~ "\n"
-#~ "Indtast adressen (URL)  for den hjemmeside du vil tilføje"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Fjern hjemmesiden"
-#~ msgstr[1] "Fjern hjemmesider"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Er du sikker på at du vil fjerne denne hjemmeside?"
-#~ msgstr[1] "Er du sikker på at du vil fjerne disse %(count)s hjemmesider?"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d Hjemmeside valgt"
-#~ msgstr[1] "%(count)d Hjemmesider valgt"
-
 #, python-format
 #~ msgid "Expected CRLF got: %(character)r"
 #~ msgstr "Forventede CRLF, fik: %(character)r"
@@ -5591,94 +5372,6 @@ msgstr ""
 #, python-format
 #~ msgid "Bad Chunk size: %(msg)s"
 #~ msgstr "Dårlig chunkstørrelse: %(msg)s"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Ændring af sproget kræver at Miro genstartes.)"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Forlad fuldskærmsvisning"
-
-#~ msgid "(Pending)"
-#~ msgstr "Ventende"
-
-#~ msgid "Choose Language"
-#~ msgstr "Vælg sprog"
-
-#~ msgid "Update"
-#~ msgstr "Opdatér"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "%(name)s start"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Vi anbefaler at du har %(name) startet når computeren tændes.\n"
-#~ "På denne måde kan igangværende nedhentninger færdiggøres og nye mediefiler \n"
-#~ "kan nedhentes i baggrunden, så de er klar når du vil se dem."
-
-#~ msgid "Finding Files"
-#~ msgstr "Finder filer"
-
-#, python-format
-#~ msgid ""
-#~ "Welcome to the %(name)s first time setup!\n"
-#~ "\n"
-#~ "The next few screens will help you set up %(name)s so that it works best for "
-#~ "you.\n"
-#~ "\n"
-#~ "What language would you like Miro to be in?"
-#~ msgstr ""
-#~ "Velkommen til førstegangsopsætningen af %(name)s!\n"
-#~ "\n"
-#~ "De næste trin vil hjælpe dig med at sætte %(name)s op, så det virker bedst "
-#~ "for dig.\n"
-#~ "\n"
-#~ "Hvilket sprog vil du bruge Miro på?"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s vil nu indsende en nedbrudsrapport til vores nedbrudsdatabase\\"
-#~ "n\n"
-#~ "\\n\n"
-#~ "Vil du inkludere hele programdatabasen inklusive alle videoer og feed-"
-#~ "metadata i denne nedbrudsrapport? Dette vil hjælpe os med at diagnosticere "
-#~ "problemet."
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
-#~ "\n"
-#~ "Check to see if your disk is full.  If it is full, then quit %(appname)s, "
-#~ "free up some space, and start %(appname)s again.\n"
-#~ "\n"
-#~ "If your disk is not full, help us understand the problem by reporting a bug "
-#~ "to our crash database.\n"
-#~ "\n"
-#~ "Finally, you can start fresh and your damaged database will be removed, but "
-#~ "you will have to re-add your feeds and media files."
-#~ msgstr ""
-#~ "Undskyld, %(appname)s kunne ikke opgradere din database på grund af fejl.\\"
-#~ "n\n"
-#~ "\\n\n"
-#~ "Tjek om din harddisk er fyldt. Hvis den er fyldt, så afslut %(appname)s,\n"
-#~ "frigør noget plads og start %(appname)s forfra.\\n\n"
-#~ "\\n\n"
-#~ "Hvis din harddisk ikke er fyldt, så hjælp os med at forstå problemet,\n"
-#~ "ved at sende en fejlrapport til vores fejldatabase.\\n\n"
-#~ "\\n\n"
-#~ "Afslutningsvis kan du starte forfra, og din ødelagte database vil blive "
-#~ "fjernet,\n"
-#~ "men du er nødt til at tilføje dine feeds og mediefiler igen."
 
 #~ msgid "Would you like to keep the feed?"
 #~ msgstr "Ønsker du at beholde denne feed?"
@@ -5692,20 +5385,11 @@ msgstr ""
 #~ msgid "_Download Item"
 #~ msgstr "_Hent element"
 
-#~ msgid "_Edit Item"
-#~ msgstr "_Rediger element"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Indstillinger"
-
 #~ msgid "Subscribed to new feed:"
 #~ msgstr "Abonnerer på ny kilde:"
 
 #~ msgid "Save Item _As"
 #~ msgstr "_Gem element som"
-
-#~ msgid "Add Website"
-#~ msgstr "Tilføj _hjemmeside"
 
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Ny _søgekilde"
@@ -5725,17 +5409,8 @@ msgstr ""
 #~ msgid "Check _Version"
 #~ msgstr "Kontroller _version"
 
-#~ msgid "_Remove Folders"
-#~ msgstr "F_jern mapper"
-
 #~ msgid "_Remove Folder"
 #~ msgstr "F_jern mappe"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Fjern hjemmesider"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Fjern hjemmeside"
 
 #~ msgid "New Playlist Fol_der"
 #~ msgstr "Ny spilleliste_mappe"
@@ -5746,9 +5421,6 @@ msgstr ""
 #~ msgid "_Remove Playlist"
 #~ msgstr "_Fjern spilleliste"
 
-#~ msgid "_Previous Item"
-#~ msgstr "_Forrige element"
-
 #~ msgid "_Remove Playlists"
 #~ msgstr "_Fjern spillelister"
 
@@ -5758,17 +5430,11 @@ msgstr ""
 #~ msgid "_Remove Playlist Folder"
 #~ msgstr "F_jern spillelistemappe"
 
-#~ msgid "_Next Item"
-#~ msgstr "_Næste element"
-
 #~ msgid "Volume _Down"
 #~ msgstr "Lydstyrke _ned"
 
 #~ msgid "Volume _Up"
 #~ msgstr "Lydstyrke _op"
-
-#~ msgid "Convert"
-#~ msgstr "Omdan"
 
 #~ msgid "Skip _Forward"
 #~ msgstr "Spring f_remad"
@@ -5781,54 +5447,3 @@ msgstr ""
 
 #~ msgid "Length"
 #~ msgstr "Varighed"
-
-#~ msgid ""
-#~ "Your browser will load the web-site where you can download and install "
-#~ "Bonjour.\n"
-#~ "\n"
-#~ "When the installation is finished, simply restart Miro for the changes to "
-#~ "take effect."
-#~ msgstr ""
-#~ "Din browser vil indlæse hjemmesiden, hvorpå du kan hente Bonjour.\n"
-#~ "\n"
-#~ "Når installationen er færdig, skal du bare genstarte Miro for at ændringerne "
-#~ "skal træde i kraft."
-
-#~ msgid "Would you like to keep the podcast?"
-#~ msgstr "Vil du beholde denne podcast?"
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Der opstod en fejl under indlæsningen af denne podcast"
-
-#, python-format
-#~ msgid ""
-#~ "For the best %(appname)s experience, we suggest you install Bonjour, which "
-#~ "is distributed as a part of Print Services.\n"
-#~ "\n"
-#~ "Installing Bonjour will allow you share your media library with other "
-#~ "%(appname)s users on your network, as well as stream media from other "
-#~ "%(appname)s users on your network.\n"
-#~ "\n"
-#~ "After installing Print Services, you will have to restart Miro.\n"
-#~ "\n"
-#~ "Would you like to do this now?"
-#~ msgstr ""
-#~ "For at få den bedste %(appname)s oplevelse anbefaler vi at du installerer "
-#~ "Bonjour, der distribueres som en del af Print Services.\n"
-#~ "\n"
-#~ "Ved at installere Bonjour kan du dele dit mediebibliotek med andre  "
-#~ "%(appname)s brugere på dit netværk, såvel som streame medier fra andre "
-#~ "%(appname)s brugere på dit netværk.\n"
-#~ "\n"
-#~ "Efter at have installeret Print Services skal du genstarte Miro.\n"
-#~ "\n"
-#~ "Ønsker du at gøre dette nu?"
-
-#~ msgid ""
-#~ "Miro has determined that your system may be missing the Bonjour components, "
-#~ "a standard part of Mac OS X installations.  Please review your Mac OS X "
-#~ "installation."
-#~ msgstr ""
-#~ "Miro har opdaget at dit system muligvis mangler Bonjour-komponenterne, som "
-#~ "er en standarddel af Mac OS X-installationer. Undersøg venligst din Mac OS X-"
-#~ "installation."

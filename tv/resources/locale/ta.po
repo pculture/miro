@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:10+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4505,15 +4505,6 @@ msgstr ""
 #~ msgid "Single and external downloads"
 #~ msgstr "தனி மற்றும் வெளியக பதிவிறக்கங்கள்"
 
-#~ msgid "Path:"
-#~ msgstr "பாதை:"
-
-#~ msgid "Title:"
-#~ msgstr "தலைப்பு:"
-
-#~ msgid "Media type:"
-#~ msgstr "ஊடக வகை:"
-
 #~ msgid "Save Search"
 #~ msgstr "தேடலை சேமி"
 
@@ -4532,32 +4523,14 @@ msgstr ""
 #~ msgid "Auto Download"
 #~ msgstr "தானியங்கி பதிவிறக்கம்"
 
-#~ msgid "Rename Website"
-#~ msgstr "வலைத்தளத்தை மறுபெயரிடு"
-
-#~ msgid "Remove Website"
-#~ msgstr "வலைத்தளத்தை நீக்கு"
-
-#~ msgid "Remove Websites"
-#~ msgstr "வலைத்தளங்களை நீக்கு"
-
-#~ msgid "WEBSITES"
-#~ msgstr "வலைத்தளங்கள்"
-
 #~ msgid "LIBRARY"
 #~ msgstr "நூலகம்"
 
 #~ msgid "PLAYLISTS"
 #~ msgstr "இசைப்பட்டியல்கள்"
 
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(மொழியை மாற்ற மிரோவை மீளதுவக்க வேண்டும்.)"
-
 #~ msgid "Auto download setting:"
 #~ msgstr "தானியங்கி பதிவிறக்க அமைப்பு:"
 
 #~ msgid "Comments"
 #~ msgstr "குறிப்புகள்"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "முழுத்திரையிலிருந்து வெளியேறு"

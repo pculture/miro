@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4487,9 +4487,6 @@ msgstr ""
 #~ msgid "Internal Error"
 #~ msgstr "内部エラー"
 
-#~ msgid "Custom Channels"
-#~ msgstr "カスタム・チャンネル"
-
 #~ msgid "_Paste"
 #~ msgstr "貼り付け(_P)"
 
@@ -4519,12 +4516,6 @@ msgstr ""
 
 #~ msgid "Auto Download"
 #~ msgstr "自動ダウンロード"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "ビジュアライゼーション変更の効果を反映させるには、もう一度再生しなおして下さい"
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "オーディオ再生時、このビデオを使用する:"
 
 #~ msgid "activity"
 #~ msgstr "アクティビティー"
@@ -4585,21 +4576,6 @@ msgstr ""
 
 #~ msgid "Auto download setting:"
 #~ msgstr "自動ダウンロード設定:"
-
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr "これらのフォルダーの新しいビデオを視聴して、それらをライブラリーに含める:"
-
-#~ msgid "Stop after each video"
-#~ msgstr "各ビデオ再生後に停止"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "続けて別のビデオを再生"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "前回停止したポイントからビデオの再生を再開"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "デフォルトのビデオ有効期限:"
 
 #~ msgid "No Results Found"
 #~ msgstr "見つけることが出来ませんでした"
@@ -4714,9 +4690,6 @@ msgstr ""
 
 #~ msgid "Rename Feed"
 #~ msgstr "フィードの名前を変更"
-
-#~ msgid "Add to Library"
-#~ msgstr "ライブラリに追加"
 
 #, python-format
 #~ msgid "Skipped %(count)d feed already present."
@@ -4866,12 +4839,6 @@ msgstr ""
 #~ msgid "audio"
 #~ msgstr "音声"
 
-#~ msgid "Remove Website"
-#~ msgstr "ウェブサイトを削除"
-
-#~ msgid "Remove Websites"
-#~ msgstr "ウェブサイトを削除"
-
 #~ msgid "Revert Feed Name"
 #~ msgstr "フィード名を元に戻す"
 
@@ -4881,24 +4848,9 @@ msgstr ""
 #~ msgid "LIBRARY"
 #~ msgstr "ライブラリ"
 
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "ビデオフィード"
-
-#~ msgid "WEBSITES"
-#~ msgstr "ウェブサイト"
-
 #~ msgid ""
 #~ "Resume playing a video or audio item from the point it was last stopped."
 #~ msgstr "ビデオまたは楽曲を前回停止した場所から再生する。"
-
-#~ msgid "Add Website"
-#~ msgstr "ウェブサイトを追加"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "ウェブサイトの追加 - 無効なURLです"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "追加するウェブサイトのURLを入力してください"
 
 #~ msgid ""
 #~ "One of these items is a folder.  Delete/Removeing a folder will "
@@ -4914,47 +4866,18 @@ msgstr ""
 #~ msgid "Display Contents"
 #~ msgstr "内容を表示"
 
-#~ msgid "Re_name Website"
-#~ msgstr "ウェブサイト名称変更(_n)"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "フィード名変更(_n)"
-
 #~ msgid "Enter the URL of the feed to add"
 #~ msgstr "追加するフィードのURLを入力してください"
 
 #~ msgid "Add Feed - Invalid URL"
 #~ msgstr "フィード追加 - 不正なURLです"
 
-#~ msgid "_Edit Item"
-#~ msgstr "項目を編集(_E)"
-
 #~ msgid "New Searc_h Feed"
 #~ msgstr "フィードの新規検索(_h)"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "フィード削除(_R)"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "フィード削除(_R)"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "フォルダー削除(_R)"
 
 #, python-format
 #~ msgid "_About %(name)s"
 #~ msgstr "%(name)s について(_A)"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "ウェブサイト削除(_R)"
-
-#~ msgid "_Remove Website"
-#~ msgstr "ウェブサイト削除(_R)"
-
-#, python-format
-#~ msgid "%(count)d Website Selected"
-#~ msgid_plural "%(count)d Websites Selected"
-#~ msgstr[0] "%(count)d のウェブサイトが選択されています"
 
 #~ msgid "All Items Match Search"
 #~ msgstr "検索に一致した全アイテム"
@@ -4963,12 +4886,3 @@ msgstr ""
 #~ msgid "Show %(count)d More Item"
 #~ msgid_plural "Show %(count)d More Items"
 #~ msgstr[0] "さらに %(count)d 項目を表示"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(言語設定を反映するにはMiroを再起動する必要があります。)"
-
-#~ msgid "Download to My Miro"
-#~ msgstr "Miroへダウンロード"
-
-#~ msgid "Non Podcast"
-#~ msgstr "非ポッドキャスト"

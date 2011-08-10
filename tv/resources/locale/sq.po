@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4548,17 +4548,8 @@ msgid ""
 "it."
 msgstr ""
 
-#~ msgid "Custom Channels"
-#~ msgstr "Kanale Vetjake"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Si parazgjedhje, videot skadojnë pas:"
-
 #~ msgid "Comments"
 #~ msgstr "Komente"
-
-#~ msgid "Start Seeding"
-#~ msgstr "Fillo Ndarjen"
 
 #~ msgid "Feed Settings"
 #~ msgstr "Ndrrysho Ushqyesin"
@@ -5445,117 +5436,5 @@ msgstr ""
 #~ "filmave nga koleksioni juaj.\n"
 #~ "Ndryshimet së fundmi mund të humbasin."
 
-#~ msgid "Title:"
-#~ msgstr "Titull:"
-
-#~ msgid "Media type:"
-#~ msgstr "Lloj media:"
-
-#~ msgid "Path:"
-#~ msgstr "Shteg:"
-
-#~ msgid "WEBSITES"
-#~ msgstr "WEBSITES"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "PRURJE VIDEO"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Drejtoria '%s' nuk u krijua dot.  "
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Luani media në Miro."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ "\n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s s'mund të përdorë drejtorinë parësore për videot që gjendet "
-#~ "te:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Kjo mund të vijë ngaqë gjendet në një disk të jashtëm, i cili nuk është "
-#~ "lidhur në sistem, ngaqë është drejtori te e cila %(shortappname)s nuk ka "
-#~ "leje shkrimi, ose ka diçka në atë shteg që nuk është drejtori.\n"
-#~ "\n"
-#~ "Nëse vazhdoni, si drejtori parësore videosh do të caktohet një vend në këtë "
-#~ "disk.  Nëse keni video të shkarkuara, kjo do ta bëjë %(shortappname)s të "
-#~ "humbë hollësitë mbi këto video.\n"
-#~ "\n"
-#~ "Nëse e ndalni këtu, mandej mund të lidhni diskun në sistem ose të ndreqni "
-#~ "problemin dhe të rinisni %(shortappname)s."
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Përpjestim Sipër/Poshtë"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Ri_emërtoni Prurjen"
-
-#~ msgid "Re_name Site"
-#~ msgstr "Ri_emërtoni 'Site''-in"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Hiqe Prurjen"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Hiqi Prurjet"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Hiqi Dosjet"
-
-#~ msgid "_Remove Site"
-#~ msgstr "_Hiqe \"Site\"-in"
-
-#~ msgid "_Remove Sites"
-#~ msgstr "_Hiqi \"Site\"-et"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "_Nëntituj"
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "s'ka lidhje - provë sërish për %s"
-
-#~ msgid "Remove Website"
-#~ msgstr "Fshij uebfaqen"
-
-#~ msgid "Rename Website"
-#~ msgstr "Ndrysho emrin e uebfaqes"
-
-#~ msgid "Add Website"
-#~ msgstr "Shto një uebfaqe"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Fshij uebfaqet"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Shto një faqe - URL i gabuar"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Shkruaj URL adresën e faqes"
-
 #~ msgid "Seeding"
 #~ msgstr "Duke dërguar"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Fshij uebfaqen"
-#~ msgstr[1] "Fshij uebfaqet"
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Ndrysho"

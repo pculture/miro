@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:49+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -4508,12 +4508,6 @@ msgstr ""
 #~ msgid "_Stop"
 #~ msgstr "_Halti"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Videoj estas aŭtomate eksigataj post:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Propraj Kanaloj"
-
 #~ msgid "Web Page"
 #~ msgstr "Retpaĝo"
 
@@ -4672,6 +4666,3 @@ msgstr ""
 
 #~ msgid "Cu_t"
 #~ msgstr "El_tondi"
-
-#~ msgid "Universal, Chinese"
-#~ msgstr "Universala, Ĉina"

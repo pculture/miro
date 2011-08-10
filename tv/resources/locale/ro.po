@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-20 14:32-0400\n"
-"PO-Revision-Date: 2011-06-17 14:20+0000\n"
+"PO-Revision-Date: 2011-08-04 21:27+0000\n"
 "Last-Translator: icasib <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,8 +11,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2011-07-20 17:09+0000\n"
-"X-Generator: Launchpad (build 13468)\n"
+"X-Launchpad-Export-Date: 2011-08-10 17:50+0000\n"
+"X-Generator: Launchpad (build 13636)\n"
 
 #: ../../osx/plat/utils.py:615 ../../windows/plat/utils.py:509
 msgid "iTunes"
@@ -2642,7 +2642,7 @@ msgstr "Deschid_e"
 
 #: ../../lib/frontends/widgets/menus.py:218
 msgid "Import"
-msgstr ""
+msgstr "Importă"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Search all my Files..."
@@ -2650,7 +2650,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:222
 msgid "Search in a Folder..."
-msgstr ""
+msgstr "Caută într-un dosar..."
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "Watch a Folder..."
@@ -2658,7 +2658,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:228
 msgid "Choose Files...."
-msgstr ""
+msgstr "Alege fișiere..."
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "Download from a URL"
@@ -2694,7 +2694,7 @@ msgstr "Copiază _URLul elementului"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "Check Version"
-msgstr ""
+msgstr "Verifică versiunea"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Quit"
@@ -2706,7 +2706,7 @@ msgstr "Bară _laterală"
 
 #: ../../lib/frontends/widgets/menus.py:263
 msgid "_New Folder"
-msgstr ""
+msgstr "Dosar _nou"
 
 #: ../../lib/frontends/widgets/menus.py:267
 #: ../../lib/frontends/widgets/tablist.py:1081
@@ -2734,7 +2734,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:278
 msgid "Remove Folders"
-msgstr ""
+msgstr "Șterge dosare"
 
 #: ../../lib/frontends/widgets/menus.py:279
 #: ../../lib/frontends/widgets/tablist.py:970
@@ -2794,11 +2794,11 @@ msgstr "Redenumește lista de redare"
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Șterge lista de redare"
 
 #: ../../lib/frontends/widgets/menus.py:313
 msgid "Remove Playlists"
-msgstr ""
+msgstr "Șterge listele de redare"
 
 #: ../../lib/frontends/widgets/menus.py:314
 msgid "Remove Playlist Folders"
@@ -2806,7 +2806,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:315
 msgid "Remove Playlist Folder"
-msgstr ""
+msgstr "Șterge dosarul cu liste de redare"
 
 #: ../../lib/frontends/widgets/menus.py:318
 msgid "P_layback"
@@ -2814,35 +2814,35 @@ msgstr "R_edare"
 
 #: ../../lib/frontends/widgets/menus.py:323
 msgid "Stop"
-msgstr ""
+msgstr "Oprește"
 
 #: ../../lib/frontends/widgets/menus.py:326
 msgid "Next Item"
-msgstr ""
+msgstr "Elementul următor"
 
 #: ../../lib/frontends/widgets/menus.py:329
 msgid "Previous Item"
-msgstr ""
+msgstr "Elementul anterior"
 
 #: ../../lib/frontends/widgets/menus.py:333
 msgid "Skip Forward"
-msgstr ""
+msgstr "Sari înainte"
 
 #: ../../lib/frontends/widgets/menus.py:335
 msgid "Skip Back"
-msgstr ""
+msgstr "Sari înapoi"
 
 #: ../../lib/frontends/widgets/menus.py:338
 msgid "Volume Up"
-msgstr ""
+msgstr "Mărește volumul"
 
 #: ../../lib/frontends/widgets/menus.py:340
 msgid "Volume Down"
-msgstr ""
+msgstr "Redu volumul"
 
 #: ../../lib/frontends/widgets/menus.py:343
 msgid "_Fullscreen"
-msgstr "_Tot ecranul"
+msgstr "Pe tot _ecranul"
 
 #: ../../lib/frontends/widgets/menus.py:346
 msgid "_Toggle Detached/Attached"
@@ -2850,7 +2850,7 @@ msgstr "_Activează dezatașare/atașare"
 
 #: ../../lib/frontends/widgets/menus.py:353
 msgid "Select a Subtitles File..."
-msgstr "Selecteaza fisierul de subtitrare"
+msgstr "Selectează fișierul de subtitrare"
 
 #: ../../lib/frontends/widgets/menus.py:359
 msgid "Sorts"
@@ -2867,23 +2867,23 @@ msgstr "A_jutor"
 #: ../../lib/frontends/widgets/menus.py:364
 #, python-format
 msgid "About %(name)s"
-msgstr ""
+msgstr "Despre %(name)s"
 
 #: ../../lib/frontends/widgets/menus.py:372
 msgid "Donate"
-msgstr ""
+msgstr "Donează"
 
 #: ../../lib/frontends/widgets/menus.py:375
 msgid "Help"
-msgstr ""
+msgstr "Ajutor"
 
 #: ../../lib/frontends/widgets/menus.py:379
 msgid "Report a Bug"
-msgstr ""
+msgstr "Raportează o eroare"
 
 #: ../../lib/frontends/widgets/menus.py:381
 msgid "Translate"
-msgstr ""
+msgstr "Traducere"
 
 #: ../../lib/frontends/widgets/menus.py:383
 msgid "Planet Miro"
@@ -4641,23 +4641,6 @@ msgstr ""
 #~ msgid "_Remove"
 #~ msgstr "Ște_rge"
 
-#~ msgid "Add to Library"
-#~ msgstr "Adaugă la bibliotecă"
-
-#~ msgid "You must restart playback for visualization changes to take effect."
-#~ msgstr "Trebuie să reporniți redarea înainte ca schimbările să ia efect."
-
-#~ msgid "Use this for video when playing audio:"
-#~ msgstr "Utilizați asta ca video când redați audio:"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Canale personale"
-
-#, python-format
-#~ msgid ""
-#~ "You are running a version of %(appname)s with a custom set of channels."
-#~ msgstr "Rulați o versiune %(appname)s cu un set personalizat de canale."
-
 #, python-format
 #~ msgid "%(size)s gb/s"
 #~ msgstr "%(size)s Gb/s"
@@ -4795,11 +4778,6 @@ msgstr ""
 #~ msgid "Auto download setting:"
 #~ msgstr "Opțiuni de descărcare automată:"
 
-#~ msgid "Watch for new videos in these folders and include them in library:"
-#~ msgstr ""
-#~ "Urmărește video-uri nou adăugate în aceste directoare și include-le în "
-#~ "librărie:"
-
 #~ msgid "No Results Found"
 #~ msgstr "Nici un rezultat găsit"
 
@@ -4849,14 +4827,6 @@ msgstr ""
 #~ msgid "Add Site - Invalid URL"
 #~ msgstr "Adăugare sit - URL eronat"
 
-#, python-format
-#~ msgid "Remove %(name)s"
-#~ msgstr "Șterge %(name)s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %(name)s?"
-#~ msgstr "Sigur doriți să ștergeți %(name)s?"
-
 #~ msgid "Rename Site"
 #~ msgstr "Redenumește situl"
 
@@ -4883,9 +4853,6 @@ msgstr ""
 
 #~ msgid "Permalink"
 #~ msgstr "Permalink"
-
-#~ msgid "Add to library"
-#~ msgstr "Adaugă în librărie"
 
 #~ msgid "audio"
 #~ msgstr "audio"
@@ -5185,41 +5152,11 @@ msgstr ""
 #~ msgstr ""
 #~ "Acest fișier la %(url)s nu pare să fie audio sau video, nici un flux RSS."
 
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Abonare la mai multe fluxuri"
-
-#~ msgid "Enter a name for the new feed folder"
-#~ msgstr "Alegeți un nume pentru noul dosar de fluxuri"
-
 #~ msgid "Add new feed to this section:"
 #~ msgstr "Adaugă noul flux în această secțiune:"
 
 #~ msgid "Create Feed"
 #~ msgstr "Crează flux"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to one of these feeds.  These feeds will "
-#~ "stay where they currently are."
-#~ msgid_plural ""
-#~ "NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-#~ "will stay where they currently are."
-#~ msgstr[0] ""
-#~ "ATENȚIE: Sunteți deja abonat la unul din aceste fluxuri. Acesta va rămâne "
-#~ "unde este acum."
-#~ msgstr[1] ""
-#~ "ATENȚIE: Sunteți deja abonat la %(count)d din aceste fluxuri. Acestea vor "
-#~ "rămâne unde sunt acum."
-#~ msgstr[2] ""
-#~ "ATENȚIE: Sunteți deja abonat la %(count)d din aceste fluxuri. Acestea vor "
-#~ "rămâne unde sunt acum."
-
-#, python-format
-#~ msgid "Create feed?"
-#~ msgid_plural "Create %(count)d feeds?"
-#~ msgstr[0] "Creare flux?"
-#~ msgstr[1] "Creare %(count)d fluxuri?"
-#~ msgstr[2] "Creare %(count)d de fluxuri?"
 
 #, python-format
 #~ msgid ""
@@ -5248,9 +5185,6 @@ msgstr ""
 #~ msgid "Pause Auto-Downloading when this many items are unplayed:"
 #~ msgstr ""
 #~ "Suspendă descărcarea automată când sunt atâtea elemente încă neredate:"
-
-#~ msgid "Resume playing a video from the point it was last stopped."
-#~ msgstr "Reia redarea video de unde a fost oprită ultima oară."
 
 #~ msgid "Default settings for new feeds:"
 #~ msgstr "Configurare implicită pentru fluxuri noi:"
@@ -5320,15 +5254,6 @@ msgstr ""
 
 #~ msgid "_Translate"
 #~ msgstr "_Traduceţi"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Redă clipuri unul după altul"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Oprește redarea după fiecare clip video"
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "În mod implicit clipurile expiră după:"
 
 #~ msgid "File in Browser"
 #~ msgstr "Fişier în browser"
@@ -5519,9 +5444,6 @@ msgstr ""
 #~ msgstr[1] "%(num).0f minute"
 #~ msgstr[2] "%(num).0f de minute"
 
-#~ msgid "View:"
-#~ msgstr "Vizualizare:"
-
 #, python-format
 #~ msgid "_About %(name)s"
 #~ msgstr "_Despre %(name)s"
@@ -5565,211 +5487,3 @@ msgstr ""
 #~ "Spaţiu pe disc insuficient pentru a-ţi reactualiza baza de date de la "
 #~ "versiunea precedentă a %(appname)s. Te rog şterge câteva fişiere şi încearcă "
 #~ "iar."
-
-#~ msgid "Title:"
-#~ msgstr "Titlu:"
-
-#~ msgid "Edit the metadata of this item."
-#~ msgstr "Modifica metadata acestui element"
-
-#~ msgid "S_ubtitles"
-#~ msgstr "S_ubtitrări"
-
-#~ msgid "Unknown Language"
-#~ msgstr "Limbă necunoscută"
-
-#, python-format
-#~ msgid "Directory '%s' could not be created.  "
-#~ msgstr "Directorul '%s' nu a putut fi creat.  "
-
-#~ msgid "WEBSITES"
-#~ msgstr "PAGINI WEB"
-
-#~ msgid "VIDEO FEEDS"
-#~ msgstr "FLUXURI VIDEO"
-
-#~ msgid "Media type:"
-#~ msgstr "Tip mediu:"
-
-#~ msgid "Play media in Miro."
-#~ msgstr "Redă media în Miro."
-
-#~ msgid "Path:"
-#~ msgstr "Cale acces:"
-
-#~ msgid "Remove Website"
-#~ msgstr "Şterge Pagina Web"
-
-#~ msgid "Remove Websites"
-#~ msgstr "Şterge Paginile Web"
-
-#~ msgid "Enter the URL of the website to add"
-#~ msgstr "Scrie adresa URL a paginii web pe care vrei s-o adaugi"
-
-#~ msgid "Rename Website"
-#~ msgstr "Redenumire Pagina Web"
-
-#~ msgid "Add Website"
-#~ msgstr "Adaugă Pagină Web"
-
-#~ msgid "Add Website - Invalid URL"
-#~ msgstr "Adăugare pagină web - URL invalid"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the website to add"
-#~ msgstr ""
-#~ "Adresa introdusă nu este URL valid.\n"
-#~ "Verifică URL -ul si încearcă din nou.\n"
-#~ "Introdu URL -ul paginii web pe care vrei s-o adaugi."
-
-#~ msgid "_Edit Item"
-#~ msgstr "_Editare obiect"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Preferințe"
-
-#, python-format
-#~ msgid ""
-#~ "We're sorry, %(appname)s was unable to start up due to a problem with the "
-#~ "database:\n"
-#~ "\n"
-#~ "Error: %(error)s\n"
-#~ "\n"
-#~ "It's possible that your database file is corrupted and cannot be used.\n"
-#~ "\n"
-#~ "You can start fresh and your damaged database will be removed, but you will "
-#~ "have to re-add your feeds and media files.  If you want to do this, press "
-#~ "the Start Fresh button and restart %(appname)s.\n"
-#~ "\n"
-#~ "To help us fix problems like this in the future, please file a bug report at "
-#~ "%(url)s."
-#~ msgstr ""
-#~ "Ne pare rau, %(appname)s nu a putut porni din cauza unei probleme cu baza de "
-#~ "date:\n"
-#~ "\n"
-#~ "Eroare: %(error)s\n"
-#~ "\n"
-#~ "E posibil ca baza dumneavoastra  de date sa fie corupta si nu poate fi "
-#~ "utilizata.\n"
-#~ "\n"
-#~ "Puteti reseta aplicatia si baza de date distrusa va fi stearsa, dar va "
-#~ "trebui sa adaugati din nou toate feed-urile si fisierele media. Daca doriti "
-#~ "sa resetati putesi apasa pe butonul Start Fresh si reporniti %(appname)s.\n"
-#~ "\n"
-#~ "Pentru a ne ajuta sa reparam probleme asemanatoare in viitor, va rugam sa "
-#~ "completati un raport de eroare la %(url)s."
-
-#, python-format
-#~ msgid "no connection - retrying in %s"
-#~ msgstr "conexiune inexistenta - reincearca in %s"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Motiv necunoscut"
-
-#, python-format
-#~ msgid ""
-#~ "%(appname)s will now submit a crash report to our crash database\n"
-#~ "\n"
-#~ "Do you want to include entire program database including all video and feed "
-#~ "metadata with crash report? This will help us diagnose the issue."
-#~ msgstr ""
-#~ "%(appname)s va trimite un raport de eroare catre baza noastra de date\n"
-#~ "Doriti sa includeti intreaga baza de date a programelor inclusiv toate "
-#~ "fisierele video si datele feed-urilor in raportul de eroare? Aceasta ne va "
-#~ "ajuta sa diagnosticam problema aparuta."
-
-#~ msgid "Up/Down Ratio"
-#~ msgstr "Raport Up/Down"
-
-#~ msgid "Re_name Website"
-#~ msgstr "Redenumeste site-ul web"
-
-#~ msgid "Re_name Feed"
-#~ msgstr "Redenumeste feed-ul"
-
-#~ msgid "_Remove Feeds"
-#~ msgstr "_Sterge feed-urile"
-
-#~ msgid "_Remove Folders"
-#~ msgstr "_Sterge directoarele"
-
-#~ msgid "_Remove Feed"
-#~ msgstr "_Sterge feed-ul"
-
-#~ msgid "_Previous Item"
-#~ msgstr "_Elementul precedent"
-
-#~ msgid "_Remove Websites"
-#~ msgstr "_Sterge site-urile web"
-
-#~ msgid "_Remove Website"
-#~ msgstr "_Sterge site-ul web"
-
-#~ msgid "_Next Item"
-#~ msgstr "_Urmatorul element"
-
-#, python-format
-#~ msgid "Are you sure you want to remove this website?"
-#~ msgid_plural "Are you sure you want to remove these %(count)s websites?"
-#~ msgstr[0] "Sunteti sigur ca doriti sa stergeti pagina web"
-#~ msgstr[1] "Sunteti sigur ca doriti sa stergeti pagina web"
-
-#~ msgid "Convert"
-#~ msgstr "Conversie"
-
-#~ msgid "Auto-download"
-#~ msgstr "Descarcare automata"
-
-#~ msgid "Update"
-#~ msgstr "Actualizează"
-
-#~ msgid "Finding Files"
-#~ msgstr "Cautare fisiere"
-
-#, python-format
-#~ msgid "%(name)s Startup"
-#~ msgstr "Porneste %(name)s"
-
-#, python-format
-#~ msgid ""
-#~ "We recommend that you have %(name)s launch when your computer starts up.  "
-#~ "This way, downloads in progress can finish downloading and new media files "
-#~ "can be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Vă recomandăm să lansati  %(name)s atunci când computerul porneşte. În acest "
-#~ "fel, descărcările în curs se pot termina  şi noi fisiere media pot fi "
-#~ "descărcate în fundal, pentru a fi gata atunci când doriţi să le urmăriţi."
-
-#~ msgid "Open log"
-#~ msgstr "Deschide jurnalul"
-
-#, python-format
-#~ msgid "Failed: %(error)s"
-#~ msgstr "Esuat: %(error)s"
-
-#~ msgid "(Changing the language requires you to restart Miro.)"
-#~ msgstr "(Schimbarea limbii va necesita să reporniţi Miro.)"
-
-#~ msgid "Exit fullscreen"
-#~ msgstr "Ieșire din mod Afişare pe tot ecranul"
-
-#~ msgid "Unknow Host"
-#~ msgstr "Sursa necunoscuta"
-
-#~ msgid "Choose Language"
-#~ msgstr "Alegeti limba"
-
-#, python-format
-#~ msgid "Enter a new name for the website %(name)s"
-#~ msgstr "Introduceti un nou nume pentru site-ul %(name)s"
-
-#~ msgid "Remove website"
-#~ msgid_plural "Remove websites"
-#~ msgstr[0] "Şterge site-ul web"
-#~ msgstr[1] "Şterge site-urile web"
-
-#~ msgid "Error loading podcast"
-#~ msgstr "Eroare la încărcarea podcast-ului"
