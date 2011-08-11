@@ -694,23 +694,9 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
         self.icon = {}
-        self.setup_size = (-1, -1)
-
-    def setup_icons(self, width, height):
-        """Create icons that will fill our allocated area correctly. """
-        if (width, height) == self.setup_size:
-            return
-
-        icon_width = int(height / 2.0)
-        icon_height = int((icon_width / self.ICON_PROPORTIONS) + 0.5)
-        # FIXME: by the time min_width is set below, it doesn't matter --Kaz
-        self.width = self.min_width = icon_width
-        self.height = icon_height
-        icon_dimensions = (icon_width, icon_height)
         for state in StateCircleRenderer.ICON_STATES:
             path = resources.path('images/status-icon-%s.png' % state)
-            self.icon[state] = imagepool.get_surface(path, icon_dimensions)
-        self.setup_size = (width, height)
+            self.icon[state] = imagepool.get_surface(path)
 
     def get_size(self, style, layout_manager):
         return self.min_width, self.min_height
@@ -719,13 +705,13 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         return None
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        self.setup_icons(context.width, context.height)
         icon = self.calc_icon()
+        if icon is None:
+            return
         # center icon vertically and horizontally
-        x = int((context.width - self.width) / 2)
-        y = int((context.height - self.height) / 2)
-        if icon:
-            icon.draw(context, x, y, icon.width, icon.height)
+        x = (context.width - icon.width) // 2
+        y = (context.height - icon.height) // 2
+        icon.draw(context, x, y, icon.width, icon.height)
 
     def calc_icon(self):
         """Get the icon we should show.
