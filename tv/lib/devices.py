@@ -28,7 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from glob import glob
-from fnmatch import fnmatch
+import fnmatch
 try:
     import simplejson as json
 except ImportError:
@@ -36,6 +36,7 @@ except ImportError:
 import codecs
 import logging
 import os, os.path
+import re
 import time
 import bisect
 try:
@@ -78,6 +79,49 @@ def unicode_to_path(path):
     """
     return utf8_to_filename(path.encode('utf8')).replace('/', os.path.sep)
 
+class GlobSet(object):
+    """
+    A set()like object which allows some of its values to be glob-style pattern
+    matches.
+    """
+    def __init__(self, values):
+        self.frozenset = frozenset(v.lower() for v in values
+                                   if v and '*' not in v)
+        patterns = [v.lower() for v in values if '*' in v]
+        self.repr = repr([v.lower() for v in values])
+        if patterns:
+            self.regex = re.compile('|'.join(fnmatch.translate(v)
+                                             for v in patterns))
+        else:
+            self.regex = None
+
+    def __repr__(self):
+        return "GlobSet(%s)" % (self.repr,)
+
+    def __contains__(self, value):
+        if not value:
+            return False
+        value = value.lower()
+        if value in self.frozenset:
+            return True
+        elif self.regex:
+            return bool(self.regex.match(value))
+        return False
+
+    def __iter__(self):
+        return iter(self.frozenset)
+
+    def __eq__(self, other):
+        return self.frozenset == frozenset(other)
+
+    def __and__(self, other):
+        if isinstance(other, GlobSet):
+            return NotImplemented
+        other = set(other)
+        if self.frozenset & other:
+            return True
+        return any(v for v in other if self.regex.match(v))
+
 class BaseDeviceInfo(object):
     """
     Base class for device information.
@@ -87,7 +131,8 @@ class BaseDeviceInfo(object):
     # might as well save a bit of memory anyways.
     __slots__ = ['name', 'device_name', 'vendor_id', 'product_id',
                  'video_conversion', 'video_path',
-                 'audio_conversion', 'audio_path', 'audio_types',
+                 'audio_conversion', 'audio_path',
+                 'container_types', 'audio_types', 'video_types',
                  'mount_instructions']
     def update(self, kwargs):
         for key, value in kwargs.items():
@@ -95,6 +140,8 @@ class BaseDeviceInfo(object):
                 self.audio_path = unicode_to_path(value)
             elif key == 'video_path':
                 self.video_path = unicode_to_path(value)
+            elif key.endswith('_types'):
+                setattr(self, key, GlobSet(value))
             else:
                 setattr(self, key, value)
 
@@ -124,7 +171,9 @@ class DeviceInfo(BaseDeviceInfo):
     video_path: mount-relative path to where the videos should be placed
     audio_conversion: the Miro conversion name for audio to this device
     audio_path: mount-relative path to where audio files should be placed
-    audio_types: audio MIME types this device supports
+    container_types: FFmpeg container formats this device supports
+    audio_types: FFmpeg audio codecs this device supports
+    video_types: FFmpeg video codecs this device supports
     mount_instructions: text to show the user about how to mount their device
     parent (optional): a MultipleDeviceInfo instance which has this device's
                        info
@@ -301,7 +350,7 @@ class DeviceManager(object):
             info = self.device_by_name[device_name]
         except KeyError:
             for info in self.generic_devices:
-                if fnmatch(device_name, info.device_name):
+                if fnmatch.fnmatch(device_name, info.device_name):
                     break
             else:
                 raise
@@ -752,17 +801,42 @@ class DeviceSyncManager(object):
     def conversion_for_info(self, info):
         device_settings = self.device.database.get(u'settings', {})
         device_info = self.device.info
-        if info.file_type == 'audio':
-            audio_conversion = (device_settings.get(u'audio_conversion') or
-                                device_info.audio_conversion)
-            if (audio_conversion == 'copy' or (info.file_format and
-                info.file_format.split()[0] in device_info.audio_types)):
-                return 'copy'
+        media_info = conversions.get_media_info(info.video_path)
+        requires_conversion = False
+        def ensure_set(v):
+            if isinstance(v, basestring):
+                return set([v])
             else:
-                return audio_conversion
+                return set(v)
+        if 'container' in media_info:
+            info_containers = ensure_set(media_info['container'])
+            if not (device_info.container_types & info_containers):
+                requires_conversion = True # container doesn't match
+        else:
+            requires_conversion = True
+        if 'audio_codec' in media_info:
+            info_audio_codecs = ensure_set(media_info['audio_codec'])
+            if not (device_info.audio_types & info_audio_codecs):
+                requires_conversion = True # audio codec doesn't match
+        else:
+            requires_conversion = True
+        if info.file_type == 'video':
+            if (device_settings.get(u'always_sync_videos') or
+                'video_codec' not in media_info):
+                requires_conversion = True
+            else:
+                info_video_codecs = ensure_set(media_info['video_codec'])
+                if not (device_info.video_types & info_video_codecs):
+                    requires_conversion = True # video codec doesn't match
+        print 'CONVERSION', info.video_path, media_info, requires_conversion
+        if not requires_conversion:
+            return 'copy' # so easy!
+        elif info.file_type == 'audio':
+            return (device_settings.get(u'audio_conversion') or
+                    device_info.audio_conversion)
         elif info.file_type == 'video':
-            return(device_settings.get(u'video_conversion') or
-                   device_info.video_conversion)
+            return (device_settings.get(u'video_conversion') or
+                    device_info.video_conversion)
 
     def start_conversion(self, conversion, info, target):
         conversion_manager = conversions.conversion_manager

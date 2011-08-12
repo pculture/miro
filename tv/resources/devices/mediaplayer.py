@@ -9,7 +9,9 @@ sony_walkman = DeviceInfo(u'Sony Walkman',
                           video_path=u'VIDEO',
                           audio_conversion='mp3',
                           audio_path=u'MUSIC',
-                          audio_types='.mp3 .wma .mp4 .m4a'.split(),
+                          container_types = 'mp3 isom asf'.split(),
+                          audio_types='mp* wmav* aac'.split(),
+                          video_types=['h264'],
                           mount_instructions=_(
         "Your Walkman must be in USB Storage mode to sync files to it.\n"))
 
@@ -21,7 +23,9 @@ iriver_t10 = DeviceInfo(u'iRiver T10',
                         video_path=u'Playlists',
                         audio_conversion='mp3',
                         audio_path=u'Playlists',
-                        audio_types='.mp3 .wma .ogg .asf'.split(),
+                        container_types='mp3 asf ogg'.split(),
+                        audio_types='mp* wmav* vorbis'.split(),
+                        video_types=[],
                         mount_instructions=_(
         "Your device must be in USB Storage mode to sync files to it.\n"))
 
@@ -33,7 +37,9 @@ psp = DeviceInfo(u'Playstation Portable',
                  video_path=u'Video',
                  audio_conversion='mp3',
                  audio_path=u'Music',
-                 audio_types='.mp3 .mp4 .wav .wma'.split(),
+                 container_types='mp3 isom asf wav'.split(),
+                 audio_types='mp* aac pcm* wmav*'.split(),
+                 video_types='h264 mpeg* wmv*'.split(),
                  mount_instructions=_(
         "Your PSP must be in USB Storage mode to sync files to it.\n"))
 

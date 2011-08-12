@@ -528,8 +528,11 @@ class DeviceSettingsWidget(widgetset.Background):
             (_("Store video in this directory"), u'video_path', 'text'),
             (_("Store audio in this directory"), u'audio_path', 'text'),
             (_("Always show this device, even if "
-               "'show all devices' is turned off"), u'always_show', 'bool')
-            ):
+               "'show all devices' is turned off"), u'always_show', 'bool'),
+            (_("Always convert videos before copying to this device, even "
+               "if the video can play without conversion\n(may reduce video "
+               "file sizes, but makes syncing much slower)"),
+             u"always_sync_videos", 'bool')):
             if type_ == 'text':
                 widget = widgetset.TextEntry()
                 widget.set_size_request(260, -1)
@@ -609,7 +612,7 @@ class DeviceSettingsWidget(widgetset.Background):
             value = values[value] # sends an index
         elif setting == 'name' or setting.endswith('path'):
             value = widget.get_text()
-        elif setting == 'always_show':
+        elif setting in (u'always_show', u'always_sync_videos'):
             value = widget.get_checked()
         if value != self.device.database.get(u'settings', {}).get(setting,
                                                                   not value):

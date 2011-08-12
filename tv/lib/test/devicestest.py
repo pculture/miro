@@ -59,7 +59,9 @@ class DeviceManagerTest(MiroTestCase):
 from miro.devices import DeviceInfo, MultipleDeviceInfo
 defaults = {
     "audio_conversion": "mp3",
-    "audio_types": ".mp3 .aac".split(),
+    "container_types": "isom mp3".split(),
+    "audio_types": "mp3 aac".split(),
+    "video_types": ["h264"],
     "mount_instructions": _("Mount Instructions\\nOver multiple lines"),
     "video_path": u"Video",
     "audio_path": u"Audio",
@@ -103,7 +105,9 @@ devices = [target1, multiple]
         self.assertFalse(device.has_multiple_devices)
         self.assertEqual(device.mount_instructions,
                          _('Mount Instructions\nOver multiple lines'))
-        self.assertEqual(device.audio_types, ['.mp3', '.aac'])
+        self.assertEqual(device.container_types, ['mp3', 'isom'])
+        self.assertEqual(device.audio_types, ['mp3', 'aac'])
+        self.assertEqual(device.video_types, ['h264'])
 
         # both devices have the same ID
         device = dm.get_device_by_id(0x1234, 0x4567)
@@ -141,7 +145,9 @@ target1 = DeviceInfo("Target1",
                      product_id=None,
                      video_conversion="hero",
                      audio_conversion="mp3",
-                     audio_types=".mp3 .aac".split(),
+                     container_types="isom mp3".split(),
+                     audio_types="mp3 aac".split(),
+                     video_types=["h264"],
                      mount_instructions=u"",
                      video_path=u"Video",
                      audio_path=u"Audio")
@@ -164,7 +170,9 @@ devices = [target1]
             """from miro.devices import DeviceInfo, MultipleDeviceInfo
 defaults = {
     "audio_conversion": "mp3",
-    "audio_types": ".mp3 .aac".split(),
+    "container_types": "mp3 isom".split(),
+    "audio_types": "mp3 aac".split(),
+    "video_types": ["h264"],
     "mount_instructions": "Mount Instructions\\nOver multiple lines",
     "video_path": u"Video",
     "audio_path": u"Audio",
@@ -194,7 +202,9 @@ devices = [multiple]
             """from miro.devices import DeviceInfo, MultipleDeviceInfo
 defaults = {
     "audio_conversion": "mp3",
-    "audio_types": ".mp3 .aac".split(),
+    "container_types": "mp3 isom".split(),
+    "audio_types": "mp3 aac".split(),
+    "video_types": ["h264"],
     "mount_instructions": "Mount Instructions\\nOver multiple lines",
     "video_path": u"Video",
     "audio_path": u"Audio",
@@ -249,3 +259,38 @@ class DeviceHelperTest(MiroTestCase):
         with open(os.path.join(self.tempdir, '.miro', 'json')) as f:
             new_data = json.load(f)
         self.assertEqual(data, new_data)
+
+class GlobSetTest(MiroTestCase):
+
+    def test_globset_regular_match(self):
+        gs = devices.GlobSet('abc')
+        self.assertTrue('a' in gs)
+        self.assertTrue('A' in gs)
+        self.assertTrue('b' in gs)
+        self.assertTrue('c' in gs)
+        self.assertFalse('d' in gs)
+        self.assertFalse('aa' in gs)
+
+    def test_globset_glob_match(self):
+        gs = devices.GlobSet(['a*', 'b*'])
+        self.assertTrue('a' in gs)
+        self.assertTrue('AB' in gs)
+        self.assertTrue('b' in gs)
+        self.assertTrue('ba' in gs)
+        self.assertFalse('c' in gs)
+
+    def test_globset_both_match(self):
+        gs = devices.GlobSet(['a', 'b*'])
+        self.assertTrue('a' in gs)
+        self.assertTrue('b' in gs)
+        self.assertTrue('ba' in gs)
+        self.assertFalse('ab' in gs)
+        self.assertFalse('c' in gs)
+
+    def test_globset_and(self):
+        gs = devices.GlobSet(['a', 'b*'])
+        self.assertTrue(gs & set('a'))
+        self.assertTrue(gs & set('b'))
+        self.assertTrue(gs & set('bc'))
+        self.assertTrue(gs & set(['bc', 'c']))
+        self.assertFalse(gs & set('cd'))
