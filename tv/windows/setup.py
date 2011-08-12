@@ -505,7 +505,7 @@ class bdist_nsis(Command):
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
         if not self.nozugo:
-            self.copy_file(os.path.join(platform_dir, 'zugo-silent.exe'), self.dist_dir)
+            self.copy_file(os.path.join(platform_dir, 'toolbar-silent.exe'), self.dist_dir)
         self.copy_file(self.install_icon, self.dist_dir)
         self.copy_file(self.install_image, self.dist_dir)
 
@@ -531,7 +531,7 @@ class bdist_nsis(Command):
         nsis_vars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
         nsis_vars['MOZILLA_INSTALLER'] = '1' # don't show Zugo to international users
         if not self.nozugo:
-            nsis_vars['MIROBAR_EXE'] = 'zugo-silent.exe'
+            nsis_vars['MIROBAR_EXE'] = 'toolbar-silent.exe'
         if self.generic:
             nsis_vars['GENERIC_INSTALLER'] = '1'
 
