@@ -169,16 +169,46 @@ def extract_info(ast):
     if not input0:
         raise ValueError("no input #0")
 
+    foo, info['container'], bar = input0.line.split(', ', 2)
+    if ',' in info['container']:
+        info['container'] = info['container'].split(',')
+
+    metadata = input0.get_by_key("Metadata")
+    if metadata:
+        major_brand_node = metadata.get_by_key("major_brand")
+        extra_container_types = []
+        if major_brand_node:
+            major_brand = major_brand_node.line.split(':')[1].strip()
+            extra_container_types = [major_brand]
+        else:
+            major_brand = None
+
+        compatible_brands_node = metadata.get_by_key("compatible_brands")
+        if compatible_brands_node:
+            line = compatible_brands_node.line.split(':')[1].strip()
+            extra_container_types.extend(line[i:i+4] for i in range(0, len(line), 4)
+                                         if line[i:i+4] != major_brand)
+
+        if extra_container_types:
+            if not isinstance(info['container'], list):
+                info['container'] = list(info['container'])
+            info['container'].extend(extra_container_types)
+
     duration = input0.get_by_key("Duration:")
     if not duration:
         raise ValueError("no duration:")
     for stream_node in duration.children:
         stream = stream_node.line
         if "Video:" in stream:
-            match = SIZE_RE.search(stream)
+            stream_number, video, data = stream.split(': ', 2)
+            info['video_codec'] = data.split(', ')[0]
+            match = SIZE_RE.search(data)
             if match:
                 info["width"] = int(match.group(1))
                 info["height"] = int(match.group(2))
+        elif 'Audio:' in stream:
+            stream_number, video, data = stream.split(': ', 2)
+            info['audio_codec'] = data.split(', ')[0]
     return info
 
 
@@ -188,7 +218,8 @@ def get_media_info(filepath):
 
     :param filepath: absolute path to the media file in question
 
-    :returns: dict of media info possibly containing: height, width
+    :returns: dict of media info possibly containing: height, width,
+    container, audio_codec, video_codec
     """
 
     ffmpeg_bin = utils.get_ffmpeg_executable_path()

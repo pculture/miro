@@ -1,1 +1,1 @@
-{'width': 480, 'height': 270}
+{'width': 480, 'height': 270, 'container': ['mov', 'mp4', 'm4a', '3gp', '3g2', 'mj2', 'mp42', 'isom', 'avc1'], 'video_codec': 'h264', 'audio_codec': 'aac'}

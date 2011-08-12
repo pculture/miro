@@ -35,7 +35,9 @@ for data in (
                       product_id=None,
                       video_conversion='hero',
                       audio_conversion='mp3',
-                      audio_types='.mp3 .wma .m4a .aac .mid .wav'.split(),
+                      container_types='mp3 asf isom wav mpeg avi'.split(),
+                      audio_types='mp* wmav* aac pcm*'.split(),
+                      video_types='h264 mpeg* wmv*'.split(),
                       mount_instructions=_(
             "Your device must be mounted in order for %(shortappname)s to "
             "sync files to it.", {'shortappname':
