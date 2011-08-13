@@ -439,7 +439,7 @@ class VideoRenderer(Renderer):
         if message_name == 'prepare-xwindow-id':
             imagesink = message.src
             imagesink.set_property('force-aspect-ratio', True)
-            imagesink.set_xwindow_id(self.output_widget.persistent_window.xid)
+            imagesink.set_xwindow_id(self.output_widget.persistent_window.handle)
 
     def set_widget(self, widget):
         widget.connect("destroy", self.on_destroy)
