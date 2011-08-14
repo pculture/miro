@@ -59,7 +59,6 @@ from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
 from miro.plat.frontends.widgets import bonjour
 from miro.plat.frontends.widgets import flash
-from miro.plat.frontends.widgets import update
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 BLACKLISTED_FILE_EXTENSIONS = ('.ade', '.adp', '.asx', '.bas', '.bat', '.chm',
