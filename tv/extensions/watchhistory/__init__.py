@@ -31,7 +31,7 @@ from watchhistory import main
 
 WATCHER = None
 
-def load():
+def load(context):
     """Loads the watchhistory module.
     """
     global WATCHER

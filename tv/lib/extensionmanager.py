@@ -253,7 +253,7 @@ class ExtensionManager(object):
         """
         logging.info("extension manager: loading: %r", ext)
         load = getattr(sys.modules[ext.ext_module], "load")
-        load()
+        load(api.ExtensionContext(ext.ext_module))
         self._register_hooks(ext)
         ext.loaded = True
 

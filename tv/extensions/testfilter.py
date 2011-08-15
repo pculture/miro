@@ -47,7 +47,7 @@ def get_item_list_filters(type_, id_):
     # add our filter to all item lists
     return [StartsWithVowelItemFilter()]
 
-def load():
+def load(context):
     # only load if we are running the widgets frontend
     # FIXME: get_frontend() doesn't seem to be working, skip check for now
     #if api.get_frontend() != 'widgets':
