@@ -277,6 +277,7 @@ class MiroTestCase(unittest.TestCase):
         # reload config and initialize it to temprary
         config.load_temporary()
         self.platform = app.config.get(prefs.APP_PLATFORM)
+        self.set_temp_support_directory()
         database.set_thread(threading.currentThread())
         database.setup_managers()
         self.raise_db_load_errors = True
@@ -303,6 +304,20 @@ class MiroTestCase(unittest.TestCase):
         # app.extension_manager.load_extension()
         app.extension_manager = extensionmanager.ExtensionManager(
                 [self.tempdir], [])
+
+    def set_temp_support_directory(self):
+        self.sandbox_support_directory = os.path.join(self.tempdir, 'support')
+        if not os.path.exists(self.sandbox_support_directory):
+            os.makedirs(self.sandbox_support_directory)
+        app.config.set(prefs.SUPPORT_DIRECTORY, self.sandbox_support_directory)
+
+    def tearDown(self): 
+        app.config.set(prefs.SUPPORT_DIRECTORY, self.old_support_directory)
+        try:
+            shutil.rmtree(self.sandbox_support_directory)
+        except OSError, e:
+            assert 0, "test teardown failed"
+        MiroTestCase.tearDown(self)
 
     def on_windows(self):
         return self.platform == "windows"
