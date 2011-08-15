@@ -762,7 +762,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         return self.min_width, 0
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
-        return None
+        return 'album-click'
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if self.group_info is None:

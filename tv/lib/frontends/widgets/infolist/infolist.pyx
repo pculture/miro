@@ -605,6 +605,31 @@ cdef class InfoList:
         # now we can calculate the index of node and the size of the group
         return (nodes_before, nodes_before + nodes_after + 1)
 
+    def get_group_top(self, id_):
+        """Get the first info for an item's group
+
+        :returns: an info object
+        :raises ValueError: if no groupping is set
+        """
+        if self.grouping_func is None:
+            raise ValueError("no grouping set")
+
+        return self._get_group_top(self._fetch_node(id_))
+
+    cdef object _get_group_top(self, InfoListNode* node):
+        """low-level function that the work for get_group_top().
+        """
+        cdef InfoListNode* other_node
+        cdef long group_hash
+
+        group_hash = self._get_group_hash(node)
+        # move up as long as we are still in the group
+        other_node = node
+        while (not infolist_node_is_sentinal(other_node)
+                and self._get_group_hash(other_node.prev) == group_hash):
+            other_node = other_node.prev
+        return infolist_node_get_info(other_node)
+
     def __len__(self):
         return self.nodelist.node_count
 

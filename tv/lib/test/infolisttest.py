@@ -157,6 +157,9 @@ class InfoListTestBase(MiroTestCase):
                 # check get_group_info()
                 self.assertEquals(self.infolist.get_group_info(info.id),
                         (i, total_count))
+                # check get_group_top()
+                self.assertEquals(self.infolist.get_group_top(info.id),
+                        group[0])
                 # check group_info part of row_for_iter
                 it = self.infolist.iter_for_id(info.id)
                 info, attrs, group_info = self.infolist.row_for_iter(it)

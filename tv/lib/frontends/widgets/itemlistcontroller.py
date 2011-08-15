@@ -775,6 +775,11 @@ class ItemListController(object):
             messages.DownloadDeviceItems([item_info]).send_to_backend()
         elif name == 'download-sharing-item':
             messages.DownloadSharingItems([item_info]).send_to_backend()
+        elif name == 'album-click':
+            first_track = itemview.model.get_group_top(item_info.id)
+            first_track_iter = itemview.model.iter_for_id(first_track.id)
+            itemview.unselect_all()
+            itemview.select(first_track_iter)
         else:
             logging.debug("ItemView doesn't know how to handle hotspot %s.",
                 name)
