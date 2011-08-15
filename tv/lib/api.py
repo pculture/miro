@@ -87,6 +87,13 @@ __all__ = [
 APIVERSION = 0
 
 import logging
+import os
+
+import sqlite3
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 from miro import app
 from miro import signals
@@ -159,6 +166,139 @@ def get_support_directory():
     """
     from miro import app, prefs
     return app.config.get(prefs.SUPPORT_DIRECTORY)
+
+class StorageManager(object):
+    """Manages data for an extension.
+
+    StorageManagers allow two kinds of data storage:
+
+    - Simple Storage: simple key/value pair storage.  Useful for extensions
+      with basic storage needs.  See the set_value(), get_value(), and
+      clear_value() methods.
+
+    - SQLite Storage: Use an SQLite connection.  Use this if you have complex
+      storage needs and want a relational database to handle it.  Call
+      get_sqlite_connection() to use this.
+
+    A StorageManager object is passed into each extension's load() function
+    via the context argument.  Extensions must use this object for their
+    storage needs.  Do not create a new StorageManager object.
+
+    Simple and SQLite storage can be used together if needed, however they
+    share the same underlying SQLite connection.  You should avoid using the
+    simple storage API while in the middle of an SQLite transation.
+    """
+
+    def __init__(self, unique_name):
+        """Create a StorageManager
+
+        :param unique_name: unique string to name the sqlite file with
+        """
+        self._unique_name = unique_name
+        # Sqlite connection/cursor.  We create these lazily because many
+        # extensions won't use their StorageManager
+        self._connection = None
+        self._cursor = None
+        # stores if we've run through _ensure_simple_api_table()
+        self._checked_for_simple_api_table = False
+
+    def _ensure_connection(self):
+        if self._connection is None:
+            self._connection = sqlite3.connect(self._sqlite_path(),
+                    isolation_level=None)
+            self._cursor = self._connection.cursor()
+
+    def _sqlite_path(self):
+        filename = 'extension-db-%s.sqlite' % self._unique_name
+        return os.path.join(get_support_directory(), filename)
+
+    def get_sqlite_connection(self):
+        self._ensure_connection()
+        return self._connection
+
+    def _ensure_simple_api_table(self):
+        """Ensure the table we need for the simple API has been created.
+        """
+        if self._checked_for_simple_api_table:
+            return
+        self._ensure_connection()
+        self._cursor.execute("SELECT COUNT(*) FROM sqlite_master "
+                "WHERE type='table' and name = 'simple_data'")
+        if self._cursor.fetchone()[0] == 0:
+            self._cursor.execute("CREATE TABLE simple_data "
+                    "(key TEXT PRIMARY KEY, value TEXT)")
+        self._checked_for_simple_api_table = True
+
+    def set_value(self, key, value):
+        """Set a value using the simple API
+
+        set_value() stores a value that you can later retrieve with
+        get_value()
+
+        :param key: key to set (unicode or an ASCII bytestring)
+        :param value: value to set
+        """
+        self._ensure_simple_api_table()
+        self._cursor.execute("INSERT OR REPLACE INTO simple_data "
+                "(key, value) VALUES (?, ?)",
+                (key, json.dumps(value)))
+        self._connection.commit()
+
+    def get_value(self, key):
+        """Get a value using the simple API
+
+        get_value() retrieves a value that was previously set with set_value().
+
+        :param key: key to retrieve
+        :returns: value set with set_value()
+        :raises KeyError: key not set
+        """
+        self._ensure_simple_api_table()
+        self._cursor.execute("SELECT value FROM simple_data WHERE key=?",
+                (key,))
+        row = self._cursor.fetchone()
+        if row is None:
+            raise KeyError(key)
+        else:
+            return json.loads(row[0])
+
+    def key_exists(self, key):
+        """Test if a key is stored using the simple API
+
+        :param key: key to retrieve
+        :returns: True if a value set with set_value()
+        """
+        self._ensure_simple_api_table()
+        self._cursor.execute("SELECT value FROM simple_data WHERE key=?",
+                (key,))
+        return self._cursor.fetchone() is not None
+
+    def clear_value(self, key):
+        """Clear a value using the simple API
+
+        clear_value() unsets a value that was set with set_value().
+
+        Calling clear_value() with a key that has not been set results in a
+        no-op.
+
+        :param key: key to clear
+        """
+        self._ensure_simple_api_table()
+        self._cursor.execute("DELETE FROM simple_data WHERE key=?", (key,))
+        self._connection.commit()
+
+class ExtensionContext(object):
+    """ExtensionContext -- Stores objects specific to an extension
+
+    ExtensionContexts are passed in to the load() method for each extension.
+
+    Attributes:
+      - storage_manager: StorageManager for the extension
+
+    New attributes will be added as we add to the extension system
+    """
+    def __init__(self, unique_name):
+        self.storage_manager = StorageManager(unique_name)
 
 def hook_invoke(hook_name, *args, **kwargs):
     """Call all functions registered for a hook.
