@@ -737,6 +737,8 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     """Renderer for album view."""
 
     IGNORE_PADDING = True
+    DRAW_BACKGROUND = False
+
     IMAGE_SIZE = (138, 138)
     IMAGE_MARGIN_TOP = 5
     IMAGE_MARGIN_BOTTOM = 0
