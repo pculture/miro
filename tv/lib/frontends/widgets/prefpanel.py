@@ -959,6 +959,7 @@ class SharingPanel(PanelBuilder):
 
         share_audio_cbx = widgetset.Checkbox(_('Share my music library.'))
         share_video_cbx = widgetset.Checkbox(_('Share my video library.'))
+        share_feed_cbx = widgetset.Checkbox(_('Share my feed list.'))
 
         def manual_configuration(widget):
             checked = widget.get_checked()
@@ -966,12 +967,13 @@ class SharingPanel(PanelBuilder):
                 widget.set_checked(not checked)
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
-                       [share_audio_cbx, share_video_cbx,
+                       [share_audio_cbx, share_video_cbx, share_feed_cbx,
                         sharing_warnonquit_cbx, share_txt],
                        manualconfig=manual_configuration)
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
         attach_boolean(share_audio_cbx, prefs.SHARE_AUDIO)
         attach_boolean(share_video_cbx, prefs.SHARE_VIDEO)
+        attach_boolean(share_feed_cbx, prefs.SHARE_FEED)
         share_error = build_error_image()
         attach_text(share_txt, prefs.SHARE_NAME,
                     share_error,

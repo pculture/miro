@@ -462,13 +462,25 @@ class DownloadingItemsTracker(DatabaseSourceTrackerBase):
 class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
     type = u'sharing-backend'
     def __init__(self, id_):
-        self.id = id_
-        if self.id is None:
-            # All items
+        # NOTE: dodgy: we want to keep the existing api but we need a different
+        # database query for playlist and feed.  So ... track this info in
+        # the identifier and then chuck it away when we are done.
+        if id_ is None:
+            self.id = None
+            # All items.  Type is ignored in this case.
             self.view = item.Item.watchable_view()
         else:
-            # This playlist id only.
-            self.view = item.Item.playlist_view(self.id)
+            id_, podcast = id_
+            typ = 'feed' if podcast else 'playlist'
+            self.id = id_
+            if typ == 'playlist':
+                self.view = item.Item.playlist_view(self.id)
+            elif typ == 'feed':
+                self.view = item.Item.feed_view(self.id)
+            else:
+                # Future expansion?
+                logging.debug('SharingBackendTracker: unrecognized type %s',
+                              typ)
         DatabaseSourceTrackerBase.__init__(self)
 
 class PreferencedItemsTracker(DatabaseSourceTrackerBase):
