@@ -322,6 +322,8 @@ class TranscodeObject(object):
 
         self.request_path_func = request_path_func
 
+        # note: nchunks is an estimate only.  We don't know how many
+        # chunks there are until we do the actual segmentation.
         self.nchunks = self.duration / TranscodeObject.segment_duration
         self.trailer = self.duration % TranscodeObject.segment_duration
         if self.trailer:
@@ -340,6 +342,7 @@ class TranscodeObject(object):
         self.chunk_lock = threading.Lock()
         self.chunk_sem = threading.Semaphore(0)
         self.tmp_file = tempfile.TemporaryFile()
+        self.finished = False
 
         self.transcode_gate = threading.Event()
 
@@ -458,18 +461,28 @@ class TranscodeObject(object):
         self.tmp_file.write(d)
         if not d:
             self.tmp_file.flush()
-            self.tmp_file.seek(0, os.SEEK_SET)
             with self.chunk_lock:
-                self.chunk_buffer.append(self.tmp_file)
-                chunk_buffer_size = len(self.chunk_buffer)
-                if (chunk_buffer_size >= 
-                  TranscodeObject.buffer_high_watermark):
-                    logging.debug('TranscodeObject: throttling')
-                    self.chunk_throttle.clear()
-            # Tell consumer there is stuff available
+                # This is empty ... we haven't actually written anything.
+                # This an end of transcode marker.
+                if not self.tmp_file.tell():
+                    logging.debug('Transcode: end-of-transcode marker')
+                    self.finished = True
+                else:
+                    self.tmp_file.seek(0, os.SEEK_SET)
+                    self.chunk_buffer.append(self.tmp_file)
+                    chunk_buffer_size = len(self.chunk_buffer)
+                    if (chunk_buffer_size >= 
+                      TranscodeObject.buffer_high_watermark):
+                        logging.debug('TranscodeObject: throttling')
+                        self.chunk_throttle.clear()
+
+            # Tell consumer there is stuff available.  We do this for the
+            # end of transcode marker too.  Why?  Because it may be stuck in
+            # the chunk_sem acquiring state.  This will kick start it.
             self.chunk_sem.release()
             # ready for next segment
             self.tmp_file = tempfile.TemporaryFile()
+           
 
     # Data consumer from segmenter.  Here, we listen for incoming request.
     # no need to handle quit signal - the sink should return a zero read
@@ -497,7 +510,13 @@ class TranscodeObject(object):
                 raise
 
     def get_chunk(self):
-        # Consume an item ...
+        # End of transcode check: if the transcode returned not enough
+        # chunks, then send an empty file.
+        with self.chunk_lock:
+            if self.finished and not self.chunk_buffer:
+                return tempfile.TemporaryFile()
+
+        # Consume an item
         self.chunk_sem.acquire()
         with self.chunk_lock:
             # If we got woken up, and there is nothing there, maybe it's
