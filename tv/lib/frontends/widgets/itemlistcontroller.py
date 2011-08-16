@@ -347,6 +347,7 @@ class ItemListController(object):
 
     def change_sort_indicators(self, sort_key, ascending):
         self.list_item_view.change_sort_indicator(sort_key, ascending)
+        self.album_item_view.change_sort_indicator(sort_key, ascending)
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
 
     def _init_widget(self):
@@ -371,6 +372,8 @@ class ItemListController(object):
                 self.on_item_details_expander_clicked)
         self.list_item_view.connect_weak('sort-changed',
             self.on_sort_changed, list_view)
+        self.album_item_view.connect_weak('sort-changed',
+            self.on_sort_changed, album_view)
         self.titlebar.connect_weak('list-view-clicked',
             self.set_view, list_view)
         self.titlebar.connect_weak('normal-view-clicked',
