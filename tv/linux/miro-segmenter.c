@@ -22,6 +22,11 @@
  * http://svn.assembla.com/svn/legend/segmenter/segmenter.c
  */
 
+#include <sys/types.h>
+#include <sys/socket.h>
+
+#include <arpa/inet.h>
+
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -280,6 +285,21 @@ int main(int argc, char **argv)
 
     url_fclose(oc->pb);
     av_free(oc);
+
+    /* End-of-transcode marker. */
+    {
+        struct sockaddr_in sockaddr;
+	int rc, s;
+
+        memset(&sockaddr, 0, sizeof(sockaddr));
+        sockaddr.sin_family = AF_INET;
+        sockaddr.sin_port = htons(atoi(argv[2]));
+        sockaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+        /* Don't worry about errors - there isn't much we can do anyway. */
+        s = socket(AF_INET, SOCK_STREAM, 0);
+        rc = connect(s, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
+        close(s);
+    }
 
     return 0;
 }
