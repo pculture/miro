@@ -746,6 +746,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     BACKGROUND_COLOR = widgetutil.WHITE
     TEXT_COLOR = widgetutil.BLACK
     TRACK_TEXT_COLOR = widgetutil.css_to_color('#969696')
+    BOTTOM_LINE_COLOR = widgetutil.css_to_color('#dddddd')
     FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 
     min_width = IMAGE_SIZE[0] + MARGIN_LEFT + MARGIN_RIGHT
@@ -782,6 +783,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             if self.info.artist:
                 self.render_text(context, layout_manager, self.info.artist,
                         True)
+                self.draw_bottom_line(context)
             return
 
         current_row, total_rows = self.group_info
@@ -813,6 +815,9 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
         # draw track number
         self.render_track_number(context, layout_manager, current_row)
+        # render line below the album
+        if current_row == total_rows - 1:
+            self.draw_bottom_line(context)
 
     def clear_cell(self, context):
         """Draw our background color over the cell to clear it."""
@@ -901,6 +906,11 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         y = (context.height - line_height) // 2
         # okay, ready to draw
         textbox.draw(context, x, y, width, line_height)
+
+    def draw_bottom_line(self, context):
+        context.set_color(self.BOTTOM_LINE_COLOR)
+        context.rectangle(0, context.height-1, context.width, 1)
+        context.fill()
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
