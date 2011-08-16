@@ -27,6 +27,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import functools
+import logging
+
 from miro import api
 from miro.frontends.widgets import widgetsapi
 
@@ -44,8 +47,18 @@ class StartsWithVowelItemFilter(widgetsapi.ExtensionItemFilter):
                 item_info.name[0].lower() in ('a', 'e', 'i', 'o', 'u'))
 
 def get_item_list_filters(type_, id_):
-    # add our filter to all item lists
+    # Implement the item_list_filter hook by adding the
+    # StartsWithVowelItemFilter
     return [StartsWithVowelItemFilter()]
+
+def context_menu_action(selection):
+    logging.info("Example Context menu action clicked: %s", selection)
+
+def update_item_context_menu(selection, menu):
+    # implement the item_context_menu hook by adding an item at the top of the
+    # menu that activates context_menu_action with the current selection
+    action = functools.partial(context_menu_action, selection)
+    menu.insert(0, ('Example Action', action))
 
 def load(context):
     # only load if we are running the widgets frontend

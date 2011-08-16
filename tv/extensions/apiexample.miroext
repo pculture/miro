@@ -1,0 +1,9 @@
+[extension]
+name = Extension API Example
+version = core
+enabled_by_default = False
+module = apiexample
+description = Example extension that shows how to use the API
+[hooks]
+item_list_filters = apiexample:get_item_list_filters
+item_context_menu = apiexample:update_item_context_menu

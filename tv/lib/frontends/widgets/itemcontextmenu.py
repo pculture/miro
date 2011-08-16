@@ -30,6 +30,7 @@
 """itemcontextmenu.py -- Handle popping up a context menu for an item
 """
 
+from miro import api
 from miro import app
 from miro import displaytext
 from miro import messages
@@ -52,9 +53,12 @@ class ItemContextMenuHandler(object):
                     for iter in tableview.get_selection()]
 
         if len(selected) == 1:
-            return self._make_context_menu_single(selected[0])
+            menu = self._make_context_menu_single(selected[0])
         else:
-            return self._make_context_menu_multiple(selected)
+            menu = self._make_context_menu_multiple(selected)
+        # allow extensions to change the menu
+        api.hook_invoke('item_context_menu', selected, menu)
+        return menu
 
     def _remove_context_menu_item(self, selection):
         """Returns the appropriate remove/delete menu item.
