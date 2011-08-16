@@ -35,6 +35,7 @@ from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets import itemcontextmenu
+from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemtrack
@@ -216,3 +217,12 @@ class AllFeedsController(FeedController):
 
     def make_titlebar(self, feed_info):
         return itemlistwidgets.AllFeedsTitlebar()
+
+    def get_item_list_grouping(self):
+        return itemlist.feed_grouping
+
+    def build_column_renderers(self):
+        column_renderers = FeedController.build_column_renderers(self)
+        # switch the album view renderer to display feed info
+        column_renderers.get('multi-row-album').feed_mode = True
+        return column_renderers

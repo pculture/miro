@@ -209,6 +209,7 @@ class ItemListController(object):
         self.config_change_handle = None
         self.show_resume_playing_button = False
         self.item_tracker = self.build_item_tracker()
+        self.item_list.set_grouping(self.get_item_list_grouping())
         self._init_widget()
         self._check_for_initial_items()
 
@@ -511,6 +512,9 @@ class ItemListController(object):
 
     def build_item_tracker(self):
         return itemtrack.ItemListTracker.create(self.type, self.id)
+
+    def get_item_list_grouping(self):
+        return itemlist.album_grouping
 
     def _check_for_initial_items(self):
         """Check if our the ItemList from our itemtrack already has items

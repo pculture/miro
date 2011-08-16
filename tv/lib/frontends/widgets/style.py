@@ -753,9 +753,27 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
-        album_art_path = resources.path('images/album-art-placeholder.gif')
-        self.album_art = imagepool.get_surface(album_art_path,
-                size=self.IMAGE_SIZE)
+        self.feed_mode = False
+
+    def get_image_path(self):
+        if self.feed_mode:
+            feed_info = widgetutil.get_feed_info(self.info.feed_id)
+            return feed_info.thumbnail
+        else:
+            # use placeholder image until the metadata changes happen
+            return resources.path('images/album-art-placeholder.gif')
+
+    def get_album(self):
+        if self.feed_mode:
+            return self.info.feed_name
+        else:
+            return self.info.album
+
+    def get_artist(self):
+        if self.feed_mode:
+            return self.info.feed_url
+        else:
+            return self.info.artist
 
     def get_size(self, style, layout_manager):
         # return 0 for height because we render to multiple columns.  We let
@@ -766,6 +784,11 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         return 'album-click'
 
     def render(self, context, layout_manager, selected, hotspot, hover):
+        album_art = imagepool.get_surface(self.get_image_path(),
+                size=self.IMAGE_SIZE)
+        artist = self.get_artist()
+        album = self.get_album()
+
         if self.group_info is None:
             # we can't render if group_info isn't set
             logging.warn("group_info is None in MultiRowAlbumRenderer")
@@ -776,20 +799,19 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             logging.warn("row height is 0 in MultiRowAlbumRenderer")
             return
 
-        if not self.info.album:
+        if not album:
             # if we don't have an album name, then try to render the artist
             # name.  If not, just leave ourselves blank.
             self.clear_cell(context)
-            if self.info.artist:
-                self.render_text(context, layout_manager, self.info.artist,
-                        True)
+            if artist:
+                self.render_text(context, layout_manager, artist, True)
                 self.draw_bottom_line(context)
             return
 
         current_row, total_rows = self.group_info
 
         # calculate how many rows we need to display the image
-        total_image_height = (self.album_art.height + self.IMAGE_MARGIN_TOP +
+        total_image_height = (album_art.height + self.IMAGE_MARGIN_TOP +
                 self.IMAGE_MARGIN_BOTTOM)
         image_row_count = math.ceil(float(total_image_height) /
                 context.height)
@@ -801,17 +823,15 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             image_row_count = 0
         if current_row < image_row_count:
             # draw image cells
-            self.render_image(context, self.album_art, current_row)
+            self.render_image(context, album_art, current_row)
         else:
             # draw text and empty cells
             self.clear_cell(context)
 
             if current_row == image_row_count:
-                self.render_text(context, layout_manager, self.info.album,
-                        True)
+                self.render_text(context, layout_manager, album, True)
             elif current_row == image_row_count + 1:
-                self.render_text(context, layout_manager, self.info.artist,
-                        False)
+                self.render_text(context, layout_manager, artist, False)
 
         # draw track number
         self.render_track_number(context, layout_manager, current_row)
