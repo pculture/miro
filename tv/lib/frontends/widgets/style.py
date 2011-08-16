@@ -738,7 +738,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
     IGNORE_PADDING = True
     IMAGE_SIZE = (138, 138)
-    IMAGE_MARGIN_TOP = 11
+    IMAGE_MARGIN_TOP = 5
     IMAGE_MARGIN_BOTTOM = 0
     MARGIN_RIGHT = 45
     MARGIN_LEFT = 11
