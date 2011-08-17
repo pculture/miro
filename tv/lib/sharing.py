@@ -50,6 +50,7 @@ from miro import feed
 from miro import prefs
 from miro import signals
 from miro import filetypes
+from miro import fileutil
 from miro import util
 from miro import transcode
 from miro import metadata
@@ -1013,16 +1014,24 @@ class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It
     pushes Miro media items to pydaap so pydaap can serve them to the outside
     world."""
+
     type = u'sharing-backend'
     id = u'sharing-backend'
+
+    SHARE_AUDIO = libdaap.DAAP_MEDIAKIND_AUDIO
+    SHARE_VIDEO = libdaap.DAAP_MEDIAKIND_VIDEO
+    SHARE_FEED  = 0x4    # XXX
 
     def __init__(self):
         self.revision = 1
         self.share_types = []
         if app.config.get(prefs.SHARE_AUDIO):
-            self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+            self.share_types += [SharingManagerBackend.SHARE_AUDIO]
         if app.config.get(prefs.SHARE_VIDEO):
-            self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+            self.share_types += [SharingManagerBackend.SHARE_VIDEO]
+        if app.config.get(prefs.SHARE_FEED):
+            self.share_types += [SharingManagerBackend.SHARE_FEED]
+        
         self.item_lock = threading.Lock()
         self.revision_cv = threading.Condition(self.item_lock)
         self.transcode_lock = threading.Lock()
@@ -1160,8 +1169,13 @@ class SharingManagerBackend(object):
             if daap_string == 'dmap.persistentid':
                 itemprop[daap_string] = item.id
 
-            # XXX
             itemprop['podcast'] = typ == 'feed'
+            path = ''
+            if itemprop['podcast']:
+                if item.thumbnail_valid():
+                    path = fileutil.expand_filename(
+                      item.icon_cache.get_filename())
+            itemprop['cover_art'] = path
 
             # piece de resistance
             itemprop['revision'] = self.revision
@@ -1460,7 +1474,17 @@ class SharingManagerBackend(object):
         return file_obj, os.path.basename(path)
 
     def get_playlists(self):
-        return self.daap_playlists
+        returned = dict()
+        for p in self.daap_playlists:
+            pl = self.daap_playlists[p]
+            if not pl['valid'] or not pl['podcast']:
+                returned[p] = pl
+            else:
+                if SharingManagerBackend.SHARE_FEED in self.share_types:
+                    returned[p] = pl
+                else:
+                    returned[p] = self.deleted_item()
+        return returned
 
     def on_config_changed(self, obj, key, value):
         keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key,
@@ -1470,13 +1494,11 @@ class SharingManagerBackend(object):
                 share_types_orig = self.share_types
                 self.share_types = []
                 if app.config.get(prefs.SHARE_AUDIO):
-                    self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+                    self.share_types += [SharingManagerBackend.SHARE_AUDIO]
                 if app.config.get(prefs.SHARE_VIDEO):
-                    self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
-                logging.debug('WARNING: FEED configuration change not yet '
-                              'implemented')
-                #if app.config.get(prefs.SHARE_FEED):
-                #    self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+                    self.share_types += [SharingManagerBackend.SHARE_VIDEO]
+                if app.config.get(prefs.SHARE_FEED):
+                    self.share_types += [SharingManagerBackend.SHARE_FEED]
                 # Just by enabling and disabing this, the selection of items
                 # available to a user could have changed.
                 #
