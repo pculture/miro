@@ -1278,7 +1278,6 @@ class SharingManagerBackend(object):
                 elif playlist_id in feed_ids:
                     self.playlist_item_map[playlist_id] = [x.id
                       for x in Item.feed_view(playlist_id)]
-                    logging.debug('FEED %s - items %s', playlist_id, self.playlist_item_map[playlist_id])
                 else:
                     logging.error('playlist id %s not valid', playlist_id)
                     continue
