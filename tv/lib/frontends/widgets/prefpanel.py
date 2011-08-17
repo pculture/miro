@@ -959,7 +959,8 @@ class SharingPanel(PanelBuilder):
 
         share_audio_cbx = widgetset.Checkbox(_('Share my music library.'))
         share_video_cbx = widgetset.Checkbox(_('Share my video library.'))
-        share_feed_cbx = widgetset.Checkbox(_('Share my feed list.'))
+        share_feed_cbx = widgetset.Checkbox(
+            _('Share my downloaded podcasts as playlists.'))
 
         def manual_configuration(widget):
             checked = widget.get_checked()
