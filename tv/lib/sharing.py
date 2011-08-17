@@ -1202,7 +1202,7 @@ class SharingManagerBackend(object):
                     app.info_updater.item_changed_callbacks.add(self.type,
                                                      p.id,
                                                      self.handle_items_changed)
-                    id_ = (p.id, p['podcast'])
+                    id_ = (p.id, typ == 'feed')
                     messages.TrackItems(self.type, id_).send_to_backend()
 
         eventloop.add_urgent_call(lambda: _handle_playlist_added(),
