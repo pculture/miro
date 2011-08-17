@@ -159,10 +159,13 @@ class MovieDataUpdater(signals.SignalEmitter):
             mediatype = self.parse_type(stdout)
         screenshot = self.parse_screenshot(stdout, mdi)
 
-        # bz:17364 HACK: need to avoid UnicodeDecodeError - until we do a
-        # proper pathname cleanup.
-        logging.debug("moviedata: mdp %s %s %s %s", duration, screenshot,
-                mediatype, mdi.video_path.encode('utf-8', 'replace'))
+        # bz:17364/bz:18072 HACK: need to avoid UnicodeDecodeError -
+        # until we do a proper pathname cleanup.  Used to be a %s with a
+        # encode to utf-8 but then 18072 came up.  It seems that this
+        # can either be a str OR a unicode.  I don't really feel
+        # like dealing with this right now, so just use %r.
+        logging.debug("moviedata: mdp %s %s %s %r", duration, screenshot,
+                mediatype, mdi.video_path)
         return duration, screenshot, mediatype
 
     @contextmanager
