@@ -61,7 +61,14 @@ BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
 # below.
 BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
 
-if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
+if os.path.exists(os.path.join("miro-binary-kit-win", "binary-kit")):
+    # miro-binary-kit-win/binary-kit/ overrides the binary_kit_version
+    # stuff.  that makes it easier for devs to do dev things and
+    # put the miro-binary-kit-win repository in the tv/windows/
+    # directory.
+    BINARY_KIT_ROOT = os.path.join("miro-binary-kit-win", "binary-kit")
+
+elif not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
     print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
     sys.exit(1)
 
