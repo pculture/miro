@@ -337,11 +337,15 @@ def kill_process(pid):
 
 def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
+
+    # FIXME - wtf is going on here between os.environ, env and
+    # environ?
     for key, value in env.items():
         os.environ[key] = value
 
     environ = os.environ.copy()
-    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(
+        prefs.DOWNLOADER_LOG_PATHNAME)
     environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
     if hasattr(app, 'in_unit_tests'):
         environ['MIRO_IN_UNIT_TESTS'] = '1'
@@ -351,6 +355,8 @@ def launch_download_daemon(oldpid, env):
     # environment values.  at present this affects FFMPEG_DATADIR
     # which doesn't matter in the downloader, so we remove it.
     del environ["FFMPEG_DATADIR"]
+    del environ["GST_PLUGIN_PATH"]
+    del environ["GST_PLUGIN_SYSTEM_PATH"]
 
     # start the downloader.  We use the subprocess module to turn off
     # the console.  One slightly awkward thing is that the current
@@ -373,6 +379,7 @@ def launch_download_daemon(oldpid, env):
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     except AttributeError:
         startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
+
     subprocess.Popen(downloader_path, stdout=subprocess.PIPE,
                      stderr=subprocess.PIPE,
                      stdin=subprocess.PIPE,
