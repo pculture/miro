@@ -974,7 +974,7 @@ class DaapClient(object):
             return True
         # We've been disconnected or there was a problem?
         except (socket.error, IOError, ValueError):
-            self.disconnect()
+            self.disconnect(polite=True)
             return False
         except httplib.BadStatusLine:
             self.disconnect()
@@ -994,7 +994,8 @@ class DaapClient(object):
         # We've been disconnected or there was a problem?
         except (AttributeError, socket.error, IOError, ValueError,
                 httplib.BadStatusLine):
-            self.disconnect()
+            # Use of 'polite' flag: see description in connect().
+            self.disconnect(polite=True)
             return None
 
     def revision_query(self, update):
@@ -1071,13 +1072,18 @@ class DaapClient(object):
             self.disconnect()
             return None
 
-    def disconnect(self):
+    def disconnect(self, polite=False):
         try:
             self.timer.cancel()
-            # Don't use - you are just making life difficult for yourself to
-            # nuke the existing connection ...
-            #if polite:
-            #    self.conn.request('GET', self.sessionize('/logout', []))
+            # Don't use 'polite' unless absolutely necessary - you are just 
+            # making life difficult for yourself to nuke the existing
+            # connection.  Usually, we would use in connect() when the login
+            # fails, including when we cannot deal with a newer version of
+            # iTunes, in which case the login is okay but database fetch
+            # fails.  iTunes deals badly otherwise, thinking we are still 
+            # hanging around.
+            if polite:
+                self.conn.request('GET', self.sessionize('/logout', []))
         # Don't care since we are going away anyway.
         except (socket.error, ValueError, httplib.ResponseNotReady,
                 httplib.BadStatusLine, AttributeError, IOError):
