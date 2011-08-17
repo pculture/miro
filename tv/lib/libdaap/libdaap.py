@@ -1088,7 +1088,8 @@ class DaapClient(object):
             if self.conn:
                 conn = self.conn
                 self.conn = None
-                conn.sock.shutdown(socket.SHUT_RDWR)
+                if conn.sock:
+                    conn.sock.shutdown(socket.SHUT_RDWR)
                 conn.close()
 
     def daap_get_file_request(self, file_id, enclosure=None):
