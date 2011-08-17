@@ -1502,7 +1502,12 @@ class SharingManagerBackend(object):
             # don't forget to set the path..
             # ok: it is ignored since this is not valid dmap/daap const.
             itemprop['path'] = item.video_path
-            itemprop['cover_art'] = item.thumbnail
+            defaults = (resources.path('images/thumb-default-audio.png'),
+                        resources.path('images/thumb-default-video.png'))
+            if item.thumbnail not in defaults:
+                itemprop['cover_art'] = item.thumbnail
+            else:
+                itemprop['cover_art'] = ''
 
             # HACK: the rmapping dict doesn't work because we can't
             # double up the key.
