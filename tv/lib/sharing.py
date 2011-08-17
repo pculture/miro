@@ -1170,18 +1170,18 @@ class SharingManagerBackend(object):
             self.daap_playlists[item.id] = itemprop
 
     def handle_feed_added(self, obj, added):
-        added = [a for a in added if not a.url or
-                 (a.url and a.url.startswith('dtv:'))]
+        added = [a for a in added if not a.origURL or
+                 (a.origURL and not a.origURL.startswith('dtv:'))]
         self.handle_playlist_added(obj, added, typ='feed')
 
     def handle_feed_changed(self, obj, changed):
-        changed = [c for c in changed if not c.url or
-                 (c.url and c.url.startswith('dtv:'))]
+        changed = [c for c in changed if not c.origURL or
+                 (c.origURL and not c.origURL.startswith('dtv:'))]
         self.handle_playlist_changed(obj, changed, typ='feed')
 
     def handle_feed_removed(self, obj, removed):
-        removed = [r for r in removed if not r.url or
-                 (r.url and r.url.startswith('dtv:'))]
+        removed = [r for r in removed if not r.origURL or
+                 (r.origURL and not r.origURL.startswith('dtv:'))]
         self.handle_playlist_removed(obj, removed, typ='feed')
 
     def handle_playlist_added(self, obj, added, typ='playlist'):
@@ -1259,15 +1259,14 @@ class SharingManagerBackend(object):
             # First, playlists.
             playlists = playlist.SavedPlaylist.make_view()
             # Grab feeds.  We like the feeds, but don't grab fake ersatz stuff. 
-            feeds = [f for f in feed.Feed.make_view() if f.url and
-                     not f.url.startswith('dtv:')]
+            feeds = [f for f in feed.Feed.make_view() if not f.origURL or
+                     (f.origURL and not f.origURL.startswith('dtv:'))]
             playlist_ids = [p.id for p in playlists]
-            feed_ids = [f.id for f in feeds if f.url and
-                        not f.url.startswith('dtv:')]
+            feed_ids = [f.id for f in feeds]
             self.make_daap_playlists(playlist.SavedPlaylist.make_view(),
                                      'playlist')
             # et tu, feed.  But we basically handle it the same way.
-            self.make_daap_playlists(feed.Feed.make_view(), 'feed')
+            self.make_daap_playlists(feeds, 'feed')
             # Now, build the playlists.
             for playlist_id in self.daap_playlists.keys():
                 # revision for playlist already created in make_daap_playlist
