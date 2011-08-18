@@ -1141,10 +1141,17 @@ class SharingManagerBackend(object):
             for attr in daap_rmapping.keys():
                daap_string = daap_rmapping[attr]
                itemprop[daap_string] = getattr(item, attr, None)
-               # XXX Pants.  Items have 'name' and feeds have 'title'
+               # XXX Pants.  We use this for the initial population when
+               # we pass in DB objects and then later on we also use this
+               # when they are in fact tab infos.  In the raw DBObject we
+               # use title, and in the tab infos we use name.  But in the
+               # DBObject 'name' is valid too!
+               # 
                # Blargh!
                if daap_string == 'dmap.itemname':
                    itemprop[daap_string] = getattr(item, 'title', None)
+                   if itemprop[daap_string] is None:
+                       itemprop[daap_string] = getattr(item, 'name', None)
                if isinstance(itemprop[daap_string], unicode):
                    itemprop[daap_string] = (
                      itemprop[daap_string].encode('utf-8'))
