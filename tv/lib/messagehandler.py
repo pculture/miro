@@ -548,7 +548,7 @@ class GuideSidebarTracker(DatabaseSourceTrackerBase):
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
     def __init__(self, share):
-        share_id = share.parent_id if share.parent_id else share.id
+        share_id = share.tracker_id
         self.id = share
         self.tracker = app.sharing_tracker.get_tracker(share_id)
         self.source = itemsource.SharingItemSource(self.tracker,

@@ -397,7 +397,8 @@ class SharingTracker(object):
                                                        [info], [])
                         message.send_to_frontend()
                     return
-                info = messages.SharingInfo(share_id, fullname, host, port)
+                info = messages.SharingInfo(share_id, share_id,
+                                            fullname, host, port)
                 info.connect_uuid = uuid.uuid4()
                 self.available_shares[share_id] = info
                 self.try_to_add(share_id, fullname, host, port,
@@ -728,6 +729,18 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if playlists is None:
             raise IOError('Cannot get playlist')
         returned_playlists = []
+        video_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'video'))).hexdigest())
+        audio_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'audio'))).hexdigest())
+        playlist_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'playlist'))).hexdigest())
+        podcast_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'podcast'))).hexdigest())
         for k in playlists.keys():
             # Clean the playlist: remove NUL characters.
             for k_ in playlists[k]:
@@ -753,37 +766,60 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 playlist_id = unicode(md5(repr((name,
                                                 host,
                                                 port, k))).hexdigest())
-                podcast = playlists[k]['com.apple.itunes.is-podcast-playlist']
+                try:
+                    key = 'com.apple.itunes.is-podcast-playlist'
+                    podcast = playlists[k][key]
+                except KeyError:
+                    podcast = False
+                if podcast:
+                    parent_id = podcast_playlist_id
+                else:
+                    parent_id = playlist_playlist_id
                 info = messages.SharingInfo(playlist_id,
+                                            self.share.id,
                                             playlists[k]['dmap.itemname'],
                                             host,
                                             port,
-                                            parent_id=self.share.id,
+                                            parent_id=parent_id,
                                             playlist_id=k,
                                             podcast=podcast)
                 returned_playlists.append(info)
-        video_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'video'))).hexdigest())
-        audio_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'audio'))).hexdigest())
-
         # These are fake: so we only want to insert these once.
         if not update:
             video_info = messages.SharingInfo(video_playlist_id,
+                                              self.share.id,
                                               u'video',
                                               host,
                                               port,
                                               parent_id=self.share.id,
                                               playlist_id=u'video')
             audio_info = messages.SharingInfo(audio_playlist_id,
+                                              self.share.id,
                                               u'audio',
                                               host,
                                               port,
                                               parent_id=self.share.id,
                                               playlist_id=u'audio')
-            # Place this stuff at the front
+            playlist_folder_info = messages.SharingInfo(playlist_playlist_id,
+                                              self.share.id,
+                                              u'playlist',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'playlist',
+                                              has_children=True)
+            podcast_folder_info = messages.SharingInfo(podcast_playlist_id,
+                                              self.share.id,
+                                              u'podcast',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'podcast',
+                                              has_children=True)
+            # Place this stuff at the front.  Insert(0, XXX) is a push
+            # operation.
+            returned_playlists.insert(0, podcast_folder_info)
+            returned_playlists.insert(0, playlist_folder_info)
             returned_playlists.insert(0, audio_info)
             returned_playlists.insert(0, video_info)
 
@@ -830,6 +866,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Have to save the items from the base playlist first, because
         # Rhythmbox will get lazy and only send the ids around (expecting
         # us to already to have the data, I guess). 
+        playlist_items = []
+        podcast_items = []
         for k in playlists.keys():
             if k == self.base_playlist:
                 continue
@@ -843,7 +881,21 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             for itemkey in items.keys():
                 item = itemdict[itemkey]
                 returned_items_meth(item)
+                try:
+                    key = 'com.apple.itunes.is-podcast-playlist'
+                    if playlists[k].has_key(key):
+                        podcast_items.append(item)
+                    else:
+                        playlist_items.append(item)
+                except KeyError:
+                    pass
             returned_playlist_items[k] = returned_items
+
+        # Filter out dups
+        playlist_items = list(set(playlist_items))
+        podcast_items = list(set(podcast_items))
+        returned_playlist_items['podcast'] = podcast_items
+        returned_playlist_items['playlist'] = playlist_items
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
