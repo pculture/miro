@@ -1172,9 +1172,11 @@ class SharingManagerBackend(object):
             itemprop['podcast'] = typ == 'feed'
             path = ''
             if itemprop['podcast']:
-                if item.thumbnail_valid():
-                    path = fileutil.expand_filename(
-                      item.icon_cache.get_filename())
+                pass
+                # Currently broken.  Please come back soon.
+                #if item.thumbnail_valid():
+                #    path = fileutil.expand_filename(
+                #      item.icon_cache.get_filename())
             itemprop['cover_art'] = path
 
             # piece de resistance
@@ -1184,18 +1186,18 @@ class SharingManagerBackend(object):
             self.daap_playlists[item.id] = itemprop
 
     def handle_feed_added(self, obj, added):
-        added = [a for a in added if not a.origURL or
-                 (a.origURL and not a.origURL.startswith('dtv:'))]
+        added = [a for a in added if not a.url or
+                 (a.url and not a.url.startswith('dtv:'))]
         self.handle_playlist_added(obj, added, typ='feed')
 
     def handle_feed_changed(self, obj, changed):
-        changed = [c for c in changed if not c.origURL or
-                 (c.origURL and not c.origURL.startswith('dtv:'))]
+        changed = [c for c in changed if not c.url or
+                 (c.url and not c.url.startswith('dtv:'))]
         self.handle_playlist_changed(obj, changed, typ='feed')
 
     def handle_feed_removed(self, obj, removed):
-        removed = [r for r in removed if not r.origURL or
-                 (r.origURL and not r.origURL.startswith('dtv:'))]
+        removed = [r for r in removed if not r.url or
+                 (r.url and not r.url.startswith('dtv:'))]
         self.handle_playlist_removed(obj, removed, typ='feed')
 
     def handle_playlist_added(self, obj, added, typ='playlist'):
