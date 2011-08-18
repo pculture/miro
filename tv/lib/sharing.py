@@ -1116,10 +1116,19 @@ class SharingManagerBackend(object):
                 self.make_item_dict(message.changed)
             else:
                 # Simply update the item's revision.
+                # XXX Feed sharing: catch KeyError because item may not
+                # be downloaded (and hence not in watchable list).  Only
+                # need to catch changed as when feed items get added they
+                # do not get added to the main list.
                 for x in message.added:
-                    self.daapitems[x.id]['revision'] = self.revision
+                        self.daapitems[x.id]['revision'] = self.revision
                 for x in message.changed:
-                    self.daapitems[x.id]['revision'] = self.revision
+                    try:
+                        self.daapitems[x.id]['revision'] = self.revision
+                    except KeyError: 
+                        logging.debug('sharing: item changed error feed = %s '
+                                      'item = %s', message.id, x.id)
+                                      
 
     def deleted_item(self):
         return dict(revision=self.revision, valid=False)
