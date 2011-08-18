@@ -1481,15 +1481,16 @@ class SharingManagerBackend(object):
 
     def get_playlists(self):
         returned = dict()
-        for p in self.daap_playlists:
-            pl = self.daap_playlists[p]
-            if not pl['valid'] or not pl['podcast']:
-                returned[p] = pl
-            else:
-                if SharingManagerBackend.SHARE_FEED in self.share_types:
+        with self.item_lock:
+            for p in self.daap_playlists:
+                pl = self.daap_playlists[p]
+                if not pl['valid'] or not pl['podcast']:
                     returned[p] = pl
                 else:
-                    returned[p] = self.deleted_item()
+                    if SharingManagerBackend.SHARE_FEED in self.share_types:
+                        returned[p] = pl
+                    else:
+                        returned[p] = self.deleted_item()
         return returned
 
     def on_config_changed(self, obj, key, value):
