@@ -1069,9 +1069,10 @@ class SharingManagerBackend(object):
                         #
                         # Requires work to update the watchable view to include
                         # stuff from the individual feeds.
-                        logging.debug('FIXME: Non-downloaded podcast item? '
-                                      'ITEMID = %s ID = %s', item_id,
-                                      message.id)
+                        logging.debug('sharing handle list: '
+                                      'non-downloaded podcast item? '
+                                      'container = %s item= %s', message.id,
+                                      item_id)
             else:
                 self.make_item_dict(message.items)
 
