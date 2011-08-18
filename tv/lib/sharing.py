@@ -1127,9 +1127,7 @@ class SharingManagerBackend(object):
                     try:
                         self.daapitems[x.id]['revision'] = self.revision
                     except KeyError: 
-                        logging.debug('sharing: item changed error feed = %s '
-                                      'item = %s', message.id, x.id)
-                                      
+                        pass
 
     def deleted_item(self):
         return dict(revision=self.revision, valid=False)
