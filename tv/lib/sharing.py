@@ -1182,14 +1182,6 @@ class SharingManagerBackend(object):
                 itemprop[daap_string] = item.id
 
             itemprop['podcast'] = typ == 'feed'
-            path = ''
-            if itemprop['podcast']:
-                pass
-                # Currently broken.  Please come back soon.
-                #if item.thumbnail_valid():
-                #    path = fileutil.expand_filename(
-                #      item.icon_cache.get_filename())
-            itemprop['cover_art'] = path
 
             # piece de resistance
             itemprop['revision'] = self.revision
