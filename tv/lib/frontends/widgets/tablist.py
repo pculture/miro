@@ -856,19 +856,29 @@ class SharingTabListHandler(object):
                                     repr((u'audio',
                                     info.host,
                                     info.port, u'audio'))).hexdigest())
+        active = None
         if info.is_folder:
             thumb_path = resources.path('images/sharing.png')
         # Checking the name instead of a supposedly unique id is ok for now
         # because
         elif info.playlist_id == u'video':
             thumb_path = resources.path('images/icon-video.png')
+            active = resources.path('images/icon-video_active.png')
             info.name = _('Video')
         elif info.playlist_id == u'audio':
             thumb_path = resources.path('images/icon-audio.png')
+            active = resources.path('images/icon-audio_active.png')
             info.name = _('Music')
         else:
-            thumb_path = resources.path('images/icon-playlist.png')
+            if info.podcast:
+                thumb_path = resources.path('images/icon-podcast.png')
+                active = resources.path('images/icon-podcast_active.png')
+            else:
+                thumb_path = resources.path('images/icon-playlist.png')
+                active = resources.path('images/icon-playlist_active.png')
         info.icon = imagepool.get_surface(thumb_path)
+        if active:
+            info.active_icon = imagepool.get_surface(active)
 
 class ConnectList(TabUpdaterMixin, HideableTabList):
     name = _('Connect')

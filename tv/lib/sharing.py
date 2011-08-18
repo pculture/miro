@@ -753,12 +753,14 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 playlist_id = unicode(md5(repr((name,
                                                 host,
                                                 port, k))).hexdigest())
+                podcast = playlists[k]['com.apple.itunes.is-podcast-playlist']
                 info = messages.SharingInfo(playlist_id,
                                             playlists[k]['dmap.itemname'],
                                             host,
                                             port,
                                             parent_id=self.share.id,
-                                            playlist_id=k)
+                                            playlist_id=k,
+                                            podcast=podcast)
                 returned_playlists.append(info)
         video_playlist_id = unicode(md5(repr((name,
                                               host,
@@ -1115,11 +1117,15 @@ class SharingManagerBackend(object):
             else:
                 # Simply update the item's revision.
                 # XXX Feed sharing: catch KeyError because item may not
-                # be downloaded (and hence not in watchable list).  Only
-                # need to catch changed as when feed items get added they
-                # do not get added to the main list.
+                # be downloaded (and hence not in watchable list).
+                # Catch changed as when feed items get added they
+                # do not get added to the main list.  Catch added, when newly
+                # available podcasts come into view.
                 for x in message.added:
+                    try:
                         self.daapitems[x.id]['revision'] = self.revision
+                    except KeyError:
+                        pass
                 for x in message.changed:
                     try:
                         self.daapitems[x.id]['revision'] = self.revision
@@ -1182,6 +1188,9 @@ class SharingManagerBackend(object):
                 itemprop[daap_string] = item.id
 
             itemprop['podcast'] = typ == 'feed'
+            # XXX
+            if itemprop['podcast']:
+                itemprop['com.apple.itunes.is-podcast-playlist'] = True
 
             # piece de resistance
             itemprop['revision'] = self.revision
