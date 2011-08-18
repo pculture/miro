@@ -883,7 +883,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 returned_items_meth(item)
                 try:
                     key = 'com.apple.itunes.is-podcast-playlist'
-                    if playlists[k].has_key(key):
+                    if playlists[k].has_key(key) and playlists[k][key]:
                         podcast_items.append(item)
                     else:
                         playlist_items.append(item)
