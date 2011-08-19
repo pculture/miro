@@ -974,12 +974,15 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 logging.debug('Playlist %s already deleted', k)
                 continue
             to_remove = []
+            # Base playlist == None, so munge it up.  Could probably just
+            # use the base playlist id and skip this trouble!
+            playlist_id = None if k == self.base_playlist else k
             for item_id in item_ids:
                 for item in playlist_items:
                     if item.id != item_id:
                         continue
                     to_remove.append(item)
-                    self.emit('removed', k, item)
+                    self.emit('removed', playlist_id, item)
                     break
             for r in to_remove:
                 playlist_items.remove(r)
@@ -994,14 +997,17 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             to_remove = []
             to_add = []
             for candidate in candidates:
+                # Base playlist == None, so munge it up.  Could probably just
+                # use the base playlist id and skip this trouble!
+                playlist_id = None if k == self.base_playlist else k
                 for item in playlist_items:
                     if candidate.id == item.id:
-                        self.emit('changed', k, candidate)
+                        self.emit('changed', playlist_id, candidate)
                         to_remove.append(item)
                         to_add.append(candidate)
                         break
                 else:
-                    self.emit('added', k, candidate)
+                    self.emit('added', playlist_id, candidate)
                     to_add.append(candidate)
             for r in to_remove:
                 playlist_items.remove(r)
