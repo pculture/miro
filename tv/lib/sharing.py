@@ -1267,8 +1267,9 @@ class SharingManagerBackend(object):
         self.handle_playlist_changed(obj, changed, typ='feed')
 
     def handle_feed_removed(self, obj, removed):
-        removed = [r for r in removed if not r.url or
-                 (r.url and not r.url.startswith('dtv:'))]
+        # Can't actually filter out removed - it is a list of ids.  But no
+        # matter as we just ignore it if we can't find it in our tracked
+        # playlists.
         self.handle_playlist_removed(obj, removed, typ='feed')
 
     def handle_playlist_added(self, obj, added, typ='playlist'):
