@@ -547,7 +547,6 @@ class TableViewCommon(object):
         self.setFocusRingType_(NSFocusRingTypeNone)
         self.handled_last_mouse_down = False
         self.gradientHighlight = False
-        self._column_wrappers = []
         self.tracking_area = None
         # we handle cell spacing manually
         self.setIntercellSpacing_(NSSize(0, 0))
@@ -574,7 +573,6 @@ class TableViewCommon(object):
     def addTableColumn_(self, column):
         index = len(self.tableColumns())
         column.set_index(index)
-        self._column_wrappers.append(column)
         self.column_index_map[column._column] = index
         self.SuperClass.addTableColumn_(self, column._column)
 
@@ -584,9 +582,6 @@ class TableViewCommon(object):
         for key, index in self.column_index_map.items():
             if index > removed:
                 self.column_index_map[key] -= 1
-        for column in self._column_wrappers[:]:
-            if column._column == column:
-                del self._column_wrappers[column]
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
@@ -806,6 +801,7 @@ class TableColumn(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('clicked')
         self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
+        wrappermap.add(self._column, self)
         header_cell = MiroTableHeaderCell.alloc().init()
         self.custom_header = False
         if header:
