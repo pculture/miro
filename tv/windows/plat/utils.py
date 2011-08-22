@@ -390,7 +390,11 @@ def exit_miro(return_code):
     """Python's sys.exit isn't sufficient in a Windows
     application. It's not clear why.
     """
-    ctypes.windll.kernel32.ExitProcess(return_code)
+    try:
+        # this kicks up an access violation error.  not clear why.
+        ctypes.windll.kernel32.ExitProcess(return_code)
+    except WindowsError:
+        pass
 
 def movie_data_program_info(movie_path, thumbnail_path):
     exe_path = os.path.join(resources.app_root(), 'Miro_MovieData.exe')

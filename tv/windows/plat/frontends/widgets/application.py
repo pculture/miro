@@ -89,8 +89,14 @@ class WindowsApplication(Application):
 
     def _run(self):
 
-        associate.associate_extensions(self._get_exe_location(),
-                                        self._get_icon_location())
+        self.initXULRunner()
+        gtk.gdk.threads_init()
+        self.startup()
+
+
+        associate.associate_extensions(
+            self._get_exe_location(), self._get_icon_location())
+
         winrel = platform.release()
         if winrel == "post2008Server":
             winrel += " (could be Windows 7)"
@@ -118,14 +124,8 @@ class WindowsApplication(Application):
         app.audio_renderer = AudioRenderer()
         app.video_renderer = VideoRenderer()
         app.get_item_type = get_item_type
-        self.initXULRunner()
-        gtk.gdk.threads_init()
-        self.startup()
-        gtk.gdk.threads_enter()
-        try:
-            gtk.main()
-        finally:
-            gtk.gdk.threads_leave()
+
+        gtk.main()
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
         ctypes.cdll.winsparkle.win_sparkle_cleanup()
@@ -277,8 +277,8 @@ class WindowsApplication(Application):
 
     def on_new_window(self, uri):
         self.open_url(uri)
-        
-    # This overwrites the Application.check_update method since the Windows 
+
+    # This overwrites the Application.check_update method since the Windows
     # autoupdate code does not use autoupdate.py.
     def check_version(self):
         ctypes.cdll.winsparkle.win_sparkle_check_update_with_ui()
