@@ -944,6 +944,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             if p.playlist_id in deleted_playlists:
                 if not p.playlist_id in playlist_dict:
                     deleted.append(p.id)
+                    to_remove.append(p)
                 else:
                     logging.debug('client update: weird server playlist id %s '
                                   'in deleted and item list at the same time',
@@ -953,7 +954,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 to_remove.append(p)
         added = [playlist_dict[p] for p in playlist_dict if p not in
                  playlist_ids]
-        for p in to_remove:
+        for p in set(to_remove):
             self.playlists.remove(p)
             # Only remove it if it's really going!
             changed_ids = [p.playlist_id for p in changed]
