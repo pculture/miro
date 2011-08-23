@@ -671,23 +671,24 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_disconnect(self):
         client = self.client
         self.client = None
-        playlist_ids = [playlist_.id for playlist_ in self.playlists]
         eventloop.call_in_thread(self.client_disconnect_callback,
                                  self.client_disconnect_error_callback,
                                  client.disconnect,
                                  'DAAP client connect')
 
     def client_disconnect_error_callback(self, unused):
-        playlist_ids = [playlist_.id for playlist_ in self.playlists]
-        message = messages.TabsChanged('connect', [], [], playlist_ids)
+        tab_ids = [p.id for p in self.playlists
+                        if self.items.has_key(p.playlist_id) and
+                        self.items[p.playlist_id]]
+        message = messages.TabsChanged('connect', [], [], tab_ids)
         message.send_to_frontend()
-        pass
 
     def client_disconnect_callback(self, unused):
-        playlist_ids = [playlist_.id for playlist_ in self.playlists]
-        message = messages.TabsChanged('connect', [], [], playlist_ids)
+        tab_ids = [p.id for p in self.playlists
+                        if self.items.has_key(p.playlist_id) and
+                        self.items[p.playlist_id]]
+        message = messages.TabsChanged('connect', [], [], tab_ids)
         message.send_to_frontend()
-        pass
 
     def client_connect(self):
         name = self.share.name
@@ -966,6 +967,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.playlists += added
         self.playlists += changed
 
+        old_empty_playlists = set([k for k in self.items if not self.items[k]])
+        old_valid_playlists = set([k for k in self.items if self.items[k]])
+
         for k in deleted_items:
             item_ids = deleted_items[k]
             try:
@@ -1014,6 +1018,32 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 playlist_items.remove(r)
             playlist_items += to_add
 
+        valid_playlists = set([k for k in self.items if self.items[k]])
+
+        # Filter out empty stuff.  Re-add previously empty stuff that now
+        # has stuff (in changed).
+        #
+        # Algorithm: check added.  If empty, filter out.
+        # Check changed.  If empty, and previously not empty, append to
+        # deleted.  If previously empty and now not empty, move from changed
+        # to added.
+        added = [a for a in added if self.items[a.playlist_id]]
+        to_remove = []
+        for c in changed:
+            if (not self.items[c.playlist_id] and
+              c.playlist_id in old_valid_playlists):
+                to_remove.append(c)
+        deleted += [r.id for r in to_remove]
+        for r in to_remove:
+            changed.remove(r)
+        # Was empty and now not empty.  Intersection of previously empty
+        # playlists and playlists are now not empty.
+        added_ids = list(old_empty_playlists.intersection(valid_playlists))
+        for p in self.playlists:
+            if p.playlist_id in added_ids:
+                added.append(p)
+                changed.remove(p)
+
         # Finally, update the tabs.
         message = messages.TabsChanged('connect', added, changed, deleted)
         message.send_to_frontend()
@@ -1036,7 +1066,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # the progress indicator.
         self.share.mount = True
         self.share.is_updating = False
-        message = messages.TabsChanged('connect', self.playlists,
+        # Only show non-empty stuff
+        playlists = [p for p in self.playlists if self.items[p.playlist_id]]
+        message = messages.TabsChanged('connect', playlists,
                                        [self.share], [])
         message.send_to_frontend()
 
