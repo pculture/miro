@@ -459,6 +459,8 @@ class DownloadingItemsTracker(DatabaseSourceTrackerBase):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self)
 
+# We don't use the preferenced tracker superclass here because we want
+# to do it manually - have both audio and video prefs to take care of here.
 class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
     type = u'sharing-backend'
     def __init__(self, id_):
@@ -466,9 +468,18 @@ class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
         # database query for playlist and feed.  So ... track this info in
         # the identifier and then chuck it away when we are done.
         if id_ is None:
-            self.id = None
             # All items.  Type is ignored in this case.
-            self.view = item.Item.watchable_view()
+            self.id = None
+            # Make sure arguments in order we expect.
+            prefs_ = [prefs.SHOW_PODCASTS_IN_VIDEO,
+                      prefs.SHOW_PODCASTS_IN_MUSIC]
+            self.conf = dict([(p.key, app.config.get(p)) for p in prefs_])
+            self.keys = [p.key for p in prefs_]
+            args = [self.conf[k] for k in self.keys]
+            self.view = item.Item.watchable_view(*args)
+            # Finally: connect to the backend configuration change callback
+            app.backend_config_watcher.connect_weak('changed',
+                                                    self.on_config_changed)
         else:
             id_, podcast = id_
             typ = 'feed' if podcast else 'playlist'
@@ -482,6 +493,18 @@ class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
                 logging.debug('SharingBackendTracker: unrecognized type %s',
                               typ)
         DatabaseSourceTrackerBase.__init__(self)
+
+    def on_config_changed(self, obj, key, value):
+        if key in self.keys:
+            self.conf[key] = value
+            # Make sure arguments in order we expect.
+            args = [self.conf[k] for k in self.keys]
+            self.view = item.Item.watchable_view(*args)
+            for source in self.trackers:
+                source.disconnect_all()
+            self.trackers = []
+            self.add_callbacks()
+            self.send_initial_list()
 
 class PreferencedItemsTracker(DatabaseSourceTrackerBase):
 
