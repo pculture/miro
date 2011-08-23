@@ -1110,6 +1110,12 @@ class SharingManagerBackend(object):
     def register_protos(self, proto):
         pass
 
+    # Note: this can be called more than once, if you change your podcast
+    # configuration to show/hide podcast items!  What we do here is,
+    # ditch the old list re-create new one with the updated information.
+    # This is a complete list send and not a diff like handle_items_changed()
+    # is.  But make sure at the same time that the old deleted stuff is marked
+    # as such.
     def handle_item_list(self, message):
         with self.item_lock:
             self.update_revision()
@@ -1132,7 +1138,11 @@ class SharingManagerBackend(object):
                         # stuff from the individual feeds.
                         pass
             else:
+                deleted = [item_id for item_id in self.daapitems if
+                           item_id not in item_ids]
                 self.make_item_dict(message.items)
+                for d in deleted:
+                    self.daapitems[d] = self.deleted_item()
 
     def handle_items_changed(self, message):
         # If items are changed, overwrite with a recreated entry.  This
