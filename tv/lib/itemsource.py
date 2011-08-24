@@ -475,12 +475,14 @@ class SharingItemSource(ItemSource):
 
     def _on_tracker_added(self, tracker, playlist, item):
         if self.playlist_id == playlist:
-            if not self.include_podcasts and not self.is_podcast(item):
+            if (self.include_podcasts or
+              not self.include_podcasts and not self.is_podcast(item)):
                 self.emit("added", self._ensure_info(item))
 
     def _on_tracker_changed(self, tracker, playlist, item):
         if self.playlist_id == playlist:
-            if not self.include_podcasts and not self.is_podcast(item):
+            if (self.include_podcasts or
+              not self.include_podcasts and not self.is_podcast(item)):
                 self.emit("changed", self._ensure_info(item))
 
     def _on_tracker_removed(self, tracker, playlist, item):
@@ -488,7 +490,8 @@ class SharingItemSource(ItemSource):
         if playlist == None:
             del self.info_cache[item.id]
         if playlist == self.playlist_id:
-            if not self.include_podcasts and not self.is_podcast(item):
+            if (self.include_podcasts or
+              not self.include_podcasts and not self.is_podcast(item)):
                 self.emit("removed", item.id)
 
     def fetch_all(self):
