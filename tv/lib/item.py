@@ -675,25 +675,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def watchable_view(cls, include_video_podcasts=False,
-                            include_music_podcasts=False):
-        base_query = ("not isContainerItem AND "
-                 "(deleted IS NULL or not deleted) AND "
-                 "(is_file_item OR rd.main_item_id=item.id) AND "
-                 "item.file_type='%s'")
-        query = []
-        d = dict(video=include_video_podcasts, audio=include_music_podcasts)
-        for typ in d:
-            s = '(' + base_query % typ
-            if not d[typ]:
-                s += (" AND (feed_id IS NULL OR "
-                      "feed.origURL == 'dtv:manualFeed' OR "
-                      "feed.origURL == 'dtv:searchDownloads' OR "
-                      "feed.origURL == 'dtv:search' OR "
-                      "is_file_item)")
-            s += ')'
-            query.append(s)
-        return cls.make_view(' OR '.join(query),
+    def watchable_view(cls):
+        return cls.make_view(
+            "not isContainerItem AND "
+            "(deleted IS NULL or not deleted) AND "
+            "(is_file_item OR rd.main_item_id=item.id) AND " 
+            "NOT item.file_type='other'",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 

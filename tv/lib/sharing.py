@@ -1026,26 +1026,37 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Algorithm: check added.  If empty, filter out.
         # Check changed.  If empty, and previously not empty, append to
         # deleted.  If previously empty and now not empty, move from changed
-        # to added.
+        # to added.  If previously empty and now also empty, ditch it from the
+        # changed lists.
         added = [a for a in added if self.items[a.playlist_id]]
         to_remove = []
+        to_ditch = []
         for c in changed:
-            if (not self.items[c.playlist_id] and
-              c.playlist_id in old_valid_playlists):
-                to_remove.append(c)
+            if not self.items[c.playlist_id]:
+                if c.playlist_id in old_valid_playlists:
+                    to_remove.append(c)
+                elif c.playlist_id in old_empty_playlists:
+                    to_ditch.append(c)
         deleted += [r.id for r in to_remove]
         for r in to_remove:
             changed.remove(r)
+        for d in to_ditch:
+            changed.remove(d)
         # Was empty and now not empty.  Intersection of previously empty
         # playlists and playlists are now not empty.
         added_ids = list(old_empty_playlists.intersection(valid_playlists))
         for p in self.playlists:
             if p.playlist_id in added_ids:
                 added.append(p)
-                changed.remove(p)
+                try:
+                    changed.remove(p)
+                except ValueError:
+                    logging.debug('warning: playlist %s not in changed',
+                                  p.name)
 
-        # Finally, update the tabs.
-        message = messages.TabsChanged('connect', added, changed, deleted)
+        # Finally, update the tabs.  Use set() to filter out the duplicates.
+        message = messages.TabsChanged('connect', set(added), set(changed),
+                                       set(deleted))
         message.send_to_frontend()
 
     def client_update_error_callback(self, unused):
@@ -1190,7 +1201,6 @@ class SharingManagerBackend(object):
                         self.daap_playlists[message.id]['revision'] = revision
                         self.playlist_item_map[message.id].remove(itemid)
                         self.deleted_item_map[message.id].append(itemid)
-                        logging.debug('INACTIVE %s %s', itemid, message.id)
                 except KeyError:
                     pass
                 try:
@@ -1595,13 +1605,13 @@ class SharingManagerBackend(object):
         with self.item_lock:
             for p in self.daap_playlists:
                 pl = self.daap_playlists[p]
-                if not pl['valid'] or not pl['podcast']:
+                send_podcast = (
+                  SharingManagerBackend.SHARE_FEED in self.share_types)
+                if (not pl['valid'] or not pl['podcast'] or
+                  (pl['podcast'] and send_podcast)):
                     returned[p] = pl
                 else:
-                    if SharingManagerBackend.SHARE_FEED in self.share_types:
-                        returned[p] = pl
-                    else:
-                        returned[p] = self.deleted_item()
+                    returned[p] = self.deleted_item()
         return returned
 
     def on_config_changed(self, obj, key, value):
@@ -1618,14 +1628,23 @@ class SharingManagerBackend(object):
                 if app.config.get(prefs.SHARE_FEED):
                     self.share_types += [SharingManagerBackend.SHARE_FEED]
                 # Just by enabling and disabing this, the selection of items
-                # available to a user could have changed.
-                #
+                # available to a user could have changed.  We are a bit lazy
+                # here and just use a hammer to update everything without
+                # working out what needs to be updated.
                 if share_types_orig != self.share_types:
                     self.update_revision()
                 for p in self.daap_playlists:
                     self.daap_playlists[p]['revision'] = self.revision
                 for i in self.daapitems:
                     self.daapitems[i]['revision'] = self.revision
+
+    # XXX TEMPORARY: should this item be podcast?  We won't need this when
+    # the item type's metadata is completely accurate and won't lie to us.
+    def item_from_podcast(self, item):
+        feed_url = item.feed_url
+        ersatz_feeds = ['dtv:manualFeed', 'dtv:searchDownloads', 'dtv:search']
+        is_feed = not any([feed_url.startswith(x) for x in ersatz_feeds])
+        return item.feed_id and is_feed and not item.is_file_item
 
     def get_items(self, playlist_id=None):
         # Easy: just return
@@ -1634,8 +1653,16 @@ class SharingManagerBackend(object):
             if not playlist_id:
                 for k in self.daapitems.keys():
                     item = self.daapitems[k]
-                    if (not item['valid'] or
-                      item['com.apple.itunes.mediakind'] in self.share_types):
+                    valid = item['valid']
+                    if valid:
+                        mk = item['com.apple.itunes.mediakind']
+                        ik = item['org.participatoryculture.miro.itemkind']
+                        podcast = ik and (ik & MIRO_ITEMKIND_PODCAST)
+                        include_if_podcast = (podcast and
+                          SharingManagerBackend.SHARE_FEED in self.share_types)
+                    if (not valid or
+                      mk in self.share_types and 
+                      (not podcast or include_if_podcast)):
                         items[k] = item
                     else:
                         items[k] = self.deleted_item()
@@ -1645,9 +1672,17 @@ class SharingManagerBackend(object):
             if self.playlist_item_map.has_key(playlist_id):
                 for x in self.daapitems.keys():
                     item = self.daapitems[x]
+                    valid = item['valid']
+                    if valid:
+                        mk = item['com.apple.itunes.mediakind']
+                        ik = item['org.participatoryculture.miro.itemkind']
+                        podcast = ik and (ik & MIRO_ITEMKIND_PODCAST)
+                        include_if_podcast = (podcast and
+                          SharingManagerBackend.SHARE_FEED in self.share_types)
                     if (x in self.playlist_item_map[playlist_id] and
-                      (not item['valid'] or
-                      item['com.apple.itunes.mediakind'] in self.share_types)):
+                      (not valid or
+                       mk in self.share_types and
+                       (not podcast or include_if_podcast))):
                         playlist[x] = item
                     else:
                         playlist[x] = self.deleted_item()
@@ -1689,13 +1724,19 @@ class SharingManagerBackend(object):
                 if ext in supported_filetypes:
                     enclosure = ext
 
+            # If this should be considered an item from a podcast feed then
+            # mark it as such.  But allow for manual overriding by the user,
+            # as per what was set in the metadata.
+            if self.item_from_podcast(item):
+                key = 'org.participatoryculture.miro.itemkind'
+                itemprop[key] = MIRO_ITEMKIND_PODCAST
             try:
-                key = itemprop['org.participatoryculture.miro.itemkind']
-                itemprop['org.participatoryculture.miro.itemkind'] = (
-                    miro_itemkind_mapping[key])
+                key = 'org.participatoryculture.miro.itemkind'
+                kind = itemprop[key]
+                if kind:
+                    itemprop[key] = miro_itemkind_mapping[kind]
             except KeyError:
                 pass
-
             if itemprop['com.apple.itunes.mediakind'] == u'video':
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_VIDEO)

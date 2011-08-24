@@ -140,7 +140,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 33
+    VERSION = 34
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -180,6 +180,7 @@ class DatabaseItemSource(ItemSource):
             'license': item.get_license(),
             'file_url': item.get_url(),
             'is_container_item': item.isContainerItem,
+            'is_file_item': item.is_file_item,
             'is_playable': item.is_playable(),
             'file_type': item.file_type,
             'subtitle_encoding': item.subtitle_encoding,
@@ -427,6 +428,7 @@ class SharingItemSource(ItemSource):
             license = item.license,
             file_url = item.url or u'',
             is_container_item = False,
+            is_file_item = False,
             is_playable = True,
             children = [],
             file_type = item.file_type,
@@ -617,6 +619,7 @@ class DeviceItemSource(ItemSource):
             license = item.license,
             file_url = item.url or u'',
             is_container_item = False,
+            is_file_item = False,
             is_playable = True,
             children = [],
             file_type = item.file_type,
