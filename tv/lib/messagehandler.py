@@ -553,10 +553,29 @@ class SharingItemTracker(SourceTrackerBase):
         share_id = share.tracker_id
         self.id = share
         self.tracker = app.sharing_tracker.get_tracker(share_id)
+        prefdict = dict(video=prefs.SHOW_PODCASTS_IN_VIDEO,
+                        audio=prefs.SHOW_PODCASTS_IN_MUSIC)
         self.source = itemsource.SharingItemSource(self.tracker,
                                                    share.playlist_id)
-
+        try:
+            self.pref = prefdict[share.playlist_id]
+            self.prefvalue = app.config.get(self.pref)
+            self.source.include_podcasts = self.prefvalue
+        except KeyError:
+            self.pref = self.prefvalue = None
+        app.backend_config_watcher.connect_weak('changed',
+                                                self.on_config_changed)
         SourceTrackerBase.__init__(self)
+
+    def on_config_changed(self, obj, key, value):
+        if self.pref and key == self.pref.key:
+            self.prefvalue = value
+            self.source.include_podcasts = self.prefvalue
+            for source in self.trackers:
+                source.disconnect_all()
+            self.trackers = []
+            self.add_callbacks()
+            self.send_initial_list()
 
     def _make_changed_list(self, changed):
         retval = []

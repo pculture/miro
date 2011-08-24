@@ -390,6 +390,7 @@ class SharingItemSource(ItemSource):
         ItemSource.__init__(self)
         self.tracker = tracker
         self.playlist_id = playlist_id
+        self.include_podcasts = True
         self.signal_handles = [
             self.tracker.connect('added', self._on_tracker_added),
             self.tracker.connect('changed', self._on_tracker_changed),
@@ -465,20 +466,30 @@ class SharingItemSource(ItemSource):
         else:
             return obj
 
+    def is_podcast(self, item):
+        try:
+            return item.kind == 'podcast'
+        except AttributeError:
+            pass
+        return False
+
     def _on_tracker_added(self, tracker, playlist, item):
         if self.playlist_id == playlist:
-            self.emit("added", self._ensure_info(item))
+            if not self.include_podcasts and not self.is_podcast(item):
+                self.emit("added", self._ensure_info(item))
 
     def _on_tracker_changed(self, tracker, playlist, item):
         if self.playlist_id == playlist:
-            self.emit("changed", self._ensure_info(item))
+            if not self.include_podcasts and not self.is_podcast(item):
+                self.emit("changed", self._ensure_info(item))
 
     def _on_tracker_removed(self, tracker, playlist, item):
         # Only nuke if we are removing the item from the library.
         if playlist == None:
             del self.info_cache[item.id]
         if playlist == self.playlist_id:
-            self.emit("removed", item.id)
+            if not self.include_podcasts and not self.is_podcast(item):
+                self.emit("removed", item.id)
 
     def fetch_all(self):
         # Always call _ensure_info() on the item when fetching.
@@ -498,7 +509,10 @@ class SharingItemSource(ItemSource):
         # cache or if it does not exist then create a new copy so this should
         # be okay.
         return [self._ensure_info(item) for item in 
-                self.tracker.get_items(playlist_id=self.playlist_id)]
+                self.tracker.get_items(playlist_id=self.playlist_id)
+                if self.include_podcasts or
+                (not self.include_podcasts and
+                 not self.is_podcast(item))]
 
     def unlink(self):
         for handle in self.signal_handles:
