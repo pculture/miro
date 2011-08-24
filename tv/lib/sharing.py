@@ -835,6 +835,12 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             raise ValueError('Cannot find items in base playlist')
 
         deleted_items[self.base_playlist] = deleted
+        # Make sure that we ditch stuff from the in-house video, music,
+        # playlist and podcast tabs too.
+        # XXX lazy - the callback will filter out irrelevant items.
+        fake_playlists = ('video', 'audio', 'playlist', 'podcast')
+        for p in fake_playlists:
+            deleted_items[p] = deleted
 
         itemdict = dict()
         returned_playlist_items = dict()
@@ -1028,10 +1034,13 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # deleted.  If previously empty and now not empty, move from changed
         # to added.  If previously empty and now also empty, ditch it from the
         # changed lists.
+        fake_playlists = ('video', 'audio', 'podcast', 'playlist')
         added = [a for a in added if self.items[a.playlist_id]]
         to_remove = []
         to_ditch = []
         for c in changed:
+            if c.playlist_id in fake_playlists:
+                continue
             if not self.items[c.playlist_id]:
                 if c.playlist_id in old_valid_playlists:
                     to_remove.append(c)
@@ -1053,7 +1062,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 except ValueError:
                     logging.debug('warning: playlist %s not in changed',
                                   p.name)
-
+        # No matter what happens, do not re-add in-house tabs.
+        added = [a for a in added if a.playlist_id not in fake_playlists]
         # Finally, update the tabs.  Use set() to filter out the duplicates.
         message = messages.TabsChanged('connect', set(added), set(changed),
                                        set(deleted))
