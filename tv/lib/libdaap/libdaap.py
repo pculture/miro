@@ -1089,14 +1089,17 @@ class DaapClient(object):
                 httplib.BadStatusLine, AttributeError, IOError):
             pass
         finally:
-            # self.conn may be invalid at this point but that's okay, finally
-            # block doesn't raise exception but just prints it out.
+            # self.conn may be invalid at this point but that's okay, 
+            # we'll catch it and also the socket error in case that gets
+            # raised.
             self.session = None
             if self.conn:
                 conn = self.conn
                 self.conn = None
-                if conn.sock:
+                try:
                     conn.sock.shutdown(socket.SHUT_RDWR)
+                except (AttributeError, socket.error), e:
+                    pass
                 conn.close()
 
     def daap_get_file_request(self, file_id, enclosure=None):
