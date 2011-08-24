@@ -470,16 +470,7 @@ class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
         if id_ is None:
             # All items.  Type is ignored in this case.
             self.id = None
-            # Make sure arguments in order we expect.
-            prefs_ = [prefs.SHOW_PODCASTS_IN_VIDEO,
-                      prefs.SHOW_PODCASTS_IN_MUSIC]
-            self.conf = dict([(p.key, app.config.get(p)) for p in prefs_])
-            self.keys = [p.key for p in prefs_]
-            args = [self.conf[k] for k in self.keys]
-            self.view = item.Item.watchable_view(*args)
-            # Finally: connect to the backend configuration change callback
-            app.backend_config_watcher.connect_weak('changed',
-                                                    self.on_config_changed)
+            self.view = item.Item.watchable_view()
         else:
             id_, podcast = id_
             typ = 'feed' if podcast else 'playlist'
@@ -493,18 +484,6 @@ class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
                 logging.debug('SharingBackendTracker: unrecognized type %s',
                               typ)
         DatabaseSourceTrackerBase.__init__(self)
-
-    def on_config_changed(self, obj, key, value):
-        if key in self.keys:
-            self.conf[key] = value
-            # Make sure arguments in order we expect.
-            args = [self.conf[k] for k in self.keys]
-            self.view = item.Item.watchable_view(*args)
-            for source in self.trackers:
-                source.disconnect_all()
-            self.trackers = []
-            self.add_callbacks()
-            self.send_initial_list()
 
 class PreferencedItemsTracker(DatabaseSourceTrackerBase):
 
