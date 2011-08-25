@@ -238,6 +238,8 @@ class Player(player.Player):
 
     def get_audio_tracks(self):
         tracks = list()
+        if not self.movie:
+            return tracks
         for i, track in enumerate(
           self.movie.tracksOfMediaType_(QTMediaTypeSound)):
             is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
@@ -252,6 +254,8 @@ class Player(player.Player):
         return tracks
 
     def set_audio_track(self, tag):
+        if not self.movie:
+            return
         for track in self.movie.tracksOfMediaType_(QTMediaTypeSound):
             track_id = track.attributeForKey_(QTTrackIDAttribute)
             # In theory, you could have multiple enabled audio tracks, playing
@@ -386,6 +390,8 @@ class Player(player.Player):
         self.seek_to(pos / duration)
 
     def seek_to(self, position):
+        if not self.movie:
+            return
         qttime = self.movie.duration()
         if isinstance(qttime, tuple):
             qttime = (qttime[0] * position, qttime[1], qttime[2])
@@ -398,7 +404,8 @@ class Player(player.Player):
         self.play()
 
     def set_playback_rate(self, rate):
-        self.movie.setRate_(rate)
+        if self.movie:
+            self.movie.setRate_(rate)
 
     def movie_load_state_changed(self, disconnect=True):
         callback = self.callback
