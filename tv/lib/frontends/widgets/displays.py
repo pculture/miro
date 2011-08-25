@@ -545,8 +545,13 @@ class CantPlayWidget(widgetset.SolidBackground):
         skip_button = widgetset.Button(_('Skip'))
         reveal_button.connect('clicked', self._on_reveal)
         skip_button.connect('clicked', self._on_skip)
-        hbox.pack_start(reveal_button)
-        hbox.pack_start(self.play_externally_button)
+
+        self.reveal_button_holder = widgetutil.HideableWidget(reveal_button)
+        self.play_externally_button_holder = widgetutil.HideableWidget(
+                                          self.play_externally_button)
+
+        hbox.pack_start(self.reveal_button_holder)
+        hbox.pack_start(self.play_externally_button_holder)
         hbox.pack_start(skip_button)
         vbox.pack_start(widgetutil.align_center(hbox, top_pad=24))
         alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
@@ -580,6 +585,13 @@ class CantPlayWidget(widgetset.SolidBackground):
             self.play_externally_button.set_text(_('Play Externally'))
         else:
             self.play_externally_button.set_text(_('Open Externally'))
+
+    def set_remote(self, remote):
+        widgets = [self.reveal_button_holder,
+                   self.play_externally_button_holder]
+        m = 'hide' if remote else 'show'
+        for w in widgets:
+            getattr(w, m)()
 
 class VideoDisplay(Display):
     def __init__(self, renderer):
@@ -617,6 +629,7 @@ class VideoDisplay(Display):
 
     def setup(self, item_info, item_type, volume):
         self.show_renderer()
+        self.cant_play_widget.set_remote(item_info.remote)
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info = item_info
         if item_type != 'video':
