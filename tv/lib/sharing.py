@@ -1087,8 +1087,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # the progress indicator.
         self.share.mount = True
         self.share.is_updating = False
-        # Only show non-empty stuff
-        playlists = [p for p in self.playlists if self.items[p.playlist_id]]
+        # Only show non-empty stuff, but make sure that we always display
+        # the top level podcast tabs.
+        fake_playlists = ('video', 'audio', 'playlist', 'podcast')
+        playlists = [p for p in self.playlists if self.items[p.playlist_id]
+                     or p.playlist_id in fake_playlists]
         message = messages.TabsChanged('connect', playlists,
                                        [self.share], [])
         message.send_to_frontend()
