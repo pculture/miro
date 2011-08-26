@@ -677,16 +677,17 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                  'DAAP client connect')
 
     def client_disconnect_error_callback(self, unused):
-        tab_ids = [p.id for p in self.playlists
-                        if self.items.has_key(p.playlist_id) and
-                        self.items[p.playlist_id]]
-        message = messages.TabsChanged('connect', [], [], tab_ids)
-        message.send_to_frontend()
+        self.client_disconnect_callback_common(unused)
 
     def client_disconnect_callback(self, unused):
+        self.client_disconnect_callback_common(unused)
+
+    def client_disconnect_callback_common(self, unused):
+        fake_playlists = ('video', 'audio', 'playlist', 'podcast')
         tab_ids = [p.id for p in self.playlists
                         if self.items.has_key(p.playlist_id) and
-                        self.items[p.playlist_id]]
+                        self.items[p.playlist_id] or
+                        p.playlist_id in fake_playlists]
         message = messages.TabsChanged('connect', [], [], tab_ids)
         message.send_to_frontend()
 
