@@ -488,7 +488,10 @@ class SharingItemSource(ItemSource):
     def _on_tracker_removed(self, tracker, playlist, item):
         # Only nuke if we are removing the item from the library.
         if playlist == None:
-            del self.info_cache[item.id]
+            try:
+                del self.info_cache[item.id]
+            except KeyError:
+                pass
         if playlist == self.playlist_id:
             if (self.include_podcasts or
               not self.include_podcasts and not self.is_podcast(item)):
