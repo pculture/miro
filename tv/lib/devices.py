@@ -120,6 +120,8 @@ class GlobSet(object):
         other = set(other)
         if self.frozenset & other:
             return True
+        if not self.regex:
+            return False
         return any(v for v in other if self.regex.match(v))
 
 class BaseDeviceInfo(object):

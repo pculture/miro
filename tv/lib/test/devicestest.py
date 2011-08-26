@@ -294,3 +294,11 @@ class GlobSetTest(MiroTestCase):
         self.assertTrue(gs & set('bc'))
         self.assertTrue(gs & set(['bc', 'c']))
         self.assertFalse(gs & set('cd'))
+
+    def test_globset_and_plain(self):
+        gs = devices.GlobSet('ab')
+        self.assertTrue(gs & set('a'))
+        self.assertTrue(gs & set('b'))
+        self.assertTrue(gs & set('ab'))
+        self.assertTrue(gs & set('bc'))
+        self.assertFalse(gs & set('cd'))
