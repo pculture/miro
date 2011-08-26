@@ -1182,11 +1182,12 @@ class SharingManagerBackend(object):
                 # We could just overwrite everything without actually deleting
                 # the object.  A missing key means it's a folder, and we skip
                 # over it.
+                playlist = []
                 for x in changed:
                     if self.daap_playlists.has_key(x.id):
                         #self.daap_playlists[x.id] = self.deleted_item()
                         del self.daap_playlists[x.id]
-                playlist = [x for x in changed if not x.is_folder]
+                        playlist.append(x)
                 self.make_daap_playlists(playlist)
 
         eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
@@ -1202,8 +1203,16 @@ class SharingManagerBackend(object):
                     if self.daap_playlists.has_key(x):
                         self.daap_playlists[x] = self.deleted_item()
                         #del self.daap_playlists[x]
-                        del self.playlist_item_map[x]
-                        del self.deleted_item_map[x]
+                        try:
+                            del self.playlist_item_map[x]
+                        except KeyError:
+                            logging.debug('sharing: cannot delete '
+                                          'playlist_item_map id = %d', x)
+                        try:
+                            del self.deleted_item_map[x]
+                        except KeyError:
+                            logging.debug('sharing: cannot delete '
+                                          'deleted_item_map id = %d', x)
                         messages.StopTrackingItems(self.type,
                                                    x).send_to_backend()
                         app.info_updater.item_list_callbacks.remove(self.type,
