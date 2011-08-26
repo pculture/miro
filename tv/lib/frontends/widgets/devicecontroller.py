@@ -594,6 +594,8 @@ class DeviceSettingsWidget(widgetset.Background):
         else:
             self.boxes['always_show'].disable()
             self.boxes['always_show'].set_checked(True)
+        self.boxes['always_sync_videos'].set_checked(
+                device_settings.get(u'always_sync_videos', False))            
         self.bulk_change = False
 
     def setting_changed(self, widget, setting_or_value, setting=None):
