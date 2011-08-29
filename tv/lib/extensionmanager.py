@@ -110,7 +110,8 @@ class Extension:
         will be called using args and kwargs.  The return value or exception
         will be passed on.
 
-        raises KeyError: this extension doesn't implement hook_name
+        :raises KeyError: this extension doesn't implement hook_name
+        :raises: invoke_hook propogates exceptions from the hook function
         """
         hook_func = self.hooks[hook_name]
         return hook_func(*args, **kwargs)

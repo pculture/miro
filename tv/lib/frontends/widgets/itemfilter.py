@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -59,7 +59,7 @@ class ItemFilter(object):
 
         subclasses must override this
 
-        :returns:t True if the ItemInfo should be included in the item list.
+        :returns: True if the ItemInfo should be included in the item list.
         """
         raise NotImplementedError()
 

@@ -40,12 +40,12 @@ your config file containing a list of hooks.  For each hook, the key is the
 name of the hook and the value specifies where to find the hook function.  The
 values are in the form of package.module:path.to.obj.
 
-Here's an example [hooks] section:
+Here's an example [hooks] section::
 
-[hooks]
-hook1 = myext:handle_hook
-hook2 = myext.foo:handle_hook
-hook3 = myext:hook_obj.handle_hook
+    [hooks]
+    hook1 = myext:handle_hook
+    hook2 = myext.foo:handle_hook
+    hook3 = myext:hook_obj.handle_hook
 
 In this example, hook1 will be handled by handle_hook() inside the module
 myext, hook2 will be handled by the handle_hook() function inside the module
