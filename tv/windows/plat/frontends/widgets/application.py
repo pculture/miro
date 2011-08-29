@@ -124,7 +124,14 @@ class WindowsApplication(Application):
         app.video_renderer = VideoRenderer()
         app.get_item_type = get_item_type
 
-        gtk.main()
+        gtk.gdk.threads_enter()
+        try:
+            gtk.main()
+        finally:
+            gtk.gdk.threads_leave()
+
+
+
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
         ctypes.cdll.winsparkle.win_sparkle_cleanup()
