@@ -726,7 +726,7 @@ class DeviceTabListHandler(object):
         new_data = {
             'fake': True,
             'tab_type': typ,
-            'id': u'%s-%s' % (info.id, typ),
+            'id': u'%r-%s' % (info.id, typ),
             'name': name,
             'device_name': info.name,
             'icon': imagepool.get_surface(
