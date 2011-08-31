@@ -192,6 +192,12 @@ def get(descriptor):
         return proxy_info.port
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
         return proxy_info.ignore_hosts
+    elif descriptor == prefs.AUTOUPDATE_URL:
+        return prefs.get_from_environ('DTV_AUTOUPDATE_URL',
+          u'http://www.participatoryculture.org/democracy-appcast-windows.xml')
+    elif descriptor == prefs.AUTOUPDATE_BETA_URL:
+        return prefs.get_from_environ('DTV_AUTOUPDATE_BETA_URL',
+          u'http://www.participatoryculture.org/democracy-appcast-windows-beta.xml')
     # Proxy authorization isn't suppored on windows, so the following
     # keys are ignored:
     #

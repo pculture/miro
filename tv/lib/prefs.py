@@ -173,11 +173,11 @@ SHARE_URL         = Pref(key='ShareURL',        default=default_share,
                          platformSpecific=False)
 # this is for final releases
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=default_autoupdate,
-                         platformSpecific=False)
+                         platformSpecific=True)
 # this is for beta and release candidate releases
 AUTOUPDATE_BETA_URL = Pref(
     key='AutoupdateBetaURL', default=default_autoupdate_beta,
-    platformSpecific=False)
+    platformSpecific=True)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
 TROUBLESHOOT_URL  = Pref(key='TroubleshootURL', default=u"http://manual.getmiro.com/troubleshooting.html",
