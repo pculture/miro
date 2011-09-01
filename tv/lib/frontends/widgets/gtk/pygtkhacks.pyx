@@ -73,10 +73,11 @@ cdef extern from "pygobject.h":
     cdef PyObject* pygobject_init(int req_major, int req_minor, int req_micro)
     cdef GObject* pygobject_get(PyGObject*)
 
-cdef GtkWidget* get_gtk_widget(object pygtk_widget):
+cdef GObject* get_c_gobject(object py_gobject):
+    """Get a C GObject pointer from a Python GObject."""
     cdef PyGObject *pygobject
-    pygobject = <PyGObject *>pygtk_widget
-    return <GtkWidget*>(pygobject_get(pygobject))
+    pygobject = <PyGObject *>py_gobject
+    return pygobject_get(pygobject)
 
 def initialize():
     if pygobject_init(-1, -1, -1) == NULL:
@@ -84,14 +85,14 @@ def initialize():
 
 def unset_tree_view_drag_dest_row(object py_tree_view):
     cdef GtkTreeView* tree_view 
-    tree_view = <GtkTreeView*>get_gtk_widget(py_tree_view)
+    tree_view = <GtkTreeView*>get_c_gobject(py_tree_view)
     gtk_tree_view_set_drag_dest_row(tree_view, NULL, GTK_TREE_VIEW_DROP_BEFORE)
 
 def set_entry_border(object py_entry, int top, int right, int bottom, int left):
     cdef GtkEntry* entry
     cdef GtkBorder border
 
-    entry = <GtkEntry*>get_gtk_widget(py_entry)
+    entry = <GtkEntry*>get_c_gobject(py_entry)
     border.left = left
     border.right = right
     border.top = top
@@ -102,14 +103,10 @@ def set_tooltip_text(object tooltip, text):
     # For some reason this isn't available on pygtk 2.12.1 for windows, so we
     # have to implement it ourselves.
     cdef GtkTooltip* gtk_tooltip
-    cdef PyGObject *pygobject
-    pygobject = <PyGObject *>tooltip
-    gtk_tooltip = <GtkTooltip*>(pygobject_get(pygobject))
+    gtk_tooltip = <GtkTooltip*>get_c_gobject(tooltip)
     gtk_tooltip_set_text(gtk_tooltip, text)
 
 def set_pango_layout_height(object layout, height):
     cdef PangoLayout* pango_layout
-    cdef PyGObject *pygobject
-    pygobject = <PyGObject *>layout
-    pango_layout = <PangoLayout*>(pygobject_get(pygobject))
+    pango_layout = <PangoLayout*>get_c_gobject(layout)
     pango_layout_set_height(pango_layout, height)
