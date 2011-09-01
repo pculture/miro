@@ -80,7 +80,14 @@ class FilteredListMixin(object):
     """
     def __init__(self):
         filters = app.widget_state.get_filters(self.type, self.id)
-        self.item_list.set_filters(filters)
+        try:
+            self.item_list.set_filters(filters)
+        except KeyError:
+            logging.warn("Error setting initial filters to %s "
+                    "(type: %s, id: %s)", filters, self.type, self.id)
+            self.item_list.set_filters([u'all'])
+            app.widget_state.set_filters(self.type, self.id,
+                self.item_list.get_filters())
         self.after_filters_changed()
         self.add_extension_filters()
 

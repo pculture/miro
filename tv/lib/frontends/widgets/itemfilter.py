@@ -125,10 +125,14 @@ class ItemFilterSet(object):
         """Set the filters to be a specific set.
 
         No validation is used to check that the set is valid.
+
+        :raises KeyError: one of the filter keys is not valid
         """
+        # fetch the filters first.  This way we won't change our attributes in
+        # case of a KeyError.
+        filter_objs = [ItemFilter.get_filter(k) for k in filter_keys]
         self.active_filters = set(filter_keys)
-        self.active_filter_objects = [ItemFilter.get_filter(k) for k in
-                filter_keys]
+        self.active_filter_objects = filter_objs
 
     def filter(self, item_info):
         """Run all active filters on item_info
