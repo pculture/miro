@@ -39,6 +39,7 @@ import time
 import subprocess
 import ctypes
 
+import gobject
 import gtk
 
 from miro.gtcache import gettext as _
@@ -90,7 +91,7 @@ class WindowsApplication(Application):
     def _run(self):
 
         self.initXULRunner()
-        gtk.gdk.threads_init()
+        gobject.threads_init()
         self.startup()
 
 
@@ -126,6 +127,7 @@ class WindowsApplication(Application):
         app.get_item_type = get_item_type
 
         gtk.main()
+
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
         ctypes.cdll.winsparkle.win_sparkle_cleanup()
