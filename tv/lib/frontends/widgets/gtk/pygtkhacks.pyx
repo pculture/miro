@@ -33,6 +33,7 @@ cdef extern from "gtk/gtk.h":
     ctypedef int gint
     ctypedef unsigned long gulong
     ctypedef unsigned int guint
+    ctypedef unsigned short gboolean
     ctypedef char gchar
     ctypedef void * gpointer
     ctypedef void * GCallback
@@ -60,6 +61,17 @@ cdef extern from "gtk/gtk.h":
     cdef void gtk_entry_set_text (GtkEntry        *entry,
                                      char* text)
     cdef void gtk_tooltip_set_text (GtkTooltip  *tooltip, char *text)
+
+cdef extern from "gdk/gdk.h":
+    ctypedef struct GdkWindow
+    ctypedef struct GdkDrawable
+
+    void gdk_window_get_internal_paint_info (GdkWindow *window,
+                                             GdkDrawable **real_drawable,
+                                             gint *x_offset,
+                                             gint *y_offset)
+    gboolean gdk_window_ensure_native (GdkWindow *window)
+
 
 cdef extern from "pango/pango.h":
     ctypedef struct PangoLayout
@@ -110,3 +122,19 @@ def set_pango_layout_height(object layout, height):
     cdef PangoLayout* pango_layout
     pango_layout = <PangoLayout*>get_c_gobject(layout)
     pango_layout_set_height(pango_layout, height)
+
+def get_gdk_window_offset(py_gdk_window):
+    cdef GdkWindow* window
+    cdef GdkDrawable* drawable
+    cdef gint x_offset, y_offset
+
+    window = <GdkWindow*>get_c_gobject(py_gdk_window)
+    gdk_window_get_internal_paint_info(window, &drawable, &x_offset,
+            &y_offset)
+    return (x_offset, y_offset)
+
+def ensure_native_window(py_gdk_window):
+    cdef GdkWindow* window
+
+    window = <GdkWindow*>get_c_gobject(py_gdk_window)
+    return gdk_window_ensure_native(window)

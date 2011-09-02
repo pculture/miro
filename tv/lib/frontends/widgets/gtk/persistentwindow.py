@@ -40,6 +40,8 @@ import weakref
 
 _dummy_window = None
 
+from miro.frontends.widgets.gtk import pygtkhacks
+
 def _get_dummy_window():
     """Get a hidden window to use.
 
@@ -81,6 +83,7 @@ class PersistentWindow(gtk.DrawingArea):
 
     def do_realize(self):
         gtk.DrawingArea.do_realize(self)
+        pygtkhacks.ensure_native_window(self.window)
         self.persistent_window.reparent(self.window, 0, 0)
         self.persistent_window.resize(self.allocation.width,
                 self.allocation.height)

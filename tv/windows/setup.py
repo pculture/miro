@@ -202,6 +202,7 @@ pygtkhacks_ext = Extension(
     library_dirs=[GTK_LIB_PATH],
     libraries=[
         'gtk-win32-2.0',
+        'gdk-win32-2.0',
         'pango-1.0',
         ]
     )
