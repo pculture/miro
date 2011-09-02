@@ -92,12 +92,31 @@ class MetadataProgressUpdater(object):
         This method executes as an idle callback, so it's safe to call from
         any thread.
         """
+        self._will_process_path(path, device)
+
+    @eventloop.as_idle
+    def will_process_paths(self, paths, device=None):
+        """Call we've started processing metadata for several files.  The
+        advantage to this method is that it only adds one idle callback for the
+        whole set of filenames.
+
+        This method executes as an idle callback, so it's safe to call from
+        any thread.
+        """
+        for path in paths:
+            self._will_process_path(path, device)
+        
+    def _will_process_path(self, path, device=None):
+        """Actual implementation of the logic to add a new path to the metadata
+        queue.
+        """
         if path in self.path_to_target:
-            # hmm, we already are storing path in our system.  Log a warning
-            # and don't count it
-            logging.warn("MetadataProgressUpdate.will_process_path() called "
-                    "for path %s that we already counted for %s", path,
-                    self.path_to_target[path])
+            # hmm, we already are storing path in our system.  Log a
+            # warning and don't count it
+            logging.warn("MetadataProgressUpdate.will_process_path() "
+                         "called for path %s that we already "
+                         "counted for %s", path,
+                         self.path_to_target[path])
             return
         target = self._calc_target(path, device)
         if target is None:

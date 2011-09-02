@@ -1239,6 +1239,7 @@ def scan_device_for_files(device):
     known_files = clean_database(device)
     item_data = []
     start = time.time()
+    filenames = []
     def _continue():
         if not app.device_manager.running: # user quit, so we will too
             logging.debug('stopping scan on %s: user quit', device.mount)
@@ -1264,13 +1265,15 @@ def scan_device_for_files(device):
             item_type = u'audio'
         if item_type is not None:
             item_data.append((ufilename, item_type))
-            app.metadata_progress_updater.will_process_path(filename,
-                                                            device)
+            filenames.append(filename)
         if time.time() - start > 0.4:
+            app.metadata_progress_updater.will_process_paths(filenames,
+                                                             device)
             yield # let other stuff run
             if not _continue():
                 break
             start = time.time()
+            filenames = []
 
     if app.device_manager.running and os.path.exists(device.mount):
         # we don't re-check if the device is hidden because we still want to
