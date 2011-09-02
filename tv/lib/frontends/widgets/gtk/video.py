@@ -584,7 +584,8 @@ class VideoPlayer(player.Player, VBox):
         self.renderer.set_current_time(time_pos)
 
     def enter_fullscreen(self):
-        self.screensaver_manager = screensaver.create_manager()
+        self.screensaver_manager = screensaver.create_manager(
+                app.widgetapp.window._window)
         if self.screensaver_manager is not None:
             self.screensaver_manager.disable()
         self.rebuild_video_details()

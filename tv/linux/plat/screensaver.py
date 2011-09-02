@@ -34,14 +34,69 @@ import dbus
 import gobject
 import subprocess
 
+class Gnome3ScreenSaverManager(object):
+    """Screen saver manager for Gnome 3.x"""
 
-class GnomeScreenSaverManager(object):
-    def __init__(self):
+    def __init__(self, toplevel_window):
+        self.cookie = None
+        self.toplevel_window = toplevel_window
+        # keep a bus around for as long as this object is alive.  Gnome 3 docs
+        # say that disconnecting from the bus will uninhibit the screen saver.
+        self.bus = dbus.SessionBus()
+
+    def should_use(self):
+        # check to see if the DBus object exists
+        if not self.bus.name_has_owner('org.gnome.SessionManager'):
+            return False
+        # check to see if it has the "Inhibit" method"
+        # We use the Introspect() method to do this which returns an XML
+        # string.  We could parse this, but it seems enough just to check if
+        # the method name is present anywhere.
+        obj = self.bus.get_object('org.gnome.SessionManager',
+                             '/org/gnome/SessionManager')
+        return 'Inhibit' in obj.Introspect()
+
+    def _get_session_manager(self):
+        return self.bus.get_object('org.gnome.SessionManager',
+                             '/org/gnome/SessionManager')
+
+    def disable(self):
+        obj = self._get_session_manager()
+
+        prog = "Miro"
+        toplevel_xid = dbus.UInt32(self.toplevel_window.window.xid)
+        reason = "Playing a video"
+        flags = dbus.UInt32(8) # inhibit idle
+
+        self.cookie = obj.Inhibit(prog, toplevel_xid, reason, flags)
+
+    def enable(self):
+        if self.cookie is None:
+            raise AssertionError("disable() must be called before enable()")
+
+        obj = self._get_session_manager()
+
+        obj.Uninhibit(self.cookie)
+        self.cookie = None
+
+class Gnome2ScreenSaverManager(object):
+    """Screen saver manager for Gnome 2.x"""
+
+    def __init__(self, toplevel_window):
         self.cookie = None
 
     def should_use(self):
         bus = dbus.SessionBus()
-        return bus.name_has_owner('org.gnome.ScreenSaver')
+        # first check if the screen saver dbus object exists
+        if not bus.name_has_owner('org.gnome.ScreenSaver'):
+            return False
+        # check to see if it has the "Inhibit" method" (on Gnome 3 it doesn't)
+        # We use the Introspect() method to do this which returns an XML
+        # string.  We could parse this, but it seems enough just to check if
+        # the method name is present anywhere.
+        obj = bus.get_object('org.gnome.ScreenSaver',
+                             '/org/gnome/ScreenSaver')
+        return 'Inhibit' in obj.Introspect()
 
     def disable(self):
         bus = dbus.SessionBus()
@@ -64,7 +119,7 @@ class GnomeScreenSaverManager(object):
 
 
 class XScreenSaverManager(object):
-    def __init__(self):
+    def __init__(self, toplevel_window):
         self.timer = None
 
     def call_xss(self, command):
@@ -94,16 +149,18 @@ class XScreenSaverManager(object):
         self.timer = None
 
 
-MANAGERS = [
-    GnomeScreenSaverManager(),
-    XScreenSaverManager(),
+MANAGER_CLASSES = [
+    Gnome3ScreenSaverManager,
+    Gnome2ScreenSaverManager,
+    XScreenSaverManager,
     # TODO: make a KDE3 version?
 ]
 
 
-def create_manager():
+def create_manager(toplevel_window):
     """Return an object that can disable/enable the screensaver."""
-    for manager in MANAGERS:
+    for klass in MANAGER_CLASSES:
+        manager = klass(toplevel_window)
         if manager.should_use():
             return manager
     return None

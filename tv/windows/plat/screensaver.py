@@ -80,7 +80,7 @@ class WindowsScreenSaverManager(object):
             SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, 1, None, 0)
         self.was_active = None
 
-def create_manager():
+def create_manager(toplevel_window):
     """Return an object that can disable/enable the screensaver.
     """
     return WindowsScreenSaverManager()
