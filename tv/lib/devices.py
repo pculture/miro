@@ -1240,18 +1240,18 @@ def scan_device_for_files(device):
     item_data = []
     start = time.time()
     filenames = []
-    def _continue():
+    def _stop():
         if not app.device_manager.running: # user quit, so we will too
             logging.debug('stopping scan on %s: user quit', device.mount)
-            return False
+            return True
         if not os.path.exists(device.mount): # device disappeared
             logging.debug('stopping scan on %s: disappeared', device.mount)
-            return False
+            return True
         if app.device_manager._is_hidden(device): # device no longer being
                                                   # shown
             logging.debug('stopping scan on %s: hidden', device.mount)
-            return False
-        return True
+            return True
+        return False
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
@@ -1270,7 +1270,7 @@ def scan_device_for_files(device):
             app.metadata_progress_updater.will_process_paths(filenames,
                                                              device)
             yield # let other stuff run
-            if not _continue():
+            if _stop():
                 break
             start = time.time()
             filenames = []
@@ -1296,7 +1296,7 @@ def scan_device_for_files(device):
             if time.time() - start > 0.4:
                 device.database.set_bulk_mode(False) # save the database
                 yield # let other idle functions run
-                if not _continue():
+                if _stop():
                     break
                 device.database.set_bulk_mode(True)
                 start = time.time()
