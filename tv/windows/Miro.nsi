@@ -1466,6 +1466,7 @@ continue:
 
   ; Remove registry keys
   DeleteRegKey HKLM "Software\${CONFIG_PUBLISHER}"
+  DeleteRegKey HKCU  "Software\${CONFIG_PUBLISHER}"
   DeleteRegKey HKLM "${UNINST_KEY}"
   DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
   DeleteRegKey HKCR "${CONFIG_PROG_ID}"
