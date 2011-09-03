@@ -193,11 +193,19 @@ def get(descriptor):
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
         return proxy_info.ignore_hosts
     elif descriptor == prefs.AUTOUPDATE_URL:
-        return prefs.get_from_environ('DTV_AUTOUPDATE_URL',
-          u'http://www.participatoryculture.org/democracy-appcast-windows.xml')
+        if app.configfile.contains(descriptor.key):
+            default = app.configfile.get(descriptor.key)
+        else:
+            default = u'http://www.participatoryculture.org' \
+                       '/democracy-appcast-windows.xml'
+        return prefs.get_from_environ('DTV_AUTOUPDATE_URL', default)
     elif descriptor == prefs.AUTOUPDATE_BETA_URL:
-        return prefs.get_from_environ('DTV_AUTOUPDATE_BETA_URL',
-          u'http://www.participatoryculture.org/democracy-appcast-windows-beta.xml')
+        if app.configfile.contains(descriptor.key):
+            default = app.configfile.get(descriptor.key)
+        else:
+            default = u'http://www.participatoryculture.org' \
+                       '/democracy-appcast-windows-beta.xml'
+        return prefs.get_from_environ('DTV_AUTOUPDATE_BETA_URL', default)
     # Proxy authorization isn't suppored on windows, so the following
     # keys are ignored:
     #
