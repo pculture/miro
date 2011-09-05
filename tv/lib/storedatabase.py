@@ -408,10 +408,10 @@ class LiveStorage:
         try:
             del self._object_map[obj.id]
         except KeyError:
-            details = "key error in forget_object: %s (obj: %s)" % (obj.id,
-                    obj)
-            app.controller.failed_soft('storedatabase.forget_object', details,
-                    with_exception=True)
+            details = ('storedatabase.forget_object: '
+                       'key error in forget_object: %s (obj: %s)' %
+                       (obj.id, obj))
+            logging.error(details)
         self._ids_loaded.discard(obj.id)
 
     def _insert_sql_for_schema(self, obj_schema):
