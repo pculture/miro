@@ -265,7 +265,14 @@ class ItemInfoCache(signals.SignalEmitter):
             # doing a failsafe load
             del self.id_to_info[item.id]
             return
-        info = self.id_to_info.pop(item.id)
+        try:
+            info = self.id_to_info.pop(item.id)
+        except KeyError:
+            # We are upgrading from a version without an info cache, and an
+            # item was expired, but it didn't exist in the cache before.
+            logging.info('Item %s removed but no corresponding info exists',
+                          item.id)
+            return
 
         if item.id in self._infos_added:
             del self._infos_added[item.id]
