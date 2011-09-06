@@ -508,7 +508,7 @@ class DeviceManager(object):
     def _send_disconnect(self, info):
         sync_manager = app.device_manager.get_sync_for_device(info,
                                                               create=False)
-        if sync_manager:
+        if sync_manager and sync_manager.started:
             messages.ShowWarning(
                 _('Device removed during sync'),
                 _('%(name)s was removed while a sync was in progress.  '
