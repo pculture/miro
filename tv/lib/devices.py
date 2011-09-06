@@ -805,7 +805,13 @@ class DeviceSyncManager(object):
     def conversion_for_info(self, info):
         device_settings = self.device.database.get(u'settings', {})
         device_info = self.device.info
-        media_info = conversions.get_media_info(info.video_path)
+        try:
+            media_info = conversions.get_media_info(info.video_path)
+        except ValueError:
+            logging.exception('error getting media info for %r',
+                              info.video_path)
+            return 'copy'
+        
         requires_conversion = False
         def ensure_set(v):
             if isinstance(v, basestring):
@@ -832,7 +838,6 @@ class DeviceSyncManager(object):
                 info_video_codecs = ensure_set(media_info['video_codec'])
                 if not (device_info.video_types & info_video_codecs):
                     requires_conversion = True # video codec doesn't match
-        print 'CONVERSION', info.video_path, media_info, requires_conversion
         if not requires_conversion:
             return 'copy' # so easy!
         elif info.file_type == 'audio':
