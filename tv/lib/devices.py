@@ -239,10 +239,12 @@ class USBMassStorageDeviceInfo(DeviceInfo):
                 'generic': True,
                 'mount_instructions': _("Your drive must be mounted."),
                 'audio_conversion': 'copy',
-                'audio_types': '',
+                'audio_types': frozenset(),
                 'audio_path': u'Miro',
+                'video_types': frozenset(),
                 'video_conversion': 'copy',
                 'video_path': u'Miro',
+                'container_types': frozenset(),
                 })
 
 class DeviceManager(object):
