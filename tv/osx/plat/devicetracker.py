@@ -106,7 +106,7 @@ class DeviceTracker(object):
         device_name = disk_info.MediaName[:-6] # strip off ' Media'
         logging.debug('seen device: %r' % device_name)
         self._mounted_volumes.add(volume)
-        app.device_manager.device_connected(volume,
+        app.device_manager.device_connected(volume.decode('utf8'),
                                             name=device_name,
                                             mount=real_volume + '/',
                                             size=volume_info.TotalSize,
@@ -115,7 +115,7 @@ class DeviceTracker(object):
     def _disk_unmounted(self, volume):
         if volume in self._mounted_volumes:
             self._mounted_volumes.remove(volume)
-            app.device_manager.device_disconnected(volume)
+            app.device_manager.device_disconnected(volume.decode('utf8'))
 
     def eject(self, device):
         diskutil('eject', device.mount, use_plist=False)
