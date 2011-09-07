@@ -565,6 +565,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     button is clicked.
     """
     type = u'sharing'
+    fake_playlists = ('video', 'audio', 'playlist', 'podcast')
+
     def __init__(self, share):
         signals.SignalEmitter.__init__(self)
         for sig in 'added', 'changed', 'removed':
@@ -573,7 +575,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.share = share
         self.items = dict()
         self.info_cache = dict()
-        self.playlists = []
+        self.playlists = dict()
         self.base_playlist = None    # Temporary
         self.share.is_updating = True
         message = messages.TabsChanged('connect', [], [self.share], [])
@@ -683,11 +685,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.client_disconnect_callback_common(unused)
 
     def client_disconnect_callback_common(self, unused):
-        fake_playlists = ('video', 'audio', 'playlist', 'podcast')
-        tab_ids = [p.id for p in self.playlists
-                        if self.items.has_key(p.playlist_id) and
-                        self.items[p.playlist_id] or
-                        p.playlist_id in fake_playlists]
+        tab_ids = [p.id for p in self.playlists.itervalues()
+                        if self.items[p.playlist_id] or
+                         p.playlist_id in SharingItemTrackerImpl.fake_playlists]
         message = messages.TabsChanged('connect', [], [], tab_ids)
         message.send_to_frontend()
 
@@ -730,19 +730,19 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         playlists, deleted_playlists = client.playlists(update=update)
         if playlists is None:
             raise IOError('Cannot get playlist')
-        returned_playlists = []
-        video_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'video'))).hexdigest())
-        audio_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'audio'))).hexdigest())
-        playlist_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'playlist'))).hexdigest())
-        podcast_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'podcast'))).hexdigest())
+        returned_playlists = dict()
+        video_tab_id = unicode(md5(repr((name,
+                                         host,
+                                         port, u'video'))).hexdigest())
+        audio_tab_id = unicode(md5(repr((name,
+                                         host,
+                                         port, u'audio'))).hexdigest())
+        playlist_tab_id = unicode(md5(repr((name,
+                                            host,
+                                            port, u'playlist'))).hexdigest())
+        podcast_tab_id = unicode(md5(repr((name,
+                                           host,
+                                           port, u'podcast'))).hexdigest())
         for k in playlists.keys():
             # Clean the playlist: remove NUL characters.
             for k_ in playlists[k]:
@@ -765,19 +765,19 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             if not is_base_playlist:
                 # XXX only add playlist if it not base playlist.  We don't
                 # explicitly show base playlist.
-                playlist_id = unicode(md5(repr((name,
-                                                host,
-                                                port, k))).hexdigest())
+                tab_id = unicode(md5(repr((name,
+                                           host,
+                                           port, k))).hexdigest())
                 try:
                     key = 'com.apple.itunes.is-podcast-playlist'
                     podcast = playlists[k][key]
                 except KeyError:
                     podcast = False
                 if podcast:
-                    parent_id = podcast_playlist_id
+                    parent_id = podcast_tab_id
                 else:
-                    parent_id = playlist_playlist_id
-                info = messages.SharingInfo(playlist_id,
+                    parent_id = playlist_tab_id
+                info = messages.SharingInfo(tab_id,
                                             self.share.id,
                                             playlists[k]['dmap.itemname'],
                                             host,
@@ -785,24 +785,24 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                             parent_id=parent_id,
                                             playlist_id=k,
                                             podcast=podcast)
-                returned_playlists.append(info)
+                returned_playlists[k] = info
         # These are fake: so we only want to insert these once.
         if not update:
-            video_info = messages.SharingInfo(video_playlist_id,
+            video_info = messages.SharingInfo(video_tab_id,
                                               self.share.id,
                                               u'video',
                                               host,
                                               port,
                                               parent_id=self.share.id,
                                               playlist_id=u'video')
-            audio_info = messages.SharingInfo(audio_playlist_id,
+            audio_info = messages.SharingInfo(audio_tab_id,
                                               self.share.id,
                                               u'audio',
                                               host,
                                               port,
                                               parent_id=self.share.id,
                                               playlist_id=u'audio')
-            playlist_folder_info = messages.SharingInfo(playlist_playlist_id,
+            playlist_folder_info = messages.SharingInfo(playlist_tab_id,
                                               self.share.id,
                                               u'playlist',
                                               host,
@@ -810,7 +810,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                               parent_id=self.share.id,
                                               playlist_id=u'playlist',
                                               has_children=True)
-            podcast_folder_info = messages.SharingInfo(podcast_playlist_id,
+            podcast_folder_info = messages.SharingInfo(podcast_tab_id,
                                               self.share.id,
                                               u'podcast',
                                               host,
@@ -818,12 +818,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                               parent_id=self.share.id,
                                               playlist_id=u'podcast',
                                               has_children=True)
-            # Place this stuff at the front.  Insert(0, XXX) is a push
-            # operation.
-            returned_playlists.insert(0, podcast_folder_info)
-            returned_playlists.insert(0, playlist_folder_info)
-            returned_playlists.insert(0, audio_info)
-            returned_playlists.insert(0, video_info)
+            returned_playlists['video'] = video_info
+            returned_playlists['audio'] = audio_info
+            returned_playlists['playlist'] = playlist_folder_info
+            returned_playlists['podcast'] = podcast_folder_info
 
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken?
@@ -838,20 +836,19 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         deleted_items[self.base_playlist] = deleted
         # Make sure that we ditch stuff from the in-house video, music,
         # playlist and podcast tabs too.
-        # XXX lazy - the callback will filter out irrelevant items.
-        fake_playlists = ('video', 'audio', 'playlist', 'podcast')
-        for p in fake_playlists:
+        #
+        # The callback will filter out irrelevant items, so we can just
+        # add these as we please, it's easier that way to than figure out
+        # the exact set.
+        for p in SharingItemTrackerImpl.fake_playlists:
             deleted_items[p] = deleted
 
         itemdict = dict()
         returned_playlist_items = dict()
-        returned_items = []
-        video_items = []
-        audio_items = []
+        returned_items = dict()
+        video_items = dict()
+        audio_items = dict()
         sharing_item_meth = self.sharing_item
-        returned_items_meth = returned_items.append
-        audio_items_meth = audio_items.append
-        video_items_meth = video_items.append
         for itemkey in items.keys():
             # Clean it of NUL
             for k in items[itemkey]:
@@ -860,11 +857,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                     items[itemkey][k] = tmp.replace('\x00', '')
             item = sharing_item_meth(items[itemkey])
             itemdict[itemkey] = item
-            returned_items_meth(item)
+            returned_items[itemkey] = item
             if item.file_type == u'video':
-                video_items_meth(item)
+                video_items[itemkey] = item
             elif item.file_type == u'audio':
-                audio_items_meth(item)
+                audio_items[itemkey] = item
             else:
                 logging.warn('item file type unrecognized %s', item.file_type)
         returned_playlist_items[u'video'] = video_items
@@ -874,13 +871,12 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Have to save the items from the base playlist first, because
         # Rhythmbox will get lazy and only send the ids around (expecting
         # us to already to have the data, I guess). 
-        playlist_items = []
-        podcast_items = []
+        playlist_items = dict()
+        podcast_items = dict()
         for k in playlists.keys():
             if k == self.base_playlist:
                 continue
-            returned_items = []
-            returned_items_meth = returned_items.append
+            returned_items = dict()
             items, deleted = client.items(playlist_id=k, meta=DAAP_META,
                                                update=update)
             if items is None:
@@ -888,20 +884,17 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             deleted_items[k] = deleted
             for itemkey in items.keys():
                 item = itemdict[itemkey]
-                returned_items_meth(item)
+                returned_items[itemkey] = itemdict[itemkey]
                 try:
                     key = 'com.apple.itunes.is-podcast-playlist'
                     if playlists[k].has_key(key) and playlists[k][key]:
-                        podcast_items.append(item)
+                        podcast_items[itemkey] = item
                     else:
-                        playlist_items.append(item)
+                        playlist_items[itemkey] = item
                 except KeyError:
                     pass
             returned_playlist_items[k] = returned_items
 
-        # Filter out dups
-        playlist_items = list(set(playlist_items))
-        podcast_items = list(set(podcast_items))
         returned_playlist_items['podcast'] = podcast_items
         returned_playlist_items['playlist'] = playlist_items
 
@@ -940,91 +933,71 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         (returned_items, returned_playlists,
          deleted_playlists, deleted_items) = args
 
-        # Do the playlists first.  So when when we add items, it will
-        # Just Work.
-        playlist_dict = dict()
-        # XXX
-        for p in returned_playlists:
-            playlist_dict[p.playlist_id] = p
-        to_remove = []
-        playlist_ids = [p.playlist_id for p in self.playlists]
-        for p in self.playlists:
-            if p.playlist_id in deleted_playlists:
-                if not p.playlist_id in playlist_dict:
-                    deleted.append(p.id)
-                    to_remove.append(p)
-                else:
-                    logging.debug('client update: weird server playlist id %s '
-                                  'in deleted and item list at the same time',
-                                  p.playlist_id)
-            if p.playlist_id in playlist_dict:
-                changed.append(playlist_dict[p.playlist_id])
-                to_remove.append(p)
-        added = [playlist_dict[p] for p in playlist_dict if p not in
-                 playlist_ids]
-        for p in set(to_remove):
-            self.playlists.remove(p)
-            # Only remove it if it's really going!
-            changed_ids = [p.playlist_id for p in changed]
-            if not p.playlist_id in changed_ids:
-                del self.items[p.playlist_id]
-        # Make sure that when we add something it is accessible.
-        for p in added:
-            self.items[p.playlist_id] = []
-        self.playlists += added
-        self.playlists += changed
+        # First: delete old junk.  But only delete from sidebar if the
+        # thing was there in the first place, which basically means if there
+        # was a non-empty number of items in the list.
+        for k in deleted_playlists:
+            if k == self.base_playlist:
+                logging.debug('client_update_callback: remote asked us to '
+                              'delete base playlist, ignoring')
+                continue
+            try:
+                playlist_id = self.playlists[k].id
+                del self.playlists[k]
+                if self.items[k]:
+                    deleted.append(playlist_id)
+            except KeyError:
+                pass
 
+        # Added/update changed playlist.  But not necessarily the added/changed
+        # list to send, because we don't know whether this list is empty
+        # at this point.  Defer until we process the items, we will fix up.
+        for k, v in returned_playlists.iteritems():
+            if self.playlists.has_key(k):
+                changed.append(v)
+            else:
+                added.append(v)
+                self.items[k] = dict()
+            self.playlists[k] = v
+
+        # Keep tabs on whether existing playlist is empty or not
         old_empty_playlists = set([k for k in self.items if not self.items[k]])
         old_valid_playlists = set([k for k in self.items if self.items[k]])
 
-        for k in deleted_items:
-            item_ids = deleted_items[k]
+        # Process deleted items.
+        for k, item_ids in deleted_items.iteritems():
             try:
                 playlist_items = self.items[k]
             except KeyError:
                 # Huh what?  Sent us something that we don't have anymore.
                 logging.debug('Playlist %s already deleted', k)
                 continue
-            to_remove = []
             # Base playlist == None, so munge it up.  Could probably just
             # use the base playlist id and skip this trouble!
             playlist_id = None if k == self.base_playlist else k
             for item_id in item_ids:
-                for item in playlist_items:
-                    if item.id != item_id:
-                        continue
-                    to_remove.append(item)
+                try:
+                    item = playlist_items[item_id]
+                    del playlist_items[item_id]
                     self.emit('removed', playlist_id, item)
-                    break
-            for r in to_remove:
-                playlist_items.remove(r)
+                except KeyError:
+                    pass
 
-        for k in returned_items:
-            candidates = returned_items[k]
+        # Now, process returned items, that have been added/changed. 
+        for k, updated_playlist in returned_items.iteritems():
             try:
                 playlist_items = self.items[k]
             except KeyError:
+                # Huh?  We asked for a playlist that didn't exist?
                 logging.debug('CANNOT ACCESS self.items[%s]', k)
-                raise
-            to_remove = []
-            to_add = []
-            for candidate in candidates:
-                # Base playlist == None, so munge it up.  Could probably just
-                # use the base playlist id and skip this trouble!
-                playlist_id = None if k == self.base_playlist else k
-                for item in playlist_items:
-                    if candidate.id == item.id:
-                        self.emit('changed', playlist_id, candidate)
-                        to_remove.append(item)
-                        to_add.append(candidate)
-                        break
-                else:
-                    self.emit('added', playlist_id, candidate)
-                    to_add.append(candidate)
-            for r in to_remove:
-                playlist_items.remove(r)
-            playlist_items += to_add
+                continue
+            playlist_id = None if k == self.base_playlist else k
+            for key, value in updated_playlist.iteritems():
+                sig = 'changed' if playlist_items.has_key(key) else 'added'
+                self.emit(sig, playlist_id, value)
+                playlist_items[key] = value
 
+        # Keep tabs on current state of playlists
         valid_playlists = set([k for k in self.items if self.items[k]])
 
         # Filter out empty stuff.  Re-add previously empty stuff that now
@@ -1035,36 +1008,49 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # deleted.  If previously empty and now not empty, move from changed
         # to added.  If previously empty and now also empty, ditch it from the
         # changed lists.
-        fake_playlists = ('video', 'audio', 'podcast', 'playlist')
         added = [a for a in added if self.items[a.playlist_id]]
         to_remove = []
-        to_ditch = []
         for c in changed:
-            if c.playlist_id in fake_playlists:
+            if (c.playlist_id == self.base_playlist or
+              c.playlist_id in SharingItemTrackerImpl.fake_playlists):
                 continue
             if not self.items[c.playlist_id]:
+                # We need to remove it.
                 if c.playlist_id in old_valid_playlists:
+                    # Transitioned from valid to empty.  Append to deleted.
+                    logging.debug('%s transitioned to empty', c.name)
+                    deleted.append(c.id)
                     to_remove.append(c)
                 elif c.playlist_id in old_empty_playlists:
-                    to_ditch.append(c)
-        deleted += [r.id for r in to_remove]
+                    # Was empty, is still empty.  Ditch from changed list.
+                    logging.debug('%s was empty, still empty', c.name)
+                    to_remove.append(c)
+
+        # Ditch stuff in the changed list
         for r in to_remove:
-            changed.remove(r)
-        for d in to_ditch:
-            changed.remove(d)
-        # Was empty and now not empty.  Intersection of previously empty
-        # playlists and playlists are now not empty.
-        added_ids = list(old_empty_playlists.intersection(valid_playlists))
-        for p in self.playlists:
-            if p.playlist_id in added_ids:
-                added.append(p)
+            while True:
                 try:
-                    changed.remove(p)
+                    changed.remove(r)
                 except ValueError:
-                    logging.debug('warning: playlist %s not in changed',
-                                  p.name)
-        # No matter what happens, do not re-add in-house tabs.
-        added = [a for a in added if a.playlist_id not in fake_playlists]
+                    break
+
+        # Was empty and now not empty.  Intersection of previously empty
+        # playlists and playlists are now not empty.  Add to added list,
+        # and if it exists in the changed list, ditch it (because we should
+        # use add as it did not exist before).
+        added_ids = list(old_empty_playlists.intersection(valid_playlists))
+        for added_id in added_ids:
+            if added_id == self.base_playlist:
+                continue
+            if added_id in SharingItemTrackerImpl.fake_playlists:
+                continue
+            added.append(self.playlists[added_id])
+            try:
+                changed.remove(self.playlists[added_id])
+            except ValueError:
+                logging.debug('empty to non-empty transition playlist %s '
+                              'not in changed list', added_id)
+
         # Finally, update the tabs.  Use set() to filter out the duplicates.
         message = messages.TabsChanged('connect', set(added), set(changed),
                                        set(deleted))
@@ -1082,17 +1068,22 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.playlists = returned_playlists
         # Send a list of all the items to the main sharing tab.  Only add
         # those that are part of the base playlist.
-        for item in self.items[self.base_playlist]:
+        for item in self.items[self.base_playlist].itervalues():
             self.emit('added', None, item)
         # Once all the items are added then send display mounted and remove
         # the progress indicator.
         self.share.mount = True
         self.share.is_updating = False
         # Only show non-empty stuff, but make sure that we always display
-        # the top level podcast tabs.
-        fake_playlists = ('video', 'audio', 'playlist', 'podcast')
-        playlists = [p for p in self.playlists if self.items[p.playlist_id]
-                     or p.playlist_id in fake_playlists]
+        # the top level podcast tabs.  This filtering is a bit of work, but
+        # even if we have hundreds of playlists, it won't be that bad, and
+        # we only need to do this once.
+        playlists = [p for p in self.playlists.itervalues()
+                     if self.items[p.playlist_id] and
+                     p.playlist_id not in SharingItemTrackerImpl.fake_playlists]
+        # Append the ersatz playlists at the front.
+        for i, v in enumerate(SharingItemTrackerImpl.fake_playlists):
+            playlists.insert(i, self.playlists[v])
         message = messages.TabsChanged('connect', playlists,
                                        [self.share], [])
         message.send_to_frontend()
@@ -1120,9 +1111,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # called before the connection actually has succeeded.
         try:
             if playlist_id is None:
-                return self.items[self.base_playlist]
+                return self.items[self.base_playlist].values()
             else:
-                return self.items[playlist_id]
+                return self.items[playlist_id].values()
         except KeyError:
             logging.error('Cannot get playlist, was looking for %s',
                           playlist_id)
