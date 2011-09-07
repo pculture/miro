@@ -519,8 +519,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.get_by_url('dtv:searchDownloads')
 
     @classmethod
-    def folder_view(cls, id):
-        return cls.make_view('folder_id=?', (id,))
+    def folder_view(cls, id_):
+        return cls.make_view('folder_id=?', (id_,))
 
     @classmethod
     def visible_view(cls):

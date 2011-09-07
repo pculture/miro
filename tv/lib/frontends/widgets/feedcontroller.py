@@ -45,11 +45,11 @@ class FeedController(itemlistcontroller.ItemListController,
                      itemlistcontroller.FilteredListMixin):
     """Controller object for feeds."""
     TYPE = u'feed'
-    def __init__(self, id, is_folder, is_directory_feed):
+    def __init__(self, id_, is_folder, is_directory_feed):
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
         self.titlebar = None
-        itemlistcontroller.ItemListController.__init__(self, self.TYPE, id)
+        itemlistcontroller.ItemListController.__init__(self, self.TYPE, id_)
         itemlistcontroller.FilteredListMixin.__init__(self)
         self.show_resume_playing_button = True
 

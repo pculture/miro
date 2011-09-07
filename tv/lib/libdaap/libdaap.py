@@ -98,7 +98,8 @@ DEFAULT_DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
                      'com.apple.itunes.series-name')
 DEFAULT_DAAP_PLAYLIST_META = ('dmap.itemid,dmap.itemname,dmap.persistentid,' +
                               'daap.baseplaylist,dmap.itemcount,' +
-                              'dmap.parentcontainerid,dmap.persistentid')
+                              'dmap.parentcontainerid,dmap.persistentid,' + 
+                              'com.apple.itunes.is-podcast-playlist')
 
 class SessionObject(object):
     # Container object for a daap session.  Basically a heartbeat timeout

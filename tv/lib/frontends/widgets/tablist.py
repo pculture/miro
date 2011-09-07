@@ -848,27 +848,37 @@ class SharingTabListHandler(object):
     def init_info(self, info):
         info.type = u'sharing'
         info.unwatched = info.available = 0
-        info.video_playlist_id = unicode(md5(
-                                    repr((u'video',
-                                    info.host,
-                                    info.port, u'video'))).hexdigest())
-        info.audio_playlist_id = unicode(md5(
-                                    repr((u'audio',
-                                    info.host,
-                                    info.port, u'audio'))).hexdigest())
-        if info.is_folder:
+        active = None
+        if info.is_folder and info.playlist_id is None:
             thumb_path = resources.path('images/sharing.png')
         # Checking the name instead of a supposedly unique id is ok for now
         # because
         elif info.playlist_id == u'video':
             thumb_path = resources.path('images/icon-video.png')
+            active = resources.path('images/icon-video_active.png')
             info.name = _('Video')
         elif info.playlist_id == u'audio':
             thumb_path = resources.path('images/icon-audio.png')
+            active = resources.path('images/icon-audio_active.png')
             info.name = _('Music')
-        else:
+        elif info.playlist_id == u'playlist':
             thumb_path = resources.path('images/icon-playlist.png')
+            active = resources.path('images/icon-playlist_active.png')
+            info.name = _('Playlists')
+        elif info.playlist_id == u'podcast':
+            thumb_path = resources.path('images/icon-podcast.png')
+            active = resources.path('images/icon-podcast_active.png')
+            info.name = _('Podcasts')
+        else:
+            if info.podcast:
+                thumb_path = resources.path('images/icon-podcast-small.png')
+                active = resources.path('images/icon-podcast-small_active.png')
+            else:
+                thumb_path = resources.path('images/icon-playlist-small.png')
+                active = resources.path('images/icon-playlist-small_active.png')
         info.icon = imagepool.get_surface(thumb_path)
+        if active:
+            info.active_icon = imagepool.get_surface(active)
 
 class ConnectList(TabUpdaterMixin, HideableTabList):
     name = _('Connect')

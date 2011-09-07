@@ -269,12 +269,15 @@ class ConnectTab(widgetset.VBox):
         hbox = widgetset.HBox(spacing=30)
         self.share_audio_cbx = widgetset.Checkbox(_("Share Music"), bold=True)
         self.share_video_cbx = widgetset.Checkbox(_("Share Videos"), bold=True)
+        self.share_feed_cbx = widgetset.Checkbox(_("Share Podcasts"), bold=True)
         self.share_warnonquit_cbx = widgetset.Checkbox(
             _('Warn on quit when others are connected to my media library.'))
         hbox.pack_start(widgetutil.align_top(self.share_video_cbx))
         hbox.pack_start(widgetutil.align_top(self.share_audio_cbx))
+        hbox.pack_start(widgetutil.align_top(self.share_feed_cbx))
         prefpanel.attach_boolean(self.share_audio_cbx, prefs.SHARE_AUDIO)
         prefpanel.attach_boolean(self.share_video_cbx, prefs.SHARE_VIDEO)
+        prefpanel.attach_boolean(self.share_feed_cbx, prefs.SHARE_FEED)
         prefpanel.attach_boolean(self.share_warnonquit_cbx,
                                  prefs.SHARE_WARN_ON_QUIT)
         vbox.pack_start(hbox)
@@ -296,6 +299,7 @@ class ConnectTab(widgetset.VBox):
 
         if not self.share_button.get_value():
             self.share_entry.disable()
+            self.share_feed_cbx.disable()
             self.share_video_cbx.disable()
             self.share_audio_cbx.disable()
             self.share_warnonquit_cbx.disable()
@@ -314,7 +318,8 @@ class ConnectTab(widgetset.VBox):
                                                 bottom_pad=50))
 
         widgets = [self.share_button, self.share_entry, self.share_audio_cbx,
-                   self.share_video_cbx, self.share_warnonquit_cbx]
+                   self.share_video_cbx, self.share_feed_cbx,
+                   self.share_warnonquit_cbx]
         callbacks = (self.sharing_start_volatile, self.sharing_end_volatile)
         app.sharing_manager.register_interest(self, callbacks, widgets)
 

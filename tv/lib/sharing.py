@@ -46,12 +46,15 @@ from miro import app
 from miro import eventloop
 from miro import messages
 from miro import playlist
+from miro import feed
 from miro import prefs
 from miro import signals
 from miro import filetypes
+from miro import fileutil
 from miro import util
 from miro import transcode
 from miro import metadata
+from miro.item import Item
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
@@ -394,7 +397,8 @@ class SharingTracker(object):
                                                        [info], [])
                         message.send_to_frontend()
                     return
-                info = messages.SharingInfo(share_id, fullname, host, port)
+                info = messages.SharingInfo(share_id, share_id,
+                                            fullname, host, port)
                 info.connect_uuid = uuid.uuid4()
                 self.available_shares[share_id] = info
                 self.try_to_add(share_id, fullname, host, port,
@@ -725,6 +729,18 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if playlists is None:
             raise IOError('Cannot get playlist')
         returned_playlists = []
+        video_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'video'))).hexdigest())
+        audio_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'audio'))).hexdigest())
+        playlist_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'playlist'))).hexdigest())
+        podcast_playlist_id = unicode(md5(repr((name,
+                                              host,
+                                              port, u'podcast'))).hexdigest())
         for k in playlists.keys():
             # Clean the playlist: remove NUL characters.
             for k_ in playlists[k]:
@@ -750,35 +766,60 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                 playlist_id = unicode(md5(repr((name,
                                                 host,
                                                 port, k))).hexdigest())
+                try:
+                    key = 'com.apple.itunes.is-podcast-playlist'
+                    podcast = playlists[k][key]
+                except KeyError:
+                    podcast = False
+                if podcast:
+                    parent_id = podcast_playlist_id
+                else:
+                    parent_id = playlist_playlist_id
                 info = messages.SharingInfo(playlist_id,
+                                            self.share.id,
                                             playlists[k]['dmap.itemname'],
                                             host,
                                             port,
-                                            parent_id=self.share.id,
-                                            playlist_id=k)
+                                            parent_id=parent_id,
+                                            playlist_id=k,
+                                            podcast=podcast)
                 returned_playlists.append(info)
-        video_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'video'))).hexdigest())
-        audio_playlist_id = unicode(md5(repr((name,
-                                              host,
-                                              port, u'audio'))).hexdigest())
-
         # These are fake: so we only want to insert these once.
         if not update:
             video_info = messages.SharingInfo(video_playlist_id,
+                                              self.share.id,
                                               u'video',
                                               host,
                                               port,
                                               parent_id=self.share.id,
                                               playlist_id=u'video')
             audio_info = messages.SharingInfo(audio_playlist_id,
+                                              self.share.id,
                                               u'audio',
                                               host,
                                               port,
                                               parent_id=self.share.id,
                                               playlist_id=u'audio')
-            # Place this stuff at the front
+            playlist_folder_info = messages.SharingInfo(playlist_playlist_id,
+                                              self.share.id,
+                                              u'playlist',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'playlist',
+                                              has_children=True)
+            podcast_folder_info = messages.SharingInfo(podcast_playlist_id,
+                                              self.share.id,
+                                              u'podcast',
+                                              host,
+                                              port,
+                                              parent_id=self.share.id,
+                                              playlist_id=u'podcast',
+                                              has_children=True)
+            # Place this stuff at the front.  Insert(0, XXX) is a push
+            # operation.
+            returned_playlists.insert(0, podcast_folder_info)
+            returned_playlists.insert(0, playlist_folder_info)
             returned_playlists.insert(0, audio_info)
             returned_playlists.insert(0, video_info)
 
@@ -825,6 +866,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Have to save the items from the base playlist first, because
         # Rhythmbox will get lazy and only send the ids around (expecting
         # us to already to have the data, I guess). 
+        playlist_items = []
+        podcast_items = []
         for k in playlists.keys():
             if k == self.base_playlist:
                 continue
@@ -838,7 +881,21 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             for itemkey in items.keys():
                 item = itemdict[itemkey]
                 returned_items_meth(item)
+                try:
+                    key = 'com.apple.itunes.is-podcast-playlist'
+                    if playlists[k].has_key(key) and playlists[k][key]:
+                        podcast_items.append(item)
+                    else:
+                        playlist_items.append(item)
+                except KeyError:
+                    pass
             returned_playlist_items[k] = returned_items
+
+        # Filter out dups
+        playlist_items = list(set(playlist_items))
+        podcast_items = list(set(podcast_items))
+        returned_playlist_items['podcast'] = podcast_items
+        returned_playlist_items['playlist'] = playlist_items
 
         # We don't append these items directly to the object and let
         # the success callback to do it to prevent race.
@@ -1017,16 +1074,24 @@ class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It
     pushes Miro media items to pydaap so pydaap can serve them to the outside
     world."""
+
     type = u'sharing-backend'
     id = u'sharing-backend'
+
+    SHARE_AUDIO = libdaap.DAAP_MEDIAKIND_AUDIO
+    SHARE_VIDEO = libdaap.DAAP_MEDIAKIND_VIDEO
+    SHARE_FEED  = 0x4    # XXX
 
     def __init__(self):
         self.revision = 1
         self.share_types = []
         if app.config.get(prefs.SHARE_AUDIO):
-            self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+            self.share_types += [SharingManagerBackend.SHARE_AUDIO]
         if app.config.get(prefs.SHARE_VIDEO):
-            self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+            self.share_types += [SharingManagerBackend.SHARE_VIDEO]
+        if app.config.get(prefs.SHARE_FEED):
+            self.share_types += [SharingManagerBackend.SHARE_FEED]
+        
         self.item_lock = threading.Lock()
         self.revision_cv = threading.Condition(self.item_lock)
         self.transcode_lock = threading.Lock()
@@ -1055,7 +1120,16 @@ class SharingManagerBackend(object):
                 # Update the revision of these items, so they will match
                 # when the playlist items are fetched.
                 for item_id in item_ids:
-                    self.daapitems[item_id]['revision'] = self.revision
+                    try:
+                        self.daapitems[item_id]['revision'] = self.revision
+                    except KeyError:
+                        # This non-downloaded podcast item?  I think what
+                        # we want to do here is set it as a podcast item
+                        # but disable the items that are not yet available.
+                        #
+                        # Requires work to update the watchable view to include
+                        # stuff from the individual feeds.
+                        pass
             else:
                 self.make_item_dict(message.items)
 
@@ -1100,10 +1174,21 @@ class SharingManagerBackend(object):
                 self.make_item_dict(message.changed)
             else:
                 # Simply update the item's revision.
+                # XXX Feed sharing: catch KeyError because item may not
+                # be downloaded (and hence not in watchable list).
+                # Catch changed as when feed items get added they
+                # do not get added to the main list.  Catch added, when newly
+                # available podcasts come into view.
                 for x in message.added:
-                    self.daapitems[x.id]['revision'] = self.revision
+                    try:
+                        self.daapitems[x.id]['revision'] = self.revision
+                    except KeyError:
+                        pass
                 for x in message.changed:
-                    self.daapitems[x.id]['revision'] = self.revision
+                    try:
+                        self.daapitems[x.id]['revision'] = self.revision
+                    except KeyError: 
+                        pass
 
     def deleted_item(self):
         return dict(revision=self.revision, valid=False)
@@ -1114,16 +1199,23 @@ class SharingManagerBackend(object):
         self.directed = directed
         self.revision_cv.notify_all()
 
-    def make_daap_playlists(self, items):
+    def make_daap_playlists(self, items, typ):
         for item in items:
             itemprop = dict()
             for attr in daap_rmapping.keys():
                daap_string = daap_rmapping[attr]
                itemprop[daap_string] = getattr(item, attr, None)
-               # XXX Pants.
-               if (daap_string == 'dmap.itemname' and
-                 itemprop[daap_string] == None):
+               # XXX Pants.  We use this for the initial population when
+               # we pass in DB objects and then later on we also use this
+               # when they are in fact tab infos.  In the raw DBObject we
+               # use title, and in the tab infos we use name.  But in the
+               # DBObject 'name' is valid too!
+               # 
+               # Blargh!
+               if daap_string == 'dmap.itemname':
                    itemprop[daap_string] = getattr(item, 'title', None)
+                   if itemprop[daap_string] is None:
+                       itemprop[daap_string] = getattr(item, 'name', None)
                if isinstance(itemprop[daap_string], unicode):
                    itemprop[daap_string] = (
                      itemprop[daap_string].encode('utf-8'))
@@ -1133,8 +1225,14 @@ class SharingManagerBackend(object):
                 # yet.  Therefore, it may not be possible to run 
                 # get_items() and getting the count attribute.  Instead we 
                 # use the playlist_item_map.
-                tmp = [y for y in 
-                       playlist.PlaylistItemMap.playlist_view(item.id)]
+                if typ == 'playlist':
+                    tmp = [y for y in 
+                           playlist.PlaylistItemMap.playlist_view(item.id)]
+                elif typ == 'feed':
+                    tmp = [y for y in Item.feed_view(item.id)]
+                else:
+                    # whoups, sorry mate!
+                    raise ValueError('unknown playlist variant type %s' % typ)
                 count = len(tmp)
                 itemprop[daap_string] = count
             daap_string = 'dmap.parentcontainerid'
@@ -1147,19 +1245,40 @@ class SharingManagerBackend(object):
             if daap_string == 'dmap.persistentid':
                 itemprop[daap_string] = item.id
 
+            itemprop['podcast'] = typ == 'feed'
+            # XXX
+            if itemprop['podcast']:
+                itemprop['com.apple.itunes.is-podcast-playlist'] = True
+
             # piece de resistance
             itemprop['revision'] = self.revision
             itemprop['valid'] = True
 
             self.daap_playlists[item.id] = itemprop
 
-    def handle_playlist_added(self, obj, added):
+    def handle_feed_added(self, obj, added):
+        added = [a for a in added if not a.url or
+                 (a.url and not a.url.startswith('dtv:'))]
+        self.handle_playlist_added(obj, added, typ='feed')
+
+    def handle_feed_changed(self, obj, changed):
+        changed = [c for c in changed if not c.url or
+                 (c.url and not c.url.startswith('dtv:'))]
+        self.handle_playlist_changed(obj, changed, typ='feed')
+
+    def handle_feed_removed(self, obj, removed):
+        # Can't actually filter out removed - it is a list of ids.  But no
+        # matter as we just ignore it if we can't find it in our tracked
+        # playlists.
+        self.handle_playlist_removed(obj, removed, typ='feed')
+
+    def handle_playlist_added(self, obj, added, typ='playlist'):
         playlists = [x for x in added if not x.is_folder]
 
         def _handle_playlist_added():
             with self.item_lock:
                 self.update_revision()
-                self.make_daap_playlists(playlists)
+                self.make_daap_playlists(playlists, typ)
                 for p in playlists:
                     # no need to update the revision here: already done in
                     # make_daap_playlists.
@@ -1171,12 +1290,13 @@ class SharingManagerBackend(object):
                     app.info_updater.item_changed_callbacks.add(self.type,
                                                      p.id,
                                                      self.handle_items_changed)
-                    messages.TrackItems(self.type, p.id).send_to_backend()
+                    id_ = (p.id, typ == 'feed')
+                    messages.TrackItems(self.type, id_).send_to_backend()
 
         eventloop.add_urgent_call(lambda: _handle_playlist_added(),
                                   "SharingManagerBackend: playlist added")
 
-    def handle_playlist_changed(self, obj, changed):
+    def handle_playlist_changed(self, obj, changed, typ='playlist'):
         def _handle_playlist_changed():
             with self.item_lock:
                 self.update_revision()
@@ -1189,13 +1309,13 @@ class SharingManagerBackend(object):
                         #self.daap_playlists[x.id] = self.deleted_item()
                         del self.daap_playlists[x.id]
                         playlist.append(x)
-                self.make_daap_playlists(playlist)
+                self.make_daap_playlists(playlist, typ)
 
         eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
                                   "SharingManagerBackend: playlist changed")
 
 
-    def handle_playlist_removed(self, obj, removed):
+    def handle_playlist_removed(self, obj, removed, typ='playlist'):
         def _handle_playlist_removed():
             with self.item_lock:
                 self.update_revision()
@@ -1232,11 +1352,30 @@ class SharingManagerBackend(object):
     def populate_playlists(self):
         with self.item_lock:
             self.update_revision()
-            self.make_daap_playlists(playlist.SavedPlaylist.make_view())
+            # First, playlists.
+            playlists = playlist.SavedPlaylist.make_view()
+            # Grab feeds.  We like the feeds, but don't grab fake ersatz stuff. 
+            feeds = [f for f in feed.Feed.make_view() if not f.origURL or
+                     (f.origURL and not f.origURL.startswith('dtv:'))]
+            playlist_ids = [p.id for p in playlists]
+            feed_ids = [f.id for f in feeds]
+            self.make_daap_playlists(playlist.SavedPlaylist.make_view(),
+                                     'playlist')
+            # et tu, feed.  But we basically handle it the same way.
+            self.make_daap_playlists(feeds, 'feed')
+            # Now, build the playlists.
             for playlist_id in self.daap_playlists.keys():
                 # revision for playlist already created in make_daap_playlist
-                self.playlist_item_map[playlist_id] = [x.item_id
-                  for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
+                if playlist_id in playlist_ids:
+                    self.playlist_item_map[playlist_id] = [x.item_id
+                      for x in playlist.PlaylistItemMap.playlist_view(
+                      playlist_id)]
+                elif playlist_id in feed_ids:
+                    self.playlist_item_map[playlist_id] = [x.id
+                      for x in Item.feed_view(playlist_id)]
+                else:
+                    logging.error('playlist id %s not valid', playlist_id)
+                    continue
                 self.deleted_item_map[playlist_id] = []
 
     def start_tracking(self):
@@ -1255,7 +1394,8 @@ class SharingManagerBackend(object):
                                                  self.handle_item_list)
             app.info_updater.item_changed_callbacks.add(self.type, playlist_id,
                                                  self.handle_items_changed)
-            messages.TrackItems(self.type, playlist_id).send_to_backend()
+            id_ = (playlist_id, self.daap_playlists[playlist_id]['podcast'])
+            messages.TrackItems(self.type, id_).send_to_backend()
 
         app.info_updater.connect('playlists-added',
                                  self.handle_playlist_added)
@@ -1263,6 +1403,13 @@ class SharingManagerBackend(object):
                                  self.handle_playlist_changed)
         app.info_updater.connect('playlists-removed',
                                  self.handle_playlist_removed)
+
+        app.info_updater.connect('feeds-added',
+                                 self.handle_feed_added)
+        app.info_updater.connect('feeds-changed',
+                                 self.handle_feed_changed)
+        app.info_updater.connect('feeds-removed',
+                                 self.handle_feed_removed)
 
     def stop_tracking(self):
         for playlist_id in self.daap_playlists:
@@ -1282,6 +1429,10 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_added)
         app.info_updater.disconnect(self.handle_playlist_changed)
         app.info_updater.disconnect(self.handle_playlist_removed)
+
+        app.info_updater.disconnect(self.handle_feed_added)
+        app.info_updater.disconnect(self.handle_feed_changed)
+        app.info_updater.disconnect(self.handle_feed_removed)
 
     def watcher(self, session, request):
         while True:
@@ -1404,18 +1555,32 @@ class SharingManagerBackend(object):
         return file_obj
 
     def get_playlists(self):
-        return self.daap_playlists
+        returned = dict()
+        with self.item_lock:
+            for p in self.daap_playlists:
+                pl = self.daap_playlists[p]
+                if not pl['valid'] or not pl['podcast']:
+                    returned[p] = pl
+                else:
+                    if SharingManagerBackend.SHARE_FEED in self.share_types:
+                        returned[p] = pl
+                    else:
+                        returned[p] = self.deleted_item()
+        return returned
 
     def on_config_changed(self, obj, key, value):
-        keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key]
+        keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key,
+                prefs.SHARE_FEED.key]
         if key in keys:
             with self.item_lock:
                 share_types_orig = self.share_types
                 self.share_types = []
                 if app.config.get(prefs.SHARE_AUDIO):
-                    self.share_types += [libdaap.DAAP_MEDIAKIND_AUDIO]
+                    self.share_types += [SharingManagerBackend.SHARE_AUDIO]
                 if app.config.get(prefs.SHARE_VIDEO):
-                    self.share_types += [libdaap.DAAP_MEDIAKIND_VIDEO]
+                    self.share_types += [SharingManagerBackend.SHARE_VIDEO]
+                if app.config.get(prefs.SHARE_FEED):
+                    self.share_types += [SharingManagerBackend.SHARE_FEED]
                 # Just by enabling and disabing this, the selection of items
                 # available to a user could have changed.
                 #

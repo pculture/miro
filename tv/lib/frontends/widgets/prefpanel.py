@@ -956,6 +956,7 @@ class SharingPanel(PanelBuilder):
 
         share_audio_cbx = widgetset.Checkbox(_('Share my music library.'))
         share_video_cbx = widgetset.Checkbox(_('Share my video library.'))
+        share_feed_cbx = widgetset.Checkbox(_('Share my downloaded podcasts.'))
 
         def manual_configuration(widget):
             checked = widget.get_checked()
@@ -963,12 +964,13 @@ class SharingPanel(PanelBuilder):
                 widget.set_checked(not checked)
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
-                       [share_audio_cbx, share_video_cbx,
+                       [share_audio_cbx, share_video_cbx, share_feed_cbx,
                         sharing_warnonquit_cbx, share_txt],
                        manualconfig=manual_configuration)
         attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT)
         attach_boolean(share_audio_cbx, prefs.SHARE_AUDIO)
         attach_boolean(share_video_cbx, prefs.SHARE_VIDEO)
+        attach_boolean(share_feed_cbx, prefs.SHARE_FEED)
         share_error = build_error_image()
         attach_text(share_txt, prefs.SHARE_NAME,
                     share_error,
@@ -982,9 +984,10 @@ class SharingPanel(PanelBuilder):
             sharing_warnonquit_cbx.disable()
             share_audio_cbx.disable()
             share_video_cbx.disable()
+            share_feed_cbx.disable()
 
         widgets = [sharing_cbx, share_audio_cbx, share_video_cbx,
-                   sharing_warnonquit_cbx, share_txt]
+                   share_feed_cbx, sharing_warnonquit_cbx, share_txt]
         callbacks = (self.sharing_start_volatile, self.sharing_end_volatile)
         # Register interest with the enable/disable provider for sharing.
         app.sharing_manager.register_interest(self, callbacks, widgets)
@@ -1001,6 +1004,7 @@ class SharingPanel(PanelBuilder):
 
         vbox.pack_start(widgetutil.align_left(share_video_cbx, bottom_pad=6))
         vbox.pack_start(widgetutil.align_left(share_audio_cbx, bottom_pad=6))
+        vbox.pack_start(widgetutil.align_left(share_feed_cbx, bottom_pad=6))
 
         if not app.sharing_manager.mdns_present:
             text = _("Bonjour is required for sharing. "
