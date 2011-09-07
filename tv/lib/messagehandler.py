@@ -458,6 +458,8 @@ class DownloadingItemsTracker(DatabaseSourceTrackerBase):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self)
 
+# We don't use the preferenced tracker superclass here because we want
+# to do it manually - have both audio and video prefs to take care of here.
 class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
     type = u'sharing-backend'
     def __init__(self, id_):
@@ -465,8 +467,8 @@ class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
         # database query for playlist and feed.  So ... track this info in
         # the identifier and then chuck it away when we are done.
         if id_ is None:
-            self.id = None
             # All items.  Type is ignored in this case.
+            self.id = None
             self.view = item.Item.watchable_view()
         else:
             id_, podcast = id_
@@ -550,10 +552,29 @@ class SharingItemTracker(SourceTrackerBase):
         share_id = share.tracker_id
         self.id = share
         self.tracker = app.sharing_tracker.get_tracker(share_id)
+        prefdict = dict(video=prefs.SHOW_PODCASTS_IN_VIDEO,
+                        audio=prefs.SHOW_PODCASTS_IN_MUSIC)
         self.source = itemsource.SharingItemSource(self.tracker,
                                                    share.playlist_id)
-
+        try:
+            self.pref = prefdict[share.playlist_id]
+            self.prefvalue = app.config.get(self.pref)
+            self.source.include_podcasts = self.prefvalue
+        except KeyError:
+            self.pref = self.prefvalue = None
+        app.backend_config_watcher.connect_weak('changed',
+                                                self.on_config_changed)
         SourceTrackerBase.__init__(self)
+
+    def on_config_changed(self, obj, key, value):
+        if self.pref and key == self.pref.key:
+            self.prefvalue = value
+            self.source.include_podcasts = self.prefvalue
+            for source in self.trackers:
+                source.disconnect_all()
+            self.trackers = []
+            self.add_callbacks()
+            self.send_initial_list()
 
     def _make_changed_list(self, changed):
         retval = []

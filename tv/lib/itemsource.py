@@ -141,7 +141,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 33
+    VERSION = 34
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -181,6 +181,7 @@ class DatabaseItemSource(ItemSource):
             'license': item.get_license(),
             'file_url': item.get_url(),
             'is_container_item': item.isContainerItem,
+            'is_file_item': item.is_file_item,
             'is_playable': item.is_playable(),
             'file_type': item.file_type,
             'subtitle_encoding': item.subtitle_encoding,
@@ -390,6 +391,7 @@ class SharingItemSource(ItemSource):
         ItemSource.__init__(self)
         self.tracker = tracker
         self.playlist_id = playlist_id
+        self.include_podcasts = True
         self.signal_handles = [
             self.tracker.connect('added', self._on_tracker_added),
             self.tracker.connect('changed', self._on_tracker_changed),
@@ -428,6 +430,7 @@ class SharingItemSource(ItemSource):
             license = item.license,
             file_url = item.url or u'',
             is_container_item = False,
+            is_file_item = False,
             is_playable = True,
             children = [],
             file_type = item.file_type,
@@ -464,13 +467,24 @@ class SharingItemSource(ItemSource):
         else:
             return obj
 
+    def is_podcast(self, item):
+        try:
+            return item.kind == 'podcast'
+        except AttributeError:
+            pass
+        return False
+
     def _on_tracker_added(self, tracker, playlist, item):
         if self.playlist_id == playlist:
-            self.emit("added", self._ensure_info(item))
+            if (self.include_podcasts or
+              not self.include_podcasts and not self.is_podcast(item)):
+                self.emit("added", self._ensure_info(item))
 
     def _on_tracker_changed(self, tracker, playlist, item):
         if self.playlist_id == playlist:
-            self.emit("changed", self._ensure_info(item))
+            if (self.include_podcasts or
+              not self.include_podcasts and not self.is_podcast(item)):
+                self.emit("changed", self._ensure_info(item))
 
     def _on_tracker_removed(self, tracker, playlist, item):
         # Only nuke if we are removing the item from the library.
@@ -480,7 +494,9 @@ class SharingItemSource(ItemSource):
             except KeyError:
                 pass
         if playlist == self.playlist_id:
-            self.emit("removed", item.id)
+            if (self.include_podcasts or
+              not self.include_podcasts and not self.is_podcast(item)):
+                self.emit("removed", item.id)
 
     def fetch_all(self):
         # Always call _ensure_info() on the item when fetching.
@@ -500,7 +516,10 @@ class SharingItemSource(ItemSource):
         # cache or if it does not exist then create a new copy so this should
         # be okay.
         return [self._ensure_info(item) for item in 
-                self.tracker.get_items(playlist_id=self.playlist_id)]
+                self.tracker.get_items(playlist_id=self.playlist_id)
+                if self.include_podcasts or
+                (not self.include_podcasts and
+                 not self.is_podcast(item))]
 
     def unlink(self):
         for handle in self.signal_handles:
@@ -618,6 +637,7 @@ class DeviceItemSource(ItemSource):
             license = item.license,
             file_url = item.url or u'',
             is_container_item = False,
+            is_file_item = False,
             is_playable = True,
             children = [],
             file_type = item.file_type,
