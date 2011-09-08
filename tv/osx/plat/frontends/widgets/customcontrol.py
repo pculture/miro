@@ -147,7 +147,7 @@ class ContinuousDrawableButton(DrawableButton):
         if not wrapper.get_disabled():
             if self.firedOnce:
                 wrapper.emit('released')
-            elif self.releaseInBounds:
+            elif self.releaseInbounds:
                 wrapper.emit('clicked')
 
     def sendAction_to_(self, action, to):
