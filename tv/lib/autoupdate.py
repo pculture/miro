@@ -53,7 +53,8 @@ def check_for_updates(up_to_date_callback=None):
     """
     import miro.plat
     if miro.plat.AUTOUPDATE == False:
-        logging.info("this platform has autoupdate disabled.  skipping.")
+        logging.info("this platform has the built-in autoupdate "
+                     "parser disabled.  Skipping.")
         return
 
     global check_in_progress
