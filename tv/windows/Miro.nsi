@@ -1075,6 +1075,12 @@ Function .onInit
   StrCpy $ZUGO_PROVIDER "Bing™"
   StrCpy $ZUGO_TERMS "http://www.startnow.com/terms/bing/"
 
+  ; If it's already installed, change install dir to the current installation directroy.
+  ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
+  StrCmp $R0 "" SkipChangingInstDir
+  StrCpy $INSTDIR $R0
+SkipChangingInstDir:
+
   ; Check if we're reinstalling
   ${GetParameters} $R0
   ${GetOptions} "$R0" "/ADVANCED" $R1
