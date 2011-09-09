@@ -63,6 +63,8 @@ from miro import signals
 from miro import conversions
 from miro.util import check_u
 
+from miro.download_utils import next_free_filename
+
 from miro.plat import resources
 from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
                              utf8_to_filename)
@@ -782,23 +784,28 @@ class DeviceSyncManager(object):
             if self.device.database.item_exists(info):
                 continue # don't recopy stuff
             conversion = self.conversion_for_info(info)
+            if not conversion:
+                continue
             if info.file_type == 'audio':
                 target_folder = self.audio_target_folder
             elif info.file_type == 'video':
                 target_folder = self.video_target_folder
             else:
                 continue
-            if conversion:
-                self.total += 1
-                if conversion == 'copy':
-                    final_path = os.path.join(target_folder,
-                                              os.path.basename(
-                            info.video_path))
-                    self.copy_file(info, final_path)
-                else:
-                    self.start_conversion(conversion,
-                                          info,
-                                          target_folder)
+            self.total += 1
+            if conversion == 'copy':
+                final_path = os.path.join(target_folder,
+                                          os.path.basename(
+                        info.video_path))
+                if os.path.exists(final_path):
+                    logging.debug('%r exists, getting a new one precopy',
+                                  final_path)
+                    final_path, fp = next_free_filename(final_path)
+                self.copy_file(info, final_path)
+            else:
+                self.start_conversion(conversion,
+                                      info,
+                                      target_folder)
 
         self._check_finished()
 
@@ -871,6 +878,8 @@ class DeviceSyncManager(object):
         if (info, final_path) in self.copying:
             logging.warn('tried to copy %r twice', info)
             return
+        file(final_path, 'w').close() # create the file so that future tries
+                                      # will see it
         self.copying[final_path] = info
         self.total_size[info.id] = info.size
         if not self._copy_iter_running:
@@ -954,6 +963,10 @@ class DeviceSyncManager(object):
                                                      self.device.mount),
                                  extension)
         new_path = os.path.join(dirname, new_basename)
+        if os.path.exists(new_path):
+            logging.debug('final destination %r exists, making a new one',
+                          new_path)
+            new_path, fp = next_free_filename(new_path)
 
         def callback():
             if not os.path.exists(new_path):
