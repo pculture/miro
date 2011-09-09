@@ -150,7 +150,7 @@ class WindowsApplication(Application):
                                             url.encode('ascii', 'ignore'))
         ctypes.cdll.winsparkle.win_sparkle_set_app_details(
                                 unicode(app.config.get(prefs.PUBLISHER)),
-                                unicode(app.config.get(prefs.SHORT_APP_NAME)),
+                                unicode(app.config.get(prefs.LONG_APP_NAME)),
                                 unicode(app.config.get(prefs.APP_VERSION)))
         ctypes.cdll.winsparkle.win_sparkle_init()
 
