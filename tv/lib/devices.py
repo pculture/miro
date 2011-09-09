@@ -686,9 +686,14 @@ class DeviceSyncManager(object):
         count = size = 0
         for info in items:
             converter = self.conversion_for_info(info, )
-            if converter:
+            if converter == 'copy':
+                count += 1
+                size += info.size
+            elif converter:
                 task = conversions.conversion_manager._make_conversion_task(
-                    converter, info, None, False)
+                    converter, info,
+                    target_folder=None,
+                    create_item=False)
                 if task:
                     count += 1
                     size += task.get_output_size_guess()
