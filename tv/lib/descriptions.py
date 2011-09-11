@@ -138,9 +138,10 @@ class DataSource(ReferenceableByValue, DDBObject):
     UNIQUE = (
         {'name', 'version'},
     )
-    def setup_new(self, name, version):
+    def setup_new(self, name, version, priority):
         self.name = name
         self.version = version
+        self.priority = priority
 
 class DataSourceStatus(ReferenceableByValue, DDBObject):
     """The status of a DataSource as applies to tracking one block type."""
@@ -209,6 +210,9 @@ class Describeable(object):
                 logging.warn('no description of type %s found for id %s',
                         description_type, description_id)
 
+    def clear_descriptions(self, DescriptionClass):
+        print('TODO TODO TODO TODO TODO')
+
     def get_active_description(self, DescriptionClass):
         """Return the highest-priority description of the given class referring
         to this object.
@@ -271,10 +275,8 @@ class LibraryItem(Description, DDBObject):
     """Each library item."""
     UNIQUE = (
     )
-    def setup_new(self, record, title=None, description=None):
-        Description.setup_new(self, record)
-        self.title = title
-        self.description = description
+    def setup_new(self):
+        Description.setup_new(self, None)
         # XXX TODO: entity_id
         self.entity_id = 0
 
@@ -283,6 +285,21 @@ class LibraryItem(Description, DDBObject):
         )
 
 LibraryEntity = Entity(LibraryItem)
+
+class Label(Description, DDBObject):
+    """Title and description."""
+    UNIQUE = (
+    )
+    def setup_new(self, record, title=None, description=None):
+        Description.setup_new(self, record)
+        self.title = title
+        self.description = description
+
+    def get_info_provided(self):
+        return dict(
+            title = self.title,
+            description = self.description,
+        )
 
 class Production(Description, DDBObject):
     """Production details - release date and copyright info."""
@@ -343,10 +360,9 @@ class Album(Description, DDBObject):
         {'name'},
     )
     artist = Artist.IdReference('artist_id')
-    def setup_new(self, record, name=None, artist=None, cover_art=None):
+    def setup_new(self, record, name=None, artist=None):
         Description.setup_new(self, record)
         self.name = name
-        self.cover_art = cover_art
         self.artist_id = artist.id if artist is not None else None
         # XXX TODO: entity_id
         self.entity_id = 0
@@ -354,8 +370,7 @@ class Album(Description, DDBObject):
     def get_info_provided(self):
         return dict(
             album = self.name,
-            cover_art = self.cover_art,
-            album_artist = self.artist.name,
+            album_artist = self.artist.name if self.artist is not None else u'',
         )
 
 AlbumEntity = Entity(Album)
@@ -372,8 +387,30 @@ class AlbumEntry(Description, DDBObject):
         self.track = track
 
     def get_info_provided(self):
+        """An an Entry type, we actually grab most of our data from the Album
+        we're pointing to.
+        """
+        if self.album is not None:
+            data = self.album.get_info_provided()
+        else:
+            data = {}
+        data['track'] = self.track
+        return data
+
+class CoverArt(Description, DDBObject):
+    """An Album's cover art"""
+    UNIQUE = (
+        {'path'},
+    )
+    album = Album.IdReference('album_id')
+    def setup_new(self, record, album, path):
+        Description.setup_new(self, record)
+        self.album_id = album.id
+        self.path = path
+
+    def get_info_provided(self):
         return dict(
-            track = self.track,
+            cover_art = self.cover_art,
         )
 
 class File(Description, DDBObject):

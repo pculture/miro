@@ -31,24 +31,25 @@
 frontend cares about these and the backend doesn't.
 """
 
-import logging
 import fileutil
 import os.path
 
 from miro.util import returns_unicode
 from miro import coverart
 from miro import filetags
-from miro import filetypes
+from miro import descriptions
+from miro import app
 
 class Source(object):
     """Object with readable metadata properties."""
-
+    library_entity = descriptions.LibraryItem.IdReference('library_entity_id')
     def get_iteminfo_metadata(self):
         # until MDP has run, has_drm is very uncertain; by letting it be True in
         # the backend but False in the frontend while waiting for MDP, we keep
         # is_playable False but don't show "DRM Locked" until we're sure.
         has_drm = self.has_drm and self.mdp_state is not None
-        return dict(
+        # get old-style monolithic data
+        data = dict(
             name = self.get_title(),
             title_tag = self.title_tag,
             description = self.get_description(),
@@ -70,6 +71,10 @@ class Source(object):
             metadata_version = self.metadata_version,
             mdp_state = self.mdp_state,
         )
+        # add new-style modular data (takes precedence)
+        if self.library_entity is not None:
+            data.update(self.library_entity.get_info())
+        return data
 
     def setup_new(self):
         self.title = u""
@@ -93,6 +98,7 @@ class Source(object):
         self.kind = None
         self.metadata_version = 0
         self.mdp_state = None # moviedata.State.UNSEEN
+        self.library_entity_id = descriptions.LibraryItem().id
 
     @property
     def media_type_checked(self):
@@ -120,29 +126,7 @@ class Source(object):
             return
 
         path = self.get_filename()
-        rv = filetags.read_metadata(path)
-        if not rv:
-            return
-
-        mediatype, duration, metadata, cover_art = rv
-        self.file_type = mediatype
-        # FIXME: duration isn't actually a attribute of metadata.Source.
-        # This currently works because Item and Device item are the only
-        # classes that call read_metadata(), and they both define duration
-        # the same way.
-        #
-        # But this is pretty fragile.  We should probably refactor
-        # duration to be an attribute of metadata.Source.
-        self.duration = duration
-        self.cover_art = cover_art
-        self.album = metadata.get('album', None)
-        self.album_artist = metadata.get('album_artist', None)
-        self.artist = metadata.get('artist', None)
-        self.title_tag = metadata.get('title', None)
-        self.track = metadata.get('track', None)
-        self.year = metadata.get('year', None)
-        self.genre = metadata.get('genre', None)
-        self.has_drm = metadata.get('drm', False)
+        filetags.create_record(self.library_entity, path)
 
         # 16346#c26 - run MDP for all OGG files in case they're videos
         extension = os.path.splitext(path)[1].lower()
@@ -189,6 +173,16 @@ class Store(Source):
     set_kind = metadata_setter('kind', unicode)
     set_metadata_version = metadata_setter('metadata_version', int)
     set_mdp_state = metadata_setter('mdp_state', int)
+
+    def set_file(self, path):
+        """Associate with this library item a File object"""
+        # path is a UNIQUE value to File, so anything else with the same path
+        # raises an error here
+        fil = descriptions.File(None, path)
+
+        # de-associate any previous File, associate the new File
+        self.library_entity.clear_descriptions(descriptions.File)
+        self.library_entity.add_description(fil)
 
     def set_cover_art(self, new_file, _bulk=False):
         """Set new cover art. Deletes any old cover art.
@@ -265,3 +259,29 @@ class Store(Source):
         metadata_version = set_metadata_version,
         mdp_state = set_mdp_state,
     )
+
+class MetadataManager(object):
+    def __init__(self):
+        self.providers = {}
+
+    def load_extractors(self):
+        # load the extractors!
+        from miro import echonest
+
+    def add_provider(self, datasource, DescriptionClass, provider):
+        # TODO: order providers for DescriptionClass by datasource priority
+        self.providers[DescriptionClass.__name__] = [(datasource, provider)]
+
+    def run_extractors(self):
+        """Catch up each extractor to the existing items, in order. """
+        for class_name, provider_info in self.providers.iteritems():
+            DescriptionClass = descriptions.Description.get_type(class_name)
+            datasource, get_descriptions = provider_info
+            status_query = {'datasource_id': datasource.id,
+                    'description_type': class_name}
+            status ,= descriptions.DataSourceStatus.quick_find(status_query)
+            examined_id = status.max_examined
+            for new_item in DescriptionClass.make_view('id > ?', (examined_id,)):
+                for description in get_descriptions(new_item):
+                    new_item.add_description(description)
+                status.max_examined = new_item.id

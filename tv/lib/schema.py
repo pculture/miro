@@ -410,8 +410,8 @@ class IconCacheSchema (DDBObjectSchema):
 
 from miro.descriptions import DataSource, DataSourceStatus, Record, Entry
 from miro.descriptions import ArtistEntity, AlbumEntity, LibraryEntity
-from miro.descriptions import (Artist, Album, AlbumEntry, LibraryItem,
-    Production, Genre, Rating, File, Media, Download)
+from miro.descriptions import (Artist, Album, AlbumEntry, CoverArt, LibraryItem,
+    Label, Production, Genre, Rating, File, Media, Download)
 
 def EntitySchema(cls):
     class _EntitySchema(DDBObjectSchema):
@@ -434,6 +434,7 @@ class DataSourceSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('name', SchemaString()),
         ('version', SchemaInt()),
+        ('priority', SchemaInt()),
     ]
 
     indexes = (
@@ -443,6 +444,7 @@ class DataSourceStatusSchema(DDBObjectSchema):
     klass = DataSourceStatus
     table_name = 'datasource_status'
     fields = DDBObjectSchema.fields + [
+        ('datasource_id', SchemaId(DataSourceSchema)),
         ('description_type', SchemaClass()),
         ('max_examined', SchemaId(None, noneOk=True)),
     ]
@@ -481,8 +483,19 @@ class LibraryItemSchema(DDBObjectSchema):
     klass = LibraryItem
     table_name = 'library_item'
     fields = DDBObjectSchema.fields + [
-        ('record_id', SchemaId(RecordSchema)),
         ('entity_id', SchemaId(ItemEntitySchema)),
+    ]
+
+    indexes = (
+    )
+
+class LabelSchema(DDBObjectSchema):
+    klass = Label
+    table_name = 'label'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('title', SchemaString(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
     ]
 
     indexes = (
@@ -541,7 +554,6 @@ class AlbumSchema(DDBObjectSchema):
         ('record_id', SchemaId(RecordSchema)),
         ('entity_id', SchemaId(AlbumEntitySchema)),
         ('name', SchemaString(noneOk=True)),
-        ('cover_art', SchemaFilename(noneOk=True)),
         ('artist_id', SchemaId(ArtistSchema, noneOk=True)),
     ]
 
@@ -555,6 +567,18 @@ class AlbumEntrySchema(DDBObjectSchema):
         ('record_id', SchemaId(RecordSchema)),
         ('track', SchemaInt()),
         ('album_id', SchemaId(AlbumSchema)),
+    ]
+
+    indexes = (
+    )
+
+class CoverArtSchema(DDBObjectSchema):
+    klass = CoverArt
+    table_name = 'cover_art'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('album_id', SchemaId(AlbumSchema)),
+        ('path', SchemaFilename()),
     ]
 
     indexes = (
@@ -1002,9 +1026,9 @@ object_schemas = [
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
     DBLogEntrySchema, ViewStateSchema,
 
-    DataSourceSchema, RecordSchema, EntrySchema,
-    ArtistEntitySchema, AlbumEntitySchema, ItemEntitySchema,
-    LibraryItemSchema, ProductionSchema, GenreSchema, RatingSchema,
+    DataSourceSchema, DataSourceStatusSchema, RecordSchema, EntrySchema,
+    ArtistEntitySchema, AlbumEntitySchema, CoverArtSchema, ItemEntitySchema,
+    LibraryItemSchema, LabelSchema, ProductionSchema, GenreSchema, RatingSchema,
     ArtistSchema, AlbumSchema, AlbumEntrySchema, FileSchema, MediaSchema,
     DownloadSchema,
 ]
