@@ -104,6 +104,7 @@ _sqlite_type_map = {
         schema.SchemaList: 'pythonrepr',
         schema.SchemaStatusContainer: 'pythonrepr',
         schema.SchemaFilename: 'text',
+        schema.SchemaId: 'integer',
 }
 
 VERSION_KEY = "Democracy Version"
