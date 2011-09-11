@@ -1343,9 +1343,9 @@ class FeedToolbar(widgetset.Background):
         self.settings_button = widgetutil.HideableWidget(settings_button)
 
         autodownload_button = widgetutil.MultiStateTitlebarButton(
-            [('autodownload-all', _("Auto-Download All"), "all"),
+            [('autodownload-off', _("Auto-Download Off"), "off"),
              ('autodownload-new', _("Auto-Download New"), "new"),
-             ('autodownload-off', _("Auto-Download Off"), "off")])
+             ('autodownload-all', _("Auto-Download All"), "all")])
         autodownload_button.connect('clicked', self._on_autodownload_changed)
 
         self.autodownload_button_actual = autodownload_button
@@ -1365,11 +1365,11 @@ class FeedToolbar(widgetset.Background):
         self.autodownload_dc = None
 
     def set_autodownload_mode(self, autodownload_mode):
-        if autodownload_mode == 'all':
+        if autodownload_mode == 'off':
             self.autodownload_button_actual.set_toggle_state(0)
         elif autodownload_mode == 'new':
             self.autodownload_button_actual.set_toggle_state(1)
-        elif autodownload_mode == 'off':
+        elif autodownload_mode == 'all':
             self.autodownload_button_actual.set_toggle_state(2)
 
     def draw(self, context, layout):
