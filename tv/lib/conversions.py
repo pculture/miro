@@ -957,8 +957,8 @@ class ConversionTask(object):
             return
         logging.warning("killing conversion task %d",
                         self.process_handle.pid)
-        self.process_handle.kill()
         try:
+            self.process_handle.kill()
             self.process_handle.wait()
         except OSError:
             logging.exception('exception while interupting process')
