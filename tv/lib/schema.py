@@ -88,7 +88,8 @@ class SchemaItem(object):
 
         if data is None:
             if not self.noneOk:
-                raise ValidationError("None value is not allowed")
+                raise ValidationError("None value is not allowed for this " +
+                        self.__class__.__name__)
         return True
 
     def validateType(self, data, correctType):
