@@ -696,9 +696,15 @@ def build_output_paths(item_info, target_folder, converter_info):
 def round_even(num):
     """This takes a number, converts it to an integer, then makes
     sure it's even.
+
+    Additional rules: this helper always rounds down to avoid stray black
+    pixels (see bz18122).
+
+    This function makes sure that the value returned is always >= 0.
     """
     num = int(num)
-    return num + (num % 2)
+    val = num - (num % 2)
+    return val if val > 0 else 0
 
 
 def build_parameters(input_path, output_path, converter_info, media_info):
