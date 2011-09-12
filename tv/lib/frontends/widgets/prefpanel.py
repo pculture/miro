@@ -476,6 +476,10 @@ class GeneralPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox(8)
 
+        startup_shutdown_heading = dialogwidgets.heading(
+                                       _('Startup / Shutdown'))
+        v.pack_start(startup_shutdown_heading)
+
         run_at_startup_cbx = widgetset.Checkbox(_(
             "Automatically run %(appname)s when I log in.",
             {'appname': app.config.get(prefs.SHORT_APP_NAME)}))
@@ -501,6 +505,19 @@ class GeneralPanel(PanelBuilder):
                        prefs.WARN_IF_CONVERTING_ON_QUIT)
         v.pack_start(warn_if_converting_cbx)
 
+        sidebar_heading = dialogwidgets.heading(_('Sidebar'))
+        v.pack_start(sidebar_heading)
+
+        cbx = widgetset.Checkbox(_('Show videos from podcasts in the Videos '
+                                   'section.'))
+        attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_VIDEO)
+        v.pack_start(cbx)
+
+        cbx = widgetset.Checkbox(_('Show audio from podcasts in the Music '
+                                   'section.'))
+        attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_MUSIC)
+        v.pack_start(cbx)
+
         # FIXME - need to automatically generate list of available
         # languages in correct language
         lang_options = gtcache.get_languages()
@@ -509,15 +526,19 @@ class GeneralPanel(PanelBuilder):
         lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
         attach_combo(lang_option_menu, prefs.LANGUAGE,
                      [op[0] for op in lang_options])
-        v.pack_start(widgetutil.align_left(
-            widgetutil.build_control_line((
-                        widgetset.Label(_("Language:")), lang_option_menu))))
+
+        language_heading = dialogwidgets.heading(_("Language"))
+        v.pack_start(language_heading)
 
         v.pack_start(widgetutil.align_left(
             dialogwidgets.note(
                     _("(Changing the language requires you to "
                       "restart %(appname)s.)",
                       {"appname": app.config.get(prefs.SHORT_APP_NAME)}))))
+
+        v.pack_start(widgetutil.align_left(
+            widgetutil.build_control_line((
+                        widgetset.Label(_('Display in:')), lang_option_menu))))
 
         pack_extras(v, "general")
 
@@ -526,18 +547,6 @@ class GeneralPanel(PanelBuilder):
 class PodcastsPanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
-
-        cbx = widgetset.Checkbox(_('Show videos from podcasts in the Videos '
-                                   'section.'))
-        attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_VIDEO)
-        grid.pack(cbx)
-        grid.end_line(spacing=2)
-
-        cbx = widgetset.Checkbox(_('Show audio from podcasts in the Music '
-                                   'section.'))
-        attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_MUSIC)
-        grid.pack(cbx)
-        grid.end_line(spacing=12)
 
         cc_options = [(1440, _("Every day")),
                       (60, _("Every hour")),
