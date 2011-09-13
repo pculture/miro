@@ -44,16 +44,11 @@ from miro.frontends.widgets.gtk.window import Window, WrappedWindow
 from miro.frontends.widgets.gtk.widgetset import (
     Widget, VBox, Label, HBox, Alignment, Background, DrawingArea,
     ClickableImageButton)
-from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
+from miro.plat.frontends.widgets import videoembed
 
 BLACK = (0.0, 0.0, 0.0)
 WHITE = (1.0, 1.0, 1.0)
 GREEN = (159.0 / 255.0, 202.0 / 255.0, 120.0 / 255.0)
-
-# Global VideoWidget object.  We re-use so we can re-use our
-# PersistentWindow
-video_widget = None
-
 
 class ClickableLabel(Widget):
     """This is like a label and reimplements many of the Label things,
@@ -213,20 +208,6 @@ class VideoOverlay(Window):
         window.move(screen_rect.x, screen_rect.y + screen_rect.height -
                 my_height)
 
-
-class VideoWidget(Widget):
-    def __init__(self, renderer):
-        Widget.__init__(self)
-        self.set_widget(PersistentWindow())
-        self._widget.set_double_buffered(False)
-        self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
-        self._widget.add_events(gtk.gdk.BUTTON_PRESS_MASK)
-        renderer.set_widget(self._widget)
-
-    def destroy(self):
-        self._widget.destroy()
-
-
 class Divider(DrawingArea):
     def size_request(self, layout):
         return (1, 25)
@@ -237,7 +218,6 @@ class Divider(DrawingArea):
         context.move_to(0, 0)
         context.rel_line_to(0, context.height)
         context.stroke()
-
 
 class VideoDetailsWidget(Background):
     def __init__(self):
@@ -491,7 +471,6 @@ class VideoPlayer(player.Player, VBox):
     HIDE_CONTROLS_TIMEOUT = 2000
 
     def __init__(self):
-        global video_widget
         player.Player.__init__(self)
         VBox.__init__(self)
         if app.video_renderer is not None:
@@ -502,32 +481,34 @@ class VideoPlayer(player.Player, VBox):
         self.overlay = None
         self.screensaver_manager = None
 
-        if video_widget is None:
-            video_widget = VideoWidget(self.renderer)
-        self._video_widget = video_widget
+        self._video_widget = videoembed.VideoWidget(self.renderer)
         self.pack_start(self._video_widget, expand=True)
 
         self._video_details = VideoDetailsWidget()
         self.pack_start(self._video_details)
 
         self.hide_controls_timeout = None
-        self.motion_handler = None
-        self.videobox_motion_handler = None
         self.hidden_cursor = make_hidden_cursor()
         # piggyback on the TrackItemsManually message that playback.py sends.
         app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
                 self._on_items_changed)
         self._item_id = None
 
-        self._video_widget.wrapped_widget_connect(
-            'button-press-event', self.on_button_press)
+        self._video_widget.connect('double-click', self.on_double_click)
+        self._video_widget.connect('mouse-motion', self.on_mouse_motion)
 
     def teardown(self):
+        # remove the our embedding widget from the hierarchy
+        self.remove(self._video_widget)
+        # now that we aren't showing a video widget, we can reset playback
         self.renderer.reset()
+        self._video_widget.destroy()
+        # remove callbacks
+        self._video_widget.disconnect_all()
         app.info_updater.item_changed_callbacks.remove('manual',
                 'playback-list', self._on_items_changed)
-        self._items_changed_callback = None
-        self.remove(self._video_widget)
+        # dereference VideoWidget
+        self._video_widget = None
 
     def _on_items_changed(self, message):
         for item_info in message.changed:
@@ -555,7 +536,7 @@ class VideoPlayer(player.Player, VBox):
     def play(self):
         self.renderer.play()
         # do this to trigger the overlay showing up for a smidge
-        self.on_mouse_motion(None, None)
+        self.on_mouse_motion(None)
 
     def play_from_time(self, resume_time=0):
         # Note: This overrides player.Player's version of play_from_time, but
@@ -590,10 +571,8 @@ class VideoPlayer(player.Player, VBox):
             self.screensaver_manager.disable()
         self.rebuild_video_details()
         self._make_overlay()
-        self.motion_handler = self.wrapped_widget_connect(
-                'motion-notify-event', self.on_mouse_motion)
-        self.videobox_motion_handler = self.overlay._window.connect(
-                'motion-notify-event', self.on_mouse_motion)
+        self.overlay._window.connect('motion-notify-event',
+                self.on_motion_notify)
         if not app.playback_manager.detached_window:
             app.widgetapp.window.menubar.hide()
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
@@ -633,21 +612,25 @@ class VideoPlayer(player.Player, VBox):
     def prepare_switch_to_detached_playback(self):
         gobject.timeout_add(0, self.rebuild_video_details)
 
-    def on_button_press(self, widget, event):
-        if event.type == gtk.gdk._2BUTTON_PRESS:
-            app.playback_manager.toggle_fullscreen()
-            return True
-        return False
+    def on_double_click(self, widget):
+        app.playback_manager.toggle_fullscreen()
 
-    def on_mouse_motion(self, widget, event):
+    def on_motion_notify(self, widget, event):
+        self.on_mouse_motion(widget)
+
+    def on_mouse_motion(self, widget):
         if not self.overlay:
             return
         if not self.overlay.is_visible():
             show_it_all = False
 
-            if event is None:
-                show_it_all = True
-            else:
+            # NOTE: this code wasn't working when I went through the
+            # windows overhaul, so I just left it commented out.  Will says we
+            # should eventually implement this.
+            #
+            #if event is None:
+                #show_it_all = True
+            #else:
                 # figures out the monitor that miro is fullscreened on and
                 # gets the monitor geometry for that.
                 # if app.playback_manager.detached_window is not None:
@@ -664,7 +647,8 @@ class VideoPlayer(player.Player, VBox):
 
                 # Hack to fix #17213.  Eventually we should remove this and
                 # uncomment the code above to implement #8655
-                show_it_all = True
+                #show_it_all = True
+            show_it_all = True
 
             if show_it_all:
                 self.show_controls()
@@ -716,7 +700,6 @@ class VideoPlayer(player.Player, VBox):
         self._video_details.show()
         self._destroy_overlay()
         _window().unfullscreen()
-        self._widget.disconnect(self.motion_handler)
         self.cancel_hide_controls()
         _window().window.set_cursor(None)
 

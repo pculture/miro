@@ -91,9 +91,9 @@ class Renderer:
         self.bus.enable_sync_message_emission()
 
         self.watch_ids.append(self.bus.connect("message", self.on_bus_message))
-        self.audiosink = gst.element_factory_make(
+        audiosink = gst.element_factory_make(
             self.audiosink_name, "audiosink")
-        self.playbin.set_property("audio-sink", self.audiosink)
+        self.playbin.set_property("audio-sink", audiosink)
 
     def destroy_playbin(self):
         if self.playbin is None:
@@ -103,7 +103,6 @@ class Renderer:
         self.watch_ids = []
         self.bus = None
         self.playbin = None
-        self.audiosink = None
 
     def invoke_select_callback(self, success=False):
         if success:
@@ -290,19 +289,21 @@ class VideoRenderer(Renderer):
 
         self.textsink_name = "textoverlay"
 
-        self.output_widget = None
+        self.imagesink = None
+        self.window_id = None
 
     def build_playbin(self):
         Renderer.build_playbin(self)
+        # imagesink gets set when we get the prepare-xwindow-id message
+        self.imagesink = None
         self.watch_ids.append(self.bus.connect(
                 'sync-message::element', self.on_sync_message))
-        self.videosink = gst.element_factory_make(
-            self.videosink_name, "videosink")
-        self.playbin.set_property("video-sink", self.videosink)
+        videosink = gst.element_factory_make(self.videosink_name, "videosink")
+        self.playbin.set_property("video-sink", videosink)
         try:
-            self.textsink = gst.element_factory_make(
+            textsink = gst.element_factory_make(
                 self.textsink_name, "textsink")
-            self.playbin.set_property("text-sink", self.textsink)
+            self.playbin.set_property("text-sink", textsink)
         except TypeError:
             logging.warning("this platform has an old version of "
                             "playbin2--no subtitle support.")
@@ -310,8 +311,7 @@ class VideoRenderer(Renderer):
 
     def destroy_playbin(self):
         Renderer.destroy_playbin(self)
-        self.videosink = None
-        self.textsink = None
+        self.imagesink = None
 
     def select_file(self, iteminfo, callback, errback, sub_filename=""):
         self._setup_item(iteminfo)
@@ -344,40 +344,29 @@ class VideoRenderer(Renderer):
             return
         message_name = message.structure.get_name()
         if message_name == 'prepare-xwindow-id':
-            imagesink = message.src
-            imagesink.set_property('force-aspect-ratio', True)
-            # FIXME: replaces this with a cleaner solution
-            window = self.output_widget.persistent_window
-            try:
-                window_id = window.xid # linux
-            except AttributeError:
-                window_id = window.handle # windows
-            imagesink.set_xwindow_id(window_id)
+            self.imagesink = message.src
+            self.imagesink.set_property('force-aspect-ratio', True)
+            if self.window_id is not None:
+                self.imagesink.set_xwindow_id(self.window_id)
+            else:
+                logging.warn("Got prepare-xwindow-id before "
+                        "set_xwindow_id() called")
 
-    def set_widget(self, widget):
-        # FIXME: remove GTK-specific code
-        widget.connect("destroy", self.on_destroy)
-        widget.connect("expose-event", self.on_expose)
-        self.output_widget = widget
-        self.gc = widget.persistent_window.new_gc()
-        self.gc.foreground = gtk.gdk.color_parse("black")
+    def set_window_id(self, window_id):
+        """Set the window id to render to
 
-    def on_destroy(self, widget):
-        if self.playbin:
-            self.playbin.set_state(gst.STATE_NULL)
+        window_id a value to pass into gstreamer's set_xwindow_id() method.
+        On linux, it's an x window id, on windows it's an HWND
+        """
+        self.window_id = window_id
 
-    def on_expose(self, widget, event):
-        if self.videosink and hasattr(self.videosink, "expose"):
-            self.videosink.expose()
-        else:
-            # if we had an image to show, we could do so here...  that image
-            # would show for audio-only items.
-            widget.window.draw_rectangle(self.gc,
-                                         True,
-                                         0, 0,
-                                         widget.allocation.width,
-                                         widget.allocation.height)
-        return True
+    def ready_for_expose(self):
+        """Are we ready to handle an expose event?"""
+        return self.imagesink and hasattr(self.imagesink, "expose")
+
+    def expose(self):
+        if self.ready_for_expose():
+            self.imagesink.expose()
 
     def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
