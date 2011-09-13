@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,18 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""gstreamerrenderer.py -- Windows gstreamer renderer """
+"""miro.frontends.widgets.gst -- portable gstreamer code """
 
-import os
-from miro.plat import resources
-
-GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
-
-# need to fix os.environ so gstreamer picks up the plugins
-os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
-os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
-
-# all of our stuff comes from portable
-
-from miro.frontends.widgets.gst.renderer import AudioRenderer, VideoRenderer
-from miro.frontends.widgets.gst.sniffer import get_item_type
+# check that we have the correct pygst version when we import the gst package
+import pygst
+pygst.require('0.10')

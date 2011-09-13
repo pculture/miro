@@ -27,18 +27,25 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""gstreamerrenderer.py -- Windows gstreamer renderer """
+"""gstutils.py -- utility functions for gstreamer code.  """
 
-import os
-from miro.plat import resources
+import gst
 
-GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
+from miro import util
 
-# need to fix os.environ so gstreamer picks up the plugins
-os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
-os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
+def to_seconds(t):
+    return t / gst.SECOND
 
-# all of our stuff comes from portable
+def from_seconds(s):
+    return s * gst.SECOND
 
-from miro.frontends.widgets.gst.renderer import AudioRenderer, VideoRenderer
-from miro.frontends.widgets.gst.sniffer import get_item_type
+def _get_file_url(filename):
+    """Get a file:// URL for a filename """
+
+    # FIXME: this code is really weird.  We should probably make urlize()
+    # always work
+
+    try:
+        return filename.urlize()
+    except AttributeError:
+        return util.make_file_url(filename)

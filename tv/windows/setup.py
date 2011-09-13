@@ -628,6 +628,7 @@ package_list=[
     'miro.dl_daemon.private',
     'miro.frontends',
     'miro.frontends.widgets',
+    'miro.frontends.widgets.gst',
     'miro.frontends.widgets.gtk',
     'miro.test',
     'miro.plat',
