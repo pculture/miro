@@ -754,6 +754,10 @@ class _MultiRowAlbumRenderStrategy(object):
         """Get artist name to render."""
         raise NotImplementedError()
 
+    def draw_track_numbers(self):
+        """Should we draw track numbers?"""
+        return True
+
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
         # use placeholder image until the metadata changes happen
@@ -776,6 +780,9 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_artist(self, item_info):
         return item_info.feed_url
 
+    def draw_track_numbers(self):
+        return False
+
 class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
         try:
@@ -794,6 +801,9 @@ class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
 
     def get_artist(self, item_info):
         return None
+
+    def draw_track_numbers(self):
+        return False
 
 class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     """Renderer for album view."""
@@ -905,7 +915,8 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
                 self.render_text(context, layout_manager, artist, False)
 
         # draw track number
-        self.render_track_number(context, layout_manager, current_row)
+        if self._render_strategy.draw_track_numbers():
+            self.render_track_number(context, layout_manager, current_row)
         # render line below the album
         if current_row == total_rows - 1:
             self.draw_bottom_line(context)
