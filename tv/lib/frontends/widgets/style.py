@@ -733,6 +733,68 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         else:
             return None
 
+class _MultiRowAlbumRenderStrategy(object):
+    """Utility class that controls what we render in MultiRowAlbumRenderer
+
+    We subclass for each of the different modes that we use (standard, feed,
+    videos, etc).
+
+    This class is just used internally.
+    """
+
+    def get_image_path(self, item_info):
+        """Get a path to the image we should draw."""
+        raise NotImplementedError()
+
+    def get_album(self, item_info):
+        """Get album name to render."""
+        raise NotImplementedError()
+
+    def get_artist(self, item_info):
+        """Get artist name to render."""
+        raise NotImplementedError()
+
+class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
+    def get_image_path(self, item_info):
+        # use placeholder image until the metadata changes happen
+        return resources.path('images/album-art-placeholder.gif')
+
+    def get_album(self, item_info):
+        return item_info.album
+
+    def get_artist(self, item_info):
+        return item_info.artist
+
+class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
+    def get_image_path(self, item_info):
+        feed_info = widgetutil.get_feed_info(item_info.feed_id)
+        return feed_info.thumbnail
+
+    def get_album(self, item_info):
+        return item_info.feed_name
+
+    def get_artist(self, item_info):
+        return item_info.feed_url
+
+class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
+    def get_image_path(self, item_info):
+        try:
+            feed_info = widgetutil.get_feed_info(item_info.feed_id)
+            return feed_info.thumbnail
+        except KeyError:
+            return resources.path('images/thumb-default-video.png')
+
+    def get_album(self, item_info):
+        if item_info.show:
+            return item_info.show
+        elif item_info.feed_name:
+            return item_info.feed_name
+        else:
+            return None
+
+    def get_artist(self, item_info):
+        return None
+
 class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     """Renderer for album view."""
 
@@ -755,27 +817,34 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
-        self.feed_mode = False
+        self._render_strategy = _StandardRenderStrategy()
 
     def get_image_path(self):
-        if self.feed_mode:
-            feed_info = widgetutil.get_feed_info(self.info.feed_id)
-            return feed_info.thumbnail
-        else:
-            # use placeholder image until the metadata changes happen
-            return resources.path('images/album-art-placeholder.gif')
+        return self._render_strategy.get_image_path(self.info)
 
     def get_album(self):
-        if self.feed_mode:
-            return self.info.feed_name
-        else:
-            return self.info.album
+        return self._render_strategy.get_album(self.info)
 
     def get_artist(self):
-        if self.feed_mode:
-            return self.info.feed_url
+        return self._render_strategy.get_artist(self.info)
+
+    def switch_mode(self, new_mode):
+        """Switch which mode we use to render the album art.
+
+        Currently there are 3 modes:
+
+        - 'standard' -- standard view of the data
+        - 'feed' -- use feed info instead of album info
+        - 'video' -- mode for the all videos tab
+        """
+        if new_mode == 'standard':
+            self._render_strategy = _StandardRenderStrategy()
+        elif new_mode == 'feed':
+            self._render_strategy = _FeedRenderStrategy()
+        elif new_mode == 'video':
+            self._render_strategy = _VideoRenderStrategy()
         else:
-            return self.info.artist
+            raise ValueError("Unknown mode: %s" % new_mode)
 
     def get_size(self, style, layout_manager):
         # return 0 for height because we render to multiple columns.  We let

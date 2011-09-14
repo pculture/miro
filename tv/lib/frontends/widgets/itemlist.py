@@ -363,6 +363,20 @@ def feed_grouping(info):
     """Grouping function that groups infos by their feed."""
     return info.feed_id
 
+def video_grouping(info):
+    """Grouping function that groups infos for the videos tab.
+
+    For this group, we try to figure out what "show" the item is in.  If the
+    user has set a show we use that, otherwise we use the podcast.
+
+    """
+    if info.show:
+        return info.show
+    elif info.feed_name:
+        return info.feed_name
+    else:
+        return None
+
 class ItemList(object):
     """
     Attributes:

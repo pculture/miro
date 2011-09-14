@@ -1163,6 +1163,16 @@ class VideoItemsController(AudioVideoItemsController):
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True, wide_image=True)
 
+    def get_item_list_grouping(self):
+        return itemlist.video_grouping
+
+    def build_column_renderers(self):
+        column_renderers = AudioVideoItemsController.build_column_renderers(
+                self)
+        # switch the album view renderer to display feed info
+        column_renderers.get('multi-row-album').switch_mode('video')
+        return column_renderers
+
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'
     id = u'music'
