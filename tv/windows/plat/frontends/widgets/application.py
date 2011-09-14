@@ -61,6 +61,7 @@ from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
 from miro.plat.frontends.widgets import bonjour
+from miro.plat.frontends.widgets import embeddingwindow
 from miro.plat.frontends.widgets import flash
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -92,6 +93,7 @@ class WindowsApplication(Application):
 
         self.initXULRunner()
         gobject.threads_init()
+        embeddingwindow.init()
         self.startup()
 
 

@@ -36,22 +36,7 @@ from miro import signals
 from miro.frontends.widgets.gtk import base
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk import pygtkhacks
-
-_dummy_window = None
-def _get_dummy_window():
-    """Get a hidden window to reparent gstreamer windows to.
-
-    These windows are used when the GtkVideoWidget isn't currently realized.
-
-    This method creates the hidden window lazily, as a singleton.
-    """
-    global _dummy_window
-    if _dummy_window is None:
-        _dummy_window = gtk.gdk.Window(None,
-                x=0, y=0, width=1, height=1,
-                window_type=gtk.gdk.WINDOW_TOPLEVEL,
-                wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
-    return _dummy_window
+from miro.plat.frontends.widgets import embeddingwindow
 
 class GtkVideoWidget(gtk.DrawingArea):
     """GtkVideoWidget -- GTK widget for embedding gstreamer."""
@@ -59,81 +44,72 @@ class GtkVideoWidget(gtk.DrawingArea):
     def __init__(self, renderer):
         gtk.DrawingArea.__init__(self)
         self.renderer = renderer
-        # make a window for gstreamer to use.  This window stays around, even
-        # when the widget is unrealized.
-        # This is a bit of cheating because we are not supposed to create
-        # windows until we get the realize signal.  However, this is the
-        # simplest way to get gstreamer working.
-        self.gstreamer_window = gtk.gdk.Window(_get_dummy_window(),
-                x=0, y=0, width=1, height=1, window_type=gtk.gdk.WINDOW_CHILD,
-                wclass=gtk.gdk.INPUT_OUTPUT, event_mask=self.get_events())
-        # make sure it's a native window, otherwise gstreamer gets confused
-        pygtkhacks.ensure_native_window(self.gstreamer_window)
+        # make a HWND for gstreamer to use.
+        self.embedding_window = embeddingwindow.EmbeddingWindow()
+        self.embedding_window.set_event_handler(self)
+        self.embedding_window.enable_motion_events(True)
         # pass it to our renderer
-        self.renderer.set_window_id(self.gstreamer_window.handle)
+        self.renderer.set_window_id(self.embedding_window.hwnd)
+
+    def _get_window_area(self):
+        """Get the area of our window relative to a native window
+
+        This method calculates where our window is relative to it's nearest
+        parent that's a native window.
+        """
+
+        offsets = pygtkhacks.get_gdk_window_offset(self.window)
+        # offsets are relative to our window, we need to negate them to make
+        # them relative to our native parent window.
+        return (-offsets[0], -offsets[1],
+                self.allocation.width, self.allocation.height)
 
     def do_realize(self):
         # call base class
         gtk.DrawingArea.do_realize(self)
-        # move our gstreamer_window on top of our regular window.
-        self.gstreamer_window.resize(*self.window.get_size())
-        self.gstreamer_window.reparent(self.window, 0, 0)
-        self.gstreamer_window.show()
-        # set user data so that events on gstreamer_window go to this widget
-        self.gstreamer_window.set_user_data(self)
-        self.gstreamer_window.set_events(self.get_events())
+        # attach our embedded window to our window
+        self.embedding_window.attach(self.window.handle,
+                *self._get_window_area())
 
     def do_unrealize(self):
-        # hide our gstreamer_window and reparent it to a hidden window
-        self.gstreamer_window.reparent(_get_dummy_window(), 0, 0)
-        # unset user data
-        self.gstreamer_window.set_user_data(None)
+        # detach our embedded window
+        self.embedding_window.detach()
         # call base class
         gtk.DrawingArea.do_unrealize(self)
 
     def do_size_allocate(self, allocation):
+        # call our base class
         gtk.DrawingArea.do_size_allocate(self, allocation)
         if self.flags() & gtk.REALIZED:
-            # resize our gstreamer window.  We don't have to move it because
-            # it always should be at (0, 0) relative to our regular window.
-            self.gstreamer_window.resize(allocation.width, allocation.height)
+            # move our embedded window
+            self.embedding_window.reposition(*self._get_window_area())
 
-    def do_motion_notify_event(self, event):
+    def on_mouse_move(self, x, y):
         wrappermap.wrapper(self).emit('mouse-motion')
 
-    def do_button_press_event(self, event):
-        if event.type == gtk.gdk._2BUTTON_PRESS:
-            wrappermap.wrapper(self).emit('double-click')
+    def on_double_click(self, x, y):
+        wrappermap.wrapper(self).emit('double-click')
 
-    def do_expose_event(self, event):
+    def on_paint(self):
         if self.renderer.ready_for_expose():
             # our renderer is setup, have it handle the expose
             self.renderer.expose()
         else:
             # our renderer is not ready yet, draw black
-            cr = event.window.cairo_create()
-            cr.set_source_rgb(0, 0, 0)
-            cr.rectangle(*event.area)
-            cr.fill()
+            self.embedding_window.paint_black()
 
     def destroy(self):
         # unrealize if we need to
         if self.flags() & gtk.REALIZED:
             self.unrealize()
-        # unset our renderer window
+        # stop our renderer
+        self.renderer.reset()
         self.renderer.set_window_id(None)
-        # destroy our gstreamer window
-        self.gstreamer_window.destroy()
+        # destroy our embedding window
+        self.embedding_window.destroy()
+        self.embedding_window = None
         # let DrawingArea take care of the rest
         gtk.DrawingArea.destroy(self)
-
-    def add_events(self, mask):
-        gtk.DrawingArea.add_events(self, mask)
-        self.gstreamer_window.set_events(self.get_events())
-
-    def set_events(self, mask):
-        gtk.DrawingArea.set_events(self, mask)
-        self.gstreamer_window.set_events(self.get_events())
 gobject.type_register(GtkVideoWidget)
 
 class VideoWidget(base.Widget):
@@ -158,8 +134,6 @@ class VideoWidget(base.Widget):
         self.create_signal("mouse-motion")
         self.create_signal("double-click")
         self.renderer = renderer
-        self._widget.add_events(gtk.gdk.BUTTON_PRESS_MASK |
-                gtk.gdk.POINTER_MOTION_MASK)
 
     def destroy(self):
         self._widget.destroy()

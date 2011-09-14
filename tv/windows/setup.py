@@ -207,6 +207,12 @@ pygtkhacks_ext = Extension(
         ]
     )
 
+embeddingwindow_ext = \
+    Extension("miro.plat.frontends.widgets.embeddingwindow",
+        [os.path.join(widgets_dir, 'embeddingwindow.c')],
+        libraries=[ 'user32', 'gdi32'],
+    )
+
 xulrunnerbrowser_ext_dir = os.path.join(widgets_dir, 'XULRunnerBrowser')
 xulrunnerbrowser_ext = Extension(
     "miro.plat.frontends.widgets.xulrunnerbrowser",
@@ -282,6 +288,7 @@ os.environ['PATH'] = ';'.join([
 ext_modules = [
     ngrams_ext,
     pygtkhacks_ext,
+    embeddingwindow_ext,
     xulrunnerbrowser_ext,
     infolist_ext,
 ]
