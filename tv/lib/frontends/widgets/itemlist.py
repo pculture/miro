@@ -168,10 +168,52 @@ class AlbumSort(ItemSort):
                 info.track,
                 info.artist_sort_key)
 
-class MultiRowAlbumSort(AlbumSort):
+class MultiRowAlbumSort(ItemSort):
     """Sorter for the album view column.  It operates the same as AlbumSort
     """
     KEY = 'multi-row-album'
+
+    def __init__(self, ascending):
+        ItemSort.__init__(self, ascending)
+        self.switch_mode('standard')
+
+    def switch_mode(self, new_mode):
+        """Switch which mode we use to sort.
+
+        MultiRowAlbumRenderer displays different data depending on what mode
+        it's in.  Therefore, this sorter needs to sort differently depending
+        on that mode.
+
+        The modes available are the same as MultiRowAlbumRenderer's modes
+        (standard, feed, and video).  The mode should be set the same on each
+        """
+        if new_mode not in ('standard', 'feed', 'video'):
+            raise ValueError("unknown mode: %s" % new_mode)
+        self.sort_key = getattr(self, 'sort_key_%s' % new_mode)
+
+    # we don't define sort_key() directly instead, we define a version of it
+    # for each mode we can be in, and set the sort_key attribute in
+    # switch_mode()
+
+    def sort_key_standard(self, info):
+        # same as AlbumSort
+        return (info.album_sort_key,
+                info.track,
+                info.artist_sort_key)
+
+    def sort_key_feed(self, info):
+        return (info.feed_name,
+                info.release_date)
+
+    def sort_key_video(self, info):
+        if info.show:
+            show_name = info.show
+        elif info.feed_name:
+            show_name = info.feed_name
+        else:
+            show_name = ''
+        return (show_name,
+                info.release_date)
 
 class TrackSort(ItemSort):
     KEY = 'track'

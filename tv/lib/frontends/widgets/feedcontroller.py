@@ -221,8 +221,5 @@ class AllFeedsController(FeedController):
     def get_item_list_grouping(self):
         return itemlist.feed_grouping
 
-    def build_column_renderers(self):
-        column_renderers = FeedController.build_column_renderers(self)
-        # switch the album view renderer to display feed info
-        column_renderers.get('multi-row-album').switch_mode('feed')
-        return column_renderers
+    def get_multi_row_album_mode(self):
+        return 'feed'

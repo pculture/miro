@@ -359,7 +359,21 @@ class ItemListController(object):
             column = WidgetStateStore.DEFAULT_SORT_COLUMN[self.type]
             column, ascending = self.parse_sort_key(column)
             sorter = itemlist.SORT_KEY_MAP[column](ascending)
+        if column == 'multi-row-album':
+            sorter.switch_mode(self.get_multi_row_album_mode())
         return sorter
+
+    def setup_multi_row_album_sorter(self, sorter):
+        """Set up the sorter for the multi-row album column
+
+        That column displays different data depending on which tab is
+        selected.  For example in the all feeds tab, it displays data based on
+        the feed attributes, rather than album attributes.
+
+        If a subclass changes what's displayed in that column, it probably
+        should also override this method and change the mode for the sorter.
+        """
+        pass
 
     def make_sort_key(self, sorter):
         key = unicode(sorter.KEY)
@@ -530,8 +544,19 @@ class ItemListController(object):
         self.views[album_view_type] = album_view
         return album_view
 
+    def get_multi_row_album_mode(self):
+        """Get the mode to use for MultiRowAlbumRenderer.
+
+        Subclasses should override this method to change how that column gets
+        rendered
+        """
+        return 'standard'
+
     def build_column_renderers(self):
-        return itemlistwidgets.ListViewColumnRendererSet()
+        column_renderers = itemlistwidgets.ListViewColumnRendererSet()
+        multi_row_mode = self.get_multi_row_album_mode()
+        column_renderers.get('multi-row-album').switch_mode(multi_row_mode)
+        return column_renderers
 
     def build_header_toolbar(self):
         sorts_enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
@@ -1166,12 +1191,8 @@ class VideoItemsController(AudioVideoItemsController):
     def get_item_list_grouping(self):
         return itemlist.video_grouping
 
-    def build_column_renderers(self):
-        column_renderers = AudioVideoItemsController.build_column_renderers(
-                self)
-        # switch the album view renderer to display feed info
-        column_renderers.get('multi-row-album').switch_mode('video')
-        return column_renderers
+    def get_multi_row_album_mode(self):
+        return 'video'
 
 class AudioItemsController(AudioVideoItemsController):
     type = u'music'
