@@ -661,12 +661,17 @@ class TableViewCommon(object):
         clip_path = NSBezierPath.bezierPath()
         for col_index in iter_range(self.columnsInRect_(clip_rect)):
             column = wrappermap.wrapper(self.tableColumns()[col_index])
-            column_rect = self.rectOfColumn_(col_index)
-            if not column.renderer.DRAW_BACKGROUND:
-                self.drawBackgroundOutsideContent_clipRect_(column_rect,
+            if column.renderer.DRAW_BACKGROUND:
+                # We should draw the background for this column, add it's rect
+                # to our clip rect.
+                column_rect = self.rectOfColumn_(col_index)
+                clip_path.appendBezierPathWithRect_(column_rect)
+            else:
+                # We shouldn't draw the background for this column.  Don't add
+                # anything to the clip rect, but do draw the area before the
+                # first row and after the last row.
+                self.drawBackgroundOutsideContent_clipRect_(col_index,
                         clip_rect)
-                continue
-            clip_path.appendBezierPathWithRect_(column_rect)
         # clip to that path
         clip_path.addClip()
         # do the default drawing
@@ -674,7 +679,7 @@ class TableViewCommon(object):
         # restore graphics state
         graphics_context.restoreGraphicsState()
 
-    def drawBackgroundOutsideContent_clipRect_(self, column_rect, clip_rect):
+    def drawBackgroundOutsideContent_clipRect_(self, index, clip_rect):
         """Draw our background outside the rows with content
 
         We call this for cells with DRAW_BACKGROUND set to False.  For those,
@@ -684,23 +689,27 @@ class TableViewCommon(object):
 
         self.backgroundColor().set()
 
-        # calculate x and width for both the top and bottom rect from the
-        # overlap between the column rect and the clip rect
-        intersection = NSIntersectionRect(clip_rect, column_rect)
-        x = intersection.origin.x
-        width = intersection.size.width
+        total_rect = NSIntersectionRect(self.rectOfColumn_(index), clip_rect)
 
-        # draw part of clip_rect above column_rect
-        height_above_top = column_rect.origin.y - clip_rect.origin.y
-        if height_above_top > 0:
-            y = clip_rect.origin.y
-            NSRectFill(NSMakeRect(x, y, width, height_above_top))
+        if self.numberOfRows() == 0:
+            # if no rows are selected, draw the background over everything
+            NSRectFill(total_rect)
+            return
 
-        # draw part of clip_rect below column_rect
-        height_below_bottom = NSMaxY(clip_rect) - NSMaxY(column_rect)
-        if NSMaxY(clip_rect) > NSMaxY(column_rect):
-            y = NSMaxY(column_rect) + 1
-            NSRectFill(NSMakeRect(x, y, width, height_below_bottom))
+        # fill the area above the first row
+        first_row_rect = self.rectOfRow_(0)
+        if first_row_rect.origin.y > total_rect.origin.y:
+            height = first_row_rect.origin.y - total_rect.origin.y
+            NSRectFill(NSMakeRect(total_rect.origin.x, total_rect.origin.y,
+                    total_rect.size.width, height))
+
+        # fill the area below the last row
+        last_row_rect = self.rectOfRow_(self.numberOfRows()-1)
+        if NSMaxY(last_row_rect) < NSMaxY(total_rect):
+            y = NSMaxY(last_row_rect) + 1
+            height = NSMaxY(total_rect) - NSMaxY(last_row_rect)
+            NSRectFill(NSMakeRect(total_rect.origin.x, y,
+                    total_rect.size.width, height))
 
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):
         return YES
