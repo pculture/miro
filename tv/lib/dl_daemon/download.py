@@ -798,8 +798,8 @@ class HTTPDownloader(BGDownloader):
         BGDownloader.handle_temporary_error(self, short_reason, reason)
 
     def handle_move_error(self, error):
-        logging.exception("Error moving to movies directory")
-        logging.warn("filename: %s, shortFilename: %s, movies directory: %s",
+        logging.exception("Error moving to movies directory\n"
+                "filename: %s, shortFilename: %s, movies directory: %s",
                 self.filename, self.shortFilename,
             app.config.get(prefs.MOVIES_DIRECTORY))
         text = _("Error moving to movies directory")
