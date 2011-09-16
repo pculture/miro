@@ -617,6 +617,21 @@ class bdist_nsis(Command):
             for name in files:
                 self.add_file(os.path.join(root, name))
 
+package_list=[
+    'miro',
+    'miro.libdaap',
+    'miro.dl_daemon',
+    'miro.dl_daemon.private',
+    'miro.frontends',
+    'miro.frontends.widgets',
+    'miro.frontends.widgets.gtk',
+    'miro.test',
+    'miro.plat',
+    'miro.plat.renderers',
+    'miro.plat.frontends',
+    'miro.plat.frontends.widgets',
+]
+
 if __name__ == "__main__":
     setup(
         windows=[
@@ -650,20 +665,7 @@ if __name__ == "__main__":
                 },
             ],
         ext_modules=ext_modules,
-        packages=[
-            'miro',
-            'miro.libdaap',
-            'miro.dl_daemon',
-            'miro.dl_daemon.private',
-            'miro.frontends',
-            'miro.frontends.widgets',
-            'miro.frontends.widgets.gtk',
-            'miro.test',
-            'miro.plat',
-            'miro.plat.renderers',
-            'miro.plat.frontends',
-            'miro.plat.frontends.widgets',
-            ],
+        packages=package_list,
         package_dir={
             'miro': portable_dir,
             'miro.plat': platform_package_dir,
@@ -678,9 +680,7 @@ if __name__ == "__main__":
             },
         options={
             'py2exe': {
-                'packages': [
-                    'encodings'
-                    ],
+                'packages': package_list + ['encodings'],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
                              'gio, libtorrent, mutagen'),
                 },
