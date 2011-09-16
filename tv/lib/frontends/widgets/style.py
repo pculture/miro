@@ -789,7 +789,8 @@ class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
             feed_info = widgetutil.get_feed_info(item_info.feed_id)
             return feed_info.thumbnail
         except KeyError:
-            return resources.path('images/thumb-default-video.png')
+            # use placeholder image until we get one from a designer
+            return resources.path('images/album-art-placeholder.gif')
 
     def get_album(self, item_info):
         if item_info.show:
