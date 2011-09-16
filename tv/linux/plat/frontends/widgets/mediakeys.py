@@ -32,6 +32,13 @@ import dbus
 
 from miro import app
 
+# Note: make sure that we catch dbus.DBusException.  The DBus object can
+# fail to be created, or could also fail when it got created when we try
+# to make use of it.  For example, DBus could have been stopped and in
+# a volatile state as it is being upgraded, or maybe it's not running because
+# it was administratively stopped.  Since we have no control over the
+# external environment, just catch it and fail gracefully (kind-of) by
+# not crashing but not recovering either.
 
 class MediaKeyHandler(object):
     def __init__(self, app_window):
@@ -61,8 +68,11 @@ class MediaKeyHandler(object):
                 app.widgetapp.on_previous_clicked()
 
     def on_window_focus(self, window):
-        self.bus_object.GrabMediaPlayerKeys(
-            "Miro", 0, dbus_interface='org.gnome.SettingsDaemon.MediaKeys')
+        try:
+            self.bus_object.GrabMediaPlayerKeys(
+                "Miro", 0, dbus_interface='org.gnome.SettingsDaemon.MediaKeys')
+        except dbus.DBusException:
+            logging.exception('GrabMediaPlayerKeys failed')
         return False
 
 
