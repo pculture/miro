@@ -771,8 +771,12 @@ class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
 
 class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
-        feed_info = widgetutil.get_feed_info(item_info.feed_id)
-        return feed_info.thumbnail
+        try:
+            feed_info = widgetutil.get_feed_info(item_info.feed_id)
+        except KeyError:
+            return None
+        else:
+            return feed_info.thumbnail
 
     def get_album(self, item_info):
         return item_info.feed_name
@@ -866,8 +870,12 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         return 'album-click'
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        album_art = imagepool.get_surface(self.get_image_path(),
-                size=self.IMAGE_SIZE)
+        album_art_path = self.get_image_path()
+        if album_art_path is not None:
+            album_art = imagepool.get_surface(album_art_path,
+                    size=self.IMAGE_SIZE)
+        else:
+            album_art = None
         artist = self.get_artist()
         album = self.get_album()
 
@@ -893,10 +901,13 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         current_row, total_rows = self.group_info
 
         # calculate how many rows we need to display the image
-        total_image_height = (album_art.height + self.IMAGE_MARGIN_TOP +
-                self.IMAGE_MARGIN_BOTTOM)
-        image_row_count = math.ceil(float(total_image_height) /
-                context.height)
+        if album_art is not None:
+            total_image_height = (album_art.height + self.IMAGE_MARGIN_TOP +
+                    self.IMAGE_MARGIN_BOTTOM)
+            image_row_count = math.ceil(float(total_image_height) /
+                    context.height)
+        else:
+            image_row_count = 0
 
         # render the current cell
         if total_rows < image_row_count:
