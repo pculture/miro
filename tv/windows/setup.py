@@ -29,20 +29,15 @@
 
 import os.path
 import os
-import shutil
 import time
 import socket
-import copy
 import sys
 import string
 import subprocess
 import zipfile as zip
 from glob import glob, iglob
-from xml.sax.saxutils import escape
-from distutils import sysconfig
 from distutils.core import Command
 import distutils.command.install_data
-from distutils.ccompiler import new_compiler
 from distutils import file_util, dir_util
 
 
@@ -139,13 +134,11 @@ PYTHON_BINARY = "python"
 
 from distutils.core import setup
 from distutils.extension import Extension
-from distutils.core import Command
 from distutils import log
 import py2exe
 import py2exe.build_exe
 import os
 import sys
-import re
 from Pyrex.Distutils import build_ext
 
 # The name of this platform.
