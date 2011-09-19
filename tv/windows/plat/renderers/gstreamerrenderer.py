@@ -29,16 +29,41 @@
 
 """gstreamerrenderer.py -- Windows gstreamer renderer """
 
+# Before importing gstreamer, fix os.environ so gstreamer finds it's plugins
 import os
 from miro.plat import resources
-
 GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
-
-# need to fix os.environ so gstreamer picks up the plugins
 os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
 os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
 
-# all of our stuff comes from portable
+import pygst
+pygst.require('0.10')
+import gst
 
-from miro.frontends.widgets.gst.renderer import AudioRenderer, VideoRenderer
+from miro import app
+from miro.frontends.widgets.gst import renderer
+
+# We need to define get_item_type().  Use the version from sniffer.
 from miro.frontends.widgets.gst.sniffer import get_item_type
+
+class WindowsSinkFactory(renderer.SinkFactory):
+    """Windows class to create gstreamer audio/video sinks.
+
+    This class is very simple because we know exactly what gstreamer plugins
+    we install on windows.
+    """
+
+    def make_audiosink(self):
+        return gst.element_factory_make("directsoundsink" , "audiosink")
+
+    def make_videosink(self):
+        # Use dshowvideosink.
+        # d3dvideosink doesn't work on my vmware VM.
+        # directdrawsink does work, but I believe it is less likely to be
+        # hardware accelerated than the direct show one.
+        return gst.element_factory_make("dshowvideosink" , "videosink")
+
+def make_renderers():
+    sink_factory = WindowsSinkFactory()
+    return (renderer.AudioRenderer(sink_factory),
+            renderer.VideoRenderer(sink_factory))

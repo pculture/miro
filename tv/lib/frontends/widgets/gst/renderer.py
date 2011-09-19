@@ -51,33 +51,35 @@ from miro.frontends.widgets import menus
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gst import gstutil
 
+class SinkFactory(object):
+    """SinkFactory -- Create audio/video sinks for our renderer.
 
-class Renderer:
-    def __init__(self):
+    SinkFactory an the interface that platforms must implement to use
+    VideoRenderer and AudioRenderer.  It simple contains the logic to create
+    the audiosink and videosink elements to give to gstreamer.
+
+    When creating elements, SinkFactory can return anything that will work
+    with playbin2.  Normally this means creating an element with
+    gst.element_factory_make().  Howvever, if platforms need more complexity,
+    they can chain elements together and return a gst.Bin that contains them.
+    """
+
+    def make_audiosink(self):
+        """Create a gstreamer element to use as an audiosink.  """
+        raise NotImplementedError()
+
+    def make_videosink(self):
+        """Create a gstreamer element to use as an audiosink.  """
+        raise NotImplementedError()
+
+
+class Renderer(object):
+    def __init__(self, sink_factory):
         logging.info("GStreamer version: %s", gst.version_string())
 
         self.rate = 1.0
         self.select_callbacks = None
-
-        audiosink_name = app.config.get(options.GSTREAMER_AUDIOSINK)
-        try:
-            gst.element_factory_make(audiosink_name, "audiosink")
-
-        except gst.ElementNotFoundError:
-            logging.warn("gstreamerrenderer: ElementNotFoundError '%s'",
-                         audiosink_name)
-            audiosink_name = "autoaudiosink"
-            gst.element_factory_make(audiosink_name, "audiosink")
-
-        except Exception, e:
-            logging.warn("gstreamerrenderer: Exception thrown '%s'" % e)
-            logging.exception("sink exception")
-            audiosink_name = "alsasink"
-            gst.element_factory_make(audiosink_name, "audiosink")
-
-        self.audiosink_name = audiosink_name
-        logging.info("GStreamer audiosink: %s", audiosink_name)
-
+        self.sink_factory = sink_factory
         self.supports_subtitles = True
         self.playbin = None
         self.bus = None
@@ -91,9 +93,8 @@ class Renderer:
         self.bus.enable_sync_message_emission()
 
         self.watch_ids.append(self.bus.connect("message", self.on_bus_message))
-        audiosink = gst.element_factory_make(
-            self.audiosink_name, "audiosink")
-        self.playbin.set_property("audio-sink", audiosink)
+        self.playbin.set_property("audio-sink",
+                self.sink_factory.make_audiosink())
 
     def destroy_playbin(self):
         if self.playbin is None:
@@ -265,30 +266,10 @@ class AudioRenderer(Renderer):
     pass
 
 class VideoRenderer(Renderer):
-    def __init__(self):
-        Renderer.__init__(self)
-
-        videosink_name = app.config.get(options.GSTREAMER_IMAGESINK)
-        try:
-            gst.element_factory_make(videosink_name, "videosink")
-
-        except gst.ElementNotFoundError:
-            logging.warn("gstreamerrenderer: ElementNotFoundError '%s'",
-                         videosink_name)
-            videosink_name = "xvimagesink"
-            gst.element_factory_make(videosink_name, "videosink")
-
-        except Exception, e:
-            logging.warn("gstreamerrenderer: Exception thrown '%s'" % e)
-            logging.exception("sink exception")
-            videosink_name = "ximagesink"
-            gst.element_factory_make(videosink_name, "videosink")
-
-        logging.info("GStreamer videosink: %s", videosink_name)
-        self.videosink_name = videosink_name
+    def __init__(self, sink_factory):
+        Renderer.__init__(self, sink_factory)
 
         self.textsink_name = "textoverlay"
-
         self.imagesink = None
         self.window_id = None
 
@@ -298,8 +279,8 @@ class VideoRenderer(Renderer):
         self.imagesink = None
         self.watch_ids.append(self.bus.connect(
                 'sync-message::element', self.on_sync_message))
-        videosink = gst.element_factory_make(self.videosink_name, "videosink")
-        self.playbin.set_property("video-sink", videosink)
+        self.playbin.set_property("video-sink",
+                self.sink_factory.make_videosink())
         try:
             textsink = gst.element_factory_make(
                 self.textsink_name, "textsink")

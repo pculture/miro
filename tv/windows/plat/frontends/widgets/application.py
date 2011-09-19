@@ -52,8 +52,7 @@ from miro.plat import clipboard
 from miro.plat import options
 from miro.plat import resources
 from miro.plat import associate
-from miro.plat.renderers.gstreamerrenderer import (
-    AudioRenderer, VideoRenderer, get_item_type)
+from miro.plat.renderers import gstreamerrenderer
 
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import gtkdirectorywatch
@@ -124,9 +123,10 @@ class WindowsApplication(Application):
             logging.info("pycurl:            %s", pycurl.version)
         except ImportError:
             logging.exception("pycurl won't load")
-        app.audio_renderer = AudioRenderer()
-        app.video_renderer = VideoRenderer()
-        app.get_item_type = get_item_type
+
+        renderers = gstreamerrenderer.make_renderers()
+        app.audio_renderer, app.video_renderer = renderers
+        app.get_item_type = gstreamerrenderer.get_item_type
 
         gtk.main()
 
