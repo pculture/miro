@@ -29,20 +29,15 @@
 
 import os.path
 import os
-import shutil
 import time
 import socket
-import copy
 import sys
 import string
 import subprocess
 import zipfile as zip
 from glob import glob, iglob
-from xml.sax.saxutils import escape
-from distutils import sysconfig
 from distutils.core import Command
 import distutils.command.install_data
-from distutils.ccompiler import new_compiler
 from distutils import file_util, dir_util
 
 
@@ -113,6 +108,10 @@ FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
 
+# so py2exe can find DLLs
+sys.path.append(VCREDIST71_PATH)
+sys.path.append(os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT'))
+
 def find_data_files(dest_path_base, source_path):
     retval = []
     for path, dirs, files in os.walk(source_path):
@@ -135,13 +134,11 @@ PYTHON_BINARY = "python"
 
 from distutils.core import setup
 from distutils.extension import Extension
-from distutils.core import Command
 from distutils import log
 import py2exe
 import py2exe.build_exe
 import os
 import sys
-import re
 from Pyrex.Distutils import build_ext
 
 # The name of this platform.
@@ -681,6 +678,8 @@ if __name__ == "__main__":
         options={
             'py2exe': {
                 'packages': package_list + ['encodings'],
+                # don't include stray DLLs from Win2008
+                'dll_excludes': ['DNSAPI.DLL', 'MSIMG32.DLL'],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
                              'gio, libtorrent, mutagen'),
                 },
