@@ -552,7 +552,7 @@ class CurlTransfer(object):
         return False
 
 
-    def debug_func(self, type, msg):
+    def debug_func(self, typ, msg):
         type_map = {
                 pycurl.INFOTYPE_HEADER_IN: 'header-in',
                 pycurl.INFOTYPE_HEADER_OUT: 'header-out',
@@ -560,7 +560,7 @@ class CurlTransfer(object):
                 pycurl.INFOTYPE_DATA_OUT: 'data-out',
                 pycurl.INFOTYPE_TEXT: 'text',
         }
-        type_str = type_map.get(type, type)
+        type_str = type_map.get(typ, typ)
         logging.warn("libcurl debug (%s) %r", type_str, msg)
 
 
