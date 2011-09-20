@@ -677,15 +677,22 @@ class CurlTransfer(object):
                 self.saw_head_success = True
         elif info['status'] == 401:
             self.handle_http_auth()
-        elif info['status'] in (405, 501):
-            if self.trying_head_request:
-                # server didn't like the HEAD request, so just try the GET
-                self._send_new_request()
-                self.saw_head_success = True
-            else:
-                self.call_errback(UnexpectedStatusCode(info['status']))
         elif info['status'] == 407:
             self.handle_proxy_auth()
+        elif self.trying_head_request:
+            # The response code wasn't what we expected, but we are doing
+            # a HEAD request.
+            #
+            # Servers have "inventive" strategies for dealing with HEAD
+            # requests.  I don't really feel like handling them one by
+            # one since you never know what comes through, so just assume
+            # things are okay and let the actual download handler deal with
+            # failure.
+            #
+            # We handle this before all of the error handling to make sure
+            # we have a chance to catch this.
+            self._send_new_request()
+            self.saw_head_success = True
         elif info['status'] >= 500 and info['status'] < 600:
             logging.info("httpclient: possibly temporary http error: HTTP %s",
                          info['status'])
