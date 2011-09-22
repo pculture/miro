@@ -223,8 +223,7 @@ class Renderer(object):
 
     def stop(self):
         if self.playbin:
-            self.playbin.set_state(gst.STATE_NULL)
-            self.destroy_playbin()
+            self.reset()
 
     def get_rate(self):
         return 256
