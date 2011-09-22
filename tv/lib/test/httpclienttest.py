@@ -991,16 +991,22 @@ class NetworkErrorTest(HTTPClientTestBase):
             httpclient.ServerClosedConnection))
 
     @uses_httpclient
-    def test_404_error(self):
+    def test_404_error(self, write_file=None):
         self.expecting_errback = True
         url = self.httpserver.build_url('badfile.txt')
-        self.grab_url(url)
+        self.grab_url(url, write_file=write_file)
         self.assert_(isinstance(self.grab_url_error,
             httpclient.UnexpectedStatusCode))
         # FIXME: It'd be nice if we could check a HTTP code rather than a
         # static message.
         self.assertEquals(self.grab_url_error.friendlyDescription,
                 _("File not found"))
+        if write_file:
+            self.assertEquals(open(write_file).read(), '')
+
+    def test_error_nofile(self):
+        write_file = self.make_temp_path(".txt")
+        self.test_404_error(write_file=write_file)
 
     @uses_mock_httpclient
     def test_bad_domain_name(self):

@@ -466,15 +466,14 @@ class CurlTransfer(object):
         elif self.options.write_file is not None:
             if not self.saw_head_success:
                 # try a HEAD request first to see if the request will work.
-                # This avoids writing error responses to our file.  It also
-                # avoids the issue of RESUME_FROM being applied to the error
-                # response.
+                # It avoids the issue of RESUME_FROM being applied to the 
+                # error response.
                 self.handle.setopt(pycurl.NOBODY, 1)
                 self.trying_head_request = True
             else:
                 self.handle.setopt(pycurl.URL, self.last_url)
                 self._open_file()
-                self.handle.setopt(pycurl.WRITEDATA, self._filehandle)
+                self.handle.setopt(pycurl.WRITEFUNCTION, self._write_file)
         elif self.content_check_callback is not None:
             self.handle.setopt(pycurl.WRITEFUNCTION, self._call_content_check)
         else:
@@ -484,6 +483,10 @@ class CurlTransfer(object):
             logging.warn("debugging request: %s", self.options.url)
             self.handle.setopt(pycurl.VERBOSE, 1)
             self.handle.setopt(pycurl.DEBUGFUNCTION, self.debug_func)
+
+    def _write_file(self, buf):
+        if self.check_response_code(self.status_code):
+            self._filehandle.write(buf)
 
     def _lookup_auth(self):
         """Lookup existing HTTP passwords to use.
