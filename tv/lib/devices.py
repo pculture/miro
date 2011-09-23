@@ -654,8 +654,8 @@ class DeviceSyncManager(object):
             if name == u'new_playlists':
                 for playlist_ in view:
                     playlist_view = item.Item.playlist_view(playlist_.id)
-                    infos = itemsource.DatabaseItemSource(
-                        playlist_view).fetch_all()
+                    infos = [info for info in itemsource.DatabaseItemSource(
+                            playlist_view).fetch_all() if info.video_path]
                     size = self.get_sync_size(infos)[1]
                     if size and size < remaining:
                         for info in infos:
@@ -665,6 +665,8 @@ class DeviceSyncManager(object):
             else:
                 source = itemsource.DatabaseItemSource(view)
                 for info in source.fetch_all():
+                    if not info.video_path:
+                        continue
                     size = self.get_sync_size([info])[1]
                     if size and size < remaining:
                         info.auto_sync = True
@@ -815,6 +817,11 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def conversion_for_info(self, info):
+        if not info.video_path:
+            app.controller.failed_soft("device conversion",
+                                       "got video %r without video_path" % (
+                    info.name,))
+            return None
         device_settings = self.device.database.get(u'settings', {})
         device_info = self.device.info
         try:
