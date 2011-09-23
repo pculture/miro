@@ -1,9 +1,12 @@
 import functools
 import os
+import logging
 import pycurl
 import pickle
 from cStringIO import StringIO
 
+from miro import app
+from miro import prefs
 from miro import dialogs
 from miro import eventloop
 from miro import httpauth
@@ -978,8 +981,15 @@ class NetworkErrorTest(HTTPClientTestBase):
     def test_connect_error(self):
         self.grab_url('http://255.255.255.255/')
         self.check_errback_called()
-        self.assert_(isinstance(self.grab_url_error,
-            httpclient.ConnectionError))
+        # The http proxy always replies with something, (probably a 40x or
+        # 50x message) so we should not check against this as it will
+        # be unreliable when the proxy is active.
+        if app.config.get(prefs.HTTP_PROXY_ACTIVE):
+            logging.info('Proxy active: skipping specific connection error '
+                         'check')
+        else:
+            self.assert_(isinstance(self.grab_url_error,
+                httpclient.ConnectionError))
 
     @uses_httpclient
     def test_closed_connection_error(self):
