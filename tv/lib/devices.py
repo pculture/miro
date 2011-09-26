@@ -639,7 +639,7 @@ class DeviceSyncManager(object):
         name_to_view[u'most_played_music'].order_by = 'item.play_count DESC'
         name_to_view[u'new_playlists'].order_by = 'playlist.id DESC'
         name_to_view[u'recent_podcasts'].where = (
-            '%s AND item.filename' % (
+            '%s AND item.filename NOT IN (NULL, "")' % (
                 name_to_view[u'recent_podcasts'].where,))
         name_to_view[u'recent_podcasts'].order_by = 'item.id DESC'
 
