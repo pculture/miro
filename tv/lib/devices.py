@@ -638,8 +638,11 @@ class DeviceSyncManager(object):
         name_to_view[u'random_music'].order_by = 'RANDOM()'
         name_to_view[u'most_played_music'].order_by = 'item.play_count DESC'
         name_to_view[u'new_playlists'].order_by = 'playlist.id DESC'
+        name_to_view[u'recent_podcasts'].where = (
+            '%s AND item.filename' % (
+                name_to_view[u'recent_podcasts'].where,))
         name_to_view[u'recent_podcasts'].order_by = 'item.id DESC'
-        
+
         scores = sync.get(u'auto_fill_settings', {})
         total = float(sum(scores.setdefault(name, 0.5)
                           for name in name_to_view))
@@ -654,8 +657,8 @@ class DeviceSyncManager(object):
             if name == u'new_playlists':
                 for playlist_ in view:
                     playlist_view = item.Item.playlist_view(playlist_.id)
-                    infos = [info for info in itemsource.DatabaseItemSource(
-                            playlist_view).fetch_all() if info.video_path]
+                    infos = itemsource.DatabaseItemSource(
+                        playlist_view).fetch_all()
                     size = self.get_sync_size(infos)[1]
                     if size and size < remaining:
                         for info in infos:
@@ -665,8 +668,6 @@ class DeviceSyncManager(object):
             else:
                 source = itemsource.DatabaseItemSource(view)
                 for info in source.fetch_all():
-                    if not info.video_path:
-                        continue
                     size = self.get_sync_size([info])[1]
                     if size and size < remaining:
                         info.auto_sync = True
