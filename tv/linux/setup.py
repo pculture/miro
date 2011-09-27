@@ -441,8 +441,13 @@ class build(distutils.command.build.build):
         segmenter_exe = os.path.join(output_dir, 'miro-segmenter')
         self.distribution.scripts.append(segmenter_exe)
 
+    def build_echoprint_codegen(self):
+        path = os.path.join(platform_dir, 'contrib', 'echoprint-codegen', 'src')
+        subprocess.call('/usr/bin/make', cwd=path)
+
     def run(self):
         self.build_segmenter()
+        self.build_echoprint_codegen()
         distutils.command.build.build.run(self)
         
 class test_system(Command):
