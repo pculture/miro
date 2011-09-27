@@ -287,6 +287,7 @@ class MiroBuild (py2app):
             'miro.frontends.shell',
             'miro.frontends.widgets',
             'pyechonest',
+            'miro.extractor',
             'miro.plat',
             'miro.plat.frontends',
             'miro.plat.frontends.widgets'

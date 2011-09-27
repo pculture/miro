@@ -536,7 +536,7 @@ class DDBObject(signals.SignalEmitter):
 
     def __init__(self, *args, **kwargs):
         self.in_db_init = True
-        signals.SignalEmitter.__init__(self, 'removed')
+        signals.SignalEmitter.__init__(self, 'removed', 'changed')
         self.changed_attributes = set()
 
         if len(args) == 0 and kwargs.keys() == ['restored_data']:
@@ -717,6 +717,7 @@ class DDBObject(signals.SignalEmitter):
         if needs_save:
             app.db.update_obj(self)
         app.view_tracker_manager.update_view_trackers(self)
+        self.emit('changed')
 
     def on_signal_change(self):
         pass

@@ -89,6 +89,7 @@ from miro import devices
 from miro import sharing
 from miro import transcode
 from miro import workerprocess
+from miro import metadata
 from miro.plat import devicetracker
 
 DEBUG_DB_MEM_USAGE = False
@@ -299,6 +300,9 @@ def finish_startup(obj, thread):
     if DEBUG_DB_MEM_USAGE:
         util.db_mem_usage_test()
         mem_usage_test_event.set()
+
+    app.metadata_manager = metadata.MetadataManager()
+    app.metadata_manager.load_extractors()
 
     # MetadataProgressUpdater needs to be installed before ItemInfoCache,
     # since ItemInfoCache may create items if it uses failsafe mode
