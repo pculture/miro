@@ -39,7 +39,6 @@ import contextlib
 import Queue
 
 from miro import coverart
-from miro import filetags
 from miro import descriptions
 from miro import app
 from miro import signals
@@ -135,47 +134,6 @@ class Source(object):
     @returns_unicode
     def get_description(self):
         return self.description
-
-    def read_metadata(self):
-        # always mark the file as seen
-        self.metadata_version = filetags.METADATA_VERSION
-
-        if self.file_type == u'other':
-            return
-
-        path = self.get_filename()
-        rv = filetags.read_metadata(path)
-        if not rv:
-            return
-
-        mediatype, duration, metadata, cover_art = rv
-        self.file_type = mediatype
-        # FIXME: duration isn't actually a attribute of metadata.Source.
-        # This currently works because Item and Device item are the only
-        # classes that call read_metadata(), and they both define duration
-        # the same way.
-        #
-        # But this is pretty fragile.  We should probably refactor
-        # duration to be an attribute of metadata.Source.
-        self.duration = duration
-        self.cover_art = cover_art
-        self.album = metadata.get('album', None)
-        self.album_artist = metadata.get('album_artist', None)
-        self.artist = metadata.get('artist', None)
-        self.title_tag = metadata.get('title', None)
-        self.track = metadata.get('track', None)
-        self.year = metadata.get('year', None)
-        self.genre = metadata.get('genre', None)
-        self.has_drm = metadata.get('drm', False)
-
-        # 16346#c26 - run MDP for all OGG files in case they're videos
-        extension = os.path.splitext(path)[1].lower()
-        # oga is the only ogg-ish extension guaranteed to be audio
-        if extension.startswith('.og') and extension != '.oga':
-            # None because we need is_playable to be False until MDP has
-            # determined the real file type, or newly-downloaded videos will
-            # always play as audio; MDP always looks at file_type=None files
-            self.file_type = None
 
 def metadata_setter(attribute, type_=None):
     def set_metadata(self, value, _bulk=False):

@@ -163,7 +163,7 @@ class MovieDataUpdater(object):
 
         screenshot = MovieDataUpdater.parse_screenshot(stdout, mdi)
         if screenshot is not None:
-            yield CoverArt.with_values(record=record, path=screenshot)
+            yield CoverArt.with_values(record=record, album=None, path=screenshot)
 
 app.metadata_manager.add_provider(
         MovieDataUpdater.get_datasource(), File, MovieDataUpdater.process)

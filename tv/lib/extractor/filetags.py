@@ -37,10 +37,22 @@ import mutagen
 from miro import coverart
 from miro import filetypes
 from miro import app
+from miro.descriptions import *
 
 # increment this after adding to TAGS_FOR_ATTRIBUTE or changing read_metadata() in a way
 # that will increase data identified (will not change values already extracted)
 METADATA_VERSION = 5
+
+# new-style version info
+_mutagen = None
+def get_mutagen_datasource():
+    global _mutagen
+    if _mutagen is None:
+        _mutagen = DataSource.with_values(
+            name=u'mutagen', version=METADATA_VERSION, priority=10)
+        DataSourceStatus.with_values(
+                datasource=_mutagen, description_type='File')
+    return _mutagen
 
 TAGS_FOR_ATTRIBUTE = dict(
     album=frozenset(['album', 'talb', 'wm/albumtitle', u'\uFFFDalb']),
@@ -232,7 +244,7 @@ def _setup_mutagen_errors():
             oggtheora.error, oggvorbis.error, trueaudio.error, _vorbis.error)
 _setup_mutagen_errors()
 
-def read_metadata(filename, test=False):
+def _read_metadata(filename, test=False):
     """This is the external interface of the filetags module. Given a filename,
     this function returns a tuple of (mediatype [a string], duration [integer
     number of milliseconds(?)], data [dict of attributes to set on the item],
@@ -354,3 +366,84 @@ def _parse_mutagen(filename, muta, test):
             cover_art = _make_cover_art_file(filename, image_data)
         del data['cover_art']
     return mediatype, duration, data, cover_art
+
+FILE_TYPE_FROM_STRING = {
+    None: None,
+    'audio': 1,
+    'video': 2,
+    'other': 3,
+}
+
+FILE_TYPE_TO_STRING = dict((v, k) for k, v in FILE_TYPE_FROM_STRING.items())
+
+def create_record(file_):
+    path = file_.path
+    rv = _read_metadata(path)
+    if rv is None:
+        return
+    mediatype, duration, metadata, cover_art_path = rv
+
+    # create a Record to document how and when the data was acquired
+    record = Record(get_mutagen_datasource())
+
+    # the LibraryItem - this is the modular equivalent of an Item
+    title = metadata.get('title', None)
+    label = Label(record, title)
+
+    # Production
+    try:
+        release_year = metadata['year']
+    except KeyError:
+        pass
+    else:
+        yield Production(record, release_year)
+
+    # Genre
+    try:
+        genre_name = metadata['genre']
+    except KeyError:
+        pass
+    else:
+        yield Genre(record, genre_name)
+
+    # Artist
+    try:
+        artist_name = metadata['artist']
+    except KeyError:
+        artist = None
+    else:
+        artist = Artist.with_values(record=record, name=artist_name)
+    if artist is not None:
+        yield artist
+
+    # Album
+    try:
+        album_name = metadata['album']
+    except KeyError:
+        pass
+    else:
+        # album's Artist
+        try:
+            album_artist_name = metadata['album_artist']
+        except KeyError:
+            album_artist = artist
+        else:
+            if album_artist_name == artist_name:
+                album_artist = artist
+            else:
+                album_artist = Artist.with_values(record=record, name=album_artist_name)
+        album = Album.with_values(record=record, name=album_name, artist=album_artist)
+        if cover_art_path is not None:
+            album.add_description(CoverArt.with_values(record=record, album=album, path=cover_art_path))
+        yield AlbumEntry(record, album, metadata.get('track', None))
+        # TODO: album_tracks
+
+    # Media
+    file_type = FILE_TYPE_FROM_STRING[mediatype]
+    yield Media(record, file_type, duration, metadata.get('drm', False))
+
+    # new file_type API
+    if file_type is not None:
+        yield MediaType(record, FILE_TYPE_FROM_STRING[mediatype]-1)
+
+app.metadata_manager.add_provider(get_mutagen_datasource(), File, create_record)
