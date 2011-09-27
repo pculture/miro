@@ -402,6 +402,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.split_item()
 
     def setup_restored(self):
+        metadata.Store.setup_restored(self)
         self.setup_common()
         self.setup_links()
 
@@ -868,6 +869,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     def set_filename(self, filename):
         self.filename = filename
+        # the new modular metadata stuff uses File objects to keep track of
+        # files; references to self.filename are still ubiquitous elsewhere and
+        # are used in SQL queries, so it'll take some work to eventually factor
+        # them out.
+        metadata.Store.set_file(self, filename)
 
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
@@ -2288,6 +2294,7 @@ class IncompleteMovieDataUpdator(object):
         self.done = False
         self.handle = moviedata.movie_data_updater.connect('queue-empty',
                 self.on_queue_empty)
+        app.metadata_manager.run_extractors()
         self.do_some_updates()
 
     def do_some_updates(self):

@@ -31,24 +31,26 @@
 frontend cares about these and the backend doesn't.
 """
 
-import logging
 import fileutil
 import os.path
+import logging
 
 from miro.util import returns_unicode
 from miro import coverart
 from miro import filetags
-from miro import filetypes
+from miro import descriptions
+from miro import app
 
 class Source(object):
     """Object with readable metadata properties."""
-
+    library_entity = descriptions.LibraryItem.IdReference('library_entity_id')
     def get_iteminfo_metadata(self):
         # until MDP has run, has_drm is very uncertain; by letting it be True in
         # the backend but False in the frontend while waiting for MDP, we keep
         # is_playable False but don't show "DRM Locked" until we're sure.
         has_drm = self.has_drm and self.mdp_state is not None
-        return dict(
+        # get old-style monolithic data
+        data = dict(
             name = self.get_title(),
             title_tag = self.title_tag,
             description = self.get_description(),
@@ -70,6 +72,16 @@ class Source(object):
             metadata_version = self.metadata_version,
             mdp_state = self.mdp_state,
         )
+        # add new-style modular data (takes precedence)
+        if self.library_entity is not None:
+            data.update(self.library_entity.get_info())
+        # XXX: hacky transitional code
+        # here's where we convert some properties that we may only have as
+        # ItemInfo values and modular values back into monolithic values, so
+        # that Item's sql queries can find them
+        if 'file_type' in data:
+            self.file_type = data['file_type']
+        return data
 
     def setup_new(self):
         self.title = u""
@@ -93,6 +105,12 @@ class Source(object):
         self.kind = None
         self.metadata_version = 0
         self.mdp_state = None # moviedata.State.UNSEEN
+        self.library_entity_id = descriptions.LibraryItem().id
+        self.library_entity.connect('changed', self.signal_change)
+
+    def setup_restored(self):
+        if self.library_entity is not None:
+            self.library_entity.connect('changed', self.signal_change)
 
     @property
     def media_type_checked(self):
@@ -190,6 +208,16 @@ class Store(Source):
     set_metadata_version = metadata_setter('metadata_version', int)
     set_mdp_state = metadata_setter('mdp_state', int)
 
+    def set_file(self, path):
+        """Associate with this library item a File object"""
+        # path is a UNIQUE value to File, so anything else with the same path
+        # raises an error here
+        fil = descriptions.File(None, path)
+
+        # de-associate any previous File, associate the new File
+        self.library_entity.clear_descriptions(descriptions.File)
+        self.library_entity.add_description(fil)
+
     def set_cover_art(self, new_file, _bulk=False):
         """Set new cover art. Deletes any old cover art.
 
@@ -265,3 +293,59 @@ class Store(Source):
         metadata_version = set_metadata_version,
         mdp_state = set_mdp_state,
     )
+
+class MetadataManager(object):
+    def __init__(self):
+        self.providers = {}
+
+    def load_extractors(self):
+        from miro.extractor import *
+
+    def add_provider(self, datasource, DescriptionClass, provider):
+        # TODO: order providers for DescriptionClass by datasource priority
+        self.providers.setdefault(DescriptionClass.__name__, [])
+        self.providers[DescriptionClass.__name__].append((datasource, provider))
+        logging.info('extractor registered: %r', datasource)
+
+    def run_extractors(self):
+        """Catch up each extractor to the existing items, in order of id. """
+        print('run_extractors')
+        for class_name in self.providers:
+            self.run_extractors_for_type(class_name)
+        logging.info("known exctractors: %r", self.providers)
+
+    def run_extractors_for_type(self, class_name):
+        """Run extractors that respond to a certain type of Describebable."""
+        print('checking for extractors for %r' % (class_name,))
+        DescriptionClass = descriptions.Description.get_type(class_name)
+        for datasource, get_descriptions in self.providers.get(class_name, ()):
+            print('running extractor %s for %r' % (datasource.name, class_name))
+            status_query = {'datasource_id': datasource.id,
+                    'description_type': class_name}
+            status ,= descriptions.DataSourceStatus.quick_find(status_query)
+            new_items = DescriptionClass.make_view(
+                    'id > ?', (status.max_examined,), order_by='id')
+            for new_item in new_items:
+                print('processing an item...')
+                try:
+                    for description in get_descriptions(new_item):
+                        print('adding description of type %s' %
+                                (description.__class__.__name__,))
+                        new_item.add_description(description)
+                    status.max_examined = new_item.id
+                    status.signal_change()
+                except ExtractionFailed:
+                    # TODO: distinguish between "temporary" errors and errors
+                    # that are expected to persist for rest of session?
+                    break
+
+    def describeable_created(self, describeable):
+        self.run_extractors_for_type(describeable.__class__.__name__)
+
+# extraction process
+
+class ExtractionFailed(Exception):
+    pass
+
+class ExtractorInvalid(ExtractionFailed):
+    pass

@@ -155,6 +155,11 @@ def rename_column(cursor, table, from_column, to_column, new_type=None):
     for sql in index_sql:
         cursor.execute(sql)
 
+def create_table(cursor, table_name, **kwargs):
+    parts = ["CREATE TABLE %s (id integer PRIMARY KEY " % (table_name,)]
+    parts.extend(' '.join(i) for i in kwargs.iteritems())
+    cursor.execute(','.join(parts) + ')')
+
 def get_object_tables(cursor):
     """Returns a list of tables that store ``DDBObject`` subclasses.
     """
@@ -3380,3 +3385,43 @@ def upgrade162(cursor):
                 "SET active_filters=? "
                 "WHERE type = ? AND id_ = ?",
                 (new_active_filters, type, id_))
+
+def upgrade163(cursor):
+    # Entities; no fields
+    create_table(cursor, 'artistentity_entity')
+    create_table(cursor, 'albumentity_entity')
+    create_table(cursor, 'libraryitementity_entity')
+    # metametadata
+    create_table(cursor, 'datasource', name='text', version='integer',
+            priority='integer')
+    create_table(cursor, 'datasource_status', datasource_id='integer',
+            description_type='text', max_examined='integer')
+    create_table(cursor, 'record', source_id='integer', acquired='timestamp',
+            created='timestamp')
+    create_table(cursor, 'entry', subject_type='text', subject_id='integer',
+            description_type='text', description_id='integer')
+    cursor.execute("CREATE INDEX subject_entry ON entry (subject_id)")
+    # descriptions
+    create_table(cursor, 'library_item', entity_id='integer')
+    create_table(cursor, 'label', record_id='integer', title='text',
+            description='text')
+    create_table(cursor, 'production', record_id='integer',
+            release_year='integer', copright='text')
+    create_table(cursor, 'genre', record_id='integer', genre='text')
+    create_table(cursor, 'rating', record_id='integer', rating='integer')
+    create_table(cursor, 'artist', record_id='integer', entity_id='integer',
+            name='text', echonest_id='text')
+    create_table(cursor, 'album', record_id='integer', entity_id='integer',
+            name='text', artist_id='integer')
+    create_table(cursor, 'album_entry', record_id='integer', track='integer',
+            album_id='integer')
+    create_table(cursor, 'cover_art', record_id='integer', album_id='integer',
+            path='text')
+    create_table(cursor, 'file', record_id='integer', path='text')
+    create_table(cursor, 'media', record_id='integer', file_type='integer',
+            duration='integer', has_drm='integer')
+    create_table(cursor, 'download', record_id='integer', url='text')
+    create_table(cursor, 'mediatype', record_id='integer', mediatype='integer')
+    create_table(cursor, 'duration', record_id='integer', milliseconds='integer')
+    # link in modular data
+    cursor.execute("ALTER TABLE item ADD COLUMN library_entity_id integer")

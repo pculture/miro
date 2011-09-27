@@ -579,6 +579,7 @@ setup(name='miro',
         'miro.plat.frontends',
         'miro.plat.frontends.widgets',
         'miro.plat.renderers',
+        'miro.extractor',
         'pyechonest',
     ],
     package_dir={

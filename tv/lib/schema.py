@@ -196,6 +196,23 @@ class SchemaStringSet(SchemaItem):
                 raise ValidationError("%r contains the delimiter (%s)" %
                         (data, self.delimiter))
 
+class SchemaId(SchemaSimpleItem):
+    """Defines the SchemaId type for ID references."""
+    def __init__(self, klass, noneOk=False):
+        SchemaSimpleItem.__init__(self, noneOk)
+        self.klass = klass
+
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateTypes(data, [int, long])
+        # TODO: klass ID validation
+
+class SchemaClass(SchemaSimpleItem):
+    """Type for storing types"""
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateType(data, str)
+
 class SchemaReprContainer(SchemaItem):
     """SchemaItem saved using repr() to save nested lists, dicts and
     tuples that store simple types.  The look is similar to JSON, but
@@ -412,6 +429,245 @@ class IconCacheSchema (DDBObjectSchema):
         ('url', SchemaURL(noneOk=True)),
         ]
 
+from miro.descriptions import DataSource, DataSourceStatus, Record, Entry
+from miro.descriptions import ArtistEntity, AlbumEntity, LibraryEntity
+from miro.descriptions import (Artist, Album, AlbumEntry, CoverArt, LibraryItem,
+    Label, Production, Genre, Rating, File, Media, Download, MediaType,
+    Duration)
+# XXX Description subclasses can't be modified; it might be useful to have some
+# sort of schema-level support for enforcing that, and it could potentially
+# allow certain optimizations
+
+def EntitySchema(cls):
+    class _EntitySchema(DDBObjectSchema):
+        klass = cls
+        table_name = cls.__name__.lower() + '_entity'
+        fields = DDBObjectSchema.fields + [
+        ]
+
+        indexes = (
+        )
+    return _EntitySchema
+
+ArtistEntitySchema = EntitySchema(ArtistEntity)
+AlbumEntitySchema = EntitySchema(AlbumEntity)
+ItemEntitySchema = EntitySchema(LibraryEntity)
+
+class DataSourceSchema(DDBObjectSchema):
+    klass = DataSource
+    table_name = 'datasource'
+    fields = DDBObjectSchema.fields + [
+        ('name', SchemaString()),
+        ('version', SchemaInt()),
+        ('priority', SchemaInt()),
+    ]
+
+    indexes = (
+    )
+
+class DataSourceStatusSchema(DDBObjectSchema):
+    klass = DataSourceStatus
+    table_name = 'datasource_status'
+    fields = DDBObjectSchema.fields + [
+        ('datasource_id', SchemaId(DataSourceSchema)),
+        ('description_type', SchemaClass()),
+        ('max_examined', SchemaId(None)),
+    ]
+
+    indexes = (
+    )
+
+class RecordSchema(DDBObjectSchema):
+    klass = Record
+    table_name = 'record'
+    fields = DDBObjectSchema.fields + [
+        ('source_id', SchemaId(DataSourceSchema)),
+        ('acquired', SchemaDateTime()),
+        ('created', SchemaDateTime(noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class EntrySchema(DDBObjectSchema):
+    klass = Entry
+    table_name = 'entry'
+    fields = DDBObjectSchema.fields + [
+        # entity or description
+        ('subject_type', SchemaBinary()),
+        ('subject_id', SchemaId(None)),
+        # description of subject
+        ('description_type', SchemaBinary()),
+        ('description_id', SchemaId(None)),
+    ]
+
+    indexes = (
+        ('subject_entry', ('subject_id',)),
+    )
+
+class LibraryItemSchema(DDBObjectSchema):
+    klass = LibraryItem
+    table_name = 'library_item'
+    fields = DDBObjectSchema.fields + [
+        ('entity_id', SchemaId(ItemEntitySchema)),
+    ]
+
+    indexes = (
+    )
+
+class LabelSchema(DDBObjectSchema):
+    klass = Label
+    table_name = 'label'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('title', SchemaString(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class ProductionSchema(DDBObjectSchema):
+    klass = Production
+    table_name = 'production'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('release_year', SchemaInt(noneOk=True)),
+        ('copyright', SchemaString(noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class GenreSchema(DDBObjectSchema):
+    klass = Genre
+    table_name = 'genre'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('genre', SchemaString(noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class RatingSchema(DDBObjectSchema):
+    klass = Rating
+    table_name = 'rating'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('rating', SchemaInt()),
+    ]
+
+    indexes = (
+    )
+
+class ArtistSchema(DDBObjectSchema):
+    klass = Artist
+    table_name = 'artist'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('entity_id', SchemaId(ArtistEntitySchema)),
+        ('name', SchemaString()),
+        ('echonest_id', SchemaString(noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class AlbumSchema(DDBObjectSchema):
+    klass = Album
+    table_name = 'album'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('entity_id', SchemaId(AlbumEntitySchema)),
+        ('name', SchemaString(noneOk=True)),
+        ('artist_id', SchemaId(ArtistSchema, noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class AlbumEntrySchema(DDBObjectSchema):
+    klass = AlbumEntry
+    table_name = 'album_entry'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('track', SchemaInt()),
+        ('album_id', SchemaId(AlbumSchema)),
+    ]
+
+    indexes = (
+    )
+
+class CoverArtSchema(DDBObjectSchema):
+    klass = CoverArt
+    table_name = 'cover_art'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('album_id', SchemaId(AlbumSchema, noneOk=True)),
+        ('path', SchemaFilename()),
+    ]
+
+    indexes = (
+    )
+
+class FileSchema(DDBObjectSchema):
+    klass = File
+    table_name = 'file'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema, noneOk=True)),
+        ('path', SchemaFilename()),
+    ]
+
+    indexes = (
+    )
+
+class MediaSchema(DDBObjectSchema):
+    klass = Media
+    table_name = 'media'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('file_type', SchemaInt(noneOk=True)),
+        ('duration', SchemaInt(noneOk=True)),
+        ('has_drm', SchemaBool(noneOk=True)),
+    ]
+
+    indexes = (
+    )
+
+class DownloadSchema(DDBObjectSchema):
+    klass = Download
+    table_name = 'download'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('url', SchemaString()),
+    ]
+
+    indexes = (
+    )
+
+class MediaTypeSchema(DDBObjectSchema):
+    klass = MediaType
+    table_name = 'mediatype'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('mediatype', SchemaInt()),
+    ]
+
+    indexes = (
+    )
+
+class DurationSchema(DDBObjectSchema):
+    klass = Duration
+    table_name = 'duration'
+    fields = DDBObjectSchema.fields + [
+        ('record_id', SchemaId(RecordSchema)),
+        ('milliseconds', SchemaInt()),
+    ]
+
+    indexes = (
+    )
+
 class ItemSchema(MultiClassObjectSchema):
     table_name = 'item'
 
@@ -492,6 +748,8 @@ class ItemSchema(MultiClassObjectSchema):
         ('episode_number', SchemaInt(noneOk=True)),
         ('season_number', SchemaInt(noneOk=True)),
         ('kind', SchemaString(noneOk=True)),
+        # module metadata
+        ('library_entity_id', SchemaId(LibraryEntity, noneOk=True)),
     ]
 
     indexes = (
@@ -804,7 +1062,7 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 162
+VERSION = 163
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -816,4 +1074,10 @@ object_schemas = [
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
     DBLogEntrySchema, ViewStateSchema,
+
+    DataSourceSchema, DataSourceStatusSchema, RecordSchema, EntrySchema,
+    ArtistEntitySchema, AlbumEntitySchema, CoverArtSchema, ItemEntitySchema,
+    LibraryItemSchema, LabelSchema, ProductionSchema, GenreSchema, RatingSchema,
+    ArtistSchema, AlbumSchema, AlbumEntrySchema, FileSchema, MediaSchema,
+    DownloadSchema, DurationSchema, MediaTypeSchema,
 ]
