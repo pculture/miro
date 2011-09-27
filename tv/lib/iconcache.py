@@ -205,25 +205,32 @@ class IconCache(DDBObject):
                     tmp_filename = self.filename + ".part"
                 else:
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
-
                 tmp_filename, output = next_free_filename(tmp_filename)
-
                 output.write(info["body"])
                 output.close()
             except IOError:
                 self.remove_file(tmp_filename)
+                return
+            except ValueError:
+                logging.warn('update_icon_cache: next_free_filename failed '
+                             '#1, candidate = %r', tmp_filename)
+                return
+
+            filename = unicode(info["filename"])
+            filename = unicode_to_filename(filename, cachedir)
+            filename = os.path.join(cachedir, filename)
+            needs_save = True
+            try:
+                filename, fp = next_free_filename(filename)
+            except ValueError:
+                logging.warn('update_icon_cache: next_free_filename failed '
+                             '#2, candidate = %r', filename)
                 return
 
             if self.filename:
                 filename = self.filename
                 self.filename = None
                 self.remove_file(filename)
-
-            filename = unicode(info["filename"])
-            filename = unicode_to_filename(filename, cachedir)
-            filename = os.path.join(cachedir, filename)
-            filename, fp = next_free_filename(filename)
-            needs_save = True
 
             # we need to move the file here--so we close the file
             # pointer and then move the file.

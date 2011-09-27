@@ -533,7 +533,14 @@ class ConversionManager(signals.SignalEmitter):
                 logging.warn("Couldn't find task for key %s", msg['key'])
                 return
             source = task.temp_output_path
-            destination, fp = next_free_filename(task.final_output_path)
+            try:
+                destination, fp = next_free_filename(task.final_output_path)
+                fp.close()
+            except ValueError:
+                logging.warn('_process_message_queue: ' 
+                             'next_free_filename failed.  Candidate = %r',
+                             task.final_output_path)
+                return
             source_info = task.item_info
             conversion_name = task.get_display_name()
             if os.path.exists(source):
@@ -548,7 +555,6 @@ class ConversionManager(signals.SignalEmitter):
             else:
                 task.error = _("Reason unknown--check log")
                 self._notify_tasks_count()
-            fp.close()
             self.emit('task-staged', task)
 
     def _move_finished_file(self, source, destination):

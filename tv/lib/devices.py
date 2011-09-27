@@ -805,7 +805,15 @@ class DeviceSyncManager(object):
                 if os.path.exists(final_path):
                     logging.debug('%r exists, getting a new one precopy',
                                   final_path)
-                    final_path, fp = next_free_filename(final_path)
+                    try:
+                        final_path, fp = next_free_filename(final_path)
+                        # XXX we should be passing in the file handle not
+                        # path.
+                        fp.close()
+                    except ValueError:
+                        logging.warn('add_items: next_free_filename failed. '
+                                     'candidate = %r', final_path)
+                        continue
                 self.copy_file(info, final_path)
             else:
                 self.start_conversion(conversion,

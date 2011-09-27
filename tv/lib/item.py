@@ -2222,17 +2222,23 @@ filename was %s""", stringify(self.filename))
             # start to migrate.  This helps ensure that the destination we're
             # migrating too is not already taken.
             src = self.filename
-            if fileutil.isdir(src):
-                new_filename = next_free_directory(new_filename)
-                fp = None
+            try:
+                is_dir = fileutil.isdir(src)
+                if is_dir:
+                    new_filename = next_free_directory(new_filename)
+                    fp = None
+                else:
+                    new_filename, fp = next_free_filename(new_filename)
+                    fp.close() # clean up if we called next_free_filename()
+            except ValueError:
+                func = 'next_free_directory' if isdir else 'next_free_filename'
+                logging.warn('migrate_file: %s failed.  Filename %r '
+                             'candidate %r', func, src, new_filename)
             else:
-                new_filename, fp = next_free_filename(new_filename)
-            def callback():
-                self.filename = new_filename
-                self.signal_change()
-            fileutil.migrate_file(src, new_filename, callback)
-            if fp is not None:
-                fp.close() # clean up if we called next_free_filename()
+                def callback():
+                    self.filename = new_filename
+                    self.signal_change()
+                fileutil.migrate_file(src, new_filename, callback)
         elif fileutil.exists(new_filename):
             self.filename = new_filename
             self.signal_change()
