@@ -157,6 +157,7 @@ portable_xpcom_dir = os.path.join(portable_widgets_dir, 'gtk', 'xpcom')
 test_dir = os.path.join(root_dir, 'resources')
 resources_dir = os.path.join(root_dir, 'resources')
 extensions_dir = os.path.join(root_dir, 'extensions')
+echonest_dir = os.path.join(root_dir, 'contrib', 'pyechonest')
 
 sys.path.insert(0, root_dir)
 # when we install the portable modules, they will be in the miro
@@ -627,6 +628,7 @@ package_list=[
     'miro.plat.renderers',
     'miro.plat.frontends',
     'miro.plat.frontends.widgets',
+    'pyechonest',
 ]
 
 if __name__ == "__main__":
@@ -666,6 +668,7 @@ if __name__ == "__main__":
         package_dir={
             'miro': portable_dir,
             'miro.plat': platform_package_dir,
+            'pyechonest': echonest_dir,
             },
         data_files=data_files,
         cmdclass={
