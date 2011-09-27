@@ -258,6 +258,7 @@ def _read_metadata(filename, test=False):
     mutagen object in a different wrapper subclass, with all the wrappers
     sharing a common interface. --KCW
     """
+    return # XXX TESTING echonest
     try:
         muta = mutagen.File(filename)
     except MUTAGEN_ERRORS:
