@@ -639,6 +639,7 @@ class LiveStorage:
                 value = self._converter.from_sql(schema, name, schema_item,
                         value)
             except StandardError:
+                logging.exception('self._converter.from_sql failed.')
                 handler = self._converter.get_malformed_data_handler(schema,
                         name, schema_item, value)
                 if handler is None:
@@ -1031,7 +1032,7 @@ class SQLiteConverter(object):
         return eval(value, __builtins__, {'datetime': datetime, 'time': _TIME_MODULE_SHADOW})
 
     def _status_from_sql(self, repr_value, schema_item):
-        status_dict = self._repr_from_sql(repr_value)
+        status_dict = self._repr_from_sql(repr_value, schema_item)
         filename_fields = schema.SchemaStatusContainer.filename_fields
         for key in filename_fields:
             value = status_dict.get(key)
