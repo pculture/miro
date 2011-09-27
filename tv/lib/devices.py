@@ -638,8 +638,11 @@ class DeviceSyncManager(object):
         name_to_view[u'random_music'].order_by = 'RANDOM()'
         name_to_view[u'most_played_music'].order_by = 'item.play_count DESC'
         name_to_view[u'new_playlists'].order_by = 'playlist.id DESC'
+        name_to_view[u'recent_podcasts'].where = (
+            '%s AND item.filename NOT IN (NULL, "")' % (
+                name_to_view[u'recent_podcasts'].where,))
         name_to_view[u'recent_podcasts'].order_by = 'item.id DESC'
-        
+
         scores = sync.get(u'auto_fill_settings', {})
         total = float(sum(scores.setdefault(name, 0.5)
                           for name in name_to_view))
@@ -823,6 +826,11 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def conversion_for_info(self, info):
+        if not info.video_path:
+            app.controller.failed_soft("device conversion",
+                                       "got video %r without video_path" % (
+                    info.name,))
+            return None
         device_settings = self.device.database.get(u'settings', {})
         device_info = self.device.info
         try:
