@@ -587,11 +587,18 @@ class BGDownloader(object):
         if src == dest:
             return
 
-        if os.path.isdir(src):
-            dest = next_free_directory(dest)
-        else:
-            dest, fp = next_free_filename(dest)
-            fp.close()
+        try:
+            is_dir = os.path.isdir(src)
+            if is_dir:
+                dest = next_free_directory(dest)
+            else:
+                dest, fp = next_free_filename(dest)
+                fp.close()
+        except ValueError:
+            func = 'next_free_directory' if is_dir else 'next_free_filename'
+            logging.warn('move_to_directory: %s failed.  candidate = %r',
+                         func, dest)
+            return
 
         def callback():
             # for torrent of a directory of files, we want to remove
@@ -1447,8 +1454,9 @@ class BTDownloader(BGDownloader):
             # exceptions.
             #
             # Not sure if this is correct but if we throw a runtime
-            # error like above it can't hurt anyone.
-            except (OSError, IOError):
+            # error like above it can't hurt anyone.  ValueError to catch
+            # next_free_filename().
+            except (ValueError, OSError, IOError):
                 raise RuntimeError
         self.update_client()
         self._resume_torrent()

@@ -450,18 +450,25 @@ class RemoteDownloader(DDBObject):
                 # create a file or directory to serve as a placeholder before
                 # we start to migrate.  This helps ensure that the destination
                 # we're migrating too is not already taken.
-                if fileutil.isdir(filename):
-                    newfilename = next_free_directory(newfilename)
-                    fp = None
+                try:
+                    is_dir = fileutil.isdir(filename)
+                    if is_dir:
+                        newfilename = next_free_directory(newfilename)
+                        fp = None
+                    else:
+                        newfilename, fp = next_free_filename(newfilename)
+                        fp.close()
+                except ValueError:
+                    func = ('next_free_directory' if is_dir
+                            else 'next_free_filename')
+                    logging.warn('migrate: %s failed.  candidate = %r',
+                                 func, newfilename)
                 else:
-                    newfilename, fp = next_free_filename(newfilename)
-                def callback():
-                    self.status['filename'] = newfilename
-                    self.signal_change(needs_signal_item=False)
-                    self._file_migrated(filename)
-                fileutil.migrate_file(filename, newfilename, callback)
-                if fp is not None:
-                    fp.close() # clean up if we called next_free_filename()
+                    def callback():
+                        self.status['filename'] = newfilename
+                        self.signal_change(needs_signal_item=False)
+                        self._file_migrated(filename)
+                    fileutil.migrate_file(filename, newfilename, callback)
         for i in self.item_list:
             i.migrate_children(directory)
 
