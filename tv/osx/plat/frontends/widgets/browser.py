@@ -129,6 +129,9 @@ class Browser(Widget):
     def can_go_forward(self):
         return self.view.canGoForward()
 
+    def destroy(self):
+        pass
+
 ###############################################################################
 
 class MiroWebView (WebView):

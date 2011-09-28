@@ -109,8 +109,11 @@ public:
     nsresult getCurrentTitle(char ** aTitle, int* length);
     // Call when the parent window changes size
     nsresult resize(int x, int y, int width, int height);
-    // Give the browser keyboard focus
-    nsresult focus();
+    // Activate the browser window.  This makes it take keyboard focus and
+    // display the caret
+    nsresult activate();
+    // Deactivate the browser window
+    nsresult deactivate();
     // Browser Navigation buttons.  Their functionality corresponds to the
     // nsIWebNavigation interface
     int canGoBack();

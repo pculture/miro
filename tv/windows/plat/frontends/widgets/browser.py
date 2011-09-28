@@ -29,54 +29,71 @@
 
 """browser.py -- WebBrowser widget."""
 
-from miro.frontends.widgets.gtk import wrappermap
-from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
-from miro.frontends.widgets.gtk.widgetset import Widget
-
 import logging
+
 import gtk
 import gobject
 
+from miro.frontends.widgets.gtk import wrappermap
+from miro.frontends.widgets.gtk.widgetset import Widget
+from miro.plat.frontends.widgets import embeddingwidget
 from miro.plat.frontends.widgets import xulrunnerbrowser
 
-class BrowserWidget(PersistentWindow):
+class BrowserWidget(embeddingwidget.EmbeddingWidget):
     def __init__(self):
-        PersistentWindow.__init__(self)
-        self.browser = None
-        self.set_size_request(200, 100) # seems like a reasonable default
-        self.add_events(gtk.gdk.EXPOSURE_MASK)
+        embeddingwidget.EmbeddingWidget.__init__(self)
+        self.set_can_focus(True)
         self.browser = xulrunnerbrowser.XULRunnerBrowser(
-                self.persistent_window.handle, 0, 0, 1, 1)
+                self.embedding_window.hwnd, 0, 0, 1, 1)
         self.browser.set_callback_object(self)
 
     def navigate(self, url):
         self.browser.load_uri(url)
 
+    # GTK event handlers
+
     def do_realize(self):
-        PersistentWindow.do_realize(self)
-        self.browser.resize(0, 0, self.allocation.width, 
+        embeddingwidget.EmbeddingWidget.do_realize(self)
+        self.browser.resize(0, 0, self.allocation.width,
                 self.allocation.height)
         self.browser.enable()
 
     def do_unrealize(self):
         self.browser.disable()
-        PersistentWindow.do_unrealize(self)
+        embeddingwidget.EmbeddingWidget.do_unrealize(self)
 
-    def do_destroy(self):
-        # This seems to be able to get called after our browser attribute no
-        # longer exists.  Double check to make sure that's not the case.
-        if hasattr(self, 'browser'):
-            self.browser.destroy()
-        PersistentWindow.do_destroy(self)
-
-    def do_focus_in_event(self, event):
-        PersistentWindow.do_focus_in_event(self, event)
-        self.browser.focus()
-
-    def do_size_allocate(self, rect):
-        PersistentWindow.do_size_allocate(self, rect)
+    def do_size_allocate(self, allocation):
+        embeddingwidget.EmbeddingWidget.do_size_allocate(self, allocation)
         if self.flags() & gtk.REALIZED:
-            self.browser.resize(0, 0, rect.width, rect.height)
+            # resize our browser
+            self.browser.resize(0, 0, allocation.width, allocation.height)
+
+    def destroy(self):
+        self.browser.destroy()
+        self.browser = None
+        embeddingwidget.EmbeddingWidget.destroy(self)
+
+    def do_focus_out_event(self, event):
+        # GTK has moved the focus away from our embedded window.  Deactivate
+        # the browser.
+        #
+        # Focus the toplevel window.  GTK normally always keeps it's toplevel
+        # focused, but XULRunner stole it when we called browser.activate().
+        # Now that the browser doesn't want the keyboard focus anymore, we
+        # should give it back to the toplevel.
+        self.browser.deactivate()
+        toplevel = self.get_toplevel()
+        toplevel.window.focus()
+
+    # EmbeddingWindow callbacks
+
+    def on_mouseactivate(self):
+        # The embedding window got a WM_MOUSEACTIVATE event.  We should tell
+        # GTK to focus our widget and XULRunner to activate itself.
+        self.grab_focus()
+        self.browser.activate()
+
+    # XULRunnerBrowser callbacks
 
     def on_browser_focus(self, forward):
         def change_focus():
@@ -101,14 +118,12 @@ class BrowserWidget(PersistentWindow):
 
     def on_net_stop(self):
         wrappermap.wrapper(self).emit('net-stop')
-
 gobject.type_register(BrowserWidget)
 
 class Browser(Widget):
     def __init__(self):
         Widget.__init__(self)
         self.set_widget(BrowserWidget())
-        self._widget.set_property('can-focus', True)
         self.url = None
 
         # TODO: implement net-start and net-stop signaling on windows.
@@ -145,3 +160,6 @@ class Browser(Widget):
 
     def reload(self):
         self._widget.browser.reload()
+
+    def destroy(self):
+        self._widget.browser.destroy()

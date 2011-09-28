@@ -53,7 +53,6 @@
 
 #include "MiroBrowserEmbed.h"
 #include "xulrunnerbrowser.h"
-#include "FixFocus.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -89,7 +88,6 @@ nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x,
     browserBaseWindow->SetVisibility(PR_TRUE);
     browserBaseWindow->SetEnabled(PR_TRUE);
 
-    install_focus_fixes((HWND)mWindow);
     rv = mWebBrowser->GetParentURIContentListener(
             getter_AddRefs(mParentContentListener));
     NS_ENSURE_SUCCESS(rv, rv);
@@ -222,13 +220,23 @@ nsresult MiroBrowserEmbed::resize(int x, int y, int width, int height)
             PR_TRUE);
 }
 
-// Give the browser keyboard focus
-nsresult MiroBrowserEmbed::focus()
+// Activate the browser window.  This makes it take keyboard focus and display
+// the caret
+nsresult MiroBrowserEmbed::activate()
 {
     nsCOMPtr<nsIWebBrowserFocus> browserFocus(
             do_GetInterface(mWebBrowser));
     if(!browserFocus) return NS_ERROR_FAILURE;
     return browserFocus->Activate();
+}
+
+// Deactivate the browser window.
+nsresult MiroBrowserEmbed::deactivate()
+{
+    nsCOMPtr<nsIWebBrowserFocus> browserFocus(
+            do_GetInterface(mWebBrowser));
+    if(!browserFocus) return NS_ERROR_FAILURE;
+    return browserFocus->Deactivate();
 }
 
 // Set the focus callback.  This will be called when the user tabs through all

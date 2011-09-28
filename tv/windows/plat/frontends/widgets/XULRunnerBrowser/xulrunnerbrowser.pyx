@@ -63,7 +63,8 @@ cdef extern from "MiroBrowserEmbed.h":
         nsresult (*getCurrentURI)(char ** uri)
         nsresult (*getCurrentTitle)(char ** title, int* length)
         nsresult (*resize)(int x, int y, int width, int height)
-        nsresult (*focus)()
+        nsresult (*activate)()
+        nsresult (*deactivate)()
         int (*canGoBack)()
         int (*canGoForward)()
         void (*goBack)()
@@ -270,10 +271,15 @@ cdef class XULRunnerBrowser:
 
         return PyString_FromStringAndSize(title, length);
 
-    def focus(self):
+    def activate(self):
         cdef nsresult rv
-        rv = self.browser.focus()
-        self._check_result('MiroBrowserEmbed.focus', rv)
+        rv = self.browser.activate()
+        self._check_result('MiroBrowserEmbed.activate', rv)
+
+    def deactivate(self):
+        cdef nsresult rv
+        rv = self.browser.deactivate()
+        self._check_result('MiroBrowserEmbed.deactivate', rv)
 
     def can_go_back(self):
         return self.browser.canGoBack()
