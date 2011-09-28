@@ -210,7 +210,7 @@ pygtkhacks_ext = Extension(
 embeddingwindow_ext = \
     Extension("miro.plat.frontends.widgets.embeddingwindow",
         [os.path.join(widgets_dir, 'embeddingwindow.c')],
-        libraries=[ 'user32', 'gdi32'],
+        libraries=[ 'user32', 'gdi32', 'comctl32'],
     )
 
 xulrunnerbrowser_ext_dir = os.path.join(widgets_dir, 'XULRunnerBrowser')
@@ -245,7 +245,6 @@ xulrunnerbrowser_ext = Extension(
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroBrowserEmbed.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroWindowCreator.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroDirectoryProvider.cpp'),
-        os.path.join(xulrunnerbrowser_ext_dir, 'FixFocus.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'Init.cpp'),
         ]
     )

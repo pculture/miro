@@ -40,8 +40,13 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <commctrl.h>
 #include <Python.h>
 #include "structmember.h"
+
+/* Constants */
+
+#define SUBCLASS_ID 0
 
 /* Module-level variables */
 
@@ -98,7 +103,47 @@ finally:
 }
 
 /*
- * win32 windows procedure
+ * win32 subclass procedure.  This code gets called on the toplevel window
+ * when we use embedded windows.  It intercepts messages before GTK sees them
+ * and fixes issues when using embedded components.
+ */
+static LRESULT CALLBACK
+toplevel_subclass_proc (HWND hwnd,
+                        UINT msg,
+                        WPARAM wparam,
+                        LPARAM lparam,
+                        UINT_PTR uidsubclass,
+                        DWORD_PTR refdata)
+{
+    switch (msg) {
+        case WM_KILLFOCUS:
+            /*
+             * GTK always keeps the toplevel window focused and handles
+             * routing keyboard events itself.  Therefore, when it sees
+             * WM_KILLFOCUS it assumes it's going to another toplevel window.
+             * However, XULRunner calls SetFocus on it's child window to
+             * handle keyboard input.
+             *
+             * To keep things sane, we handle the event ourselves when we see
+             * that the focus is going to a child window.
+             */
+            if(wparam && IsChild(hwnd, (HWND)wparam)) {
+                return 0;
+            }
+            break;
+
+        case WM_NCDESTROY:
+            /* Window is about to be destroyed, cleanup */
+            RemoveWindowSubclass(hwnd, toplevel_subclass_proc, SUBCLASS_ID);
+            break;
+    }
+
+    return DefSubclassProc(hwnd, msg, wparam, lparam);
+}
+
+
+/*
+ * win32 windows procedure.  This handles the embedded window.
  */
 
 static LRESULT CALLBACK
@@ -108,6 +153,7 @@ wnd_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
     EmbeddingWindow* self;
     PyGILState_STATE gstate;
     int x, y;
+    RECT* rect;
 
     self = (EmbeddingWindow*) GetWindowLongPtr(hwnd, GWLP_USERDATA);
     if(!self) {
@@ -153,7 +199,10 @@ wnd_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
             call_event_handler(self, "on_paint", arglist);
             Py_DECREF(arglist);
             PyGILState_Release(gstate);
-            break;
+            /* Call DefWindowProc, which handles calling ValidateRect()
+             * If we don't have this call, we just get infinite WM_PAINT
+             * messages. */
+            return DefWindowProc(hwnd, msg, wparam, lparam);
 
         case WM_LBUTTONDBLCLK:
             gstate = PyGILState_Ensure();
@@ -163,6 +212,16 @@ wnd_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
             Py_DECREF(arglist);
             PyGILState_Release(gstate);
             break;
+
+        case WM_MOUSEACTIVATE:
+            gstate = PyGILState_Ensure();
+            arglist = Py_BuildValue("()");
+            call_event_handler(self, "on_mouseactivate", arglist);
+            Py_DECREF(arglist);
+            PyGILState_Release(gstate);
+            // Call DefWindowProc to keep the message propataging to our
+            // toplevel
+            return DefWindowProc(hwnd, msg, wparam, lparam);
 
         default:
             return DefWindowProc(hwnd, msg, wparam, lparam);
@@ -323,20 +382,32 @@ static PyObject*
 EmbeddingWindow_attach(EmbeddingWindow* self,
                        PyObject* args)
 {
-    long parent_hwnd;
+    HWND parent, toplevel;
     long x, y, width, height;
 
     if(!ensure_hwnd(self)) return NULL;
 
+    /* NOTE: we are casting a long to an HWND with the next call.  See the
+     * note in EmbeddingWindow_init() for why this is okay
+     */
+
     if (!PyArg_ParseTuple(args, "lllll:EmbeddingWindow.attach",
-                          &parent_hwnd, &x, &y, &width, &height)) {
+                          &parent, &x, &y, &width, &height)) {
         return NULL;
     }
+
+    /* Attach our subclass procedure to the toplevel window.  This fixes some
+     * issues with GTK.
+     * Note: SetWindowSubclass handles tracking which subclass procedures have
+     * been attached to which windows.  Calling it twice is okay.
+     */
+    toplevel = GetAncestor(parent, GA_ROOT);
+    SetWindowSubclass(toplevel, toplevel_subclass_proc, SUBCLASS_ID, 0);
 
     /* Cast long value to an HWND.  See the note in EmbeddingWindow_init()
      * for why this is okay
      */
-    SetParent(self->hwnd, (HWND)parent_hwnd);
+    SetParent(self->hwnd, parent);
     MoveWindow(self->hwnd, x, y, width, height, FALSE);
     ShowWindow(self->hwnd, SW_SHOW);
 
@@ -368,6 +439,11 @@ EmbeddingWindow_detach(EmbeddingWindow* self,
 
     ShowWindow(self->hwnd, SW_HIDE);
     SetParent(self->hwnd, hidden_window);
+
+    /* Note: we don't remove our subclass procedure here.  There may be other
+     * embedded windows still inside the toplevel.  This means that
+     * toplevel_subclass_proc() needs to take this into account.
+     */
 
     Py_RETURN_NONE;
 }

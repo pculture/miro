@@ -35,54 +35,25 @@ import gtk
 from miro import signals
 from miro.frontends.widgets.gtk import base
 from miro.frontends.widgets.gtk import wrappermap
-from miro.frontends.widgets.gtk import pygtkhacks
-from miro.plat.frontends.widgets import embeddingwindow
+from miro.plat.frontends.widgets import embeddingwidget
 
-class GtkVideoWidget(gtk.DrawingArea):
+class GtkVideoWidget(embeddingwidget.EmbeddingWidget):
     """GtkVideoWidget -- GTK widget for embedding gstreamer."""
 
     def __init__(self, renderer):
-        gtk.DrawingArea.__init__(self)
-        self.renderer = renderer
-        # make a HWND for gstreamer to use.
-        self.embedding_window = embeddingwindow.EmbeddingWindow()
-        self.embedding_window.set_event_handler(self)
+        embeddingwidget.EmbeddingWidget.__init__(self)
         self.embedding_window.enable_motion_events(True)
-        # pass it to our renderer
+        self.renderer = renderer
         self.renderer.set_window_id(self.embedding_window.hwnd)
 
-    def _get_window_area(self):
-        """Get the area of our window relative to a native window
+    def destroy(self):
+        # stop our renderer
+        self.renderer.reset()
+        self.renderer.set_window_id(None)
+        # let EmbeddingWidget take care of the rest
+        embeddingwidget.EmbeddingWidget.destroy(self)
 
-        This method calculates where our window is relative to it's nearest
-        parent that's a native window.
-        """
-
-        offsets = pygtkhacks.get_gdk_window_offset(self.window)
-        # offsets are relative to our window, we need to negate them to make
-        # them relative to our native parent window.
-        return (-offsets[0], -offsets[1],
-                self.allocation.width, self.allocation.height)
-
-    def do_realize(self):
-        # call base class
-        gtk.DrawingArea.do_realize(self)
-        # attach our embedded window to our window
-        self.embedding_window.attach(self.window.handle,
-                *self._get_window_area())
-
-    def do_unrealize(self):
-        # detach our embedded window
-        self.embedding_window.detach()
-        # call base class
-        gtk.DrawingArea.do_unrealize(self)
-
-    def do_size_allocate(self, allocation):
-        # call our base class
-        gtk.DrawingArea.do_size_allocate(self, allocation)
-        if self.flags() & gtk.REALIZED:
-            # move our embedded window
-            self.embedding_window.reposition(*self._get_window_area())
+    # EmbeddingWindow callbacks
 
     def on_mouse_move(self, x, y):
         wrappermap.wrapper(self).emit('mouse-motion')
@@ -97,19 +68,6 @@ class GtkVideoWidget(gtk.DrawingArea):
         else:
             # our renderer is not ready yet, draw black
             self.embedding_window.paint_black()
-
-    def destroy(self):
-        # unrealize if we need to
-        if self.flags() & gtk.REALIZED:
-            self.unrealize()
-        # stop our renderer
-        self.renderer.reset()
-        self.renderer.set_window_id(None)
-        # destroy our embedding window
-        self.embedding_window.destroy()
-        self.embedding_window = None
-        # let DrawingArea take care of the rest
-        gtk.DrawingArea.destroy(self)
 gobject.type_register(GtkVideoWidget)
 
 class VideoWidget(base.Widget):
