@@ -34,7 +34,7 @@
 
 #include <Python.h>
 #include "nsIWindowCreator.h"
-#include "embed_base/nsIWindowCreator2.h"
+#include "nsIWindowCreator2.h"
 #include "nsEmbedString.h"
 
 typedef void(*windowCallback)(char* uri, void* data);

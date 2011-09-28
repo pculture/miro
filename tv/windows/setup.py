@@ -227,9 +227,6 @@ xulrunnerbrowser_ext = Extension(
         ("XPCOM_GLUE", 1),
         ("PCF_USING_XULRUNNER19", 1),
         ],
-    extra_compile_args=[
-        "/Zc:wchar_t-"
-        ],
     library_dirs=[
         os.path.join(XULRUNNER_SDK_PATH, 'lib'),
         GTK_LIB_PATH,

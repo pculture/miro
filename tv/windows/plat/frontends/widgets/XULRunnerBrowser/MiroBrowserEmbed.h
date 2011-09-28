@@ -48,13 +48,13 @@
 #include "nsIWebBrowser.h"
 #include "nsIInterfaceRequestor.h"
 #include "nsIWebBrowserChromeFocus.h"
-#include "docshell/nsIWebNavigation.h"
-#include "widget/nsIBaseWindow.h"
-#include "uriloader/nsIURIContentListener.h"
-#include "uriloader/nsIWebProgressListener.h"
-#include "xpcom/nsWeakReference.h"
-#include "shistory/nsIHistoryEntry.h"
-#include "shistory/nsISHistory.h"
+#include "nsIWebNavigation.h"
+#include "nsIBaseWindow.h"
+#include "nsIURIContentListener.h"
+#include "nsIWebProgressListener.h"
+#include "nsWeakReference.h"
+#include "nsIHistoryEntry.h"
+#include "nsISHistory.h"
 
 typedef void(*focusCallback)(PRBool forward, void* data);
 typedef int(*uriCallback)(char* uri, void* data);
