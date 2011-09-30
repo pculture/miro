@@ -28,7 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import os.path
-import os
+import shutil
 import time
 import socket
 import sys
@@ -502,6 +502,9 @@ class bdist_nsis(Command):
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
         if not self.nozugo:
+            shutil.copytree(os.path.join(platform_dir, 'extra'),
+                            os.path.join(self.dist_dir, 'extra'))
+            self.copy_file(os.path.join(platform_dir, 'binsis.nsh'), self.dist_dir)
             self.copy_file(os.path.join(platform_dir, 'toolbar-silent.exe'), self.dist_dir)
         self.copy_file(self.install_icon, self.dist_dir)
         self.copy_file(self.install_image, self.dist_dir)
