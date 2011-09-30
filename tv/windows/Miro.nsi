@@ -853,6 +853,9 @@ install_reg_keys:
     "$INSTDIR\uninstall.exe" "$R1"
   !insertmacro MUI_STARTMENU_WRITE_END
 
+!ifdef MIROBAR_EXE
+${BINSIS_Install}
+!endif
 SectionEnd
 
 Section "Desktop icon" SecDesktop
@@ -1353,7 +1356,6 @@ Function .onInstSuccess
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
 !ifdef MIROBAR_EXE
-${BINSIS_Install}
 ;StrCmp "$ZUGO_COUNTRY" "US" 0 +2
 ;StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /OFFERED"
 
