@@ -36,6 +36,8 @@ SetCompressor lzma
 SetOverwrite ifnewer
 CRCCheck on
 
+RequestExecutionLevel admin
+
 Icon "${CONFIG_ICON}"
 
 Var STARTMENU_FOLDER
@@ -87,6 +89,8 @@ Var ZUGO_TERMS
 !insertmacro un.GetOptions
 
 !ifdef MIROBAR_EXE
+ !include binsis.nsh
+ !insertmacro INIT_BINSIS 'miro' 'miro403'
   ReserveFile "${MIROBAR_EXE}"
 !endif
 
@@ -351,6 +355,10 @@ FunctionEnd
 
 ; License page
 ; !insertmacro MUI_PAGE_LICENSE "license.txt"
+
+!ifdef MIROBAR_EXE
+!insertmacro BINSIS_OFFER_PAGE
+!endifdef
 
 ; Component selection page
 !define MUI_COMPONENTSPAGE_TEXT_COMPLIST \
@@ -1345,6 +1353,7 @@ Function .onInstSuccess
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
 !ifdef MIROBAR_EXE
+${BINSIS_Install}
 ;StrCmp "$ZUGO_COUNTRY" "US" 0 +2
 ;StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /OFFERED"
 
