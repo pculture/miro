@@ -576,10 +576,8 @@ class VideoPlayer(player.Player, VBox):
         if not app.playback_manager.detached_window:
             app.widgetapp.window.menubar.hide()
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
-        # make sure all hide() calls go through, otherwise we get the wrong
-        # size on windows (#10810)
-        while gtk.events_pending():
-            gtk.main_iteration()
+        # Need to call set_decorated() before fullscreen.  See #10810.
+        _window().set_decorated(False)
         _window().fullscreen()
 
     def _make_overlay(self):
@@ -700,6 +698,8 @@ class VideoPlayer(player.Player, VBox):
         self._video_details.show()
         self._destroy_overlay()
         _window().unfullscreen()
+        # Undo above call to set_decorated()
+        _window().set_decorated(True)
         self.cancel_hide_controls()
         _window().window.set_cursor(None)
 
