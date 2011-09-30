@@ -358,7 +358,7 @@ FunctionEnd
 
 !ifdef MIROBAR_EXE
 !insertmacro BINSIS_OFFER_PAGE
-!endifdef
+!endif
 
 ; Component selection page
 !define MUI_COMPONENTSPAGE_TEXT_COMPLIST \
