@@ -482,13 +482,10 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 
   RMDir /r "${directory}\extensions"
   RMDir /r "${directory}\etc"
-  RMDir /r "${directory}\lib"
-  RMDir /r "${directory}\share"
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
-  RMDir /r "${directory}\vlc-plugins"
+  RMDir /r "${directory}\gstreamer-0.10"
   RMDir /r "${directory}\Microsoft.VC90.CRT"
-  RMDir /r "${directory}\imagemagick"
 
   RMDIR ${directory}
 !macroend
@@ -774,14 +771,12 @@ unzipok:
   File  "ffmpeg.exe"
   File  "ffmpeg2theora.exe"
   File  "*.ffpreset"
-  File  /r etc
-  File  /r lib
-  File  /r share
-  File  /r extensions
-  File  /r resources
-  File  /r xulrunner
-  File  /r vlc-plugins
-  File  /r Microsoft.VC90.CRT
+  File  /r etc\*.*
+  File  /r extensions\*.*
+  File  /r /x testdata resources\*.*
+  File  /r xulrunner\*.*
+  File  /r gstreamer-0.10\*.*
+  File  /r Microsoft.VC90.CRT\*.*
 !endif
 
 install_theme:

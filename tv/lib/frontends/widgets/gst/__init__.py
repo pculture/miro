@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,40 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""vlchack.py -- Hack for #16987
+"""miro.frontends.widgets.gst -- portable gstreamer code """
 
-Call the hack_window() method shortly after playback begins to try to make
-sure that VLC's windows are sized properly.
-"""
-
-import logging
-import ctypes
-
-GetWindow = ctypes.windll.user32.GetWindow
-MoveWindow = ctypes.windll.user32.MoveWindow
-GetClientRect = ctypes.windll.user32.GetClientRect
-PostMessage = ctypes.windll.user32.PostMessageA
-
-GW_CHILD = 5
-
-WM_WINDOWPOSCHANGED = 0x0047
-
-class RECT(ctypes.Structure):
-    _fields_ = [
-            ("left", ctypes.c_ulong),
-            ("top", ctypes.c_ulong),
-            ("right", ctypes.c_ulong),
-            ("bottom", ctypes.c_ulong)
-    ];
-
-def hack_window(hwnd):
-    # get VLC's DirectX window
-    child = GetWindow(hwnd, GW_CHILD)
-    if child:
-        # perturb the window my moving it 1px down, then back up.  This makes
-        # VLC see a WM_WINDOWPOSCHANGED message and fix it's windows.
-        rect = RECT()
-        GetClientRect(child, ctypes.byref(rect))
-        MoveWindow(child, 0, 1, rect.right, rect.bottom, 0)
-        MoveWindow(child, 0, 0, rect.right, rect.bottom, 0)
-
+# check that we have the correct pygst version when we import the gst package
+import pygst
+pygst.require('0.10')

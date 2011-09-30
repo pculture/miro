@@ -34,8 +34,8 @@
 #include "nsILocalFile.h"
 #include "nsIDirectoryService.h"
 #include "nsAppDirectoryServiceDefs.h"
-#include "xulapp/nsXULAppAPI.h"
-#include "xpcom/nsServiceManagerUtils.h"
+#include "nsXULAppAPI.h"
+#include "nsServiceManagerUtils.h"
 
 NS_IMPL_ISUPPORTS1(MiroDirectoryProvider, nsIDirectoryServiceProvider)
 

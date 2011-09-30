@@ -41,15 +41,15 @@
 #include "nsEmbedString.h"
 #include "nsILocalFile.h"
 #include "nsXPCOMGlue.h" 
-#include "pref/nsIPref.h"
-#include "xulapp/nsXULAppAPI.h"
-#include "xpcom/nsServiceManagerUtils.h"
-#include "necko/nsNetCID.h"
-#include "necko/nsICookieManager2.h"
+#include "nsIPrefService.h"
+#include "nsXULAppAPI.h"
+#include "nsServiceManagerUtils.h"
+#include "nsNetCID.h"
+#include "nsICookieManager2.h"
 
 #include "Init.h"
 
-XRE_InitEmbeddingType XRE_InitEmbedding;
+XRE_InitEmbedding2Type XRE_InitEmbedding2;
 XRE_TermEmbeddingType XRE_TermEmbedding; 
 XRE_LockProfileDirectoryType XRE_LockProfileDirectory; 
 XRE_NotifyProfileType XRE_NotifyProfile; 
@@ -72,7 +72,7 @@ nsresult init_xulrunner(const char* xul_dir, const char* app_dir)
     }
 
     const nsDynamicFunctionLoad dynamicSymbols[] = {
-        { "XRE_InitEmbedding", (NSFuncPtr*) &XRE_InitEmbedding },
+        { "XRE_InitEmbedding2", (NSFuncPtr*) &XRE_InitEmbedding2 },
         { "XRE_TermEmbedding", (NSFuncPtr*) &XRE_TermEmbedding },
         { "XRE_LockProfileDirectory", (NSFuncPtr*) &XRE_LockProfileDirectory },
         { "XRE_NotifyProfile", (NSFuncPtr*) &XRE_NotifyProfile },
@@ -90,7 +90,7 @@ nsresult init_xulrunner(const char* xul_dir, const char* app_dir)
                 getter_AddRefs(app_dir_file));
     NS_ENSURE_SUCCESS(rv, rv);
 
-    rv = XRE_InitEmbedding(xul_dir_file, app_dir_file, 0, 0, 0);
+    rv = XRE_InitEmbedding2(xul_dir_file, app_dir_file, 0);
     NS_ENSURE_SUCCESS(rv, rv);
     return NS_OK;
 }
@@ -100,13 +100,19 @@ nsresult setup_user_agent(const char* vendor, const char* vendor_sub,
         const char* comment)
 {
     nsresult rv;
-    nsCOMPtr<nsIPref> prefs(do_GetService(NS_PREF_CONTRACTID, &rv));
+    nsCOMPtr<nsIPrefService> pref_service(
+                do_GetService(NS_PREFSERVICE_CONTRACTID, &rv));
     NS_ENSURE_SUCCESS(rv, rv);
-    rv = prefs->SetCharPref("general.useragent.vendor", vendor);
+
+    nsCOMPtr<nsIPrefBranch> prefs;
+    rv = pref_service->GetBranch("general.useragent", getter_AddRefs(prefs));
     NS_ENSURE_SUCCESS(rv, rv);
-    rv = prefs->SetCharPref("general.useragent.vendorSub", vendor_sub);
+
+    rv = prefs->SetCharPref("vendor", vendor);
     NS_ENSURE_SUCCESS(rv, rv);
-    rv = prefs->SetCharPref("general.useragent.vendorComment", comment);
+    rv = prefs->SetCharPref("vendorSub", vendor_sub);
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = prefs->SetCharPref("vendorComment", comment);
     NS_ENSURE_SUCCESS(rv, rv);
     return NS_OK;
 }
