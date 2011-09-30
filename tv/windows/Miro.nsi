@@ -771,12 +771,12 @@ unzipok:
   File  "ffmpeg.exe"
   File  "ffmpeg2theora.exe"
   File  "*.ffpreset"
-  File  /r etc
-  File  /r extensions
-  File  /r resources
-  File  /r xulrunner
-  File  /r gstreamer-0.10
-  File  /r Microsoft.VC90.CRT
+  File  /r etc\*.*
+  File  /r extensions\*.*
+  File  /r /x testdata resources\*.*
+  File  /r xulrunner\*.*
+  File  /r gstreamer-0.10\*.*
+  File  /r Microsoft.VC90.CRT\*.*
 !endif
 
 install_theme:
