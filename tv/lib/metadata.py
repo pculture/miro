@@ -276,7 +276,7 @@ class MetadataManager(object):
         """Run extractors that respond to a certain type of Describebable."""
         print('checking for extractors for %r' % (class_name,))
         DescriptionClass = descriptions.Description.get_type(class_name)
-        for datasource, get_descriptions in self.providers[class_name]:
+        for datasource, get_descriptions in self.providers.get(class_name, ()):
             print('running extractor %s for %r' % (datasource.name, class_name))
             status_query = {'datasource_id': datasource.id,
                     'description_type': class_name}
@@ -285,9 +285,25 @@ class MetadataManager(object):
                     'id > ?', (status.max_examined,), order_by='id')
             for new_item in new_items:
                 print('processing an item...')
-                for description in get_descriptions(new_item):
-                    print('adding description of type %s' %
-                            (description.__class__.__name__,))
-                    new_item.add_description(description)
-                status.max_examined = new_item.id
-                status.signal_change()
+                try:
+                    for description in get_descriptions(new_item):
+                        print('adding description of type %s' %
+                                (description.__class__.__name__,))
+                        new_item.add_description(description)
+                    status.max_examined = new_item.id
+                    status.signal_change()
+                except ExtractionFailed:
+                    # TODO: distinguish between "temporary" errors and errors
+                    # that are expected to persist for rest of session?
+                    break
+
+    def describeable_created(self, describeable):
+        self.run_extractors_for_type(describeable.__class__.__name__)
+
+# extraction process
+
+class ExtractionFailed(Exception):
+    pass
+
+class ExtractorInvalid(ExtractionFailed):
+    pass

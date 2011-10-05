@@ -199,6 +199,9 @@ class Describeable(object):
     """Something to which Descriptions can be added - this includes Entries and
     other Descriptions.
     """
+    def setup_new(self):
+        app.metadata_manager.describeable_created(self)
+
     def add_description(self, description):
         Entry(self, description)
         self._signal_change()
@@ -256,6 +259,7 @@ class Description(Describeable, ReferenceableByValue):
     UNIQUE = NotImplemented
     _types = None
     def setup_new(self, record):
+        Describeable.setup_new(self)
         self.record_id = record.id if record is not None else None
 
     @classmethod
