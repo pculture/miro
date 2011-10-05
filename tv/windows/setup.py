@@ -61,7 +61,14 @@ BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
 # below.
 BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
 
-if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
+if os.path.exists(os.path.join("miro-binary-kit-win", "binary-kit")):
+    # miro-binary-kit-win/binary-kit/ overrides the binary_kit_version
+    # stuff.  that makes it easier for devs to do dev things and
+    # put the miro-binary-kit-win repository in the tv/windows/
+    # directory.
+    BINARY_KIT_ROOT = os.path.join("miro-binary-kit-win", "binary-kit")
+
+elif not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
     print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
     sys.exit(1)
 
@@ -73,17 +80,21 @@ OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'include')
 OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'lib')
 OPENSSL_LIBRARIES = ['ssleay32', 'libeay32']
 
-# GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.20.0-20100406_win32')
-GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.16.6-20091215_win32')
+import gtk
+GTK_ROOT_PATH = os.path.join(
+    os.path.dirname(gtk.__file__),
+    os.pardir,
+    "runtime")
+GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
 GTK_INCLUDE_PATH = os.path.join(GTK_ROOT_PATH, 'include')
 GTK_LIB_PATH = os.path.join(GTK_ROOT_PATH, 'lib')
-GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
 GTK_INCLUDE_DIRS = [
     os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
     os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
     os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
     os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
     os.path.join(GTK_INCLUDE_PATH, 'cairo'),
+    os.path.join(GTK_INCLUDE_PATH, 'gdk-pixbuf-2.0'),
     os.path.join(GTK_LIB_PATH, 'glib-2.0', 'include'),
     os.path.join(GTK_LIB_PATH, 'gtk-2.0', 'include'),
 ]
@@ -95,7 +106,8 @@ PYGTK_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygtk')
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
-VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
+GSTREAMER_PATH = os.path.join(BINARY_KIT_ROOT, 'gstreamer')
+GSTREAMER_BIN_PATH = os.path.join(GSTREAMER_PATH, 'bin')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
@@ -172,6 +184,9 @@ from miro import buildutils
 # .pyd file
 sys.path.insert(0, LIBTORRENT_PATH)
 sys.path.insert(0, MUTAGEN_PATH)
+sys.path.insert(0, os.path.join(GSTREAMER_PATH, 'lib', 'site-packages'))
+sys.path.insert(0, os.path.join(GSTREAMER_PATH, 'lib', 'site-packages', 'gst-0.10'))
+
 
 #### Extensions ####
 ngrams_ext = \
@@ -188,8 +203,15 @@ pygtkhacks_ext = Extension(
     library_dirs=[GTK_LIB_PATH],
     libraries=[
         'gtk-win32-2.0',
+        'gdk-win32-2.0',
         'pango-1.0',
         ]
+    )
+
+embeddingwindow_ext = \
+    Extension("miro.plat.frontends.widgets.embeddingwindow",
+        [os.path.join(widgets_dir, 'embeddingwindow.c')],
+        libraries=[ 'user32', 'gdi32', 'comctl32'],
     )
 
 xulrunnerbrowser_ext_dir = os.path.join(widgets_dir, 'XULRunnerBrowser')
@@ -205,9 +227,6 @@ xulrunnerbrowser_ext = Extension(
         ("XP_WIN", 1),
         ("XPCOM_GLUE", 1),
         ("PCF_USING_XULRUNNER19", 1),
-        ],
-    extra_compile_args=[
-        "/Zc:wchar_t-"
         ],
     library_dirs=[
         os.path.join(XULRUNNER_SDK_PATH, 'lib'),
@@ -227,7 +246,6 @@ xulrunnerbrowser_ext = Extension(
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroBrowserEmbed.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroWindowCreator.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'MiroDirectoryProvider.cpp'),
-        os.path.join(xulrunnerbrowser_ext_dir, 'FixFocus.cpp'),
         os.path.join(xulrunnerbrowser_ext_dir, 'Init.cpp'),
         ]
     )
@@ -256,13 +274,18 @@ infolist_ext = \
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-        OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
-        LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
+        OPENSSL_LIB_PATH,
+        ZLIB_RUNTIME_LIBRARY_PATH,
+        LIBTORRENT_PATH,
+        GTK_LIB_PATH,
+        GSTREAMER_BIN_PATH,
+        os.environ['PATH']])
 
 # Private extension modules to build.
 ext_modules = [
     ngrams_ext,
     pygtkhacks_ext,
+    embeddingwindow_ext,
     xulrunnerbrowser_ext,
     infolist_ext,
 ]
@@ -278,18 +301,18 @@ def fill_template(templatepath, outpath, **vars):
 data_files = []
 data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
 
-image_loader_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'loaders')
-theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
-theme_path = os.path.join('share', 'themes')
-for path in (image_loader_path, theme_engine_path, theme_path):
-    src_path = os.path.join(GTK_ROOT_PATH, path)
-    data_files.extend(find_data_files(path, src_path))
+# theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
+# theme_path = os.path.join('share', 'themes')
+# for path in (theme_engine_path, theme_path):
+#     src_path = os.path.join(GTK_ROOT_PATH, path)
+#     data_files.extend(find_data_files(path, src_path))
 
-data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
-data_files.extend(find_data_files(
-        'vlc-plugins', os.path.join(VLC_PATH, 'vlc-plugins')))
-data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
-data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
+# gstreamer files
+data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', '*.dll'))))
+data_files.append(
+    ('gstreamer-0.10',
+     iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*.dll'))))
+data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
 data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
@@ -309,6 +332,7 @@ data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
 data_files.append((os.path.join('etc', 'gtk-2.0'), [
             os.path.join(os.path.dirname(__file__), 'gtkrc')]))
+data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images', 'conversions', 'devices'):
@@ -385,23 +409,9 @@ class install_data(distutils.command.install_data.install_data):
             BUILD_TIME=str(time.time()))
         self.outfiles.append(dest)
 
-    def install_gdk_pixbuf_loaders(self):
-        basename = os.path.join('etc', 'gtk-2.0', 'gdk-pixbuf.loaders')
-        source = os.path.join(GTK_ROOT_PATH, basename)
-        dest = os.path.join(self.install_dir, basename)
-        contents = open(source).read()
-        # Not sure why they have paths like this in the file, but we
-        # need to change them.
-        contents = contents.replace(
-            "c:/devel/target/9c384abfa28a3e070eb60fc2972f823b/", "")
-        self.mkpath(os.path.dirname(dest))
-        open(dest, 'wt').write(contents)
-        self.outfiles.append(dest)
-
     def run(self):
         distutils.command.install_data.install_data.run(self)
         self.install_app_config()
-        self.install_gdk_pixbuf_loaders()
 
 # We want to make sure we include msvcp90.dll in the dist directory.
 # Recipe taken from
@@ -622,6 +632,7 @@ package_list=[
     'miro.dl_daemon.private',
     'miro.frontends',
     'miro.frontends.widgets',
+    'miro.frontends.widgets.gst',
     'miro.frontends.widgets.gtk',
     'miro.test',
     'miro.plat',
@@ -684,7 +695,7 @@ if __name__ == "__main__":
                 # don't include stray DLLs from Win2008
                 'dll_excludes': ['DNSAPI.DLL', 'MSIMG32.DLL'],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
-                             'gio, libtorrent, mutagen'),
+                             'gio, libtorrent, mutagen, gst'),
                 },
             },
         )

@@ -296,9 +296,13 @@ class SiteDisplay(TabDisplay):
     def on_sites_removed(cls, info_updater, id_list):
         for id_ in id_list:
             try:
-                del cls._open_sites[id_]
+                browser = cls._open_sites[id_]
             except KeyError:
                 pass
+            else:
+                # explicitly destroy the browser.  Some platforms need this
+                # call to cleanup.
+                browser.destroy()
 
     @staticmethod
     def should_display(tab_type, selected_tabs):

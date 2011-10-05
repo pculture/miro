@@ -58,7 +58,7 @@ def _general_panel():
 def _playback_panel():
     extras = []
     font_infos = [(_('System Default'), None)]
-    font_infos.extend(fontinfo.get_all_font_info())
+    font_infos.extend((name, name) for name in fontinfo.get_all_font_info())
     subtitle_font_menu = widgetset.OptionMenu(
             [name for (name, path) in font_infos])
     attach_combo(subtitle_font_menu, prefs.SUBTITLE_FONT,

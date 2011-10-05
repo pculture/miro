@@ -54,8 +54,7 @@ def set_renderer(modname):
     try:
         pkg = __import__('miro.plat.renderers.' + modname)
         module = getattr(pkg.plat.renderers, modname)
-        app.video_renderer = module.VideoRenderer()
-        app.audio_renderer = module.AudioRenderer()
+        app.audio_renderer, app.video_renderer = module.make_renderers()
         app.movie_data_program_info = module.movie_data_program_info
         app.get_item_type = module.get_item_type
         logging.info("set_renderer: successfully loaded %s", modname)

@@ -136,6 +136,8 @@ class Browser(Widget):
     def stop(self):
         self._browser.stop_loading()
 
+    def destroy(self):
+        pass
 
 def get_first_time_dialog_coordinates(width, height):
     """Returns the coordinates for the first time dialog.

@@ -1,4 +1,3 @@
-/*
 # Miro - an RSS based video player application
 # Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
 # Participatory Culture Foundation
@@ -27,11 +26,44 @@
 # but you are not obligated to do so. If you do not wish to do so, delete
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
-*/
 
-#ifndef __PCF_MIRO_FIX_FOCUS_H__
-#define __PCF_MIRO_FIX_FOCUS_H__
+"""gstreamerrenderer.py -- Windows gstreamer renderer """
 
-void install_focus_fixes(HWND hwnd);
+# Before importing gstreamer, fix os.environ so gstreamer finds it's plugins
+import os
+from miro.plat import resources
+GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
+os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
+os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
 
-#endif /* __PCF_MIRO_FIX_FOCUS_H__ */
+import pygst
+pygst.require('0.10')
+import gst
+
+from miro import app
+from miro.frontends.widgets.gst import renderer
+
+# We need to define get_item_type().  Use the version from sniffer.
+from miro.frontends.widgets.gst.sniffer import get_item_type
+
+class WindowsSinkFactory(renderer.SinkFactory):
+    """Windows class to create gstreamer audio/video sinks.
+
+    This class is very simple because we know exactly what gstreamer plugins
+    we install on windows.
+    """
+
+    def make_audiosink(self):
+        return gst.element_factory_make("directsoundsink" , "audiosink")
+
+    def make_videosink(self):
+        # Use dshowvideosink.
+        # d3dvideosink doesn't work on my vmware VM.
+        # directdrawsink does work, but I believe it is less likely to be
+        # hardware accelerated than the direct show one.
+        return gst.element_factory_make("dshowvideosink" , "videosink")
+
+def make_renderers():
+    sink_factory = WindowsSinkFactory()
+    return (renderer.AudioRenderer(sink_factory),
+            renderer.VideoRenderer(sink_factory))

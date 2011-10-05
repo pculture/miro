@@ -56,3 +56,13 @@ WINDOWS_ICON = Pref(
     # this is platform specific, but if we set this to True then it
     # won't look up the value in the theme's app.config file
     platformSpecific=False)
+
+GSTREAMER_IMAGESINK = Pref(
+    key="DefaultGstreamerImagesink",
+    default="autovideosink",
+    platformSpecific=False)
+
+GSTREAMER_AUDIOSINK = Pref(
+    key="DefaultGstreamerAudiosink",
+    default="autoaudiosink",
+    platformSpecific=False)

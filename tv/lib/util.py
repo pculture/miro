@@ -1142,3 +1142,12 @@ def import_module(module_name):
     for part in parts[1:]:
         mod = getattr(mod, part)
     return mod
+
+def make_file_url(path):
+    """Get a file:// URL for a file path."""
+
+    path_part = urllib.pathname2url(os.path.abspath(path))
+    # On windows pathname2url adds a leading "///" to absolute paths.  This is
+    # pretty weird and annoying, but easy to fix
+    path_part = re.sub(r'^/+', '', path_part)
+    return 'file:///' + path_part

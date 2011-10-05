@@ -34,8 +34,8 @@
 #include "xulrunnerbrowser.h"
 #include "nsIWebBrowserChrome.h"
 #include "nsIWindowWatcher.h"
-#include "necko/nsIURI.h"
-#include "xpcom/nsServiceManagerUtils.h"
+#include "nsIURI.h"
+#include "nsServiceManagerUtils.h"
 
 NS_IMPL_ISUPPORTS2(MiroWindowCreator, nsIWindowCreator, nsIWindowCreator2)
 
