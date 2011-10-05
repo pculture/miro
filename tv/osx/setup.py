@@ -62,6 +62,7 @@ ROOT_DIR = os.path.normpath(ROOT_DIR)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'lib')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
+ECHONEST_DIR = os.path.join(ROOT_DIR, 'contrib', 'pyechonest')
 
 INFOLIST_DIR = os.path.join(PORTABLE_DIR, 'frontends', 'widgets', 'infolist')
 
@@ -285,6 +286,7 @@ class MiroBuild (py2app):
             'miro.frontends.profilewidgets',
             'miro.frontends.shell',
             'miro.frontends.widgets',
+            'pyechonest',
             'miro.plat',
             'miro.plat.frontends',
             'miro.plat.frontends.widgets'
@@ -296,6 +298,7 @@ class MiroBuild (py2app):
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
             'miro.plat': PLATFORM_PACKAGE_DIR,
+            'pyechonest': ECHONEST_DIR,
         }
         
         self.iconfile = self.config.get_icon_file()

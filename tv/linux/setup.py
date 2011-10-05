@@ -102,6 +102,7 @@ platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
                                     'widgets')
 platform_extensions_dir = os.path.join(platform_dir, 'extensions')
+echonest_dir = os.path.join(root_dir, 'contrib', 'pyechonest')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -572,11 +573,13 @@ setup(name='miro',
         'miro.plat.frontends',
         'miro.plat.frontends.widgets',
         'miro.plat.renderers',
+        'pyechonest',
     ],
     package_dir={
         'miro': portable_dir,
         'miro.test': test_dir,
         'miro.plat': platform_package_dir,
+        'pyechonest': echonest_dir,
     },
     cmdclass={
         'test_system': test_system,
