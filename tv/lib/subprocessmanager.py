@@ -381,7 +381,14 @@ class SubprocessManager(object):
         self.thread.join(timeout)
         # If things didn't shutdown, then force them to quit
         if self.process.returncode is None:
-            self.process.terminate()
+            try:
+                self.process.terminate()
+            except OSError, e:
+                # Error on terminate.  Normally we should log an error, except
+                # in the case where the process quit by itself before our
+                # terminate() call (see #18172).
+                if self.process.returncode is None:
+                    logging.exception("error calling terminate()")
         self._cleanup_process()
 
     def _on_thread_quit(self, thread):
