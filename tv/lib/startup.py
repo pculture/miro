@@ -73,7 +73,6 @@ from miro import messages
 from miro import messagehandler
 from miro import metadataprogress
 from miro import models
-from miro import moviedata
 from miro import playlist
 from miro import prefs
 import miro.plat.resources
@@ -420,8 +419,6 @@ def on_frontend_started():
     yield None
     feed.expire_items()
     yield None
-    moviedata.movie_data_updater.start_thread()
-    yield None
     commandline.startup()
     yield None
     autoupdate.check_for_updates()
@@ -434,8 +431,8 @@ def on_frontend_started():
     eventloop.add_timeout(20, item.start_deleted_checker,
             "start checking deleted items")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
-    eventloop.add_timeout(60, item.update_incomplete_movie_data,
-            "update movie data")
+    eventloop.add_timeout(60, app.metadata_manager.run_extractors,
+            "update metadata")
     eventloop.add_timeout(90, clear_icon_cache_orphans, "clear orphans")
 
 def setup_global_feeds():

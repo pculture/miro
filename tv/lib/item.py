@@ -60,7 +60,6 @@ from miro import eventloop
 from miro import prefs
 from miro.plat import resources
 from miro import util
-from miro import moviedata
 from miro import filetypes
 from miro import searchengines
 from miro import fileutil
@@ -346,10 +345,6 @@ class FileFeedParserValues(FeedParserValues):
             'releaseDateObj': datetime.min,
         }
 
-class CheckMediaError(StandardError):
-    """Error when trying to call read_metadata on an item."""
-    pass
-
 class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -495,41 +490,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         return cls.make_view("rd.state in ('finished', 'uploading', "
                 "'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
-
-    @classmethod
-    def incomplete_mdp_view(cls, limit=10):
-        """Return up to limit local items that have not yet been examined with
-        MDP; a file is considered examined even if we have decided to skip it.
-
-        NB. don't change this without also changing in_incomplete_mdp_view!
-        """
-        return cls.make_view("((is_file_item AND NOT deleted) OR "
-                "(rd.state in ('finished', 'uploading', 'uploading-paused'))) "
-                "AND NOT isContainerItem " # match CMF short-circuit, just in case
-                "AND mdp_state IS NULL", # State.UNSEEN
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                limit=limit)
-
-    @property
-    def in_incomplete_mdp_view(self):
-        """This is the python version of the SQL query in incomplete_mdp_view,
-        to be used in situations where e.g. we need to assert that an item is no
-        longer eligible for the view - where actually querying the entire view
-        would be unreasonable.
-
-        NB. don't change this without also changing incomplete_mdp_view!
-        """
-        if not self.id_exists():
-            return False
-        if self.isContainerItem:
-            return False
-        # FIXME: if possible we should use the actual incomplete_mdp_view with
-        # an id=self.id constraint, but I don't see a straightforward way to do
-        # that
-        valid_file_item = self.is_file_item and not self.deleted
-        downloaded = self.downloader_state in (
-                'finished', 'uploading', 'uploading-paused')
-        return self.mdp_state is None and (valid_file_item or downloaded)
 
     @classmethod
     def unique_others_view(cls):
@@ -1806,35 +1766,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.recalc_feed_counts()
 
     def check_media_file(self):
-        """Begin metadata extraction for this item; runs mutagen synchonously,
-        if applicable, and then adds the item to mdp's queue.
-        """
-        if self.isContainerItem:
-            self.file_type = u'other'
-            self.signal_change()
-            return # this is OK because incomplete_mdp_view knows about it
-        # NOTE: it is very important (#7993) that there is no way to leave this
-        # method without either:
-        # - calling moviedata.movie_data_updater.request_update(self)
-        # - calling _handle_invalid_media_file
-        try:
-            self._check_media_file()
-        except IOError, e:
-            # shouldn't generally happen, but probably something we have no
-            # control over; likely another process has moved or deleted our file
-            logging.warn("check_media_file failed: %s", e)
-            self._handle_invalid_media_file()
-        except CheckMediaError, e:
-            # filename is None - this should never happen
-            app.controller.failed_soft("check_media_file", str(e), True)
-            self._handle_invalid_media_file()
-        else:
-            moviedata.movie_data_updater.request_update(self)
-            if self.file_type is None:
-                # if this is not overridden by movie_data_updater,
-                # neither mutagen nor MDP could identify it
-                self.file_type = u'other'
-            self.signal_change()
+        pass
 
     def _handle_invalid_media_file(self):
         """Failed to process a file in check_media_file; when this happens we:
@@ -2281,41 +2213,6 @@ def filename_to_title(filename):
 def fp_values_for_file(filename, title=None, description=None):
     return FileFeedParserValues(filename, title, description)
 
-def update_incomplete_movie_data():
-    IncompleteMovieDataUpdator()
-    # this will stay around because it connects to the movie data updater's
-    # signal.  Once it disconnects from the signal, we clean it up
-
-class IncompleteMovieDataUpdator(object):
-    """Finds local Items that have not been examined by MDP, and queues them.
-    """
-    BATCH_SIZE = 10
-    def __init__(self):
-        self.done = False
-        self.handle = moviedata.movie_data_updater.connect('queue-empty',
-                self.on_queue_empty)
-        app.metadata_manager.run_extractors()
-        self.do_some_updates()
-
-    def do_some_updates(self):
-        """Update some incomplete files, or set done=True if there are none.
-
-        Mutagen runs as part of the item creation process, so we need only check
-        whether MDP has examined a file here.
-        """
-        items_queued = 0
-        for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
-            item.check_media_file()
-            items_queued += 1
-        self.done = items_queued < self.BATCH_SIZE
-
-    def on_queue_empty(self, movie_data_updator):
-        if self.done:
-            movie_data_updator.disconnect(self.handle)
-        else:
-            eventloop.add_idle(self.do_some_updates,
-                    'update incomplete movie data')
-
 class DeletedFileChecker(object):
     """Utility class that manages calling Item.check_deleted().
 
@@ -2429,13 +2326,6 @@ class DeviceItem(metadata.Store):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
-            if not self.metadata_version:
-                # haven't run read_metadata yet.  We don't check the actual
-                # version because upgrading metadata isn't supported.
-                self.read_metadata()
-                if not self.get_title():
-                    self.title = filename_to_unicode(
-                        os.path.basename(self.video_path))
 
         except (OSError, IOError):
             # if there was an error reading the data from the filesystem, don't
