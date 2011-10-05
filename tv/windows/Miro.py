@@ -54,9 +54,6 @@ def startup(argv):
     from miro import bootstrap
     bootstrap.bootstrap()
 
-    from miro.plat import fontinfo
-    fontinfo.init()
-
     from miro.plat import commandline
     args = commandline.get_command_line()[1:]
 

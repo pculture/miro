@@ -29,79 +29,9 @@
 
 """fontinfo.py.  Get info about system fonts."""
 
-import ctypes
-import os
-import logging
-from miro.plat import specialfolders
-
-class FT_FaceRec(ctypes.Structure):
-    _fields_ = [
-            ('num_faces', ctypes.c_long),
-            ('face_index', ctypes.c_long),
-            ('face_flags', ctypes.c_long),
-            ('style_flags', ctypes.c_long),
-            ('num_glyphs', ctypes.c_long),
-            ('family_name', ctypes.c_char_p),
-            ('style_name', ctypes.c_char_p),
-
-            # There's many more fields, but this is all we need
-    ]
-FT_FACE = ctypes.POINTER(FT_FaceRec)
-
-freetype = library = None
-_font_cache = {} # maps path -> font name
-
-def init():
-    global freetype
-    global library
-
-    freetype = ctypes.cdll.LoadLibrary("freetype6")
-    library = ctypes.c_void_p()
-    rv = freetype.FT_Init_FreeType(ctypes.byref(library))
-    if rv != 0:
-        logging.warn("Couldn't load freetype: %s", rv)
-
-def check_init():
-    if freetype is None:
-        raise AssertionError("init() not called")
-
-def _get_font_info(path):
-    face = FT_FACE()
-    rv = freetype.FT_New_Face(library, path, 0, ctypes.byref(face))
-    if rv == 0:
-        name = "%s %s" % (face.contents.family_name, face.contents.style_name)
-        freetype.FT_Done_Face(face)
-        return name
-    else:
-        raise ValueError("Couldn't load freetype font: %s (error: %s)" %
-                         (path, rv))
-
-def get_font_info(path):
-    global _font_cache
-
-    check_init()
-    try:
-        return _font_cache[path]
-    except KeyError:
-        _font_cache[path] = _get_font_info(path)
-        return _font_cache[path]
+import pangocairo
 
 def get_all_font_info():
-    check_init()
-    font_dir = specialfolders.get_special_folder("Fonts")
-    infos = {}
-    for filename in os.listdir(font_dir):
-        if not (filename.lower().endswith('.ttf') or
-                filename.lower().endswith('.ttc')):
-            continue
-        path = os.path.join(font_dir, filename)
-        try:
-            name = get_font_info(path)
-        except ValueError, e:
-            logging.debug(e)
-            continue
-        if name not in infos:
-            infos[name] = path
-    names = infos.keys()
-    names.sort()
-    return [(name, infos[name]) for name in names]
+    font_map = pangocairo.cairo_font_map_get_default()
+    families = font_map.list_families()
+    return [f.get_name() for f in families]

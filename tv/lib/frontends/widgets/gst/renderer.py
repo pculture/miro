@@ -271,6 +271,7 @@ class VideoRenderer(Renderer):
         self.textsink_name = "textoverlay"
         self.imagesink = None
         self.window_id = None
+        self.config_cb_handle = None
 
     def build_playbin(self):
         Renderer.build_playbin(self)
@@ -288,10 +289,31 @@ class VideoRenderer(Renderer):
             logging.warning("this platform has an old version of "
                             "playbin2--no subtitle support.")
             self.supports_subtitles = False
+        # setup subtitle fonts
+        self.set_subtitle_font(app.config.get(prefs.SUBTITLE_FONT))
+        self.connect_to_config_changed()
 
     def destroy_playbin(self):
         Renderer.destroy_playbin(self)
         self.imagesink = None
+        self.disconnect_from_config_changed()
+
+    def connect_to_config_changed(self):
+        if self.config_cb_handle is None:
+            self.config_cb_handle = app.frontend_config_watcher.connect(
+                    'changed', self.on_config_changed)
+
+    def disconnect_from_config_changed(self):
+        if self.config_cb_handle is not None:
+            app.frontend_config_watcher.disconnect(self.config_cb_handle)
+            self.config_cb_handle = None
+
+    def on_config_changed(self, obj, key, value):
+        if key == prefs.SUBTITLE_FONT.key:
+            self.set_subtitle_font(value)
+
+    def set_subtitle_font(self, name):
+        self.playbin.set_property("subtitle-font-desc", name)
 
     def select_file(self, iteminfo, callback, errback, sub_filename=""):
         self._setup_item(iteminfo)
