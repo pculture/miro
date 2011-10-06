@@ -629,6 +629,7 @@ package_list=[
     'miro.plat.frontends',
     'miro.plat.frontends.widgets',
     'pyechonest',
+    'miro.extractor',
 ]
 
 if __name__ == "__main__":

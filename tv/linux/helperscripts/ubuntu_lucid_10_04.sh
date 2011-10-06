@@ -33,6 +33,9 @@ aptitude install \
     python-gconf \
     python-pycurl \
     python-mutagen \
+    libboost1.42-dev \
+    libtag1-dev \
+    zlib1g-dev \
     gstreamer0.10-ffmpeg \
     gstreamer0.10-plugins-base \
     gstreamer0.10-plugins-good \

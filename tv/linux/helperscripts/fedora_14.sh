@@ -30,5 +30,8 @@ yum install \
    pywebkitgtk \
    gstreamer-python \
    python-mutagen \
+   boost-devel \
+   taglib \
+   zlib \
    ffmpeg \
    ffmpeg2theora
