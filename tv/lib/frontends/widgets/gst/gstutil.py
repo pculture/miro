@@ -27,11 +27,25 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""fontinfo.py.  Get info about system fonts."""
+"""gstutils.py -- utility functions for gstreamer code.  """
 
-import pangocairo
+import gst
 
-def get_all_font_info():
-    font_map = pangocairo.cairo_font_map_get_default()
-    families = font_map.list_families()
-    return [f.get_name() for f in families]
+from miro import util
+
+def to_seconds(t):
+    return t / gst.SECOND
+
+def from_seconds(s):
+    return s * gst.SECOND
+
+def _get_file_url(filename):
+    """Get a file:// URL for a filename """
+
+    # FIXME: this code is really weird.  We should probably make urlize()
+    # always work
+
+    try:
+        return filename.urlize()
+    except AttributeError:
+        return util.make_file_url(filename)

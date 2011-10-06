@@ -62,7 +62,7 @@ TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 class State(object):
     """Enum for tracking what we've looked at.
-    
+
     None indicates that we haven't looked at the file at all;
     non-true values indicate that we haven't run MDP.
     """
@@ -85,7 +85,7 @@ class MovieDataInfo(object):
         self.video_path = item.get_filename()
         self.thumbnail_path = self._make_thumbnail_path()
         self._program_info = None
-    
+
     def _make_thumbnail_path(self):
         # add a random string to the filename to ensure it's unique.
         # Two videos can have the same basename if they're in
@@ -96,8 +96,8 @@ class MovieDataInfo(object):
 
     @property
     def program_info(self):
-        if not self._program_info:  
-            self._program_info = self._calc_program_info() 
+        if not self._program_info:
+            self._program_info = self._calc_program_info()
         return self._program_info
 
     def _calc_program_info(self):
@@ -142,6 +142,9 @@ class MovieDataUpdater(signals.SignalEmitter):
             if self.in_shutdown:
                 raise Shutdown
             raise
+
+        if not stdout:
+            logging.debug("moviedata: error--no stdout: %s", stdout)
 
         if TRY_AGAIN_RE.search(stdout):
             # FIXME: we should try again at some point, but right now we just

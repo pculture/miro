@@ -39,6 +39,7 @@ import time
 import subprocess
 import ctypes
 
+import gobject
 import gtk
 
 from miro.gtcache import gettext as _
@@ -51,13 +52,15 @@ from miro.plat import clipboard
 from miro.plat import options
 from miro.plat import resources
 from miro.plat import associate
-from miro.plat.renderers.vlc import VLCRenderer, get_item_type
+from miro.plat.renderers import gstreamerrenderer
+
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import gtkdirectorywatch
 from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
 from miro.plat.frontends.widgets import bonjour
+from miro.plat.frontends.widgets import embeddingwidget
 from miro.plat.frontends.widgets import flash
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -87,8 +90,15 @@ class WindowsApplication(Application):
 
     def _run(self):
 
-        associate.associate_extensions(self._get_exe_location(),
-                                        self._get_icon_location())
+        self.initXULRunner()
+        gobject.threads_init()
+        embeddingwidget.init()
+        self.startup()
+
+
+        associate.associate_extensions(
+            self._get_exe_location(), self._get_icon_location())
+
         winrel = platform.release()
         if winrel == "post2008Server":
             winrel += " (could be Windows 7)"
@@ -113,16 +123,13 @@ class WindowsApplication(Application):
             logging.info("pycurl:            %s", pycurl.version)
         except ImportError:
             logging.exception("pycurl won't load")
-        app.video_renderer = app.audio_renderer = VLCRenderer()
-        app.get_item_type = get_item_type
-        self.initXULRunner()
-        gtk.gdk.threads_init()
-        self.startup()
-        gtk.gdk.threads_enter()
-        try:
-            gtk.main()
-        finally:
-            gtk.gdk.threads_leave()
+
+        renderers = gstreamerrenderer.make_renderers()
+        app.audio_renderer, app.video_renderer = renderers
+        app.get_item_type = gstreamerrenderer.get_item_type
+
+        gtk.main()
+
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
         ctypes.cdll.winsparkle.win_sparkle_cleanup()
@@ -241,7 +248,8 @@ class WindowsApplication(Application):
             self.quit()
 
     def quit_ui(self):
-        app.video_renderer.shutdown()
+        logging.debug('Destroying EmbeddingWidgets')
+        embeddingwidget.shutdown()
         logging.debug('Destroying persistent window widgets')
         for widget in persistentwindow.get_widgets():
             widget.destroy()
@@ -275,8 +283,8 @@ class WindowsApplication(Application):
 
     def on_new_window(self, uri):
         self.open_url(uri)
-        
-    # This overwrites the Application.check_update method since the Windows 
+
+    # This overwrites the Application.check_update method since the Windows
     # autoupdate code does not use autoupdate.py.
     def check_version(self):
         ctypes.cdll.winsparkle.win_sparkle_check_update_with_ui()

@@ -48,13 +48,13 @@
 #include "nsIWebBrowser.h"
 #include "nsIInterfaceRequestor.h"
 #include "nsIWebBrowserChromeFocus.h"
-#include "docshell/nsIWebNavigation.h"
-#include "widget/nsIBaseWindow.h"
-#include "uriloader/nsIURIContentListener.h"
-#include "uriloader/nsIWebProgressListener.h"
-#include "xpcom/nsWeakReference.h"
-#include "shistory/nsIHistoryEntry.h"
-#include "shistory/nsISHistory.h"
+#include "nsIWebNavigation.h"
+#include "nsIBaseWindow.h"
+#include "nsIURIContentListener.h"
+#include "nsIWebProgressListener.h"
+#include "nsWeakReference.h"
+#include "nsIHistoryEntry.h"
+#include "nsISHistory.h"
 
 typedef void(*focusCallback)(PRBool forward, void* data);
 typedef int(*uriCallback)(char* uri, void* data);
@@ -109,8 +109,11 @@ public:
     nsresult getCurrentTitle(char ** aTitle, int* length);
     // Call when the parent window changes size
     nsresult resize(int x, int y, int width, int height);
-    // Give the browser keyboard focus
-    nsresult focus();
+    // Activate the browser window.  This makes it take keyboard focus and
+    // display the caret
+    nsresult activate();
+    // Deactivate the browser window
+    nsresult deactivate();
     // Browser Navigation buttons.  Their functionality corresponds to the
     // nsIWebNavigation interface
     int canGoBack();

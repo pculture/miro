@@ -359,3 +359,5 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.loading_icon.set_download(True)
         timer.add(5, lambda: self.toolbar.loading_icon.set_download(False))
 
+    def destroy(self):
+        self.browser.destroy()
