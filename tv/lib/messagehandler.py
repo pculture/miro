@@ -1941,6 +1941,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             fi.genre = item_info.genre
             fi.signal_change()
 
+    def handle_clog_backend(self, message):
+        logging.debug('handle_clog_backend: Backend snoozing for %d seconds.  '
+                      'ZZZZZZ.', message.n)
+        time.sleep(message.n)
+        logging.debug('handle_clog_backend: Backend out of snooze.  Yawn!')
+
     def handle_force_feedparser_processing(self, message):
         # For all our RSS feeds, force an update
         for f in feed.Feed.make_view():

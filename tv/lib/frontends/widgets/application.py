@@ -1051,6 +1051,27 @@ class Application:
             if path is not None:
                 self.message_handler.profile_next_message(message_obj, path)
 
+    def clog_backend(self):
+        """Dev method: hog the backend to simluate the backend being
+        unresponsive.
+
+        NB: strings not translated on purpose.
+        """
+        title = 'Clog backend'
+        description = ('Make the backend busy by sleeping for a specified '
+                      'number of seconds to simulate a clogged backend.\n\n'
+                      'WARNING: use judiciously!\n\n'
+                      'Default is 0 seconds.')
+        initial_text = '0'
+        n = dialogs.ask_for_string(title, description, initial_text)
+        if n == None:
+            return
+        try:
+            n = int(n)
+        except ValueError:
+            n = 0
+        messages.ClogBackend(n).send_to_backend()
+
     def profile_redraw(self):
         """Devel method: profile time to redraw part of the interface."""
 
