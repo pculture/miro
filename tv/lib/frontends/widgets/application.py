@@ -1405,6 +1405,17 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if share.mount:
             messages.SharingEject(share).send_to_backend()
 
+    def handle_downloader_sync_command_comlete(self, message):
+        # This callback is to ensure that if we are in the downloads
+        # resort_on_update is re-enabled.  Walk the display stack to see
+        # if there is a downloading display and if there is, reset the
+        # resort_on_update boolean.
+        displays = app.display_manager.display_stack
+        for d in displays:
+            if d.type == 'downloading':
+                d.controller.item_list.set_resort_on_update(True)
+        logging.debug('DownloadBatchCommandComplete')
+
     def handle_jettison_tabs(self, message):
         typ = message.type
         item_ids = message.ids

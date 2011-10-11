@@ -901,6 +901,13 @@ class ForceFeedparserProcessing(BackendMessage):
 
 # Frontend Messages
 
+class DownloaderSyncCommandComplete(FrontendMessage):
+    """Tell the frontend that the pause/resume all command are complete,
+    so that we only sort once.  This saves time sorting and also prevents
+    UI clog when items are updated and gets sorted one by one.
+    """
+    pass
+
 class JettisonTabs(FrontendMessage):
     """Tell the frontend to remove certain sidebar tabs from its model.  Done
     when selecting multiple items in the sidebar using the add to new folder

@@ -114,6 +114,23 @@ class UpdateDownloadStatus(Command):
         from miro.downloader import RemoteDownloader
         return RemoteDownloader.update_status(*self.args, **self.kws)
 
+# DownloaderSyncRequest/DownloaderSyncNotify: what are these?
+#
+# They are used to as a notification.  Usage: DownloaderSyncRequest command
+# is sent to the downloader and when it is received the downloader sends
+# DownloaderSyncNotify.  Thus, when a DownloaderSyncNotify is received,
+# you can be sure that all commands for the corresponding DownloaderSyncRequest
+# has been completed (commands are never re-ordered).
+class DownloaderSyncRequest(Command):
+    def action(self):
+        from miro.dl_daemon import download
+        return download.sync_notify()
+
+class DownloaderSyncNotify(Command):
+    def action(self):
+        from miro.messages import DownloaderSyncCommandComplete
+        DownloaderSyncCommandComplete().send_to_frontend()
+
 class BatchUpdateDownloadStatus(Command):
     spammy = True
     def action(self):

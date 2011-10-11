@@ -44,7 +44,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
         itemlistcontroller.ItemListController.__init__(
             self, u'downloading', u'downloading')
-        self.item_list.resort_on_update = True
+        self.item_list.set_resort_on_update(True)
         self.toolbar = None
 
     def build_widget(self):
@@ -83,13 +83,27 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def _update_free_space(self):
         self.status_toolbar.update_free_space()
 
+    # The pause_all/resume_all and cancel_all disables the automatic sorting
+    # mechanism until the operations are complete, because even though the
+    # operation affects all items in the list the status updates for these
+    # items are not batched.
+    #
+    # When complete, the backend is expected to send a reply indicating that
+    # all operations (up to this point) are complete and at that point we can
+    # re-enable the sort again.  See DownloadBatchCommandComplete.
     def _on_pause_all(self, widget):
+        self.item_list.set_resort_on_update(False)
         messages.PauseAllDownloads().send_to_backend()
 
     def _on_resume_all(self, widget):
+        self.item_list.set_resort_on_update(False)
         messages.ResumeAllDownloads().send_to_backend()
 
     def _on_cancel_all(self, widget):
+        # For this one we do set the resort_on_update = False because
+        # we are getting rid of items so we do want the sort to happen
+        # when stuff updates, but we only want it to happen at the very end.
+        self.item_list.set_resort_on_update(False)
         messages.CancelAllDownloads().send_to_backend()
 
     def _on_settings(self, widget):
