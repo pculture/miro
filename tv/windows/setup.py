@@ -107,7 +107,6 @@ XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 GSTREAMER_PATH = os.path.join(BINARY_KIT_ROOT, 'gstreamer')
-GSTREAMER_BIN_PATH = os.path.join(GSTREAMER_PATH, 'bin')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
@@ -278,7 +277,7 @@ os.environ['PATH'] = ';'.join([
         ZLIB_RUNTIME_LIBRARY_PATH,
         LIBTORRENT_PATH,
         GTK_LIB_PATH,
-        GSTREAMER_BIN_PATH,
+        GTK_BIN_PATH,
         os.environ['PATH']])
 
 # Private extension modules to build.
@@ -312,7 +311,6 @@ data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', '*.dll'))))
 data_files.append(
     ('gstreamer-0.10',
      iglob(os.path.join(GSTREAMER_PATH, 'lib', 'gstreamer-0.10', '*.dll'))))
-data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'bin', '*.dll'))))
 data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
@@ -441,6 +439,7 @@ class bdist_miro(Command):
         pass
 
     def run(self):
+        self.setup_gstreamer_bin_dir()
         self.run_command('py2exe')
         self.copy_ico()
         if self.test:
@@ -458,6 +457,51 @@ class bdist_miro(Command):
         shortappname = template_vars["shortAppName"]
         self.copy_file("Miro.ico",
                        os.path.join(dist_dir, "%s.ico" % shortappname))
+
+    def setup_gstreamer_bin_dir(self):
+        """Setup a directory that contains gstreamer runtime DLLs
+
+        The issue here is that we want some DLLs from the gstreamer runtime
+        directory, but not the ones that are also included in GTK_BIN_PATH.
+        The GTK versions are newer and GTK's ABI is backward compatible but
+        not forward compatible.
+
+        Our strategy is to create a new directory inside the build directory
+        and copy over the files that we need, but not the GTK DLLs.
+        """
+        # figure out a directory to put the gstreamer dlls
+        bdist_dir = self.get_finalized_command('bdist').bdist_base
+        gstreamer_bin_dir = os.path.join(bdist_dir, 'gstreamer_bin')
+        # move them there
+        self.copy_gstreamer_dlls(gstreamer_bin_dir)
+        # add that directory to the PATH
+        os.environ['PATH'] = ';'.join([gstreamer_bin_dir, os.environ['PATH']])
+
+    def copy_gstreamer_dlls(self, dest_path):
+        """Copy gstreamer DLLs to a directory.
+
+        This method does the work for setup_gstreamer_bin_dir().  It copies
+        over DLLs from the gstreamer bin directory, unless they also exist in
+        GTK_BIN_PATH.
+        """
+        src_path = os.path.join(GSTREAMER_PATH, 'bin')
+        files_to_copy = []
+        for name in os.listdir(src_path):
+            if name == 'libgtkgl-2.0-1.dll':
+                # This one isn't in the GTK bin directory, but we still want
+                # to skiip it.  It's definitely not needed, and might get in
+                # the way.
+                continue
+            if os.path.exists(os.path.join(GTK_BIN_PATH, name)):
+                # This file is also in the GTK runtime directory.  We want to
+                # use the GTK version, so don't copy the file
+                continue
+            files_to_copy.append(name)
+
+        dir_util.create_tree(dest_path, files_to_copy)
+        for name in files_to_copy:
+            file_util.copy_file(os.path.join(src_path, name), dest_path,
+                    update=True)
 
 class runmiro(Command):
     description = "build Miro and start it up"
