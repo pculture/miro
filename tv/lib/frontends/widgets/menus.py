@@ -743,7 +743,7 @@ def on_memory_stats():
     app.widgetapp.memory_stats()
 
 @action_handler("ForceFeedparserProcessing")
-def on_memory_stats():
+def on_force_feedparser_processing():
     app.widgetapp.force_feedparser_processing()
 
 def generate_action_groups(menu_structure):
