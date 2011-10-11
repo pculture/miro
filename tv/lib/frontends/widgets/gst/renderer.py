@@ -335,7 +335,8 @@ class VideoRenderer(Renderer):
                 self.enabled_track = 0
 
         if sub_filename:
-            self.playbin.set_property("suburi", "file://%s" % sub_filename)
+            self.playbin.set_property("suburi",
+                    gstutil._get_file_url(sub_filename))
         if sub_index > -1:
             flags = self.playbin.get_property('flags')
             self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
