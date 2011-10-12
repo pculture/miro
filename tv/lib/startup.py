@@ -431,7 +431,7 @@ def on_frontend_started():
     eventloop.add_timeout(20, item.start_deleted_checker,
             "start checking deleted items")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
-    eventloop.add_timeout(60, app.metadata_manager.run_extractors,
+    eventloop.add_timeout(60, app.metadata_manager.start_thread,
             "update metadata")
     eventloop.add_timeout(90, clear_icon_cache_orphans, "clear orphans")
 

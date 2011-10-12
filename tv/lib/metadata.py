@@ -34,12 +34,18 @@ frontend cares about these and the backend doesn't.
 import fileutil
 import os.path
 import logging
+import threading
+import contextlib
+import Queue
 
-from miro.util import returns_unicode
 from miro import coverart
 from miro import filetags
 from miro import descriptions
 from miro import app
+from miro import signals
+from miro import eventloop
+from miro.util import returns_unicode
+from miro.plat.utils import thread_body
 
 class Source(object):
     """Object with readable metadata properties."""
@@ -294,26 +300,45 @@ class Store(Source):
         mdp_state = set_mdp_state,
     )
 
-class MetadataManager(object):
+class MetadataManager(signals.SignalEmitter):
     def __init__(self):
+        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop')
         self.providers = {}
+        self.thread = None
+        self.to_extract = Queue.Queue()
+
+    def start_thread(self):
+        self.thread = threading.Thread(name='Extractor Thread',
+                target=thread_body,
+                args=[self.thread_loop])
+        self.thread.setDaemon(True)
+        self.thread.start()
+
+    def thread_loop(self):
+        """to_extract is a queue of types of objects we might want to examine;
+        creating a new object or adding a new extractor puts that type of object
+        back on the queue
+        """
+        while True:
+            self.emit('begin-loop')
+            class_name = self.to_extract.get()
+            try:
+                self.run_extractors_for_type(class_name)
+            finally:
+                self.emit('end-loop')
 
     def load_extractors(self):
         from miro.extractor import *
 
     def add_provider(self, datasource, DescriptionClass, provider):
         # TODO: order providers for DescriptionClass by datasource priority
-        self.providers.setdefault(DescriptionClass.__name__, [])
-        self.providers[DescriptionClass.__name__].append((datasource, provider))
+        class_name = DescriptionClass.__name__
+        self.providers.setdefault(class_name, [])
+        self.providers[class_name].append((datasource, provider))
+        self.to_extract.put(class_name)
         logging.info('extractor registered: %r', datasource)
 
-    def run_extractors(self):
-        """Catch up each extractor to the existing items, in order of id. """
-        print('run_extractors')
-        for class_name in self.providers:
-            self.run_extractors_for_type(class_name)
-        logging.info("known exctractors: %r", self.providers)
-
+    @eventloop.as_idle
     def run_extractors_for_type(self, class_name):
         """Run extractors that respond to a certain type of Describebable."""
         print('checking for extractors for %r' % (class_name,))
@@ -340,7 +365,7 @@ class MetadataManager(object):
                     break
 
     def describeable_created(self, describeable):
-        self.run_extractors_for_type(describeable.__class__.__name__)
+        self.to_extract.put(describeable.__class__.__name__)
 
 # extraction process
 
