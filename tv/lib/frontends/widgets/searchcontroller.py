@@ -163,6 +163,7 @@ class SearchController(itemlistcontroller.SimpleItemListController):
     def make_titlebar(self):
         titlebar = itemlistwidgets.SearchListTitlebar()
         titlebar.connect('save-search', self._on_save_search)
+        titlebar.hide_album_view_button()
         return titlebar
 
     def get_saved_search_text(self):
