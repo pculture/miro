@@ -202,7 +202,17 @@ class MultiRowAlbumSort(ItemSort):
                 info.artist_sort_key)
 
     def sort_key_feed(self, info):
-        return (info.feed_name,
+        # sort watched folders to the bottom
+        if info.feed_url.startswith('dtv:directoryfeed:'):
+            watched_folder_key = 1
+        else:
+            watched_folder_key = 0
+        # We want watched folders to always be at the bottom, even if we
+        # reverse the search.
+        if self.reverse:
+            watched_folder_key = -watched_folder_key
+        return (watched_folder_key,
+                info.feed_name.lower(),
                 info.release_date)
 
     def sort_key_video(self, info):
