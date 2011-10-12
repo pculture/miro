@@ -71,6 +71,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         titlebar.connect("cancel-all", self._on_cancel_all)
         titlebar.connect("settings", self._on_settings)
         titlebar.switch_to_view(self.widget.selected_view)
+        titlebar.hide_album_view_button()
         return titlebar
 
     def make_context_menu_handler(self):
