@@ -65,7 +65,11 @@ static AVStream *add_output_stream(AVFormatContext *output_format_context, AVStr
     }
 
     switch (input_codec_context->codec_type) {
+#if LIBAVFORMAT_VERSION_MAJOR > 52
+        case AVMEDIA_TYPE_AUDIO:
+#else
         case CODEC_TYPE_AUDIO:
+#endif
             output_codec_context->channel_layout = input_codec_context->channel_layout;
             output_codec_context->sample_rate = input_codec_context->sample_rate;
             output_codec_context->channels = input_codec_context->channels;
@@ -77,7 +81,11 @@ static AVStream *add_output_stream(AVFormatContext *output_format_context, AVStr
                 output_codec_context->block_align = input_codec_context->block_align;
             }
             break;
+#if LIBAVFORMAT_VERSION_MAJOR > 52
+        case AVMEDIA_TYPE_VIDEO:
+#else
         case CODEC_TYPE_VIDEO:
+#endif
             output_codec_context->pix_fmt = input_codec_context->pix_fmt;
             output_codec_context->width = input_codec_context->width;
             output_codec_context->height = input_codec_context->height;
@@ -159,7 +167,11 @@ int main(int argc, char **argv)
         exit(1);
     }
 
+#if LIBAVFORMAT_VERSION_MAJOR > 52
+    ofmt = av_guess_format("mpegts", NULL, NULL);
+#else
     ofmt = guess_format("mpegts", NULL, NULL);
+#endif
     if (!ofmt) {
         fprintf(stderr, "Could not find MPEG-TS muxer\n");
         exit(1);
@@ -179,12 +191,20 @@ int main(int argc, char **argv)
 
     for (i = 0; i < ic->nb_streams && (video_index < 0 || audio_index < 0); i++) {
         switch (ic->streams[i]->codec->codec_type) {
+#if LIBAVFORMAT_VERSION_MAJOR > 52
+            case AVMEDIA_TYPE_VIDEO:
+#else
             case CODEC_TYPE_VIDEO:
+#endif
                 video_index = i;
                 ic->streams[i]->discard = AVDISCARD_NONE;
                 video_st = add_output_stream(oc, ic->streams[i]);
                 break;
+#if LIBAVFORMAT_VERSION_MAJOR > 52
+            case AVMEDIA_TYPE_AUDIO:
+#else
             case CODEC_TYPE_AUDIO:
+#endif
                 audio_index = i;
                 ic->streams[i]->discard = AVDISCARD_NONE;
                 audio_st = add_output_stream(oc, ic->streams[i]);
@@ -239,7 +259,11 @@ int main(int argc, char **argv)
             break;
         }
 
+#if LIBAVFORMAT_VERSION_MAJOR > 52
+        if (packet.stream_index == video_index && (packet.flags & AV_PKT_FLAG_KEY)) {
+#else
         if (packet.stream_index == video_index && (packet.flags & PKT_FLAG_KEY)) {
+#endif
             segment_time = (double)video_st->pts.val * video_st->time_base.num / video_st->time_base.den;
         }
         else if (video_index < 0) {
