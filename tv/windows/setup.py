@@ -474,8 +474,12 @@ class bdist_miro(Command):
         gstreamer_bin_dir = os.path.join(bdist_dir, 'gstreamer_bin')
         # move them there
         self.copy_gstreamer_dlls(gstreamer_bin_dir)
-        # add that directory to the PATH
+        # add that directory to the PATH so py2exe finds DLLs that it needs
         os.environ['PATH'] = ';'.join([gstreamer_bin_dir, os.environ['PATH']])
+        # add the DLLs to data_files as well, since some of them are linked
+        # dynamically
+        self.distribution.data_files.append(
+                ('', iglob(os.path.join(gstreamer_bin_dir, '*.dll'))))
 
     def copy_gstreamer_dlls(self, dest_path):
         """Copy gstreamer DLLs to a directory.
