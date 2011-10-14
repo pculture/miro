@@ -149,6 +149,16 @@ class ViewToggler(widgetset.HBox):
         self.pack_start(self.togglers[album_view])
         self.pack_start(self.togglers[list_view])
 
+    def hide_album_view(self):
+        album_view = WidgetStateStore.get_album_view_type()
+        if self.togglers[album_view] in self.children:
+            self.remove(self.togglers[album_view])
+
+    def show_album_view(self):
+        album_view = WidgetStateStore.get_album_view_type()
+        if self.togglers[album_view] not in self.children:
+            self.pack_start(self.togglers[album_view])
+
     def size_request(self, layout):
         width = sum([w.size_request()[0] for w in self.togglers.values()])
         return w, -1
@@ -623,6 +633,12 @@ class ItemListTitlebar(Titlebar):
 
     def switch_to_view(self, view):
         self.view_toggler.switch_to_view(view)
+
+    def show_album_view_button(self):
+        self.view_toggler.show_album_view()
+
+    def hide_album_view_button(self):
+        self.view_toggler.hide_album_view()
 
     def set_title(self, title):
         self.title_drawer = title
