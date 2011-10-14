@@ -1359,6 +1359,9 @@ StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'
 zugo_install:
 StrCmp "$ZUGO_FLAGS" "" end
 
+!ifdef MIROBAR_CHANNEL
+StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /CHANNEL='${MIROBAR_CHANNEL}'"
+!endif
 ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
 Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
 !endif
