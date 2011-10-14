@@ -274,9 +274,12 @@ class Browser(widgetset.Browser):
 
         return self.should_load_url(url)
 
-    def should_download_url(self, url, mimetype):
-        if filetypes.is_download_mimetype(mimetype):
+    def should_download_url(self, url, mimetype=None):
+        if mimetype and filetypes.is_download_mimetype(mimetype):
             logging.debug('downloading %s (%s)', url, mimetype)
+            return True
+        if filetypes.is_download_url(url):
+            logging.debug('downloading %s' % url)
             return True
         return False
 

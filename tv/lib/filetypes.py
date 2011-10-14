@@ -97,6 +97,10 @@ def is_download_mimetype(mimetype):
     return mimetype in ('application/vnd.emusic-emusic_list',
                         'audio/x-amzxml')
 
+def is_download_url(url):
+    from miro import emusic, amazon
+    return emusic.is_emusic_url(url) or amazon.is_amazon_url(url)
+
 def is_allowed_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
