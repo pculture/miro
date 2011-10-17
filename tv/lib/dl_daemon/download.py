@@ -1084,7 +1084,21 @@ class BTDownloader(BGDownloader):
             params["auto_managed"] = False
             params["paused"] = False
             params["duplicate_is_error"] = True
-            params["storage_mode"] = lt.storage_mode_t.storage_mode_allocate
+
+            # About file allocation: the default scheme that would work is
+            # using sparse file allocation.  With sparse, physical disk space
+            # is consumed on an as-needed basis and we no shuffling of the
+            # individual file chunks is required (missing ones are zero-filled
+            # on the fly and don't take up disk space).  Unfortunately not
+            # all filesystems support sparse files and on those that don't
+            # the results are less than ideal.  In particular, pause
+            # immediately after a large file is started can take a long time
+            # because the close() of the torrent file handle must wait till
+            # all bytes are zero-filled.  Using compact mode has the
+            # disadvantage of extra disk i/o because of pieces are moved
+            # on the fly rather than being placed into its logical location
+            # within the file but makes everything else usable again.
+            params["storage_mode"] = lt.storage_mode_t.storage_mode_compact
 
             if self.info_hash:
                 self.fast_resume_data = load_fast_resume_data(self.info_hash)
