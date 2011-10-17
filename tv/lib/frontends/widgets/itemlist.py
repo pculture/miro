@@ -456,6 +456,9 @@ class ItemList(object):
         self._sorter = sorter
         self.model.change_sort(sorter.sort_key, sorter.reverse)
 
+    def set_resort_on_update(self, resort):
+        self.resort_on_update = resort
+
     def resort(self):
         self.set_sort(self._sorter)
 

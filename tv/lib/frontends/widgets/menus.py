@@ -401,6 +401,7 @@ def get_menu():
                 MenuItem(_("Memory Stats"), "MemoryStats"),
                 MenuItem(_("Force Feedparser Processing"),
                     "ForceFeedparserProcessing"),
+                MenuItem(_("Clog Backend"), "ClogBackend")
                 ])
 
         mbar.menuitems.append(dev_menu)
@@ -743,8 +744,12 @@ def on_memory_stats():
     app.widgetapp.memory_stats()
 
 @action_handler("ForceFeedparserProcessing")
-def on_memory_stats():
+def on_force_feedparser_processing():
     app.widgetapp.force_feedparser_processing()
+
+@action_handler("ClogBackend")
+def on_clog_backend():
+    app.widgetapp.clog_backend()
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to
