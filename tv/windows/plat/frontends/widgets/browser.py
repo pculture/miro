@@ -28,8 +28,10 @@
 # statement from all source files in the program, then also delete it here.
 
 """browser.py -- WebBrowser widget."""
-
+import urlparse
+import os, os.path
 import logging
+import tempfile
 
 import gtk
 import gobject
@@ -46,6 +48,7 @@ class BrowserWidget(embeddingwidget.EmbeddingWidget):
         self.browser = xulrunnerbrowser.XULRunnerBrowser(
                 self.embedding_window.hwnd, 0, 0, 1, 1)
         self.browser.set_callback_object(self)
+        self._downloads = {} # in-progress downloads
 
     def navigate(self, url):
         self.browser.load_uri(url)
@@ -108,15 +111,32 @@ class BrowserWidget(embeddingwidget.EmbeddingWidget):
         gobject.idle_add(change_focus)
 
     def on_uri_load(self, uri):
-        rv = wrappermap.wrapper(self).should_load_url(uri)
-        if rv:
-            wrappermap.wrapper(self).url = uri
+        if wrappermap.wrapper(self).should_download_url(uri):
+            parsed = urlparse.urlparse(uri)
+            prefix, suffix = os.path.splitext(os.path.basename(parsed.path))
+            fd, path = tempfile.mkstemp(suffix=suffix, prefix=prefix)
+            os.close(fd)
+            self.browser.download_uri(uri, path)
+            self._downloads[uri] = path
+            return False
+        else:
+            rv = wrappermap.wrapper(self).should_load_url(uri)
+            if rv:
+                wrappermap.wrapper(self).url = uri
         return rv
 
-    def on_net_start(self):
+    def on_net_start(self, uri):
+        if uri in self._downloads:
+            return # don't need to bother
         wrappermap.wrapper(self).emit('net-start')
 
-    def on_net_stop(self):
+    def on_net_stop(self, uri):
+        if uri in self._downloads:
+            path = self._downloads.pop(uri)
+            wrappermap.wrapper(self).emit(
+                'download-finished', 
+                'file://%s' % path.replace(os.sep, '/'))
+            return
         wrappermap.wrapper(self).emit('net-stop')
 gobject.type_register(BrowserWidget)
 
@@ -129,6 +149,7 @@ class Browser(Widget):
         # TODO: implement net-start and net-stop signaling on windows.
         self.create_signal('net-start')
         self.create_signal('net-stop')
+        self.create_signal('download-finished')
 
     def navigate(self, url):
         self._widget.navigate(url)

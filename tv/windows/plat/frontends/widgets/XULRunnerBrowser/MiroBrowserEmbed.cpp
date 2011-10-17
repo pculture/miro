@@ -39,17 +39,25 @@
 #include <Python.h>
 #include "nsCOMPtr.h"
 #include "nsComponentManagerUtils.h"
+#include "nsCWebBrowserPersist.h"
 #include "nsEmbedCID.h"
+#include "nsIChannel.h"
 #include "nsIDOMWindow.h"
 #include "nsIInterfaceRequestorUtils.h"
+#include "nsIIOService.h"
+#include "nsILocalFile.h"
+#include "nsIProperties.h"
 #include "nsISupportsImpl.h"
 #include "nsIWebBrowser.h"
 #include "nsIWebBrowserFocus.h"
+#include "nsIWebBrowserPersist.h"
 #include "nsDocShellCID.h"
 #include "nsIDocShellTreeItem.h"
 #include "nsIWebNavigationInfo.h"
 #include "nsIURI.h"
 #include "nsServiceManagerUtils.h"
+#include "nsNetCID.h"
+#include "nsXPCOMCID.h"
 
 #include "MiroBrowserEmbed.h"
 #include "xulrunnerbrowser.h"
@@ -163,6 +171,29 @@ nsresult MiroBrowserEmbed::loadURI(const char* uri)
     mWebNavigation->LoadURI(PromiseFlatString(mCurrentURI).get(),
             nsIWebNavigation::LOAD_FLAGS_NONE, 0, 0, 0);
     return NS_OK;
+}
+
+// Download a URI to a path
+nsresult MiroBrowserEmbed::downloadURI(const char* uri, const char* path)
+{
+  nsresult rv;
+  nsIURI *aURI;
+  nsCOMPtr<nsIIOService> io_service(do_GetService(NS_IOSERVICE_CONTRACTID));
+  io_service->NewURI(nsDependentCString(uri), nsnull, nsnull, &aURI);
+  if (!aURI) {
+    return NS_ERROR_FAILURE;
+  }
+  nsCOMPtr<nsIWebBrowserPersist> persist(do_CreateInstance(NS_WEBBROWSERPERSIST_CONTRACTID, &rv));
+  NS_ENSURE_SUCCESS(rv, rv);
+  nsCOMPtr<nsILocalFile> file(do_CreateInstance(NS_LOCAL_FILE_CONTRACTID, &rv));
+  NS_ENSURE_SUCCESS(rv, rv);
+  file->InitWithPath(NS_ConvertASCIItoUTF16(path));
+  persist->SetProgressListener(this);
+  persist->SetPersistFlags(nsIWebBrowserPersist::PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION|
+			   nsIWebBrowserPersist::PERSIST_FLAGS_CLEANUP_ON_FAILURE|
+			   nsIWebBrowserPersist::PERSIST_FLAGS_FORCE_ALLOW_COOKIES);
+  persist->SaveURI(aURI, nsnull, nsnull, nsnull, "", file);
+  return NS_OK;
 }
 
 nsresult MiroBrowserEmbed::getCurrentURI(char ** uri)
@@ -474,6 +505,7 @@ NS_IMETHODIMP MiroBrowserEmbed::GetSiteWindow(void * *aSiteWindow)
 NS_IMETHODIMP MiroBrowserEmbed::OnStartURIOpen(nsIURI *aURI, PRBool *_retval)
 {
     nsresult rv;
+    int should_load;
     nsCAutoString specString;
     *_retval = PR_FALSE;
 
@@ -484,9 +516,10 @@ NS_IMETHODIMP MiroBrowserEmbed::OnStartURIOpen(nsIURI *aURI, PRBool *_retval)
     // continue the load.  However, it seems like the opposite is actually the
     // case.
     if(mURICallback && is_enabled()) {
-        if(mURICallback((char*)specString.get(), mURICallbackData) == 0) {
-            *_retval = PR_TRUE;
-        }
+      should_load = mURICallback((char*)specString.get(), mURICallbackData);
+      if(should_load == 0) {
+	*_retval = PR_TRUE;
+      }
     }
     return NS_OK;
 }
@@ -556,12 +589,22 @@ NS_IMETHODIMP MiroBrowserEmbed::SetParentContentListener(nsIURIContentListener *
 /* void onStateChange (in nsIWebProgress aWebProgress, in nsIRequest aRequest, in unsigned long aStateFlags, in nsresult aStatus); */
 NS_IMETHODIMP MiroBrowserEmbed::OnStateChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRUint32 aStateFlags, nsresult aStatus)
 {
+    nsresult rv;
+    nsCAutoString specString;
     if((aStateFlags & nsIWebProgressListener::STATE_IS_NETWORK) &&
             mNetworkCallback && is_enabled()) {
+        if (aRequest) {
+	  nsIURI *aURI;
+	  ((nsIChannel*)aRequest)->GetOriginalURI(&aURI);
+          rv = aURI->GetSpec(specString);
+          NS_ENSURE_SUCCESS(rv, rv);
+	} else {
+          NS_NAMED_LITERAL_STRING(specString, "");
+        }
         if(aStateFlags & nsIWebProgressListener::STATE_START) {
-            mNetworkCallback(PR_TRUE, mNetworkCallbackData);
+	  mNetworkCallback(PR_TRUE, (char*)specString.get(), mNetworkCallbackData);
         } else if(aStateFlags & nsIWebProgressListener::STATE_STOP) {
-            mNetworkCallback(PR_FALSE, mNetworkCallbackData);
+	  mNetworkCallback(PR_FALSE, (char*)specString.get(), mNetworkCallbackData);
         }
     }
     return NS_OK;

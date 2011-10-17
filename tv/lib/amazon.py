@@ -39,6 +39,7 @@ from xml.dom import minidom
 
 from miro import app
 from miro import httpclient
+from miro import fileutil
 try:
     import pyDes as des
 except ImportError:
@@ -56,17 +57,15 @@ def decrypt_amz(data):
 
 def is_amazon_url(url):
     parts = urlparse.urlparse(url)
-    return ((parts.netloc.startswith('amazon.') or
-             parts.netloc.startswith('www.amazon')) and
-            (parts.path.endswith('.amz') or
+    return ((parts.path.endswith('.amz') or
              parts.path.endswith('.m3u')))
 
 def is_amazon_content_type(content_type):
     """
     Returns True if this is a content type from Amazon.
     """
-    return content_type in ('audio/x-amzxml',
-                            'audio/x-mpegurl')
+    return content_type.startswith(('audio/x-amzxml',
+                                    'audio/x-mpegurl'))
 
 def download_file(url, handle_unknown_callback):
     """
@@ -77,6 +76,13 @@ def download_file(url, handle_unknown_callback):
     def callback(data):
         _amazon_callback(data, unknown)
 
+    if url.startswith('file://'):
+        path = url[7:]
+        try:
+            _amz_callback(file(path).read())
+        finally:
+            fileutil.remove(path)
+        return
     options = httpclient.TransferOptions(url)
     options.requires_cookies = True
     transfer = httpclient.CurlTransfer(options, callback,
@@ -92,13 +98,13 @@ def _amazon_callback(data, unknown):
         unknown()
         return
 
-    if data['content-type'] == 'audio/x-amzxml': # .amz file:
-        _amz_callback(data)
-    elif data['content-type'] == 'audio/x-mpegurl': # .m3u file:
-        _m3u_callback(data)
+    if data['content-type'].startswith('audio/x-amzxml'): # .amz file:
+        _amz_callback(data['body'])
+    elif data['content-type'].startswith('audio/x-mpegurl'): # .m3u file:
+        _m3u_callback(data['body'])
 
 def _amz_callback(data):
-    content = decrypt_amz(base64.b64decode(data['body'])).rstrip('\x00\x08')
+    content = decrypt_amz(base64.b64decode(data)).rstrip('\x00\x08')
 
     dom = minidom.parseString(content)
 
@@ -130,7 +136,7 @@ def _amz_callback(data):
 def _m3u_callback(data):
     from miro.singleclick import _build_entry, download_video
 
-    for line in data['body'].split('\n'):
+    for line in data.split('\n'):
         line = line.strip()
         if line.startswith('#'): # comment
             continue

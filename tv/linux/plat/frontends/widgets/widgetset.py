@@ -29,6 +29,8 @@
 
 import gtk
 import gobject
+import os
+import tempfile
 
 # Most of our stuff comes from the portable code, except the video
 # renderer and the browser.
@@ -41,7 +43,6 @@ from miro.plat.frontends.widgets import webkitbrowser
 # Use the default font
 ITEM_TITLE_FONT = None
 ITEM_DESC_FONT = None
-
 
 class ScrolledBrowser(gtk.ScrolledWindow):
     def __init__(self):
@@ -59,16 +60,20 @@ class Browser(Widget):
         Widget.__init__(self)
         self.set_widget(ScrolledBrowser())
         self._browser = self._widget.browser
+        self.downloads = set()
 
         self.wrapped_browser_connect('load-started', self.on_net_start)
         self.wrapped_browser_connect('load-finished', self.on_net_stop)
-        self.wrapped_browser_connect('navigation-policy-decision-requested',
-                self.on_navigate)
+        #self.wrapped_browser_connect('navigation-policy-decision-requested',
+        #        self.on_navigate)
         self.wrapped_browser_connect('mime-type-policy-decision-requested',
                 self.on_mime_type)
+        self.wrapped_browser_connect('download-requested',
+                                     self.on_download_requested)
 
         self.create_signal('net-start')
         self.create_signal('net-stop')
+        self.create_signal('download-finished')
 
         # FIXME - handle new windows
 
@@ -95,9 +100,24 @@ class Browser(Widget):
 
     def on_mime_type(self, view, frame, request, mtype, policy_decision):
         uri = request.get_uri()
+        if self.should_download_url(uri, mtype):
+            policy_decision.download()
+            return True
         if not self.should_load_mimetype(uri, mtype):
             policy_decision.ignore()
             return True
+
+    def on_download_requested(self, view, download):
+        prefix, suffix = os.path.splitext(download.get_suggested_filename())
+        fd, path = tempfile.mkstemp(suffix=suffix, prefix=prefix)
+        os.close(fd)
+        download.set_destination_uri('file://%s' % path)
+        download.connect('notify::status', self.on_download_status_changed)
+        return True
+
+    def on_download_status_changed(self, download, param):
+        if download.get_status().value_nick == 'finished':
+            self.emit('download-finished', download.get_destination_uri())
 
     def get_current_url(self):
         return self._browser.get_property("uri")
@@ -121,9 +141,15 @@ class Browser(Widget):
     def can_go_back(self):
         return self._browser.can_go_back()
 
-    def should_load_url(self, url, mimetype=None):
+    def should_load_url(self, url):
         """This gets overriden by frontends/widgets/browser.Browser."""
         return True
+
+    def should_load_mimetype(self, url, mimetype):
+        return True
+
+    def should_download_url(self, url, mimetype=None):
+        return False
 
     def navigate(self, url):
         if url:

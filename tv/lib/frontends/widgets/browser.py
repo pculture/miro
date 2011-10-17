@@ -272,7 +272,21 @@ class Browser(widgetset.Browser):
                                  metadata).send_to_backend()
             return False
 
-        return True
+        return self.should_load_url(url)
+
+    def should_download_url(self, url, mimetype=None):
+        if mimetype and filetypes.is_download_mimetype(mimetype):
+            logging.debug('downloading %s (%s)', url, mimetype)
+            return True
+        if filetypes.is_download_url(url):
+            logging.debug('downloading %s' % url)
+            return True
+        return False
+
+    def do_download_finished(self, url):
+        logging.debug('finished downloading %s', url)
+        self.emit('download-started')
+        messages.DownloadURL(url, self.unknown_callback).send_to_backend()
 
 class BrowserNav(widgetset.VBox):
     def __init__(self, guide_info):

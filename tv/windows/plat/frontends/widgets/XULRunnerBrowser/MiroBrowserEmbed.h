@@ -58,7 +58,7 @@
 
 typedef void(*focusCallback)(PRBool forward, void* data);
 typedef int(*uriCallback)(char* uri, void* data);
-typedef void(*networkCallback)(PRBool is_start, void* data);
+typedef void(*networkCallback)(PRBool is_start, char* uri, void* data);
 
 class MiroBrowserEmbed   : public nsIWebBrowserChrome,
                            public nsIWebBrowserChromeFocus,
@@ -101,6 +101,8 @@ public:
     nsresult enable();
     // Load a URI into the browser
     nsresult loadURI(const char* uri);
+    // Downloads a URI
+    nsresult downloadURI(const char* uri, const char* path);
     // Gets the current uri from mWebNavigator
     nsresult getCurrentURI(char ** uri);
     // Gets the current title from a long chain of things.  aTitle is a utf-16
