@@ -1398,6 +1398,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 item_.pause_upload()
             else:
                 item_.pause()
+        downloader.sync_downloader_commands() 
 
     def handle_pause_download(self, message):
         try:
@@ -1406,6 +1407,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             logging.warn("PauseDownload: Item not found -- %s", message.id)
         else:
             item_.pause()
+        downloader.sync_downloader_commands()
 
     def handle_resume_all_downloads(self, message):
         """Resumes downloading and uploading items"""
@@ -1414,6 +1416,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 item_.start_upload()
             else:
                 item_.resume()
+        downloader.sync_downloader_commands()
 
     def handle_resume_download(self, message):
         try:
@@ -1937,6 +1940,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             fi.year = item_info.year
             fi.genre = item_info.genre
             fi.signal_change()
+
+    def handle_clog_backend(self, message):
+        logging.debug('handle_clog_backend: Backend snoozing for %d seconds.  '
+                      'ZZZZZZ.', message.n)
+        time.sleep(message.n)
+        logging.debug('handle_clog_backend: Backend out of snooze.  Yawn!')
 
     def handle_force_feedparser_processing(self, message):
         # For all our RSS feeds, force an update

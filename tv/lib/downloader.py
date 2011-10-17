@@ -72,6 +72,12 @@ def generate_dlid():
         dlid = u"download%08d" % random.randint(0, 99999999)
     return dlid
 
+# NB: sync_downloader_commands: for information on how to use this please
+# see the note in DownloaderSyncRequest/DownloaderSyncNotify.
+def sync_downloader_commands():
+    c = command.DownloaderSyncRequest(RemoteDownloader.dldaemon)
+    c.send()
+
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
     def setup_new(self, url, item, contentType=None, channelName=None):

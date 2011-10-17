@@ -894,12 +894,26 @@ class RateItem(BackendMessage):
         self.info = info
         self.rating = rating
 
+class ClogBackend(BackendMessage):
+    """Dev message: intentionally clog the backend for a specified number of 
+    seconds.
+    """
+    def __init__(self, n=0):
+        self.n = n
+
 class ForceFeedparserProcessing(BackendMessage):
     """Force the backend to do a bunch of feedparser updates
     """
     pass
 
 # Frontend Messages
+
+class DownloaderSyncCommandComplete(FrontendMessage):
+    """Tell the frontend that the pause/resume all command are complete,
+    so that we only sort once.  This saves time sorting and also prevents
+    UI clog when items are updated and gets sorted one by one.
+    """
+    pass
 
 class JettisonTabs(FrontendMessage):
     """Tell the frontend to remove certain sidebar tabs from its model.  Done

@@ -1051,6 +1051,27 @@ class Application:
             if path is not None:
                 self.message_handler.profile_next_message(message_obj, path)
 
+    def clog_backend(self):
+        """Dev method: hog the backend to simluate the backend being
+        unresponsive.
+
+        NB: strings not translated on purpose.
+        """
+        title = 'Clog backend'
+        description = ('Make the backend busy by sleeping for a specified '
+                      'number of seconds to simulate a clogged backend.\n\n'
+                      'WARNING: use judiciously!\n\n'
+                      'Default is 0 seconds.')
+        initial_text = '0'
+        n = dialogs.ask_for_string(title, description, initial_text)
+        if n == None:
+            return
+        try:
+            n = int(n)
+        except ValueError:
+            n = 0
+        messages.ClogBackend(n).send_to_backend()
+
     def profile_redraw(self):
         """Devel method: profile time to redraw part of the interface."""
 
@@ -1404,6 +1425,17 @@ class WidgetsMessageHandler(messages.MessageHandler):
         # Now, reply to backend, and eject the share.
         if share.mount:
             messages.SharingEject(share).send_to_backend()
+
+    def handle_downloader_sync_command_comlete(self, message):
+        # This callback is to ensure that if we are in the downloads
+        # resort_on_update is re-enabled.  Walk the display stack to see
+        # if there is a downloading display and if there is, reset the
+        # resort_on_update boolean.
+        displays = app.display_manager.display_stack
+        for d in displays:
+            if d.type == 'downloading':
+                d.controller.item_list.set_resort_on_update(True)
+        logging.debug('DownloadBatchCommandComplete')
 
     def handle_jettison_tabs(self, message):
         typ = message.type

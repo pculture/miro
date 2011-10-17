@@ -151,6 +151,9 @@ def stop_upload(dlid):
         _lock.release()
     return download.stop_upload()
 
+def sync_notify():
+    return command.DownloaderSyncNotify(daemon.LAST_DAEMON).send()
+
 def pause_upload(dlid):
     _lock.acquire()
     try:
