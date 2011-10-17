@@ -31,6 +31,7 @@
 
 import os
 import logging
+import tempfile
 
 from AppKit import *
 from Foundation import *
@@ -49,6 +50,7 @@ class Browser(Widget):
         self.url = None
         self.create_signal('net-start')
         self.create_signal('net-stop')
+        self.create_signal('download-finished')
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
         self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
         self.view.setMaintainsBackForwardList_(YES)
@@ -63,6 +65,7 @@ class Browser(Widget):
         self.view.setResourceLoadDelegate_(delegate)
         self.view.setFrameLoadDelegate_(delegate)
         self.view.setUIDelegate_(delegate)
+        self.view.setDownloadDelegate_(delegate)
 
 
     def viewport_created(self):
@@ -147,6 +150,7 @@ class BrowserDelegate (NSObject):
         self.browser = browser
         self.openPanelContextID = 1
         self.openPanelContext = dict()
+        self._downloads = {}
         return self
 
     def webView_didStartProvisionalLoadForFrame_(self, webview, frame):
@@ -165,7 +169,9 @@ class BrowserDelegate (NSObject):
 
     def webView_decidePolicyForMIMEType_request_frame_decisionListener_(self, webview, mtype, request, frame, listener):
         url = unicode(request.URL())
-        if self.browser.should_load_mimetype(url, mtype):
+        if self.browser.should_download_url(url, mtype):
+            listener.download()
+        elif self.browser.should_load_mimetype(url, mtype):
             listener.use()
         else:
             listener.ignore()        
@@ -239,6 +245,27 @@ class BrowserDelegate (NSObject):
 
     def webView_runJavaScriptAlertPanelWithMessage_(self, webview, message):
         logging.jsalert(message)
+
+    # NSURLDownloadDelegate methods
+    def download_decideDestinationWithSuggestedFilename_(self, download, filename):
+        prefix, suffix = os.path.splitext(filename)
+        fd, path = tempfile.mkstemp(suffix=suffix, prefix=prefix)
+        os.close(fd)
+        download.setDestination_allowOverwrite_(path, NO)
+
+    def downloadDidFinish_(self, download):
+        path = self._downloads.pop(download)
+        self.browser.emit('net-stop')
+        self.browser.emit('download-finished', 'file://%s' % path)
+
+    def download_didCreateDestination_(self, download, path):
+        self._downloads[download] = path
+
+    def downloadShouldUseCredentialStorage_(self, download):
+        return YES
+
+    def download_shouldDecodeSourceDataOfMIMEType_(self, download, mime_type):
+        return YES
 
 ###############################################################################
 
