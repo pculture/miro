@@ -392,7 +392,7 @@ class ItemListController(object):
         self.selected_view = app.widget_state.get_selected_view(self.type,
                                                                 self.id)
         # build widgets
-        self.standard_view_toolbar = self.build_header_toolbar()
+        self.standard_view_toolbar = self.build_standard_view_header()
         self.widget = itemlistwidgets.ItemContainerWidget(
                 self.standard_view_toolbar, self.selected_view)
         self.build_widget()
@@ -505,7 +505,8 @@ class ItemListController(object):
     def build_list_view(self):
         """Build the list view widget for this controller."""
         list_view_type = WidgetStateStore.get_list_view_type()
-        columns = app.widget_state.get_columns_enabled(self.type, self.id)
+        columns = app.widget_state.get_columns_enabled(self.type, self.id,
+                list_view_type)
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view_type)
         column_renderers = self.build_column_renderers()
@@ -524,12 +525,13 @@ class ItemListController(object):
         """Build the album view widget for this controller."""
         # build album view widget
         album_view_type = WidgetStateStore.get_album_view_type()
-        columns = app.widget_state.get_columns_enabled(self.type, self.id)
+        columns = app.widget_state.get_columns_enabled(self.type, self.id,
+                album_view_type)
         # use list view column widths for now.  I think we want to separate
         # values for these eventually, but since we're sharing which columns
         # are enabled, let's share the widths too.
         album_view_widths = app.widget_state.get_column_widths(
-                self.type, self.id, WidgetStateStore.get_list_view_type())
+                self.type, self.id, album_view_type)
         column_renderers = self.build_column_renderers()
         album_view = itemlistwidgets.AlbumView(self.item_list,
                 column_renderers, columns, album_view_widths)
@@ -558,8 +560,9 @@ class ItemListController(object):
         column_renderers.get('multi-row-album').switch_mode(multi_row_mode)
         return column_renderers
 
-    def build_header_toolbar(self):
-        sorts_enabled = app.widget_state.get_columns_enabled(self.type, self.id)
+    def build_standard_view_header(self):
+        sorts_enabled = app.widget_state.get_columns_enabled(self.type,
+                self.id, WidgetStateStore.get_standard_view_type())
         return itemlistwidgets.HeaderToolbar(sorts_enabled)
 
     def build_item_tracker(self):
@@ -586,14 +589,23 @@ class ItemListController(object):
         self.widget.item_details.set_expanded(expanded)
 
     def update_columns_enabled(self):
-        sorts = app.widget_state.get_columns_enabled(self.type, self.id)
+        if self.selected_view == WidgetStateStore.get_standard_view_type():
+            self._update_columns_enabled_standard_view()
+        else:
+            self._update_columns_enabled_table_view()
+
+    def _update_columns_enabled_table_view(self):
+        columns = app.widget_state.get_columns_enabled(self.type, self.id,
+                self.selected_view)
         widths = app.widget_state.get_column_widths(self.type, self.id,
-            WidgetStateStore.get_list_view_type())
-        self.list_item_view.column_widths.update(widths)
-        self.list_item_view.update_sorts(sorts)
-        self.album_item_view.column_widths.update(widths)
-        self.album_item_view.update_sorts(sorts)
-        self.standard_view_toolbar.update_sorts(sorts)
+                self.selected_view)
+        self.current_item_view.column_widths.update(widths)
+        self.current_item_view.update_sorts(columns)
+
+    def _update_columns_enabled_standard_view(self):
+        columns = app.widget_state.get_columns_enabled(self.type, self.id,
+                self.selected_view)
+        self.standard_view_toolbar.update_sorts(columns)
 
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
@@ -881,11 +893,25 @@ class ItemListController(object):
 
     def save_columns(self):
         """Save enabled columns, column order, and column widths"""
-        columns, widths = self.list_item_view.get_column_state()
-        app.widget_state.set_columns_enabled(self.type, self.id, columns)
-        list_view_type = WidgetStateStore.get_list_view_type()
-        app.widget_state.update_column_widths(
-                self.type, self.id, list_view_type, widths)
+
+        self._save_table_view_columns(WidgetStateStore.get_list_view_type())
+        self._save_table_view_columns(WidgetStateStore.get_album_view_type())
+        self._save_standard_view_columns()
+
+    def _save_table_view_columns(self, view_type):
+        item_view = self.views[view_type]
+        columns, widths =  item_view.get_column_state()
+        app.widget_state.set_columns_enabled(self.type, self.id,
+                view_type, columns)
+        app.widget_state.update_column_widths(self.type, self.id,
+                view_type, widths)
+
+    def _save_standard_view_columns(self):
+        standard_view_type = WidgetStateStore.get_standard_view_type()
+        columns = self.standard_view_toolbar.get_sorts()
+        app.widget_state.set_columns_enabled(self.type, self.id,
+                standard_view_type, columns)
+
 
     def save_scroll_positions(self):
         """Save the current scroll positions of all item views"""

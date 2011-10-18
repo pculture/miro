@@ -53,9 +53,6 @@ class DisplayState(DDBObject):
         self.last_played_item_id = None
         self.active_filters = None
         self.sort_state = None
-        # ListView properties
-        self.list_view_columns = None
-        self.list_view_widths = None
 
 class ViewState(DDBObject):
     """Properties that need to be stored for each TableView
@@ -65,6 +62,8 @@ class ViewState(DDBObject):
         self.display_id = key[1]
         self.view_type = key[2]
         self.scroll_position = None
+        self.columns_enabled = None
+        self.column_widths = None
 
 class GlobalState(DDBObject):
     """Properties that apply globally"""

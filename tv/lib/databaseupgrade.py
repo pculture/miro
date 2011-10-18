@@ -3420,3 +3420,38 @@ def upgrade163(cursor):
         # object on startup, so no need to do anything here
         pass
 
+def upgrade164(cursor):
+    """Move column info from DisplayState to ViewState.
+
+    This makes it easier to store different data for list, album, and standard
+    view.
+    """
+
+    # view type constants
+    STANDARD_VIEW = 0
+    LIST_VIEW = 1
+    ALBUM_VIEW = 3
+
+    # make new columns in view state
+    cursor.execute("ALTER TABLE view_state "
+            "ADD COLUMN columns_enabled pythonrepr")
+    cursor.execute("ALTER TABLE view_state "
+            "ADD COLUMN column_widths pythonrepr")
+
+    # copy data from display_state
+    cursor.execute("UPDATE view_state "
+            "SET columns_enabled = "
+            "(SELECT list_view_columns FROM display_state "
+            "WHERE display_state.type=view_state.display_type AND "
+            "display_state.id_ = view_state.display_id) "
+            "WHERE view_type in (?, ?, ?)",
+            (STANDARD_VIEW, LIST_VIEW, ALBUM_VIEW))
+    cursor.execute("UPDATE view_state "
+            "SET column_widths = "
+            "(SELECT list_view_widths FROM display_state "
+            "WHERE display_state.type=view_state.display_type AND "
+            "display_state.id_ = view_state.display_id) "
+            "WHERE view_type in (?, ?)", (LIST_VIEW, ALBUM_VIEW))
+    # drop old columns
+    remove_column(cursor, 'display_state', ['list_view_columns'])
+    remove_column(cursor, 'display_state', ['list_view_widths'])
