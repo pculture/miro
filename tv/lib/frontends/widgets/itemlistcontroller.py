@@ -505,7 +505,7 @@ class ItemListController(object):
     def build_list_view(self):
         """Build the list view widget for this controller."""
         list_view_type = WidgetStateStore.get_list_view_type()
-        columns = app.widget_state.get_sorts_enabled(self.type, self.id)
+        columns = app.widget_state.get_columns_enabled(self.type, self.id)
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view_type)
         column_renderers = self.build_column_renderers()
@@ -524,7 +524,7 @@ class ItemListController(object):
         """Build the album view widget for this controller."""
         # build album view widget
         album_view_type = WidgetStateStore.get_album_view_type()
-        columns = app.widget_state.get_sorts_enabled(self.type, self.id)
+        columns = app.widget_state.get_columns_enabled(self.type, self.id)
         # use list view column widths for now.  I think we want to separate
         # values for these eventually, but since we're sharing which columns
         # are enabled, let's share the widths too.
@@ -559,7 +559,7 @@ class ItemListController(object):
         return column_renderers
 
     def build_header_toolbar(self):
-        sorts_enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
+        sorts_enabled = app.widget_state.get_columns_enabled(self.type, self.id)
         return itemlistwidgets.HeaderToolbar(sorts_enabled)
 
     def build_item_tracker(self):
@@ -586,7 +586,7 @@ class ItemListController(object):
         self.widget.item_details.set_expanded(expanded)
 
     def update_columns_enabled(self):
-        sorts = app.widget_state.get_sorts_enabled(self.type, self.id)
+        sorts = app.widget_state.get_columns_enabled(self.type, self.id)
         widths = app.widget_state.get_column_widths(self.type, self.id,
             WidgetStateStore.get_list_view_type())
         self.list_item_view.column_widths.update(widths)
@@ -882,7 +882,7 @@ class ItemListController(object):
     def save_columns(self):
         """Save enabled columns, column order, and column widths"""
         columns, widths = self.list_item_view.get_column_state()
-        app.widget_state.set_sorts_enabled(self.type, self.id, columns)
+        app.widget_state.set_columns_enabled(self.type, self.id, columns)
         list_view_type = WidgetStateStore.get_list_view_type()
         app.widget_state.update_column_widths(
                 self.type, self.id, list_view_type, widths)

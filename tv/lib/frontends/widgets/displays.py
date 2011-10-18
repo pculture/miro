@@ -365,7 +365,7 @@ class ItemListDisplayMixin(object):
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def toggle_column_enabled(self, name):
-        app.widget_state.toggle_sort(self.type, self.id, name)
+        app.widget_state.toggle_column_enabled(self.type, self.id, name)
         self.controller.update_columns_enabled()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
@@ -382,7 +382,7 @@ class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
 
     def get_column_info(self):
         available = WidgetStateStore.get_columns_available(self.type)
-        enabled = app.widget_state.get_sorts_enabled(self.type, self.id)
+        enabled = app.widget_state.get_columns_enabled(self.type, self.id)
         return enabled, available
 
 class FeedDisplay(ItemListDisplay):

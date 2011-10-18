@@ -309,7 +309,7 @@ class WidgetStateStore(object):
         display.last_played_item_id = id_
         self._save_display_state(display_type, display_id)
 
-    def get_sorts_enabled(self, display_type, display_id):
+    def get_columns_enabled(self, display_type, display_id):
         display = self._get_display(display_type, display_id)
         columns = display.list_view_columns
         if columns is None:
@@ -323,18 +323,18 @@ class WidgetStateStore(object):
         # filter it out:
         return [x for x in columns if x in available]
 
-    def set_sorts_enabled(self, display_type, display_id, enabled):
+    def set_columns_enabled(self, display_type, display_id, enabled):
         display = self._get_display(display_type, display_id)
         display.list_view_columns = enabled
         self._save_display_state(display_type, display_id)
 
-    def toggle_sort(self, display_type, display_id, column):
-        columns = self.get_sorts_enabled(display_type, display_id)
+    def toggle_column_enabled(self, display_type, display_id, column):
+        columns = self.get_columns_enabled(display_type, display_id)
         if column in columns:
             columns.remove(column)
         else:
             columns.append(column)
-        self.set_sorts_enabled(display_type, display_id, columns)
+        self.set_columns_enabled(display_type, display_id, columns)
 
 # ViewState properties that are only valid for specific view_types:
 
@@ -346,7 +346,7 @@ class WidgetStateStore(object):
             if column_widths is None:
                 column_widths = {}
             # get widths for each enabled column
-            columns = self.get_sorts_enabled(display_type, display_id)
+            columns = self.get_columns_enabled(display_type, display_id)
             for name in columns:
                 default = WidgetStateStore.DEFAULT_COLUMN_WIDTHS[name]
                 column_widths.setdefault(name, default)
