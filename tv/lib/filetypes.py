@@ -74,7 +74,9 @@ MIMETYPES_EXT_MAP = {
     'application/x-magnet':     ['.magnet'],
 
     'audio/x-mpegurl':  ['.m3u'],
-    'audio/x-amzxml': ['.amz']
+    'audio/x-amzxml': ['.amz'],
+
+    'application/vnd.emusic-emusic_list': ['.emx']
 }
 
 EXT_MIMETYPES_MAP = {}
@@ -91,6 +93,14 @@ def is_allowed_mimetype(mimetype):
     """
     return (mimetype in MIMETYPES_EXT_MAP.keys())
 
+def is_download_mimetype(mimetype):
+    return mimetype in ('application/vnd.emusic-emusic_list',
+                        'audio/x-amzxml')
+
+def is_download_url(url):
+    from miro import emusic, amazon
+    return emusic.is_emusic_url(url) or amazon.is_amazon_url(url)
+
 def is_allowed_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
@@ -99,8 +109,7 @@ def is_allowed_filename(filename):
     return (is_video_filename(filename)
             or is_audio_filename(filename)
             or is_torrent_filename(filename)
-            or filename.endswith('.amz')
-            or filename.endswith('.m3u'))
+            or filename.endswith(('.amz', '.m3u', '.emx')))
 
 def is_playable_filename(filename):
     """

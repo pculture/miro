@@ -38,6 +38,7 @@ cdef extern from "Python.h":
     PyObject* PyObject_CallMethod(PyObject *o, char* name, char* format, ...)
     PyObject* PyObject_CallFunction(PyObject *o, char* format, ...)
     int PyObject_IsTrue(PyObject *o)
+    long PyInt_AsLong(PyObject *o)
     void Py_DECREF(PyObject*)
     void Py_INCREF(PyObject*)
     object PyString_FromString(char *)
@@ -52,7 +53,7 @@ cdef extern from "nscore.h":
 cdef extern from "MiroBrowserEmbed.h":
     ctypedef void(*focusCallback)(PRBool forward, void* data)
     ctypedef int(*uriCallback)(char* data, void* data)
-    ctypedef void(*networkCallback)(PRBool is_start, void* data)
+    ctypedef void(*networkCallback)(PRBool is_start, char* data, void* data)
     ctypedef struct MiroBrowserEmbed:
         nsresult (*init)(unsigned long parentWindow, int x, int y, int width, 
                 int height)
@@ -60,6 +61,7 @@ cdef extern from "MiroBrowserEmbed.h":
         nsresult (*enable)()
         nsresult (*destroy)()
         nsresult (*loadURI)(char* uri)
+        nsresult (*downloadURI)(char* uri, char* path)
         nsresult (*getCurrentURI)(char ** uri)
         nsresult (*getCurrentTitle)(char ** title, int* length)
         nsresult (*resize)(int x, int y, int width, int height)
@@ -183,17 +185,17 @@ cdef int uriCallbackGlue(char *uri, void* data) with gil:
     should_load = PyObject_CallMethod(<PyObject*>data,
             "on_uri_load", "s", uri)
     if should_load:
-        retval = PyObject_IsTrue(should_load)
+        retval = PyInt_AsLong(should_load);
         Py_DECREF(should_load)
     return retval
 
-cdef void networkCallbackGlue(PRBool is_start, void* data) with gil:
+cdef void networkCallbackGlue(PRBool is_start, char* uri, void* data) with gil:
     cdef PyObject* retval
 
     if is_start:
-        retval = PyObject_CallMethod(<PyObject*>data, "on_net_start", "")
+        retval = PyObject_CallMethod(<PyObject*>data, "on_net_start", "s", uri)
     else:
-        retval = PyObject_CallMethod(<PyObject*>data, "on_net_stop", "")
+        retval = PyObject_CallMethod(<PyObject*>data, "on_net_stop", "s", uri)
     if retval:
         Py_DECREF(retval)
 
@@ -250,6 +252,11 @@ cdef class XULRunnerBrowser:
         cdef nsresult rv
         rv = self.browser.loadURI(uri)
         self._check_result('MiroBrowserEmbed.loadURI', rv)
+
+    def download_uri(self, uri, path):
+        cdef nsresult rv
+        rv = self.browser.downloadURI(uri, path)
+        self._check_result('MiroBrowserEmbed.downloadURI', rv)
 
     def get_current_uri(self):
         cdef nsresult rv

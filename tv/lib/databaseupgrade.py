@@ -3380,3 +3380,43 @@ def upgrade162(cursor):
                 "SET active_filters=? "
                 "WHERE type = ? AND id_ = ?",
                 (new_active_filters, type, id_))
+
+def upgrade163(cursor):
+    """Add eMusic as a store."""
+        # if the user is using a theme, we don't do anything
+    if not app.config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
+        return
+
+    store_url = u'http://www.kqzyfj.com/click-5294129-10364534'
+    favicon_url = u'http://www.emusic.com/favicon.ico'
+    cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
+                   (store_url,))
+    count = cursor.fetchone()[0]
+    if count > 0:
+        return
+
+    next_id = get_next_id(cursor)
+
+    cursor.execute("INSERT INTO channel_guide "
+                   "(id, url, allowedURLs, updated_url, favicon, firstTime, "
+                   "store, userTitle) "
+                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                   (next_id, store_url, "[]", store_url,
+                    favicon_url, True, 1, u"eMusic")) # 1 is a visible store
+
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('site',))
+    row = cursor.fetchone()
+    if row is not None:
+        try:
+            tab_ids = eval_container(row[0])
+        except StandardError:
+            tab_ids = []
+        tab_ids.append(next_id)
+        cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                       (repr(tab_ids), 'site'))
+    else:
+        # no site taborder (#11985).  We will create the TabOrder
+        # object on startup, so no need to do anything here
+        pass
+
