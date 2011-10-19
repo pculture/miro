@@ -973,10 +973,6 @@ SkipChangingInstDir:
   StrCpy $REINSTALL "1"
   ClearErrors
 
-  !ifdef OPENCANDY
-  !insertmacro OpenCandyAsyncInit "${OC_STR_MY_PRODUCT_NAME}" "${OC_STR_KEY}" "${OC_STR_SECRET}" ${OC_INIT_MODE_NORMAL}
-  !endif
-
   GetTempFileName $TACKED_ON_FILE
   Delete "$TACKED_ON_FILE"  ; The above macro creates the file
   TackOn::writeToFile "$TACKED_ON_FILE"
@@ -1153,7 +1149,12 @@ StartInstall:
   StrCmp $REINSTALL "1" SkipLanguageDLL
   StrCmp "$ADVANCED" "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
-SkipLanguageDLL:
+  SkipLanguageDLL:
+
+  !ifdef OPENCANDY
+  !insertmacro OpenCandyAsyncInit "${OC_STR_MY_PRODUCT_NAME}" "${OC_STR_KEY}" "${OC_STR_SECRET}" ${OC_INIT_MODE_NORMAL}
+  !endif
+
 
   ; Make check boxes for unhandled file extensions.
 
