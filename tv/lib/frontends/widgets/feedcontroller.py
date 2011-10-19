@@ -88,7 +88,8 @@ class FeedController(itemlistcontroller.ItemListController,
         else:
             titlebar = itemlistwidgets.ChannelTitlebar()
             titlebar.connect('save-search', self._on_save_search)
-        titlebar.hide_album_view_button()
+        if not self.is_directory_feed:
+            titlebar.hide_album_view_button()
         return titlebar
 
     def get_saved_search_text(self):
