@@ -743,8 +743,6 @@ class DisplayStateSchema(DDBObjectSchema):
         ('id_', SchemaString()),
         ('selected_view', SchemaInt(noneOk=True)),
         ('active_filters', SchemaStringSet(noneOk=True)),
-        ('list_view_columns', SchemaList(SchemaString(), noneOk=True)),
-        ('list_view_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
         ('shuffle', SchemaBool(noneOk=True)),
         ('repeat', SchemaInt(noneOk=True)),
         ('selection', SchemaList(SchemaMultiValue(), noneOk=True)),
@@ -755,14 +753,6 @@ class DisplayStateSchema(DDBObjectSchema):
     indexes = (
         ('display_state_display', ('type', 'id_')),
     )
-
-    @staticmethod
-    def handle_malformed_list_view_columns(value):
-        return None
-
-    @staticmethod
-    def handle_malformed_list_view_widths(value):
-        return None
 
 class GlobalStateSchema(DDBObjectSchema):
     klass = GlobalState
@@ -790,6 +780,8 @@ class ViewStateSchema(DDBObjectSchema):
         ('display_id', SchemaString()),
         ('view_type', SchemaInt()),
         ('scroll_position', SchemaTuple(SchemaInt(), SchemaInt(), noneOk=True)),
+        ('columns_enabled', SchemaList(SchemaString(), noneOk=True)),
+        ('column_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
     ]
 
     indexes = (
@@ -804,7 +796,16 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_selection(value):
         return None
 
-VERSION = 163
+    @staticmethod
+    def handle_malformed_columns_enabled(value):
+        return None
+
+    @staticmethod
+    def handle_malformed_column_widths(value):
+        return None
+
+
+VERSION = 164
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

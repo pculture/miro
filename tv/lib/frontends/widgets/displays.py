@@ -53,7 +53,8 @@ from miro.frontends.widgets import searchcontroller
 from miro.frontends.widgets import tabcontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
-from miro.plat.frontends.widgets.threads import call_on_ui_thread
+from miro.frontends.widgets.widgetstatestore import WidgetStateStore
+
 from miro.plat.frontends.widgets import widgetset
 
 class Display(signals.SignalEmitter):
@@ -93,6 +94,29 @@ class Display(signals.SignalEmitter):
     def cleanup(self):
         """Cleanup any resources allocated in create.  This will be called
         after the widget for this display is removed.
+        """
+        pass
+
+    def get_column_info(self):
+        """Get info about the togglable columns for this display.
+
+        By default this returns None, which indicates that the display doesn't
+        support togglable columns.
+
+        Subclasses can override this and return the tuple (columns_enabled,
+        columns_available) which describes the togglable columns.
+        Both should be a list of column names.
+        """
+        return None
+
+    def toggle_column_enabled(self, name):
+        """Change if a column is enabled.
+
+        This method is called after the sorts menu changes.  By default we do
+        nothing.  If a display has togglable columns, it should override this
+        and update the enabled columns.
+
+        :param name: unicode identifier for the column
         """
         pass
 
@@ -340,7 +364,9 @@ class ItemListDisplayMixin(object):
         self.controller.stop_tracking()
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
-    def update_columns_enabled(self):
+    def toggle_column_enabled(self, name):
+        app.widget_state.toggle_column_enabled(self.type, self.id,
+                self.controller.selected_view, name)
         self.controller.update_columns_enabled()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
@@ -354,6 +380,13 @@ class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
 
     def make_controller(self, tab):
         raise NotImplementedError()
+
+    def get_column_info(self):
+        available = WidgetStateStore.get_columns_available(self.type, self.id,
+                self.controller.selected_view)
+        enabled = app.widget_state.get_columns_enabled(self.type, self.id,
+                self.controller.selected_view)
+        return enabled, available
 
 class FeedDisplay(ItemListDisplay):
     TAB_TYPE = u'feed'

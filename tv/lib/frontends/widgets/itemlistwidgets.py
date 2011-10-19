@@ -887,6 +887,7 @@ class SorterOwner(object):
     def __init__(self, sorts_enabled):
         self.create_signal('sort-changed')
         self.sorters = dict()
+        self.sorts_enabled = []
         self.update_sorts(sorts_enabled)
 
     def on_sorter_clicked(self, widget, sort_key):
@@ -914,6 +915,10 @@ class SorterOwner(object):
         for name in sorted(new - old, key=sorts_enabled.index):
             self.sorters[name] = self.make_sorter(name)
         self.allocate_widths()
+        self.sorts_enabled = sorts_enabled
+
+    def get_sorts(self):
+        return self.sorts_enabled
 
     def allocate_widths(self, preserving_by_label=None):
         """Option method for subclasses that need to allocate widths when their
@@ -1128,9 +1133,7 @@ class ListView(ItemView, SorterOwner):
             sorter.set_width(self.column_widths[name])
 
 class AlbumView(ListView):
-    def update_sorts(self, sorters):
-        # force multi-row-album column to be included as the first column
-        ListView.update_sorts(self, ['multi-row-album'] + sorters)
+    pass
 
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed

@@ -417,9 +417,7 @@ class Application:
 
     def toggle_column(self, name):
         current_display = app.display_manager.get_current_display()
-        app.widget_state.toggle_sort(current_display.type, current_display.id,
-            unicode(name))
-        current_display.update_columns_enabled()
+        current_display.toggle_column_enabled(unicode(name))
 
     def share_item(self, item):
         share_items = {"file_url": item.file_url,

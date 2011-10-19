@@ -982,18 +982,20 @@ class MenuStateManager(signals.SignalEmitter):
 
     def _update_view_menu(self):
         display = app.display_manager.get_current_display()
-        # using hasattr because not all displays have ids and types
-        # TODO: refactor the display type / id system
-        if not (hasattr(display, 'type') and hasattr(display, 'id')):
+        # fetch the enabled/available columns for this display
+        column_info = display.get_column_info()
+        if column_info is None:
+            # display doesn't support togglable columns
             return
-
-        enabled = set(app.widget_state.get_sorts_enabled(display.type, display.id))
-        checks = dict(('ToggleColumn-' + column, column in enabled)
-            for column in WidgetStateStore.get_columns())
-        self.emit('checked-changed', 'ListView', checks)
-
-        for column in WidgetStateStore.get_columns_available(display.type):
+        columns_enabled = set(column_info[0])
+        columns_available = column_info[1]
+        # make available columns user selectable
+        for column in columns_available:
             self.enabled_groups.add('column-%s' % column)
+        # check the currently enabled columns
+        checks = dict(('ToggleColumn-' + column, column in columns_enabled)
+            for column in WidgetStateStore.get_toggleable_columns())
+        self.emit('checked-changed', 'ListView', checks)
 
 def _get_view_menu():
     menu = list()
