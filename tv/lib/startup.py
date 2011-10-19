@@ -322,7 +322,9 @@ def finish_startup(obj, thread):
     setup_theme()
     install_message_handler()
     itemsource.setup_handlers()
-    downloader.init_controller()
+
+    app.download_state_manager = downloader.DownloadStateManager()
+    app.download_state_manager.init_controller()
 
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()
@@ -423,7 +425,7 @@ def on_frontend_started():
     autoupdate.check_for_updates()
     yield None
     # Delay running high CPU/IO operations for a bit
-    eventloop.add_timeout(5, downloader.startup_downloader,
+    eventloop.add_timeout(5, app.download_state_manager.startup_downloader,
             "start downloader daemon")
     eventloop.add_timeout(10, workerprocess.startup,
             "start worker process")

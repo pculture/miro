@@ -907,7 +907,6 @@ class ForceFeedparserProcessing(BackendMessage):
     pass
 
 # Frontend Messages
-
 class DownloaderSyncCommandComplete(FrontendMessage):
     """Tell the frontend that the pause/resume all command are complete,
     so that we only sort once.  This saves time sorting and also prevents
