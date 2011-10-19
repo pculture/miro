@@ -49,10 +49,18 @@ import traceback
 import unicodedata
 import urllib
 
-import libtorrent
-
 from miro.clock import clock
 from miro import filetypes
+
+# Do NOT import libtorrent up here.  libtorrent.so is compiled with
+# @executable_path-relative path dependency for the Python library
+# within the Python framework.  This makes Miro.app invoke properly,
+# but you cannot invoke the python command line interpreter (like
+# we do with the metadata extractor) because the python executable
+# has a different path to the Miro binary in Miro.app, and so when
+# libtorrent tries to load Python shared library it fails.
+#
+# See bz:18370.
 
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
@@ -219,6 +227,7 @@ def get_torrent_info_hash(path):
 
     f = open(path, 'rb')
     try:
+        import libtorrent
         data = f.read(MAX_TORRENT_SIZE)
         if not data or data[0] != 'd':
             # File doesn't start with 'd', bailout  (see #12301)
@@ -241,6 +250,7 @@ def get_name_from_torrent_metadata(metadata):
     :returns: torrent name unicode string
     :raises ValueError: metadata was not formatted properly
     """
+    import libtorrent
     metadata_dict = libtorrent.bdecode(metadata)
     if metadata_dict is None:
         raise ValueError("metadata is not bencoded")
