@@ -382,7 +382,8 @@ class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
         raise NotImplementedError()
 
     def get_column_info(self):
-        available = WidgetStateStore.get_columns_available(self.type)
+        available = WidgetStateStore.get_columns_available(self.type, self.id,
+                self.controller.selected_view)
         enabled = app.widget_state.get_columns_enabled(self.type, self.id,
                 self.controller.selected_view)
         return enabled, available

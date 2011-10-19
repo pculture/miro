@@ -1133,9 +1133,7 @@ class ListView(ItemView, SorterOwner):
             sorter.set_width(self.column_widths[name])
 
 class AlbumView(ListView):
-    def update_sorts(self, sorters):
-        # force multi-row-album column to be included as the first column
-        ListView.update_sorts(self, [u'multi-row-album'] + sorters)
+    pass
 
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed

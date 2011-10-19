@@ -157,7 +157,7 @@ class WidgetStateStore(object):
     # This needs to be handled here, though analagous properties (e.g.
     # NO_RESIZE_COLUMNS) are handled in widgetconst. #16783 refers to fixing the
     # WSS mess - these shouldn't be sets of strings anyway.
-    MANDATORY_SORTERS = frozenset([u'name'])
+    MANDATORY_SORTERS = frozenset([u'name', u'multi-row-album'])
 
     def __init__(self):
         self.displays = {}
@@ -316,14 +316,26 @@ class WidgetStateStore(object):
         columns = view.columns_enabled
         if columns is None:
             columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
-        available = WidgetStateStore.AVAILABLE_COLUMNS[display_type]
-        # If a column used to be disableable for a view but now is not,
-        # re-add it at the end of the list:
-        mandatory = available & WidgetStateStore.MANDATORY_SORTERS
-        columns.extend(mandatory.difference(columns))
+        available = WidgetStateStore.get_columns_available(display_type,
+                display_id, view_type)
+        self._add_manditory_columns(view_type, columns)
         # If a column used to be enableable for a view but now is not,
         # filter it out:
         return [x for x in columns if x in available]
+
+    def _add_manditory_columns(self, view_type, columns):
+        """Add manditory columns to the list of columns enabled."""
+        # We currently handle name and multi-row-album.  Add an assertion so
+        # that if MANDATORY_SORTERS changes without this code changing, we'll
+        # see a crash report.
+
+        assert (WidgetStateStore.MANDATORY_SORTERS ==
+                set((u'name', u'multi-row-album')))
+        if u'name' not in columns:
+            columns.append(u'name')
+        if (view_type == self.get_album_view_type() and
+                u'multi-row-album' not in columns):
+            columns.insert(0, u'multi-row-album')
 
     def set_columns_enabled(self, display_type, display_id, view_type,
             enabled):
@@ -403,8 +415,11 @@ class WidgetStateStore(object):
 # static properties of a display_type:
 
     @staticmethod
-    def get_columns_available(display_type):
-        return WidgetStateStore.AVAILABLE_COLUMNS[display_type]
+    def get_columns_available(display_type, display_id, view_type):
+        available = WidgetStateStore.AVAILABLE_COLUMNS[display_type]
+        if view_type == WidgetStateStore.get_album_view_type():
+            available.add(u'multi-row-album')
+        return available
 
 # static properties of a view_type:
 

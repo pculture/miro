@@ -80,7 +80,7 @@ COLUMN_LABELS = {
     u'kind': _('Video Kind'),
     u'playlist': _('Order'),
 }
-NO_RESIZE_COLUMNS = set(['state', 'rating', 'multi-row-album'])
+NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set(['state'])
 DESCENDING_BY_DEFAULT = frozenset(['date', 'date-added', 'rate'])
 COLUMN_WIDTH_WEIGHTS = {
