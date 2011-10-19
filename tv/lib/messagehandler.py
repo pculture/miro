@@ -1714,14 +1714,14 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         # shallow-copy attributes that store lists, dicts, and sets so
         # that changing the DisplayInfo doesn't change the database object
         state.active_filters = copy.copy(info.active_filters)
-        state.list_view_columns = copy.copy(info.list_view_columns)
-        state.list_view_widths = copy.copy(info.list_view_widths)
         state.signal_change()
 
     def handle_save_view_state(self, message):
         info = message.view_info
         state = self._get_view_state(info.key)
         state.scroll_position = info.scroll_position
+        state.columns_enabled = copy.copy(info.columns_enabled)
+        state.column_widths = copy.copy(info.column_widths)
         state.signal_change()
 
     def handle_save_global_state(self, message):

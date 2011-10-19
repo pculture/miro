@@ -1796,8 +1796,6 @@ class DisplayInfo(object):
             self.last_played_item_id = display.last_played_item_id
             # shallow-copy attributes that store lists, dicts, and sets so
             # that changing the database object doesn't change the DisplayInfo
-            self.list_view_columns = copy.copy(display.list_view_columns)
-            self.list_view_widths = copy.copy(display.list_view_widths)
             self.active_filters = copy.copy(display.active_filters)
         else:
             self.selected_view = None
@@ -1807,8 +1805,6 @@ class DisplayInfo(object):
             self.selection = None
             self.sort_state = None
             self.last_played_item_id = None
-            self.list_view_columns = None
-            self.list_view_widths = None
 
 class GlobalInfo(object):
     """Contains the properties that are global to the widgets frontend
@@ -1825,8 +1821,14 @@ class ViewInfo(object):
         self.key = key
         if view is not None:
             self.scroll_position = view.scroll_position
+            # shallow-copy attributes that store lists, dicts, and sets so
+            # that changing the database object doesn't change the DisplayInfo
+            self.columns_enabled = copy.copy(view.columns_enabled)
+            self.column_widths = copy.copy(view.column_widths)
         else:
             self.scroll_position = None
+            self.columns_enabled = None
+            self.column_widths = None
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.
