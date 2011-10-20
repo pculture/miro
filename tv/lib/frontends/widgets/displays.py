@@ -55,6 +55,7 @@ from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets import widgetset
 
 class Display(signals.SignalEmitter):
