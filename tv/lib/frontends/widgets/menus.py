@@ -983,6 +983,9 @@ class MenuStateManager(signals.SignalEmitter):
     def _update_view_menu(self):
         display = app.display_manager.get_current_display()
         # fetch the enabled/available columns for this display
+        if display is None:
+            # no display?
+            return
         column_info = display.get_column_info()
         if column_info is None:
             # display doesn't support togglable columns

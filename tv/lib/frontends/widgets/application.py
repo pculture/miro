@@ -417,7 +417,8 @@ class Application:
 
     def toggle_column(self, name):
         current_display = app.display_manager.get_current_display()
-        current_display.toggle_column_enabled(unicode(name))
+        if current_display:
+            current_display.toggle_column_enabled(unicode(name))
 
     def share_item(self, item):
         share_items = {"file_url": item.file_url,

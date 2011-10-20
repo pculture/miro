@@ -138,7 +138,7 @@ class PlaybackManager (signals.SignalEmitter):
             return
         app.tabs._select_from_tab_list(self.selected_tab_list.type, tab_iter)
         display = app.display_manager.current_display
-        if hasattr(display, 'controller'):
+        if display and hasattr(display, 'controller'):
             controller = display.controller
             controller.scroll_to_item(playing_item, manual=True, recenter=True)
         else:

@@ -117,6 +117,7 @@ class CheckMenuHandler(NSObject):
 check_menu_handler = CheckMenuHandler.alloc().init()
 
 def update_view_menu_state():
+    # Error checking for display != None done below in try/except block
     display = app.display_manager.get_current_display()
     main_menu = NSApp().mainMenu()
     # XXX: should be using the tag to prevent interface and locale breakages

@@ -278,8 +278,10 @@ class DisplayManager(object):
         display = self.display_stack.pop()
         if unselect:
             self._unselect_display(display, on_top=True)
-        self.current_display.on_activate(is_push=False)
-        app.widgetapp.window.set_main_area(self.current_display.widget)
+        current_display = self.current_display
+        if current_display:
+            current_display.on_activate(is_push=False)
+            app.widgetapp.window.set_main_area(current_display.widget)
 
     def _unselect_display(self, display, on_top):
         if on_top:
