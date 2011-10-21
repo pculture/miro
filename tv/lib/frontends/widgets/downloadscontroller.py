@@ -36,6 +36,7 @@ from miro.frontends.widgets.itemlistwidgets import (
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import prefpanel
 
+from miro import app
 from miro import messages
 from miro import downloader
 from miro import prefs
@@ -90,7 +91,10 @@ class DownloadsController(itemlistcontroller.ItemListController):
     #
     # When complete, the backend is expected to send a reply indicating that
     # all operations (up to this point) are complete and at that point we can
-    # re-enable the sort again.  See DownloadBatchCommandComplete.
+    # re-enable the sort again.  See DownloadSyncCommandComplete().  We hope
+    # for the best that the remote command to do whatever's needed should not
+    # take more than a second or two which should be accurate for a moderately
+    # sized download list.
     def _on_pause_all(self, widget):
         self.item_list.set_resort_on_update(False)
         messages.PauseAllDownloads().send_to_backend()
@@ -111,4 +115,5 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
     def on_items_changed(self):
         self.status_toolbar.update_rates(
-            downloader.total_down_rate, downloader.total_up_rate)
+            app.download_state_manager.total_down_rate,
+            app.download_state_manager.total_up_rate)

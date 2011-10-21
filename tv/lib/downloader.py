@@ -31,6 +31,7 @@ import datetime
 import os
 import random
 import logging
+import time
 
 from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError
@@ -51,13 +52,157 @@ from miro import flashscraper
 from miro import fileutil
 from miro.fileobject import FilenameType
 
-daemon_starter = None
+class DownloadStateManager(object):
+    """DownloadStateManager: class to store state information about the
+    downloader.
 
-# a hash of download ids that the server knows about.
-_downloads = {}
+    Commands to the downloader is batched and sent every second.  This is
+    based on the premise that commands for a particular download id can 
+    be completely superceded by a subsequent command, with the exception
+    of a pause/resume pair.  For example, a stop command will completely
+    supecede a pause command, so if the 2 are sent in quick succession
+    only the stop command will be sent by the downloader.  The exception
+    to this rule is the pause/resume pair which acts like matter and
+    anti-matter, which will nuke itself when they come into contact
+    (but dies with not even a whimper instead of a gorgeous display).
+    """
+    STOP    = command.DownloaderBatchCommand.STOP
+    RESUME  = command.DownloaderBatchCommand.RESUME
+    PAUSE   = command.DownloaderBatchCommand.PAUSE
+    RESTORE = command.DownloaderBatchCommand.RESTORE
 
-total_up_rate = 0
-total_down_rate = 0
+    RESUME_EXISTING = command.DownloaderBatchCommand.RESUME_EXISTING
+    RESUME_NEW      = command.DownloaderBatchCommand.RESUME_NEW
+
+    UPDATE_INTERVAL = 1
+
+    def __init__(self):
+        self.total_up_rate = 0
+        self.total_down_rate = 0
+        # a hash of download ids that the server knows about.
+        self.downloads = {}
+        self.daemon_starter = None
+        self.startup_commands = dict()
+        self.commands = dict()
+        self.bulk_mode = False
+
+    def set_bulk_mode(self):
+        self.bulk_mode = True
+
+    def send_initial_updates(self):
+        commands = self.startup_commands
+        self.startup_commands = None
+        if commands:
+            c = command.DownloaderBatchCommand(RemoteDownloader.dldaemon,
+                                               commands)
+            c.send()
+
+    def send_updates(self):
+        commands = self.commands
+        self.commands = dict()
+        if commands:
+            c = command.DownloaderBatchCommand(RemoteDownloader.dldaemon,
+                                               commands)
+            c.send()
+        elif self.bulk_mode:
+            from miro.messages import DownloaderSyncCommandComplete
+            # If we did a pause/resume/cancel all, and there weren't any
+            # items in the list to send nobody would re-enable the auto-sort.
+            # So we do it here.
+            DownloaderSyncCommandComplete().send_to_frontend()
+        # Reset the bulk mode notification.
+        self.bulk_mode = False
+        self.start_updates()
+
+    def start_updates(self):
+        eventloop.add_timeout(self.UPDATE_INTERVAL,
+                              self.send_updates,
+                              "Send Download Command Updates")
+
+    def get_download(self, dlid):
+        try:
+            return self.downloads[dlid]
+        except KeyError:
+            return None
+
+    def add_download(self, dlid, downloader):
+        self.downloads[dlid] = downloader
+
+    def delete_download(self, dlid):
+        try:
+            del self.downloads[dlid]
+        except KeyError:
+            return False
+        else:
+            return True
+
+    def daemon_started(self):
+        return self.daemon_starter and self.daemon_starter.started
+
+    def queue(self, identifier, cmd, args):
+        if not self.downloads.has_key(identifier):
+            raise ValueError('add_download() not called before queue()')
+
+        # Catch restores first, we will flush them when the downloader's
+        # started.
+        if cmd == self.RESTORE and not self.daemon_started():
+            self.startup_commands[identifier] = (cmd, args)
+            return
+
+        exists = self.commands.has_key(identifier)
+
+        # Make sure that a pause/resume pair cancel each other out.  For
+        # others, assume that a subsequent command can completely supercede
+        # the previous command.
+        if exists:
+            old_cmd, unused = self.commands[identifier]
+            if (old_cmd == self.RESUME and cmd == self.PAUSE or
+              old_cmd == self.PAUSE and cmd == self.RESUME):
+                # Make sure that we unfreeze it
+                self.downloads[identifier].status_updates_frozen = False
+                del self.commands[identifier]
+                return
+            # HACK: When we pause and resume we currently send a download
+            # command, then a restore downloader command which doesn't
+            # do anything.  This also breaks our general assumption that a 
+            # current command can completely supercede any previous queued
+            # command so if we see it disable it.  I'm not actually
+            # sure why we'd want to send a restore command in this case.
+            if cmd == self.RESTORE:
+               logging.info('not restoring active download')
+               return
+
+        # Freeze the status updates, but don't freeze if it is a restore.
+        if not cmd == self.RESTORE:
+            self.downloads[identifier].status_updates_frozen = True
+        self.commands[identifier] = (cmd, args)
+
+    def init_controller(self):
+        """Intializes the download daemon controller.
+
+        This doesn't actually start up the downloader daemon, that's done
+        in startup_downloader.  Commands will be queued until then.
+        """
+        self.daemon_starter = DownloadDaemonStarter()
+
+    def startup_downloader(self):
+        """Initialize the downloaders.
+    
+        This method currently does 2 things.  It deletes any stale files
+        self in Incomplete Downloads, then it restarts downloads that have
+        been restored from the database.  It must be called before any
+        RemoteDownloader objects get created.
+        """
+        self.daemon_starter.startup()
+        # Now that the daemon has started, we can process updates.
+        self.send_initial_updates()
+        self.start_updates()
+    
+    def shutdown_downloader(self, callback=None):
+        if self.daemon_starter:
+            self.daemon_starter.shutdown(callback)
+        elif callback:
+            callback()
 
 def get_downloader_by_dlid(dlid):
     try:
@@ -72,14 +217,9 @@ def generate_dlid():
         dlid = u"download%08d" % random.randint(0, 99999999)
     return dlid
 
-# NB: sync_downloader_commands: for information on how to use this please
-# see the note in DownloaderSyncRequest/DownloaderSyncNotify.
-def sync_downloader_commands():
-    c = command.DownloaderSyncRequest(RemoteDownloader.dldaemon)
-    c.send()
-
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
+    MIN_STATUS_UPDATE_SPACING = 0.7
     def setup_new(self, url, item, contentType=None, channelName=None):
         check_u(url)
         if contentType:
@@ -105,6 +245,8 @@ class RemoteDownloader(DDBObject):
         self.manualUpload = False
         self._save_later_dc = None
         self._update_retry_time_dc = None
+        self.status_updates_frozen = False
+        self.last_update = time.time()
         if contentType is None:
             self.contentType = u""
         else:
@@ -168,7 +310,7 @@ class RemoteDownloader(DDBObject):
         downloader to disk, do it now.
         """
         if self.id_exists() and self._save_later_dc is not None:
-            self.signal_change()
+            self.signal_change(needs_signal_item=False)
 
     def _cancel_save_later(self):
         if self._save_later_dc is not None:
@@ -230,29 +372,94 @@ class RemoteDownloader(DDBObject):
         return (0, 0)
 
     def before_changing_status(self):
-        global total_down_rate
-        global total_up_rate
         rates = self._get_rates()
-        total_down_rate -= rates[0]
-        total_up_rate -= rates[1]
+        app.download_state_manager.total_down_rate -= rates[0]
+        app.download_state_manager.total_up_rate -= rates[1]
 
     def after_changing_status(self):
-        global total_down_rate
-        global total_up_rate
         self._recalc_state()
         rates = self._get_rates()
-        total_down_rate += rates[0]
-        total_up_rate += rates[1]
+        app.download_state_manager.total_down_rate += rates[0]
+        app.download_state_manager.total_up_rate += rates[1]
 
     @classmethod
-    def update_status(cls, data):
+    def update_status(cls, data, cmd_done=False):
         for field in data:
             if field not in ['filename', 'shortFilename', 'channelName',
                              'metainfo']:
                 data[field] = unicodify(data[field])
+
         self = get_downloader_by_dlid(dlid=data['dlid'])
 
         if self is not None:
+            now = time.time()
+            last_update = self.last_update
+            rate_limit = False
+            state = self.get_state()
+            new_state = data.get('state', u'downloading')
+
+            # If this item was marked as pending update, then any update
+            # which comes in now which does not have cmd_done set is void.
+            if not cmd_done and self.status_updates_frozen:
+                logging.debug('self = %s, '
+                              'saved state = %s '
+                              'downloader state = %s.  '
+                              'Discard.',
+                              self, state, new_state)
+                # treat as stale
+                return False
+
+            # If the timing between the status updates is too narrow,
+            # try to skip it because it makes the UI jerky otherwise.
+            if now < last_update:
+                logging.debug('time.time() gone backwards last = %s now = %s',
+                              last_update, now)
+            else:
+                diff = now - last_update
+                if diff < self.MIN_STATUS_UPDATE_SPACING:
+                    logging.debug('Rate limit: '
+                                  'self = %s, now - last_update = %s, '
+                                  'MIN_STATUS_UPDATE_SPACING = %s.',
+                                  self, diff, self.MIN_STATUS_UPDATE_SPACING)
+                    rate_limit = True
+
+            # If the state is one which we set and was meant to be passed
+            # through to the downloader (valid_states), and the downloader
+            # replied with something that was a response to a previous
+            # download command, and state was also a part of valid_states,
+            # but the saved state and the new state do not match
+            # then it means the message is stale.
+            #
+            # Have a think about why this is true: when you set a state,
+            # which is authoritative, to the downloader you expect it
+            # to reply with that same state.  If they do not match then it
+            # means the message is stale.
+            #
+            # The exception to this rule is if the downloader replies with
+            # an error state, or if downloading has transitioned to finished
+            # state.
+            #
+            # This also does not apply to any state which we set on the
+            # downloader via a restore command.  A restore command before
+            # a pause/resume/cancel will work as intended, and no special
+            # trickery is required.  A restore command which happens after
+            # a pause/resume/cancel is void, so no work is required.
+            #
+            # I hope this makes sense and is clear!
+            valid_states = (u'downloading', u'paused', u'stopped',
+                            u'uploading-paused', u'finished')
+            if (cmd_done and
+              state in valid_states and new_state in valid_states and
+              state != new_state):
+                if not (state == u'downloading' and new_state == u'finished'):
+                    logging.debug('self = %s STALE.  '
+                                  'Saved state %s, got state %s.  Discarding.',
+                                  self, state, new_state)
+                    return False
+
+            # We are updating!  Reset the status_updates_frozen flag.
+            self.status_updates_frozen = False
+ 
             # FIXME - this should get fixed.
             metainfo = data.pop('metainfo', self.metainfo)
 
@@ -262,7 +469,10 @@ class RemoteDownloader(DDBObject):
             current = (self.status, self.metainfo)
             new = (data, metainfo)
             if current == new:
-                return
+                return True
+
+            # We have something to update: update the last updated timestamp.
+            self.last_update = now
 
             was_finished = self.is_finished()
             old_filename = self.get_filename()
@@ -285,7 +495,7 @@ class RemoteDownloader(DDBObject):
             finished = self.is_finished() and not was_finished
             file_migrated = (self.is_finished() and
                              self.get_filename() != old_filename)
-            needs_signal_item = not (finished or file_migrated)
+            needs_signal_item = not (finished or file_migrated or rate_limit)
             self.after_changing_status()
 
             if ((self.get_state() == u'uploading'
@@ -294,21 +504,24 @@ class RemoteDownloader(DDBObject):
                       and self.get_upload_ratio() > app.config.get(prefs.UPLOAD_RATIO)))):
                 self.stop_upload()
 
-            self.signal_change(needs_signal_item=needs_signal_item,
-                               needs_save=False)
             if self.changed_attributes == set(('status',)):
                 # if we just changed status, then we can wait a while
                 # to store things to disk.  Since we go through
                 # update_status() often, this results in a fairly
                 # large performance gain and alleviates #12101
                 self._save_later()
+                self.signal_change(needs_signal_item=needs_signal_item,
+                                   needs_save=False)
             else:
                 self.signal_change()
+
             if finished:
                 for item in self.item_list:
                     item.on_download_finished()
             elif file_migrated:
                 self._file_migrated(old_filename)
+
+        return True
 
     def run_downloader(self):
         """This is the actual download thread.
@@ -329,12 +542,13 @@ class RemoteDownloader(DDBObject):
 
             self.url = url
             logging.debug("downloading url %s", self.url)
-            c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                                self.url, self.dlid,
-                                                self.contentType,
-                                                self.channelName)
-            c.send()
-            _downloads[self.dlid] = self
+            args = dict(url=self.url, content_type=self.contentType,
+                        channel_name=self.channelName,
+                        subcmd=app.download_state_manager.RESUME_NEW)
+            app.download_state_manager.add_download(self.dlid, self)
+            app.download_state_manager.queue(self.dlid,
+                                             app.download_state_manager.RESUME,
+                                             args)
             self.status["state"] = u"downloading"
         else:
             self.status["state"] = u'failed'
@@ -344,10 +558,11 @@ class RemoteDownloader(DDBObject):
 
     def pause(self):
         """Pauses the download."""
-        if _downloads.has_key(self.dlid):
-            c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
-                                             self.dlid)
-            c.send()
+        if app.download_state_manager.get_download(self.dlid):
+            args = dict(upload=False)
+            app.download_state_manager.queue(self.dlid,
+                                             app.download_state_manager.PAUSE,
+                                             args)
         self.before_changing_status()
         self.status["state"] = u"paused"
         self.after_changing_status()
@@ -359,11 +574,13 @@ class RemoteDownloader(DDBObject):
         """
         if self.get_state() in [u'downloading', u'uploading', u'paused',
                                 u'offline']:
-            if _downloads.has_key(self.dlid):
-                c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
-                                                self.dlid, delete)
-                c.send()
-                del _downloads[self.dlid]
+            if app.download_state_manager.get_download(self.dlid):
+                args = dict(upload=False, delete=delete)
+                app.download_state_manager.queue(
+                    self.dlid,
+                    app.download_state_manager.STOP,
+                    args)
+                app.download_state_manager.delete_download(self.dlid)
 
         if delete:
             self.delete()
@@ -400,8 +617,7 @@ class RemoteDownloader(DDBObject):
         if self.get_state() == u'failed':
             # For failed downloads, don't trust the redirected URL (#14232)
             self.url = self.origURL
-            if _downloads.has_key (self.dlid):
-                del _downloads[self.dlid]
+            app.download_state_manager.delete_download(self.dlid)
             self.dlid = generate_dlid()
             self.before_changing_status()
             self.status = {}
@@ -412,17 +628,18 @@ class RemoteDownloader(DDBObject):
                 self.run_downloader()
             self.signal_change()
         elif self.get_state() in (u'stopped', u'paused', u'offline'):
-            if _downloads.has_key(self.dlid):
-                c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
-                                                 self.dlid)
-                c.send()
-
+            if app.download_state_manager.get_download(self.dlid):
+                args = dict(subcmd=app.download_state_manager.RESUME_EXISTING)
+                app.download_state_manager.queue(
+                    self.dlid,
+                    app.download_state_manager.RESUME,
+                    args)
             self.status['state'] = u'downloading'
             self.restart()
             self.signal_change()
 
     def migrate(self, directory):
-        if _downloads.has_key(self.dlid):
+        if app.download_state_manager.get_download(self.dlid):
             c = command.MigrateDownloadCommand(RemoteDownloader.dldaemon,
                                                self.dlid, directory)
             c.send()
@@ -497,11 +714,9 @@ class RemoteDownloader(DDBObject):
     def remove(self):
         """Removes downloader from the database and deletes the file.
         """
-        global total_down_rate
-        global total_up_rate
         rates = self._get_rates()
-        total_down_rate -= rates[0]
-        total_up_rate -= rates[1]
+        app.download_state_manager.total_down_rate -= rates[0]
+        app.download_state_manager.total_up_rate -= rates[1]
         self.stop(self.delete_files)
         DDBObject.remove(self)
 
@@ -638,6 +853,8 @@ class RemoteDownloader(DDBObject):
         return self.status.get('filename', FilenameType(''))
 
     def setup_restored(self):
+        self.status_updates_frozen = False
+        self.last_update = time.time()
         self._save_later_dc = None
         self._update_retry_time_dc = None
         self.delete_files = True
@@ -667,7 +884,7 @@ class RemoteDownloader(DDBObject):
     def restart_on_startup_if_needed(self):
         if not self.id_exists():
             return
-        if _downloads.has_key(self.dlid):
+        if app.download_state_manager.get_download(self.dlid):
             # something has caused us to restart already, (for
             # example, the user selects "resume seeding").  squelch
             # any automatic behaviour (#12462)
@@ -689,16 +906,17 @@ class RemoteDownloader(DDBObject):
             else:
                 self.run_downloader()
         else:
-            _downloads[self.dlid] = self
+            app.download_state_manager.add_download(self.dlid, self)
             dler_status = self.status
             # FIXME: not sure why this is necessary
             if self.contentType ==  u'application/x-magnet':
                 dler_status['url'] = self.url
             dler_status['metainfo'] = self.metainfo
-
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
-                                                 dler_status)
-            c.send()
+            args = dict(downloader=dler_status)
+            app.download_state_manager.queue(
+                self.dlid,
+                app.download_state_manager.RESTORE,
+                args)
             self.before_changing_status()
             self.status['state'] = u'downloading'
             self.after_changing_status()
@@ -721,10 +939,11 @@ class RemoteDownloader(DDBObject):
                          self.get_state())
             return
         self.manualUpload = True
-        if _downloads.has_key(self.dlid):
-            c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
-                                             self.dlid)
-            c.send()
+        if app.download_state_manager.get_download(self.dlid):
+            args = dict(subcmd=app.download_state_manager.RESUME_EXISTING)
+            app.download_state_manager.queue(self.dlid,
+                                             app.download_state_manager.RESUME,
+                                             args)
         else:
             self.before_changing_status()
             self.status['state'] = u'uploading'
@@ -736,11 +955,11 @@ class RemoteDownloader(DDBObject):
         """
         Stop uploading/seeding and set status as "finished".
         """
-        if _downloads.has_key(self.dlid):
-            c = command.StopUploadCommand(RemoteDownloader.dldaemon,
-                                          self.dlid)
-            c.send()
-            del _downloads[self.dlid]
+        if app.download_state_manager.get_download(self.dlid):
+            args = dict(upload=True)
+            app.download_state_manager.queue(self.dlid,
+                app.download_state_manager.STOP, args)
+            app.download_state_manager.delete_download(self.dlid)
         self.before_changing_status()
         self.status["state"] = u"finished"
         self.after_changing_status()
@@ -750,11 +969,12 @@ class RemoteDownloader(DDBObject):
         """
         Stop uploading/seeding and set status as "uploading-paused".
         """
-        if _downloads.has_key(self.dlid):
-            c = command.PauseUploadCommand(RemoteDownloader.dldaemon,
-                                           self.dlid)
-            c.send()
-            del _downloads[self.dlid]
+        if app.download_state_manager.get_download(self.dlid):
+            args = dict(upload=True)
+            app.download_state_manager.queue(self.dlid,
+                app.download_state_manager.PAUSE,
+                args)
+            app.download_state_manager.delete_download(self.dlid)
         self.before_changing_status()
         self.status["state"] = u"uploading-paused"
         self.after_changing_status()
@@ -853,31 +1073,6 @@ class DownloadDaemonStarter(object):
         shutdown_downloader_objects()
         self.shutdown_callback()
         del self.shutdown_callback
-
-def init_controller():
-    """Intializes the download daemon controller.
-
-    This doesn't actually start up the downloader daemon, that's done
-    in startup_downloader.  Commands will be queued until then.
-    """
-    global daemon_starter
-    daemon_starter = DownloadDaemonStarter()
-
-def startup_downloader():
-    """Initialize the downloaders.
-
-    This method currently does 2 things.  It deletes any stale files
-    self in Incomplete Downloads, then it restarts downloads that have
-    been restored from the database.  It must be called before any
-    RemoteDownloader objects get created.
-    """
-    daemon_starter.startup()
-
-def shutdown_downloader(callback=None):
-    if daemon_starter:
-        daemon_starter.shutdown(callback)
-    elif callback:
-        callback()
 
 def lookup_downloader(url):
     try:

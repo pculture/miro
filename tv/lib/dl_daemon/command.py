@@ -109,34 +109,17 @@ class RemoveHTTPAuthCommand(Command):
         from miro import httpauth
         httpauth.remove_by_url_and_realm(*self.args)
 
-class UpdateDownloadStatus(Command):
-    def action(self):
-        from miro.downloader import RemoteDownloader
-        return RemoteDownloader.update_status(*self.args, **self.kws)
-
-# DownloaderSyncRequest/DownloaderSyncNotify: what are these?
-#
-# They are used to as a notification.  Usage: DownloaderSyncRequest command
-# is sent to the downloader and when it is received the downloader sends
-# DownloaderSyncNotify.  Thus, when a DownloaderSyncNotify is received,
-# you can be sure that all commands for the corresponding DownloaderSyncRequest
-# has been completed (commands are never re-ordered).
-class DownloaderSyncRequest(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.sync_notify()
-
-class DownloaderSyncNotify(Command):
-    def action(self):
-        from miro.messages import DownloaderSyncCommandComplete
-        DownloaderSyncCommandComplete().send_to_frontend()
-
 class BatchUpdateDownloadStatus(Command):
     spammy = True
     def action(self):
         from miro.downloader import RemoteDownloader
-        for status in self.args[0]:
-            RemoteDownloader.update_status(status)
+        from miro.messages import DownloaderSyncCommandComplete
+
+        cmd_done = self.args[1]
+        fresh = all(RemoteDownloader.update_status(status, cmd_done=cmd_done)
+                    for status in self.args[0])
+        if cmd_done and fresh:
+            DownloaderSyncCommandComplete().send_to_frontend()
 
 class DownloaderErrorCommand(Command):
     def action(self):
@@ -171,6 +154,9 @@ class ShutDownResponseCommand(Command):
 #############################################################################
 #  App to Downloader commands                                               #
 #############################################################################
+
+# XXX why do we have so much junk here when we can multiplex this stuff with
+# a cmd parameter? -gl
 class InitialConfigCommand(Command):
     def action(self):
         app.config.set_dictionary(*self.args, **self.kws)
@@ -186,46 +172,63 @@ class UpdateHTTPPasswordsCommand(Command):
         from miro.dl_daemon.private import httpauth
         httpauth.update_passwords(*self.args)
 
-class StartNewDownloadCommand(Command):
+# Downloader Daemon start/stop/resume demux.
+#
+# This is the class that contains the action handler for commands which may
+# be marshalled and sent to us via the DownloadStateManager().
+#
+# Here, they are demuxed, and then dispatched to the downloader.
+class DownloaderBatchCommand(Command):
+    STOP    = 0
+    RESUME  = 1
+    PAUSE   = 2
+    RESTORE = 4
+
+    RESUME_EXISTING = 0
+    RESUME_NEW      = 1
+
     def action(self):
         from miro.dl_daemon import download
-        return download.start_new_download(*self.args, **self.kws)
-
-class StartDownloadCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.start_download(*self.args, **self.kws)
-
-class PauseDownloadCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.pause_download(*self.args, **self.kws)
-
-class StopDownloadCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.stop_download(*self.args, **self.kws)
-
-class StopUploadCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.stop_upload(*self.args, **self.kws)
-
-class PauseUploadCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.pause_upload(*self.args, **self.kws)
-
-class GetDownloadStatusCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.get_download_status(*self.args, **self.kws)
-
-class RestoreDownloaderCommand(Command):
-    def action(self):
-        from miro.dl_daemon import download
-        return download.restore_downloader(*self.args, **self.kws)
-
+        mark_reply = True
+        for dlid, (cmd, args) in self.args[0].iteritems():
+            if cmd == self.PAUSE:
+                upload = args['upload']
+                if upload:
+                    download.pause_upload(dlid)
+                else:
+                    download.pause_download(dlid)
+            elif cmd == self.STOP:
+                upload = args['upload']
+                if upload:
+                    download.stop_upload(dlid)
+                else:
+                    download.stop_download(dlid, args['delete'])
+            elif cmd == self.RESUME:
+                subcmd = args['subcmd']
+                if subcmd == self.RESUME_EXISTING:
+                    download.start_download(dlid)
+                elif cmd == self.RESUME_NEW:
+                    channel_name = args['channel_name']
+                    url = args['url']
+                    content_type = args['content_type']
+                    download.start_new_download(url, dlid, content_type,
+                                                channel_name)
+                else:
+                    raise ValueError('Invalid resume subcommand')
+            elif cmd == self.RESTORE:
+                # Restoring a downloader doesn't actually change any state
+                # so don't reply.
+                mark_reply = False
+                downloader = args['downloader']
+                download.restore_downloader(downloader)
+            else:
+                raise ValueError('unknown downloader batch command %s' % cmd)
+        # Mark this so that the next time we run through the periodic update
+        # which will be after all the above have been processed because we
+        # are in the same thread.
+        if mark_reply:
+            download.DOWNLOAD_UPDATER.set_cmds_done()
+ 
 class MigrateDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download

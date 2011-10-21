@@ -134,7 +134,6 @@ def stop_download(dlid, delete):
         return True
     finally:
         _lock.release()
-
     return download.stop(delete)
 
 def stop_upload(dlid):
@@ -150,9 +149,6 @@ def stop_upload(dlid):
     finally:
         _lock.release()
     return download.stop_upload()
-
-def sync_notify():
-    return command.DownloaderSyncNotify(daemon.LAST_DAEMON).send()
 
 def pause_upload(dlid):
     _lock.acquire()
@@ -200,6 +196,9 @@ def shutdown():
         _downloads[dlid].shutdown()
     logging.info("Shutting down torrent session...")
     TORRENT_SESSION.shutdown()
+    # Flush the status updates.
+    logging.info('flushing status updates...')
+    DOWNLOAD_UPDATER.flush_update()
     logging.info("shutdown() finished")
 
 def restore_downloader(downloader):
@@ -424,24 +423,35 @@ class DownloadStatusUpdater(object):
 
     def __init__(self):
         self.to_update = set()
+        self.cmds_done = False
 
     def start_updates(self):
         eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.do_update,
                 "Download status update")
 
-    def do_update(self):
+    def flush_update(self):
+        self.do_update(periodic=False)
+
+    def do_update(self, periodic=True):
         try:
             TORRENT_SESSION.update_torrents()
             statuses = []
             for downloader in self.to_update:
                 statuses.append(downloader.get_status())
             self.to_update = set()
-            if statuses:
+            if statuses or self.cmds_done:
                 command.BatchUpdateDownloadStatus(daemon.LAST_DAEMON,
-                        statuses).send()
+                                                  statuses,
+                                                  self.cmds_done).send()
+                self.cmds_done = False
         finally:
-            eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.do_update,
-                    "Download status update")
+            if periodic:
+                eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL,
+                                      self.do_update,
+                                      "Download status update")
+
+    def set_cmds_done(self):
+        self.cmds_done = True
 
     def queue_update(self, downloader):
         self.to_update.add(downloader)
@@ -498,9 +508,12 @@ class BGDownloader(object):
             'retryCount': self.retryCount,
             'channelName': self.channelName}
 
-    def update_client(self):
-        x = command.UpdateDownloadStatus(daemon.LAST_DAEMON, self.get_status())
-        return x.send()
+    def update_client(self, now=False):
+        if not now:
+            DOWNLOAD_UPDATER.queue_update(self)
+        else:
+            command.BatchUpdateDownloadStatus(daemon.LAST_DAEMON,
+                                              [self.get_status()]).send()
 
     def pick_initial_filename(self, suffix=".part", torrent=False,
                               is_directory=False):
@@ -747,9 +760,7 @@ class HTTPDownloader(BGDownloader):
             self.url, self.on_download_finished, self.on_download_error,
             header_callback=self.on_headers, write_file=self.filename,
             resume=resume)
-        self.update_client()
-        eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
-                'update http downloader stats')
+        self.update_stats()
 
     def _resume_sanity_check(self):
         """Do sanity checks to test if we should try HTTP Resume.
@@ -891,7 +902,7 @@ class HTTPDownloader(BGDownloader):
             self.rate = stats.download_rate
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
                 'update http downloader stats')
-        DOWNLOAD_UPDATER.queue_update(self)
+        self.update_client()
 
     def pause(self):
         """Pauses the download.
@@ -1285,9 +1296,8 @@ class BTDownloader(BGDownloader):
             self.move_to_movies_directory()
             self.state = u"uploading"
             self.endTime = clock()
-            self.update_client()
-        else:
-            DOWNLOAD_UPDATER.queue_update(self)
+
+        self.update_client()
 
         if app.config.get(prefs.LIMIT_UPLOAD_RATIO):
             if status.state == lt.torrent_status.states.seeding:

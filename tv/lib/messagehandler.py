@@ -1393,12 +1393,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_pause_all_downloads(self, message):
         """Pauses all downloading and uploading items"""
+        app.download_state_manager.set_bulk_mode()
         for item_ in item.Item.downloading_view():
             if item_.is_uploading():
                 item_.pause_upload()
             else:
                 item_.pause()
-        downloader.sync_downloader_commands() 
 
     def handle_pause_download(self, message):
         try:
@@ -1407,16 +1407,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             logging.warn("PauseDownload: Item not found -- %s", message.id)
         else:
             item_.pause()
-        downloader.sync_downloader_commands()
 
     def handle_resume_all_downloads(self, message):
         """Resumes downloading and uploading items"""
+        app.download_state_manager.set_bulk_mode()
         for item_ in item.Item.paused_view():
             if item_.is_uploading_paused():
                 item_.start_upload()
             else:
                 item_.resume()
-        downloader.sync_downloader_commands()
 
     def handle_resume_download(self, message):
         try:
@@ -1427,6 +1426,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             item_.resume()
 
     def handle_cancel_all_downloads(self, message):
+        app.download_state_manager.set_bulk_mode()
         for item_ in item.Item.download_tab_view():
             if item_.is_uploading() or item_.is_uploading_paused():
                 item_.stop_upload()
