@@ -304,6 +304,10 @@ class MiroTestCase(unittest.TestCase):
         # app.extension_manager.load_extension()
         app.extension_manager = extensionmanager.ExtensionManager(
                 [self.tempdir], [])
+        # Create a download state object (but don't start the downloader
+        # for the individual test unless necessary.  In this case we override
+        # the class to run the downloader).
+        app.download_state_manager = downloader.DownloadStateManager()
 
     def set_temp_support_directory(self):
         self.sandbox_support_directory = os.path.join(self.tempdir, 'support')

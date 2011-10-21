@@ -69,7 +69,9 @@ class Controller:
         logging.info("Shutting down video conversions manager")
         conversions.conversion_manager.shutdown()
         logging.info("Shutting down Downloader...")
-        downloader.shutdown_downloader(self.downloader_shutdown)
+        if app.download_state_manager is not None:
+            app.download_state_manager.shutdown_downloader(
+                self.downloader_shutdown)
         try:
             logging.info("Shutting down worker process.")
             workerprocess.shutdown()
