@@ -111,6 +111,9 @@ FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 
 VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
+# so py2exe can find DLLs
+sys.path.append(VCREDIST71_PATH)
+sys.path.append(os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT'))
 
 def find_data_files(dest_path_base, source_path):
     retval = []
