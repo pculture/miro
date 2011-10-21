@@ -472,16 +472,14 @@ class bdist_nsis(Command):
 
     user_options = [
         ('generic', None, 'Build a generic installer instead of the Miro-branded installer.'),
-        ('nozugo', None, 'Do not include the silent Zugo toolbar installer.'),
-        ('mozilla', None, 'Do not show the toolbar option to international users.'),
+        ('noopencandy', None, 'Do not include the OpenCandy code.'),
         ('install-icon=', None, 'ICO file to use for the installer.'),
         ('install-image=', None, 'BMP file to use for the welcome/finish pages.')
         ]
 
     def initialize_options(self):
         self.generic = False
-        self.nozugo = False
-        self.mozilla = False
+        self.noopencandy = False
         self.install_icon = None
         self.install_image = None
 
@@ -504,8 +502,10 @@ class bdist_nsis(Command):
         log.info("building installer")
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
-        if not self.nozugo:
-            self.copy_file(os.path.join(platform_dir, 'zugo-silent.exe'), self.dist_dir)
+        if not self.noopencandy:
+            self.copy_file(os.path.join(platform_dir, 'OCSetupHlp.nsh'), self.dist_dir)
+            self.copy_file(os.path.join(platform_dir, 'OCSetupHlp.dll'), self.dist_dir)
+            self.copy_file(os.path.join(platform_dir, 'OpenCandy EULA.txt'), self.dist_dir)
         self.copy_file(self.install_icon, self.dist_dir)
         self.copy_file(self.install_image, self.dist_dir)
 
@@ -529,8 +529,9 @@ class bdist_nsis(Command):
         nsis_vars['MIRO_INSTALL_ICON'] = self.install_icon
         nsis_vars['MIRO_INSTALL_IMAGE'] = self.install_image
         nsis_vars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
-        if not self.nozugo:
-            nsis_vars['MIROBAR_EXE'] = 'zugo-silent.exe'
+        nsis_vars['MOZILLA_INSTALLER'] = '1' # don't show Zugo to international users
+        if not self.noopencandy:
+            nsis_vars['OPENCANDY'] = '1'
         if self.generic:
             nsis_vars['GENERIC_INSTALLER'] = '1'
         if self.mozilla:
@@ -540,10 +541,8 @@ class bdist_nsis(Command):
         # One stage installer
         if self.generic:
             output_file = "%s-generic" % output_file
-        if self.nozugo:
-            output_file = "%s-nozugo" % output_file
-        if self.mozilla:
-            output_file = '%s-mozilla' % output_file
+        if self.noopencandy:
+            output_file = "%s-noopencandy" % output_file
 
         output_file = (output_file %
                        (template_vars['shortAppName'], template_vars['appVersion']))
@@ -568,7 +567,6 @@ class bdist_nsis(Command):
                        (template_vars['shortAppName'], template_vars['appVersion']))
         nsis_vars['CONFIG_OUTPUT_FILE'] = output_file
         nsis_vars['CONFIG_TWOSTAGE'] = "Yes"
-        nsis_vars.pop('MIROBAR_EXE', None)
 
         nsis_args = ["/D%s=%s" % (k, v) for (k, v) in nsis_vars.iteritems()]
         nsis_args.append(os.path.join(self.dist_dir, "Miro.nsi"))
