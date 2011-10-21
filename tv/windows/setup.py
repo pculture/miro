@@ -532,13 +532,10 @@ class bdist_nsis(Command):
         nsis_vars['MIRO_INSTALL_ICON'] = self.install_icon
         nsis_vars['MIRO_INSTALL_IMAGE'] = self.install_image
         nsis_vars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
-        nsis_vars['MOZILLA_INSTALLER'] = '1' # don't show Zugo to international users
         if not self.noopencandy:
             nsis_vars['OPENCANDY'] = '1'
         if self.generic:
             nsis_vars['GENERIC_INSTALLER'] = '1'
-        if self.mozilla:
-            nsis_vars['MOZILLA_INSTALLER'] = '1'
 
         output_file = '%s-%s'
         # One stage installer
