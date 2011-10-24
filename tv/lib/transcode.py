@@ -492,8 +492,6 @@ class TranscodeObject(object):
             try:
                 r, w, x = select.select([self.sink.fileno()], [], [])
                 self.chunk_throttle.wait()
-                if self.segmenter_handle.poll() is not None:
-                    return
                 try:
                     self.sink.handle_request()
                 except socket.error, (err, errstring):
