@@ -1944,7 +1944,6 @@ class SharingManager(object):
             self.disable_discover()
             app.sharing_tracker.pause()
             self.server.set_name(name)
-            self.server.set_finished_callback(self.finished_callback)
 
         if discoverable != self.discoverable:
             if discoverable:
@@ -2083,6 +2082,7 @@ class SharingManager(object):
             self.sharing = False
             return
 
+        self.server.set_finished_callback(self.finished_callback)
         self.server.set_log_message_callback(
             lambda format, *args: logging.info(format, *args))
 
