@@ -584,7 +584,7 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         self.tab_order = tabs.TabOrder(u'channel')
         self.guide = guide.ChannelGuide(u'http://example.com/')
         self.theme_hist = theme.ThemeHistory()
-        self.display_state = widgetstate.DisplayState((u'testtype', u'testid'))
+        self.view_state = widgetstate.ViewState((u'testtype', u'testid', 0))
 
     def check_fixed_value(self, obj, column_name, value, disk_value=None):
         obj = self.reload_object(obj)
@@ -641,17 +641,12 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
                               (self.theme_hist.id,))
         self.check_fixed_value(self.theme_hist, 'pastThemes', [])
 
-    def test_corrupt_display_state(self):
-        app.db.cursor.execute("UPDATE display_state SET "
-                "active_filters=?, selected_view=?, "
-                "list_view_columns=?, list_view_widths=? WHERE id=?",
-                ('all', 1, '{baddata', '{baddata', self.display_state.id))
-        self.check_fixed_value(self.display_state, 'list_view_columns', None)
-        self.check_fixed_value(self.display_state, 'list_view_widths', None)
-        # check that fields with valid values were salvaged
-        reloaded = self.reload_object(self.display_state)
-        self.assertEquals(reloaded.active_filters, set([u'all']))
-        self.assertEquals(reloaded.selected_view, 1)
+    def test_corrupt_view_state(self):
+        app.db.cursor.execute("UPDATE view_state SET "
+                "columns_enabled=?, column_widths=? WHERE id=?",
+                ('{baddata', '{baddata', self.view_state.id))
+        self.check_fixed_value(self.view_state, 'columns_enabled', None)
+        self.check_fixed_value(self.view_state, 'column_widths', None)
 
     def test_corrupt_link_history(self):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy
