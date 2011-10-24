@@ -555,26 +555,40 @@ class TranscodeObject(object):
         self.transcode_gate.wait()
         try:
             self.ffmpeg_handle.kill()
+        except (AttributeError, OSError), e:
+            logging.debug('transcode shutdown: ffmpeg kill %s', e)
+        try:
             self.segmenter_handle.kill()
+        except (AttributeError, OSError), e:
+            logging.debug('transcode shutdown: segmenter kill %s', e)
+        try:
             # Wait for segmenter to die so that poll() will return not None
             self.segmenter_handle.wait()
+        except (AttributeError, OSError), e:
+            logging.debug('transcode shutdown: segmenter wait %s', e)
+        try:
             self.ffmpeg_handle.wait()
-            logging.info('TranscodeObject reaping sink')
+        except (AttributeError, OSError), e:
+            logging.debug('transcode shutdown: ffmpeg wait %s', e)
+        logging.info('TranscodeObject reaping sink')
+        try:
             # Close the server, to make select() on the sink fd return
             self.sink.socket.close()
-            # Nobody is producing mpegts packets at this point.  So if we 
-            # unthrottle here nobody should undo our good work
-            self.chunk_throttle.set()
+        except (OSError, AttributeError), e:
+            logging.debug('transcode shutdown: sink socket close %s', e)
+        # Nobody is producing mpegts packets at this point.  So if we 
+        # unthrottle here nobody should undo our good work
+        self.chunk_throttle.set()
+        try:
             self.sink_thread.join()
-            # Ensure we unblock the get_chunk().
-            self.chunk_sem.release()
-            logging.info('TranscodeObject sink reaped')
-            # Set these last: sink thread relies on it.
-            self.ffmpeg_handle = None
-            self.segmenter_handle = None
-            self.sink_thread = None
-        # Catch AttributeError in case it's not actually there, or OSError,
-        # in case it doesn't exist anymore.  We don't really care.
-        # Catch RuntimeError in case sink_thread hasn't been started yet.
-        except (RuntimeError, OSError, AttributeError):
-            pass
+        except (OSError, AttributeError, RuntimeError), e:
+            # Catch RuntimeError in case sink_thread hasn't been started yet.
+            logging.debug('transcode shutdown: sink join %s', e)
+
+        # Ensure we unblock the get_chunk().
+        self.chunk_sem.release()
+        logging.info('TranscodeObject sink reaped')
+        # Set these last: sink thread relies on it.
+        self.ffmpeg_handle = None
+        self.segmenter_handle = None
+        self.sink_thread = None

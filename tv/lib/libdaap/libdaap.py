@@ -201,8 +201,6 @@ class DaapTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
                 del self.activeconn[s]
             except KeyError:
                 pass
-        if self.finished_callback:
-            self.finished_callback(s)
 
 class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.1'
