@@ -790,71 +790,83 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         filename_root = self.get_filename()
         if fileutil.isdir(filename_root):
-            return set(fileutil.miro_allfiles(filename_root))
+            return (f for f in fileutil.miro_allfiles(filename_root))
         else:
-            return set()
+            return []
 
-    def _make_new_children(self, paths):
+    def _make_new_child(self, path):
         filename_root = self.get_filename()
         if filename_root is None:
-            logging.error("Item._make_new_children: get_filename here is None")
+            logging.error("Item._make_new_child: get_filename here is None")
             return
-        for path in paths:
-            assert path.startswith(filename_root)
-            offsetPath = path[len(filename_root):]
-            while offsetPath[0] in ('/', '\\'):
-                offsetPath = offsetPath[1:]
-            FileItem(path, parent_id=self.id, offsetPath=offsetPath)
+        assert path.startswith(filename_root)
+        offsetPath = path[len(filename_root):]
+        while offsetPath[0] in ('/', '\\'):
+            offsetPath = offsetPath[1:]
+        FileItem(path, parent_id=self.id, offsetPath=offsetPath)
 
     def find_new_children(self):
         """If this feed is a container item, walk through its
-        directory and find any new children.  Returns True if it found
-        children and ran signal_change().
+        directory and find any new children.  An iterator that returns
+        child paths.
         """
         if not self.isContainerItem:
-            return False
+            return
         if self.get_state() == 'downloading':
             # don't try to find videos that we're in the middle of
             # re-downloading
-            return False
-        child_paths = self._find_child_paths()
-        for child in self.get_children():
-            child_paths.discard(child.get_filename())
-        self._make_new_children(child_paths)
-        if child_paths:
-            self.signal_change()
-            return True
-        return False
+            return
 
+        children = [c.get_filename() for c in self.get_children()]
+        child_paths = []
+        for child_path in self._find_child_paths():
+            if child_path in children:
+                continue
+            yield child_path
+
+    @eventloop.idle_iterator
     def split_item(self):
-        """returns True if it ran signal_change()"""
         if self.isContainerItem is not None:
-            return self.find_new_children()
+            found_children = False
+            for child_path in self.find_new_children():
+                found_children = True
+                self._make_new_child(child_path)
+                yield
+                # Has it been deleted?  If so bail.
+                if not self.id_exists():
+                    return
+            # At this point no need to check id_exists() because the we already
+            # checked after yielding.
+            if found_children:
+                self.signal_change()
+            return
         if ((not isinstance(self, FileItem)
              and (self.downloader is None
                   or not self.downloader.is_finished()))):
-            return False
+            return
         filename_root = self.get_filename()
         if filename_root is None:
-            return False
+            return
         if fileutil.isdir(filename_root):
-            child_paths = self._find_child_paths()
-            if len(child_paths) > 0:
+            for child_path in self._find_child_paths():
                 self.isContainerItem = True
-                self._make_new_children(child_paths)
+                self._make_new_child(child_path)
+                yield
+                # Deleted?  If so bail
+                if not self.id_exists():
+                    return
             else:
-                if not self.get_feed_url().startswith ("dtv:directoryfeed"):
+                if not self.get_feed_url().startswith("dtv:directoryfeed"):
                     target_dir = app.config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
-                            self.migrate (target_dir)
+                            self.migrate(target_dir)
                         else:
-                            self.downloader.migrate (target_dir)
+                            self.downloader.migrate(target_dir)
                 self.isContainerItem = False
         else:
             self.isContainerItem = False
         self.signal_change()
-        return True
 
     def set_subtitle_encoding(self, encoding):
         if encoding is not None:
