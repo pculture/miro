@@ -2180,7 +2180,13 @@ class DirectoryScannerImplBase(FeedImpl):
         # files on the filesystem
         scan_dir = self._scan_dir()
         if fileutil.isdir(scan_dir) and not is_file_bundle(scan_dir):
-            all_files = fileutil.miro_allfiles(scan_dir)
+            THRESHOLD = 128
+            all_files = []
+            for f in fileutil.miro_allfiles(scan_dir):
+                all_files.append(f)
+                length = len(all_files)
+                if not (length % THRESHOLD):
+                    yield
             to_add = self._filter_paths(all_files, known_files)
             for path in to_add:
                 app.metadata_progress_updater.will_process_path(path)
@@ -2231,12 +2237,8 @@ class DirectoryScannerImplBase(FeedImpl):
         This method removes items from paths if they are in known_files or
         they are not media files
         """
-        rv = []
-        for path in paths:
-            ufile = filename_to_unicode(path)
-            if (not known_files.contains_path(path) and
-                    filetypes.is_media_filename(ufile)):
-                rv.append(path)
+        rv = [p for p in paths if not known_files.contains_path(p) and
+              filetypes.is_media_filename(filename_to_unicode(p))]
         return rv
 
 class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
