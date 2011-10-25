@@ -227,12 +227,12 @@ class ThreadPool(object):
         # in a blocking operation which is exactly the point of having them
         # so eventloop.join() in turn blocks.  So if it doesn't clean up
         # in time let the daemon flag in the Thread() do its job.  See #16584.
-        while len(self.threads) > 0:
-            x = self.threads.pop()
+        for t in self.threads:
             try:
-                x.join(0.5)
+                t.join(0.5)
             except StandardError:
                 pass
+        self.threads = []
 
 class SimpleEventLoop(signals.SignalEmitter):
     def __init__(self):
