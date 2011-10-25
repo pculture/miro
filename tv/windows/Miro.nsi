@@ -1093,11 +1093,14 @@ Function .onInit
   IfErrors +3 0
   StrCpy $ZUGO_COUNTRY "SW"
   ClearErrors
+  !ifdef MIROBAR_CHANNEL
+  StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /CHANNEL='${MIROBAR_CHANNEL}'"
+  !endif
 
 
   ; get the country Zugo thinks we're in
   StrCmp $ZUGO_COUNTRY "" 0 +8
-  NSISdl::download_quiet /TIMEOUT=10000 /NOIEPROXY "http://track.zugo.com/getCountry/" "$PLUGINSDIR\getCountry" /END ; requires content length to be set!
+  NSISdl::download_quiet /TIMEOUT=10000 /NOIEPROXY "http://installer.zugo.com/getcountry?client=partner&pid=666" "$PLUGINSDIR\getCountry" /END ; requires content length to be set!
   Pop $R0 ; pop the request status
   ClearErrors
   FileOpen $0 $PLUGINSDIR\getCountry r
@@ -1359,9 +1362,6 @@ StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'
 zugo_install:
 StrCmp "$ZUGO_FLAGS" "" end
 
-!ifdef MIROBAR_CHANNEL
-StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /CHANNEL='${MIROBAR_CHANNEL}'"
-!endif
 ;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
 Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
 !endif
