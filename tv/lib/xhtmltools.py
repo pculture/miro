@@ -37,6 +37,7 @@ from urllib import quote, quote_plus
 from HTMLParser import HTMLParser, HTMLParseError
 import random
 import logging
+import collections
 
 class XHTMLifier(HTMLParser):
     """Very simple parser to convert HTML to XHTML
@@ -52,7 +53,7 @@ class XHTMLifier(HTMLParser):
                 self.output = u'<html><head></head><body>'
             else:
                 self.output = ''
-            self.stack = []
+            self.stack = collections.deque()
             self.filter_font_tags = filter_font_tags
             self.feed(data)
             self.close()

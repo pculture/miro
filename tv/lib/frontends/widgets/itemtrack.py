@@ -39,9 +39,9 @@ following things:
 import weakref
 import itertools
 import logging
+import collections
 
 from miro import app
-from miro import datastructures
 from miro import messages
 from miro import signals
 from miro import search
@@ -253,7 +253,7 @@ class SearchFilter(object):
         self.query = ''
         self.all_items = {} # maps id to item info
         self.matching_ids = set()
-        self._pending_changes = datastructures.Fifo()
+        self._pending_changes = collections.deque()
         self._index_pass_scheduled = False
 
     def is_filtering(self):
@@ -269,7 +269,7 @@ class SearchFilter(object):
         if not self.query:
             # special case, just send out the list and calculate the index
             # later
-            self._pending_changes.enqueue((items, [], []))
+            self._pending_changes.append((items, [], []))
             self._schedule_indexing()
             return items
         self._ensure_index_ready()
@@ -289,7 +289,7 @@ class SearchFilter(object):
         if not self.query:
             # special case, just send out the list and calculate the index
             # later
-            self._pending_changes.enqueue((added, changed, removed))
+            self._pending_changes.append((added, changed, removed))
             self._schedule_indexing()
             return added, changed, removed
         self._ensure_index_ready()
@@ -365,7 +365,7 @@ class SearchFilter(object):
     def _ensure_index_ready(self):
         if len(self._pending_changes) > 0:
             while len(self._pending_changes) > 0:
-                (added, changed, removed) = self._pending_changes.dequeue()
+                (added, changed, removed) = self._pending_changes.popleft()
                 self._add_items(added)
                 self._update_items(changed)
                 self._remove_ids(removed)
@@ -381,7 +381,7 @@ class SearchFilter(object):
         # find a chunk of items, process them, then schedule another call
         if len(self._pending_changes) == 0:
             return
-        (added, changed, removed) = self._pending_changes.dequeue()
+        (added, changed, removed) = self._pending_changes.popleft()
         self._add_items(added)
         self._update_items(changed)
         self._remove_ids(removed)

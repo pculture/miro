@@ -29,9 +29,9 @@
 
 import os
 import logging
+import collections
 
 from miro import httpclient
-from datastructures import Fifo
 from miro import eventloop
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.download_utils import next_free_filename, get_file_url_path
@@ -45,8 +45,8 @@ RUNNING_MAX = 3
 
 class IconCacheUpdater:
     def __init__(self):
-        self.idle = Fifo()
-        self.vital = Fifo()
+        self.idle = collections.deque()
+        self.vital = collections.deque()
         self.running_count = 0
         self.in_shutdown = False
 
@@ -61,9 +61,9 @@ class IconCacheUpdater:
             self.running_count += 1
         else:
             if is_vital:
-                self.vital.enqueue(item)
+                self.vital.append(item)
             else:
-                self.idle.enqueue(item)
+                self.idle.append(item)
 
     def update_finished(self):
         if self.in_shutdown:
@@ -71,9 +71,9 @@ class IconCacheUpdater:
             return
 
         if len(self.vital) > 0:
-            item = self.vital.dequeue()
+            item = self.vital.popleft()
         elif len(self.idle) > 0:
-            item = self.idle.dequeue()
+            item = self.idle.popleft()
         else:
             self.running_count -= 1
             return
@@ -82,7 +82,7 @@ class IconCacheUpdater:
 
     @eventloop.as_idle
     def clear_vital(self):
-        self.vital = Fifo()
+        self.vital = collections.deque()
 
     @eventloop.as_idle
     def shutdown(self):
