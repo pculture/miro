@@ -42,7 +42,6 @@ from miro import feedparser
 from miro import filetypes
 from miro import flashscraper
 from miro import util
-from miro.datastructures import Fifo
 
 # values from feedparser dicts that don't have to convert in
 # normalize_feedparser_dict()
