@@ -313,9 +313,12 @@ class WidgetStateStore(object):
 
     def get_columns_enabled(self, display_type, display_id, view_type):
         view = self._get_view(display_type, display_id, view_type)
-        columns = view.columns_enabled
-        if columns is None:
-            columns = WidgetStateStore.DEFAULT_COLUMNS[display_type]
+        # Copy the column list.  We may modify it in _add_manditory_columns()
+        # and that shouldn't change the source value.
+        if view.columns_enabled is not None:
+            columns = list(view.columns_enabled)
+        else:
+            columns = list(WidgetStateStore.DEFAULT_COLUMNS[display_type])
         available = WidgetStateStore.get_columns_available(display_type,
                 display_id, view_type)
         self._add_manditory_columns(view_type, columns)
@@ -416,7 +419,8 @@ class WidgetStateStore(object):
 
     @staticmethod
     def get_columns_available(display_type, display_id, view_type):
-        available = WidgetStateStore.AVAILABLE_COLUMNS[display_type]
+        available = WidgetStateStore.AVAILABLE_COLUMNS[display_type].copy()
+        # copy the set, since we may modify it before returning it
         if view_type == WidgetStateStore.get_album_view_type():
             available.add(u'multi-row-album')
         return available
