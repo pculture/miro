@@ -196,10 +196,9 @@ class MultiRowAlbumSort(ItemSort):
     # switch_mode()
 
     def sort_key_standard(self, info):
-        # same as AlbumSort
-        return (info.album_sort_key,
-                info.track,
-                info.artist_sort_key)
+        return (info.artist_sort_key,
+                info.album_sort_key,
+                info.track)
 
     def sort_key_feed(self, info):
         # sort watched folders to the bottom
