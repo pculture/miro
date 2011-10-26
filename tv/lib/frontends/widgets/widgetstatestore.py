@@ -99,6 +99,8 @@ class WidgetStateStore(object):
     DEFAULT_SORT_COLUMN[u'device-audio'] = DEFAULT_SORT_COLUMN[u'music']
     DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
     DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
+    # DEFAULT_COLUMNS stores the default columns when using list view for
+    # different display types.  We tweak it in _calc_default_columns()
     DEFAULT_COLUMNS = {
         u'videos':
             [u'state', u'name', u'length', u'date-added', u'feed-name',
@@ -318,13 +320,21 @@ class WidgetStateStore(object):
         if view.columns_enabled is not None:
             columns = list(view.columns_enabled)
         else:
-            columns = list(WidgetStateStore.DEFAULT_COLUMNS[display_type])
+            columns = self._calc_default_columns(display_type, view_type)
         available = WidgetStateStore.get_columns_available(display_type,
                 display_id, view_type)
         self._add_manditory_columns(view_type, columns)
         # If a column used to be enableable for a view but now is not,
         # filter it out:
         return [x for x in columns if x in available]
+
+    def _calc_default_columns(self, display_type, view_type):
+        columns = list(WidgetStateStore.DEFAULT_COLUMNS[display_type])
+        if view_type == self.get_album_view_type():
+            # remove the individual artist/album columns.  The user can see
+            # both in the multi-row-artist
+            columns = [n for n in columns if n not in (u'artist', u'album')]
+        return columns
 
     def _add_manditory_columns(self, view_type, columns):
         """Add manditory columns to the list of columns enabled."""
