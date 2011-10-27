@@ -275,12 +275,32 @@ class SharingTracker(object):
     def __init__(self):
         self.name_to_id_map = dict()
         self.trackers = dict()
+        self.active_downloads = dict()
+        self.active_downloads_rmap = dict()
         self.available_shares = dict()
         self.r, self.w = util.make_dummy_socket_pair()
         self.paused = True
         self.event = threading.Event()
         libdaap.register_meta('org.participatoryculture.miro.itemkind', 'miKD',
                               libdaap.DMAP_TYPE_UBYTE)
+        # We will get completion callback for items even those that we don't
+        # care about but we don't do it very often so the performance
+        # penalty is not important.
+        signals.system.connect('download-complete', self.download_callback)
+
+    def register_active_download(self, share_id, item):
+        self.active_downloads[share_id].append(item)
+        self.active_downloads_rmap[item] = share_id
+
+    def download_callback(self, obj, item):
+        try:
+            share_id = self.active_downloads_rmap[item]
+            del self.active_downloads_rmap[item]
+            self.active_downloads[share_id].remove(item)
+            count = len(self.active_downloads[share_id])
+            messages.SharingActiveDownloadsCount(count).send_to_frontend()
+        except (KeyError, ValueError), e:
+            logging.debug('sharing: download_callback: %s', e)
 
     def mdns_callback(self, added, fullname, host, port):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
@@ -510,7 +530,15 @@ class SharingTracker(object):
             pass
         else:
             del self.trackers[share_id]
+            downloads = self.active_downloads[share_id]
+            for d in downloads:
+                d.remove()
+                del self.active_downloads_rmap[d]
+            del self.active_downloads[share_id]
             tracker.client_disconnect()
+
+    def has_tracker(self, share_id):
+        return self.trackers.has_key(share_id)
 
     def get_tracker(self, share_id):
         try:
@@ -519,9 +547,13 @@ class SharingTracker(object):
             logging.debug('sharing: creating new tracker')
             share = self.available_shares[share_id]
             self.trackers[share_id] = SharingItemTrackerImpl(share)
+            self.active_downloads[share_id] = []
             return self.trackers[share_id]
 
     def stop_tracking(self):
+        # Iterate over the list of trackers and nuke them
+        for share_id in self.trackers:
+            self.eject(share_id)
         # What to do in case of socket error here?
         self.w.send(SharingTracker.CMD_QUIT)
 

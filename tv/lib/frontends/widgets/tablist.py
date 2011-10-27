@@ -46,7 +46,9 @@ from miro import signals
 from miro import messages
 from miro import errors
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from miro.plat import resources
+from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import playback
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
@@ -818,8 +820,29 @@ class SharingTabListHandler(object):
 
     def on_hotspot_clicked(self, view, hotspot, iter_):
         if hotspot == 'eject-device':
-            # Don't track this tab anymore for music.
             info = view.model[iter_][0]
+            c = app.widgetapp.sharing_download_count
+            if c:
+                title = _('Share Eject')
+                description = ngettext(
+                    'There is still %(count)d active download for this '
+                    'share. If you eject this download will be '
+                    'canceled.\n\n'
+                    'Are you sure you want to eject?',
+                    'There are still %(count)d active downloads for this '
+                    'share. If you eject these downloads will be '
+                    'canceled.\n\n'
+                    'Are you sure you want to eject?',
+                    c, 
+                    {'count': c}
+                )
+                response = dialogs.show_choice_dialog(title, description,
+                                                      [dialogs.BUTTON_YES,
+                                                       dialogs.BUTTON_NO])
+                if response != dialogs.BUTTON_YES:
+                    return
+
+            # Don't track this tab anymore for music.
             info.mount = False
             # We must stop the playback if we are playing from the same
             # share that we are ejecting from.

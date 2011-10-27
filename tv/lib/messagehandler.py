@@ -1883,6 +1883,13 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         from miro.singleclick import _build_entry, download_video
 
         for item_info in message.item_infos:
+            # If, by the time we get here, we have already been disconnected,
+            # then simply ignore and move on.
+            share_id = (item_info.host, item_info.port)
+            if not app.sharing_tracker.has_tracker(share_id):
+                logging.info('share with host %s port %s gone, ignore',
+                             item_info.host, item_info.port)
+                continue
             # notes:
             # For sharing item the URL is encoded directory into the path.
             url = item_info.video_path.urlize().decode('utf-8', 'replace')
@@ -1898,7 +1905,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 value = getattr(item_info, src_key)
                 additional[dst_key] = value
             entry = _build_entry(url, content_type, additional=additional)
-            download_video(entry)
+            new_item = download_video(entry)
+            app.sharing_tracker.register_active_download(share_id, new_item)
 
     def handle_download_device_items(self, message):
         manual_feed = Feed.get_manual_feed()
