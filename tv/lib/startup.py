@@ -597,6 +597,6 @@ def reconnect_downloaders():
         downloader_.remove()
     manualItems = item.Item.feed_view(feed.Feed.get_manual_feed().get_id())
     for item_ in manualItems:
-        if item_.downloader is None and item_.__class__ == item.Item:
+        if item_.__class__ == item.Item and not item_.has_downloader():
             logging.warn("removing cancelled external torrent: %s", item_)
             item_.remove()
