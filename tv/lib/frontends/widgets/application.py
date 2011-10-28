@@ -1432,7 +1432,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         # resort_on_update boolean.
         displays = app.display_manager.display_stack
         for d in displays:
-            if d.type == 'downloading':
+            if hasattr(d, 'type') and d.type == 'downloading':
                 d.controller.item_list.set_resort_on_update(True)
         logging.debug('DownloaderSyncCommandComplete')
 
