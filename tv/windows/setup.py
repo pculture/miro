@@ -602,7 +602,6 @@ class bdist_nsis(Command):
         output_file = (output_file %
                        (template_vars['shortAppName'], template_vars['appVersion']))
         nsis_vars['CONFIG_OUTPUT_FILE'] = '%s.exe' % output_file
-        nsis_vars['CONFIG_TWOSTAGE'] = "No"
 
         nsis_args = ["/D%s=%s" % (k, v) for (k, v) in nsis_vars.iteritems()]
         nsis_args.append(os.path.join(self.dist_dir, "Miro.nsi"))
@@ -612,39 +611,6 @@ class bdist_nsis(Command):
         if subprocess.call([NSIS_PATH] + nsis_args) != 0:
             print "ERROR creating the 1 stage installer, quitting"
             return
-
-        # Two stage installer
-        if self.generic:
-            output_file = '%s-%s-generic-twostage.exe'
-        else:
-            output_file = "%s-%s-twostage.exe"
-        output_file = (output_file %
-                       (template_vars['shortAppName'], template_vars['appVersion']))
-        nsis_vars['CONFIG_OUTPUT_FILE'] = output_file
-        nsis_vars['CONFIG_TWOSTAGE'] = "Yes"
-        nsis_vars.pop('MIROBAR_EXE', None)
-
-        nsis_args = ["/D%s=%s" % (k, v) for (k, v) in nsis_vars.iteritems()]
-        nsis_args.append(os.path.join(self.dist_dir, "Miro.nsi"))
-
-        if os.access(output_file, os.F_OK):
-            os.remove(output_file)
-        subprocess.call([NSIS_PATH] + nsis_args)
-
-        zip_path = os.path.join(self.dist_dir, "%s-Contents-%s.zip" %
-            (template_vars['shortAppName'], template_vars['appVersion']))
-        self.zipfile = zip.ZipFile(zip_path, 'w', zip.ZIP_DEFLATED)
-        self.add_file(nsis_vars['CONFIG_EXECUTABLE'])
-        self.add_file(nsis_vars['CONFIG_ICON'])
-        self.add_file(nsis_vars['CONFIG_MOVIE_DATA_EXECUTABLE'])
-        self.add_file(nsis_vars['CONFIG_HELPER_EXECUTABLE'])
-        self.add_glob("*.dll")
-
-        self.add_directory("defaults")
-        self.add_directory("resources")
-        self.add_directory("xulrunner")
-
-        self.zipfile.close()
 
     def add_glob(self, wildcard):
         wildcard = os.path.join(self.dist_dir, wildcard)
