@@ -725,6 +725,7 @@ class DeviceItemHandler(ItemHandler):
                     os.unlink(info.cover_art)
                 except (OSError, IOError):
                     pass # ignore errors
+            device.remaining += info.size
             device.database.emit('item-removed', info)
 
     def bulk_delete(self, info_list):
@@ -738,6 +739,8 @@ class DeviceItemHandler(ItemHandler):
                 self.delete(info)
         finally:
             for device in all_devices:
+                message = messages.DeviceChanged(device)
+                message.send_to_frontend()
                 device.database.set_bulk_mode(False)
 
     def set_is_playing(self, info, is_playing):
