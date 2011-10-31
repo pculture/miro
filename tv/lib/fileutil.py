@@ -123,8 +123,12 @@ def abspath(path):
     return path
 
 def copy_with_progress(input_path, output_path, block_size=32*1024):
+    flags = os.O_WRONLY | os.O_CREAT
+    if hasattr(os, 'O_SYNC'):
+        flags |= os.O_SYNC
+    output_fd = os.open(output_path, flags)
     with file(input_path, 'rb') as input:
-        with file(output_path, 'wb') as output:
+        with os.fdopen(output_fd, 'wb') as output:
             data = input.read(block_size)
             while data:
                 output.write(data)

@@ -690,7 +690,7 @@ class DeviceSyncManager(object):
             return 0, 0
         count = size = 0
         for info in items:
-            converter = self.conversion_for_info(info, )
+            converter = self.conversion_for_info(info)
             if converter == 'copy':
                 count += 1
                 size += info.size
