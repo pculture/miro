@@ -529,6 +529,19 @@ class EventLoopTest(MiroTestCase):
         finally:
             eventloop.thread_pool_quit()
 
+    def run_idles_for_this_loop(self):
+        idle_queue = eventloop._eventloop.idle_queue
+        urgent_queue = eventloop._eventloop.urgent_queue
+        while idle_queue.has_pending_idle() or urgent_queue.has_pending_idle():
+            if urgent_queue.has_pending_idle():
+                urgent_queue.process_idles()
+            if idle_queue.has_pending_idle():
+                idle_queue.process_next_idle()
+        # make sure that idles scheduled for the next loop run as well, but
+        # don't do this inside the while loop.
+        eventloop._eventloop._add_idles_for_next_loop()
+
+
     def run_pending_timeouts(self):
         scheduler = eventloop._eventloop.scheduler
         while scheduler.has_pending_timeout():
