@@ -833,6 +833,11 @@ class DeviceSyncManager(object):
             return None
         device_settings = self.device.database.get(u'settings', {})
         device_info = self.device.info
+
+        # shortcut, if we're just going to copy the file
+        if device_settings.get(u'%s_conversion' % info.file_type) == u'copy':
+            return 'copy'
+
         try:
             media_info = conversions.get_media_info(info.video_path)
         except ValueError:
