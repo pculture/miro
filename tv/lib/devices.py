@@ -598,23 +598,25 @@ class DeviceSyncManager(object):
             finally:
                 source.unlink()
 
-        for file_type in (u'audio', u'video'):
-            for info in itemsource.DeviceItemSource(self.device,
-                                                    file_type).fetch_all():
-                if (info.feed_url and info.file_url and
-                    info.feed_url in url_to_view):
-                    view = url_to_view[info.feed_url]
-                    new_view = database.View(
-                        view.fetcher,
-                        view.where + (' AND (rd.origURL=? OR rd.url=? '
-                                      'OR item.url=?)'),
-                        view.values + (info.file_url, info.file_url,
-                                       info.file_url),
-                        view.order_by,
-                        view.joins,
-                        view.limit)
-                    if not new_view.count():
-                        expired.add(info)
+        # check for expired items
+        if sync[u'podcasts'].get(u'expire', True):
+            for file_type in (u'audio', u'video'):
+                for info in itemsource.DeviceItemSource(self.device,
+                                                        file_type).fetch_all():
+                    if (info.feed_url and info.file_url and
+                        info.feed_url in url_to_view):
+                        view = url_to_view[info.feed_url]
+                        new_view = database.View(
+                            view.fetcher,
+                            view.where + (' AND (rd.origURL=? OR rd.url=? '
+                                          'OR item.url=?)'),
+                            view.values + (info.file_url, info.file_url,
+                                           info.file_url),
+                            view.order_by,
+                            view.joins,
+                            view.limit)
+                        if not new_view.count():
+                            expired.add(info)
         return infos, expired
 
     def get_auto_items(self, size):
