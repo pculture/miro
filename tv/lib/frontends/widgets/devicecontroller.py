@@ -329,9 +329,7 @@ class RoundedVBox(widgetset.Background):
         width, height = self.get_width(), self.get_height()
         x, y = (context.width - width) / 2, (context.height - height) / 2
         widgetutil.round_rect(context, x, y, width, height, 20)
-        context.clip()
         context.set_color(self.BG_COLOR)
-        context.rectangle(x, y, width, height)
         context.fill()
         widgetutil.round_rect(context, x, y, width, height, 20)
         widgetutil.round_rect_reverse(context, x+1, y+1, width-2, height-2, 20)
