@@ -304,21 +304,63 @@ class AutoFillSlider(widgetset.CustomSlider):
         slider_y = (context.height - self.knob.height) / 2
         self.knob.draw(context, slider_x, slider_y, self.knob.width,
                 self.knob.height)
-    
 
-class SyncWidget(widgetset.VBox):
+class RoundedVBox(widgetset.Background):
+    BORDER_COLOR = widgetutil.css_to_color('#c8c8c8')
+    BG_COLOR = widgetutil.css_to_color('#e4e4e4')
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self._vbox = widgetset.VBox()
+        self.add(self._vbox)
+        self.children_start = []
+
+    def pack_start(self, widget, **kwargs):
+        self._vbox.pack_start(widget, **kwargs)
+        self.children_start.append(widget)
+
+    def set_size_request(self, width, height):
+        self._vbox.set_size_request(width, height)
+
+    def size_request(self, layout):
+        return self._vbox.get_size_request()
+
+    def draw(self, context, layout):
+        width, height = self.get_width(), self.get_height()
+        x, y = (context.width - width) / 2, (context.height - height) / 2
+        widgetutil.round_rect(context, x, y, width, height, 20)
+        context.set_color(self.BG_COLOR)
+        context.fill()
+        widgetutil.round_rect(context, x, y, width, height, 20)
+        widgetutil.round_rect_reverse(context, x+1, y+1, width-2, height-2, 20)
+        context.set_color(self.BORDER_COLOR)
+        context.fill()
+        total = y
+        for child in self.children_start[:-1]:
+            total += child.get_height()
+            context.rectangle(x, total, width, 1)
+            context.fill()
+
+        widgetset.Background.draw(self, context, layout)
+
+class SyncWidget(RoundedVBox):
     list_label = _("Sync These Podcasts")
 
     def __init__(self):
         self.device = None
         self.bulk_change = False
-        widgetset.VBox.__init__(self)
+        RoundedVBox.__init__(self)
         self.create_signal('changed')
+
+        top_vbox = widgetset.VBox()
         self.sync_library = widgetset.Checkbox(self.title)
         self.sync_library.connect('toggled', self.sync_library_toggled)
-        self.pack_start(widgetutil.pad(self.sync_library, top=50))
-        self._pack_extra_buttons()
+        top_vbox.pack_start(self.sync_library)
+        self._pack_extra_buttons(top_vbox)
 
+        self.pack_start(widgetutil.pad(top_vbox, 20, 20, 20, 20))
+
+        bottom_vbox = widgetset.VBox()
         self.feed_list = widgetset.VBox()
         self.feed_list.set_size_request(450, -1)
         self.info_map = {}
@@ -331,14 +373,12 @@ class SyncWidget(widgetset.VBox):
                 self.info_map[self.info_key(info)] = checkbox
         else:
             self.sync_library.disable()
-        background = widgetset.SolidBackground(
-                widgetutil.css_to_color('#dddddd'))
+        background = widgetset.SolidBackground(self.BG_COLOR)
         background.add(self.feed_list)
         scroller = widgetset.Scroller(False, True)
         scroller.set_child(background)
         self.feed_list.disable()
-        self.pack_start(widgetutil.pad(scroller, top=20, bottom=5),
-                        expand=True)
+        bottom_vbox.pack_start(scroller, expand=True)
 
         line = widgetset.HBox(spacing=5)
         button = widgetutil.TitlebarButton(_("Select none"))
@@ -347,9 +387,12 @@ class SyncWidget(widgetset.VBox):
         button = widgetutil.TitlebarButton(_("Select all"))
         button.connect('clicked', self.select_clicked, True)
         line.pack_end(button)
-        self.pack_start(widgetutil.pad(line, bottom=20))
+        bottom_vbox.pack_start(widgetutil.pad(line, top=5))
 
-    def _pack_extra_buttons(self):
+        self.pack_start(widgetutil.pad(bottom_vbox, 20, 20, 20, 20),
+                        expand=True)
+
+    def _pack_extra_buttons(self, vbox):
         pass
 
     def set_device(self, device):
@@ -447,10 +490,10 @@ class PodcastSyncWidget(SyncWidget):
     file_type = u'podcasts'
     title = _("Sync Podcasts")
 
-    def _pack_extra_buttons(self):
+    def _pack_extra_buttons(self, vbox):
         self.sync_unwatched = widgetset.Checkbox(_("Only sync unplayed items"))
         self.sync_unwatched.connect('toggled', self.unwatched_toggled)
-        self.pack_start(widgetutil.pad(self.sync_unwatched, left=20))
+        vbox.pack_start(widgetutil.pad(self.sync_unwatched, left=20))
 
     def unwatched_toggled(self, obj):
         all_items = (not obj.get_checked())
@@ -489,14 +532,17 @@ class PlaylistSyncWidget(SyncWidget):
     def find_info_by_key(self, key):
         return app.tabs['playlist'].find_playlist_with_name(key)
 
-class DeviceSettingsWidget(widgetset.Background):
+class DeviceSettingsWidget(RoundedVBox):
     def __init__(self):
-        widgetset.Background.__init__(self)
+        RoundedVBox.__init__(self)
+        self._background = widgetset.Background()
+        self.pack_start(widgetutil.align_center(self._background,
+                                                20, 20, 20, 20))
         self.boxes = {}
         self.device = None
 
     def create_table(self):
-        self.remove()
+        self._background.remove()
         def _get_conversion_name(id_):
             if id_ == 'copy':
                 return _('Copy')
@@ -566,7 +612,8 @@ class DeviceSettingsWidget(widgetset.Background):
                 table.pack(widgetutil.align_left(widget[1]), 1, row)
         table.set_column_spacing(20)
         table.set_row_spacing(20)
-        self.set_child(widgetutil.align(table, 0.5, top_pad=50))
+        self._background.set_child(widgetutil.align_center(table,
+                                                           20, 20, 20, 20))
 
     def set_device(self, device):
         if self.device is None:
@@ -681,12 +728,13 @@ class DeviceMountedView(widgetset.VBox):
                                        label], 0),
                 top_pad=10))
 
+        rounded_vbox = RoundedVBox()
         self.auto_fill = widgetset.Checkbox(
             _("After syncing my selections in the tabs above, "
               "fill remaining space with:"))
         self.auto_fill.connect('toggled', self._auto_fill_changed)
-        vbox.pack_start(widgetutil.align_center(self.auto_fill,
-                                                top_pad=20))
+        rounded_vbox.pack_start(widgetutil.align_center(self.auto_fill,
+                                               20, 20, 20, 20))
         names = [
             (_('Newest Music'), u'recent_music'),
             (_('Random Music'), u'random_music'),
@@ -718,8 +766,11 @@ class DeviceMountedView(widgetset.VBox):
             self.auto_fill_sliders[setting] = dragger
             hbox = widgetutil.build_hbox([label, dragger], 20)
             scrollers.append(hbox)
-        vbox.pack_start(widgetutil.align_center(
-                widgetutil.build_vbox(scrollers, 10)))
+        rounded_vbox.pack_start(widgetutil.align_center(
+                widgetutil.build_vbox(scrollers, 10),
+                20, 20, 20, 20))
+
+        vbox.pack_start(widgetutil.align_center(rounded_vbox, 20, 20, 20, 20))
 
         self.device_size = SizeWidget()
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
@@ -729,11 +780,14 @@ class DeviceMountedView(widgetset.VBox):
         self.pack_end(widgetutil.align_center(self.sync_container))
 
         self.add_tab('main', vbox)
-        self.add_tab('podcasts', widgetutil.align_center(PodcastSyncWidget()))
+        self.add_tab('podcasts', widgetutil.align_center(PodcastSyncWidget(),
+                                                         20, 20, 20, 20))
         self.add_tab('playlists',
-                     widgetutil.align_center(PlaylistSyncWidget()))
+                     widgetutil.align_center(PlaylistSyncWidget(),
+                                             20, 20, 20, 20))
         self.add_tab('settings',
-                     widgetutil.align_center(DeviceSettingsWidget()))
+                     widgetutil.align_center(DeviceSettingsWidget(),
+                                             20, 20, 20, 20))
 
     def add_tab(self, key, widget):
         if not self.tabs:
