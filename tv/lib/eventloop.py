@@ -35,22 +35,21 @@ network requests and scheduling.
 TODO: handle user setting clock back
 """
 
-import threading
 import errno
+import heapq
+import logging
+import Queue
 import select
 import socket
-import heapq
-import Queue
-import logging
+import threading
 import traceback
+
 from miro import app
 from miro import config
 from miro import trapcall
 from miro import signals
 from miro import util
-
 from miro.clock import clock
-
 from miro.plat.utils import thread_body
 
 cumulative = {}
