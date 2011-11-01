@@ -2140,6 +2140,13 @@ class DirectoryScannerImplBase(FeedImpl):
     def do_update(self):
         self.ufeed.confirm_db_thread()
 
+        def should_halt_early():
+            """Check if we should halt before completing the entire update.
+
+            This should be called after each yield statement.
+            """
+            return not self.id_exists()
+
         self._before_update()
 
         known_files = self.calc_known_files()
@@ -2187,9 +2194,16 @@ class DirectoryScannerImplBase(FeedImpl):
                 length = len(all_files)
                 if not (length % THRESHOLD):
                     yield
+                    if should_halt_early():
+                        return
             to_add = self._filter_paths(all_files, known_files)
             for path in to_add:
                 app.metadata_progress_updater.will_process_path(path)
+            # since we've now called will_process_path(), we should make sure
+            # we call path_processed() if we halt early
+            def halt_early_cleanup():
+                for path in path_iter:
+                    app.metadata_progress_updater.path_processed(path)
             # Keep track of the paths we will add in case we get directory
             # watcher updates.  In that case, we want these paths to be in
             # known_files.  It's very important that the next line come before
@@ -2198,15 +2212,15 @@ class DirectoryScannerImplBase(FeedImpl):
             path_iter = iter(to_add)
             finished = False
             yield # yield after doing prep work
-            try:
-                while not finished:
-                    finished = self._add_batch_of_videos(path_iter, 0.2)
-                    yield # yield after each batch
-            except ObjectNotFoundError:
-                # whoops, we disappeared! clean up and quit
-                for path in path_iter:
-                    app.metadata_progress_updater.path_processed(path)
+            if should_halt_early():
+                halt_early_cleanup()
                 return
+            while not finished:
+                finished = self._add_batch_of_videos(path_iter, 0.2)
+                yield # yield after each batch
+                if should_halt_early():
+                    halt_early_cleanup()
+                    return
         self._after_update()
         self.updating = False
         self.pending_paths_to_add = []

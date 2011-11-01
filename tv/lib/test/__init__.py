@@ -85,6 +85,7 @@ from miro.test.watchedfoldertest import *
 from miro.test.subprocesstest import *
 from miro.test.itemfiltertest import *
 from miro.test.extensiontest import *
+from miro.test.idleiteratetest import *
 
 # platform specific tests
 
