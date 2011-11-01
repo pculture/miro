@@ -754,9 +754,9 @@ class _MultiRowAlbumRenderStrategy(object):
         """Get artist name to render."""
         raise NotImplementedError()
 
-    def draw_track_numbers(self):
-        """Should we draw track numbers?"""
-        return True
+    def get_track_number(self, item_info):
+        """Track number to show"""
+        raise NotImplementedError()
 
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
@@ -768,6 +768,12 @@ class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
 
     def get_artist(self, item_info):
         return item_info.artist
+
+    def get_track_number(self, item_info):
+        if item_info.track is not None:
+            return item_info.track
+        else:
+            return ''
 
 class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
@@ -784,8 +790,8 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_artist(self, item_info):
         return item_info.feed_url
 
-    def draw_track_numbers(self):
-        return False
+    def get_track_number(self, item_info):
+        return ''
 
 class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
@@ -807,8 +813,8 @@ class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_artist(self, item_info):
         return None
 
-    def draw_track_numbers(self):
-        return False
+    def get_track_number(self, item_info):
+        return ''
 
 class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     """Renderer for album view."""
@@ -842,6 +848,9 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
     def get_artist(self):
         return self._render_strategy.get_artist(self.info)
+
+    def get_track_number(self):
+        return self._render_strategy.get_track_number(self.info)
 
     def switch_mode(self, new_mode):
         """Switch which mode we use to render the album art.
@@ -878,6 +887,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             album_art = None
         artist = self.get_artist()
         album = self.get_album()
+        track = self.get_track_number()
 
         if self.group_info is None:
             # we can't render if group_info isn't set
@@ -927,8 +937,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
                 self.render_text(context, layout_manager, artist, False)
 
         # draw track number
-        if self._render_strategy.draw_track_numbers():
-            self.render_track_number(context, layout_manager, current_row)
+        self.render_track_number(context, layout_manager, track)
         # render line below the album
         if current_row == total_rows - 1:
             self.draw_bottom_line(context)
@@ -1011,7 +1020,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         # setup a textbox for the text
         layout_manager.set_font(self.FONT_SIZE)
         layout_manager.set_text_color(self.TRACK_TEXT_COLOR)
-        textbox = layout_manager.textbox(str(track_number + 1))
+        textbox = layout_manager.textbox(str(track_number))
         # place the text on the right-side of the cell
         textbox.set_width(width)
         textbox.set_alignment('right')
