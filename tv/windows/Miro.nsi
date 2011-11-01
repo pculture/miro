@@ -631,24 +631,6 @@ is_admin:
 
 StrCmp $ONLY_INSTALL_THEME "1" install_theme
 
-!if ${CONFIG_TWOSTAGE} = "Yes"
-
-  InetLoad::load http://ftp.osuosl.org/pub/pculture.org/democracy/win/${CONFIG_SHORT_APP_NAME}-Contents-${CONFIG_VERSION}.zip "$INSTDIR\${CONFIG_SHORT_APP_NAME}-Contents.zip"
-  Pop $0
-  StrCmp $0 "OK" dlok
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
-  Abort
-dlok:
-  !insertmacro ZIPDLL_EXTRACT "$INSTDIR\${CONFIG_SHORT_APP_NAME}-Contents.zip" $INSTDIR <ALL>
-  Delete "$INSTDIR\${CONFIG_SHORT_APP_NAME}-Contents.zip"
-  Pop $0
-  StrCmp $0 "success" unzipok
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Unzip error, click OK to abort installation: $0" /SD IDOK
-  Abort
-unzipok:
-
-!else
-
   File  "${CONFIG_EXECUTABLE}"
   File  "${CONFIG_ICON}"
   File  "${CONFIG_DOWNLOADER_EXECUTABLE}"
@@ -670,7 +652,6 @@ unzipok:
   File  /r xulrunner
   File  /r vlc-plugins
   File  /r Microsoft.VC90.CRT
-!endif
 
 install_theme:
   StrCmp $THEME_NAME "" done_installing_theme
