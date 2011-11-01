@@ -407,10 +407,6 @@ class SyncWidget(RoundedVBox):
         # OS X doesn't send the callback when we toggle it manually (#15392)
         self.sync_library_toggled(self.sync_library)
 
-        if self.file_type != u'playlists':
-            all_feeds = this_sync.get(u'all', True)
-            self.sync_unwatched.set_checked(not all_feeds)
-
         for item in this_sync.get(u'items', []):
             if item in self.info_map:
                 self.info_map[item].set_checked(True)
@@ -493,7 +489,11 @@ class PodcastSyncWidget(SyncWidget):
     def _pack_extra_buttons(self, vbox):
         self.sync_unwatched = widgetset.Checkbox(_("Only sync unplayed items"))
         self.sync_unwatched.connect('toggled', self.unwatched_toggled)
+        self.expire_podcasts = widgetset.Checkbox(
+            _("Delete expired podcasts from my device"))
+        self.expire_podcasts.connect('toggled', self.expire_podcasts_toggled)
         vbox.pack_start(widgetutil.pad(self.sync_unwatched, left=20))
+        vbox.pack_start(widgetutil.pad(self.expire_podcasts, left=20))
 
     def unwatched_toggled(self, obj):
         all_items = (not obj.get_checked())
@@ -505,11 +505,37 @@ class PodcastSyncWidget(SyncWidget):
             message.send_to_backend()
             self.emit('changed')
 
+    def expire_podcasts_toggled(self, obj):
+        expire_podcasts = bool(obj.get_checked())
+        current = self.device.database[u'sync'][self.file_type].get(u'expire')
+        if current != expire_podcasts:
+            message = messages.ChangeDeviceSyncSetting(self.device,
+                                                       self.file_type,
+                                                       u'expire',
+                                                       expire_podcasts)
+            message.send_to_backend()
+            self.emit('changed')
+
+    def set_device(self, device):
+        SyncWidget.set_device(self, device)
+        sync = self.device.database.setdefault(u'sync', {})
+        if self.file_type not in sync:
+            this_sync = {}
+        else:
+            this_sync = sync[self.file_type]
+
+        all_feeds = this_sync.get(u'all', True)
+        self.sync_unwatched.set_checked(not all_feeds)
+        expire_podcasts = this_sync.get(u'expire', True)
+        self.expire_podcasts.set_checked(expire_podcasts)
+
     def sync_library_toggled(self, obj):
         if SyncWidget.sync_library_toggled(self, obj):
             self.sync_unwatched.enable()
+            self.expire_podcasts.enable()
         else:
             self.sync_unwatched.disable()
+            self.expire_podcasts.disable()
 
     def get_items(self):
         return [info for info in app.tabs['feed'].get_feeds()
