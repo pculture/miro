@@ -565,6 +565,10 @@ cdef class InfoList:
             node.group_hash = -1
             node = node.next
 
+    def get_grouping(self):
+        """Get the current grouping function."""
+        return self.grouping_func
+
     def get_group_info(self, id_):
         """Get the info about the group an info is inside.
 
