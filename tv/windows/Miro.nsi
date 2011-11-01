@@ -654,7 +654,7 @@ unzipok:
   File  "${CONFIG_DOWNLOADER_EXECUTABLE}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "${CONFIG_HELPER_EXECUTABLE}"
-  File  "*.dll"
+  File  /x "OCSetupHlp.dll" "*.dll"
   File  "*.pyd"
   File  "w9xpopen.exe"
   File  "library.zip"
