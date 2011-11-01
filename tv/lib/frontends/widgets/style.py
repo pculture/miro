@@ -822,19 +822,24 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     IGNORE_PADDING = True
     DRAW_BACKGROUND = False
 
-    IMAGE_SIZE = (138, 138)
+    MAX_IMAGE_SIZE = (138, 138)
     IMAGE_MARGIN_TOP = 5
     IMAGE_MARGIN_BOTTOM = 0
-    MARGIN_RIGHT = 45
-    MARGIN_LEFT = 11
+    IMAGE_MARGIN_LEFT = 8
+    IMAGE_MARGIN_RIGHT = 6
+
+    MIN_TEXT_WIDTH = 48
+    TEXT_PADDING_RIGHT = 6
     TRACK_NUMBER_MARGIN_RIGHT = 13
+
     BACKGROUND_COLOR = widgetutil.WHITE
     TEXT_COLOR = widgetutil.BLACK
     TRACK_TEXT_COLOR = widgetutil.css_to_color('#969696')
     BOTTOM_LINE_COLOR = widgetutil.css_to_color('#dddddd')
     FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 
-    min_width = IMAGE_SIZE[0] + MARGIN_LEFT + MARGIN_RIGHT
+    min_width = (IMAGE_MARGIN_LEFT + MAX_IMAGE_SIZE[0] + IMAGE_MARGIN_RIGHT +
+            MIN_TEXT_WIDTH)
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
@@ -851,6 +856,12 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
     def get_track_number(self):
         return self._render_strategy.get_track_number(self.info)
+
+    def get_current_row(self):
+        return self.group_info[0]
+
+    def get_total_rows(self):
+        return self.group_info[1]
 
     def switch_mode(self, new_mode):
         """Switch which mode we use to render the album art.
@@ -879,68 +890,29 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         return 'album-click'
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        album_art_path = self.get_image_path()
-        if album_art_path is not None:
-            album_art = imagepool.get_surface(album_art_path,
-                    size=self.IMAGE_SIZE)
-        else:
-            album_art = None
-        artist = self.get_artist()
-        album = self.get_album()
-        track = self.get_track_number()
+        if not self.sanity_check_before_render(context):
+            return
 
+        self.render_album_art(context)
+        self.render_track_number(context, layout_manager)
+        self.render_album_or_artist(context, layout_manager)
+
+    def sanity_check_before_render(self, context):
+        """Do some sanity checking before starting to render things.
+
+        Returns True if we're okay to render, False if we should bail
+        """
         if self.group_info is None:
             # we can't render if group_info isn't set
             logging.warn("group_info is None in MultiRowAlbumRenderer")
-            return
+            return False
         if context.height == 0:
             # not sure how this would happen, but we need to avoid
             # divide-by-zero errors if it does
             logging.warn("row height is 0 in MultiRowAlbumRenderer")
-            return
+            return False
+        return True
 
-        if not album:
-            # if we don't have an album name, then try to render the artist
-            # name.  If not, just leave ourselves blank.
-            self.clear_cell(context)
-            if artist:
-                self.render_text(context, layout_manager, artist, True)
-                self.draw_bottom_line(context)
-            return
-
-        current_row, total_rows = self.group_info
-
-        # calculate how many rows we need to display the image
-        if album_art is not None:
-            total_image_height = (album_art.height + self.IMAGE_MARGIN_TOP +
-                    self.IMAGE_MARGIN_BOTTOM)
-            image_row_count = math.ceil(float(total_image_height) /
-                    context.height)
-        else:
-            image_row_count = 0
-
-        # render the current cell
-        if total_rows < image_row_count:
-            # we don't have enough room to draw the image, just try to draw
-            # the text
-            image_row_count = 0
-        if current_row < image_row_count:
-            # draw image cells
-            self.render_image(context, album_art, current_row)
-        else:
-            # draw text and empty cells
-            self.clear_cell(context)
-
-            if current_row == image_row_count:
-                self.render_text(context, layout_manager, album, True)
-            elif current_row == image_row_count + 1:
-                self.render_text(context, layout_manager, artist, False)
-
-        # draw track number
-        self.render_track_number(context, layout_manager, track)
-        # render line below the album
-        if current_row == total_rows - 1:
-            self.draw_bottom_line(context)
 
     def clear_cell(self, context):
         """Draw our background color over the cell to clear it."""
@@ -948,8 +920,56 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         context.rectangle(0, 0, context.width, context.height)
         context.fill()
 
-    def render_image(self, context, image, current_row):
+    def make_album_art(self, context):
+        """Make an image to draw as album art.
+
+        Returns ImageSurface to draw or None if we don't have anything
+        """
+        if self.get_total_rows() < 2:
+            # don't draw album art if we only have 1 item in the group
+            return None
+
+        album_art_path = self.get_image_path()
+        if album_art_path is None:
+            return None
+
+        # calculate total y-pixels for the entire group
+        height_for_group = context.height * self.get_total_rows()
+        # calculate the width/height we have to play with
+        max_width = min(self.MAX_IMAGE_SIZE[0],
+                context.width - self.IMAGE_MARGIN_RIGHT -
+                self.IMAGE_MARGIN_LEFT - self.MIN_TEXT_WIDTH)
+        max_height = min(self.MAX_IMAGE_SIZE[1],
+                height_for_group - self.IMAGE_MARGIN_TOP -
+                self.IMAGE_MARGIN_BOTTOM)
+        # pick the smaller of the 2 and make a square ImageSurface
+        side_length = min(max_width, max_height)
+        return imagepool.get_surface(album_art_path,
+                    size=(side_length, side_length))
+
+    def render_album_art(self, context):
+        album_art = self.make_album_art(context)
+        if (album_art is not None and
+                self.cell_contains_album_art(context, album_art)):
+            self.render_album_art_slice(context, album_art)
+        else:
+            # we aren't drawing album art, just clear the cell
+            self.clear_cell(context)
+
+    def cell_contains_album_art(self, context, album_art):
+        """Does this cell contain a portion of the album art?
+        """
+        album_art_bottom = album_art.height + self.IMAGE_MARGIN_TOP
+        cell_top = self.get_current_row() * context.height
+        cell_bottom = cell_top + context.height
+        return (cell_bottom > self.IMAGE_MARGIN_TOP and
+                cell_top < album_art_bottom)
+
+    def render_album_art_slice(self, context, image):
+        """Render the slice of the album art for this cell."""
+
         if context.width < image.width:
+            self.clear_cell(context)
             # not enough width to draw
             return
 
@@ -958,14 +978,14 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         context.set_color(self.BACKGROUND_COLOR)
         # setup variables to track where we are copying from and to
 
-        dest_x = self.MARGIN_LEFT
+        dest_x = self.IMAGE_MARGIN_LEFT
         width = image.width
 
         dest_y = 0
         height = context.height
 
         src_x = 0
-        src_y = current_row * context.height - self.IMAGE_MARGIN_TOP
+        src_y = self.get_current_row() * context.height - self.IMAGE_MARGIN_TOP
 
         if src_y < 0:
             # The cell is contains the top padding for our image.
@@ -998,9 +1018,19 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
                 context.height)
         context.fill()
 
-    def render_text(self, context, layout_manager, text, bold):
-        x = self.MARGIN_LEFT
-        width = context.width - self.MARGIN_LEFT - self.MARGIN_RIGHT
+    def render_album_or_artist(self, context, layout_manager):
+        x = (self.MAX_IMAGE_SIZE[0] + self.IMAGE_MARGIN_LEFT +
+                self.IMAGE_MARGIN_RIGHT)
+        if self.get_current_row() == 0:
+            text = self.get_artist()
+            bold = True
+        elif self.get_current_row() == 1:
+            text = self.get_album()
+            bold = False
+        else:
+            return
+
+        width = self.album_artist_text_end - x
         # setup a textbox for the text
         layout_manager.set_font(self.FONT_SIZE, bold=bold)
         layout_manager.set_text_color(self.TEXT_COLOR)
@@ -1010,30 +1040,23 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         textbox.set_width(width)
         # middle-align the text to line-up with the other cells
         line_height = textbox.font.line_height()
-        y = (context.height - line_height) // 2
+        y = (context.height - line_height) / 2.0
         # okay, ready to draw
         textbox.draw(context, x, y, width, line_height)
 
-    def render_track_number(self, context, layout_manager, track_number):
-        x = 0
-        width = context.width - self.TRACK_NUMBER_MARGIN_RIGHT
+    def render_track_number(self, context, layout_manager):
         # setup a textbox for the text
         layout_manager.set_font(self.FONT_SIZE)
         layout_manager.set_text_color(self.TRACK_TEXT_COLOR)
-        textbox = layout_manager.textbox(str(track_number))
+        textbox = layout_manager.textbox(str(self.get_track_number()))
         # place the text on the right-side of the cell
-        textbox.set_width(width)
-        textbox.set_alignment('right')
+        text_width, text_height = textbox.get_size()
+        x = context.width - self.TEXT_PADDING_RIGHT - text_width
         # middle-align the text to line-up with the other cells
-        line_height = textbox.font.line_height()
-        y = (context.height - line_height) // 2
+        y = (context.height - text_height) // 2
         # okay, ready to draw
-        textbox.draw(context, x, y, width, line_height)
-
-    def draw_bottom_line(self, context):
-        context.set_color(self.BOTTOM_LINE_COLOR)
-        context.rectangle(0, context.height-1, context.width, 1)
-        context.fill()
+        textbox.draw(context, x, y, text_width, text_height)
+        self.album_artist_text_end = x - self.TEXT_PADDING_RIGHT
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
