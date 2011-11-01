@@ -1133,7 +1133,10 @@ class ListView(ItemView, SorterOwner):
             sorter.set_width(self.column_widths[name])
 
 class AlbumView(ListView):
-    pass
+    def __init__(self, item_list, renderer_set, sorts, column_widths):
+        ListView.__init__(self, item_list, renderer_set, sorts, column_widths)
+        self.set_group_lines_enabled(True)
+        self.set_group_line_style(widgetutil.css_to_color('#dddddd'), 1)
 
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed
