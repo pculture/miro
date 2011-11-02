@@ -554,6 +554,9 @@ class TableViewCommon(object):
         self.handled_last_mouse_down = False
         self.gradientHighlight = False
         self.tracking_area = None
+        self.group_lines_enabled = False
+        self.group_line_width = 1
+        self.group_line_color = (0, 0, 0, 1.0)
         # we handle cell spacing manually
         self.setIntercellSpacing_(NSSize(0, 0))
         self.column_spacing = 3
@@ -710,6 +713,26 @@ class TableViewCommon(object):
             height = NSMaxY(total_rect) - NSMaxY(last_row_rect)
             NSRectFill(NSMakeRect(total_rect.origin.x, y,
                     total_rect.size.width, height))
+
+    def drawRow_clipRect_(self, row, clip_rect):
+        self.SuperClass.drawRow_clipRect_(self, row, clip_rect)
+        if self.group_lines_enabled:
+            self.drawGroupLine_(row)
+
+    def drawGroupLine_(self, row):
+        infolist = wrappermap.wrapper(self).model
+        if (not isinstance(infolist, tablemodel.InfoListModel) or
+                infolist.get_grouping() is None):
+            return
+
+        info, attrs, group_info = infolist[row]
+        if group_info[0] == group_info[1] - 1:
+            rect = self.rectOfRow_(row)
+            rect.origin.y = NSMaxY(rect) - self.group_line_width
+            rect.size.height = self.group_line_width
+            NSColor.colorWithDeviceRed_green_blue_alpha_(
+                    *self.group_line_color).set()
+            NSRectFill(rect)
 
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):
         return YES
@@ -1468,6 +1491,15 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
 
     def set_gradient_highlight(self, setting):
         self.tableview.gradientHighlight = setting
+
+    def set_group_lines_enabled(self, enabled):
+        self.tableview.group_lines_enabled = enabled
+        self.queue_redraw()
+
+    def set_group_line_style(self, color, width):
+        self.tableview.group_line_color = color + (1.0,)
+        self.tableview.group_line_width = width
+        self.queue_redraw()
 
     def get_tooltip(self, iter, column):
         return None
