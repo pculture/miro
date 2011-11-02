@@ -823,9 +823,9 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     DRAW_BACKGROUND = False
 
     MAX_IMAGE_SIZE = (138, 138)
-    IMAGE_MARGIN_TOP = 5
-    IMAGE_MARGIN_BOTTOM = 0
-    IMAGE_MARGIN_LEFT = 8
+    IMAGE_MARGIN_TOP = 4
+    IMAGE_MARGIN_BOTTOM = 3
+    IMAGE_MARGIN_LEFT = 7
     IMAGE_MARGIN_RIGHT = 6
 
     MIN_TEXT_WIDTH = 48
