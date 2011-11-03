@@ -151,8 +151,8 @@ def _calc_interior_frame(total_frame, tableview):
     spacing ourselves.  This method calculates the area that a cell should
     render to, given the total spacing.
     """
-    return NSMakeRect(total_frame.origin.x + tableview.column_spacing // 2,
-            total_frame.origin.y + tableview.row_spacing // 2,
+    return NSMakeRect(total_frame.origin.x + tableview.column_spacing / 2.0,
+            total_frame.origin.y + tableview.row_spacing / 2.0,
             total_frame.size.width - tableview.column_spacing,
             total_frame.size.height - tableview.row_spacing)
 
