@@ -184,9 +184,6 @@ class DownloaderBatchCommand(Command):
     PAUSE   = 2
     RESTORE = 4
 
-    RESUME_EXISTING = 0
-    RESUME_NEW      = 1
-
     def action(self):
         from miro.dl_daemon import download
         mark_reply = True
@@ -204,17 +201,10 @@ class DownloaderBatchCommand(Command):
                 else:
                     download.stop_download(dlid, args['delete'])
             elif cmd == self.RESUME:
-                subcmd = args['subcmd']
-                if subcmd == self.RESUME_EXISTING:
-                    download.start_download(dlid)
-                elif cmd == self.RESUME_NEW:
-                    channel_name = args['channel_name']
-                    url = args['url']
-                    content_type = args['content_type']
-                    download.start_new_download(url, dlid, content_type,
-                                                channel_name)
-                else:
-                    raise ValueError('Invalid resume subcommand')
+                channel_name = args['channel_name']
+                url = args['url']
+                content_type = args['content_type']
+                download.start_download(url, dlid, content_type, channel_name)
             elif cmd == self.RESTORE:
                 # Restoring a downloader doesn't actually change any state
                 # so don't reply.
