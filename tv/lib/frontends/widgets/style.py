@@ -356,6 +356,7 @@ class GenreRenderer(ListViewRendererText):
     attr_name = 'genre'
 
 class DateAddedRenderer(ListViewRendererText):
+    min_width = 70
     attr_name = 'display_date_added'
 
 class LastPlayedRenderer(ListViewRendererText):
