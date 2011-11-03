@@ -71,9 +71,6 @@ class DownloadStateManager(object):
     PAUSE   = command.DownloaderBatchCommand.PAUSE
     RESTORE = command.DownloaderBatchCommand.RESTORE
 
-    RESUME_EXISTING = command.DownloaderBatchCommand.RESUME_EXISTING
-    RESUME_NEW      = command.DownloaderBatchCommand.RESUME_NEW
-
     UPDATE_INTERVAL = 1
 
     def __init__(self):
@@ -543,8 +540,7 @@ class RemoteDownloader(DDBObject):
             self.url = url
             logging.debug("downloading url %s", self.url)
             args = dict(url=self.url, content_type=self.contentType,
-                        channel_name=self.channelName,
-                        subcmd=app.download_state_manager.RESUME_NEW)
+                        channel_name=self.channelName)
             app.download_state_manager.add_download(self.dlid, self)
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.RESUME,
@@ -629,7 +625,8 @@ class RemoteDownloader(DDBObject):
             self.signal_change()
         elif self.get_state() in (u'stopped', u'paused', u'offline'):
             if app.download_state_manager.get_download(self.dlid):
-                args = dict(subcmd=app.download_state_manager.RESUME_EXISTING)
+                args = dict(url=self.url, content_type=self.contentType,
+                            channel_name=self.channelName)
                 app.download_state_manager.queue(
                     self.dlid,
                     app.download_state_manager.RESUME,
@@ -940,7 +937,8 @@ class RemoteDownloader(DDBObject):
             return
         self.manualUpload = True
         if app.download_state_manager.get_download(self.dlid):
-            args = dict(subcmd=app.download_state_manager.RESUME_EXISTING)
+            args = dict(url=self.url, content_type=self.contentType,
+                        channel_name=self.channelName)
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.RESUME,
                                              args)
