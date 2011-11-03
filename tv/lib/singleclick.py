@@ -262,11 +262,14 @@ def download_video(fp_dict):
     to the manual feed, and sets the item to download.
 
     :param fp_dict: feedparser dict specifying metadata for the item
+
+    :returns: the new item
     """
     fp_values = item.FeedParserValues(fp_dict)
     manual_feed = feed.Feed.get_manual_feed()
     new_item = item.Item(fp_values, feed_id=manual_feed.get_id())
     new_item.download()
+    return new_item
 
 def filter_existing_feed_urls(urls):
     """Takes a list of feed urls and returns a list of urls that aren't

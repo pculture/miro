@@ -109,6 +109,7 @@ class Application:
         app.saved_items = set()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
         app.store_manager = stores.StoreManager()
+        self.sharing_download_count = 0
         self.download_count = 0
         self.paused_count = 0
         self.unwatched_count = 0
@@ -1405,6 +1406,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def profile_next_message(self, message_obj, path):
         self._profile_info = (message_obj, path)
 
+    def handle_sharing_active_downloads_count(self, message):
+        app.widgetapp.sharing_download_count = message.count
+
     def handle_sharing_disappeared(self, message):
         share = message.share
         host = share.host
@@ -1478,7 +1482,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         title = _('Connect failed')
         description = _('Connection to share %(name)s failed.\n\n'
                         'The share is either unreachable or incompatible '
-                        'with %(appname)s sharing.',
+                        'with %(appname)s sharing.\n\n'
+                        'Any active downloads associated this share '
+                        'have been automatically canceled.',
                         {"name": name,
                          "appname": app.config.get(prefs.SHORT_APP_NAME)})
         dialogs.show_message(title, description, dialogs.INFO_MESSAGE)

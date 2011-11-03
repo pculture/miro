@@ -926,6 +926,11 @@ class JettisonTabs(FrontendMessage):
         self.type = typ
         self.ids = ids
 
+class SharingActiveDownloadsCount(FrontendMessage):
+    """Tell frontend the number of active downloads via shares."""
+    def __init__(self, count):
+        self.count = count
+
 class SharingConnectFailed(FrontendMessage):
     """Tell the frontend the request to connect a share failed."""
     def __init__(self, share):

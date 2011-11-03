@@ -68,6 +68,18 @@ class Controller:
     def shutdown(self):
         logging.info("Shutting down video conversions manager")
         conversions.conversion_manager.shutdown()
+        try:
+            # shut this down early: we want to do it before the closing
+            # of the database and the downloader, since we may need to
+            # cancel downloads.
+            if app.sharing_manager is not None:
+                logging.info("Shutting down Sharing Manager")
+                app.sharing_manager.shutdown()
+            if app.sharing_tracker is not None:
+                logging.info("Shutting down Sharing Tracker")
+                app.sharing_tracker.stop_tracking()
+        except StandardError:
+            logging.exception('error while shutting down sharing')
         logging.info("Shutting down Downloader...")
         if app.download_state_manager is not None:
             app.download_state_manager.shutdown_downloader(
@@ -78,12 +90,6 @@ class Controller:
             if app.device_manager is not None:
                 logging.info("Shutting down device manager")
                 app.device_manager.shutdown()
-            if app.sharing_manager is not None:
-                logging.info("Shutting down Sharing Manager")
-                app.sharing_manager.shutdown()
-            if app.sharing_tracker is not None:
-                logging.info("Shutting down Sharing Tracker")
-                app.sharing_tracker.stop_tracking()
         except StandardError:
             signals.system.failed_exn("while shutting down")
             # don't abort - it's not "fatal" and we can still shutdown
