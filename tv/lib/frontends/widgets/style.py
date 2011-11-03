@@ -761,8 +761,7 @@ class _MultiRowAlbumRenderStrategy(object):
 
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
-        # use placeholder image until the metadata changes happen
-        return resources.path('images/album-art-placeholder.gif')
+        return item_info.cover_art
 
     def get_album(self, item_info):
         return item_info.album
