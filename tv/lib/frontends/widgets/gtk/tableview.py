@@ -214,6 +214,9 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
         self.set_enable_search(False)
         self.horizontal_separator = self.style_get_property("horizontal-separator")
         self.expander_size = self.style_get_property("expander-size")
+        self.group_lines_enabled = False
+        self.group_line_color = (0, 0, 0)
+        self.group_line_width = 1
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -280,6 +283,49 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
             gc = self.get_style().fg_gc[self.state]
             x1, x2, y = self.bottom_drag_dest_coords()
             event.window.draw_line(gc, x1, y, x2, y)
+        if self.group_lines_enabled:
+            self.draw_group_lines(event)
+
+    def draw_group_lines(self, expose_event):
+        # we need both the GTK TreeModel and the InfoList for this one
+        gtk_model = self.get_model()
+        infolist = wrappermap.wrapper(self).model
+        if (not isinstance(infolist, InfoListModel) or
+                infolist.get_grouping() is None):
+            return
+        # prepare a couple variables for the drawing
+        expose_bottom = expose_event.area.y + expose_event.area.height
+        cr = expose_event.window.cairo_create()
+        cr.set_source_rgb(*self.group_line_color)
+        first_column = self.get_columns()[0]
+        # start on the top row of the expose event
+        path_info = self.get_path_at_pos(expose_event.area.x, expose_event.area.y)
+        if path_info is None:
+            return
+        else:
+            path = path_info[0]
+            gtk_iter = gtk_model.get_iter(path)
+        # draw the lines
+        while True:
+            # calculate the row's area in the y direction.  We don't care
+            # about the x-axis, but PyGTK forces us to pass in a column, so we
+            # send in the first one and ignore the x/width attributes.
+            background_area = self.get_background_area(path, first_column)
+            if background_area.y > expose_bottom:
+                break
+            # draw stuff if we're on the last row
+            info, attrs, group_info = infolist.row_for_iter(gtk_iter)
+            if group_info[0] == group_info[1] - 1:
+                y = (background_area.y + background_area.height -
+                        self.group_line_width)
+                cr.rectangle(expose_event.area.x, y, expose_event.area.width,
+                        self.group_line_width)
+                cr.fill()
+            # prepare for next row
+            gtk_iter = gtk_model.iter_next(gtk_iter)
+            if gtk_iter is None:
+                break
+            path = (path[0] + 1,)
 
     def bottom_drag_dest_coords(self):
         visible = self.get_visible_rect()
@@ -1114,6 +1160,23 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
             self.modify_style('base', gtk.STATE_ACTIVE, self.background_color)
         if self.use_custom_style:
             self.set_column_background_color()
+
+    def set_group_lines_enabled(self, enabled):
+        """Enable/Disable group lines.
+
+        This only has an effect if our model is an InfoListModel and it has a
+        grouping set.
+
+        If group lines are enabled, we will draw a line below the last item in
+        the group.  Use set_group_line_style() to change the look of the line.
+        """
+        self._widget.group_lines_enabled = enabled
+        self.queue_redraw()
+
+    def set_group_line_style(self, color, width):
+        self._widget.group_line_color = color
+        self._widget.group_line_width = width
+        self.queue_redraw()
 
     def handle_custom_style_change(self):
         if self.background_color is not None:

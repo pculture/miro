@@ -138,6 +138,7 @@ class InfoListTestBase(MiroTestCase):
     def check_update_grouping(self, new_grouping):
         old_list = self.infolist.info_list()
         self.infolist.set_grouping(new_grouping)
+        self.assertEquals(self.infolist.get_grouping(), new_grouping)
         self.grouping_func = new_grouping
         # check that the ordering of infos is the same
         self.assertEquals(old_list, self.infolist.info_list())
@@ -254,6 +255,7 @@ class InfoListDataTest(InfoListTestBase):
         # test setting a grouping function
         def first_letter_grouping(info):
             return info.name[0]
+        self.assertEquals(self.infolist.get_grouping(), None)
         self.check_update_grouping(first_letter_grouping)
         # test changing a grouping function
         def last_letter_grouping(info):
