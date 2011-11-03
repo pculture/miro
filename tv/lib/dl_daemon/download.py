@@ -81,17 +81,6 @@ def create_downloader(url, content_type, dlid, magnet=None):
     else:
         return HTTPDownloader(url, dlid, expectedContentType=content_type)
 
-def start_new_download(url, dlid, content_type, channel_name):
-    """Creates a new downloader object.
-    """
-    check_u(url)
-    check_u(content_type)
-    if channel_name:
-        check_f(channel_name)
-    dl = create_downloader(url, content_type, dlid)
-    dl.channelName = channel_name
-    _downloads[dlid] = dl
-
 def pause_download(dlid):
     """Pauses a download by download id.
 
@@ -113,16 +102,19 @@ def info_hash_to_long(info_hash):
     """
     return long(str(info_hash), 16)
 
-def start_download(dlid):
+def start_download(url, dlid, content_type, channel_name):
     try:
         download = _downloads[dlid]
+        download.start()
     except KeyError:
-        # There is no download with this id
-        err = u"in start_download(): no downloader with id %s" % dlid
-        c = command.DownloaderErrorCommand(daemon.LAST_DAEMON, err)
-        c.send()
-        return True
-    return download.start()
+        # There is no download with this id.  This is a new download.
+        check_u(url)
+        check_u(content_type)
+        if channel_name:
+            check_f(channel_name)
+        dl = create_downloader(url, content_type, dlid)
+        dl.channelName = channel_name
+        _downloads[dlid] = dl
 
 def stop_download(dlid, delete):
     _lock.acquire()
