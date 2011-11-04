@@ -283,7 +283,7 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
             gc = self.get_style().fg_gc[self.state]
             x1, x2, y = self.bottom_drag_dest_coords()
             event.window.draw_line(gc, x1, y, x2, y)
-        if self.group_lines_enabled:
+        if self.group_lines_enabled and event.window == self.get_bin_window():
             self.draw_group_lines(event)
 
     def draw_group_lines(self, expose_event):
