@@ -559,7 +559,7 @@ class DeviceSyncManager(object):
         self._copy_iter_running = False
         self.started = False
 
-    def get_sync_items(self):
+    def get_sync_items(self, max_size=None):
         """
         Returns two lists of ItemInfos; one for items we need to sync, and one
         for items which have expired.
@@ -617,6 +617,17 @@ class DeviceSyncManager(object):
                             view.limit)
                         if not new_view.count():
                             expired.add(info)
+        if max_size is not None and infos:
+            for info in expired:
+                max_size += sum(i.size for i in expired)
+            sync_size = self.get_sync_size(infos)[1]
+            if sync_size > max_size:
+                sizes_and_items = [
+                    (self.get_sync_size([i])[1], i) for i in infos]
+                for i in self.yield_items_to_get_to(sync_size - max_size,
+                                                       sizes_and_items):
+                    sync_size -= i.size
+                    infos.remove(i)
         return infos, expired
 
     def get_auto_items(self, size):
@@ -745,9 +756,13 @@ class DeviceSyncManager(object):
             self.device.remaining += info.size
         self._check_finished()
 
-    def expire_auto_items(self, size):
+    @staticmethod
+    def yield_items_to_get_to(size, sizes_and_items):
         """
-        Expires automatically synced items.
+        This algorithm lets us filter a set of items to get to a given size.
+        ``size`` is the total size we're trying to get below.
+        ``sizes_and_items`` is a list of (size, item) tuples.  This function
+        yields the items that need to be removed.
 
         The algorithm we use is:
         * Sort all the auto items by their size
@@ -757,34 +772,48 @@ class DeviceSyncManager(object):
             * Otherwise, remove the item around the insertion point which is
               closest and try again with the new remaining size
         """
-        sizes = [(data[u'size'], file_type, id_)
-                 for file_type in u'audio', u'video'
-                 for id_, data in self.device.database[file_type].items()
-                 if data.get(u'auto_sync', False)]
-        sizes.sort()
-        keys = [i[0] for i in sizes]
+        sizes_and_items.sort()
+        keys = [i[0] for i in sizes_and_items]
         def remove_(index):
-            size, file_type, id_ = sizes.pop(index)
-            del self.device.database[file_type][id_]
-            fileutil.delete(os.path.join(self.device.mount,
-                                         utf8_to_filename(
-                        id_.encode('utf8'))))
-            self.device.remaining += size
-            return keys.pop(index)
+            keys.pop(index)
+            return sizes_and_items.pop(index)
 
         while size >= 0 and keys:
             left = bisect.bisect_left(keys, size)
             if left == size: # perfect fit!
-                remove_(left)
-                return
+                s, i = remove_(left)
+                yield i
+                break
             right = bisect.bisect_right(keys, size)
             if left == right == len(keys):
-                remove_(len(keys) - 1)
+                s, i = remove_(len(keys) - 1)
+                size -= s
+                yield i
                 continue
             if (abs(left - size) < abs(right - size)): # left is closer
-                size -= remove_(left)
+                s, i = remove_(left)
+                size -= s
+                yield i
             else:
-                size -= remove_(right)
+                s, i = remove_(right)
+                size -= s
+                yield i
+        
+    def expire_auto_items(self, size):
+        """
+        Expires automatically synced items.
+        """
+        sizes = [(data[u'size'], (file_type, id_))
+                 for file_type in u'audio', u'video'
+                 for id_, data in self.device.database[file_type].items()
+                 if data.get(u'auto_sync', False)]
+        for (file_type, id_) in self.yield_items_to_get_to(size, sizes):
+            data = self.device.database[file_type].pop(id_)
+            del self.device.database[file_type][id_]
+            fileutil.delete(os.path.join(self.device.mount,
+                                         utf8_to_filename(
+                        id_.encode('utf8'))))
+            self.device.remaining += data[u'size']
 
     def add_items(self, item_infos):
         for info in item_infos:
