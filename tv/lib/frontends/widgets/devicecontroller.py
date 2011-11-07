@@ -58,24 +58,55 @@ from miro.plat.frontends.widgets import widgetset
 
 class DeviceTabButtonSegment(segmented.TextButtonSegment):
     PARTS = {
-        'off-far-left':     segmented._get_image('device-off-far-left'),
-        'off-middle-left':  segmented._get_image('device-off-middle-left'),
-        'off-center':       segmented._get_image('device-off-center'),
-        'off-middle-right': segmented._get_image('device-off-middle-right'),
-        'off-far-right':    segmented._get_image('device-off-far-right'),
-        'on-far-left':      segmented._get_image('device-on-far-left'),
-        'on-middle-left':   segmented._get_image('device-on-middle-left'),
-        'on-center':        segmented._get_image('device-on-center'),
-        'on-middle-right':  segmented._get_image('device-on-middle-right'),
-        'on-far-right':     segmented._get_image('device-on-far-right')
+        'off-far-left':     segmented._get_image('toggle-button-inactive_left'),
+        'off-middle-left':  segmented._get_image('toggle-button-inactive_center'),
+        'off-center':       segmented._get_image('toggle-button-inactive_center'),
+        'off-middle-right': segmented._get_image('toggle-button-separator'),
+        'off-far-right':    segmented._get_image('toggle-button-inactive_right'),
+        'on-far-left':      segmented._get_image('toggle-button-active_left'),
+        'on-middle-left':   segmented._get_image('toggle-button-active_center'),
+        'on-center':        segmented._get_image('toggle-button-active_center'),
+        'on-middle-right':  segmented._get_image('toggle-button-active_center'),
+        'on-far-right':     segmented._get_image('toggle-button-active_right')
     }
 
     MARGIN = 20
-    TEXT_COLOR = {True: (1, 1, 1), False: widgetutil.css_to_color('#424242')}
+    TEXT_COLOR = {True: (1, 1, 1), False: widgetutil.css_to_color('#0e0e0e')}
 
     def size_request(self, layout):
         width, _ = segmented.TextButtonSegment.size_request(self, layout)
-        return width, 23
+        return width, 24
+
+class TabButtonContainer(widgetset.Background):
+    TOP_BORDER = widgetutil.css_to_color('#e2e2e2')
+    TOP_GRADIENT = widgetutil.css_to_color('#cfcfcf')
+    BOTTOM_GRADIENT = widgetutil.css_to_color('#a4a4a4')
+    BOTTOM_BORDER1 = widgetutil.css_to_color('#bbbbbb')
+    BOTTOM_BORDER2 = widgetutil.css_to_color('#303030')
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.set_size_request(-1, 45)
+
+    def draw(self, context, layout):
+        context.set_line_width(1)
+        context.move_to(0, 0.5)
+        context.line_to(context.width, 0.5)
+        context.set_color(self.TOP_BORDER)
+        context.stroke()
+        gradient = widgetset.Gradient(0, 1, context.width, context.height - 2)
+        gradient.set_start_color(self.TOP_GRADIENT)
+        gradient.set_end_color(self.BOTTOM_GRADIENT)
+        context.rectangle(0, 1, context.width, context.height - 2)
+        context.gradient_fill(gradient)
+        context.move_to(0, context.height - 1.5)
+        context.line_to(context.width, context.height - 1.5)
+        context.set_color(self.BOTTOM_BORDER1)
+        context.stroke()
+        context.move_to(0, context.height - 0.5)
+        context.line_to(context.width, context.height - 0.5)
+        context.set_color(self.BOTTOM_BORDER2)
+        context.stroke()        
 
 class SizeProgressBar(widgetset.Background):
 
@@ -654,12 +685,18 @@ class DeviceMountedView(widgetset.VBox):
             self.button_row.add_button(name.lower(), button)
 
         self.button_row.set_active('main')
-        self.pack_start(widgetutil.align_center(
-                        self.button_row.make_widget(), top_pad=50))
+        tbc = TabButtonContainer()
+        tbc.add(widgetutil.align_center(self.button_row.make_widget(),
+                                        top_pad=9))
+        width = tbc.child.get_size_request()[0]
+        tbc.child.set_size_request(-1, 24)
+        self.pack_start(tbc)
 
         self.tabs = {}
         self.tab_container = widgetset.Background()
-        self.pack_start(self.tab_container, expand=True)
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(self.tab_container)
+        self.pack_start(scroller, expand=True)
 
 
         label_size = widgetutil.font_scale_from_osx_points(16)
@@ -667,11 +704,15 @@ class DeviceMountedView(widgetset.VBox):
         label = widgetset.Label(_("Drag individual video and audio files "
                                   "onto the device in the sidebar to copy "
                                   "them."))
+        label.set_size_request(width, -1)
         label.set_size(label_size)
+        label.set_wrap(True)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
         label = widgetset.Label(_("Use these options and the tabs above for "
                                   "automatic syncing."))
         label.set_size(label_size)
+        label.set_size_request(width, -1)
+        label.set_wrap(True)
         vbox.pack_start(widgetutil.align_center(label, top_pad=10))
 
         self.auto_sync = widgetset.Checkbox(_("Sync automatically?"))
