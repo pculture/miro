@@ -434,6 +434,7 @@ class ThreeImageButton(widgetset.CustomButton):
         self.set_can_focus(False)
         self.set_cursor(widgetconst.CURSOR_POINTING_HAND)
         self.title = title
+        self.text_size = self.TEXT_SIZE
         self.surface = ThreeImageSurface(basename)
         self.surface_active = ThreeImageSurface(basename + '_active')
         self.surface_inactive = ThreeImageSurface(basename + '_inactive')
@@ -442,12 +443,15 @@ class ThreeImageButton(widgetset.CustomButton):
         self.title = text
         self.invalidate_size_request()
 
+    def set_text_size(self, size):
+        self.text_size = size
+
     def _get_textbox(self, layout):
         if self.get_disabled():
             layout.set_text_color(self.DISABLED_TEXT_COLOR)
         else:
             layout.set_text_color(self.TEXT_COLOR)
-        layout.set_font(self.TEXT_SIZE)
+        layout.set_font(self.text_size)
         return layout.textbox(self.title)
 
     def size_request(self, layout):
@@ -462,7 +466,8 @@ class ThreeImageButton(widgetset.CustomButton):
         else:
             surface = self.surface
 
-        surface.draw(context, 0, 0, context.width)
+        surface.draw(context, 0, int((context.height - surface.height) / 2),
+                     context.width)
         textbox = self._get_textbox(layout)
         width, height = textbox.get_size()
         textbox.draw(context, int((context.width - width) / 2),
