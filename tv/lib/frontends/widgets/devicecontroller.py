@@ -688,12 +688,15 @@ class DeviceMountedView(widgetset.VBox):
         tbc = TabButtonContainer()
         tbc.add(widgetutil.align_center(self.button_row.make_widget(),
                                         top_pad=9))
+        width = tbc.child.get_size_request()[0]
         tbc.child.set_size_request(-1, 24)
         self.pack_start(tbc)
 
         self.tabs = {}
         self.tab_container = widgetset.Background()
-        self.pack_start(self.tab_container, expand=True)
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(self.tab_container)
+        self.pack_start(scroller, expand=True)
 
 
         label_size = widgetutil.font_scale_from_osx_points(16)
@@ -701,11 +704,15 @@ class DeviceMountedView(widgetset.VBox):
         label = widgetset.Label(_("Drag individual video and audio files "
                                   "onto the device in the sidebar to copy "
                                   "them."))
+        label.set_size_request(width, -1)
         label.set_size(label_size)
+        label.set_wrap(True)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
         label = widgetset.Label(_("Use these options and the tabs above for "
                                   "automatic syncing."))
         label.set_size(label_size)
+        label.set_size_request(width, -1)
+        label.set_wrap(True)
         vbox.pack_start(widgetutil.align_center(label, top_pad=10))
 
         self.auto_sync = widgetset.Checkbox(_("Sync automatically?"))
