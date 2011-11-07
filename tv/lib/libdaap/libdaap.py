@@ -855,6 +855,9 @@ class DaapClient(object):
         # We've been disconnected, or server gave incorrect response?
         except (IOError, ValueError):
             self.disconnect()
+        except AttributeError:
+            logging.debug('AttributeError caught; probably during shutdown. '
+                          'Ignoring.')
 
     # Generic check for http response.  ValueError() on unexpected response.
     def check_reply(self, response, http_code=httplib.OK, callback=None,
