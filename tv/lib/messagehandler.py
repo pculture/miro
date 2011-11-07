@@ -1821,8 +1821,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_query_sync_information(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)
-        infos, expired = dsm.get_sync_items()
+        infos, expired = dsm.get_sync_items(message.device.max_sync_size())
         count, size = dsm.get_sync_size(infos, expired)
+        dsm.last_sync_info = (infos, expired, count, size)
         message = messages.CurrentSyncInformation(message.device,
                                                   count,
                                                   size)
@@ -1830,8 +1831,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_device_sync_feeds(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)
-        infos, expired = dsm.get_sync_items()
-        count, size = dsm.get_sync_size(infos, expired)
+        if hasattr(dsm, 'last_sync_info'):
+            infos, expired, count, size = dsm.last_sync_info
+            del dsm.last_sync_info
+        else:
+            infos, expired = dsm.get_sync_items(message.device.max_sync_size())
+            count, size = dsm.get_sync_size(infos, expired)
 
         if size > message.device.max_sync_size():
             return

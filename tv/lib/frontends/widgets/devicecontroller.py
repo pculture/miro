@@ -41,7 +41,6 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
 
-from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
@@ -79,184 +78,128 @@ class DeviceTabButtonSegment(segmented.TextButtonSegment):
         return width, 23
 
 class SizeProgressBar(widgetset.Background):
-    GRADIENT_COLOR_TOP = widgetutil.css_to_color('#080808')
-    GRADIENT_COLOR_BOTTOM = widgetutil.css_to_color('#515151')
-    SIZE_COLOR_TOP = widgetutil.css_to_color('#829ac8')
-    SIZE_COLOR_BOTTOM = widgetutil.css_to_color('#697fb0')
-    SIZE_BORDER = widgetutil.css_to_color('#060606')
 
     def __init__(self):
         widgetset.Background.__init__(self)
         self.size_ratio = 0.0
+        self.in_progress = False
         self.bg_surface = widgetutil.ThreeImageSurface('device-size-bg')
         self.fg_surface = widgetutil.ThreeImageSurface('device-size-fg')
+        self.progress_surface = widgetutil.ThreeImageSurface(
+            'device-size-progress')
+
+    def set_in_progress(self, value):
+        self.in_progress = bool(value)
+        self.queue_redraw()
 
     def set_progress(self, progress):
         self.size_ratio = progress
         self.queue_redraw()
 
     def draw(self, context, layout):
-        self.bg_surface.draw(context, 0, 0, context.width)
+        self.bg_surface.draw(context, 0, 1, context.width)
         if self.size_ratio:
-            self.fg_surface.draw(context, 0, 0,
-                                 int(context.width * self.size_ratio))
+            if self.in_progress:
+                surface = self.progress_surface
+            else:
+                surface = self.fg_surface
+            width = max(int(context.width * self.size_ratio),
+                        surface.left.width + surface.right.width)
+            surface.draw(context, 0, 0, width)
 
 class SizeWidget(widgetset.Background):
     def __init__(self):
         self.in_progress = False
         widgetset.Background.__init__(self)
+        hbox = widgetset.HBox()
+        # left side: labels on first line, progress on second
         vbox = widgetset.VBox()
-        # first line: size remaining on the left, sync status on the right
+
         line = widgetset.HBox()
         self.size_label = widgetset.Label(u"")
         self.size_label.set_bold(True)
         self.sync_label = widgetset.Label(u"")
+        self.sync_label.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
+        self.sync_label.set_bold(True)
         line.pack_start(self.size_label)
         line.pack_end(self.sync_label)
         vbox.pack_start(widgetutil.pad(line, bottom=10))
 
-        # second line: bigger; size status on left, sync button on right
-        line = widgetset.HBox()
         self.progress = SizeProgressBar()
-        self.progress.set_size_request(425, 36)
+        self.progress.set_size_request(-1, 14)
+        vbox.pack_start(self.progress)
+
+        hbox.pack_start(vbox, expand=True)
+
+        # right size: sync button
         self.sync_button = widgetutil.ThreeImageButton(
-            'device-sync', _("Sync Now"))
-        self.sync_button.set_size_request(100, 39)
-        line.pack_start(self.progress)
-        line.pack_end(widgetutil.pad(self.sync_button, left=50))
-        vbox.pack_start(line)
-        self.add(widgetutil.align(vbox, 0.5, 1, 0, 0, top_pad=15,
-                                  bottom_pad=15, right_pad=20))
+            'device-sync', _("Up to date"))
+        self.sync_button.disable()
+        self.sync_button.set_size_request(150, 23)
+        hbox.pack_end(widgetutil.pad(self.sync_button, left=50))
+        self.add(widgetutil.align(hbox, 0.5, 1, 1, 0, top_pad=10,
+                                  bottom_pad=10, left_pad=50, right_pad=50))
 
     def draw(self, context, layout):
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color(widgetutil.css_to_color('#c2c2c2'))
-        gradient.set_end_color(widgetutil.css_to_color('#a3a3a3'))
-        context.rectangle(0, 0, context.width, context.height)
+        context.set_line_width(1)
+        context.set_color(widgetutil.css_to_color('#d8d8d8'))
+        context.move_to(0, 0.5)
+        context.line_to(context.width, 0.5)
+        context.stroke()
+        gradient = widgetset.Gradient(0, 1, 0, context.height)
+        gradient.set_start_color(widgetutil.css_to_color('#f7f7f7'))
+        gradient.set_end_color(widgetutil.css_to_color('#cacaca'))
+        context.rectangle(0, 1, context.width, context.height)
         context.gradient_fill(gradient)
 
     def set_size(self, size, remaining):
+        if self.in_progress:
+            return
         if size and remaining:
             self.progress.set_progress(1 - float(remaining) / size)
             self.size_label.set_text(
-                _("%(used)s used / %(total)s total - %(percent)i%% full", {
+                _("%(used)s used / %(total)s total", {
                     'used': displaytext.size_string(size - remaining),
-                    'total': displaytext.size_string(size),
-                    'percent': 100 * (1 - float(remaining) / size)}))
+                    'total': displaytext.size_string(size)}))
+            self.sync_label.set_text(
+                _("%(percent)i%% full",
+                  {'percent': 100 * (1 - float(remaining) / size)}))
         else:
             self.progress.set_progress(0)
             self.size_label.set_text(u"")
-
-    def get_text(self):
-        return self.sync_label.get_text()
+            self.sync_label.set_text(u"")
 
     def set_sync_state(self, count):
         if self.in_progress:
             # don't update sync state while we're syncing
             return
         if count:
-            self.sync_label.set_text(
-                ngettext('1 file selected to sync',
-                         '%(count)i files selected to sync',
+            self.sync_button.set_text(
+                ngettext('Sync 1 File',
+                         'Sync %(count)i Files',
                          count,
                          {'count': count}))
             self.sync_button.enable()
         else:
-            self.sync_label.set_text(_("Up to date"))
+            self.sync_button.set_text(_("Up to date"))
             self.sync_button.disable()
 
     def set_in_progress(self, progress):
-        self.in_progress = progress
-        if progress:
-            self.sync_label.set_text(u"")
-            self.sync_button.set_text(_("In Progress"))
-            self.sync_button.disable()
-        else:
-            self.sync_button.set_text(_("Sync Now"))
-            self.set_sync_state(0)
+        if progress != self.in_progress:
+            self.in_progress = progress
+            self.progress.set_in_progress(progress)
+            if progress:
+                self.size_label.set_text(_("Now Syncing"))
+                self.sync_button.set_text(_("Cancel Sync"))
+                self.sync_button.enable()
+            else:
+                self.set_sync_state(0)
 
-class SyncProgressBar(widgetset.Background):
-    PROGRESS_GRADIENT_TOP = (1, 1, 1)
-    PROGRESS_GRADIENT_BOTTOM = widgetutil.css_to_color('#a0a0a0')
-
-    BACKGROUND_GRADIENT_TOP = widgetutil.css_to_color('#0c0c0e')
-    BACKGROUND_GRADIENT_BOTTOM = widgetutil.css_to_color('#3f4346')
-
-    def __init__(self):
-        widgetset.Background.__init__(self)
-        self.progress_ratio = 0.0
-
-    def set_progress(self, progress):
-        self.progress_ratio = progress
-        self.queue_redraw()
-
-    def draw(self, context, layout):
-        widgetutil.circular_rect(context, 0, 0, context.width, context.height)
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color(self.BACKGROUND_GRADIENT_TOP)
-        gradient.set_end_color(self.BACKGROUND_GRADIENT_BOTTOM)
-        context.gradient_fill(gradient)
-        progress_width = (
-            (context.width - context.height) * self.progress_ratio +
-            context.height)
-        widgetutil.circular_rect_negative(context, 1, 1,
-                                          progress_width - 2,
-                                          context.height - 2)
-        gradient = widgetset.Gradient(1, 1, 1, context.height - 2)
-        gradient.set_start_color(self.PROGRESS_GRADIENT_TOP)
-        gradient.set_end_color(self.PROGRESS_GRADIENT_BOTTOM)
-        context.gradient_fill(gradient)
-
-class SyncProgressWidget(widgetset.Background):
-    def __init__(self):
-        widgetset.Background.__init__(self)
-
-        vbox = widgetset.VBox()
-        # first line: sync progess and cancel button
-        line = widgetset.HBox()
-        self.sync_progress = SyncProgressBar()
-        self.sync_progress.set_size_request(400, 10)
-        self.cancel_button = imagebutton.ImageButton('sync-cancel')
-        line.pack_start(widgetutil.pad(self.sync_progress, 10, 10, 5, 5))
-        line.pack_end(widgetutil.pad(self.cancel_button, 5, 5, 5, 5))
-        vbox.pack_start(line)
-
-        # second line: time remaining, all the way to the right
-        line = widgetset.HBox()
-        self.sync_files = widgetset.Label(u"")
-        self.sync_remaining = widgetset.Label(u"")
-        self.sync_remaining.set_bold(True)
-        line.pack_start(widgetutil.align_left(self.sync_files, 5, 5, 5, 5))
-        line.pack_end(widgetutil.align_right(self.sync_remaining, 5, 5, 5, 5))
-        vbox.pack_start(line)
-
-        self.add(widgetutil.pad(vbox, 10, 10, 10, 10))
-
-    def set_text(self, text):
-        self.sync_files.set_text(text)
-
-    def set_status(self, progress, eta):
-        self.sync_progress.set_progress(progress)
-        if eta:
-            self.sync_remaining.set_text(
-                _('%(eta)s left (%(percent).1f%%)',
-                  {'eta': displaytext.time_string(int(eta)),
-                   'percent': progress * 100}))
-        else:
-            self.sync_remaining.set_text(_('%(percent).1f%% complete',
-                                           {'percent': progress * 100}))
-
-    def draw(self, context, layout):
-        # we draw the rectangle off the bottom so that it's flat
-        widgetutil.round_rect(context, 0, 0, context.width,
-                              context.height + 10, 10)
-
-        context.set_color(widgetutil.css_to_color('#9199bd'))
-        context.fill()
-        widgetutil.round_rect_reverse(context, 1, 1, context.width - 2,
-                                      context.height + 10, 10)
-        context.set_color(widgetutil.css_to_color('#bec1d0'))
-        context.fill()
+    def set_sync_status(self, progress, eta):
+        self.set_in_progress(True)
+        self.progress.set_progress(progress)
+        label = displaytext.time_string(int(eta)) if eta is not None else u''
+        self.sync_label.set_text(label)
 
 class AutoFillSlider(widgetset.CustomSlider):
     def __init__(self):
@@ -802,9 +745,6 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
         self.pack_end(self.device_size)
 
-        self.sync_container = widgetset.Background()
-        self.pack_end(widgetutil.align_center(self.sync_container))
-
         self.add_tab('main', vbox)
         self.add_tab('podcasts', widgetutil.align_center(PodcastSyncWidget(),
                                                          20, 20, 20, 20))
@@ -934,7 +874,10 @@ class DeviceMountedView(widgetset.VBox):
         message.send_to_backend()
 
     def sync_clicked(self, obj):
-        message = messages.DeviceSyncFeeds(self.device)
+        if self.device_size.in_progress:
+            message = messages.CancelDeviceSync(self.device)
+        else:
+            message = messages.DeviceSyncFeeds(self.device)
         message.send_to_backend()
 
     def current_sync_information(self, count, size):
@@ -945,21 +888,9 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.set_sync_state(count)
 
     def set_sync_status(self, progress, eta):
-        if not isinstance(self.sync_container.child, SyncProgressWidget):
-            widget = SyncProgressWidget()
-            widget.cancel_button.connect('clicked', self.cancel_sync)
-            self.sync_container.set_child(widget)
-            widget.set_text(self.device_size.get_text())
-            self.device_size.set_in_progress(True)
-        self.device_size.set_size(self.device.size, self.device.remaining)
-        self.sync_container.child.set_status(progress, eta)
-
-    def cancel_sync(self, obj):
-        message = messages.CancelDeviceSync(self.device)
-        message.send_to_backend()
+        self.device_size.set_sync_status(progress, eta)
 
     def sync_finished(self):
-        self.sync_container.remove()
         self.device_size.set_in_progress(False)
         self.device_size.set_size(self.device.size, self.device.remaining)
         self.sync_settings_changed(self)
@@ -1114,7 +1045,6 @@ class DeviceController(object):
     def handle_device_sync_changed(self, message):
         if message.device.id != self.device.id:
             return # not our device
-
         if message.finished:
             self.widget.sync_finished()
         else:
