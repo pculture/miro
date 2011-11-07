@@ -36,6 +36,7 @@ from miro import fileutil
 import StringIO
 
 import urlparse
+from xml.parsers.expat import ExpatException
 from xml.dom import minidom
 
 def is_emusic_url(url):
@@ -72,8 +73,15 @@ def _emx_callback(data, unknown):
     _download_emx_files(StringIO.StringIO(data['body']))
 
 def _download_emx_files(file_):
-    dom = minidom.parse(file_)
-
+    try:
+        dom = minidom.parse(file_)
+    except Exception:
+        with file(file_, 'rb') as f:
+            app.controller.failed_soft('_emx_callback',
+                                       'could not parse %r, data:\n%r' % (
+                    file_, f.read()),
+                                       with_exception=True)
+        return
     from miro.singleclick import _build_entry, download_video
 
     for track in dom.documentElement.getElementsByTagName('TRACK'):
