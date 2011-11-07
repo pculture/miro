@@ -104,9 +104,21 @@ def _amazon_callback(data, unknown):
         _m3u_callback(data['body'])
 
 def _amz_callback(data):
-    content = decrypt_amz(base64.b64decode(data)).rstrip('\x00\x08')
+    try:
+        content = decrypt_amz(base64.b64decode(data)).rstrip('\x00\x08')
+    except Exception:
+        app.controller.failed_soft('_amz_callback',
+                                   'could not b64decde/decrypt:\n%r' % data,
+                                   with_exception=True)
+        return
 
-    dom = minidom.parseString(content)
+    try:
+        dom = minidom.parseString(content)
+    except Exception:
+        app.controller.failed_soft('_amz_callback',
+                                   'could not parse data:\n%r' % content,
+                                   with_exception=True)
+        return
 
     from miro.singleclick import _build_entry, download_video
 
