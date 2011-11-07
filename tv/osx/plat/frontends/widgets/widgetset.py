@@ -54,6 +54,8 @@ from miro.plat.frontends.widgets.tableview import (TableView, TableColumn,
         CUSTOM_HEADER_HEIGHT)
 from miro.plat.frontends.widgets.tablemodel import (TableModel,
         TreeTableModel, InfoListModel)
+from miro.plat.frontends.widgets.osxmenus import (Menu, Separator, MenuItem,
+        RadioMenuItem, CheckMenuItem)
 from miro.plat.frontends.widgets.audio import AudioPlayer
 from miro.plat.frontends.widgets.video import VideoPlayer
 from miro.plat.frontends.widgets.sniffer import get_item_type

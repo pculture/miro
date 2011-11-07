@@ -37,36 +37,19 @@ from Foundation import *
 
 from miro import app
 from miro import prefs
+from miro import signals
 
 from miro.gtcache import gettext as _
-from miro.frontends.widgets import menus
-from miro.frontends.widgets.menus import (
+from miro.frontends.widgets.keyboard import (Shortcut, MOD,
     CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, 
     DOWN_ARROW, ENTER, SPACE, DELETE, BKSPACE, ESCAPE)
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
 from miro.plat.appstore import appstore_edition
 
-STD_ACTION_MAP = {
-    "HideMiro":         (NSApp(), 'hide:'),
-    "HideOthers":       (NSApp(), 'hideOtherApplications:'),
-    "ShowAll":          (NSApp(), 'unhideAllApplications:'),
-    "Cut":              (nil,     'cut:'),
-    "Copy":             (nil,     'copy:'),
-    "Paste":            (nil,     'paste:'),
-    "Delete":           (nil,     'delete:'),
-    "SelectAll":        (nil,     'selectAll:'),
-    "Zoom":             (nil,     'performZoom:'),
-    "Minimize":         (nil,     'performMiniaturize:'),
-    "BringAllToFront":  (nil,     'arrangeInFront:'),
-    "CloseWindow":      (nil,     'performClose:'),
-}
-
-menus.set_mod(CMD)
-MOD=CMD
-
 MODIFIERS_MAP = {
     MOD:   NSCommandKeyMask,
+    CMD:   NSCommandKeyMask,
     SHIFT: NSShiftKeyMask,
     CTRL:  NSControlKeyMask,
     ALT:   NSAlternateKeyMask
@@ -104,17 +87,402 @@ def make_modifier_mask(shortcut):
 
 VIEW_ITEM_MAP = {}
 
-class CheckMenuHandler(NSObject):
-    def handleMenuItem_(self, sender):
-        state = sender.state()
-        if state == NSOnState:
-            new_state = NSOffState
-        else:
-            new_state = NSOnState
-        sender.setState_(new_state)
-        NSApp().delegate().handleMenuItem_(sender)
+def _remove_mnemonic(label):
+    """Remove the underscore used by GTK for mnemonics.
+    
+    We totally ignore them on OSX, since they are now deprecated.
+    """
+    return label.replace("_", "")
 
-check_menu_handler = CheckMenuHandler.alloc().init()
+def handle_menu_activate(ns_menu_item):
+    """Handle a menu item being activated.
+
+    This gets called by our application delegate.
+    """
+
+    menu_item = ns_menu_item.representedObject()
+    menu_item.emit("activate")
+    menubar = menu_item._find_menubar()
+    if menubar is not None:
+        menubar.emit("activate", menu_item.name)
+
+class MenuItemBase(signals.SignalEmitter):
+    """Base class for MenuItem and Separator"""
+    def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.name = None
+        self.parent = None
+
+    def show(self):
+        self._menu_item.setHidden_(False)
+
+    def hide(self):
+        self._menu_item.setHidden_(True)
+
+    def enable(self):
+        self._menu_item.setEnabled_(True)
+
+    def disable(self):
+        self._menu_item.setEnabled_(False)
+
+    def remove_from_parent(self):
+        """Remove this menu item from it's parent Menu."""
+        if self.parent is not None:
+            self.parent.remove(self)
+
+class MenuItem(MenuItemBase):
+    """See the GTK version of this method for the current docstring."""
+
+    # map Miro action names to standard OSX actions.
+    _STD_ACTION_MAP = {
+        "HideMiro":         (NSApp(), 'hide:'),
+        "HideOthers":       (NSApp(), 'hideOtherApplications:'),
+        "ShowAll":          (NSApp(), 'unhideAllApplications:'),
+        "Cut":              (nil,     'cut:'),
+        "Copy":             (nil,     'copy:'),
+        "Paste":            (nil,     'paste:'),
+        "Delete":           (nil,     'delete:'),
+        "SelectAll":        (nil,     'selectAll:'),
+        "Zoom":             (nil,     'performZoom:'),
+        "Minimize":         (nil,     'performMiniaturize:'),
+        "BringAllToFront":  (nil,     'arrangeInFront:'),
+        "CloseWindow":      (nil,     'performClose:'),
+    }
+
+    def __init__(self, label, name, shortcuts=None, groups=None,
+            **state_labels):
+        MenuItemBase.__init__(self)
+        self.name = name
+        self._menu_item = self._make_menu_item(label)
+        self.create_signal('activate')
+        # FIXME:  Our constructor arguments don't make a lot of sense.  See
+        # the GTK note.
+        if shortcuts is None:
+            shortcuts = ()
+        if not isinstance(shortcuts, tuple):
+            shortcuts = (shortcuts,)
+        self.shortcuts = shortcuts
+        self._setup_shortcuts()
+
+    def _make_menu_item(self, label):
+        menu_item = NSMenuItem.alloc().init()
+        menu_item.setTitle_(_remove_mnemonic(label))
+        # we set ourselves as the represented object for the menu item so we
+        # can easily translate one to the other
+        menu_item.setRepresentedObject_(self)
+        if menu_item.action in self._STD_ACTION_MAP:
+            menu_item.setTarget_(self._STD_ACTION_MAP[menu_item.action][0])
+            menu_item.setAction_(self._STD_ACTION_MAP[menu_item.action][1])
+        else:
+            menu_item.setTarget_(NSApp().delegate())
+            menu_item.setAction_('handleMenuActivate:')
+        return menu_item
+
+    def _setup_shortcuts(self):
+        for shortcut in self.shortcuts:
+            if isinstance(shortcut.shortcut, str):
+                self._menu_item.setKeyEquivalent_(shortcut.shortcut)
+                self._menu_item.setKeyEquivalentModifierMask_(
+                        make_modifier_mask(shortcut))
+            elif shortcut.shortcut in KEYS_MAP:
+                self._menu_item.setKeyEquivalent_(KEYS_MAP[shortcut.shortcut])
+                self._menu_item.setKeyEquivalentModifierMask_(
+                        make_modifier_mask(shortcut))
+            # FIXME: we don't support setting shortcuts past the first
+            return
+
+    def _change_shortcut(self, shortcut):
+        self.shortcuts = [shortcut]
+        self._setup_shortcuts()
+
+    def set_label(self, new_label):
+        self._menu_item.setTitle_(new_label)
+
+    def _find_menubar(self):
+        """Remove this menu item from it's parent Menu."""
+        menu_item = self
+        while menu_item.parent is not None:
+            menu_item = menu_item.parent
+        if isinstance(menu_item, MenuBar):
+            return menu_item
+        else:
+            return None
+
+class RadioMenuItem(MenuItem):
+    """See the GTK version of this method for the current docstring."""
+    def __init__(self, label, name, radio_group, shortcuts=None,
+            groups=None, **state_labels):
+        MenuItem.__init__(self, label, name, shortcuts, groups,
+                **state_labels)
+        self.others_in_group = set()
+        # FIXME: we don't do anything with radio_group.  We need to
+        # re-implement this functionality
+
+    @staticmethod
+    def set_group(*items):
+        if len(items) < 2:
+            raise ValueError("Need at least 2 items to make a radio group")
+        for radio_menu_item in items:
+            if radio_menu_item.others_in_group:
+                raise ValueError("%s is already in a group")
+        # re-implement this functionality
+        whole_group = set(items)
+        for radio_menu_item in items:
+            others = whole_group - set([radio_menu_item])
+            radio_menu_item.others_in_group = others
+
+    def remove_from_group(self):
+        """Remove this RadioMenuItem from its current group."""
+        for other in self.others_in_group:
+            other.others_in_group.remove(self)
+        self.others_in_group = set()
+
+    def do_activate(self):
+        for other in self.others_in_group:
+            other._menu_item.setState_(NSOffState)
+
+class CheckMenuItem(MenuItem):
+    """See the GTK version of this method for the current docstring."""
+    def __init__(self, label, name, check_group, shortcuts=None,
+            groups=None, **state_labels):
+        MenuItem.__init__(self, label, name, shortcuts, groups,
+                **state_labels)
+        # FIXME: we don't do anything with check_group.  We need to
+        # re-implement this functionality
+
+    def do_activate(self):
+        if self._menu_item.state() == NSOffState:
+            self._menu_item.setState_(NSOnState)
+        else:
+            self._menu_item.setState_(NSOffState)
+
+class Separator(MenuItemBase):
+    """See the GTK version of this method for the current docstring."""
+    def __init__(self):
+        MenuItemBase.__init__(self)
+        self._menu_item = NSMenuItem.separatorItem()
+
+class MenuShell(signals.SignalEmitter):
+    def __init__(self, nsmenu):
+        signals.SignalEmitter.__init__(self)
+        self._menu = nsmenu
+        self.children = []
+        self.parent = None
+
+    def append(self, menu_item):
+        """Add a menu item to the end of this menu."""
+        self.children.append(menu_item)
+        self._menu.addItem_(menu_item._menu_item)
+        menu_item.parent = self
+
+    def insert(self, index, menu_item):
+        """Insert a menu item in the middle of this menu."""
+        self.children.insert(index, menu_item)
+        self._menu.insertItem_atIndex_(menu_item._menu_item, index)
+        menu_item.parent = self
+
+    def index(self, name):
+        """Find the position of a child menu item."""
+        for i, menu_item in enumerate(self.children):
+            if menu_item.name == name:
+                return i
+        return -1
+
+    def remove(self, menu_item):
+        """Remove a child menu item.
+
+        :raises ValueError: menu_item is not a child of this menu
+        """
+        self.children.remove(menu_item)
+        self._menu.removeItem_(menu_item._menu_item)
+        menu_item.parent = None
+
+    def get_children(self):
+        """Get the child menu items in order."""
+        return self.children
+
+    def find(self, name):
+        """Search for a menu or menu item
+
+        This method recursively searches the entire menu structure for a Menu
+        or MenuItem object with a given name.
+
+        :raises KeyError: name not found
+        """
+        found = self._find(name)
+        if found is None:
+            raise KeyError(name)
+        else:
+            return found
+
+    def _find(self, name):
+        """Low-level helper-method for find().
+
+        :returns: found menu item or None.
+        """
+        for menu_item in self.get_children():
+            if menu_item.name == name:
+                return menu_item
+            if isinstance(menu_item, Menu):
+                submenu_find = menu_item._find(name)
+                if submenu_find is not None:
+                    return submenu_find
+        return None
+
+class Menu(MenuShell):
+    """See the GTK version of this method for the current docstring."""
+    def __init__(self, label, name, child_items=None, groups=None):
+        MenuShell.__init__(self, NSMenu.alloc().init())
+        self._menu.setTitle_(_remove_mnemonic(label))
+        self.name = name
+        if child_items is not None:
+            for item in child_items:
+                self.append(item)
+        self._menu_item = NSMenuItem.alloc().init()
+        self._menu_item.setTitle_(_remove_mnemonic(label))
+        self._menu_item.setSubmenu_(self._menu)
+        # Hack to set the services menu
+        if name == "ServicesMenu":
+            NSApp().setServicesMenu_(self._menu_item)
+        # FIXME we ignore groups.  They're just there as a temporary measure
+        # to keep the constructure signature the same.
+
+class AppMenu(MenuShell):
+    """Wrapper for the application menu (AKA the Miro menu)
+
+    We need to special case this because OSX automatically creates the menu
+    item.
+    """
+    def __init__(self):
+        MenuShell.__init__(self, NSApp().mainMenu().itemAtIndex_(0).submenu())
+        self.name = "Miro"
+
+class MenuBar(MenuShell):
+    """See the GTK version of this method for the current docstring."""
+    def __init__(self):
+        MenuShell.__init__(self, NSApp().mainMenu())
+        self.create_signal('activate')
+        self._add_app_menu()
+
+    def _add_app_menu(self):
+        """Add the app menu to this menu bar.
+
+        We need to special case this because OSX automatically adds the
+        NSMenuItem for the app menu, we just need to set up our wrappers.
+        """
+        self._app_menu = AppMenu()
+        self.children.append(self._app_menu)
+        self._app_menu.parent = self
+
+    def add_initial_menus(self, menus):
+        for menu in menus:
+            self.append(menu)
+        self._modify_initial_menus()
+
+    def _extract_menu_item(self, name):
+        """Helper method for changing the portable menu structure."""
+        menu_item = self.find(name)
+        menu_item.remove_from_parent()
+        return menu_item
+
+    def _modify_initial_menus(self):
+        short_appname = app.config.get(prefs.SHORT_APP_NAME)
+        # Application menu
+        miroMenuItems = [
+            self._extract_menu_item("About"),
+            Separator(),
+            self._extract_menu_item("Donate")
+        ]
+
+        if not appstore_edition():
+            miroMenuItems += [
+                self._extract_menu_item("CheckVersion")
+            ]
+
+        miroMenuItems += [
+            Separator(),
+            self._extract_menu_item("EditPreferences"),
+            Separator(),
+            Menu(_("Services"), "ServicesMenu", []),
+            Separator(),
+            MenuItem(_("Hide %(appname)s", {"appname": short_appname}),
+                     "HideMiro", Shortcut("h", MOD)),
+            MenuItem(_("Hide Others"), "HideOthers",
+                     Shortcut("h", MOD, ALT)),
+            MenuItem(_("Show All"), "ShowAll"),
+            Separator(),
+            self._extract_menu_item("Quit")
+        ]
+        for item in miroMenuItems:
+            self._app_menu.append(item)
+        self._app_menu.find("EditPreferences").set_label(_("Preferences..."))
+        self._app_menu.find("EditPreferences")._change_shortcut(
+            Shortcut(",", MOD))
+        self._app_menu.find("Quit").set_label(_("Quit %(appname)s",
+                                       {"appname": short_appname}))
+
+        # File menu
+        closeWinItem = MenuItem(_("Close Window"), "CloseWindow",
+                                Shortcut("w", MOD))
+        self.find("FileMenu").append(closeWinItem)
+
+        # Edit menu
+        editMenuItems = [
+            MenuItem(_("Cut"), "Cut", Shortcut("x", MOD)),
+            MenuItem(_("Copy"), "Copy", Shortcut("c", MOD)),
+            MenuItem(_("Paste"), "Paste", Shortcut("v", MOD)),
+            MenuItem(_("Delete"), "Delete"),
+            Separator(),
+            MenuItem(_("Select All"), "SelectAll", Shortcut("a", MOD))
+        ]
+        editMenu = Menu(_("Edit"), "Edit", editMenuItems)
+        self.insert(1, editMenu)
+
+        # Playback menu
+        presentMenuItems = [
+            MenuItem(_("Present Half Size"), "PresentHalfSize", 
+                     Shortcut("0", MOD),
+                     groups=["PlayingVideo", "PlayableVideosSelected"]),
+            MenuItem(_("Present Actual Size"), "PresentActualSize", 
+                     Shortcut("1", MOD),
+                     groups=["PlayingVideo", "PlayableVideosSelected"]),
+            MenuItem(_("Present Double Size"), "PresentDoubleSize", 
+                     Shortcut("2", MOD),
+                     groups=["PlayingVideo", "PlayableVideosSelected"]),
+        ]
+        presentMenu = Menu(_("Present Video"), "Present", presentMenuItems)
+        playback_menu = self.find("PlaybackMenu")
+        playback_menu.insert(playback_menu.index('AudioTrackMenu'),
+                             presentMenu)
+
+        # Window menu
+        windowMenuItems = [
+            MenuItem(_("Zoom"), "Zoom"),
+            MenuItem(_("Minimize"), "Minimize", Shortcut("m", MOD)),
+            Separator(),
+            MenuItem(_("Main Window"), "ShowMain",
+                     Shortcut("M", MOD, SHIFT)),
+            Separator(),
+            MenuItem(_("Bring All to Front"), "BringAllToFront"),
+        ]
+        windowMenu = Menu(_("Window"), "Window", windowMenuItems)
+        self.insert(self.index("HelpMenu"), windowMenu)
+
+        # Help Menu
+        helpItem = self.find("Help")
+        helpItem.set_label(_("%(appname)s Help", {"appname": short_appname}))
+        helpItem._change_shortcut(Shortcut("?", MOD))
+
+    def do_activate(self, name):
+        # We handle a couple OSX-specific actions here
+        if name == "PresentActualSize":
+            NSApp().delegate().present_movie('natural-size')
+        elif name == "PresentDoubleSize":
+            NSApp().delegate().present_movie('double-size')
+        elif name == "PresentHalfSize":
+            NSApp().delegate().present_movie('half-size')
+        elif name == "ShowMain":
+            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
 
 def update_view_menu_state():
     # Error checking for display != None done below in try/except block
@@ -148,179 +516,6 @@ def update_view_menu_state():
             state = NSOffState
         menu_item.setState_(state)
 
-def make_menu_item(menu_item):
-    nsmenuitem = NSMenuItem.alloc().init()
-    nsmenuitem.setTitleWithMnemonic_(menu_item.label.replace("_", "&"))
-    if isinstance(menu_item, menus.MenuItem):
-        for shortcut in menu_item.shortcuts:
-            if isinstance(shortcut.shortcut, str):
-                nsmenuitem.setKeyEquivalent_(shortcut.shortcut)
-                nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
-                continue
-            else:
-                if shortcut.shortcut in KEYS_MAP:
-                    nsmenuitem.setKeyEquivalent_(KEYS_MAP[shortcut.shortcut])
-                    nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
-                    continue
-
-        if menu_item.action in STD_ACTION_MAP:
-            nsmenuitem.setTarget_(STD_ACTION_MAP[menu_item.action][0])
-            nsmenuitem.setAction_(STD_ACTION_MAP[menu_item.action][1])
-        else:
-            nsmenuitem.setRepresentedObject_(menu_item.action)
-            if isinstance(menu_item, menus.CheckMenuItem):
-                nsmenuitem.setTarget_(check_menu_handler)
-                column = menu_item.action.split('-', 1)[1]
-                VIEW_ITEM_MAP[column] = nsmenuitem
-            else:
-                nsmenuitem.setTarget_(NSApp().delegate())
-            nsmenuitem.setAction_('handleMenuItem:')
-    return nsmenuitem
-
-def populate_single_menu(nsmenu, miro_menu):
-    for miro_item in miro_menu.menuitems:
-        if isinstance(miro_item, menus.Separator):
-            item = NSMenuItem.separatorItem()
-        elif isinstance(miro_item, menus.MenuItem):
-            item = make_menu_item(miro_item)
-        elif isinstance(miro_item, menus.Menu):
-            submenu = NSMenu.alloc().init()
-            populate_single_menu(submenu, miro_item)
-            item = NSMenuItem.alloc().init()
-            item.setTitle_(miro_item.label.replace("_", ""))
-            item.setSubmenu_(submenu)
-        nsmenu.addItem_(item)
-
-def extract_menu_item(menu_structure, action):
-    if menu_structure.has(action):
-        menu = menu_structure.get(action)
-        menu_structure.remove(action)
-        return menu
-    return None
-
-_menu_structure = None
-def populate_menu():
-    short_appname = app.config.get(prefs.SHORT_APP_NAME)
-
-    menubar = menus.get_menu()
-
-    # Application menu
-    miroMenuItems = [
-        extract_menu_item(menubar, "About"),
-        menus.Separator(),
-        extract_menu_item(menubar, "Donate")
-    ]
-
-    if not appstore_edition():
-        miroMenuItems += [
-            extract_menu_item(menubar, "CheckVersion")
-        ]
-
-    miroMenuItems += [
-        menus.Separator(),
-        extract_menu_item(menubar, "EditPreferences"),
-        menus.Separator(),
-        menus.Menu(_("Services"), "ServicesMenu", []),
-        menus.Separator(),
-        menus.MenuItem(_("Hide %(appname)s", {"appname": short_appname}),
-                       "HideMiro", menus.Shortcut("h", MOD)),
-        menus.MenuItem(_("Hide Others"), "HideOthers", 
-                       menus.Shortcut("h", MOD, ALT)),
-        menus.MenuItem(_("Show All"), "ShowAll"),
-        menus.Separator(),
-        extract_menu_item(menubar, "Quit")
-    ]
-    miroMenu = menus.Menu(short_appname, "Miro", miroMenuItems)
-    miroMenu.get("EditPreferences").label = _("Preferences...")
-    miroMenu.get("EditPreferences").shortcuts = (menus.Shortcut(",", MOD),)
-    miroMenu.get("Quit").label = _("Quit %(appname)s", 
-                                   {"appname": short_appname})
-
-    # File menu
-    closeWinItem = menus.MenuItem(_("Close Window"), "CloseWindow", 
-                                  menus.Shortcut("w", MOD))
-    menubar.get("FileMenu").append(closeWinItem)
-
-    # Edit menu
-    editMenuItems = [
-        menus.MenuItem(_("Cut"), "Cut", menus.Shortcut("x", MOD)),
-        menus.MenuItem(_("Copy"), "Copy", menus.Shortcut("c", MOD)),
-        menus.MenuItem(_("Paste"), "Paste", menus.Shortcut("v", MOD)),
-        menus.MenuItem(_("Delete"), "Delete"),
-        menus.Separator(),
-        menus.MenuItem(_("Select All"), "SelectAll", menus.Shortcut("a", MOD))
-    ]
-    editMenu = menus.Menu(_("Edit"), "Edit", editMenuItems)
-    menubar.insert(1, editMenu)
-
-    # Playback menu
-    presentMenuItems = [
-        menus.MenuItem(_("Present Half Size"), "PresentHalfSize", 
-                       menus.Shortcut("0", MOD),
-                       groups=["PlayingVideo", "PlayableVideosSelected"]),
-        menus.MenuItem(_("Present Actual Size"), "PresentActualSize", 
-                       menus.Shortcut("1", MOD),
-                       groups=["PlayingVideo", "PlayableVideosSelected"]),
-        menus.MenuItem(_("Present Double Size"), "PresentDoubleSize", 
-                       menus.Shortcut("2", MOD),
-                       groups=["PlayingVideo", "PlayableVideosSelected"]),
-    ]
-    playback_menu = menubar.get("PlaybackMenu")
-    subtitlesMenu = playback_menu.get("SubtitlesMenu")
-    audioMenu = playback_menu.get("AudioTrackMenu")
-    playback_menu.remove("SubtitlesMenu")
-    playback_menu.remove("AudioTrackMenu")
-    presentMenu = menus.Menu(_("Present Video"), "Present", presentMenuItems)
-    playback_menu.append(presentMenu)
-    playback_menu.append(audioMenu)
-    playback_menu.append(subtitlesMenu)
-    fullscreen_menu_item = playback_menu.get("Fullscreen")
-    fullscreen_menu_item.shortcuts = [ menus.Shortcut("f", MOD)]
-
-    # Window menu
-    windowMenuItems = [
-        menus.MenuItem(_("Zoom"), "Zoom"),
-        menus.MenuItem(_("Minimize"), "Minimize", menus.Shortcut("m", MOD)),
-        menus.Separator(),
-        menus.MenuItem(_("Main Window"), "ShowMain", 
-                       menus.Shortcut("M", MOD, SHIFT)),
-        menus.Separator(),
-        menus.MenuItem(_("Bring All to Front"), "BringAllToFront"),
-    ]
-    windowMenu = menus.Menu(_("Window"), "Window", windowMenuItems)
-    menubar.insert(6, windowMenu)
-
-    # Help Menu
-    helpItem = menubar.get("Help")
-    helpItem.label = _("%(appname)s Help", {"appname": short_appname})
-    helpItem.shortcuts = (menus.Shortcut("?", MOD),)
-
-    # Now populate the main menu bar
-    main_menu = NSApp().mainMenu()
-    # XXX: should be using the tag to prevent interface and locale breakages
-    appMenu = main_menu.itemAtIndex_(0).submenu()
-    populate_single_menu(appMenu, miroMenu)
-    servicesMenuItem = appMenu.itemWithTitle_(_("Services"))
-    NSApp().setServicesMenu_(servicesMenuItem)
-
-    for menu in menubar.menuitems:
-        nsmenu = NSMenu.alloc().init()
-        nsmenu.setTitle_(menu.label.replace("_", ""))
-        populate_single_menu(nsmenu, menu)
-        nsmenuitem = make_menu_item(menu)
-        nsmenuitem.setSubmenu_(nsmenu)
-        main_menu.addItem_(nsmenuitem)
-
-    # we do this to get groups correct
-    menubar.insert(0, miroMenu)
-
-    menus.osx_menu_structure = menubar
-    menus.osx_action_groups = menus.generate_action_groups(menubar)
-    
-    # Keep the updated structure around
-    global _menu_structure
-    _menu_structure = menubar
-    
 class ContextMenuHandler(NSObject):
     def initWithCallback_(self, callback):
         self = super(ContextMenuHandler, self).init()

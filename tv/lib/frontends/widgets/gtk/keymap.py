@@ -32,47 +32,56 @@
 
 import gtk
 
-from miro.frontends.widgets import menus
+from miro.frontends.widgets import keyboard
 
 menubar_mod_map = {
-    menus.CTRL: '<Ctrl>',
-    menus.ALT: '<Alt>',
-    menus.SHIFT: '<Shift>',
+    keyboard.MOD: '<Ctrl>',
+    keyboard.CTRL: '<Ctrl>',
+    keyboard.ALT: '<Alt>',
+    keyboard.SHIFT: '<Shift>',
 }
 
 menubar_key_map = {
-    menus.RIGHT_ARROW: 'Right',
-    menus.LEFT_ARROW: 'Left',
-    menus.UP_ARROW: 'Up',
-    menus.DOWN_ARROW: 'Down',
-    menus.SPACE: 'space',
-    menus.ENTER: 'Return',
-    menus.DELETE: 'Delete',
-    menus.BKSPACE: 'BackSpace',
-    menus.ESCAPE: 'Escape',
+    keyboard.RIGHT_ARROW: 'Right',
+    keyboard.LEFT_ARROW: 'Left',
+    keyboard.UP_ARROW: 'Up',
+    keyboard.DOWN_ARROW: 'Down',
+    keyboard.SPACE: 'space',
+    keyboard.ENTER: 'Return',
+    keyboard.DELETE: 'Delete',
+    keyboard.BKSPACE: 'BackSpace',
+    keyboard.ESCAPE: 'Escape',
     '>': 'greater',
     '<': 'less'
 }
+for i in range(1, 13):
+    name = 'F%d' % i
+    menubar_key_map[getattr(keyboard, name)] = name
 
 # These are reversed versions of menubar_key_map and menubar_mod_map
 gtk_key_map = dict((i[1], i[0]) for i in menubar_key_map.items())
 
+def get_accel_string(shortcut):
+    mod_str = ''.join(menubar_mod_map[mod] for mod in shortcut.modifiers)
+    key_str = menubar_key_map.get(shortcut.shortcut, shortcut.shortcut)
+    return mod_str + key_str
+
 def translate_gtk_modifiers(event):
-    """Convert a keypress event to a set of modifiers from the menus
+    """Convert a keypress event to a set of modifiers from the shortcut
     module.
     """
     modifiers = set()
     if event.state & gtk.gdk.CONTROL_MASK:
-        modifiers.add(menus.CTRL)
+        modifiers.add(keyboard.CTRL)
     if event.state & gtk.gdk.MOD1_MASK:
-        modifiers.add(menus.ALT)
+        modifiers.add(keyboard.ALT)
     if event.state & gtk.gdk.SHIFT_MASK:
-        modifiers.add(menus.SHIFT)
+        modifiers.add(keyboard.SHIFT)
     return modifiers
 
 def translate_gtk_event(event):
     """Convert a GTK key event into the tuple (key, modifiers) where
-    key and modifiers are from the menus module.
+    key and modifiers are from the shortcut module.
     """
     gtk_keyval = gtk.gdk.keyval_name(event.keyval)
     if gtk_keyval == None:

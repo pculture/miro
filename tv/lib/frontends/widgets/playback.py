@@ -42,7 +42,7 @@ from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
 from miro.frontends.widgets import itemtrack
-from miro.frontends.widgets import menus
+from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
@@ -1158,7 +1158,7 @@ def handle_key_press(key, mods):
     """Handle a playback key press events """
 
     if len(mods) != 0:
-        if set([menus.MOD, menus.SHIFT]) == mods:
+        if set([keyboard.MOD, keyboard.SHIFT]) == mods:
             if key in ('>', '.'): # OS X sends '.', GTK sends '>'
                 app.widgetapp.on_forward_clicked()
                 return True
@@ -1166,20 +1166,20 @@ def handle_key_press(key, mods):
                 app.widgetapp.on_previous_clicked()
                 return True
 
-        if set([menus.SHIFT]) == mods:
-            if key == menus.RIGHT_ARROW:
+        if set([keyboard.SHIFT]) == mods:
+            if key == keyboard.RIGHT_ARROW:
                 app.widgetapp.on_skip_forward()
                 return True
-            elif key == menus.LEFT_ARROW:
+            elif key == keyboard.LEFT_ARROW:
                 app.widgetapp.on_skip_backward()
                 return True
 
-        if set([menus.CTRL]) == mods and key == menus.SPACE:
+        if set([keyboard.CTRL]) == mods and key == keyboard.SPACE:
             app.playback_manager.toggle_paused()
             return True
         return False
 
-    if key == menus.DELETE or key == menus.BKSPACE:
+    if key == keyboard.DELETE or key == keyboard.BKSPACE:
         playing = app.playback_manager.get_playing_item()
         if playing is not None:
             if app.playback_manager.is_playing_audio:
@@ -1191,7 +1191,7 @@ def handle_key_press(key, mods):
                 app.widgetapp.remove_items([playing])
             return True
 
-    if key == menus.ESCAPE:
+    if key == keyboard.ESCAPE:
         if app.playback_manager.is_fullscreen:
             app.playback_manager.exit_fullscreen()
             return True
@@ -1199,22 +1199,22 @@ def handle_key_press(key, mods):
             app.widgetapp.on_stop_clicked()
             return True
 
-    if key == menus.RIGHT_ARROW:
+    if key == keyboard.RIGHT_ARROW:
         app.widgetapp.on_forward_clicked()
         return True
 
-    if key == menus.LEFT_ARROW:
+    if key == keyboard.LEFT_ARROW:
         app.widgetapp.on_previous_clicked()
         return True
 
-    if key == menus.UP_ARROW:
+    if key == keyboard.UP_ARROW:
         app.widgetapp.up_volume()
         return True
 
-    if key == menus.DOWN_ARROW:
+    if key == keyboard.DOWN_ARROW:
         app.widgetapp.down_volume()
         return True
 
-    if key == menus.SPACE:
+    if key == keyboard.SPACE:
         app.playback_manager.toggle_paused()
         return True
