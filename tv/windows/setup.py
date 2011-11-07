@@ -476,6 +476,8 @@ class bdist_nsis(Command):
     user_options = [
         ('generic', None, 'Build a generic installer instead of the Miro-branded installer.'),
         ('noopencandy', None, 'Do not include the OpenCandy code.'),
+        ('ockey=', None, "Override the default OpenCandy product key."),
+        ('ocsecret=', None, "Override the default OpenCandy secret."),
         ('install-icon=', None, 'ICO file to use for the installer.'),
         ('install-image=', None, 'BMP file to use for the welcome/finish pages.')
         ]
@@ -485,6 +487,7 @@ class bdist_nsis(Command):
         self.noopencandy = False
         self.install_icon = None
         self.install_image = None
+        self.ockey = self.ocsecret = None
 
     def finalize_options(self):
         if self.generic and (self.install_icon or self.install_icon):
@@ -534,6 +537,10 @@ class bdist_nsis(Command):
         nsis_vars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
         if not self.noopencandy:
             nsis_vars['OPENCANDY'] = '1'
+            if self.ockey:
+                nsis_vars['OC_STR_KEY'] = self.ockey
+            if self.ocsecret:
+                nsis_vars['OC_STR_SECRET'] = self.ocsecret
         if self.generic:
             nsis_vars['GENERIC_INSTALLER'] = '1'
 

@@ -82,8 +82,12 @@ Var PROJECT_URL
 !ifdef OPENCANDY
 !define OC_STR_MY_PRODUCT_NAME "${CONFIG_LONG_APP_NAME}"
 ; Please change the key and secret to the ones assigned for your specific products
+!ifndef OC_STR_KEY
 !define OC_STR_KEY "81dab33a498beb643d240c5d9e308dd4"
+!endif
+!ifndef OC_STR_SECRET
 !define OC_STR_SECRET "c9d97e81b1eb239328ca25384f908497"
+!endif
 !include "OCSetupHlp.nsh"
 !insertmacro OpenCandyReserveFile
 !endif
