@@ -34,185 +34,26 @@ from miro import errors
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro.frontends.widgets.keyboard import (Shortcut, CTRL, ALT, SHIFT, CMD,
+     MOD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE,
+     BKSPACE, ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12)
 from miro.frontends.widgets.widgetconst import COLUMN_LABELS
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
+from miro.plat.frontends.widgets.widgetset import (MenuItem, RadioMenuItem,
+        CheckMenuItem, Separator, Menu)
 
 from miro.gtcache import gettext as _
 
-(CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW,
- DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE,
- F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) = range(25)
-
-MOD = CTRL
-
-def set_mod(modifier):
-    """Allows the platform to change the MOD key.  OSX and
-    Windows have different mod keys.
-
-    Examples:
-    >>> set_mod(CTRL)
-    >>> set_mod(CMD)
+def setup_menubar(menubar):
+    """Setup the main miro menubar.
     """
-    global MOD
-    MOD = modifier
+    menubar.add_initial_menus(get_app_menu())
+    menubar.connect("activate", on_menubar_activate)
 
-class Shortcut:
-    """Defines a shortcut key combination used to trigger this
-    menu item.
+def get_app_menu():
+    """Returns the default menu structure."""
 
-    The first argument is the shortcut key.  Other arguments are
-    modifiers.
-
-    Examples:
-
-    >>> Shortcut("x", MOD)
-    >>> Shortcut(BKSPACE, MOD)
-
-    This is wrong:
-
-    >>> Shortcut(MOD, "x")
-    """
-    def __init__(self, shortcut, *modifiers):
-        self.shortcut = shortcut
-        self.modifiers = modifiers
-
-class MenuItem:
-    """Single item in the menu that can be clicked on that has an action.
-
-    :param label: The label it has (must be internationalized)
-    :param action: The action string for this menu item.
-    :param shortcuts: None, the Shortcut, or tuple of Shortcut objects.
-    :param groups: The action groups this item is enabled in.  By default
-                   this is ["AlwaysOn"]
-    :param state_labels: If this menu item has states, then this is
-                         the name/value pairs for all states.
-
-    Example:
-
-    >>> MenuItem(_("Preferences"), "EditPreferences")
-    >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
-    >>> MenuItem(_("_Update Podcasts and Library"), "UpdatePodcasts",
-    ...          (Shortcut("r", MOD), Shortcut(F5)))
-    >>> MenuItem(_("_Play"), "PlayPauseItem",
-    ...          play=_("_Play"), pause=_("_Pause"))
-    """
-    def __init__(self, label, action, shortcuts=None, groups=None,
-            **state_labels):
-        self.label = label
-        self.action = action
-        if shortcuts is None:
-            shortcuts = ()
-        if not isinstance(shortcuts, tuple):
-            shortcuts = (shortcuts,)
-        self.shortcuts = shortcuts
-        if groups is None:
-            groups = ["AlwaysOn"]
-        self.groups = groups
-        self.state_labels = state_labels
-
-class RadioMenuItem(MenuItem):
-    """MenuItem that has a radio button is grouped with other RadioMenuItems.
-
-    :param radio_group: identifier for the group that this menu item is in.
-    """
-    def __init__(self, label, action, radio_group, shortcuts=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, action, shortcuts, groups,
-                **state_labels)
-        self.radio_group = radio_group
-
-class CheckMenuItem(MenuItem):
-    """MenuItem that has a check mark.
-
-    :param check_group: the group this menu item is in
-    """
-    def __init__(self, label, action, check_group, shortcuts=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, action, shortcuts, groups,
-                **state_labels)
-        self.check_group = check_group
-
-class Separator:
-    """This denotes a separator in the menu.
-    """
-    def __init__(self):
-        self.action = None
-
-class Menu:
-    """A Menu holds a list of MenuItems and Menus.
-
-    Example:
-    >>> Menu(_("P_layback"), "Playback", [
-    ...      MenuItem(_("_Foo"), "Foo"),
-    ...      MenuItem(_("_Bar"), "Bar")
-    ...      ])
-    >>> Menu("", "toplevel", [
-    ...     Menu(_("_File"), "File", [ ... ])
-    ...     ])
-    """
-    def __init__(self, label, action, menuitems, groups=None):
-        self.label = label
-        self.action = action
-        self.menuitems = list(menuitems)
-        if groups is None:
-            groups = ["AlwaysOn"]
-        self.groups = groups
-
-    def __iter__(self):
-        for mem in self.menuitems:
-            yield mem
-            if isinstance(mem, Menu):
-                for mem2 in mem:
-                    yield mem2
-
-    def has(self, action):
-        for mem in self:
-            if mem.action == action:
-                return True
-        return False
-
-    def get(self, action, default=None):
-        for mem in self:
-            if mem.action == action:
-                return mem
-
-        if default is not None:
-            return default
-
-        raise ValueError("%s is not in this menu." % action)
-
-    def index(self, action):
-        for i, mem in enumerate(self.menuitems):
-            if mem.action == action:
-                return i
-        raise ValueError("%s not in this menu." % action)
-
-    def remove(self, action):
-        # FIXME - this won't remove separators--probably should do
-        # a pass to remove a separator for two separators in a row
-        # or a separator at the beginning or end of the list
-        self.menuitems = [m for m in self.menuitems if m.action != action]
-        for mem in self.menuitems:
-            if isinstance(mem, Menu):
-                mem.remove(action)
-
-    def count(self):
-        return len(self.menuitems)
-
-    def insert(self, index, menuitem):
-        self.menuitems.insert(index, menuitem)
-
-    def append(self, menuitem):
-        self.menuitems.append(menuitem)
-
-def get_menu():
-    """Returns the default menu structure.
-
-    Call this, then make whatever platform-specific changes you 
-    need to make.
-    """
-    mbar = Menu("", "TopLevel", [
-            Menu(_("_File"), "FileMenu", [
+    file_menu = Menu(_("_File"), "FileMenu", [
                     MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
                              groups=["NonPlaying"]),
                     Menu(_("Import"), "Import", [
@@ -250,9 +91,9 @@ def get_menu():
                     MenuItem(_("Check Version"), "CheckVersion"),
                     MenuItem(_("Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
-                    ]),
+                    ])
 
-            Menu(_("_Sidebar"), "SidebarMenu", [
+    sidebar_menu = Menu(_("_Sidebar"), "SidebarMenu", [
                     MenuItem(_("Add Podcast"), "NewPodcast",
                              Shortcut("n", MOD),
                              groups=["NonPlaying"]),
@@ -296,9 +137,9 @@ def get_menu():
                              groups=["PodcastSelected"]),
                     MenuItem(_("Copy URL"), "CopyPodcastURL",
                              groups=["PodcastSelected"]),
-                    ]),
+                    ])
 
-            Menu(_("_Playlists"), "PlaylistsMenu", [
+    playlists_menu = Menu(_("_Playlists"), "PlaylistsMenu", [
                     MenuItem(_("New _Playlist"), "NewPlaylist",
                              Shortcut("p", MOD),
                              groups=["NonPlaying"]),
@@ -313,9 +154,9 @@ def get_menu():
                              plural=_("Remove Playlists"),
                              folders=_("Remove Playlist Folders"),
                              folder=_("Remove Playlist Folder")),
-                    ]),
+                    ])
 
-            Menu(_("P_layback"), "PlaybackMenu", [
+    playback_menu = Menu(_("P_layback"), "PlaybackMenu", [
                     MenuItem(_("Play"), "PlayPauseItem",
                              groups=["PlayPause"],
                              play=_("Play"),
@@ -363,20 +204,16 @@ def get_menu():
                                      "SubtitlesSelect",
                                      groups=["PlayingLocalVideo"])
                             ]),
-                    ]),
+                    ])
 
-            Menu(_("Sorts"), "ViewMenu", _get_view_menu()),
-
-            Menu(_("_Convert"), "ConvertMenu", _get_convert_menu()),
-
-            Menu(_("_Help"), "HelpMenu", [
+    sorts_menu = Menu(_("Sorts"), "ViewMenu", _get_view_menu())
+    convert_menu = Menu(_("_Convert"), "ConvertMenu", _get_convert_menu())
+    help_menu = Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("About %(name)s",
                                {'name': app.config.get(prefs.SHORT_APP_NAME)}),
                              "About")
                     ])
-            ])
 
-    help_menu = mbar.get("HelpMenu")
     if app.config.get(prefs.DONATE_URL):
         help_menu.append(MenuItem(_("Donate"), "Donate"))
 
@@ -391,8 +228,11 @@ def get_menu():
     if app.config.get(prefs.PLANET_URL):
         help_menu.append(MenuItem(_("Planet Miro"), "Planet"))
 
+    all_menus = [file_menu, sidebar_menu, playlists_menu, playback_menu,
+            sorts_menu, convert_menu, help_menu ]
+
     if app.debugmode:
-        dev_menu = Menu(_("Dev"), "DevMenu", [
+        all_menus.append(Menu(_("Dev"), "DevMenu", [
                 MenuItem(_("Profile Message"), "ProfileMessage"),
                 MenuItem(_("Profile Redraw"), "ProfileRedraw"),
                 MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
@@ -403,9 +243,8 @@ def get_menu():
                     "ForceFeedparserProcessing"),
                 MenuItem(_("Clog Backend"), "ClogBackend")
                 ])
-
-        mbar.menuitems.append(dev_menu)
-    return mbar
+        )
+    return all_menus
 
 def _get_convert_menu():
     menu = list()
@@ -434,10 +273,10 @@ def add_subtitle_encoding_menu(menubar, category_label, *encodings):
         human-readable name, and encoding is a value that we can pass to
         VideoDisplay.select_subtitle_encoding()
     """
-    subtitles_menu = menubar.get("PlaybackMenu").get("SubtitlesMenu")
+    subtitles_menu = menubar.find("SubtitlesMenu")
     try:
-        encoding_menu = subtitles_menu.get("SubtitleEncodingMenu")
-    except ValueError:
+        encoding_menu = menubar.find("SubtitleEncodingMenu")
+    except KeyError:
         # first time calling this function, we need to set up the menu.
         encoding_menu = Menu(_("_Encoding"),
                 "SubtitleEncodingMenu", [], groups=['PlayingVideo'])
@@ -461,6 +300,12 @@ def add_subtitle_encoding_menu(menubar, category_label, *encodings):
 
 action_handlers = {}
 group_action_handlers = {}
+
+def on_menubar_activate(menubar, action_name):
+    callback = lookup_handler(action_name)
+    if callback is not None:
+        callback()
+
 def lookup_handler(action_name):
     """For a given action name, get a callback to handle it.  Return
     None if no callback is found.

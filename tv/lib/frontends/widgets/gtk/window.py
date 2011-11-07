@@ -41,50 +41,16 @@ from miro import signals
 from miro import dialogs
 from miro.fileobject import FilenameType
 from miro.gtcache import gettext as _
-from miro.frontends.widgets.gtk import wrappermap, widgets
-from miro.frontends.widgets.gtk import keymap, layout
-from miro.frontends.widgets import menus
+from miro.frontends.widgets.gtk import gtkmenus
+from miro.frontends.widgets.gtk import keymap
+from miro.frontends.widgets.gtk import layout
+from miro.frontends.widgets.gtk import widgets
+from miro.frontends.widgets.gtk import wrappermap
 from miro.plat import resources
 
 # keeps the objects alive until destroy() is called
 alive_windows = set()
 running_dialogs = set()
-
-def __get_fullscreen_stock_id():
-    try:
-        return gtk.STOCK_FULLSCREEN
-    except StandardError:
-        pass
-
-STOCK_IDS = {
-    "SaveItem": gtk.STOCK_SAVE,
-    "CopyItemURL": gtk.STOCK_COPY,
-    "RemoveItems": gtk.STOCK_REMOVE,
-    "Fullscreen": __get_fullscreen_stock_id(),
-    "StopItem": gtk.STOCK_MEDIA_STOP,
-    "NextItem": gtk.STOCK_MEDIA_NEXT,
-    "PreviousItem": gtk.STOCK_MEDIA_PREVIOUS,
-    "PlayPauseItem": gtk.STOCK_MEDIA_PLAY,
-    "Open": gtk.STOCK_OPEN,
-    "EditPreferences": gtk.STOCK_PREFERENCES,
-    "Quit": gtk.STOCK_QUIT,
-    "Help": gtk.STOCK_HELP,
-    "About": gtk.STOCK_ABOUT,
-    "Translate": gtk.STOCK_EDIT
-}
-
-for i in range(1, 13):
-    name = 'F%d' % i
-    keymap.menubar_key_map[getattr(menus, name)] = name
-
-def get_accel_string(shortcut):
-    mod_str = ''.join(
-        keymap.menubar_mod_map[mod] for mod in shortcut.modifiers)
-    key_str = keymap.menubar_key_map.get(shortcut.shortcut, shortcut.shortcut)
-    return mod_str + key_str
-
-def get_stock_id(n):
-    return STOCK_IDS.get(n, None)
 
 class WrappedWindow(gtk.Window):
     def do_map(self):
@@ -169,14 +135,6 @@ class WindowBase(signals.SignalEmitter):
         self.create_signal('key-press')
         self.create_signal('show')
         self.create_signal('hide')
-        # FIXME - this is a weird place to have the menu code because
-        # it causes all WindowBase subclasses to have all this extra
-        # menu stuff.
-        self.menu_structure = None
-        self.menu_action_groups = None
-        self._audio_merge_id = self._merge_id = None
-        self._subtitle_tracks_cached = None
-        self._setup_ui_manager()
 
     def set_window(self, window):
         self._window = window
@@ -197,9 +155,6 @@ class WindowBase(signals.SignalEmitter):
         # gray/white (lighter than #f0f0f0).
         self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
-
-    def connect_menu_keyboard_shortcuts(self):
-        self._window.add_accel_group(self.ui_manager.get_accel_group())
 
     def _add_menu(self, menu, outstream, parent=None):
         outstream.write('<menu action="%s">' % menu.action)
@@ -563,25 +518,24 @@ class MainWindow(Window):
         self.vbox = gtk.VBox()
         self._window.add(self.vbox)
         self.vbox.show()
-        self._add_menubar()
-        self.connect_menu_keyboard_shortcuts()
+        self._add_app_menubar()
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         self.create_signal('on-shown')
-        app.menu_manager.connect('enabled-changed', self.on_menu_change)
-        app.menu_manager.connect('radio-group-changed', self.on_radio_change)
-        app.menu_manager.connect('checked-changed', self.on_checked_change)
-        app.playback_manager.connect('did-start-playing',
-                                     self.on_playback_change)
-        app.playback_manager.connect('will-play', self.on_playback_change)
-        app.playback_manager.connect('did-stop', self.on_playback_change)
+        #app.menu_manager.connect('enabled-changed', self.on_menu_change)
+        #app.menu_manager.connect('radio-group-changed', self.on_radio_change)
+        #app.menu_manager.connect('checked-changed', self.on_checked_change)
+        #app.playback_manager.connect('did-start-playing',
+                                     #self.on_playback_change)
+        #app.playback_manager.connect('will-play', self.on_playback_change)
+        #app.playback_manager.connect('did-stop', self.on_playback_change)
 
         self._window.connect('key-release-event', self.on_key_release)
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
         self._window.connect('map-event', lambda w, a: self.emit('on-shown'))
-        self._clear_subtitles_menu()
-        self._clear_audio_track_menu()
+        #self._clear_subtitles_menu()
+        #self._clear_audio_track_menu()
 
     def _make_gtk_window(self):
         return WrappedMainWindow()
@@ -785,6 +739,11 @@ class MainWindow(Window):
 </menubar>
 </ui>'''
         self._audio_merge_id = self.ui_manager.add_ui_from_string(s)
+
+    def _add_app_menubar(self):
+        menubar = app.widgetapp.menubar
+        self.vbox.pack_start(menubar._widget, expand=False)
+        self._window.add_accel_group(menubar.get_accel_group())
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)
