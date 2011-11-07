@@ -155,6 +155,7 @@ class ButtonSegment(widgetset.CustomButton):
         surface = widgetutil.ThreeImageSurface()
         surface.set_images(left, center, right)
         surface.draw(context, 0, 0, context.width)
+        return surface
 
 class TextButtonSegment(ButtonSegment):
     MARGIN = 12
@@ -169,11 +170,11 @@ class TextButtonSegment(ButtonSegment):
         return math.ceil(width) + (2 * self.MARGIN), 20
 
     def draw(self, context, layout):
-        ButtonSegment.draw(self, context, layout)
+        surface = ButtonSegment.draw(self, context, layout)
         layout.set_text_color(self.TEXT_COLOR[self.active])
         textbox = self._get_textbox(layout)
         _, height = textbox.get_size()
-        y = int((context.height - height) / 2.0)
+        y = int((surface.height - height) / 2.0)
         textbox.draw(context, self.MARGIN, y, context.width - (2 * self.MARGIN), context.height)
 
     def _get_textbox(self, layout):
