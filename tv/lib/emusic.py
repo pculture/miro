@@ -36,7 +36,6 @@ from miro import fileutil
 import StringIO
 
 import urlparse
-from xml.parsers.expat import ExpatException
 from xml.dom import minidom
 
 def is_emusic_url(url):
