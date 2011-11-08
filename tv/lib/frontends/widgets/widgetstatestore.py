@@ -143,7 +143,7 @@ class WidgetStateStore(object):
         u'file-type'])
     AVAILABLE_COLUMNS['search'] |= set([u'size', u'rating'])
     AVAILABLE_COLUMNS['videos'] |= set([u'description', u'date', u'rating',
-        u'file-type', u'show', u'kind', u'status'])
+        u'file-type', u'show', u'kind', u'status', u'genre'])
     AVAILABLE_COLUMNS[u'device-audio'] = AVAILABLE_COLUMNS[u'music'].copy()
     AVAILABLE_COLUMNS[u'device-video'] = AVAILABLE_COLUMNS[u'videos'].copy()
     AVAILABLE_COLUMNS[u'feed'] = ((AVAILABLE_COLUMNS['music'] |
