@@ -822,13 +822,12 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     IGNORE_PADDING = True
     DRAW_BACKGROUND = False
 
-    MAX_IMAGE_SIZE = (138, 138)
     IMAGE_MARGIN_TOP = 4
     IMAGE_MARGIN_BOTTOM = 3
     IMAGE_MARGIN_LEFT = 7
     IMAGE_MARGIN_RIGHT = 6
 
-    MIN_TEXT_WIDTH = 48
+    MIN_TEXT_WIDTH = 78
     TEXT_PADDING_RIGHT = 6
     TRACK_NUMBER_MARGIN_RIGHT = 13
 
@@ -838,8 +837,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     BOTTOM_LINE_COLOR = widgetutil.css_to_color('#dddddd')
     FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 
-    min_width = (IMAGE_MARGIN_LEFT + MAX_IMAGE_SIZE[0] + IMAGE_MARGIN_RIGHT +
-            MIN_TEXT_WIDTH)
+    min_width = 130
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
@@ -893,6 +891,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         if not self.sanity_check_before_render(context):
             return
 
+        self.calc_album_art_size(context)
         self.render_album_art(context)
         self.render_track_number(context, layout_manager)
         self.render_album_or_artist(context, layout_manager)
@@ -913,6 +912,15 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             return False
         return True
 
+    def calc_album_art_size(self, context):
+        """Calculate how big we are going to draw album art.
+
+        This is currently big enough so it fits in 6 rows with the top/bottom
+        padding.
+        """
+        self.album_art_size = context.height * 6
+        self.album_art_size -= (self.IMAGE_MARGIN_TOP +
+                self.IMAGE_MARGIN_BOTTOM)
 
     def clear_cell(self, context):
         """Draw our background color over the cell to clear it."""
@@ -925,27 +933,15 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
 
         Returns ImageSurface to draw or None if we don't have anything
         """
-        if self.get_total_rows() < 2:
-            # don't draw album art if we only have 1 item in the group
+        if self.get_total_rows() < 6:
+            # don't draw album art if we have less than 6 items in the group
             return None
 
         album_art_path = self.get_image_path()
         if album_art_path is None:
             return None
-
-        # calculate total y-pixels for the entire group
-        height_for_group = context.height * self.get_total_rows()
-        # calculate the width/height we have to play with
-        max_width = min(self.MAX_IMAGE_SIZE[0],
-                context.width - self.IMAGE_MARGIN_RIGHT -
-                self.IMAGE_MARGIN_LEFT - self.MIN_TEXT_WIDTH)
-        max_height = min(self.MAX_IMAGE_SIZE[1],
-                height_for_group - self.IMAGE_MARGIN_TOP -
-                self.IMAGE_MARGIN_BOTTOM)
-        # pick the smaller of the 2 and make a square ImageSurface
-        side_length = min(max_width, max_height)
         return imagepool.get_surface(album_art_path,
-                    size=(side_length, side_length))
+                size=(self.album_art_size, self.album_art_size))
 
     def render_album_art(self, context):
         album_art = self.make_album_art(context)
@@ -1019,7 +1015,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         context.fill()
 
     def render_album_or_artist(self, context, layout_manager):
-        x = (self.MAX_IMAGE_SIZE[0] + self.IMAGE_MARGIN_LEFT +
+        x = (self.album_art_size + self.IMAGE_MARGIN_LEFT +
                 self.IMAGE_MARGIN_RIGHT)
         if self.get_current_row() == 0:
             text = self.get_artist()
