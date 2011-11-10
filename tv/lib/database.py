@@ -144,7 +144,7 @@ class DDBObjectFetcher(ViewObjectFetcher):
         self.klass = klass
 
     def fetch_obj(self, id_):
-        return app.db.get_obj_by_id(id_)
+        return app.db.get_obj_by_id(id_, self.klass)
 
     def fetch_obj_for_ddb_object(self, ddb_object):
         return ddb_object
@@ -156,7 +156,8 @@ class DDBObjectFetcher(ViewObjectFetcher):
         if app.db.ensure_objects_loaded(self.klass, id_list):
             # sometimes objects will call remove() in setup_restored().
             # We need to filter those out.
-            new_id_list = [id_ for id_ in id_list if app.db.id_alive(id_)]
+            new_id_list = [i for i in id_list
+                           if app.db.id_alive(i, self.klass)]
             if len(new_id_list) < id_list:
                 id_list[:] = new_id_list # update id_list in-place
 
@@ -535,6 +536,7 @@ class DDBObject(signals.SignalEmitter):
     lastID = 0
 
     def __init__(self, *args, **kwargs):
+        self.confirm_db_thread()
         self.in_db_init = True
         signals.SignalEmitter.__init__(self, 'removed')
         self.changed_attributes = set()
@@ -593,7 +595,7 @@ class DDBObject(signals.SignalEmitter):
     def get_by_id(cls, id_):
         try:
             # try memory first before going to sqlite.
-            obj = app.db.get_obj_by_id(id_)
+            obj = app.db.get_obj_by_id(id_, cls)
             if app.db.object_from_class_table(obj, cls):
                 return obj
             else:
