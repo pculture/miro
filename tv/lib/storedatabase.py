@@ -402,18 +402,20 @@ class LiveStorage:
         serialized_value BLOB NOT NULL);""")
 
     def remember_object(self, obj):
-        self._object_map[obj.id] = obj
-        self._ids_loaded.add(obj.id)
+        key = (obj.id, app.db.table_name(obj.__class__))
+        self._object_map[key] = obj
+        self._ids_loaded.add(key)
 
     def forget_object(self, obj):
+        key = (obj.id, app.db.table_name(obj.__class__))
         try:
-            del self._object_map[obj.id]
+            del self._object_map[key]
         except KeyError:
             details = ('storedatabase.forget_object: '
                        'key error in forget_object: %s (obj: %s)' %
                        (obj.id, obj))
             logging.error(details)
-        self._ids_loaded.discard(obj.id)
+        self._ids_loaded.discard(key)
 
     def _insert_sql_for_schema(self, obj_schema):
         return "INSERT INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
@@ -545,17 +547,17 @@ class LiveStorage:
             max_id = max(max_id, self.cursor.fetchone()[0])
         return max_id
 
-    def get_obj_by_id(self, id_):
+    def get_obj_by_id(self, id_, klass):
         """Get a particular DDBObject.
 
         This will throw a KeyError if id is not in the database, or if the
         object for id has not been loaded yet.
         """
-        return self._object_map[id_]
+        return self._object_map[(id_, app.db.table_name(klass))]
 
-    def id_alive(self, id_):
-        """Check if an id_ is exists and is loaded in the databes."""
-        return id_ in self._object_map
+    def id_alive(self, id_, klass):
+        """Check if an id exists and is loaded in the database."""
+        return (id_, app.db.table_name(klass)) in self._object_map
 
     def table_name(self, klass):
         return self._schema_map[klass].table_name
@@ -583,19 +585,21 @@ class LiveStorage:
         id_list = list(self.query_ids(schema.table_name, where, values,
             order_by, joins,
             limit))
+        t = app.db.table_name(klass)
         if self.ensure_objects_loaded(klass, id_list):
             # sometimes objects will call remove() in setup_restored().
             # We need to filter those out.
-            id_list = [id_ for id_ in id_list if id_ in self._object_map]
+            id_list = [i for i in id_list if (i, t) in self._object_map]
         for id_ in id_list:
-            yield self._object_map[id_]
+            yield self._object_map[(id_, t)]
 
     def ensure_objects_loaded(self, klass, id_list):
         """Ensure that a list of ids are loaded into memory.
 
         :returns: True iff we needed to load objects
         """
-        unrestored_ids = set(id_list).difference(self._ids_loaded)
+        unrestored_ids = set(id_list).difference(
+          i for i, unused in self._ids_loaded)
         if unrestored_ids:
             # restore any objects that we don't already have in memory.
             schema = self._schema_map[klass]
