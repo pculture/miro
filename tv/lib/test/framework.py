@@ -459,8 +459,9 @@ class MiroTestCase(unittest.TestCase):
 
     def reload_object(self, obj):
         # force an object to be reloaded from the databas.
-        del app.db._object_map[obj.id]
-        app.db._ids_loaded.remove(obj.id)
+        key = (obj.id, app.db.table_name(obj.__class__))
+        del app.db._object_map[key]
+        app.db._ids_loaded.remove(key)
         return obj.__class__.get_by_id(obj.id)
 
     def handle_error(self, obj, report):
