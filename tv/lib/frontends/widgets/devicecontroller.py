@@ -165,6 +165,7 @@ class SizeWidget(widgetset.Background):
         # right size: sync button
         self.sync_button = widgetutil.ThreeImageButton(
             'device-sync', _("Up to date"))
+        self.sync_button.set_text_size(1.07) # 14pt
         self.sync_button.disable()
         self.sync_button.set_size_request(150, 23)
         hbox.pack_end(widgetutil.pad(self.sync_button, left=50))
