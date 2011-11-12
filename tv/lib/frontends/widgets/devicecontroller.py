@@ -48,6 +48,7 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import segmented
+from miro.frontends.widgets import tabcontroller
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
@@ -699,30 +700,34 @@ class DeviceMountedView(widgetset.VBox):
         scroller.add(self.tab_container)
         self.pack_start(scroller, expand=True)
 
-
-        label_size = widgetutil.font_scale_from_osx_points(16)
         vbox = widgetset.VBox()
-        label = widgetset.Label(_("Drag individual video and audio files "
-                                  "onto the device in the sidebar to copy "
-                                  "them."))
-        label.set_size_request(width, -1)
-        label.set_size(label_size)
-        label.set_wrap(True)
-        vbox.pack_start(widgetutil.align_center(label, top_pad=50))
-        label = widgetset.Label(_("Use these options and the tabs above for "
-                                  "automatic syncing."))
-        label.set_size(label_size)
+        vbox.pack_start(widgetutil.align_left(
+                tabcontroller.ConnectTab.build_header(_("Individual Files")),
+                top_pad=10))
+        label = tabcontroller.ConnectTab.build_text(
+            _("Drag individual video and audio files onto "
+              "the device in the sidebar to copy them."))
         label.set_size_request(width, -1)
         label.set_wrap(True)
-        vbox.pack_start(widgetutil.align_center(label, top_pad=10))
+        vbox.pack_start(widgetutil.align_left(label, top_pad=10))
 
-        self.auto_sync = widgetset.Checkbox(_("Sync automatically?"))
+        vbox.pack_start(widgetutil.align_left(
+                tabcontroller.ConnectTab.build_header(_("Syncing")),
+                top_pad=30))
+        label = tabcontroller.ConnectTab.build_text(
+            _("Use the tabs above and these options for "
+              "automatic syncing."))
+        label.set_size_request(width, -1)
+        label.set_wrap(True)
+        vbox.pack_start(widgetutil.align_left(label, top_pad=10))
+
+        self.auto_sync = widgetset.Checkbox(_("Sync automatically when this "
+                                              "device is connected"))
         self.auto_sync.connect('toggled', self._auto_sync_changed)
-        vbox.pack_start(widgetutil.align_center(self.auto_sync,
-                                                top_pad=20))
+        vbox.pack_start(widgetutil.align_left(self.auto_sync, top_pad=10))
         max_fill_label = _(
             "Don't fill more than %(count)i percent of the "
-            "free space on my device",
+            "free space when syncing",
             {'count': id(self)})
         checkbox_label, text_label = max_fill_label.split(unicode(id(self)), 1)
         self.max_fill_enabled = widgetset.Checkbox(checkbox_label)
@@ -733,18 +738,21 @@ class DeviceMountedView(widgetset.VBox):
         self.max_fill_percent.connect('focus-out',
                                       self._max_fill_percent_changed)
         label = widgetset.Label(text_label)
-        vbox.pack_start(widgetutil.align_center(
+        vbox.pack_start(widgetutil.align_left(
                 widgetutil.build_hbox([self.max_fill_enabled,
                                        self.max_fill_percent,
                                        label], 0),
                 top_pad=10))
 
         rounded_vbox = RoundedVBox()
+        vbox.pack_start(widgetutil.align_left(
+                tabcontroller.ConnectTab.build_header(_("Auto Fill")),
+                top_pad=30, bottom_pad=10))
         self.auto_fill = widgetset.Checkbox(
             _("After syncing my selections in the tabs above, "
               "fill remaining space with:"))
         self.auto_fill.connect('toggled', self._auto_fill_changed)
-        rounded_vbox.pack_start(widgetutil.align_center(self.auto_fill,
+        rounded_vbox.pack_start(widgetutil.align_left(self.auto_fill,
                                                20, 20, 20, 20))
         names = [
             (_('Newest Music'), u'recent_music'),
@@ -755,9 +763,9 @@ class DeviceMountedView(widgetset.VBox):
         longest = max(names, key=lambda x: len(x[0]))[0]
         width = widgetset.Label(longest).get_width()
         less_label = widgetset.Label(_('Less').upper())
-        less_label.set_size(label_size / 2)
+        less_label.set_size(tabcontroller.ConnectTab.TEXT_SIZE / 2)
         more_label = widgetset.Label(_('More').upper())
-        more_label.set_size(label_size / 2)
+        more_label.set_size(tabcontroller.ConnectTab.TEXT_SIZE / 2)
         label_hbox = widgetutil.build_hbox([
                 less_label,
                 widgetutil.pad(more_label,
@@ -777,17 +785,17 @@ class DeviceMountedView(widgetset.VBox):
             self.auto_fill_sliders[setting] = dragger
             hbox = widgetutil.build_hbox([label, dragger], 20)
             scrollers.append(hbox)
-        rounded_vbox.pack_start(widgetutil.align_center(
+        rounded_vbox.pack_start(widgetutil.align_left(
                 widgetutil.build_vbox(scrollers, 10),
                 20, 20, 20, 20))
 
-        vbox.pack_start(widgetutil.align_center(rounded_vbox, 20, 20, 20, 20))
+        vbox.pack_start(widgetutil.align_left(rounded_vbox))
 
         self.device_size = SizeWidget()
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
         self.pack_end(self.device_size)
 
-        self.add_tab('main', vbox)
+        self.add_tab('main', widgetutil.align_center(vbox, 20, 20, 20, 20))
         self.add_tab('podcasts', widgetutil.align_center(PodcastSyncWidget(),
                                                          20, 20, 20, 20))
         self.add_tab('playlists',
