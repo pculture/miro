@@ -974,6 +974,11 @@ class DeviceSyncManager(object):
             if self.stopping:
                 break # no more copies
             yield
+        for final_path in self.copying:
+            # canceled the sync, so remove the non-synced files
+            eventloop.add_idle(fileutil.delete,
+                               "deleting canceled sync",
+                               args=(final_path,))
         self._copy_iter_running = False
 
     def _conversion_changed_callback(self, conversion_manager, task):
