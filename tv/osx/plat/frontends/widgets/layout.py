@@ -566,10 +566,10 @@ class Table(Container):
     def place_children(self):
         column_positions = [0]
         for width in self.column_widths[:-1]:
-            column_positions.append(width + column_positions[-1])
+            column_positions.append(width + column_positions[-1] + self.column_spacing)
         row_positions = [0]
         for height in self.row_heights[:-1]:
-            row_positions.append(height + row_positions[-1])
+            row_positions.append(height + row_positions[-1] + self.row_spacing)
 
         my_x= self.viewport.placement.origin.x
         my_y = self.viewport.placement.origin.y

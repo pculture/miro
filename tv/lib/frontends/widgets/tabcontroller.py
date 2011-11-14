@@ -225,11 +225,19 @@ class ConnectTab(widgetset.VBox):
             lambda: app.sharing_manager.unregister_interest(self))
         widgetset.VBox.__del__(self)
 
-    def build_header(self, text):
+    @classmethod
+    def build_header(klass, text):
         label = widgetset.Label(text)
-        label.set_size(self.HEADER_SIZE)
-        label.set_color(self.HEADER_COLOR)
+        label.set_size(klass.HEADER_SIZE)
+        label.set_color(klass.HEADER_COLOR)
         label.set_bold(True)
+        return label
+
+    @classmethod
+    def build_text(klass, text):
+        label = widgetset.Label(text)
+        label.set_size(klass.TEXT_SIZE)
+        label.set_color(klass.TEXT_COLOR)
         return label
 
     def _build_daap_section(self, bottom):
@@ -239,12 +247,10 @@ class ConnectTab(widgetset.VBox):
                                               bottom_pad=10))
         # Note: "Miro iPad app" is the name of a piece of software--
         # don't substitute Miro for %(appname)s here.
-        label = widgetset.Label(
+        label = self.build_text(
             _("%(shortappname)s can stream and download files to and from "
               "other %(shortappname)ss on your local network and to the "
               "Miro iPad app.  It's awesome!", self.trans_data))
-        label.set_size(self.TEXT_SIZE)
-        label.set_color(self.TEXT_COLOR)
         label.set_wrap(True)
         label.set_size_request(550, -1)
         bottom.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -335,14 +341,12 @@ class ConnectTab(widgetset.VBox):
         label_line.pack_start(widgetutil.align_top(help_button))
         bottom.pack_start(label_line)
 
-        label = widgetset.Label(
+        label = self.build_text(
             _("Connect the USB cable to sync your Android device with "
               "%(shortappname)s.  Be sure to set your device to 'USB Mass "
               "Storage' mode in your device settings.  Attach your digital "
               "camera, and convert your video files to be instantly "
               "web-ready.", self.trans_data))
-        label.set_size(self.TEXT_SIZE)
-        label.set_color(self.TEXT_COLOR)
         label.set_size_request(400, -1)
         label.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -356,12 +360,10 @@ class ConnectTab(widgetset.VBox):
         self.show_unknown.connect('toggled', self.show_all_devices_toggled)
         show_all_vbox.pack_start(self.show_unknown)
         padding = self.show_unknown.get_text_padding()
-        label = widgetset.Label(
+        label = self.build_text(
             _("Use this if your phone doesn't appear in %(shortappname)s when "
               "you connect it to the computer, or if you want to sync with an "
               "external drive.", self.trans_data))
-        label.set_size(self.TEXT_SIZE)
-        label.set_color(self.TEXT_COLOR)
         label.set_size_request(370 - padding, -1)
         label.set_wrap(True)
         show_all_vbox.pack_start(widgetutil.pad(label, top=10, left=padding))
@@ -382,13 +384,11 @@ class ConnectTab(widgetset.VBox):
         label = self.build_header(_("Miro on your iPad"))
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=10))
-        label = widgetset.Label(
+        label = self.build_text(
             _("The gorgeous Miro iPad app lets you wirelessly stream music "
               "and videos from %(shortappname)s on your desktop to your iPad. "
               "You can also download songs and videos to your iPad and take "
               "them with you.", self.trans_data))
-        label.set_size(self.TEXT_SIZE)
-        label.set_color(self.TEXT_COLOR)
         label.set_wrap(True)
         label.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
@@ -406,11 +406,9 @@ class ConnectTab(widgetset.VBox):
         label = self.build_header(_("Miro on Android"))
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,
                                               bottom_pad=10))
-        label = widgetset.Label(
+        label = self.build_text(
             _("We don't yet have a Miro app for Android, but you can stream "
               "to your device using other DAAP apps."))
-        label.set_size(self.TEXT_SIZE)
-        label.set_color(self.TEXT_COLOR)
         label.set_wrap(True)
         label.set_size_request(550, -1)
         vbox.pack_start(widgetutil.align_left(label, left_pad=20,

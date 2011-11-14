@@ -399,7 +399,7 @@ class DeviceManager(object):
         if not getattr(info.info, 'generic', False):
             # not a generic device
             return False
-        if info.mount and info.database.get('settings', {}).get(
+        if info.mount and info.database.get(u'settings', {}).get(
             'always_show', False):
             # we want to show this device all the time
             return False
@@ -546,6 +546,8 @@ class DeviceSyncManager(object):
     """
     def __init__(self, device):
         self.device = device
+        self.device_info = self.device.info
+        self.device_settings = self.device.database.get(u'settings')
         self.start_time = time.time()
         self.signal_handles = []
         self.finished = 0
@@ -557,6 +559,7 @@ class DeviceSyncManager(object):
         self.stopping = False
         self._change_timeout = None
         self._copy_iter_running = False
+        self._info_to_conversion = {}
         self.started = False
 
     def get_sync_items(self, max_size=None):
@@ -700,12 +703,17 @@ class DeviceSyncManager(object):
         if not items and not expired:
             return 0, 0
         count = size = 0
+        items_for_converter = {}
         for info in items:
             converter = self.conversion_for_info(info)
-            if converter == 'copy':
-                count += 1
-                size += info.size
-            elif converter:
+            items_for_converter.setdefault(converter, set()).add(info)
+        if 'copy' in items_for_converter:
+            items = items_for_converter.pop('copy')
+            count += len(items)
+            size += sum(info.size for info in items)
+        for converter in items_for_converter:
+            items = items_for_converter.pop(converter)
+            for info in items:
                 task = conversions.conversion_manager._make_conversion_task(
                     converter, info,
                     target_folder=None,
@@ -856,17 +864,27 @@ class DeviceSyncManager(object):
 
         self._check_finished()
 
+
+    def cache_conversion(meth):
+        def wrapper(self, info):
+            if info not in self._info_to_conversion:
+                self._info_to_conversion[info] = meth(self, info)
+            return self._info_to_conversion[info]
+        return wrapper
+
+    @cache_conversion
     def conversion_for_info(self, info):
         if not info.video_path:
             app.controller.failed_soft("device conversion",
                                        "got video %r without video_path" % (
                     info.name,))
             return None
-        device_settings = self.device.database.get(u'settings', {})
-        device_info = self.device.info
 
         # shortcut, if we're just going to copy the file
-        if device_settings.get(u'%s_conversion' % info.file_type) == u'copy':
+        if self.device_settings.get(
+            u'%s_conversion' % info.file_type,
+            getattr(self.device_info,
+                    '%s_conversion' % info.file_type)) == u'copy':
             return 'copy'
 
         try:
@@ -884,32 +902,32 @@ class DeviceSyncManager(object):
                 return set(v)
         if 'container' in media_info:
             info_containers = ensure_set(media_info['container'])
-            if not (device_info.container_types & info_containers):
+            if not (self.device_info.container_types & info_containers):
                 requires_conversion = True # container doesn't match
         else:
             requires_conversion = True
         if 'audio_codec' in media_info:
             info_audio_codecs = ensure_set(media_info['audio_codec'])
-            if not (device_info.audio_types & info_audio_codecs):
+            if not (self.device_info.audio_types & info_audio_codecs):
                 requires_conversion = True # audio codec doesn't match
         else:
             requires_conversion = True
         if info.file_type == 'video':
-            if (device_settings.get(u'always_sync_videos') or
+            if (self.device_settings.get(u'always_sync_videos') or
                 'video_codec' not in media_info):
                 requires_conversion = True
             else:
                 info_video_codecs = ensure_set(media_info['video_codec'])
-                if not (device_info.video_types & info_video_codecs):
+                if not (self.device_info.video_types & info_video_codecs):
                     requires_conversion = True # video codec doesn't match
         if not requires_conversion:
             return 'copy' # so easy!
         elif info.file_type == 'audio':
-            return (device_settings.get(u'audio_conversion') or
-                    device_info.audio_conversion)
+            return (self.device_settings.get(u'audio_conversion') or
+                    self.device_info.audio_conversion)
         elif info.file_type == 'video':
-            return (device_settings.get(u'video_conversion') or
-                    device_info.video_conversion)
+            return (self.device_settings.get(u'video_conversion') or
+                    self.device_info.video_conversion)
 
     def start_conversion(self, conversion, info, target):
         conversion_manager = conversions.conversion_manager
@@ -974,6 +992,11 @@ class DeviceSyncManager(object):
             if self.stopping:
                 break # no more copies
             yield
+        for final_path in self.copying:
+            # canceled the sync, so remove the non-synced files
+            eventloop.add_idle(fileutil.delete,
+                               "deleting canceled sync",
+                               args=(final_path,))
         self._copy_iter_running = False
 
     def _conversion_changed_callback(self, conversion_manager, task):
