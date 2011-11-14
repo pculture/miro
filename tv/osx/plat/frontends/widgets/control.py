@@ -290,7 +290,16 @@ class Checkbox(SizedControl):
             self.view.setFont_(NSFont.boldSystemFontOfSize_(0))
 
     def calc_size_request(self):
-        size = self.view.cell().cellSize()
+        if self.manual_size_request:
+            width, height = self.manual_size_request
+            if width == -1:
+                width = 10000
+            if height == -1:
+                height = 10000
+            size = self.view.cell().cellSizeForBounds_(
+                NSRect((0, 0), (width, height)))
+        else:
+            size = self.view.cell().cellSize()
         return (size.width, size.height)
 
     def baseline(self):
