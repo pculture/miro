@@ -593,6 +593,7 @@ class DeviceSettingsWidget(RoundedVBox):
                 widget.set_size_request(260, -1)
             elif type_== 'bool':
                 widget = widgetset.Checkbox(text)
+                widget.set_size_request(400, -1)
             else:
                 raise RuntimeError('unknown settings widget: %r' % type_)
             self.boxes[setting] = widget
