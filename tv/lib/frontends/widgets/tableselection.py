@@ -31,7 +31,6 @@
 the platform tableview modules provide the platform-specific methods used here.
 """
 
-from __future__ import with_statement # neccessary for python2.5
 from contextlib import contextmanager
 
 import logging
