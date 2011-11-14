@@ -791,9 +791,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         filename_root = self.get_filename()
         if fileutil.isdir(filename_root):
-            return set(fileutil.miro_allfiles(filename_root))
+            return (fn for fn in fileutil.miro_allfiles(filename_root))
         else:
-            return set()
+            return []
 
     def _make_new_children(self, paths):
         filename_root = self.get_filename()
@@ -809,37 +809,34 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     def find_new_children(self):
         """If this feed is a container item, walk through its
-        directory and find any new children.  Returns True if it found
-        children and ran signal_change().
+        directory and find any new children.
         """
         if not self.isContainerItem:
-            return False
+            return
         if self.get_state() == 'downloading':
             # don't try to find videos that we're in the middle of
             # re-downloading
-            return False
-        child_paths = self._find_child_paths()
+            return
+        child_paths = set(self._find_child_paths())
         for child in self.get_children():
             child_paths.discard(child.get_filename())
         self._make_new_children(child_paths)
         if child_paths:
             self.signal_change()
-            return True
-        return False
 
     def split_item(self):
-        """returns True if it ran signal_change()"""
         if self.isContainerItem is not None:
-            return self.find_new_children()
+            self.find_new_children()
+            return
         if ((not isinstance(self, FileItem)
              and (self.downloader is None
                   or not self.downloader.is_finished()))):
-            return False
+            return
         filename_root = self.get_filename()
         if filename_root is None:
-            return False
+            return
         if fileutil.isdir(filename_root):
-            child_paths = self._find_child_paths()
+            child_paths = set(self._find_child_paths())
             if len(child_paths) > 0:
                 self.isContainerItem = True
                 self._make_new_children(child_paths)
@@ -855,7 +852,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         else:
             self.isContainerItem = False
         self.signal_change()
-        return True
 
     def set_subtitle_encoding(self, encoding):
         if encoding is not None:
