@@ -79,7 +79,11 @@ def download_file(url, handle_unknown_callback):
     if url.startswith('file://'):
         path = url[7:]
         try:
-            _amz_callback(file(path).read())
+            with file(path) as f:
+                if path.endswith('.m3u'):
+                    _m3u_callback(f.read())
+                else:
+                    _amz_callback(f.read())
         finally:
             fileutil.remove(path)
         return
