@@ -2093,6 +2093,7 @@ class DirectoryScannerImplBase(FeedImpl):
                     self.handle_watcher_updates,
                     "handle directory watcher updates")
 
+    @eventloop.idle_iterator
     def handle_watcher_updates(self):
         # If we are not longer valid just return
         if not self.ufeed.id_exists():
@@ -2106,7 +2107,15 @@ class DirectoryScannerImplBase(FeedImpl):
         known_files = self.calc_known_files()
         for x in self.items:
             known_files.add_path(x.get_filename())
-        to_add = self._filter_paths(self._watcher_paths_added, known_files)
+        to_add = []
+        start = time.time()
+        for f in self._filter_paths(self._watcher_paths_added, known_files):
+            to_add.append(f)
+            if time.time() - start > 0.4:
+                yield
+                if not self.id_exists():
+                    return
+                start = time.time()
         # commit changes
         app.bulk_sql_manager.start()
         try:
@@ -2161,6 +2170,7 @@ class DirectoryScannerImplBase(FeedImpl):
         # Remove items with deleted files or that that are in feeds
         to_remove = []
         duplicate_paths = []
+        start = time.time()
         for item in self.items:
             filename = item.get_filename()
             if (filename is None or
@@ -2172,6 +2182,11 @@ class DirectoryScannerImplBase(FeedImpl):
             else:
                 duplicate_paths.append(filename)
                 to_remove.append(item)
+            if time.time() - start > 0.4:
+                yield
+                if should_halt_early():
+                    return
+                start = time.time()
         if duplicate_paths:
             app.controller.failed_soft("scanning directory",
                 "duplicate paths in directory watcher: %s (impl: %s" %
@@ -2193,19 +2208,27 @@ class DirectoryScannerImplBase(FeedImpl):
         # files on the filesystem
         scan_dir = self._scan_dir()
         if fileutil.isdir(scan_dir) and not is_file_bundle(scan_dir):
-            THRESHOLD = 128
             all_files = []
+            start = time.time()
             for f in fileutil.miro_allfiles(scan_dir):
                 all_files.append(f)
-                length = len(all_files)
-                if not (length % THRESHOLD):
+                if time.time() - start > 0.4:
                     yield
                     if should_halt_early():
                         return
-            to_add = self._filter_paths(all_files, known_files)
-            for path in to_add:
-                app.metadata_progress_updater.will_process_path(path)
-            # since we've now called will_process_path(), we should make sure
+                    start = time.time()
+            start = time.time()
+            to_add = []
+            for path in self._filter_paths(all_files, known_files):
+                to_add.append(path)
+                if time.time() - start > 0.4:
+                    yield
+                    if should_halt_early():
+                        return
+                    start = time.time()
+
+            app.metadata_progress_updater.will_process_paths(to_add)
+            # since we've now called will_process_paths(), we should make sure
             # we call path_processed() if we halt early
             def halt_early_cleanup():
                 for path in path_iter:
@@ -2257,9 +2280,8 @@ class DirectoryScannerImplBase(FeedImpl):
         This method removes items from paths if they are in known_files or
         they are not media files
         """
-        rv = [p for p in paths if not known_files.contains_path(p) and
-              filetypes.is_media_filename(filename_to_unicode(p))]
-        return rv
+        return (p for p in paths if not known_files.contains_path(p) and
+              filetypes.is_media_filename(filename_to_unicode(p)))
 
 class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def setup_new(self, ufeed, directory):

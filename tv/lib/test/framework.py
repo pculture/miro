@@ -254,6 +254,10 @@ class FakeMetadataProgressUpdater(object):
         # we should test this, but for now it's just a stub
         pass
 
+    def will_process_paths(self, paths):
+        # we should test this, but for now it's just a stub
+        pass
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.setup_log_filter()
