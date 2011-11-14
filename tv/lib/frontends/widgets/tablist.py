@@ -47,12 +47,12 @@ from miro import messages
 from miro import errors
 from miro.gtcache import gettext as _
 from miro.plat import resources
-from miro.frontends.widgets import playback
-from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import keyboard
+from miro.frontends.widgets import playback
 from miro.frontends.widgets import statictabs
+from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import menus
 from miro.frontends.widgets.tablistdnd import (FeedListDragHandler,
      FeedListDropHandler, PlaylistListDragHandler, PlaylistListDropHandler,
      MediaTypeDropHandler, DeviceDropHandler)
@@ -324,14 +324,14 @@ class TabList(signals.SignalEmitter):
         self.view.connect_weak('row-activated', self.on_row_activated)
 
     def on_key_press(self, view, key, mods):
-        if key == menus.DOWN_ARROW and len(mods) == 0:
+        if key == keyboard.DOWN_ARROW and len(mods) == 0:
             # Test if the user is trying to move down past the last row in the
             # table, if so, select the next tablist.
             if view.is_selected(_last_iter(view, view.model)):
                 if self._move_to_next_tablist():
                     return True
             return False
-        elif key == menus.UP_ARROW and len(mods) == 0:
+        elif key == keyboard.UP_ARROW and len(mods) == 0:
             # Test if the user is trying to move up past the first row in the
             # table, if so, select the next tablist.
             if view.is_selected(view.model.first_iter()):
@@ -613,8 +613,11 @@ class HideableTabList(TabList):
         self._after_change(True)
 
     def on_key_press(self, view, key, mods):
-        if key == menus.DELETE or key == menus.BKSPACE:
+        if key == keyboard.DELETE or key == keyboard.BKSPACE:
             self.on_delete_key_pressed()
+            return True
+        elif key == keyboard.F5:
+            app.widgetapp.update_selected_feeds()
             return True
         return TabList.on_key_press(self, view, key, mods)
 

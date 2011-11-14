@@ -116,18 +116,6 @@ class WrappedWindow(gtk.Window):
 
 gobject.type_register(WrappedWindow)
 
-class WrappedMainWindow(WrappedWindow):
-    def do_key_press_event(self, event):
-        if (gtk.gdk.keyval_name(event.keyval) == 'Return' and
-                event.state & gtk.gdk.MOD1_MASK and
-                app.playback_manager.is_playing):
-            # Hack for having 2 shortcuts for fullscreen
-            app.playback_manager.enter_fullscreen()
-            return
-        return WrappedWindow.do_key_press_event(self, event)
-
-gobject.type_register(WrappedMainWindow)
-
 class WindowBase(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
@@ -538,7 +526,7 @@ class MainWindow(Window):
         #self._clear_audio_track_menu()
 
     def _make_gtk_window(self):
-        return WrappedMainWindow()
+        return WrappedWindow()
 
     def on_delete_window(self, widget, event):
         app.widgetapp.on_close()

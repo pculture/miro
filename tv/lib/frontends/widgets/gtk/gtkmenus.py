@@ -111,7 +111,7 @@ class MenuItem(MenuItemBase):
 
     :param label: The label it has (must be internationalized)
     :param name: String identifier for this item
-    :param shortcuts: None, the Shortcut, or tuple of Shortcut objects.
+    :param shortcut: Shortcut object to use
 
     Signals:
     - activate: menu item was clicked
@@ -126,7 +126,7 @@ class MenuItem(MenuItemBase):
     ...          play=_("_Play"), pause=_("_Pause"))
     """
 
-    def __init__(self, label, name, shortcuts=None, groups=None,
+    def __init__(self, label, name, shortcut=None, groups=None,
             **state_labels):
         MenuItemBase.__init__(self)
         self.name = name
@@ -135,13 +135,8 @@ class MenuItem(MenuItemBase):
         self._widget.show()
         self.create_signal('activate')
         # FIXME:  Our contstructor arguments are all messed up.  We ignore
-        # group and state_labels and only support 1 shortcut.
-        if shortcuts is None:
-            shortcuts = ()
-        if not isinstance(shortcuts, tuple):
-            shortcuts = (shortcuts,)
-        self.shortcuts = shortcuts
-        self._setup_shortcut()
+        # group and state_labels.
+        _setup_accel(self._widget, self.name, shortcut)
 
     def _on_activate(self, menu_item):
         self.emit('activate')
@@ -178,15 +173,6 @@ class MenuItem(MenuItemBase):
         else:
             return gtk.MenuItem(label)
 
-    def _setup_shortcut(self):
-        """Setup our shortcuts.  """
-        if len(self.shortcuts) == 0:
-            _setup_accel(self._widget, self.name, None)
-        else:
-            _setup_accel(self._widget, self.name, self.shortcuts[0])
-        # FIXME: we only handle a single shortcut, but we input multiple ones
-        # in the constructor.
-
     def set_label(self, new_label):
         self._widget.set_label(new_label)
 
@@ -194,9 +180,9 @@ class RadioMenuItem(MenuItem):
     """MenuItem that toggles on/off and is grouped with other RadioMenuItems.
     """
 
-    def __init__(self, label, name, radio_group, shortcuts=None,
+    def __init__(self, label, name, radio_group, shortcut=None,
             groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcuts, groups,
+        MenuItem.__init__(self, label, name, shortcut, groups,
                 **state_labels)
         # FIXME: we don't do anything with radio_group.  We need to
         # re-implement this functionality
@@ -228,9 +214,9 @@ class RadioMenuItem(MenuItem):
 class CheckMenuItem(MenuItem):
     """MenuItem that toggles on/off"""
 
-    def __init__(self, label, name, check_group, shortcuts=None,
+    def __init__(self, label, name, check_group, shortcut=None,
             groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcuts, groups,
+        MenuItem.__init__(self, label, name, shortcut, groups,
                 **state_labels)
         # FIXME: we don't do anything with check_group.  We need to
         # re-implement this functionality
