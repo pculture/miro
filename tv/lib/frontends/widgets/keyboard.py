@@ -52,3 +52,18 @@ class Shortcut:
     def __init__(self, shortcut, *modifiers):
         self.shortcut = shortcut
         self.modifiers = modifiers
+
+    def _get_key_symbol(self, value):
+        """Translate key values to their symbolic names."""
+        if isinstance(self.shortcut, int):
+            shortcut_string = '<Unknown>'
+            for name, value in globals().iteritems():
+                if value == self.shortcut:
+                    return name
+        return repr(value)
+
+    def __str__(self):
+        shortcut_string = self._get_key_symbol(self.shortcut)
+        mod_string = repr(set(self._get_key_symbol(k) for k in
+                              self.modifiers))
+        return "Shortcut(%s, %s)" % (shortcut_string, mod_string)

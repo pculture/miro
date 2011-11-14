@@ -52,11 +52,11 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemtrack
-from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
@@ -740,15 +740,18 @@ class ItemListController(object):
         self.throbber_manager.start(item_info)
 
     def on_key_press(self, view, key, mods):
-        if key == menus.DELETE or key == menus.BKSPACE:
+        if key == keyboard.DELETE or key == keyboard.BKSPACE:
             return self.handle_delete()
-        elif key == menus.ESCAPE:
+        elif key == keyboard.ESCAPE:
             return self.handle_escape()
-        elif key == menus.ENTER:
+        elif key == keyboard.ENTER:
             self.play_selection()
             return True
-        elif key == menus.SPACE and app.playback_manager.is_playing:
+        elif key == keyboard.SPACE and app.playback_manager.is_playing:
             app.playback_manager.toggle_paused()
+            return True
+        elif key == keyboard.F5:
+            app.widgetapp.update_selected_feeds()
             return True
         elif isinstance(key, basestring) and len(key) == 1 and key.isalnum():
             self.titlebar.start_editing_search(key)

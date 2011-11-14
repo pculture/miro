@@ -1174,6 +1174,11 @@ def handle_key_press(key, mods):
                 app.widgetapp.on_skip_backward()
                 return True
 
+        if set([keyboard.ALT]) == mods:
+            if key == keyboard.ENTER:
+                app.playback_manager.enter_fullscreen()
+                return True
+
         if set([keyboard.CTRL]) == mods and key == keyboard.SPACE:
             app.playback_manager.toggle_paused()
             return True

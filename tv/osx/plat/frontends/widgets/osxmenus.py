@@ -29,30 +29,30 @@
 
 """menus.py -- Menu handling code."""
 
+import logging
 import struct
 
 from objc import nil, NO, YES
+import AppKit
 from AppKit import *
 from Foundation import *
 
 from miro import app
 from miro import prefs
 from miro import signals
-
 from miro.gtcache import gettext as _
-from miro.frontends.widgets.keyboard import (Shortcut, MOD,
-    CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, 
-    DOWN_ARROW, ENTER, SPACE, DELETE, BKSPACE, ESCAPE)
+from miro.frontends.widgets import keyboard
+# import these names directly into our namespace for easy access
+from miro.frontends.widgets.keyboard import Shortcut, MOD
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
-
 from miro.plat.appstore import appstore_edition
 
 MODIFIERS_MAP = {
-    MOD:   NSCommandKeyMask,
-    CMD:   NSCommandKeyMask,
-    SHIFT: NSShiftKeyMask,
-    CTRL:  NSControlKeyMask,
-    ALT:   NSAlternateKeyMask
+    keyboard.MOD:   NSCommandKeyMask,
+    keyboard.CMD:   NSCommandKeyMask,
+    keyboard.SHIFT: NSShiftKeyMask,
+    keyboard.CTRL:  NSControlKeyMask,
+    keyboard.ALT:   NSAlternateKeyMask
 }
 
 if isinstance(NSBackspaceCharacter, int):
@@ -61,23 +61,28 @@ else:
     backspace = ord(NSBackspaceCharacter)
     
 KEYS_MAP = {
-    SPACE: " ",
-    ENTER: "\r",
-    BKSPACE: struct.pack("H", backspace),
-    DELETE: NSDeleteFunctionKey,
-    RIGHT_ARROW: NSRightArrowFunctionKey,
-    LEFT_ARROW: NSLeftArrowFunctionKey,
-    UP_ARROW: NSUpArrowFunctionKey,
-    DOWN_ARROW: NSDownArrowFunctionKey,
+    keyboard.SPACE: " ",
+    keyboard.ENTER: "\r",
+    keyboard.BKSPACE: struct.pack("H", backspace),
+    keyboard.DELETE: NSDeleteFunctionKey,
+    keyboard.RIGHT_ARROW: NSRightArrowFunctionKey,
+    keyboard.LEFT_ARROW: NSLeftArrowFunctionKey,
+    keyboard.UP_ARROW: NSUpArrowFunctionKey,
+    keyboard.DOWN_ARROW: NSDownArrowFunctionKey,
     '.': '.',
     ',': ','
 }
+# add function keys
+for i in range(1, 13):
+    portable_key = getattr(keyboard, "F%s" % i)
+    osx_key = getattr(AppKit, "NSF%sFunctionKey" % i)
+    KEYS_MAP[portable_key] = osx_key
 
 REVERSE_MODIFIERS_MAP = dict((i[1], i[0]) for i in MODIFIERS_MAP.items())
 REVERSE_KEYS_MAP = dict((i[1], i[0]) for i in KEYS_MAP.items() 
-        if i[0] != BKSPACE)
-REVERSE_KEYS_MAP[u'\x7f'] = BKSPACE
-REVERSE_KEYS_MAP[u'\x1b'] = ESCAPE
+        if i[0] != keyboard.BKSPACE)
+REVERSE_KEYS_MAP[u'\x7f'] = keyboard.BKSPACE
+REVERSE_KEYS_MAP[u'\x1b'] = keyboard.ESCAPE
 
 def make_modifier_mask(shortcut):
     mask = 0
@@ -149,20 +154,13 @@ class MenuItem(MenuItemBase):
         "CloseWindow":      (nil,     'performClose:'),
     }
 
-    def __init__(self, label, name, shortcuts=None, groups=None,
+    def __init__(self, label, name, shortcut=None, groups=None,
             **state_labels):
         MenuItemBase.__init__(self)
         self.name = name
         self._menu_item = self._make_menu_item(label)
         self.create_signal('activate')
-        # FIXME:  Our constructor arguments don't make a lot of sense.  See
-        # the GTK note.
-        if shortcuts is None:
-            shortcuts = ()
-        if not isinstance(shortcuts, tuple):
-            shortcuts = (shortcuts,)
-        self.shortcuts = shortcuts
-        self._setup_shortcuts()
+        self._setup_shortcut(shortcut)
 
     def _make_menu_item(self, label):
         menu_item = NSMenuItem.alloc().init()
@@ -178,22 +176,24 @@ class MenuItem(MenuItemBase):
             menu_item.setAction_('handleMenuActivate:')
         return menu_item
 
-    def _setup_shortcuts(self):
-        for shortcut in self.shortcuts:
-            if isinstance(shortcut.shortcut, str):
-                self._menu_item.setKeyEquivalent_(shortcut.shortcut)
-                self._menu_item.setKeyEquivalentModifierMask_(
-                        make_modifier_mask(shortcut))
-            elif shortcut.shortcut in KEYS_MAP:
-                self._menu_item.setKeyEquivalent_(KEYS_MAP[shortcut.shortcut])
-                self._menu_item.setKeyEquivalentModifierMask_(
-                        make_modifier_mask(shortcut))
-            # FIXME: we don't support setting shortcuts past the first
+    def _setup_shortcut(self, shortcut):
+        if shortcut is None:
+            key = ''
+            modifier_mask = 0
+        elif isinstance(shortcut.shortcut, str):
+            key = shortcut.shortcut
+            modifier_mask = make_modifier_mask(shortcut)
+        elif shortcut.shortcut in KEYS_MAP:
+            key = KEYS_MAP[shortcut.shortcut]
+            modifier_mask = make_modifier_mask(shortcut)
+        else:
+            logging.warn("Don't know how to handle shortcut: %s", shortcut)
             return
+        self._menu_item.setKeyEquivalent_(key)
+        self._menu_item.setKeyEquivalentModifierMask_(modifier_mask)
 
     def _change_shortcut(self, shortcut):
-        self.shortcuts = [shortcut]
-        self._setup_shortcuts()
+        self._setup_shortcut(shortcut)
 
     def set_label(self, new_label):
         self._menu_item.setTitle_(new_label)
@@ -210,9 +210,9 @@ class MenuItem(MenuItemBase):
 
 class RadioMenuItem(MenuItem):
     """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, radio_group, shortcuts=None,
+    def __init__(self, label, name, radio_group, shortcut=None,
             groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcuts, groups,
+        MenuItem.__init__(self, label, name, shortcut, groups,
                 **state_labels)
         self.others_in_group = set()
         # FIXME: we don't do anything with radio_group.  We need to
@@ -243,9 +243,9 @@ class RadioMenuItem(MenuItem):
 
 class CheckMenuItem(MenuItem):
     """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, check_group, shortcuts=None,
+    def __init__(self, label, name, check_group, shortcut=None,
             groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcuts, groups,
+        MenuItem.__init__(self, label, name, shortcut, groups,
                 **state_labels)
         # FIXME: we don't do anything with check_group.  We need to
         # re-implement this functionality
@@ -408,7 +408,7 @@ class MenuBar(MenuShell):
             MenuItem(_("Hide %(appname)s", {"appname": short_appname}),
                      "HideMiro", Shortcut("h", MOD)),
             MenuItem(_("Hide Others"), "HideOthers",
-                     Shortcut("h", MOD, ALT)),
+                     Shortcut("h", MOD, keyboard.ALT)),
             MenuItem(_("Show All"), "ShowAll"),
             Separator(),
             self._extract_menu_item("Quit")
@@ -461,7 +461,7 @@ class MenuBar(MenuShell):
             MenuItem(_("Minimize"), "Minimize", Shortcut("m", MOD)),
             Separator(),
             MenuItem(_("Main Window"), "ShowMain",
-                     Shortcut("M", MOD, SHIFT)),
+                     Shortcut("M", MOD, keyboard.SHIFT)),
             Separator(),
             MenuItem(_("Bring All to Front"), "BringAllToFront"),
         ]
@@ -574,13 +574,13 @@ def translate_event_modifiers(event):
     mods = set()
     flags = event.modifierFlags()
     if flags & NSCommandKeyMask:
-        mods.add(CMD)
+        mods.add(keyboard.CMD)
     if flags & NSControlKeyMask:
-        mods.add(CTRL)
+        mods.add(keyboard.CTRL)
     if flags & NSAlternateKeyMask:
-        mods.add(ALT)
+        mods.add(keyboard.ALT)
     if flags & NSShiftKeyMask:
-        mods.add(SHIFT)
+        mods.add(keyboard.SHIFT)
     return mods
 
 class SubtitleChangesHandler(NSObject):
