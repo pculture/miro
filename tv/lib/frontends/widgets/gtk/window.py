@@ -511,7 +511,6 @@ class MainWindow(Window):
         self.create_signal('save-maximized')
         self.create_signal('on-shown')
         #app.menu_manager.connect('radio-group-changed', self.on_radio_change)
-        #app.menu_manager.connect('checked-changed', self.on_checked_change)
         #app.playback_manager.connect('did-start-playing',
                                      #self.on_playback_change)
         #app.playback_manager.connect('will-play', self.on_playback_change)
@@ -558,16 +557,6 @@ class MainWindow(Window):
             if action.get_name() == value:
                 action.set_active(True)
                 return
-
-    def on_checked_change(self, menu_manager, check_group, values):
-        group = self.check_groups[check_group]
-        for action in group:
-            name = action.get_name()
-            if name in values:
-                checked = values[name]
-                action.handler_block_by_func(self.on_activate)
-                action.set_active(checked)
-                action.handler_unblock_by_func(self.on_activate)
 
     def on_playback_change(self, playback_manager, *extra_args):
         self._ignore_on_subtitles_change = True

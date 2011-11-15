@@ -207,10 +207,25 @@ class MenuItem(MenuItemBase):
         else:
             return None
 
-class RadioMenuItem(MenuItem):
+class CheckMenuItem(MenuItem):
+    """See the GTK version of this method for the current docstring."""
+    def set_state(self, active):
+        if active:
+            state = NSOnState
+        else:
+            state = NSOffState
+        self._menu_item.setState_(state)
+
+    def do_activate(self):
+        if self._menu_item.state() == NSOffState:
+            self._menu_item.setState_(NSOnState)
+        else:
+            self._menu_item.setState_(NSOffState)
+
+class RadioMenuItem(CheckMenuItem):
     """See the GTK version of this method for the current docstring."""
     def __init__(self, label, name, radio_group, shortcut=None):
-        MenuItem.__init__(self, label, name, shortcut)
+        CheckMenuItem.__init__(self, label, name, shortcut)
         self.others_in_group = set()
         # FIXME: we don't do anything with radio_group.  We need to
         # re-implement this functionality
@@ -237,19 +252,7 @@ class RadioMenuItem(MenuItem):
     def do_activate(self):
         for other in self.others_in_group:
             other._menu_item.setState_(NSOffState)
-
-class CheckMenuItem(MenuItem):
-    """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, check_group, shortcut=None):
-        MenuItem.__init__(self, label, name, shortcut)
-        # FIXME: we don't do anything with check_group.  We need to
-        # re-implement this functionality
-
-    def do_activate(self):
-        if self._menu_item.state() == NSOffState:
-            self._menu_item.setState_(NSOnState)
-        else:
-            self._menu_item.setState_(NSOffState)
+        CheckMenuItem.do_activate(self)
 
 class Separator(MenuItemBase):
     """See the GTK version of this method for the current docstring."""
@@ -341,6 +344,12 @@ class Menu(MenuShell):
         # Hack to set the services menu
         if name == "ServicesMenu":
             NSApp().setServicesMenu_(self._menu_item)
+
+    def show(self):
+        self._menu_item.setHidden_(False)
+
+    def hide(self):
+        self._menu_item.setHidden_(True)
 
 class AppMenu(MenuShell):
     """Wrapper for the application menu (AKA the Miro menu)
@@ -508,38 +517,6 @@ class MenuBar(MenuShell):
             return True
         return False
 
-def update_view_menu_state():
-    # Error checking for display != None done below in try/except block
-    display = app.display_manager.get_current_display()
-    main_menu = NSApp().mainMenu()
-    # XXX: should be using the tag to prevent interface and locale breakages
-    view_menu = main_menu.itemAtIndex_(6)
-    try:
-        key = (display.type, display.id)
-    except AttributeError:
-        view_menu.setHidden_(True)
-        return
-    view_menu.setHidden_(False)
-    enabled = app.widget_state.get_columns_enabled(
-            display.type,
-            display.id,
-            display.controller.selected_view)
-
-    for column in WidgetStateStore.get_toggleable_columns():
-        menu_item = VIEW_ITEM_MAP[column]
-        hidden = not column in WidgetStateStore.get_columns_available(
-            display.type,
-            display.id,
-            display.controller.selected_view)
-        menu_item.setHidden_(hidden)
-        if hidden:
-            continue
-        if column in enabled:
-            state = NSOnState
-        else:
-            state = NSOffState
-        menu_item.setState_(state)
-
 class ContextMenuHandler(NSObject):
     def initWithCallback_(self, callback):
         self = super(ContextMenuHandler, self).init()
@@ -624,14 +601,6 @@ class AudioTrackChangesHandler(NSObject):
 
 subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
 audio_track_menu_handler = AudioTrackChangesHandler.alloc().init()
-
-def on_menu_change(menu_manager):
-    main_menu = NSApp().mainMenu()
-
-    update_view_menu_state()
-    # Calling update() here does not result in
-    # AppController.validateUserInterfaceItem_() running. Why?? -Kaz
-    main_menu.update()
 
 def on_playback_change(playback_manager):
     main_menu = NSApp().mainMenu()
