@@ -125,6 +125,10 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.in_progress = set()
         self.queue = Queue.Queue()
         self.thread = None
+        self.watchdog = None
+        self.pipe = None
+        self.cmd_begin_gate = threading.Event()
+        self.cmd_end_gate = threading.Event()
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
@@ -132,6 +136,12 @@ class MovieDataUpdater(signals.SignalEmitter):
                                        args=[self.thread_loop])
         self.thread.setDaemon(True)
         self.thread.start()
+
+        self.watchdog = threading.Thread(target=thread_body,
+                             args=[self.watcher],
+                             name='moviedata watchdog timer')
+        self.watchdog.setDaemon(True)
+        self.watchdog.start()
 
     def process_with_movie_data_program(self, mdi):
         command_line, env = mdi.program_info
@@ -218,8 +228,20 @@ class MovieDataUpdater(signals.SignalEmitter):
         if hasattr(app, 'metadata_progress_updater'): # hack for unittests
             app.metadata_progress_updater.path_processed(mdi.video_path)
 
+    def watcher(self):
+        while True:
+            self.cmd_begin_gate.wait()
+            if self.in_shutdown:
+                break
+            self.cmd_begin_gate.clear()
+            # OK to wait indefinitely: run_movie_data_program() sits on
+            # on a timed wait so when the gate clears and finds the
+            # external program still active it will kill it, and this will
+            # resolve.  Then everything proceeds as normal.
+            self.pipe.wait()
+            self.cmd_end_gate.set()
+
     def run_movie_data_program(self, command_line, env):
-        start_time = time.time()
         # create tempfiles to catch output for the movie data program.  Using
         # a pipe fails if the movie data program outputs enough to fill up the
         # buffers (see #17059)
@@ -230,19 +252,33 @@ class MovieDataUpdater(signals.SignalEmitter):
                 startupinfo=util.no_console_startupinfo())
         # close stdin since we won't write to it.
         pipe.stdin.close()
-        while pipe.poll() is None and not self.in_shutdown:
-            time.sleep(SLEEP_DELAY)
-            if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
-                logging.warning("Movie data process hung, killing it")
-                self.kill_process(pipe)
-                raise ProcessHung
+        self.pipe = pipe
+        # Fire up the watchdog
+        self.cmd_begin_gate.set()
+        self.cmd_end_gate.wait(MOVIE_DATA_UTIL_TIMEOUT)
+        # Pipe should be gone by now.  Reset for safety
+        self.pipe = None
+        if pipe.poll() is None and not self.in_shutdown:
+            logging.warning("Movie data process hung, killing it")
+            self.kill_process(pipe)
+            # when the process is killed the end command gate will be
+            # set, so wait again here for it to clear.
+            self.cmd_end_gate.wait()
+            self.cmd_end_gate.clear()
+            raise ProcessHung
 
         if self.in_shutdown:
             if pipe.poll() is None:
                 logging.warning("Movie data process running after shutdown, "
                                 "killing it")
                 self.kill_process(pipe)
+            # no need to clear command gates here - shutting down anyway
             raise Shutdown
+
+        # We now know this is normal external movie data program termination.
+        # The self.pipe.wait() in the watchdog must have succeeded so
+        # clear the end command gate.
+        self.cmd_end_gate.clear()
         # FIXME: should we do anything with stderr?
         movie_data_stdout.seek(0)
         return movie_data_stdout.read()
@@ -349,6 +385,14 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.in_shutdown = True
         # wake up our thread
         self.queue.put(None)
+        # Wake up the command gates.  Begin gate wakes up the
+        # watchdog and tells it to quit.
+        #
+        # End gate wakes up run_movie_data_program() if it was
+        # blocked on a moviedata.  It will have detection code for
+        # the quit scenario.
+        self.cmd_begin_gate.set()
+        self.cmd_end_gate.set()
         if self.thread is not None:
             self.thread.join()
 
