@@ -173,12 +173,21 @@ class MenuItem(MenuItemBase):
     def set_label(self, new_label):
         self._widget.set_label(new_label)
 
-class RadioMenuItem(MenuItem):
+class CheckMenuItem(MenuItem):
+    """MenuItem that toggles on/off"""
+
+    def make_widget(self, label):
+        return gtk.CheckMenuItem(label)
+
+    def set_state(self, active):
+        self._widget.set_active(active)
+
+class RadioMenuItem(CheckMenuItem):
     """MenuItem that toggles on/off and is grouped with other RadioMenuItems.
     """
 
     def __init__(self, label, name, radio_group, shortcut=None):
-        MenuItem.__init__(self, label, name, shortcut)
+        CheckMenuItem.__init__(self, label, name, shortcut)
         # FIXME: we don't do anything with radio_group.  We need to
         # re-implement this functionality
 
@@ -205,17 +214,6 @@ class RadioMenuItem(MenuItem):
     def remove_from_group(self):
         """Remove this RadioMenuItem from its current group."""
         self.set_group(None)
-
-class CheckMenuItem(MenuItem):
-    """MenuItem that toggles on/off"""
-
-    def __init__(self, label, name, check_group, shortcut=None):
-        MenuItem.__init__(self, label, name, shortcut)
-        # FIXME: we don't do anything with check_group.  We need to
-        # re-implement this functionality
-
-    def make_widget(self, label):
-        return gtk.CheckMenuItem(label)
 
 class Separator(MenuItemBase):
     """Separator item for menus"""
@@ -327,6 +325,14 @@ class Menu(MenuShell):
         self._widget.set_submenu(self._menu)
         for item in child_items:
             self.append(item)
+
+    def show(self):
+        """Show this menu."""
+        self._widget.show()
+
+    def hide(self):
+        """Hide this menu."""
+        self._widget.hide()
 
     def _set_accel_group(self, accel_group):
         """Set the accel group for this widget.

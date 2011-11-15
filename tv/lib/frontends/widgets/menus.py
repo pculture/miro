@@ -240,7 +240,7 @@ def get_app_menu():
                             ]),
                     ])
 
-    sorts_menu = Menu(_("Sorts"), "ViewMenu", _get_view_menu())
+    sorts_menu = Menu(_("Sorts"), "SortsMenu", [])
     convert_menu = Menu(_("_Convert"), "ConvertMenu", _get_convert_menu())
     help_menu = Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("About %(name)s",
@@ -864,9 +864,9 @@ class MenuManager(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('radio-group-changed')
-        self.create_signal('checked-changed')
         self.menu_item_fetcher = MenuItemFetcher()
         self.legacy_menu_updater = LegacyMenuUpdater()
+        self.sorts_menu_updater = SortsMenuUpdater()
         self.subtitle_encoding_enabled = False
 
     def _set_play_pause(self):
@@ -887,35 +887,92 @@ class MenuManager(signals.SignalEmitter):
 
     def update_menus(self):
         self._set_play_pause()
+        self.sorts_menu_updater.update()
         self.legacy_menu_updater.update_menus()
 
-    def _update_view_menu(self):
+class MenuUpdater(object):
+    """Base class for objects that dynamically update menus."""
+    def __init__(self, menu_name):
+        self.menu = app.widgetapp.menubar.find(menu_name)
+
+    def update(self):
+        self.start_update()
+        if not self.should_show_menu():
+            self.menu.hide()
+            return
+
+        self.menu.show()
+        if self.should_rebuild_menu():
+            for child in self.menu.get_children():
+                self.menu.remove(child)
+            self.populate_menu()
+        self.update_items()
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        pass
+
+    def should_show_menu(self):
+        """Should we display the menu?  """
+        return True
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return False
+
+    def populate_menu(self):
+        """Add MenuItems to our menu."""
+        pass
+
+    def update_items(self):
+        """Update our menu items."""
+        pass
+
+class SortsMenuUpdater(MenuUpdater):
+    """Update the sorts menu for MenuManager."""
+    def __init__(self):
+        MenuUpdater.__init__(self, 'SortsMenu')
+        self.current_sorts = []
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        self.togglable_columns = self.columns_enabled = None
         display = app.display_manager.get_current_display()
-        # fetch the enabled/available columns for this display
         if display is None:
             # no display?
             return
         column_info = display.get_column_info()
         if column_info is None:
-            # display doesn't support togglable columns
+            # no togglable columns for this display
             return
-        columns_enabled = set(column_info[0])
-        columns_available = column_info[1]
-        # make available columns user selectable
-        for column in columns_available:
-            self.enabled_groups.add('column-%s' % column)
-        # check the currently enabled columns
-        checks = dict(('ToggleColumn-' + column, column in columns_enabled)
-            for column in WidgetStateStore.get_toggleable_columns())
-        self.emit('checked-changed', 'ListView', checks)
+        self.columns_enabled = column_info[0]
+        untogglable = WidgetStateStore.MANDATORY_SORTERS
+        self.togglable_columns = list(c for c in column_info[1]
+                                      if c not in untogglable)
+        self.togglable_columns.sort(key=COLUMN_LABELS.get)
 
-def _get_view_menu():
-    return []
-    menu = list()
-    toggleable = WidgetStateStore.get_toggleable_columns()
-    for name in sorted(toggleable, key=COLUMN_LABELS.get):
-        groups = ['column-%s' % name]
-        label = COLUMN_LABELS[name]
-        handler_name = make_column_toggle_handler(name)
-        menu.append(CheckMenuItem(label, handler_name, 'ListView', groups=groups))
-    return menu
+    def should_show_menu(self):
+        """Should we display the menu?  """
+        return self.togglable_columns is not None
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return self.togglable_columns != self.current_sorts
+
+    def populate_menu(self):
+        """Make a list of menu items for this menu."""
+        for name in self.togglable_columns:
+            label = COLUMN_LABELS[name]
+            handler_name = make_column_toggle_handler(name)
+            self.menu.append(CheckMenuItem(label, handler_name))
+        self.current_sorts = self.togglable_columns
+
+    def update_items(self):
+        """Update our menu items."""
+        menu_names_to_enable = set(make_column_toggle_handler(name)
+                                   for name in self.columns_enabled)
+        for menu_item in self.menu.get_children():
+            if menu_item.name in menu_names_to_enable:
+                menu_item.set_state(True)
+            else:
+                menu_item.set_state(False)
