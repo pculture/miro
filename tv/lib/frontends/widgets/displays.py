@@ -55,6 +55,7 @@ from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
+from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets import widgetset
 
@@ -169,6 +170,8 @@ class DisplayManager(object):
                 # catch-all.
                 DummyDisplay,
         ]
+        # Delayed call pointer for change_non_video_displays()
+        self.change_non_video_displays_dc = None
         # displays that we keep alive all the time
         self.permanent_displays = set()
         self.add_permanent_display(VideoItemsDisplay())
@@ -223,6 +226,21 @@ class DisplayManager(object):
         self.push_display(display)
 
     def change_non_video_displays(self, display):
+        # If the dc exists, cancel it.  If the cancel failed because lost
+        # the race to cancel it, then the display will load and some
+        # some redundant code will be scheduled onto the main thread, but
+        # that's okay, since at the next invocation of the delayed call
+        # we shall get the correct display.  We use a miro.timer here
+        # rather than tacking onto the UI loop using call_on_ui_thread()
+        # since we can't cancel it.
+        if self.change_non_video_displays_dc:
+            timer.cancel(self.change_non_video_displays_dc)
+            self.change_non_video_displays_dc = None
+        self.change_non_video_displays_dc = timer.add(0.1,
+          lambda: call_on_ui_thread(
+          lambda: self.do_change_non_video_displays(display)))
+
+    def do_change_non_video_displays(self, display):
         """Like select_display(), but don't replace the VideoDisplay
 
         Mostly this will work like select_display().  However, if there is a
@@ -231,7 +249,13 @@ class DisplayManager(object):
         The main reason for this method is when we are playing video and the
         current tab gets removed (#16225).  In this case, we want to select a
         new tab and make a display for that tab, but not show that display
-        until video stops
+        until video stops.
+
+        Normally this is called as part of a deferred call by
+        change_non_video_displays().  We do this because loading a display
+        is a relatively expensive process and we want to be able to cancel
+        the operation if the display is going to be extremely transient,
+        e.g. during a continued keypress event as part of navigation.
         """
 
         if (len(self.display_stack) == 0 or
