@@ -144,32 +144,6 @@ class WindowBase(signals.SignalEmitter):
         self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
 
-    def on_subtitles_select(self, action, track_index):
-        action_group = self.action_groups["AlwaysOn"]
-        action_group.get_action("SubtitlesDisabled").current_value = -2
-        app.playback_manager.open_subtitle_file()
-
-    def on_subtitles_change(self, action, track_index):
-        if hasattr(self, "_ignore_on_subtitles_change"):
-            return
-        if action.get_property("current-value") != action.get_property(
-            "value"):
-            return
-        action_group = self.action_groups["AlwaysOn"]
-        action_group.get_action(
-            "SubtitlesDisabled").current_value = track_index
-        if track_index == -1:
-            app.video_renderer.disable_subtitles()
-        else:
-            app.video_renderer.enable_subtitle_track(track_index)
-
-    def select_subtitle_radio(self, track_index):
-        self._ignore_on_subtitles_change = True
-        action_group = self.action_groups["AlwaysOn"]
-        action = action_group.get_action("SubtitlesDisabled")
-        action.set_property('current-value', track_index)
-        delattr(self, "_ignore_on_subtitles_change")
-
 class Window(WindowBase):
     """The main Miro window.  """
 
@@ -325,16 +299,10 @@ class MainWindow(Window):
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         self.create_signal('on-shown')
-        #app.playback_manager.connect('did-start-playing',
-                                     #self.on_playback_change)
-        #app.playback_manager.connect('will-play', self.on_playback_change)
-        #app.playback_manager.connect('did-stop', self.on_playback_change)
-
         self._window.connect('key-release-event', self.on_key_release)
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
         self._window.connect('map-event', lambda w, a: self.emit('on-shown'))
-        #self._clear_subtitles_menu()
 
     def _make_gtk_window(self):
         return WrappedWindow()
@@ -358,82 +326,6 @@ class MainWindow(Window):
             if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left',
                                                      'Up', 'Down'):
                 return True
-
-    def _add_menubar(self):
-        self.menubar = self.ui_manager.get_widget("/MiroMenu")
-        self.vbox.pack_start(self.menubar, expand=False)
-        self.menubar.show_all()
-
-    def on_playback_change(self, playback_manager, *extra_args):
-        self._ignore_on_subtitles_change = True
-        if app.playback_manager.is_playing_audio:
-            self._clear_subtitles_menu()
-            renderer = app.audio_renderer
-        else:
-            tracks = app.video_renderer.get_subtitle_tracks()
-#             if tracks is None or len(tracks) == 0:
-            if len(tracks) == 0:
-                self._clear_subtitles_menu()
-            else:
-                self._populate_subtitles_menu(tracks)
-            renderer = app.video_renderer
-        delattr(self, "_ignore_on_subtitles_change")
-
-    def _populate_subtitles_menu(self, tracks):
-        enabled_track = app.video_renderer.get_enabled_subtitle_track()
-
-        if self._subtitle_tracks_cached == (tuple(tracks), enabled_track):
-            return
-
-        self._subtitle_tracks_cached = (tuple(tracks), enabled_track)
-
-        if self._merge_id is not None:
-            self.ui_manager.remove_ui(self._merge_id)
-
-        outstream = StringIO.StringIO()
-        outstream.write('''<ui>
-<menubar name="MiroMenu">
-   <menu action="PlaybackMenu">
-      <menu action="SubtitlesMenu">
-''')
-        for i, lang in tracks:
-            outstream.write(
-                '         <menuitem action="SubtitleTrack%d"/>\n' % i)
-        outstream.write('''         <separator/>
-         <menuitem action="SubtitlesDisabled"/>
-         <menuitem action="SubtitlesSelect"/>
-      </menu>
-   </menu>
-</menubar>
-</ui>''')
-
-        self._merge_id = self.ui_manager.add_ui_from_string(
-            outstream.getvalue())
-
-        action_group = self.action_groups["AlwaysOn"]
-        for i, lang in tracks:
-            action_group.get_action("SubtitleTrack%d" % i).set_property(
-                "label", lang)
-
-        action_group.get_action("SubtitlesDisabled").set_property(
-            "current-value", enabled_track)
-
-    def _clear_subtitles_menu(self):
-        if self._merge_id is not None:
-            self.ui_manager.remove_ui(self._merge_id)
-            self._subtitle_tracks_cached = None
-
-        s = '''<ui>
-<menubar name="MiroMenu">
-<menu action="PlaybackMenu">
-<menu action="SubtitlesMenu">
-<menuitem action="NoneAvailable"/>
-<menuitem action="SubtitlesSelect"/>
-</menu>
-</menu>
-</menubar>
-</ui>'''
-        self._merge_id = self.ui_manager.add_ui_from_string(s)
 
     def _add_app_menubar(self):
         menubar = app.widgetapp.menubar

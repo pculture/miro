@@ -232,12 +232,6 @@ def get_app_menu():
                                      groups=["NeverEnabled"]),
                             ]),
                     Menu(_("Subtitles"), "SubtitlesMenu", [
-                            MenuItem(_("None Available"), "NoneAvailable",
-                                     groups=["NeverEnabled"]),
-                            Separator(),
-                            MenuItem(_("Select a Subtitles File..."),
-                                     "SubtitlesSelect",
-                                     groups=["PlayingLocalVideo"]),
                             Menu(_("_Encoding"), "SubtitleEncodingMenu", []),
                             ]),
                     ])
@@ -827,6 +821,7 @@ class MenuManager(signals.SignalEmitter):
             LegacyMenuUpdater(),
             SortsMenuUpdater(),
             AudioTrackMenuUpdater(),
+            SubtitlesMenuUpdater(),
             self.subtitle_encoding_updater,
         ]
 
@@ -891,10 +886,14 @@ class MenuUpdater(object):
 
         self.menu.show()
         if self.should_rebuild_menu():
-            for child in self.menu.get_children():
-                self.menu.remove(child)
+            self.clear_menu()
             self.populate_menu()
         self.update_items()
+
+    def clear_menu(self):
+        """Remove items from our menu before rebuilding it."""
+        for child in self.menu.get_children():
+            self.menu.remove(child)
 
     def start_update(self):
         """Called at the very start of the update method.  """
@@ -1024,6 +1023,109 @@ class AudioTrackMenuUpdater(MenuUpdater):
                 menu_item.set_state(True)
                 return
 
+class SubtitlesMenuUpdater(MenuUpdater):
+    """Update the subtitles menu for MenuManager."""
+
+    def __init__(self):
+        MenuUpdater.__init__(self, 'SubtitlesMenu')
+        self.none_available = MenuItem(_("None Available"), "NoneAvailable")
+        self.none_available.disable()
+        self.currently_displayed_tracks = None
+
+    def on_change_track(self, menu_item, track_id):
+        if menu_item.get_state() and app.playback_manager.is_playing:
+            app.playback_manager.set_subtitle_track(track_id)
+
+    def on_disable(self, menu_item):
+        if app.playback_manager.is_playing:
+            app.playback_manager.set_subtitle_track(None)
+
+    def on_select_file_activate(self, menu_item):
+        if app.playback_manager.is_playing:
+            app.playback_manager.open_subtitle_file()
+
+    def action_name(self, track_id):
+        return 'ChangeSubtitles-%s' % track_id
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        self.enabled_track = app.playback_manager.get_enabled_subtitle_track()
+        self.all_tracks = list(app.playback_manager.get_subtitle_tracks())
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return self.currently_displayed_tracks != self.all_tracks
+
+    def get_items(self):
+        """Get the items that we actually should work with.
+
+        This is a all of the child items in our menu, except the subtitle
+        encoding menu.
+        """
+        return self.menu.get_children()[:-1]
+
+    def clear_menu(self):
+        # only clear the subtitle items, not the subtitle encoding submenu.
+        for item in self.get_items():
+            self.menu.remove(item)
+
+    def populate_menu(self):
+        """Add MenuItems to our menu."""
+        to_add = self.make_items_for_tracks()
+        to_add.append(Separator())
+        select_file = MenuItem(_("Select a Subtitles file..."),
+                               "SelectSubtitlesFile")
+        select_file.connect("activate", self.on_select_file_activate)
+        to_add.append(select_file)
+
+        # insert menu items before the select subtitles encoding item
+        for i, menu_item in enumerate(to_add):
+            self.menu.insert(i, menu_item)
+        self.currently_displayed_tracks = self.all_tracks
+
+    def make_items_for_tracks(self):
+        """Get MenuItems for subtitle tracks embedded in the video."""
+
+        if not self.all_tracks:
+            return [self.none_available]
+
+        items = []
+        first_item = None
+        for track_id, label in self.all_tracks:
+            menu_item = RadioMenuItem(label, self.action_name(track_id))
+            menu_item.connect("activate", self.on_change_track, track_id)
+            items.append(menu_item)
+            if first_item is None:
+                first_item = menu_item
+            else:
+                menu_item.set_group(first_item)
+
+        items.append(Separator())
+        disable = RadioMenuItem(_("Disable Subtitles"), "DisableSubtitles")
+        disable.connect("activate", self.on_disable)
+        disable.set_group(first_item)
+        items.append(disable)
+        return items
+
+    def update_items(self):
+        """Update our menu items."""
+        menu_items = self.get_items()
+        if app.playback_manager.is_playing_video:
+            for item in menu_items:
+                if item is not self.none_available:
+                    item.enable()
+            if self.enabled_track is not None:
+                enabled_action_name = self.action_name(self.enabled_track)
+            else:
+                enabled_action_name = "DisableSubtitles"
+            for item in menu_items:
+                if item.name == enabled_action_name:
+                    item.set_state(True)
+                    break
+        else:
+            for item in menu_items:
+                item.disable()
+
 class SubtitleEncodingMenuUpdater(object):
     """Handles updating the subtitles encoding menu.
 
@@ -1051,10 +1153,8 @@ class SubtitleEncodingMenuUpdater(object):
         return self.default_item is not None
 
     def update(self):
-        should_enable = (app.playback_manager.is_playing and not
-                         app.playback_manager.is_playing_audio)
         encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
-        if should_enable:
+        if app.playback_manager.is_playing_video:
             encoding_menu.enable()
         else:
             encoding_menu.disable()

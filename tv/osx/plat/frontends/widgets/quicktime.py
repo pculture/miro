@@ -272,11 +272,11 @@ class Player(player.Player):
             if len(enabled_tracks) == 0:
                 tracks = self.get_subtitle_tracks()
                 if len(tracks) > 0:
-                    self.enable_subtitle_track(tracks[0])
+                    self.set_subtitle_track(tracks[0][1])
             elif len(enabled_tracks) > 1:
                 track_id = enabled_tracks[-1].attributeForKey_(QTTrackIDAttribute)
                 self.disable_subtitles()
-                self.enable_subtitle_track(track_id)
+                self.set_subtitle_track(track_id)
         else:
             self.disable_subtitles()
 
@@ -299,10 +299,18 @@ class Player(player.Player):
                             name = lang_info["name"]
                     if name != display_name:
                         name = "%s (%s)" % (name, display_name)
-                    is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
                     track_id = track.attributeForKey_(QTTrackIDAttribute)
-                    tracks.append((track_id, name, is_enabled))
+                    tracks.append((track_id, name))
         return tracks
+
+    def get_enabled_subtitle_track(self):
+        if self.movie is None:
+            return None
+        for track in self.movie.tracks():
+            if (self.is_subtitle_track(track) and
+                track.attributeForKey_(QTTrackEnabledAttribute) == 1):
+                return track.attributeForKey_(QTTrackIDAttribute)
+        return None
 
     def _find_track(self, key, value):
         if self.movie is not None:
@@ -321,8 +329,10 @@ class Player(player.Player):
                         tracks.append(track)
         return tracks
 
-    def get_enabled_subtitle_track(self):
-        return self._find_track(QTTrackEnabledAttribute, 1)
+    def unset_subtitle_track(self):
+        track = self._find_track(QTTrackEnabledAttribute, 1)
+        if track is not None:
+            track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
     def get_all_enabled_subtitle_tracks(self):
         return self._find_all_tracks(QTTrackEnabledAttribute, 1)
@@ -338,13 +348,14 @@ class Player(player.Player):
         media_type = track.attributeForKey_(QTTrackMediaTypeAttribute)
         return (layer == -1 and media_type == QTMediaTypeVideo) or media_type in [QTMediaTypeSubtitle, QTMediaTypeClosedCaption]
 
-    def enable_subtitle_track(self, track_id):
-        current = self.get_enabled_subtitle_track()
-        if current is not None:
-            current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+    def set_subtitle_track(self, track_id):
+        self.unset_subtitle_track()
+        if track_id is None:
+            return
         to_enable = self.get_subtitle_track_by_id(track_id)
         if to_enable is not None:
             to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
+        app.menu_manager.update_menus()
 
     def disable_subtitles(self):
         tracks = self.get_all_enabled_subtitle_tracks()

@@ -399,8 +399,7 @@ class VideoDetailsWidget(Background):
         menu.append(sep)
 
         child = gtk.MenuItem(_("Select a Subtitles file..."))
-        sensitive = 'PlayingLocalVideo' in app.menu_manager.enabled_groups
-        child.set_sensitive(sensitive)
+        child.set_sensitive(app.playback_manager.is_playing_video)
         child.connect('activate', self.handle_select_subtitle_file)
         child.show()
         menu.append(child)
@@ -410,13 +409,13 @@ class VideoDetailsWidget(Background):
     def handle_disable_subtitles(self, widget):
         if widget.active:
             app.video_renderer.disable_subtitles()
-            app.widgetapp.window.on_playback_change(app.playback_manager)
+            app.menu_manager.update_menus()
             self.rebuild_video_details()
 
     def handle_subtitle_change(self, widget, index):
         if widget.active:
-            app.video_renderer.enable_subtitle_track(index)
-            app.widgetapp.window.on_playback_change(app.playback_manager)
+            app.video_renderer.set_subtitle_track(index)
+            app.menu_manager.update_menus()
             self.rebuild_video_details()
 
     def handle_select_subtitle_file(self, widget):

@@ -469,7 +469,7 @@ class VideoRenderer(Renderer):
             return self.enabled_track
         return self.playbin.get_property("current-text")
 
-    def enable_subtitle_track(self, track_index):
+    def set_subtitle_track(self, track_index):
         if not self.supports_subtitles:
             return
         tracks = self.get_subtitles()
@@ -480,7 +480,7 @@ class VideoRenderer(Renderer):
 
         if filename is not None:
             # file-based subtitle tracks have to get selected as files
-            # first, then enable_subtitle_track gets called again with
+            # first, then set_subtitle_track gets called again with
             # the new track_index
             pos = self.get_current_time()
 

@@ -136,8 +136,6 @@ class OSXApplication(Application, signals.SignalEmitter):
         migrateappname.migrateVideos('Democracy', 'Miro')
         self.menubar = osxmenus.MenuBar()
         Application.startup_ui(self)
-        #app.playback_manager.connect('did-start-playing', osxmenus.on_playback_change)
-        #app.playback_manager.connect('did-stop', osxmenus.on_playback_change)
         # add the Amazon cookie to Safari
         storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         if 'dmusic_download_manager_enabled' not in [

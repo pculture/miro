@@ -92,6 +92,10 @@ class PlaybackManager (signals.SignalEmitter):
     def player_playing(self):
         return self.player is not None and self.open_successful
 
+    def get_is_playing_video(self):
+        return self.is_playing and not self.is_playing_audio
+    is_playing_video = property(get_is_playing_video)
+
     def set_volume(self, volume):
         self.volume = volume
         if self.player is not None:
@@ -339,6 +343,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.emit('did-stop')
+        app.menu_manager.update_menus()
 
     def get_audio_tracks(self):
         """Get a list of available audio tracks
@@ -369,6 +374,37 @@ class PlaybackManager (signals.SignalEmitter):
             self.player.set_audio_track(track_id)
         else:
             raise ValueError("Not playing")
+
+    def get_subtitle_tracks(self):
+        """Get a list of available subtitle tracks
+
+        :returns: list of (label, track_id) tuples
+        """
+        if self.player is not None and not self.is_playing_audio:
+            return self.player.get_subtitle_tracks()
+        else:
+            return []
+
+    def get_enabled_subtitle_track(self):
+        """Get the currently enabled subtitle track
+
+        :returns: current track_id or None if we are not playing video
+        """
+        if self.player is not None and not self.is_playing_audio:
+            return self.player.get_enabled_subtitle_track()
+        else:
+            return None
+
+    def set_subtitle_track(self, track_id):
+        """Change the currently enabled subtitle track
+
+        :param track_id: track_id from get_subtitle_tracks()
+        """
+        if self.player is None:
+            raise ValueError("Not playing")
+        if self.is_playing_audio:
+            raise ValueError("Playing Audio")
+        self.player.set_subtitle_track(track_id)
 
     def toggle_shuffle(self):
         self.set_shuffle(not self.shuffle)
