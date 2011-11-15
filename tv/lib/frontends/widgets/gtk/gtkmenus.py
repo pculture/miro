@@ -197,26 +197,12 @@ class RadioMenuItem(CheckMenuItem):
         widget.set_label(label)
         return widget
 
-    @staticmethod
-    def set_group(*items):
-        """Set a list of RadioMenuItems to belong to the a group
-
-        When any of the RadioMenuItems is turned on, the others will be
-        turned off.
-        """
-        if len(items) < 2:
-            raise ValueError("Need at least 2 items to make a radio group")
-        for menu_item in items:
-            group = menu_item._widget.get_group()
-            if not (group is None or len(group) == 1):
-                raise ValueError("%s is already in a group")
-        first = items[0]
-        for other in items[1:]:
-            other._widget.set_group(first._widget)
+    def set_group(self, group_item):
+        self._widget.set_group(group_item._widget)
 
     def remove_from_group(self):
         """Remove this RadioMenuItem from its current group."""
-        self.set_group(None)
+        self._widget.set_group(None)
 
 class Separator(MenuItemBase):
     """Separator item for menus"""
@@ -396,3 +382,4 @@ class MainWindowMenuBar(MenuBar):
         this_platform = app.config.get(prefs.APP_PLATFORM)
         if this_platform == 'linux':
             self.find("CheckVersion").remove_from_parent()
+        app.video_renderer.setup_subtitle_encoding_menu()

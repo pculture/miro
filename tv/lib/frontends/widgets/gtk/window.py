@@ -144,166 +144,6 @@ class WindowBase(signals.SignalEmitter):
         self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
 
-    def _add_menu(self, menu, outstream, parent=None):
-        outstream.write('<menu action="%s">' % menu.action)
-        for mem in menu.menuitems:
-            if isinstance(mem, menus.Menu):
-                self._add_menu(mem, outstream, menu)
-            elif isinstance(mem, menus.Separator):
-                self._add_separator(mem, outstream)
-            elif isinstance(mem, menus.MenuItem):
-                self._add_menuitem(mem, outstream)
-        outstream.write('</menu>')
-
-    def _add_menuitem(self, menu, outstream):
-        if menu.action not in ("NoAudioTracks", "NoneAvailable",
-                               "SubtitlesSelect"):
-            outstream.write('<menuitem action="%s" />' % menu.action)
-
-    def _add_separator(self, menu, outstream):
-        outstream.write("<separator />")
-
-    def _setup_ui_manager(self):
-        self.menu_structure = menus.get_menu()
-
-        # make modifications to the menu structure here
-
-        # on linux, we don't have a CheckVersion option because
-        # we update with the package system.
-        this_platform = app.config.get(prefs.APP_PLATFORM)
-        if this_platform == 'linux':
-            file_menu = self.menu_structure.get("FileMenu")
-            file_menu.remove("CheckVersion")
-
-        # If the renderer supports it, create a the subtitle encodings menu
-        try:
-            app.video_renderer.setup_subtitle_encoding_menu(
-                self.menu_structure)
-        except AttributeError:
-            pass
-
-        # generate action groups after making all modifications
-        mag = menus.generate_action_groups(self.menu_structure)
-        self.menu_action_groups = mag
-
-        self.ui_manager = gtk.UIManager()
-        self.make_actions()
-
-        outstream = StringIO.StringIO()
-        outstream.write('<ui><menubar name="MiroMenu">')
-        for mem in self.menu_structure.menuitems:
-            self._add_menu(mem, outstream)
-        outstream.write('</menubar>')
-
-        for mem in self.menu_structure:
-            if ((not isinstance(mem, menus.MenuItem) or
-                 len(mem.shortcuts) <= 1)):
-                continue
-            for shortcut in mem.shortcuts[1:]:
-                outstream.write('<accelerator action="%s%i" />' % \
-                                (mem.action, id(shortcut)))
-        outstream.write('</ui>')
-        self.ui_manager.add_ui_from_string(outstream.getvalue())
-
-    def make_action(self, action, label, groups, shortcuts=None):
-        gtk_action = gtk.Action(action, label, None, get_stock_id(action))
-        self.setup_action(gtk_action, groups, shortcuts)
-
-    def make_radio_action(self, action, radio_group, label, groups,
-            shortcuts):
-        gtk_action = gtk.RadioAction(action, label, None,
-                get_stock_id(action), 0)
-        self.setup_action(gtk_action, groups, shortcuts)
-        try:
-            root_action = self.radio_group_actions[radio_group]
-        except KeyError:
-            # gtk_action is the first action for the group.
-            self.radio_group_actions[radio_group] = gtk_action
-        else:
-            # There was already a gtk_action for this group
-            gtk_action.set_group(root_action)
-
-    def setup_action(self, gtk_action, groups, shortcuts):
-        action_name = gtk_action.get_name()
-        self.actions[action_name] = gtk_action
-        callback = menus.lookup_handler(action_name)
-        if callback is not None:
-            gtk_action.connect("activate", self.on_activate, callback)
-        action_group_name = groups[0]
-        action_group = self.action_groups[action_group_name]
-        if shortcuts is None or len(shortcuts) == 0:
-            action_group.add_action(gtk_action)
-        else:
-            action_group.add_action_with_accel(gtk_action,
-                                               get_accel_string(shortcuts[0]))
-            for shortcut in shortcuts[1:]:
-                shortcut_name = gtk_action.get_name() + str(id(shortcut))
-                extra_action = gtk.Action(shortcut_name, None, None, None)
-                extra_action.set_visible(False)
-                if callback is not None:
-                    extra_action.connect('activate', self.on_activate,
-                                         callback)
-                action_group.add_action_with_accel(extra_action,
-                                                   get_accel_string(shortcut))
-
-    def _raw_check_action(self, action, label, groups, callback, index,
-                          group=None):
-        gtk_action = gtk.RadioAction(action, label, None, None, index)
-        if group is not None:
-            gtk_action.set_group(group)
-        gtk_action.connect("activate", callback, index)
-        self.action_groups[groups[0]].add_action(gtk_action)
-
-    def make_check_action(self, action, check_group, label, groups, shortcuts):
-        gtk_action = gtk.ToggleAction(action, label, None, None)
-        self.actions[action] = gtk_action
-        callback = menus.lookup_handler(gtk_action.get_name())
-        if callback is not None:
-            gtk_action.connect("toggled", self.on_activate, callback)
-        if check_group not in self.check_groups:
-            self.check_groups[check_group] = list()
-        self.check_groups[check_group].append(gtk_action)
-        self.action_groups[groups[0]].add_action(gtk_action)
-
-    def make_actions(self):
-        self.action_groups = {}
-        self.actions = {}
-        self.radio_group_actions = {}
-        self.check_groups = {}
-
-        for name in self.menu_action_groups.keys():
-            self.action_groups[name] = gtk.ActionGroup(name)
-
-        self.action_groups["Subtitles"] = gtk.ActionGroup("Subtitles")
-
-        for mem in self.menu_structure:
-            if isinstance(mem, menus.Separator):
-                continue
-            if isinstance(mem, menus.Menu):
-                self.make_action(mem.action, mem.label, mem.groups)
-            elif isinstance(mem, menus.RadioMenuItem):
-                self.make_radio_action(mem.action, mem.radio_group, mem.label,
-                        mem.groups, mem.shortcuts)
-            elif isinstance(mem, menus.CheckMenuItem):
-                self.make_check_action(mem.action, mem.check_group, mem.label,
-                        mem.groups, mem.shortcuts)
-            elif isinstance(mem, menus.MenuItem):
-                self.make_action(mem.action, mem.label, mem.groups,
-                        mem.shortcuts)
-
-
-        # make a bunch of SubtitleTrack# actions
-        self._raw_check_action("SubtitlesDisabled", _("Disable Subtitles"),
-                               ["AlwaysOn"], self.on_subtitles_change, -1)
-        radio_group = self.action_groups["AlwaysOn"].get_action(
-            "SubtitlesDisabled")
-        for i in range(199):
-            self._raw_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
-                                   self.on_subtitles_change, i, radio_group)
-
-        for action_group in self.action_groups.values():
-            self.ui_manager.insert_action_group(action_group, -1)
-
     def on_subtitles_select(self, action, track_index):
         action_group = self.action_groups["AlwaysOn"]
         action_group.get_action("SubtitlesDisabled").current_value = -2
@@ -329,9 +169,6 @@ class WindowBase(signals.SignalEmitter):
         action = action_group.get_action("SubtitlesDisabled")
         action.set_property('current-value', track_index)
         delattr(self, "_ignore_on_subtitles_change")
-
-    def on_activate(self, action, callback):
-        callback()
 
 class Window(WindowBase):
     """The main Miro window.  """
@@ -488,7 +325,6 @@ class MainWindow(Window):
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         self.create_signal('on-shown')
-        #app.menu_manager.connect('radio-group-changed', self.on_radio_change)
         #app.playback_manager.connect('did-start-playing',
                                      #self.on_playback_change)
         #app.playback_manager.connect('will-play', self.on_playback_change)
@@ -527,13 +363,6 @@ class MainWindow(Window):
         self.menubar = self.ui_manager.get_widget("/MiroMenu")
         self.vbox.pack_start(self.menubar, expand=False)
         self.menubar.show_all()
-
-    def on_radio_change(self, menu_manager, radio_group, value):
-        root_action = self.radio_group_actions[radio_group]
-        for action in root_action.get_group():
-            if action.get_name() == value:
-                action.set_active(True)
-                return
 
     def on_playback_change(self, playback_manager, *extra_args):
         self._ignore_on_subtitles_change = True
