@@ -510,7 +510,6 @@ class MainWindow(Window):
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         self.create_signal('on-shown')
-        #app.menu_manager.connect('enabled-changed', self.on_menu_change)
         #app.menu_manager.connect('radio-group-changed', self.on_radio_change)
         #app.menu_manager.connect('checked-changed', self.on_checked_change)
         #app.playback_manager.connect('did-start-playing',
@@ -552,37 +551,6 @@ class MainWindow(Window):
         self.menubar = self.ui_manager.get_widget("/MiroMenu")
         self.vbox.pack_start(self.menubar, expand=False)
         self.menubar.show_all()
-
-    def on_menu_change(self, menu_manager):
-        for name, action_group in self.action_groups.items():
-            if name in menu_manager.enabled_groups:
-                action_group.set_visible(True)
-                action_group.set_sensitive(True)
-            else:
-                # TODO: don't hard-code this here; probably put a "hide when
-                # not checked" property on check menu class --Kaz
-                if name.startswith('column-'):
-                    action_group.set_visible(False)
-                else:
-                    action_group.set_sensitive(False)
-
-        def get_state_label(action, state):
-            menu = self.menu_structure.get(action)
-            return menu.state_labels.get(state, menu.label)
-
-        action_labels = {}
-        for state, actions in menu_manager.states.iteritems():
-            for action in actions:
-                action_labels[action] = get_state_label(action, state)
-
-        for name, action in self.actions.iteritems():
-            default = self.menu_structure.get(name).label
-            new_label = action_labels.get(name, default)
-            action.set_property('label', new_label)
-
-        play_pause = self.menu_structure.get('PlayPauseItem').state_labels[
-            menu_manager.play_pause_state]
-        self.actions['PlayPauseItem'].set_property('label', play_pause)
 
     def on_radio_change(self, menu_manager, radio_group, value):
         root_action = self.radio_group_actions[radio_group]

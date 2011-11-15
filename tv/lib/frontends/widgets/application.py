@@ -172,9 +172,9 @@ class Application:
     def setup_globals(self):
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
-        menus.setup_menubar(self.menubar)
-        app.menu_manager = menus.MenuStateManager()
         app.playback_manager = playback.PlaybackManager()
+        menus.setup_menubar(self.menubar)
+        app.menu_manager = menus.MenuManager()
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
         app.tabs = tablistmanager.TabListManager()

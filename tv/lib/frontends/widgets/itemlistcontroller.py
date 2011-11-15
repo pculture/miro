@@ -210,6 +210,32 @@ class ThrobberAnimationManager(AnimationManager):
             self.item_list.finish_throbber(item_info.id)
             return False
 
+class ItemSelectionInfo(object):
+    """Stores information about what's selected in an item list.
+
+    Attributes:
+    - count: number of selected items
+    - has_download: are any of the items downloaded?
+    - has_remote: are any of the items remote?
+    - file_types: set containing all file types
+    """
+    def __init__(self, selected_items=None):
+        if selected_items is None:
+            selected_items = []
+        self.count = len(selected_items)
+        self.file_types = set()
+        self.has_download = self.has_remote = False
+        for item in selected_items:
+            self.file_types.add(item.file_type)
+            if item.downloaded:
+                self.has_download = True
+            if item.remote:
+                self.has_remote = True
+
+    def has_file_type(self, file_type):
+        """Does the selection have a specific file type?"""
+        return file_type in self.file_types
+
 class ItemListController(object):
     """Base class for controllers that manage list of items.
 
@@ -396,6 +422,7 @@ class ItemListController(object):
         self.widget = itemlistwidgets.ItemContainerWidget(
                 self.standard_view_toolbar, self.selected_view)
         self.build_widget()
+        self.item_selection_info = ItemSelectionInfo()
         self.list_item_view = self.build_list_view()
         self.standard_item_view = self.build_standard_view()
         self.album_item_view = self.build_album_view()
@@ -455,7 +482,7 @@ class ItemListController(object):
         # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id,
                                            self.selected_view)
-        app.menu_manager.update_menus()
+        self._selection_changed()
         self.expand_or_contract_item_details()
 
     def get_current_item_view(self):
@@ -856,8 +883,13 @@ class ItemListController(object):
                 name)
 
     def on_selection_changed(self, item_view, view_type):
-        app.menu_manager.update_menus()
+        self._selection_changed()
         self.update_item_details()
+
+    def _selection_changed(self):
+        """This is called whenever the item selection changes."""
+        self.item_selection_info = ItemSelectionInfo(self.get_selection())
+        app.menu_manager.update_menus()
 
     def update_item_details(self):
         try:
@@ -1391,6 +1423,12 @@ class ItemListControllerManager(object):
             return []
         else:
             return self.displayed.get_selection()
+
+    def get_selection_info(self):
+        if self.displayed is None:
+            return ItemSelectionInfo()
+        else:
+            return self.displayed.item_selection_info
 
     def can_play_items(self):
         """Can we play any items currently?"""
