@@ -242,7 +242,6 @@ class Player(player.Player):
             return tracks
         for i, track in enumerate(
           self.movie.tracksOfMediaType_(QTMediaTypeSound)):
-            is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
             track_id = track.attributeForKey_(QTTrackIDAttribute)
             # To avoid crappy names encoded into files, use "Track %d (xxx)
             display_name = track.attributeForKey_(QTTrackDisplayNameAttribute)
@@ -250,17 +249,22 @@ class Player(player.Player):
                 {"track": i + 1, 
                  "name": display_name
                 })
-            tracks.append((track_id, name, is_enabled))
+            tracks.append((track_id, name))
         return tracks
 
-    def set_audio_track(self, tag):
+    def get_enabled_audio_track(self):
+        for track in self.movie.tracksOfMediaType_(QTMediaTypeSound):
+            if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
+                return track.attributeForKey_(QTTrackIDAttribute)
+
+    def set_audio_track(self, new_track_id):
         if not self.movie:
             return
         for track in self.movie.tracksOfMediaType_(QTMediaTypeSound):
             track_id = track.attributeForKey_(QTTrackIDAttribute)
             # In theory, you could have multiple enabled audio tracks, playing
             # at the same time but that'd be a bit silly?
-            track.setEnabled_(track_id == tag)
+            track.setEnabled_(new_track_id == track_id)
 
     def setup_subtitles(self, force_subtitles):
         if app.config.get(prefs.ENABLE_SUBTITLES) or force_subtitles:

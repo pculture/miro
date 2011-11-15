@@ -378,9 +378,6 @@ def group_action_handler(action_prefix):
 def make_convert_handler(converter):
     return "ConvertItemTo-" + converter.identifier
 
-def make_column_toggle_handler(name):
-    return "ToggleColumn-" + name
-
 # File menu
 @action_handler("Open")
 def on_open():
@@ -658,7 +655,7 @@ class LegacyMenuUpdater(object):
     def __init__(self):
         self.menu_item_fetcher = MenuItemFetcher()
 
-    def update_menus(self):
+    def update(self):
         # reset enabled_groups and state_labels
         self.reset()
         # update enabled_groups and state_labels based on the state of the UI
@@ -865,8 +862,11 @@ class MenuManager(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('radio-group-changed')
         self.menu_item_fetcher = MenuItemFetcher()
-        self.legacy_menu_updater = LegacyMenuUpdater()
-        self.sorts_menu_updater = SortsMenuUpdater()
+        self.menu_updaters = [
+            LegacyMenuUpdater(),
+            SortsMenuUpdater(),
+            AudioTrackMenuUpdater(),
+        ]
         self.subtitle_encoding_enabled = False
 
     def _set_play_pause(self):
@@ -887,8 +887,8 @@ class MenuManager(signals.SignalEmitter):
 
     def update_menus(self):
         self._set_play_pause()
-        self.sorts_menu_updater.update()
-        self.legacy_menu_updater.update_menus()
+        for menu_updater in self.menu_updaters:
+            menu_updater.update()
 
 class MenuUpdater(object):
     """Base class for objects that dynamically update menus."""
@@ -934,6 +934,9 @@ class SortsMenuUpdater(MenuUpdater):
         MenuUpdater.__init__(self, 'SortsMenu')
         self.current_sorts = []
 
+    def action_name(self, column_name):
+        return "ToggleColumn-" + column_name
+
     def start_update(self):
         """Called at the very start of the update method.  """
         self.togglable_columns = self.columns_enabled = None
@@ -963,16 +966,71 @@ class SortsMenuUpdater(MenuUpdater):
         """Make a list of menu items for this menu."""
         for name in self.togglable_columns:
             label = COLUMN_LABELS[name]
-            handler_name = make_column_toggle_handler(name)
+            handler_name = self.action_name(name)
             self.menu.append(CheckMenuItem(label, handler_name))
         self.current_sorts = self.togglable_columns
 
     def update_items(self):
         """Update our menu items."""
-        menu_names_to_enable = set(make_column_toggle_handler(name)
+        menu_names_to_enable = set(self.action_name(name)
                                    for name in self.columns_enabled)
         for menu_item in self.menu.get_children():
             if menu_item.name in menu_names_to_enable:
                 menu_item.set_state(True)
             else:
                 menu_item.set_state(False)
+
+class AudioTrackMenuUpdater(MenuUpdater):
+    """Update the audio track menu for MenuManager."""
+    def __init__(self):
+        MenuUpdater.__init__(self, 'AudioTrackMenu')
+        self.currently_displayed_tracks = None
+
+    def _on_track_change(self, menu_item, track_id):
+        if menu_item.get_state() and app.playback_manager.is_playing:
+            app.playback_manager.set_audio_track(track_id)
+
+    def action_name(self, track_id):
+        return 'ChangeAudioTrack-%s' % track_id
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        self.track_info = app.playback_manager.get_audio_tracks()
+        self.enabled_track = app.playback_manager.get_enabled_audio_track()
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return self.track_info != self.currently_displayed_tracks
+
+    def populate_menu(self):
+        """Add MenuItems to our menu."""
+        if not self.track_info:
+            self.make_empty_menu()
+            self.currently_displayed_tracks = self.track_info
+            return
+
+        group = []
+        for (track_id, label) in self.track_info:
+            menu_item = RadioMenuItem(label, self.action_name(track_id))
+            self.menu.append(menu_item)
+            menu_item.connect('activate', self._on_track_change,
+                              track_id)
+            group.append(menu_item)
+        if len(group) >= 2:
+            RadioMenuItem.set_group(*group)
+        self.currently_displayed_tracks = self.track_info
+
+    def make_empty_menu(self):
+        menu_item = MenuItem(_("None Available"), "NoSubtitlesAvailable")
+        menu_item.disable()
+        self.menu.append(menu_item)
+
+    def update_items(self):
+        """Update our menu items."""
+        if self.enabled_track is None:
+            return
+        enabled_name = self.action_name(self.enabled_track)
+        for menu_item in self.menu.get_children():
+            if menu_item.name == enabled_name:
+                menu_item.set_state(True)
+                return

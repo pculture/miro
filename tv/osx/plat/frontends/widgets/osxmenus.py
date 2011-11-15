@@ -197,6 +197,9 @@ class MenuItem(MenuItemBase):
     def set_label(self, new_label):
         self._menu_item.setTitle_(new_label)
 
+    def get_label(self):
+        self._menu_item.title()
+
     def _find_menubar(self):
         """Remove this menu item from it's parent Menu."""
         menu_item = self
@@ -216,6 +219,9 @@ class CheckMenuItem(MenuItem):
             state = NSOffState
         self._menu_item.setState_(state)
 
+    def get_state(self):
+        return self._menu_item.state() == NSOnState
+
     def do_activate(self):
         if self._menu_item.state() == NSOffState:
             self._menu_item.setState_(NSOnState)
@@ -224,11 +230,9 @@ class CheckMenuItem(MenuItem):
 
 class RadioMenuItem(CheckMenuItem):
     """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, radio_group, shortcut=None):
+    def __init__(self, label, name, shortcut=None):
         CheckMenuItem.__init__(self, label, name, shortcut)
         self.others_in_group = set()
-        # FIXME: we don't do anything with radio_group.  We need to
-        # re-implement this functionality
 
     @staticmethod
     def set_group(*items):
@@ -297,7 +301,7 @@ class MenuShell(signals.SignalEmitter):
 
     def get_children(self):
         """Get the child menu items in order."""
-        return self.children
+        return list(self.children)
 
     def find(self, name):
         """Search for a menu or menu item
@@ -594,13 +598,8 @@ class SubtitleChangesHandler(NSObject):
         app.playback_manager.player.disable_subtitles()
         on_playback_change(app.playback_manager)
 
-class AudioTrackChangesHandler(NSObject):
-    def selectAudioTrack_(self, sender):
-        app.playback_manager.player.set_audio_track(sender.tag())
-        on_playback_change(app.playback_manager)
 
 subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
-audio_track_menu_handler = AudioTrackChangesHandler.alloc().init()
 
 def on_playback_change(playback_manager):
     main_menu = NSApp().mainMenu()
@@ -611,38 +610,7 @@ def on_playback_change(playback_manager):
     subtitles_menu.setAutoenablesItems_(NO)
     subtitles_tracks = None
 
-    audio_track_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(17)
-    audio_track_menu = NSMenu.alloc().init()
-    audio_track_menu.setAutoenablesItems_(NO)
-    audio_tracks = None
-    if app.playback_manager.is_playing and not app.playback_manager.is_playing_audio:
-        subtitles_tracks = app.playback_manager.player.get_subtitle_tracks()
-        audio_tracks = app.playback_manager.player.get_audio_tracks()
-    populate_audio_track_menu(audio_track_menu, audio_tracks)
-    populate_subtitles_menu(subtitles_menu, subtitles_tracks)
-    # Keep the original None available unless we found valid tracks.
-    audio_track_menu_root.setSubmenu_(audio_track_menu)
     subtitles_menu_root.setSubmenu_(subtitles_menu)
-
-def populate_audio_track_menu(nsmenu, tracks):
-    if tracks is not None and len(tracks) > 0:
-        for track in tracks:
-            item = NSMenuItem.alloc().init()
-            item.setTag_(track[0])
-            item.setTitle_(track[1])
-            item.setEnabled_(YES)
-            item.setTarget_(audio_track_menu_handler)
-            item.setAction_('selectAudioTrack:')
-            if track[2]:
-                item.setState_(NSOnState)
-            else:
-                item.setState_(NSOffState)
-            nsmenu.addItem_(item)
-    else:
-        item = NSMenuItem.alloc().init()
-        item.setTitle_(_("None Available"))
-        item.setEnabled_(NO)
-        nsmenu.addItem_(item)
 
 def populate_subtitles_menu(nsmenu, tracks):
     if tracks is not None and len(tracks) > 0:

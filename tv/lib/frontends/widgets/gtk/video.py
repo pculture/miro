@@ -35,11 +35,11 @@ import gobject
 import gtk
 
 from miro import app
-from miro import player
 from miro.gtcache import gettext as _
 from miro import messages
 from miro.plat import resources
 from miro.plat import screensaver
+from miro.frontends.widgets.gtk import player
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
 from miro.frontends.widgets.gtk.widgetset import (
     Widget, VBox, Label, HBox, Alignment, Background, DrawingArea,
@@ -461,7 +461,7 @@ class VideoDetailsWidget(Background):
         if self._delete_image:
             self._delete_image.on_leave_notify(None, None)
 
-class VideoPlayer(player.Player, VBox):
+class VideoPlayer(player.GTKPlayer, VBox):
     """Video renderer widget.
 
     Note: ``app.video_renderer`` must be initialized before
@@ -471,12 +471,8 @@ class VideoPlayer(player.Player, VBox):
     HIDE_CONTROLS_TIMEOUT = 2000
 
     def __init__(self):
-        player.Player.__init__(self)
+        player.GTKPlayer.__init__(self, app.video_renderer)
         VBox.__init__(self)
-        if app.video_renderer is not None:
-            self.renderer = app.video_renderer
-        else:
-            self.renderer = NullRenderer()
 
         self.overlay = None
         self.screensaver_manager = None
@@ -711,3 +707,15 @@ class VideoPlayer(player.Player, VBox):
 
     def select_subtitle_encoding(self, encoding):
         app.video_renderer.select_subtitle_encoding(encoding)
+
+    def get_subtitle_tracks(self):
+        return self.renderer.get_subtitle_tracks()
+
+    def get_enabled_subtitle_track(self):
+        return self.renderer.get_enabled_audio_track()
+
+    def set_subtitle_track(self, track_index):
+        if track_index is not None:
+            self.renderer.set_subtitle_track(track_index)
+        else:
+            self.renderer.disable_subtitles()
