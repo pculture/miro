@@ -232,30 +232,65 @@ class RadioMenuItem(CheckMenuItem):
     """See the GTK version of this method for the current docstring."""
     def __init__(self, label, name, shortcut=None):
         CheckMenuItem.__init__(self, label, name, shortcut)
+        # The leader of a radio group stores the list of all items in the
+        # group
+        self.group_leader = None
         self.others_in_group = set()
 
-    @staticmethod
-    def set_group(*items):
-        if len(items) < 2:
-            raise ValueError("Need at least 2 items to make a radio group")
-        for radio_menu_item in items:
-            if radio_menu_item.others_in_group:
-                raise ValueError("%s is already in a group")
-        # re-implement this functionality
-        whole_group = set(items)
-        for radio_menu_item in items:
-            others = whole_group - set([radio_menu_item])
-            radio_menu_item.others_in_group = others
+    def set_group(self, group_item):
+        if self.group_leader is not None:
+            raise ValueError("%s is already in a group" % self)
+        if group_item.group_leader is None:
+            group_leader = group_item
+        else:
+            group_leader = group_item.group_leader
+        if group_leader.group_leader is not None:
+            raise AssertionError("group_leader structure is wrong")
+        self.group_leader = group_leader
+        group_leader.others_in_group.add(self)
 
     def remove_from_group(self):
         """Remove this RadioMenuItem from its current group."""
-        for other in self.others_in_group:
-            other.others_in_group.remove(self)
-        self.others_in_group = set()
+        if self.group_leader is not None:
+            # we have a group leader, remove ourself from their list.
+            # Note that this code will work even if we're the last item in
+            # others_in_group.
+            self.group_leader.others_in_group.remove(self)
+            self.group_leader = None
+        elif len(self.others_in_group) > 1:
+            # we're the group leader, hand off the leader to a different item
+            first_item = iter(self.others_in_group).next()
+            for other in self.others_in_group:
+                if other is first_item:
+                    other.others_in_group = self.others_in_group
+                    other.others_in_group.remove(first_item)
+                    other.group_leader = None
+                else:
+                    other.group_leader = first_item
+            self.others_in_group = set()
+        elif len(self.others_in_group) == 1:
+            # we're the group leader, but there's only 1 other item.  unset
+            # everything.
+            for other in self.others_in_group:
+                other.group_leader = None
+            self.others_in_group = set()
+
+    def _items_in_group(self):
+        if self.group_leader is not None: # we have a group leader
+            yield self.group_leader
+            for other in self.group_leader.others_in_group:
+                yield other
+        elif self.others_in_group: # we're the group leader
+            yield self
+            for other in self.others_in_group:
+                yield other
+        else: # we don't have a group set
+            yield self
 
     def do_activate(self):
-        for other in self.others_in_group:
-            other._menu_item.setState_(NSOffState)
+        for item in self._items_in_group():
+            if item is not self:
+                item.set_state(False)
         CheckMenuItem.do_activate(self)
 
 class Separator(MenuItemBase):
@@ -354,6 +389,12 @@ class Menu(MenuShell):
 
     def hide(self):
         self._menu_item.setHidden_(True)
+
+    def enable(self):
+        self._menu_item.setEnabled_(True)
+
+    def disable(self):
+        self._menu_item.setEnabled_(False)
 
 class AppMenu(MenuShell):
     """Wrapper for the application menu (AKA the Miro menu)

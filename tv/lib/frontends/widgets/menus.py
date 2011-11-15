@@ -30,6 +30,7 @@
 """Menu handling code."""
 
 import collections
+import itertools
 import logging
 
 from miro import app
@@ -236,9 +237,13 @@ def get_app_menu():
                             Separator(),
                             MenuItem(_("Select a Subtitles File..."),
                                      "SubtitlesSelect",
-                                     groups=["PlayingLocalVideo"])
+                                     groups=["PlayingLocalVideo"]),
+                            Menu(_("_Encoding"), "SubtitleEncodingMenu", []),
                             ]),
                     ])
+    # hide the SubtitleEncodingMenu until it's populated with items.  On OSX,
+    # we don't support it yet
+    playback_menu.find("SubtitleEncodingMenu").hide()
 
     sorts_menu = Menu(_("Sorts"), "SortsMenu", [])
     convert_menu = Menu(_("_Convert"), "ConvertMenu", _get_convert_menu())
@@ -294,43 +299,6 @@ def _get_convert_menu():
     menu.append(Separator())
     menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
     return menu
-
-def add_subtitle_encoding_menu(menubar, category_label, *encodings):
-    """Helper method to set up the subtitles encoding menu.
-
-    This method should be called for each category of subtitle encodings (East
-    Asian, Western European, Unicode, etc).  Pass it the list of encodings for
-    that category.
-
-    :param category_label: human-readable name for the category
-    :param encodings: list of (label, encoding) tuples.  label is a
-        human-readable name, and encoding is a value that we can pass to
-        VideoDisplay.select_subtitle_encoding()
-    """
-    subtitles_menu = menubar.find("SubtitlesMenu")
-    try:
-        encoding_menu = menubar.find("SubtitleEncodingMenu")
-    except KeyError:
-        # first time calling this function, we need to set up the menu.
-        encoding_menu = Menu(_("_Encoding"),
-                "SubtitleEncodingMenu", [], groups=['PlayingVideo'])
-        subtitles_menu.append(encoding_menu)
-        default_item = RadioMenuItem(_('Default (UTF-8)'),
-                "SubtitleEncoding-Default", 'subtitle-encoding',
-                groups=['PlayingVideo'])
-        encoding_menu.append(default_item)
-        app.menu_manager.subtitle_encoding_enabled = True
-
-    category_menu = Menu(category_label,
-            "SubtitleEncodingCat%s" % encoding_menu.count(), [],
-            groups=['PlayingVideo'])
-    encoding_menu.append(category_menu)
-
-    for encoding, name in encodings:
-        label = '%s (%s)' % (name, encoding)
-        category_menu.append(RadioMenuItem(label,
-            'SubtitleEncoding-%s' % encoding,
-            'subtitle-encoding', groups=["PlayingVideo"]))
 
 action_handlers = {}
 group_action_handlers = {}
@@ -553,13 +521,6 @@ def on_toggle_detach():
 @action_handler("SubtitlesSelect")
 def on_subtitles_select():
     app.playback_manager.open_subtitle_file()
-
-@group_action_handler("SubtitleEncoding")
-def on_subtitle_encoding(converter):
-    if converter == 'Default':
-        app.playback_manager.select_subtitle_encoding(None)
-    else:
-        app.playback_manager.select_subtitle_encoding(converter)
 
 # Sorts menu
 @group_action_handler("ToggleColumn")
@@ -860,14 +821,14 @@ class MenuManager(signals.SignalEmitter):
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
-        self.create_signal('radio-group-changed')
         self.menu_item_fetcher = MenuItemFetcher()
+        self.subtitle_encoding_updater = SubtitleEncodingMenuUpdater()
         self.menu_updaters = [
             LegacyMenuUpdater(),
             SortsMenuUpdater(),
             AudioTrackMenuUpdater(),
+            self.subtitle_encoding_updater,
         ]
-        self.subtitle_encoding_enabled = False
 
     def _set_play_pause(self):
         if ((not app.playback_manager.is_playing
@@ -877,13 +838,30 @@ class MenuManager(signals.SignalEmitter):
             label = _('Pause')
         self.menu_item_fetcher['PlayPauseItem'].set_label(label)
 
+    def add_subtitle_encoding_menu(self, category_label, *encodings):
+        """Set up a subtitles encoding menu.
+
+        This method should be called for each category of subtitle encodings
+        (East Asian, Western European, Unicode, etc).  Pass it the list of
+        encodings for that category.
+
+        :param category_label: human-readable name for the category
+        :param encodings: list of (label, encoding) tuples.  label is a
+            human-readable name, and encoding is a value that we can pass to
+            VideoDisplay.select_subtitle_encoding()
+        """
+        self.subtitle_encoding_updater.add_menu(category_label, encodings)
+
     def select_subtitle_encoding(self, encoding):
-        if self.subtitle_encoding_enabled:
-            if encoding is None:
-                action_name = 'SubtitleEncoding-Default'
-            else:
-                action_name = 'SubtitleEncoding-%s' % encoding
-            self.emit('radio-group-changed', 'subtitle-encoding', action_name)
+        if not self.subtitle_encoding_updater.has_encodings():
+            # OSX never sets up the subtitle encoding menu
+            return
+        menu_item_name = self.subtitle_encoding_updater.action_name(encoding)
+        try:
+            self.menu_item_fetcher[menu_item_name].set_state(True)
+        except KeyError:
+            logging.warn("Error enabling subtitle encoding menu item: %s",
+                         menu_item_name)
 
     def update_menus(self):
         self._set_play_pause()
@@ -893,7 +871,17 @@ class MenuManager(signals.SignalEmitter):
 class MenuUpdater(object):
     """Base class for objects that dynamically update menus."""
     def __init__(self, menu_name):
-        self.menu = app.widgetapp.menubar.find(menu_name)
+        self.menu_name = menu_name
+
+    # we lazily access our menu item, since we are created before the menubar
+    # is fully setup.
+    def get_menu(self):
+        try:
+            return self._menu
+        except AttributeError:
+            self._menu = app.widgetapp.menubar.find(self.menu_name)
+            return self._menu
+    menu = property(get_menu)
 
     def update(self):
         self.start_update()
@@ -1016,8 +1004,9 @@ class AudioTrackMenuUpdater(MenuUpdater):
             menu_item.connect('activate', self._on_track_change,
                               track_id)
             group.append(menu_item)
-        if len(group) >= 2:
-            RadioMenuItem.set_group(*group)
+
+        for item in group[1:]:
+            item.set_group(group[0])
         self.currently_displayed_tracks = self.track_info
 
     def make_empty_menu(self):
@@ -1034,3 +1023,76 @@ class AudioTrackMenuUpdater(MenuUpdater):
             if menu_item.name == enabled_name:
                 menu_item.set_state(True)
                 return
+
+class SubtitleEncodingMenuUpdater(object):
+    """Handles updating the subtitles encoding menu.
+
+    This class is responsible for:
+        - populating the subtitles encoding method
+        - enabling/disabling the menu items
+    """
+
+    def __init__(self):
+        self.menu_item_fetcher = MenuItemFetcher()
+        self.default_item = None
+        self.category_counter = itertools.count()
+
+    def action_name(self, encoding):
+        """Get the name of the menu item for a given encoding.
+
+        :param: string name of the encoding, or None for the default encoding
+        """
+        if encoding is None:
+            return 'SubtitleEncoding-Default'
+        else:
+            return 'SubtitleEncoding-%s' % encoding
+
+    def has_encodings(self):
+        return self.default_item is not None
+
+    def update(self):
+        should_enable = (app.playback_manager.is_playing and not
+                         app.playback_manager.is_playing_audio)
+        encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
+        if should_enable:
+            encoding_menu.enable()
+        else:
+            encoding_menu.disable()
+
+    def add_menu(self, category_label, encodings):
+        if not self.has_encodings():
+            self.init_menu()
+        category_menu = self.add_submenu(category_label)
+        self.populate_submenu(category_menu, encodings)
+
+    def init_menu(self):
+        # first time calling this function, we need to set up the menu.
+        encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
+        encoding_menu.show()
+        self.default_item = RadioMenuItem(_('Default (UTF-8)'),
+                                          self.action_name(None))
+        self.default_item.set_state(True)
+        self.default_item.connect("activate", self.on_activate, None)
+        encoding_menu.append(self.default_item)
+
+    def add_submenu(self, label):
+        encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
+        name = "SubtitleEncodingCat-%s" % self.category_counter.next()
+        category_menu = Menu(label, name, [])
+        encoding_menu.append(category_menu)
+        return category_menu
+
+    def populate_submenu(self, category_menu, encodings):
+        for encoding, name in encodings:
+            label = '%s (%s)' % (name, encoding)
+            menu_item = RadioMenuItem(label,
+                                      self.action_name(encoding))
+            menu_item.set_state(False)
+            menu_item.connect("activate", self.on_activate, encoding)
+            category_menu.append(menu_item)
+            menu_item.set_group(self.default_item)
+
+    def on_activate(self, menu_item, encoding):
+        if menu_item.get_state():
+            # only handle event if the menu is changing to on
+            app.playback_manager.select_subtitle_encoding(encoding)
