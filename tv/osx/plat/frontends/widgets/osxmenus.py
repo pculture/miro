@@ -154,8 +154,7 @@ class MenuItem(MenuItemBase):
         "CloseWindow":      (nil,     'performClose:'),
     }
 
-    def __init__(self, label, name, shortcut=None, groups=None,
-            **state_labels):
+    def __init__(self, label, name, shortcut=None):
         MenuItemBase.__init__(self)
         self.name = name
         self._menu_item = self._make_menu_item(label)
@@ -210,10 +209,8 @@ class MenuItem(MenuItemBase):
 
 class RadioMenuItem(MenuItem):
     """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, radio_group, shortcut=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcut, groups,
-                **state_labels)
+    def __init__(self, label, name, radio_group, shortcut=None):
+        MenuItem.__init__(self, label, name, shortcut)
         self.others_in_group = set()
         # FIXME: we don't do anything with radio_group.  We need to
         # re-implement this functionality
@@ -243,10 +240,8 @@ class RadioMenuItem(MenuItem):
 
 class CheckMenuItem(MenuItem):
     """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, check_group, shortcut=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcut, groups,
-                **state_labels)
+    def __init__(self, label, name, check_group, shortcut=None):
+        MenuItem.__init__(self, label, name, shortcut)
         # FIXME: we don't do anything with check_group.  We need to
         # re-implement this functionality
 
@@ -331,9 +326,11 @@ class MenuShell(signals.SignalEmitter):
 
 class Menu(MenuShell):
     """See the GTK version of this method for the current docstring."""
-    def __init__(self, label, name, child_items=None, groups=None):
+    def __init__(self, label, name, child_items=None):
         MenuShell.__init__(self, NSMenu.alloc().init())
         self._menu.setTitle_(_remove_mnemonic(label))
+        # we will enable/disable menu items manually
+        self._menu.setAutoenablesItems_(False)
         self.name = name
         if child_items is not None:
             for item in child_items:
@@ -344,8 +341,6 @@ class Menu(MenuShell):
         # Hack to set the services menu
         if name == "ServicesMenu":
             NSApp().setServicesMenu_(self._menu_item)
-        # FIXME we ignore groups.  They're just there as a temporary measure
-        # to keep the constructure signature the same.
 
 class AppMenu(MenuShell):
     """Wrapper for the application menu (AKA the Miro menu)
@@ -439,21 +434,19 @@ class MenuBar(MenuShell):
         self.insert(1, editMenu)
 
         # Playback menu
-        presentMenuItems = [
+        present_menu_items = [
             MenuItem(_("Present Half Size"), "PresentHalfSize", 
-                     Shortcut("0", MOD),
-                     groups=["PlayingVideo", "PlayableVideosSelected"]),
+                     Shortcut("0", MOD)),
             MenuItem(_("Present Actual Size"), "PresentActualSize", 
-                     Shortcut("1", MOD),
-                     groups=["PlayingVideo", "PlayableVideosSelected"]),
+                     Shortcut("1", MOD)),
             MenuItem(_("Present Double Size"), "PresentDoubleSize", 
-                     Shortcut("2", MOD),
-                     groups=["PlayingVideo", "PlayableVideosSelected"]),
+                     Shortcut("2", MOD)),
         ]
-        presentMenu = Menu(_("Present Video"), "Present", presentMenuItems)
+        self.present_menu = Menu(_("Present Video"), "Present",
+                                 present_menu_items)
         playback_menu = self.find("PlaybackMenu")
         playback_menu.insert(playback_menu.index('AudioTrackMenu'),
-                             presentMenu)
+                             self.present_menu)
 
         # Window menu
         windowMenuItems = [
@@ -473,6 +466,9 @@ class MenuBar(MenuShell):
         helpItem.set_label(_("%(appname)s Help", {"appname": short_appname}))
         helpItem._change_shortcut(Shortcut("?", MOD))
 
+        self._update_present_menu()
+        self._connect_to_signals()
+
     def do_activate(self, name):
         # We handle a couple OSX-specific actions here
         if name == "PresentActualSize":
@@ -483,6 +479,34 @@ class MenuBar(MenuShell):
             NSApp().delegate().present_movie('half-size')
         elif name == "ShowMain":
             app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
+
+    def _connect_to_signals(self):
+        app.playback_manager.connect("will-play", self._on_playback_change)
+        app.playback_manager.connect("will-stop", self._on_playback_change)
+
+    def _on_playback_change(self, playback_manager, *args):
+        self._update_present_menu()
+
+    def _update_present_menu(self):
+        if self._should_enable_present_menu():
+            for menu_item in self.present_menu.get_children():
+                menu_item.enable()
+        else:
+            for menu_item in self.present_menu.get_children():
+                menu_item.disable()
+
+    def _should_enable_present_menu(self):
+        if (app.playback_manager.is_playing and
+            not app.playback_manager.is_playing_audio):
+            # we're currently playing video, allow the user to fullscreen
+            return True
+        selection_info = app.item_list_controller_manager.get_selection_info()
+        if (selection_info.has_download and
+            selection_info.has_file_type('video')):
+            # A downloaded video is selected, allow the user to start playback
+            # in fullscreen
+            return True
+        return False
 
 def update_view_menu_state():
     # Error checking for display != None done below in try/except block
@@ -603,11 +627,6 @@ audio_track_menu_handler = AudioTrackChangesHandler.alloc().init()
 
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
-    # XXX Flaky: we should be using the tag to prevent interface and language
-    # XXX breakages.
-    play_pause_menu_item = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(0)
-    play_pause = _menu_structure.get("PlayPauseItem").state_labels[app.menu_manager.play_pause_state]
-    play_pause_menu_item.setTitleWithMnemonic_(play_pause.replace("_", "&"))
 
     update_view_menu_state()
     # Calling update() here does not result in

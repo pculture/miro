@@ -126,16 +126,13 @@ class MenuItem(MenuItemBase):
     ...          play=_("_Play"), pause=_("_Pause"))
     """
 
-    def __init__(self, label, name, shortcut=None, groups=None,
-            **state_labels):
+    def __init__(self, label, name, shortcut=None):
         MenuItemBase.__init__(self)
         self.name = name
         self.set_widget(self.make_widget(label))
         self.wrapped_widget_connect('activate', self._on_activate)
         self._widget.show()
         self.create_signal('activate')
-        # FIXME:  Our contstructor arguments are all messed up.  We ignore
-        # group and state_labels.
         _setup_accel(self._widget, self.name, shortcut)
 
     def _on_activate(self, menu_item):
@@ -180,10 +177,8 @@ class RadioMenuItem(MenuItem):
     """MenuItem that toggles on/off and is grouped with other RadioMenuItems.
     """
 
-    def __init__(self, label, name, radio_group, shortcut=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcut, groups,
-                **state_labels)
+    def __init__(self, label, name, radio_group, shortcut=None):
+        MenuItem.__init__(self, label, name, shortcut)
         # FIXME: we don't do anything with radio_group.  We need to
         # re-implement this functionality
 
@@ -214,10 +209,8 @@ class RadioMenuItem(MenuItem):
 class CheckMenuItem(MenuItem):
     """MenuItem that toggles on/off"""
 
-    def __init__(self, label, name, check_group, shortcut=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, name, shortcut, groups,
-                **state_labels)
+    def __init__(self, label, name, check_group, shortcut=None):
+        MenuItem.__init__(self, label, name, shortcut)
         # FIXME: we don't do anything with check_group.  We need to
         # re-implement this functionality
 
@@ -323,7 +316,7 @@ class Menu(MenuShell):
     ...     ])
     """
 
-    def __init__(self, label, name, child_items, groups=None):
+    def __init__(self, label, name, child_items):
         MenuShell.__init__(self)
         self.set_widget(gtk.MenuItem(label))
         self._widget.show()
@@ -334,8 +327,6 @@ class Menu(MenuShell):
         self._widget.set_submenu(self._menu)
         for item in child_items:
             self.append(item)
-        # FIXME we ignore groups.  They're just there as a temporary measure
-        # to keep the constructure signature the same.
 
     def _set_accel_group(self, accel_group):
         """Set the accel group for this widget.
