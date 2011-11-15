@@ -97,3 +97,17 @@ class AudioPlayer(player.Player):
 
     def set_playback_rate(self, rate):
         self.renderer.set_rate(rate)
+
+    def get_audio_tracks(self):
+        track_count = self.renderer.get_audio_tracks()
+        tracks = []
+        for i in xrange(track_count):
+            name = 'Track %s' % i
+            tracks.append((i, name))
+        return tracks
+
+    def get_enabled_audio_track(self):
+        return self.renderer.get_enabled_audio_track()
+
+    def set_audio_track(self, track_index):
+        self.renderer.set_audio_track(track_index)

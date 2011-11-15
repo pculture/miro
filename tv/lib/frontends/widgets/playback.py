@@ -340,6 +340,36 @@ class PlaybackManager (signals.SignalEmitter):
         self.previous_left_widget = None
         self.emit('did-stop')
 
+    def get_audio_tracks(self):
+        """Get a list of available audio tracks
+
+        :returns: list of (label, track_id) tuples
+        """
+        if self.player is not None:
+            return self.player.get_audio_tracks()
+        else:
+            return []
+
+    def get_enabled_audio_track(self):
+        """Get the currently enabled audio track
+
+        :returns: current track_id or None if we are not playing
+        """
+        if self.player is not None:
+            return self.player.get_enabled_audio_track()
+        else:
+            return None
+
+    def set_audio_track(self, track_id):
+        """Change the currently enabled audio track
+
+        :param track_id: track_id from get_audio_tracks()
+        """
+        if self.player is not None:
+            self.player.set_audio_track(track_id)
+        else:
+            raise ValueError("Not playing")
+
     def toggle_shuffle(self):
         self.set_shuffle(not self.shuffle)
 

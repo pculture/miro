@@ -173,6 +173,9 @@ class MenuItem(MenuItemBase):
     def set_label(self, new_label):
         self._widget.set_label(new_label)
 
+    def get_label(self):
+        self._widget.get_label()
+
 class CheckMenuItem(MenuItem):
     """MenuItem that toggles on/off"""
 
@@ -182,17 +185,17 @@ class CheckMenuItem(MenuItem):
     def set_state(self, active):
         self._widget.set_active(active)
 
+    def get_state(self):
+        return self._widget.get_active()
+
 class RadioMenuItem(CheckMenuItem):
     """MenuItem that toggles on/off and is grouped with other RadioMenuItems.
     """
 
-    def __init__(self, label, name, radio_group, shortcut=None):
-        CheckMenuItem.__init__(self, label, name, shortcut)
-        # FIXME: we don't do anything with radio_group.  We need to
-        # re-implement this functionality
-
     def make_widget(self, label):
-        return gtk.RadioMenuItem(label)
+        widget = gtk.RadioMenuItem()
+        widget.set_label(label)
+        return widget
 
     @staticmethod
     def set_group(*items):
@@ -271,7 +274,7 @@ class MenuShell(base.Widget):
 
     def get_children(self):
         """Get the child menu items in order."""
-        return self.children
+        return list(self.children)
 
     def find(self, name):
         """Search for a menu or menu item
