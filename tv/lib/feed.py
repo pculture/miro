@@ -2143,6 +2143,11 @@ class DirectoryScannerImplBase(FeedImpl):
         self._add_known_files(known_files)
         return known_files
 
+    # Subclass may override this to implement asynchronous preparation
+    # if it is long-running
+    def schedule_update(self):
+        self.do_update()
+
     def update(self):
         self.ufeed.confirm_db_thread()
         if not self.ufeed.id_exists():
@@ -2150,7 +2155,7 @@ class DirectoryScannerImplBase(FeedImpl):
 
         if not self.updating:
             self.updating = True
-            self.do_update()
+            self.schedule_update()
 
     @eventloop.idle_iterator
     def do_update(self):
@@ -2330,16 +2335,33 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
                 ufeed=ufeed, title=None)
         self.set_update_frequency(5)
         self.schedule_update_events(0)
+        self._prepare_count = 0
         self.start_watching_directory()
 
     def setup_restored(self):
+        self._prepare_count = 0
         DirectoryScannerImplBase.setup_restored(self)
         self.start_watching_directory()
 
-    def _before_update(self):
+    def schedule_update(self):
+        self._async_prepare()
+
+    def _async_prepare(self):
         # Make sure container items have created FileItems for their contents
+        #
+        # Since find_new_children() is an idle iterator we can safely
+        # count on the call returning immediately and at the end of the loop
         for container in models.Item.containers_view():
-            container.find_new_children()
+            container.find_new_children(callback=self._async_prepare_complete)
+            self._prepare_count += 1
+
+    def _async_prepare_complete(self, unused):
+        if not self.id_exists():
+            return
+        self._prepare_count -= 1
+        if self._prepare_count == 0:
+            # All done?  Go to the do_update()
+            self.do_update()
 
     def _calc_known_files(self):
         pass
