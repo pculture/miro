@@ -45,7 +45,8 @@ from miro import signals
 from miro import util
 from miro import fileutil
 from miro.plat.utils import (movie_data_program_info,
-                             thread_body)
+                             thread_body,
+                             begin_thread_loop, finish_thread_loop)
 from miro.errors import Shutdown
 
 # Time in seconds that we wait for the utility to execute.  If it goes
@@ -129,6 +130,8 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.pipe = None
         self.cmd_begin_gate = threading.Event()
         self.cmd_end_gate = threading.Event()
+        self.connect('begin-loop', begin_thread_loop)
+        self.connect('end-loop', finish_thread_loop)
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
@@ -395,5 +398,3 @@ class MovieDataUpdater(signals.SignalEmitter):
         self.cmd_end_gate.set()
         if self.thread is not None:
             self.thread.join()
-
-movie_data_updater = MovieDataUpdater()

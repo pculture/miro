@@ -1838,7 +1838,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return # this is OK because incomplete_mdp_view knows about it
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
-        # - calling moviedata.movie_data_updater.request_update(self)
+        # - calling app.movie_data_updater.request_update(self)
         # - calling _handle_invalid_media_file
         try:
             self._check_media_file()
@@ -1852,7 +1852,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             app.controller.failed_soft("check_media_file", str(e), True)
             self._handle_invalid_media_file()
         else:
-            moviedata.movie_data_updater.request_update(self)
+            app.movie_data_updater.request_update(self)
             if self.file_type is None:
                 # if this is not overridden by movie_data_updater,
                 # neither mutagen nor MDP could identify it
@@ -1886,7 +1886,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
-        # - calling moviedata.movie_data_updater.request_update(self)
+        # - calling app.movie_data_updater.request_update(self)
         # - changing this item so that not self.in_incomplete_mdp_view
         filename = self.get_filename()
         if filename is None:
@@ -2315,8 +2315,8 @@ class IncompleteMovieDataUpdator(object):
     BATCH_SIZE = 10
     def __init__(self):
         self.done = False
-        self.handle = moviedata.movie_data_updater.connect('queue-empty',
-                self.on_queue_empty)
+        self.handle = app.movie_data_updater.connect('queue-empty',
+                                                     self.on_queue_empty)
         self.do_some_updates()
 
     def do_some_updates(self):
@@ -2465,7 +2465,7 @@ class DeviceItem(metadata.Store):
             logging.debug('error reading %s', self.id, exc_info=True)
         else:
             if self.mdp_state is None: # haven't run MDP yet
-                moviedata.movie_data_updater.request_update(self)
+                app.movie_data_updater.request_update(self)
         self.__initialized = True
 
     @staticmethod

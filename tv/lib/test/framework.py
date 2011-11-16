@@ -275,7 +275,7 @@ class MiroTestCase(unittest.TestCase):
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
-        moviedata.movie_data_updater = moviedata.MovieDataUpdater()
+        app.movie_data_updater = moviedata.MovieDataUpdater()
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary

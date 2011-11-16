@@ -77,6 +77,9 @@ downloader_config_watcher = None
 # download state manager
 download_state_manager = None
 
+# movie data updater
+movie_data_updater = None
+
 # sends MetadataProgressUpdate messages to the frontend
 metadata_progress_updater = None
 
