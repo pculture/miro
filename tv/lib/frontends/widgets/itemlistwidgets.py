@@ -999,7 +999,7 @@ class ListView(ItemView, SorterOwner):
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(self.COLUMN_PADDING)
-        self.set_row_spacing(5)
+        self.set_row_spacing(4)
         self.set_grid_lines(False, False)
         self.set_alternate_row_backgrounds(True)
         self.html_stripper = util.HTMLStripper()
