@@ -130,7 +130,8 @@ class MenuItem(MenuItemBase):
         MenuItemBase.__init__(self)
         self.name = name
         self.set_widget(self.make_widget(label))
-        self.wrapped_widget_connect('activate', self._on_activate)
+        self.activate_id = self.wrapped_widget_connect('activate',
+                                                       self._on_activate)
         self._widget.show()
         self.create_signal('activate')
         _setup_accel(self._widget, self.name, shortcut)
@@ -183,10 +184,18 @@ class CheckMenuItem(MenuItem):
         return gtk.CheckMenuItem(label)
 
     def set_state(self, active):
+        # prevent the activate signal from fireing in response to us manually
+        # changing a value
+        self._widget.handler_block(self.activate_id)
         self._widget.set_active(active)
+        self._widget.handler_unblock(self.activate_id)
 
     def get_state(self):
         return self._widget.get_active()
+
+    def _on_activate(self, menu_item):
+        if self.get_state():
+            MenuItem._on_activate(self, menu_item)
 
 class RadioMenuItem(CheckMenuItem):
     """MenuItem that toggles on/off and is grouped with other RadioMenuItems.
