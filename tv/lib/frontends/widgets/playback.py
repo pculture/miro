@@ -42,7 +42,7 @@ from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
 from miro.frontends.widgets import itemtrack
-from miro.frontends.widgets import menus
+from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
@@ -91,6 +91,10 @@ class PlaybackManager (signals.SignalEmitter):
 
     def player_playing(self):
         return self.player is not None and self.open_successful
+
+    def get_is_playing_video(self):
+        return self.is_playing and not self.is_playing_audio
+    is_playing_video = property(get_is_playing_video)
 
     def set_volume(self, volume):
         self.volume = volume
@@ -290,7 +294,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_paused = False
         self.is_suspended = False
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
 
     def should_resume(self):
         if self.force_resume:
@@ -308,7 +312,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.emit('will-pause')
             self.player.pause()
             self.is_paused = True
-            app.menu_manager.update_menus()
+            app.menu_manager.update_menus('playback-changed')
 
     def fullscreen(self):
         if not self.is_playing or not self.video_display:
@@ -339,6 +343,68 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.emit('did-stop')
+        app.menu_manager.update_menus('playback-changed')
+
+    def get_audio_tracks(self):
+        """Get a list of available audio tracks
+
+        :returns: list of (label, track_id) tuples
+        """
+        if self.player is not None:
+            return self.player.get_audio_tracks()
+        else:
+            return []
+
+    def get_enabled_audio_track(self):
+        """Get the currently enabled audio track
+
+        :returns: current track_id or None if we are not playing
+        """
+        if self.player is not None:
+            return self.player.get_enabled_audio_track()
+        else:
+            return None
+
+    def set_audio_track(self, track_id):
+        """Change the currently enabled audio track
+
+        :param track_id: track_id from get_audio_tracks()
+        """
+        if self.player is not None:
+            self.player.set_audio_track(track_id)
+        else:
+            raise ValueError("Not playing")
+
+    def get_subtitle_tracks(self):
+        """Get a list of available subtitle tracks
+
+        :returns: list of (label, track_id) tuples
+        """
+        if self.player is not None and not self.is_playing_audio:
+            return self.player.get_subtitle_tracks()
+        else:
+            return []
+
+    def get_enabled_subtitle_track(self):
+        """Get the currently enabled subtitle track
+
+        :returns: current track_id or None if we are not playing video
+        """
+        if self.player is not None and not self.is_playing_audio:
+            return self.player.get_enabled_subtitle_track()
+        else:
+            return None
+
+    def set_subtitle_track(self, track_id):
+        """Change the currently enabled subtitle track
+
+        :param track_id: track_id from get_subtitle_tracks()
+        """
+        if self.player is None:
+            raise ValueError("Not playing")
+        if self.is_playing_audio:
+            raise ValueError("Playing Audio")
+        self.player.set_subtitle_track(track_id)
 
     def toggle_shuffle(self):
         self.set_shuffle(not self.shuffle)
@@ -531,7 +597,7 @@ class PlaybackManager (signals.SignalEmitter):
             if self.detached_window is not None:
                 self.detached_window.set_title(item_info.name)
         self.emit('did-start-playing')
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
 
     def _build_video_player(self, item_info, volume):
         self.player = widgetset.VideoPlayer()
@@ -676,7 +742,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.switch_to_detached_playback()
         else:
             self.switch_to_attached_playback()
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
             
     def switch_to_attached_playback(self):
         self.cancel_update_timer()
@@ -1158,7 +1224,7 @@ def handle_key_press(key, mods):
     """Handle a playback key press events """
 
     if len(mods) != 0:
-        if set([menus.MOD, menus.SHIFT]) == mods:
+        if set([keyboard.MOD, keyboard.SHIFT]) == mods:
             if key in ('>', '.'): # OS X sends '.', GTK sends '>'
                 app.widgetapp.on_forward_clicked()
                 return True
@@ -1166,20 +1232,25 @@ def handle_key_press(key, mods):
                 app.widgetapp.on_previous_clicked()
                 return True
 
-        if set([menus.SHIFT]) == mods:
-            if key == menus.RIGHT_ARROW:
+        if set([keyboard.SHIFT]) == mods:
+            if key == keyboard.RIGHT_ARROW:
                 app.widgetapp.on_skip_forward()
                 return True
-            elif key == menus.LEFT_ARROW:
+            elif key == keyboard.LEFT_ARROW:
                 app.widgetapp.on_skip_backward()
                 return True
 
-        if set([menus.CTRL]) == mods and key == menus.SPACE:
+        if set([keyboard.ALT]) == mods:
+            if key == keyboard.ENTER:
+                app.playback_manager.enter_fullscreen()
+                return True
+
+        if set([keyboard.CTRL]) == mods and key == keyboard.SPACE:
             app.playback_manager.toggle_paused()
             return True
         return False
 
-    if key == menus.DELETE or key == menus.BKSPACE:
+    if key == keyboard.DELETE or key == keyboard.BKSPACE:
         playing = app.playback_manager.get_playing_item()
         if playing is not None:
             if app.playback_manager.is_playing_audio:
@@ -1191,7 +1262,7 @@ def handle_key_press(key, mods):
                 app.widgetapp.remove_items([playing])
             return True
 
-    if key == menus.ESCAPE:
+    if key == keyboard.ESCAPE:
         if app.playback_manager.is_fullscreen:
             app.playback_manager.exit_fullscreen()
             return True
@@ -1199,22 +1270,22 @@ def handle_key_press(key, mods):
             app.widgetapp.on_stop_clicked()
             return True
 
-    if key == menus.RIGHT_ARROW:
+    if key == keyboard.RIGHT_ARROW:
         app.widgetapp.on_forward_clicked()
         return True
 
-    if key == menus.LEFT_ARROW:
+    if key == keyboard.LEFT_ARROW:
         app.widgetapp.on_previous_clicked()
         return True
 
-    if key == menus.UP_ARROW:
+    if key == keyboard.UP_ARROW:
         app.widgetapp.up_volume()
         return True
 
-    if key == menus.DOWN_ARROW:
+    if key == keyboard.DOWN_ARROW:
         app.widgetapp.down_volume()
         return True
 
-    if key == menus.SPACE:
+    if key == keyboard.SPACE:
         app.playback_manager.toggle_paused()
         return True
