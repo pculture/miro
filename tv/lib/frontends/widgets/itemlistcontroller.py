@@ -482,7 +482,7 @@ class ItemListController(object):
         # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id,
                                            self.selected_view)
-        self._selection_changed()
+        self._selection_changed('item-list-view-changed')
         self.expand_or_contract_item_details()
 
     def get_current_item_view(self):
@@ -886,10 +886,11 @@ class ItemListController(object):
         self._selection_changed()
         self.update_item_details()
 
-    def _selection_changed(self):
+    def _selection_changed(self, *extra_reasons_for_update_menus):
         """This is called whenever the item selection changes."""
         self.item_selection_info = ItemSelectionInfo(self.get_selection())
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('item-selection-changed',
+                                      *extra_reasons_for_update_menus)
 
     def update_item_details(self):
         try:
@@ -1095,8 +1096,11 @@ class ItemListController(object):
         self.send_model_changed()
         self.update_resume_button()
         self.update_count_label()
-        self.update_item_details()
         self.check_for_empty_list()
+        # call _selection_changed() and update_item_details in case one of the
+        # selected items changed
+        self._selection_changed()
+        self.update_item_details()
 
     def check_for_empty_list(self):
         self.widget.set_list_empty_mode(self.calc_list_empty_mode())

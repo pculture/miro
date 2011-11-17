@@ -409,13 +409,13 @@ class VideoDetailsWidget(Background):
     def handle_disable_subtitles(self, widget):
         if widget.active:
             app.video_renderer.disable_subtitles()
-            app.menu_manager.update_menus()
+            app.menu_manager.update_menus('playback-changed')
             self.rebuild_video_details()
 
     def handle_subtitle_change(self, widget, index):
         if widget.active:
             app.video_renderer.set_subtitle_track(index)
-            app.menu_manager.update_menus()
+            app.menu_manager.update_menus('playback-changed')
             self.rebuild_video_details()
 
     def handle_select_subtitle_file(self, widget):

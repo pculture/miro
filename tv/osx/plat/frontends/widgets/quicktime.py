@@ -355,7 +355,7 @@ class Player(player.Player):
         to_enable = self.get_subtitle_track_by_id(track_id)
         if to_enable is not None:
             to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
 
     def disable_subtitles(self):
         tracks = self.get_all_enabled_subtitle_tracks()

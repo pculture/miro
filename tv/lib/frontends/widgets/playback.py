@@ -294,7 +294,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_paused = False
         self.is_suspended = False
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
 
     def should_resume(self):
         if self.force_resume:
@@ -312,7 +312,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.emit('will-pause')
             self.player.pause()
             self.is_paused = True
-            app.menu_manager.update_menus()
+            app.menu_manager.update_menus('playback-changed')
 
     def fullscreen(self):
         if not self.is_playing or not self.video_display:
@@ -343,7 +343,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.emit('did-stop')
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
 
     def get_audio_tracks(self):
         """Get a list of available audio tracks
@@ -597,7 +597,7 @@ class PlaybackManager (signals.SignalEmitter):
             if self.detached_window is not None:
                 self.detached_window.set_title(item_info.name)
         self.emit('did-start-playing')
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
 
     def _build_video_player(self, item_info, volume):
         self.player = widgetset.VideoPlayer()
@@ -742,7 +742,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.switch_to_detached_playback()
         else:
             self.switch_to_attached_playback()
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('playback-changed')
             
     def switch_to_attached_playback(self):
         self.cancel_update_timer()
