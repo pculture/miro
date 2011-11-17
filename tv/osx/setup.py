@@ -582,6 +582,7 @@ class MiroBuild (py2app):
         print "Pre-compiling site.py"
         import py_compile
         py_compile.compile(os.path.join(self.rsrcRoot, 'lib', 'python%s' % PYTHON_VERSION, 'site.py'))
+        py_compile.compile(os.path.join(self.rsrcRoot, 'qt_extractor.py'))
     
     def copy_theme_files(self):
         # Copy theme files to the application bundle
