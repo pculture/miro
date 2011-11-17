@@ -57,9 +57,9 @@ class MetadataProgressUpdater(object):
         self.targets_to_update = set()
         # handle for our delayed callback
         self.timeout = None
-        # by default, wait half a second before sending the progess update to
+        # by default, wait 2 seconds before sending the progess update to
         # the frontend
-        self.message_interval = 0.5
+        self.message_interval = 2.0
 
     def _guess_mediatype(self, path):
         """Guess the mediatype of a file. Needs to be quick, as it's executed
