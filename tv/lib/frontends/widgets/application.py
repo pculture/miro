@@ -1660,13 +1660,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_item_list(self, message):
         app.info_updater.handle_item_list(message)
-        if app.menu_manager:
-            app.menu_manager.update_menus()
 
     def handle_items_changed(self, message):
         app.info_updater.handle_items_changed(message)
-        if app.menu_manager:
-            app.menu_manager.update_menus()
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

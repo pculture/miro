@@ -610,7 +610,7 @@ class LegacyMenuUpdater(object):
     def __init__(self):
         self.menu_item_fetcher = MenuItemFetcher()
 
-    def update(self):
+    def update(self, reasons):
         # reset enabled_groups and state_labels
         self.reset()
         # update enabled_groups and state_labels based on the state of the UI
@@ -858,15 +858,22 @@ class MenuManager(signals.SignalEmitter):
             logging.warn("Error enabling subtitle encoding menu item: %s",
                          menu_item_name)
 
-    def update_menus(self):
+    def update_menus(self, *reasons):
+        """Call this when a change is made that could change the menus
+
+        Use reasons to describe why the menus could change.  Some MenuUpdater
+        objects will do some optimizations based on that
+        """
+        reasons = set(reasons)
         self._set_play_pause()
         for menu_updater in self.menu_updaters:
-            menu_updater.update()
+            menu_updater.update(reasons)
 
 class MenuUpdater(object):
     """Base class for objects that dynamically update menus."""
     def __init__(self, menu_name):
         self.menu_name = menu_name
+        self.first_update = False
 
     # we lazily access our menu item, since we are created before the menubar
     # is fully setup.
@@ -878,7 +885,10 @@ class MenuUpdater(object):
             return self._menu
     menu = property(get_menu)
 
-    def update(self):
+    def update(self, reasons):
+        if not self.first_update and not self.should_process_update(reasons):
+            return
+        self.first_update = False
         self.start_update()
         if not self.should_show_menu():
             self.menu.hide()
@@ -889,6 +899,13 @@ class MenuUpdater(object):
             self.clear_menu()
             self.populate_menu()
         self.update_items()
+
+    def should_process_update(self, reasons):
+        """Test if we should ignore the update call.
+
+        :param reasons: the reasons passed in to MenuManager.update_menus()
+        """
+        return True
 
     def clear_menu(self):
         """Remove items from our menu before rebuilding it."""
@@ -920,6 +937,10 @@ class SortsMenuUpdater(MenuUpdater):
     def __init__(self):
         MenuUpdater.__init__(self, 'SortsMenu')
         self.current_sorts = []
+
+    def should_process_update(self, reasons):
+        return ('tab-selection-changed' in reasons or
+                'item-list-view-changed' in reasons)
 
     def action_name(self, column_name):
         return "ToggleColumn-" + column_name
@@ -972,6 +993,9 @@ class AudioTrackMenuUpdater(MenuUpdater):
     def __init__(self):
         MenuUpdater.__init__(self, 'AudioTrackMenu')
         self.currently_displayed_tracks = None
+
+    def should_process_update(self, reasons):
+        return 'playback-changed' in reasons
 
     def _on_track_change(self, menu_item, track_id):
         if app.playback_manager.is_playing:
@@ -1031,6 +1055,9 @@ class SubtitlesMenuUpdater(MenuUpdater):
         self.none_available = MenuItem(_("None Available"), "NoneAvailable")
         self.none_available.disable()
         self.currently_displayed_tracks = None
+
+    def should_process_update(self, reasons):
+        return 'playback-changed' in reasons
 
     def on_change_track(self, menu_item, track_id):
         if app.playback_manager.is_playing:
@@ -1152,7 +1179,7 @@ class SubtitleEncodingMenuUpdater(object):
     def has_encodings(self):
         return self.default_item is not None
 
-    def update(self):
+    def update(self, reasons):
         encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
         if app.playback_manager.is_playing_video:
             encoding_menu.enable()
