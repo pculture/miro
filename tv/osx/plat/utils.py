@@ -446,7 +446,7 @@ def _get_cmd_line_and_env_for_script(script_name):
     return ((py_exe_path, script_path), env)
 
 def movie_data_program_info(movie_path, thumbnail_path):
-    cmd_line, env = _get_cmd_line_and_env_for_script('qt_extractor.py')
+    cmd_line, env = _get_cmd_line_and_env_for_script('qt_extractor.pyc')
     return (cmd_line + (movie_path, thumbnail_path), env)
 
 def miro_helper_program_info():
