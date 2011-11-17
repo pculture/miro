@@ -974,7 +974,7 @@ class AudioTrackMenuUpdater(MenuUpdater):
         self.currently_displayed_tracks = None
 
     def _on_track_change(self, menu_item, track_id):
-        if menu_item.get_state() and app.playback_manager.is_playing:
+        if app.playback_manager.is_playing:
             app.playback_manager.set_audio_track(track_id)
 
     def action_name(self, track_id):
@@ -1033,7 +1033,7 @@ class SubtitlesMenuUpdater(MenuUpdater):
         self.currently_displayed_tracks = None
 
     def on_change_track(self, menu_item, track_id):
-        if menu_item.get_state() and app.playback_manager.is_playing:
+        if app.playback_manager.is_playing:
             app.playback_manager.set_subtitle_track(track_id)
 
     def on_disable(self, menu_item):
@@ -1193,6 +1193,4 @@ class SubtitleEncodingMenuUpdater(object):
             menu_item.set_group(self.default_item)
 
     def on_activate(self, menu_item, encoding):
-        if menu_item.get_state():
-            # only handle event if the menu is changing to on
-            app.playback_manager.select_subtitle_encoding(encoding)
+        app.playback_manager.select_subtitle_encoding(encoding)
