@@ -1257,6 +1257,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.header_view.custom_header = True
         self.tableview.setCornerView_(SorterPadding.alloc().init())
 
+    def enable_album_view_focus_hack(self):
+        # this only matters on GTK
+        pass
+
     def focus(self):
         if self.tableview.window() is not None:
             self.tableview.window().makeFirstResponder_(self.tableview)

@@ -62,6 +62,20 @@ from miro.frontends.widgets.gtk.tableviewcells import (GTKCustomCellRenderer,
 PathInfo = namedtuple('PathInfo', 'path column x y') 
 Rect = namedtuple('Rect', 'x y width height') 
 
+_album_view_gtkrc_installed = False
+def _install_album_view_gtkrc():
+    """Hack for disabling the focus ring on the album view widget."""
+    global _album_view_gtkrc_installed
+    if _album_view_gtkrc_installed:
+        return
+    rc_string = ('style "album-view-style"\n'
+                 '{ \n'
+                 '  GtkWidget::focus-line-width = 0 \n'
+                 '}\n'
+                 'widget "*.miro-album-view" style "album-view-style"\n')
+    gtk.rc_parse_string(rc_string)
+    _album_view_gtkrc_installed = True
+
 def rect_contains_rect(outside, inside):
     # currently unused
     return (outside.x <= inside.x and
@@ -1208,6 +1222,10 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         """
         column_spacing = TableColumn.FIXED_PADDING * len(self.columns)
         return total_width - column_spacing
+
+    def enable_album_view_focus_hack(self):
+        _install_album_view_gtkrc()
+        self._widget.set_name("miro-album-view")
 
     def focus(self):
         self._widget.grab_focus()
