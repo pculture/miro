@@ -31,39 +31,37 @@
 import os
 import sys
 import glob
-import objc
-import QTKit
-import AppKit
-import Foundation
+from objc import YES, NO, nil
+from QTKit import *
+from AppKit import *
+from Foundation import *
 
 from miro.plat import qtcomp
 from miro.plat import utils
 from miro.plat.frontends.widgets import mediatypes
 
-# Gross - renice this so that it runs with a lower priority.  See #15164.
-os.nice(19)
-
-# =============================================================================
-
 def register_quicktime_components():
     bundle_path = os.getenv('MIRO_BUNDLE_PATH')
-    components_directory_path = os.path.join(bundle_path, 'Contents', 'Components')
-    components = glob.glob(os.path.join(components_directory_path, '*.component'))
+    components_directory_path = os.path.join(bundle_path,
+                                             'Contents',
+                                             'Components')
+    components = glob.glob(os.path.join(components_directory_path,
+                                        '*.component'))
     for component in components:
         cmpName = os.path.basename(component)
         stdloc1 = os.path.join("/", "Library", "Quicktime", cmpName)
-        stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins", "Components", cmpName)
+        stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins",
+                               "Components", cmpName)
         if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
             qtcomp.register(component)
-
-# =============================================================================
 
 def extract_duration(qtmovie):
     try:
         qttime = qtmovie.duration()
         if utils.qttimescale(qttime) == 0:
             return -1
-        return int((utils.qttimevalue(qttime) / float(utils.qttimescale(qttime))) * 1000)
+        return int((utils.qttimevalue(qttime) /
+                   float(utils.qttimescale(qttime))) * 1000)
     except Exception:
         return -1
 
@@ -78,7 +76,7 @@ def get_type(qtmovie):
     has_audio = False
     has_video = False
     for track in all_tracks:
-        media_type = track.attributeForKey_(QTKit.QTTrackMediaTypeAttribute)
+        media_type = track.attributeForKey_(QTTrackMediaTypeAttribute)
         if media_type in mediatypes.AUDIO_MEDIA_TYPES:
             has_audio = True
         elif media_type in mediatypes.VIDEO_MEDIA_TYPES:
@@ -92,12 +90,11 @@ def get_type(qtmovie):
 
     return item_type
 
-# -----------------------------------------------------------------------------
-
 def extract_thumbnail(qtmovie, target, width=0, height=0):
     try:
         qttime = qtmovie.duration()
-        qttime = utils.qttimevalue_set(qttime, int(utils.qttimevalue(qttime) * 0.5))
+        qttime = utils.qttimevalue_set(qttime,
+                                       int(utils.qttimevalue(qttime) * 0.5))
         frame = qtmovie.frameImageAtTime_(qttime)
         if frame is objc.nil:
             return "Failure"
@@ -110,32 +107,37 @@ def extract_thumbnail(qtmovie, target, width=0, height=0):
             width = frame_size.width
             height = frame_size.height
 
-        source_size = frame.size()
-        source_ratio = source_size.width / source_size.height
-        destination_size = Foundation.NSSize(width, height)
-        destination_ratio = destination_size.width / destination_size.height
+        srcsize = frame.size()
+        srcratio = srcsize.width / srcsize.height
+        destsize = NSSize(width, height)
+        destratio = destsize.width / destsize.height
 
-        if source_ratio > destination_ratio:
-            size = Foundation.NSSize(destination_size.width, destination_size.width / source_ratio)
-            pos = Foundation.NSPoint(0, (destination_size.height - size.height) / 2.0)
+        if srcratio > destination_ratio:
+            size = NSSize(destination_size.width,
+                                     destination_size.width / srcratio)
+            pos = NSPoint(0,
+              (destination_size.height - size.height) / 2.0)
         else:
-            size = Foundation.NSSize(destination_size.height * source_ratio, destination_size.height)
-            pos = Foundation.NSPoint((destination_size.width - size.width) / 2.0, 0)
+            size = NSSize(destsize.height * srcratio, destsize.height)
+            pos = NSPoint((destsize.width - size.width) / 2.0, 0)
 
-        destination = AppKit.NSImage.alloc().initWithSize_(destination_size)
+        destination = NSImage.alloc().initWithSize_(destination_size)
         try:
             destination.lockFocus()
-            AppKit.NSGraphicsContext.currentContext().setImageInterpolation_(AppKit.NSImageInterpolationHigh)
-            AppKit.NSColor.blackColor().set()
-            AppKit.NSRectFill(((0,0), destination_size))
-            frame.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), source_size), AppKit.NSCompositeSourceOver, 1.0)
+            context = NSGraphicsContext.currentContext()
+            context.setImageInterpolation_(NSImageInterpolationHigh)
+            NSColor.blackColor().set()
+            NSRectFill(((0,0), destination_size))
+            frame.drawInRect_fromRect_operation_fraction_((pos, size),
+              ((0,0), srcsize), NSCompositeSourceOver, 1.0)
         finally:
             destination.unlockFocus()
 
         tiff_data = destination.TIFFRepresentation()
-        image_rep = AppKit.NSBitmapImageRep.imageRepWithData_(tiff_data)
-        properties = {AppKit.NSImageCompressionFactor: 0.8}
-        jpeg_data = image_rep.representationUsingType_properties_(AppKit.NSJPEGFileType, properties)
+        image_rep = NSBitmapImageRep.imageRepWithData_(tiff_data)
+        properties = {NSImageCompressionFactor: 0.8}
+        jpeg_data = image_rep.representationUsingType_properties_(
+          NSJPEGFileType, properties)
         if jpeg_data is objc.nil:
             return "Failure"
 
@@ -145,52 +147,59 @@ def extract_thumbnail(qtmovie, target, width=0, height=0):
 
     return "Success"
 
-# =============================================================================
+def usage():
+    print 'usage: %s movie thumb' % sys.argv[0]
 
-movie_path = sys.argv[1].decode('utf-8')
-thumb_path = sys.argv[2].decode('utf-8')
+def main(argc, argv):
+    if argc != 3:
+        usage()
+        return 1
 
-info = AppKit.NSBundle.mainBundle().infoDictionary()
-info["LSBackgroundOnly"] = "1"
-AppKit.NSApplicationLoad()
+    movie_path = argv[1].decode('utf-8')
+    thumb_path = argv[2].decode('utf-8')
+    
+    info = NSBundle.mainBundle().infoDictionary()
+    info["LSBackgroundOnly"] = "1"
+    NSApplicationLoad()
+    
+    register_quicktime_components()
+    
+    pyobjc_version = objc.__version__
+    pyobjc_version = pyobjc_version.split('.')
+    pyobjc_version = int(pyobjc_version[0])
+    
+    # XXX movieWithFile_error_ may be asynchronous, but at least when
+    # it is done locally it seems to return in such a way that makes it possible
+    # to extract stuff.  The QTMovieLoadState attribute never seems to update,
+    # maybe because we are missing some Cocoa runloop stuff or something.  One
+    # issue arises for streamed movie files (such as some mov), it returns
+    # loading state and then we hit failure and Miro puts it into the Misc
+    # category despite it actually being playable.
+    qtmovie, error = QTMovie.movieWithFile_error_(movie_path, None)
+    load_state = QTMovieLoadStateError
+    if qtmovie:
+        load_state = qtmovie.attributeForKey_(
+          QTMovieLoadStateAttribute).longValue()
+    if (qtmovie is None or error is not objc.nil or
+      load_state < QTMovieLoadStateLoaded):
+        print "Miro-Movie-Data-Length: -1"
+        print "Miro-Movie-Data-Thumbnail: Failure"
+        print "Miro-Movie-Data-Type: other"
+        sys.exit(0)
+    
+    movie_type = get_type(qtmovie)
+    print "Miro-Movie-Data-Type: %s" % movie_type
+    
+    duration = extract_duration(qtmovie)
+    print "Miro-Movie-Data-Length: %s" % duration
+    
+    if movie_type == "video":
+        thmb_result = extract_thumbnail(qtmovie, thumb_path)
+        print "Miro-Movie-Data-Thumbnail: %s" % thmb_result
+    else:
+        print "Miro-Movie-Data-Thumbnail: Failure"
+    
+    return 0
 
-register_quicktime_components()
-
-pyobjc_version = objc.__version__
-pyobjc_version = pyobjc_version.split('.')
-pyobjc_version = int(pyobjc_version[0])
-
-# XXX movieWithFile_error_ may be asynchronous, but at least when
-# it is done locally it seems to return in such a way that makes it possible
-# to extract stuff.  The QTMovieLoadState attribute never seems to update,
-# maybe because we are missing some Cocoa runloop stuff or something.  One
-# issue arises for streamed movie files (such as some mov), it returns
-# loading state and then we hit failure and Miro puts it into the Misc
-# category despite it actually being playable.
-qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path, None)
-load_state = QTKit.QTMovieLoadStateError
-if qtmovie:
-    load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute).longValue()
-if (qtmovie is None or error is not objc.nil or
-  load_state < QTKit.QTMovieLoadStateLoaded):
-    print "Miro-Movie-Data-Length: -1"
-    print "Miro-Movie-Data-Thumbnail: Failure"
-    print "Miro-Movie-Data-Type: other"
-    sys.exit(0)
-
-movie_type = get_type(qtmovie)
-print "Miro-Movie-Data-Type: %s" % movie_type
-
-duration = extract_duration(qtmovie)
-print "Miro-Movie-Data-Length: %s" % duration
-
-if movie_type == "video":
-    thmb_result = extract_thumbnail(qtmovie, thumb_path)
-    print "Miro-Movie-Data-Thumbnail: %s" % thmb_result
-else:
-    print "Miro-Movie-Data-Thumbnail: Failure"
-
-
-sys.exit(0)
-
-# =============================================================================
+if __name__ == '__main__':
+    sys.exit(main(len(sys.argv), sys.argv))
