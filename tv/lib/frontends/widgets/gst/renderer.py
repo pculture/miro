@@ -469,7 +469,7 @@ class VideoRenderer(Renderer):
             return self.enabled_track
         return self.playbin.get_property("current-text")
 
-    def enable_subtitle_track(self, track_index):
+    def set_subtitle_track(self, track_index):
         if not self.supports_subtitles:
             return
         tracks = self.get_subtitles()
@@ -480,7 +480,7 @@ class VideoRenderer(Renderer):
 
         if filename is not None:
             # file-based subtitle tracks have to get selected as files
-            # first, then enable_subtitle_track gets called again with
+            # first, then set_subtitle_track gets called again with
             # the new track_index
             pos = self.get_current_time()
 
@@ -522,8 +522,8 @@ class VideoRenderer(Renderer):
             sub_path = util.copy_subtitle_file(sub_path, iteminfo.video_path)
         self.select_file(iteminfo, handle_ok, handle_err, sub_path)
 
-    def setup_subtitle_encoding_menu(self, menubar):
-        menus.add_subtitle_encoding_menu(menubar, _('Eastern European'),
+    def setup_subtitle_encoding_menu(self):
+        app.menu_manager.add_subtitle_encoding_menu(_('Eastern European'),
                 ("ISO-8859-4", _("Baltic")),
                 ("ISO-8859-13", _("Baltic")),
                 ("WINDOWS-1257", _("Baltic")),
@@ -544,7 +544,7 @@ class VideoRenderer(Renderer):
                 ("ISO-8859-16", _("Romanian")),
                 ("MAC_ROMANIAN", _("Romanian")),
         )
-        menus.add_subtitle_encoding_menu(menubar, _('Western European'),
+        app.menu_manager.add_subtitle_encoding_menu(_('Western European'),
                 ("ISO-8859-14", _("Celtic")),
                 ("ISO-8859-7", _("Greek")),
                 ("MAC_GREEK", _("Greek")),
@@ -558,7 +558,7 @@ class VideoRenderer(Renderer):
                 ("MAC_ROMAN", _("Western")),
                 ("WINDOWS-1252", _("Western")),
         )
-        menus.add_subtitle_encoding_menu(menubar, _('East Asian'),
+        app.menu_manager.add_subtitle_encoding_menu(_('East Asian'),
                 ("GB18030", _("Chinese Simplified")),
                 ("GB2312", _("Chinese Simplified")),
                 ("GBK", _("Chinese Simplified")),
@@ -574,7 +574,7 @@ class VideoRenderer(Renderer):
                 ("JOHAB", _("Korean")),
                 ("UHC", _("Korean")),
         )
-        menus.add_subtitle_encoding_menu(menubar, _('SE and SW Asian'),
+        app.menu_manager.add_subtitle_encoding_menu(_('SE and SW Asian'),
                 ("ARMSCII-8", _("Armenian")),
                 ("GEORGIAN-PS", _("Georgian")),
                 ("MAC_GUJARATI", _("Gujarati")),
@@ -589,7 +589,7 @@ class VideoRenderer(Renderer):
                 ("VISCII", _("Vietnamese")),
                 ("WINDOWS-1258", _("Vietnamese")),
         )
-        menus.add_subtitle_encoding_menu(menubar, _('Middle Eastern'),
+        app.menu_manager.add_subtitle_encoding_menu(_('Middle Eastern'),
                 ("ISO-8859-6", _("Arabic")),
                 ("IBM864", _("Arabic")),
                 ("MAC_ARABIC", _("Arabic")),
@@ -601,7 +601,7 @@ class VideoRenderer(Renderer):
                 ("ISO-8859-8", _("Hebrew Visual")),
                 ("MAC_FARSI", _("Persian")),
         )
-        menus.add_subtitle_encoding_menu(menubar, _('Unicode'),
+        app.menu_manager.add_subtitle_encoding_menu(_('Unicode'),
                 ("UTF-7", _("Unicode")),
                 ("UTF-8", _("Unicode")),
                 ("UTF-16", _("Unicode")),

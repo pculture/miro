@@ -73,12 +73,19 @@ class Widget(signals.SignalEmitter):
     def set_widget(self, widget):
         self._widget = widget
         wrappermap.add(self._widget, self)
-        self.wrapped_widget_connect('hierarchy_changed',
-                self.on_hierarchy_changed)
+        if self.should_connect_to_hierarchy_changed():
+            self.wrapped_widget_connect('hierarchy_changed',
+                    self.on_hierarchy_changed)
         self.wrapped_widget_connect('size-allocate', self.on_size_allocate)
         self.wrapped_widget_connect('key-press-event', self.on_key_press)
         self.wrapped_widget_connect('focus-out-event', self.on_focus_out)
         self.use_custom_style_callback = None
+
+    def should_connect_to_hierarchy_changed(self):
+        # GTK creates windows to handle submenus, which messes with our
+        # on_hierarchy_changed callback.  We don't care about custom styles
+        # for menus anyways, so just ignore the signal.
+        return not isinstance(self._widget, gtk.MenuItem)
 
     def set_can_focus(self, allow):
         """Set if we allow the widget to hold keyboard focus.

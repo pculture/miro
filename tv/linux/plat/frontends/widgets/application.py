@@ -68,6 +68,7 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.associate import associate_protocols
 
 from miro.frontends.widgets.gtk.widgetset import Rect
+from miro.frontends.widgets.gtk import gtkmenus
 from miro.frontends.widgets.gtk import webkitgtkhacks
 from miro.frontends.widgets.gtk import gtkdirectorywatch
 
@@ -146,6 +147,7 @@ class LinuxApplication(Application):
         self._setup_webkit()
         associate_protocols(self._get_command())
         gtkdirectorywatch.GTKDirectoryWatcher.install()
+        self.menubar = gtkmenus.MainWindowMenuBar()
         self.startup()
 
         logging.info("Linux version:     %s %s %s",

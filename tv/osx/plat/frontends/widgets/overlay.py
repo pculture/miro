@@ -191,11 +191,10 @@ class OverlayPalette (NSWindowController):
             self.adjustContent(videoWindow, True)
 
     def showSubtitlesMenu_(self, sender):
-        menu = NSMenu.alloc().init()
-        menu.setAutoenablesItems_(NO)
-        subtitles_tracks = app.playback_manager.player.get_subtitle_tracks()
-        osxmenus.populate_subtitles_menu(menu, subtitles_tracks)
-        NSMenu.popUpContextMenu_withEvent_forView_(menu, NSApp().currentEvent(), self.window().contentView())
+        subtitles_menu = app.widgetapp.menubar.find('SubtitlesMenu')
+        NSMenu.popUpContextMenu_withEvent_forView_(subtitles_menu._menu,
+                                                   NSApp().currentEvent(),
+                                                   self.window().contentView())
     
     def getHorizontalPosition(self, videoWindow, width):
         parentFrame = videoWindow.frame()
