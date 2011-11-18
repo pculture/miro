@@ -547,7 +547,8 @@ class DeviceSyncManager(object):
     def __init__(self, device):
         self.device = device
         self.device_info = self.device.info
-        self.device_settings = self.device.database.get(u'settings')
+        self.device_settings = self.device.database.setdefault(u'settings',
+                                                               {})
         self.start_time = time.time()
         self.signal_handles = []
         self.finished = 0
