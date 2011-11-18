@@ -479,29 +479,43 @@ class VideoRenderer(Renderer):
         language, filename = tracks[track_index]
 
         if filename is not None:
-            # file-based subtitle tracks have to get selected as files
-            # first, then set_subtitle_track gets called again with
-            # the new track_index
-            pos = self.get_current_time()
-
-            # note: select_success needs to mirror what playback
-            # manager does
-            def select_success():
-                self.set_current_time(pos)
-                self.play()
-
-            self.select_subtitle_file(self.iteminfo, filename, select_success)
+            self.switch_subtitle_file(filename)
             self.enabled_track = track_index
             return
         flags = self.playbin.get_property('flags')
         self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
                                     current_text=track_index)
 
+    def switch_subtitle_file(self, filename):
+        """Set our playbin to use a file to get subtitles from.
+
+        :param filename: path to file or None to disable subtitle files
+        """
+        # file-based subtitle tracks have to get selected as files
+        # first, then enable_subtitle_track gets called again with
+        # the new track_index
+        pos = self.get_current_time()
+
+        # note: select_success needs to mirror what playback
+        # manager does
+        def select_success():
+            self.set_current_time(pos)
+            self.play()
+
+        self.select_subtitle_file(self.iteminfo, filename, select_success)
+
     def disable_subtitles(self):
         if not self.supports_subtitles:
             return
-        flags = self.playbin.get_property('flags')
-        self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
+        if self.playbin.get_property("suburi") is None:
+            # playing embedded subtitles, we can just switch off the
+            # PLAY_FLAG_TEXT property
+            flags = self.playbin.get_property('flags')
+            self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
+        else:
+            # playing subtitles from an external file, we have to jump through
+            # some hoops to disable them.
+            self.switch_subtitle_file(None)
         self.enabled_track = None
 
     def select_subtitle_file(self, iteminfo, sub_path,
@@ -518,7 +532,7 @@ class VideoRenderer(Renderer):
             app.playback_manager.stop()
         filenames = [filename
                      for lang, filename in self.get_subtitles().values()]
-        if sub_path not in filenames:
+        if sub_path is not None and sub_path not in filenames:
             sub_path = util.copy_subtitle_file(sub_path, iteminfo.video_path)
         self.select_file(iteminfo, handle_ok, handle_err, sub_path)
 
