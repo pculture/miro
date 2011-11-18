@@ -837,7 +837,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     BOTTOM_LINE_COLOR = widgetutil.css_to_color('#dddddd')
     FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 
-    min_width = 130
+    min_width = 133
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
@@ -1027,6 +1027,10 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             return
 
         width = self.album_artist_text_end - x
+        if width < 10:
+            # don't try to render if we have a really small, or negative
+            # amount of space
+            return
         # setup a textbox for the text
         layout_manager.set_font(self.FONT_SIZE, bold=bold)
         layout_manager.set_text_color(self.TEXT_COLOR)
