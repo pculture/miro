@@ -851,8 +851,6 @@ class DeviceMountedView(widgetset.VBox):
                                                        None,
                                                        u'auto', is_checked)
             message.send_to_backend()
-            if is_checked:
-                messages.DeviceSyncFeeds(self.device).send_to_backend()
 
     def _max_fill_enabled_changed(self, widget):
         is_checked = widget.get_checked()
