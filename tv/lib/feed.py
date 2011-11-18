@@ -2094,6 +2094,9 @@ class DirectoryScannerImplBase(FeedImpl):
                     "handle directory watcher updates")
 
     def handle_watcher_updates(self):
+        # If we are not longer valid just return
+        if not self.ufeed.id_exists():
+            return
         # find deleted paths that we have items for
         to_remove = []
         for item in self.items:
@@ -2132,13 +2135,16 @@ class DirectoryScannerImplBase(FeedImpl):
         return known_files
 
     def update(self):
+        self.ufeed.confirm_db_thread()
+        if not self.ufeed.id_exists():
+            return
+
         if not self.updating:
             self.updating = True
             self.do_update()
 
     @eventloop.idle_iterator
     def do_update(self):
-        self.ufeed.confirm_db_thread()
 
         def should_halt_early():
             """Check if we should halt before completing the entire update.
