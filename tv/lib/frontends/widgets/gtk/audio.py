@@ -28,25 +28,9 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
-from miro import player
+from miro.frontends.widgets.gtk import player
 
-class NullRenderer:
-    def __init__(self):
-        pass
-
-    def reset(self):
-        pass
-
-    def select_file(self, iteminfo, success_callback, error_callback):
-        error_callback()
-
-    def stop(self):
-        pass
-
-    def set_volume(self, v):
-        pass
-
-class AudioPlayer(player.Player):
+class AudioPlayer(player.GTKPlayer):
     """Audio renderer widget.
 
     Note: ``app.audio_renderer`` must be inititalized before instantiating this
@@ -54,11 +38,7 @@ class AudioPlayer(player.Player):
     ``None``.
     """
     def __init__(self):
-        player.Player.__init__(self)
-        if app.audio_renderer is not None:
-            self.renderer = app.audio_renderer
-        else:
-            self.renderer = NullRenderer()
+        player.GTKPlayer.__init__(self, app.audio_renderer)
 
     def teardown(self):
         self.renderer.reset()

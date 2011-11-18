@@ -48,7 +48,6 @@ from miro import moviedata
 from miro import signals
 from miro import httpclient
 from miro import commandline
-from miro.frontends.widgets import menus
 from miro.frontends.widgets.application import Application
 from miro.plat import growl
 from miro.plat import bundle
@@ -135,11 +134,8 @@ class OSXApplication(Application, signals.SignalEmitter):
 
     def startup_ui(self):
         migrateappname.migrateVideos('Democracy', 'Miro')
-        osxmenus.populate_menu()
+        self.menubar = osxmenus.MenuBar()
         Application.startup_ui(self)
-        app.menu_manager.connect('enabled-changed', osxmenus.on_menu_change)
-        app.playback_manager.connect('did-start-playing', osxmenus.on_playback_change)
-        app.playback_manager.connect('did-stop', osxmenus.on_playback_change)
         # add the Amazon cookie to Safari
         storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         if 'dmusic_download_manager_enabled' not in [
@@ -460,44 +456,9 @@ class AppController(NSObject):
 
         eventloop.add_idle(lambda: commandline.parse_command_line_args([url]), "Open URL")
 
-    def validateUserInterfaceItem_(self, menuitem):
-        action = menuitem.representedObject()
-        item = menus.osx_menu_structure.get(action)
+    def handleMenuActivate_(self, menu_item):
+        osxmenus.handle_menu_activate(menu_item)
 
-        label = item.label
-        if action == 'PlayPauseItem':
-            label = item.state_labels.get(app.menu_manager.play_pause_state,
-                                          item.label)
-        else:
-            for state, actions in app.menu_manager.states.items():
-                if action in actions:
-                    label = item.state_labels.get(state, item.label)
-                    break
-        menuitem.setTitleWithMnemonic_(label.replace("_", "&"))
-
-        group_names = item.groups
-        for group_name in group_names:
-            if group_name in app.menu_manager.enabled_groups:
-                return True
-        return False
-
-    def handleMenuItem_(self, sender):
-        action = sender.representedObject()
-        if action == "PresentActualSize":
-            self.present_movie('natural-size')
-        elif action == "PresentDoubleSize":
-            self.present_movie('double-size')
-        elif action == "PresentHalfSize":
-            self.present_movie('half-size')
-        elif action == "ShowMain":
-            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
-        else:
-            handler = menus.lookup_handler(action)
-            if handler is not None:
-                handler()
-            else:
-                logging.warn("No handler for %s" % action)
-    
     def present_movie(self, mode):
         # Make sure that the video window is not minimized and is the key window.
         # (based on a patch by Geoffrey Lee, see #13545 and #13546)

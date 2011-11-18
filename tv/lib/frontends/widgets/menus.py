@@ -29,190 +29,68 @@
 
 """Menu handling code."""
 
+import collections
+import itertools
+import logging
+
 from miro import app
 from miro import errors
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro.frontends.widgets.keyboard import (Shortcut, CTRL, ALT, SHIFT, CMD,
+     MOD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE,
+     BKSPACE, ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12)
 from miro.frontends.widgets.widgetconst import COLUMN_LABELS
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
-
+from miro.plat.frontends.widgets import widgetset
+# import menu widgets into our namespace for easy access
+from miro.plat.frontends.widgets.widgetset import (Separator, Menu,
+                                                   RadioMenuItem, CheckMenuItem)
 from miro.gtcache import gettext as _
 
-(CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW,
- DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE,
- F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) = range(25)
+class MenuItem(widgetset.MenuItem):
+    """Portable MenuItem class.
 
-MOD = CTRL
-
-def set_mod(modifier):
-    """Allows the platform to change the MOD key.  OSX and
-    Windows have different mod keys.
-
-    Examples:
-    >>> set_mod(CTRL)
-    >>> set_mod(CMD)
+    This adds group handling to the platform menu items.
     """
-    global MOD
-    MOD = modifier
+    # group_map is used for the legacy menu updater code
+    group_map = collections.defaultdict(set)
 
-class Shortcut:
-    """Defines a shortcut key combination used to trigger this
-    menu item.
-
-    The first argument is the shortcut key.  Other arguments are
-    modifiers.
-
-    Examples:
-
-    >>> Shortcut("x", MOD)
-    >>> Shortcut(BKSPACE, MOD)
-
-    This is wrong:
-
-    >>> Shortcut(MOD, "x")
-    """
-    def __init__(self, shortcut, *modifiers):
-        self.shortcut = shortcut
-        self.modifiers = modifiers
-
-class MenuItem:
-    """Single item in the menu that can be clicked on that has an action.
-
-    :param label: The label it has (must be internationalized)
-    :param action: The action string for this menu item.
-    :param shortcuts: None, the Shortcut, or tuple of Shortcut objects.
-    :param groups: The action groups this item is enabled in.  By default
-                   this is ["AlwaysOn"]
-    :param state_labels: If this menu item has states, then this is
-                         the name/value pairs for all states.
-
-    Example:
-
-    >>> MenuItem(_("Preferences"), "EditPreferences")
-    >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
-    >>> MenuItem(_("_Update Podcasts and Library"), "UpdatePodcasts",
-    ...          (Shortcut("r", MOD), Shortcut(F5)))
-    >>> MenuItem(_("_Play"), "PlayPauseItem",
-    ...          play=_("_Play"), pause=_("_Pause"))
-    """
-    def __init__(self, label, action, shortcuts=None, groups=None,
-            **state_labels):
-        self.label = label
-        self.action = action
-        if shortcuts is None:
-            shortcuts = ()
-        if not isinstance(shortcuts, tuple):
-            shortcuts = (shortcuts,)
-        self.shortcuts = shortcuts
-        if groups is None:
-            groups = ["AlwaysOn"]
-        self.groups = groups
+    def __init__(self, label, name, shortcut=None, groups=None,
+                 **state_labels):
+        widgetset.MenuItem.__init__(self, label, name, shortcut)
+        # state_labels is used for the legacy menu updater code
         self.state_labels = state_labels
+        if groups:
+            if len(groups) > 1:
+                raise ValueError("only support one group")
+            MenuItem.group_map[groups[0]].add(self)
 
-class RadioMenuItem(MenuItem):
-    """MenuItem that has a radio button is grouped with other RadioMenuItems.
+class MenuItemFetcher(object):
+    """Get MenuItems by their name quickly.  """
 
-    :param radio_group: identifier for the group that this menu item is in.
-    """
-    def __init__(self, label, action, radio_group, shortcuts=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, action, shortcuts, groups,
-                **state_labels)
-        self.radio_group = radio_group
-
-class CheckMenuItem(MenuItem):
-    """MenuItem that has a check mark.
-
-    :param check_group: the group this menu item is in
-    """
-    def __init__(self, label, action, check_group, shortcuts=None,
-            groups=None, **state_labels):
-        MenuItem.__init__(self, label, action, shortcuts, groups,
-                **state_labels)
-        self.check_group = check_group
-
-class Separator:
-    """This denotes a separator in the menu.
-    """
     def __init__(self):
-        self.action = None
+        self._cache = {}
 
-class Menu:
-    """A Menu holds a list of MenuItems and Menus.
+    def __getitem__(self, name):
+        if name in self._cache:
+            return self._cache[name]
+        else:
+            menu_item = app.widgetapp.menubar.find(name)
+            self._cache[name] = menu_item
+            return menu_item
 
-    Example:
-    >>> Menu(_("P_layback"), "Playback", [
-    ...      MenuItem(_("_Foo"), "Foo"),
-    ...      MenuItem(_("_Bar"), "Bar")
-    ...      ])
-    >>> Menu("", "toplevel", [
-    ...     Menu(_("_File"), "File", [ ... ])
-    ...     ])
+def setup_menubar(menubar):
+    """Setup the main miro menubar.
     """
-    def __init__(self, label, action, menuitems, groups=None):
-        self.label = label
-        self.action = action
-        self.menuitems = list(menuitems)
-        if groups is None:
-            groups = ["AlwaysOn"]
-        self.groups = groups
+    menubar.add_initial_menus(get_app_menu())
+    menubar.connect("activate", on_menubar_activate)
 
-    def __iter__(self):
-        for mem in self.menuitems:
-            yield mem
-            if isinstance(mem, Menu):
-                for mem2 in mem:
-                    yield mem2
+def get_app_menu():
+    """Returns the default menu structure."""
 
-    def has(self, action):
-        for mem in self:
-            if mem.action == action:
-                return True
-        return False
-
-    def get(self, action, default=None):
-        for mem in self:
-            if mem.action == action:
-                return mem
-
-        if default is not None:
-            return default
-
-        raise ValueError("%s is not in this menu." % action)
-
-    def index(self, action):
-        for i, mem in enumerate(self.menuitems):
-            if mem.action == action:
-                return i
-        raise ValueError("%s not in this menu." % action)
-
-    def remove(self, action):
-        # FIXME - this won't remove separators--probably should do
-        # a pass to remove a separator for two separators in a row
-        # or a separator at the beginning or end of the list
-        self.menuitems = [m for m in self.menuitems if m.action != action]
-        for mem in self.menuitems:
-            if isinstance(mem, Menu):
-                mem.remove(action)
-
-    def count(self):
-        return len(self.menuitems)
-
-    def insert(self, index, menuitem):
-        self.menuitems.insert(index, menuitem)
-
-    def append(self, menuitem):
-        self.menuitems.append(menuitem)
-
-def get_menu():
-    """Returns the default menu structure.
-
-    Call this, then make whatever platform-specific changes you 
-    need to make.
-    """
-    mbar = Menu("", "TopLevel", [
-            Menu(_("_File"), "FileMenu", [
+    file_menu = Menu(_("_File"), "FileMenu", [
                     MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
                              groups=["NonPlaying"]),
                     Menu(_("Import"), "Import", [
@@ -250,9 +128,9 @@ def get_menu():
                     MenuItem(_("Check Version"), "CheckVersion"),
                     MenuItem(_("Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
-                    ]),
+                    ])
 
-            Menu(_("_Sidebar"), "SidebarMenu", [
+    sidebar_menu = Menu(_("_Sidebar"), "SidebarMenu", [
                     MenuItem(_("Add Podcast"), "NewPodcast",
                              Shortcut("n", MOD),
                              groups=["NonPlaying"]),
@@ -279,7 +157,7 @@ def get_menu():
                              site=_("Remove Source"),
                              sites=_("Remove Sources")),
                     MenuItem(_("Update Podcast"), "UpdatePodcasts",
-                             (Shortcut("r", MOD), Shortcut(F5)),
+                             Shortcut("r", MOD),
                              groups=["PodcastsSelected"],
                              plural=_("Update Podcasts")),
                     MenuItem(_("Update All Podcasts and Library"),
@@ -296,9 +174,9 @@ def get_menu():
                              groups=["PodcastSelected"]),
                     MenuItem(_("Copy URL"), "CopyPodcastURL",
                              groups=["PodcastSelected"]),
-                    ]),
+                    ])
 
-            Menu(_("_Playlists"), "PlaylistsMenu", [
+    playlists_menu = Menu(_("_Playlists"), "PlaylistsMenu", [
                     MenuItem(_("New _Playlist"), "NewPlaylist",
                              Shortcut("p", MOD),
                              groups=["NonPlaying"]),
@@ -313,13 +191,11 @@ def get_menu():
                              plural=_("Remove Playlists"),
                              folders=_("Remove Playlist Folders"),
                              folder=_("Remove Playlist Folder")),
-                    ]),
+                    ])
 
-            Menu(_("P_layback"), "PlaybackMenu", [
+    playback_menu = Menu(_("P_layback"), "PlaybackMenu", [
                     MenuItem(_("Play"), "PlayPauseItem",
-                             groups=["PlayPause"],
-                             play=_("Play"),
-                             pause=_("Pause")),
+                             groups=["PlayPause"]),
                     MenuItem(_("Stop"), "StopItem", Shortcut("d", MOD),
                              groups=["Playing"]),
                     Separator(),
@@ -346,7 +222,7 @@ def get_menu():
                              groups=["Playing"]),
                     Separator(),
                     MenuItem(_("_Fullscreen"), "Fullscreen",
-                             (Shortcut("f", MOD), Shortcut(ENTER, ALT)),
+                             Shortcut("f", MOD),
                              groups=["PlayingVideo"]),
                     MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach",
                              Shortcut("t", MOD),
@@ -356,27 +232,21 @@ def get_menu():
                                      groups=["NeverEnabled"]),
                             ]),
                     Menu(_("Subtitles"), "SubtitlesMenu", [
-                            MenuItem(_("None Available"), "NoneAvailable",
-                                     groups=["NeverEnabled"]),
-                            Separator(),
-                            MenuItem(_("Select a Subtitles File..."),
-                                     "SubtitlesSelect",
-                                     groups=["PlayingLocalVideo"])
+                            Menu(_("_Encoding"), "SubtitleEncodingMenu", []),
                             ]),
-                    ]),
+                    ])
+    # hide the SubtitleEncodingMenu until it's populated with items.  On OSX,
+    # we don't support it yet
+    playback_menu.find("SubtitleEncodingMenu").hide()
 
-            Menu(_("Sorts"), "ViewMenu", _get_view_menu()),
-
-            Menu(_("_Convert"), "ConvertMenu", _get_convert_menu()),
-
-            Menu(_("_Help"), "HelpMenu", [
+    sorts_menu = Menu(_("Sorts"), "SortsMenu", [])
+    convert_menu = Menu(_("_Convert"), "ConvertMenu", _get_convert_menu())
+    help_menu = Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("About %(name)s",
                                {'name': app.config.get(prefs.SHORT_APP_NAME)}),
                              "About")
                     ])
-            ])
 
-    help_menu = mbar.get("HelpMenu")
     if app.config.get(prefs.DONATE_URL):
         help_menu.append(MenuItem(_("Donate"), "Donate"))
 
@@ -391,8 +261,11 @@ def get_menu():
     if app.config.get(prefs.PLANET_URL):
         help_menu.append(MenuItem(_("Planet Miro"), "Planet"))
 
+    all_menus = [file_menu, sidebar_menu, playlists_menu, playback_menu,
+            sorts_menu, convert_menu, help_menu ]
+
     if app.debugmode:
-        dev_menu = Menu(_("Dev"), "DevMenu", [
+        all_menus.append(Menu(_("Dev"), "DevMenu", [
                 MenuItem(_("Profile Message"), "ProfileMessage"),
                 MenuItem(_("Profile Redraw"), "ProfileRedraw"),
                 MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
@@ -403,9 +276,8 @@ def get_menu():
                     "ForceFeedparserProcessing"),
                 MenuItem(_("Clog Backend"), "ClogBackend")
                 ])
-
-        mbar.menuitems.append(dev_menu)
-    return mbar
+        )
+    return all_menus
 
 def _get_convert_menu():
     menu = list()
@@ -422,45 +294,14 @@ def _get_convert_menu():
     menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
     return menu
 
-def add_subtitle_encoding_menu(menubar, category_label, *encodings):
-    """Helper method to set up the subtitles encoding menu.
-
-    This method should be called for each category of subtitle encodings (East
-    Asian, Western European, Unicode, etc).  Pass it the list of encodings for
-    that category.
-
-    :param category_label: human-readable name for the category
-    :param encodings: list of (label, encoding) tuples.  label is a
-        human-readable name, and encoding is a value that we can pass to
-        VideoDisplay.select_subtitle_encoding()
-    """
-    subtitles_menu = menubar.get("PlaybackMenu").get("SubtitlesMenu")
-    try:
-        encoding_menu = subtitles_menu.get("SubtitleEncodingMenu")
-    except ValueError:
-        # first time calling this function, we need to set up the menu.
-        encoding_menu = Menu(_("_Encoding"),
-                "SubtitleEncodingMenu", [], groups=['PlayingVideo'])
-        subtitles_menu.append(encoding_menu)
-        default_item = RadioMenuItem(_('Default (UTF-8)'),
-                "SubtitleEncoding-Default", 'subtitle-encoding',
-                groups=['PlayingVideo'])
-        encoding_menu.append(default_item)
-        app.menu_manager.subtitle_encoding_enabled = True
-
-    category_menu = Menu(category_label,
-            "SubtitleEncodingCat%s" % encoding_menu.count(), [],
-            groups=['PlayingVideo'])
-    encoding_menu.append(category_menu)
-
-    for encoding, name in encodings:
-        label = '%s (%s)' % (name, encoding)
-        category_menu.append(RadioMenuItem(label,
-            'SubtitleEncoding-%s' % encoding,
-            'subtitle-encoding', groups=["PlayingVideo"]))
-
 action_handlers = {}
 group_action_handlers = {}
+
+def on_menubar_activate(menubar, action_name):
+    callback = lookup_handler(action_name)
+    if callback is not None:
+        callback()
+
 def lookup_handler(action_name):
     """For a given action name, get a callback to handle it.  Return
     None if no callback is found.
@@ -498,9 +339,6 @@ def group_action_handler(action_prefix):
 
 def make_convert_handler(converter):
     return "ConvertItemTo-" + converter.identifier
-
-def make_column_toggle_handler(name):
-    return "ToggleColumn-" + name
 
 # File menu
 @action_handler("Open")
@@ -678,13 +516,6 @@ def on_toggle_detach():
 def on_subtitles_select():
     app.playback_manager.open_subtitle_file()
 
-@group_action_handler("SubtitleEncoding")
-def on_subtitle_encoding(converter):
-    if converter == 'Default':
-        app.playback_manager.select_subtitle_encoding(None)
-    else:
-        app.playback_manager.select_subtitle_encoding(converter)
-
 # Sorts menu
 @group_action_handler("ToggleColumn")
 def on_toggle_column(name):
@@ -762,27 +593,53 @@ def generate_action_groups(menu_structure):
                 action_groups.setdefault(grp, []).append(menu.action)
     return action_groups
 
-class MenuStateManager(signals.SignalEmitter):
-    """Updates the menu based on the current selection.
+class LegacyMenuUpdater(object):
+    """This class contains the logic to update the menus based on enabled
+    groups and state labels.
 
-    This includes enabling/disabling menu items, changing menu text
-    for plural selection and enabling/disabling the play button.  The
-    play button is obviously not a menu item, but it's pretty closely
-    related
-
-    Whenever code makes a change that could possibly affect which menu
-    items should be enabled/disabled, it should call the
-    update_menus() method.
+    Now that we can directly manipulate MenuItems, we probably can re-write
+    this stuff in a cleaner and better way.
     """
+    # NOTE: this code is probably extremely brittle.  If you want to change
+    # something, you are probably better off rewriting it and moving it to
+    # MenuManager
+    #
+    # FIXME: we should probably just move all this code to new classes
+    # eventually
+
     def __init__(self):
-        signals.SignalEmitter.__init__(self)
-        self.create_signal('enabled-changed')
-        self.create_signal('radio-group-changed')
-        self.create_signal('checked-changed')
-        self.enabled_groups = set(['AlwaysOn'])
-        self.states = {}
-        self.play_pause_state = "play"
-        self.subtitle_encoding_enabled = False
+        self.menu_item_fetcher = MenuItemFetcher()
+
+    def update(self, reasons):
+        # reset enabled_groups and state_labels
+        self.reset()
+        # update enabled_groups and state_labels based on the state of the UI
+        self._handle_selected_tabs()
+        self._handle_selected_items()
+        # update menu items based on enabled_groups and state_labels
+        self.update_enabled_groups()
+        self.update_state_labels()
+
+    def update_enabled_groups(self):
+        for group_name, items in MenuItem.group_map.iteritems():
+            if group_name in self.enabled_groups:
+                for item in items:
+                    item.enable()
+            else:
+                for item in items:
+                    item.disable()
+
+    def update_state_labels(self):
+        for state, names in self.states.iteritems():
+            for name in names:
+                menu_item = self.menu_item_fetcher[name]
+                try:
+                    new_label = menu_item.state_labels[state]
+                except KeyError:
+                    logging.warn("Error trying to set menu item %s to %s",
+                                 name, state)
+                else:
+                    menu_item.set_label(new_label)
 
     def reset(self):
         self.states = {"feed": [],
@@ -816,13 +673,6 @@ class MenuStateManager(signals.SignalEmitter):
         else:
             self.enabled_groups.add('NonPlaying')
 
-    def _set_play_pause(self):
-        if ((not app.playback_manager.is_playing
-             or app.playback_manager.is_paused)):
-            self.play_pause_state = 'play'
-        else:
-            self.play_pause_state = 'pause'
-
     def _handle_feed_selection(self, selected_feeds):
         """Handle the user selecting things in the feed list.
 
@@ -845,9 +695,7 @@ class MenuStateManager(signals.SignalEmitter):
             if len(selected_folders) == len(selected_feeds):
                 self.states["folders"].append("RemoveSomething")
             else:
-                self.states["plural"].append("RemoveSomething")
                 self.states["feeds"].append("RemoveSomething")
-                self.states["feeds"].append("RenameSomething")
             self.states["plural"].append("UpdatePodcasts")
 
     def _handle_site_selection(self, selected_sites):
@@ -893,69 +741,49 @@ class MenuStateManager(signals.SignalEmitter):
         # we don't change menu items for the static tab list
         pass
 
-    def _update_menus_for_selected_tabs(self):
+    def _handle_selected_tabs(self):
         try:
             selection_type, selected_tabs = app.tabs.selection
         except errors.WidgetActionError:
             return
-        if len(selected_tabs) == 1:
-            app.menu_manager._update_view_menu()
         if selection_type is None or selected_tabs[0].type == u'tab':
             pass
         elif selection_type == 'feed':
-            app.menu_manager._handle_feed_selection(selected_tabs)
+            self._handle_feed_selection(selected_tabs)
         elif selection_type == 'playlist':
-            app.menu_manager._handle_playlist_selection(selected_tabs)
+            self._handle_playlist_selection(selected_tabs)
         elif selection_type in ('static', 'library'):
-            app.menu_manager._handle_static_tab_selection(selected_tabs)
+            self._handle_static_tab_selection(selected_tabs)
         elif selection_type in ('site', 'store'):
-            app.menu_manager._handle_site_selection(selected_tabs)
+            self._handle_site_selection(selected_tabs)
         elif selection_type == 'connect':
-            app.menu_manager._handle_connect_selection(selected_tabs)
+            self._handle_connect_selection(selected_tabs)
         else:
             raise ValueError("Unknown tab list type: %s" % selection_type)
 
-    def select_subtitle_encoding(self, encoding):
-        if self.subtitle_encoding_enabled:
-            if encoding is None:
-                action_name = 'SubtitleEncoding-Default'
-            else:
-                action_name = 'SubtitleEncoding-%s' % encoding
-            self.emit('radio-group-changed', 'subtitle-encoding', action_name)
-
-    def _update_menus_for_selected_items(self):
+    def _handle_selected_items(self):
         """Update the menu items based on the current item list
         selection.
         """
-        selected_items = app.item_list_controller_manager.get_selection()
-        downloaded = False
-        has_audio = False
-        is_remote = False
-        for item in selected_items:
-            if item.downloaded:
-                downloaded = True
-            if item.file_type == 'audio':
-                has_audio = True
-            if item.remote:
-                is_remote = True
+        selection_info = app.item_list_controller_manager.get_selection_info()
 
-        if selected_items and not is_remote:
-            if len(selected_items) == 1:
+        if selection_info.count > 0 and not selection_info.has_remote:
+            if selection_info.count == 1:
                 self.enabled_groups.add('LocalItemSelected')
             else:
                 self.states['plural'].append('EditItems')
             self.enabled_groups.add('LocalItemsSelected')
 
-        if downloaded:
-            if not is_remote:
+        if selection_info.has_download:
+            if not selection_info.has_remote:
                 self.enabled_groups.add('LocalPlayablesSelected')
                 self.enabled_groups.add('LocalPlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
-            if not has_audio:
+            if not selection_info.has_file_type('audio'):
                 self.enabled_groups.add('PlayableVideosSelected')
-            if len(selected_items) == 1:
-                if not is_remote:
+            if selection_info.count == 1:
+                if not selection_info.has_remote:
                     self.enabled_groups.add('LocalPlayableSelected')
                     self.enabled_groups.add('LocalPlayableSelected_PlayPause')
                 self.enabled_groups.add('PlayableSelected')
@@ -966,46 +794,430 @@ class MenuStateManager(signals.SignalEmitter):
         can_play = app.item_list_controller_manager.can_play_items()
         if can_play:
             self.enabled_groups.add('PlayPause')
-            if not is_remote:
+            if not selection_info.has_remote:
                 self.enabled_groups.add('LocalPlayableSelected_PlayPause')
                 self.enabled_groups.add('LocalPlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayableSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
         app.widgetapp.window.videobox.handle_new_selection(can_play)
 
-    def update_menus(self):
-        self.reset()
-        self._update_menus_for_selected_tabs()
-        self._update_menus_for_selected_items()
-        self._set_play_pause()
-        self.emit('enabled-changed')
+class MenuManager(signals.SignalEmitter):
+    """Updates the menu based on the current selection.
 
-    def _update_view_menu(self):
+    This includes enabling/disabling menu items, changing menu text
+    for plural selection and enabling/disabling the play button.  The
+    play button is obviously not a menu item, but it's pretty closely
+    related
+
+    Whenever code makes a change that could possibly affect which menu
+    items should be enabled/disabled, it should call the
+    update_menus() method.
+    """
+    def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.menu_item_fetcher = MenuItemFetcher()
+        self.subtitle_encoding_updater = SubtitleEncodingMenuUpdater()
+        self.menu_updaters = [
+            LegacyMenuUpdater(),
+            SortsMenuUpdater(),
+            AudioTrackMenuUpdater(),
+            SubtitlesMenuUpdater(),
+            self.subtitle_encoding_updater,
+        ]
+
+    def _set_play_pause(self):
+        if ((not app.playback_manager.is_playing
+             or app.playback_manager.is_paused)):
+            label = _('Play')
+        else:
+            label = _('Pause')
+        self.menu_item_fetcher['PlayPauseItem'].set_label(label)
+
+    def add_subtitle_encoding_menu(self, category_label, *encodings):
+        """Set up a subtitles encoding menu.
+
+        This method should be called for each category of subtitle encodings
+        (East Asian, Western European, Unicode, etc).  Pass it the list of
+        encodings for that category.
+
+        :param category_label: human-readable name for the category
+        :param encodings: list of (label, encoding) tuples.  label is a
+            human-readable name, and encoding is a value that we can pass to
+            VideoDisplay.select_subtitle_encoding()
+        """
+        self.subtitle_encoding_updater.add_menu(category_label, encodings)
+
+    def select_subtitle_encoding(self, encoding):
+        if not self.subtitle_encoding_updater.has_encodings():
+            # OSX never sets up the subtitle encoding menu
+            return
+        menu_item_name = self.subtitle_encoding_updater.action_name(encoding)
+        try:
+            self.menu_item_fetcher[menu_item_name].set_state(True)
+        except KeyError:
+            logging.warn("Error enabling subtitle encoding menu item: %s",
+                         menu_item_name)
+
+    def update_menus(self, *reasons):
+        """Call this when a change is made that could change the menus
+
+        Use reasons to describe why the menus could change.  Some MenuUpdater
+        objects will do some optimizations based on that
+        """
+        reasons = set(reasons)
+        self._set_play_pause()
+        for menu_updater in self.menu_updaters:
+            menu_updater.update(reasons)
+
+class MenuUpdater(object):
+    """Base class for objects that dynamically update menus."""
+    def __init__(self, menu_name):
+        self.menu_name = menu_name
+        self.first_update = False
+
+    # we lazily access our menu item, since we are created before the menubar
+    # is fully setup.
+    def get_menu(self):
+        try:
+            return self._menu
+        except AttributeError:
+            self._menu = app.widgetapp.menubar.find(self.menu_name)
+            return self._menu
+    menu = property(get_menu)
+
+    def update(self, reasons):
+        if not self.first_update and not self.should_process_update(reasons):
+            return
+        self.first_update = False
+        self.start_update()
+        if not self.should_show_menu():
+            self.menu.hide()
+            return
+
+        self.menu.show()
+        if self.should_rebuild_menu():
+            self.clear_menu()
+            self.populate_menu()
+        self.update_items()
+
+    def should_process_update(self, reasons):
+        """Test if we should ignore the update call.
+
+        :param reasons: the reasons passed in to MenuManager.update_menus()
+        """
+        return True
+
+    def clear_menu(self):
+        """Remove items from our menu before rebuilding it."""
+        for child in self.menu.get_children():
+            self.menu.remove(child)
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        pass
+
+    def should_show_menu(self):
+        """Should we display the menu?  """
+        return True
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return False
+
+    def populate_menu(self):
+        """Add MenuItems to our menu."""
+        pass
+
+    def update_items(self):
+        """Update our menu items."""
+        pass
+
+class SortsMenuUpdater(MenuUpdater):
+    """Update the sorts menu for MenuManager."""
+    def __init__(self):
+        MenuUpdater.__init__(self, 'SortsMenu')
+        self.current_sorts = []
+
+    def should_process_update(self, reasons):
+        return ('tab-selection-changed' in reasons or
+                'item-list-view-changed' in reasons)
+
+    def action_name(self, column_name):
+        return "ToggleColumn-" + column_name
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        self.togglable_columns = self.columns_enabled = None
         display = app.display_manager.get_current_display()
-        # fetch the enabled/available columns for this display
         if display is None:
             # no display?
             return
         column_info = display.get_column_info()
         if column_info is None:
-            # display doesn't support togglable columns
+            # no togglable columns for this display
             return
-        columns_enabled = set(column_info[0])
-        columns_available = column_info[1]
-        # make available columns user selectable
-        for column in columns_available:
-            self.enabled_groups.add('column-%s' % column)
-        # check the currently enabled columns
-        checks = dict(('ToggleColumn-' + column, column in columns_enabled)
-            for column in WidgetStateStore.get_toggleable_columns())
-        self.emit('checked-changed', 'ListView', checks)
+        self.columns_enabled = column_info[0]
+        untogglable = WidgetStateStore.MANDATORY_SORTERS
+        self.togglable_columns = list(c for c in column_info[1]
+                                      if c not in untogglable)
+        self.togglable_columns.sort(key=COLUMN_LABELS.get)
 
-def _get_view_menu():
-    menu = list()
-    toggleable = WidgetStateStore.get_toggleable_columns()
-    for name in sorted(toggleable, key=COLUMN_LABELS.get):
-        groups = ['column-%s' % name]
-        label = COLUMN_LABELS[name]
-        handler_name = make_column_toggle_handler(name)
-        menu.append(CheckMenuItem(label, handler_name, 'ListView', groups=groups))
-    return menu
+    def should_show_menu(self):
+        """Should we display the menu?  """
+        return self.togglable_columns is not None
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return self.togglable_columns != self.current_sorts
+
+    def populate_menu(self):
+        """Make a list of menu items for this menu."""
+        for name in self.togglable_columns:
+            label = COLUMN_LABELS[name]
+            handler_name = self.action_name(name)
+            self.menu.append(CheckMenuItem(label, handler_name))
+        self.current_sorts = self.togglable_columns
+
+    def update_items(self):
+        """Update our menu items."""
+        menu_names_to_enable = set(self.action_name(name)
+                                   for name in self.columns_enabled)
+        for menu_item in self.menu.get_children():
+            if menu_item.name in menu_names_to_enable:
+                menu_item.set_state(True)
+            else:
+                menu_item.set_state(False)
+
+class AudioTrackMenuUpdater(MenuUpdater):
+    """Update the audio track menu for MenuManager."""
+    def __init__(self):
+        MenuUpdater.__init__(self, 'AudioTrackMenu')
+        self.currently_displayed_tracks = None
+
+    def should_process_update(self, reasons):
+        return 'playback-changed' in reasons
+
+    def _on_track_change(self, menu_item, track_id):
+        if app.playback_manager.is_playing:
+            app.playback_manager.set_audio_track(track_id)
+
+    def action_name(self, track_id):
+        return 'ChangeAudioTrack-%s' % track_id
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        self.track_info = app.playback_manager.get_audio_tracks()
+        self.enabled_track = app.playback_manager.get_enabled_audio_track()
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return self.track_info != self.currently_displayed_tracks
+
+    def populate_menu(self):
+        """Add MenuItems to our menu."""
+        if not self.track_info:
+            self.make_empty_menu()
+            self.currently_displayed_tracks = self.track_info
+            return
+
+        group = []
+        for (track_id, label) in self.track_info:
+            menu_item = RadioMenuItem(label, self.action_name(track_id))
+            self.menu.append(menu_item)
+            menu_item.connect('activate', self._on_track_change,
+                              track_id)
+            group.append(menu_item)
+
+        for item in group[1:]:
+            item.set_group(group[0])
+        self.currently_displayed_tracks = self.track_info
+
+    def make_empty_menu(self):
+        menu_item = MenuItem(_("None Available"), "NoSubtitlesAvailable")
+        menu_item.disable()
+        self.menu.append(menu_item)
+
+    def update_items(self):
+        """Update our menu items."""
+        if self.enabled_track is None:
+            return
+        enabled_name = self.action_name(self.enabled_track)
+        for menu_item in self.menu.get_children():
+            if menu_item.name == enabled_name:
+                menu_item.set_state(True)
+                return
+
+class SubtitlesMenuUpdater(MenuUpdater):
+    """Update the subtitles menu for MenuManager."""
+
+    def __init__(self):
+        MenuUpdater.__init__(self, 'SubtitlesMenu')
+        self.none_available = MenuItem(_("None Available"), "NoneAvailable")
+        self.none_available.disable()
+        self.currently_displayed_tracks = None
+
+    def should_process_update(self, reasons):
+        return 'playback-changed' in reasons
+
+    def on_change_track(self, menu_item, track_id):
+        if app.playback_manager.is_playing:
+            app.playback_manager.set_subtitle_track(track_id)
+
+    def on_disable(self, menu_item):
+        if app.playback_manager.is_playing:
+            app.playback_manager.set_subtitle_track(None)
+
+    def on_select_file_activate(self, menu_item):
+        if app.playback_manager.is_playing:
+            app.playback_manager.open_subtitle_file()
+
+    def action_name(self, track_id):
+        return 'ChangeSubtitles-%s' % track_id
+
+    def start_update(self):
+        """Called at the very start of the update method.  """
+        self.enabled_track = app.playback_manager.get_enabled_subtitle_track()
+        self.all_tracks = list(app.playback_manager.get_subtitle_tracks())
+
+    def should_rebuild_menu(self):
+        """Should we rebuild the menu structure?"""
+        return self.currently_displayed_tracks != self.all_tracks
+
+    def get_items(self):
+        """Get the items that we actually should work with.
+
+        This is a all of the child items in our menu, except the subtitle
+        encoding menu.
+        """
+        return self.menu.get_children()[:-1]
+
+    def clear_menu(self):
+        # only clear the subtitle items, not the subtitle encoding submenu.
+        for item in self.get_items():
+            self.menu.remove(item)
+
+    def populate_menu(self):
+        """Add MenuItems to our menu."""
+        to_add = self.make_items_for_tracks()
+        to_add.append(Separator())
+        select_file = MenuItem(_("Select a Subtitles file..."),
+                               "SelectSubtitlesFile")
+        select_file.connect("activate", self.on_select_file_activate)
+        to_add.append(select_file)
+
+        # insert menu items before the select subtitles encoding item
+        for i, menu_item in enumerate(to_add):
+            self.menu.insert(i, menu_item)
+        self.currently_displayed_tracks = self.all_tracks
+
+    def make_items_for_tracks(self):
+        """Get MenuItems for subtitle tracks embedded in the video."""
+
+        if not self.all_tracks:
+            return [self.none_available]
+
+        items = []
+        first_item = None
+        for track_id, label in self.all_tracks:
+            menu_item = RadioMenuItem(label, self.action_name(track_id))
+            menu_item.connect("activate", self.on_change_track, track_id)
+            items.append(menu_item)
+            if first_item is None:
+                first_item = menu_item
+            else:
+                menu_item.set_group(first_item)
+
+        items.append(Separator())
+        disable = RadioMenuItem(_("Disable Subtitles"), "DisableSubtitles")
+        disable.connect("activate", self.on_disable)
+        disable.set_group(first_item)
+        items.append(disable)
+        return items
+
+    def update_items(self):
+        """Update our menu items."""
+        menu_items = self.get_items()
+        if app.playback_manager.is_playing_video:
+            for item in menu_items:
+                if item is not self.none_available:
+                    item.enable()
+            if self.enabled_track is not None:
+                enabled_action_name = self.action_name(self.enabled_track)
+            else:
+                enabled_action_name = "DisableSubtitles"
+            for item in menu_items:
+                if item.name == enabled_action_name:
+                    item.set_state(True)
+                    break
+        else:
+            for item in menu_items:
+                item.disable()
+
+class SubtitleEncodingMenuUpdater(object):
+    """Handles updating the subtitles encoding menu.
+
+    This class is responsible for:
+        - populating the subtitles encoding method
+        - enabling/disabling the menu items
+    """
+
+    def __init__(self):
+        self.menu_item_fetcher = MenuItemFetcher()
+        self.default_item = None
+        self.category_counter = itertools.count()
+
+    def action_name(self, encoding):
+        """Get the name of the menu item for a given encoding.
+
+        :param: string name of the encoding, or None for the default encoding
+        """
+        if encoding is None:
+            return 'SubtitleEncoding-Default'
+        else:
+            return 'SubtitleEncoding-%s' % encoding
+
+    def has_encodings(self):
+        return self.default_item is not None
+
+    def update(self, reasons):
+        encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
+        if app.playback_manager.is_playing_video:
+            encoding_menu.enable()
+        else:
+            encoding_menu.disable()
+
+    def add_menu(self, category_label, encodings):
+        if not self.has_encodings():
+            self.init_menu()
+        category_menu = self.add_submenu(category_label)
+        self.populate_submenu(category_menu, encodings)
+
+    def init_menu(self):
+        # first time calling this function, we need to set up the menu.
+        encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
+        encoding_menu.show()
+        self.default_item = RadioMenuItem(_('Default (UTF-8)'),
+                                          self.action_name(None))
+        self.default_item.set_state(True)
+        self.default_item.connect("activate", self.on_activate, None)
+        encoding_menu.append(self.default_item)
+
+    def add_submenu(self, label):
+        encoding_menu = self.menu_item_fetcher["SubtitleEncodingMenu"]
+        name = "SubtitleEncodingCat-%s" % self.category_counter.next()
+        category_menu = Menu(label, name, [])
+        encoding_menu.append(category_menu)
+        return category_menu
+
+    def populate_submenu(self, category_menu, encodings):
+        for encoding, name in encodings:
+            label = '%s (%s)' % (name, encoding)
+            menu_item = RadioMenuItem(label,
+                                      self.action_name(encoding))
+            menu_item.set_state(False)
+            menu_item.connect("activate", self.on_activate, encoding)
+            category_menu.append(menu_item)
+            menu_item.set_group(self.default_item)
+
+    def on_activate(self, menu_item, encoding):
+        app.playback_manager.select_subtitle_encoding(encoding)

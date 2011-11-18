@@ -128,7 +128,7 @@ class TabDisplay(Display):
         raise NotImplementedError()
 
     def on_activate(self, is_push):
-        app.menu_manager.update_menus()
+        app.menu_manager.update_menus('tab-selection-changed')
 
     @staticmethod
     def should_display(tab_type, selected_tabs):

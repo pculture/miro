@@ -52,11 +52,11 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemtrack
-from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
@@ -209,6 +209,32 @@ class ThrobberAnimationManager(AnimationManager):
         else:
             self.item_list.finish_throbber(item_info.id)
             return False
+
+class ItemSelectionInfo(object):
+    """Stores information about what's selected in an item list.
+
+    Attributes:
+    - count: number of selected items
+    - has_download: are any of the items downloaded?
+    - has_remote: are any of the items remote?
+    - file_types: set containing all file types
+    """
+    def __init__(self, selected_items=None):
+        if selected_items is None:
+            selected_items = []
+        self.count = len(selected_items)
+        self.file_types = set()
+        self.has_download = self.has_remote = False
+        for item in selected_items:
+            self.file_types.add(item.file_type)
+            if item.downloaded:
+                self.has_download = True
+            if item.remote:
+                self.has_remote = True
+
+    def has_file_type(self, file_type):
+        """Does the selection have a specific file type?"""
+        return file_type in self.file_types
 
 class ItemListController(object):
     """Base class for controllers that manage list of items.
@@ -396,6 +422,7 @@ class ItemListController(object):
         self.widget = itemlistwidgets.ItemContainerWidget(
                 self.standard_view_toolbar, self.selected_view)
         self.build_widget()
+        self.item_selection_info = ItemSelectionInfo()
         self.list_item_view = self.build_list_view()
         self.standard_item_view = self.build_standard_view()
         self.album_item_view = self.build_album_view()
@@ -455,7 +482,7 @@ class ItemListController(object):
         # perform finishing touches
         app.widget_state.set_selected_view(self.type, self.id,
                                            self.selected_view)
-        app.menu_manager.update_menus()
+        self._selection_changed('item-list-view-changed')
         self.expand_or_contract_item_details()
 
     def get_current_item_view(self):
@@ -740,15 +767,18 @@ class ItemListController(object):
         self.throbber_manager.start(item_info)
 
     def on_key_press(self, view, key, mods):
-        if key == menus.DELETE or key == menus.BKSPACE:
+        if key == keyboard.DELETE or key == keyboard.BKSPACE:
             return self.handle_delete()
-        elif key == menus.ESCAPE:
+        elif key == keyboard.ESCAPE:
             return self.handle_escape()
-        elif key == menus.ENTER:
+        elif key == keyboard.ENTER:
             self.play_selection()
             return True
-        elif key == menus.SPACE and app.playback_manager.is_playing:
+        elif key == keyboard.SPACE and app.playback_manager.is_playing:
             app.playback_manager.toggle_paused()
+            return True
+        elif key == keyboard.F5:
+            app.widgetapp.update_selected_feeds()
             return True
         elif isinstance(key, basestring) and len(key) == 1 and key.isalnum():
             self.titlebar.start_editing_search(key)
@@ -853,8 +883,14 @@ class ItemListController(object):
                 name)
 
     def on_selection_changed(self, item_view, view_type):
-        app.menu_manager.update_menus()
+        self._selection_changed()
         self.update_item_details()
+
+    def _selection_changed(self, *extra_reasons_for_update_menus):
+        """This is called whenever the item selection changes."""
+        self.item_selection_info = ItemSelectionInfo(self.get_selection())
+        app.menu_manager.update_menus('item-selection-changed',
+                                      *extra_reasons_for_update_menus)
 
     def update_item_details(self):
         try:
@@ -1060,8 +1096,11 @@ class ItemListController(object):
         self.send_model_changed()
         self.update_resume_button()
         self.update_count_label()
-        self.update_item_details()
         self.check_for_empty_list()
+        # call _selection_changed() and update_item_details in case one of the
+        # selected items changed
+        self._selection_changed()
+        self.update_item_details()
 
     def check_for_empty_list(self):
         self.widget.set_list_empty_mode(self.calc_list_empty_mode())
@@ -1388,6 +1427,12 @@ class ItemListControllerManager(object):
             return []
         else:
             return self.displayed.get_selection()
+
+    def get_selection_info(self):
+        if self.displayed is None:
+            return ItemSelectionInfo()
+        else:
+            return self.displayed.item_selection_info
 
     def can_play_items(self):
         """Can we play any items currently?"""

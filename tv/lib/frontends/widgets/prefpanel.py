@@ -54,7 +54,7 @@ from miro import app
 from miro import messages
 from miro import prefs
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import menus
+from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import widgetconst
@@ -1397,7 +1397,7 @@ class PreferencesWindow(widgetset.PreferencesWindow):
                     break
 
     def do_key_press(self, key, mods):
-        if key == menus.ESCAPE:
+        if key == keyboard.ESCAPE:
             self.close()
             return True
         return False

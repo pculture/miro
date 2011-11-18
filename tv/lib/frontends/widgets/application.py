@@ -172,8 +172,9 @@ class Application:
     def setup_globals(self):
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
-        app.menu_manager = menus.MenuStateManager()
         app.playback_manager = playback.PlaybackManager()
+        app.menu_manager = menus.MenuManager()
+        menus.setup_menubar(self.menubar)
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
         app.tabs = tablistmanager.TabListManager()
@@ -1659,13 +1660,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_item_list(self, message):
         app.info_updater.handle_item_list(message)
-        if app.menu_manager:
-            app.menu_manager.update_menus()
 
     def handle_items_changed(self, message):
         app.info_updater.handle_items_changed(message)
-        if app.menu_manager:
-            app.menu_manager.update_menus()
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count
