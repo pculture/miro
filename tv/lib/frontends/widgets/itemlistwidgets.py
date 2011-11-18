@@ -1137,6 +1137,7 @@ class AlbumView(ListView):
         ListView.__init__(self, item_list, renderer_set, sorts, column_widths)
         self.set_group_lines_enabled(True)
         self.set_group_line_style(widgetutil.css_to_color('#dddddd'), 1)
+        self.enable_album_view_focus_hack()
 
 class DownloadStatusToolbar(Toolbar):
     """Widget that shows free space and download and upload speed
