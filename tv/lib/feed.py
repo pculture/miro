@@ -2167,6 +2167,9 @@ class DirectoryScannerImplBase(FeedImpl):
             """
             return not self.id_exists()
 
+        if should_halt_early():
+            return
+
         self._before_update()
 
         known_files = self.calc_known_files()
