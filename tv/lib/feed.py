@@ -2250,7 +2250,7 @@ class DirectoryScannerImplBase(FeedImpl):
                 halt_early_cleanup()
                 return
             while not finished:
-                finished = self._add_batch_of_videos(path_iter, 0.2)
+                finished = self._add_batch_of_videos(path_iter, 0.1)
                 yield # yield after each batch
                 if should_halt_early():
                     halt_early_cleanup()
