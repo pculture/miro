@@ -2306,37 +2306,31 @@ def fp_values_for_file(filename, title=None, description=None):
 
 def update_incomplete_movie_data():
     IncompleteMovieDataUpdator()
-    # this will stay around because it connects to the movie data updater's
-    # signal.  Once it disconnects from the signal, we clean it up
 
 class IncompleteMovieDataUpdator(object):
     """Finds local Items that have not been examined by MDP, and queues them.
     """
-    BATCH_SIZE = 10
+    BATCH_SIZE = 100
     def __init__(self):
-        self.done = False
-        self.handle = app.movie_data_updater.connect('queue-empty',
-                                                     self.on_queue_empty)
         self.do_some_updates()
 
+    @eventloop.idle_iterator
     def do_some_updates(self):
         """Update some incomplete files, or set done=True if there are none.
 
         Mutagen runs as part of the item creation process, so we need only check
         whether MDP has examined a file here.
         """
-        items_queued = 0
-        for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
-            item.check_media_file()
-            items_queued += 1
-        self.done = items_queued < self.BATCH_SIZE
-
-    def on_queue_empty(self, movie_data_updator):
-        if self.done:
-            movie_data_updator.disconnect(self.handle)
-        else:
-            eventloop.add_idle(self.do_some_updates,
-                    'update incomplete movie data')
+        while True:
+            queued = False
+            # NB: Okay - request_update() will skip item already queued
+            for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
+                item.check_media_file()
+                queued = True
+            if queued:
+                yield
+            else:
+                break
 
 class DeletedFileChecker(object):
     """Utility class that manages calling Item.check_deleted().

@@ -44,22 +44,11 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.plat.utils import (movie_data_program_info,
-                             thread_body,
-                             begin_thread_loop, finish_thread_loop)
-from miro.errors import Shutdown
+from miro import workerprocess
 
 # Time in seconds that we wait for the utility to execute.  If it goes
 # longer than this, we assume it's hung and kill it.
 MOVIE_DATA_UTIL_TIMEOUT = 30
-
-# Time to sleep while we're polling the external movie command
-SLEEP_DELAY = 0.1
-
-DURATION_RE = re.compile("Miro-Movie-Data-Length: (\d+)")
-TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
-THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
-TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 class State(object):
     """Enum for tracking what we've looked at.
@@ -85,7 +74,6 @@ class MovieDataInfo(object):
         self.item = item
         self.video_path = item.get_filename()
         self.thumbnail_path = self._make_thumbnail_path()
-        self._program_info = None
 
     def _make_thumbnail_path(self):
         # add a random string to the filename to ensure it's unique.
@@ -94,18 +82,6 @@ class MovieDataInfo(object):
         video_base = os.path.basename(self.video_path)
         filename = '%s.%s.png' % (video_base, util.random_string(5))
         return os.path.join(self.image_directory('extracted'), filename)
-
-    @property
-    def program_info(self):
-        if not self._program_info:
-            self._program_info = self._calc_program_info()
-        return self._program_info
-
-    def _calc_program_info(self):
-        videopath = fileutil.expand_filename(self.video_path)
-        thumbnailpath = fileutil.expand_filename(self.thumbnail_path)
-        command_line, env = movie_data_program_info(videopath, thumbnailpath)
-        return command_line, env
 
     @classmethod
     def image_directory(cls, subdir):
@@ -116,64 +92,34 @@ class MovieDataInfo(object):
             pass
         return dir_
 
-class ProcessHung(StandardError): pass
-
-class MovieDataUpdater(signals.SignalEmitter):
+class MovieDataUpdater(object):
     def __init__ (self):
-        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop',
-                'queue-empty')
         self.in_shutdown = False
         self.in_progress = set()
-        self.queue = Queue.Queue()
-        self.thread = None
-        self.watchdog = None
-        self.pipe = None
-        self.cmd_begin_gate = threading.Event()
-        self.cmd_end_gate = threading.Event()
-        self.connect('begin-loop', begin_thread_loop)
-        self.connect('end-loop', finish_thread_loop)
 
-    def start_thread(self):
-        self.thread = threading.Thread(name='Movie Data Thread',
-                                       target=thread_body,
-                                       args=[self.thread_loop])
-        self.thread.setDaemon(True)
-        self.thread.start()
+    def _path_processed(self, mdi):
+        if hasattr(app, 'metadata_progress_updater'): # hack for unittests
+            app.metadata_progress_updater.path_processed(mdi.video_path)
 
-        self.watchdog = threading.Thread(target=thread_body,
-                             args=[self.watcher],
-                             name='moviedata watchdog timer')
-        self.watchdog.setDaemon(True)
-        self.watchdog.start()
+    def errback(self, result, mdi):
+        logging.debug('moviedata: FAILED! result = %s', result)
+        self.update_failed(mdi.item)
+        self._path_processed(mdi)
 
-    def process_with_movie_data_program(self, mdi):
-        command_line, env = mdi.program_info
-        try:
-            stdout = self.run_movie_data_program(command_line, env)
-        except StandardError:
-            # check whether it's actually a Shutdown error, then raise
-            if self.in_shutdown:
-                raise Shutdown
-            raise
+    def callback(self, result, mdi):
+        mediatype, duration, got_screenshot = result
 
-        if not stdout:
-            logging.debug("moviedata: error--no stdout: %s", stdout)
-
-        if TRY_AGAIN_RE.search(stdout):
-            # FIXME: we should try again at some point, but right now we just
-            # ignore this
-            pass
-
-        duration = self.parse_duration(stdout)
         if os.path.splitext(mdi.video_path)[1] == '.flv':
             # bug #17266.  if the extension is .flv, we ignore the mediatype
             # we just got from the movie data program.  this is
             # specifically for .flv files which the movie data
             # extractors have a hard time with.
             mediatype = u'video'
+
+        if fileutil.exists(mdi.thumbnail_path) and got_screenshot:
+            screenshot = mdi.thumbnail_path
         else:
-            mediatype = self.parse_type(stdout)
-        screenshot = self.parse_screenshot(stdout, mdi)
+            screenshot = None
 
         # bz:17364/bz:18072 HACK: need to avoid UnicodeDecodeError -
         # until we do a proper pathname cleanup.  Used to be a %s with a
@@ -182,142 +128,11 @@ class MovieDataUpdater(signals.SignalEmitter):
         # like dealing with this right now, so just use %r.
         logging.debug("moviedata: mdp %s %s %s %r", duration, screenshot,
                 mediatype, mdi.video_path)
-        return duration, screenshot, mediatype
 
-    @contextmanager
-    def looping(self):
-        """Simple contextmanager to ensure that whatever happens in a
-        thread_loop, we signal begin/end properly.
-        """
-        self.emit('begin-loop')
-        try:
-            yield
-        finally:
-            self.emit('end-loop')
+        # Repack the thing, as we may have changed it
+        self.update_finished(mdi.item, duration, screenshot, mediatype)
+        self._path_processed(mdi)
 
-    def thread_loop(self):
-        try:
-            while not self.in_shutdown:
-                with self.looping():
-                    self.process_item()
-        except Shutdown:
-            pass
-
-    def process_item(self):
-        try:
-            mdi = self.queue.get(block=False)
-        except Queue.Empty:
-            self.emit('queue-empty')
-            mdi = self.queue.get(block=True)
-        # IMPORTANT: once we have popped an MDI off the queue, its mdp_state
-        # *must* be set (by update_finished or update_failed) unless we shut
-        # down before we could process it
-        if mdi is None:
-            raise Shutdown
-        try:
-            results = self.process_with_movie_data_program(mdi)
-        except ProcessHung:
-            self.update_failed(mdi.item)
-            # this kind of error is expected; just a warning
-            logging.warning("Movie data process hung, killing it. File was: %r",
-                    mdi.video_path)
-        except StandardError:
-            self.update_failed(mdi.item)
-            signals.system.failed_exn(
-                "When running external movie data program for %r" %
-                mdi.video_path)
-        else:
-            self.update_finished(mdi.item, *results)
-        if hasattr(app, 'metadata_progress_updater'): # hack for unittests
-            app.metadata_progress_updater.path_processed(mdi.video_path)
-
-    def watcher(self):
-        while True:
-            self.cmd_begin_gate.wait()
-            if self.in_shutdown:
-                break
-            self.cmd_begin_gate.clear()
-            # OK to wait indefinitely: run_movie_data_program() sits on
-            # on a timed wait so when the gate clears and finds the
-            # external program still active it will kill it, and this will
-            # resolve.  Then everything proceeds as normal.
-            self.pipe.wait()
-            self.cmd_end_gate.set()
-
-    def run_movie_data_program(self, command_line, env):
-        # create tempfiles to catch output for the movie data program.  Using
-        # a pipe fails if the movie data program outputs enough to fill up the
-        # buffers (see #17059)
-        movie_data_stdout = tempfile.TemporaryFile()
-        movie_data_stderr = tempfile.TemporaryFile()
-        pipe = subprocess.Popen(command_line, stdout=movie_data_stdout,
-                stdin=subprocess.PIPE, stderr=movie_data_stderr, env=env,
-                startupinfo=util.no_console_startupinfo())
-        # close stdin since we won't write to it.
-        pipe.stdin.close()
-        self.pipe = pipe
-        # Fire up the watchdog
-        self.cmd_begin_gate.set()
-        self.cmd_end_gate.wait(MOVIE_DATA_UTIL_TIMEOUT)
-        # Pipe should be gone by now.  Reset for safety
-        self.pipe = None
-        if pipe.poll() is None and not self.in_shutdown:
-            logging.warning("Movie data process hung, killing it")
-            self.kill_process(pipe)
-            # when the process is killed the end command gate will be
-            # set, so wait again here for it to clear.
-            self.cmd_end_gate.wait()
-            self.cmd_end_gate.clear()
-            raise ProcessHung
-
-        if self.in_shutdown:
-            if pipe.poll() is None:
-                logging.warning("Movie data process running after shutdown, "
-                                "killing it")
-                self.kill_process(pipe)
-            # no need to clear command gates here - shutting down anyway
-            raise Shutdown
-
-        # We now know this is normal external movie data program termination.
-        # The self.pipe.wait() in the watchdog must have succeeded so
-        # clear the end command gate.
-        self.cmd_end_gate.clear()
-        # FIXME: should we do anything with stderr?
-        movie_data_stdout.seek(0)
-        return movie_data_stdout.read()
-
-    def kill_process(self, pipe):
-        try:
-            pipe.kill()
-            pipe.wait()
-        except OSError:
-            logging.warning("Error trying to kill the movie data process:\n%s",
-                            traceback.format_exc())
-        else:
-            logging.warning("Movie data process killed")
-
-    def parse_duration(self, stdout):
-        duration_match = DURATION_RE.search(stdout)
-        if duration_match:
-            return int(duration_match.group(1))
-        else:
-            return None
-
-    def parse_type(self, stdout):
-        type_match = TYPE_RE.search(stdout)
-        if type_match:
-            return unicode(type_match.group(1))
-        else:
-            return None
-
-    def parse_screenshot(self, stdout, mdi):
-        if (THUMBNAIL_SUCCESS_RE.search(stdout) and
-                fileutil.exists(mdi.thumbnail_path)):
-            return mdi.thumbnail_path
-        else:
-            return None
-
-    @as_idle
     def update_failed(self, item):
         self.in_progress.remove(item.id)
         if item.id_exists():
@@ -329,7 +144,6 @@ class MovieDataUpdater(signals.SignalEmitter):
                 item.file_type = u'other'
             item.signal_change()
 
-    @as_idle
     def update_finished(self, item, duration, screenshot, mediatype):
         self.in_progress.remove(item.id)
         if item.id_exists():
@@ -367,7 +181,12 @@ class MovieDataUpdater(signals.SignalEmitter):
 
         if self._should_process_item(item):
             self.in_progress.add(item.id)
-            self.queue.put(MovieDataInfo(item))
+            info = MovieDataInfo(item)
+            workerprocess.run_media_metadata_extractor(
+              info.video_path,
+              info.thumbnail_path,
+              lambda result: self.callback(result, info),
+              lambda result: self.errback(result, info))
         else:
             self.update_skipped(item)
             app.metadata_progress_updater.path_processed(item.get_filename())
@@ -386,15 +205,3 @@ class MovieDataUpdater(signals.SignalEmitter):
 
     def shutdown(self):
         self.in_shutdown = True
-        # wake up our thread
-        self.queue.put(None)
-        # Wake up the command gates.  Begin gate wakes up the
-        # watchdog and tells it to quit.
-        #
-        # End gate wakes up run_movie_data_program() if it was
-        # blocked on a moviedata.  It will have detection code for
-        # the quit scenario.
-        self.cmd_begin_gate.set()
-        self.cmd_end_gate.set()
-        if self.thread is not None:
-            self.thread.join()

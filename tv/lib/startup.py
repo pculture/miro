@@ -420,8 +420,6 @@ def on_frontend_started():
     yield None
     feed.expire_items()
     yield None
-    app.movie_data_updater.start_thread()
-    yield None
     commandline.startup()
     yield None
     autoupdate.check_for_updates()

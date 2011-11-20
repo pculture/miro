@@ -65,10 +65,9 @@ def scaled_size(from_size, to_size):
 
 
 class Extractor:
-    def __init__(self, filename, thumbnail_filename, callback):
+    def __init__(self, filename, thumbnail_filename):
         self.thumbnail_filename = thumbnail_filename
         self.filename = filename
-        self.callback = callback
 
         self.grabit = False
         self.first_pause = True
@@ -130,10 +129,6 @@ class Extractor:
                         self.disconnect()
                         self.done()
 
-    def taking_too_long(self):
-        self.disconnect()
-        self.done()
-
     def done(self):
         if self.saw_video_tag:
             media_type = 'video'
@@ -141,7 +136,22 @@ class Extractor:
             media_type = 'audio'
         else:
             media_type = 'other'
-        self.callback(self.duration, self.success, media_type)
+        self.media_type = media_type
+        gtk.main_quit()
+
+    def run(self):
+        gtk.gdk.threads_init()
+        gtk.main()
+
+    def get_result(self):
+        duration = self.duration
+        success = self.success
+        media_type = self.media_type
+
+        if duration != -1:
+            duration /= 1000000
+
+        return (media_type, duration, success)
 
     def get_duration(self, pipeline, attempts=0):
         if attempts == 5:
@@ -199,15 +209,6 @@ class Extractor:
             "message", self.on_bus_message)
 
         self.thumbnail_pipeline.set_state(gst.STATE_PAUSED)
-
-        # sometimes it seems the pipeline0 never reaches a PAUSED
-        # state.  because of that, it never triggers a finished
-        # condition and the extractor hangs.
-        #
-        # so we cap that at 3 seconds and if we hit that point, we
-        # just quit out with whatever we have.
-
-        gobject.timeout_add(3000, self.taking_too_long)
 
         return False
 
@@ -291,19 +292,10 @@ def make_verbose():
         if callable(fun):
             Extractor.__dict__[mem] = wrap_func(fun)
 
-
-def handle_result(duration, success, media_type):
-    if duration != -1:
-        print "Miro-Movie-Data-Length: %s" % (duration / 1000000)
-    else:
-        print "Miro-Movie-Data-Length: -1"
-    if success:
-        print "Miro-Movie-Data-Thumbnail: Success"
-    else:
-        print "Miro-Movie-Data-Thumbnail: Failure"
-    print "Miro-Movie-Data-Type: %s" % media_type
-    sys.exit(0)
-
+def run(movie_file, thumbnail_file):
+    extractor = Extractor(movie_file, thumbnail_file)
+    extractor.run()
+    return extractor.get_result()
 
 def main(argv):
     if "--verbose" in argv:
@@ -317,14 +309,10 @@ def main(argv):
     if len(argv) < 3:
         argv.append(os.path.join(os.path.dirname(__file__), "thumbnail.png"))
 
-    # Gross - renice this so that it runs with a lower priority.  See #15164
-    # os.nice(19)
+    result = run(argv[1], argv[2])
+    print result
 
-    extractor = Extractor(argv[1], argv[2], handle_result)
-    gtk.gdk.threads_init()
-    gtk.main()
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))

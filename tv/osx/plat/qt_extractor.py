@@ -37,11 +37,13 @@ from AppKit import *
 from Foundation import *
 
 from miro.plat import qtcomp
-from miro.plat import utils
+from miro.plat import qttimeutils
 from miro.plat.frontends.widgets import mediatypes
 
 def register_quicktime_components():
     bundle_path = os.getenv('MIRO_BUNDLE_PATH')
+    if not bundle_path:
+        bundle_path = NSBundle.mainBundle().bundlePath().encode('utf-8')
     components_directory_path = os.path.join(bundle_path,
                                              'Contents',
                                              'Components')
@@ -58,10 +60,10 @@ def register_quicktime_components():
 def extract_duration(qtmovie):
     try:
         qttime = qtmovie.duration()
-        if utils.qttimescale(qttime) == 0:
+        if qttimeutils.qttimescale(qttime) == 0:
             return -1
-        return int((utils.qttimevalue(qttime) /
-                   float(utils.qttimescale(qttime))) * 1000)
+        return int((qttimeutils.qttimevalue(qttime) /
+                   float(qttimeutils.qttimescale(qttime))) * 1000)
     except Exception:
         return -1
 
@@ -93,15 +95,16 @@ def get_type(qtmovie):
 def extract_thumbnail(qtmovie, target, width=0, height=0):
     try:
         qttime = qtmovie.duration()
-        qttime = utils.qttimevalue_set(qttime,
-                                       int(utils.qttimevalue(qttime) * 0.5))
+        qttime = qttimeutils.qttimevalue_set(qttime,
+          int(qttimeutils.qttimevalue(qttime) * 0.5))
+
         frame = qtmovie.frameImageAtTime_(qttime)
-        if frame is objc.nil:
-            return "Failure"
+        if frame is nil:
+            return False
 
         frame_size = frame.size()
         if frame_size.width == 0 or frame_size.height == 0:
-            return "Failure"
+            return False
 
         if (width == 0) and (height == 0):
             width = frame_size.width
@@ -112,62 +115,44 @@ def extract_thumbnail(qtmovie, target, width=0, height=0):
         destsize = NSSize(width, height)
         destratio = destsize.width / destsize.height
 
-        if srcratio > destination_ratio:
-            size = NSSize(destination_size.width,
-                                     destination_size.width / srcratio)
+        if srcratio > destratio:
+            size = NSSize(destsize.width, destsize.width / srcratio)
             pos = NSPoint(0,
-              (destination_size.height - size.height) / 2.0)
+              (destsize.height - size.height) / 2.0)
         else:
             size = NSSize(destsize.height * srcratio, destsize.height)
             pos = NSPoint((destsize.width - size.width) / 2.0, 0)
 
-        destination = NSImage.alloc().initWithSize_(destination_size)
+        dest = NSImage.alloc().initWithSize_(destsize)
         try:
-            destination.lockFocus()
+            dest.lockFocus()
             context = NSGraphicsContext.currentContext()
             context.setImageInterpolation_(NSImageInterpolationHigh)
             NSColor.blackColor().set()
-            NSRectFill(((0,0), destination_size))
+            NSRectFill(((0,0), destsize))
             frame.drawInRect_fromRect_operation_fraction_((pos, size),
               ((0,0), srcsize), NSCompositeSourceOver, 1.0)
         finally:
-            destination.unlockFocus()
+            dest.unlockFocus()
 
-        tiff_data = destination.TIFFRepresentation()
+        tiff_data = dest.TIFFRepresentation()
         image_rep = NSBitmapImageRep.imageRepWithData_(tiff_data)
         properties = {NSImageCompressionFactor: 0.8}
         jpeg_data = image_rep.representationUsingType_properties_(
           NSJPEGFileType, properties)
-        if jpeg_data is objc.nil:
-            return "Failure"
+        if jpeg_data is nil:
+            return False
 
-        jpeg_data.writeToFile_atomically_(target, objc.YES)
+        jpeg_data.writeToFile_atomically_(target, YES)
     except Exception:
-        return "Failure"
+        return False
 
-    return "Success"
+    return True
 
 def usage():
     print 'usage: %s movie thumb' % sys.argv[0]
 
-def main(argc, argv):
-    if argc != 3:
-        usage()
-        return 1
-
-    movie_path = argv[1].decode('utf-8')
-    thumb_path = argv[2].decode('utf-8')
-    
-    info = NSBundle.mainBundle().infoDictionary()
-    info["LSBackgroundOnly"] = "1"
-    NSApplicationLoad()
-    
-    register_quicktime_components()
-    
-    pyobjc_version = objc.__version__
-    pyobjc_version = pyobjc_version.split('.')
-    pyobjc_version = int(pyobjc_version[0])
-    
+def run(movie_path, thumb_path):
     # XXX movieWithFile_error_ may be asynchronous, but at least when
     # it is done locally it seems to return in such a way that makes it possible
     # to extract stuff.  The QTMovieLoadState attribute never seems to update,
@@ -180,26 +165,32 @@ def main(argc, argv):
     if qtmovie:
         load_state = qtmovie.attributeForKey_(
           QTMovieLoadStateAttribute).longValue()
-    if (qtmovie is None or error is not objc.nil or
+    if (qtmovie is None or error is not nil or
       load_state < QTMovieLoadStateLoaded):
-        print "Miro-Movie-Data-Length: -1"
-        print "Miro-Movie-Data-Thumbnail: Failure"
-        print "Miro-Movie-Data-Type: other"
-        sys.exit(0)
+        return ('other', -1, None)
     
     movie_type = get_type(qtmovie)
-    print "Miro-Movie-Data-Type: %s" % movie_type
-    
     duration = extract_duration(qtmovie)
-    print "Miro-Movie-Data-Length: %s" % duration
-    
+    thmb_result = False
+
     if movie_type == "video":
         thmb_result = extract_thumbnail(qtmovie, thumb_path)
-        print "Miro-Movie-Data-Thumbnail: %s" % thmb_result
-    else:
-        print "Miro-Movie-Data-Thumbnail: Failure"
-    
+
+    return (movie_type, duration, thmb_result)
+
+def main(argc, argv):
+    if argc != 3:
+        usage()
+        return 1
+
+    movie_path = argv[1]
+    thumb_path = argv[2]
+    result = run(movie_path, thumb_path)
+    print result
     return 0
 
 if __name__ == '__main__':
+    info = NSBundle.mainBundle().infoDictionary()
+    info["LSBackgroundOnly"] = "1"
+    register_quicktime_components()
     sys.exit(main(len(sys.argv), sys.argv))
