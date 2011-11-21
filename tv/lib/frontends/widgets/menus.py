@@ -812,9 +812,12 @@ class MenuManager(signals.SignalEmitter):
     Whenever code makes a change that could possibly affect which menu
     items should be enabled/disabled, it should call the
     update_menus() method.
+
+    Signals:
+    - menus-updated(reasons): Emitted whenever update_menus() is called
     """
     def __init__(self):
-        signals.SignalEmitter.__init__(self)
+        signals.SignalEmitter.__init__(self, 'menus-updated')
         self.menu_item_fetcher = MenuItemFetcher()
         self.subtitle_encoding_updater = SubtitleEncodingMenuUpdater()
         self.menu_updaters = [
@@ -868,6 +871,7 @@ class MenuManager(signals.SignalEmitter):
         self._set_play_pause()
         for menu_updater in self.menu_updaters:
             menu_updater.update(reasons)
+        self.emit('menus-updated', reasons)
 
 class MenuUpdater(object):
     """Base class for objects that dynamically update menus."""
