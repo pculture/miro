@@ -312,23 +312,8 @@ def exit_miro(return_code):
     """
     sys.exit(return_code)
 
-
-def movie_data_program_info(movie_path, thumbnail_path):
-    """Returns the necessary information for Miro to run the media
-    item info extractor program.
-
-    The media item info extractor program takes a media item path and
-    a path for where the thumbnail should go (if there is one) and
-    returns information about the media item.
-
-    Due to legacy reasons, this is called ``movie_data_program_info``,
-    but it applies to audio items as well as video items.
-
-    :returns: tuple of ``((python, script-path, movie-path, thumbnail-path),
-        environment)``.  Environment is either a dict or None.
-    """
-    from miro import app
-    return app.movie_data_program_info(movie_path, thumbnail_path)
+def run_media_metadata_extractor(movie_path, thumbnail_path):
+    return app.run_media_metadata_extractor(movie_path, thumbnail_path)
 
 def miro_helper_program_info():
     """Get the command line to launch miro_helper.py """

@@ -254,6 +254,10 @@ class FakeMetadataProgressUpdater(object):
         # we should test this, but for now it's just a stub
         pass
 
+    def will_process_paths(self, paths):
+        # we should test this, but for now it's just a stub
+        pass
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.setup_log_filter()
@@ -271,7 +275,7 @@ class MiroTestCase(unittest.TestCase):
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
-        moviedata.movie_data_updater = moviedata.MovieDataUpdater()
+        app.movie_data_updater = moviedata.MovieDataUpdater()
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary

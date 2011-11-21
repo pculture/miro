@@ -201,7 +201,7 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
     else:
         callback()
 
-class DeletesInProgressTracker(set):
+class DeletesInProgressTracker(object):
     def __init__(self):
         self.set = set()
     def normalize(self, path):

@@ -308,7 +308,6 @@ class MiroBuild (py2app):
             os.path.join('Resources-Widgets', 'MainMenu.nib'),
             os.path.join('Resources-Widgets', 'OverlayPalette.nib'),
             os.path.join('Resources-Widgets', 'Credits.html'),
-            'qt_extractor.py',
             os.path.join(PORTABLE_DIR, 'miro_helper.py'),
         ]
 
@@ -579,9 +578,12 @@ class MiroBuild (py2app):
                 print "    %s" % dest
     
     def precompile_site_pyc(self):
-        print "Pre-compiling site.py"
+        print "Pre-compiling python sources"
         import py_compile
         py_compile.compile(os.path.join(self.rsrcRoot, 'lib', 'python%s' % PYTHON_VERSION, 'site.py'))
+        print "Deleting python sources"
+        # These can go, since we have the pyc now
+        os.remove(os.path.join(self.rsrcRoot, 'lib', 'python%s' % PYTHON_VERSION, 'site.py'))
     
     def copy_theme_files(self):
         # Copy theme files to the application bundle

@@ -40,6 +40,8 @@ from miro import feedparserutil
 from miro import subprocessmanager
 from miro import util
 
+from miro.plat import utils
+
 # define messages/handlers
 
 class TaskMessage(subprocessmanager.SubprocessMessage):
@@ -53,6 +55,12 @@ class FeedparserTask(TaskMessage):
     def __init__(self, html):
         TaskMessage.__init__(self)
         self.html = html
+
+class MediaMetadataExtractorTask(TaskMessage):
+    def __init__(self, filename, thumbnail):
+        TaskMessage.__init__(self)
+        self.filename = filename
+        self.thumbnail = thumbnail
 
 class TaskResult(subprocessmanager.SubprocessResponse):
     def __init__(self, task_id, result):
@@ -75,6 +83,11 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         # don't use it anyways, so just unset the value
         parsed_feed['bozo_exception'] = None
         return parsed_feed
+
+    def handle_media_metadata_extractor_task(self, msg):
+        filename = msg.filename
+        thumbnail = msg.thumbnail
+        return utils.run_media_metadata_extractor(filename, thumbnail)
 
 class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def on_startup(self):
@@ -127,6 +140,11 @@ def shutdown():
     _subprocess_manager.shutdown()
 
 # API for sending tasks
+def run_media_metadata_extractor(filename, thumbnail, callback, errback):
+    """Convience API for running the media metadata extractor"""
+    msg = MediaMetadataExtractorTask(filename, thumbnail)
+    _task_queue.add_task(msg, callback, errback)
+
 def run_feedparser(html, callback, errback):
     """Run feedparser on a chunk of html."""
     msg = FeedparserTask(html)

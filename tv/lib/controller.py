@@ -48,7 +48,6 @@ from miro import httpauth
 from miro import httpclient
 from miro import iconcache
 from miro import messages
-from miro import moviedata
 from miro import prefs
 from miro import signals
 from miro import conversions
@@ -123,7 +122,8 @@ class Controller:
             logging.info("Shutting down icon cache updates")
             iconcache.icon_cache_updater.shutdown()
             logging.info("Shutting down movie data updates")
-            moviedata.movie_data_updater.shutdown()
+            if app.movie_data_updater is not None:
+                app.movie_data_updater.shutdown()
 
             logging.info("Joining event loop ...")
             eventloop.join()

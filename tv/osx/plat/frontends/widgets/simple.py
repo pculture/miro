@@ -210,12 +210,19 @@ class ClickableImageButton(ImageDisplay):
         else:
             return ImageDisplay.calc_size_request(self)
 
+class MiroImageView(NSImageView):
+    def viewWillMoveToWindow_(self, aWindow):
+        self.setAnimates_(not aWindow == nil)
+
 class AnimatedImageDisplay(Widget):
     def __init__(self, path):
         Widget.__init__(self)
-        self.nsimage = NSImage.alloc().initByReferencingFile_(filename_to_unicode(path))
-        self.view = NSImageView.alloc().init()
+        self.nsimage = NSImage.alloc().initByReferencingFile_(
+          filename_to_unicode(path))
+        self.view = MiroImageView.alloc().init()
         self.view.setImage_(self.nsimage)
+        # enabled when viewWillMoveToWindow:aWindow invoked
+        self.view.setAnimates_(NO)
 
     def calc_size_request(self):
         return self.nsimage.size().width, self.nsimage.size().height
