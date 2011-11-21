@@ -934,7 +934,7 @@ class DeviceSyncManager(object):
         conversion_manager = conversions.conversion_manager
         start_conversion = conversion_manager.start_conversion
 
-        if not self.waiting:
+        if not self.signal_handles:
             for signal, callback in (
                 ('task-changed', self._conversion_changed_callback),
                 ('task-staged', self._conversion_staged_callback),
