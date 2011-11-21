@@ -510,7 +510,7 @@ class DeviceManager(object):
     def _send_disconnect(self, info):
         sync_manager = app.device_manager.get_sync_for_device(info,
                                                               create=False)
-        if sync_manager and sync_manager.started:
+        if sync_manager and not sync_manager.is_finished():
             messages.ShowWarning(
                 _('Device removed during sync'),
                 _('%(name)s was removed while a sync was in progress.  '
@@ -879,6 +879,10 @@ class DeviceSyncManager(object):
             app.controller.failed_soft("device conversion",
                                        "got video %r without video_path" % (
                     info.name,))
+            return None
+
+        if info.file_type not in ('audio', 'video'):
+            logging.debug("got item %r that's not audio or video", info.name)
             return None
 
         # shortcut, if we're just going to copy the file
