@@ -328,9 +328,9 @@ class MainWindow(Window):
                 return True
 
     def _add_app_menubar(self):
-        menubar = app.widgetapp.menubar
-        self.vbox.pack_start(menubar._widget, expand=False)
-        self._window.add_accel_group(menubar.get_accel_group())
+        self.menubar = app.widgetapp.menubar
+        self.vbox.pack_start(self.menubar._widget, expand=False)
+        self._window.add_accel_group(self.menubar.get_accel_group())
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)

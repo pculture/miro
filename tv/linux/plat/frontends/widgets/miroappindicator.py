@@ -77,9 +77,9 @@ class MiroAppIndicator:
         # (espcecially during downloads). Therefore we later only set 
         # a new app indicator menu if there actually is a change in 
         # the menu text. This avoids a flickering menu.
-        app.menu_manager.connect('enabled-changed', self._on_menu_update)
+        app.menu_manager.connect('menus-updated', self._on_menu_update)
 
-    def _on_menu_update(self, manager):
+    def _on_menu_update(self, manager, reason):
         eventloop.add_idle(self.calculate_popup_menu, "Update app indicator menu")
 
     def set_visible(self, visible):

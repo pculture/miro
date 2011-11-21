@@ -167,9 +167,9 @@ class MenuItem(MenuItemBase):
         # we set ourselves as the represented object for the menu item so we
         # can easily translate one to the other
         menu_item.setRepresentedObject_(self)
-        if menu_item.action in self._STD_ACTION_MAP:
-            menu_item.setTarget_(self._STD_ACTION_MAP[menu_item.action][0])
-            menu_item.setAction_(self._STD_ACTION_MAP[menu_item.action][1])
+        if self.name in self._STD_ACTION_MAP:
+            menu_item.setTarget_(self._STD_ACTION_MAP[self.name][0])
+            menu_item.setAction_(self._STD_ACTION_MAP[self.name][1])
         else:
             menu_item.setTarget_(NSApp().delegate())
             menu_item.setAction_('handleMenuActivate:')
@@ -485,7 +485,7 @@ class MenuBar(MenuShell):
             MenuItem(_("Select All"), "SelectAll", Shortcut("a", MOD))
         ]
         editMenu = Menu(_("Edit"), "Edit", editMenuItems)
-        self.insert(1, editMenu)
+        self.insert(2, editMenu)
 
         # Playback menu
         present_menu_items = [

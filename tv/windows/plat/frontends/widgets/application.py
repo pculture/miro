@@ -56,6 +56,7 @@ from miro.plat.renderers import gstreamerrenderer
 
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import gtkdirectorywatch
+from miro.frontends.widgets.gtk import gtkmenus
 from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
@@ -93,6 +94,7 @@ class WindowsApplication(Application):
         self.initXULRunner()
         gobject.threads_init()
         embeddingwidget.init()
+        self.menubar = gtkmenus.MainWindowMenuBar()
         self.startup()
 
 

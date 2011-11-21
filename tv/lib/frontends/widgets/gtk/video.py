@@ -569,7 +569,7 @@ class VideoPlayer(player.GTKPlayer, VBox):
         self.overlay._window.connect('motion-notify-event',
                 self.on_motion_notify)
         if not app.playback_manager.detached_window:
-            app.widgetapp.window.menubar.hide()
+            app.widgetapp.window.menubar._widget.hide()
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
         # Need to call set_decorated() before fullscreen.  See #10810.
         _window().set_decorated(False)
@@ -688,7 +688,7 @@ class VideoPlayer(player.GTKPlayer, VBox):
         if self.screensaver_manager is not None:
             self.screensaver_manager.enable()
             self.screensaver_manager = None
-        app.widgetapp.window.menubar.show()
+        app.widgetapp.window.menubar._widget.show()
         self.rebuild_video_details()
         self._video_details.show()
         self._destroy_overlay()
