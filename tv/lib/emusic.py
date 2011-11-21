@@ -29,6 +29,8 @@
 
 """Functions for downloading from eMusic."""
 
+import logging
+
 from miro import app
 from miro import httpclient
 from miro import fileutil
@@ -74,7 +76,10 @@ def _emx_callback(data, unknown):
 def _download_emx_files(file_):
     try:
         dom = minidom.parse(file_)
-    except Exception:
+    except Exception, e:
+        if e.message == 'no element found: line 1, column 0':
+            logging.debug('got _emx file with no data, skipping')
+            return
         with file(file_, 'rb') as f:
             app.controller.failed_soft('_emx_callback',
                                        'could not parse %r, data:\n%r' % (
