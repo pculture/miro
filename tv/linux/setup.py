@@ -103,6 +103,8 @@ platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
                                     'widgets')
 platform_extensions_dir = os.path.join(platform_dir, 'extensions')
 echonest_dir = os.path.join(root_dir, 'contrib', 'pyechonest')
+echoprint_dir = os.path.join(platform_dir, 'contrib', 'echoprint-codegen')
+echoprint_src_dir = os.path.join(echoprint_dir, 'src')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -441,8 +443,14 @@ class build(distutils.command.build.build):
         segmenter_exe = os.path.join(output_dir, 'miro-segmenter')
         self.distribution.scripts.append(segmenter_exe)
 
+    def build_echoprint_codegen(self):
+        subprocess.check_call('/usr/bin/make', cwd=echoprint_src_dir)
+        exe_path = os.path.join(echoprint_dir, 'echoprint-codegen')
+        self.distribution.scripts.append(exe_path)
+
     def run(self):
         self.build_segmenter()
+        self.build_echoprint_codegen()
         distutils.command.build.build.run(self)
         
 class test_system(Command):
