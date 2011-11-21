@@ -364,6 +364,11 @@ def get_segmenter_executable_path():
     # path.
     return os.path.join(miro_exec_prefix, 'miro-segmenter')
 
+def get_echoprint_executable_path():
+    # NB: Since this was installed using distutils this should give the right
+    # path.
+    return os.path.join(miro_exec_prefix, 'echoprint-codegen')
+
 def get_transcode_video_options():   
     # Linux ffmpeg may not have fancy pants encoders so leave to use default.
     has_video_args = []

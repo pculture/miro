@@ -32,6 +32,7 @@
 import collections
 import itertools
 import logging
+import subprocess
 
 from miro import app
 from miro import errors
@@ -48,6 +49,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.widgetset import (Separator, Menu,
                                                    RadioMenuItem, CheckMenuItem)
 from miro.gtcache import gettext as _
+from miro.plat import utils
 
 class MenuItem(widgetset.MenuItem):
     """Portable MenuItem class.
@@ -274,7 +276,8 @@ def get_app_menu():
                 MenuItem(_("Memory Stats"), "MemoryStats"),
                 MenuItem(_("Force Feedparser Processing"),
                     "ForceFeedparserProcessing"),
-                MenuItem(_("Clog Backend"), "ClogBackend")
+                MenuItem(_("Clog Backend"), "ClogBackend"),
+                MenuItem(_("Run Echoprint"), "RunEchoprint"),
                 ])
         )
     return all_menus
@@ -581,6 +584,13 @@ def on_force_feedparser_processing():
 @action_handler("ClogBackend")
 def on_clog_backend():
     app.widgetapp.clog_backend()
+
+@action_handler("RunEchoprint")
+def on_run_echoprint():
+    print 'Running echoprint'
+    print '-' * 50
+    subprocess.call([utils.get_echoprint_executable_path()])
+    print '-' * 50
 
 class LegacyMenuUpdater(object):
     """This class contains the logic to update the menus based on enabled
