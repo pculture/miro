@@ -485,7 +485,7 @@ class MenuBar(MenuShell):
             MenuItem(_("Select All"), "SelectAll", Shortcut("a", MOD))
         ]
         editMenu = Menu(_("Edit"), "Edit", editMenuItems)
-        self.insert(1, editMenu)
+        self.insert(2, editMenu)
 
         # Playback menu
         present_menu_items = [
