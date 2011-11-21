@@ -37,6 +37,7 @@ import traceback
 import logging
 import re
 import shutil
+import time
 
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
@@ -791,9 +792,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         filename_root = self.get_filename()
         if fileutil.isdir(filename_root):
-            return set(fileutil.miro_allfiles(filename_root))
+            return (fn for fn in fileutil.miro_allfiles(filename_root))
         else:
-            return set()
+            return []
 
     def _make_new_children(self, paths):
         filename_root = self.get_filename()
@@ -801,61 +802,88 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             logging.error("Item._make_new_children: get_filename here is None")
             return
         for path in paths:
+            # XXX this assert is expensive due to stat()
+            assert os.path.isfile(path)
             assert path.startswith(filename_root)
             offsetPath = path[len(filename_root):]
             while offsetPath[0] in ('/', '\\'):
                 offsetPath = offsetPath[1:]
             FileItem(path, parent_id=self.id, offsetPath=offsetPath)
 
-    def find_new_children(self):
+    @eventloop.idle_iterator
+    def find_new_children(self, skip=[], callback=None):
         """If this feed is a container item, walk through its
-        directory and find any new children.  Returns True if it found
-        children and ran signal_change().
+        directory and find any new children.  You may specify a callback
+        which will be called at the end of the find_new_children()
+        operation as a sort of serializing operation.  Doing so,
+        is entirely optional though on an as-needed basis.
         """
-        if not self.isContainerItem:
-            return False
+        if not self.id_exists() or self.isContainerItem == False:
+            return
         if self.get_state() == 'downloading':
             # don't try to find videos that we're in the middle of
             # re-downloading
-            return False
-        child_paths = self._find_child_paths()
-        for child in self.get_children():
-            child_paths.discard(child.get_filename())
-        self._make_new_children(child_paths)
-        if child_paths:
+            return
+        dirty = False
+        this_pass = []
+        start = time.time()
+        for path in self._find_child_paths():
+            if path in skip:
+                continue
+            this_pass.append(path)
+            if time.time() - start > 0.3:
+                self.isContainerItem = True
+                dirty = True
+                self._make_new_children(this_pass)
+                self.signal_change()
+                yield
+                if not self.id_exists():
+                    return
+                # Leave "skip" as is.  The filesystem namespace changes
+                # asynchronously wrt to our operations and so whether we do
+                # it piecemeal or in one go is the same.
+                start = time.time()
+                this_pass = []
+        if this_pass:
+            # Do the leftovers
+            dirty = True
+            self.isContainerItem = True
+            self._make_new_children(this_pass)
             self.signal_change()
-            return True
-        return False
+        if callback:
+            callback(dirty)
 
     def split_item(self):
-        """returns True if it ran signal_change()"""
         if self.isContainerItem is not None:
-            return self.find_new_children()
+            if self.isContainerItem:
+                skip = [c.get_filename() for c in self.get_children()]
+                self.find_new_children(skip=skip)
+            return
         if ((not isinstance(self, FileItem)
              and (self.downloader is None
                   or not self.downloader.is_finished()))):
-            return False
+            return
         filename_root = self.get_filename()
         if filename_root is None:
-            return False
+            return
         if fileutil.isdir(filename_root):
-            child_paths = self._find_child_paths()
-            if len(child_paths) > 0:
-                self.isContainerItem = True
-                self._make_new_children(child_paths)
-            else:
-                if not self.get_feed_url().startswith ("dtv:directoryfeed"):
-                    target_dir = app.config.get(prefs.NON_VIDEO_DIRECTORY)
-                    if not filename_root.startswith(target_dir):
-                        if isinstance(self, FileItem):
-                            self.migrate (target_dir)
-                        else:
-                            self.downloader.migrate (target_dir)
-                self.isContainerItem = False
+            def complete(nonempty):
+                if not self.id_exists():
+                    return
+                if not nonempty:
+                    if not self.get_feed_url().startswith("dtv:directoryfeed"):
+                        target_dir = app.config.get(prefs.NON_VIDEO_DIRECTORY)
+                        if not filename_root.startswith(target_dir):
+                            if isinstance(self, FileItem):
+                                self.migrate(target_dir)
+                            else:
+                                self.downloader.migrate(target_dir)
+                    self.isContainerItem = False
+                self.signal_change()
+            self.find_new_children(callback=complete)
         else:
             self.isContainerItem = False
         self.signal_change()
-        return True
 
     def set_subtitle_encoding(self, encoding):
         if encoding is not None:
@@ -1810,7 +1838,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             return # this is OK because incomplete_mdp_view knows about it
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
-        # - calling moviedata.movie_data_updater.request_update(self)
+        # - calling app.movie_data_updater.request_update(self)
         # - calling _handle_invalid_media_file
         try:
             self._check_media_file()
@@ -1824,7 +1852,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             app.controller.failed_soft("check_media_file", str(e), True)
             self._handle_invalid_media_file()
         else:
-            moviedata.movie_data_updater.request_update(self)
+            app.movie_data_updater.request_update(self)
             if self.file_type is None:
                 # if this is not overridden by movie_data_updater,
                 # neither mutagen nor MDP could identify it
@@ -1858,7 +1886,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         # NOTE: it is very important (#7993) that there is no way to leave this
         # method without either:
-        # - calling moviedata.movie_data_updater.request_update(self)
+        # - calling app.movie_data_updater.request_update(self)
         # - changing this item so that not self.in_incomplete_mdp_view
         filename = self.get_filename()
         if filename is None:
@@ -2278,37 +2306,31 @@ def fp_values_for_file(filename, title=None, description=None):
 
 def update_incomplete_movie_data():
     IncompleteMovieDataUpdator()
-    # this will stay around because it connects to the movie data updater's
-    # signal.  Once it disconnects from the signal, we clean it up
 
 class IncompleteMovieDataUpdator(object):
     """Finds local Items that have not been examined by MDP, and queues them.
     """
-    BATCH_SIZE = 10
+    BATCH_SIZE = 100
     def __init__(self):
-        self.done = False
-        self.handle = moviedata.movie_data_updater.connect('queue-empty',
-                self.on_queue_empty)
         self.do_some_updates()
 
+    @eventloop.idle_iterator
     def do_some_updates(self):
         """Update some incomplete files, or set done=True if there are none.
 
         Mutagen runs as part of the item creation process, so we need only check
         whether MDP has examined a file here.
         """
-        items_queued = 0
-        for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
-            item.check_media_file()
-            items_queued += 1
-        self.done = items_queued < self.BATCH_SIZE
-
-    def on_queue_empty(self, movie_data_updator):
-        if self.done:
-            movie_data_updator.disconnect(self.handle)
-        else:
-            eventloop.add_idle(self.do_some_updates,
-                    'update incomplete movie data')
+        while True:
+            queued = False
+            # NB: Okay - request_update() will skip item already queued
+            for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
+                item.check_media_file()
+                queued = True
+            if queued:
+                yield
+            else:
+                break
 
 class DeletedFileChecker(object):
     """Utility class that manages calling Item.check_deleted().
@@ -2437,7 +2459,7 @@ class DeviceItem(metadata.Store):
             logging.debug('error reading %s', self.id, exc_info=True)
         else:
             if self.mdp_state is None: # haven't run MDP yet
-                moviedata.movie_data_updater.request_update(self)
+                app.movie_data_updater.request_update(self)
         self.__initialized = True
 
     @staticmethod

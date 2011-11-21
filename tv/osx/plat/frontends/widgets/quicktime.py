@@ -41,6 +41,7 @@ from miro import player
 from miro import iso639
 from miro.gtcache import gettext as _
 from miro.plat import utils
+from miro.plat import qttimeutils
 from miro.plat import bundle
 from miro.plat import qtcomp
 from miro.plat import script_codes
@@ -129,27 +130,6 @@ def warm_up():
         logging.warn("QuickTime Warm Up failed: %s" % error)
     else:
         warmup_handler.handleInitialLoadStateForMovie_(warmup_movie)
-
-###############################################################################
-
-def qttime2secs(qttime):
-    timeScale = qttimescale(qttime)
-    if timeScale == 0:
-        return 0.0
-    timeValue = qttimevalue(qttime)
-    return timeValue / float(timeScale)
-
-def qttimescale(qttime):
-    if isinstance(qttime, tuple):
-        return qttime[1]
-    else:
-        return qttime.timeScale
-
-def qttimevalue(qttime):
-    if isinstance(qttime, tuple):
-        return qttime[0]
-    else:
-        return qttime.timeValue
 
 ###############################################################################
 # The QTMediaTypeSubtitle and QTMediaTypeClosedCaption media types are only
@@ -382,7 +362,7 @@ class Player(player.Player):
     def get_elapsed_playback_time(self):
         if self.movie:
             qttime = self.movie.currentTime()
-            return utils.qttime2secs(qttime)
+            return qttimeutils.qttime2secs(qttime)
         else:
             return 0
 
@@ -390,7 +370,7 @@ class Player(player.Player):
         if self.movie is None:
             return 0
         qttime = self.movie.duration()
-        return utils.qttime2secs(qttime)
+        return qttimeutils.qttime2secs(qttime)
 
     def skip_forward(self):
         current = self.get_elapsed_playback_time()

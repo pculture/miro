@@ -41,7 +41,7 @@ try:
 except ImportError:
     from sqlite3 import dbapi2
 
-import Foundation
+from Foundation import *
 
 # =============================================================================
 
@@ -70,7 +70,7 @@ def launch_application(parsed_options, args):
 
     from glob import glob
     theme = None
-    bundle = Foundation.NSBundle.mainBundle()
+    bundle = NSBundle.mainBundle()
     bundle_path = bundle.bundlePath()
     bundle_theme_dir_path = os.path.join(bundle_path, "Contents", "Theme")
     if os.path.exists(bundle_theme_dir_path):
@@ -146,7 +146,7 @@ def launch_downloader_daemon():
     from miro import eventloop
 
     def beginLoop(loop):
-        loop.pool = Foundation.NSAutoreleasePool.alloc().init()
+        loop.pool = NSAutoreleasePool.alloc().init()
     eventloop.connect('begin-loop', beginLoop)
     eventloop.connect('thread-will-start', beginLoop)
 
@@ -154,7 +154,11 @@ def launch_downloader_daemon():
         del loop.pool
     eventloop.connect('end-loop', endLoop)
     eventloop.connect('thread-did-start', endLoop)
-    
+ 
+    # set as background task
+    info = NSBundle.mainBundle().infoDictionary()
+    info["LSBackgroundOnly"] = "1"
+
     # And launch
     from miro.dl_daemon import MiroDownloader
     MiroDownloader.launch()
@@ -167,6 +171,15 @@ def launch_downloader_daemon():
 
 def launch_miro_helper():
     from miro import miro_helper
+    from miro.plat import qt_extractor
+
+    # set as background task
+    info = NSBundle.mainBundle().infoDictionary()
+    info["LSBackgroundOnly"] = "1"
+
+    # Register the quicktime components
+    qt_extractor.register_quicktime_components()
+
     miro_helper.launch()
 
 # =============================================================================

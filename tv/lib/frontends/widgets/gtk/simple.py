@@ -107,7 +107,18 @@ class AnimatedImageDisplay(Widget):
     def __init__(self, path):
         Widget.__init__(self)
         self.set_widget(gtk.Image())
-        self._widget.set_from_animation(gtk.gdk.PixbufAnimation(path))
+        self._animation = gtk.gdk.PixbufAnimation(path)
+        # Set to animate before we are shown and stop animating after
+        # we disappear.
+        self._widget.connect('map', lambda w: self._set_animate(True))
+        self._widget.connect('unmap-event',
+                             lambda w, a: self._set_animate(False))
+
+    def _set_animate(self, enabled):
+        if enabled:
+            self._widget.set_from_animation(self._animation)
+        else:
+            self._widget.clear()
 
 class Label(Widget):
     """Widget that displays simple text."""

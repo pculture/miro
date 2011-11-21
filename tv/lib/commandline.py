@@ -109,7 +109,7 @@ def add_videos(paths):
     finished = False
     yield # yield after doing prep work
     while not finished:
-        finished = _add_batch_of_videos(path_iter, 0.5)
+        finished = _add_batch_of_videos(path_iter, 0.1)
         yield # yield after each batch
 
 def _add_batch_of_videos(path_iter, max_time):

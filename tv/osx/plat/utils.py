@@ -51,6 +51,7 @@ from miro.util import returns_unicode, returns_binary, check_u, check_b
 from miro.plat.filenames import (PlatformFilenameType,
                                  os_filename_to_filename_type,
                                  filename_type_to_os_filename)
+from miro.plat import qt_extractor
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 # We need to define samefile for the portable code.  Lucky for us, this is
@@ -445,9 +446,8 @@ def _get_cmd_line_and_env_for_script(script_name):
             env[k] = env[k].encode('utf-8')
     return ((py_exe_path, script_path), env)
 
-def movie_data_program_info(movie_path, thumbnail_path):
-    cmd_line, env = _get_cmd_line_and_env_for_script('qt_extractor.py')
-    return (cmd_line + (movie_path, thumbnail_path), env)
+def run_media_metadata_extractor(movie_path, thumbnail_path):
+    return qt_extractor.run(movie_path, thumbnail_path)
 
 def miro_helper_program_info():
     cmd_line = _app_command_line() + [u'--miro-helper']
@@ -503,36 +503,6 @@ def get_ffmpeg2theora_executable_path():
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters
     
-###############################################################################
-
-def qttime2secs(qttime):
-    timeScale = qttimescale(qttime)
-    if timeScale == 0:
-        return 0.0
-    timeValue = qttimevalue(qttime)
-    return timeValue / float(timeScale)
-
-def qttimescale(qttime):
-    if isinstance(qttime, tuple):
-        return qttime[1]
-    else:
-        return qttime.timeScale
-
-def qttimevalue(qttime):
-    if isinstance(qttime, tuple):
-        return qttime[0]
-    else:
-        return qttime.timeValue
-
-def qttimevalue_set(qttime, value):
-    if isinstance(qttime, tuple):
-        return(value, qttime[1], qttime[2])
-    else:
-        qttime.timeValue = value
-        return qttime
-
-###############################################################################
-
 def get_logical_cpu_count():
     try:
         import multiprocessing

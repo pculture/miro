@@ -84,11 +84,13 @@ class WatchedFolderTest(EventLoopTest):
         self.copy_new_file('c.mp3')
         self.send_watcher_signal("added", "c.mp3")
         self.run_pending_timeouts()
+        self.runPendingIdles()
         self.check_items('a.mp3', 'b.mp3', 'c.mp3')
         # if we already know about the file, nothing should be added
         self.send_watcher_signal("added", "a.mp3")
         self.send_watcher_signal("added", "c.mp3")
         self.run_pending_timeouts()
+        self.runPendingIdles()
         self.check_items('a.mp3', 'b.mp3', 'c.mp3')
 
     def test_watcher_deleted(self):
@@ -100,11 +102,13 @@ class WatchedFolderTest(EventLoopTest):
         self.remove_file('a.mp3')
         self.send_watcher_signal("deleted", "a.mp3")
         self.run_pending_timeouts()
+        self.runPendingIdles()
         self.check_items('b.mp3')
         # deleted for a file not contained in our feed shouldn't crash
         self.send_watcher_signal("deleted", "a.mp3")
         self.send_watcher_signal("deleted", "never-there.mp3")
         self.run_pending_timeouts()
+        self.runPendingIdles()
         self.check_items('b.mp3')
 
     def test_double_update(self):

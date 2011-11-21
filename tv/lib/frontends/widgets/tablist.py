@@ -29,7 +29,6 @@
 
 """Displays the list of tabs on the left-hand side of the app."""
 
-from __future__ import with_statement # python2.5
 import itertools
 from hashlib import md5
 try:

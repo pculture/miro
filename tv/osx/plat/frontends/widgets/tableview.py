@@ -31,8 +31,6 @@
 associated classes.
 """
 
-from __future__ import with_statement # for python2.5
-
 import math
 import logging
 from contextlib import contextmanager

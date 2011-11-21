@@ -9,21 +9,23 @@ from miro.feed import Feed
 from miro.item import Item, FileItem, FeedParserValues
 from miro.fileobject import FilenameType
 from miro.downloader import RemoteDownloader
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.singleclick import _build_entry
 
 def fp_values_for_url(url, additional=None):
     return FeedParserValues(_build_entry(url, 'video/x-unknown', additional))
 
-class ContainerItemTest(MiroTestCase):
+class ContainerItemTest(EventLoopTest):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        EventLoopTest.setUp(self)
         self.feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
         self.mytempdir = FilenameType(tempfile.mkdtemp(dir=self.tempdir))
         self._make_fake_item("pcf.avi")
         self._make_fake_item("dean.avi")
         self._make_fake_item("npr.txt")
         self.container_item = FileItem(self.mytempdir, self.feed.id)
+        # Give the iterators some time to run
+        self.process_idles()
         for child in self.container_item.get_children():
             if child.filename.endswith("avi"):
                 child.file_type = u'video'
@@ -33,7 +35,7 @@ class ContainerItemTest(MiroTestCase):
 
     def tearDown(self):
         shutil.rmtree(self.mytempdir, ignore_errors=True)
-        MiroTestCase.tearDown(self)
+        EventLoopTest.tearDown(self)
 
     def _make_fake_item(self, filename):
         f = open(os.path.join(self.mytempdir, filename), 'wb')

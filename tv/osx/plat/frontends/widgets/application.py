@@ -44,7 +44,6 @@ from miro import prefs
 from miro import downloader
 from miro import messages
 from miro import eventloop
-from miro import moviedata
 from miro import signals
 from miro import httpclient
 from miro import commandline
@@ -125,8 +124,6 @@ class OSXApplication(Application, signals.SignalEmitter):
         eventloop.connect('thread-did-start', self.endLoop)
         eventloop.connect('begin-loop', self.beginLoop)
         eventloop.connect('end-loop', self.endLoop)
-        moviedata.movie_data_updater.connect('begin-loop', self.beginLoop)
-        moviedata.movie_data_updater.connect('end-loop', self.endLoop)
         httpclient.register_on_start(
             lambda cm: cm.connect('begin-loop', self.beginLoop))
         httpclient.register_on_start(

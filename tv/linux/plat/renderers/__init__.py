@@ -55,7 +55,7 @@ def set_renderer(modname):
         pkg = __import__('miro.plat.renderers.' + modname)
         module = getattr(pkg.plat.renderers, modname)
         app.audio_renderer, app.video_renderer = module.make_renderers()
-        app.movie_data_program_info = module.movie_data_program_info
+        app.run_media_metadata_extractor = module.run_extractor
         app.get_item_type = module.get_item_type
         logging.info("set_renderer: successfully loaded %s", modname)
     except StandardError:

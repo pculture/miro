@@ -326,6 +326,8 @@ def finish_startup(obj, thread):
     app.download_state_manager = downloader.DownloadStateManager()
     app.download_state_manager.init_controller()
 
+    app.movie_data_updater = moviedata.MovieDataUpdater()
+
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager = sharing.SharingManager()
@@ -417,8 +419,6 @@ def on_frontend_started():
     autodler.start_downloader()
     yield None
     feed.expire_items()
-    yield None
-    moviedata.movie_data_updater.start_thread()
     yield None
     commandline.startup()
     yield None

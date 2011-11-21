@@ -112,11 +112,11 @@ class MovieDataRequestTest(MiroTestCase):
             # we called request_update()
             item.mdp_state = None
             item.signal_change()
-            moviedata.movie_data_updater.request_update(item)
+            app.movie_data_updater.request_update(item)
 
     def check_will_run_moviedata(self, item, should_run):
         # check MovieDataUpdater._should_process_item()
-        mdu = moviedata.movie_data_updater
+        mdu = app.movie_data_updater
         self.assertEquals(mdu._should_process_item(item), should_run)
         # check incomplete_mdp_view
         incomplete_view = set(models.Item.incomplete_mdp_view())

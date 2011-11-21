@@ -50,6 +50,7 @@ from miro.plat import prelogger
 from miro.plat import proxyfind
 from miro.plat import resources
 from miro.plat import specialfolders
+from miro.plat.renderers import gst_extractor
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
 from miro import fileutil
@@ -396,11 +397,8 @@ def exit_miro(return_code):
     except WindowsError:
         pass
 
-def movie_data_program_info(movie_path, thumbnail_path):
-    exe_path = os.path.join(resources.app_root(), 'Miro_MovieData.exe')
-    cmd_line = (exe_path, movie_path, thumbnail_path)
-    env = None
-    return (cmd_line, env)
+def run_media_metadata_extractor(movie_path, thumbnail_path):
+    return gst_extractor.run(movie_path, thumbnail_path)
 
 def get_logical_cpu_count():
     try:

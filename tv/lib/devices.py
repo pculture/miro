@@ -1371,7 +1371,7 @@ def scan_device_for_files(device):
         if item_type is not None:
             item_data.append((ufilename, item_type))
             filenames.append(filename)
-        if time.time() - start > 0.4:
+        if time.time() - start > 0.3:
             app.metadata_progress_updater.will_process_paths(filenames,
                                                              device)
             yield # let other stuff run
