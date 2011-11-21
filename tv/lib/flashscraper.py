@@ -312,7 +312,7 @@ def _scrape_vimeo_callback(info, callback):
     url = info['redirected-url']
     try:
         doc = minidom.parseString(info['body'])
-        id_ = VIMEO_CLIP_RE.match(url).group(1)
+        id_ = VIMEO_CLIP_RE.match(url).group('id_')
         req_sig = doc.getElementsByTagName('request_signature').item(0).firstChild.data.decode('ascii', 'replace')
         req_sig_expires = doc.getElementsByTagName('request_signature_expires').item(0).firstChild.data.decode('ascii', 'replace')
         url = (u"http://www.vimeo.com/moogaloop/play/clip:%s/%s/%s/?q=" %
