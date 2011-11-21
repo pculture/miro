@@ -582,17 +582,6 @@ def on_force_feedparser_processing():
 def on_clog_backend():
     app.widgetapp.clog_backend()
 
-def generate_action_groups(menu_structure):
-    """Takes a menu structure and returns a map of action group name to
-    list of menu actions in that group.
-    """
-    action_groups = {}
-    for menu in menu_structure:
-        if hasattr(menu, "groups"):
-            for grp in menu.groups:
-                action_groups.setdefault(grp, []).append(menu.action)
-    return action_groups
-
 class LegacyMenuUpdater(object):
     """This class contains the logic to update the menus based on enabled
     groups and state labels.
