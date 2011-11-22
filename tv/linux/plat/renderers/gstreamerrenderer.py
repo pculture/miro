@@ -44,10 +44,6 @@ from miro.plat import options
 # We need to define get_item_type().  Use the version from sniffer.
 from miro.frontends.widgets.gst.sniffer import get_item_type
 
-def run_extractor(movie_path, thumbnail_path):
-    from miro.plat.renderers import gst_extractor
-    return gst_extractor.run(movie_path, thumbnail_path)
-
 class LinuxSinkFactory(renderer.SinkFactory):
     """Linux class to create gstreamer audio/video sinks.
 
