@@ -109,6 +109,10 @@ class MovieDataUpdater(object):
     def callback(self, result, mdi):
         mediatype, duration, got_screenshot = result
 
+        # Make sure this is unicode, or else database validation will
+        # fail on insert!
+        mediatype = unicode(mediatype)
+
         if os.path.splitext(mdi.video_path)[1] == '.flv':
             # bug #17266.  if the extension is .flv, we ignore the mediatype
             # we just got from the movie data program.  this is
