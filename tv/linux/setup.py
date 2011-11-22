@@ -55,8 +55,8 @@ from distutils.errors import DistutilsOptionError
 from distutils.util import change_root
 from glob import glob
 from string import Template
-import distutils.command.install_data
-import distutils.command.build
+from distutils.command.build import build
+from distutils.command.install_data import install_data
 import os
 import pwd
 import subprocess
@@ -365,9 +365,9 @@ if not "clean" in sys.argv:
 
 
 #### Our specialized install_data command ####
-class install_data(distutils.command.install_data.install_data):
-    """install_data extends to default implementation so that it automatically
-    installs app.config from app.config.template.
+class miro_install_data(install_data):
+    """miro_install_data extends to default implementation so that it
+    automatically installs app.config from app.config.template.
     """
 
     def install_app_config(self):
@@ -422,10 +422,10 @@ class install_data(distutils.command.install_data.install_data):
             self.outfiles.append(dest)
 
     def run(self):
-        distutils.command.install_data.install_data.run(self)
+        install_data.run(self)
         self.install_app_config()
 
-class build(distutils.command.build.build):
+class miro_build(build):
     def build_segmenter(self):
         segmenter_src = os.path.join(platform_dir, 'miro-segmenter.c')
         cc = ccompiler.new_compiler()
@@ -445,14 +445,20 @@ class build(distutils.command.build.build):
 
     def build_echoprint_codegen(self):
         subprocess.check_call('/usr/bin/make', cwd=echoprint_src_dir)
-        exe_path = os.path.join(echoprint_dir, 'echoprint-codegen')
-        self.distribution.scripts.append(exe_path)
+        src_binary = os.path.join(echoprint_dir, 'echoprint-codegen')
+        dest_dir = os.path.join(self.build_base, 'echoprint-codegen')
+        dest_binary = os.path.join(dest_dir, 'echoprint-codegen')
+        self.mkpath(dest_dir)
+        if os.path.exists(dest_binary) and not self.dry_run:
+            os.unlink(dest_binary)
+        self.move_file(src_binary, dest_binary)
+        self.distribution.scripts.append(dest_binary)
 
     def run(self):
         self.build_segmenter()
         self.build_echoprint_codegen()
-        distutils.command.build.build.run(self)
-        
+        build.run(self)
+
 class test_system(Command):
     description = ("Allows you to test configurations without compiling "
                    "or running.")
@@ -593,8 +599,8 @@ setup(name='miro',
     cmdclass={
         'test_system': test_system,
         'build_ext': build_ext,
-        'build': build,
-        'install_data': install_data,
+        'build': miro_build,
+        'install_data': miro_install_data,
         'install_theme': install_theme,
         'clean': clean,
     }
