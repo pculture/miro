@@ -237,7 +237,8 @@ def run_feedparser(html, callback, errback):
         else:
             callback(rv)
     else:
-        workerprocess.run_feedparser(html, callback, errback)
+        workerprocess.send(workerprocess.FeedparserTask(html),
+                           callback, errback)
 
 # Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0

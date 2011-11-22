@@ -185,11 +185,11 @@ class MovieDataUpdater(object):
         if self._should_process_item(item):
             self.in_progress.add(item.id)
             info = MovieDataInfo(item)
-            workerprocess.run_media_metadata_extractor(
-              info.video_path,
-              info.thumbnail_path,
-              lambda result: self.callback(result, info),
-              lambda result: self.errback(result, info))
+            task = workerprocess.MediaMetadataExtractorTask(info.video_path,
+                                                            info.thumbnail_path)
+            workerprocess.send(task,
+                               lambda result: self.callback(result, info),
+                               lambda result: self.errback(result, info))
         else:
             self.update_skipped(item)
             app.metadata_progress_updater.path_processed(item.get_filename())

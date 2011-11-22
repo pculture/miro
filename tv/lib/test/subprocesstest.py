@@ -224,7 +224,8 @@ class WorkerProcessTest(EventLoopTest):
         path = os.path.join(resources.path("testdata/feedparsertests/feeds"),
             "http___feeds_miroguide_com_miroguide_featured.xml")
         html = open(path).read()
-        workerprocess.run_feedparser(html, self.callback, self.errback)
+        msg = workerprocess.FeedparserTask(html)
+        workerprocess.send(msg, self.callback, self.errback)
 
     def check_successful_result(self):
         self.assertNotEquals(self.result, None)
@@ -244,8 +245,8 @@ class WorkerProcessTest(EventLoopTest):
     def test_feedparser_error(self):
         # test feedparser failing to parse a feed
         workerprocess.startup()
-        workerprocess.run_feedparser('FORCE EXCEPTION', self.callback,
-                self.errback)
+        msg = workerprocess.FeedparserTask('FORCE EXCEPTION')
+        workerprocess.send(msg, self.callback, self.errback)
         self.runEventLoop(4.0)
         self.assertEquals(self.result, None)
         self.assert_(isinstance(self.error, ValueError))

@@ -140,12 +140,11 @@ def shutdown():
     _subprocess_manager.shutdown()
 
 # API for sending tasks
-def run_media_metadata_extractor(filename, thumbnail, callback, errback):
-    """Convience API for running the media metadata extractor"""
-    msg = MediaMetadataExtractorTask(filename, thumbnail)
-    _task_queue.add_task(msg, callback, errback)
+def send(msg, callback, errback):
+    """Send a message to the worker process.
 
-def run_feedparser(html, callback, errback):
-    """Run feedparser on a chunk of html."""
-    msg = FeedparserTask(html)
+    :param msg: Message to send
+    :param callback: function to call on success
+    :param errback: function to call on error
+    """
     _task_queue.add_task(msg, callback, errback)
