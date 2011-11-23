@@ -379,16 +379,15 @@ class SubprocessManager(object):
         # If things go right, the process will quit, then our thread will
         # quit.  Wait for a clean shutdown
         self.thread.join(timeout)
-        # If things didn't shutdown, then force them to quit
-        if self.process.returncode is None:
-            try:
-                self.process.terminate()
-            except OSError, e:
-                # Error on terminate.  Normally we should log an error, except
-                # in the case where the process quit by itself before our
-                # terminate() call (see #18172).
-                if self.process.returncode is None:
-                    logging.exception("error calling terminate()")
+        # If things didn't shutdown, then force them to quit.  Let's not
+        # bother with SIGTERM since that really also would be an abnormal
+        # exit as far as the child is concerned.
+        try:
+            self.process.kill()
+        except OSError, e:
+            # Error on kill.  Just log an error and move on.  Nothing
+            # much we can do here anyway.
+            logging.exception('worker subprocess kill failed')
         self._cleanup_process()
 
     def _on_thread_quit(self, thread):
@@ -558,18 +557,14 @@ def subprocess_main():
         raise # reraise so that miro_helper.py returns a non-zero exit code
     # startup thread to process stdin
     queue = Queue.Queue()
-    thread = threading.Thread(target=_subprocess_pipe_thread, args=(stdin,
-        queue))
-    thread.daemon = False
+    thread = threading.Thread(target=_subprocess_handler_thread,
+                              args=(handler, stdin, queue))
+    thread.daemon = True
     thread.start()
     # run our message loop
     handler.on_startup()
     try:
-        while True:
-            msg = queue.get()
-            if msg is None:
-                break
-            handler.handle(msg)
+        _subprocess_pipe_thread(stdin, queue)
     finally:
         handler.on_shutdown()
         # send None to signal that we are about to quit
@@ -622,22 +617,35 @@ def _subprocess_setup(stdin, stdout):
         _send_subprocess_error_for_exception()
         raise LoadError("Exception while constructing handler: %s" % e)
 
-def _subprocess_pipe_thread(stdin, queue):
-    """Thread inside the subprocess that reads messages from stdin.
+def _subprocess_handler_thread(handler, stdin, queue):
+    """Thread inside the subprocess that handles messages.
 
     We use a separate thread so that our pipe doesn't get backed up while we
     are process messages
     """
     try:
+        while True:
+            handler.handle(queue.get())
+    except StandardError:
+        # Boh boh.  Something went wrong!  We close the stdin to break
+        # the main read from pipe loop in the main thread. Then it will
+        # quit, and the main Miro process will restart us.
+        stdin.close()
+        # Bye bye, thread ...
+
+def _subprocess_pipe_thread(stdin, queue):
+    """Thread inside the subprocess that reads messages from stdin.
+    """
+    try:
         for msg in _read_from_pipe(stdin):
+            if msg is None:
+                break
             queue.put(msg)
     except StandardError, e:
         # we could try to send a SubprocessError message, but it's highly
         # likely that our main process is dead, so it's simplest to just avoid
         # writing to the (likely closed) stdout pipe.
         pass
-    # put None to our queue so the main thread quits
-    queue.put(None)
 
 class PipeMessageProxy(object):
     """Handles messages by writing them to a pipe
