@@ -180,7 +180,6 @@ class MovieDataUpdater(object):
         if self.in_shutdown:
             return
         if item.id in self.in_progress:
-            logging.warn("Not adding in-progess item (%s)", item.id)
             return
 
         if self._should_process_item(item):
