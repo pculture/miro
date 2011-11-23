@@ -497,7 +497,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def incomplete_mdp_view(cls, limit=10):
+    def incomplete_mdp_view(cls):
         """Return up to limit local items that have not yet been examined with
         MDP; a file is considered examined even if we have decided to skip it.
 
@@ -507,8 +507,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 "(rd.state in ('finished', 'uploading', 'uploading-paused'))) "
                 "AND NOT isContainerItem " # match CMF short-circuit, just in case
                 "AND mdp_state IS NULL", # State.UNSEEN
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                limit=limit)
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @property
     def in_incomplete_mdp_view(self):
@@ -2304,33 +2303,16 @@ def filename_to_title(filename):
 def fp_values_for_file(filename, title=None, description=None):
     return FileFeedParserValues(filename, title, description)
 
+@eventloop.idle_iterator
 def update_incomplete_movie_data():
-    IncompleteMovieDataUpdator()
-
-class IncompleteMovieDataUpdator(object):
     """Finds local Items that have not been examined by MDP, and queues them.
+    The metadata update request runs asynchronously and also it handles
+    duplicate items being added, so we need not worry slurping in the entire
+    thing.
     """
-    BATCH_SIZE = 100
-    def __init__(self):
-        self.do_some_updates()
-
-    @eventloop.idle_iterator
-    def do_some_updates(self):
-        """Update some incomplete files, or set done=True if there are none.
-
-        Mutagen runs as part of the item creation process, so we need only check
-        whether MDP has examined a file here.
-        """
-        while True:
-            queued = False
-            # NB: Okay - request_update() will skip item already queued
-            for item in Item.incomplete_mdp_view(limit=self.BATCH_SIZE):
-                item.check_media_file()
-                queued = True
-            if queued:
-                yield
-            else:
-                break
+    for item in Item.incomplete_mdp_view():
+        item.check_media_file()
+        yield
 
 class DeletedFileChecker(object):
     """Utility class that manages calling Item.check_deleted().
