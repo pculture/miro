@@ -313,7 +313,8 @@ def exit_miro(return_code):
     sys.exit(return_code)
 
 def run_media_metadata_extractor(movie_path, thumbnail_path):
-    return app.run_media_metadata_extractor(movie_path, thumbnail_path)
+    from miro.plat.renderers import gst_extractor
+    return gst_extractor.run(movie_path, thumbnail_path)
 
 def miro_helper_program_info():
     """Get the command line to launch miro_helper.py """
