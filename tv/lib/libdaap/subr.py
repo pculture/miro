@@ -273,7 +273,7 @@ def decode_response(reply):
             decoded.append((code, value))
             reply = reply[realfmtsize:]
         return decoded
-    except (KeyError, ValueError), e:
+    except (struct.error, KeyError, ValueError), e:
         return [(-1, [])]
 
 def encode_response(reply, content_encoding=None):
