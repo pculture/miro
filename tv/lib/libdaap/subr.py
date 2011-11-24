@@ -313,7 +313,11 @@ def encode_response(reply, content_encoding=None):
             # order
             fmt = '!4sI' + fmt
             # XXX slow - should bunch up
-            blob += struct.pack(fmt, code, size, value)
+            try:
+                blob += struct.pack(fmt, code, size, value)
+            except struct.error:
+                # This pack did not work.  Let's ignore it
+                pass
             blob += subblob
         blob = StreamObj(blob, content_encoding=content_encoding)
     except ValueError:
