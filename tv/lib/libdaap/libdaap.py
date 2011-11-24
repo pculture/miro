@@ -671,19 +671,26 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 reply = []
                 extra_headers = []
         except Exception, e:
-            self.log_message('Error: Exception occurred: ' + str(e))
-            if self.server.debug:
-                (typ, value, tb) = sys.exc_info()
-                print 'Exception: ' + str(typ)
-                print 'Traceback:\n'
-                traceback.print_tb(tb)
+            (typ, value, tb) = sys.exc_info()
+            parts = 'Error: Exception occurred: %s\nTraceback:\n'
+            parts += ''.join(traceback.format_list(traceback.extract_tb(tb)))
+            self.log_message(parts, e)
             # XXX should we end the connection on an exception occurence?
             rcode = DAAP_BADREQUEST
             reply = []
             extra_headers = []
-        content_encoding = self.reply_encoding()
-        self.do_send_reply(rcode, reply, extra_headers=extra_headers,
-                           content_encoding=content_encoding)
+        try:
+            content_encoding = self.reply_encoding()
+            self.do_send_reply(rcode, reply, extra_headers=extra_headers,
+                               content_encoding=content_encoding)
+        except Exception, e:
+            (typ, value, tb) = sys.exc_info()
+            parts = 'Error: Exception during response: %s\nTraceback:\n'
+            parts += ''.join(traceback.format_list(traceback.extract_tb(tb)))
+            self.log_message(parts, e)
+            # Let's cut them off ... no reply for you!  Re-raising the
+            # exception should make the caller do the right thing.
+            raise e
         if endconn:
             self.wfile.close()
 
