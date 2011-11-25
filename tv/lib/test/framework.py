@@ -28,6 +28,7 @@ from time import sleep
 from miro import models
 from miro import workerprocess
 
+from miro.test import mock
 from miro.test import testhttpserver
 
 util.setup_logging()
@@ -312,6 +313,7 @@ class MiroTestCase(unittest.TestCase):
         # for the individual test unless necessary.  In this case we override
         # the class to run the downloader).
         app.download_state_manager = downloader.DownloadStateManager()
+        self.mock_patchers = []
 
     def set_temp_support_directory(self):
         self.sandbox_support_directory = os.path.join(self.tempdir, 'support')
@@ -319,18 +321,12 @@ class MiroTestCase(unittest.TestCase):
             os.makedirs(self.sandbox_support_directory)
         app.config.set(prefs.SUPPORT_DIRECTORY, self.sandbox_support_directory)
 
-    def tearDown(self): 
-        app.config.set(prefs.SUPPORT_DIRECTORY, self.old_support_directory)
-        try:
-            shutil.rmtree(self.sandbox_support_directory)
-        except OSError, e:
-            assert 0, "test teardown failed"
-        MiroTestCase.tearDown(self)
-
     def on_windows(self):
         return self.platform == "windows"
 
     def tearDown(self):
+        for patcher in self.mock_patchers:
+            patcher.stop()
         # shutdown workerprocess if we started it for some reason.
         workerprocess.shutdown()
         self.reset_log_filter()
@@ -352,6 +348,20 @@ class MiroTestCase(unittest.TestCase):
 
         # Remove tempdir
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
+
+    def patch_function(self, function_name, new_function):
+        """Use Mock to replace an existing function for a single test.
+
+        function_name should be in the form "full.module.name.object".  For
+        example "miro.startup.startup"
+
+        :param function_name: name of the function to patch
+        :param new_function: function object to replace it with
+        """
+        patcher = mock.patch(function_name,
+                             mock.Mock(side_effect=new_function))
+        patcher.start()
+        self.mock_patchers.append(patcher)
 
     def unload_extensions(self):
         for ext in app.extension_manager.extensions:
