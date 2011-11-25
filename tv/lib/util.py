@@ -543,8 +543,8 @@ def returns_file(func):
     return a filename, file object
     """
     def check_func(*args, **kwargs):
+        result = func(*args, **kwargs)
         try:
-            result = func(*args, **kwargs)
             filename, fileobj = result
             if result is not None and type(fileobj) != file:
                 raise ValueError('returns_file: not a valid file object')

@@ -3,6 +3,7 @@ import time
 import Queue
 
 from miro import app
+from miro import moviedata
 from miro import subprocessmanager
 from miro import workerprocess
 from miro.plat import resources
@@ -209,6 +210,9 @@ class WorkerProcessTest(EventLoopTest):
         # override the normal handler class with our own
         workerprocess._subprocess_manager.handler_class = (
                 UnittestWorkerProcessHandler)
+        self.reset_results()
+
+    def reset_results(self):
         self.result = self.error = None
 
     def callback(self, result):
@@ -219,6 +223,8 @@ class WorkerProcessTest(EventLoopTest):
         self.error = error
         self.stopEventLoop(abnormal=False)
 
+
+class FeedParserTest(WorkerProcessTest):
     def send_feedparser_task(self):
         # send feedparser successfully parsing a feed
         path = os.path.join(resources.path("testdata/feedparsertests/feeds"),
@@ -228,8 +234,9 @@ class WorkerProcessTest(EventLoopTest):
         workerprocess.send(msg, self.callback, self.errback)
 
     def check_successful_result(self):
+        if self.error is not None:
+            raise self.error
         self.assertNotEquals(self.result, None)
-        self.assertEquals(self.error, None)
         # just do some very basic test to see if the result is correct
         if self.result['bozo']:
             raise AssertionError("Feedparser parse error: %s",
@@ -272,3 +279,36 @@ class WorkerProcessTest(EventLoopTest):
         workerprocess.startup()
         self.runEventLoop(4.0)
         self.check_successful_result()
+
+class MovieDataTest(WorkerProcessTest):
+    def check_successful_result(self):
+        # just do some very basic test to see if the result is correct
+        if self.error is not None:
+            raise self.error
+        if not isinstance(self.result, dict):
+            raise TypeError(self.result)
+
+    def check_movie_data_call(self, filename, file_type, duration):
+        source_path = resources.path("testdata/metadata/" + filename)
+        msg = workerprocess.MovieDataProgramTask(source_path, self.tempdir)
+        workerprocess.send(msg, self.callback, self.errback)
+        self.runEventLoop(4.0)
+        self.check_successful_result()
+        self.assertEquals(self.result['source_path'], source_path)
+        self.assertEquals(self.result['file_type'], file_type)
+        self.assertEquals(self.result['duration'], duration)
+        if file_type == 'video':
+            screenshot_name = os.path.basename(source_path) + '.png'
+            self.assertEquals(self.result['screenshot_path'],
+                              os.path.join(self.tempdir, screenshot_name))
+        else:
+            self.assertEquals(self.result['screenshot_path'], None)
+        self.reset_results()
+
+    def test_movie_data_worker_process(self):
+        workerprocess.startup()
+        self.check_movie_data_call('mp3-0.mp3', 'audio', 1044)
+        self.check_movie_data_call('mp3-1.mp3', 'audio', 1044)
+        self.check_movie_data_call('mp3-2.mp3', 'audio', 1044)
+        self.check_movie_data_call('webm-0.webm', 'video', 434)
+        self.check_movie_data_call('drm.m4v', 'other', None)

@@ -40,11 +40,12 @@ import logging
 from contextlib import contextmanager
 
 from miro import app
+from miro import download_utils
 from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro import workerprocess
+from miro.plat.utils import run_media_metadata_extractor
 
 # Time in seconds that we wait for the utility to execute.  If it goes
 # longer than this, we assume it's hung and kill it.
@@ -173,6 +174,7 @@ class MovieDataUpdater(object):
         item.signal_change()
 
     def request_update(self, item):
+        from miro import workerprocess
         if (hasattr(app, 'in_unit_tests') and
                 not hasattr(app, 'testing_mdp')):
             # kludge for skipping MDP in non-MDP unittests
@@ -208,3 +210,61 @@ class MovieDataUpdater(object):
 
     def shutdown(self):
         self.in_shutdown = True
+
+def convert_mdp_result(source_path, screenshot_path, result):
+    """Convert the movie data program result for the metadata manager
+    """
+    converted_result = { 'source_path': source_path }
+    file_type, duration, success = result
+
+    # MDP retuturns durations in millseconds, convert to seconds
+    if duration >= 0:
+        converted_result['duration'] = duration
+    else:
+        converted_result['duration'] = None
+
+    # Make file_type is unicode, or else database validation will fail on
+    # insert!
+    converted_result['file_type'] = unicode(file_type)
+
+    if os.path.splitext(source_path)[1] == '.flv':
+        # bug #17266.  if the extension is .flv, we ignore the file type
+        # we just got from the movie data program.  this is
+        # specifically for .flv files which the movie data
+        # extractors have a hard time with.
+        converted_result['file_type'] = u'video'
+
+    if (converted_result['file_type'] == 'video' and success and
+        fileutil.exists(screenshot_path)):
+        converted_result['screenshot_path'] = screenshot_path
+    else:
+        converted_result['screenshot_path'] = None
+    return converted_result
+
+def _make_screenshot_path(source_path, image_directory):
+    """Get a unique path to put a screenshot at
+
+    This function creates a unique path to put a screenshot file at.
+
+    :param source_path: path to the input video file
+    :param image_directory: directory to put screenshots in
+    """
+    filename = os.path.basename(source_path) + ".png"
+    path = os.path.join(image_directory, filename)
+    # we have to use next_free_filename_no_create() here because we are
+    # passing the file path to the movie data process, so keeping the file
+    # open is not an option.  We'll just have to live with the race condition
+    return download_utils.next_free_filename(path)
+
+def process_file(source_path, image_directory):
+    """Send a file to the movie data program.
+
+    :param source_path: path to the file to process
+    :param image_directory: directory to put screenshut files
+    :returns: dictionary with metadata info
+    """
+    screenshot_path, fp = _make_screenshot_path(source_path, image_directory)
+    result = run_media_metadata_extractor(source_path, screenshot_path)
+    # we can close the file now, since MDP has written to it
+    fp.close()
+    return convert_mdp_result(source_path, screenshot_path, result)

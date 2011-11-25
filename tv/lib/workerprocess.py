@@ -37,6 +37,7 @@ includes feedparser, but we could pretty easily extend this to other tasks.
 import itertools
 
 from miro import feedparserutil
+from miro import moviedata
 from miro import subprocessmanager
 from miro import util
 
@@ -61,6 +62,12 @@ class MediaMetadataExtractorTask(TaskMessage):
         TaskMessage.__init__(self)
         self.filename = filename
         self.thumbnail = thumbnail
+
+class MovieDataProgramTask(TaskMessage):
+    def __init__(self, source_path, screenshot_directory):
+        TaskMessage.__init__(self)
+        self.source_path = source_path
+        self.screenshot_directory = screenshot_directory
 
 class TaskResult(subprocessmanager.SubprocessResponse):
     def __init__(self, task_id, result):
@@ -88,6 +95,10 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         filename = msg.filename
         thumbnail = msg.thumbnail
         return utils.run_media_metadata_extractor(filename, thumbnail)
+
+    def handle_movie_data_program_task(self, msg):
+        return moviedata.process_file(msg.source_path,
+                                      msg.screenshot_directory)
 
 class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def on_startup(self):
