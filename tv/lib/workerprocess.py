@@ -37,6 +37,7 @@ includes feedparser, but we could pretty easily extend this to other tasks.
 import itertools
 
 from miro import feedparserutil
+from miro import filetags
 from miro import moviedata
 from miro import subprocessmanager
 from miro import util
@@ -69,6 +70,12 @@ class MovieDataProgramTask(TaskMessage):
         self.source_path = source_path
         self.screenshot_directory = screenshot_directory
 
+class MutagenTask(TaskMessage):
+    def __init__(self, source_path, cover_art_directory):
+        TaskMessage.__init__(self)
+        self.source_path = source_path
+        self.cover_art_directory = cover_art_directory
+
 class TaskResult(subprocessmanager.SubprocessResponse):
     def __init__(self, task_id, result):
         self.task_id = task_id
@@ -99,6 +106,9 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
     def handle_movie_data_program_task(self, msg):
         return moviedata.process_file(msg.source_path,
                                       msg.screenshot_directory)
+
+    def handle_mutagen_task(self, msg):
+        return filetags.process_file(msg.source_path, msg.cover_art_directory)
 
 class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def on_startup(self):

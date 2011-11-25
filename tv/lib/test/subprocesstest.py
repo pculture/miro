@@ -312,3 +312,39 @@ class MovieDataTest(WorkerProcessTest):
         self.check_movie_data_call('mp3-2.mp3', 'audio', 1044)
         self.check_movie_data_call('webm-0.webm', 'video', 434)
         self.check_movie_data_call('drm.m4v', 'other', None)
+
+class MutagenTest(WorkerProcessTest):
+    def check_successful_result(self):
+        # just do some very basic test to see if the result is correct
+        if self.error is not None:
+            raise self.error
+        if not isinstance(self.result, dict):
+            raise TypeError(self.result)
+
+    def check_mutagen_call(self, filename, file_type, duration, title,
+                           has_cover_art):
+        source_path = resources.path("testdata/metadata/" + filename)
+        msg = workerprocess.MutagenTask(source_path, self.tempdir)
+        workerprocess.send(msg, self.callback, self.errback)
+        self.runEventLoop(4.0)
+        self.check_successful_result()
+        self.assertEquals(self.result['source_path'], source_path)
+        self.assertEquals(self.result['file_type'], file_type)
+        self.assertEquals(self.result['duration'], duration)
+        self.assertEquals(self.result['title'], title)
+        if has_cover_art:
+            self.assertNotEquals(self.result['cover_art_path'], None)
+        else:
+            self.assertEquals(self.result['cover_art_path'], None)
+        self.reset_results()
+
+    def test_mutagen_worker_process(self):
+        workerprocess.startup()
+        self.check_mutagen_call('mp3-0.mp3', 'audio', 1055,
+                                   'Invisible Walls', False)
+        self.check_mutagen_call('mp3-1.mp3', 'audio', 1055, 'Race Lieu',
+                                False)
+        self.check_mutagen_call('mp3-2.mp3', 'audio', 1066,
+                                   '#426: Tough Room 2011', False)
+        self.check_mutagen_call('drm.m4v', 'video', 2668832, 'Thinkers',
+                                True)

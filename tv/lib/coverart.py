@@ -118,10 +118,11 @@ class Image(object):
         return isinstance(image_object, cls.PROCESSES_TYPE)
 
     @staticmethod
-    def _get_destination_path(extension, track_path):
+    def _get_destination_path(extension, track_path, directory=None):
         filename = "{0}.{1}.{2}".format(os.path.basename(track_path),
                    util.random_string(5), extension)
-        directory = app.config.get(prefs.COVER_ART_DIRECTORY)
+        if directory is None:
+            directory = app.config.get(prefs.COVER_ART_DIRECTORY)
         # make the directory if necessary:
         try:
             fileutil.makedirs(directory)
@@ -154,11 +155,12 @@ class Image(object):
         """
         return self.is_cover
 
-    def write_to_file(self, track_path):
+    def write_to_file(self, track_path, directory=None):
         """Creates a new file containing this image's data.
         Returns the file's path.
         """
-        path = self._get_destination_path(self.get_extension(), track_path)
+        path = self._get_destination_path(self.get_extension(), track_path,
+                                          directory)
         try:
             file_handle = fileutil.open_file(path, 'wb')
             file_handle.write(self.data) 

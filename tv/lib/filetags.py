@@ -189,7 +189,7 @@ def _track_from_filename(full_path):
         number = ''.join(initial_int[-2:]) # e.g. '204' is disc 2, track 04
         return int(number)
 
-def _make_cover_art_file(track_path, objects):
+def _make_cover_art_file(track_path, objects, cover_art_directory=None):
     """Given an iterable of mutagen cover art objects, returns the path to a
     newly-created file created from one of the objects. If given more than one
     object, uses the one most likely to be cover art. If none of the objects are
@@ -219,7 +219,7 @@ def _make_cover_art_file(track_path, objects):
         # no attached image is definitively cover art. use the first one.
         cover_image = images[0]
 
-    path = cover_image.write_to_file(track_path)
+    path = cover_image.write_to_file(track_path, cover_art_directory)
     return path
 
 MUTAGEN_ERRORS = None
@@ -232,7 +232,7 @@ def _setup_mutagen_errors():
             oggtheora.error, oggvorbis.error, trueaudio.error, _vorbis.error)
 _setup_mutagen_errors()
 
-def read_metadata(filename, test=False):
+def read_metadata(filename, test=False, cover_art_directory=None):
     """This is the external interface of the filetags module. Given a filename,
     this function returns a tuple of (mediatype [a string], duration [integer
     number of milliseconds(?)], data [dict of attributes to set on the item],
@@ -246,6 +246,8 @@ def read_metadata(filename, test=False):
     mutagen object in a different wrapper subclass, with all the wrappers
     sharing a common interface. --KCW
     """
+    # FIXME: we should probably drop the test parameter and set
+    # cover_art_directory in the unittests
     try:
         muta = mutagen.File(filename)
     except MUTAGEN_ERRORS:
@@ -288,9 +290,9 @@ def read_metadata(filename, test=False):
                 with_exception=True)
     else:
         if muta:
-            return _parse_mutagen(filename, muta, test)
+            return _parse_mutagen(filename, muta, test, cover_art_directory)
 
-def _parse_mutagen(filename, muta, test):    
+def _parse_mutagen(filename, muta, test, cover_art_directory):
     meta = muta.__dict__
     tags = meta['tags']
     if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
@@ -345,12 +347,37 @@ def _parse_mutagen(filename, muta, test):
         if test:
             cover_art = True
         else:
-            cover_art = _make_cover_art_file(filename, image_data)
+            cover_art = _make_cover_art_file(filename, image_data,
+                                             cover_art_directory)
     elif 'cover_art' in data:
         image_data = data['cover_art']
         if test:
             cover_art = True
         else:
-            cover_art = _make_cover_art_file(filename, image_data)
+            cover_art = _make_cover_art_file(filename, image_data,
+                                             cover_art_directory)
         del data['cover_art']
     return mediatype, duration, data, cover_art
+
+def process_file(source_path, cover_art_directory):
+    """Send a file through mutagen
+
+    :param source_path: path to the media file
+    :param cover_art_directory: directory to store cover art in
+    :returns: dict of metadata
+    """
+    result = read_metadata(source_path,
+                           cover_art_directory=cover_art_directory)
+    if result is None:
+        return {}
+    file_type, duration, data, cover_art = result
+    # combine everything into a single dict
+    # FIXME: we should refactor read_metadata() to return data in this way
+    data['source_path'] = source_path
+    data['file_type'] = file_type
+    if duration >= 0:
+        data['duration'] = duration
+    else:
+        data['duration'] = None
+    data['cover_art_path'] = cover_art
+    return data
