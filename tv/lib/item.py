@@ -810,7 +810,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             FileItem(path, parent_id=self.id, offsetPath=offsetPath)
 
     @eventloop.idle_iterator
-    def find_new_children(self, skip=[], callback=None):
+    def find_new_children(self, callback=None):
         """If this feed is a container item, walk through its
         directory and find any new children.  You may specify a callback
         which will be called at the end of the find_new_children()
@@ -819,6 +819,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         """
         if not self.id_exists() or self.isContainerItem == False:
             return
+        if self.isContainerItem:
+            skip = [c.get_filename() for c in self.get_children()]
+        else:
+            skip = []
         if self.get_state() == 'downloading':
             # don't try to find videos that we're in the middle of
             # re-downloading
@@ -855,8 +859,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def split_item(self):
         if self.isContainerItem is not None:
             if self.isContainerItem:
-                skip = [c.get_filename() for c in self.get_children()]
-                self.find_new_children(skip=skip)
+                self.find_new_children()
             return
         if ((not isinstance(self, FileItem)
              and (self.downloader is None
@@ -2311,7 +2314,8 @@ def update_incomplete_movie_data():
     thing.
     """
     for item in Item.incomplete_mdp_view():
-        item.check_media_file()
+        if item.id_exists():
+            item.check_media_file()
         yield
 
 class DeletedFileChecker(object):
