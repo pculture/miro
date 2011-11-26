@@ -137,9 +137,9 @@ class TaskQueue(object):
         """Process a TaskResult from our subprocess."""
         msg, callback, errback = self.tasks_in_progress.pop(reply.task_id)
         if isinstance(reply.result, Exception):
-            errback(reply.result)
+            errback(msg, reply.result)
         else:
-            callback(reply.result)
+            callback(msg, reply.result)
 
     def run_pending_tasks(self):
         """Rerun all tasks in the queue."""

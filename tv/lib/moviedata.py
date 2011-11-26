@@ -190,8 +190,8 @@ class MovieDataUpdater(object):
             task = workerprocess.MediaMetadataExtractorTask(info.video_path,
                                                             info.thumbnail_path)
             workerprocess.send(task,
-                               lambda result: self.callback(result, info),
-                               lambda result: self.errback(result, info))
+                               lambda msg, result: self.callback(result, info),
+                               lambda msg, result: self.errback(result, info))
         else:
             self.update_skipped(item)
             app.metadata_progress_updater.path_processed(item.get_filename())

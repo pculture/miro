@@ -215,14 +215,13 @@ class WorkerProcessTest(EventLoopTest):
     def reset_results(self):
         self.result = self.error = None
 
-    def callback(self, result):
+    def callback(self, msg, result):
         self.result = result
         self.stopEventLoop(abnormal=False)
 
-    def errback(self, error):
+    def errback(self, msg, error):
         self.error = error
         self.stopEventLoop(abnormal=False)
-
 
 class FeedParserTest(WorkerProcessTest):
     def send_feedparser_task(self):
