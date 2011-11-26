@@ -233,6 +233,8 @@ class Player(player.Player):
         return tracks
 
     def get_enabled_audio_track(self):
+        if not self.movie:
+            return None
         for track in self.movie.tracksOfMediaType_(QTMediaTypeSound):
             if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
                 return track.attributeForKey_(QTTrackIDAttribute)
