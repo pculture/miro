@@ -818,7 +818,6 @@ class DeviceSyncManager(object):
                  if data.get(u'auto_sync', False)]
         for (file_type, id_) in self.yield_items_to_get_to(size, sizes):
             data = self.device.database[file_type].pop(id_)
-            del self.device.database[file_type][id_]
             fileutil.delete(os.path.join(self.device.mount,
                                          utf8_to_filename(
                         id_.encode('utf8'))))
