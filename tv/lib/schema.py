@@ -365,6 +365,7 @@ class ObjectSchema(object):
         return cls.klass
 
     indexes = ()
+    unique_indexes = ()
 
 class MultiClassObjectSchema(ObjectSchema):
     """ObjectSchema where rows will be restored to different python
@@ -390,6 +391,7 @@ from miro.folder import (HideableTab, ChannelFolder, PlaylistFolder,
 from miro.guide import ChannelGuide
 from miro.item import Item, FileItem
 from miro.iconcache import IconCache
+from miro.metadata import MetadataStatus, MetadataEntry
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.tabs import TabOrder
 from miro.theme import ThemeHistory
@@ -816,6 +818,60 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_column_widths(value):
         return None
 
+class MetadataStatusSchema(DDBObjectSchema):
+    klass = MetadataStatus
+    table_name = 'metadata_status'
+    fields = DDBObjectSchema.fields + [
+        ('path', SchemaFilename()),
+        ('mutagen_status', SchemaString()),
+        ('moviedata_status', SchemaString()),
+    ]
+
+    indexes = (
+        ('metadata_mutagen', ('mutagen_status',)),
+        ('metadata_moviedata', ('moviedata_status',))
+    )
+
+    unique_indexes = (
+        ('metadata_path', ('path',)),
+    )
+
+class MetadataEntrySchema(DDBObjectSchema):
+    klass = MetadataEntry
+    table_name = 'metadata'
+    fields = DDBObjectSchema.fields + [
+        ('path', SchemaFilename()),
+        ('source', SchemaString()),
+        ('priority', SchemaInt()),
+        ('file_type', SchemaString(noneOk=True)),
+        ('duration', SchemaInt(noneOk=True)),
+        ('album', SchemaString(noneOk=True)),
+        ('album_artist', SchemaString(noneOk=True)),
+        ('album_tracks', SchemaInt(noneOk=True)),
+        ('artist', SchemaString(noneOk=True)),
+        ('cover_art_path', SchemaFilename(noneOk=True)),
+        ('screenshot_path', SchemaFilename(noneOk=True)),
+        ('drm', SchemaBool(noneOk=True)),
+        ('genre', SchemaString(noneOk=True)),
+        ('title', SchemaString(noneOk=True)),
+        ('track', SchemaInt(noneOk=True)),
+        ('year', SchemaInt(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
+        ('rating', SchemaInt(noneOk=True)),
+        ('show', SchemaString(noneOk=True)),
+        ('episode_id', SchemaString(noneOk=True)),
+        ('episode_number', SchemaInt(noneOk=True)),
+        ('season_number', SchemaInt(noneOk=True)),
+        ('kind', SchemaString(noneOk=True)),
+    ]
+
+    indexes = (
+        ('metadata_entry_path', ('path',)),
+    )
+
+    unique_indexes = (
+        ('metadata_entry_path_and_source', ('path', 'source')),
+    )
 
 VERSION = 165
 

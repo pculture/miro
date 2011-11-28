@@ -21,6 +21,7 @@ from miro import iteminfocache
 from miro import moviedata
 from miro import util
 from miro import prefs
+from miro import schema
 from miro import searchengines
 from miro import signals
 from miro import storedatabase

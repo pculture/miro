@@ -35,10 +35,17 @@ import logging
 import fileutil
 import os.path
 
+import sqlite3
+
 from miro.util import returns_unicode
+from miro import app
 from miro import coverart
+from miro import database
 from miro import filetags
 from miro import filetypes
+from miro import prefs
+from miro import signals
+from miro import workerprocess
 
 class Source(object):
     """Object with readable metadata properties."""
@@ -265,3 +272,320 @@ class Store(Source):
         metadata_version = set_metadata_version,
         mdp_state = set_mdp_state,
     )
+
+class MetadataStatus(database.DDBObject):
+    """Stores the status of different metadata extractors for a file
+
+    For each metadata extractor (mutagen, movie data program, echoprint, etc),
+    we store if that extractor has run yet, has failed, is being skipped, etc.
+    """
+
+    # constants for the *_status columns
+    STATUS_NOT_RUN = u'N'
+    STATUS_COMPLETE = u'C'
+    STATUS_FAILURE = u'F'
+    STATUS_SKIP = u'S'
+
+    def setup_new(self, path):
+        self.path = path
+        self.mutagen_status = self.STATUS_NOT_RUN
+        self.moviedata_status = self.STATUS_NOT_RUN
+
+    @classmethod
+    def get_by_path(cls, path):
+        """Get an object by its path attribute.
+
+        We use the DatabaseObjectCache to cache status by path, so this method
+        is fairly quick.
+        """
+        try:
+            return app.db.cache.get('metadata', path)
+        except KeyError:
+            return cls.make_view('path=?', (path,)).get_singleton()
+
+    def setup_restored(self):
+        app.db.cache.set('metadata', self.path, self)
+
+    def on_db_insert(self):
+        app.db.cache.set('metadata', self.path, self)
+        database.DDBObject.on_db_insert(self)
+
+    def removed_from_db(self):
+        app.db.cache.remove('metadata', self.path)
+        database.DDBObject.removed_from_db(self)
+
+    def update_after_mutagen(self, data):
+        self.mutagen_status = self.STATUS_COMPLETE
+        if self._should_skip_movie_data(data):
+            self.moviedata_status = self.STATUS_SKIP
+        self.signal_change()
+
+    def _should_skip_movie_data(self, mutagen_data):
+        my_ext = os.path.splitext(self.path)[1].lower()
+        # we should skip movie data if:
+        #   - we're sure the file is audio (mutagen misreports .ogg videos as
+        #     audio)
+        #   - mutagen was able to get the duration for the file
+        #   - mutagen doesn't think the file has DRM
+        return ((my_ext == '.oga' or not my_ext.startswith('.og')) and
+                mutagen_data['file_type'] == 'audio' and
+                mutagen_data['duration'] is not None and not
+                mutagen_data['drm'])
+
+    def update_after_movie_data(self, data):
+        self.moviedata_status = self.STATUS_COMPLETE
+        self.signal_change()
+
+    def update_after_mutagen_error(self):
+        self.mutagen_status = self.STATUS_FAILURE
+        self.signal_change()
+
+    def update_after_movie_data_error(self):
+        self.moviedata_status = self.STATUS_FAILURE
+        self.signal_change()
+
+    @classmethod
+    def needs_mutagen_view(cls):
+        return cls.make_view('mutagen_status=?', (cls.STATUS_NOT_RUN,))
+
+    @classmethod
+    def needs_moviedata_view(cls):
+        return cls.make_view('mutagen_status != ? AND moviedata_status=?',
+                             (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN))
+
+class MetadataEntry(database.DDBObject):
+    """Stores metadata from a single source.
+
+    Each metadata extractor (mutagen, movie data, echonest, etc), we create a
+    MetadataEntry object for each path that it got metadata from.
+    """
+
+    # stores the priorities for each source type
+    source_priority_map = {
+        'mutagen': 20,
+        'movie-data': 30,
+        'user-data': 50,
+    }
+
+    @staticmethod
+    def metadata_columns():
+        return ('file_type', 'duration', 'album', 'album_artist',
+                'album_tracks', 'artist', 'cover_art_path', 'screenshot_path',
+                'drm', 'genre', 'title', 'track', 'year', 'description',
+                'rating', 'show', 'episode_id', 'episode_number',
+                'season_number', 'kind',)
+
+    def setup_new(self, path, source, data):
+        self.path = path
+        self.source = source
+        self.priority = MetadataEntry.source_priority_map[source]
+        # set all metadata to None by default
+        for name in self.metadata_columns():
+            setattr(self, name, None)
+        self.__dict__.update(data)
+
+    def update_metadata(self, new_data):
+        """Update the values for this object."""
+        self.__dict__.update(new_data)
+        self.signal_change()
+
+    def get_metadata(self):
+        """Get the metadata stored in this object as a dict."""
+        rv = {}
+        for name in self.metadata_columns():
+            value = getattr(self, name)
+            if value is not None:
+                rv[name] = value
+        return rv
+
+    @classmethod
+    def metadata_for_path(cls, path):
+        return cls.make_view('path=?', (path,), order_by='priority ASC')
+
+    @classmethod
+    def get_entry(cls, source, path):
+        view = cls.make_view('source=? AND path=?', (source, path))
+        return view.get_singleton()
+
+class MetadataManager(signals.SignalEmitter):
+    """Extract and track metadata for files.
+
+    This class is responsible for:
+    - creating/updating MetadataStatus and MetadataEntry objects
+    - invoking mutagen, moviedata, echoprint, and other extractors
+    - combining all the metadata we have for a path into a single dict.
+    """
+    def add_file(self, path):
+        """Add a new file to the metadata syestem
+
+        :param path: path to the file
+        :raises ValueError: path is already in the system
+        """
+        try:
+            MetadataStatus(path)
+        except sqlite3.IntegrityError:
+            raise ValueError("%s already added" % path)
+        self._run_mutagen(path)
+
+    def remove_file(self, path):
+        """Remove a file from the metadata system.
+
+        All queued mutagen and movie data calls will be canceled.
+        :raises KeyError: path not in the metadata system
+        """
+        status = self._get_status_for_path(path)
+        for entry in MetadataEntry.metadata_for_path(path):
+            entry.remove()
+        status.remove()
+        # TODO: we should inform the worker process that this path has been removed so 
+        # that it can cancel the any queued calls to mutagen/movie data
+
+    def get_metadata(self, path):
+        """Get metadata for a path
+
+        :param path: path to the file
+        :returns: dict of metadata
+        :raises KeyError: path not in the metadata system
+        """
+        status = self._get_status_for_path(path)
+
+        metadata = self._get_metadata_from_filename(path)
+        drm_by_source = {}
+        for entry in MetadataEntry.metadata_for_path(path):
+            entry_metadata = entry.get_metadata()
+            metadata.update(entry_metadata)
+            drm_by_source[entry.source] = entry.drm
+        metadata['has_drm'] = self._calc_has_drm(drm_by_source.get('mutagen'),
+                                                 status)
+        self._add_fallback_columns(metadata)
+        return metadata
+
+    def _add_fallback_columns(self, metadata_dict):
+        """If we don't have data for some keys, fallback to a different key
+        """
+        fallbacks = [
+            ('show', 'artist'),
+            ('episode_id', 'title')
+        ]
+        for name, fallback in fallbacks:
+            if name not in metadata_dict:
+                try:
+                    metadata_dict[name] = metadata_dict[fallback]
+                except KeyError:
+                    # nothing in the fallback key either, too bad
+                    pass
+
+    def set_user_data(self, path, user_data):
+        """Update metadata based on user-inputted data
+
+        :raises KeyError: path not in the metadata system
+        """
+        # make sure that our MetadataStatus object exists
+        status = self._get_status_for_path(path)
+        try:
+            # try to update the current entry
+            current_entry = MetadataEntry.get_entry(u'user-data', path)
+            current_entry.update_metadata(user_data)
+        except database.ObjectNotFoundError:
+            # make a new entry if none exists
+            MetadataEntry(path, u'user-data', user_data)
+
+    def restart_incomplete(self):
+        """Restart extractors for files with incomplete metadata
+
+        This method queues calls to mutagen, movie data, etc.  It should only
+        be called once per miro run
+        """
+        for status in MetadataStatus.needs_mutagen_view():
+            self._run_mutagen(status.path)
+        for status in MetadataStatus.needs_moviedata_view():
+            self._run_movie_data(status.path)
+
+    def _get_status_for_path(self, path):
+        """Get a MetadataStatus object for a given path."""
+        try:
+            return MetadataStatus.get_by_path(path)
+        except database.ObjectNotFoundError:
+            raise KeyError(path)
+
+    def _calc_has_drm(self, mutagen_drm, metadata_status):
+        """Calculate the value of has_drm.
+
+        has_drm is True when all of these are True
+        - mutagen thinks the object has DRM
+        - movie data failed to open the file
+        """
+        return (mutagen_drm and metadata_status.moviedata_status ==
+                MetadataStatus.STATUS_FAILURE)
+
+    def _run_mutagen(self, path):
+        """Run mutagen on a path."""
+        cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
+        msg = workerprocess.MutagenTask(path, cover_art_dir)
+        workerprocess.send(msg, self._mutagen_callback, self._mutagen_errback)
+
+    def _run_movie_data(self, path):
+        """Run the movie data program on a path."""
+        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
+        msg = workerprocess.MovieDataProgramTask(path, screenshot_dir)
+        workerprocess.send(msg, self._moviedata_callback,
+                           self._moviedata_errback)
+
+    def _get_metadata_from_filename(self, path):
+        """Get metadata that we know from a filename alone."""
+        return {
+            'file_type': filetypes.item_file_type_for_filename(path),
+        }
+
+    def _mutagen_callback(self, msg, result):
+        # make sure that the file is still in our system
+        try:
+            status = MetadataStatus.get_by_path(msg.source_path)
+        except database.ObjectNotFoundError:
+            logging.warn("got mutagen callback for removed path: %s",
+                         msg.source_path)
+            return
+        # Store the metadata
+        MetadataEntry(msg.source_path, u'mutagen', result)
+        # Update MetadataStatus
+        status.update_after_mutagen(result)
+        # run movie data if needed
+        if status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
+            self._run_movie_data(msg.source_path)
+
+    def _mutagen_errback(self, msg, error):
+        logging.warn("Error running mutagen for %s: %s", msg.source_path,
+                     error)
+        try:
+            status = MetadataStatus.get_by_path(msg.source_path)
+        except database.ObjectNotFoundError:
+            logging.warn("got mutagen errback for removed path: %s",
+                         msg.source_path)
+            return
+        status.update_after_mutagen_error()
+        if status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
+            self._run_movie_data(msg.source_path)
+
+    def _moviedata_callback(self, msg, result):
+        try:
+            status = MetadataStatus.get_by_path(msg.source_path)
+        except database.ObjectNotFoundError:
+            logging.warn("got movie data callback for removed path: %s",
+                         msg.source_path)
+            return
+        # Store the metadata
+        MetadataEntry(msg.source_path, u'movie-data', result)
+        # Update MetadataStatus
+        status.update_after_movie_data(result)
+
+    def _moviedata_errback(self, msg, error):
+        logging.warn("Error running movie data for %s: %s", msg.source_path,
+                     error)
+        try:
+            status = MetadataStatus.get_by_path(msg.source_path)
+        except database.ObjectNotFoundError:
+            logging.warn("got movie data errback for removed path: %s",
+                         msg.source_path)
+            return
+        status.update_after_movie_data_error()

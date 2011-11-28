@@ -46,6 +46,7 @@ The hope is that it will be human readable.  We use the type
 ``pythonrepr`` to label these columns.
 """
 
+import collections
 import glob
 import shutil
 import cPickle
@@ -120,14 +121,68 @@ def split_values_for_sqlite(value_list):
     for start in xrange(0, len(value_list), CHUNK_SIZE):
         yield value_list[start:start+CHUNK_SIZE]
 
+class DatabaseObjectCache(object):
+    """Handles caching objects for a database.
+
+    This class implements a generic caching system for DDBObjects.  Other
+    components can use it reduce the number of database queries they run.
+    """
+    def __init__(self):
+        # map (category, cache_key) to objects
+        self._objects = {}
+
+    def set(self, category, cache_key, obj):
+        """Add an object to the cache
+
+        category is an arbitrary name used to separate different caches.  Each
+        component that uses DatabaseObjectCache should use a different
+        category.
+
+        :param category: unique string
+        :param key: key to retrieve the object with
+        :param obj: object to add
+        """
+        self._objects[(category, cache_key)] = obj
+
+    def get(self, category, cache_key):
+        """Get an object from the cache
+
+        :param category: category from set
+        :param key: key from set
+        :returns: object passed in with set
+        :raises KeyError: object not in cache
+        """
+        return self._objects[(category, cache_key)]
+
+    def remove(self, category, cache_key):
+        """Remove an object from the cache
+
+        :param category: category from set
+        :param key: key from set
+        :raises KeyError: object not in cache
+        """
+        del self._objects[(category, cache_key)]
+
+    def clear(self, category):
+        """Clear all objects in a category.
+
+        :param category: category to clear
+        """
+        for key in objects.keys():
+            if key[0] == category:
+                del self._objects[key]
 
 class LiveStorage:
     """Handles the storage of DDBObjects.
 
     This class does basically two things:
 
-    1. Loads the initial object list (and runs database upgrades)
-    2. Handles updating the database based on changes to DDBObjects.
+    - Loads the initial object list (and runs database upgrades)
+    - Handles updating the database based on changes to DDBObjects.
+
+    Attributes:
+
+    - cache -- DatabaseObjectCache object
     """
     def __init__(self, path=None, object_schemas=None, schema_version=None):
         if path is None:
@@ -150,6 +205,7 @@ class LiveStorage:
             logging.info("sqlite3 has no version attribute.")
 
         db_existed = os.path.exists(path)
+        self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
         self._dc = None
         self._query_times = {}
@@ -876,6 +932,9 @@ class LiveStorage:
                     (schema.table_name, self._calc_sqlite_types(schema)))
             for name, columns in schema.indexes:
                 self.cursor.execute("CREATE INDEX %s ON %s (%s)" %
+                        (name, schema.table_name, ', '.join(columns)))
+            for name, columns in schema.unique_indexes:
+                self.cursor.execute("CREATE UNIQUE INDEX %s ON %s (%s)" %
                         (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
