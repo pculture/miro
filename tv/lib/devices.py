@@ -712,8 +712,7 @@ class DeviceSyncManager(object):
             items = items_for_converter.pop('copy')
             count += len(items)
             size += sum(info.size for info in items)
-        for converter in items_for_converter:
-            items = items_for_converter.pop(converter)
+        for converter, items in items_for_converter.items():
             for info in items:
                 task = conversions.conversion_manager._make_conversion_task(
                     converter, info,
