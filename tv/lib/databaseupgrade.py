@@ -3455,3 +3455,14 @@ def upgrade164(cursor):
     # drop old columns
     remove_column(cursor, 'display_state', ['list_view_columns'])
     remove_column(cursor, 'display_state', ['list_view_widths'])
+
+def upgrade165(cursor):
+    """Add lots of indexes."""
+    indices = [
+      ('playlist_item_map_item_id', 'playlist_item_map', 'item_id'),
+      ('playlist_folder_item_map_item_id', 'playlist_folder_item_map',
+       'item_id'),
+      ('feed_impl_key', 'feed', 'feed_impl_id')
+    ]
+    for n, t, c in indices:
+        cursor.execute("CREATE INDEX %s ON %s (%s)" % (n, t, c))

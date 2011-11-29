@@ -528,6 +528,10 @@ class FeedSchema(DDBObjectSchema):
         ('last_viewed', SchemaDateTime()),
     ]
 
+    indexes = (
+        ('feed_impl_key', ('feed_impl_id',)),
+    )
+
 class FeedImplSchema(DDBObjectSchema):
     klass = FeedImpl
     table_name = 'feed_impl'
@@ -682,6 +686,10 @@ class PlaylistItemMapSchema(DDBObjectSchema):
         ('position', SchemaInt()),
     ]
 
+    indexes = (
+        ('playlist_item_map_item_id', ('item_id',)),
+    )
+
 class PlaylistFolderItemMapSchema(DDBObjectSchema):
     klass = PlaylistFolderItemMap
     table_name = 'playlist_folder_item_map'
@@ -691,6 +699,10 @@ class PlaylistFolderItemMapSchema(DDBObjectSchema):
         ('position', SchemaInt()),
         ('count', SchemaInt()),
     ]
+
+    indexes = (
+        ('playlist_folder_item_map_item_id', ('item_id',)),
+    )
 
 class TabOrderSchema(DDBObjectSchema):
     klass = TabOrder
@@ -805,7 +817,7 @@ class ViewStateSchema(DDBObjectSchema):
         return None
 
 
-VERSION = 164
+VERSION = 165
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
