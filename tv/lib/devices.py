@@ -1129,7 +1129,7 @@ class DeviceSyncManager(object):
 
 
     def is_finished(self):
-        if self.stopping:
+        if self.stopping or not self.started:
             return True
         if self.waiting or self.copying:
             return False
