@@ -1,6 +1,7 @@
 import collections
 import os
 
+from miro.test import mock
 from miro.test.framework import MiroTestCase
 from miro import schema
 from miro import filetypes
@@ -52,6 +53,7 @@ class MockMetadataProcessor(object):
     def reset(self):
         self.mutagen_calls = {}
         self.movie_data_calls = {}
+        self.canceled_files = set()
 
     def send(self, task, callback, errback):
         task_data = (task, callback, errback)
@@ -64,6 +66,8 @@ class MockMetadataProcessor(object):
             if task.source_path in self.movie_data_calls:
                 raise ValueError("Already processing %s" % task.source_path)
             self.movie_data_calls[task.source_path] = task_data
+        elif isinstance(task, workerprocess.CancelFileOperations):
+            self.canceled_files.update(task.paths)
         else:
             raise TypeError(task)
 
@@ -180,6 +184,10 @@ class MetadataManagerTest(MiroTestCase):
     def check_run_mutagen(self, filename, file_type, duration, title,
                           drm=False):
         path = '/videos/' + filename
+        if not filename.startswith('/'):
+            path = '/videos/' + filename
+        else:
+            path = filename
         mutagen_data = {
             'file_type': file_type,
             'duration': duration,
@@ -219,7 +227,10 @@ class MetadataManagerTest(MiroTestCase):
 
     def check_run_movie_data(self, filename, file_type, duration,
                              screenshot_worked):
-        path = '/videos/' + filename
+        if not filename.startswith('/'):
+            path = '/videos/' + filename
+        else:
+            path = filename
         self.processor.run_movie_data_callback(path, file_type, duration,
                                                screenshot_worked)
         # check that the metadata is updated based on the values from mutagen
@@ -355,14 +366,18 @@ class MetadataManagerTest(MiroTestCase):
         self.check_queued_moviedata_calls(['foo.avi'])
         self.check_queued_mutagen_calls(['bar.mp3'])
         # remove the files
-        self.metadata_manager.remove_file('/videos/foo.avi')
-        self.metadata_manager.remove_file('/videos/bar.mp3')
-        self.metadata_manager.remove_file('/videos/baz.avi')
+        to_remove = ['/videos/foo.avi', '/videos/bar.mp3', '/videos/baz.avi' ]
+        self.metadata_manager.remove_file(to_remove[0])
+        self.metadata_manager.remove_files(to_remove[1:])
+        # check that the metadata manager sent a CancelFileOperations message
+        self.assertEquals(self.processor.canceled_files, set(to_remove))
         # check that none of the videos are in the metadata manager
-        self.assertRaises(KeyError, self.get_metadata, 'foo.avi')
-        self.assertRaises(KeyError, self.get_metadata, 'bar.mp3')
-        self.assertRaises(KeyError, self.get_metadata, 'baz.avi')
-        # check that callbacks/errbacks for those files don't result in errors
+        for path in to_remove:
+            self.assertRaises(KeyError, self.metadata_manager.get_metadata,
+                              path)
+        # check that callbacks/errbacks for those files don't result in
+        # errors.  The metadata system may have already been processing the
+        # file when it got the CancelFileOperations message.
         self.processor.run_movie_data_callback('/videos/foo.avi', 'video',
                                                100, True)
         self.processor.run_mutagen_errback('/videos/bar.mp3', ValueError())
@@ -421,3 +436,82 @@ class MetadataManagerTest(MiroTestCase):
         run_movie_data(100, 200)
         self.assertEquals(len(self.processor.mutagen_calls), 0)
         self.assertEquals(len(self.processor.movie_data_calls), 0)
+
+    def test_move(self):
+        # add a couple files at different points in the metadata process
+        self.check_add_file('foo.avi')
+        self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
+        self.check_add_file('bar.mp3')
+        self.check_add_file('baz.avi')
+        self.check_run_mutagen('baz.avi', 'video', 100, 'Foo')
+        self.check_run_movie_data('baz.avi', 'video', 100, True)
+        self.check_queued_moviedata_calls(['foo.avi'])
+        self.check_queued_mutagen_calls(['bar.mp3'])
+        # Move some of the files to new names
+        def new_path_name(old_path):
+            return '/videos2/' + os.path.basename(old_path)
+        to_move = ['/videos/foo.avi', '/videos/bar.mp3', '/videos/baz.avi' ]
+        old_metadata = dict((p, self.metadata_manager.get_metadata(p))
+                             for p in to_move)
+        self.metadata_manager.will_move_files(to_move)
+        # check that the metadata manager sent a CancelFileOperations message
+        self.assertEquals(self.processor.canceled_files, set(to_move))
+        # tell metadata manager that the move is done
+        new_paths = [new_path_name(p) for p in to_move]
+        self.metadata_manager.files_moved(zip(to_move, new_paths))
+        # check that the metadata stored with the new path and not the old one
+        for path in to_move:
+            new_path = new_path_name(path)
+            for dct in (self.mutagen_data, self.movieprogram_data,
+                        self.user_info_data):
+                dct[new_path] = dct.pop(path)
+            self.assertEquals(old_metadata[path],
+                              self.metadata_manager.get_metadata(new_path))
+            self.assertRaises(KeyError, self.metadata_manager.get_metadata,
+                              path)
+        # check that callbacks/errbacks for the old paths don't result in
+        # errors.  The metadata system may have already been processing the
+        # file when it got the CancelFileOperations message.
+        self.processor.run_movie_data_callback('/videos/foo.avi', 'video',
+                                               100, True)
+        self.processor.run_mutagen_errback('/videos/bar.mp3', ValueError())
+        # check that callbacks work for new paths
+        self.check_run_movie_data('/videos2/foo.avi', 'video', 100, True)
+        self.check_run_mutagen('/videos2/bar.mp3', 'audio', 120, 'Bar')
+
+    def test_queueing_with_delete(self):
+        # test that we remove files that are queued as well
+        paths = ['/videos/video-%d.avi' % i for i in xrange(200)]
+        for p in paths:
+            self.metadata_manager.add_file(p)
+        # we now have 200 mutagen calls so 100 of them should be pending
+
+        # if some files get removed, then we should start new ones
+        self.metadata_manager.remove_files(paths[:25])
+        self.assertEquals(len(self.processor.mutagen_calls), 125)
+
+        # If pending files get removed, we should remove them from the pending
+        # queues
+        self.metadata_manager.remove_files(paths[25:])
+        mm = self.metadata_manager
+        self.assertEquals(len(mm.mutagen_processor._pending_tasks), 0)
+        self.assertEquals(len(mm.moviedata_processor._pending_tasks), 0)
+
+    def test_queueing_with_move(self):
+        # test moving queued files
+        paths = ['/videos/video-%d.avi' % i for i in xrange(200)]
+        for p in paths:
+            self.metadata_manager.add_file(p)
+        # we now have 200 mutagen calls so 100 of them should be pending
+
+        # if pending files get moved, the paths should be updated
+        moved = paths[150:]
+        changes = [(p, '/new' + p) for p in moved]
+        self.metadata_manager.will_move_files(moved)
+        self.metadata_manager.files_moved(changes)
+        # send mutagen call backs so the pending calls start
+        for p in paths[:100]:
+            self.processor.run_mutagen_callback(p, 'video', 100, u'Title',
+                                                False)
+        correct_paths = paths[100:150] + [p[1] for p in changes]
+        self.assertSameSet(self.processor.mutagen_calls.keys(), correct_paths)

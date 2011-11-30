@@ -36,6 +36,7 @@ includes feedparser, but we could pretty easily extend this to other tasks.
 
 from collections import deque
 import itertools
+import logging
 import threading
 
 from miro import feedparserutil
@@ -90,6 +91,13 @@ class MutagenTask(TaskMessage):
         self.source_path = source_path
         self.cover_art_directory = cover_art_directory
 
+class CancelFileOperations(TaskMessage):
+    """Cancel mutagen/movie data tasks for a set of path."""
+    priority = 0
+    def __init__(self, paths):
+        TaskMessage.__init__(self)
+        self.paths = paths
+
 class WorkerProcessReady(subprocessmanager.SubprocessResponse):
     pass
 
@@ -106,7 +114,10 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
 
     def call_handler(self, method, msg):
         try:
-            if isinstance(msg, TaskMessage):
+            if isinstance(msg, CancelFileOperations):
+                # handle this message as soon as we can.
+                handle_task(method, msg)
+            elif isinstance(msg, TaskMessage):
                 self.task_queue.add_task(method, msg)
             else:
                 method(msg)
@@ -124,8 +135,12 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
             self.threads.append(t)
         WorkerProcessReady().send_to_main_process()
 
-    # NOTE: all of the handle_*_task() methods get called in one of our worker
-    # threads, so they should only call thread-safe functions
+    def handle_cancel_file_operations(self, msg):
+        self.task_queue.cancel_file_operations(msg.paths)
+        return None
+
+    # NOTE: all of the handle_*_task() methods below get called in one of our
+    # worker threads, so they should only call thread-safe functions
 
     def handle_feedparser_task(self, msg):
         parsed_feed = feedparserutil.parse(msg.html)
@@ -176,6 +191,18 @@ class _SinglePriorityQueue(object):
                 return None
             if fifo:
                 return fifo.popleft()
+
+    def filter_messages(self, filterfunc, message_class):
+        """Remove messages from the queue
+
+        :param filterfunc: function to determine if messages should stay
+        :param message_class: type of messages to filter
+        """
+        fifo = self.fifo_map[message_class]
+        new_items = tuple((method, msg) for (method, msg) in fifo
+                         if filterfunc(msg))
+        fifo.clear()
+        fifo.extend(new_items)
 
 class WorkerTaskQueue(object):
     """Store the pending tasks for the worker process.
@@ -242,11 +269,33 @@ class WorkerTaskQueue(object):
         # no tasks in any of our queues
         return None
 
+    def cancel_file_operations(self, paths):
+        """Cancels all mutagen/movie data tasks for a list of paths."""
+        # Acquire our lock as soon as possible.  We want to prevent other
+        # tasks from getting tasks, since they may be about to deleted.
+        with self.condition:
+            path_set = set(paths)
+            def filter_func(msg):
+                return msg.source_path not in path_set
+            for cls in (MutagenTask, MovieDataProgramTask):
+                queue = self.queue_map[cls.priority]
+                queue.filter_messages(filter_func, cls)
+
     def shutdown(self):
         # should be save to set this without the lock, since it's a boolean
         with self.condition:
             self.should_quit = True
             self.condition.notify_all()
+
+def handle_task(handler_method, msg):
+    """Process a TaskMessage."""
+    try:
+        # normally we send the result of our handler method back
+        rv = handler_method(msg)
+    except StandardError, e:
+        # if something breaks, we send the Exception back
+        rv = e
+    TaskResult(msg.task_id, rv).send_to_main_process()
 
 def worker_thread(task_queue):
     """Thread loop in the worker process."""
@@ -255,15 +304,7 @@ def worker_thread(task_queue):
         next_task = task_queue.get_next_task()
         if next_task is None:
             break
-        handler_method, msg = next_task
-        try:
-            # normally we send the result of our handler method back
-            rv = handler_method(msg)
-        except StandardError, e:
-            # if something breaks, we send the Exception back
-            rv = e
-        if isinstance(msg, TaskMessage):
-            TaskResult(msg.task_id, rv).send_to_main_process()
+        handle_task(*next_task)
 
 class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def __init__(self):
@@ -346,3 +387,12 @@ def send(msg, callback, errback):
     :param errback: function to call on error
     """
     _miro_task_queue.add_task(msg, callback, errback)
+
+def cancel_tasks_for_files(paths):
+    """Cancel mutagen and movie data tasks for a list of paths."""
+    msg = CancelFileOperations(paths)
+    # we don't care about the return value, but we still want to use the task
+    # queue to queue up this message.
+    def null_callback(msg, result):
+        pass
+    send(msg, null_callback, null_callback)

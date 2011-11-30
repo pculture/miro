@@ -154,6 +154,15 @@ class DatabaseObjectCache(object):
         """
         return self._objects[(category, cache_key)]
 
+    def key_exists(self, category, cache_key):
+        """Test if an object is in the cache
+
+        :param category: category from set
+        :param key: key from set
+        :returns: if an object is present with that key
+        """
+        return (category, cache_key) in self._objects
+
     def remove(self, category, cache_key):
         """Remove an object from the cache
 

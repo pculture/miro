@@ -359,6 +359,9 @@ class MiroTestCase(unittest.TestCase):
         function_name should be in the form "full.module.name.object".  For
         example "miro.startup.startup"
 
+        This can also be used on a class object in order to return a different
+        object, if we only use class objects as factory functions.
+
         :param function_name: name of the function to patch
         :param new_function: function object to replace it with
         """
@@ -500,8 +503,8 @@ class MiroTestCase(unittest.TestCase):
         self.assertSameSet(dict1.keys(), dict2.keys())
         for k in dict1:
             if not dict1[k] == dict2[k]:
-                raise AssertionError("Values differ for key %s: %s -- %s",
-                        k, dict1[k], dict2[k])
+                raise AssertionError("Values differ for key %r: %r -- %r" %
+                        (k, dict1[k], dict2[k]))
 
 class EventLoopTest(MiroTestCase):
     def setUp(self):

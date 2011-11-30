@@ -414,6 +414,20 @@ class WorkerSystemTest(EventLoopTest):
         msg = workerprocess.FeedparserTask(html)
         workerprocess.send(msg, self.callback, self.errback)
 
+    def send_mutagen_task(self, filename):
+        path = resources.path("testdata/metadata/" + filename)
+        msg = workerprocess.MutagenTask(path, self.tempdir)
+        workerprocess.send(msg, self.callback, self.errback)
+
+    def send_moviedata_task(self, filename):
+        path = resources.path("testdata/metadata/" + filename)
+        msg = workerprocess.MovieDataProgramTask(path, self.tempdir)
+        workerprocess.send(msg, self.callback, self.errback)
+
+    def check_result_classes(self, *class_list):
+        result_classes = [msg.__class__ for msg, result in self.callback_data]
+        self.assertEquals(result_classes, list(class_list))
+
     def test_priority(self):
         # Test that tasks run with the correct priority
         workerprocess.startup(thread_count=2)
@@ -421,7 +435,7 @@ class WorkerSystemTest(EventLoopTest):
         # send a bunch of tasks that are slow to process
         for i in xrange(4):
             self.send_slow_processing_task()
-        # wait long enough to make sure all of those tasks got recieved by the
+        # wait long enough to make sure all of those tasks got started on the
         # worker process, but not long enough so that any one of them
         # completed.
         time.sleep(0.2)
@@ -431,8 +445,35 @@ class WorkerSystemTest(EventLoopTest):
         # have been bumped ahead of the queued SlowRunningTask tasks.
         self.wait_for_results(5)
         self.assertEquals(self.errback_data, [])
-        result_classes = [msg.__class__ for msg, result in self.callback_data]
-        self.assertEquals(result_classes, [
-            SlowRunningTask, SlowRunningTask,
-            workerprocess.FeedparserTask,
-            SlowRunningTask, SlowRunningTask, ])
+        self.check_result_classes(SlowRunningTask, SlowRunningTask,
+                                  workerprocess.FeedparserTask,
+                                  SlowRunningTask, SlowRunningTask)
+
+    def test_cancel_files(self):
+        # Test the CancelFileOperations message
+        workerprocess.startup(thread_count=2)
+        self._wait_for_subprocess_ready()
+        # fill up the task queue with stuff
+        for i in xrange(2):
+            self.send_slow_processing_task()
+        # wait long enough to make sure all of those tasks got started on the
+        # worker process, but not long enough so that any one of them
+        # completed.
+        time.sleep(0.2)
+        # send bunch of mutagen/metadata tasks
+        self.send_mutagen_task('mp3-0.mp3')
+        self.send_mutagen_task('mp3-1.mp3')
+        self.send_moviedata_task('webm-0.webm')
+        # stop tasks for some of the files
+        to_cancel = [
+            resources.path('testdata/metadata/mp3-0.mp3'),
+            resources.path('testdata/metadata/webm-0.webm'),
+        ]
+        workerprocess.cancel_tasks_for_files(to_cancel)
+        # wait for results.  We should get results for the 2 SlowRunningTask
+        # objects and 1 of our mutagen tasks
+        self.wait_for_results(3)
+        self.check_result_classes(SlowRunningTask, SlowRunningTask,
+                                  workerprocess.MutagenTask)
+        self.assertEquals(self.callback_data[2][0].source_path,
+                          resources.path('testdata/metadata/mp3-1.mp3'))

@@ -344,6 +344,16 @@ class MetadataStatus(database.DDBObject):
         self.moviedata_status = self.STATUS_FAILURE
         self.signal_change()
 
+    def rename(self, new_path):
+        """Change the path for this object."""
+        if app.db.cache.key_exists('metadata', new_path):
+            raise KeyError("MetadataStatus.rename: already an object for "
+                           "%s (old path: %s)" % (new_path, self.path))
+        app.db.cache.remove('metadata', self.path)
+        app.db.cache.set('metadata', new_path, self)
+        self.path = new_path
+        self.signal_change()
+
     @classmethod
     def needs_mutagen_view(cls):
         return cls.make_view('mutagen_status=?', (cls.STATUS_NOT_RUN,))
@@ -398,6 +408,11 @@ class MetadataEntry(database.DDBObject):
                 rv[name] = value
         return rv
 
+    def rename(self, new_path):
+        """Change the path for this object."""
+        self.path = new_path
+        self.signal_change()
+
     @classmethod
     def metadata_for_path(cls, path):
         return cls.make_view('path=?', (path,), order_by='priority ASC')
@@ -441,11 +456,22 @@ class _TaskProcessor(signals.SignalEmitter):
         workerprocess.send(task, self._callback, self._errback)
 
     def _on_task_complete(self, status, task):
-        del self._active_tasks[task.source_path]
-        if self._pending_tasks:
-            path, task = self._pending_tasks.popitem()
-            self._send_task(task)
+        self.remove_task_for_path(task.source_path)
         self.emit('task-complete', status)
+
+    def remove_task_for_path(self, path):
+        try:
+            del self._active_tasks[path]
+        except KeyError:
+            # task isn't in our system, maybe it's pending?
+            try:
+                del self._pending_tasks[path]
+            except KeyError:
+                pass
+        else:
+            if self._pending_tasks:
+                path, task = self._pending_tasks.popitem()
+                self._send_task(task)
 
     def _callback(self, task, result):
         try:
@@ -530,15 +556,77 @@ class MetadataManager(signals.SignalEmitter):
     def remove_file(self, path):
         """Remove a file from the metadata system.
 
+        This is basically equivelent to calling remove_files([path]), except
+        that it doesn't start the bulk_sql_manager.
+        """
+        paths = [path]
+        workerprocess.cancel_tasks_for_files(paths)
+        self._remove_files(paths)
+
+    def remove_files(self, paths):
+        """Remove files from the metadata system.
+
         All queued mutagen and movie data calls will be canceled.
+
+        :param paths: paths to remove
         :raises KeyError: path not in the metadata system
         """
-        status = self._get_status_for_path(path)
-        for entry in MetadataEntry.metadata_for_path(path):
-            entry.remove()
-        status.remove()
-        # TODO: we should inform the worker process that this path has been removed so 
-        # that it can cancel the any queued calls to mutagen/movie data
+        workerprocess.cancel_tasks_for_files(paths)
+        app.bulk_sql_manager.start()
+        try:
+            self._remove_files(paths)
+        finally:
+            app.bulk_sql_manager.finish()
+
+    def _remove_files(self, paths):
+        """Does the work for remove_file and remove_files"""
+        for path in paths:
+            self._get_status_for_path(path).remove()
+            for entry in MetadataEntry.metadata_for_path(path):
+                entry.remove()
+        for processor in (self.mutagen_processor, self.moviedata_processor):
+            for path in paths:
+                processor.remove_task_for_path(path)
+
+    def will_move_files(self, paths):
+        """Prepare for files to be moved
+
+        All queued mutagen and movie data calls will be put on hold until
+        files_moved() is called.
+
+        :param paths: list of paths that will be moved
+        """
+        workerprocess.cancel_tasks_for_files(paths)
+        for processor in (self.mutagen_processor, self.moviedata_processor):
+            for path in paths:
+                processor.remove_task_for_path(path)
+
+    def files_moved(self, move_info):
+        """Call this after files have been moved to a new location.
+
+        Queued mutagen and movie data calls will be restarted.
+
+        :param move_info: list of (old_path, new_path) tuples
+        """
+        restart_mutagen_for = []
+        restart_moviedata_for = []
+        app.bulk_sql_manager.start()
+        try:
+            for old_path, new_path in move_info:
+                status = self._get_status_for_path(old_path)
+                status.rename(new_path)
+                for entry in MetadataEntry.metadata_for_path(old_path):
+                    entry.rename(new_path)
+                if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
+                    restart_mutagen_for.append(new_path)
+                elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
+                    restart_moviedata_for.append(new_path)
+        finally:
+            app.bulk_sql_manager.finish()
+        for p in restart_mutagen_for:
+            self._run_mutagen(p)
+        for p in restart_moviedata_for:
+            self._run_movie_data(p)
 
     def get_metadata(self, path):
         """Get metadata for a path
