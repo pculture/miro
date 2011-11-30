@@ -407,6 +407,95 @@ class MetadataEntry(database.DDBObject):
         view = cls.make_view('source=? AND path=?', (source, path))
         return view.get_singleton()
 
+class _TaskProcessor(signals.SignalEmitter):
+    """Handle sending tasks to the worker process.
+
+    Responsible for:
+        - sending messages
+        - queueing messages after we reach a limit
+        - handling callbacks and errbacks
+
+    This class is the base class for this.  Subclasses need to define
+    handle_callback() and handle_errback().
+
+    Signals:
+
+    - task-complete(status) -- we're done with a metadata entry
+    """
+    def __init__(self, limit):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('task-complete')
+        self.limit = limit
+        # map source paths to tasks
+        self._active_tasks = {}
+        self._pending_tasks = {}
+
+    def add_task(self, task):
+        if len(self._active_tasks) < self.limit:
+            self._send_task(task)
+        else:
+            self._pending_tasks[task.source_path] = task
+
+    def _send_task(self, task):
+        self._active_tasks[task.source_path] = task
+        workerprocess.send(task, self._callback, self._errback)
+
+    def _on_task_complete(self, status, task):
+        del self._active_tasks[task.source_path]
+        if self._pending_tasks:
+            path, task = self._pending_tasks.popitem()
+            self._send_task(task)
+        self.emit('task-complete', status)
+
+    def _callback(self, task, result):
+        try:
+            status = MetadataStatus.get_by_path(task.source_path)
+        except database.ObjectNotFoundError:
+            logging.warn("got callback for removed path: %s", task.source_path)
+            return
+        self.handle_callback(status, task, result)
+        self._on_task_complete(status, task)
+
+    def _errback(self, task, error):
+        logging.warn("Error running %s for %s: %s", task, task.source_path,
+                     error)
+        try:
+            status = MetadataStatus.get_by_path(task.source_path)
+        except database.ObjectNotFoundError:
+            logging.warn("got errback for removed path: %s", task.source_path)
+            return
+        self.handle_errback(status, task, error)
+        self._on_task_complete(status, task)
+
+    def handle_callback(self, status, task, result):
+        """Handle a successfull task."""
+        raise NotImplementedError()
+
+    def handle_errback(self, status, task, error):
+        """Handle a successfull task."""
+        raise NotImplementedError()
+
+
+class _MutagenTaskProcessor(_TaskProcessor):
+    def handle_callback(self, status, task, result):
+        """Handle a successfull task."""
+        # Store the metadata
+        MetadataEntry(task.source_path, u'mutagen', result)
+        # Update MetadataStatus
+        status.update_after_mutagen(result)
+
+    def handle_errback(self, status, task, error):
+        """Handle a successfull task."""
+        status.update_after_mutagen_error()
+
+class _MovieDataTaskProcessor(_TaskProcessor):
+    def handle_callback(self, status, task, result):
+        MetadataEntry(task.source_path, u'movie-data', result)
+        status.update_after_movie_data(result)
+
+    def handle_errback(self, status, task, error):
+        status.update_after_movie_data_error()
+
 class MetadataManager(signals.SignalEmitter):
     """Extract and track metadata for files.
 
@@ -415,6 +504,17 @@ class MetadataManager(signals.SignalEmitter):
     - invoking mutagen, moviedata, echoprint, and other extractors
     - combining all the metadata we have for a path into a single dict.
     """
+
+    def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.mutagen_processor = _MutagenTaskProcessor(100)
+        self.moviedata_processor = _MovieDataTaskProcessor(100)
+        self.cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
+        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
+        self.mutagen_processor.connect("task-complete",
+                                       self._on_task_complete)
+
     def add_file(self, path):
         """Add a new file to the metadata syestem
 
@@ -520,72 +620,21 @@ class MetadataManager(signals.SignalEmitter):
 
     def _run_mutagen(self, path):
         """Run mutagen on a path."""
-        cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
-        msg = workerprocess.MutagenTask(path, cover_art_dir)
-        workerprocess.send(msg, self._mutagen_callback, self._mutagen_errback)
+        task = workerprocess.MutagenTask(path, self.cover_art_dir)
+        self.mutagen_processor.add_task(task)
 
     def _run_movie_data(self, path):
         """Run the movie data program on a path."""
-        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-        screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
-        msg = workerprocess.MovieDataProgramTask(path, screenshot_dir)
-        workerprocess.send(msg, self._moviedata_callback,
-                           self._moviedata_errback)
+        task = workerprocess.MovieDataProgramTask(path, self.screenshot_dir)
+        self.moviedata_processor.add_task(task)
+
+    def _on_task_complete(self, processor, status):
+        if (processor is self.mutagen_processor and 
+            status.moviedata_status == MetadataStatus.STATUS_NOT_RUN):
+            self._run_movie_data(status.path)
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
         return {
             'file_type': filetypes.item_file_type_for_filename(path),
         }
-
-    def _mutagen_callback(self, msg, result):
-        # make sure that the file is still in our system
-        try:
-            status = MetadataStatus.get_by_path(msg.source_path)
-        except database.ObjectNotFoundError:
-            logging.warn("got mutagen callback for removed path: %s",
-                         msg.source_path)
-            return
-        # Store the metadata
-        MetadataEntry(msg.source_path, u'mutagen', result)
-        # Update MetadataStatus
-        status.update_after_mutagen(result)
-        # run movie data if needed
-        if status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
-            self._run_movie_data(msg.source_path)
-
-    def _mutagen_errback(self, msg, error):
-        logging.warn("Error running mutagen for %s: %s", msg.source_path,
-                     error)
-        try:
-            status = MetadataStatus.get_by_path(msg.source_path)
-        except database.ObjectNotFoundError:
-            logging.warn("got mutagen errback for removed path: %s",
-                         msg.source_path)
-            return
-        status.update_after_mutagen_error()
-        if status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
-            self._run_movie_data(msg.source_path)
-
-    def _moviedata_callback(self, msg, result):
-        try:
-            status = MetadataStatus.get_by_path(msg.source_path)
-        except database.ObjectNotFoundError:
-            logging.warn("got movie data callback for removed path: %s",
-                         msg.source_path)
-            return
-        # Store the metadata
-        MetadataEntry(msg.source_path, u'movie-data', result)
-        # Update MetadataStatus
-        status.update_after_movie_data(result)
-
-    def _moviedata_errback(self, msg, error):
-        logging.warn("Error running movie data for %s: %s", msg.source_path,
-                     error)
-        try:
-            status = MetadataStatus.get_by_path(msg.source_path)
-        except database.ObjectNotFoundError:
-            logging.warn("got movie data errback for removed path: %s",
-                         msg.source_path)
-            return
-        status.update_after_movie_data_error()

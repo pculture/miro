@@ -102,6 +102,8 @@ class SubprocessMessage(messagetools.Message):
 
     def send_to_process(self):
         try:
+            # handler gets set in SubprocessManager.__init__() when it calls
+            # install_handler()
             handler = self.handler
         except AttributeError:
             logging.warn("No handler for %s" % self)
@@ -138,7 +140,14 @@ class SubprocessError(SubprocessResponse):
         self.report = report
         self.soft_fail = soft_fail
 
-def _send_subprocess_error_for_exception(soft_fail=True):
+def send_subprocess_error_for_exception(soft_fail=True):
+    """Send a SubprocessError message after a caught exception.
+
+    This method creates a crash report using sys.exc_info().  So it should
+    only be called after an exception is caught.
+
+    :param soft_fail: trigger a soft failure in the main process
+    """
     exc_info = sys.exc_info()
     report = '---- subprocess stack ---- '
     report += crashreport.format_stack_report('in subprocess', exc_info)
@@ -164,7 +173,7 @@ class SubprocessHandler(messagetools.MessageHandler):
         try:
             method(message)
         except StandardError:
-            _send_subprocess_error_for_exception()
+            send_subprocess_error_for_exception()
 
     # NOTE: we use "on_" prefix to distinguish these from messages
     def on_startup(self):
@@ -261,7 +270,7 @@ def _load_obj(pipe):
         raise LoadError("Pickle data references unimportable module")
     except StandardError, e:
         # log this exception for easier debugging.
-        _send_subprocess_error_for_exception()
+        send_subprocess_error_for_exception()
         raise LoadError("Unknown error in pickle.loads: %s" % e)
 
 def _dump_obj(obj, pipe):
@@ -560,7 +569,7 @@ def subprocess_main():
     except Exception, e:
         # error reading our initial messages.  Try to log a warning, then
         # quit.
-        _send_subprocess_error_for_exception()
+        send_subprocess_error_for_exception()
         _finish_subprocess_message_stream(stdout)
         raise # reraise so that miro_helper.py returns a non-zero exit code
     # startup thread to process stdin
@@ -626,7 +635,7 @@ def _subprocess_setup(stdin, stdout):
         return msg.handler_class(*msg.handler_args)
     except StandardError, e:
         # log this exception for easier debugging.
-        _send_subprocess_error_for_exception()
+        send_subprocess_error_for_exception()
         raise LoadError("Exception while constructing handler: %s" % e)
 
 def _subprocess_pipe_thread(stdin, queue):
@@ -650,16 +659,20 @@ class PipeMessageProxy(object):
     """Handles messages by writing them to a pipe
 
     This is used in the subprocess to send messages back to the main process
-    over it's stdout pipe.
+    over it's stdout pipe
+
+    It's safe for multiple threads in the subprocess to use this at once
     """
     def __init__(self, fileobj):
         self.fileobj = fileobj
+        self.lock = threading.Lock()
 
     def handle(self, msg):
         try:
-            _dump_obj(msg, self.fileobj)
+            with self.lock:
+                _dump_obj(msg, self.fileobj)
         except pickle.PickleError:
-            _send_subprocess_error_for_exception()
+            send_subprocess_error_for_exception()
         # NOTE: we don't handle IOError here because what can we do about
         # that?  Just let it propagate up to the top and which should cause us
         # to shutdown.

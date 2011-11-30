@@ -73,6 +73,12 @@ class SawEvent(subprocessmanager.SubprocessResponse):
     def __init__(self, event):
         self.event = event
 
+class SlowRunningTask(workerprocess.TaskMessage):
+    """Task sent to the worker process that should do nothing except take a
+    bunch of time.
+    """
+    priority = -10
+
 # Actual tests go below here
 
 class SubprocessManagerTest(EventLoopTest):
@@ -202,6 +208,10 @@ class UnittestWorkerProcessHandler(workerprocess.WorkerProcessHandler):
         else:
             return workerprocess.WorkerProcessHandler.handle_feedparser_task(
                     self, msg)
+
+    def handle_slow_running_task(self, msg):
+        time.sleep(0.5)
+        return None
 
 class WorkerProcessTest(EventLoopTest):
     """Test our worker process."""
@@ -347,3 +357,82 @@ class MutagenTest(WorkerProcessTest):
                                    '#426: Tough Room 2011', False)
         self.check_mutagen_call('drm.m4v', 'video', 2668832, 'Thinkers',
                                 True)
+
+class WorkerSystemTest(EventLoopTest):
+    """Contains tests for the worker process system as a whole
+    """
+
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        self.stop_on_result_count = -1
+        self.callback_data = []
+        self.errback_data = []
+        workerprocess._subprocess_manager.handler_class = (
+                UnittestWorkerProcessHandler)
+
+    def callback(self, msg, result):
+        self.callback_data.append((msg, result))
+        self.check_stop_event_loop()
+
+    def errback(self, msg, error):
+        self.errback_data.append((msg, error))
+        self.check_stop_event_loop()
+
+    def check_stop_event_loop(self):
+        """Check if enough callbacks/errbacks have been called that we should
+        stop the event loop
+        """
+        total_results = len(self.callback_data) + len(self.errback_data)
+        if total_results >= self.stop_on_result_count:
+            self.stopEventLoop(abnormal=False)
+
+    def wait_for_results(self, count):
+        self.stop_on_result_count = count
+        self.runEventLoop(4.0)
+
+    def _wait_for_subprocess_ready(self, timeout=6.0):
+        """Wait for the subprocess to startup."""
+
+        start = time.time()
+        while True:
+            # wait a bit for the subprocess to send us a message
+            self.runEventLoop(0.1, timeoutNormal=True)
+            if workerprocess._subprocess_manager.responder.worker_ready:
+                return
+            if time.time() - start > timeout:
+                raise AssertionError("subprocess didn't startup in %s secs",
+                        timeout)
+
+    def send_slow_processing_task(self):
+        workerprocess.send(SlowRunningTask(), self.callback, self.errback)
+
+    def send_feedparser_task(self):
+        # send feedparser successfully parsing a feed
+        path = os.path.join(resources.path("testdata/feedparsertests/feeds"),
+            "http___feeds_miroguide_com_miroguide_featured.xml")
+        html = open(path).read()
+        msg = workerprocess.FeedparserTask(html)
+        workerprocess.send(msg, self.callback, self.errback)
+
+    def test_priority(self):
+        # Test that tasks run with the correct priority
+        workerprocess.startup(thread_count=2)
+        self._wait_for_subprocess_ready()
+        # send a bunch of tasks that are slow to process
+        for i in xrange(4):
+            self.send_slow_processing_task()
+        # wait long enough to make sure all of those tasks got recieved by the
+        # worker process, but not long enough so that any one of them
+        # completed.
+        time.sleep(0.2)
+        # now send feedparser task
+        self.send_feedparser_task()
+        # wait to get results for all the tasks.  The feedparser task should
+        # have been bumped ahead of the queued SlowRunningTask tasks.
+        self.wait_for_results(5)
+        self.assertEquals(self.errback_data, [])
+        result_classes = [msg.__class__ for msg, result in self.callback_data]
+        self.assertEquals(result_classes, [
+            SlowRunningTask, SlowRunningTask,
+            workerprocess.FeedparserTask,
+            SlowRunningTask, SlowRunningTask, ])

@@ -183,6 +183,8 @@ class DummyController:
     def failed_soft(self, when, details, with_exception=False):
         # FIXME: should have some way to make this turn into an exception
         if not self.failed_soft_okay:
+            print "failed_soft called in DummyController"
+            print details
             raise AssertionError("failed_soft called in DummyController")
         self.failed_soft_count += 1
 
@@ -330,6 +332,7 @@ class MiroTestCase(unittest.TestCase):
             patcher.stop()
         # shutdown workerprocess if we started it for some reason.
         workerprocess.shutdown()
+        workerprocess._miro_task_queue.reset()
         self.reset_log_filter()
         signals.system.disconnect_all()
         util.chatter = True

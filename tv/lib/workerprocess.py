@@ -34,10 +34,13 @@ tasks to this process.  See #17328 for more details.  Right now this just
 includes feedparser, but we could pretty easily extend this to other tasks.
 """
 
+from collections import deque
 import itertools
+import threading
 
 from miro import feedparserutil
 from miro import filetags
+from miro import messagetools
 from miro import moviedata
 from miro import subprocessmanager
 from miro import util
@@ -46,14 +49,23 @@ from miro.plat import utils
 
 # define messages/handlers
 
-class TaskMessage(subprocessmanager.SubprocessMessage):
+class WorkerMessage(subprocessmanager.SubprocessMessage):
+    pass
+
+class WorkerStartupInfo(WorkerMessage):
+    def __init__(self, thread_count):
+        self.thread_count = thread_count
+
+class TaskMessage(WorkerMessage):
     _id_counter = itertools.count()
+    priority = 0
 
     def __init__(self):
         subprocessmanager.SubprocessMessage.__init__(self)
         self.task_id = TaskMessage._id_counter.next()
 
 class FeedparserTask(TaskMessage):
+    priority = 20
     def __init__(self, html):
         TaskMessage.__init__(self)
         self.html = html
@@ -65,16 +77,21 @@ class MediaMetadataExtractorTask(TaskMessage):
         self.thumbnail = thumbnail
 
 class MovieDataProgramTask(TaskMessage):
+    priority = 10
     def __init__(self, source_path, screenshot_directory):
         TaskMessage.__init__(self)
         self.source_path = source_path
         self.screenshot_directory = screenshot_directory
 
 class MutagenTask(TaskMessage):
+    priority = 10
     def __init__(self, source_path, cover_art_directory):
         TaskMessage.__init__(self)
         self.source_path = source_path
         self.cover_art_directory = cover_art_directory
+
+class WorkerProcessReady(subprocessmanager.SubprocessResponse):
+    pass
 
 class TaskResult(subprocessmanager.SubprocessResponse):
     def __init__(self, task_id, result):
@@ -82,17 +99,36 @@ class TaskResult(subprocessmanager.SubprocessResponse):
         self.result = result
 
 class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
+    def __init__(self):
+        subprocessmanager.SubprocessHandler.__init__(self)
+        self.threads = []
+        self.task_queue = WorkerTaskQueue()
+
     def call_handler(self, method, msg):
         try:
-            # normally we send the result of our handler method back
-            rv = method(msg)
-        except StandardError, e:
-            # if something breaks, we send the Exception back
-            rv = e
-        TaskResult(msg.task_id, rv).send_to_main_process()
+            if isinstance(msg, TaskMessage):
+                self.task_queue.add_task(method, msg)
+            else:
+                method(msg)
+        except StandardError:
+            subprocessmanager.send_subprocess_error_for_exception()
+
+    def on_shutdown(self):
+        self.task_queue.shutdown()
+
+    def handle_worker_startup_info(self, msg):
+        for i in xrange(msg.thread_count):
+            t = threading.Thread(target=worker_thread, args=(self.task_queue,))
+            t.daemon = True
+            t.start()
+            self.threads.append(t)
+        WorkerProcessReady().send_to_main_process()
+
+    # NOTE: all of the handle_*_task() methods get called in one of our worker
+    # threads, so they should only call thread-safe functions
 
     def handle_feedparser_task(self, msg):
-        parsed_feed =  feedparserutil.parse(msg.html)
+        parsed_feed = feedparserutil.parse(msg.html)
         # bozo_exception is sometimes C object that is not picklable.  We
         # don't use it anyways, so just unset the value
         parsed_feed['bozo_exception'] = None
@@ -110,16 +146,154 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
     def handle_mutagen_task(self, msg):
         return filetags.process_file(msg.source_path, msg.cover_art_directory)
 
+class _SinglePriorityQueue(object):
+    """Manages tasks at a single priority for WorkerTaskQueue
+
+    For any given priority we want to do the following:
+        - If there is more than one TaskMessage class with that priority, we
+          want to alternate handling tasks between them.
+        - For a given TaskMessage class, we want to handle tasks FIFO.
+    """
+    def __init__(self, priority):
+        self.priority = priority
+        # map message classes to FIFO deques for that class
+        self.fifo_map = {}
+        # set up our structure for each task with our priority
+        for cls in util.all_subclasses(TaskMessage):
+            if cls.priority == priority:
+                self.fifo_map[cls] = deque()
+        # fifo_cycler is used to cycle through each fifo
+        self.fifo_cycler = itertools.cycle(self.fifo_map.values())
+        self.fifo_count = len(self.fifo_map)
+
+    def add_task(self, handler_method, msg):
+        self.fifo_map[msg.__class__].append((handler_method, msg))
+
+    def get_next_task(self):
+        for i, fifo in enumerate(self.fifo_cycler):
+            if i >= self.fifo_count:
+                # no tasks in any of our fifos
+                return None
+            if fifo:
+                return fifo.popleft()
+
+class WorkerTaskQueue(object):
+    """Store the pending tasks for the worker process.
+
+    WorkerTaskQueue is responsible for storing task info for each pending
+    task, and getting the next one in order of priority.
+
+    It's shared between the main subprocess thread, and all worker threads, so
+    all methods need to be thread-safe.
+    """
+    def __init__(self):
+        self.should_quit = False
+        self.condition = threading.Condition()
+        # queues_by_priority contains a _SinglePriorityQueue for each priority
+        # level, ordered from highest to lowest priority
+        self.queues_by_priority = []
+        # queue_map maps priority levels to queues
+        self.queue_map = {}
+        self._init_queues()
+
+    def _init_queues(self):
+        all_prorities = set(cls.priority for
+                            cls in util.all_subclasses(TaskMessage))
+        for priority in sorted(all_prorities, reverse=True):
+            queue = _SinglePriorityQueue(priority)
+            self.queues_by_priority.append(queue)
+            self.queue_map[queue.priority] = queue
+
+    def add_task(self, handler_method, msg):
+        """Add a new task to the queue.  """
+        with self.condition:
+            self.queue_map[msg.priority].add_task(handler_method, msg)
+            self.condition.notify()
+
+    def get_next_task(self):
+        """Get the next task to be processed from the queue.
+
+        This method will block if there are no tasks ready in the queue.
+
+        It will return the tuple (handler_method, message) once there is
+        something ready.  The worker thread should call
+        handler_method(message) to run the task, and send back the result to
+        the main process.
+
+        get_next_task() returns None if the worker thread should quit.
+        """
+        with self.condition:
+            if self.should_quit:
+                return None
+            next_task_info = self._get_next_task()
+            if next_task_info is not None:
+                return next_task_info
+            # no tasks yet, need to wait for more
+            self.condition.wait()
+            if self.should_quit:
+                return None
+            return self._get_next_task()
+
+    def _get_next_task(self):
+        for queue in self.queues_by_priority:
+            next_for_queue = queue.get_next_task()
+            if next_for_queue is not None:
+                return next_for_queue
+        # no tasks in any of our queues
+        return None
+
+    def shutdown(self):
+        # should be save to set this without the lock, since it's a boolean
+        with self.condition:
+            self.should_quit = True
+            self.condition.notify_all()
+
+def worker_thread(task_queue):
+    """Thread loop in the worker process."""
+
+    while True:
+        next_task = task_queue.get_next_task()
+        if next_task is None:
+            break
+        handler_method, msg = next_task
+        try:
+            # normally we send the result of our handler method back
+            rv = handler_method(msg)
+        except StandardError, e:
+            # if something breaks, we send the Exception back
+            rv = e
+        if isinstance(msg, TaskMessage):
+            TaskResult(msg.task_id, rv).send_to_main_process()
+
 class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
+    def __init__(self):
+        subprocessmanager.SubprocessResponder.__init__(self)
+        self.worker_ready = False
+        self.startup_message = None
+
     def on_startup(self):
-        _task_queue.run_pending_tasks()
+        self.startup_message.send_to_process()
+        _miro_task_queue.run_pending_tasks()
+
+    def on_shutdown(self):
+        self.worker_ready = False
+
+    def on_restart(self):
+        self.worker_ready = False
 
     def handle_task_result(self, msg):
-        _task_queue.process_result(msg)
+        _miro_task_queue.process_result(msg)
 
-# Manage task queue
+    def handle_worker_process_ready(self, msg):
+        self.worker_ready = True
 
-class TaskQueue(object):
+class MiroTaskQueue(object):
+    """Store the pending tasks for the main process.
+
+    Responsible for:
+        - Storing callbacks/errbacks for each pending task
+        - Calling the callback/errback for a finished task
+    """
     def __init__(self):
         # maps task_ids to (msg, callback, errback) tuples
         self.tasks_in_progress = {}
@@ -146,14 +320,17 @@ class TaskQueue(object):
         for msg, callback, errback in self.tasks_in_progress.values():
             msg.send_to_process()
 
-_task_queue = TaskQueue()
+_miro_task_queue = MiroTaskQueue()
 
 # Manage subprocess
-_subprocess_manager = subprocessmanager.SubprocessManager(TaskMessage,
+_subprocess_manager = subprocessmanager.SubprocessManager(WorkerMessage,
         WorkerProcessResponder(), WorkerProcessHandler)
 
-def startup():
+def startup(thread_count=3):
     """Startup the worker process."""
+
+    startup_msg = WorkerStartupInfo(thread_count)
+    _subprocess_manager.responder.startup_message = startup_msg
     _subprocess_manager.start()
 
 def shutdown():
@@ -168,4 +345,4 @@ def send(msg, callback, errback):
     :param callback: function to call on success
     :param errback: function to call on error
     """
-    _task_queue.add_task(msg, callback, errback)
+    _miro_task_queue.add_task(msg, callback, errback)

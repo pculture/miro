@@ -386,3 +386,38 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo.avi')
         self.check_set_user_info('foo.avi', artist=u'miro',
                                  title=u'Four point Five', album=u'PCF')
+
+    def test_queueing(self):
+        # test that if we don't send too many requests to the worker process
+        paths = ['/videos/video-%d.avi' % i for i in xrange(200)]
+        for p in paths:
+            self.metadata_manager.add_file(p)
+        # 200 paths are ready to go, but only 100 should be queued up to
+        # mutagen
+        self.assertEquals(len(self.processor.mutagen_calls), 100)
+
+        def run_mutagen(start, stop):
+            for p in paths[start:stop]:
+                self.processor.run_mutagen_callback(p, 'video', 100, u'Title',
+                                                    False)
+        def run_movie_data(start, stop):
+            for p in paths[start:stop]:
+                self.processor.run_movie_data_callback(p, 'video', 100, True)
+
+        # let 50 mutagen tasks complete, we should queue up 50 more
+        run_mutagen(0, 50)
+        self.assertEquals(len(self.processor.mutagen_calls), 100)
+        self.assertEquals(len(self.processor.movie_data_calls), 50)
+        # let 75 more complete, we should be hitting our movie data max now
+        run_mutagen(50, 125)
+        self.assertEquals(len(self.processor.mutagen_calls), 75)
+        self.assertEquals(len(self.processor.movie_data_calls), 100)
+        # looks good, just double check that we finish both queues okay
+        run_movie_data(0, 100)
+        self.assertEquals(len(self.processor.movie_data_calls), 25)
+        run_mutagen(125, 200)
+        self.assertEquals(len(self.processor.mutagen_calls), 0)
+        self.assertEquals(len(self.processor.movie_data_calls), 100)
+        run_movie_data(100, 200)
+        self.assertEquals(len(self.processor.mutagen_calls), 0)
+        self.assertEquals(len(self.processor.movie_data_calls), 0)
