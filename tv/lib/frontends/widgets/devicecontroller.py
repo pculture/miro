@@ -496,7 +496,7 @@ class PodcastSyncWidget(SyncWidget):
         SyncWidget.set_device(self, device)
         sync = self.device.database.setdefault(u'sync', {})
         if self.file_type not in sync:
-            this_sync = {}
+            this_sync = sync[self.file_type] = {}
         else:
             this_sync = sync[self.file_type]
 
