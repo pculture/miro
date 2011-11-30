@@ -1147,7 +1147,7 @@ class DeviceSyncManager(object):
         if not total:
             return 0.0
         progress = float(sum(self.progress_size.itervalues()))
-        return progress / total
+        return min(progress / total, 1.0)
 
     def cancel(self):
         if not self.started:
