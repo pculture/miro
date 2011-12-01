@@ -144,6 +144,10 @@ class WindowBase(signals.SignalEmitter):
         self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
 
+    def connect_menu_keyboard_shortcuts(self):
+        """Connect the shortcuts for the app menu to this window."""
+        self._window.add_accel_group(app.widgetapp.menubar.get_accel_group())
+
 class Window(WindowBase):
     """The main Miro window.  """
 
@@ -330,7 +334,7 @@ class MainWindow(Window):
     def _add_app_menubar(self):
         self.menubar = app.widgetapp.menubar
         self.vbox.pack_start(self.menubar._widget, expand=False)
-        self._window.add_accel_group(self.menubar.get_accel_group())
+        self.connect_menu_keyboard_shortcuts()
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)
