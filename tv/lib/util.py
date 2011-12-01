@@ -1155,9 +1155,12 @@ def import_module(module_name):
 
 def make_file_url(path):
     """Get a file:// URL for a file path."""
-
+    if isinstance(path, unicode):
+        path = path.encode('utf-8')
     path_part = urllib.pathname2url(os.path.abspath(path))
     # On windows pathname2url adds a leading "///" to absolute paths.  This is
     # pretty weird and annoying, but easy to fix
     path_part = re.sub(r'^/+', '', path_part)
+    # Always return str.  Pathname2url() returns a str and from that point
+    # there are no unicode to infect us for a unicode type upgrade.
     return 'file:///' + path_part
