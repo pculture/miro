@@ -37,7 +37,7 @@ from miro import httpclient
 import urlparse
 import cgi
 from xml.dom import minidom
-from urllib import unquote_plus
+from urllib import unquote_plus, urlencode
 from miro.util import check_u
 
 def is_maybe_flashscrapable(url):
@@ -124,11 +124,16 @@ def _youtube_callback_step2(info, video_id, callback):
         # build the format codes.
         fmt_list = [x.split('/')[0] for x in params['fmt_list'][0].split(',')]
         # build the list of available urls.
-        fmt_url_map = params["url_encoded_fmt_stream_map"][0].split(",")
-        # strip url= from url=xxxxxx, strip trailer.
-        fmt_url_map = [unquote_plus(x[4:]).split(';')[0] for x in fmt_url_map]
-        # now build the actual fmt_url_map ...
-        fmt_url_map = dict(zip(fmt_list, fmt_url_map))
+        stream_map = params["url_encoded_fmt_stream_map"][0].split(",")
+        fmt_url_map = dict()
+        # strip url= from url=xxxxxx, strip trailer.  Strip duplicate params.
+        for fmt, u in zip(fmt_list, stream_map):
+            o = urlparse.urlsplit(unquote_plus(u[4:]).split(';')[0])
+            qs = urlencode(list(set(urlparse.parse_qsl(o.query))))
+            # Let's put humpty dumpty back together again
+            fmt_url_map[fmt] = urlparse.urlunsplit(
+              urlparse.SplitResult(o.scheme, o.netloc, o.path, qs, o.fragment))
+            
 
         title = params.get("title", ["No title"])[0]
         try:
