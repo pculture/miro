@@ -290,6 +290,7 @@ class MiroTestCase(unittest.TestCase):
         database.setup_managers()
         self.raise_db_load_errors = True
         app.db = None
+        self.allow_db_upgrade_error_dialog = False
         self.reload_database()
         self.setup_new_item_info_cache()
         searchengines._engines = [
@@ -455,7 +456,15 @@ class MiroTestCase(unittest.TestCase):
         self.shutdown_database()
         self.setup_new_database(path, schema_version, object_schemas)
         if upgrade:
-            app.db.upgrade_database()
+            if self.allow_db_upgrade_error_dialog:
+                # this means that exceptions in the upgrade will be sent to a
+                # dialog box.  Be careful with this, if you don't handle the
+                # dialog, then the unit tests will hang.
+                app.db.upgrade_database()
+            else:
+                # normal case: use _upgrade_database() because we want
+                # exceptions to keep propagating
+                app.db._upgrade_database()
             database.update_last_id()
 
     def clear_ddb_object_cache(self):

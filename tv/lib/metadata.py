@@ -372,6 +372,7 @@ class MetadataEntry(database.DDBObject):
 
     # stores the priorities for each source type
     source_priority_map = {
+        'old-item': 10,
         'mutagen': 20,
         'movie-data': 30,
         'user-data': 50,
@@ -643,8 +644,7 @@ class MetadataManager(signals.SignalEmitter):
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
             drm_by_source[entry.source] = entry.drm
-        metadata['has_drm'] = self._calc_has_drm(drm_by_source.get('mutagen'),
-                                                 status)
+        metadata['has_drm'] = self._calc_has_drm(drm_by_source, status)
         self._add_fallback_columns(metadata)
         return metadata
 
@@ -696,15 +696,22 @@ class MetadataManager(signals.SignalEmitter):
         except database.ObjectNotFoundError:
             raise KeyError(path)
 
-    def _calc_has_drm(self, mutagen_drm, metadata_status):
+    def _calc_has_drm(self, drm_by_source, metadata_status):
         """Calculate the value of has_drm.
 
         has_drm is True when all of these are True
         - mutagen thinks the object has DRM
-        - movie data failed to open the file
+        - movie data failed to open the file, or we're not going to run movie
+          data (this is only true for items created before the MetadataManager
+          existed)
         """
-        return (mutagen_drm and metadata_status.moviedata_status ==
-                MetadataStatus.STATUS_FAILURE)
+        try:
+            mutagen_thinks_drm = drm_by_source['mutagen']
+        except KeyError:
+            mutagen_thinks_drm = drm_by_source.get('old-item', False)
+        return (mutagen_thinks_drm and
+                metadata_status.moviedata_status in
+                (MetadataStatus.STATUS_FAILURE or MetadataStatus.STATUS_SKIP))
 
     def _run_mutagen(self, path):
         """Run mutagen on a path."""

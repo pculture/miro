@@ -69,37 +69,7 @@ def remove_column(cursor, table, column_names):
     :param table: the table to remove the columns from
     :param column_names: list of columns to remove
     """
-    cursor.execute("PRAGMA table_info('%s')" % table)
-    columns = []
-    columns_with_type = []
-    for column_info in cursor.fetchall():
-        column = column_info[1]
-        col_type = column_info[2]
-        if column in column_names:
-            continue
-        columns.append(column)
-        if column == 'id':
-            col_type += ' PRIMARY KEY'
-        columns_with_type.append("%s %s" % (column, col_type))
-
-    cursor.execute("PRAGMA index_list('%s')" % table)
-    index_sql = []
-    for index_info in cursor.fetchall():
-        name = index_info[1]
-        if name in column_names:
-            continue
-        cursor.execute("SELECT sql FROM sqlite_master "
-                       "WHERE name=? and type='index'", (name,))
-        index_sql.append(cursor.fetchone()[0])
-
-    cursor.execute("ALTER TABLE %s RENAME TO old_%s" % (table, table))
-    cursor.execute("CREATE TABLE %s (%s)" %
-                   (table, ', '.join(columns_with_type)))
-    cursor.execute("INSERT INTO %s SELECT %s FROM old_%s" %
-                   (table, ', '.join(columns), table))
-    cursor.execute("DROP TABLE old_%s" % table)
-    for sql in index_sql:
-        cursor.execute(sql)
+    alter_table_columns(cursor, table, column_names, {})
 
 def rename_column(cursor, table, from_column, to_column, new_type=None):
     """Renames a column in a SQLITE table.
@@ -120,6 +90,34 @@ def rename_column(cursor, table, from_column, to_column, new_type=None):
     :param to_column: the new name
     :param new_type: new type for the column (or None to keep the old one)
     """
+    if new_type is None:
+        new_types = {}
+    else:
+        new_types = {to_column: new_type}
+    alter_table_columns(cursor, table, [], {from_column: to_column}, new_types)
+
+def alter_table_columns(cursor, table, delete_columns, rename_columns,
+                        new_types=None):
+    """Rename/drop multiple columns at once
+
+    .. Note::
+
+       This does **NOT** handle renaming the column in an index.
+
+       If you're going to rename columns that are involved in indexes,
+       you'll need to add that feature.
+
+    .. Note::
+
+       Don't rename the id column--that would be bad.
+
+    :param table: the table to remove the columns from
+    :param delete_columns: list of columns to delete
+    :param rename_columns: dict mapping old column names to new column names
+    :param new_types: dict mapping new column names to their new types
+    """
+    if new_types is None:
+        new_types = {}
     cursor.execute("PRAGMA table_info('%s')" % table)
     old_columns = []
     new_columns = []
@@ -127,11 +125,13 @@ def rename_column(cursor, table, from_column, to_column, new_type=None):
     for column_info in cursor.fetchall():
         column = column_info[1]
         col_type = column_info[2]
+        if column in delete_columns:
+            continue
         old_columns.append(column)
-        if column == from_column:
-            column = to_column
-            if new_type is not None:
-                col_type = new_type
+        if column in rename_columns:
+            column = rename_columns[column]
+        if column in new_types:
+            col_type = new_types[column]
         new_columns.append(column)
         if column == 'id':
             col_type += ' PRIMARY KEY'
@@ -3466,3 +3466,126 @@ def upgrade165(cursor):
     ]
     for n, t, c in indices:
         cursor.execute("CREATE INDEX %s ON %s (%s)" % (n, t, c))
+
+def upgrade166(cursor):
+    """Create the metadata table and migrate data from item to it."""
+
+    cursor.execute("""
+    CREATE TABLE metadata_status (id integer PRIMARY KEY, path text,
+                                  mutagen_status text, moviedata_status text)
+                   """)
+    cursor.execute("""\
+    CREATE TABLE metadata (id integer PRIMARY KEY, path text, source text,
+                           priority integer, file_type text, duration integer,
+                           album text, album_artist text, album_tracks
+                           integer, artist text, cover_art_path text,
+                           screenshot_path text, drm integer, genre text,
+                           title text, track integer, year integer,
+                           description text, rating integer, show text,
+                           episode_id text, episode_number integer,
+                           season_number integer, kind text)
+                   """)
+    cursor.execute("CREATE INDEX metadata_mutagen ON metadata_status "
+                   "(mutagen_status)")
+    cursor.execute("CREATE INDEX metadata_moviedata ON metadata_status "
+                   "(moviedata_status)")
+    cursor.execute("CREATE UNIQUE INDEX metadata_path ON metadata_status "
+                   "(path)")
+    cursor.execute("CREATE INDEX metadata_entry_path ON metadata (path)")
+    cursor.execute("CREATE UNIQUE INDEX metadata_entry_path_and_source "
+                   "ON metadata (path, source)")
+
+
+    # map old MDP states to their new values
+    mdp_state_map = {
+        None : 'N',
+        0 : 'S',
+        1 : 'C',
+        2 : 'F',
+    }
+
+    # currently get_title() returns the contents of title and falls back on
+    # title_tag.  Set the title column to be that value for the conversion.
+    # As a side-effect this makes the title column the same as what
+    # get_metadata() would return.
+    cursor.execute("UPDATE item SET title=title_tag WHERE title IS NULL")
+
+    # map columns in metadata table to their old name in item
+    column_map = {
+        'path': 'filename',
+        'file_type': 'file_type',
+        'duration': 'duration',
+        'album': 'album',
+        'album_artist': 'album_artist',
+        'album_tracks': 'album_tracks',
+        'artist':'artist',
+        'cover_art_path': 'cover_art',
+        'screenshot_path': 'screenshot',
+        'drm': 'has_drm',
+        'genre': 'genre',
+        'title ': 'title',
+        'track': 'track',
+        'year': 'year',
+        'description': 'description',
+        'rating': 'rating',
+        'show': 'show',
+        'episode_id': 'episode_id',
+        'episode_number': 'episode_number',
+        'season_number': 'season_number',
+        'kind': 'kind',
+    }
+
+    insert_columns = ['id', 'source', 'priority']
+    select_columns = ['mdp_state']
+
+    filenames_seen = set()
+
+    for key, value in column_map.items():
+        insert_columns.append(key)
+        select_columns.append(value)
+    sql = "SELECT %s FROM item WHERE filename NOT NULL ORDER BY id ASC" % (
+        ', '.join(select_columns))
+    next_id = get_next_id(cursor)
+    filename_index = select_columns.index('filename')
+    for row in list(cursor.execute(sql)):
+        path = row[filename_index]
+        if path in filenames_seen:
+            # duplicate filename, just skip this data
+            continue
+        else:
+            filenames_seen.add(path)
+        # Make an entry in the metadata table with the metadata that was
+        # stored.  We don't know if it came from mutagen, movie data, torrent
+        # data or wherever, so we use "old-item" as the source and give it a
+        # low priority.
+        values = [next_id, 'old-item', 10]
+        values.extend(row[1:])
+        mdp_state = row[0]
+        sql = "INSERT INTO metadata (%s) VALUES (%s)" % (
+            ', '.join(insert_columns),
+            ', '.join('?' for i in xrange(len(insert_columns))))
+        cursor.execute(sql, values)
+        next_id += 1
+
+        # Make an entry in the metadata_status table.  We're not sure if
+        # mutagen completed successfully or not, so we just call its status
+        # SKIPPED.  moviedata_status is based on the old mdp_state column
+        sql = ("INSERT INTO metadata_status "
+               "(id, path, mutagen_status, moviedata_status) "
+               "VALUES (?, ?, ?, ?)")
+        cursor.execute(sql, (next_id, path, 'S', mdp_state_map[mdp_state]))
+        next_id += 1
+
+    # We need to alter the item table to:
+    #   - drop the columns now handled by metadata_status
+    #   - make column names match the keys in MetadataManager.get_metadata()
+    #   - add a new column for torrent titles
+
+    rename_columns={
+        'cover_art': 'cover_art_path',
+        'screenshot': 'screenshot_path',
+    }
+    delete_columns=['mdp_state', 'metadata_version', 'title_tag']
+    alter_table_columns(cursor, 'item', delete_columns, rename_columns)
+
+    cursor.execute("ALTER TABLE item ADD torrent_title TEXT")

@@ -372,6 +372,7 @@ class DiskTest(FakeSchemaTest):
         :param upgrade: handle upgrade dialogs by clicking "start fresh"
         :param corruption: handle database corrupt message boxes
         """
+        self.allow_db_upgrade_error_dialog = True
         def dialog_handler(obj, dialog):
             if upgrade and (dialogs.BUTTON_START_FRESH in dialog.buttons):
                 # handle database upgrade dialog
