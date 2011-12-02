@@ -38,15 +38,18 @@ from miro.gtcache import gettext as _
 from miro import messages
 
 def log_drive(drive, when):
-    logging.debug('drive %s: %s' % (when, drive))
+    logging.debug('drive %s: %s (%s)' % (when, drive,
+                                         drive.get_identifier('unix-device')))
 
 def log_volume(volume, when):
-    logging.debug('volume %s: %s (drive: %s, mount: %s)' % (
-            when, volume, volume.get_drive(), volume.get_mount()))
+    logging.debug('volume %s: %s (unix: %s, drive: %s, mount: %s)' % (
+            when, volume, volume.get_identifier('unix-device'),
+            volume.get_drive(), volume.get_mount()))
 
 def log_mount(mount, when):
-    logging.debug('mount %s: %s (volume: %s, drive: %s)' % (
-            when, mount, mount.get_volume(), mount.get_drive()))
+    logging.debug('mount %s: %s (root: %s, volume: %s, drive: %s)' % (
+            when, mount, mount.get_root().get_path(), mount.get_volume(),
+            mount.get_drive()))
 
 class DeviceTracker(object):
     def __init__(self):
