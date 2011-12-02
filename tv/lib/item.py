@@ -1543,6 +1543,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         if self.isContainerItem:
             for item in self.get_children():
                 item.delete_files()
+        if self.get_filename():
+            fileutil.delete(self.get_filename())
         self.delete_subtitle_files()
 
     def delete_subtitle_files(self):

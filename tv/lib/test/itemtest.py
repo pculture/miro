@@ -79,6 +79,26 @@ class ChildRemoveTest(ContainerItemTest):
         self.container_item.delete_files()
         self.container_item.remove()
 
+    def test_expire_deletes_file(self):
+        feed = Feed(u'http://example.com/1')
+        fd, fname = tempfile.mkstemp(dir=self.tempdir)
+        try:
+            fname = FilenameType(fname)
+            with open(fname, 'w') as f:
+                f.write('TEST DATA')
+            i = Item(fp_values_for_url(u'http://example.com1/item1'),
+                     feed_id=feed.id)
+            i.set_filename(fname)
+            i.signal_change()
+            self.process_idles()
+            i.expire()
+            self.assertFalse(os.path.exists(fname))
+        finally:
+            try:
+                os.remove(fname)
+            except OSError:
+                pass
+
 class ExpiredViewTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
