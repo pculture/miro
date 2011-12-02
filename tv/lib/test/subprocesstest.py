@@ -337,14 +337,13 @@ class MutagenTest(WorkerProcessTest):
         workerprocess.send(msg, self.callback, self.errback)
         self.runEventLoop(4.0)
         self.check_successful_result()
-        self.assertEquals(self.result['source_path'], source_path)
         self.assertEquals(self.result['file_type'], file_type)
         self.assertEquals(self.result['duration'], duration)
         self.assertEquals(self.result['title'], title)
         if has_cover_art:
             self.assertNotEquals(self.result['cover_art_path'], None)
         else:
-            self.assertEquals(self.result['cover_art_path'], None)
+            self.assert_('cover_art_path' not in self.result)
         self.reset_results()
 
     def test_mutagen_worker_process(self):

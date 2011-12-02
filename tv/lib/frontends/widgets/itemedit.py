@@ -496,7 +496,7 @@ class GeneralPanel(DialogPanel):
         """Pack the left column into the middle HBox of the main VBox."""
         widget = widgetset.VBox()
         left = []
-        left.append(TextField('name', self.items, _("Name")))
+        left.append(TextField('title', self.items, _("Name")))
         left.append(TextField('artist', self.items, _("Artist")))
         left.append(TextField('album', self.items, _("Album")))
         left.append(TextField('genre', self.items, _("Genre")))

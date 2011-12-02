@@ -12,25 +12,10 @@ from miro.test.framework import MiroTestCase, dynamic_test
 from os import path
 
 from miro.plat import resources
-from miro.filetags import read_metadata
+from miro.filetags import process_file
 
 @dynamic_test(expected_cases=8)
 class FileTagsTest(MiroTestCase):
-    def assert_file_data(self, test,
-            mediatype='*', duration='*', data='*', cover_art='*'):
-        if data != '*' and data is not None:
-            data = dict((unicode(key), value) for key, value in data.iteritems())
-        filename = resources.path(path.join('testdata', 'metadata', test))
-        expected = (mediatype, duration, data, cover_art)
-        results = read_metadata(filename, True)
-        if results is None:
-            # files for which mutagen returns nothing should have None for all
-            # fields, including None instead of a tags dict.
-            results = None, None, None, None
-        for observed, expected_value in zip(results, expected):
-            if expected_value != '*':
-                self.assertEquals(observed, expected_value)
-
     # mp3-2.mp3:
         # FIXME: losing data - TPE2="Chicago Public Media"
 
@@ -49,8 +34,15 @@ class FileTagsTest(MiroTestCase):
         return json.load(open(results_path)).iteritems()
 
     def dynamic_test_case(self, filename, expected):
-        file_type = expected['file_type']
-        duration = expected['duration']
-        tags = expected['tags']
-        cover_art = expected['cover_art']
-        self.assert_file_data(filename, file_type, duration, tags, cover_art)
+        # make all keys unicode
+        #expected = dict((unicode(key), value)
+                        #for key, value in expected.iteritems())
+        filename = resources.path(path.join('testdata', 'metadata', filename))
+        results = process_file(filename, self.tempdir)
+        # cover art nedes to be handled specially
+        if expected.pop('cover_art'):
+            self.assertNotEqual(results.pop('cover_art_path'), None)
+        else:
+            self.assert_('cover_art_path' not in results)
+        # for the rest, we just compare the dicts
+        self.assertEquals(results, expected)

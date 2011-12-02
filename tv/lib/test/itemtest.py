@@ -238,7 +238,8 @@ class ItemSearchTest(MiroTestCase):
                 feed_id=self.feed.id)
 
     def test_matches_search(self):
-        self.item1.set_title(u"miro is cool")
+        self.item1.entry_title = u"miro is cool"
+        self.item1.signal_change()
         self.assertEquals(self.item1.matches_search('miro'), True)
         self.assertEquals(self.item1.matches_search('iro'), True)
         self.assertEquals(self.item1.matches_search('c'), True)

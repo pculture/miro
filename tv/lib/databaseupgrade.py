@@ -3470,6 +3470,7 @@ def upgrade165(cursor):
 def upgrade166(cursor):
     """Create the metadata table and migrate data from item to it."""
 
+    # create new tables
     cursor.execute("""
     CREATE TABLE metadata_status (id integer PRIMARY KEY, path text,
                                   mutagen_status text, moviedata_status text)
@@ -3494,6 +3495,8 @@ def upgrade166(cursor):
     cursor.execute("CREATE INDEX metadata_entry_path ON metadata (path)")
     cursor.execute("CREATE UNIQUE INDEX metadata_entry_path_and_source "
                    "ON metadata (path, source)")
+    # add new index to item
+    cursor.execute("CREATE INDEX item_filename ON item (filename)")
 
 
     # map old MDP states to their new values

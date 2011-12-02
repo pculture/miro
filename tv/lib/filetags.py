@@ -232,22 +232,13 @@ def _setup_mutagen_errors():
             oggtheora.error, oggvorbis.error, trueaudio.error, _vorbis.error)
 _setup_mutagen_errors()
 
-def read_metadata(filename, test=False, cover_art_directory=None):
-    """This is the external interface of the filetags module. Given a filename,
-    this function returns a tuple of (mediatype [a string], duration [integer
-    number of milliseconds(?)], data [dict of attributes to set on the item],
-    cover_art [filename]).
+def process_file(filename, cover_art_directory=None):
+    """Send a file through mutagen
 
-    Both the interface and the implementation are in need of substantial
-    reworking. I have a replacement in the works (with write support!) but have
-    pushed it off for 4.1 since this is generally functional. The root of the
-    problem is that I have tried to write one function that handles all the
-    different mutagen metadata objects; the new approach will be to wrap each
-    mutagen object in a different wrapper subclass, with all the wrappers
-    sharing a common interface. --KCW
+    :param filename: path to the media file
+    :param cover_art_directory: directory to store cover art in
+    :returns: dict of metadata
     """
-    # FIXME: we should probably drop the test parameter and set
-    # cover_art_directory in the unittests
     try:
         muta = mutagen.File(filename)
     except MUTAGEN_ERRORS:
@@ -290,9 +281,10 @@ def read_metadata(filename, test=False, cover_art_directory=None):
                 with_exception=True)
     else:
         if muta:
-            return _parse_mutagen(filename, muta, test, cover_art_directory)
+            return _parse_mutagen(filename, muta, cover_art_directory)
+    return {}
 
-def _parse_mutagen(filename, muta, test, cover_art_directory):
+def _parse_mutagen(filename, muta, cover_art_directory):
     meta = muta.__dict__
     tags = meta['tags']
     if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
@@ -303,10 +295,11 @@ def _parse_mutagen(filename, muta, test, cover_art_directory):
     if hasattr(muta, 'info'):
         info = muta.info.__dict__
 
-    duration = _get_duration(muta, info)
-    mediatype = _get_mediatype(muta, filename, info, tags)
 
-    data = {}
+    data = {
+        'duration': _get_duration(muta, info),
+        'file_type': _get_mediatype(muta, filename, info, tags),
+    }
     for file_tag, value in tags.iteritems():
         try:
             file_tag = _sanitize_key(file_tag)
@@ -341,43 +334,13 @@ def _parse_mutagen(filename, muta, test, cover_art_directory):
         if guessed_track:
             data['track'] = guessed_track
 
-    cover_art = None
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures
-        if test:
-            cover_art = True
-        else:
-            cover_art = _make_cover_art_file(filename, image_data,
-                                             cover_art_directory)
+        data['cover_art_path'] = _make_cover_art_file(filename, image_data,
+                                                      cover_art_directory)
     elif 'cover_art' in data:
         image_data = data['cover_art']
-        if test:
-            cover_art = True
-        else:
-            cover_art = _make_cover_art_file(filename, image_data,
-                                             cover_art_directory)
+        data['cover_art_path'] = _make_cover_art_file(filename, image_data,
+                                                      cover_art_directory)
         del data['cover_art']
-    return mediatype, duration, data, cover_art
-
-def process_file(source_path, cover_art_directory):
-    """Send a file through mutagen
-
-    :param source_path: path to the media file
-    :param cover_art_directory: directory to store cover art in
-    :returns: dict of metadata
-    """
-    result = read_metadata(source_path,
-                           cover_art_directory=cover_art_directory)
-    if result is None:
-        return {}
-    file_type, duration, data, cover_art = result
-    # combine everything into a single dict
-    # FIXME: we should refactor read_metadata() to return data in this way
-    data['source_path'] = source_path
-    data['file_type'] = file_type
-    if duration >= 0:
-        data['duration'] = duration
-    else:
-        data['duration'] = None
-    data['cover_art_path'] = cover_art
     return data

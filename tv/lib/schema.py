@@ -450,13 +450,14 @@ class ItemSchema(MultiClassObjectSchema):
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
-        ('screenshot', SchemaFilename(noneOk=True)),
+        ('screenshot_path', SchemaFilename(noneOk=True)),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
         ('license', SchemaString(noneOk=True)),
         ('rss_id', SchemaString(noneOk=True)),
         ('thumbnail_url', SchemaURL(noneOk=True)),
         ('entry_title', SchemaString(noneOk=True)),
+        ('torrent_title', SchemaString(noneOk=True)),
         ('entry_description', SchemaString(noneOk=False)),
         ('link', SchemaURL(noneOk=False)),
         ('payment_link', SchemaURL(noneOk=False)),
@@ -472,12 +473,9 @@ class ItemSchema(MultiClassObjectSchema):
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
-        ('cover_art', SchemaFilename(noneOk=True)),
-        ('mdp_state', SchemaInt(noneOk=True)),
+        ('cover_art_path', SchemaFilename(noneOk=True)),
         # metadata:
-        ('metadata_version', SchemaInt()),
         ('title', SchemaString(noneOk=True)),
-        ('title_tag', SchemaString(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
         ('album_artist', SchemaString(noneOk=True)),
@@ -503,6 +501,7 @@ class ItemSchema(MultiClassObjectSchema):
             ('item_downloader', ('downloader_id',)),
             ('item_feed_downloader', ('feed_id', 'downloader_id',)),
             ('item_file_type', ('file_type',)),
+            ('item_filename', ('filename',)),
     )
 
 class FeedSchema(DDBObjectSchema):
@@ -873,7 +872,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_path_and_source', ('path', 'source')),
     )
 
-VERSION = 165
+VERSION = 166
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
@@ -885,5 +884,6 @@ object_schemas = [
     PlaylistSchema, HideableTabSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
-    DBLogEntrySchema, ViewStateSchema,
+    DBLogEntrySchema, ViewStateSchema, MetadataStatusSchema,
+    MetadataEntrySchema
 ]

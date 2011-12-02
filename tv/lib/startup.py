@@ -73,7 +73,6 @@ from miro import messages
 from miro import messagehandler
 from miro import metadataprogress
 from miro import models
-from miro import moviedata
 from miro import playlist
 from miro import prefs
 import miro.plat.resources
@@ -326,7 +325,7 @@ def finish_startup(obj, thread):
     app.download_state_manager = downloader.DownloadStateManager()
     app.download_state_manager.init_controller()
 
-    app.movie_data_updater = moviedata.MovieDataUpdater()
+    item.setup_metadata_manager()
 
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()
@@ -432,8 +431,8 @@ def on_frontend_started():
     eventloop.add_timeout(20, item.start_deleted_checker,
             "start checking deleted items")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
-    eventloop.add_timeout(60, item.update_incomplete_movie_data,
-            "update movie data")
+    eventloop.add_timeout(60, item.update_incomplete_metadata,
+            "update metadata data")
     eventloop.add_timeout(90, clear_icon_cache_orphans, "clear orphans")
 
 def setup_global_feeds():

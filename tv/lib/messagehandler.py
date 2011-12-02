@@ -1542,14 +1542,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for handler, info_list in infos_per_handler.iteritems():
             handler.bulk_delete(info_list)
 
-    def handle_rename_video(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("RenameVideo: Item not found -- %s", message.id)
-        else:
-            item_.set_title(message.new_name)
-
     def handle_edit_items(self, message):
         changes = message.change_dict
         for id_ in message.item_ids:
@@ -1558,7 +1550,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             except database.ObjectNotFoundError:
                 logging.warn("EditItems: Item not found -- %s", id_)
                 continue
-            item_.set_metadata_from_iteminfo(changes)
+            item_.set_user_metadata(changes)
 
     def handle_revert_feed_title(self, message):
         try:

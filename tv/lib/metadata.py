@@ -29,249 +29,31 @@
 
 """``miro.metadata`` -- Handle metadata properties for *Items. Generally the
 frontend cares about these and the backend doesn't.
+
+Module properties:
+    attribute_names -- set of attribute names for metadata
 """
 
 import logging
-import fileutil
 import os.path
 
 import sqlite3
 
-from miro.util import returns_unicode
 from miro import app
-from miro import coverart
 from miro import database
-from miro import filetags
+from miro import eventloop
 from miro import filetypes
 from miro import prefs
 from miro import signals
 from miro import workerprocess
+from miro.plat.utils import filename_to_unicode
 
-class Source(object):
-    """Object with readable metadata properties."""
-
-    def get_iteminfo_metadata(self):
-        # until MDP has run, has_drm is very uncertain; by letting it be True in
-        # the backend but False in the frontend while waiting for MDP, we keep
-        # is_playable False but don't show "DRM Locked" until we're sure.
-        has_drm = self.has_drm and self.mdp_state is not None
-        return dict(
-            name = self.get_title(),
-            title_tag = self.title_tag,
-            description = self.get_description(),
-            album = self.album,
-            album_artist = self.album_artist,
-            artist = self.artist,
-            track = self.track,
-            album_tracks = self.album_tracks,
-            year = self.year,
-            genre = self.genre,
-            rating = self.rating,
-            cover_art = self.cover_art,
-            has_drm = has_drm,
-            show = self.show if self.show is not None else self.artist,
-            episode_id = self.episode_id if self.episode_id is not None else self.get_title(),
-            episode_number = self.episode_number,
-            season_number = self.season_number if self.season_number is not None else self.album,
-            kind = self.kind,
-            metadata_version = self.metadata_version,
-            mdp_state = self.mdp_state,
-        )
-
-    def setup_new(self):
-        self.title = u""
-        self.title_tag = None
-        self.description = u""
-        self.album = None
-        self.album_artist = None
-        self.artist = None
-        self.track = None
-        self.album_tracks = None
-        self.year = None
-        self.genre = None
-        self.rating = None
-        self.cover_art = None
-        self.has_drm = None
-        self.file_type = None
-        self.show = None
-        self.episode_id = None
-        self.episode_number = None
-        self.season_number = None
-        self.kind = None
-        self.metadata_version = 0
-        self.mdp_state = None # moviedata.State.UNSEEN
-
-    @property
-    def media_type_checked(self):
-        """This was previously tracked as a real property; it's used by
-        ItemInfo. Provided for compatibility with the previous API.
-        """
-        return self.file_type is not None
-
-    @returns_unicode
-    def get_title(self):
-        if self.title:
-            return self.title
-        else:
-            return self.title_tag if self.title_tag else u''
-
-    @returns_unicode
-    def get_description(self):
-        return self.description
-
-    def read_metadata(self):
-        # always mark the file as seen
-        self.metadata_version = filetags.METADATA_VERSION
-
-        if self.file_type == u'other':
-            return
-
-        path = self.get_filename()
-        rv = filetags.read_metadata(path)
-        if not rv:
-            return
-
-        mediatype, duration, metadata, cover_art = rv
-        self.file_type = mediatype
-        # FIXME: duration isn't actually a attribute of metadata.Source.
-        # This currently works because Item and Device item are the only
-        # classes that call read_metadata(), and they both define duration
-        # the same way.
-        #
-        # But this is pretty fragile.  We should probably refactor
-        # duration to be an attribute of metadata.Source.
-        self.duration = duration
-        self.cover_art = cover_art
-        self.album = metadata.get('album', None)
-        self.album_artist = metadata.get('album_artist', None)
-        self.artist = metadata.get('artist', None)
-        self.title_tag = metadata.get('title', None)
-        self.track = metadata.get('track', None)
-        self.year = metadata.get('year', None)
-        self.genre = metadata.get('genre', None)
-        self.has_drm = metadata.get('drm', False)
-
-        # 16346#c26 - run MDP for all OGG files in case they're videos
-        extension = os.path.splitext(path)[1].lower()
-        # oga is the only ogg-ish extension guaranteed to be audio
-        if extension.startswith('.og') and extension != '.oga':
-            # None because we need is_playable to be False until MDP has
-            # determined the real file type, or newly-downloaded videos will
-            # always play as audio; MDP always looks at file_type=None files
-            self.file_type = None
-
-def metadata_setter(attribute, type_=None):
-    def set_metadata(self, value, _bulk=False):
-        if value is not None and type_ is not None:
-            # None is always an acceptable value for metadata properties
-            value = type_(value)
-        if not _bulk:
-            self.confirm_db_thread()
-        setattr(self, attribute, value)
-        if not _bulk:
-            self.signal_change()
-            self.write_back((attribute,))
-    return set_metadata
-
-class Store(Source):
-    """Object with read/write metadata properties."""
-
-    set_title = metadata_setter('title', unicode)
-    set_title_tag = metadata_setter('title_tag', unicode)
-    set_description = metadata_setter('description', unicode)
-    set_album = metadata_setter('album', unicode)
-    set_album_artist = metadata_setter('album_artist', unicode)
-    set_artist = metadata_setter('artist', unicode)
-    set_track = metadata_setter('track', int)
-    set_album_tracks = metadata_setter('album_tracks')
-    set_year = metadata_setter('year', int)
-    set_genre = metadata_setter('genre', unicode)
-    set_rating = metadata_setter('rating', int)
-    set_file_type = metadata_setter('file_type', unicode)
-    set_has_drm = metadata_setter('has_drm', bool)
-    set_show = metadata_setter('show', unicode)
-    set_episode_id = metadata_setter('episode_id', unicode)
-    set_episode_number = metadata_setter('episode_number', int)
-    set_season_number = metadata_setter('season_number', int)
-    set_kind = metadata_setter('kind', unicode)
-    set_metadata_version = metadata_setter('metadata_version', int)
-    set_mdp_state = metadata_setter('mdp_state', int)
-
-    def set_cover_art(self, new_file, _bulk=False):
-        """Set new cover art. Deletes any old cover art.
-
-        Creates a copy of the image in our cover art directory.
-        """
-        if not _bulk:
-            self.confirm_db_thread()
-        if new_file:
-            new_cover = coverart.Image.from_file(new_file, self.get_filename())
-        self.delete_cover_art()
-        if new_file:
-            self.cover_art = new_cover
-        if not _bulk:
-            self.signal_change()
-            self.write_back(('cover_art',))
-
-    def delete_cover_art(self):
-        """Delete the cover art file and unset cover_art."""
-        try:
-            fileutil.remove(self.cover_art)
-        except (OSError, TypeError):
-            pass
-        self.cover_art = None
-
-    def setup_new(self):
-        Source.setup_new(self)
-        self._deferred_update = {}
-
-    def set_metadata_from_iteminfo(self, changes, _deferrable=True):
-        self.confirm_db_thread()
-        for field, value in changes.iteritems():
-            Store.ITEM_INFO_TO_ITEM[field](self, value, _bulk=True)
-        self.signal_change()
-        self.write_back(changes.keys())
-
-    def write_back(self, _changed):
-        """Write back metadata changes to the original source, if supported. If
-        this method fails because the item is playing, it should add the changed
-        fields to _deferred_update.
-        """
-        # not implemented yet
-        #logging.debug("%s can't write back changes", self.__class__.__name__)
-
-    def set_is_playing(self, playing):
-        """Hook so that we can defer updating an item's data if we can't change
-        it while it's playing.
-        """
-        if not playing and self._deferred_update:
-            self.set_metadata_from_iteminfo(self._deferred_update, _deferrable=False)
-            self._deferred_update = {}
-        super(Store, self).set_is_playing(playing)
-
-    ITEM_INFO_TO_ITEM = dict(
-        name = set_title,
-        title_tag = set_title_tag,
-        description = set_description,
-        album = set_album,
-        album_artist = set_album_artist,
-        artist = set_artist,
-        track = set_track,
-        album_tracks = set_album_tracks,
-        year = set_year,
-        genre = set_genre,
-        rating = set_rating,
-        file_type = set_file_type,
-        cover_art = set_cover_art,
-        has_drm = set_has_drm,
-        show = set_show,
-        episode_id = set_episode_id,
-        episode_number = set_episode_number,
-        season_number = set_season_number,
-        kind = set_kind,
-        metadata_version = set_metadata_version,
-        mdp_state = set_mdp_state,
-    )
+attribute_names = set([
+    'file_type', 'duration', 'album', 'album_artist', 'album_tracks',
+    'artist', 'cover_art_path', 'screenshot_path', 'has_drm', 'genre',
+    'title', 'track', 'year', 'description', 'rating', 'show', 'episode_id',
+    'episode_number', 'season_number', 'kind',
+])
 
 class MetadataStatus(database.DDBObject):
     """Stores the status of different metadata extractors for a file
@@ -290,6 +72,7 @@ class MetadataStatus(database.DDBObject):
         self.path = path
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
+        self._add_to_cache()
 
     @classmethod
     def get_by_path(cls, path):
@@ -301,14 +84,19 @@ class MetadataStatus(database.DDBObject):
         try:
             return app.db.cache.get('metadata', path)
         except KeyError:
-            return cls.make_view('path=?', (path,)).get_singleton()
+            view = cls.make_view('path=?', (filename_to_unicode(path),))
+            return view.get_singleton()
 
     def setup_restored(self):
         app.db.cache.set('metadata', self.path, self)
 
-    def on_db_insert(self):
+    def _add_to_cache(self):
+        if app.db.cache.key_exists('metadata', self.path):
+            # duplicate path.  Lets let sqlite raise the error when we try to
+            # insert things.
+            logging.warn("self.path already in cache (%s)", self.path)
+            return
         app.db.cache.set('metadata', self.path, self)
-        database.DDBObject.on_db_insert(self)
 
     def removed_from_db(self):
         app.db.cache.remove('metadata', self.path)
@@ -328,9 +116,9 @@ class MetadataStatus(database.DDBObject):
         #   - mutagen was able to get the duration for the file
         #   - mutagen doesn't think the file has DRM
         return ((my_ext == '.oga' or not my_ext.startswith('.og')) and
-                mutagen_data['file_type'] == 'audio' and
-                mutagen_data['duration'] is not None and not
-                mutagen_data['drm'])
+                mutagen_data.get('file_type') == 'audio' and
+                mutagen_data.get('duration') is not None and
+                not mutagen_data.get('drm'))
 
     def update_after_movie_data(self, data):
         self.moviedata_status = self.STATUS_COMPLETE
@@ -378,20 +166,21 @@ class MetadataEntry(database.DDBObject):
         'user-data': 50,
     }
 
-    @staticmethod
-    def metadata_columns():
-        return ('file_type', 'duration', 'album', 'album_artist',
-                'album_tracks', 'artist', 'cover_art_path', 'screenshot_path',
-                'drm', 'genre', 'title', 'track', 'year', 'description',
-                'rating', 'show', 'episode_id', 'episode_number',
-                'season_number', 'kind',)
+    # metadata columns stores the set of column names that store actual
+    # metadata (as opposed to things like source and path)
+    metadata_columns = attribute_names.copy()
+    # has_drm is a tricky column.  In MetadataEntry objects it's just called
+    # 'drm'.  Then MetadataManager calculates has_drm based on a variety of
+    # factors.
+    metadata_columns.discard('has_drm')
+    metadata_columns.add('drm')
 
     def setup_new(self, path, source, data):
         self.path = path
         self.source = source
         self.priority = MetadataEntry.source_priority_map[source]
         # set all metadata to None by default
-        for name in self.metadata_columns():
+        for name in self.metadata_columns:
             setattr(self, name, None)
         self.__dict__.update(data)
 
@@ -403,7 +192,7 @@ class MetadataEntry(database.DDBObject):
     def get_metadata(self):
         """Get the metadata stored in this object as a dict."""
         rv = {}
-        for name in self.metadata_columns():
+        for name in self.metadata_columns:
             value = getattr(self, name)
             if value is not None:
                 rv[name] = value
@@ -416,11 +205,13 @@ class MetadataEntry(database.DDBObject):
 
     @classmethod
     def metadata_for_path(cls, path):
-        return cls.make_view('path=?', (path,), order_by='priority ASC')
+        return cls.make_view('path=?', (filename_to_unicode(path),),
+                             order_by='priority ASC')
 
     @classmethod
     def get_entry(cls, source, path):
-        view = cls.make_view('source=? AND path=?', (source, path))
+        view = cls.make_view('source=? AND path=?',
+                             (source, filename_to_unicode(path)))
         return view.get_singleton()
 
 class _TaskProcessor(signals.SignalEmitter):
@@ -506,6 +297,7 @@ class _TaskProcessor(signals.SignalEmitter):
 class _MutagenTaskProcessor(_TaskProcessor):
     def handle_callback(self, status, task, result):
         """Handle a successfull task."""
+        logging.debug("mutagen done: %s", status.path)
         # Store the metadata
         MetadataEntry(task.source_path, u'mutagen', result)
         # Update MetadataStatus
@@ -517,6 +309,7 @@ class _MutagenTaskProcessor(_TaskProcessor):
 
 class _MovieDataTaskProcessor(_TaskProcessor):
     def handle_callback(self, status, task, result):
+        logging.debug("movie data done: %s", status.path)
         MetadataEntry(task.source_path, u'movie-data', result)
         status.update_after_movie_data(result)
 
@@ -530,17 +323,37 @@ class MetadataManager(signals.SignalEmitter):
     - creating/updating MetadataStatus and MetadataEntry objects
     - invoking mutagen, moviedata, echoprint, and other extractors
     - combining all the metadata we have for a path into a single dict.
+
+    Signals:
+
+    - new-metadata(dict) -- We have new metadata for files.  dict is a
+                            dictionary mapping paths to the metadata.
     """
+
+    # how long to wait before emiting the new-metadata signal.  Shorter times
+    # mean more responsiveness, longer times allow us to bulk update many
+    # items at once.
+    UPDATE_INTERVAL = 1.0
+
 
     def __init__(self):
         signals.SignalEmitter.__init__(self)
+        self.create_signal('new-metadata')
         self.mutagen_processor = _MutagenTaskProcessor(100)
         self.moviedata_processor = _MovieDataTaskProcessor(100)
         self.cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
-        self.mutagen_processor.connect("task-complete",
-                                       self._on_task_complete)
+        self.all_task_processors = [
+            self.mutagen_processor,
+            self.moviedata_processor
+        ]
+        for processor in self.all_task_processors:
+            processor.connect("task-complete", self._on_task_complete)
+        # paths that have new metadata since the last time we emitted the
+        # "new-metadata" signal
+        self.updated_paths = set()
+        self._new_metadata_scheduled = False
 
     def add_file(self, path):
         """Add a new file to the metadata syestem
@@ -553,6 +366,10 @@ class MetadataManager(signals.SignalEmitter):
         except sqlite3.IntegrityError:
             raise ValueError("%s already added" % path)
         self._run_mutagen(path)
+
+    def path_in_system(self, path):
+        """Test if a path is in the metadata system."""
+        return app.db.cache.key_exists('metadata', path)
 
     def remove_file(self, path):
         """Remove a file from the metadata system.
@@ -585,7 +402,7 @@ class MetadataManager(signals.SignalEmitter):
             self._get_status_for_path(path).remove()
             for entry in MetadataEntry.metadata_for_path(path):
                 entry.remove()
-        for processor in (self.mutagen_processor, self.moviedata_processor):
+        for processor in self.all_task_processors:
             for path in paths:
                 processor.remove_task_for_path(path)
 
@@ -598,7 +415,7 @@ class MetadataManager(signals.SignalEmitter):
         :param paths: list of paths that will be moved
         """
         workerprocess.cancel_tasks_for_files(paths)
-        for processor in (self.mutagen_processor, self.moviedata_processor):
+        for processor in self.all_task_processors:
             for path in paths:
                 processor.remove_task_for_path(path)
 
@@ -727,9 +544,25 @@ class MetadataManager(signals.SignalEmitter):
         if (processor is self.mutagen_processor and 
             status.moviedata_status == MetadataStatus.STATUS_NOT_RUN):
             self._run_movie_data(status.path)
+        self.updated_paths.add(status.path)
+        self._schedule_emit_new_metadata()
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
         return {
             'file_type': filetypes.item_file_type_for_filename(path),
         }
+
+    def _schedule_emit_new_metadata(self):
+        if not self._new_metadata_scheduled:
+            eventloop.add_timeout(self.UPDATE_INTERVAL,
+                                  self._emit_new_metadata,
+                                  'emit new-metadata signal')
+            self._new_metadata_scheduled =  True
+
+    def _emit_new_metadata(self):
+        self._new_metadata_scheduled = False
+        new_metadata = dict((p, self.get_metadata(p))
+                             for p in self.updated_paths)
+        self.updated_paths.clear()
+        self.emit('new-metadata', new_metadata)

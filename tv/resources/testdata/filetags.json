@@ -2,84 +2,67 @@
     "theora_with_ogg_extension.ogg": {
         "file_type": "video",
         "duration": 67,
-        "cover_art": null,
-        "tags" : {
-        }
+        "cover_art": false
     },
     "mp3-0.mp3": {
         "file_type": "audio",
         "duration": 1055,
-        "cover_art": null,
-        "tags" : {
-            "album": "Increase The Dosage",
-            "artist": "Revolution Void",
-            "genre": "Blues",
-            "title": "Invisible Walls",
-            "track": 1
-        }
+        "cover_art": false,
+        "album": "Increase The Dosage",
+        "artist": "Revolution Void",
+        "genre": "Blues",
+        "title": "Invisible Walls",
+        "track": 1
     },
     "mp3-1.mp3": {
         "file_type": "audio",
         "duration": 1055,
-        "cover_art": null,
-        "tags" : {
-            "album": "The Heart EP",
-            "artist": "Ckz",
-            "title": "Race Lieu",
-            "track": 2,
-            "year": 2008
-        }
+        "cover_art": false,
+        "album": "The Heart EP",
+        "artist": "Ckz",
+        "title": "Race Lieu",
+        "track": 2,
+        "year": 2008
     },
     "mp3-2.mp3": {
         "file_type": "audio",
         "duration": 1066,
-        "cover_art": null,
-        "tags" : {
-            "artist": "This American Life",
-            "genre": "Podcast",
-            "title": "#426: Tough Room 2011",
-            "year": 2011
-        }
+        "cover_art": false,
+        "artist": "This American Life",
+        "genre": "Podcast",
+        "title": "#426: Tough Room 2011",
+        "year": 2011
     },
     "mp4-0.mp4": {
         "file_type": "video",
         "duration": 312308,
-        "cover_art": null,
-        "tags" : {
-            "title": "Africa: Cash for Climate Change?"
-        }
+        "cover_art": false,
+        "title": "Africa: Cash for Climate Change?"
     },
     "drm.m4v": {
         "file_type": "video",
         "duration": 2668832,
         "cover_art": true,
-        "tags" : {
-            "album": "The Most Extreme, Season 1",
-            "album_artist": "The Most Extreme",
-            "artist": "The Most Extreme",
-            "genre": "Nonfiction",
-            "drm": true,
-            "title": "Thinkers",
-            "track": 10,
-            "year": 2000
-        }
+        "album": "The Most Extreme, Season 1",
+        "album_artist": "The Most Extreme",
+        "artist": "The Most Extreme",
+        "genre": "Nonfiction",
+        "drm": true,
+        "title": "Thinkers",
+        "track": 10,
+        "year": 2000
     },
     "nuls.mp3": {
         "file_type": "audio",
         "duration": 1055,
-        "cover_art": null,
-        "tags" : {
-            "album": "Increase The\nDosge",
-            "artist": "Revoluton Void",
-            "genre": "Blus",
-            "title": "Invisible\nWals",
-            "track": 1
-        }
+        "cover_art": false,
+        "album": "Increase The\nDosge",
+        "artist": "Revoluton Void",
+        "genre": "Blus",
+        "title": "Invisible\nWals",
+        "track": 1
     },
     "webm-0.webm": {
-        "file_type": null,
-        "duration": null,
-        "cover_art": null,
-        "tags" : null
+        "cover_art": false
     }
 }

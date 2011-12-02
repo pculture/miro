@@ -18,7 +18,6 @@ from miro import httpauth
 from miro import httpclient
 from miro import item
 from miro import iteminfocache
-from miro import moviedata
 from miro import util
 from miro import prefs
 from miro import schema
@@ -279,7 +278,7 @@ class MiroTestCase(unittest.TestCase):
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
-        app.movie_data_updater = moviedata.MovieDataUpdater()
+        item.setup_metadata_manager()
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary

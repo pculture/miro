@@ -655,6 +655,21 @@ class DDBObject(signals.SignalEmitter):
     def reset_changed_attributes(self):
         self.changed_attributes = set()
 
+    def _bulk_update_db_values(self, dct):
+        """Safely update many DB values at a time.
+
+        _bulk_update_db_values is needed because if you just call
+        self.__dict__.update(), then changed_attributes won't be updated so we
+        won't save the new values to the DB in signal_change()
+
+        _bulk_update_db_values can only be used on attributes that map to
+        database columns.
+
+        :param dct: dict of new values for our database attributes
+        """
+        self.__dict__.update(dct)
+        self.changed_attributes.update(dct.keys())
+
     def get_id(self):
         """Returns unique integer associated with this object
         """

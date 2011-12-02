@@ -140,7 +140,7 @@ class ViewTrackerTest(DatabaseTestCase):
         self.feed2.set_title(u"booya")
         self.i3.signal_change()
         self.i2.remove()
-        self.i1.set_title(u"new title")
+        self.i1.mark_item_skipped()
         app.bulk_sql_manager.finish()
         self.assertEquals(self.add_callbacks, [self.i3])
         self.assertEquals(self.remove_callbacks, [self.i2])

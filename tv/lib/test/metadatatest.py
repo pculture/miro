@@ -10,44 +10,7 @@ from miro import schema
 from miro import filetypes
 from miro import metadata
 from miro import workerprocess
-from miro.plat import resources
 from miro.plat.utils import PlatformFilenameType
-
-class TestSource(metadata.Source):
-    pass
-
-class TestStore(metadata.Store):
-    def confirm_db_thread(self): pass
-    def signal_change(self): pass
-    # doesn't need a get_filename() because no coverart file will be written
-
-class Metadata(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-
-    def test_iteminfo_round_trip(self):
-        """Test that properties changed by ItemInfo name affect the right
-        attributes. Test will also fail with errors if setup_new doesn't
-        initialize all the properties that are used by ItemInfo.
-        """
-        source = TestSource()
-        source.setup_new()
-        info = source.get_iteminfo_metadata()
-
-        store = TestStore()
-        store.setup_new()
-        store.set_metadata_from_iteminfo(info)
-
-        original_dict = info
-        after_round_trip = store.get_iteminfo_metadata()
-
-        if hasattr(self, 'assertDictEqual'):
-            # python2.7 includes helpful details
-            self.assertDictEqual(original_dict, after_round_trip)
-        else:
-            original_items = sorted(original_dict.items())
-            round_trip_items = sorted(after_round_trip.items())
-            self.assertEqual(original_items, round_trip_items)
 
 class MockMetadataProcessor(object):
     """Replaces the mutagen and movie data code with test values."""
@@ -135,18 +98,6 @@ class MetadataManagerTest(MiroTestCase):
         self.processor = MockMetadataProcessor()
         self.patch_function('miro.workerprocess.send', self.processor.send)
         self.metadata_manager = metadata.MetadataManager()
-
-    def reload_database(self, path=':memory:', schema_version=None,
-                        object_schemas=None, upgrade=True):
-        if object_schemas is None:
-            # add schemas for the metadata system.  These are not in the
-            # regular DB schema because we haven't written database upgrades
-            # for them.
-            object_schemas = schema.object_schemas + [
-                schema.MetadataStatusSchema, schema.MetadataEntrySchema,
-            ]
-        MiroTestCase.reload_database(self, path, schema_version,
-                                     object_schemas, upgrade)
 
     def _calc_correct_metadata(self, path):
         """Calculate what the metadata should be for a path."""

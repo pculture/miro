@@ -34,7 +34,18 @@ from miro import app
 from miro import database
 from miro import item
 from miro import messages
+from miro import metadata
 from miro import signals
+
+def _add_metadata(info_dict, item_obj):
+    """Add metadata from obj to a info dictionary."""
+    for name in metadata.attribute_names:
+        value = getattr(item_obj, name)
+        if name == 'title':
+            # we change the name of "title" to "name" in ItemInfo
+            name = 'name'
+        if value is not None or name not in info_dict:
+            info_dict[name] = value
 
 class ItemSource(signals.SignalEmitter):
     """
@@ -154,10 +165,12 @@ class DatabaseItemSource(ItemSource):
     @staticmethod
     def _item_info_for(item):
         info = {
+            'name': item.get_title(),
             'feed_id': item.feed_id,
             'feed_name': item.get_source(),
             'feed_url': item.get_feed_url(),
             'state': item.get_state(),
+            'description': item.get_description(),
             'release_date': item.get_release_date(),
             'size': item.get_size(),
             'duration': item.get_duration_value(),
@@ -184,7 +197,6 @@ class DatabaseItemSource(ItemSource):
             'is_playable': item.is_playable(),
             'file_type': item.file_type,
             'subtitle_encoding': item.subtitle_encoding,
-            'media_type_checked': item.media_type_checked,
             'seeding_status': item.torrent_seeding_status(),
             'mime_type': item.enclosure_type,
             'date_added': item.get_creation_time(),
@@ -209,7 +221,7 @@ class DatabaseItemSource(ItemSource):
             'auto_rating': item.get_auto_rating(),
             'is_playing': item.is_playing(),
             }
-        info.update(item.get_iteminfo_metadata())
+        _add_metadata(info, item)
         if item.isContainerItem:
             info['children'] = [DatabaseItemSource._item_info_for(i) for i in
                                 item.get_children()]
@@ -401,11 +413,13 @@ class SharingItemSource(ItemSource):
     def _item_info_for(self, item):
         info = dict(
             item_source=self,
+            name=item.title,
             source_type='sharing',
             feed_id = item.feed_id,
             feed_name = None,
             feed_url = None,
             state = u'saved',
+            description = item.description,
             release_date = item.get_release_date(),
             size = item.size,
             duration = item.duration,
@@ -435,7 +449,6 @@ class SharingItemSource(ItemSource):
             file_type = item.file_type,
             subtitle_encoding = item.subtitle_encoding,
             seeding_status = None,
-            media_type_checked = True,
             mime_type = item.enclosure_type,
             artist = item.artist,
             auto_rating = None,
@@ -456,7 +469,7 @@ class SharingItemSource(ItemSource):
             host=item.host,
             port=item.port,
             is_playing=False)
-        info.update(item.get_iteminfo_metadata())
+        _add_metadata(info, item)
         return messages.ItemInfo(item.id, **info)
 
     def _ensure_info(self, obj):
@@ -609,11 +622,13 @@ class DeviceItemSource(ItemSource):
             duration = item.duration / 1000
         info = dict(
             source_type='device',
+            name=item.get_title(),
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
                          self.device.name),
             feed_url = item.feed_url,
             state = u'saved',
+            description = u'',
             release_date = item.get_release_date(),
             size = item.size,
             duration = duration,
@@ -631,7 +646,6 @@ class DeviceItemSource(ItemSource):
             downloaded = True,
             is_external = False,
             video_watched = True,
-            media_type_checked = item.media_type_checked,
             video_path = item.get_filename(),
             thumbnail = item.get_thumbnail(),
             thumbnail_url = item.thumbnail_url or u'',
@@ -663,7 +677,7 @@ class DeviceItemSource(ItemSource):
             skip_count=0,
             auto_rating=0,
             is_playing=item.is_playing)
-        info.update(item.get_iteminfo_metadata())
+        _add_metadata(info, item)
         return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):

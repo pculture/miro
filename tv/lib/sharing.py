@@ -158,7 +158,7 @@ def inet_ntop(af, ip):
                                                                 ip))
         raise ValueError('unknown address family %d' % af)
 
-class SharingItem(metadata.Source):
+class SharingItem(object):
     """
     An item which lives on a remote share.
     """
@@ -182,7 +182,8 @@ class SharingItem(metadata.Source):
         self.file_type = None
         self.creation_time = None
 
-        metadata.Source.setup_new(self)
+        for name in metadata.attribute_names:
+            setattr(self, name, None)
 
         self.__dict__.update(kwargs)
 
