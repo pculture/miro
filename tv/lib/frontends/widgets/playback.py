@@ -680,7 +680,7 @@ class PlaybackManager (signals.SignalEmitter):
         self._handle_skip()
         if ((not self.item_continuous_playback_mode(
                             self.playlist.currently_playing) and
-             self._not_skipped_by_user)):
+             self._not_skipped_by_user) and not (self.shuffle or self.repeat)):
             self.stop()
         else:
             self.playlist.select_next_item(self._not_skipped_by_user)
