@@ -137,8 +137,13 @@ class DeviceTracker(object):
         self._unix_device_to_drive[id_] = volume.get_drive()
         if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
-        app.device_manager.device_connected(id_, **info)
         drive_id = volume.get_drive().get_identifier('unix-device')
+        if drive_id != id_ and drive_id in self._unix_device_to_drive:
+            # we sent a "connect message" for the drive; disconnect the extra
+            # device before we connect the volume (#17891)
+            del self._unix_device_to_drive[drive_id]
+            app.device_manager.device_disconnected(drive_id)
+        app.device_manager.device_connected(id_, **info)
         self._drive_has_volumes.setdefault(drive_id, 0)
         self._drive_has_volumes[drive_id] += 1
 
