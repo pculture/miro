@@ -393,14 +393,29 @@ class SubprocessManager(object):
     def _on_thread_quit(self, thread):
         """Handle our thread exiting."""
 
-        # Igoner this call if it was queued from while we were in the middle
+        # Ignore this call if it was queued from while we were in the middle
         # of shutdown().
         if not self.is_running:
             return
 
         if thread is not self.thread:
-            app.controller.failed_soft('handling subprocess',
-                    '_on_thread_quit called by an old thread')
+            # If we have lost the race between the cleanup on shutdown
+            # it should be safe to ignore.
+            #
+            # This can happen when the process does not immediately shut down
+            # because the worker process is still processing pending jobs
+            # and the quit message was not processed in time and so the
+            # subprocess was forcibly terminated.  When that happens
+            # _cleanup_process() is called which resets the thread attribute
+            # to None immediately, but _on_thread_quit() is only run some
+            # time after that (when we notice the pipe to the subprocess's
+            # close we add _on_thread_quit() to the idle loop).
+            #
+            # So if the self.thread attribute is None then it means we are done
+            # and so things are all good.
+            if self.thread is not None:
+                app.controller.failed_soft('handling subprocess',
+                        '_on_thread_quit called by an old thread')
             return
 
         if self.thread.quit_type == self.thread.QUIT_NORMAL:
