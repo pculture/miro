@@ -8,6 +8,15 @@ bitrate: 600000
 parameters: -i {input} -s 320x240 -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 {output}
 mediatype: video
 
+[Kindle Fire]
+extension: mp4
+executable: ffmpeg
+extension: mp4
+bitrate: 700000
+parameters: -i {input} -acodec aac -ab 96k -vcodec libx264 -vpre slow -f mp4 -crf 22 {output}
+mediatype: video
+ssize: 1024x600
+
 [WebM (VP8)]
 only_on: osx
 executable: ffmpeg
