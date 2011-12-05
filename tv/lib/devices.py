@@ -239,7 +239,7 @@ class DeviceManager(object):
                 else:
                     key = (info.vendor_id, info.product_id)
                     existing = self.device_by_id[key]
-                    self.device_by_id[key] = self.merge(existing, info)
+                    self.device_by_id[key] = self._merge(existing, info)
 
     def remove_device(self, info):
         # FIXME - need this

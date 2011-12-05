@@ -64,6 +64,9 @@ htc_incredible_2 = DeviceInfo(u'HTC Droid Incredible 2',
 htc_sensation = DeviceInfo(u'HTC Sensation',
                            video_conversion='epic')
 
+htc_aria = DeviceInfo(u'HTC Aria',
+                      video_conversion='hero')
+
 generic_htc = DeviceInfo(_('Generic %(name)s Device', {'name': 'HTC'}),
                          video_conversion='hero')
 
@@ -71,6 +74,7 @@ htc_android_device = MultipleDeviceInfo(
     'HTC Android Phone', [htc_hero, htc_evo, htc_evo_4g, htc_legend,
                           tmobile_g1, tmobile_g2, htc_vision, htc_desire_z,
                           htc_incredible, htc_incredible_2, htc_sensation,
+                          htc_aria,
                           generic_htc],
     vendor_id=0x0bb4,
     product_id=0x0ff9,
@@ -140,6 +144,13 @@ motorola_xoom = DeviceInfo(u'Motorola Xoom',
                            video_conversion='xoom',
                            **tablet_defaults)
 
+galaxy_s2 = DeviceInfo(u'Galaxy S2',
+                       vendor_id=0x04e8,
+                       product_id=0x685e,
+                       device_name='Android UMS Composite',
+                       video_conversion='epic',
+                       **defaults)
+
 galaxy_tab = DeviceInfo(u'Galaxy Tab',
                         vendor_id=0x04e8,
                         product_id=0x681d,
@@ -161,6 +172,25 @@ lg_optimus_2x = DeviceInfo(u'Optimus 2x',
                            video_conversion='epic',
                            **defaults)
 
+lg_optimus_s = DeviceInfo(
+    u'Optimus S',
+    vendor_id=0x1004,
+    product_id=0x618E,
+    device_name='GOOGLE Mass storage',
+    video_conversion='hero',
+    audio_conversion='mp3',
+    container_types='mp3 wav asf isom ogg mpeg avi'.split(),
+    audio_types='mp* wmav* aac pcm* vorbis'.split(),
+    video_types='theora h264 mpeg* wmv*'.split(),
+    mount_instructions=_("Your phone must be in 'USB storage mode' in "
+                            "order for %(shortappname)s to sync files to it.\n"
+                            "To mount your phone, select 'Turn on USB "
+                            "storage' from the notifications.",
+                            {'shortappname':
+                                 app.config.get(prefs.SHORT_APP_NAME)}),
+    video_path=u'Media/Video',
+    audio_path=u'Media/Audio')
+
 nookcolor = DeviceInfo(
     name=u'MyNOOKColor',
     device_name='B&N Ebook Disk',
@@ -177,9 +207,28 @@ nookcolor = DeviceInfo(
                          'and in USB Mode to sync files to it.\n')
     )
 
+toshiba_thrive = DeviceInfo(
+    u'Toshiba Thrive',
+    vendor_id=0x18d1,
+    product_id=0x7102,
+    device_name='AT100',
+    video_conversion='xoom',
+    audio_conversion='mp3',
+    container_types='mp3 wav asf isom ogg mpeg avi'.split(),
+    audio_types='mp* wmav* aac pcm* vorbis'.split(),
+    video_types='theora h264 mpeg* wmv*'.split(),
+    mount_instructions=_("Your tablet must be in 'USB storage mode' in "
+                            "order for %(shortappname)s to sync files to it.\n"
+                            "To mount your phone, select 'Turn on USB "
+                            "storage' from the notifications.",
+                            {'shortappname':
+                                 app.config.get(prefs.SHORT_APP_NAME)}),
+    video_path=u'Movies',
+    audio_path=u'Music')
+
 devices = [htc_android_device, htc_desire, htc_desire_hd, htc_thunderbolt,
            nexus_one,
            motorola_droid_one, motorola_droid_two, motorola_droid2,
-           motorola_droidx, motorola_xoom, lg_optimus_2x,
-           galaxy_tab, epic, nookcolor]
+           motorola_droidx, motorola_xoom, lg_optimus_2x, lg_optimus_s,
+           galaxy_s2, galaxy_tab, epic, nookcolor, toshiba_thrive]
 
