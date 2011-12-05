@@ -71,5 +71,8 @@ Orhon Can (device submission)
 Edwin Castillo (device submission)
 James Lynch Jr (device submission)
 Eric "betazed" Mitchell (device submission)
+Rahul Kalluri (device submission)
+Reynaldo Cruz (device submission)
+Christoph (device submission)
 
 Jani Uusitalo (translations)
