@@ -35,6 +35,7 @@ import re
 import os
 import select
 import socket
+import subprocess
 import sys
 import SocketServer
 import threading
@@ -44,6 +45,7 @@ from miro.plat.utils import (get_ffmpeg_executable_path, setup_ffmpeg_presets,
                              get_segmenter_executable_path, thread_body,
                              get_transcode_video_options,
                              get_transcode_audio_options)
+from miro.plat.popen import Popen
 
 # Transcoding
 #
@@ -165,11 +167,9 @@ def needs_transcode(media_file):
     kwargs = {"stdout": subprocess.PIPE,
               "stderr": subprocess.PIPE,
               "stdin": subprocess.PIPE,
-              "startupinfo": util.no_console_startupinfo()}
-    if os.name != "nt":
-        kwargs["close_fds"] = True
+              "close_fds": True}
     args = [ffmpeg_exe, "-i", media_file]
-    handle = subprocess.Popen(args, **kwargs)
+    handle = Popen(args, **kwargs)
     # XXX unbounded read here but should be okay, ffmpeg output is finite.
     # note that we need to read from stderr, since that's what ffmpeg spits 
     # out.
@@ -397,9 +397,7 @@ class TranscodeObject(object):
             kwargs = {"stdin": open(os.devnull, 'rb'),
                       "stdout": subprocess.PIPE,
                       "stderr": open(os.devnull, 'wb'),
-                      "startupinfo": util.no_console_startupinfo()}
-            if os.name != "nt":
-                kwargs["close_fds"] = True
+                      "close_fds": True}
             args = [ffmpeg_exe, "-i", self.media_file]
             if self.time_offset:
                 logging.debug('transcode: start job @ %d' % self.time_offset)
@@ -427,22 +425,20 @@ class TranscodeObject(object):
 
             args += TranscodeObject.output_args
             logging.debug('Running command %s' % ' '.join(args))
-            self.ffmpeg_handle = subprocess.Popen(args, **kwargs)
+            self.ffmpeg_handle = Popen(args, **kwargs)
 
             segmenter_exe = get_segmenter_executable_path()
             args = [segmenter_exe]
             address, port = self.sink.server_address
             args += TranscodeObject.segmenter_args + [str(port)]
+            # Can't use close_fds here because we need to pass the fds to
+            # the child
             kwargs = {"stdout": open(os.devnull, 'rb'),
                       "stdin": self.ffmpeg_handle.stdout,
-                      "stderr": open(os.devnull, 'wb'),
-                      "startupinfo": util.no_console_startupinfo()}
-            # XXX Can't use this - need to pass on the child fds
-            #if os.name != "nt":
-            #    kwargs["close_fds"] = True
+                      "stderr": open(os.devnull, 'wb')}
 
             logging.debug('Running command %s' % ' '.join(args))
-            self.segmenter_handle = subprocess.Popen(args, **kwargs)
+            self.segmenter_handle = Popen(args, **kwargs)
    
             self.sink_thread = threading.Thread(target=thread_body,
                                                 args=[self.segmenter_consumer],

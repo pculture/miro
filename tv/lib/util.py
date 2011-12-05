@@ -51,6 +51,7 @@ import urllib
 
 from miro.clock import clock
 from miro import filetypes
+from miro.plat.popen import Popen
 
 # Do NOT import libtorrent up here.  libtorrent.so is compiled with
 # @executable_path-relative path dependency for the Python library
@@ -616,23 +617,6 @@ def quote_unicode_url(url):
             quoted_chars.append(c)
     return u''.join(quoted_chars)
 
-def no_console_startupinfo():
-    """Returns the startupinfo argument for subprocess.Popen so that
-    we don't open a console window.  On platforms other than windows,
-    this is just None.  On windows, it's some win32 silliness.
-    """
-    if subprocess.mswindows:
-        startupinfo = subprocess.STARTUPINFO()
-        # XXX temporary: STARTF_USESHOWWINDOW is in a different location
-        # as of Python 2.6.6
-        try:
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        except AttributeError:
-            startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
-        return startupinfo
-    else:
-        return None
-
 def call_command(*args, **kwargs):
     """Call an external command.  If the command doesn't exit with
     status 0, or if it outputs to stderr, an exception will be raised.
@@ -652,9 +636,8 @@ def call_command(*args, **kwargs):
     if kwargs:
         raise TypeError('extra keyword arguments: %s' % kwargs)
 
-    pipe = subprocess.Popen(args, stdout=subprocess.PIPE,
-            stdin=subprocess.PIPE, stderr=subprocess.PIPE,
-            startupinfo=no_console_startupinfo())
+    pipe = Popen(args, stdout=subprocess.PIPE,
+                 stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = pipe.communicate()
     if return_everything:
         return (pipe.returncode, stdout, stderr)

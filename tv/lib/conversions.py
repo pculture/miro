@@ -55,6 +55,7 @@ from miro.gtcache import gettext as _
 from miro.fileobject import FilenameType
 from miro.plat import utils
 from miro.plat import resources
+from miro.plat.popen import Popen
 
 NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
 
@@ -878,12 +879,9 @@ class ConversionTask(object):
                   "stdout": subprocess.PIPE,
                   "stderr": subprocess.STDOUT,
                   "stdin": subprocess.PIPE,
-                  "startupinfo": util.no_console_startupinfo()}
-        if os.name != "nt":
-            kwargs["close_fds"] = True
-
+                  "close_fds": True}
         try:
-            self.process_handle = subprocess.Popen(args, **kwargs)
+            self.process_handle = Popen(args, **kwargs)
             self.process_output(line_reader(self.process_handle.stdout))
             self.process_handle.wait()
 

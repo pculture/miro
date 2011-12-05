@@ -27,36 +27,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""gstreamerrenderer.py -- Windows gstreamer renderer """
+import subprocess
 
-import pygst
-pygst.require('0.10')
-import gst
-
-from miro import app
-from miro.frontends.widgets.gst import renderer
-
-# We need to define get_item_type().  Use the version from sniffer.
-from miro.frontends.widgets.gst.sniffer import get_item_type
-
-class WindowsSinkFactory(renderer.SinkFactory):
-    """Windows class to create gstreamer audio/video sinks.
-
-    This class is very simple because we know exactly what gstreamer plugins
-    we install on windows.
+def Popen(args, **kwargs):
+    """Like subprocess.Popen but make sure we get rid of any platform
+    quirks.  This is a nop on Mac.
     """
-
-    def make_audiosink(self):
-        return gst.element_factory_make("directsoundsink" , "audiosink")
-
-    def make_videosink(self):
-        # Use dshowvideosink.
-        # d3dvideosink doesn't work on my vmware VM.
-        # directdrawsink does work, but I believe it is less likely to be
-        # hardware accelerated than the direct show one.
-        return gst.element_factory_make("dshowvideosink" , "videosink")
-
-def make_renderers():
-    sink_factory = WindowsSinkFactory()
-    return (renderer.AudioRenderer(sink_factory),
-            renderer.VideoRenderer(sink_factory))
+    return subprocess.Popen(args, **kwargs)
