@@ -49,18 +49,10 @@ class DeviceTracker(object):
                                                            # avoid GC
         self._oldwndproc = ctypes.windll.user32.GetWindowLongW(
             app.widgetapp.window._window.window.handle,
-            GWL_WNDPROC)
-        if self._oldwndproc == 0:
-            logging.warn('DeviceTracker: GetWindowLongW returned 0')
-        self._pending_messages = []
-
+            GWL_WNDPROC) # set it up before we set up our callback
         self._oldwndproc = ctypes.windll.user32.SetWindowLongW(
                 app.widgetapp.window._window.window.handle,
                 GWL_WNDPROC, self._wndproc_wrapped)
-        if self._pending_messages:
-            for args in self._pending_messages:
-                ctypes.windll.user32.CallWindowProcW(self._oldwndproc, *args)
-        self._pending_messages = []
 
         self._devices_changed()
 
@@ -70,11 +62,9 @@ class DeviceTracker(object):
             #if self._lastChange - previousChange > 0.25:
             self._devices_changed()
         if not self._oldwndproc:
-            # we can get here if GetWindowLongW returned 0.  Something
-            # is probably terribly wrong, but we'll try our best
-            # anyways.
-            self._pending_messages.append((hwnd, msg, wparam, lparam))
-            return 0
+            # we can get here if GetWindowLongW returned 0.  Call the
+            # default window proc.
+            return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wparam, lparam)
         else:
             return ctypes.windll.user32.CallWindowProcW(self._oldwndproc, hwnd,
                                                     msg, wparam, lparam)
