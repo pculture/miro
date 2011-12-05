@@ -175,6 +175,13 @@ class SubprocessHandler(messagetools.MessageHandler):
         except StandardError:
             send_subprocess_error_for_exception()
 
+    def get_task_from_queue(self, queue):
+        """Get the next task from a Queue object.
+
+        This method should block until a task is ready.
+        """
+        return queue.get()
+
     # NOTE: we use "on_" prefix to distinguish these from messages
     def on_startup(self):
         """Called after the subprocess starts up."""
@@ -582,7 +589,7 @@ def subprocess_main():
     handler.on_startup()
     try:
         while True:
-            msg = queue.get()
+            msg = handler.get_task_from_queue(queue)
             if msg is None:
                 break
             handler.handle(msg)

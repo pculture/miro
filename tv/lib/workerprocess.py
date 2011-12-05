@@ -111,18 +111,41 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         subprocessmanager.SubprocessHandler.__init__(self)
         self.threads = []
         self.task_queue = WorkerTaskQueue()
+        self.pending_moviedata_tasks = deque()
 
     def call_handler(self, method, msg):
         try:
             if isinstance(msg, CancelFileOperations):
                 # handle this message as soon as we can.
                 handle_task(method, msg)
+            elif isinstance(msg, MovieDataProgramTask):
+                # we have to handle this message on this thread, since
+                # QtKit will break if we use it on any thread except the main
+                # one.  Put it in pending_moviedata_tasks and handle once
+                # there's no more tasks waiting in to be processed
+                self.pending_moviedata_tasks.append((method, msg))
             elif isinstance(msg, TaskMessage):
                 self.task_queue.add_task(method, msg)
             else:
                 method(msg)
         except StandardError:
             subprocessmanager.send_subprocess_error_for_exception()
+
+    def get_task_from_queue(self, queue):
+        # handle movie data tasks if no more tasks are coming in right now
+        while queue.empty() and self.pending_moviedata_tasks:
+            method, msg = self.pending_moviedata_tasks.popleft()
+            handle_task(method, msg)
+
+        # block waiting for the next message.  We know that one of the
+        # following is True
+        # - The queue has a message in it and therefore
+        #   get_task_from_queue() will be called again soon
+        # - pending_moviedata_tasks is empty
+        # 
+        # So we don't have to worry about the blocking call preventing the
+        # MovieDataProgramTasks from running
+        return queue.get()
 
     def on_shutdown(self):
         self.task_queue.shutdown()
@@ -136,8 +159,22 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         WorkerProcessReady().send_to_main_process()
 
     def handle_cancel_file_operations(self, msg):
-        self.task_queue.cancel_file_operations(msg.paths)
+        path_set = set(paths)
+        self.task_queue.cancel_file_operations(path_set)
+        # we need to handle pending_moviedata_tasks, since those skip the task
+        # queue
+        filtered_tasks = deque(t for t in self.pending_moviedata_tasks
+                               if t.source_path not in path_set)
+        self.pending_moviedata_tasks = filtered_tasks
         return None
+
+    # handle_movie_data_program_task gets called in the main thread, unlike
+    # all other task handler methods
+
+    def handle_movie_data_program_task(self, msg):
+        return moviedata.process_file(msg.source_path,
+                                      msg.screenshot_directory)
+
 
     # NOTE: all of the handle_*_task() methods below get called in one of our
     # worker threads, so they should only call thread-safe functions
@@ -153,10 +190,6 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         filename = msg.filename
         thumbnail = msg.thumbnail
         return utils.run_media_metadata_extractor(filename, thumbnail)
-
-    def handle_movie_data_program_task(self, msg):
-        return moviedata.process_file(msg.source_path,
-                                      msg.screenshot_directory)
 
     def handle_mutagen_task(self, msg):
         return filetags.process_file(msg.source_path, msg.cover_art_directory)
@@ -269,12 +302,11 @@ class WorkerTaskQueue(object):
         # no tasks in any of our queues
         return None
 
-    def cancel_file_operations(self, paths):
+    def cancel_file_operations(self, path_set):
         """Cancels all mutagen/movie data tasks for a list of paths."""
         # Acquire our lock as soon as possible.  We want to prevent other
         # tasks from getting tasks, since they may be about to deleted.
         with self.condition:
-            path_set = set(paths)
             def filter_func(msg):
                 return msg.source_path not in path_set
             for cls in (MutagenTask, MovieDataProgramTask):
