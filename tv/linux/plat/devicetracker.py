@@ -37,6 +37,20 @@ from miro import app
 from miro.gtcache import gettext as _
 from miro import messages
 
+def log_drive(drive, when):
+    logging.debug('drive %s: %s (%s)' % (when, drive,
+                                         drive.get_identifier('unix-device')))
+
+def log_volume(volume, when):
+    logging.debug('volume %s: %s (unix: %s, drive: %s, mount: %s)' % (
+            when, volume, volume.get_identifier('unix-device'),
+            volume.get_drive(), volume.get_mount()))
+
+def log_mount(mount, when):
+    logging.debug('mount %s: %s (root: %s, volume: %s, drive: %s)' % (
+            when, mount, mount.get_root().get_path(), mount.get_volume(),
+            mount.get_drive()))
+
 class DeviceTracker(object):
     def __init__(self):
         self._unix_device_to_drive = {}
@@ -45,9 +59,13 @@ class DeviceTracker(object):
     def start_tracking(self):
         volume_monitor = gio.volume_monitor_get()
         volume_monitor.connect('drive-connected', self._drive_connected)
+        volume_monitor.connect('drive-changed',
+                               lambda x, y: log_drive(y, 'changed'))
         volume_monitor.connect('volume-added', self._volume_added)
         volume_monitor.connect('volume-changed', self._volume_changed)
         volume_monitor.connect('mount-added', self._mount_added)
+        volume_monitor.connect('mount-removed',
+                               lambda x, y: log_mount(y, 'removed'))
         volume_monitor.connect('volume-removed', self._volume_removed)
         volume_monitor.connect('drive-disconnected', self._drive_disconnected)
 
@@ -86,6 +104,7 @@ class DeviceTracker(object):
             }
 
     def _drive_connected(self, volume_monitor, drive):
+        log_drive(drive, 'connected')
         if self._should_ignore_drive(drive):
             return
         logging.debug('seen device: %r', drive.get_name())
@@ -100,6 +119,7 @@ class DeviceTracker(object):
             app.device_manager.device_connected(id_, name=drive.get_name())
 
     def _drive_disconnected(self, volume_monitor, drive):
+        log_drive(drive, 'disconnected')
         if self._should_ignore_drive(drive):
             return
         id_ = drive.get_identifier('unix-device')
@@ -111,17 +131,24 @@ class DeviceTracker(object):
             app.device_manager.device_disconnected(id_)
 
     def _volume_added(self, volume_monitor, volume):
+        log_volume(volume, 'added')
         id_, info = self._get_volume_info(volume)
         # have to set this so that we can access it when the volume is removed
         self._unix_device_to_drive[id_] = volume.get_drive()
         if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
-        app.device_manager.device_connected(id_, **info)
         drive_id = volume.get_drive().get_identifier('unix-device')
+        if drive_id != id_ and drive_id in self._unix_device_to_drive:
+            # we sent a "connect message" for the drive; disconnect the extra
+            # device before we connect the volume (#17891)
+            del self._unix_device_to_drive[drive_id]
+            app.device_manager.device_disconnected(drive_id)
+        app.device_manager.device_connected(id_, **info)
         self._drive_has_volumes.setdefault(drive_id, 0)
         self._drive_has_volumes[drive_id] += 1
 
     def _volume_changed(self, volume_monitor, volume):
+        log_volume(volume, 'changed')
         if volume is None or self._should_ignore_drive(volume.get_drive()):
             return
         try:
@@ -133,10 +160,12 @@ class DeviceTracker(object):
             app.device_manager.device_changed(id_, **info)
 
     def _mount_added(self, volume_monitor, mount):
+        log_mount(mount, 'added')
         if mount.get_volume():
             self._volume_changed(volume_monitor, mount.get_volume())
 
     def _volume_removed(self, volume_monitor, volume):
+        log_volume(volume, 'removed')
         if volume is None:
             return
         drive = volume.get_drive()
