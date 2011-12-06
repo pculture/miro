@@ -45,6 +45,7 @@ import struct
 import subprocess
 import sys
 import threading
+import trapcall
 import warnings
 import Queue
 
@@ -201,12 +202,34 @@ class SubprocessResponder(messagetools.MessageHandler):
     called to handle events in the process lifecycle, like startup and
     shutdown.
     """
+    def __init__(self):
+        messagetools.MessageHandler.__init__(self)
+        # (handler_method, message) tuples to call in the event loop thread
+        self.handler_queue = Queue.Queue()
+        self.safe_to_skip_add_idle = False
 
     def call_handler(self, method, message):
         # this executes in the thread reading from the subprocess pipe.  Move
         # things into the backend thread.
-        name = 'handle subprocess message: %s' % message
-        eventloop.add_idle(method, name, args=(message,))
+        self.handler_queue.put((method, message))
+        if not self.safe_to_skip_add_idle:
+            # we can skip calling add_idle() again if we put objects on the
+            # queue before process_handler_queue() starts getting from it in
+            # the event loop thread.
+            self.safe_to_skip_add_idle = True
+            eventloop.add_idle(self.process_handler_queue,
+                               'process handler queue')
+
+    def process_handler_queue(self):
+        # this executes in the event loop thread.  Here's where we should call
+        # handler methods
+
+        # Before we get anything from our queue, we must set
+        # safe_to_skip_add_idle to False
+        self.safe_to_skip_add_idle = False
+        while not self.handler_queue.empty():
+            (method, message) = self.handler_queue.get()
+            trapcall.trap_call('processing handler method', method, message)
 
     def on_startup(self):
         """Called after the subprocess starts up."""

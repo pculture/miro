@@ -2119,14 +2119,15 @@ class DirectoryScannerImplBase(FeedImpl):
                     return
                 start = time.time()
         # commit changes
-        app.bulk_sql_manager.start()
-        try:
-            for item in to_remove:
-                item.remove()
-            for path in to_add:
-                self._make_child(path)
-        finally:
-            app.bulk_sql_manager.finish()
+        with app.local_metadata_manager.bulk_add():
+            app.bulk_sql_manager.start()
+            try:
+                for item in to_remove:
+                    item.remove()
+                for path in to_add:
+                    self._make_child(path)
+            finally:
+                app.bulk_sql_manager.finish()
         # cleanup and prepare for the next change
         self._watcher_paths_deleted = set()
         self._watcher_paths_added = set()
@@ -2247,11 +2248,12 @@ class DirectoryScannerImplBase(FeedImpl):
             yield # yield after doing prep work
             if should_halt_early():
                 return
-            while not finished:
-                finished = self._add_batch_of_videos(path_iter, 0.1)
-                yield # yield after each batch
-                if should_halt_early():
-                    return
+            with app.local_metadata_manager.bulk_add():
+                while not finished:
+                    finished = self._add_batch_of_videos(path_iter, 0.1)
+                    yield # yield after each batch
+                    if should_halt_early():
+                        return
         self._after_update()
         self.updating = False
         self.pending_paths_to_add = []

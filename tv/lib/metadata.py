@@ -35,6 +35,7 @@ Module properties:
 """
 
 import collections
+import contextlib
 import logging
 import os.path
 
@@ -408,6 +409,8 @@ class MetadataManager(signals.SignalEmitter):
         self.cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
+        self.pending_mutagen_tasks = []
+        self.bulk_add_count = 0
         self.all_task_processors = [
             self.mutagen_processor,
             self.moviedata_processor
@@ -419,6 +422,37 @@ class MetadataManager(signals.SignalEmitter):
         # "new-metadata" signal
         self.updated_paths = set()
         self._update_scheduled = False
+
+    @contextlib.contextmanager
+    def bulk_add(self):
+        """Context manager to use when adding lots of files
+
+        While this context manager is active, we will delay calling mutagen.
+        bulk_add() contexts can be nested, we will delay processing metadata
+        until the last one finishes.
+
+        Example:
+
+        >>> with metadata_manager.bulk_add()
+        >>>     add_lots_of_videos()
+        >>>     add_lots_of_videos()
+        >>> # at this point mutagen calls will start
+        """
+        # initialize context
+        self.bulk_add_count += 1
+        yield
+        # cleanup context
+        self.bulk_add_count -= 1
+        if not self.in_bulk_add():
+            self._send_pending_mutagen_tasks()
+
+    def in_bulk_add(self):
+        return self.bulk_add_count != 0
+
+    def _send_pending_mutagen_tasks(self):
+        for task in self.pending_mutagen_tasks:
+            self.mutagen_processor.add_task(task)
+        self.pending_mutagen_tasks = []
 
     def add_file(self, path):
         """Add a new file to the metadata syestem
@@ -610,7 +644,10 @@ class MetadataManager(signals.SignalEmitter):
     def _run_mutagen(self, path):
         """Run mutagen on a path."""
         task = workerprocess.MutagenTask(path, self.cover_art_dir)
-        self.mutagen_processor.add_task(task)
+        if not self.in_bulk_add():
+            self.mutagen_processor.add_task(task)
+        else:
+            self.pending_mutagen_tasks.append(task)
 
     def _run_movie_data(self, path):
         """Run the movie data program on a path."""
