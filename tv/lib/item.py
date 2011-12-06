@@ -2530,14 +2530,10 @@ def setup_metadata_manager():
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
 
 def on_new_metadata(metadata_manager, new_metadata):
-    app.bulk_sql_manager.start()
-    try:
-        for path, metadata in new_metadata.iteritems():
-            for item in Item.items_with_path_view(path):
-                item.update_from_metadata(metadata)
-                item.signal_change()
-    finally:
-        app.bulk_sql_manager.finish()
+    for path, metadata in new_metadata.iteritems():
+        for item in Item.items_with_path_view(path):
+            item.update_from_metadata(metadata)
+            item.signal_change()
 
 def update_incomplete_metadata():
     """Restart medata updates for our items.  """

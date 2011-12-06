@@ -252,11 +252,13 @@ class _TaskProcessor(signals.SignalEmitter):
 
     Signals:
 
-    - task-complete(status) -- we're done with a metadata entry
+    - task-complete(path, result_dict) -- we successfully extracted metadata
+    - task-error(path) -- we failed to extract metadata
     """
     def __init__(self, source_name, limit):
         signals.SignalEmitter.__init__(self)
         self.create_signal('task-complete')
+        self.create_signal('task-error')
         self.source_name = source_name
         self.limit = limit
         # map source paths to tasks
@@ -273,10 +275,6 @@ class _TaskProcessor(signals.SignalEmitter):
         self._active_tasks[task.source_path] = task
         workerprocess.send(task, self._callback, self._errback)
 
-    def _on_task_complete(self, status, task):
-        self.remove_task_for_path(task.source_path)
-        self.emit('task-complete', status)
-
     def remove_task_for_path(self, path):
         try:
             del self._active_tasks[path]
@@ -292,16 +290,10 @@ class _TaskProcessor(signals.SignalEmitter):
                 self._send_task(task)
 
     def _callback(self, task, result):
-        try:
-            status = MetadataStatus.get_by_path(task.source_path)
-        except database.ObjectNotFoundError:
-            logging.warn("got callback for removed path: %s", task.source_path)
-            return
-        logging.debug("%s done: %s", self.source_name, status.path)
+        logging.debug("%s done: %s", self.source_name, task.source_path)
         self._check_for_none_values(result)
-        entry = MetadataEntry(task.source_path, self.source_name, result)
-        status.update_after_success(entry)
-        self._on_task_complete(status, task)
+        self.emit('task-complete', task.source_path, result)
+        self.remove_task_for_path(task.source_path)
 
     def _check_for_none_values(self, result):
         """Check that result dicts don't have keys for None values."""
@@ -317,13 +309,8 @@ class _TaskProcessor(signals.SignalEmitter):
     def _errback(self, task, error):
         logging.warn("Error running %s for %s: %s", task, task.source_path,
                      error)
-        try:
-            status = MetadataStatus.get_by_path(task.source_path)
-        except database.ObjectNotFoundError:
-            logging.warn("got errback for removed path: %s", task.source_path)
-            return
-        status.update_after_error(self.source_name)
-        self._on_task_complete(status, task)
+        self.emit('task-error', task.source_path)
+        self.remove_task_for_path(task.source_path)
 
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
@@ -409,15 +396,16 @@ class MetadataManager(signals.SignalEmitter):
 
     Signals:
 
-    - new-metadata(dict) -- We have new metadata for files.  dict is a
-                            dictionary mapping paths to the metadata.
+    - new-metadata(dict) -- We have new metadata for files. dict is a
+                            dictionary mapping paths to the new metadata.
+                            Note: the new metadata only contains changed
+                            values, not the entire metadata dict.
     """
 
     # how long to wait before emiting the new-metadata signal.  Shorter times
     # mean more responsiveness, longer times allow us to bulk update many
     # items at once.
     UPDATE_INTERVAL = 1.0
-
 
     def __init__(self):
         signals.SignalEmitter.__init__(self)
@@ -435,11 +423,19 @@ class MetadataManager(signals.SignalEmitter):
         ]
         for processor in self.all_task_processors:
             processor.connect("task-complete", self._on_task_complete)
+            processor.connect("task-error", self._on_task_error)
         self.count_tracker = _ProcessingCountTracker()
-        # paths that have new metadata since the last time we emitted the
-        # "new-metadata" signal
-        self.updated_paths = set()
+        # List of (processor, path, metadata) tuples for metadata since the
+        # last _run_updates() call
+        self.metadata_finished = []
+        # List of (processor, path) tuples for failed metadata since the last
+        # _run_updates() call
+        self.metadata_errors = []
+        self._reset_new_metadata()
         self._update_scheduled = False
+
+    def _reset_new_metadata(self):
+        self.new_metadata = collections.defaultdict(dict)
 
     @contextlib.contextmanager
     def bulk_add(self):
@@ -637,14 +633,12 @@ class MetadataManager(signals.SignalEmitter):
         task = workerprocess.MovieDataProgramTask(path, self.screenshot_dir)
         self.moviedata_processor.add_task(task)
 
-    def _on_task_complete(self, processor, status):
-        if (processor is self.mutagen_processor and 
-            status.moviedata_status == MetadataStatus.STATUS_NOT_RUN):
-            self._run_movie_data(status.path)
-        else:
-            self.count_tracker.file_finished(status.path)
-        self.updated_paths.add(status.path)
+    def _on_task_complete(self, processor, path, result):
+        self.metadata_finished.append((processor, path, result))
         self._schedule_update()
+
+    def _on_task_error(self, processor, path):
+        self.metadata_errors.append((processor, path))
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
@@ -653,30 +647,83 @@ class MetadataManager(signals.SignalEmitter):
         }
 
     def _schedule_update(self):
-        """Schedule updating other miro components.
+        """Scheduling sending updates.
 
-        Call this if we have new metadata, or we've started processing a new
-        file.
+        For performance reasons we try to group together database updates and
+        progress updates so that we can perform them in bulk.
+
+        Call this when we have updates from our metadata processors, or when
+        we may nede to change the MetadataProgressUpdate counts.
         """
         if not self._update_scheduled:
             eventloop.add_timeout(self.UPDATE_INTERVAL,
-                                  self._send_updates,
+                                  self._run_updates,
                                   'send metadata updates')
             self._update_scheduled = True
 
-    def _send_updates(self):
+    def _run_updates(self):
+        # Should this be inside an idle iterator?  It definitely runs slowly
+        # when we're running mutagen on a music library, but I think that's to
+        # be expected.  It seems fast enough in other cases to me - BDK
         self._update_scheduled = False
-        self._emit_new_metadata()
+        app.bulk_sql_manager.start()
+        try:
+            self._process_metadata_finished()
+            self._process_metadata_errors()
+            self.emit('new-metadata', self.new_metadata)
+        finally:
+            app.bulk_sql_manager.finish()
+            self._reset_new_metadata()
         self._send_progress_updates()
 
-    def _emit_new_metadata(self):
-        new_metadata = {}
-        for path in self.updated_paths:
-            metadata = self.get_metadata(path)
-            new_metadata[path] = metadata
-            self.count_tracker.check_file_type(path, metadata)
-        self.updated_paths.clear()
-        self.emit('new-metadata', new_metadata)
+    def _process_metadata_finished(self):
+        for (processor, path, result) in self.metadata_finished:
+            try:
+                status = MetadataStatus.get_by_path(path)
+            except database.ObjectNotFoundError:
+                logging.warn("_process_metadata_finished -- path removed: %s",
+                             path)
+                continue
+            entry = MetadataEntry(path, processor.source_name, result)
+            if entry.priority >= status.max_entry_priority:
+                # If this entry is going to overwrite all other metadata, then
+                # we don't have to call get_metadata().  Just send the new
+                # values.
+                can_skip_get_metadata = True
+            else:
+                can_skip_get_metadata = False
+            status.update_after_success(entry)
+            if can_skip_get_metadata:
+                self.new_metadata[path].update(result)
+            else:
+                self.new_metadata[path] = self.get_metadata(path)
+            self._processor_finished(processor, status)
+        self.metadata_finished = []
+
+    def _process_metadata_errors(self):
+        for (processor, path) in self.metadata_errors:
+            try:
+                status = MetadataStatus.get_by_path(path)
+            except database.ObjectNotFoundError:
+                logging.warn("_process_metadata_finished -- path removed: %s",
+                             path)
+                continue
+            status.update_after_error(processor.source_name)
+            self._processor_finished(processor, status)
+            # we only have new metadata if the error means we can set the
+            # has_drm flag now
+            if processor is self.moviedata_processor and status.get_has_drm():
+                self.new_metadata[path].update({'has_drm': True})
+        self.metadata_errors = []
+
+    def _processor_finished(self, processor, status):
+        """Called after both success and failure of a metadata processor
+        """
+        if (processor is self.mutagen_processor and 
+            status.moviedata_status == MetadataStatus.STATUS_NOT_RUN):
+            self._run_movie_data(status.path)
+        else:
+            self.count_tracker.file_finished(status.path)
 
     def _send_progress_updates(self):
         for file_type in (u'audio', u'video'):
@@ -686,3 +733,4 @@ class MetadataManager(signals.SignalEmitter):
             eta = None
             msg = messages.MetadataProgressUpdate(target, count, eta, total)
             msg.send_to_frontend()
+
