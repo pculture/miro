@@ -70,6 +70,11 @@ class MetadataStatus(database.DDBObject):
     STATUS_FAILURE = u'F'
     STATUS_SKIP = u'S'
 
+    _source_name_to_status_column = {
+        u'mutagen': 'mutagen_status',
+        u'movie-data': 'moviedata_status',
+    }
+
     def setup_new(self, path):
         self.path = path
         self.mutagen_status = self.STATUS_NOT_RUN
@@ -104,13 +109,34 @@ class MetadataStatus(database.DDBObject):
         app.db.cache.remove('metadata', self.path)
         database.DDBObject.removed_from_db(self)
 
-    def update_after_mutagen(self, data):
-        self.mutagen_status = self.STATUS_COMPLETE
-        if self._should_skip_movie_data(data):
+    def get_has_drm(self):
+        """Does this media file have DRM preventing us from playing it?
+
+        has_drm is True when all of these are True
+        - mutagen thinks the object has DRM
+        - movie data failed to open the file, or we're not going to run movie
+          data (this is only true for items created before the MetadataManager
+          existed)
+        """
+        return (self.mutagen_thinks_drm and
+                self.moviedata_status in
+                (MetadataStatus.STATUS_FAILURE or MetadataStatus.STATUS_SKIP))
+
+    def _set_status_column(self, source_name, value):
+        column_name = self._source_name_to_status_column[source_name]
+        setattr(self, column_name, value)
+
+    def update_after_success(self, entry):
+        """Update after we succussfully extracted some metadata
+
+        :param entry: MetadataEntry for the new data
+        """
+        self._set_status_column(entry.source, self.STATUS_COMPLETE)
+        if entry.source == 'mutagen' and self._should_skip_movie_data(entry):
             self.moviedata_status = self.STATUS_SKIP
         self.signal_change()
 
-    def _should_skip_movie_data(self, mutagen_data):
+    def _should_skip_movie_data(self, entry):
         my_ext = os.path.splitext(self.path)[1].lower()
         # we should skip movie data if:
         #   - we're sure the file is audio (mutagen misreports .ogg videos as
@@ -118,20 +144,13 @@ class MetadataStatus(database.DDBObject):
         #   - mutagen was able to get the duration for the file
         #   - mutagen doesn't think the file has DRM
         return ((my_ext == '.oga' or not my_ext.startswith('.og')) and
-                mutagen_data.get('file_type') == 'audio' and
-                mutagen_data.get('duration') is not None and
-                not mutagen_data.get('drm'))
+                entry.file_type == 'audio' and
+                entry.duration is not None and
+                not entry.drm)
 
-    def update_after_movie_data(self, data):
-        self.moviedata_status = self.STATUS_COMPLETE
-        self.signal_change()
-
-    def update_after_mutagen_error(self):
-        self.mutagen_status = self.STATUS_FAILURE
-        self.signal_change()
-
-    def update_after_movie_data_error(self):
-        self.moviedata_status = self.STATUS_FAILURE
+    def update_after_error(self, source_name):
+        """Update after we failed to extract some metadata."""
+        self._set_status_column(source_name, self.STATUS_FAILURE)
         self.signal_change()
 
     def rename(self, new_path):
@@ -224,16 +243,14 @@ class _TaskProcessor(signals.SignalEmitter):
         - queueing messages after we reach a limit
         - handling callbacks and errbacks
 
-    This class is the base class for this.  Subclasses need to define
-    handle_callback() and handle_errback().
-
     Signals:
 
     - task-complete(status) -- we're done with a metadata entry
     """
-    def __init__(self, limit):
+    def __init__(self, source_name, limit):
         signals.SignalEmitter.__init__(self)
         self.create_signal('task-complete')
+        self.source_name = source_name
         self.limit = limit
         # map source paths to tasks
         self._active_tasks = {}
@@ -273,7 +290,9 @@ class _TaskProcessor(signals.SignalEmitter):
         except database.ObjectNotFoundError:
             logging.warn("got callback for removed path: %s", task.source_path)
             return
-        self.handle_callback(status, task, result)
+        logging.debug("%s done: %s", self.source_name, status.path)
+        entry = MetadataEntry(task.source_path, self.source_name, result)
+        status.update_after_success(entry)
         self._on_task_complete(status, task)
 
     def _errback(self, task, error):
@@ -284,39 +303,8 @@ class _TaskProcessor(signals.SignalEmitter):
         except database.ObjectNotFoundError:
             logging.warn("got errback for removed path: %s", task.source_path)
             return
-        self.handle_errback(status, task, error)
+        status.update_after_error(self.source_name)
         self._on_task_complete(status, task)
-
-    def handle_callback(self, status, task, result):
-        """Handle a successfull task."""
-        raise NotImplementedError()
-
-    def handle_errback(self, status, task, error):
-        """Handle a successfull task."""
-        raise NotImplementedError()
-
-
-class _MutagenTaskProcessor(_TaskProcessor):
-    def handle_callback(self, status, task, result):
-        """Handle a successfull task."""
-        logging.debug("mutagen done: %s", status.path)
-        # Store the metadata
-        MetadataEntry(task.source_path, u'mutagen', result)
-        # Update MetadataStatus
-        status.update_after_mutagen(result)
-
-    def handle_errback(self, status, task, error):
-        """Handle a successfull task."""
-        status.update_after_mutagen_error()
-
-class _MovieDataTaskProcessor(_TaskProcessor):
-    def handle_callback(self, status, task, result):
-        logging.debug("movie data done: %s", status.path)
-        MetadataEntry(task.source_path, u'movie-data', result)
-        status.update_after_movie_data(result)
-
-    def handle_errback(self, status, task, error):
-        status.update_after_movie_data_error()
 
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
@@ -415,8 +403,8 @@ class MetadataManager(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('new-metadata')
-        self.mutagen_processor = _MutagenTaskProcessor(100)
-        self.moviedata_processor = _MovieDataTaskProcessor(100)
+        self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
+        self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
         self.cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
