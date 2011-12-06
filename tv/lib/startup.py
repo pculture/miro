@@ -71,7 +71,6 @@ from miro import feed
 from miro import folder
 from miro import messages
 from miro import messagehandler
-from miro import metadataprogress
 from miro import models
 from miro import playlist
 from miro import prefs
@@ -299,9 +298,6 @@ def finish_startup(obj, thread):
         util.db_mem_usage_test()
         mem_usage_test_event.set()
 
-    # MetadataProgressUpdater needs to be installed before ItemInfoCache,
-    # since ItemInfoCache may create items if it uses failsafe mode
-    app.metadata_progress_updater = metadataprogress.MetadataProgressUpdater()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
     dbupgradeprogress.upgrade_end()

@@ -80,9 +80,6 @@ download_state_manager = None
 # movie data updater
 movie_data_updater = None
 
-# sends MetadataProgressUpdate messages to the frontend
-metadata_progress_updater = None
-
 # debugmode adds a bunch of computation that's useful for development
 # and debugging.  initalized to None; set to True/False depending on
 # mode

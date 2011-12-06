@@ -34,6 +34,7 @@ Module properties:
     attribute_names -- set of attribute names for metadata
 """
 
+import collections
 import logging
 import os.path
 
@@ -43,6 +44,7 @@ from miro import app
 from miro import database
 from miro import eventloop
 from miro import filetypes
+from miro import messages
 from miro import prefs
 from miro import signals
 from miro import workerprocess
@@ -316,6 +318,80 @@ class _MovieDataTaskProcessor(_TaskProcessor):
     def handle_errback(self, status, task, error):
         status.update_after_movie_data_error()
 
+class _ProcessingCountTracker(object):
+    """Helps MetadataManager keep track of counts for MetadataProgressUpdate
+
+    For each file type, this class tracks the number of files that we're
+    still getting metadata for.
+    """
+    def __init__(self):
+        # map file type to the count for that type
+        self.counts = collections.defaultdict(int)
+        # map file type to the total for that type.  The total should track
+        # the number of file_started() calls, without ever going down.  Once
+        # the counts goes down to zero, it should be reset
+        self.totals = collections.defaultdict(int)
+        # map paths to the file type we currently think they are
+        self.file_types = {}
+
+    def get_count(self, file_type):
+        return self.counts[file_type]
+
+    def get_total(self, file_type):
+        return self.totals[file_type]
+
+    def file_started(self, path, metadata=None):
+        """Add a path to our counts.
+
+        metadata is an optional dict of metadata for that file.
+        """
+        if metadata is not None:
+            file_type = metadata['file_type']
+        else:
+            file_type = filetypes.item_file_type_for_filename(path)
+        self.file_types[path] = file_type
+        self.counts[file_type] += 1
+        self.totals[file_type] += 1
+
+    def check_file_type(self, path, metadata):
+        """Check we have the right file type for a path.
+
+        Call this whenever the metadata changes for a path.
+        """
+        new_file_type = metadata['file_type']
+        try:
+            old_file_type = self.file_types[path]
+        except KeyError:
+            # not a big deal, we probably finished the file at the same time
+            # as the metadata update.
+            return
+        if new_file_type != old_file_type:
+            self.counts[old_file_type] -= 1
+            self.counts[new_file_type] += 1
+            # change total value too, since the original guess was wrong
+            self.totals[old_file_type] -= 1
+            self.totals[new_file_type] += 1
+            self.file_types[path] = new_file_type
+
+    def file_finished(self, path):
+        """Remove a file from our counts."""
+        try:
+            file_type = self.file_types.pop(path)
+        except KeyError:
+            # Not tracking this path, just ignore
+            return
+        self.counts[file_type] -= 1
+        if self.counts[file_type] == 0:
+            self.totals[file_type] = 0
+
+    def file_moved(self, old_path, new_path):
+        """Change the name for a file."""
+        try:
+            self.file_types[new_path] = self.file_types.pop(old_path)
+        except KeyError:
+            # not tracking this path, just ignore
+            return
+
 class MetadataManager(signals.SignalEmitter):
     """Extract and track metadata for files.
 
@@ -350,10 +426,11 @@ class MetadataManager(signals.SignalEmitter):
         ]
         for processor in self.all_task_processors:
             processor.connect("task-complete", self._on_task_complete)
+        self.count_tracker = _ProcessingCountTracker()
         # paths that have new metadata since the last time we emitted the
         # "new-metadata" signal
         self.updated_paths = set()
-        self._new_metadata_scheduled = False
+        self._update_scheduled = False
 
     def add_file(self, path):
         """Add a new file to the metadata syestem
@@ -366,6 +443,8 @@ class MetadataManager(signals.SignalEmitter):
         except sqlite3.IntegrityError:
             raise ValueError("%s already added" % path)
         self._run_mutagen(path)
+        self.count_tracker.file_started(path)
+        self._schedule_update()
 
     def path_in_system(self, path):
         """Test if a path is in the metadata system."""
@@ -402,9 +481,11 @@ class MetadataManager(signals.SignalEmitter):
             self._get_status_for_path(path).remove()
             for entry in MetadataEntry.metadata_for_path(path):
                 entry.remove()
+            self.count_tracker.file_finished(path)
         for processor in self.all_task_processors:
             for path in paths:
                 processor.remove_task_for_path(path)
+        self._schedule_update()
 
     def will_move_files(self, paths):
         """Prepare for files to be moved
@@ -439,6 +520,7 @@ class MetadataManager(signals.SignalEmitter):
                     restart_mutagen_for.append(new_path)
                 elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
                     restart_moviedata_for.append(new_path)
+                self.count_tracker.file_moved(old_path, new_path)
         finally:
             app.bulk_sql_manager.finish()
         for p in restart_mutagen_for:
@@ -503,8 +585,15 @@ class MetadataManager(signals.SignalEmitter):
         """
         for status in MetadataStatus.needs_mutagen_view():
             self._run_mutagen(status.path)
+            # Add file to our _ProcessingCountTracker.  If we need mutagen,
+            # it's safe to say we don't have any metadata
+            self.count_tracker.file_started(status.path)
         for status in MetadataStatus.needs_moviedata_view():
             self._run_movie_data(status.path)
+            # Add file to our _ProcessingCountTracker.
+            self.count_tracker.file_started(status.path,
+                                            self.get_metadata(status.path))
+        self._schedule_update()
 
     def _get_status_for_path(self, path):
         """Get a MetadataStatus object for a given path."""
@@ -544,8 +633,10 @@ class MetadataManager(signals.SignalEmitter):
         if (processor is self.mutagen_processor and 
             status.moviedata_status == MetadataStatus.STATUS_NOT_RUN):
             self._run_movie_data(status.path)
+        else:
+            self.count_tracker.file_finished(status.path)
         self.updated_paths.add(status.path)
-        self._schedule_emit_new_metadata()
+        self._schedule_update()
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
@@ -553,16 +644,37 @@ class MetadataManager(signals.SignalEmitter):
             'file_type': filetypes.item_file_type_for_filename(path),
         }
 
-    def _schedule_emit_new_metadata(self):
-        if not self._new_metadata_scheduled:
+    def _schedule_update(self):
+        """Schedule updating other miro components.
+
+        Call this if we have new metadata, or we've started processing a new
+        file.
+        """
+        if not self._update_scheduled:
             eventloop.add_timeout(self.UPDATE_INTERVAL,
-                                  self._emit_new_metadata,
-                                  'emit new-metadata signal')
-            self._new_metadata_scheduled =  True
+                                  self._send_updates,
+                                  'send metadata updates')
+            self._update_scheduled = True
+
+    def _send_updates(self):
+        self._update_scheduled = False
+        self._emit_new_metadata()
+        self._send_progress_updates()
 
     def _emit_new_metadata(self):
-        self._new_metadata_scheduled = False
-        new_metadata = dict((p, self.get_metadata(p))
-                             for p in self.updated_paths)
+        new_metadata = {}
+        for path in self.updated_paths:
+            metadata = self.get_metadata(path)
+            new_metadata[path] = metadata
+            self.count_tracker.check_file_type(path, metadata)
         self.updated_paths.clear()
         self.emit('new-metadata', new_metadata)
+
+    def _send_progress_updates(self):
+        for file_type in (u'audio', u'video'):
+            target = (u'library', file_type)
+            count = self.count_tracker.get_count(file_type)
+            total = self.count_tracker.get_total(file_type)
+            eta = None
+            msg = messages.MetadataProgressUpdate(target, count, eta, total)
+            msg.send_to_frontend()

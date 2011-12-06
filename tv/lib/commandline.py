@@ -103,8 +103,6 @@ def add_video(path, manual_feed=None):
 def add_videos(paths):
     # filter out non-existent paths
     paths = [p for p in paths if fileutil.exists(p)]
-    for path in paths:
-        app.metadata_progress_updater.will_process_path(path)
     path_iter = iter(paths)
     finished = False
     yield # yield after doing prep work
@@ -125,9 +123,7 @@ def _add_batch_of_videos(path_iter, max_time):
     app.bulk_sql_manager.start()
     try:
         for path in path_iter:
-            if not add_video(path, manual_feed=manual_feed):
-                # video was a duplicate, undo the will_process_path() call
-                app.metadata_progress_updater.path_processed(path)
+            add_video(path, manual_feed=manual_feed)
             if time.time() - start_time > max_time:
                 return False
         return True

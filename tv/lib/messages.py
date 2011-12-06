@@ -43,11 +43,11 @@ import copy
 import logging
 
 from miro.gtcache import gettext as _
-from miro.folder import ChannelFolder, PlaylistFolder
 from miro.messagetools import Message, MessageHandler
 from miro.plat import resources
 from miro import app
 from miro import displaytext
+from miro import models
 from miro import guide
 from miro import search
 from miro import prefs
@@ -1039,7 +1039,7 @@ class ChannelInfo(object):
             self.search_term = channel_obj.searchTerm
         else:
             self.search_term = None
-        if not isinstance(channel_obj, ChannelFolder):
+        if not isinstance(channel_obj, models.ChannelFolder):
             self.has_original_title = channel_obj.has_original_title()
             self.is_updating = channel_obj.is_updating()
             self.parent_id = channel_obj.folder_id
@@ -1081,7 +1081,7 @@ class PlaylistInfo(object):
     def __init__(self, playlist_obj):
         self.name = playlist_obj.get_title()
         self.id = playlist_obj.id
-        self.is_folder = isinstance(playlist_obj, PlaylistFolder)
+        self.is_folder = isinstance(playlist_obj, models.PlaylistFolder)
         if self.is_folder:
             self.parent_id = None
         else:
