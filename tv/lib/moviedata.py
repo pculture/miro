@@ -42,8 +42,6 @@ def convert_mdp_result(source_path, screenshot_path, result):
     # MDP retuturns durations in millseconds, convert to seconds
     if duration >= 0:
         converted_result['duration'] = duration
-    else:
-        converted_result['duration'] = None
 
     # Make file_type is unicode, or else database validation will fail on
     # insert!
@@ -59,8 +57,6 @@ def convert_mdp_result(source_path, screenshot_path, result):
     if (converted_result['file_type'] == 'video' and success and
         fileutil.exists(screenshot_path)):
         converted_result['screenshot_path'] = screenshot_path
-    else:
-        converted_result['screenshot_path'] = None
     return converted_result
 
 def _make_screenshot_path(source_path, image_directory):

@@ -824,6 +824,8 @@ class MetadataStatusSchema(DDBObjectSchema):
         ('path', SchemaFilename()),
         ('mutagen_status', SchemaString()),
         ('moviedata_status', SchemaString()),
+        ('mutagen_thinks_drm', SchemaBool()),
+        ('max_entry_priority', SchemaInt()),
     ]
 
     indexes = (

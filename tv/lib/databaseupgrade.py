@@ -3473,7 +3473,9 @@ def upgrade166(cursor):
     # create new tables
     cursor.execute("""
     CREATE TABLE metadata_status (id integer PRIMARY KEY, path text,
-                                  mutagen_status text, moviedata_status text)
+                                  mutagen_status text, moviedata_status text,
+                                  mutagen_thinks_drm integer,
+                                  max_entry_priority integer)
                    """)
     cursor.execute("""\
     CREATE TABLE metadata (id integer PRIMARY KEY, path text, source text,
@@ -3550,8 +3552,10 @@ def upgrade166(cursor):
         ', '.join(select_columns))
     next_id = get_next_id(cursor)
     filename_index = select_columns.index('filename')
+    has_drm_index = select_columns.index('has_drm')
     for row in list(cursor.execute(sql)):
         path = row[filename_index]
+        has_drm = row[has_drm_index]
         if path in filenames_seen:
             # duplicate filename, just skip this data
             continue
@@ -3570,13 +3574,16 @@ def upgrade166(cursor):
         cursor.execute(sql, values)
         next_id += 1
 
+        OLD_ITEM_PRIORITY = 10
         # Make an entry in the metadata_status table.  We're not sure if
         # mutagen completed successfully or not, so we just call its status
         # SKIPPED.  moviedata_status is based on the old mdp_state column
         sql = ("INSERT INTO metadata_status "
-               "(id, path, mutagen_status, moviedata_status) "
-               "VALUES (?, ?, ?, ?)")
-        cursor.execute(sql, (next_id, path, 'S', mdp_state_map[mdp_state]))
+               "(id, path, mutagen_status, moviedata_status, "
+               "mutagen_thinks_drm, max_entry_priority) "
+               "VALUES (?, ?, ?, ?, ?, ?)")
+        cursor.execute(sql, (next_id, path, 'S', mdp_state_map[mdp_state],
+                             has_drm, OLD_ITEM_PRIORITY))
         next_id += 1
 
     # We need to alter the item table to:

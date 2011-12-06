@@ -305,13 +305,16 @@ class MovieDataTest(WorkerProcessTest):
         self.check_successful_result()
         self.assertEquals(self.result['source_path'], source_path)
         self.assertEquals(self.result['file_type'], file_type)
-        self.assertEquals(self.result['duration'], duration)
+        if duration is not None:
+            self.assertEquals(self.result['duration'], duration)
+        else:
+            self.assert_('duration' not in self.result)
         if file_type == 'video':
             screenshot_name = os.path.basename(source_path) + '.png'
             self.assertEquals(self.result['screenshot_path'],
                               os.path.join(self.tempdir, screenshot_name))
         else:
-            self.assertEquals(self.result['screenshot_path'], None)
+            self.assert_('screenshot_path' not in self.result)
         self.reset_results()
 
     def test_movie_data_worker_process(self):

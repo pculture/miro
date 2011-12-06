@@ -47,12 +47,15 @@ class MockMetadataProcessor(object):
             'duration': duration,
             'title': unicode(title) if title is not None else None,
             'drm': drm,
-            'cover_art_path': None,
         }
         # Real mutagen calls send much more than the title for metadata, but
         # this is enough to test
         if file_type == 'audio':
             data['cover_art_path'] = self._cover_art_path(task.source_path)
+        # remove None values before sending the data
+        for key, value in data.items():
+            if value is None:
+                del data[key]
         callback(task, data)
 
     def _cover_art_path(self, media_path):
@@ -73,11 +76,14 @@ class MockMetadataProcessor(object):
             'source_path': task.source_path,
             'file_type': unicode(file_type),
             'duration': duration,
-            'screenshot_path': None,
         }
         if screenshot_worked:
             screenshot_path = self.get_screenshot_path(task.source_path)
             data['screenshot_path'] = screenshot_path
+        # remove None values before sending the data
+        for key, value in data.items():
+            if value is None:
+                del data[key]
         callback(task, data)
 
     def run_movie_data_errback(self, source_path, error):
@@ -107,11 +113,6 @@ class MetadataManagerTest(MiroTestCase):
         metadata.update(self.mutagen_data[path])
         metadata.update(self.movieprogram_data[path])
         metadata.update(self.user_info_data[path])
-        # Handle fallback columns
-        if 'show' not in metadata and 'artist' in metadata:
-            metadata['show'] = metadata['artist']
-        if 'episode_id' not in metadata and 'title' in metadata:
-            metadata['episode_id'] = metadata['title']
         return metadata
 
     def check_metadata(self, path):
@@ -350,13 +351,6 @@ class MetadataManagerTest(MiroTestCase):
         self.assertEquals(metadata['title'], 'Newer Foo')
         self.assertEquals(metadata['album'], 'The bestest')
 
-    def test_metadata_fallbacks(self):
-        # Check our fallback logic.  See MetadataManager._add_fallbacks() for
-        # details.
-        self.check_add_file('foo.avi')
-        self.check_set_user_info('foo.avi', artist=u'miro',
-                                 title=u'Four point Five', album=u'PCF')
-
     def test_queueing(self):
         # test that if we don't send too many requests to the worker process
         paths = ['/videos/video-%d.avi' % i for i in xrange(200)]
@@ -572,6 +566,8 @@ class MetadataStatusSchemaV166(DDBObjectSchema):
         ('path', SchemaFilename()),
         ('mutagen_status', SchemaString()),
         ('moviedata_status', SchemaString()),
+        ('mutagen_thinks_drm', SchemaBool()),
+        ('max_entry_priority', SchemaInt()),
     ]
 
     indexes = (

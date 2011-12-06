@@ -80,6 +80,8 @@ class MetadataStatus(database.DDBObject):
         self.path = path
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
+        self.mutagen_thinks_drm = False
+        self.max_entry_priority = -1
         self._add_to_cache()
 
     @classmethod
@@ -133,8 +135,12 @@ class MetadataStatus(database.DDBObject):
         :param entry: MetadataEntry for the new data
         """
         self._set_status_column(entry.source, self.STATUS_COMPLETE)
-        if entry.source == 'mutagen' and self._should_skip_movie_data(entry):
-            self.moviedata_status = self.STATUS_SKIP
+        if entry.source == 'mutagen':
+            if self._should_skip_movie_data(entry):
+                self.moviedata_status = self.STATUS_SKIP
+            thinks_drm = entry.drm if entry.drm is not None else False
+            self.mutagen_thinks_drm = thinks_drm
+        self.max_entry_priority = max(self.max_entry_priority, entry.priority)
         self.signal_change()
 
     def _should_skip_movie_data(self, entry):
@@ -292,9 +298,21 @@ class _TaskProcessor(signals.SignalEmitter):
             logging.warn("got callback for removed path: %s", task.source_path)
             return
         logging.debug("%s done: %s", self.source_name, status.path)
+        self._check_for_none_values(result)
         entry = MetadataEntry(task.source_path, self.source_name, result)
         status.update_after_success(entry)
         self._on_task_complete(status, task)
+
+    def _check_for_none_values(self, result):
+        """Check that result dicts don't have keys for None values."""
+        # FIXME: we shouldn't need this function, metadata extractors should
+        # only send keys for values that it actually has, not None values.
+        for key, value in result.items():
+            if value is None:
+                app.controller.failed_soft('_check_for_none_values',
+                                           '%s has None Value' % key,
+                                           with_exception=False)
+                del result[key]
 
     def _errback(self, task, error):
         logging.warn("Error running %s for %s: %s", task, task.source_path,
@@ -560,29 +578,11 @@ class MetadataManager(signals.SignalEmitter):
         status = self._get_status_for_path(path)
 
         metadata = self._get_metadata_from_filename(path)
-        drm_by_source = {}
         for entry in MetadataEntry.metadata_for_path(path):
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
-            drm_by_source[entry.source] = entry.drm
-        metadata['has_drm'] = self._calc_has_drm(drm_by_source, status)
-        self._add_fallback_columns(metadata)
+        metadata['has_drm'] = status.get_has_drm()
         return metadata
-
-    def _add_fallback_columns(self, metadata_dict):
-        """If we don't have data for some keys, fallback to a different key
-        """
-        fallbacks = [
-            ('show', 'artist'),
-            ('episode_id', 'title')
-        ]
-        for name, fallback in fallbacks:
-            if name not in metadata_dict:
-                try:
-                    metadata_dict[name] = metadata_dict[fallback]
-                except KeyError:
-                    # nothing in the fallback key either, too bad
-                    pass
 
     def set_user_data(self, path, user_data):
         """Update metadata based on user-inputted data
@@ -623,23 +623,6 @@ class MetadataManager(signals.SignalEmitter):
             return MetadataStatus.get_by_path(path)
         except database.ObjectNotFoundError:
             raise KeyError(path)
-
-    def _calc_has_drm(self, drm_by_source, metadata_status):
-        """Calculate the value of has_drm.
-
-        has_drm is True when all of these are True
-        - mutagen thinks the object has DRM
-        - movie data failed to open the file, or we're not going to run movie
-          data (this is only true for items created before the MetadataManager
-          existed)
-        """
-        try:
-            mutagen_thinks_drm = drm_by_source['mutagen']
-        except KeyError:
-            mutagen_thinks_drm = drm_by_source.get('old-item', False)
-        return (mutagen_thinks_drm and
-                metadata_status.moviedata_status in
-                (MetadataStatus.STATUS_FAILURE or MetadataStatus.STATUS_SKIP))
 
     def _run_mutagen(self, path):
         """Run mutagen on a path."""

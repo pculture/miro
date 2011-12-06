@@ -334,13 +334,16 @@ def _parse_mutagen(filename, muta, cover_art_directory):
         if guessed_track:
             data['track'] = guessed_track
 
+    cover_art_path = None
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures
-        data['cover_art_path'] = _make_cover_art_file(filename, image_data,
-                                                      cover_art_directory)
+        cover_art_path = _make_cover_art_file(filename, image_data,
+                                              cover_art_directory)
     elif 'cover_art' in data:
         image_data = data['cover_art']
-        data['cover_art_path'] = _make_cover_art_file(filename, image_data,
-                                                      cover_art_directory)
+        cover_art_path = _make_cover_art_file(filename, image_data,
+                                              cover_art_directory)
         del data['cover_art']
+    if cover_art_path is not None:
+        data['cover_art_path'] = cover_art_path
     return data
