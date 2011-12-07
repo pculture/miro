@@ -108,13 +108,17 @@ def _amazon_callback(data, unknown):
         _m3u_callback(data['body'])
 
 def _amz_callback(data):
-    try:
-        content = decrypt_amz(base64.b64decode(data)).rstrip('\x00\x08')
-    except Exception:
-        app.controller.failed_soft('_amz_callback',
-                                   'could not b64decde/decrypt:\n%r' % data,
-                                   with_exception=True)
-        return
+    if data.lstrip().startswith('<playlist>'): # plain XML
+        content = data.strip()
+    else:
+        try:
+            content = decrypt_amz(base64.b64decode(data)).rstrip('\x00\x08')
+        except Exception:
+            app.controller.failed_soft(
+                '_amz_callback',
+                'could not b64decde/decrypt:\n%r' % data,
+                with_exception=True)
+            return
 
     try:
         dom = minidom.parseString(content)
