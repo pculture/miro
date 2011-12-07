@@ -270,6 +270,7 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
+        models.Item._path_count_tracker.reset()
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
         # setup the deleted file checker

@@ -11,6 +11,7 @@ from miro.fileobject import FilenameType
 from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.singleclick import _build_entry
+from miro.plat.utils import unicode_to_filename
 
 def fp_values_for_url(url, additional=None):
     return FeedParserValues(_build_entry(url, 'video/x-unknown', additional))
@@ -267,3 +268,45 @@ class DeletedItemTest(MiroTestCase):
         app.controller.failed_soft_okay = True
         Item._allow_nonexistent_paths = False
         FileItem("/non/existent/path/", feed.id)
+
+class HaveItemForPathTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.feed = Feed(u'http://example.com/1')
+        self.added_items = {}
+        self.deleted_paths = []
+
+    def add_item(self, filename):
+        path = '/videos/' + unicode_to_filename(filename)
+        self.added_items[path] = FileItem(path, self.feed.id)
+
+    def remove_item(self, filename):
+        path = '/videos/' + unicode_to_filename(filename)
+        self.added_items[path].remove()
+        del self.added_items[path]
+        self.deleted_paths.append(path)
+
+    def check_have_item_for_path(self):
+        for path, item in self.added_items.items():
+            self.assertEquals(Item.have_item_for_path(path), True)
+            # case differences shouldn't matter
+            self.assertEquals(Item.have_item_for_path(path.lower()), True)
+            self.assertEquals(Item.have_item_for_path(path.upper()), True)
+        for path in self.deleted_paths:
+            self.assertEquals(Item.have_item_for_path(path), False)
+            self.assertEquals(Item.have_item_for_path(path.upper()), False)
+            self.assertEquals(Item.have_item_for_path(path.lower()), False)
+
+    def test_have_item_for_path(self):
+        # add some items before the first items_for_path() call
+        self.add_item(u'video-1')
+        self.add_item(u'vIdEO-2')
+        self.check_have_item_for_path()
+        # Add more items and test again
+        self.add_item(u'VIDEO\xe4-3')
+        self.add_item(u'vIdEO-four')
+        self.check_have_item_for_path()
+        # Delete some items and test one more time
+        self.remove_item(u'vIdEO-2')
+        self.remove_item(u'VIDEO\xe4-3')
+        self.check_have_item_for_path()

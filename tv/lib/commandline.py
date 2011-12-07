@@ -67,27 +67,19 @@ _started_up = False
 _command_line_videos = None
 _command_line_view = None
 
-def _item_exists_for_path(path):
-    # in SQLite, LIKE is case insensitive, so we can use it to only look at
-    # filenames that possibly will match
-    for item_ in item.Item.make_view('filename LIKE ?',
-            (filename_to_unicode(path),)):
-        if samefile(item_.filename, path):
-            return item_
-    return False
-
 def add_video(path, manual_feed=None):
     """Add a new video
 
     :returns: True if we create a new Item object.
     """
     path = os.path.abspath(path)
-    item_for_path = _item_exists_for_path(path)
-    if item_for_path:
-        if item_for_path.deleted:
-            item_for_path.make_undeleted()
+    if item.Item.have_item_for_path(path):
         logging.debug("Not adding duplicate video: %s",
                       path.decode('ascii', 'ignore'))
+        # get the first item and undelete it
+        item_for_path = list(item.Item.items_with_path_view(path))[0]
+        if item_for_path.deleted:
+            item_for_path.make_undeleted()
         if _command_line_videos is not None:
             _command_line_videos.add(item_for_path)
         return False

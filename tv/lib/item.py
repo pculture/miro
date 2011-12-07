@@ -30,6 +30,7 @@
 """``miro.item`` -- Holds ``Item`` class and related things.
 """
 
+import collections
 from datetime import datetime, timedelta
 import locale
 import os.path
@@ -346,6 +347,58 @@ class FileFeedParserValues(FeedParserValues):
             'releaseDateObj': datetime.min,
         }
 
+class _ItemsForPathCountTracker(object):
+    """Helps Item implement have_item_for_path
+
+    This class tracks how many items we have for a given path.  It's optimized
+    pretty agressively.  We call it many times when importing new files.
+    """
+
+    def get_count(self, path):
+        try:
+            counts = self.count_for_paths
+        except AttributeError:
+            counts = self._init_counts_for_paths()
+        return counts[self._count_key(path)]
+
+    def _init_counts_for_paths(self):
+        # Use a raw DB query for this one, since we want to be as fast as
+        # possible
+        counts = collections.defaultdict(int)
+        app.db.cursor.execute("SELECT lower(filename), COUNT(*) "
+                              "FROM item "
+                              "GROUP BY filename")
+        counts.update(app.db.cursor)
+        self.count_for_paths = counts
+        return counts
+
+    def _count_key(self, path):
+        # normalize paths so that they match whats in the database, and work
+        # case-insensitively
+        return filename_to_unicode(path).lower()
+
+    def reset(self):
+        try:
+            del self.count_for_paths
+        except AttributeError:
+            pass
+
+    def add_item(self, item):
+        if item.filename is None:
+            return
+        try:
+            self.count_for_paths[self._count_key(item.filename)] += 1
+        except AttributeError:
+            return # counts not created yet we can just ignore
+
+    def remove_item(self, item):
+        if item.filename is None:
+            return
+        try:
+            self.count_for_paths[self._count_key(item.filename)] -= 1
+        except AttributeError:
+            return # counts not created yet we can just ignore
+
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -398,6 +451,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
+        Item._path_count_tracker.add_item(self)
 
     def setup_restored(self):
         self.setup_common()
@@ -769,11 +823,22 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def items_with_path_view(cls, path):
-        return cls.make_view('filename=?', (filename_to_unicode(path),))
+        return cls.make_view('lower(filename)=?',
+                             (filename_to_unicode(path).lower(),))
 
     @classmethod
     def downloader_view(cls, dler_id):
         return cls.make_view("downloader_id=?", (dler_id,))
+
+    _path_count_tracker = _ItemsForPathCountTracker()
+
+    @staticmethod
+    def have_item_for_path(path):
+        """Check if we have an item for a path.
+
+        This method is optimized to avoid DB queries if at all possible.
+        """
+        return Item._path_count_tracker.get_count(path) > 0
 
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
@@ -898,12 +963,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def set_filename(self, filename):
+        Item._path_count_tracker.remove_item(self)
         self.filename = filename
         if not app.local_metadata_manager.path_in_system(filename):
             metadata = app.local_metadata_manager.add_file(filename)
         else:
             metadata = app.local_metadata_manager.get_metadata(filename)
         self.update_from_metadata(metadata)
+        Item._path_count_tracker.add_item(self)
 
     def update_from_metadata(self, metadata_dict):
         """Update our attributes from a metadata dictionary."""
@@ -1905,6 +1972,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 item.migrate(newdir)
 
     def remove(self):
+        Item._path_count_tracker.remove_item(self)
         if self.has_downloader():
             self.set_downloader(None)
         self.remove_icon_cache()
@@ -2072,6 +2140,11 @@ class FileItem(Item):
 
     def is_external(self):
         return self.parent_id is None
+
+    def _look_for_downloader(self):
+        # we don't need a database query to know that there's no downloader
+        # for us.
+        return
 
     def expire(self):
         self.confirm_db_thread()
