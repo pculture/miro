@@ -472,6 +472,7 @@ class MetadataManager(signals.SignalEmitter):
         """Add a new file to the metadata syestem
 
         :param path: path to the file
+        :returns initial metadata for the file
         :raises ValueError: path is already in the system
         """
         try:
@@ -481,6 +482,7 @@ class MetadataManager(signals.SignalEmitter):
         self._run_mutagen(path)
         self.count_tracker.file_started(path)
         self._schedule_update()
+        return self._get_metadata_from_filename(path)
 
     def path_in_system(self, path):
         """Test if a path is in the metadata system."""

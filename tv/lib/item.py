@@ -900,8 +900,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def set_filename(self, filename):
         self.filename = filename
         if not app.local_metadata_manager.path_in_system(filename):
-            app.local_metadata_manager.add_file(filename)
-        metadata = app.local_metadata_manager.get_metadata(filename)
+            metadata = app.local_metadata_manager.add_file(filename)
+        else:
+            metadata = app.local_metadata_manager.get_metadata(filename)
         self.update_from_metadata(metadata)
 
     def update_from_metadata(self, metadata_dict):
