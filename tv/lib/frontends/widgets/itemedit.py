@@ -262,7 +262,14 @@ class NumberField(Field):
             self.widget.set_width(width)
             self.widget.set_max_length(width)
         value = self.common_value or ""
-        self.widget.set_text(str(value))
+        # Ugh!  Convert to utf-8 or else decode may not work!
+        if isinstance(value, unicode):
+            value = value.encode('utf-8')
+        try:
+            value = str(value)
+        except TypeError, ValueError:
+            value = ''
+        self.widget.set_text(value)
 
     def get_value(self):
         value = self.widget.get_text()
