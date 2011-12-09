@@ -2013,9 +2013,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         try:
             return self._downloader
         except AttributeError:
-            dler = downloader.get_existing_downloader(self)
-            if dler is not None:
-                dler.add_item(self)
+            if self.downloader_id is None:
+                dler = None
+            else:
+                dler = downloader.get_existing_downloader(self)
+                if dler is not None:
+                    dler.add_item(self)
             self._downloader = dler
             return dler
     downloader = property(_get_downloader)
