@@ -29,13 +29,6 @@
 
 """gstreamerrenderer.py -- Windows gstreamer renderer """
 
-# Before importing gstreamer, fix os.environ so gstreamer finds it's plugins
-import os
-from miro.plat import resources
-GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
-os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
-os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
-
 import pygst
 pygst.require('0.10')
 import gst

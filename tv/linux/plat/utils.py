@@ -37,6 +37,7 @@ import logging
 import logging.handlers
 import locale
 import urllib
+import subprocess
 import sys
 import time
 from miro.util import returns_unicode, returns_binary, check_u, check_b

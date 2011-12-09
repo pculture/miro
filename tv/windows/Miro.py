@@ -30,10 +30,19 @@
 """Startup the main Miro process or run unittests.
 """
 
+import os
 import sys
 import logging
 
 def startup(argv):
+    # Before importing gstreamer, fix os.environ so gstreamer finds its
+    # plugins.  Do this early before any code is run to prevent any import
+    # of gst missing this!
+    from miro.plat import resources
+    GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
+    os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
+    os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
+
     theme = None
     # Should have code to figure out the theme.
 

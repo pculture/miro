@@ -58,6 +58,7 @@ from miro import messagetools
 from miro import trapcall
 from miro import util
 from miro.plat.utils import miro_helper_program_info, initialize_locale
+from miro.plat.popen import Popen
 
 def _on_windows():
     """Test if we are unfortunate enough to be running in windows."""
@@ -348,19 +349,11 @@ class SubprocessManager(object):
         kwargs = {
                   "stdout": subprocess.PIPE,
                   "stdin": subprocess.PIPE,
-                  "startupinfo": util.no_console_startupinfo(),
+                  "stderr": open(os.devnull, 'wb'),
                   "env": env,
+                  "close_fds": True
         }
-        if _on_windows():
-            # normally we just clone stderr for the subprocess, but on windows
-            # this doesn't work.  So we use a pipe that we immediately close
-            kwargs["stderr"] = subprocess.PIPE
-        else:
-            kwargs["stderr"] = None
-            kwargs["close_fds"] = True
-        process = subprocess.Popen(cmd_line, **kwargs)
-        if _on_windows():
-            process.stderr.close()
+        process = Popen(cmd_line, **kwargs)
         return process
 
     def shutdown(self, timeout=1.0):

@@ -36,6 +36,7 @@ from Foundation import *
 from FSEvents import *
 
 from miro import app
+from miro.plat.popen import Popen
 
 kFSEventStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
 
@@ -47,8 +48,7 @@ def diskutil(cmd, path_or_disk, use_plist=True):
         args.append('-plist')
     if path_or_disk:
         args.append(path_or_disk)
-    proc = subprocess.Popen(args, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
+    proc = Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate()
     if not use_plist:
         return stdout

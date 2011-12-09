@@ -53,6 +53,7 @@ from miro.plat.filenames import (PlatformFilenameType,
                                  filename_type_to_os_filename)
 from miro.plat import qt_extractor
 from miro.plat.frontends.widgets.threads import on_ui_thread
+from miro.plat.popen import Popen
 
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
@@ -353,7 +354,7 @@ def _app_command_line():
     if os_version < 9:
         return [exe]
     else:
-        arch = subprocess.Popen("/usr/bin/arch", stdout=subprocess.PIPE).communicate()[0].strip()
+        arch = Popen("/usr/bin/arch", stdout=subprocess.PIPE).communicate()[0].strip()
         return ['/usr/bin/arch', '-%s' % arch, exe]
 
 @on_ui_thread

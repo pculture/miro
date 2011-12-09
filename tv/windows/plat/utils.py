@@ -50,6 +50,7 @@ from miro.plat import prelogger
 from miro.plat import proxyfind
 from miro.plat import resources
 from miro.plat import specialfolders
+from miro.plat.popen import Popen
 from miro.plat.renderers import gst_extractor
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
@@ -352,13 +353,6 @@ def launch_download_daemon(oldpid, env):
         environ['MIRO_IN_UNIT_TESTS'] = '1'
     environ.update(env)
 
-    # on windows, subprocess can ONLY accept strings (no unicode) in
-    # environment values.  at present this affects FFMPEG_DATADIR
-    # which doesn't matter in the downloader, so we remove it.
-    del environ["FFMPEG_DATADIR"]
-    del environ["GST_PLUGIN_PATH"]
-    del environ["GST_PLUGIN_SYSTEM_PATH"]
-
     # start the downloader.  We use the subprocess module to turn off
     # the console.  One slightly awkward thing is that the current
     # process might not have a valid stdin/stdout/stderr, so we create
@@ -367,25 +361,12 @@ def launch_download_daemon(oldpid, env):
     # note that we use "Miro" instead of the app name here, so custom
     # versions will work
 
-    # note that the application filename has to be in double-quotes
-    # otherwise it kicks up "%1 is not a valid Win32 application"
-    # errors on some Windows machines.  Why it only happens on some is
-    # a mystery of the universe.  Bug #9274.
-    downloader_path = '"%s"' % os.path.join(resources.app_root(),
-                                           "Miro_Downloader.exe")
-    startupinfo = subprocess.STARTUPINFO()
-    # TEMPORARY: the STARTF_USESHOWWINDOW has been moved into
-    # subprocess._subprocess in Python 2.6.6 and beyond.
-    try:
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    except AttributeError:
-        startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
-
-    subprocess.Popen(downloader_path, stdout=subprocess.PIPE,
-                     stderr=subprocess.PIPE,
-                     stdin=subprocess.PIPE,
-                     startupinfo=startupinfo,
-                     env=environ)
+    downloader_path = (os.path.join(resources.app_root(),
+                                   "Miro_Downloader.exe"),) 
+    return Popen(downloader_path, stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE,
+                 stdin=subprocess.PIPE,
+                 env=environ)
 
 def exit_miro(return_code):
     """Python's sys.exit isn't sufficient in a Windows
@@ -518,7 +499,7 @@ def get_plat_media_player_name_path():
     return (_('iTunes'), import_itunes_path(itunes_path))
 
 def miro_helper_program_info():
-    cmd_line = (os.path.join(resources.app_root(), 'Miro_Helper.exe'))
+    cmd_line = (os.path.join(resources.app_root(), 'Miro_Helper.exe'),)
     env = None
     return (cmd_line, env)
 
