@@ -132,6 +132,9 @@ class ItemContextMenuHandler(object):
                 convert_menu = self._make_convert_menu()
                 section.append((_('Convert to...'), convert_menu))
 
+            section.append((_('Set media kind as...'),
+              self._make_edit_metadata_menu()))
+
             if section:
                 menu_sections.append(section)
                 section = []
@@ -387,6 +390,8 @@ class ItemContextMenuHandler(object):
                 menu.append(None)
                 convert_menu = self._make_convert_menu()
                 menu.append((_('Convert to...'), convert_menu))
+        menu.append((_('Set media kind as...'),
+                    self._make_edit_metadata_menu()))
 
 
         if available:
@@ -428,6 +433,21 @@ class ItemContextMenuHandler(object):
             menu.append((_("Edit Items"), app.widgetapp.edit_items))
 
         return menu
+
+    def _make_edit_metadata_menu(self):
+        # Edit metadata
+        edit_metadata_menu = []
+
+        edit_metadata_menu.append((_('Movie'),
+          lambda: app.widgetapp.set_media_kind(u'movie')))
+        edit_metadata_menu.append((_('Show'),
+          lambda: app.widgetapp.set_media_kind(u'show')))
+        edit_metadata_menu.append((_('Clip'),
+          lambda: app.widgetapp.set_media_kind(u'clip')))
+        edit_metadata_menu.append((_('Podcast'),
+          lambda: app.widgetapp.set_media_kind(u'podcast')))
+
+        return edit_metadata_menu
 
     def _make_convert_menu(self):
         convert_menu = []
