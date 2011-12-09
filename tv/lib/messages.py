@@ -647,6 +647,13 @@ class KeepVideo(BackendMessage):
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
+class SetMediaKind(BackendMessage):
+    """Set the media kind of the list of items to be the specified kind.
+    """
+    def __init__(self, item_infos, kind):
+        self.item_infos = item_infos
+        self.kind = kind
+
 class SaveItemAs(BackendMessage):
     """Saves an item in the dark clutches of Miro to somewhere else.
     """
