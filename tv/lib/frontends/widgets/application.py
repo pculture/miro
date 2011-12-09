@@ -685,6 +685,13 @@ class Application:
 
         messages.SaveItemAs(selection[0].id, filename).send_to_backend()
 
+    def set_media_kind(self, kind):
+        logging.debug('set media kind = %s', kind)
+        selection = app.item_list_controller_manager.get_selection()
+        if not selection:
+            return
+        messages.SetMediaKind(selection, kind).send_to_backend()
+
     def convert_items(self, converter_id):
         selection = app.item_list_controller_manager.get_selection()
         for item_info in selection:

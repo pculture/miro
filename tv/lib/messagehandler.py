@@ -1475,6 +1475,24 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         else:
             item_.save()
 
+    def handle_set_media_kind(self, message):
+        item_infos = message.item_infos
+        kind = message.kind
+        logging.debug('KIND = %s', kind)
+        items = []
+        for i in item_infos:
+            try:
+                items.append(item.Item.get_by_id(i.id))
+            except database.ObjectNotFoundError:
+                logging.warn("SetMediaKind: Item not found -- %s", i.id)
+        app.bulk_sql_manager.start()
+        try:
+            for i in items:
+                i.set_kind(kind)
+                i.signal_change()
+        finally:
+            app.bulk_sql_manager.finish()
+        
     def handle_save_item_as(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
