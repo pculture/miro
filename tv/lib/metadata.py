@@ -65,6 +65,13 @@ class MetadataStatus(database.DDBObject):
     we store if that extractor has run yet, has failed, is being skipped, etc.
     """
 
+    # NOTE: this class uses the database cache to store MetadataStatus objects
+    # for quick access.  The category is "metadata", the key is the path to
+    # the metadata and the value is the MetadataStatus object.
+    #
+    # If the value is None, that means there's a MetadataStatus object in the
+    # database, but we haven't loaded it yet.
+
     # constants for the *_status columns
     STATUS_NOT_RUN = u'N'
     STATUS_COMPLETE = u'C'
@@ -92,8 +99,13 @@ class MetadataStatus(database.DDBObject):
         is fairly quick.
         """
         try:
-            return app.db.cache.get('metadata', path)
+            cache_value = app.db.cache.get('metadata', path)
         except KeyError:
+            cache_value = None
+
+        if cache_value is not None:
+            return cache_value
+        else:
             view = cls.make_view('path=?', (filename_to_unicode(path),))
             return view.get_singleton()
 
@@ -171,13 +183,14 @@ class MetadataStatus(database.DDBObject):
         self.signal_change()
 
     @classmethod
-    def needs_mutagen_view(cls):
-        return cls.make_view('mutagen_status=?', (cls.STATUS_NOT_RUN,))
+    def needs_mutagen_select(cls, columns):
+        return cls.select(columns, 'mutagen_status=?', (cls.STATUS_NOT_RUN,))
 
     @classmethod
-    def needs_moviedata_view(cls):
-        return cls.make_view('mutagen_status != ? AND moviedata_status=?',
-                             (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN))
+    def needs_moviedata_select(cls, columns):
+        return cls.select(columns,
+                          'mutagen_status != ? AND moviedata_status=?',
+                          (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN))
 
 class MetadataEntry(database.DDBObject):
     """Stores metadata from a single source.
@@ -433,9 +446,21 @@ class MetadataManager(signals.SignalEmitter):
         self.metadata_errors = []
         self._reset_new_metadata()
         self._update_scheduled = False
+        self._calc_incomplete()
+        self._setup_path_placeholders()
 
     def _reset_new_metadata(self):
         self.new_metadata = collections.defaultdict(dict)
+
+    def _setup_path_placeholders(self):
+        """Add None values to the cache for all MetadataStatus objects
+
+        This makes path_in_system() work since it checks if the key exists.
+        However, we don't actually want to load the objects yet, since this is
+        called pretty early in the startup process.
+        """
+        for row in MetadataStatus.select(["path"]):
+            app.db.cache.set('metadata', row[0], None)
 
     @contextlib.contextmanager
     def bulk_add(self):
@@ -597,22 +622,45 @@ class MetadataManager(signals.SignalEmitter):
             # make a new entry if none exists
             MetadataEntry(path, u'user-data', user_data)
 
+    def _calc_incomplete(self):
+        """Figure out which metadata status objects we should restart.
+
+        We have to call this method on startup, but we don't want to start
+        doing any work until restart_incomplete() is called.  So we just save
+        the IDs of the rows to restart.
+        """
+        self.restart_mutagen_ids = [row[0] for row in
+                                    MetadataStatus.needs_mutagen_select(['id'])]
+        self.restart_moviedata_ids = [row[0] for row in 
+                                    MetadataStatus.needs_moviedata_select(['id'])]
+
     def restart_incomplete(self):
         """Restart extractors for files with incomplete metadata
 
-        This method queues calls to mutagen, movie data, etc.  It should only
-        be called once per miro run
+        This method queues calls to mutagen, movie data, etc.
         """
-        for status in MetadataStatus.needs_mutagen_view():
+        for id_ in self.restart_mutagen_ids:
+            try:
+                status = MetadataStatus.get_by_id(id_)
+            except database.ObjectNotFoundError:
+                pass # just ignore deleted objects
             self._run_mutagen(status.path)
-            # Add file to our _ProcessingCountTracker.  If we need mutagen,
-            # it's safe to say we don't have any metadata
+            # Add file to our _ProcessingCountTracker, but don't call
+            # get_metadata().  If we need mutagen, it's safe to say we don't
+            # have any metadata
             self.count_tracker.file_started(status.path)
-        for status in MetadataStatus.needs_moviedata_view():
+
+        for id_ in self.restart_moviedata_ids:
+            try:
+                status = MetadataStatus.get_by_id(id_)
+            except database.ObjectNotFoundError:
+                pass # just ignore deleted objects
             self._run_movie_data(status.path)
             # Add file to our _ProcessingCountTracker.
             self.count_tracker.file_started(status.path,
                                             self.get_metadata(status.path))
+        self.restart_mutagen_ids = []
+        self.restart_moviedata_ids = []
         self._schedule_update()
 
     def _get_status_for_path(self, path):

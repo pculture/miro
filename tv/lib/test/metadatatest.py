@@ -293,7 +293,7 @@ class MetadataManagerTest(MiroTestCase):
         self.assertEquals(self.get_metadata('foo2.avi')['has_drm'], False)
 
     def test_restart_incomplete(self):
-        # check the has_drm flag
+        # Test restarting incomplete 
         self.check_add_file('foo.avi')
         self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
         self.check_add_file('bar.avi')
@@ -304,14 +304,53 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_movie_data('qux.avi', 'video', 100, True)
         # At this point, foo needs movie data to be run, bar needs mutagen and
         # movie data to be run and baz/qux are complete
+        self.check_queued_moviedata_calls(['foo.avi'])
+        self.check_queued_mutagen_calls(['bar.avi'])
+        # Check that if we call restart_incomplete now, we don't get queue
+        # mutagen or movie data twice.
         self.processor.reset()
         self.metadata_manager.restart_incomplete()
-        # check that the correct calls are queed up
+        self.check_queued_moviedata_calls([])
+        self.check_queued_mutagen_calls([])
+        # Create a new MetadataManager and call restart_incomplete on that.
+        # That should invoke mutagen and movie data
+        self.metadata_manager = metadata.MetadataManager()
+        self.metadata_manager.restart_incomplete()
         self.check_queued_moviedata_calls(['foo.avi'])
         self.check_queued_mutagen_calls(['bar.avi'])
         # after mutagen finishes for bar, it should be queud for movie data
         self.check_run_mutagen('bar.avi', 'video', 100, 'Foo')
         self.check_queued_moviedata_calls(['foo.avi', 'bar.avi'])
+
+    def check_path_in_system(self, filename, correct_value):
+        path = '/videos/' + filename
+        self.assertEquals(self.metadata_manager.path_in_system(path),
+                          correct_value)
+
+
+    def test_path_in_system(self):
+        # Test the path_in_system() call
+        self.check_add_file('foo.avi')
+        self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
+        self.check_add_file('bar.avi')
+        self.check_add_file('baz.mp3')
+        self.check_run_mutagen('baz.mp3', 'audio', 100, 'Foo')
+        self.check_add_file('qux.avi')
+        self.check_run_mutagen('qux.avi', 'video', 100, 'Foo')
+        self.check_run_movie_data('qux.avi', 'video', 100, True)
+        self.check_path_in_system('foo.avi', True)
+        self.check_path_in_system('bar.avi', True)
+        self.check_path_in_system('baz.mp3', True)
+        self.check_path_in_system('qux.avi', True)
+        self.check_path_in_system('other-file.avi', False)
+        # Test path_in_system() for objects in the DB, but not in cache
+        self.clear_ddb_object_cache()
+        self.metadata_manager = metadata.MetadataManager()
+        self.check_path_in_system('foo.avi', True)
+        self.check_path_in_system('bar.avi', True)
+        self.check_path_in_system('baz.mp3', True)
+        self.check_path_in_system('qux.avi', True)
+        self.check_path_in_system('other-file.avi', False)
 
     def test_delete(self):
         # add a couple files at different points in the metadata process

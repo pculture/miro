@@ -279,7 +279,6 @@ class MiroTestCase(unittest.TestCase):
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
-        item.setup_metadata_manager()
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary
@@ -293,6 +292,7 @@ class MiroTestCase(unittest.TestCase):
         self.allow_db_upgrade_error_dialog = False
         self.reload_database()
         self.setup_new_item_info_cache()
+        item.setup_metadata_manager()
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
             ]
@@ -470,6 +470,7 @@ class MiroTestCase(unittest.TestCase):
     def clear_ddb_object_cache(self):
         app.db._ids_loaded = set()
         app.db._object_map = {}
+        app.db.cache = storedatabase.DatabaseObjectCache()
 
     def setup_new_database(self, path, schema_version, object_schemas):
         app.db = storedatabase.LiveStorage(path,
