@@ -43,9 +43,13 @@ def convert_mdp_result(source_path, screenshot_path, result):
     if duration >= 0:
         converted_result['duration'] = duration
 
-    # Make file_type is unicode, or else database validation will fail on
-    # insert!
-    converted_result['file_type'] = unicode(file_type)
+    # if moviedata reports other, that's a sign that it doesn't know what the
+    # file type is.  Just leave out the file_type key so that we fallback to
+    # the mutagen guess.
+    if file_type != "other":
+        # Make file_type is unicode, or else database validation will fail on
+        # insert!
+        converted_result['file_type'] = unicode(file_type)
 
     if os.path.splitext(source_path)[1] == '.flv':
         # bug #17266.  if the extension is .flv, we ignore the file type
@@ -54,7 +58,7 @@ def convert_mdp_result(source_path, screenshot_path, result):
         # extractors have a hard time with.
         converted_result['file_type'] = u'video'
 
-    if (converted_result['file_type'] == 'video' and success and
+    if (converted_result.get('file_type') == 'video' and success and
         fileutil.exists(screenshot_path)):
         converted_result['screenshot_path'] = screenshot_path
     return converted_result
