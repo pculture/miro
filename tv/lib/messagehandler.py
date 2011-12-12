@@ -1664,6 +1664,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         last_progress_time = 0
         title = _('Migrating Files')
         messages.ProgressDialogStart(title).send_to_frontend()
+        app.local_metadata_manager.will_move_files([d.get_filename() for d in
+                                                    to_migrate])
         for i, download in enumerate(to_migrate):
             current_time = time.time()
             if current_time > last_progress_time + 0.5:

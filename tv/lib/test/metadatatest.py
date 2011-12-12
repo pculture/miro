@@ -452,8 +452,8 @@ class MetadataManagerTest(MiroTestCase):
         # check that the metadata manager sent a CancelFileOperations message
         self.assertEquals(self.processor.canceled_files, set(to_move))
         # tell metadata manager that the move is done
-        new_paths = [new_path_name(p) for p in to_move]
-        self.metadata_manager.files_moved(zip(to_move, new_paths))
+        for path in to_move:
+            self.metadata_manager.file_moved(path, new_path_name(path))
         # check that the metadata stored with the new path and not the old one
         for path in to_move:
             new_path = new_path_name(path)
@@ -501,14 +501,15 @@ class MetadataManagerTest(MiroTestCase):
 
         # if pending files get moved, the paths should be updated
         moved = paths[150:]
-        changes = [(p, '/new' + p) for p in moved]
+        new_paths = ['/new' + p for p in moved]
         self.metadata_manager.will_move_files(moved)
-        self.metadata_manager.files_moved(changes)
+        for old_path, new_path in zip(moved, new_paths):
+            self.metadata_manager.file_moved(old_path, new_path)
         # send mutagen call backs so the pending calls start
         for p in paths[:100]:
             self.processor.run_mutagen_callback(p, 'video', 100, u'Title',
                                                 False)
-        correct_paths = paths[100:150] + [p[1] for p in changes]
+        correct_paths = paths[100:150] + new_paths
         self.assertSameSet(self.processor.mutagen_calls.keys(), correct_paths)
 
 # Create ItemSchema circa version 165 for Upgrade166Test

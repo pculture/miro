@@ -1907,6 +1907,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.recalc_feed_counts()
 
     def on_downloader_migrated(self, old_filename, new_filename):
+        app.local_metadata_manager.file_moved(old_filename, new_filename)
         self.set_filename(new_filename)
         self.signal_change()
         if self.isContainerItem:

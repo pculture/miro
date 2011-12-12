@@ -174,9 +174,6 @@ class MetadataStatus(database.DDBObject):
 
     def rename(self, new_path):
         """Change the path for this object."""
-        if app.db.cache.key_exists('metadata', new_path):
-            raise KeyError("MetadataStatus.rename: already an object for "
-                           "%s (old path: %s)" % (new_path, self.path))
         app.db.cache.remove('metadata', self.path)
         app.db.cache.set('metadata', new_path, self)
         self.path = new_path
@@ -554,7 +551,7 @@ class MetadataManager(signals.SignalEmitter):
         """Prepare for files to be moved
 
         All queued mutagen and movie data calls will be put on hold until
-        files_moved() is called.
+        file_moved() is called.
 
         :param paths: list of paths that will be moved
         """
@@ -563,8 +560,8 @@ class MetadataManager(signals.SignalEmitter):
             for path in paths:
                 processor.remove_task_for_path(path)
 
-    def files_moved(self, move_info):
-        """Call this after files have been moved to a new location.
+    def file_moved(self, old_path, new_path):
+        """Call this after a file has been moved to a new location.
 
         Queued mutagen and movie data calls will be restarted.
 
@@ -572,24 +569,29 @@ class MetadataManager(signals.SignalEmitter):
         """
         restart_mutagen_for = []
         restart_moviedata_for = []
-        app.bulk_sql_manager.start()
         try:
-            for old_path, new_path in move_info:
-                status = self._get_status_for_path(old_path)
-                status.rename(new_path)
-                for entry in MetadataEntry.metadata_for_path(old_path):
-                    entry.rename(new_path)
-                if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
-                    restart_mutagen_for.append(new_path)
-                elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
-                    restart_moviedata_for.append(new_path)
-                self.count_tracker.file_moved(old_path, new_path)
-        finally:
-            app.bulk_sql_manager.finish()
-        for p in restart_mutagen_for:
-            self._run_mutagen(p)
-        for p in restart_moviedata_for:
-            self._run_movie_data(p)
+            status = self._get_status_for_path(old_path)
+        except KeyError:
+            logging.warn("_process_files_moved: %s not in DB", old_path)
+            return
+        if app.db.cache.key_exists('metadata', new_path):
+            # There's already an entry for the new status.  What to do
+            # here?  Let's use the new one
+            logging.warn("_process_files_moved: already an object for "
+                         "%s (old path: %s)" % (new_path, status.path))
+            self.count_tracker.file_finished(status.path)
+            self.remove_file(status.path)
+            return
+
+        status.rename(new_path)
+        for entry in MetadataEntry.metadata_for_path(old_path):
+            entry.rename(new_path)
+        if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
+            self._run_mutagen(new_path)
+        elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
+            self._run_movie_data(new_path)
+            restart_moviedata_for.append(new_path)
+        self.count_tracker.file_moved(old_path, new_path)
 
     def get_metadata(self, path):
         """Get metadata for a path
