@@ -42,8 +42,13 @@ def _add_metadata(info_dict, item_obj):
     for name in metadata.attribute_names:
         value = getattr(item_obj, name)
         if name == 'title':
-            # we change the name of "title" to "name" in ItemInfo
+            # Use "name" instead of "title" since that's what all the frontend
+            # code uses.
             name = 'name'
+        elif name == 'duration' and value is not None:
+            # convert duration from milliseconds to seconds
+            value /= 1000
+
         if value is not None or name not in info_dict:
             info_dict[name] = value
 
@@ -151,7 +156,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 35
+    VERSION = 36
 
     def __init__(self, view):
         ItemSource.__init__(self)

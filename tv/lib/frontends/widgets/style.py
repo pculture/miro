@@ -761,7 +761,7 @@ class _MultiRowAlbumRenderStrategy(object):
 
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info):
-        return item_info.cover_art
+        return item_info.cover_art_path
 
     def get_album(self, item_info):
         return item_info.album

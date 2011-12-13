@@ -325,7 +325,7 @@ class ThumbnailField(DialogOwnerMixin, Field):
     TITLE = _("Choose a thumbnail file")
     DIALOG = widgetset.FileOpenDialog
     def __init__(self, items, label):
-        Field.__init__(self, 'cover_art', items, label)
+        Field.__init__(self, 'cover_art_path', items, label)
         DialogOwnerMixin.__init__(self, self.DIALOG, self.TITLE)
         path = self.common_value
 
@@ -496,7 +496,7 @@ class GeneralPanel(DialogPanel):
         """Pack the left column into the middle HBox of the main VBox."""
         widget = widgetset.VBox()
         left = []
-        left.append(TextField('title', self.items, _("Name")))
+        left.append(TextField('name', self.items, _("Name")))
         left.append(TextField('artist', self.items, _("Artist")))
         left.append(TextField('album', self.items, _("Album")))
         left.append(TextField('genre', self.items, _("Genre")))
