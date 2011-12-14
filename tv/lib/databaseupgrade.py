@@ -3567,7 +3567,11 @@ def upgrade166(cursor):
         # data or wherever, so we use "old-item" as the source and give it a
         # low priority.
         values = [next_id, 'old-item', 10]
-        values.extend(row[1:])
+        for old_value in row[1:]:
+            if old_value != '':
+                values.append(old_value)
+            else:
+                values.append(None)
         mdp_state = row[0]
         sql = "INSERT INTO metadata (%s) VALUES (%s)" % (
             ', '.join(insert_columns),
