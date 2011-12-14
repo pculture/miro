@@ -33,6 +33,7 @@ import os.path
 import logging
 import struct
 import mutagen
+import urllib
 
 from miro import coverart
 from miro import filetypes
@@ -189,12 +190,23 @@ def _track_from_filename(full_path):
         number = ''.join(initial_int[-2:]) # e.g. '204' is disc 2, track 04
         return int(number)
 
-def _make_cover_art_file(track_path, objects, cover_art_directory=None):
+def _make_cover_art_file(album_name, objects, cover_art_directory):
     """Given an iterable of mutagen cover art objects, returns the path to a
     newly-created file created from one of the objects. If given more than one
     object, uses the one most likely to be cover art. If none of the objects are
     usable, returns None.
     """
+    if album_name is None:
+        return
+    if cover_art_directory is None:
+        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
+    # quote the album so that the filename doesn't have any illegal characters
+    # in it.
+    dest_filename = calc_cover_art_filename(album_name)
+    path = os.path.join(cover_art_directory, dest_filename)
+    if os.path.exists(path):
+        # already made cover art, no need to make it again
+        return path
     if not isinstance(objects, list):
         objects = [objects]
 
@@ -219,7 +231,7 @@ def _make_cover_art_file(track_path, objects, cover_art_directory=None):
         # no attached image is definitively cover art. use the first one.
         cover_image = images[0]
 
-    path = cover_image.write_to_file(track_path, cover_art_directory)
+    cover_image.write_to_file(path)
     return path
 
 MUTAGEN_ERRORS = None
@@ -232,7 +244,14 @@ def _setup_mutagen_errors():
             oggtheora.error, oggvorbis.error, trueaudio.error, _vorbis.error)
 _setup_mutagen_errors()
 
-def process_file(filename, cover_art_directory=None):
+def calc_cover_art_filename(album_name):
+    """Get the filename we will use to store cover art for an album."""
+    # quote the album name to avoid characters that are unsafe for the
+    # filesystem.  Chars that are safe on all platforms shouldn't be touched
+    # though
+    return urllib.quote(album_name, safe=' ,.')
+
+def process_file(filename, cover_art_directory):
     """Send a file through mutagen
 
     :param filename: path to the media file
@@ -337,11 +356,11 @@ def _parse_mutagen(filename, muta, cover_art_directory):
     cover_art_path = None
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures
-        cover_art_path = _make_cover_art_file(filename, image_data,
+        cover_art_path = _make_cover_art_file(data.get('album'), image_data,
                                               cover_art_directory)
     elif 'cover_art' in data:
         image_data = data['cover_art']
-        cover_art_path = _make_cover_art_file(filename, image_data,
+        cover_art_path = _make_cover_art_file(data.get('album'), image_data,
                                               cover_art_directory)
         del data['cover_art']
     if cover_art_path is not None:

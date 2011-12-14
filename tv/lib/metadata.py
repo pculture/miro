@@ -44,6 +44,7 @@ import sqlite3
 from miro import app
 from miro import database
 from miro import eventloop
+from miro import filetags
 from miro import filetypes
 from miro import messages
 from miro import prefs
@@ -212,6 +213,9 @@ class MetadataEntry(database.DDBObject):
     # factors.
     metadata_columns.discard('has_drm')
     metadata_columns.add('drm')
+    # cover_art_path is handled implicitly by saving the cover art using the
+    # album name
+    metadata_columns.discard('cover_art_path')
 
     def setup_new(self, path, source, data):
         self.path = path
@@ -417,12 +421,12 @@ class MetadataManager(signals.SignalEmitter):
     # items at once.
     UPDATE_INTERVAL = 1.0
 
-    def __init__(self):
+    def __init__(self, cover_art_dir):
         signals.SignalEmitter.__init__(self)
         self.create_signal('new-metadata')
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
-        self.cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
+        self.cover_art_dir = cover_art_dir
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
         self.pending_mutagen_tasks = []
@@ -607,7 +611,16 @@ class MetadataManager(signals.SignalEmitter):
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
+        self._add_cover_art_path(metadata)
         return metadata
+
+    def _add_cover_art_path(self, metadata):
+        """Add the cover art path to a metadata dict """
+        if 'album' in metadata:
+            filename = filetags.calc_cover_art_filename(metadata['album'])
+            path = os.path.join(self.cover_art_dir, filename)
+            if os.path.exists(path):
+                metadata['cover_art_path'] = path
 
     def set_user_data(self, path, user_data):
         """Update metadata based on user-inputted data

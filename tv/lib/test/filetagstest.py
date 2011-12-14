@@ -9,7 +9,8 @@ except ImportError:
 
 from miro.test.framework import MiroTestCase, dynamic_test
 
-from os import path
+import shutil
+from os import path, stat
 
 from miro.plat import resources
 from miro.filetags import process_file
@@ -40,9 +41,42 @@ class FileTagsTest(MiroTestCase):
         filename = resources.path(path.join('testdata', 'metadata', filename))
         results = process_file(filename, self.tempdir)
         # cover art nedes to be handled specially
-        if expected.pop('cover_art'):
-            self.assertNotEqual(results.pop('cover_art_path'), None)
+        cover_art = expected.pop('cover_art')
+        if cover_art:
+            # cover art should be stored using the album name as its file
+            correct_path = path.join(self.tempdir, results['album'])
+            self.assertEquals(results.pop('cover_art_path'), correct_path)
         else:
             self.assert_('cover_art_path' not in results)
         # for the rest, we just compare the dicts
         self.assertEquals(results, expected)
+
+    def test_shared_cover_art(self):
+        # test what happens when 2 files with coverart share the same album.
+        # In this case the first one we process should create the cover art
+        # file and the next one should just skip cover art processing.
+        src_path = resources.path(path.join('testdata', 'metadata',
+                                            'drm.m4v'))
+        dest_paths = []
+        for x in range(3):
+            new_filename = 'drm-%s.m4v' % x
+            dest_path = path.join(self.tempdir, new_filename)
+            shutil.copyfile(src_path, dest_path)
+            dest_paths.append(dest_path)
+
+        # process the first file
+        result_1 = process_file(dest_paths[0], self.tempdir)
+        self.assertEquals(result_1['cover_art_path'],
+                          path.join(self.tempdir, result_1['album']))
+        self.assert_(path.exists(result_1['cover_art_path']))
+        org_mtime = stat(result_1['cover_art_path']).st_mtime
+
+        # process the rest, they should fill in the cover_art_path value, but
+        # not rewrite the file
+        for dup_path in dest_paths[1:]:
+            results = process_file(dup_path, self.tempdir)
+            self.assertEquals(results['cover_art_path'],
+                              result_1['cover_art_path'])
+            self.assert_(path.exists(results['cover_art_path']))
+            self.assertEquals(stat(results['cover_art_path']).st_mtime,
+                              org_mtime)

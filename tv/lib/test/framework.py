@@ -292,7 +292,7 @@ class MiroTestCase(unittest.TestCase):
         self.allow_db_upgrade_error_dialog = False
         self.reload_database()
         self.setup_new_item_info_cache()
-        item.setup_metadata_manager()
+        item.setup_metadata_manager(self.tempdir)
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
             ]

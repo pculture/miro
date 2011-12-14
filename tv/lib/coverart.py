@@ -117,34 +117,6 @@ class Image(object):
         """
         return isinstance(image_object, cls.PROCESSES_TYPE)
 
-    @staticmethod
-    def _get_destination_path(extension, track_path, directory=None):
-        filename = "{0}.{1}.{2}".format(os.path.basename(track_path),
-                   util.random_string(5), extension)
-        if directory is None:
-            directory = app.config.get(prefs.COVER_ART_DIRECTORY)
-        # make the directory if necessary:
-        try:
-            fileutil.makedirs(directory)
-        except StandardError:
-            pass
-        return os.path.join(directory, filename)
-
-    @staticmethod
-    def from_file(source, track_path):
-        """Copy a file to use as cover art."""
-        if not fileutil.isfile(source):
-            raise ValueError('cover_art must be a file')
-        path = Image._get_destination_path(
-                     os.path.splitext(source)[1], track_path)
-        try:
-            shutil.copyfile(source, path)
-        except IOError:
-            logging.warn(
-                "Couldn't write cover art file: {0}".format(path))
-            return None
-        return path
-
     def get_extension(self):
         """Get the extension appropriate for this file's data."""
         return self.extension or Image.UNKNOWN_EXTENSION
@@ -155,12 +127,10 @@ class Image(object):
         """
         return self.is_cover
 
-    def write_to_file(self, track_path, directory=None):
+    def write_to_file(self, path):
         """Creates a new file containing this image's data.
         Returns the file's path.
         """
-        path = self._get_destination_path(self.get_extension(), track_path,
-                                          directory)
         try:
             file_handle = fileutil.open_file(path, 'wb')
             file_handle.write(self.data) 

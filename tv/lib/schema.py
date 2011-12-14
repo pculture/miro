@@ -473,8 +473,8 @@ class ItemSchema(MultiClassObjectSchema):
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
-        ('cover_art_path', SchemaFilename(noneOk=True)),
         # metadata:
+        ('cover_art_path', SchemaFilename(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
@@ -850,7 +850,6 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('album_artist', SchemaString(noneOk=True)),
         ('album_tracks', SchemaInt(noneOk=True)),
         ('artist', SchemaString(noneOk=True)),
-        ('cover_art_path', SchemaFilename(noneOk=True)),
         ('screenshot_path', SchemaFilename(noneOk=True)),
         ('drm', SchemaBool(noneOk=True)),
         ('genre', SchemaString(noneOk=True)),
@@ -874,7 +873,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_path_and_source', ('path', 'source')),
     )
 
-VERSION = 166
+VERSION = 167
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

@@ -42,6 +42,7 @@ import itertools
 import os
 import re
 import logging
+import shutil
 import time
 import urllib
 
@@ -3599,3 +3600,35 @@ def upgrade166(cursor):
     alter_table_columns(cursor, 'item', delete_columns, rename_columns)
 
     cursor.execute("ALTER TABLE item ADD torrent_title TEXT")
+
+def upgrade167(cursor):
+    """Drop the cover_art_path on the metadata table."""
+
+    cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
+
+    # Move all current cover art so that it's in at the path
+    # <support-dir>/cover-art/<album-name>
+    already_moved = set()
+    cursor.execute("SELECT album, cover_art_path from metadata "
+                   "WHERE cover_art_path IS NOT NULL AND "
+                      "album IS NOT NULL")
+    for (album, cover_art_path) in cursor.fetchall():
+        if album in already_moved:
+            try:
+                os.remove(cover_art_path)
+            except StandardError:
+                logging.warn("upgrade167: Error deleting %s", cover_art_path)
+        # quote the filename using the same logic as
+        # filetags.calc_cover_art_filename()
+        dest_filename = urllib.quote(album, safe=' ,.')
+        dest_path = os.path.join(cover_art_dir, dest_filename)
+        try:
+            shutil.move(cover_art_path, dest_path)
+        except StandardError:
+            logging.warn("upgrade167: Error moving %s -> %s", cover_art_path,
+                         dest_path)
+        already_moved.add(album)
+
+    # Now that the cover art is in the correct place, we don't need to store
+    # it in the database anymore.
+    remove_column(cursor, 'metadata', ['cover_art_path'])

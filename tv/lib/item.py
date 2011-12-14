@@ -2602,9 +2602,11 @@ def move_orphaned_items():
         databaselog.info("Moved items to manual feed because their parent was "
                 "gone: %s", ', '.join(parentless_items))
 
-def setup_metadata_manager():
+def setup_metadata_manager(cover_art_dir=None):
     """Setup the MetadataManager for Items and FileItems."""
-    app.local_metadata_manager = metadata.MetadataManager()
+    if cover_art_dir is None:
+        cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
+    app.local_metadata_manager = metadata.MetadataManager(cover_art_dir)
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
 
 def on_new_metadata(metadata_manager, new_metadata):
