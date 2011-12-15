@@ -71,6 +71,9 @@ class Controller:
         if app.download_state_manager is not None:
             app.download_state_manager.shutdown_downloader(
                 self.downloader_shutdown)
+            wait_for_downloader = True
+        else:
+            wait_for_downloader = False
         try:
             logging.info("Shutting down worker process.")
             workerprocess.shutdown()
@@ -86,6 +89,8 @@ class Controller:
         except StandardError:
             signals.system.failed_exn("while shutting down")
             # don't abort - it's not "fatal" and we can still shutdown
+        if not wait_for_downloader:
+            self.downloader_shutdown()
 
     def downloader_shutdown(self):
         logging.info("Shutting down libCURL thread")
