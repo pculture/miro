@@ -205,7 +205,7 @@ class Window(WindowBase):
 
     def destroy(self):
         self.close()
-        self._window.destroy()
+        self._window  = None
         alive_windows.discard(self)
 
     def is_active(self):
@@ -365,7 +365,7 @@ class DialogBase(WindowBase):
         raise NotImplementedError()
 
     def destroy(self):
-        self._window.destroy()
+        self._window = None
 
 class Dialog(DialogBase):
     def __init__(self, title, description=None):
@@ -421,9 +421,6 @@ class Dialog(DialogBase):
             return -1
         else:
             return response - 1 # response IDs started at 1
-
-    def destroy(self):
-        DialogBase.destroy(self)
 
     def set_extra_widget(self, widget):
         self.extra_widget = widget

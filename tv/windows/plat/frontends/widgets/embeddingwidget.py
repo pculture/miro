@@ -46,10 +46,8 @@ def init():
     embeddingwindow.init()
 
 def shutdown():
-    # copy _live_widgets since we will be changing it when we call destroy()
-    to_destroy = list(_live_widgets)
-    for widget in to_destroy:
-        widget.destroy()
+    # This should release the reference and it should garbage collect
+    _live_widgets = set()
 
 class EmbeddingWidget(gtk.DrawingArea):
     """EmbeddingWidget -- GTK widget for embedding other components."""

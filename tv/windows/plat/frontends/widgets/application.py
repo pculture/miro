@@ -252,9 +252,6 @@ class WindowsApplication(Application):
     def quit_ui(self):
         logging.debug('Destroying EmbeddingWidgets')
         embeddingwidget.shutdown()
-        logging.debug('Destroying persistent window widgets')
-        for widget in persistentwindow.get_widgets():
-            widget.destroy()
         if hasattr(self, "trayicon"):
             logging.debug('Hiding tray icon')
             self.trayicon.set_visible(False)

@@ -65,7 +65,7 @@ class Window:
         return True
 
     def close(self):
-        self._widget.destroy()
+        self._widget = None
 
     def set_content_widget(self, widget):
         """Set the widget that will be drawn in the content area for this
