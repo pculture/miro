@@ -3514,7 +3514,8 @@ def upgrade166(cursor):
     # title_tag.  Set the title column to be that value for the conversion.
     # As a side-effect this makes the title column the same as what
     # get_metadata() would return.
-    cursor.execute("UPDATE item SET title=title_tag WHERE title IS NULL")
+    cursor.execute("UPDATE item SET title=title_tag "
+                   "WHERE title IS NULL OR title == ''")
 
     # map columns in metadata table to their old name in item
     column_map = {
