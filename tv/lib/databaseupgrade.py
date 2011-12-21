@@ -3625,7 +3625,7 @@ def upgrade167(cursor):
                 logging.warn("upgrade167: Error deleting %s", cover_art_path)
         # quote the filename using the same logic as
         # filetags.calc_cover_art_filename()
-        dest_filename = urllib.quote(album, safe=' ,.')
+        dest_filename = urllib.quote(album.encode('utf-8'), safe=' ,.')
         dest_path = os.path.join(cover_art_dir, dest_filename)
         try:
             shutil.move(cover_art_path, dest_path)

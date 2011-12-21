@@ -38,6 +38,7 @@ import urllib
 from miro import coverart
 from miro import filetypes
 from miro import app
+from miro.plat.utils import PlatformFilenameType
 
 # increment this after adding to TAGS_FOR_ATTRIBUTE or changing read_metadata() in a way
 # that will increase data identified (will not change values already extracted)
@@ -245,11 +246,18 @@ def _setup_mutagen_errors():
 _setup_mutagen_errors()
 
 def calc_cover_art_filename(album_name):
-    """Get the filename we will use to store cover art for an album."""
+    """Get the filename we will use to store cover art for an album.
+
+    :returns: PlatformFilenameType
+    """
+
     # quote the album name to avoid characters that are unsafe for the
     # filesystem.  Chars that are safe on all platforms shouldn't be touched
     # though
-    return urllib.quote(album_name, safe=' ,.')
+    ascii_filename = urllib.quote(album_name.encode('utf-8'), safe=' ,.')
+    # since the filename is ASCII it should be safe to convert to any platform
+    # filename type
+    return PlatformFilenameType(ascii_filename)
 
 def process_file(filename, cover_art_directory):
     """Send a file through mutagen

@@ -13,7 +13,8 @@ import shutil
 from os import path, stat
 
 from miro.plat import resources
-from miro.filetags import process_file
+from miro.plat.utils import PlatformFilenameType
+from miro.filetags import calc_cover_art_filename, process_file
 
 @dynamic_test(expected_cases=8)
 class FileTagsTest(MiroTestCase):
@@ -80,3 +81,20 @@ class FileTagsTest(MiroTestCase):
             self.assert_(path.exists(results['cover_art_path']))
             self.assertEquals(stat(results['cover_art_path']).st_mtime,
                               org_mtime)
+
+@dynamic_test()
+class TestCalcCoverArtFilename(MiroTestCase):
+    @classmethod
+    def generate_tests(cls):
+        return [
+            (u'Simple Album Name', 'Simple Album Name'),
+            (u'Bad/File\0Parts<>:"\\|?*', 
+             'Bad%2FFile%00Parts%3C%3E%3A%22%5C%7C%3F%2A'),
+            (u'Extended Chars\xf3', 'Extended Chars%C3%B3'),
+        ]
+
+    def dynamic_test_case(self, album_name, correct_filename):
+        self.assertEquals(calc_cover_art_filename(album_name),
+                          correct_filename)
+        self.assert_(isinstance(calc_cover_art_filename(album_name),
+                     PlatformFilenameType))
