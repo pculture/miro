@@ -94,4 +94,4 @@ class VideoWidget(base.Widget):
         self.renderer = renderer
 
     def destroy(self):
-        self._widget.destroy()
+        self._widget = None
