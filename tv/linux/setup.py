@@ -105,6 +105,8 @@ platform_extensions_dir = os.path.join(platform_dir, 'extensions')
 echonest_dir = os.path.join(root_dir, 'contrib', 'pyechonest')
 echoprint_dir = os.path.join(platform_dir, 'contrib', 'echoprint-codegen')
 echoprint_src_dir = os.path.join(echoprint_dir, 'src')
+enmfp_path = os.path.join(platform_dir, 'contrib', 'enmfp-codegen',
+                          'codegen.Linux-i686')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -455,9 +457,13 @@ class miro_build(build):
         self.move_file(src_binary, dest_binary)
         self.distribution.scripts.append(dest_binary)
 
+    def build_enmfp_codegen(self):
+        self.distribution.scripts.append(enmfp_path)
+
     def run(self):
         self.build_segmenter()
         self.build_echoprint_codegen()
+        self.build_enmfp_codegen()
         build.run(self)
 
 class test_system(Command):

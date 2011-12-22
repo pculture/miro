@@ -278,6 +278,7 @@ def get_app_menu():
                     "ForceFeedparserProcessing"),
                 MenuItem(_("Clog Backend"), "ClogBackend"),
                 MenuItem(_("Run Echoprint"), "RunEchoprint"),
+                MenuItem(_("Run ENMFP"), "RunENMFP"),
                 MenuItem(_("Run Donate Popup"), "RunDonatePopup")
                 ])
         )
@@ -591,6 +592,13 @@ def on_run_echoprint():
     print 'Running echoprint'
     print '-' * 50
     subprocess.call([utils.get_echoprint_executable_path()])
+    print '-' * 50
+
+@action_handler("RunENMFP")
+def on_run_echoprint():
+    print 'Running enmfp-codegen'
+    print '-' * 50
+    subprocess.call([utils.get_enmfp_executable_path()])
     print '-' * 50
 
 @action_handler("RunDonatePopup")
