@@ -117,13 +117,10 @@ class GtkVideoWidget(gtk.DrawingArea):
             cr.fill()
 
     def destroy(self):
-        # unrealize if we need to
-        if self.flags() & gtk.REALIZED:
-            self.unrealize()
         # unset our renderer window
         self.renderer.set_window_id(None)
         # destroy our gstreamer window
-        self.gstreamer_window.destroy()
+        self.gstreamer_window = None
         # let DrawingArea take care of the rest
         gtk.DrawingArea.destroy(self)
 
@@ -162,4 +159,4 @@ class VideoWidget(base.Widget):
                 gtk.gdk.POINTER_MOTION_MASK)
 
     def destroy(self):
-        self._widget.destroy()
+        self._widget = None

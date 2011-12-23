@@ -55,8 +55,6 @@ def _get_dummy_window():
                 wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
     return _dummy_window
 
-_persistent_window_to_widget = weakref.WeakValueDictionary()
-
 class PersistentWindow(gtk.DrawingArea):
     """GTK Widget that keeps around a GDK window from the time it's realized
     to the time it's destroyed.
@@ -71,7 +69,6 @@ class PersistentWindow(gtk.DrawingArea):
         self.persistent_window = gtk.gdk.Window(_get_dummy_window(),
                 x=0, y=0, width=1, height=1, window_type=gtk.gdk.WINDOW_CHILD,
                 wclass=gtk.gdk.INPUT_OUTPUT, event_mask=self.get_events())
-        _persistent_window_to_widget[self.persistent_window] = self
 
     def set_events(self, event_mask):
         gtk.DrawingArea.set_events(self, event_mask)
@@ -108,16 +105,9 @@ class PersistentWindow(gtk.DrawingArea):
         try:
             gtk.DrawingArea.do_destroy(self)
             self.persistent_window.withdraw()
-            self.persistent_window.destroy()
             self.persistent_window = None
         except AttributeError:
             # Probably means we're in shutdown, so our symbols have been
             # deleted
             pass
 gobject.type_register(PersistentWindow)
-
-def get_widgets():
-    retval = []
-    for window in _get_dummy_window().get_children():
-        retval.append(_persistent_window_to_widget[window])
-    return retval
