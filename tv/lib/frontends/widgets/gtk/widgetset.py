@@ -52,6 +52,7 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
      FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
      AlertDialog, DialogWindow
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
+from miro.frontends.widgets.gtk.donatewindow import DonateWindow
 from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
         InfoListModel, TableColumn, TreeTableModel, CUSTOM_HEADER_HEIGHT)
 from miro.frontends.widgets.gtk.tableviewcells import (CellRenderer,

@@ -339,6 +339,7 @@ for dir in ('searchengines', 'images', 'conversions', 'devices'):
     data_files.extend(find_data_files(dest_dir, source_dir))
 
 data_files.append(('resources', [os.path.join(root_dir, 'CREDITS')]))
+data_files.append(('resources', [os.path.join(resources_dir, 'donate.html')]))
 
 data_files.extend(find_data_files("extensions", extensions_dir))
 

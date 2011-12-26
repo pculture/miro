@@ -309,6 +309,7 @@ for dir in ('searchengines',
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
+data_files.append((dest_dir, [os.path.join(resource_dir, 'donate.html')]))
 
 # add core extension files
 for root, dirs, files in os.walk(extensions_dir):
