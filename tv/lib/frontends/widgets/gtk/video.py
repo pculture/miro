@@ -593,6 +593,7 @@ class VideoPlayer(player.GTKPlayer, VBox):
             self.pack_start(self._video_details)
             main_window.main_vbox.pack_start(main_window.controls_hbox)
 
+            self.overlay.destroy()
             self.overlay = None
 
     def rebuild_video_details(self):
