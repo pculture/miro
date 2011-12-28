@@ -43,6 +43,7 @@ import sqlite3
 
 from miro import app
 from miro import database
+from miro import echonest
 from miro import eventloop
 from miro import filetags
 from miro import filetypes
@@ -50,7 +51,8 @@ from miro import messages
 from miro import prefs
 from miro import signals
 from miro import workerprocess
-from miro.plat.utils import filename_to_unicode
+from miro.plat.utils import (filename_to_unicode,
+                             get_enmfp_executable_path)
 
 attribute_names = set([
     'file_type', 'duration', 'album', 'album_artist', 'album_tracks',
@@ -62,7 +64,7 @@ attribute_names = set([
 class MetadataStatus(database.DDBObject):
     """Stores the status of different metadata extractors for a file
 
-    For each metadata extractor (mutagen, movie data program, echoprint, etc),
+    For each metadata extractor (mutagen, movie data program, echonest, etc),
     we store if that extractor has run yet, has failed, is being skipped, etc.
     """
 
@@ -82,13 +84,16 @@ class MetadataStatus(database.DDBObject):
     _source_name_to_status_column = {
         u'mutagen': 'mutagen_status',
         u'movie-data': 'moviedata_status',
+        u'echonest': 'echonest_status',
     }
 
     def setup_new(self, path):
         self.path = path
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
+        self.echonest_status = self.STATUS_NOT_RUN
         self.mutagen_thinks_drm = False
+        self.echonest_id = None
         self.max_entry_priority = -1
         self._add_to_cache()
 
@@ -153,6 +158,9 @@ class MetadataStatus(database.DDBObject):
                 self.moviedata_status = self.STATUS_SKIP
             thinks_drm = entry.drm if entry.drm is not None else False
             self.mutagen_thinks_drm = thinks_drm
+        elif entry.source == 'movie-data':
+            if entry.file_type != u'audio':
+                self.echonest_status = self.STATUS_SKIP
         self.max_entry_priority = max(self.max_entry_priority, entry.priority)
         self.signal_change()
 
@@ -171,6 +179,12 @@ class MetadataStatus(database.DDBObject):
     def update_after_error(self, source_name):
         """Update after we failed to extract some metadata."""
         self._set_status_column(source_name, self.STATUS_FAILURE)
+        if (source_name == u'movie-data' and
+            self.mutagen_status == self.STATUS_FAILURE):
+            # If both mutagen and moviedata couldn't read the file, don't
+            # bother sending it to the ENMFP.  If we can't get the code, then
+            # we have to skip echonest.
+            self.echonest_status = self.STATUS_SKIP
         self.signal_change()
 
     def rename(self, new_path):
@@ -189,6 +203,14 @@ class MetadataStatus(database.DDBObject):
         return cls.select(columns,
                           'mutagen_status != ? AND moviedata_status=?',
                           (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN))
+
+    @classmethod
+    def needs_echonest_select(cls, columns):
+        return cls.select(columns,
+                          'mutagen_status != ? AND moviedata_status != ? AND '
+                          'echonest_status = ?',
+                          (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN,
+                           cls.STATUS_NOT_RUN))
 
 class MetadataEntry(database.DDBObject):
     """Stores metadata from a single source.
@@ -256,24 +278,44 @@ class MetadataEntry(database.DDBObject):
                              (source, filename_to_unicode(path)))
         return view.get_singleton()
 
-class _TaskProcessor(signals.SignalEmitter):
-    """Handle sending tasks to the worker process.
+class _MetadataProcessor(signals.SignalEmitter):
+    """Base class for processors that handle getting metadata somehow.
 
     Responsible for:
-        - sending messages
+        - starting the extraction processes
         - queueing messages after we reach a limit
         - handling callbacks and errbacks
 
+    Attributes:
+
+    source_name -- Name to identify the source name.  This should match the
+                   Metadata.source attribute
+
     Signals:
 
-    - task-complete(path, result_dict) -- we successfully extracted metadata
+    - task-complete(path, results) -- we successfully extracted metadata
     - task-error(path) -- we failed to extract metadata
     """
-    def __init__(self, source_name, limit):
+    def __init__(self, source_name):
         signals.SignalEmitter.__init__(self)
         self.create_signal('task-complete')
         self.create_signal('task-error')
         self.source_name = source_name
+
+    def remove_task_for_path(self, path):
+        """Cancel any pending tasks for a path.
+
+        _MetadataProcessors should make their best attempt to stop the task,
+        but since they are all using threads and/or different processes,
+        there's always a chance that the task will still be processed
+        """
+        pass
+
+class _TaskProcessor(_MetadataProcessor):
+    """Handle sending tasks to the worker process.  """
+
+    def __init__(self, source_name, limit):
+        _MetadataProcessor.__init__(self, source_name)
         self.limit = limit
         # map source paths to tasks
         self._active_tasks = {}
@@ -325,6 +367,69 @@ class _TaskProcessor(signals.SignalEmitter):
                      error)
         self.emit('task-error', task.source_path)
         self.remove_task_for_path(task.source_path)
+
+class _EchonestCodegenProcessor(_MetadataProcessor):
+    """Processor runs echonest code generators.
+
+    Currently we use ENMF, but we may switch to echoprint in the future
+
+    _EchonestCodegenProcessor is unique because we only output the echonest
+    code not any acutal metadata.
+
+    _EchonestCodegenProcessor is in charge of stopping calling the codegen
+    processor once a certain buffer of codes is built up.  Once echonest
+    responds to our queries about the code, then query_finished() is called
+    and _EchonestCodegenProcessor will send another file to the codegen
+    processor.
+    """
+
+    def __init__(self, buffer_size):
+        _MetadataProcessor.__init__(self, u'echonest')
+        self._queued_paths = collections.deque()
+        self._running_codegen = False
+        self._buffer_size = buffer_size
+        self._outstanding_codes = 0
+        self._codegen_path = get_enmfp_executable_path()
+        self._enabled = app.config.get(prefs.ECHONEST_ENABLED)
+        app.backend_config_watcher.connect("changed", self._on_config_change)
+
+    def add_path(self, path):
+        self._queued_paths.append(path)
+        self._process_queue()
+
+    def query_finished(self):
+        self._outstanding_codes -= 1
+
+    def _run_codegen(self, path):
+        echonest.exec_codegen(self._codegen_path, path, self._callback,
+                                self._errback)
+        self._running_codegen = True
+
+    def _callback(self, path, code):
+        self.emit('task-complete', path, code)
+        self._running_codegen = False
+        self._outstanding_codes += 1
+        self._process_queue()
+
+    def _errback(self, path, error):
+        logging.warn("Error running echonest codegen for %s (%s)" %
+                     (path, error))
+        self.emit('task-error', path)
+        self._running_codegen = False
+        self._process_queue()
+
+    def _on_config_change(self, watcher, key, value):
+        if key == prefs.ECHONEST_ENABLED.key:
+            self._enabled = value
+            if value:
+                self._process_queue()
+
+    def _process_queue(self):
+        if (self._queued_paths and
+            self._enabled and
+            not self._running_codegen and
+            self._outstanding_codes < self._buffer_size):
+            self._run_codegen(self._queued_paths.popleft())
 
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
@@ -405,7 +510,7 @@ class MetadataManager(signals.SignalEmitter):
 
     This class is responsible for:
     - creating/updating MetadataStatus and MetadataEntry objects
-    - invoking mutagen, moviedata, echoprint, and other extractors
+    - invoking mutagen, moviedata, echonest, and other extractors
     - combining all the metadata we have for a path into a single dict.
 
     Signals:
@@ -426,19 +531,22 @@ class MetadataManager(signals.SignalEmitter):
         self.create_signal('new-metadata')
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
+        self.echonest_codegen_processor = _EchonestCodegenProcessor(5)
         self.cover_art_dir = cover_art_dir
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
         self.pending_mutagen_tasks = []
         self.bulk_add_count = 0
-        self.all_task_processors = [
+        self.metadata_processors = [
             self.mutagen_processor,
-            self.moviedata_processor
+            self.moviedata_processor,
+            self.echonest_codegen_processor,
         ]
-        for processor in self.all_task_processors:
+        for processor in self.metadata_processors:
             processor.connect("task-complete", self._on_task_complete)
             processor.connect("task-error", self._on_task_error)
         self.count_tracker = _ProcessingCountTracker()
+        self.echonest_codes = {}
         # List of (processor, path, metadata) tuples for metadata since the
         # last _run_updates() call
         self.metadata_finished = []
@@ -546,7 +654,7 @@ class MetadataManager(signals.SignalEmitter):
             for entry in MetadataEntry.metadata_for_path(path):
                 entry.remove()
             self.count_tracker.file_finished(path)
-        for processor in self.all_task_processors:
+        for processor in self.metadata_processors:
             for path in paths:
                 processor.remove_task_for_path(path)
         self._schedule_update()
@@ -560,7 +668,7 @@ class MetadataManager(signals.SignalEmitter):
         :param paths: list of paths that will be moved
         """
         workerprocess.cancel_tasks_for_files(paths)
-        for processor in self.all_task_processors:
+        for processor in self.metadata_processors:
             for path in paths:
                 processor.remove_task_for_path(path)
 
@@ -646,8 +754,10 @@ class MetadataManager(signals.SignalEmitter):
         """
         self.restart_mutagen_ids = [row[0] for row in
                                     MetadataStatus.needs_mutagen_select(['id'])]
-        self.restart_moviedata_ids = [row[0] for row in 
-                                    MetadataStatus.needs_moviedata_select(['id'])]
+        self.restart_moviedata_ids = [row[0] for row in
+                                      MetadataStatus.needs_moviedata_select(['id'])]
+        self.restart_echonest_ids = [row[0] for row in
+                                      MetadataStatus.needs_echonest_select(['id'])]
 
     def restart_incomplete(self):
         """Restart extractors for files with incomplete metadata
@@ -674,8 +784,19 @@ class MetadataManager(signals.SignalEmitter):
             # Add file to our _ProcessingCountTracker.
             self.count_tracker.file_started(status.path,
                                             self.get_metadata(status.path))
+
+        for id_ in self.restart_echonest_ids:
+            try:
+                status = MetadataStatus.get_by_id(id_)
+            except database.ObjectNotFoundError:
+                pass # just ignore deleted objects
+            self._run_echonest(status.path)
+            # Add file to our _ProcessingCountTracker.
+            self.count_tracker.file_started(status.path,
+                                            self.get_metadata(status.path))
         self.restart_mutagen_ids = []
         self.restart_moviedata_ids = []
+        self.restart_echonest_ids = []
         self._schedule_update()
 
     def _get_status_for_path(self, path):
@@ -697,6 +818,10 @@ class MetadataManager(signals.SignalEmitter):
         """Run the movie data program on a path."""
         task = workerprocess.MovieDataProgramTask(path, self.screenshot_dir)
         self.moviedata_processor.add_task(task)
+
+    def _run_echonest(self, path):
+        # The first step to running echonest is to get the code.
+        self.echonest_codegen_processor.add_path(path)
 
     def _on_task_complete(self, processor, path, result):
         self.metadata_finished.append((processor, path, result))
@@ -750,21 +875,28 @@ class MetadataManager(signals.SignalEmitter):
                 logging.warn("_process_metadata_finished -- path removed: %s",
                              path)
                 continue
-            entry = MetadataEntry(path, processor.source_name, result)
-            if entry.priority >= status.max_entry_priority:
-                # If this entry is going to overwrite all other metadata, then
-                # we don't have to call get_metadata().  Just send the new
-                # values.
-                can_skip_get_metadata = True
+            if processor is self.echonest_codegen_processor:
+                self.echonest_codes[path] = result
+                # TODO: Acutally do something with the code
             else:
-                can_skip_get_metadata = False
-            status.update_after_success(entry)
-            if can_skip_get_metadata:
-                self.new_metadata[path].update(result)
-            else:
-                self.new_metadata[path] = self.get_metadata(path)
+                self._make_new_metadata_entry(status, processor, path, result)
             self._processor_finished(processor, status)
         self.metadata_finished = []
+
+    def _make_new_metadata_entry(self, status, processor, path, result):
+        entry = MetadataEntry(path, processor.source_name, result)
+        if entry.priority >= status.max_entry_priority:
+            # If this entry is going to overwrite all other metadata, then
+            # we don't have to call get_metadata().  Just send the new
+            # values.
+            can_skip_get_metadata = True
+        else:
+            can_skip_get_metadata = False
+        status.update_after_success(entry)
+        if can_skip_get_metadata:
+            self.new_metadata[path].update(result)
+        else:
+            self.new_metadata[path] = self.get_metadata(path)
 
     def _process_metadata_errors(self):
         for (processor, path) in self.metadata_errors:
@@ -785,9 +917,13 @@ class MetadataManager(signals.SignalEmitter):
     def _processor_finished(self, processor, status):
         """Called after both success and failure of a metadata processor
         """
-        if (processor is self.mutagen_processor and 
-            status.moviedata_status == MetadataStatus.STATUS_NOT_RUN):
+        # check what the next processor we should run is
+        if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
+            self._run_mutagen(status.path)
+        elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
             self._run_movie_data(status.path)
+        elif status.echonest_status == MetadataStatus.STATUS_NOT_RUN:
+            self._run_echonest(status.path)
         else:
             self.count_tracker.file_finished(status.path)
 

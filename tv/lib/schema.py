@@ -824,6 +824,8 @@ class MetadataStatusSchema(DDBObjectSchema):
         ('path', SchemaFilename()),
         ('mutagen_status', SchemaString()),
         ('moviedata_status', SchemaString()),
+        ('echonest_status', SchemaString()),
+        ('echonest_id', SchemaString(noneOk=True)),
         ('mutagen_thinks_drm', SchemaBool()),
         ('max_entry_priority', SchemaInt()),
     ]
@@ -873,7 +875,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_path_and_source', ('path', 'source')),
     )
 
-VERSION = 167
+VERSION = 168
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

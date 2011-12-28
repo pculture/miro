@@ -3637,3 +3637,14 @@ def upgrade167(cursor):
     # Now that the cover art is in the correct place, we don't need to store
     # it in the database anymore.
     remove_column(cursor, 'metadata', ['cover_art_path'])
+
+def upgrade168(cursor):
+    """Add echonest_status and echonest_id."""
+    # make the columns
+    cursor.execute("ALTER TABLE metadata_status "
+                   "ADD COLUMN echonest_status text")
+    cursor.execute("ALTER TABLE metadata_status "
+                   "ADD COLUMN echonest_id text")
+    # set echonest_status to STATUS_NOT_RUN
+    cursor.execute("UPDATE metadata_status "
+                   "SET echonest_status='N'")

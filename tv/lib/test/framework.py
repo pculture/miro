@@ -283,6 +283,7 @@ class MiroTestCase(unittest.TestCase):
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary
         config.load_temporary()
+        self.setup_config_watcher()
         self.platform = app.config.get(prefs.APP_PLATFORM)
         self.set_temp_support_directory()
         database.set_thread(threading.currentThread())
@@ -318,6 +319,10 @@ class MiroTestCase(unittest.TestCase):
         # the class to run the downloader).
         app.download_state_manager = downloader.DownloadStateManager()
         self.mock_patchers = []
+
+    def setup_config_watcher(self):
+        app.backend_config_watcher = config.ConfigWatcher(
+            lambda func, *args: func(*args))
 
     def set_temp_support_directory(self):
         self.sandbox_support_directory = os.path.join(self.tempdir, 'support')
