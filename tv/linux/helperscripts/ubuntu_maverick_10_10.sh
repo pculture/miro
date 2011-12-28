@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script installs dependencies for building and running Miro on
-# Ubuntu 10.10 (Maverick Meerkat) beta.
+# Ubuntu 10.10 (Maverick Meerkat).
 #
 # You run this sript AT YOUR OWN RISK.  Read through the whole thing
 # before running it!
