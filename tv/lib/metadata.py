@@ -302,8 +302,8 @@ class _MetadataProcessor(signals.SignalEmitter):
         self.create_signal('task-error')
         self.source_name = source_name
 
-    def remove_task_for_path(self, path):
-        """Cancel any pending tasks for a path.
+    def remove_tasks_for_paths(self, paths):
+        """Cancel any pending tasks for paths
 
         _MetadataProcessors should make their best attempt to stop the task,
         but since they are all using threads and/or different processes,
@@ -332,18 +332,22 @@ class _TaskProcessor(_MetadataProcessor):
         workerprocess.send(task, self._callback, self._errback)
 
     def remove_task_for_path(self, path):
-        try:
-            del self._active_tasks[path]
-        except KeyError:
-            # task isn't in our system, maybe it's pending?
+        self.remove_tasks_for_paths([path])
+
+    def remove_tasks_for_paths(self, paths):
+        for path in paths:
             try:
-                del self._pending_tasks[path]
+                del self._active_tasks[path]
             except KeyError:
-                pass
-        else:
-            if self._pending_tasks:
-                path, task = self._pending_tasks.popitem()
-                self._send_task(task)
+                # task isn't in our system, maybe it's pending?
+                try:
+                    del self._pending_tasks[path]
+                except KeyError:
+                    pass
+
+        while len(self._active_tasks) < self.limit and self._pending_tasks:
+            path, task = self._pending_tasks.popitem()
+            self._send_task(task)
 
     def _callback(self, task, result):
         logging.debug("%s done: %s", self.source_name, task.source_path)
@@ -368,50 +372,41 @@ class _TaskProcessor(_MetadataProcessor):
         self.emit('task-error', task.source_path)
         self.remove_task_for_path(task.source_path)
 
-class _EchonestCodegenProcessor(_MetadataProcessor):
-    """Processor runs echonest code generators.
+class _EchonestProcessor(_MetadataProcessor):
+    """Processor runs echonest queries
 
-    Currently we use ENMF, but we may switch to echoprint in the future
+    Currently we use ENMF to generate codes, but we may switch to echoprint in
+    the future
 
-    _EchonestCodegenProcessor is unique because we only output the echonest
-    code not any acutal metadata.
-
-    _EchonestCodegenProcessor is in charge of stopping calling the codegen
-    processor once a certain buffer of codes is built up.  Once echonest
-    responds to our queries about the code, then query_finished() is called
-    and _EchonestCodegenProcessor will send another file to the codegen
-    processor.
+    _EchonestProcessor stops calling the codegen processor once a certain
+    buffer of codes to be sent to echonest is built up.
     """
 
-    def __init__(self, buffer_size):
+    def __init__(self, code_buffer_size):
         _MetadataProcessor.__init__(self, u'echonest')
-        self._queued_paths = collections.deque()
+        self._codegen_queue = collections.deque()
+        self._echonest_queue = collections.deque()
         self._running_codegen = False
-        self._buffer_size = buffer_size
-        self._outstanding_codes = 0
+        self._code_buffer_size = code_buffer_size
         self._codegen_path = get_enmfp_executable_path()
         self._enabled = app.config.get(prefs.ECHONEST_ENABLED)
         app.backend_config_watcher.connect("changed", self._on_config_change)
 
     def add_path(self, path):
-        self._queued_paths.append(path)
+        self._codegen_queue.append(path)
         self._process_queue()
-
-    def query_finished(self):
-        self._outstanding_codes -= 1
 
     def _run_codegen(self, path):
-        echonest.exec_codegen(self._codegen_path, path, self._callback,
-                                self._errback)
+        echonest.exec_codegen(self._codegen_path, path, self._codegen_callback,
+                                self._codegen_errback)
         self._running_codegen = True
 
-    def _callback(self, path, code):
-        self.emit('task-complete', path, code)
+    def _codegen_callback(self, path, code):
         self._running_codegen = False
-        self._outstanding_codes += 1
+        self._echonest_queue.append((path, code))
         self._process_queue()
 
-    def _errback(self, path, error):
+    def _codegen_errback(self, path, error):
         logging.warn("Error running echonest codegen for %s (%s)" %
                      (path, error))
         self.emit('task-error', path)
@@ -425,11 +420,24 @@ class _EchonestCodegenProcessor(_MetadataProcessor):
                 self._process_queue()
 
     def _process_queue(self):
-        if (self._queued_paths and
-            self._enabled and
+        if not self._enabled:
+            return
+        if (self._codegen_queue and
             not self._running_codegen and
-            self._outstanding_codes < self._buffer_size):
-            self._run_codegen(self._queued_paths.popleft())
+            len(self._echonest_queue) < self._code_buffer_size):
+            self._run_codegen(self._codegen_queue.popleft())
+
+        # TODO: process the echonest queue
+
+    def remove_tasks_for_paths(self, paths):
+        # remove queued tasks for paths
+        path_set = set(paths)
+        self._codegen_queue = collections.deque(
+            p for p in self._codegen_queue if p not in path_set)
+        self._echonest_queue = collections.deque(
+            p for p in self._echonest_queue if p not in path_set)
+        # since we may have deleted active paths, process the new ones
+        self._process_queue()
 
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
@@ -531,7 +539,7 @@ class MetadataManager(signals.SignalEmitter):
         self.create_signal('new-metadata')
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
-        self.echonest_codegen_processor = _EchonestCodegenProcessor(5)
+        self.echonest_processor = _EchonestProcessor(5)
         self.cover_art_dir = cover_art_dir
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
@@ -540,13 +548,12 @@ class MetadataManager(signals.SignalEmitter):
         self.metadata_processors = [
             self.mutagen_processor,
             self.moviedata_processor,
-            self.echonest_codegen_processor,
+            self.echonest_processor,
         ]
         for processor in self.metadata_processors:
             processor.connect("task-complete", self._on_task_complete)
             processor.connect("task-error", self._on_task_error)
         self.count_tracker = _ProcessingCountTracker()
-        self.echonest_codes = {}
         # List of (processor, path, metadata) tuples for metadata since the
         # last _run_updates() call
         self.metadata_finished = []
@@ -655,8 +662,7 @@ class MetadataManager(signals.SignalEmitter):
                 entry.remove()
             self.count_tracker.file_finished(path)
         for processor in self.metadata_processors:
-            for path in paths:
-                processor.remove_task_for_path(path)
+            processor.remove_tasks_for_paths(paths)
         self._schedule_update()
 
     def will_move_files(self, paths):
@@ -669,8 +675,7 @@ class MetadataManager(signals.SignalEmitter):
         """
         workerprocess.cancel_tasks_for_files(paths)
         for processor in self.metadata_processors:
-            for path in paths:
-                processor.remove_task_for_path(path)
+            processor.remove_tasks_for_paths(paths)
 
     def file_moved(self, old_path, new_path):
         """Call this after a file has been moved to a new location.
@@ -820,8 +825,7 @@ class MetadataManager(signals.SignalEmitter):
         self.moviedata_processor.add_task(task)
 
     def _run_echonest(self, path):
-        # The first step to running echonest is to get the code.
-        self.echonest_codegen_processor.add_path(path)
+        self.echonest_processor.add_path(path)
 
     def _on_task_complete(self, processor, path, result):
         self.metadata_finished.append((processor, path, result))
@@ -875,11 +879,7 @@ class MetadataManager(signals.SignalEmitter):
                 logging.warn("_process_metadata_finished -- path removed: %s",
                              path)
                 continue
-            if processor is self.echonest_codegen_processor:
-                self.echonest_codes[path] = result
-                # TODO: Acutally do something with the code
-            else:
-                self._make_new_metadata_entry(status, processor, path, result)
+            self._make_new_metadata_entry(status, processor, path, result)
             self._processor_finished(processor, status)
         self.metadata_finished = []
 

@@ -2,6 +2,7 @@ import collections
 import itertools
 import os
 import urllib
+import urlparse
 import random
 import string
 import json
@@ -11,6 +12,7 @@ from miro.test.framework import MiroTestCase, EventLoopTest
 from miro import app
 from miro import databaseupgrade
 from miro import echonest
+from miro import httpclient
 from miro import prefs
 from miro import schema
 from miro import filetypes
@@ -128,7 +130,6 @@ class MetadataManagerTest(MiroTestCase):
         self.mutagen_data = collections.defaultdict(dict)
         self.movieprogram_data = collections.defaultdict(dict)
         self.user_info_data = collections.defaultdict(dict)
-        self.echonest_codes = {}
         self.processor = MockMetadataProcessor(self.tempdir)
         self.patch_function('miro.workerprocess.send', self.processor.send)
         self.patch_function('miro.echonest.exec_codegen',
@@ -172,23 +173,6 @@ class MetadataManagerTest(MiroTestCase):
                 if key in dct:
                     del dct[key]
         self.assertDictEquals(metadata, correct_metadata)
-        self.check_echonest_code(path)
-
-    def check_echonest_code(self, path):
-        status = metadata.MetadataStatus.get_by_path(path)
-        if path not in self.echonest_codes:
-            if path in self.metadata_manager.echonest_codes:
-                raise AsssertionError("MetadataManager has code for %s" %
-                                      path)
-        elif isinstance(self.echonest_codes[path], Exception):
-            self.assertEquals(status.echonest_status,
-                              metadata.MetadataStatus.STATUS_FAILURE)
-            if path in self.metadata_manager.echonest_codes:
-                raise AsssertionError("MetadataManager has code for %s" %
-                                      path)
-        else:
-            self.assertEquals(self.metadata_manager.echonest_codes[path],
-                              self.echonest_codes[path])
 
     def make_path(self, filename):
         """Create a pathname for that file in the "/videos" directory
@@ -316,14 +300,12 @@ class MetadataManagerTest(MiroTestCase):
     def check_run_echonest_codegen(self, filename):
         path = self.make_path(filename)
         code = self.calc_fake_echonest_code(path)
-        self.echonest_codes[path] = code
         self.processor.run_echonest_codegen_callback(path, code)
         self.check_metadata(path)
 
     def check_echonest_codegen_error(self, filename):
         path = self.make_path(filename)
         error = IOError()
-        self.echonest_codes[path] = error
         self.processor.run_echonest_codegen_errback(path, error)
         self.check_metadata(path)
 
@@ -525,31 +507,58 @@ class MetadataManagerTest(MiroTestCase):
         self.check_path_in_system('other-file.avi', False)
 
     def test_delete(self):
-        # add a couple files at different points in the metadata process
-        self.check_add_file('foo.avi')
-        self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
-        self.check_add_file('bar.mp3')
-        self.check_add_file('baz.avi')
-        self.check_run_mutagen('baz.avi', 'video', 100, 'Foo')
-        self.check_run_movie_data('baz.avi', 'video', 100, True)
-        self.check_queued_moviedata_calls(['foo.avi'])
-        self.check_queued_mutagen_calls(['bar.mp3'])
-        # remove the files
-        to_remove = ['/videos/foo.avi', '/videos/bar.mp3', '/videos/baz.avi' ]
-        self.metadata_manager.remove_file(to_remove[0])
-        self.metadata_manager.remove_files(to_remove[1:])
+        # add many files at different points in the metadata process
+        files_in_mutagen = []
+        for x in range(10):
+            filename = 'in-mutagen-%i.mp3' % x
+            files_in_mutagen.append(self.make_path(filename))
+            self.check_add_file(filename)
+
+        files_in_moviedata = []
+        for x in range(10):
+            filename = 'in-movie-data-%i.avi' % x
+            files_in_moviedata.append(self.make_path(filename))
+            self.check_add_file(filename)
+            self.check_run_mutagen(filename, 'video', 100, 'Foo')
+
+        files_in_echonest = []
+        for x in range(10):
+            filename = 'in-echonest-%i.mp3' % x
+            files_in_echonest.append(self.make_path(filename))
+            self.check_add_file(filename)
+            self.check_run_mutagen(filename, 'audio', 100, 'Foo')
+
+        files_finished = []
+        for x in range(10):
+            filename = 'finished-%i.avi' % x
+            files_finished.append(self.make_path(filename))
+            self.check_add_file(filename)
+            self.check_run_mutagen(filename, 'video', 100, 'Foo')
+            self.check_run_movie_data(filename, 'video', 100, True)
+
+        # remove the files using both api calls
+        all_paths = (files_in_mutagen + files_in_moviedata +
+                     files_in_echonest + files_finished)
+
+        self.metadata_manager.remove_file(all_paths[0])
+        self.metadata_manager.remove_files(all_paths[1:])
         # check that the metadata manager sent a CancelFileOperations message
-        self.assertEquals(self.processor.canceled_files, set(to_remove))
+        self.assertEquals(self.processor.canceled_files, set(all_paths))
+        # check that echonest calls were canceled
+        echonest_processor = self.metadata_manager.echonest_processor
+        self.assertEquals(len(echonest_processor._codegen_queue), 0)
+        self.assertEquals(len(echonest_processor._echonest_queue), 0)
         # check that none of the videos are in the metadata manager
-        for path in to_remove:
+        for path in all_paths:
             self.assertRaises(KeyError, self.metadata_manager.get_metadata,
                               path)
         # check that callbacks/errbacks for those files don't result in
         # errors.  The metadata system may have already been processing the
         # file when it got the CancelFileOperations message.
-        self.processor.run_movie_data_callback('/videos/foo.avi', 'video',
-                                               100, True)
-        self.processor.run_mutagen_errback('/videos/bar.mp3', ValueError())
+        self.processor.run_movie_data_callback(
+            files_in_moviedata[0], 'video', 100, True)
+        self.processor.run_mutagen_errback(
+            files_in_mutagen[0], ValueError())
 
     def test_user_and_torrent_data(self):
         self.check_add_file('foo.avi')
@@ -742,3 +751,300 @@ class TestCodegen(EventLoopTest):
         self.assertEquals(self.callback_data, None)
         self.assertEquals(self.errback_data[0], song_path)
         self.assert_(isinstance(self.errback_data[1], Exception))
+
+
+mock_grab_url = mock.Mock()
+@mock.patch('miro.httpclient.grab_url', new=mock_grab_url)
+class TestEchonestQueries(MiroTestCase):
+    """Test our echonest handling code"""
+
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        mock_grab_url.reset_mock()
+        self.callback_data = self.errback_data = None
+        self.path = "/videos/FakeSong.mp3"
+        self.album_art_dir = os.path.join(self.tempdir, 'echonest-album-art')
+        os.makedirs(self.album_art_dir)
+        # data to send to echonest.  Note that the metadata we pass to
+        # query_echonest() doesn't neseccarily relate to the fake reply we
+        # send back.
+        self.echonest_code = "FaKe=EChoNEST+COdE"
+        self.query_metadata = {
+            "artist": "Michael jackson",
+            "album": "800 chansons des annes 80",
+            "title": "Billie jean",
+            "duration": 294,
+        }
+        self.echonest_id = "fake-id-echonest"
+        self.seven_digital_id = "fake-id-7digital"
+        self.album_art_url = None
+        self.album_art_data = "fake-album-art-data"
+        # 7digital release ids
+        self.bossanova_release_id = 189844
+        self.release_ids_for_billie_jean = [
+            518377, 280410, 307167, 289401, 282494, 282073, 624250, 312343,
+            391641, 341656, 284075, 280538, 283379, 312343, 669160, 391639,
+        ]
+        echonest._EchonestQuery.seven_digital_cache = {}
+
+    def callback(self, *args):
+        self.callback_data = args
+
+    def errback(self, *args):
+        self.errback_data = args
+
+    def start_query(self):
+        """Call echonest.query_echonest()."""
+        # This tracks the metadata we except to see back from query_echonest()
+        self.reply_metadata = {}
+        echonest.query_echonest(self.path, self.album_art_dir,
+                                self.echonest_code, '3.15',
+                                self.query_metadata,
+                                self.callback, self.errback)
+
+    def check_grab_url(self, url, query_dict=None, write_file=None):
+        """Check that grab_url was called with a given URL.
+        """
+        self.assertEquals(mock_grab_url.call_count, 1)
+        args, kwargs = mock_grab_url.call_args
+        if write_file is None:
+            self.assertEquals(kwargs, {})
+        else:
+            self.assertEquals(kwargs, {'write_file': write_file})
+        self.assertEquals(len(args), 3)
+        grabbed_url = urlparse.urlparse(args[0])
+        parsed_url = urlparse.urlparse(url)
+        self.assertEquals(grabbed_url.scheme, parsed_url.scheme)
+        self.assertEquals(grabbed_url.netloc, parsed_url.netloc)
+        self.assertEquals(grabbed_url.path, parsed_url.path)
+        self.assertEquals(grabbed_url.fragment, parsed_url.fragment)
+        if query_dict:
+            self.assertDictEquals(urlparse.parse_qs(grabbed_url.query),
+                                  query_dict)
+        else:
+            self.assertEquals(grabbed_url.query, '')
+
+    def check_echonest_grab_url_call(self):
+        """Check the url sent to grab_url to perform our echonest query."""
+        echonest_url = 'http://developer.echonest.com/api/v4/song/identify'
+        correct_query = {
+            'api_key': [echonest.ECHO_NEST_API_KEY],
+            'code': [self.echonest_code],
+            'artist': [self.query_metadata['artist']],
+            'title': [self.query_metadata['title']],
+            'release': [self.query_metadata['album']],
+            'duration': [str(self.query_metadata['duration'])],
+            'version': ['3.15'],
+            # NOTE: either order of the bucket params is okay
+            'bucket': ['tracks', 'id:7digital'],
+        }
+        self.check_grab_url(echonest_url, correct_query)
+
+    def send_echonest_reply(self, response_file):
+        """Send a reply back from echonest.
+
+        As a side-effect we reset mock_grab_url before sending the reply to
+        get ready for the 7digital grab_url call
+
+        :param response_file: which file to use for response data
+        """
+        response_path = resources.path('testdata/echonest-replies/' +
+                                       response_file)
+        response_data = open(response_path).read()
+        callback = mock_grab_url.call_args[0][1]
+        mock_grab_url.reset_mock()
+        callback(response_data)
+        if response_file in ('rock-music', 'no-releases'):
+            self.reply_metadata['artist'] = 'Pixies'
+            self.reply_metadata['title'] = 'Rock Music'
+            self.reply_metadata['echonest_id'] = 'SOGQSXU12AF72A2615'
+        elif response_file == 'billie-jean':
+            self.reply_metadata['artist'] = 'Michael Jackson'
+            self.reply_metadata['title'] = 'Billie Jean'
+            self.reply_metadata['echonest_id'] = 'SOJIZLV12A58A78309'
+
+    def check_7digital_grab_url_call(self, release_id):
+        """Check the url sent to grab_url to perform our 7digital query."""
+        seven_digital_url = 'http://api.7digital.com/1.2/release/details'
+        correct_query = {
+            'oauth_consumer_key': [echonest.SEVEN_DIGITAL_API_KEY],
+            'imageSize': ['350'],
+            'releaseid': [str(release_id)],
+        }
+        self.check_grab_url(seven_digital_url, correct_query)
+
+    def send_7digital_reply(self, response_file):
+        """Send a reply back from 7digital.
+
+        As a side-effect we reset the mock_grab_url object.
+
+        :param response_file: which file to use for response data
+        """
+        response_path = resources.path('testdata/7digital-replies/%s' %
+                                       response_file)
+        response_data = open(response_path).read()
+        callback = mock_grab_url.call_args[0][1]
+        mock_grab_url.reset_mock()
+        callback(response_data)
+        if response_file == self.bossanova_release_id:
+            self.reply_metadata['album'] = 'Bossanova'
+            self.reply_metadata['cover_art_path'] = os.path.join(
+                self.album_art_dir, 'Bossanova')
+            self.album_art_url = (
+                'http://cdn.7static.com/static/img/sleeveart/'
+                '00/001/898/0000189844_350.jpg')
+
+    def check_album_art_grab_url_call(self):
+        if self.album_art_url is None:
+            raise ValueError("album_art_url not set")
+        album_art_path = os.path.join(self.album_art_dir,
+                                      self.reply_metadata['album'])
+        self.check_grab_url(self.album_art_url, write_file=album_art_path)
+
+    def send_album_art_reply(self):
+        """Send a reply back from the album art webserver
+
+        As a side-effect we reset mock_grab_url.
+        """
+        callback = mock_grab_url.call_args[0][1]
+        cover_art_file = mock_grab_url.call_args[1]['write_file']
+        open(cover_art_file, 'w').write("fake data")
+        mock_grab_url.reset_mock()
+        callback(self.album_art_data)
+
+    def check_callback(self):
+        """Check that echonest.query_echonest() sent the right data to our
+        callback.
+        """
+        self.assertNotEquals(self.callback_data, None)
+        self.assertEquals(self.errback_data, None)
+        self.assertEquals(self.callback_data[0], self.path)
+        self.assertDictEquals(self.callback_data[1], self.reply_metadata)
+
+    def check_errback(self):
+        """Check that echonest.query_echonest() called our errback instead of
+        our callback.
+        """
+        self.assertEquals(self.callback_data, None)
+        self.assertNotEquals(self.errback_data, None)
+
+    def check_grab_url_not_called(self):
+        self.assertEquals(mock_grab_url.call_count, 0)
+
+    def send_http_error(self):
+        errback = mock_grab_url.call_args[0][2]
+        error = httpclient.UnexpectedStatusCode(404)
+        errback(error)
+
+    def test_normal_query(self):
+        # test normal operations
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_7digital_reply(self.bossanova_release_id)
+        self.check_album_art_grab_url_call()
+        self.send_album_art_reply()
+        self.check_callback()
+
+    def test_album_art_error(self):
+        # test normal operations
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_7digital_reply(self.bossanova_release_id)
+        self.check_album_art_grab_url_call()
+        self.send_http_error()
+        # we shouldn't have cover_art_path in the reply, since the request
+        # failed
+        del self.reply_metadata['cover_art_path']
+        self.check_callback()
+
+    def test_not_found(self):
+        # test echonest not finding our song
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('no-match')
+        self.check_grab_url_not_called()
+        self.check_errback()
+
+    def test_echonest_http_error(self):
+        # test http errors with echonest
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_http_error()
+        mock_grab_url.reset_mock()
+        self.check_grab_url_not_called()
+        self.check_errback()
+
+    def test_no_releases(self):
+        # test no releases for a song
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('no-releases')
+        self.check_grab_url_not_called()
+        self.check_callback()
+
+    def test_7digital_http_error(self):
+        # test http errors with 7digital
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_http_error()
+        self.check_callback()
+
+    def test_7digital_no_match(self):
+        # test 7digital not matching our release id
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_7digital_reply('no-matches')
+        self.check_callback()
+
+    def test_multiple_releases(self):
+        # test multple releases when one matches our ID3 tag
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('billie-jean')
+        # When we have multiple releases, we don't have a good way of finding
+        # which one is correct.  We should skip querying 7digital.
+        self.check_grab_url_not_called()
+        self.check_callback()
+
+    def test_7digital_caching(self):
+        # test that we cache 7digital results
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_7digital_reply(self.bossanova_release_id)
+        self.check_album_art_grab_url_call()
+        self.send_album_art_reply()
+        self.check_callback()
+        old_metadata = self.reply_metadata
+        # start a new query that results in the same release id.
+        self.echonest_code = 'fake-code-2'
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        # we shouldn't call grab_URL
+        self.check_grab_url_not_called()
+        self.reply_metadata = old_metadata
+        self.check_callback()
+
+    def test_avoid_redownloading_album_art(self):
+        # test that we don't download album art that we already have
+        album_art_path = os.path.join(self.album_art_dir, 'Bossanova')
+        open(album_art_path, 'w').write('FAKE DATA')
+        self.start_query()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_7digital_reply(self.bossanova_release_id)
+        # we shouldn't try to download the album art, since that file is
+        # already there
+        self.check_grab_url_not_called()
+        self.check_callback()
