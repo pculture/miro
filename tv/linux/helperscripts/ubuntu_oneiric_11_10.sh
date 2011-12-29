@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script installs dependencies for building and running Miro on
-# Ubuntu 11.04 (Natty Narwhal).
+# Ubuntu 11.10 (Oneiric Ocelot).
 #
 # You run this sript AT YOUR OWN RISK.  Read through the whole thing
 # before running it!
