@@ -113,7 +113,7 @@ WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
 
 SEGMENTER_PATH = os.path.join(BINARY_KIT_ROOT, 'segmenter')
 FFMPEG_PATH = os.path.join(
-    BINARY_KIT_ROOT, 'ffmpeg', 'ffmpeg-r25766-swscale-r32562-mingw32-shared')
+    BINARY_KIT_ROOT, 'ffmpeg', 'libav-win32-20111229')
 FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 
 VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
@@ -315,16 +315,10 @@ data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
             os.path.join(SEGMENTER_PATH, 'miro-segmenter.exe'),
-            os.path.join(FFMPEG_PATH, 'bin', 'ffmpeg.exe'),
-            os.path.join(FFMPEG_PATH, 'bin', 'avcodec-52.dll'),
-            os.path.join(FFMPEG_PATH, 'bin', 'avcore-0.dll'),
-            os.path.join(FFMPEG_PATH, 'bin', 'avdevice-52.dll'),
-            os.path.join(FFMPEG_PATH, 'bin', 'avfilter-1.dll'),
-            os.path.join(FFMPEG_PATH, 'bin', 'avformat-52.dll'),
-            os.path.join(FFMPEG_PATH, 'bin', 'avutil-50.dll'),
-            os.path.join(FFMPEG_PATH, 'bin', 'swscale-0.dll'),
+            os.path.join(FFMPEG_PATH, 'usr', 'bin', 'ffmpeg.exe'),
             os.path.join(FFMPEG2THEORA_PATH, 'bin', 'ffmpeg2theora.exe')]))
-data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'presets', '*.ffpreset'))))
+data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'usr', 'bin', '*.dll'))))
+data_files.append(('', glob(os.path.join(FFMPEG_PATH, '..', 'presets', '*.ffpreset'))))
 data_files.append(('', glob(os.path.join(VCREDIST71_PATH, '*.dll'))))
 data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
