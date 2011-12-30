@@ -33,7 +33,7 @@ apt-get install \
     python-gconf \
     python-pycurl \
     python-mutagen \
-    libboost1.42-dev \
+    libboost1.46-dev \
     libtag1-dev \
     zlib1g-dev \
     gstreamer0.10-ffmpeg \
