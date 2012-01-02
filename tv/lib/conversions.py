@@ -1069,7 +1069,11 @@ class FFMpegConversionTask(ConversionTask):
         else:
             match = FFMpegConversionTask.PROGRESS_RE.match(line)
             if match is not None:
-                return float(match.group(1)) / self.duration
+                t = match.group(1)
+                if ':' in t:
+                    h, m, s = t.split(':')
+                    t = float(h) * 3600 + float(m) * 60 + float(s)
+                return float(t) / self.duration
             match = FFMpegConversionTask.LAST_PROGRESS_RE.match(line)
             if match is not None:
                 return 1.0

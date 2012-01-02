@@ -413,13 +413,17 @@ def get_transcode_audio_options():
     return has_audio_args
 
 def setup_ffmpeg_presets():
-    os.environ['FFMPEG_DATADIR'] = resources.app_root()
+    from miro.plat.specialfolders import get_short_path_name
+    os.environ['AVCONV_DATADIR'] = get_short_path_name(
+        resources.app_root())
 
 def get_ffmpeg_executable_path():
     return os.path.join(resources.app_root(), "ffmpeg.exe")
 
 def customize_ffmpeg_parameters(params):
     from miro.plat.specialfolders import get_short_path_name
+    # move -strict experimental to just before the output
+    params = params[2:-1] + params[:2] + params[-1:]
     # look for -i input
     ind = params.index("-i")
     if ind != -1 and len(params) > ind + 2:
@@ -428,6 +432,7 @@ def customize_ffmpeg_parameters(params):
     # FIXME - assumes the last item is {output}.
     # look at last item output
     params[-1] = get_short_path_name(params[-1])
+
     return params
 
 def get_ffmpeg2theora_executable_path():
