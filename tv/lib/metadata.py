@@ -639,6 +639,7 @@ class MetadataManager(signals.SignalEmitter):
 
     def _on_task_error(self, processor, path):
         self.metadata_errors.append((processor, path))
+        self._schedule_update()
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
