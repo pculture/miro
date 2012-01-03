@@ -137,12 +137,13 @@ class WindowBase(signals.SignalEmitter):
             self.emit('use-custom-style-changed')
 
     def calc_use_custom_style(self):
-        base = self._window.style.base[gtk.STATE_NORMAL]
-        # Decide if we should use a custom style.  Right now the
-        # formula is the base color is a very light shade of
-        # gray/white (lighter than #f0f0f0).
-        self.use_custom_style = ((base.red == base.green == base.blue) and
-                base.red >= 61680)
+        if self._window is not None:
+            base = self._window.style.base[gtk.STATE_NORMAL]
+            # Decide if we should use a custom style.  Right now the
+            # formula is the base color is a very light shade of
+            # gray/white (lighter than #f0f0f0).
+            self.use_custom_style = ((base.red == base.green == base.blue) and
+                                     base.red >= 61680)
 
     def connect_menu_keyboard_shortcuts(self):
         """Connect the shortcuts for the app menu to this window."""
