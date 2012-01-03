@@ -62,7 +62,7 @@ rock_music_code = (
     'owc_HJu_7POJgoEHCP-TfvROJ_4ZT1eULLDtF6gpBNe1gsvf0y6-C4jIs'
     'DQElfrEwUg9v8AAFXwlA==')
 
-
+import json
 import urllib
 
 def download_code(filename, code):
@@ -78,3 +78,7 @@ download_code('billie-jean', billy_jean_code)
 download_code('rock-music', rock_music_code)
 download_code('no-match', 'fake-code')
 download_code('error', '')
+# make no-releases from rock music
+no_releases_data = json.load(open('rock-music'))
+del no_releases_data['response']['songs'][0]['tracks']
+json.dump(no_releases_data, open('no-releases', 'wb'))

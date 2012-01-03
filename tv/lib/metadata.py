@@ -47,6 +47,7 @@ from miro import echonest
 from miro import eventloop
 from miro import filetags
 from miro import filetypes
+from miro import fileutil
 from miro import messages
 from miro import prefs
 from miro import signals
@@ -224,6 +225,7 @@ class MetadataEntry(database.DDBObject):
         'old-item': 10,
         'mutagen': 20,
         'movie-data': 30,
+        'echonest': 40,
         'user-data': 50,
     }
 
@@ -382,17 +384,21 @@ class _EchonestProcessor(_MetadataProcessor):
     buffer of codes to be sent to echonest is built up.
     """
 
-    def __init__(self, code_buffer_size):
+    def __init__(self, code_buffer_size, cover_art_dir):
         _MetadataProcessor.__init__(self, u'echonest')
+        self._code_buffer_size = code_buffer_size
+        self._cover_art_dir = cover_art_dir
         self._codegen_queue = collections.deque()
         self._echonest_queue = collections.deque()
         self._running_codegen = False
-        self._code_buffer_size = code_buffer_size
+        self._querying_echonest = False
         self._codegen_path = get_enmfp_executable_path()
         self._enabled = app.config.get(prefs.ECHONEST_ENABLED)
+        self._metadata_for_path = {}
         app.backend_config_watcher.connect("changed", self._on_config_change)
 
-    def add_path(self, path):
+    def add_path(self, path, current_metadata):
+        self._metadata_for_path[path] = current_metadata
         self._codegen_queue.append(path)
         self._process_queue()
 
@@ -411,6 +417,27 @@ class _EchonestProcessor(_MetadataProcessor):
                      (path, error))
         self.emit('task-error', path)
         self._running_codegen = False
+        del self._metadata_for_path[path]
+        self._process_queue()
+
+    def _query_echonest(self, path, code):
+        version = 3.15 # change to 4.11 for echoprint
+        metadata = self._metadata_for_path.pop(path)
+        echonest.query_echonest(path, self._cover_art_dir, code, version,
+                                metadata, self._echonest_callback,
+                                self._echonest_errback)
+        self._querying_echonest = True
+
+    def _echonest_callback(self, path, metadata):
+        logging.debug("Got echonest data for %s:\n%s", path, metadata)
+        self._querying_echonest = False
+        self.emit('task-complete', path, metadata)
+        self._process_queue()
+
+    def _echonest_errback(self, path, error):
+        logging.warn("Error running echonest for %s (%s)" % (path, error))
+        self._querying_echonest = False
+        self.emit('task-error', path)
         self._process_queue()
 
     def _on_config_change(self, watcher, key, value):
@@ -422,22 +449,41 @@ class _EchonestProcessor(_MetadataProcessor):
     def _process_queue(self):
         if not self._enabled:
             return
+
+        # process echonest queue
+        if (self._echonest_queue and not self._querying_echonest):
+            self._query_echonest(*self._echonest_queue.popleft())
+
+        # process codegen queue
         if (self._codegen_queue and
             not self._running_codegen and
             len(self._echonest_queue) < self._code_buffer_size):
             self._run_codegen(self._codegen_queue.popleft())
 
-        # TODO: process the echonest queue
-
     def remove_tasks_for_paths(self, paths):
-        # remove queued tasks for paths
         path_set = set(paths)
-        self._codegen_queue = collections.deque(
-            p for p in self._codegen_queue if p not in path_set)
-        self._echonest_queue = collections.deque(
-            p for p in self._echonest_queue if p not in path_set)
+        self._remove_from_codegen_queue(path_set)
+        self._remove_from_echonest_queue(path_set)
         # since we may have deleted active paths, process the new ones
         self._process_queue()
+
+    def _remove_from_codegen_queue(self, path_set):
+        new_codegen_queue = collections.deque()
+        for path in self._codegen_queue:
+            if path in path_set:
+                del self._metadata_for_path[path]
+            else:
+                new_codegen_queue.append(path)
+        self._codegen_queue = new_codegen_queue
+
+    def _remove_from_echonest_queue(self, path_set):
+        new_echonest_queue = collections.deque()
+        for path, code in self._echonest_queue:
+            if path in path_set:
+                del self._metadata_for_path[path]
+            else:
+                new_echonest_queue.append((path, code))
+        self._echonest_queue = new_echonest_queue
 
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
@@ -537,11 +583,15 @@ class MetadataManager(signals.SignalEmitter):
     def __init__(self, cover_art_dir):
         signals.SignalEmitter.__init__(self)
         self.create_signal('new-metadata')
+        self.cover_art_dir = cover_art_dir
+        self.echonest_cover_art_dir = os.path.join(cover_art_dir, 'echonest')
+        if not fileutil.exists(self.echonest_cover_art_dir):
+            fileutil.makedirs(self.echonest_cover_art_dir)
+        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
-        self.echonest_processor = _EchonestProcessor(5)
-        self.cover_art_dir = cover_art_dir
-        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        self.echonest_processor = _EchonestProcessor(
+            5, self.echonest_cover_art_dir)
         self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
         self.pending_mutagen_tasks = []
         self.bulk_add_count = 0
@@ -721,6 +771,9 @@ class MetadataManager(signals.SignalEmitter):
 
         metadata = self._get_metadata_from_filename(path)
         for entry in MetadataEntry.metadata_for_path(path):
+            if (not app.config.get(prefs.ECHONEST_ENABLED) and
+                entry.source == 'echonest'):
+                continue
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
@@ -731,9 +784,13 @@ class MetadataManager(signals.SignalEmitter):
         """Add the cover art path to a metadata dict """
         if 'album' in metadata:
             filename = filetags.calc_cover_art_filename(metadata['album'])
-            path = os.path.join(self.cover_art_dir, filename)
-            if os.path.exists(path):
-                metadata['cover_art_path'] = path
+            mutagen_path = os.path.join(self.cover_art_dir, filename)
+            echonest_path = os.path.join(self.cover_art_dir, 'echonest',
+                                         filename)
+            if os.path.exists(echonest_path):
+                metadata['cover_art_path'] = echonest_path
+            elif os.path.exists(mutagen_path):
+                metadata['cover_art_path'] = mutagen_path
 
     def set_user_data(self, path, user_data):
         """Update metadata based on user-inputted data
@@ -825,7 +882,25 @@ class MetadataManager(signals.SignalEmitter):
         self.moviedata_processor.add_task(task)
 
     def _run_echonest(self, path):
-        self.echonest_processor.add_path(path)
+        # FIXME: calling get_metadata() probably slows things down
+        metadata = self.get_metadata(path)
+        # make sure to get metadata that we just created but haven't saved yet
+        # because we're doing a bulk insert
+        if path in self.new_metadata:
+            metadata.update(self.new_metadata[path])
+        # we only send a subset of the metadata to echonest and some of the
+        # key names are different
+        echonest_metadata = {}
+        for key in ('title', 'artist', 'duration'):
+            try:
+                echonest_metadata[key] = metadata[key]
+            except KeyError:
+                pass
+        try:
+            echonest_metadata['release'] = metadata['album']
+        except KeyError:
+            pass
+        self.echonest_processor.add_path(path, echonest_metadata)
 
     def _on_task_complete(self, processor, path, result):
         self.metadata_finished.append((processor, path, result))

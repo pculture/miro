@@ -34,9 +34,13 @@ class MockMetadataProcessor(object):
         self.task_data = {
             'mutagen': {},
             'movie-data': {},
-            'echonest-codegen': {}
+            'echonest-codegen': {},
+            'echonest': {},
         }
         self.canceled_files = set()
+        # store the codes we see in query_echonest calls
+        self.query_echonest_codes = {}
+        self.query_echonest_metadata = {}
 
     def mutagen_paths(self):
         """Get the paths for mutagen calls currently in the system."""
@@ -49,6 +53,10 @@ class MockMetadataProcessor(object):
     def echonest_codegen_paths(self):
         """Get the paths for ecohnest codegen calls currently in the system."""
         return self.task_data['echonest-codegen'].keys()
+
+    def echonest_paths(self):
+        """Get the paths for ecohnest codegen calls currently in the system."""
+        return self.task_data['echonest'].keys()
 
     def add_task_data(self, source_path, name, data):
         task_data_dict = self.task_data[name]
@@ -81,6 +89,14 @@ class MockMetadataProcessor(object):
         task_data = (callback, errback)
         self.add_task_data(path, 'echonest-codegen', task_data)
 
+    def query_echonest(self, path, album_art_dir, code, version, metadata,
+                       callback, errback):
+        if path in self.query_echonest_codes:
+            raise ValueError("query_echonest already called for %s" % path)
+        self.query_echonest_codes[path] = code
+        self.query_echonest_metadata[path] = metadata
+        self.add_task_data(path, 'echonest', (callback, errback))
+
     def run_mutagen_callback(self, source_path, metadata):
         task, callback, errback = self.pop_task_data(source_path, 'mutagen')
         callback_data = {'source_path': source_path}
@@ -111,17 +127,28 @@ class MockMetadataProcessor(object):
                                                'echonest-codegen')
         errback(source_path, error)
 
+    def run_echonest_callback(self, source_path, metadata):
+        callback, errback = self.pop_task_data(source_path, 'echonest')
+        callback(source_path, metadata)
+
+    def run_echonest_errback(self, source_path, error):
+        callback, errback = self.pop_task_data(source_path, 'echonest')
+        errback(source_path, error)
+
 class MetadataManagerTest(MiroTestCase):
     # Test the MetadataManager class
     def setUp(self):
         MiroTestCase.setUp(self)
         self.mutagen_data = collections.defaultdict(dict)
         self.movieprogram_data = collections.defaultdict(dict)
+        self.echonest_data = collections.defaultdict(dict)
         self.user_info_data = collections.defaultdict(dict)
         self.processor = MockMetadataProcessor()
         self.patch_function('miro.workerprocess.send', self.processor.send)
         self.patch_function('miro.echonest.exec_codegen',
                             self.processor.exec_codegen)
+        self.patch_function('miro.echonest.query_echonest',
+                            self.processor.query_echonest)
         self.metadata_manager = metadata.MetadataManager(self.tempdir)
 
     def _calc_correct_metadata(self, path):
@@ -131,6 +158,8 @@ class MetadataManagerTest(MiroTestCase):
         }
         metadata.update(self.mutagen_data[path])
         metadata.update(self.movieprogram_data[path])
+        if app.config.get(prefs.ECHONEST_ENABLED):
+            metadata.update(self.echonest_data[path])
         metadata.update(self.user_info_data[path])
         if 'album' in metadata:
             cover_art_path = self.cover_art_for_album(metadata['album'])
@@ -139,16 +168,28 @@ class MetadataManagerTest(MiroTestCase):
         return metadata
 
     def cover_art_for_album(self, album_name):
-        cover_art_path = None
+        mutagen_cover_art_path = None
+        echonest_cover_art_path = None
         for metadata in self.mutagen_data.values():
             if ('album' in metadata and 'cover_art_path' in metadata and
                 metadata['album'] == album_name):
-                if (cover_art_path is not None and
-                    metadata['cover_art_path'] != cover_art_path):
-                    raise AssertionError("Different cover_part_paths for " +
-                                         album_name)
-                cover_art_path = metadata['cover_art_path']
-        return cover_art_path
+                if (mutagen_cover_art_path is not None and
+                    metadata['cover_art_path'] != mutagen_cover_art_path):
+                    raise AssertionError("Different mutagen cover_part_paths "
+                                         "for " + album_name)
+                mutagen_cover_art_path = metadata['cover_art_path']
+        for metadata in self.echonest_data.values():
+            if ('album' in metadata and 'cover_art_path' in metadata and
+                metadata['album'] == album_name):
+                if (echonest_cover_art_path is not None and
+                    metadata['cover_art_path'] != echonest_cover_art_path):
+                    raise AssertionError("Different mutagen cover_part_paths "
+                                         "for " + album_name)
+                echonest_cover_art_path = metadata['cover_art_path']
+        if echonest_cover_art_path:
+            return echonest_cover_art_path
+        else:
+            return mutagen_cover_art_path
 
     def check_metadata(self, path):
         correct_metadata = self._calc_correct_metadata(path)
@@ -183,9 +224,12 @@ class MetadataManagerTest(MiroTestCase):
         # ValueError
         self.assertRaises(ValueError, self.metadata_manager.add_file, path)
 
-    def cover_art_path(self, album_name):
-        return os.path.join(self.tempdir,
-                            urllib.quote(album_name, safe=" ,"))
+    def cover_art_path(self, album_name, echonest=False):
+        path_parts = [self.tempdir]
+        if echonest:
+            path_parts.append('echonest')
+        path_parts.append(urllib.quote(album_name, safe=" ,"))
+        return os.path.join(*path_parts)
 
     def check_run_mutagen(self, filename, file_type, duration, title,
                           album=None, drm=False, cover_art=True):
@@ -287,11 +331,43 @@ class MetadataManagerTest(MiroTestCase):
         code = self.calc_fake_echonest_code(path)
         self.processor.run_echonest_codegen_callback(path, code)
         self.check_metadata(path)
+        # check that the data sent to echonest is correct
+        metadata = self._calc_correct_metadata(path)
+        echonest_metadata = {}
+        for key in ('title', 'artist', 'duration'):
+            if key in metadata:
+                echonest_metadata[key] = metadata[key]
+        if 'album' in metadata:
+            echonest_metadata['release'] = metadata['album']
+        self.assertEquals(self.processor.query_echonest_codes[path], code)
+        self.assertDictEquals(self.processor.query_echonest_metadata[path],
+                              echonest_metadata)
 
     def check_echonest_codegen_error(self, filename):
         path = self.make_path(filename)
         error = IOError()
         self.processor.run_echonest_codegen_errback(path, error)
+        self.check_metadata(path)
+
+    def check_run_echonest(self, filename, title, artist=None, album=None):
+        path = self.make_path(filename)
+        echonest_data = {}
+        echonest_data['title'] = unicode('title')
+        if artist is not None:
+            echonest_data['artist'] = unicode(artist)
+        if album is not None:
+            echonest_data['album'] = unicode(album)
+            echonest_data['cover_art_path'] = self.cover_art_path(album, True)
+            # simulate grab_url() writing the mutagen_data file
+            open(echonest_data['cover_art_path'], 'wb').write("FAKE FILE")
+        self.echonest_data[path] = echonest_data
+        self.processor.run_echonest_callback(path, echonest_data)
+        self.check_metadata(path)
+
+    def check_echonest_error(self, filename):
+        path = self.make_path(filename)
+        error = IOError()
+        self.processor.run_echonest_errback(path, error)
         self.check_metadata(path)
 
     def check_set_user_info(self, filename, **info):
@@ -321,6 +397,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
         self.check_run_echonest_codegen('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
 
     def test_echonest_codegen_error(self):
         # Test audio files that echonest_codegen bails on
@@ -338,6 +415,20 @@ class MetadataManagerTest(MiroTestCase):
         self.check_echonest_not_running('foo.mp3')
         app.config.set(prefs.ECHONEST_ENABLED, True)
         self.check_run_echonest_codegen('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights2')
+        # test that disabling/enabling the config changes the metadata
+        app.config.set(prefs.ECHONEST_ENABLED, False)
+        self.check_metadata(self.make_path('foo.mp3'))
+        app.config.set(prefs.ECHONEST_ENABLED, True)
+        self.check_metadata(self.make_path('foo.mp3'))
+
+    def test_echonest_error(self):
+        # Test audio files with no issuse
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
+        self.check_movie_data_not_scheduled('foo.mp3')
+        self.check_run_echonest_codegen('foo.mp3')
+        self.check_echonest_error('foo.mp3')
 
     def test_audio_shares_cover_art(self):
         # Test that if one audio file in an album has cover art, they all will
@@ -358,6 +449,7 @@ class MetadataManagerTest(MiroTestCase):
         # data call scheduled
         self.check_run_movie_data('foo.mp3', 'audio', 100, False)
         self.check_run_echonest_codegen('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
 
     def test_audio_no_duration2(self):
         # same as test_audio_no_duration, but have movie data return that the
@@ -460,6 +552,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_queued_moviedata_calls(['foo.avi', 'bar.avi'])
         self.check_run_movie_data('bar.avi', 'audio', 100, 'Foo')
         self.check_run_echonest_codegen('baz.mp3')
+        self.check_run_echonest('baz.mp3', 'Foo')
         self.check_queued_echonest_codegen_calls(['bar.avi'])
 
     def check_path_in_system(self, filename, correct_value):
@@ -591,8 +684,16 @@ class MetadataManagerTest(MiroTestCase):
                 code = self.calc_fake_echonest_code(p)
                 self.processor.run_echonest_codegen_callback(p, code)
 
+        def run_echonest(start, stop):
+            for p in paths[start:stop]:
+                metadata = {
+                    'title': u'Title',
+                    'album': u'Album',
+                }
+                self.processor.run_echonest_callback(p, metadata)
+
         def check_counts(mutagen_calls, movie_data_calls,
-                         echonest_codegen_calls):
+                         echonest_codegen_calls, echonest_calls):
             self.metadata_manager._process_metadata_finished()
             self.metadata_manager._process_metadata_errors()
             self.assertEquals(len(self.processor.mutagen_paths()),
@@ -601,33 +702,43 @@ class MetadataManagerTest(MiroTestCase):
                               movie_data_calls)
             self.assertEquals(len(self.processor.echonest_codegen_paths()),
                               echonest_codegen_calls)
+            self.assertEquals(len(self.processor.echonest_paths()),
+                              echonest_calls)
 
         # Add all 200 paths to the metadata manager.  Only 100 should be
         # queued up to mutagen
         for p in paths:
             self.metadata_manager.add_file(p)
-        check_counts(100, 0, 0)
+        check_counts(100, 0, 0, 0)
 
         # let 50 mutagen tasks complete, we should queue up 50 more
         run_mutagen(0, 50)
-        check_counts(100, 50, 0)
+        check_counts(100, 50, 0, 0)
         # let 75 more complete, we should be hitting our movie data max now
         run_mutagen(50, 125)
-        check_counts(75, 100, 0)
+        check_counts(75, 100, 0, 0)
         # run a bunch of movie data calls.  This will let us test the echonest
         # queueing
         run_movie_data(0, 100)
         # we should only have 1 echonest codegen program running at once
-        check_counts(75, 25, 1)
+        check_counts(75, 25, 1, 0)
+        # when that gets done, we should only have 1 echonest query running at
+        # once
+        run_echonest_codegen(0, 2)
+        check_counts(75, 25, 1, 1)
         # we should stop running echonest codegen once we have 5 codes queued
         # up
-        run_echonest_codegen(0, 5)
-        check_counts(75, 25, 0)
+        run_echonest_codegen(2, 6)
+        check_counts(75, 25, 0, 1)
         # looks good, just double check that we finish our queues okay
         run_mutagen(125, 200)
-        check_counts(0, 100, 0)
+        check_counts(0, 100, 0, 1)
         run_movie_data(100, 200)
-        check_counts(0, 0, 0)
+        check_counts(0, 0, 0, 1)
+        for i in xrange(195):
+            run_echonest(i, i+1)
+            run_echonest_codegen(i+6, i+7)
+        run_echonest(195, 200)
 
     def test_move(self):
         # add a couple files at different points in the metadata process
@@ -780,7 +891,7 @@ class TestEchonestQueries(MiroTestCase):
             "artist": "Michael jackson",
             "album": "800 chansons des annes 80",
             "title": "Billie jean",
-            "duration": 294,
+            "duration": 294000,
         }
         self.echonest_id = "fake-id-echonest"
         self.seven_digital_id = "fake-id-7digital"
@@ -802,22 +913,32 @@ class TestEchonestQueries(MiroTestCase):
 
     def start_query(self):
         """Call echonest.query_echonest()."""
-        # This tracks the metadata we except to see back from query_echonest()
+        # This tracks the metadata we expect to see back from query_echonest()
         self.reply_metadata = {}
         echonest.query_echonest(self.path, self.album_art_dir,
-                                self.echonest_code, '3.15',
+                                self.echonest_code, 3.15,
                                 self.query_metadata,
                                 self.callback, self.errback)
 
-    def check_grab_url(self, url, query_dict=None, write_file=None):
+    def check_grab_url(self, url, query_dict=None, post_vars=None,
+                       write_file=None):
         """Check that grab_url was called with a given URL.
         """
         self.assertEquals(mock_grab_url.call_count, 1)
         args, kwargs = mock_grab_url.call_args
+        if post_vars is not None:
+            grab_url_post_vars = kwargs.pop('post_vars')
+            # handle query specially, since it's a json encoded dict so it can
+            # be formatted different ways
+            if 'query' in post_vars:
+                self.assertDictEquals(
+                    json.loads(grab_url_post_vars.pop('query')),
+                    post_vars.pop('query'))
+            self.assertDictEquals(grab_url_post_vars, post_vars)
         if write_file is None:
-            self.assertEquals(kwargs, {})
+            self.assertDictEquals(kwargs, {})
         else:
-            self.assertEquals(kwargs, {'write_file': write_file})
+            self.assertDictEquals(kwargs, {'write_file': write_file})
         self.assertEquals(len(args), 3)
         grabbed_url = urlparse.urlparse(args[0])
         parsed_url = urlparse.urlparse(url)
@@ -834,18 +955,22 @@ class TestEchonestQueries(MiroTestCase):
     def check_echonest_grab_url_call(self):
         """Check the url sent to grab_url to perform our echonest query."""
         echonest_url = 'http://developer.echonest.com/api/v4/song/identify'
-        correct_query = {
-            'api_key': [echonest.ECHO_NEST_API_KEY],
-            'code': [self.echonest_code],
-            'artist': [self.query_metadata['artist']],
-            'title': [self.query_metadata['title']],
-            'release': [self.query_metadata['album']],
-            'duration': [str(self.query_metadata['duration'])],
-            'version': ['3.15'],
+        post_vars = {
+            'api_key': echonest.ECHO_NEST_API_KEY,
             # NOTE: either order of the bucket params is okay
             'bucket': ['tracks', 'id:7digital'],
+            'query': {
+                'code': self.echonest_code,
+                'metadata': {
+                    'artist': self.query_metadata['artist'].encode('utf-8'),
+                    'title': self.query_metadata['title'].encode('utf-8'),
+                    'release': self.query_metadata['album'].encode('utf-8'),
+                    'duration': self.query_metadata['duration'] // 1000,
+                    'version': 3.15,
+                },
+            },
         }
-        self.check_grab_url(echonest_url, correct_query)
+        self.check_grab_url(echonest_url, post_vars=post_vars)
 
     def send_echonest_reply(self, response_file):
         """Send a reply back from echonest.
@@ -860,7 +985,7 @@ class TestEchonestQueries(MiroTestCase):
         response_data = open(response_path).read()
         callback = mock_grab_url.call_args[0][1]
         mock_grab_url.reset_mock()
-        callback(response_data)
+        callback({'body': response_data})
         if response_file in ('rock-music', 'no-releases'):
             self.reply_metadata['artist'] = 'Pixies'
             self.reply_metadata['title'] = 'Rock Music'
@@ -892,7 +1017,7 @@ class TestEchonestQueries(MiroTestCase):
         response_data = open(response_path).read()
         callback = mock_grab_url.call_args[0][1]
         mock_grab_url.reset_mock()
-        callback(response_data)
+        callback({'body': response_data})
         if response_file == self.bossanova_release_id:
             self.reply_metadata['album'] = 'Bossanova'
             self.reply_metadata['cover_art_path'] = os.path.join(
@@ -917,7 +1042,8 @@ class TestEchonestQueries(MiroTestCase):
         cover_art_file = mock_grab_url.call_args[1]['write_file']
         open(cover_art_file, 'w').write("fake data")
         mock_grab_url.reset_mock()
-        callback(self.album_art_data)
+        # don't send the body since we write a file instead
+        callback({})
 
     def check_callback(self):
         """Check that echonest.query_echonest() sent the right data to our
@@ -927,6 +1053,10 @@ class TestEchonestQueries(MiroTestCase):
         self.assertEquals(self.errback_data, None)
         self.assertEquals(self.callback_data[0], self.path)
         self.assertDictEquals(self.callback_data[1], self.reply_metadata)
+        for key, value in self.callback_data[1].items():
+            if (key in ('title', 'artist', 'album') and
+                not isinstance(value, unicode)):
+                raise AssertionError("value for %s not unicode" % key)
 
     def check_errback(self):
         """Check that echonest.query_echonest() called our errback instead of
@@ -973,8 +1103,7 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('no-match')
-        self.check_grab_url_not_called()
-        self.check_errback()
+        self.check_callback()
 
     def test_echonest_http_error(self):
         # test http errors with echonest
@@ -1055,3 +1184,10 @@ class TestEchonestQueries(MiroTestCase):
         # already there
         self.check_grab_url_not_called()
         self.check_callback()
+
+    def test_query_encoding(self):
+        # test that we send parameters as unicode to echonest/7digital
+        self.query_metadata['artist'] = "M\u0129chael jackson"
+        self.query_metadata['album'] = "Thr\u0129ller"
+        self.query_metadata['title'] = u"B\u0129llie jean"
+        self.test_normal_query()

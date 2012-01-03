@@ -42,7 +42,7 @@ from miro import eventloop
 from miro import trapcall
 
 # TODO: get a API keys for PCF
-ECHO_NEST_API_KEY="ZAHBN7QAMJFJLABY6"
+ECHO_NEST_API_KEY = "ZAHBN7QAMJFJLABY6"
 SEVEN_DIGITAL_API_KEY = "7d35gcbnycah"
 
 try:
@@ -55,9 +55,6 @@ class CodegenError(StandardError):
 
 class ResponseParsingError(StandardError):
     """Error parsing an echonest/7digital response."""
-
-class NoMatches(StandardError):
-    """Query to echonest resulted in no matches."""
 
 def exec_codegen(codegen_path, media_path, callback, errback):
     """Run an echonest codegen in a worker thread.
@@ -100,7 +97,7 @@ def query_echonest(path, album_art_dir, code, version, metadata, callback,
     :param path: path for the song
     :param album_art_dir: directory to write album art to
     :param code: echonest code from ENMFP or echoprint
-    :param version: code version ('3.15' for ENMFP or '4.11' for echoprint)
+    :param version: code version (3.15 for ENMFP or 4.11 for echoprint)
     :param metadata: dict of metadata from ID3 tags.
     :param callback: function to call on success
     :param error: function to call on error
@@ -139,56 +136,61 @@ class _EchonestQuery(object):
                            self.path, error)
 
     def query_echonest(self, code, version, metadata):
-        echonest_url = self._make_echonest_url(code, version, metadata)
-        httpclient.grab_url(echonest_url, self.echonest_callback,
-                            self.echonest_errback)
+        post_vars = {
+            'api_key': ECHO_NEST_API_KEY,
+            'bucket': ['tracks', 'id:7digital'],
+            'query': self._make_echonest_query(code, version, metadata),
+        }
+        url = 'http://developer.echonest.com/api/v4/song/identify?'
+        httpclient.grab_url(url,
+                            self.echonest_callback, self.echonest_errback,
+                            post_vars=post_vars)
 
-    def _make_echonest_url(self, code, version, metadata):
-        # data in all query strings
-        url_data = [
-            ('api_key', ECHO_NEST_API_KEY),
-            ('code', code),
-            ('version', version),
-            ('bucket', 'tracks'),
-            ('bucket', 'id:7digital'),
-        ]
-        # data from the metadata
-        for name in ('title', 'artist', 'duration'):
-            if name in metadata:
-                url_data.append((name, metadata[name]))
+    def _make_echonest_query(self, code, version, metadata):
+        echonest_metadata = {'version': version}
+        if 'title' in metadata:
+            echonest_metadata['title'] = metadata['title']
+        if 'artist' in metadata:
+            echonest_metadata['artist'] = metadata['artist']
         if 'album' in metadata:
-            url_data.append(('release', metadata['album']))
-
-        return ('http://developer.echonest.com/api/v4/song/identify?' +
-                urllib.urlencode(url_data))
+            # echonest uses "release" instead of album
+            echonest_metadata['release'] = metadata['album']
+        if 'duration' in metadata:
+            # convert millisecs to secs for echonest
+            echonest_metadata['duration'] = metadata['duration'] // 1000
+        return json.dumps({
+            'code': code,
+            'metadata': echonest_metadata,
+        })
 
     def echonest_callback(self, data):
         try:
-            self._handle_echonest_callback(data)
+            self._handle_echonest_callback(data['body'])
         except StandardError, e:
-            logging.stacktrace("Error handling echonest response")
+            logging.exception("Error handling echonest response")
             self.invoke_errback(ResponseParsingError())
 
-    def _handle_echonest_callback(self, data):
-        response = json.loads(data)['response']
+    def _handle_echonest_callback(self, echonest_reply):
+        response = json.loads(echonest_reply)['response']
         status_code = response['status']['code']
         # TODO: check status code
         songs = response['songs']
-        if len(songs) == 0:
-            raise NoMatches()
-        if len(songs) > 1:
-            logging.warn("Echonest code matched multiple songs")
+        if len(songs) != 1:
+            if len(songs) == 0:
+                logging.warn("Echonest code matched no songs")
+            else:
+                logging.warn("Echonest code matched multiple songs")
             # What can we do here?  Just return an empty metadata dict to our
             # callback
             self.invoke_callback()
             return
 
         song = songs[0]
-        self.metadata['title'] = song['title']
-        self.metadata['artist'] = song['artist_name']
-        self.metadata['echonest_id'] = song['id']
+        self.metadata['title'] = song['title'].decode('utf-8')
+        self.metadata['artist'] = song['artist_name'].decode('utf-8')
+        self.metadata['echonest_id'] = song['id'].decode('utf-8')
 
-        tracks = song['tracks']
+        tracks = song.get('tracks', [])
         if len(tracks) != 1:
             # No 7digital releases or too many Return the metadata we have
             self.invoke_callback()
@@ -237,9 +239,9 @@ class _EchonestQuery(object):
 
     def seven_digital_callback(self, data):
         try:
-            self._handle_7digital_callback(data)
+            self._handle_7digital_callback(data['body'])
         except StandardError, e:
-            logging.stacktrace("Error handling 7digital response")
+            logging.exception("Error handling 7digital response")
             # we can still invoke our callback with the data from echonest
         if (self.album_art_url and self.album_art_filename):
             self.grab_url_dest = os.path.join(self.album_art_dir,
@@ -253,8 +255,8 @@ class _EchonestQuery(object):
 
             self.invoke_callback()
 
-    def _handle_7digital_callback(self, data):
-        doc = minidom.parseString(data)
+    def _handle_7digital_callback(self, seven_digital_reply):
+        doc = minidom.parseString(seven_digital_reply)
         def find_text_for_tag(tag_name):
             return doc.getElementsByTagName(tag_name)[0].firstChild.data
 
@@ -284,6 +286,8 @@ class _EchonestQuery(object):
                             write_file=self.grab_url_dest)
 
     def album_art_callback(self, data):
+        # we don't care about the data sent back, since grab_url wrote our
+        # file for us
         self.metadata['cover_art_path'] = self.grab_url_dest
         self.invoke_callback()
 
