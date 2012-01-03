@@ -435,6 +435,7 @@ class Dialog(DialogBase):
 class FileDialogBase(DialogBase):
     def _run(self):
         ret = self._window.run()
+        self._window.hide()
         if ret == gtk.RESPONSE_OK:
             self._files = self._window.get_filenames()
             return 0
