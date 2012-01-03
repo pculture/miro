@@ -359,13 +359,17 @@ class DialogBase(WindowBase):
             return self._run()
         finally:
             running_dialogs.remove(self)
+            self._window = None
 
     def _run(self):
         """Run the dialog.  Must be implemented by subclasses."""
         raise NotImplementedError()
 
     def destroy(self):
-        self._window = None
+        if self._window is not None:
+            self._window.response(gtk.RESPONSE_NONE)
+            # don't set self._window to None yet.  We will unset it when we
+            # return from the _run() method
 
 class Dialog(DialogBase):
     def __init__(self, title, description=None):
