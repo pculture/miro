@@ -137,12 +137,13 @@ class WindowBase(signals.SignalEmitter):
             self.emit('use-custom-style-changed')
 
     def calc_use_custom_style(self):
-        base = self._window.style.base[gtk.STATE_NORMAL]
-        # Decide if we should use a custom style.  Right now the
-        # formula is the base color is a very light shade of
-        # gray/white (lighter than #f0f0f0).
-        self.use_custom_style = ((base.red == base.green == base.blue) and
-                base.red >= 61680)
+        if self._window is not None:
+            base = self._window.style.base[gtk.STATE_NORMAL]
+            # Decide if we should use a custom style.  Right now the
+            # formula is the base color is a very light shade of
+            # gray/white (lighter than #f0f0f0).
+            self.use_custom_style = ((base.red == base.green == base.blue) and
+                                     base.red >= 61680)
 
     def connect_menu_keyboard_shortcuts(self):
         """Connect the shortcuts for the app menu to this window."""
@@ -359,13 +360,17 @@ class DialogBase(WindowBase):
             return self._run()
         finally:
             running_dialogs.remove(self)
+            self._window = None
 
     def _run(self):
         """Run the dialog.  Must be implemented by subclasses."""
         raise NotImplementedError()
 
     def destroy(self):
-        self._window = None
+        if self._window is not None:
+            self._window.response(gtk.RESPONSE_NONE)
+            # don't set self._window to None yet.  We will unset it when we
+            # return from the _run() method
 
 class Dialog(DialogBase):
     def __init__(self, title, description=None):
@@ -431,6 +436,7 @@ class Dialog(DialogBase):
 class FileDialogBase(DialogBase):
     def _run(self):
         ret = self._window.run()
+        self._window.hide()
         if ret == gtk.RESPONSE_OK:
             self._files = self._window.get_filenames()
             return 0
