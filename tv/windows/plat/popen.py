@@ -41,13 +41,16 @@ def cleanse_environment(env=None):
     of unicode types, as this is not supported on Windows when passing
     it via subprocesses.
     """
-    source = env if env else os.environ.copy()
+    source = env if env else os.environ
     env = source.copy()
     for k, v in source.iteritems():
         if isinstance(v, unicode):
-            logging.debug('cleanse environment: %s in unicode with value %r.  '
-                          'Removing.', k, v)
-            del env[k]
+            try:
+                env[k] = v.encode('ascii')
+            except UnicodeEncodeError:
+                logging.debug('cleanse environment: %s in unicode with value %r.  '
+                              'Removing.', k, v)
+                del env[k]
     return env
 
 def Popen(args, **kwargs):
@@ -86,5 +89,4 @@ def Popen(args, **kwargs):
     # I'm going to declare that this version of Popen only accepts
     # sequence types for the program argument (though implementing
     # correcting quoting is probably < 20 lines of code).
-
     return subprocess.Popen(args, **kwargs)
