@@ -24,104 +24,92 @@ from miro.plat.utils import (PlatformFilenameType,
 
 class MockMetadataProcessor(object):
     """Replaces the mutagen and movie data code with test values."""
-    def __init__(self, cover_art_dir):
+    def __init__(self):
         self.reset()
-        self.cover_art_dir = cover_art_dir
 
     def reset(self):
-        self.mutagen_calls = {}
-        self.movie_data_calls = {}
-        self.echonest_codegen_calls = {}
+        # each dict in task_data maps source paths to callback/errback/task
+        # data the call to that path.  For example, for each MutagenTask that
+        # we intercept, we store that task, the callback, and the errback.
+        self.task_data = {
+            'mutagen': {},
+            'movie-data': {},
+            'echonest-codegen': {}
+        }
         self.canceled_files = set()
+
+    def mutagen_paths(self):
+        """Get the paths for mutagen calls currently in the system."""
+        return self.task_data['mutagen'].keys()
+
+    def movie_data_paths(self):
+        """Get the paths for movie data calls currently in the system."""
+        return self.task_data['movie-data'].keys()
+
+    def echonest_codegen_paths(self):
+        """Get the paths for ecohnest codegen calls currently in the system."""
+        return self.task_data['echonest-codegen'].keys()
+
+    def add_task_data(self, source_path, name, data):
+        task_data_dict = self.task_data[name]
+        if source_path in task_data_dict:
+            raise ValueError("Already processing %s (path: %s)" %
+                             (name, source_path))
+        task_data_dict[source_path] = data
+
+    def pop_task_data(self, source_path, name):
+        task_data_dict = self.task_data[name]
+        try:
+            return task_data_dict.pop(source_path)
+        except KeyError:
+            raise ValueError("No %s run scheduled for %s" %
+                             (name, source_path))
 
     def send(self, task, callback, errback):
         task_data = (task, callback, errback)
 
         if isinstance(task, workerprocess.MutagenTask):
-            if task.source_path in self.mutagen_calls:
-                raise ValueError("Already processing %s" % task.source_path)
-            self.mutagen_calls[task.source_path] = task_data
+            self.add_task_data(task.source_path, 'mutagen', task_data)
         elif isinstance(task, workerprocess.MovieDataProgramTask):
-            if task.source_path in self.movie_data_calls:
-                raise ValueError("Already processing %s" % task.source_path)
-            self.movie_data_calls[task.source_path] = task_data
+            self.add_task_data(task.source_path, 'movie-data', task_data)
         elif isinstance(task, workerprocess.CancelFileOperations):
             self.canceled_files.update(task.paths)
         else:
             raise TypeError(task)
 
     def exec_codegen(self, codegen_path, path, callback, errback):
-        self.echonest_codegen_calls[path] = (callback, errback)
+        task_data = (callback, errback)
+        self.add_task_data(path, 'echonest-codegen', task_data)
 
-    def run_mutagen_callback(self, source_path, file_type, duration, title,
-                             album, drm, cover_art):
-        task, callback, errback = self.mutagen_calls.pop(source_path)
-        data = {
-            'source_path': task.source_path,
-            'file_type': unicode(file_type),
-            'duration': duration,
-            'title': unicode(title) if title is not None else None,
-            'album': unicode(album) if album is not None else None,
-            'drm': drm,
-        }
-        # Real mutagen calls send much more than the title for metadata, but
-        # this is enough to test
-        if cover_art and album is not None:
-            # make sure there's a file where MetadataManager expects mutagen
-            # to put the cover art
-            cover_art_path = self._cover_art_path(album)
-            open(cover_art_path, 'wb').write("FAKE FILE")
-
-        # remove None values before sending the data
-        for key, value in data.items():
-            if value is None:
-                del data[key]
-        callback(task, data)
-
-    def _cover_art_path(self, album_name):
-        return os.path.join(self.cover_art_dir,
-                            urllib.quote(album_name, safe=" ,"))
+    def run_mutagen_callback(self, source_path, metadata):
+        task, callback, errback = self.pop_task_data(source_path, 'mutagen')
+        callback_data = {'source_path': source_path}
+        callback_data.update(metadata)
+        callback(task, callback_data)
 
     def run_mutagen_errback(self, source_path, error):
-        task, callback, errback = self.mutagen_calls.pop(source_path)
+        task, callback, errback = self.pop_task_data(source_path, 'mutagen')
         errback(task, error)
 
-    def run_movie_data_callback(self, source_path, file_type, duration,
-                                screenshot_worked):
-        try:
-            task, callback, errback = self.movie_data_calls.pop(source_path)
-        except KeyError:
-            raise ValueError("No movie data run scheduled for %s" %
-                             source_path)
-        data = {
-            'source_path': task.source_path,
-            'file_type': unicode(file_type),
-            'duration': duration,
-        }
-        if screenshot_worked:
-            screenshot_path = self.get_screenshot_path(task.source_path)
-            data['screenshot_path'] = screenshot_path
-        # remove None values before sending the data
-        for key, value in data.items():
-            if value is None:
-                del data[key]
-        callback(task, data)
+    def run_movie_data_callback(self, source_path, metadata):
+        task, callback, errback = self.pop_task_data(source_path, 'movie-data')
+        callback_data = {'source_path': source_path}
+        callback_data.update(metadata)
+        callback(task, callback_data)
 
     def run_movie_data_errback(self, source_path, error):
-        task, callback, errback = self.movie_data_calls.pop(source_path)
+        task, callback, errback = self.pop_task_data(source_path, 'movie-data')
         errback(task, error)
 
     def run_echonest_codegen_callback(self, source_path, code):
-        callback, errback = self.echonest_codegen_calls.pop(source_path)
+        callback, errback = self.pop_task_data(source_path,
+                                               'echonest-codegen')
         callback(source_path, code)
 
     def run_echonest_codegen_errback(self, source_path, error):
-        callback, errback = self.echonest_codegen_calls.pop(source_path)
+        callback, errback = self.pop_task_data(source_path,
+                                               'echonest-codegen')
         errback(source_path, error)
-
-    def get_screenshot_path(self, source_path):
-        filename = os.path.basename(source_path) + ".png"
-        return '/tmp/' + filename
 
 class MetadataManagerTest(MiroTestCase):
     # Test the MetadataManager class
@@ -130,7 +118,7 @@ class MetadataManagerTest(MiroTestCase):
         self.mutagen_data = collections.defaultdict(dict)
         self.movieprogram_data = collections.defaultdict(dict)
         self.user_info_data = collections.defaultdict(dict)
-        self.processor = MockMetadataProcessor(self.tempdir)
+        self.processor = MockMetadataProcessor()
         self.patch_function('miro.workerprocess.send', self.processor.send)
         self.patch_function('miro.echonest.exec_codegen',
                             self.processor.exec_codegen)
@@ -195,41 +183,45 @@ class MetadataManagerTest(MiroTestCase):
         # ValueError
         self.assertRaises(ValueError, self.metadata_manager.add_file, path)
 
+    def cover_art_path(self, album_name):
+        return os.path.join(self.tempdir,
+                            urllib.quote(album_name, safe=" ,"))
+
     def check_run_mutagen(self, filename, file_type, duration, title,
                           album=None, drm=False, cover_art=True):
+        # NOTE: real mutagen calls send more metadata, but this is enough to
+        # test
         path = self.make_path(filename)
-        mutagen_data = {
-            'file_type': file_type,
-            'duration': duration,
-            'title': title,
-            'album': album,
-            'drm': drm,
-        }
-        # Remove None keys
-        for k in mutagen_data.keys():
-            if mutagen_data[k] is None:
-                del mutagen_data[k]
+        mutagen_data = {}
+        if file_type is not None:
+            mutagen_data['file_type'] = unicode(file_type)
+        if duration is not None:
+            mutagen_data['duration'] = duration
+        if title is not None:
+            mutagen_data['title'] = unicode('title')
+        if album is not None:
+            mutagen_data['album'] = unicode(album)
+        mutagen_data['drm'] = drm
         if cover_art and album is not None:
-            mutagen_data['cover_art_path'] = \
-                    self.processor._cover_art_path(album)
+            mutagen_data['cover_art_path'] = self.cover_art_path(album)
+            # simulate read_metadata() writing the mutagen_data file
+            open(mutagen_data['cover_art_path'], 'wb').write("FAKE FILE")
         self.mutagen_data[path] = mutagen_data
-        self.processor.run_mutagen_callback(path, file_type, duration, title,
-                                            album, drm, cover_art)
+        self.processor.run_mutagen_callback(path, mutagen_data)
         self.check_metadata(path)
 
     def check_queued_mutagen_calls(self, filenames):
-        correct_keys = ['/videos/' + f for f in filenames]
-        self.assertSameSet(correct_keys, self.processor.mutagen_calls.keys())
+        correct_paths = ['/videos/' + f for f in filenames]
+        self.assertSameSet(correct_paths, self.processor.mutagen_paths())
 
     def check_queued_moviedata_calls(self, filenames):
-        correct_keys = ['/videos/' + f for f in filenames]
-        self.assertSameSet(correct_keys,
-                           self.processor.movie_data_calls.keys())
+        correct_paths = ['/videos/' + f for f in filenames]
+        self.assertSameSet(correct_paths, self.processor.movie_data_paths())
 
     def check_queued_echonest_codegen_calls(self, filenames):
-        correct_keys = ['/videos/' + f for f in filenames]
-        self.assertSameSet(correct_keys,
-                           self.processor.echonest_codegen_calls.keys())
+        correct_paths = ['/videos/' + f for f in filenames]
+        self.assertSameSet(correct_paths,
+                           self.processor.echonest_codegen_paths())
 
     def get_metadata(self, filename):
         path = self.make_path(filename)
@@ -242,27 +234,25 @@ class MetadataManagerTest(MiroTestCase):
         self.check_metadata(path)
 
     def check_movie_data_not_scheduled(self, filename):
-        if self.make_path(filename) in self.processor.movie_data_calls:
+        if self.make_path(filename) in self.processor.movie_data_paths():
             raise AssertionError("movie data scheduled for %s" % filename)
+
+    def get_screenshot_path(self, filename):
+        return '/tmp/' + filename + '.png'
 
     def check_run_movie_data(self, filename, file_type, duration,
                              screenshot_worked):
         path = self.make_path(filename)
-        self.processor.run_movie_data_callback(path, file_type, duration,
-                                               screenshot_worked)
-        # check that the metadata is updated based on the values from mutagen
-        movieprogram_data = {
-            'file_type': file_type,
-            'duration': duration,
-        }
-        # remove keys with null values
-        for key in movieprogram_data.keys():
-            if movieprogram_data[key] is None:
-                del movieprogram_data[key]
+        moviedata_data = {}
+        if file_type is not None:
+            moviedata_data['file_type'] = unicode(file_type)
+        if duration is not None:
+            moviedata_data['duration'] = duration
         if screenshot_worked:
-            movieprogram_data['screenshot_path'] = \
-                    self.processor.get_screenshot_path(path)
-        self.movieprogram_data[path] = movieprogram_data
+            ss_path = self.get_screenshot_path(filename)
+            moviedata_data['screenshot_path'] = ss_path
+        self.movieprogram_data[path] = moviedata_data
+        self.processor.run_movie_data_callback(path, moviedata_data)
         self.check_metadata(path)
 
     def check_movie_data_error(self, filename):
@@ -279,14 +269,9 @@ class MetadataManagerTest(MiroTestCase):
 
     def check_echonest_not_running(self, filename):
         path = self.make_path(filename)
-        if path in self.processor.echonest_codegen_calls:
+        if path in self.processor.echonest_codegen_paths():
             raise AssertionError("echonest_codegen scheduled for %s" %
                                  filename)
-
-    def check_both_failure(self, filename):
-        self.check_add_file('foo.avi')
-        self.check_mutagen_error('foo.avi')
-        self.check_movie_data_error('foo.avi')
 
     def calc_fake_echonest_code(self, path):
         """Echoprint codes are huge strings of ascii data.  Generate a unique
@@ -555,8 +540,12 @@ class MetadataManagerTest(MiroTestCase):
         # check that callbacks/errbacks for those files don't result in
         # errors.  The metadata system may have already been processing the
         # file when it got the CancelFileOperations message.
-        self.processor.run_movie_data_callback(
-            files_in_moviedata[0], 'video', 100, True)
+        metadata = {
+            'file_type': u'video',
+            'duration': 100
+        }
+        self.processor.run_movie_data_callback(files_in_moviedata[0],
+                                               metadata)
         self.processor.run_mutagen_errback(
             files_in_mutagen[0], ValueError())
 
@@ -581,12 +570,21 @@ class MetadataManagerTest(MiroTestCase):
             for p in paths[start:stop]:
                 # this ensures that both moviedata and echonest will be run
                 # for this file
-                self.processor.run_mutagen_callback(p, 'audio', None,
-                                                    u'Title', u'Album', False,
-                                                    False)
+                metadata = {
+                    'file_type': u'audio',
+                    'title': u'Title',
+                    'album': u'Album',
+                    'drm': False,
+                }
+                self.processor.run_mutagen_callback(p, metadata)
+
         def run_movie_data(start, stop):
             for p in paths[start:stop]:
-                self.processor.run_movie_data_callback(p, 'audio', 100, True)
+                metadata = {
+                    'file_type': u'audio',
+                    'duration': 100,
+                }
+                self.processor.run_movie_data_callback(p, metadata)
 
         def run_echonest_codegen(start, stop):
             for p in paths[start:stop]:
@@ -597,11 +595,11 @@ class MetadataManagerTest(MiroTestCase):
                          echonest_codegen_calls):
             self.metadata_manager._process_metadata_finished()
             self.metadata_manager._process_metadata_errors()
-            self.assertEquals(len(self.processor.mutagen_calls),
+            self.assertEquals(len(self.processor.mutagen_paths()),
                               mutagen_calls)
-            self.assertEquals(len(self.processor.movie_data_calls),
+            self.assertEquals(len(self.processor.movie_data_paths()),
                               movie_data_calls)
-            self.assertEquals(len(self.processor.echonest_codegen_calls),
+            self.assertEquals(len(self.processor.echonest_codegen_paths()),
                               echonest_codegen_calls)
 
         # Add all 200 paths to the metadata manager.  Only 100 should be
@@ -666,8 +664,11 @@ class MetadataManagerTest(MiroTestCase):
         # check that callbacks/errbacks for the old paths don't result in
         # errors.  The metadata system may have already been processing the
         # file when it got the CancelFileOperations message.
-        self.processor.run_movie_data_callback('/videos/foo.avi', 'video',
-                                               100, True)
+        metadata = {
+            'file_type': u'video',
+            'duration': 100,
+        }
+        self.processor.run_movie_data_callback('/videos/foo.avi', metadata)
         self.processor.run_mutagen_errback('/videos/bar.mp3', ValueError())
         # check that callbacks work for new paths
         self.check_run_movie_data('/videos2/foo.avi', 'video', 100, True)
@@ -683,7 +684,7 @@ class MetadataManagerTest(MiroTestCase):
 
         # if some files get removed, then we should start new ones
         self.metadata_manager.remove_files(paths[:25])
-        self.assertEquals(len(self.processor.mutagen_calls), 125)
+        self.assertEquals(len(self.processor.mutagen_paths()), 125)
 
         # If pending files get removed, we should remove them from the pending
         # queues
@@ -707,10 +708,16 @@ class MetadataManagerTest(MiroTestCase):
             self.metadata_manager.file_moved(old_path, new_path)
         # send mutagen call backs so the pending calls start
         for p in paths[:100]:
-            self.processor.run_mutagen_callback(p, 'video', 100, u'Title',
-                                                u'Album', False, False)
+            metadata = {
+                'file_type': u'video',
+                'duration': 100,
+                'title': u'Title',
+                'album': u'Album',
+                'drm': False,
+            }
+            self.processor.run_mutagen_callback(p, metadata)
         correct_paths = paths[100:150] + new_paths
-        self.assertSameSet(self.processor.mutagen_calls.keys(), correct_paths)
+        self.assertSameSet(self.processor.mutagen_paths(), correct_paths)
 
 class TestCodegen(EventLoopTest):
     def setUp(self):
