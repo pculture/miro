@@ -365,7 +365,7 @@ class DialogBase(WindowBase):
         raise NotImplementedError()
 
     def destroy(self):
-        self._window = None
+        self._window.response(gtk.RESPONSE_NONE)
 
 class Dialog(DialogBase):
     def __init__(self, title, description=None):
