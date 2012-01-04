@@ -3648,3 +3648,10 @@ def upgrade168(cursor):
     # set echonest_status to STATUS_NOT_RUN
     cursor.execute("UPDATE metadata_status "
                    "SET echonest_status='N'")
+
+def upgrade169(cursor):
+    """Add disabled to metadata."""
+    cursor.execute("ALTER TABLE metadata "
+                   "ADD COLUMN disabled integer")
+    cursor.execute("UPDATE metadata "
+                   "SET disabled=0")

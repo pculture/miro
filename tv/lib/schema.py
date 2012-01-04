@@ -865,6 +865,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('episode_number', SchemaInt(noneOk=True)),
         ('season_number', SchemaInt(noneOk=True)),
         ('kind', SchemaString(noneOk=True)),
+        ('disabled', SchemaBool()),
     ]
 
     indexes = (
@@ -875,7 +876,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_path_and_source', ('path', 'source')),
     )
 
-VERSION = 168
+VERSION = 169
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

@@ -245,6 +245,7 @@ class MetadataEntry(database.DDBObject):
         self.path = path
         self.source = source
         self.priority = MetadataEntry.source_priority_map[source]
+        self.disabled = False
         # set all metadata to None by default
         for name in self.metadata_columns:
             setattr(self, name, None)
@@ -271,7 +272,8 @@ class MetadataEntry(database.DDBObject):
 
     @classmethod
     def metadata_for_path(cls, path):
-        return cls.make_view('path=?', (filename_to_unicode(path),),
+        return cls.make_view('path=? AND NOT disabled',
+                             (filename_to_unicode(path),),
                              order_by='priority ASC')
 
     @classmethod
@@ -279,6 +281,17 @@ class MetadataEntry(database.DDBObject):
         view = cls.make_view('source=? AND path=?',
                              (source, filename_to_unicode(path)))
         return view.get_singleton()
+
+    @classmethod
+    def set_disabled(cls, source, path, disabled):
+        """Set/Unset the disabled flag for metadata entry."""
+        try:
+            entry = cls.get_entry(source, path)
+        except database.ObjectNotFoundError:
+            pass
+        else:
+            entry.disabled = disabled
+            entry.signal_change()
 
 class _MetadataProcessor(signals.SignalEmitter):
     """Base class for processors that handle getting metadata somehow.
