@@ -59,7 +59,7 @@ attribute_names = set([
     'file_type', 'duration', 'album', 'album_artist', 'album_tracks',
     'artist', 'cover_art_path', 'screenshot_path', 'has_drm', 'genre',
     'title', 'track', 'year', 'description', 'rating', 'show', 'episode_id',
-    'episode_number', 'season_number', 'kind',
+    'episode_number', 'season_number', 'kind', 'net_lookup_enabled',
 ])
 
 class MetadataStatus(database.DDBObject):
@@ -90,9 +90,13 @@ class MetadataStatus(database.DDBObject):
 
     def setup_new(self, path):
         self.path = path
+        self.net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
-        self.echonest_status = self.STATUS_NOT_RUN
+        if self.net_lookup_enabled:
+            self.echonest_status = self.STATUS_NOT_RUN
+        else:
+            self.echonest_status = self.STATUS_SKIP
         self.mutagen_thinks_drm = False
         self.echonest_id = None
         self.max_entry_priority = -1
@@ -188,6 +192,14 @@ class MetadataStatus(database.DDBObject):
             self.echonest_status = self.STATUS_SKIP
         self.signal_change()
 
+    def set_net_lookup_enabled(self, enabled):
+        self.net_lookup_enabled = enabled
+        if enabled and self.echonest_status == self.STATUS_SKIP:
+            self.echonest_status = self.STATUS_NOT_RUN
+        elif not enabled and self.echonest_status == self.STATUS_NOT_RUN:
+            self.echonest_status = self.STATUS_SKIP
+        self.signal_change()
+
     def rename(self, new_path):
         """Change the path for this object."""
         app.db.cache.remove('metadata', self.path)
@@ -237,6 +249,9 @@ class MetadataEntry(database.DDBObject):
     # factors.
     metadata_columns.discard('has_drm')
     metadata_columns.add('drm')
+    # net_lookup_enabled is proveded by the metadata_status table, not the
+    # actual metadata tables
+    metadata_columns.discard('net_lookup_enabled')
     # cover_art_path is handled implicitly by saving the cover art using the
     # album name
     metadata_columns.discard('cover_art_path')
@@ -284,14 +299,18 @@ class MetadataEntry(database.DDBObject):
 
     @classmethod
     def set_disabled(cls, source, path, disabled):
-        """Set/Unset the disabled flag for metadata entry."""
+        """Set/Unset the disabled flag for metadata entry.
+
+        :returns: True if there was an entry to change
+        """
         try:
             entry = cls.get_entry(source, path)
         except database.ObjectNotFoundError:
-            pass
+            return False
         else:
             entry.disabled = disabled
             entry.signal_change()
+            return True
 
 class _MetadataProcessor(signals.SignalEmitter):
     """Base class for processors that handle getting metadata somehow.
@@ -453,9 +472,7 @@ class _EchonestProcessor(_MetadataProcessor):
         self._running_codegen = False
         self._querying_echonest = False
         self._codegen_path = get_enmfp_executable_path()
-        self._enabled = app.config.get(prefs.ECHONEST_ENABLED)
         self._metadata_for_path = {}
-        app.backend_config_watcher.connect("changed", self._on_config_change)
 
     def add_path(self, path, current_metadata):
         self._metadata_for_path[path] = current_metadata
@@ -500,16 +517,7 @@ class _EchonestProcessor(_MetadataProcessor):
         self.emit('task-error', path)
         self._process_queue()
 
-    def _on_config_change(self, watcher, key, value):
-        if key == prefs.ECHONEST_ENABLED.key:
-            self._enabled = value
-            if value:
-                self._process_queue()
-
     def _process_queue(self):
-        if not self._enabled:
-            return
-
         # process echonest queue
         if (self._echonest_queue and not self._querying_echonest):
             self._query_echonest(*self._echonest_queue.pop())
@@ -600,6 +608,9 @@ class _ProcessingCountTracker(object):
         except KeyError:
             # not tracking this path, just ignore
             return
+
+    def file_being_processed(self, path):
+        return path in self.file_types
 
 class MetadataManager(signals.SignalEmitter):
     """Extract and track metadata for files.
@@ -709,13 +720,15 @@ class MetadataManager(signals.SignalEmitter):
         :raises ValueError: path is already in the system
         """
         try:
-            MetadataStatus(path)
+            status = MetadataStatus(path)
         except sqlite3.IntegrityError:
             raise ValueError("%s already added" % path)
         self._run_mutagen(path)
         self.count_tracker.file_started(path)
         self._schedule_update()
-        return self._get_metadata_from_filename(path)
+        rv = self._get_metadata_from_filename(path)
+        rv['net_lookup_enabled'] = status.net_lookup_enabled
+        return rv
 
     def path_in_system(self, path):
         """Test if a path is in the metadata system."""
@@ -813,14 +826,17 @@ class MetadataManager(signals.SignalEmitter):
 
         metadata = self._get_metadata_from_filename(path)
         for entry in MetadataEntry.metadata_for_path(path):
-            if (not app.config.get(prefs.ECHONEST_ENABLED) and
-                entry.source == 'echonest'):
-                continue
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
+        metadata['net_lookup_enabled'] = status.net_lookup_enabled
         self._add_cover_art_path(metadata)
         return metadata
+
+    def refresh_metadata_for_paths(self, paths):
+        """Send the new-metadata signal with the full metadata for paths."""
+        new_metadata = dict((p, self.get_metadata(p)) for p in paths)
+        self.emit("new-metadata", new_metadata)
 
     def _add_cover_art_path(self, metadata):
         """Add the cover art path to a metadata dict """
@@ -848,6 +864,36 @@ class MetadataManager(signals.SignalEmitter):
         except database.ObjectNotFoundError:
             # make a new entry if none exists
             MetadataEntry(path, u'user-data', user_data)
+
+    def set_net_lookup_enabled(self, paths, enabled):
+        """Set if we should do an internet lookup for a list of paths"""
+        refresh_paths = []
+        app.bulk_sql_manager.start()
+        try:
+            for path in paths:
+                try:
+                    status = MetadataStatus.get_by_path(path)
+                except database.ObjectNotFoundError:
+                    logging.warn("set_net_lookup_enabled() "
+                                 "path not in system: %s", path)
+                    continue
+                status.set_net_lookup_enabled(enabled)
+                if MetadataEntry.set_disabled('echonest', path, not enabled):
+                    refresh_paths.append(path)
+                # Changing the net_lookup value may mean we have to send the
+                # path through echonest
+                if not self.count_tracker.file_being_processed(path):
+                    self.run_next_processor(status)
+        finally:
+            app.bulk_sql_manager.finish()
+
+        if refresh_paths:
+            self.refresh_metadata_for_paths(refresh_paths)
+
+    def set_net_lookup_enabled_for_all(self, enabled):
+        """Set if we should do an internet lookup for all current paths"""
+        paths = [r[0] for r in MetadataStatus.select(['path'])]
+        self.set_net_lookup_enabled(paths, enabled)
 
     def _calc_incomplete(self):
         """Figure out which metadata status objects we should restart.

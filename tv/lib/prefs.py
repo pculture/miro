@@ -195,8 +195,8 @@ TRANSLATE_URL     = Pref(key='TranslateURL', default=u"http://develop.participat
 PLANET_URL        = Pref(key='PlanetURL', default=u"http://planet.getmiro.com/",
                          platformSpecific=False)
 # TODO: should be set to False by default
-ECHONEST_ENABLED  = Pref(key='EchonestEnabled', default=True,
-                         platformSpecific=False)
+NET_LOOKUP_BY_DEFAULT  = Pref(key='UseInternetLookupForNew', default=True,
+                              platformSpecific=False)
 
 # These can be safely ignored on platforms without minimize to tray
 MINIMIZE_TO_TRAY = \

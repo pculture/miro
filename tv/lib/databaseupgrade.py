@@ -3653,5 +3653,12 @@ def upgrade169(cursor):
     """Add disabled to metadata."""
     cursor.execute("ALTER TABLE metadata "
                    "ADD COLUMN disabled integer")
-    cursor.execute("UPDATE metadata "
-                   "SET disabled=0")
+    cursor.execute("UPDATE metadata SET disabled=0")
+
+def upgrade170(cursor):
+    """Add net_lookup_enabled."""
+    cursor.execute("ALTER TABLE metadata_status "
+                   "ADD COLUMN net_lookup_enabled integer")
+    cursor.execute("ALTER TABLE item "
+                   "ADD COLUMN net_lookup_enabled integer")
+    cursor.execute("UPDATE item SET net_lookup_enabled=0")

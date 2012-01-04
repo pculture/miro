@@ -143,6 +143,8 @@ class MetadataManagerTest(MiroTestCase):
         self.movieprogram_data = collections.defaultdict(dict)
         self.echonest_data = collections.defaultdict(dict)
         self.user_info_data = collections.defaultdict(dict)
+        # maps paths -> should we do an interent lookup
+        self.net_lookup_enabled = {}
         self.processor = MockMetadataProcessor()
         self.patch_function('miro.workerprocess.send', self.processor.send)
         self.patch_function('miro.echonest.exec_codegen',
@@ -150,6 +152,8 @@ class MetadataManagerTest(MiroTestCase):
         self.patch_function('miro.echonest.query_echonest',
                             self.processor.query_echonest)
         self.metadata_manager = metadata.MetadataManager(self.tempdir)
+        # For these examples we want to run echonest by default
+        app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
 
     def _calc_correct_metadata(self, path):
         """Calculate what the metadata should be for a path."""
@@ -158,14 +162,23 @@ class MetadataManagerTest(MiroTestCase):
         }
         metadata.update(self.mutagen_data[path])
         metadata.update(self.movieprogram_data[path])
-        if app.config.get(prefs.ECHONEST_ENABLED):
+        if self.net_lookup_enabled[path]:
             metadata.update(self.echonest_data[path])
+            metadata['net_lookup_enabled'] = True
+        else:
+            metadata['net_lookup_enabled'] = False
         metadata.update(self.user_info_data[path])
         if 'album' in metadata:
             cover_art_path = self.cover_art_for_album(metadata['album'])
             if cover_art_path:
                 metadata['cover_art_path'] = cover_art_path
         return metadata
+
+    def check_set_net_lookup_enabled(self, filename, enabled):
+        path = self.make_path(filename)
+        self.net_lookup_enabled[path] = enabled
+        self.metadata_manager.set_net_lookup_enabled([path], enabled)
+        self.check_metadata(path)
 
     def cover_art_for_album(self, album_name):
         mutagen_cover_art_path = None
@@ -214,6 +227,8 @@ class MetadataManagerTest(MiroTestCase):
 
     def check_add_file(self, filename):
         path = self.make_path(filename)
+        pref_value = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
+        self.net_lookup_enabled[path] = pref_value
         # before we add the path, get_metadata() should raise a KeyError
         self.assertRaises(KeyError, self.metadata_manager.get_metadata, path)
         # after we add the path, we should have only have metadata that we can
@@ -309,7 +324,11 @@ class MetadataManagerTest(MiroTestCase):
         self.check_echonest_not_running(filename)
         path = self.make_path(filename)
         status = metadata.MetadataStatus.get_by_path(path)
-        self.assertEquals(status.echonest_status, status.STATUS_SKIP)
+        if status.echonest_status not in (status.STATUS_SKIP,
+                                          status.STATUS_COMPLETE):
+            raise AssertionError("Bad status in "
+                                 "check_echonest_not_scheduled(): %s" %
+                                 status.echonest_status)
 
     def check_echonest_not_running(self, filename):
         path = self.make_path(filename)
@@ -406,21 +425,89 @@ class MetadataManagerTest(MiroTestCase):
         self.check_movie_data_not_scheduled('foo.mp3')
         self.check_echonest_codegen_error('foo.mp3')
 
-    def test_echonest_codegen_config(self):
-        # test echonest preference stops echonest_codegen from running
-        app.config.set(prefs.ECHONEST_ENABLED, False)
+    def test_internet_lookup_pref(self):
+        # Test that the NET_LOOKUP_BY_DEFAULT pref works
+        app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, False)
+        self.check_add_file('foo.mp3')
+        metadata = self.get_metadata('foo.mp3')
+        self.assertEquals(metadata['net_lookup_enabled'], False)
+        app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
+        self.check_add_file('bar.mp3')
+        metadata = self.get_metadata('bar.mp3')
+        self.assertEquals(metadata['net_lookup_enabled'], True)
+
+    def test_set_net_lookup_enabled(self):
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
+        self.check_movie_data_not_scheduled('foo.mp3')
+        self.check_run_echonest_codegen('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
+        self.check_set_net_lookup_enabled('foo.mp3', False)
+        self.check_set_net_lookup_enabled('foo.mp3', True)
+
+    def test_set_net_lookup_for_all(self):
+        for x in xrange(10):
+            self.check_add_file('foo-%s.mp3' % x)
+
+        self.metadata_manager.set_net_lookup_enabled_for_all(False)
+        for x in xrange(10):
+            path = self.make_path('foo-%s.mp3' % x)
+            metadata = self.metadata_manager.get_metadata(path)
+            self.assertEquals(metadata['net_lookup_enabled'], False)
+
+        self.metadata_manager.set_net_lookup_enabled_for_all(True)
+        for x in xrange(10):
+            path = self.make_path('foo-%s.mp3' % x)
+            metadata = self.metadata_manager.get_metadata(path)
+            self.assertEquals(metadata['net_lookup_enabled'], True)
+
+    def test_net_lookup_enabled_stops_processor(self):
+        # test that we don't run the echonest processor if if it's not enabled
+        app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, False)
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
         self.check_echonest_not_running('foo.mp3')
-        app.config.set(prefs.ECHONEST_ENABLED, True)
+        self.check_echonest_not_scheduled('foo.mp3')
+        # test that it starts running if we set the value to true
+        self.check_set_net_lookup_enabled('foo.mp3', True)
         self.check_run_echonest_codegen('foo.mp3')
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights2')
-        # test that disabling/enabling the config changes the metadata
-        app.config.set(prefs.ECHONEST_ENABLED, False)
-        self.check_metadata(self.make_path('foo.mp3'))
-        app.config.set(prefs.ECHONEST_ENABLED, True)
-        self.check_metadata(self.make_path('foo.mp3'))
+
+    def test_net_lookup_enabled_signals(self):
+        # test that we don't run the echonest processor if if it's not enabled
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
+        self.check_run_echonest_codegen('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights2')
+        # test that we get the new-metadata signal when we set/unset the
+        # set_lookup_enabled flag
+        foo_path = self.make_path('foo.mp3')
+        signal_handler = mock.Mock()
+        self.metadata_manager.connect("new-metadata", signal_handler)
+        def check_callback_data():
+            args, kwargs = signal_handler.call_args
+            self.assertEquals(kwargs, {})
+            self.assertEquals(args[0], self.metadata_manager)
+            # _calc_correct_metadata doesn't calculate has_drm.  Just ignore
+            # it for this telt
+            del args[1][foo_path]['has_drm']
+            self.assertEquals(args[1].keys(), [foo_path])
+            correct_metadata = self._calc_correct_metadata(foo_path)
+            # we include None values for this signal because we may be erasing
+            # metadata
+            for name in metadata.attribute_names:
+                if name not in correct_metadata and name != 'has_drm':
+                    correct_metadata[name] = None
+            self.assertDictEquals(args[1][foo_path], correct_metadata)
+
+        self.check_set_net_lookup_enabled('foo.mp3', False)
+        self.assertEquals(signal_handler.call_count, 1)
+        check_callback_data()
+
+        self.check_set_net_lookup_enabled('foo.mp3', True)
+        self.assertEquals(signal_handler.call_count, 2)
+        check_callback_data()
 
     def test_echonest_error(self):
         # Test audio files with no issuse
@@ -761,7 +848,10 @@ class MetadataManagerTest(MiroTestCase):
         self.assertEquals(self.processor.canceled_files, set(to_move))
         # tell metadata manager that the move is done
         for path in to_move:
-            self.metadata_manager.file_moved(path, new_path_name(path))
+            new_path = new_path_name(path)
+            self.metadata_manager.file_moved(path, new_path)
+            self.net_lookup_enabled[new_path] = \
+                    self.net_lookup_enabled.pop(path)
         # check that the metadata stored with the new path and not the old one
         for path in to_move:
             new_path = new_path_name(path)

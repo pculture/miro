@@ -440,6 +440,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.setup_new_icon_cache()
         self.play_count = 0
         self.skip_count = 0
+        self.net_lookup_enabled = False
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
