@@ -193,10 +193,6 @@ class CheckMenuItem(MenuItem):
     def get_state(self):
         return self._widget.get_active()
 
-    def _on_activate(self, menu_item):
-        if self.get_state():
-            MenuItem._on_activate(self, menu_item)
-
 class RadioMenuItem(CheckMenuItem):
     """MenuItem that toggles on/off and is grouped with other RadioMenuItems.
     """
@@ -212,6 +208,13 @@ class RadioMenuItem(CheckMenuItem):
     def remove_from_group(self):
         """Remove this RadioMenuItem from its current group."""
         self._widget.set_group(None)
+
+    def _on_activate(self, menu_item):
+        # GTK sends the activate signal for both the radio button that's
+        # toggled on and the one that gets turned off.  Just emit our signal
+        # for the active radio button.
+        if self.get_state():
+            MenuItem._on_activate(self, menu_item)
 
 class Separator(MenuItemBase):
     """Separator item for menus"""
