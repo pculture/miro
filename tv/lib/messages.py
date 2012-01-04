@@ -901,6 +901,17 @@ class RateItem(BackendMessage):
         self.info = info
         self.rating = rating
 
+class SetNetLookupEnabled(BackendMessage):
+    """Enable/disable internet lookups for a set of items.  """
+    def __init__(self, item_ids, enabled):
+        """Create a new message
+
+        :param item_ids: list of item ids or None for all current items
+        :param boolean enabled: enable/disable flag
+        """
+        self.item_ids = item_ids
+        self.enabled = enabled
+
 class ClogBackend(BackendMessage):
     """Dev message: intentionally clog the backend for a specified number of 
     seconds.

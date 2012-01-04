@@ -1976,3 +1976,37 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 f.actualFeed.modified = {}
                 f.actualFeed.signal_change()
                 f.update()
+
+    def handle_set_net_lookup_enabled(self, message):
+        paths = set()
+        if message.item_ids is None:
+            app.local_metadata_manager.set_net_lookup_enabled_for_all(
+                message.enabled)
+            return
+
+        for item_id in message.item_ids:
+            try:
+                i = item.Item.get_by_id(item_id)
+            except ObjectNotFoundError:
+                logging.warn("handle_force_run_echonest: id not found: %s",
+                             item_id)
+            else:
+                paths.add(i.get_filename())
+        # Remove any None values in case an item didn't have a path
+        paths.discard(None)
+        app.local_metadata_manager.set_net_lookup_enabled(paths,
+                                                          message.enabled)
+
+    def handle_remove_echonest_data(self, message):
+        paths = set()
+        for item_id in message.item_ids:
+            try:
+                i = item.Item.get_by_id(item_id)
+            except ObjectNotFoundError:
+                logging.warn("handle_force_run_echonest: id not found: %s",
+                             item_id)
+            else:
+                paths.append(i.get_filename())
+        # Remove any None values in case an item didn't have a path
+        paths.discard(None)
+        app.local_metadata_manager.remove_echonest_data(paths)

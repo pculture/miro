@@ -36,6 +36,7 @@ import subprocess
 
 from miro import app
 from miro import errors
+from miro import messages
 from miro import prefs
 from miro import signals
 from miro import conversions
@@ -83,12 +84,6 @@ class MenuItemFetcher(object):
             self._cache[name] = menu_item
             return menu_item
 
-def setup_menubar(menubar):
-    """Setup the main miro menubar.
-    """
-    menubar.add_initial_menus(get_app_menu())
-    menubar.connect("activate", on_menubar_activate)
-
 def get_app_menu():
     """Returns the default menu structure."""
 
@@ -112,13 +107,17 @@ def get_app_menu():
                     Separator(),
                     MenuItem(_("Download from a URL"), "NewDownload",
                              groups=["NonPlaying"]),
+                    MenuItem(_("Edit _Item Details..."), "EditItems",
+                             Shortcut("i", MOD),
+                             groups=["LocalItemsSelected"],
+                             plural=_("Edit _Items")),
+                    CheckMenuItem(_('Use album art and song info from online '
+                                    'lookup database (Echonest)'),
+                                  'UseEchonestData'),
                     Separator(),
                     MenuItem(_("Remove Item"), "RemoveItems",
                              groups=["LocalItemsSelected"],
                              plural=_("Remove Items")),
-                    MenuItem(_("Edit _Item"), "EditItems", Shortcut("i", MOD),
-                             groups=["LocalItemsSelected"],
-                             plural=_("Edit _Items")),
                     MenuItem(_("_Save Item As"), "SaveItem",
                              Shortcut("s", MOD),
                              groups=["LocalPlayableSelected"],
@@ -832,12 +831,19 @@ class MenuManager(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'menus-updated')
         self.menu_item_fetcher = MenuItemFetcher()
         self.subtitle_encoding_updater = SubtitleEncodingMenuUpdater()
+
+    def setup_menubar(self, menubar):
+        """Setup the main miro menubar.
+        """
+        menubar.add_initial_menus(get_app_menu())
+        menubar.connect("activate", on_menubar_activate)
         self.menu_updaters = [
             LegacyMenuUpdater(),
             SortsMenuUpdater(),
             AudioTrackMenuUpdater(),
             SubtitlesMenuUpdater(),
             self.subtitle_encoding_updater,
+            EchonestMenuHandler(menubar),
         ]
 
     def _set_play_pause(self):
@@ -1237,3 +1243,45 @@ class SubtitleEncodingMenuUpdater(object):
 
     def on_activate(self, menu_item, encoding):
         app.playback_manager.select_subtitle_encoding(encoding)
+
+class EchonestMenuHandler(object):
+    """Handles the echonest enable/disable checkbox
+
+    Responsibilities:
+        - Enabling/Disabling the menu item depending on the selection
+        - Handling the callback
+    """
+
+    def __init__(self, meunbar):
+        self.menu_item = app.widgetapp.menubar.find("UseEchonestData")
+        self.menu_item.connect("activate", self.on_activate)
+
+    def on_activate(self, button):
+        selection = app.item_list_controller_manager.get_selection()
+        id_list = [info.id for info in selection if info.downloaded]
+        m = messages.SetNetLookupEnabled(id_list, button.get_state())
+        m.send_to_backend()
+
+    def update(self, reasons):
+        ilc_manager = app.item_list_controller_manager
+        selection_info = ilc_manager.get_selection_info()
+        if selection_info.has_download:
+            self.menu_item.enable()
+        else:
+            self.menu_item.disable()
+        self.update_check_value()
+
+    def update_check_value(self):
+        selection = app.item_list_controller_manager.get_selection()
+        has_enabled = has_disabled = False
+        for info in selection:
+            if info.net_lookup_enabled:
+                has_enabled = True
+            else:
+                has_disabled = True
+        if has_enabled and has_disabled:
+            self.menu_item.set_state(None)
+        elif has_enabled:
+            self.menu_item.set_state(True)
+        else:
+            self.menu_item.set_state(False)

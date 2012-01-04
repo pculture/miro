@@ -834,8 +834,19 @@ class MetadataManager(signals.SignalEmitter):
         return metadata
 
     def refresh_metadata_for_paths(self, paths):
-        """Send the new-metadata signal with the full metadata for paths."""
-        new_metadata = dict((p, self.get_metadata(p)) for p in paths)
+        """Send the new-metadata signal with the full metadata for paths.
+
+        The metadata dicts will include None values to indicate metadata we
+        don't have, unlike normal.  This means that we can erase metadata
+        from items if it is no longer present.
+        """
+
+        new_metadata = {}
+        for p in paths:
+            # make sure we include None values
+            metadata = dict((name, None) for name in attribute_names)
+            metadata.update(self.get_metadata(p))
+            new_metadata[p] = metadata
         self.emit("new-metadata", new_metadata)
 
     def _add_cover_art_path(self, metadata):
