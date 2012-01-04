@@ -374,6 +374,53 @@ class _TaskProcessor(_MetadataProcessor):
         self.emit('task-error', task.source_path)
         self.remove_task_for_path(task.source_path)
 
+class _EchonestQueue(object):
+    """Queue for echonest tasks.
+
+    _EchonestQueue is a modified FIFO.  Each queue item is stored as a path +
+    optional additional data.
+    """
+    def __init__(self):
+        self.queue = collections.deque()
+
+    def add(self, path, *extra_data):
+        """Add a path to the queue.
+
+        *extra_data can be used to store related data to the path.  It will be
+        returned along with the path in pop()
+        """
+        self.queue.append((path, extra_data))
+
+    def pop(self):
+        """Pop a path from the active queue.
+
+        If any positional arguments were passed in to add(), then return the
+        tuple (path, extra_data1, extra_data2, ...).  If not, just return
+        path.
+
+        :raises IndexError: no path to pop
+        """
+        path, extra_data = self.queue.popleft()
+        if extra_data:
+            return (path,) + extra_data
+        else:
+            return path
+
+    def remove_paths(self, path_set):
+        """Remove all paths that are in a set."""
+
+        def filter_removed(item):
+            return item[0] not in path_set
+        new_items = filter(filter_removed, self.queue)
+        self.queue.clear()
+        self.queue.extend(new_items)
+
+    def __len__(self):
+        """Get the number of items in the queue that are not disabled because
+        of the config value.
+        """
+        return len(self.queue)
+
 class _EchonestProcessor(_MetadataProcessor):
     """Processor runs echonest queries
 
@@ -388,8 +435,8 @@ class _EchonestProcessor(_MetadataProcessor):
         _MetadataProcessor.__init__(self, u'echonest')
         self._code_buffer_size = code_buffer_size
         self._cover_art_dir = cover_art_dir
-        self._codegen_queue = collections.deque()
-        self._echonest_queue = collections.deque()
+        self._codegen_queue = _EchonestQueue()
+        self._echonest_queue = _EchonestQueue()
         self._running_codegen = False
         self._querying_echonest = False
         self._codegen_path = get_enmfp_executable_path()
@@ -399,7 +446,7 @@ class _EchonestProcessor(_MetadataProcessor):
 
     def add_path(self, path, current_metadata):
         self._metadata_for_path[path] = current_metadata
-        self._codegen_queue.append(path)
+        self._codegen_queue.add(path)
         self._process_queue()
 
     def _run_codegen(self, path):
@@ -409,7 +456,7 @@ class _EchonestProcessor(_MetadataProcessor):
 
     def _codegen_callback(self, path, code):
         self._running_codegen = False
-        self._echonest_queue.append((path, code))
+        self._echonest_queue.add(path, code)
         self._process_queue()
 
     def _codegen_errback(self, path, error):
@@ -452,38 +499,20 @@ class _EchonestProcessor(_MetadataProcessor):
 
         # process echonest queue
         if (self._echonest_queue and not self._querying_echonest):
-            self._query_echonest(*self._echonest_queue.popleft())
+            self._query_echonest(*self._echonest_queue.pop())
 
         # process codegen queue
         if (self._codegen_queue and
             not self._running_codegen and
             len(self._echonest_queue) < self._code_buffer_size):
-            self._run_codegen(self._codegen_queue.popleft())
+            self._run_codegen(self._codegen_queue.pop())
 
     def remove_tasks_for_paths(self, paths):
         path_set = set(paths)
-        self._remove_from_codegen_queue(path_set)
-        self._remove_from_echonest_queue(path_set)
+        self._echonest_queue.remove_paths(path_set)
+        self._codegen_queue.remove_paths(path_set)
         # since we may have deleted active paths, process the new ones
         self._process_queue()
-
-    def _remove_from_codegen_queue(self, path_set):
-        new_codegen_queue = collections.deque()
-        for path in self._codegen_queue:
-            if path in path_set:
-                del self._metadata_for_path[path]
-            else:
-                new_codegen_queue.append(path)
-        self._codegen_queue = new_codegen_queue
-
-    def _remove_from_echonest_queue(self, path_set):
-        new_echonest_queue = collections.deque()
-        for path, code in self._echonest_queue:
-            if path in path_set:
-                del self._metadata_for_path[path]
-            else:
-                new_echonest_queue.append((path, code))
-        self._echonest_queue = new_echonest_queue
 
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
@@ -955,7 +984,7 @@ class MetadataManager(signals.SignalEmitter):
                              path)
                 continue
             self._make_new_metadata_entry(status, processor, path, result)
-            self._processor_finished(processor, status)
+            self.run_next_processor(status)
         self.metadata_finished = []
 
     def _make_new_metadata_entry(self, status, processor, path, result):
@@ -982,14 +1011,14 @@ class MetadataManager(signals.SignalEmitter):
                              path)
                 continue
             status.update_after_error(processor.source_name)
-            self._processor_finished(processor, status)
+            self.run_next_processor(status)
             # we only have new metadata if the error means we can set the
             # has_drm flag now
             if processor is self.moviedata_processor and status.get_has_drm():
                 self.new_metadata[path].update({'has_drm': True})
         self.metadata_errors = []
 
-    def _processor_finished(self, processor, status):
+    def run_next_processor(self, status):
         """Called after both success and failure of a metadata processor
         """
         # check what the next processor we should run is
@@ -1010,4 +1039,3 @@ class MetadataManager(signals.SignalEmitter):
             eta = None
             msg = messages.MetadataProgressUpdate(target, count, eta, total)
             msg.send_to_frontend()
-

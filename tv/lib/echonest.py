@@ -87,7 +87,7 @@ def exec_codegen(codegen_path, media_path, callback, errback):
     eventloop.call_in_thread(thread_callback, thread_errback, thread_function,
                              'exec echonest codegen')
 
-def query_echonest(path, album_art_dir, code, version, metadata, callback,
+def query_echonest(path, cover_art_dir, code, version, metadata, callback,
                    errback):
     """Send a query to echonest to indentify a song.
 
@@ -95,14 +95,14 @@ def query_echonest(path, album_art_dir, code, version, metadata, callback,
     metadata_dict) or errback(path, exception_obj)
 
     :param path: path for the song
-    :param album_art_dir: directory to write album art to
+    :param cover_art_dir: directory to write cover art to
     :param code: echonest code from ENMFP or echoprint
     :param version: code version (3.15 for ENMFP or 4.11 for echoprint)
     :param metadata: dict of metadata from ID3 tags.
     :param callback: function to call on success
     :param error: function to call on error
     """
-    _EchonestQuery(path, album_art_dir, code, version, metadata, callback,
+    _EchonestQuery(path, cover_art_dir, code, version, metadata, callback,
                    errback)
 
 class _EchonestQuery(object):
@@ -114,13 +114,13 @@ class _EchonestQuery(object):
     # cache album names for 7digital release ids
     seven_digital_cache = {}
 
-    def __init__(self, path, album_art_dir, code, version, metadata, callback,
+    def __init__(self, path, cover_art_dir, code, version, metadata, callback,
                  errback):
         self.metadata = {}
-        self.album_art_url = None
-        self.album_art_filename = None
+        self.cover_art_url = None
+        self.cover_art_filename = None
         self.path = path
-        self.album_art_dir = album_art_dir
+        self.cover_art_dir = cover_art_dir
         self.seven_digitial_ids_to_query = collections.deque()
         self.seven_digital_results = []
         self.callback = callback
@@ -220,9 +220,9 @@ class _EchonestQuery(object):
     def handle_7digital_cache_hit(self, release_id):
         album = self.seven_digital_cache[release_id]
         self.metadata['album'] = album
-        album_art_filename = filetags.calc_cover_art_filename(album)
-        cover_art_path = os.path.join(self.album_art_dir,
-                                       album_art_filename)
+        cover_art_filename = filetags.calc_cover_art_filename(album)
+        cover_art_path = os.path.join(self.cover_art_dir,
+                                       cover_art_filename)
         if os.path.exists(cover_art_path):
             self.metadata['cover_art_path'] = cover_art_path
         self.invoke_callback()
@@ -243,14 +243,14 @@ class _EchonestQuery(object):
         except StandardError, e:
             logging.exception("Error handling 7digital response")
             # we can still invoke our callback with the data from echonest
-        if (self.album_art_url and self.album_art_filename):
-            self.grab_url_dest = os.path.join(self.album_art_dir,
-                                              self.album_art_filename)
+        if (self.cover_art_url and self.cover_art_filename):
+            self.grab_url_dest = os.path.join(self.cover_art_dir,
+                                              self.cover_art_filename)
             if os.path.exists(self.grab_url_dest):
                 self.metadata['cover_art_path'] = self.grab_url_dest
                 self.invoke_callback()
             else:
-                self.fetch_album_art()
+                self.fetch_cover_art()
         else:
 
             self.invoke_callback()
@@ -262,11 +262,11 @@ class _EchonestQuery(object):
 
         if len(doc.getElementsByTagName('error')) == 0:
             album = find_text_for_tag('title')
-            self.album_art_url = find_text_for_tag('image')
-            self.album_art_filename = filetags.calc_cover_art_filename(album)
+            self.cover_art_url = find_text_for_tag('image')
+            self.cover_art_filename = filetags.calc_cover_art_filename(album)
             self.metadata['album'] = album
             self.seven_digital_cache[self.release_id] = album
-            # Note: we don't need to cache the album art URL, because we only
+            # Note: we don't need to cache the cover art URL, because we only
             # have to download that once per album
         else:
             error = doc.getElementsByTagName('error')[0]
@@ -279,19 +279,19 @@ class _EchonestQuery(object):
         # we can still invoke our callback with the data from echonest
         self.invoke_callback()
 
-    def fetch_album_art(self):
-        httpclient.grab_url(self.album_art_url,
-                            self.album_art_callback,
-                            self.album_art_errback,
+    def fetch_cover_art(self):
+        httpclient.grab_url(self.cover_art_url,
+                            self.cover_art_callback,
+                            self.cover_art_errback,
                             write_file=self.grab_url_dest)
 
-    def album_art_callback(self, data):
+    def cover_art_callback(self, data):
         # we don't care about the data sent back, since grab_url wrote our
         # file for us
         self.metadata['cover_art_path'] = self.grab_url_dest
         self.invoke_callback()
 
-    def album_art_errback(self, error):
-        logging.warn("Error fetching album art (%s)", self.album_art_url)
+    def cover_art_errback(self, error):
+        logging.warn("Error fetching cover art (%s)", self.cover_art_url)
         # we can still invoke our callback with the data from echonest
         self.invoke_callback()
