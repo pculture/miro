@@ -717,6 +717,35 @@ class DialogWindow(Window):
             mask |= NSMiniaturizableWindowMask
         return mask
 
+class DonateWindow(Window):
+    def __init__(self, title):
+        Window.__init__(self, title, Rect(0, 0, 640, 440))
+        self.panels = dict()
+        self.identifiers = list()
+        self.first_show = True
+        self.nswindow.setShowsToolbarButton_(NO)
+        self.nswindow.setReleasedWhenClosed_(NO)
+        self.app_notifications = NotificationForwarder.create(NSApp())
+        self.app_notifications.connect(self.on_app_quit, 
+            'NSApplicationWillTerminateNotification')
+
+    def destroy(self):
+        super(PreferencesWindow, self).destroy()
+        self.app_notifications.disconnect()
+
+    def get_style_mask(self):
+        return (NSTitledWindowMask | NSClosableWindowMask |
+                NSMiniaturizableWindowMask)
+ 
+    def show(self):
+        if self.first_show:
+            self.nswindow.center()
+            self.first_show = False
+        Window.show(self)
+
+    def on_app_quit(self, notification):
+        self.close()
+
 class PreferencesWindow(Window):
     def __init__(self, title):
         Window.__init__(self, title, Rect(0, 0, 640, 440))

@@ -58,7 +58,7 @@
 
 typedef void(*focusCallback)(PRBool forward, void* data);
 typedef int(*uriCallback)(char* uri, void* data);
-typedef void(*networkCallback)(PRBool is_start, char* uri, void* data);
+typedef void(*networkCallback)(PRBool is_start, nsresult aStatus, char* uri, void* data);
 
 class MiroBrowserEmbed   : public nsIWebBrowserChrome,
                            public nsIWebBrowserChromeFocus,

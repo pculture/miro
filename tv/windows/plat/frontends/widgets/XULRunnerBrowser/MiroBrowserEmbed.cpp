@@ -602,9 +602,9 @@ NS_IMETHODIMP MiroBrowserEmbed::OnStateChange(nsIWebProgress *aWebProgress, nsIR
           NS_NAMED_LITERAL_STRING(specString, "");
         }
         if(aStateFlags & nsIWebProgressListener::STATE_START) {
-	  mNetworkCallback(PR_TRUE, (char*)specString.get(), mNetworkCallbackData);
+	  mNetworkCallback(PR_TRUE, 0, (char*)specString.get(), mNetworkCallbackData);
         } else if(aStateFlags & nsIWebProgressListener::STATE_STOP) {
-	  mNetworkCallback(PR_FALSE, (char*)specString.get(), mNetworkCallbackData);
+	  mNetworkCallback(PR_FALSE, aStatus, (char*)specString.get(), mNetworkCallbackData);
         }
     }
     return NS_OK;

@@ -138,6 +138,12 @@ class BrowserWidget(embeddingwidget.EmbeddingWidget):
                 'file://%s' % path.replace(os.sep, '/'))
             return
         wrappermap.wrapper(self).emit('net-stop')
+
+    def on_net_error(self, uri):
+        if uri in self._downloads:
+            self._downloads.pop(uri)
+        wrappermap.wrapper(self).emit('net-error')
+
 gobject.type_register(BrowserWidget)
 
 class Browser(Widget):
@@ -149,6 +155,7 @@ class Browser(Widget):
         # TODO: implement net-start and net-stop signaling on windows.
         self.create_signal('net-start')
         self.create_signal('net-stop')
+        self.create_signal('net-error')
         self.create_signal('download-finished')
 
     def navigate(self, url):
@@ -184,3 +191,9 @@ class Browser(Widget):
 
     def destroy(self):
         self._widget.browser.destroy()
+
+    def should_load_url(self, url):
+        return True
+
+    def should_download_url(self, url, mimetype=None):
+        return False

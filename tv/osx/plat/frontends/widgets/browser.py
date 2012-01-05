@@ -50,6 +50,7 @@ class Browser(Widget):
         self.url = None
         self.create_signal('net-start')
         self.create_signal('net-stop')
+        self.create_signal('net-error')
         self.create_signal('download-finished')
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
         self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
@@ -138,6 +139,15 @@ class Browser(Widget):
     def destroy(self):
         pass
 
+    def should_load_url(self, url):
+        return YES
+
+    def should_download_url(self, url, mimetype):
+        return NO
+
+    def should_load_mimetype(self, url, mimetype):
+        return YES
+
 ###############################################################################
 
 class MiroWebView (WebView):
@@ -206,6 +216,8 @@ class BrowserDelegate (NSObject):
                 NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, url.host())
                 # Now reload
                 frame.loadRequest_(request)
+        else:
+            self.browser.emit('net-error')
 
     def webView_createWebViewWithRequest_(self, webView, request):
         global jsOpened

@@ -62,6 +62,7 @@ from miro import filetypes
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
+from miro.frontends.widgets import donate
 from miro.frontends.widgets import newsearchfeed
 from miro.frontends.widgets import newfeed
 from miro.frontends.widgets import newfolder
@@ -1025,6 +1026,9 @@ class Application:
 
     def about(self):
         dialogs.show_about()
+
+    def show_donate_popup(self):
+        donate.show()
 
     def diagnostics(self):
         diagnostics.run_dialog()
