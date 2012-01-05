@@ -637,9 +637,9 @@ class ItemListController(object):
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
-        for view_type, item_view in self.views.items():
+        for item_view in self.views.values():
             item_view.connect_weak('selection-changed',
-                    self.on_selection_changed, view_type)
+                    self.on_selection_changed)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('key-press', self.on_key_press)
             item_view.connect_weak('row-activated', self.on_row_activated)
@@ -882,7 +882,7 @@ class ItemListController(object):
             logging.debug("ItemView doesn't know how to handle hotspot %s.",
                 name)
 
-    def on_selection_changed(self, item_view, view_type):
+    def on_selection_changed(self, item_view):
         self._selection_changed()
         self.update_item_details()
 
@@ -926,6 +926,7 @@ class ItemListController(object):
         selection = app.widget_state.get_selection(self.type, self.id)
         if selection:
             self.restore_selected_ids(selection)
+        self.on_selection_changed(self.current_item_view)
 
     def save_columns(self):
         """Save enabled columns, column order, and column widths"""
