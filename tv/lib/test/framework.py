@@ -18,6 +18,7 @@ from miro import httpauth
 from miro import httpclient
 from miro import item
 from miro import iteminfocache
+from miro import itemsource
 from miro import util
 from miro import prefs
 from miro import schema
@@ -378,6 +379,9 @@ class MiroTestCase(unittest.TestCase):
         for ext in app.extension_manager.extensions:
             if ext.loaded:
                 app.extension_manager.unload_extension(ext)
+
+    def make_item_info(self, itemobj):
+        return itemsource.DatabaseItemSource._item_info_for(itemobj)
 
     def setup_log_filter(self):
         """Make a LogFilter that will turn loggings into exceptions."""

@@ -280,6 +280,34 @@ class LiveStorageErrorHandler(object):
                 "It is now safe to quit without losing any data.")
         dialogs.MessageBoxDialog(title, description).run()
 
+class LiveStorageErrorHandlerDevice(LiveStorageErrorHandler):
+    """Handle database errors for LiveStorage on a device.
+    """
+    def __init__(self, name):
+        self.name = name
+
+    def handle_load_error(self):
+        title = _("database for device %(name)s corrupt.",
+                  {'name' : self.name})
+        description = _(
+            "The %(appname)s database on your device is corrupt and a "
+            "new one will be created.",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        dialogs.MessageBoxDialog(title, description).run_blocking()
+
+    def handle_upgrade_error(self):
+        self.handle_load_error()
+        return self.ACTION_START_FRESH
+
+    def handle_save_error(self, error_text):
+        # TODO: what should we do here?  Maybe retry a couple times then drop
+        # the database and start fresh?  I want to talk to paul to figure tihs
+        # one out -- BDK
+        raise NotImplementedError()
+
+    def handle_save_succeeded(self):
+        raise NotImplementedError()
+
 class LiveStorage:
     """Handles the storage of DDBObjects.
 
@@ -316,6 +344,7 @@ class LiveStorage:
             logging.info("sqlite3 has no version attribute.")
 
         db_existed = os.path.exists(path)
+        self.created_new = False
         self.error_handler = error_handler
         self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
@@ -363,6 +392,19 @@ class LiveStorage:
             self._handle_load_error(msg)
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
+
+    def integrity_check(self):
+        """Run an integrity check on our database and fix any issues """
+        # FIXME: should we be running this on our main database?
+        try:
+            self._integrity_check()
+        except sqlite3.DatabaseError:
+            msg = "Error running integrity check"
+            self.error_handler.handle_load_error()
+            self._handle_load_error(msg)
+
+    def _integrity_check(self):
+        self.cursor.execute("PRAGMA integrity_check")
 
     def close(self, ignore_vacuum_error=True):
         logging.info("closing database")
@@ -713,6 +755,9 @@ class LiveStorage:
     def table_name(self, klass):
         return self._schema_map[klass].table_name
 
+    def schema_fields(self, klass):
+        return self._schema_map[klass].fields
+
     def object_from_class_table(self, obj, klass):
         return self._schema_map[klass] is self._schema_map[obj.__class__]
 
@@ -998,6 +1043,7 @@ class LiveStorage:
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self._set_version()
+        self.created_new = True
 
     def _get_version(self):
         return self.get_variable(VERSION_KEY)

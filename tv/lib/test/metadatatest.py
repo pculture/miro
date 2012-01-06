@@ -4,15 +4,18 @@ import os
 import urllib
 import urlparse
 import random
+import shutil
 import string
 import json
 
 from miro.test import mock
 from miro.test.framework import MiroTestCase, EventLoopTest
 from miro import app
-from miro import databaseupgrade
+from miro import devices
 from miro import echonest
+from miro import item
 from miro import httpclient
+from miro import models
 from miro import prefs
 from miro import schema
 from miro import filetypes
@@ -20,7 +23,8 @@ from miro import metadata
 from miro import workerprocess
 from miro.plat import resources
 from miro.plat.utils import (PlatformFilenameType,
-                             get_enmfp_executable_path)
+                             get_enmfp_executable_path,
+                             utf8_to_filename, unicode_to_filename)
 
 class MockMetadataProcessor(object):
     """Replaces the mutagen and movie data code with test values."""
@@ -151,7 +155,8 @@ class MetadataManagerTest(MiroTestCase):
                             self.processor.exec_codegen)
         self.patch_function('miro.echonest.query_echonest',
                             self.processor.query_echonest)
-        self.metadata_manager = metadata.MetadataManager(self.tempdir)
+        self.metadata_manager = metadata.MetadataManager(self.tempdir,
+                                                         self.tempdir)
         # For these examples we want to run echonest by default
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
 
@@ -630,7 +635,8 @@ class MetadataManagerTest(MiroTestCase):
         self.check_queued_echonest_codegen_calls([])
         # Create a new MetadataManager and call restart_incomplete on that.
         # That should invoke mutagen and movie data
-        self.metadata_manager = metadata.MetadataManager(self.tempdir)
+        self.metadata_manager = metadata.MetadataManager(self.tempdir,
+                                                         self.tempdir)
         self.metadata_manager.restart_incomplete()
         self.check_queued_moviedata_calls(['foo.avi'])
         self.check_queued_mutagen_calls(['bar.avi'])
@@ -665,7 +671,8 @@ class MetadataManagerTest(MiroTestCase):
         self.check_path_in_system('other-file.avi', False)
         # Test path_in_system() for objects in the DB, but not in cache
         self.clear_ddb_object_cache()
-        self.metadata_manager = metadata.MetadataManager(self.tempdir)
+        self.metadata_manager = metadata.MetadataManager(self.tempdir,
+                                                         self.tempdir)
         self.check_path_in_system('foo.avi', True)
         self.check_path_in_system('bar.avi', True)
         self.check_path_in_system('baz.mp3', True)
@@ -733,6 +740,7 @@ class MetadataManagerTest(MiroTestCase):
     def test_restore(self):
         db_path = os.path.join(self.tempdir, 'testdb');
         self.reload_database(db_path)
+        self.metadata_manager.db_info = app.db_info
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
@@ -740,6 +748,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
         # reload our database to force restoring metadata items
         self.reload_database(db_path)
+        self.metadata_manager.db_info = app.db_info
         self.check_metadata('foo.mp3')
 
     def test_user_and_torrent_data(self):
@@ -932,6 +941,266 @@ class MetadataManagerTest(MiroTestCase):
             self.processor.run_mutagen_callback(p, metadata)
         correct_paths = paths[100:150] + new_paths
         self.assertSameSet(self.processor.mutagen_paths(), correct_paths)
+
+class DeviceMetadataTest(EventLoopTest):
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        # setup a device database
+        self.db = devices.DeviceDatabase()
+        self.db[u'audio'] = {}
+        self.db[u'video'] = {}
+        self.db[u'other'] = {}
+        # setup a device object
+        self.device = mock.Mock()
+        self.device.database = self.db
+        self.device.mount = self.tempdir + "/"
+        self.device.remaining = 0
+        os.makedirs(os.path.join(self.device.mount, '.miro'))
+        self.device.id = 123
+        self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
+        os.makedirs(self.cover_art_dir)
+        self.device.sqlite_db = devices.load_sqlite_database(
+            ':memory:', self.db, 'DeviceName')
+        self.device.metadata_manager = devices.make_metadata_manager(
+            self.tempdir, self.device.sqlite_db, self.device.id)
+        # copy a file to our device
+        src = resources.path('testdata/Wikipedia_Song_by_teddy.ogg')
+        dest = os.path.join(self.tempdir, 'test-song.ogg')
+        shutil.copyfile(src, dest)
+        self.mutagen_metadata = {
+            'file_type': u'audio',
+            'title': u'Title',
+            'album': u'Album',
+        }
+        self.moviedata_metadata = { 'duration': 100 }
+        self.echonest_metadata = { 'artist': u'Artist' }
+        # make a device manager
+        app.device_manager = mock.Mock()
+        app.device_manager.connected = {self.device.id: self.device}
+        # run echonest for our files
+        app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
+
+    def tearDown(self):
+        del app.device_manager
+        EventLoopTest.tearDown(self)
+
+    def make_device_item(self):
+        return devices.create_item_for_file(self.device,
+                                            u'test-song.ogg',
+                                            u'audio')
+    def run_processors(self):
+        self._run_processors(self.device.metadata_manager,
+                             os.path.join(self.tempdir, 'test-song.ogg'))
+
+    def run_processors_for_file_item(self, item):
+        self._run_processors(app.local_metadata_manager,
+                             item.get_filename())
+
+    def _run_processors(self, metadata_manager, path):
+        metadata_manager.mutagen_processor.emit("task-complete", path,
+                                                self.mutagen_metadata)
+        metadata_manager._run_updates()
+        metadata_manager.moviedata_processor.emit("task-complete", path,
+                                                 self.moviedata_metadata)
+        metadata_manager._run_updates()
+        metadata_manager.echonest_processor.emit("task-complete", path,
+                                                 self.echonest_metadata)
+        metadata_manager._run_updates()
+
+    def get_metadata_for_item(self):
+        return self.device.metadata_manager.get_metadata('test-song.ogg')
+
+    def test_new_item(self):
+        # Test that we create metadata entries for new DeviceItems.
+        device_item = self.make_device_item()
+        self.assertDictEquals(self.get_metadata_for_item(), {
+            u'file_type': u'audio',
+            u'net_lookup_enabled': True,
+            u'has_drm': False,
+        })
+        self.assertEquals(device_item.file_type, u'audio')
+        self.assertEquals(device_item.net_lookup_enabled, True)
+
+    def test_update(self):
+        item_changed_handler = mock.Mock()
+        self.device.database.connect('item-changed', item_changed_handler)
+        # Test that we update DeviceItems as we get metadata
+        self.make_device_item()
+        self.run_processors()
+        # check data in MetadataManager
+        self.assertDictEquals(self.get_metadata_for_item(), {
+            'file_type': u'audio',
+            'title': u'Title',
+            'album': u'Album',
+            'duration': 100,
+            'artist': 'Artist',
+            'has_drm': False,
+            'net_lookup_enabled': True,
+        })
+        # check data in the json database
+        item_data = self.device.database[u'audio'][u'test-song.ogg']
+        self.assertEquals(item_data[u'title'], u'Title')
+        self.assertEquals(item_data[u'artist'], u'Artist')
+        self.assertEquals(item_data[u'album'], u'Album')
+        # check the item-changed signal.  We should have gotten 3 calls, one
+        # for each time we ran _run_updates() in run_processors().  Check the
+        # data from the last emission
+        self.assertEquals(item_changed_handler.call_count, 3)
+        device_item = item_changed_handler.call_args[0][1]
+        self.assertEquals(device_item.title, u'Title')
+        self.assertEquals(device_item.artist, u'Artist')
+        self.assertEquals(device_item.album, u'Album')
+
+    def test_image_paths(self):
+        # Test that screenshot_path and cover_art_path are relative to the
+        # device
+        screenshot_path = os.path.join(self.device.mount, '.miro',
+                                       'icon-cache', 'extracted',
+                                       'screenshot.png')
+        cover_art_path = os.path.join(self.device.mount, '.miro', 'cover-art',
+                                      unicode_to_filename(u'Album'))
+        self.moviedata_metadata['screenshot_path'] = screenshot_path
+        self.echonest_metadata['cover_art_path'] = cover_art_path
+        for path in (screenshot_path, cover_art_path):
+            if not os.path.exists(os.path.dirname(path)):
+                os.makedirs(os.path.dirname(path))
+            open(path, 'w').write("FAKE DATA")
+
+        self.make_device_item()
+        self.run_processors()
+        item_metadata = self.get_metadata_for_item()
+        self.assertEquals(item_metadata['screenshot_path'],
+                          os.path.relpath(screenshot_path, self.device.mount))
+        self.assertEquals(item_metadata['cover_art_path'],
+                          os.path.relpath(cover_art_path, self.device.mount))
+
+    def test_remove(self):
+        # Test that we remove metadata entries for removed DeviceItems.
+        device_item = self.make_device_item()
+        self.run_processors()
+        device_item.remove()
+        self.assertRaises(KeyError, self.get_metadata_for_item)
+
+    def test_restart_incomplete(self):
+        # test that when we create our metadata manager it restarts the
+        # pending metadata
+        self.make_device_item()
+        mock_send = mock.Mock()
+        patcher = mock.patch('miro.workerprocess.send', mock_send)
+        with patcher:
+            self.device.metadata_manager = devices.make_metadata_manager(
+                self.tempdir, self.device.sqlite_db, self.device.id)
+        self.assertEquals(mock_send.call_count, 1)
+        task = mock_send.call_args[0][0]
+        self.assertEquals(task.source_path,
+                          os.path.join(self.tempdir, 'test-song.ogg'))
+
+    @mock.patch('miro.fileutil.migrate_file')
+    def test_copy(self, mock_migrate_file):
+        # Test copying/converting existing files into the device
+        source_path = resources.path('testdata/Wikipedia_Song_by_teddy.ogg')
+        feed = models.Feed(u'dtv:manualFeed')
+        item = models.FileItem(source_path, feed.id)
+        self.run_processors_for_file_item(item)
+        item_metadata = app.local_metadata_manager.get_metadata(
+            item.get_filename())
+        source_info = self.make_item_info(item)
+        copy_path = os.path.join(self.tempdir, 'copied-file-dest.ogg')
+
+        shutil.copyfile(source_path, copy_path)
+        dsm = devices.DeviceSyncManager(self.device)
+        dsm._add_item(copy_path, source_info)
+        self.runPendingIdles()
+        self.assertEquals(mock_migrate_file.call_count, 1)
+        current_path, final_path, callback = mock_migrate_file.call_args[0]
+        shutil.copyfile(current_path, final_path)
+        copied_item_path = os.path.relpath(final_path, self.device.mount)
+        callback()
+        # we shouldn't have any metadata processing scheduled for the device
+        device_db_info = self.device.metadata_manager.db_info
+        status = metadata.MetadataStatus.get_by_path(copied_item_path,
+                                                     device_db_info)
+        self.assertEquals(status.current_processor, None)
+        self.assertEquals(status.mutagen_status, status.STATUS_COMPLETE)
+        self.assertEquals(status.moviedata_status, status.STATUS_COMPLETE)
+        self.assertEquals(status.echonest_status, status.STATUS_COMPLETE)
+        # test that we made MetadataEntry rows
+        for source in (u'mutagen', u'movie-data', u'echonest'):
+            # this will raise an exception if the entry is not there
+            metadata.MetadataEntry.get_entry(source, copied_item_path,
+                                             device_db_info)
+        # the device item should have the original items metadata
+        device_item_metadata = self.device.metadata_manager.get_metadata(
+            copied_item_path)
+        self.assertDictEquals(device_item_metadata, item_metadata)
+
+class DeviceMetadataUpgradeTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        # setup a device database
+        json_path = resources.path('testdata/pre-metadata-device-db')
+        self.db = devices.DeviceDatabase(json.load(open(json_path)))
+        # setup a device object
+        self.device = mock.Mock()
+        self.device.database = self.db
+        self.device.mount = self.tempdir + "/"
+        self.device.remaining = 0
+        os.makedirs(os.path.join(self.device.mount, '.miro'))
+        self.device.id = 123
+        self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
+        os.makedirs(self.cover_art_dir)
+
+    def test_upgrade(self):
+        # Test the upgrade from pre-metadata device databases
+        sqlite_db = devices.load_sqlite_database(':memory:', self.db,
+                                                 'DeviceName')
+        # load_sqlite_database should have converted the old data to metadata
+        # entries
+        metadata_manager = devices.make_metadata_manager(self.tempdir,
+                                                         sqlite_db,
+                                                         self.device.id)
+        for path, item_data in self.db[u'audio'].items():
+            # fill in data that's implicit with the dict
+            item_data['file_type'] = u'audio'
+            item_data['video_path'] = path
+            filename = utf8_to_filename(path.encode('utf-8'))
+            self.check_migrated_status(filename, metadata_manager.db_info)
+            self.check_migrated_entries(filename, item_data,
+                                        metadata_manager.db_info)
+            # check that the title tag was deleted
+            self.assert_(not hasattr(item, 'title_tag'))
+
+    def check_migrated_status(self, filename, device_db_info):
+        # check the MetadataStatus.  For all items, we should be in the movie
+        # data stage.
+        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
+        self.assertEquals(status.current_processor, u'movie-data')
+        self.assertEquals(status.mutagen_status, status.STATUS_SKIP)
+        self.assertEquals(status.moviedata_status, status.STATUS_NOT_RUN)
+        self.assertEquals(status.echonest_status, status.STATUS_NOT_RUN)
+        self.assertEquals(status.net_lookup_enabled, False)
+
+    def check_migrated_entries(self, filename, item_data, device_db_info):
+        entries = metadata.MetadataEntry.metadata_for_path(filename,
+                                                           device_db_info)
+        entries = list(entries)
+        self.assertEquals(len(entries), 1)
+        entry = entries[0]
+        self.assertEquals(entry.source, 'old-item')
+
+        columns_to_check = entry.metadata_columns.copy()
+        # handle drm specially
+        self.assertEquals(entry.drm, False)
+        columns_to_check.discard('drm')
+
+        for name in columns_to_check:
+            device_value = item_data.get(name)
+            if device_value == '':
+                device_value = None
+            if getattr(entry, name) != device_value:
+                raise AssertionError(
+                    "Error migrating %s (old: %s new: %s)" %
+                    (name, device_value, getattr(entry, name)))
 
 class TestCodegen(EventLoopTest):
     def setUp(self):

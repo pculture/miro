@@ -2180,6 +2180,7 @@ class FileItem(Item):
                 self.make_deleted()
         if old_parent is not None and old_parent.get_children().count() == 0:
             old_parent.expire()
+        app.local_metadata_manager.remove_file(self.filename)
 
     def make_deleted(self):
         self._remove_from_playlists()
@@ -2391,6 +2392,11 @@ class DeviceItem(object):
         self.is_playing = False
         for attr in metadata.attribute_names:
             setattr(self, attr, None)
+        if 'local_path' in kwargs:
+            local_path = kwargs.pop('local_path')
+        else:
+            local_path = None
+        self._fix_paths_from_database(kwargs)
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2399,10 +2405,6 @@ class DeviceItem(object):
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         else:
             self.id = filename_to_unicode(self.video_path)
-        if isinstance(self.screenshot, unicode):
-            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
-        if isinstance(self.cover_art, unicode):
-            self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
         if self.file_format is None:
             self.file_format = filename_to_unicode(
                 os.path.splitext(self.video_path)[1])
@@ -2418,24 +2420,27 @@ class DeviceItem(object):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
-            if 0:
-                # TODO implement device items
-                if not self.metadata_version:
-                    # haven't run read_metadata yet.  We don't check the actual
-                    # version because upgrading metadata isn't supported.
-                    self.read_metadata()
-                    if not self.get_title():
-                        self.title = filename_to_unicode(
-                            os.path.basename(self.video_path))
-
         except (OSError, IOError):
             # if there was an error reading the data from the filesystem, don't
             # bother continuing with other FS operations or starting moviedata
             logging.debug('error reading %s', self.id, exc_info=True)
-        else:
-            if self.mdp_state is None: # haven't run MDP yet
-                app.movie_data_updater.request_update(self)
+        self.add_to_metadata_manager(local_path)
         self.__initialized = True
+
+    def _fix_paths_from_database(self, data):
+        """Make screenshot_path and cover_art_path the correct type.
+        """
+        for key in ('screenshot_path', 'cover_art_path'):
+            if key in data and isinstance(data[key], unicode):
+                data[key] = utf8_to_filename(data[key].encode('utf-8'))
+
+    def add_to_metadata_manager(self, local_path):
+        metadata_manager = self.device.metadata_manager
+        if not metadata_manager.path_in_system(self.video_path):
+            initial_metadata = metadata_manager.add_file(self.video_path,
+                                                         local_path)
+            # update ourself based on the initial metadata
+            self.__dict__.update(initial_metadata)
 
     @staticmethod
     def id_exists():
@@ -2448,7 +2453,6 @@ class DeviceItem(object):
             logging.warn('DeviceItem: release date %s invalid',
                           self.release_date)
             return datetime.now()
-           
 
     def get_creation_time(self):
         try:
@@ -2465,14 +2469,22 @@ class DeviceItem(object):
     def get_url(self):
         return self.url or u''
 
+    @returns_unicode
+    def get_title(self):
+        """Returns the title of the item.
+        """
+        if self.title:
+            return self.title
+        return os.path.basename(self.id)
+
     @returns_filename
     def get_thumbnail(self):
         if self.cover_art_path:
             return os.path.join(self.device.mount,
                                 self.cover_art_path)
-        elif self.screenshot:
+        elif self.screenshot_path:
             return os.path.join(self.device.mount,
-                                self.screenshot)
+                                self.screenshot_path)
         elif self.file_type == 'audio':
             return resources.path("images/thumb-default-audio.png")
         else:
@@ -2510,8 +2522,8 @@ class DeviceItem(object):
                                                 # thumbnail
 
     def _migrate_thumbnail(self):
-        self._migrate_image_field('screenshot')
-        self._migrate_image_field('cover_art')
+        self._migrate_image_field('screenshot_path')
+        self._migrate_image_field('cover_art_path')
 
     def remove(self, save=True):
         for file_type in [u'video', u'audio', u'other']:
@@ -2519,6 +2531,7 @@ class DeviceItem(object):
                 del self.device.database[file_type][self.id]
         if save:
             self.device.database.emit('item-removed', self)
+            self.device.metadata_manager.remove_file(self.video_path)
 
     def signal_change(self):
         if not self.__initialized:
@@ -2556,7 +2569,7 @@ class DeviceItem(object):
         for k, v in self.__dict__.items():
             if v is not None and k not in (u'device', u'file_type', u'id',
                                            u'video_path', u'_deferred_update'):
-                if ((k == u'screenshot' or k == u'cover_art')):
+                if ((k == u'screenshot_path' or k == u'cover_art_path')):
                     v = filename_to_unicode(v)
                 data[k] = v
         return data
@@ -2607,11 +2620,15 @@ def move_orphaned_items():
         databaselog.info("Moved items to manual feed because their parent was "
                 "gone: %s", ', '.join(parentless_items))
 
-def setup_metadata_manager(cover_art_dir=None):
+def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
     """Setup the MetadataManager for Items and FileItems."""
     if cover_art_dir is None:
         cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
-    app.local_metadata_manager = metadata.MetadataManager(cover_art_dir)
+    if screenshot_dir is None:
+        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
+    app.local_metadata_manager = metadata.MetadataManager(cover_art_dir,
+                                                          screenshot_dir)
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
 
 def on_new_metadata(metadata_manager, new_metadata):

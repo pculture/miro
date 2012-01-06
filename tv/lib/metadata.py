@@ -103,37 +103,48 @@ class MetadataStatus(database.DDBObject):
         self.current_processor = u'mutagen'
         self._add_to_cache()
 
+    def copy_status(self, other_status):
+        """Copy values from another metadata status object."""
+        for name, field in app.db.schema_fields(MetadataStatus):
+            if name not in ('id', 'path'):
+                setattr(self, name, getattr(other_status, name))
+        self.signal_change()
+
     @classmethod
-    def get_by_path(cls, path):
+    def get_by_path(cls, path, db_info=None):
         """Get an object by its path attribute.
 
         We use the DatabaseObjectCache to cache status by path, so this method
         is fairly quick.
         """
+        if db_info is None:
+            db_info = app.db_info
+
         try:
-            cache_value = app.db.cache.get('metadata', path)
+            cache_value = db_info.db.cache.get('metadata', path)
         except KeyError:
             cache_value = None
 
         if cache_value is not None:
             return cache_value
         else:
-            view = cls.make_view('path=?', (filename_to_unicode(path),))
+            view = cls.make_view('path=?', (filename_to_unicode(path),),
+                                 db_info=db_info)
             return view.get_singleton()
 
     def setup_restored(self):
-        app.db.cache.set('metadata', self.path, self)
+        self.db_info.db.cache.set('metadata', self.path, self)
 
     def _add_to_cache(self):
-        if app.db.cache.key_exists('metadata', self.path):
+        if self.db_info.db.cache.key_exists('metadata', self.path):
             # duplicate path.  Lets let sqlite raise the error when we try to
             # insert things.
             logging.warn("self.path already in cache (%s)", self.path)
             return
-        app.db.cache.set('metadata', self.path, self)
+        self.db_info.db.cache.set('metadata', self.path, self)
 
     def removed_from_db(self):
-        app.db.cache.remove('metadata', self.path)
+        self.db_info.db.cache.remove('metadata', self.path)
         database.DDBObject.removed_from_db(self)
 
     def get_has_drm(self):
@@ -218,14 +229,15 @@ class MetadataStatus(database.DDBObject):
 
     def rename(self, new_path):
         """Change the path for this object."""
-        app.db.cache.remove('metadata', self.path)
-        app.db.cache.set('metadata', new_path, self)
+        self.db_info.db.cache.remove('metadata', self.path)
+        self.db_info.db.cache.set('metadata', new_path, self)
         self.path = new_path
         self.signal_change()
 
     @classmethod
-    def was_running_select(cls, columns):
-        return cls.select(columns, 'current_processor IS NOT NULL')
+    def was_running_select(cls, columns, db_info=None):
+        return cls.select(columns, 'current_processor IS NOT NULL',
+                         db_info=db_info)
 
 class MetadataEntry(database.DDBObject):
     """Stores metadata from a single source.
@@ -288,25 +300,27 @@ class MetadataEntry(database.DDBObject):
         self.signal_change()
 
     @classmethod
-    def metadata_for_path(cls, path):
+    def metadata_for_path(cls, path, db_info=None):
         return cls.make_view('path=? AND NOT disabled',
                              (filename_to_unicode(path),),
-                             order_by='priority ASC')
+                             order_by='priority ASC',
+                             db_info=db_info)
 
     @classmethod
-    def get_entry(cls, source, path):
+    def get_entry(cls, source, path, db_info=None):
         view = cls.make_view('source=? AND path=?',
-                             (source, filename_to_unicode(path)))
+                             (source, filename_to_unicode(path)),
+                             db_info=db_info)
         return view.get_singleton()
 
     @classmethod
-    def set_disabled(cls, source, path, disabled):
+    def set_disabled(cls, source, path, disabled, db_info=None):
         """Set/Unset the disabled flag for metadata entry.
 
         :returns: True if there was an entry to change
         """
         try:
-            entry = cls.get_entry(source, path)
+            entry = cls.get_entry(source, path, db_info=None)
         except database.ObjectNotFoundError:
             return False
         else:
@@ -635,19 +649,24 @@ class MetadataManager(signals.SignalEmitter):
     # items at once.
     UPDATE_INTERVAL = 1.0
 
-    def __init__(self, cover_art_dir):
+    def __init__(self, cover_art_dir, screenshot_dir, db_info=None):
         signals.SignalEmitter.__init__(self)
+        if db_info is None:
+            self.db_info = app.db_info
+        else:
+            self.db_info = db_info
         self.create_signal('new-metadata')
         self.cover_art_dir = cover_art_dir
+        self.screenshot_dir = screenshot_dir
         self.echonest_cover_art_dir = os.path.join(cover_art_dir, 'echonest')
         if not fileutil.exists(self.echonest_cover_art_dir):
             fileutil.makedirs(self.echonest_cover_art_dir)
-        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        if not fileutil.exists(self.screenshot_dir):
+            fileutil.makedirs(self.screenshot_dir)
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
         self.echonest_processor = _EchonestProcessor(
             5, self.echonest_cover_art_dir)
-        self.screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
         self.pending_mutagen_tasks = []
         self.bulk_add_count = 0
         self.metadata_processors = [
@@ -680,8 +699,8 @@ class MetadataManager(signals.SignalEmitter):
         However, we don't actually want to load the objects yet, since this is
         called pretty early in the startup process.
         """
-        for row in MetadataStatus.select(["path"]):
-            app.db.cache.set('metadata', row[0], None)
+        for row in MetadataStatus.select(["path"], db_info=self.db_info):
+            self.db_info.db.cache.set('metadata', row[0], None)
 
     @contextlib.contextmanager
     def bulk_add(self):
@@ -714,27 +733,53 @@ class MetadataManager(signals.SignalEmitter):
             self.mutagen_processor.add_task(task)
         self.pending_mutagen_tasks = []
 
-    def add_file(self, path):
+    def _translate_path(self, path):
+        """Translate a path value from the db to a filesystem path.
+        """
+        return path
+
+    def _untranslate_path(self, path):
+        """Reverse the work of _translate_path."""
+        return path
+
+    def add_file(self, path, local_path=None):
         """Add a new file to the metadata syestem
 
         :param path: path to the file
+        :param local_path: path to a local file to get initial metadata for
         :returns initial metadata for the file
         :raises ValueError: path is already in the system
         """
         try:
-            status = MetadataStatus(path)
+            status = MetadataStatus(path, db_info=self.db_info)
         except sqlite3.IntegrityError:
             raise ValueError("%s already added" % path)
-        self._run_mutagen(path)
-        self.count_tracker.file_started(path)
+        initial_metadata = self._get_metadata_from_filename(path)
+        initial_metadata['net_lookup_enabled'] = status.net_lookup_enabled
+        if local_path is not None:
+            status.copy_status(MetadataStatus.get_by_path(local_path))
+            self.run_next_processor(status)
+            for entry in MetadataEntry.metadata_for_path(local_path):
+                entry_metadata = entry.get_metadata()
+                initial_metadata.update(entry_metadata)
+                MetadataEntry(path, entry.source, entry_metadata,
+                              db_info=self.db_info)
+        else:
+            self._run_mutagen(path)
+        if status.current_processor is not None:
+            self.count_tracker.file_started(path)
         self._schedule_update()
-        rv = self._get_metadata_from_filename(path)
-        rv['net_lookup_enabled'] = status.net_lookup_enabled
-        return rv
+        return initial_metadata
 
     def path_in_system(self, path):
         """Test if a path is in the metadata system."""
-        return app.db.cache.key_exists('metadata', path)
+        return self.db_info.db.cache.key_exists('metadata', path)
+
+    def _cancel_processing_paths(self, paths):
+        paths = [self._translate_path(p) for p in paths]
+        workerprocess.cancel_tasks_for_files(paths)
+        for processor in self.metadata_processors:
+            processor.remove_tasks_for_paths(paths)
 
     def remove_file(self, path):
         """Remove a file from the metadata system.
@@ -743,7 +788,6 @@ class MetadataManager(signals.SignalEmitter):
         that it doesn't start the bulk_sql_manager.
         """
         paths = [path]
-        workerprocess.cancel_tasks_for_files(paths)
         self._remove_files(paths)
 
     def remove_files(self, paths):
@@ -754,7 +798,6 @@ class MetadataManager(signals.SignalEmitter):
         :param paths: paths to remove
         :raises KeyError: path not in the metadata system
         """
-        workerprocess.cancel_tasks_for_files(paths)
         app.bulk_sql_manager.start()
         try:
             self._remove_files(paths)
@@ -763,13 +806,12 @@ class MetadataManager(signals.SignalEmitter):
 
     def _remove_files(self, paths):
         """Does the work for remove_file and remove_files"""
+        self._cancel_processing_paths(paths)
         for path in paths:
             self._get_status_for_path(path).remove()
-            for entry in MetadataEntry.metadata_for_path(path):
+            for entry in MetadataEntry.metadata_for_path(path, self.db_info):
                 entry.remove()
             self.count_tracker.file_finished(path)
-        for processor in self.metadata_processors:
-            processor.remove_tasks_for_paths(paths)
         self._schedule_update()
 
     def will_move_files(self, paths):
@@ -780,9 +822,7 @@ class MetadataManager(signals.SignalEmitter):
 
         :param paths: list of paths that will be moved
         """
-        workerprocess.cancel_tasks_for_files(paths)
-        for processor in self.metadata_processors:
-            processor.remove_tasks_for_paths(paths)
+        self._cancel_processing_paths(paths)
 
     def file_moved(self, old_path, new_path):
         """Call this after a file has been moved to a new location.
@@ -798,7 +838,7 @@ class MetadataManager(signals.SignalEmitter):
         except KeyError:
             logging.warn("_process_files_moved: %s not in DB", old_path)
             return
-        if app.db.cache.key_exists('metadata', new_path):
+        if self.db_info.db.cache.key_exists('metadata', new_path):
             # There's already an entry for the new status.  What to do
             # here?  Let's use the new one
             logging.warn("_process_files_moved: already an object for "
@@ -808,7 +848,7 @@ class MetadataManager(signals.SignalEmitter):
             return
 
         status.rename(new_path)
-        for entry in MetadataEntry.metadata_for_path(old_path):
+        for entry in MetadataEntry.metadata_for_path(old_path, self.db_info):
             entry.rename(new_path)
         if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
             self._run_mutagen(new_path)
@@ -827,7 +867,7 @@ class MetadataManager(signals.SignalEmitter):
         status = self._get_status_for_path(path)
 
         metadata = self._get_metadata_from_filename(path)
-        for entry in MetadataEntry.metadata_for_path(path):
+        for entry in MetadataEntry.metadata_for_path(path, self.db_info):
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
@@ -872,11 +912,12 @@ class MetadataManager(signals.SignalEmitter):
         status = self._get_status_for_path(path)
         try:
             # try to update the current entry
-            current_entry = MetadataEntry.get_entry(u'user-data', path)
+            current_entry = MetadataEntry.get_entry(u'user-data', path,
+                                                    self.db_info)
             current_entry.update_metadata(user_data)
         except database.ObjectNotFoundError:
             # make a new entry if none exists
-            MetadataEntry(path, u'user-data', user_data)
+            MetadataEntry(path, u'user-data', user_data, db_info=self.db_info)
 
     def set_net_lookup_enabled(self, paths, enabled):
         """Set if we should do an internet lookup for a list of paths"""
@@ -887,14 +928,15 @@ class MetadataManager(signals.SignalEmitter):
         try:
             for path in paths:
                 try:
-                    status = MetadataStatus.get_by_path(path)
+                    status = MetadataStatus.get_by_path(path, self.db_info)
                 except database.ObjectNotFoundError:
                     logging.warn("set_net_lookup_enabled() "
                                  "path not in system: %s", path)
                     continue
                 old_current_processor = status.current_processor
                 status.set_net_lookup_enabled(enabled)
-                if MetadataEntry.set_disabled('echonest', path, not enabled):
+                if MetadataEntry.set_disabled('echonest', path, not enabled,
+                                              self.db_info):
                     paths_to_refresh.append(path)
                 # Changing the net_lookup value may mean we have to send the
                 # path through echonest
@@ -918,7 +960,8 @@ class MetadataManager(signals.SignalEmitter):
 
     def set_net_lookup_enabled_for_all(self, enabled):
         """Set if we should do an internet lookup for all current paths"""
-        paths = [r[0] for r in MetadataStatus.select(['path'])]
+        paths = [r[0] for r in
+                 MetadataStatus.select(['path'], db_info=self.db_info)]
         self.set_net_lookup_enabled(paths, enabled)
 
     def _calc_incomplete(self):
@@ -928,8 +971,8 @@ class MetadataManager(signals.SignalEmitter):
         doing any work until restart_incomplete() is called.  So we just save
         the IDs of the rows to restart.
         """
-        self.restart_ids = [row[0] for row in
-                            MetadataStatus.was_running_select(['id'])]
+        results = MetadataStatus.was_running_select(['id'], self.db_info)
+        self.restart_ids = [row[0] for row in results]
 
     def restart_incomplete(self):
         """Restart extractors for files with incomplete metadata
@@ -938,9 +981,9 @@ class MetadataManager(signals.SignalEmitter):
         """
         for id_ in self.restart_ids:
             try:
-                status = MetadataStatus.get_by_id(id_)
+                status = MetadataStatus.get_by_id(id_, self.db_info)
             except database.ObjectNotFoundError:
-                pass # just ignore deleted objects
+                continue # just ignore deleted objects
             self.run_next_processor(status)
             self.count_tracker.file_started(status.path)
 
@@ -950,12 +993,13 @@ class MetadataManager(signals.SignalEmitter):
     def _get_status_for_path(self, path):
         """Get a MetadataStatus object for a given path."""
         try:
-            return MetadataStatus.get_by_path(path)
+            return MetadataStatus.get_by_path(path, self.db_info)
         except database.ObjectNotFoundError:
             raise KeyError(path)
 
     def _run_mutagen(self, path):
         """Run mutagen on a path."""
+        path = self._translate_path(path)
         task = workerprocess.MutagenTask(path, self.cover_art_dir)
         if not self.in_bulk_add():
             self.mutagen_processor.add_task(task)
@@ -964,6 +1008,7 @@ class MetadataManager(signals.SignalEmitter):
 
     def _run_movie_data(self, path):
         """Run the movie data program on a path."""
+        path = self._translate_path(path)
         task = workerprocess.MovieDataProgramTask(path, self.screenshot_dir)
         self.moviedata_processor.add_task(task)
 
@@ -974,6 +1019,8 @@ class MetadataManager(signals.SignalEmitter):
         # because we're doing a bulk insert
         if path in self.new_metadata:
             metadata.update(self.new_metadata[path])
+
+        path = self._translate_path(path)
         # we only send a subset of the metadata to echonest and some of the
         # key names are different
         echonest_metadata = {}
@@ -989,10 +1036,12 @@ class MetadataManager(signals.SignalEmitter):
         self.echonest_processor.add_path(path, echonest_metadata)
 
     def _on_task_complete(self, processor, path, result):
+        path = self._untranslate_path(path)
         self.metadata_finished.append((processor, path, result))
         self._schedule_update()
 
     def _on_task_error(self, processor, path):
+        path = self._untranslate_path(path)
         self.metadata_errors.append((processor, path))
         self._schedule_update()
 
@@ -1035,7 +1084,7 @@ class MetadataManager(signals.SignalEmitter):
     def _process_metadata_finished(self):
         for (processor, path, result) in self.metadata_finished:
             try:
-                status = MetadataStatus.get_by_path(path)
+                status = MetadataStatus.get_by_path(path, self.db_info)
             except database.ObjectNotFoundError:
                 logging.warn("_process_metadata_finished -- path removed: %s",
                              path)
@@ -1045,7 +1094,8 @@ class MetadataManager(signals.SignalEmitter):
         self.metadata_finished = []
 
     def _make_new_metadata_entry(self, status, processor, path, result):
-        entry = MetadataEntry(path, processor.source_name, result)
+        entry = MetadataEntry(path, processor.source_name, result,
+                              db_info=self.db_info)
         if entry.priority >= status.max_entry_priority:
             # If this entry is going to overwrite all other metadata, then
             # we don't have to call get_metadata().  Just send the new
@@ -1062,7 +1112,7 @@ class MetadataManager(signals.SignalEmitter):
     def _process_metadata_errors(self):
         for (processor, path) in self.metadata_errors:
             try:
-                status = MetadataStatus.get_by_path(path)
+                status = MetadataStatus.get_by_path(path, self.db_info)
             except database.ObjectNotFoundError:
                 logging.warn("_process_metadata_finished -- path removed: %s",
                              path)
@@ -1096,3 +1146,43 @@ class MetadataManager(signals.SignalEmitter):
             eta = None
             msg = messages.MetadataProgressUpdate(target, count, eta, total)
             msg.send_to_frontend()
+
+class DeviceMetadataManager(MetadataManager):
+    def __init__(self, db_info, device_id, mount):
+        cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
+        screenshot_dir = os.path.join(mount, '.miro', 'screenshots')
+        MetadataManager.__init__(self, cover_art_dir, screenshot_dir, db_info)
+        self.mount = mount
+        self.device_id = device_id
+        # FIXME: should we wait to restart incomplete metadata?
+        self.restart_incomplete()
+
+    def get_metadata(self, path):
+        metadata = MetadataManager.get_metadata(self, path)
+        # device items except cover art and screenshots to be relative to
+        # the device mount
+        for key in ('cover_art_path', 'screenshot_path'):
+            if key in metadata:
+                metadata[key] = self._untranslate_path(metadata[key])
+        return metadata
+
+    def _translate_path(self, path):
+        """Translate a path value from the db to a filesystem path.
+        """
+        return os.path.join(self.mount, path)
+
+    def _untranslate_path(self, path):
+        """Translate a path value from the db to a filesystem path.
+        """
+        return os.path.relpath(path, self.mount)
+
+    def _send_progress_updates(self):
+        count = total = 0
+        for file_type in (u'audio', u'video'):
+            count += self.count_tracker.get_count(file_type)
+            total += self.count_tracker.get_total(file_type)
+
+        target = (u'device', self.device_id)
+        eta = None
+        msg = messages.MetadataProgressUpdate(target, count, eta, total)
+        msg.send_to_frontend()
