@@ -53,7 +53,7 @@ cdef extern from "nscore.h":
 cdef extern from "MiroBrowserEmbed.h":
     ctypedef void(*focusCallback)(PRBool forward, void* data)
     ctypedef int(*uriCallback)(char* data, void* data)
-    ctypedef void(*networkCallback)(PRBool is_start, char* data, void* data)
+    ctypedef void(*networkCallback)(PRBool is_start, nsresult aStatus, char* data, void* data)
     ctypedef struct MiroBrowserEmbed:
         nsresult (*init)(unsigned long parentWindow, int x, int y, int width, 
                 int height)
@@ -189,13 +189,16 @@ cdef int uriCallbackGlue(char *uri, void* data) with gil:
         Py_DECREF(should_load)
     return retval
 
-cdef void networkCallbackGlue(PRBool is_start, char* uri, void* data) with gil:
+cdef void networkCallbackGlue(PRBool is_start, nsresult aStatus, char* uri, void* data) with gil:
     cdef PyObject* retval
 
     if is_start:
         retval = PyObject_CallMethod(<PyObject*>data, "on_net_start", "s", uri)
     else:
-        retval = PyObject_CallMethod(<PyObject*>data, "on_net_stop", "s", uri)
+        if aStatus == NS_OK:
+            retval = PyObject_CallMethod(<PyObject*>data, "on_net_stop", "s", uri)
+        else:
+            retval = PyObject_CallMethod(<PyObject*>data, "on_net_error", "s", uri)
     if retval:
         Py_DECREF(retval)
 

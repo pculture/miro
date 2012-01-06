@@ -64,6 +64,7 @@ class Browser(Widget):
 
         self.wrapped_browser_connect('load-started', self.on_net_start)
         self.wrapped_browser_connect('load-finished', self.on_net_stop)
+        self.wrapped_browser_connect('load-error', self.on_net_error)
         #self.wrapped_browser_connect('navigation-policy-decision-requested',
         #        self.on_navigate)
         self.wrapped_browser_connect('mime-type-policy-decision-requested',
@@ -73,6 +74,7 @@ class Browser(Widget):
 
         self.create_signal('net-start')
         self.create_signal('net-stop')
+        self.create_signal('net-error')
         self.create_signal('download-finished')
 
         # FIXME - handle new windows
@@ -90,6 +92,9 @@ class Browser(Widget):
 
     def on_net_stop(self, view, frame):
         self.emit('net-stop')
+
+    def on_net_error(self, view, frame, uri, error):
+        self.emit('net-error')
 
     def on_navigate(self, view, frame, request, navigation_action,
             policy_decision):

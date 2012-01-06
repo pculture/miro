@@ -278,6 +278,7 @@ def get_app_menu():
                     "ForceFeedparserProcessing"),
                 MenuItem(_("Clog Backend"), "ClogBackend"),
                 MenuItem(_("Run Echoprint"), "RunEchoprint"),
+                MenuItem(_("Run Donate Popup"), "RunDonatePopup")
                 ])
         )
     return all_menus
@@ -591,6 +592,10 @@ def on_run_echoprint():
     print '-' * 50
     subprocess.call([utils.get_echoprint_executable_path()])
     print '-' * 50
+
+@action_handler("RunDonatePopup")
+def on_run_donate_poupup():
+    app.widgetapp.show_donate_popup()
 
 class LegacyMenuUpdater(object):
     """This class contains the logic to update the menus based on enabled
