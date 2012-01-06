@@ -204,7 +204,8 @@ class MetadataManagerTest(MiroTestCase):
         else:
             return mutagen_cover_art_path
 
-    def check_metadata(self, path):
+    def check_metadata(self, filename):
+        path = self.make_path(filename)
         correct_metadata = self._calc_correct_metadata(path)
         self.metadata_manager._process_metadata_finished()
         self.metadata_manager._process_metadata_errors()
@@ -396,7 +397,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_metadata(path)
 
     def test_video(self):
-        # Test video files with no issuse
+        # Test video files with no issues
         self.check_add_file('foo.avi')
         self.check_run_mutagen('foo.avi', 'video', 101, 'Foo', 'Fight Vids')
         self.check_run_movie_data('foo.avi', 'video', 100, True)
@@ -411,7 +412,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_echonest_not_scheduled('foo.avi')
 
     def test_audio(self):
-        # Test audio files with no issuse
+        # Test audio files with no issues
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
@@ -510,7 +511,7 @@ class MetadataManagerTest(MiroTestCase):
         check_callback_data()
 
     def test_echonest_error(self):
-        # Test audio files with no issuse
+        # Test echonest failing
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
@@ -728,6 +729,18 @@ class MetadataManagerTest(MiroTestCase):
                                                metadata)
         self.processor.run_mutagen_errback(
             files_in_mutagen[0], ValueError())
+
+    def test_restore(self):
+        db_path = os.path.join(self.tempdir, 'testdb');
+        self.reload_database(db_path)
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
+        self.check_movie_data_not_scheduled('foo.mp3')
+        self.check_run_echonest_codegen('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
+        # reload our database to force restoring metadata items
+        self.reload_database(db_path)
+        self.check_metadata('foo.mp3')
 
     def test_user_and_torrent_data(self):
         self.check_add_file('foo.avi')
